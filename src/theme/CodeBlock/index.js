@@ -245,6 +245,11 @@ const PATTERNS = {
 };
 
 function isPortResource(code) {
+  // First validate that code is a string
+  if (!code || typeof code !== 'string') {
+    return false;
+  }
+
   // Skip if not a JSON-like string
   if (!code.trim().startsWith('{')) return false;
 

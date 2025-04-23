@@ -1,0 +1,71 @@
+---
+id: aggregate-entities
+title: "Aggregate entities"
+description: "This route allows you to perform an aggregation function on a blueprint's entities based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.port.io/search-and-query/)."
+sidebar_label: "Aggregate entities"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWW1v2zYQ/ivcDdgaQLaTbF03oS2QtB1QDGuDNEOBGQZCS2eLjUSqJBVXM/Tfh6PeaMtxkqHYMMAf6oovR94dnzveE67B8qWBcApvpBVWoIFZADGaSIvcCiUhhKtEGKZVYZHxNFUrw0pVMKtYjnqhdMa4ZHy51LjkJMEWhYzch5KMs3laYK6FtN8bhs0ebM4NxvX4UtyiZAYtUwumixTN+PlcT166nyvFUuRaskxpZHyuCtstErAoweiGUZ9NkE1jFRUZSuu0mD1JrM1NOJnEKjLjXGk7FmoyL0Qaj0pV6JFRC7viGkcRtzxVy4kpZTSKueUjq7rOb9vtjjy1flW61ihGy0VqGs0ulCYrDXIdJSzDKOFSmCyozQoYlzFTOWpulTZsxAxirXkj8R37XKAu2UMMqUVGXMYjJzQ5GkMAGj8XaOy5iksI1xApaVFa+uR5norIrTj5ZOhc12CiBDNOX7bMEUJQ808YWQhASXy/gHA6HLHCptTxShWyPwsIINdkmmuEayAMeAsbq4VcQgAoi4zQxm9R8yVCABEtBLMqaPto47sFE1VoCCDmJQSwQryBADIlbUK6KctTt1SG3BQar0SG5+Wu5TYRfsYa7UsCIc1l1zG3aEWG1wGbl2yViChxh9VoyVYiTdkcWcTTqEi5xXjMLjHFWy4tUzIt2UJpJ3HdiFx3kTGGKoBWUCi5S8cqAHewu45n09eRyuZCEqio1XlYxnSQ2vnDAdBbiWvtHCgsZq6fy/KeA39XZHPUDsoDDVrv7bSiRbyv3EsI4OULCOA5/XvhdLzlaYH9ClOQbkeYVVUNbKExpv5uN2/tVnwWAI9jQU7l6YWn5IKnBqvgbvtec4tfybo52hWihACksuddY6eZj4m5WkUul0MdF1plu3BO+ZlbCIHgPCI8k9JWPXTuluvdNk5+dq8vc40Gh2htuveEuFV1dFuVKa3VCgIo0VjUdXfKjf1YBz59ntK3aRq/N5mAvn9wjXbkp43WyWnT3AEup96s+pdg98FZ/5WARxH1zQuXVKXlQpozWXotynsKzTtlX9U9EMAcl0Kaj8K5rRk9p76mC2W8NfpGxk2HaCD+Vm4ie5BMuiNure7M6KY0wd5PaTq8KXOlUuTSm9P2eJPazNZOGWS6LUd6ogMt+zjYHRwOInvO/RH42QeRN1luy90I2QUCYZwA2eyOyzXofPbAaQvqnn6d0D+H+CXWt9zDTdDoLtQrl2agqyB3xsF2Pu1HYqExqm/4fukiN1YjzxyeV7JpzDYcMEDco855cLi+BXsP+qItQvZmgw93Vm2b8+vRHX5poXwfCtzofce+Lw/9x0lhkMF3wLpx5uPB7fsaIqGplNNPjmBzR680a4uw/Vv1ZjQ7kRXV1150WP+2FMSVnFuUY4n2LtZxxAoiclaxhUgt1vVuz/JwQSTJVc0ePxTGL5ofF1yOV7SV8d5gOmt2RCrfvdz70Cv2IRyhhuOAIXi27mAJLgTvoUemoATVk6TMXbUZ/0K/GAsuD4zpwJgOjOnAmA6M6cCYDozpwJgOjOnAmA6M6cCY7mJMXi5tyRP5qQrAYFRoQUluuoY5co26zig8Drv3nVk1o2VNrqSpg+X0+Jj+23TLa1zwIrXsspnpVM3QJiqGEHJlHBC4TSCEye3JpF1/0lpLQWxQ36I2Tp9CpxBC61yei/YBzCF6OFqYfsKst82Btta7tbC//3LxG5JfJM8ccSxsorT4y7m+vrNDSJDHFEZVAPR6dtm/s735wrM8xf7Ry6NtHj9radgWz+pjeovc9AMdp2koydQvc/ppTdo4Jr/sGW8LXzg9Pv1xdPxsdPrL1cnT8OlJePrz+PjZyZ91sbpnvLpnBz8rDadRr3c93Sntg9jqAv3VBvl8WJAPbjtv/zrNCbmoa/r2KlHasrOLt6QKalPj+WR8TGsQcDPubsUWJN1fF7wn0I1Y8F5fDy/o/58X9AZRFr/YSZ5SxV8FdZ5ZN4lrCrcnrszvzr1PXrMAEkpy4RTWazqiP3RaVdTdRPF0RojUgs8JdFO675vUQnF9g6V7Wne4GV2RKj2ABy/4lOC63Hrx/sMV1U3Ny3+mYpLRnLgg/YbgqmiSdmnQ9a0h5XJZULIKoV7T3S0F2eknyBuXIJsPryLhji21Gm5nztoc+vXpxobIel2n36rq5tdDd0o07mpni7psqf4Gh5APEg==
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Aggregate entities"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/entities/aggregate"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to perform an aggregation function on a blueprint's entities based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.port.io/search-and-query/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","oneOf":[{"type":"object","title":"Count entities","properties":{"func":{"type":"string","enum":["average","count"]},"averageOf":{"type":"string","enum":["hour","day","week","month","total"]},"measureTimeBy":{"type":"string","description":"A property of type `datetime`, by which the average will be calculated. Relevant only for the `average` function."},"calculationBy":{"type":"string"},"query":{"type":"object","properties":{"combinator":{"enum":["and","or"]},"rules":{"type":"array","items":{"anyOf":[{"type":"object","title":"Number rule","properties":{"property":{"type":"string"},"operator":{"enum":[">",">=","<","<="]},"value":{"type":["number"]}},"required":["property","operator","value"],"additionalProperties":false},{"type":"object","title":"Date rule","properties":{"property":{"type":"string"},"operator":{"enum":["between","notBetween","="]},"value":{"type":"object","oneOf":[{"type":"object","title":"Date range","properties":{"from":{"type":"string","format":"date-time"},"to":{"type":"string","format":"date-time"}},"required":["from","to"]},{"type":"object","title":"Date preset","properties":{"preset":{"type":"string","enum":["today","tomorrow","yesterday","lastWeek","last2Weeks","lastMonth","last3Months","last6Months","last12Months"]}},"required":["preset"]}]}},"required":["property","operator","value"],"additionalProperties":false},{"type":"object","title":"String rule","properties":{"property":{"type":"string"},"operator":{"enum":["=","!=","containsAny","contains","doesNotContain","beginsWith","doesNotBeginWith","endsWith","doesNotEndWith","in","notIn"]},"value":{"anyOf":[{"type":"string","title":"string"},{"type":"number","title":"number"},{"type":"boolean","title":"boolean"},{"type":"array","title":"array","items":{"type":"string"}},{"type":"string","title":"date-time","format":"date-time"}]}},"additionalProperties":false,"required":["property","operator","value"]},{"type":"object","title":"Empty rule","properties":{"operator":{"enum":["isEmpty","isNotEmpty"]},"property":{"type":"string"}},"required":["operator","property"],"additionalProperties":false},{"type":"object","title":"Relation rule","properties":{"operator":{"enum":["relatedTo"]},"blueprint":{"type":"string"},"value":{"type":"string"},"direction":{"enum":["upstream","downstream"]},"required":{"type":"boolean"}},"additionalProperties":false,"required":["operator","value","blueprint"]},{"type":"object","title":"Property rule","properties":{"propertySchema":{"type":"object","properties":{"type":{"type":"string"},"format":{"type":"string"}},"required":["type"],"additionalProperties":false},"operator":{"enum":["=","!="]},"value":{"anyOf":[{"type":"string","title":"string"},{"type":"number","title":"number"},{"type":"boolean","title":"boolean"}]}},"required":["operator","propertySchema"],"additionalProperties":false},{"type":"object","properties":"circular()","required":["combinator","rules"],"additionalProperties":false,"title":"object"}]}}},"required":["combinator","rules"],"additionalProperties":false,"title":"object","description":"A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated."}},"additionalProperties":false,"required":["func","query"]},{"type":"object","title":"Aggregate by property","properties":{"property":{"type":"string","description":"A property of type `number`, by which the aggregation will be calculated."},"func":{"type":"string","enum":["sum","average","min","max","median"]},"averageOf":{"type":"string","enum":["hour","day","week","month","total"]},"measureTimeBy":{"type":"string","description":"A property of type `datetime`, by which the average will be calculated. Relevant only for the `average` function."},"calculationBy":{"type":"string"},"query":{"type":"object","properties":{"combinator":{"enum":["and","or"]},"rules":{"type":"array","items":{"anyOf":[{"type":"object","title":"Number rule","properties":{"property":{"type":"string"},"operator":{"enum":[">",">=","<","<="]},"value":{"type":["number"]}},"required":["property","operator","value"],"additionalProperties":false},{"type":"object","title":"Date rule","properties":{"property":{"type":"string"},"operator":{"enum":["between","notBetween","="]},"value":{"type":"object","oneOf":[{"type":"object","title":"Date range","properties":{"from":{"type":"string","format":"date-time"},"to":{"type":"string","format":"date-time"}},"required":["from","to"]},{"type":"object","title":"Date preset","properties":{"preset":{"type":"string","enum":["today","tomorrow","yesterday","lastWeek","last2Weeks","lastMonth","last3Months","last6Months","last12Months"]}},"required":["preset"]}]}},"required":["property","operator","value"],"additionalProperties":false},{"type":"object","title":"String rule","properties":{"property":{"type":"string"},"operator":{"enum":["=","!=","containsAny","contains","doesNotContain","beginsWith","doesNotBeginWith","endsWith","doesNotEndWith","in","notIn"]},"value":{"anyOf":[{"type":"string","title":"string"},{"type":"number","title":"number"},{"type":"boolean","title":"boolean"},{"type":"array","title":"array","items":{"type":"string"}},{"type":"string","title":"date-time","format":"date-time"}]}},"additionalProperties":false,"required":["property","operator","value"]},{"type":"object","title":"Empty rule","properties":{"operator":{"enum":["isEmpty","isNotEmpty"]},"property":{"type":"string"}},"required":["operator","property"],"additionalProperties":false},{"type":"object","title":"Relation rule","properties":{"operator":{"enum":["relatedTo"]},"blueprint":{"type":"string"},"value":{"type":"string"},"direction":{"enum":["upstream","downstream"]},"required":{"type":"boolean"}},"additionalProperties":false,"required":["operator","value","blueprint"]},{"type":"object","title":"Property rule","properties":{"propertySchema":{"type":"object","properties":{"type":{"type":"string"},"format":{"type":"string"}},"required":["type"],"additionalProperties":false},"operator":{"enum":["=","!="]},"value":{"anyOf":[{"type":"string","title":"string"},{"type":"number","title":"number"},{"type":"boolean","title":"boolean"}]}},"required":["operator","propertySchema"],"additionalProperties":false},{"type":"object","properties":"circular()","required":["combinator","rules"],"additionalProperties":false,"title":"object"}]}}},"required":["combinator","rules"],"additionalProperties":false,"title":"object","description":"A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated."}},"additionalProperties":false,"required":["func","property","query"]}]}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
+      

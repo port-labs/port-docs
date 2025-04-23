@@ -5,25 +5,19 @@ description: "This route allows you to delete a webhook in your Port organizatio
 sidebar_label: "Delete a webhook"
 hide_title: true
 hide_table_of_contents: true
-api: eJztVE1v2zAM/SuCTi2QxO2ORlGgQHsYtkPRdRiGIgfGZmwhjuRKVLLM8H8faTuJE2Q7DNhtF0cfJPUeH18anWPIvKnJOKtT/VqaoLyLhAqqym2D2rmoyKkcK5RDtcVF6dxKGStXXj07T8r5Aqz5CVJlpr5zSgaWK4RDoiG1MaCoRPWWA4EKnJxhUDUUOL8qieqQJgnU9axAqrnozLgkIJGxRUgkZTqkXCu3HL0NWeaipdndwif33efVqQrBW7V2niEvmM4edpiorMRspeSsB+OyuEZLHfYjED4OYySLaKp8Kq8yjCVtweM0Y1CVK5IsBnLrqbGEhe/qJMNzyfVMTzRBEXT6pr/1h3o+0TV4WHNfvFw0OjCoNei00bSrkXUI5Jm3bifaiCw1UMmFLOfwzuSM1ywNej47149bfbiWRgnJvWai5RYsHQXtu8ZlPL5H4zHXKfmILUMMmEVvaNcBXHA/+Tkm0eelI7JBzyXeY6h5g0FofLi5kZ9TcI+4hFiRehkidcv8uAul42eHwnrSk011srndtzEkzZFUqwWb3+x7F33F0ccBMiPZuIGXAmI4iRmR/SJC9BT2lA+acOYn3B1leIiM3A9TrwelSoScs9pOuaXr0g1VEt9N68PzRw4V8H1Pbmc3onLtAq3BSvhQ/fHMcOdSNzpzrIGl/679R67tVSf8QUldAavLOnWz1Awj+qY3txy4B8nLdGRNnqqSVZWwpllAwK++als5fo/oxVa83IA3sJDx4EnOTZA1m2HJIuAfBL96Gex6rf7a8Rf57UfdypxvoIqy4+WKB//kj6edj737+PT56fWJ4yBKY8aWWXWWGRbC8uIT517q35OvOPhiyh1bSbEh7w/h/c1vEwZrHshYIdG2vwAIuXLx
+api: eJztVE1v2zAM/SsCTy2gxO2OxjBgQHsYtkPRdRiGIAfGZmwhtuRKVLLM8H8f6I847bIdBuy2i+OIpPgeH59byClk3jRsnIUUnkoTlHeRSWFVuUNQRxcVO5VTRXKoDrQpndspYyXk1YPzrJwv0JofKLcs1TcXVYZWYRVOhYbV3qDiktQqR0YVXPQZBdVgQeurkrkJaZJg0ywL4sZ5XhqXBGI2tgiJlCzGkmvltme9MctctLx8u/HJu/7x5FRF6K2qnSeFGxd5gh20ykrKdkrOBjAuizVZ7rHPQHKXheUEYxNNlS+k5SK4LR/Q0yJDxsoVSRYDu3phLFPh+0uSsVdyvQQNjEWAdAVfh0NYa2jQY01MXgIthKykGiFtgY8NQQqBvbEFdBqMaNIgl6DBYi1Bk5NlszXkQf8iHqk5LFMShpNgIuQBLc9qDiMDDZ6eo/GUQ8o+UrfWECiL3vCxB7gh9OSFxFCXnpENsJZ8T6FxNlAQGm9ubuTnJbg72mKsWD2OmdB1Gmri0uWQjheDHsimkOxvpzGGpJ1JdSDY/H6aXfQVpDBvj5k0g05fisYwJ5zR/CwSDOAnsic1sDEf6TgL8D5y6fy47DBqVBLm5HtOxm5dX264kvx+Sd8/fAANAnuYxu3yRvRtXOAaraSPt9+98tlrkVvInGWy/N+s/8Ksg+RM3zlpKjRWROq3qB03cwX7W9AwIQQN6Zkj1xpKF1jS2naDgb74quvk+DmSFzetNezRG9zIbqxayE2Q9xzSLVaB/qD21ePo0mv110a/yG/acytLvscqyj/QsKPjy+9Ntz637N39p/une9CAUQZz7pdd75fxRVhebPHaSEM/eYp3L5a07eDGrjvlD6HfVozGPLGxwqLrfgIDWW+n
 sidebar_class_name: "delete api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"delete"}
   path={"/v1/webhooks/{identifier}"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -51,51 +46,26 @@ This route allows you to delete a webhook in your Port organization. You can als
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the webhook you want to delete.<br/>","required":true}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the webhook you want to delete.<br/>","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       

@@ -5,25 +5,19 @@ description: "This route allows you to fetch all blueprints in your Port account
 sidebar_label: "Get all blueprints"
 hide_title: true
 hide_table_of_contents: true
-api: eJztUk1v2zAM/SuCThsQR8mOQVGgw4Zi2KXYslOQgywzsVBZ0iQqXWr4v490ksIpsn+wiz/IR/Lx8fWygWySjWiDlyu5bm0WKRQEoZ0LL1kcQxEYxA7QtBwTtSsQk/WYhfWcTuIpJBTamFA8zu/qpO7HxzoIBzp50YVE/WpqO6meCdOCeRYcxRbEpgmmdOBRM5fthxYx5pVSFM7zPWCkIXMbVF2sayqeW+WwwxedoDIatQt7ZUrG0NlXqGgC7NPYKisT/M7uCwEbAlZdaMCpDFhi9cZHfZzLmUS9z3K1kZ/faMrtTGYwJVk8UqaXNa0EiUEJdLOqJ8iBsAlypJlAbXr5abHg17XGX2Cni0Px44yUwzCTHWAbGsrSpsQjamzpRx2WajKAmaQDpDwSKckR5CKTjnaikhxmtwAlX2Emq/2kY3Qn0pcFe4nHCNSBKr/DkaZ73fH/QyGuyb6O6lLY8lYtiUFVvIv1uzCWW3SMH+3x8PSNoEz+pMJyviCSMoaMnfYMP3d/BHznM6q7UrCXdFAkp/w37OVECH9QRafpFCTqePj+bKKNPCwJWF85uiXZOdX3tc7wK7lh4PDvAoldTp8Hnayu+X6b7dSfj1/X1E0Xbj11yPPokPMH2/OS8hw/aBp/wzojeHyyYW+W3JFzBPnv/g1+yvyz4OzEC5ol2Q7D8BeSPLl2
+api: eJzlksFu2zAMhl9F4GkD5Ljd0RgGdNhQDLsUW3cKcqBlJhYqix5FpUsNv/sgJ+nSoXuCXWSL/CmRv74JOkpO/KieIzRw3/tkhLOSwRD4MZkDZ6NstqSuLzHThkyj+KjJ+FjSYu5Y1KBznKOu3rdSf1iWezaBUKIZWMhgy1kvqq1xPbkHU6Lak1l37PJAUbH0snnTq46pqeuOXVqNLLryXLfZh64ql1aJt/qIQpVDxcC72uWkPPgnqnxU2slyTqodx63fZaGqQ8Vq4I5CnUjzWD03U79dgQXFXYJmDR+fe4SNhUQui9cDNOsJWkIhKSIh7Jr2QjlvLAilkWOiBM0E766uyuelwZ9oizmo+XZSwjxbGEh77qCBHSlYGFF7aKDeX9cXF5ROZE+SlkayBGjg7BGO/mwRzPa1bE5/BBdDfXc9Dcd2z6NNoIeRoAEc/Vc6gIWIQ9nfZO1Z/NPiK1jwZZ6esCNZpvBxy0u511D0CxU3d1/AQmn7OP/16gpmCyMnHTAW+en0W9K/8AL70rsJHEelqP89p8f3Ufql9RjQx+Lo8uTTiZ017K/BQvsC5J6TltQ0tZjoh4R5LuGfmaTAvbGwR/HYlsdbby6xvP18DxYwl6Mv8XhY8Dj9FCrPqVjiewz5NW4W8bIWVF8tmaYjfPP8rD+m/llx4vCsLp5s5nn+DYb2tiw=
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/blueprints"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -43,27 +38,26 @@ import TabItem from "@theme/TabItem";
 
 This route allows you to fetch all blueprints in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
 
-<div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       

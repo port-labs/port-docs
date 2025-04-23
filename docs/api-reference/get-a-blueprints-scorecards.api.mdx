@@ -5,25 +5,19 @@ description: "This route allows you to fetch all scorecards for a given blueprin
 sidebar_label: "Get a blueprint's scorecards"
 hide_title: true
 hide_table_of_contents: true
-api: eJztVE1v2zAM/SuELmsBL052NIoCATYUw3Yo2u5UBINi07FQ23IkKl1m+L+PtJ3EKdKddtzF0QdJ8b3Hl1Zl6FNnGjK2Vol6KowHZwMh6LK0rx72NgBZyJHSQs7Ap9Zhql3mIbcONGzMDmtYlwEbZ2qawfIUA1xOg0cCm4MLJXqgQhNkmJsaeY2wDbo0tJcAPalys3bxbf95slCidjVUXBT0mrubNBFBWmD6AnIq5Z4zm4YKa9ICaXVVEDU+iWM+9rMNUmMdzYyNG2crS/jxVCm+nqlIkd54lTyrx+O5WkWq0U5XSOjkrlWe36y0SlpF+waZN0/c9IbTK1N/x3pDhUoWXaSMkNpo3kaq5gq8O0L8aTJu0+QGHd++1QHhdC3cCLZjKrwW1uNUCpHpVfPNQauBQC7scBuMw0wl5AJ2DMZjGhxT3kNZM7XcACN2qLPET2BLrEPf2NqjF7Cf5nP5OW/1M+Y6lAQPY6TqGDdzVVh+UjHjKhoYSFS8W8RHDD5uL1HRxZMWpFe3O7AeXMlFDoLqxkz0VF10KSD4s5gJ+EeRcIB1oOCoJmd+w/1JsmVgNM787kdKjaoWTBdndb3Kue3TDZUSf8/vwfL+K4dK8wNPi9mcm1SN9VTpWsLH6nfsjsnkf/BwxsAZ261KbU3M1X+vilcHuQh/UdyUmmVhgvshaMeRe1a7BQeeho43yTsO9GeOZ4OR5LftWnv84cquk+NtQCfG4eVOO6PXIjjPZma8rHnkc116/ItsVw+jIa/hH7r8IhWHca5llnea6/KOly883O/8EXWrqXvvvjxxuA5C5dQdL707xoXAv/jSW9sMz8pXzHox5YZdA+y922P4cPNuwujCQ7TgXnVd9wcuaWOo
+api: eJztVE1v00AQ/SujudBKS9xwtBBSJVCF4FC15VRFaGOP41XtXXd2NiVY/u9oEidxIOXEkYs/dt+s5703zz2WFAt2nbjgMceH2kXgkITANk14ibAJCSRARVLUugaxCEyF5TJCFRgsrNyaPCybRB07LzO4PmLARbAQSSBUwKmhCFJbgZIq5wmkJnhOtnGyUYCdnPJ+ydmH7eUhQEOWPbSBCewyJJk0YaCoqXgCXdXjHstQpJa8WKW0uKhFuphnWRmKOOsCy8yFrOPQBqG3x2OyyxkaFLuKmD/i/WEdFwY7y7YlIda9HmNRU2sx71E2HWGOUdj5FRpsnf9KfiU15vPBoFNFOys1GvS2VeiB33dXkhdXOWI0f5hAcNxWYZTYoRRe6hBp6oN69GK9HIzaqYcGmZ6TYyoxF040LAxGKhI72WypLMkysTJmsmUeJ7QVyxS74CNFJfvu6kpvp61+pMqmRuBuROIwGGxJ6lBijisSNDsFcszW8+zAIWb9OSmGbNKC9srrveqJG8xx76bt3N5MHMy53RSPgAntezVvR2hP/uCj7dwX2hzNuk5SB3Y/t5OEo5812ZJ4y9P5KmzLnTSKvw0scH37GQ1q2zuF5rMrHAx2IUprvcLH029IpgP/JsIJ9xOdeyyCF/LyP6KjV0I/JOsa67yqu7W/HyftEddzNMeoqZr5K8GLJ0GvQxSt7/uljfSNm2HQ5edErHlZGFxbdnapbj/2WLqozyXmlW0i/cWzi7sxh5fwD8N9Vor9LHsd5LVtkr6hwSfavPb/GRbT0N58ekCDNqmU02g8baMxPij9s1/6PTO7z+pVY3q2pO93wRuGA3639WrFmME9WokvhmH4Bd6RYF4=
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/blueprints/{blueprint_identifier}/scorecards"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -51,51 +46,26 @@ This route allows you to fetch all scorecards for a given blueprint. A scorecard
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecards you want to fetch.<br/>","required":true}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecards you want to fetch.<br/>","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       
