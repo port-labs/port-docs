@@ -982,6 +982,13 @@ export const availableGuides = [
         link: "/guides/all/verify-service",
     },
     {
+        title: "Ignore Snyk Vulnerability",
+        description: "Create a self-service action that ignores a Snyk vulnerability",
+        tags: ["Security","Snyk","Actions","Webhook"],
+        logos: ["Snyk"],
+        link: "/guides/all/ignore-snyk-vulnerability",
+    },
+    {
         title: "Enforce code maturity with GitLab file search",
         description: "Create a scorecard that tracks GitLab code maturity based on file existence",
         tags: ["Security", "GitLab", "Scorecards"],
