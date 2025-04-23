@@ -1,0 +1,40 @@
+```yaml showLineNumbers
+resources:
+  - kind: pipeline
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .title // (.id | tostring)
+          blueprint: '"gitlabPipeline"'
+          properties:
+            creator: .user.name
+            status: .status
+            createdAt: .created_at
+            updatedAt: .updated_at
+            description: .description
+            link: .web_url
+          relations:
+            service: .__project.path_with_namespace
+  - kind: job
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"gitlabJob"'
+          properties:
+            creator: .user.name
+            startedAt: .started_at
+            updatedAt: .updated_at
+            finishedAt: .finished_at
+            stage: .stage
+            status: .status
+            link: .web_url
+          relations:
+            pipeline: .pipeline.id | tostring
+```

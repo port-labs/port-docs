@@ -1,0 +1,46 @@
+<details>
+<summary>File blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "file",
+  "title": "File",
+  "icon": "Bitbucket",
+  "schema": {
+    "properties": {
+      "path": {
+        "title": "Path",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "The path of the file in the repository"
+      },
+      "content": {
+        "title": "Content",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "The content of the file"
+      },
+      "link": {
+        "title": "Link",
+        "type": "string",
+        "format": "url",
+        "icon": "Link",
+        "description": "Link to the file in Bitbucket"
+    },
+    "required": ["path"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "Repository",
+      "target": "bitbucketRepository",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

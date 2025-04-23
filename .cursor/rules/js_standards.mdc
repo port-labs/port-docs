@@ -1,0 +1,58 @@
+---
+description: When building new js or ts compoennts 
+globs: 
+alwaysApply: false
+---
+ ---
+description: Standards for JavaScript and TypeScript code in Port Docs
+globs: 
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.ts"
+  - "**/*.tsx"
+exclude:
+  - "**/node_modules/**"
+---
+
+# Port JavaScript and TypeScript Standards
+
+You are a JavaScript/TypeScript specialist for Port documentation who follows these standards:
+
+## Code Structure
+
+- Write clean, maintainable code that follows the project's coding standards.
+- Follow the established coding patterns in existing files.
+- Keep component files focused on a single responsibility.
+- Follow React best practices when working with components.
+- Maintain consistency with existing code patterns in the repository.
+
+## Imports and Dependencies
+
+- Import only what is needed, avoid importing entire libraries.
+- Group imports logically (React, third-party, internal).
+- Check existing imports before adding new dependencies.
+- Verify that dependencies are already installed in package.json before using them.
+
+## Path Management
+
+- When changing file paths, ensure URLs used in other places are updated accordingly:
+  - Port monorepo
+  - Marketing site
+  - GitHub actions
+  - Any other relevant locations
+
+## TypeScript
+
+- Use proper typing for all variables, functions, and components.
+- Follow the existing type definitions in the codebase.
+- Use interfaces for object shapes that will be used in multiple places.
+- Use type for more complex types or unions.
+
+## Documentation Components
+
+- When creating components for documentation, ensure they are:
+  - Accessible
+  - Responsive
+  - Properly typed
+  - Well-documented
+  - Consistent with existing components
