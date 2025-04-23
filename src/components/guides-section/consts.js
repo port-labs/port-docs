@@ -987,5 +987,12 @@ export const availableGuides = [
         tags: ["Security","Snyk","Actions","Webhook"],
         logos: ["Snyk"],
         link: "/guides/all/ignore-snyk-vulnerability",
+    },
+    {
+        "title": "Track health of Jira projects using scorecards",
+        "description": "Create a scorecard to track the health of Jira projects",
+        "tags": ["Jira", "Scorecards"],
+        "logos": ["Jira",],
+        "link": "/guides/all/track-health-of-jira-projects",
     }
 ]
