@@ -352,6 +352,6 @@ We will create a scorecard to assess code maturity based on the files present in
 
 After setting up the scorecard metrics on a service, it should look like this:
 
-<img src="/img/guides/fileContentScorecard.png" width="80%" border="1px" />
+<img src="/img/guides/gitLabFileCheckScorecard.png" width="80%" border="1px" />
 
 Congratulations, you have successfully configured a scorecard to track code maturity based on file or file content existence. To make the most of your new scorecard, you can add it to a dashboard in Port for easy monitoring.
