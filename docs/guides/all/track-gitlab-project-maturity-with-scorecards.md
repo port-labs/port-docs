@@ -3,22 +3,22 @@ displayed_sidebar: null
 description: Learn how to drive DevOps and DevSecOps governance in your organization by enforcing code maturity standards using scorecards with GitLab file search 
 ---
 
-# Track GitLab Project Maturity with Scorecards
+# Enforce code maturity with GitLab file checks
 
-Code maturity standards help ensure teams consistently follow engineering best practices—such as testing, linting, documentation, and CI configuration. By tracking these maturity signals with Port scorecards via GitLab file search, platform and DevOps teams can monitor compliance, guide teams toward higher maturity, and reduce risk in production.
+Code maturity standards help teams to consistently follow engineering best practices like testing, linting, documentation, and CI. By tracking these signals with Port scorecards via GitLab file search, teams can monitor compliance, guide maturity, and reduce production risk.
 
-This guide shows you how to set up a GitLab integration that uses file search to detect the presence of key configuration files (like `.gitlab-ci.yml`, `README.md`, or `Dockerfile`), and then visualize and score these practices in Port.
+This guide demonstrates how to set up a GitLab integration that uses file search to detect the presence of key configuration files (like `.gitlab-ci.yml`, `README.md`, or `package.json`), and then visualize and score these practices in Port.
 
 ## Common use cases
 
-- Encourage consistency: Ensure all services have testing and deployment pipelines in place.
-- Track adoption of practices: Identify which services still lack key maturity signals (e.g., no README, no linter config).
-- Gate production deployments: Require a certain maturity level before deploying new services.
+- **Encourage consistency**: Ensure all services have testing and deployment pipelines in place.
+- **Track adoption of practices**: Identify which services still lack key maturity signals (e.g., no README, no linter config).
+- **Gate production deployments**: Require a certain maturity level before deploying new services.
 
 ## Prerequisites
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
-- You have enabled [GitLab advanced search API](https://docs.gitlab.com/api/search/)
-- You have installed Port's [GitLab integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/) in your Port organization.
+- You have enabled [GitLab advanced search API](https://docs.gitlab.com/api/search/) in your GitLab environment.
+- You have installed Port's [GitLab integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/).
 
 
 ## Set up data model
@@ -27,7 +27,7 @@ Follow the steps below to **update** the `Service` blueprint:
 
 1. Navigate to the `Service` blueprint in your Port [Builder](https://app.getport.io/settings/data-model).
 2. Hover over it, click on the `...` button on the right, and select `Edit JSON`.
-3. Add the repository file check properties:
+3. Add the following boolean properties to capture repository maturity signals:
 
    <details>
    <summary><b>Repository file check properties (Click to expand)</b></summary>
@@ -133,7 +133,7 @@ Follow the steps below to **update** the `Service` blueprint:
 
 ## Set up scorecard
 
-We will create a scorecard to assess code maturity based on the files present in each repo.
+Let's create a scorecard to assess code maturity based on the files present in each repo:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Search for the **Service** blueprint and select it.
@@ -353,5 +353,3 @@ We will create a scorecard to assess code maturity based on the files present in
 After setting up the scorecard metrics on a service, it should look like this:
 
 <img src="/img/guides/gitLabFileCheckScorecard.png" width="80%" border="1px" />
-
-Congratulations, you have successfully configured a scorecard to track code maturity based on file or file content existence. To make the most of your new scorecard, you can add it to a dashboard in Port for easy monitoring.
