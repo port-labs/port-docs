@@ -395,5 +395,3 @@ Let's create a scorecard that will evaluate the health of each repo based on its
 After setting up the scorecard metrics on a branch, it should look like this:
 
 <img src="/img/guides/branchProtectionMetric.png" width="80%" border="1px" />
-
-Congratulations, you have successfully configured a scorecard to track branch protection rules. To make the most of your new scorecard, you can add it to a dashboard in Port for easy monitoring.
