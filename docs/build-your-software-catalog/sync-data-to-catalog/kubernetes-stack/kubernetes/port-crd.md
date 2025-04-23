@@ -220,12 +220,12 @@ The goal for this example is to map a microservice using Port's CRD and Port's K
 Before getting started:
 
 - Prepare your [Port credentials](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials);
-- Be familiar with [Port's K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) and configuration;
+- Be familiar with [Port's K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md) and configuration;
 - Make sure you are connected to a K8s cluster using `kubectl`.
 
 :::
 
-1. **Deploy the Port CRD** - follow the [deployment step](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md#deploying-ports-crds) to deploy the Port CRD. You will only need the cluster-scoped entity CRD.
+1. **Deploy the Port CRD** - follow the [deployment step](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/port-crd.md#deploying-ports-crds) to deploy the Port CRD. You will only need the cluster-scoped entity CRD.
 
 2. **Creating the blueprint** - You will begin by defining the blueprint which will represent a microservice in your software catalog.
    Create the following blueprint in your Port environment:

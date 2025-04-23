@@ -5,25 +5,19 @@ description: "This route allows you to fetch all webhooks configured in your Por
 sidebar_label: "Get all webhooks"
 hide_title: true
 hide_table_of_contents: true
-api: eJztU8GK2zAQ/RWhUxcSO+kxLAsLLUvpZWlTSgk5yPLYFrElVxolTY3/vTO2k3UgPfbWi2WN3hu9mXnqZA5Be9OicVZu5LYyQXgXEYSqa3cK4uyiQCcKQF1xTJwgq5w7BKGdLUwZPeTCWMZ58eo8CudLZc1vxSkT8YP4WlmiBicCgMAKGibQKna5QiUCUTUE0aoS9u8qxDZs0lS1bVICtpQyMS4NgGhsGVKmLCfKg3DF7GaltYsWk8fMp0/DZ+tEDcpb0ThPJWVU2bWAhdAV6IPg2CjG6diAxUH5mxAKh7mSLJo6X/KtJKPAk/Kw1CSqdmWqY0DXLI1FKP2QJ52uSx8SuZCoyiA3O/l9DMr9QgbQ0Rs8U7iTGYkFzwgPKt/M8gS57wntIbS0AcrSyferFS+3I/wAhYo1ii8TUvb9QjaAlcvplOogGa3CijbpcX2RFyQr8UfwYRASfU2At1mYWQdkv7gHiOEGMyvtKzW6GSVfCuwknlugDMT8DGe63aqG98+RlPrJPhQ2XFNFzSAWV2Js4Qa6wZrxw+CfXz8RlMWPPVgnKxIpWxewUZbhU/YXwBsTE+ume50kVyN54P9b+PdvYTQAwi9M21rRoGlkg626yaA7eVwT8DosslRFI+WDrstUgG++7nsO/4zg+QXR71F5ozL2xm4/d/7Lxy3lUpETz913GNw3/bD1L0eW40dVx3u2HMDDlx/DXcojuVKQt5+u8PHkr4TJ5Rc0N2Tf9/0f5K36ZA==
+api: eJztU02L3DAM/StGpy54kpkeQykstCyll6XdUsqQg+JoErOJldrybKch/704yezMwvbYWy/5kJ7k96ynEWoKxttBLDso4KG1QXmOQgq7jp+COnFUwupAYtoUU09UtcyPQRl2B9tET7WyLuG8umcvin2Dzv7G1DJTPzgqg05hF1gFIiUt9alAWlL7GgVV4OgNBTVgQ+WbVmQIRZ7jMGQNycBeMst5IBHrmpCnks1acqP4cHUyGsPRSfau8vn7+fHAqiP0TvXsSWHFUZ4FaGVaMo8qxRYybGJPTmbmFyI1m5CdaVTRdvUmHbkJfJAn9LQxKNhxk5sYhPuNdUKNn5vk61n5TQYaBJsAxR6+L0EoNQQy0Vs5QbEfoSL05BPCE9bFVZ8A5VRq8BQGdoECFCO83W7T6+X8PtABYyfqy4qEadLQk7RcQwENCWgYUFooID/uzvQCJCb+SD7MRKLvoIDLIOxZPkz6tWwMF8CVqK+mpX4he5Y2gpwGggJwsJ/pBBoc9un/NkrLfnUNaLBJTUtYk581WHfgudxKl/DzvG/vP4GGRHtRv8u2MGkYOEiPLsHX7nckL7wL+uW9jWDYCTn5vwL/eAWW6Qv9knzo0Lo0r9lQ4+rLPRx3oOF5UqWGloOkxDhWGOib76YphX9G8mlxSg1H9BarZIx9eW34u48PoAFjanxtvcfZeutHcvw55VL8iF18zZMzeH6mNXi1ZBwXY0/TM35J/bVi9fgZnW6knKbpD9yR9xo=
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/webhooks"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -43,27 +38,26 @@ import TabItem from "@theme/TabItem";
 
 This route allows you to fetch all webhooks configured in your Port organization. You can also see them in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
 
-<div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       

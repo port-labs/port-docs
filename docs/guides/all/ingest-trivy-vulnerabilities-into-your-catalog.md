@@ -17,7 +17,7 @@ The following example shows you how to create a `trivyVulnerability` blueprint t
 To ingest the packages to Port, a `port-app-config.yml` file in the needed repository or organisation is used.
 
 :::info Recommended installation option
-While the script provided in this example facilitates scheduled ingestion of Trivy scan results to Port, we highly recommend that you [use our Trivy Kubernetes exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy) to continuously scan your kubernetes cluster and ingest vulnerabilities to Port in real time. 
+While the script provided in this example facilitates scheduled ingestion of Trivy scan results to Port, we highly recommend that you [use our Trivy Kubernetes exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/trivy) to continuously scan your kubernetes cluster and ingest vulnerabilities to Port in real time. 
 :::
 
 

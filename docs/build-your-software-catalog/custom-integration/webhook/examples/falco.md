@@ -231,7 +231,7 @@ This guide aims to cover how to connect a Falco `alert` to an existing Namespace
 
 This guide assumes:
 - You have a Port account and that you have finished the [onboarding process](#falco-sidekick).
-- You have [K8 exporters](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/kubernetes/) installed and configured in your environment. We will use the `Namespace` blueprint from the guide.
+- You have [K8 exporters](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/) installed and configured in your environment. We will use the `Namespace` blueprint from the guide.
 - You have [Falco installed and configured](#falco-sidekick) in your environment.
 
 :::

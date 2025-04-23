@@ -32,7 +32,7 @@ This guide will show you how to integrate Kubernetes CRDs with Port and expose t
 - Platform engineers will be able to query the data and get insights about the usage of the CRDs and Kubernetes resources.
 - Platform engineers will be able to serve any CRDs to developers in a self-service manner.
 
-In this guide, we will deploy Port's [Kubernetes Exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources.
+In this guide, we will deploy Port's [Kubernetes Exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md) to export Kubernetes CRDs to Port as <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="action">actions</PortTooltip> to create, update and delete those resources.
 Also, the K8S exporter will listen to changes in all of the custom resources and reflect them in Port's UI.
 
 <img src='/img/guides/visualizeCRDs.svg' width='100%' border='1px' />
@@ -52,7 +52,7 @@ For this guide, we followed the [AWS DynamoDB composition example](https://docs.
 
 ### 2. Install Port's Kubernetes exporter
 
-In this example we will use [Helm](https://helm.sh/) to install the Kubernetes Exporter, but for more installation options please visit the [Kubernetes Exporter documentation](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#installation)
+In this example we will use [Helm](https://helm.sh/) to install the Kubernetes Exporter, but for more installation options please visit the [Kubernetes Exporter documentation](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md#installation)
 
 Here is a script that will help you install the Kubernetes Exporter without initializing default blueprints and mappings, if you would like to install it with the defaults remove the `createDefaultResources=false` variable from the script below.
 
@@ -82,7 +82,7 @@ The `crdsToDiscover` mapping parameter is a JQ pattern to discover and export CR
 With the pattern below, the Kubernetes Exporter will discover CRDs that are managed by [Crossplane's XRD](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) and that are not namespaced scoped. This is just an example, and you can adjust the pattern to match your own CRDs - even if they are managed by a custom operator.
 :::
 
-After installing the k8s exporter, add the following value to [its configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration):
+After installing the k8s exporter, add the following value to [its configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md#updating-exporter-configuration):
 
 ```yaml
 crdsToDiscover: ".metadata.ownerReferences[0].kind == \"CompositeResourceDefinition\" and .spec.scope != \"Namespaced\""
