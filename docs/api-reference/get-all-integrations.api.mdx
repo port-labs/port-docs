@@ -5,25 +5,19 @@ description: "This route allows you to fetch all integrations in your Port organ
 sidebar_label: "Get all integrations"
 hide_title: true
 hide_table_of_contents: true
-api: eJzlUk1v2zAM/SuCThuQxMmOQVGgwIai2KXYslOQg2wzsVBZ8igqXWb4v49UnM5Bs1+wi2ySj1+Pr9c1xAptRzZ4vdabxkaFIREo41x4jeoUkqKg9kBVIz5lPcEBjSRENgSA6jkgqYAH4+3vHFrclVjc52cTlAODXrUBuWzJ1a+KzFTVQPWixE8NqG0dqtSCpxzefWiIurguCnbHxQGo414LG4oyWVfPpf08hj29GoR5Zci4cCjiyVfzmo05hTfnx4WeaTKHqNdb/TSZQO9mOkKV0NKJY70ueV5AgSGYem2vsAOjEWLHBnCpXn9aLuVzzeRn2JvkSH0bkXoYZroFakLNUV6DZ+kMNWwUx1UxaaFlGDwCxjxLQseYCwmmsxMO9DC7BUjxCjPZ7jtT3Z6nvuzYazp1wBU48yucuLs3rdgPiYfF8Z7strJWw3xwlixj/T7kdEtO8FkDD89PDJXhzzSsFkseUnchUmu8wMfqj0Dv5MSZVyT2ugoc9vR/KPN8BoJfVHTOMN1MXD5uPyplq4+rfIi/WuHbNsytxPq+NBF+oBsGcf9MgKJm/j0atKaUI213UxU+ftlwOZOk9lQGL1kG449o8BLy4j8al27pI4PzK6q8mXLH8lAssvs3+Dnyz4RRbhe0cLIbhuEPyMukYQ==
+api: eJzlks9u2zAMxl9F4GkDlDjZ0RgGFNhQFLsUW3YKfGBsJhZqix5FpcsMvfsgx2kTrHuCXfyH/CiRH38jNBRqcYM69lDCpnXBCEclg13Hz8GcOBplsyet2xwzzisdBHNBMM5ngZhHFjUsB/Tu95RaftxJ8Wl6bNh0hOJNz0IGdxz15hBr6pbqJ5Pj2pLZNlzHnrxO6epdqzqEsigarsNyYNGl42IXXdcs8t2LwHt9RqFFjYodH4pw8vWiQcWF8kvw/RIsKB4ClFt4uLoeKguB6ihOT1BuR9gRCkmWCWFTuhttqiwIhYF9oADlCB9Wq/y6tfEz7TF2ar7NSkjJQk/acgMlHEjBwoDaQgnFcV1cXQG5GTmShKmXKB2UcHEAB3cxAJJ9KxvDq+Bqru91S/2538t0I+hpICgBB/eVTmDBY5//76K2LPMawYLLA7WEDck0hvN7nsqddlk/rf7u8QEs5LbPBqyXK0gWBg7ao8/y+fR70r8oAntr3wg1eyWv/wGQ5x0o/dJi6ND57Nq01nEGZAvH9bSFV0QqCy0Hzblx3GGgH9KllMM/I0mGuLJwRHG4yxvaVtfw3X/ZgAWM+exrBp4mBuaPjN4l5XP8iF18C45JPD0zj2+WjOOZsJRe9OfUPytm2C7qbEqVUvoDqemhFw==
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/integration"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -43,27 +38,26 @@ import TabItem from "@theme/TabItem";
 
 This route allows you to fetch all integrations in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
 
-<div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       

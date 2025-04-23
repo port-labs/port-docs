@@ -1,0 +1,44 @@
+Port's K8s exporter installation script will assist you in the process of installing Port's K8s exporter template using
+helm chart.
+
+This script will help you with:
+
+- setting up your custom Port [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint);
+- installing Port's k8s exporter using helm (check out the Helm
+  chart's [source code](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter));
+- deploying your custom [integration resources configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md#exporter-configuration-structure)
+
+:::tip
+You can view the bash script [here](https://github.com/port-labs/template-assets/blob/main/kubernetes/install.sh).
+:::
+
+### General installation configuration
+
+The script supports configuration via environment variables.
+
+For each variable you'd like to set, run the following command before running the script:
+
+```bash
+export {VARIABLE_NAME}={value}
+```
+
+| Environment Variable | Description                                                                                                                                                                                                                  | Default                                                                                    |
+|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+| `PORT_CLIENT_ID`     | **Required** - Your Port organization's Client ID used to authenticate the exporter to Port                                                                                                                                  |                                                                                            |
+| `PORT_CLIENT_SECRET` | **Required** - Your Port organization's Client Secret used to authenticate the exporter to Port                                                                                                                              |                                                                                            |
+| `CUSTOM_BP_PATH`     | **Required** - The URL/path to a json file with an array of blueprint objects to create. Can be either a `https://domain.com/path/to/blueprint.json` format URL, or a local path to a file `envs/production/blueprint.json`. |                                                                                            |
+| `CONFIG_YAML_URL`    | **Required** - The URL/path to the desired integration resource mapping. Can be either an https format URL`https://domain.com/path/to/config.yaml`, or a local path to a file `envs/production/config.yaml`                  | `https://github.com/port-labs/template-assets/blob/main/kubernetes/kubernetes_config.yaml` |
+| `TARGET_NAMESPACE`   | **Optional** - The Kubernetes namespace in which the exporter will be installed                                                                                                                                              | `port-k8s-exporter`                                                                        |
+| `DEPLOYMENT_NAME`    | **Optional** - The Kubernetes deployment name the exporter will be installed as                                                                                                                                              | `port-k8s-exporter`                                                                        |
+| `CLUSTER_NAME`       | **Optional** - The cluster's name as it will be exported to. Check out the note bellow for more information.                                                                                                                 | `my-cluster`                                                                               |
+
+:::note
+
+- **CLUSTER_NAME:** The script will set the cluster's name as the `CLUSTER_NAME` environment variable. This name will be
+  used as the cluster's name in integration resources configuration. If you'd like to change the cluster's name, you can do so by setting
+  the `CLUSTER_NAME` environment variable before running the script.
+- **CUSTOM_BP_PATH:** It is important to order the blueprints while taking in to account the necessary relations for
+  each blueprint. Once a blueprint was created, attempting to recreate it using the script will fail. To recreate a
+  blueprint using the script, first delete the blueprint.
+
+:::

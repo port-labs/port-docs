@@ -5,25 +5,19 @@ description: "This route allows you to fetch the details of your Port organizati
 sidebar_label: "Get organization details"
 hide_title: true
 hide_table_of_contents: true
-api: eJzFUkGv0zAM/itWztW6cZwQ0pNAT4gDT/A4Pe3gtd4S0SUhcQqj6n/H7jro0DhzaZP4+2x//jyYlnKTXGQXvNmaZ+sypFCYALsufM9wDgU4wIG4scCWoCVG12UIB40leAqJIaQjevcTNU0FuQgWMzjO4PFEFbi2AvQtWNe25GHfFYrJec4rUxnGYzbbF/NxkcTsKpOpKcnxWWKD2RMmSnLcjRJKlGPwmYQ3mFfrtf5ulbylA5aO4dOMNONYmROxDa1Ej8RSOCJbudT9pl4KMFo69ZTyVLmkTkCWOeZtXWN0K2FHUb1ywYzVPUDJN5iFls+NpdOl7auiwfA5kmQQ5gc6S3WdmdwfinSb/jTlVJclbIWlapw/hInuuFP85MTD03uBavOXOWxWa2nSxJD5hF7hc/ZHurXtaqywbyY5mCZ4Js//bT0u02H6wXXsUKYgeqaZD7ODL6bfCDD8tT9WNGtwGPaY6UvqxlGfvxVKulNy7DE53OvwZK0W6/H47lnyYdHkS3u+TvbMB92Na8jre4/S9x3fJvD01W25S3kttoGY/+Y3/BL5J2Fegytah7Ibx/EXmZRNcQ==
+api: eJzFUk2P0zAQ/SvWO1ttl6NvK4FWiAMrWE5VDtNkWluktrHHhRL5vyOnLduict5LHHnejOd9TBg498lFccHD4MW6rFIoworGMfzM6hiKkqC2LL1VYlkNLOTGrMK21ZJ6DklUSDvy7je1MVrl0ltFWTnJytOetXKDVuQHZd0wsFebsXBMzkteQENol2HW+Hw1BJ1G5r4kJ0eY9YQNU+IEs+5qp5E4x+AzZ5gJ71ardtwyec9bKqOoL2ckatXYs9gwwGDHAo1IYmGwPDwsrwmgPZ0OnPL8ckkjDKxIzGa5pOgWMSRZuICq71VLfgVcsfjaW96fFr5wmSDHyDCg6D7xERpNLRg8FrEhva7jGiPLNHCaeTi/DXO7k7HhZw8enz9Co619UuBhsULViCHLnnyDn6c/8a1hF0uhbzWc0Acv7OXNgnFSR/iXLONIzjc+s+DT2bs1Dg/QCP8kx4YsrThNG8r8LY21tusfhVNLU6dxoORo08Rbd9fBePrwAg0qbfi1Pd9ne84/LRWXkm/3BxrLPd9m8PxtUbnbMk0n82v9iz+V/ttxzsEF3VTpaq1/AEd9TKc=
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/organization"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -43,27 +38,26 @@ import TabItem from "@theme/TabItem";
 
 This route allows you to fetch the details of your Port organization, such as its name, id, and hidden blueprints.
 
-<div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       

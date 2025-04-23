@@ -7163,6 +7163,107 @@ paths:
       responses:
         "200":
           description: Default Response
+  /v1/entities/aggregate-over-time:
+    post:
+      tags:
+        - Entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                func:
+                  type: string
+                  enum:
+                    - average
+                    - sum
+                    - min
+                    - max
+                    - median
+                    - last
+                blueprint:
+                  type: string
+                measureTimeBy:
+                  type: string
+                timeRange:
+                  type: object
+                  properties:
+                    preset:
+                      type: string
+                      enum:
+                        - today
+                        - yesterday
+                        - lastDay
+                        - lastWeek
+                        - last2Weeks
+                        - lastMonth
+                        - last3Months
+                        - last6Months
+                        - last12Months
+                    timeZone:
+                      type: string
+                  required:
+                    - preset
+                  additionalProperties: false
+                timeInterval:
+                  type: string
+                  enum:
+                    - hour
+                    - day
+                    - isoWeek
+                    - month
+                properties:
+                  type: array
+                  items:
+                    type: string
+                query:
+                  $ref: "#/components/schemas/def-1"
+              additionalProperties: false
+              required:
+                - func
+                - query
+                - blueprint
+                - timeRange
+                - timeInterval
+                - properties
+                - measureTimeBy
+        required: true
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  result:
+                    type: object
+                    properties:
+                      minDate:
+                        type: number
+                      maxDate:
+                        type: number
+                      data:
+                        type: array
+                        items:
+                          object:
+                            type: object
+                            properties:
+                              date:
+                                type: number
+                            additionalProperties:
+                              type: number
+                required:
+                  - ok
+                additionalProperties: false
   /v1/entities/properties-history:
     post:
       tags:

@@ -987,5 +987,12 @@ export const availableGuides = [
         tags: ["GitHub", "Scorecards", "Security"],
         logos: ["GitHub"],
         link: "/guides/all/setup-branch-protection-rules",
+    },
+    {
+        title: "Ignore Snyk Vulnerability",
+        description: "Create a self-service action that ignores a Snyk vulnerability",
+        tags: ["Security","Snyk","Actions","Webhook"],
+        logos: ["Snyk"],
+        link: "/guides/all/ignore-snyk-vulnerability",
     }
 ]

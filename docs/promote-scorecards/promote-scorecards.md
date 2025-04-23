@@ -30,7 +30,7 @@ for example:
 
 Scorecards can be used to evaluate the maturity, production readiness and engineering quality of any entity in your software catalog, for example:
 
-- Does a service has an on-call defined?
+- Does a service have an on-call defined?
 - Does a README.md file exist in the repository?
 - Is Grafana defined for the K8s cluster?
 - Is the relation of a certain entity empty?
@@ -192,7 +192,7 @@ A scorecard rule is a single evaluation consisting of multiple checks, each rule
 | `description` | `String` | Description that will be shown in the UI when the rule is expanded. Value that contains markdown is also supported and will be displayed in a markdown format |
 | `identifier`  | `String` | The unique identifier of the `Rule`                                                                                                                           |
 | `level`       | `String` | One of the levels defined in the scorecard [levels key](#levels)                                                                                              |
-| `query`       | `Object` | The query is built from an array of [`conditions`](#conditions) and a [`combinator`](#combinator) (or / and) that will define the                             |
+| `query`       | `Object` | The query is built from a [`combinator`](#combinator) (or / and) and an array of [`conditions`](#conditions)                                                  |
 
 ### Combinator
 
