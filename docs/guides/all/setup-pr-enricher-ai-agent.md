@@ -98,45 +98,45 @@ We'll need two automations:
 2. Click on `+ Automation`
 3. Copy and paste the following JSON schema:
 
-  <details>
-    <summary><b>PR Enricher agent trigger automation (Click to expand)</b></summary>
+    <details>
+      <summary><b>PR Enricher agent trigger automation (Click to expand)</b></summary>
 
-    ```json showLineNumbers
-    {
-      "identifier": "pr_opened_to_agent",
-      "title": "Upon PR opened, trigger PR Assistant",
-      "description": "Automation to trigger PR Assistant when a new PR is opened",
-      "trigger": {
-        "type": "automation",
-        "event": {
-          "type": "ENTITY_CREATED",
-          "blueprintIdentifier": "githubPullRequest"
-        },
-        "condition": {
-          "type": "JQ",
-          "expressions": [
-            ".diff.after.properties.status == \"open\""
-          ],
-          "combinator": "and"
-        }
-      },
-      "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://api.getport.io/v1/agent/pr_review_assistant/invoke",
-        "synchronized": true,
-        "body": {
-          "prompt": "Analyze pull request with pull request identifier '{{ .event.diff.after.properties.prNumber }}'",
-          "labels": {
-            "source": "Automation",
-            "prNumber": "{{ .event.diff.after.properties.prNumber }}",
-            "repo": "{{ .event.diff.after.relations.repository }} "
+      ```json showLineNumbers
+      {
+        "identifier": "pr_opened_to_agent",
+        "title": "Upon PR opened, trigger PR Assistant",
+        "description": "Automation to trigger PR Assistant when a new PR is opened",
+        "trigger": {
+          "type": "automation",
+          "event": {
+            "type": "ENTITY_CREATED",
+            "blueprintIdentifier": "githubPullRequest"
+          },
+          "condition": {
+            "type": "JQ",
+            "expressions": [
+              ".diff.after.properties.status == \"open\""
+            ],
+            "combinator": "and"
           }
-        }
-      },
-      "publish": true
-    }
-    ```
-  </details>
+        },
+        "invocationMethod": {
+          "type": "WEBHOOK",
+          "url": "https://api.getport.io/v1/agent/pr_review_assistant/invoke",
+          "synchronized": true,
+          "body": {
+            "prompt": "Analyze pull request with pull request identifier '{{ .event.diff.after.properties.prNumber }}'",
+            "labels": {
+              "source": "Automation",
+              "prNumber": "{{ .event.diff.after.properties.prNumber }}",
+              "repo": "{{ .event.diff.after.relations.repository }} "
+            }
+          }
+        },
+        "publish": true
+      }
+      ```
+    </details>
 
 4. Click on `Create` to save the automation
 
