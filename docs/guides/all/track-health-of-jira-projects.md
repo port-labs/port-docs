@@ -5,33 +5,182 @@ description: Learn how to enforce project maturity and operational readiness by 
 
 # Set up Jira project health scorecards
 
-This guide demonstrates how to track the health and operational maturity of your Jira projects using scorecards in Port. By tracking Jira project metrics like stale tickets, customer incidents, and compliance issues, you can highlight risks, surface priorities, and nudge teams toward better practices.
+This guide demonstrates how to track the health and operational maturity of your Jira projects using scorecards in Port. By tracking Jira project metrics like stale tickets, open customer incidents, and compliance issues, you can highlight risks and nudge teams toward better practices.
 
 
 ## Common use cases
 
 - **Ensure postmortems are followed up**: Catch open incident action items that were never resolved.
-- **Improve customer trust**: Monitor recurring bugs reported by users or clients.
 - **Track compliance risks**: Identify Jira projects with lingering legal or regulatory issues.
 
 ## Prerequisites
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
-- You have installed Port's [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/).
+- Optional - You have installed Port's [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/).
 
 
 ## Set up data model
 
-If you haven't installed Port's [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/), you will need to manually create blueprints for `Jira Project` and `Jira Issue`.  
-We highly recommend that you install the Jira integration to have such resources automatically set up for you. 
+Depending on whether you've installed Port's [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/), follow one of the two paths below:
 
-### Create or update the Jira project blueprint
+### You’ve already installed the Jira integration
 
-In this setup, we will create or update the `Jira Project` blueprint.      
-**Skip** to the [update blueprint](#update-the-blueprint) section if you already have the blueprint.
+The integration automatically creates the `Jira Project` and `Jira Issue` blueprints for you.
 
-#### Create the Jira project blueprint
+To enable health tracking for Jira projects, you’ll only need to **add aggregation properties** to the `Jira Project` blueprint.
 
-If you have not installed Port's Jira integration, you need to manually create the `Jira Project` blueprint. Follow the steps below to add the blueprint:
+<h4> Add aggregation properties to `Jira Project` </h4>
+
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+2. Search for the `Jira Project` blueprint.
+3. Click on `{...} Edit JSON`.
+4. Copy and paste the following JSON snippet into the `aggregationProperties` object:
+        <details>
+      <summary><b>Aggregation properties (click to expand)</b></summary>
+    
+    ```json showLineNumbers
+    "totalComplianceIssues": {
+    "title": "Total Compliance Issues",
+    "icon": "DefaultProperty",
+    "type": "number",
+    "target": "jiraIssue",
+    "query": {
+        "combinator": "and",
+        "rules": [
+        {
+            "property": "labels",
+            "operator": "containsAny",
+            "value": [
+            "compliance"
+            ]
+        }
+        ]
+    },
+    "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+    }
+    },
+    "openUrgentBugs": {
+    "title": "Open Urgent Bugs",
+    "icon": "DefaultProperty",
+    "type": "number",
+    "target": "jiraIssue",
+    "query": {
+        "combinator": "and",
+        "rules": [
+        {
+            "property": "status",
+            "operator": "!=",
+            "value": "Done"
+        },
+        {
+            "property": "issueType",
+            "operator": "=",
+            "value": "Bug"
+        },
+        {
+            "property": "priority",
+            "operator": "=",
+            "value": "High"
+        }
+        ]
+    },
+    "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+    }
+    },
+    "issuesWithoutAssignee": {
+    "title": "Issues Without Assignee",
+    "icon": "DefaultProperty",
+    "type": "number",
+    "target": "jiraIssue",
+    "query": {
+        "combinator": "and",
+        "rules": [
+        {
+            "property": "assignee",
+            "operator": "isEmpty"
+        }
+        ]
+    },
+    "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+    }
+    },
+    "frequentCustomerIncidents": {
+    "title": "Frequent Customer Incidents",
+    "icon": "DefaultProperty",
+    "type": "number",
+    "target": "jiraIssue",
+    "query": {
+        "combinator": "and",
+        "rules": [
+        {
+            "property": "labels",
+            "operator": "containsAny",
+            "value": [
+            "customer"
+            ]
+        },
+        {
+            "property": "updated",
+            "operator": "between",
+            "value": {
+            "preset": "lastMonth"
+            }
+        }
+        ]
+    },
+    "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+    }
+    },
+    "staleTickets": {
+    "title": "Stale Tickets",
+    "icon": "DefaultProperty",
+    "type": "number",
+    "description": " Issues untouched for 30+ days suggest poor ticket hygiene or delivery risk",
+    "target": "jiraIssue",
+    "query": {
+        "combinator": "and",
+        "rules": [
+        {
+            "property": "issueType",
+            "operator": "=",
+            "value": "Task"
+        },
+        {
+            "property": "status",
+            "operator": "=",
+            "value": "To Do"
+        },
+        {
+            "property": "created",
+            "operator": "between",
+            "value": {
+            "preset": "lastMonth"
+            }
+        }
+        ]
+    },
+    "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+    }
+    }
+    ```
+    </details>
+
+5. Click `Save` to update the blueprint.
+
+### You haven’t installed the Jira integration
+
+You’ll need to manually create both the `Jira Project` and `Jira Issue` blueprints, then connect them to your Jira data source.
+
+<h4> Create the Jira project blueprint </h4>
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
@@ -206,158 +355,8 @@ If you have not installed Port's Jira integration, you need to manually create t
     </details>
 5. Click `Save` to create the blueprint.
 
-#### Update the Jira project blueprint
 
-If you have installed Port's Snyk integration, you need to add aggregated project health properties to the `Jira Project` blueprint. Follow the steps below to add these properties:
-
-1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
-2. Search for the `Jira Project` blueprint.
-3. Click on the `{...} Edit JSON` button.
-4. Copy and paste the following JSON snippet into the `aggregationProperties` object.
-        <details>
-      <summary><b>Issue key property (click to expand)</b></summary>
-    
-    
-    ```json showLineNumbers
-    "totalComplianceIssues": {
-    "title": "Total Compliance Issues",
-    "icon": "DefaultProperty",
-    "type": "number",
-    "target": "jiraIssue",
-    "query": {
-        "combinator": "and",
-        "rules": [
-        {
-            "property": "labels",
-            "operator": "containsAny",
-            "value": [
-            "compliance"
-            ]
-        }
-        ]
-    },
-    "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-    }
-    },
-    "openUrgentBugs": {
-    "title": "Open Urgent Bugs",
-    "icon": "DefaultProperty",
-    "type": "number",
-    "target": "jiraIssue",
-    "query": {
-        "combinator": "and",
-        "rules": [
-        {
-            "property": "status",
-            "operator": "!=",
-            "value": "Done"
-        },
-        {
-            "property": "issueType",
-            "operator": "=",
-            "value": "Bug"
-        },
-        {
-            "property": "priority",
-            "operator": "=",
-            "value": "High"
-        }
-        ]
-    },
-    "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-    }
-    },
-    "issuesWithoutAssignee": {
-    "title": "Issues Without Assignee",
-    "icon": "DefaultProperty",
-    "type": "number",
-    "target": "jiraIssue",
-    "query": {
-        "combinator": "and",
-        "rules": [
-        {
-            "property": "assignee",
-            "operator": "isEmpty"
-        }
-        ]
-    },
-    "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-    }
-    },
-    "frequentCustomerIncidents": {
-    "title": "Frequent Customer Incidents",
-    "icon": "DefaultProperty",
-    "type": "number",
-    "target": "jiraIssue",
-    "query": {
-        "combinator": "and",
-        "rules": [
-        {
-            "property": "labels",
-            "operator": "containsAny",
-            "value": [
-            "customer"
-            ]
-        },
-        {
-            "property": "updated",
-            "operator": "between",
-            "value": {
-            "preset": "lastMonth"
-            }
-        }
-        ]
-    },
-    "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-    }
-    },
-    "staleTickets": {
-    "title": "Stale Tickets",
-    "icon": "DefaultProperty",
-    "type": "number",
-    "description": " Issues untouched for 30+ days suggest poor ticket hygiene or delivery risk",
-    "target": "jiraIssue",
-    "query": {
-        "combinator": "and",
-        "rules": [
-        {
-            "property": "issueType",
-            "operator": "=",
-            "value": "Task"
-        },
-        {
-            "property": "status",
-            "operator": "=",
-            "value": "To Do"
-        },
-        {
-            "property": "created",
-            "operator": "between",
-            "value": {
-            "preset": "lastMonth"
-            }
-        }
-        ]
-    },
-    "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-    }
-    }
-    ```
-    </details>
-
-5. Click `Save` to update the blueprint.
-
-### Create the Jira issue blueprint
+<h4> Create the Jira issue blueprint </h4>
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
@@ -485,11 +484,11 @@ If you have installed Port's Snyk integration, you need to add aggregated projec
 
 5. Click `Save` to create the blueprint.
 
-### Update Jira integration configuration 
+<h4> Set up data source mapping </h4>
 
 1. Go to your [Data Source](https://app.getport.io/settings/data-sources) page.
 2. Select the Jira ocean integration.
-3. Add the following YAML block into the editor to update the catalog data:
+3. Add the following YAML block into the editor to ingest data from Jira:
 
     <details>
     <summary><b>Jira integration configuration (Click to expand)</b></summary>
