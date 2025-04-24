@@ -94,6 +94,22 @@ export const availableGuides = [
         link: "/guides/all/setup-slack-reminders",
     },
     {
+        title: "Create & use surveys in your portal",
+        description: "Create & use surveys in your portal to collect feedback from your users",
+        tags: ["Engineering metrics", "Actions"],
+        logos: ["Actions"],
+        category: "Experiences",
+        link: "/guides/all/create-and-use-surveys-in-your-portal",
+    },
+    {
+        title: "Create & track DORA metrics in your portal",
+        description: "Create & track DORA metrics in your portal to measure engineering performance",
+        tags: ["Engineering metrics", "Actions"],
+        logos: ["Actions"],
+        category: "Experiences",
+        link: "/guides/all/create-and-track-dora-metrics-in-your-portal",
+    },
+    {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["Cloud access management", "Actions", "RBAC"],
@@ -957,5 +973,40 @@ export const availableGuides = [
         tags: ["Engineering metrics","GitHub","Actions"],
         logos: ["GitHub"],
         link: "/guides/all/fetch-historical-github-data-for-dora-metric",
+    },
+    {
+        title: "Create a GitHub issue",
+        description: "Create a self-service action that creates a GitHub issue",
+        tags: ["GitHub", "Actions", "Webhook"],
+        logos: ["GitHub"],
+        link: "/guides/all/open-github-issue",
+    },
+    {
+        title: "Remind service owners to update their catalog data",
+        description: "Set up a workflow that notifies service owners to ensure service catalog data is up to date",
+        tags: ["GitHub", "Actions", "Webhook", "Automations"],
+        logos: ["GitHub"],
+        link: "/guides/all/verify-service",
+    },
+    {
+        title: "Enforce Branch Protection Rules with Scorecards",
+        description: "Create a scorecard that tracks branch protection rules and enforces security policies",
+        tags: ["Security", "GitHub", "Scorecards"],
+        logos: ["GitHub"],
+        link: "/guides/all/setup-branch-protection-rules",
+    },
+    {
+        title: "Ignore Snyk Vulnerability",
+        description: "Create a self-service action that ignores a Snyk vulnerability",
+        tags: ["Security","Snyk","Actions","Webhook"],
+        logos: ["Snyk"],
+        link: "/guides/all/ignore-snyk-vulnerability",
+    },
+    {
+        title: "Enforce code maturity with GitLab file search",
+        description: "Create a scorecard that tracks GitLab code maturity based on file existence",
+        tags: ["Security", "GitLab", "Scorecards"],
+        logos: ["GitLab"],
+        link: "/guides/all/track-gitlab-project-maturity-with-scorecards",
     }
 ]

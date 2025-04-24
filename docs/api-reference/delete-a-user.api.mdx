@@ -5,24 +5,19 @@ description: "This route allows you to delete a user in your Port organization.<
 sidebar_label: "Delete a user"
 hide_title: true
 hide_table_of_contents: true
-api: eJzVVMFu2zAM/RWBpxZQ43ZHYxhQoD0M26HY2lNgDIrN1FpkS6WkdJmhfx8oO43TZsOw23JQbImk+B7f8wAN+pq0C9r2UMJ9q70gGwMKZYx99mJnowhWNGiQN0X0SEL3vE/izlIQlh5Vr38qLrF4v6LiQ17urTCoqBedJRRqZWPIyV6KusV6I3gjtCiWja1jh33IFaqzNgTny6JobO0XjxicpbDQtvDeXtBK1QUvF3aLtNX4XJwvQEJQjx7KJTzwBVBJcIpUh4HfyuUAvm6xU1AOEHYOoQQfSPePkCRoxu1UaEFCrzo+5Da/Yae0AfmGIBT5RKimIfRe2HVGkXlhsp5VHw6MjYSABMKnqAkbKANFTJUEj3UkHXa5wRUqQmIIY14ZRyQcSOid7T167v/d5SX/HXd1k3Ma4WNdo/fraMyOaaltH7APnKCcM7rOFBffPWfNWfm7co6sQwp67MRuZnyqfgcSsI8dlEtGWKU0B73k8EqCahrNtyhzNyu2VsZj4p+EDkNrGygnIvhaHk4JxfaqyKwUw2FACZhI2u4HHclACXsJKadnCoIkTwVEfxQzm8xX5mcEu5/PAbDTn3B30Mx1DK2lyQYwyapF1SBByjJb25yug+H4bJ3ru48ggZsfib9aXLIknfWhU3lEU/Wbuf1ei3I4zPn/NfDIasAfoXBG6Z55yLMapvkvYXsFEkZfSChnJq0ktNYHjhmGlfL4QCYl3n6KSGywSsJWkVYr5n45QKM9PzeT9P5A6NmXScPn4p+9fxLckXG2ykR+Awkb3B1/glKV5F5J3PsYcF3X6MIs9Y3BWckvZrq5/Xx7fwsSVGQy5zLeZBlPD3zByc5e63vsgld21cmUYRhNktJL/Hj024wJ5T6aiapSSr8AU4JMbA==
+api: eJzVVMFu2zAM/RWBpxZQ43ZHYxhQID0M26HY2lNgDIrN1FpkS6WkdJmhfx8oO43bZsOw23JQbImk+B7f8wAN+pq0C9r2UMJdq70gGwMKZYx98mJvowhWNGiQN0X0SEL3vE/i1lIQlh5Ur38qLrF4v6biQ17urDCoqBedJRRqbWPIyV6KusV6K3gjtChWja1jh33IFaqzNgTny6JobO0XzlJYaFt4by9oreqClwu7Q9ppfCrOFyAhqAcP5QruuTpUEpwi1WHgt3I1gK9b7BSUA4S9QyjBB9L9AyQJmkE7FVqQ0KuOD7nHb9gpbUC+YQdFPhGqaQi9F3aTIWRSmKkn1YcjXSMbIIHwMWrCBspAEVMlwWMdSYd9bnCNipAYwphXxhEJBxJ6Z3uPnvt/d3nJfy+7WuacRvhY1+j9JhqzZ1pq2wfsAyco54yuM7/Fd89Zc1b+rpwj65CCHjux2xmfqt+DBOxjB+WKEVYpzUGvOLySoJpG8y3K3M6KbZTxmPgnocPQ2gbKiQi+lodTQrG7KjIrxXAcUAImknaHQUcyUMJBP8rpg3wgyVOn0R8DZjP5ysyMMA+TOUJ1+hPuj2q5jqG1NKkfJkG1qBokSFlgG5vTdTAcnx1zffsRJHDbI+VXi0sWo7M+dCoPZ6q+nLvutRyH44T/U9+OlAb8EQpnlO6ZhDylYRr7CnZXIGG0g4Ry5s1KQmt94JhhWCuP92RS4u3HiMS+qiTsFGm1ZuJXAzTa83MzKe4PbJ59maR7Lv7Z8ifBvfDLTpnIbyBhi/uXX55UJXmQEfc+BlzXNbowS33ja5bxs4eWN59v7m5AgopM5lzD26zh6YEvONnZa3GPXfDKfjqZMgyjQ1J6jh+PfpsxoTxEM1FVSukXSmVHbA==
 sidebar_class_name: "delete api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -34,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"delete"}
   path={"/v1/users/{user_email}"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -50,111 +46,26 @@ This route allows you to delete a user in your Port organization.<br/><br/>To le
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"user_email","description":"The email address of the user you want to delete.<br/>","required":true}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"user_email","description":"The email address of the user you want to delete.<br/>","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Deleted successfully.
-          
-          
-        </div><div>
-          <MimeTabs
-            className={"openapi-tabs__mime"}
-            schemaType={"response"}
-          >
-            <TabItem
-              label={"application/json"}
-              value={"application/json"}
-            >
-              <SchemaTabs
-                className={"openapi-tabs__schema"}
-              >
-                <TabItem
-                  label={"Schema"}
-                  value={"Schema"}
-                >
-                  <details
-                    style={{}}
-                    className={"openapi-markdown__details response"}
-                    data-collapsed={false}
-                    open={true}
-                  >
-                    <summary
-                      style={{}}
-                      className={"openapi-markdown__details-summary-response"}
-                    >
-                      <strong>
-                        Schema
-                      </strong>
-                    </summary><div
-                      style={{"textAlign":"left","marginLeft":"1rem"}}
-                    >
-                      
-                    </div><ul
-                      style={{"marginLeft":"1rem"}}
-                    >
-                      <SchemaItem
-                        collapsible={false}
-                        name={"ok"}
-                        required={true}
-                        schemaName={"any"}
-                        qualifierMessage={"**Possible values:** [`true`]"}
-                        schema={{"type":"any","enum":[true]}}
-                      >
-                        
-                      </SchemaItem>
-                    </ul>
-                  </details>
-                </TabItem><TabItem
-                  label={"Example (from schema)"}
-                  value={"Example (from schema)"}
-                >
-                  <ResponseSamples
-                    responseExample={"{\n  \"ok\": true\n}"}
-                    language={"json"}
-                  >
-                    
-                  </ResponseSamples>
-                </TabItem>
-              </SchemaTabs>
-            </TabItem>
-          </MimeTabs>
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Deleted successfully.","content":{"application/json":{"schema":{"description":"Deleted successfully.","properties":{"ok":{"type":"any","enum":[true]}},"required":["ok"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
       

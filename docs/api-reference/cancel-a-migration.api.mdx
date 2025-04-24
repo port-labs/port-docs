@@ -5,24 +5,19 @@ description: "This route allows you to cancel a running migration in your Port o
 sidebar_label: "Cancel a migration"
 hide_title: true
 hide_table_of_contents: true
-api: eJy1VE2P0zAQ/SvWnEAyzS7HCCHBwgEhRLW7nKoKTZNp4t3E9tpOuyXyf0eTOP3awgVxaR372X7vzRv3UJIvnLJBGQ053NfKC2e6QAKbxmy92JlOBCMK1AU1AoXrtFa6Eq2qHPIuoTSDnJgbF4RxFWr1a1iZgYSAlYd8Ad8muIelBEdPHfnw0ZQ7yHsojA6kAw/R2kYVAzJ78MypB1/U1CKPws4S5GBWD1QEkGCdseSCIs+rjjDtSDgfnNIVyBciSYxYsTYuSWtYVKjpIGz2buWy9xCjBCxLxVPYzI9uXGPjKUYGWHTYUiDHYi8wTkyiBMUMLIYaJGhseXF/409VXiSrStJBrRU5YdanJIf6bFGHQ5ES79Fl5aiEPLiO4lKCp6JzKuwGkitCRw7yxTIOJfHWaD86+fbqiv9OmXyiNXZNELcJOTjTUqhNyZKMHyrCynLINtfZnqPP+mOJMRt5AvNxm8mzzjWQQx2C9XmWoVWzioI1LsyUgSgvATp/gjkSeMcFGLVMMve1QKu+0u5g/4cu1MalzEKqUE1YkhskcgxvD4H9/Iytbeg4cCflXZvhLhUYA0NTfJh/AQmsdHTyenbFWLasxSGwicrN1GV7v87zcNQs/6FZR4MCPYfMNqg0sxxs71NhF7C5BnlIrAcJ+Vl+U3WXEmrORL6Avl+hpx+uiZGnnzpyHMGlhA06hSt2atFDqTyPy9RZf1H+6jZF+7X4h/64KHcKieaEbLDp+AskPNLuvFXjMsopKMx/hNyMLN/c80GHI148bBzXfffMv9/dg4RVehBbU/Ieh1tuY9yOFIwdLefk8VwPDeqqw4qx45nDY9VxpY7j/jjEPQ2Y6UWR530wyuFf7r6LW/p+bKYY9/hx6Y87kl0Tmj1fxhh/A/AlQqc=
+api: eJy1VE1vEzEQ/SvWnEAy2ZbjCiFB4YAQImrLKYrQZHeSdbux3bE3bVj5v6PZdT6aBi6IS+K1n+333rxxDzWFio2Pxlko4bYxQbHrIilsW/cY1NZ1KjpVoa2oVai4s9bYlVqbFaPsUsYKiNXUcVSOV2jNr2FlAhoirgKUM/i2gweYa2B66CjEj67eQtlD5WwkG2WI3remGpDFXRBOPYSqoTXKKG49QQlucUdVBA2enSeOhoKsMmHekXEhsrEr0C9Ekhqxauk4S2tFVGzoIGzybsHFe0hJA9a1kSlsp0c3LrENlJIAPDKuKRKL2DOMM5OkwQgDj7EBDRbXsri/8aepz5I1NdloloZYueVzkkN9HtHGQ5Ey79Flw1RDGbmjNNcQqOrYxO1AckHIxFDO5mkoSfDOhtHJtxcX8vecySdaYtdGdZ2RgzNrio2rRZILQ0VEWQnF5rLYcwxFfywxFSNPED682XnWcQslNDH6UBYFejPxjuPEOEj63GoXDoAjaTdi/ahiJ3BfBfTmK20Pxn/oYuM4pxVybRrCmngQJwG8PkT18xOufUvHUXtW2KUb7jJRMDC0w4fpF9AgGkcPLycXghWz1jhENVO52vXX3qnTJBy1yX9o09GgSE+x8C0aKywHz/tc0hlsLkEfshpAQ3mS3FzXuYZG0lDOoO8XGOgHtynJ9ENHLOGba9ggG1yIU7MeahNkXOee+ovyV9c51K/VP3TGWbm7kFhJyAbbTr5Awz1tT5s0zZPeBUX4j5CrkeWbWznocMSLJ03iuu+b6febW9CwyE/h2tWyh/FRGhgfRwrOj5ZL8mSuhxbtqsOVYMczh2eqk0odx/1+iHseCNOzIk/7YJQjv9J6Z7f0/dhMKe3x49Ifd2S7dmjxfJ5S+g2iyUAn
 sidebar_class_name: "post api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -34,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"post"}
   path={"/v1/migrations/{migration_id}/cancel"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -50,93 +46,26 @@ This route allows you to cancel a running migration in your Port organization.
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"migration_id","description":"The identifier of the migration you want to cancel.<br/>","required":true}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"migration_id","description":"The identifier of the migration you want to cancel.<br/>","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><MimeTabs
-  className={"openapi-tabs__mime"}
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"reason":{"type":"string","description":"The reason for cancelling the migration.<br/>"}},"additionalProperties":false}}}}}
 >
-  <TabItem
-    label={"application/json"}
-    value={"application/json-schema"}
-  >
-    <details
-      style={{}}
-      className={"openapi-markdown__details mime"}
-      data-collapsed={false}
-      open={true}
-    >
-      <summary
-        style={{}}
-        className={"openapi-markdown__details-summary-mime"}
-      >
-        <h3
-          className={"openapi-markdown__details-summary-header-body"}
-        >
-          Body
-        </h3>
-      </summary><div
-        style={{"textAlign":"left","marginLeft":"1rem"}}
-      >
-        
-      </div><ul
-        style={{"marginLeft":"1rem"}}
-      >
-        <SchemaItem
-          collapsible={false}
-          name={"reason"}
-          required={false}
-          schemaName={"string"}
-          qualifierMessage={undefined}
-          schema={{"type":"string","description":"The reason for cancelling the migration.<br/>"}}
-        >
-          
-        </SchemaItem>
-      </ul>
-    </details>
-  </TabItem>
-</MimeTabs><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       

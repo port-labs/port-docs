@@ -34,7 +34,7 @@ Once implemented:
 ### Setup the action's frontend
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
-2. Click on the `+ Action` button on the top left conner :
+2. Click on the `+ Action` button on the top left corner :
 
     <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
@@ -84,7 +84,7 @@ Fill out the form with your values:
     }
     ```
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 </TabItem>
 
@@ -110,7 +110,7 @@ Fill out the form:
     }
     ```
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 </TabItem>
 
