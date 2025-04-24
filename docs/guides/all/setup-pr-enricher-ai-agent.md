@@ -14,19 +14,14 @@ import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedic
 This guide will walk you through setting up a "Pull Request Enricher" AI agent in Port.  
 By the end of this guide, your developers will receive automated, contextual comments on their pull requests to help streamline the review process.
 
-<img src="/img/ai-agents/AIAgentPREnrichierGitHubComment.png" border="1px" />
-
-
-
-
-
+<img src="/img/ai-agents/AIAgentPREnrichierGitHubComment.png" border="1px" alt="PR Enricher AI Agent GitHub comment example" />
 
 ## Common use cases
 
-- Automatically comment on new pull requests with assessments based on PR metadata
-- Highlight potential areas of concern
-- Provide context from related Jira tickets directly in the PR comments
-- Suggest relevant reviewers based on code changes
+- Automatically comment on new pull requests with assessments based on PR metadata.
+- Highlight potential areas of concern.
+- Provide context from related Jira tickets directly in the PR comments.
+- Suggest relevant reviewers based on code changes.
 
 ## Prerequisites
 
@@ -51,8 +46,8 @@ Make sure you have [Port's GitHub app](/build-your-software-catalog/sync-data-to
 
 :::info Additional data sources
 While this guide uses GitHub, you can enhance the agent's capabilities by adding other data sources like:
-- PagerDuty for checking active incidents
-- Your software catalog services for broader context
+- PagerDuty for checking active incidents.
+- Your software catalog services for broader context.
 :::
 
 ### Create the agent configuration
@@ -130,7 +125,7 @@ We'll need two automations:
         "url": "https://api.getport.io/v1/agent/pr_review_assistant/invoke",
         "synchronized": true,
         "body": {
-          "prompt": "Analyze the pull request with identifier '{{ .event.diff.after.properties.prNumber }}' and provide a structured review in the following format:\n\nPR Description:\n Summarize the PR description and key properties in one sentence \n\nKey Points:\n{{ List up to 3 key insights about the changes }}\n\nObservations:\nProvide up to 3 observations using 🟢 for low risk, 🟡 for medium risk, and 🔴 for high risk\n\nRecommendations:\nList up to 3 optional recommendations for improvement.provide this in a markdown form",
+          "prompt": "Analyze pull request with pull request identifier '{{ .event.diff.after.properties.prNumber }}'",
           "labels": {
             "source": "Automation",
             "prNumber": "{{ .event.diff.after.properties.prNumber }}",
@@ -208,9 +203,10 @@ This automation requires a GitHub Personal Access Token (PAT) with `repo` scope 
 
    </details>
 
-  :::info Replace Placeholders
-  Make sure to replace 'YOUR_GITHUB_ORG' and 'YOUR_GITHUB_REPO' in the `url` field above with the actual organization and repository where your `post-pr-comment.yml` workflow resides.
-  :::
+
+:::info Replace placeholders
+Make sure to replace 'YOUR_GITHUB_ORG' and 'YOUR_GITHUB_REPO' in the `url` field above with the actual organization and repository where your `post-pr-comment.yml` workflow resides.
+:::
 
 6. Click on `Create` to save the automation
 
@@ -316,43 +312,35 @@ In your dedicated workflow repository, ensure you have a `.github/workflows` dir
 
 3. Commit and push the changes to your repository
 
-## Example responses
+## Example response
 
 The PR Enricher agent will automatically comment on new pull requests with information like:
 
 ```markdown
-## Pull Request Review: Test case with PR Enricher AI Agent 009
+## Pull Request Review: Feature/Payment Gateway Integration
 
 ### PR Details
-- **Title**: Test case with PR Enricher AI Agent 009
-- **Status**: Open
-- **PR Number**: 2477563661
-- **Repository**: [Awesome-Service](https://app.getport.io/githubRepositoryEntity?identifier=kodjomiles%2FAwesome-Service)
-- **Link**: [GitHub PR #11](https://github.com/kodjomiles/Awesome-Service/pull/11)
-- **Creator**: [Jaden Miles](https://app.getport.io/_userEntity?identifier=jaden.m%2B1%40getport.io)
-- **Assignees**: [Jaden Miles](https://app.getport.io/_userEntity?identifier=jaden.m%2B1%40getport.io)
-- **Reviewers**: [Jaden Miles](https://app.getport.io/_userEntity?identifier=jaden.m%2B1%40getport.io)
-- **Reviewer Teams**: kodjomiles
+This PR implements Stripe payment processing with 3D Secure authentication and adds feature flags for gradual rollout. Created by Alex Chen from the payments team.
 
 ### PR Description
-This pull request introduces a test case utilizing the PR Enricher AI Agent 009, aimed at enhancing the testing capabilities within the Awesome-Service repository.
+This pull request introduces a new payment gateway integration with Stripe, enabling secure credit card processing with 3D Secure authentication and compliance with PCI-DSS requirements.
 
 ### Key Points
-1. The PR is currently open and actively being reviewed.
-2. It is associated with the "Awesome-Service" repository, indicating a focus on improving service functionality.
-3. The creator, assignee, and reviewer are all the same person, Jaden Miles, which may streamline the review process but could benefit from additional perspectives.
+1. Adds a new `PaymentService` that implements the payment gateway interface with Stripe-specific logic
+2. Includes comprehensive error handling for payment failures, network issues, and fraud detection
+3. Adds feature flags to gradually roll out the payment system to different user segments
 
 ### Observations
-- **Technical Risks**: 🟢 No immediate technical risks identified from metadata.
-- **Architecture Implications**: 🟢 No significant architectural changes noted.
-- **Test Coverage**: 🟡 Ensure adequate test coverage is included to validate new functionalities.
+- **Security Impact**: 🔴 Handles sensitive payment information requiring thorough security review and PCI compliance verification
+- **Test Coverage**: 🟡 Integration tests with Stripe's test environment included, but mock tests for failure scenarios need expansion
+- **Performance**: 🟢 Initial load testing shows payment processing completes in <200ms for 99% of transactions
 
 ### Recommendations
-- **Testing**: Verify that all new features and changes are covered by unit and integration tests to ensure robustness.
-- **Documentation**: Ensure that any new functionality is well-documented for future reference and ease of understanding.
-- **Review Focus**: Consider involving additional reviewers to gain broader insights and ensure comprehensive feedback.
+- **Security Review**: Request dedicated review from security team to verify proper handling of payment tokens and credentials
+- **Documentation**: Add detailed documentation about the Stripe integration configuration and failure handling for on-call engineers
+- **Monitoring**: Consider adding additional logging and alerting for payment failures to quickly identify issues in production
 
-*This summary provides a high-level overview based on available metadata. For a detailed analysis, reviewing the actual code changes is recommended.*
+*This integration significantly expands our payment capabilities while maintaining our security standards. The feature flags provide a safe rollout strategy.*
 ```
 
 ## Best practices
@@ -371,21 +359,21 @@ To get the most out of your PR Enricher agent:
 You can further enhance the PR Enricher setup by:
 
 - **Integration expansion**: [Add more data sources](/ai-agents/build-an-ai-agent#step-2-configure-data-access) like:
-  - PagerDuty for checking active incidents
-  - GitLab or Azure DevOps for additional PR context
+  - PagerDuty for checking active incidents.
+  - GitLab or Azure DevOps for additional PR context.
 
 - **Automated actions**: [Configure the agent](/ai-agents/interact-with-the-ai-agent#actions-and-automations) to:
-  - Automatically assign reviewers based on code changes
-  - Add relevant labels to the PR (e.g., based on Jira issue type)
-  - Create related Jira tickets for follow-up tasks
+  - Automatically assign reviewers based on code changes.
+  - Add relevant labels to the PR (e.g., based on Jira issue type).
+  - Create related Jira tickets for follow-up tasks.
 
 - **Custom risk assessment**: Enhance the agent's prompt to:
-  - Include organization-specific risk factors
-  - Consider team-specific guidelines
-  - Reference internal documentation
+  - Include organization-specific risk factors.
+  - Consider team-specific guidelines.
+  - Reference internal documentation.
 
 - **Monitor and improve**: [Check how your developers are interacting](/ai-agents/interact-with-the-ai-agent#ai-interaction-details) with the agent and:
-  - Gather feedback on the quality of comments
-  - Track which suggestions are most helpful
-  - Adjust the prompt based on real usage patterns
+  - Gather feedback on the quality of comments.
+  - Track which suggestions are most helpful.
+  - Adjust the prompt based on real usage patterns.
 
