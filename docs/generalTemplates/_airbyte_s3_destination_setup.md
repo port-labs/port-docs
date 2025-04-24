@@ -15,7 +15,7 @@ import TabItem from "@theme/TabItem"
    - Under **S3 Key ID** enter your S3 Access Key ID.
    - Under **S3 Access Key** enter your S3 Access Key Secret.
    - Under **S3 Bucket Name** enter the bucket name (example: "org-xxx").
-   - Under **S3 Bucket Path** enter "/data".
+   - Under **S3 Bucket Path** enter "data/".
    - Under **S3 Bucket Region** enter the appropriate region.
    - For **output format**, choose "JSON Lines: Newline-delimited JSON".
    - For **compression**, choose "GZIP".
