@@ -358,10 +358,15 @@ This pull request introduces a new payment gateway integration with Stripe, enab
 To get the most out of your PR Enricher agent:
 
 1. **Ensure PR-Jira Linking**: Verify that your Port setup correctly establishes relations between `githubPullRequest` entities and `jiraIssue` entities.
+
 2. **Start with basic assessment**: Begin with simple risk assessment and gradually add more context as you see how the agent performs.
+
 3. **Monitor responses**: Regularly review the agent's comments to ensure they're helpful and accurate.
+
 4. **Iterate on the prompt**: Refine the prompt based on the quality of responses and specific needs of your team.
+
 5. **Test the workflow**: Create test pull requests to verify the entire flow works as expected.
+
 6. **Troubleshoot**: If you're not getting the expected results, check our [troubleshooting guide](/ai-agents/interact-with-the-ai-agent#troubleshooting--faq) for common issues and solutions.
 
 ## Possible enhancements
