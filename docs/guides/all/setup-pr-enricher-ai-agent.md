@@ -82,7 +82,7 @@ While this guide uses GitHub, you can enhance the agent's capabilities by adding
          "_user",
          "_team"
        ],
-       "prompt": "You are an experienced Technical Engineering Team Lead. Your job is to enrich pull requests with helpful context for reviewers. Based on the PR details, the author, their team, and any related issue information, write a short risk assessment: what's changed, what could break, and anything worth a second look. Add fun, clear emojis (✅🟡🔴, etc.) to highlight risk levels. No need to be exact—just provide quick, useful insights to speed up review.",
+       "prompt": "Analyze the pull request with identifier '{{ .event.diff.after.properties.prNumber }}' and provide a structured review in the following format:\n\nPR Description:\n Summarize the PR description and key properties in one sentence \n\nKey Points:\n{{ List up to 3 key insights about the changes }}\n\nObservations:\nProvide up to 3 observations using 🟢 for low risk, 🟡 for medium risk, and 🔴 for high risk\n\nRecommendations:\nList up to 3 optional recommendations for improvement.provide this in a markdown form",
        "execution_mode": "Automatic"
      }
    }
@@ -130,7 +130,7 @@ We'll need two automations:
         "url": "https://api.getport.io/v1/agent/pr_review_assistant/invoke",
         "synchronized": true,
         "body": {
-          "prompt": "Analyze the pull request with identifier '{{ .event.diff.after.properties.prNumber }}' and provide a structured review in the following format:\n\nPR Description:\n Summarize the PR description and key properties in one sentence \n\nKey Points:\n{{ List up to 3 key insights about the changes }}\n\nObservations:\nProvide up to 3 observations using 🟢 for low risk, 🟡 for medium risk, and 🔴 for high risk\n\nRecommendations:\nList up to 3 optional recommendations for improvement.provide this ina markdown form",
+          "prompt": "Analyze the pull request with identifier '{{ .event.diff.after.properties.prNumber }}' and provide a structured review in the following format:\n\nPR Description:\n Summarize the PR description and key properties in one sentence \n\nKey Points:\n{{ List up to 3 key insights about the changes }}\n\nObservations:\nProvide up to 3 observations using 🟢 for low risk, 🟡 for medium risk, and 🔴 for high risk\n\nRecommendations:\nList up to 3 optional recommendations for improvement.provide this in a markdown form",
           "labels": {
             "source": "Automation",
             "prNumber": "{{ .event.diff.after.properties.prNumber }}",
