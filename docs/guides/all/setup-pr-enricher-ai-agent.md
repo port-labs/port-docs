@@ -82,7 +82,7 @@ While this guide uses GitHub, you can enhance the agent's capabilities by adding
          "_user",
          "_team"
        ],
-       "prompt": "Analyze the pull request with identifier '{{ .event.diff.after.properties.prNumber }}' and provide a structured review in the following format:\n\nPR Description:\n Summarize the PR description and key properties in one sentence \n\nKey Points:\n{{ List up to 3 key insights about the changes }}\n\nObservations:\nProvide up to 3 observations using 🟢 for low risk, 🟡 for medium risk, and 🔴 for high risk\n\nRecommendations:\nList up to 3 optional recommendations for improvement.provide this in a markdown form",
+       "prompt": "Analyze pull request details and provide a structured review in the following format:\n\nPR Description:\n Summarize the PR description and key properties in one sentence \n\nKey Points:\n{{ List up to 3 key insights about the changes }}\n\nObservations:\nProvide up to 3 observations using 🟢 for low risk, 🟡 for medium risk, and 🔴 for high risk\n\nRecommendations:\nList up to 3 optional recommendations for improvement.provide this in markdown form",
        "execution_mode": "Automatic"
      }
    }
