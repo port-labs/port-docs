@@ -71,7 +71,7 @@ export const integrations = [
     category: 'kubernetes',
     icon: '/img/guides/icons/Kubernetes.svg',
     darkIcon: '/img/guides/icons/dark/Kubernetes.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/kubernetes',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes',
   },
   {
     name: 'AWS',

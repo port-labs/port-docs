@@ -1,0 +1,32 @@
+<details>
+
+<summary> Integration mapping </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: folder
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      folders: # Specify the repositories and folders to include under this relative path.
+        - path: "apps/" # Relative path to the folders within the repositories.
+          repos: # List of repositories to include folders from.
+            - backend-service
+            - frontend-service
+    port:
+      entity:
+        mappings:
+          identifier: .folder.name
+          title: .folder.name
+          blueprint: '"service"'
+          properties:
+            url: >-
+              .repo.web_url + "/tree/" + .repo.default_branch  + "/" +
+              .folder.path
+            description: .repo.description
+            namespace: .repo.namespace.name
+            full_path: .repo.path_with_namespace + "/" + folder.path
+            language: .repo.__languages | to_entries | max_by(.value) | .key
+            readme: file://README.md
+```
+
+</details>
