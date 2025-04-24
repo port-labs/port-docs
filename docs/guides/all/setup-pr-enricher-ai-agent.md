@@ -142,16 +142,18 @@ We'll need two automations:
 
 #### Post PR enricher AI agent response on GitHub
 
-This automation requires a GitHub Personal Access Token (PAT) with `repo` scope to post comments on pull requests. Store this token as a secret in Port.
+This automation requires a GitHub Personal Access Token (PAT) with `repo` scope to post comments on pull requests.  
+Store this token as a secret in Port.
 
-1. **Create GitHub PAT:** Follow GitHub's guide to [create a fine-grained personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with **Read and Write** permissions for **Pull requests** for the repositories you want the agent to comment on.
+1. **Create GitHub PAT:**   
+Follow GitHub's guide to [create a fine-grained personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with **Read and Write** permissions for **Pull requests** for the repositories you want the agent to comment on.
 
 2. **Add Secret to Port:**
-   - Go to the [Secrets page](https://app.getport.io/secrets) in your Port application.
-   - Click `+ Create Secret`.
-   - Set the `Key` to `GITHUB_TOKEN`.
-   - Paste your GitHub PAT into the `Value` field.
-   - Click `Create`.
+   - Click on the `...` button in the top right corner of your Port application.
+   - Click on **Credentials**.
+   - Click on the `Secrets` tab.
+   - Click on `+ Secret` and add the following secret:
+      - `GITHUB_TOKEN` - Your GitHub Personal Access Token
 
 3. Go back to the [Automations](https://app.getport.io/automations) page
 4. Click on `+ Automation`
@@ -204,9 +206,9 @@ This automation requires a GitHub Personal Access Token (PAT) with `repo` scope 
    </details>
 
 
-:::info Replace placeholders
-Make sure to replace 'YOUR_GITHUB_ORG' and 'YOUR_GITHUB_REPO' in the `url` field above with the actual organization and repository where your `post-pr-comment.yml` workflow resides.
-:::
+    :::info Replace placeholders
+    Make sure to replace 'YOUR_GITHUB_ORG' and 'YOUR_GITHUB_REPO' in the `url` field above with the actual organization and repository where your `post-pr-comment.yml` workflow resides.
+    :::
 
 6. Click on `Create` to save the automation
 
@@ -309,6 +311,14 @@ In your dedicated workflow repository, ensure you have a `.github/workflows` dir
                       EOF
         ```
       </details>
+
+      :::info Required GitHub Secrets
+      For this workflow to function properly, you need to add the following secrets to your GitHub repository:
+
+      - `PORT_GITHUB_APP_PEM`: The private key of your GitHub App in PEM format
+      - `PORT_GITHUB_APP_ID`: The App ID of your GitHub App
+      - `PORT_GITHUB_APP_INSTALLATION_ID`: The installation ID of your GitHub App in this repository
+      :::
 
 3. Commit and push the changes to your repository
 
