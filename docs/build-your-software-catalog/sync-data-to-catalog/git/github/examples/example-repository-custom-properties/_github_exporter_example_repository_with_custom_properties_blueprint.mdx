@@ -1,0 +1,41 @@
+<details>
+<summary>Repository blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "githubRepository",
+  "title": "Repository",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown"
+      },
+      "url": {
+        "title": "Repository URL",
+        "type": "string",
+        "format": "url"
+      },
+      "defaultBranch": {
+        "title": "Default branch",
+        "type": "string"
+      },
+      "custom_properties": {
+        "items": {
+          "type": "object"
+        },
+        "type": "array",
+        "title": "Custom Properties"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
