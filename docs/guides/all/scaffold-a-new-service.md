@@ -357,7 +357,7 @@ If the GitHub organization which will house your workflow is not the same as the
               cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
               blueprintIdentifier: "githubRepository"
               organizationName: ${{ env.ORG_NAME }}
-    
+              createPortEntity: false
     
     
           - name: Create Service in Port with Repository Relation
@@ -372,7 +372,7 @@ If the GitHub organization which will house your workflow is not the same as the
               blueprint: "service"
               relations: |
                 {
-                  "repository": "${{ inputs.service_name }}"
+                  "repository": "${{ env.ORG_NAME }}/${{ inputs.service_name }}"
                 }
     
           - name: Create a log message
