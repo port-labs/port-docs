@@ -982,6 +982,13 @@ export const availableGuides = [
         link: "/guides/all/verify-service",
     },
     {
+        title: "Enforce Branch Protection Rules with Scorecards",
+        description: "Create a scorecard that tracks branch protection rules and enforces security policies",
+        tags: ["Security", "GitHub", "Scorecards"],
+        logos: ["GitHub"],
+        link: "/guides/all/setup-branch-protection-rules",
+    },
+    {
         title: "Ignore Snyk Vulnerability",
         description: "Create a self-service action that ignores a Snyk vulnerability",
         tags: ["Security","Snyk","Actions","Webhook"],
