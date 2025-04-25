@@ -995,4 +995,11 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/verify-service",
     },
+    {
+        title: "Set up the Task Assistant AI agent",
+        description: "Set up an AI agent that provides contextual information and insights to task assignees",
+        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
+        logos: ["AI"],
+        link: "/guides/all/setup-task-assistant-ai-agent",
+    },
 ]
