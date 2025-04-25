@@ -28,7 +28,7 @@ By the end of this guide, your developers will receive automated, contextual ins
 This guide assumes you have:
 - A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature)
 - Appropriate permissions to create and configure AI agents
-- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/jira/jira/) configured in your Port instance
+- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) configured in your Port instance
 - [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) configured in your Port instance
 
 ## Set up data model
@@ -45,7 +45,7 @@ For this guide, we will be using **Jira** as our primary data source to provide 
 This integration will automatically create and configure all the necessary resources needed by the Task Assistant AI agent.
 
 Install the following integration to have access to these data sources:
-- [Port's Jira integration](/build-your-software-catalog/sync-data-to-catalog/jira/jira/) for projects, tasks and issues.
+- [Port's Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) for projects, tasks and issues.
 
     :::info Optional tools
     While this guide uses Jira, you can choose tools that best fit your organization's needs. 
