@@ -18,7 +18,7 @@ In this guide, you will setup an initial software catalog. You will learn how to
 - Port's [REST API](../api-reference/api-reference.mdx) - to create your deployment configs;
 - Port's [GitHub Action](../build-your-software-catalog/sync-data-to-catalog/ci-cd/github-workflow/github-workflow.md) - to create your service deployments.
 - Port's [GitHub App](../build-your-software-catalog/sync-data-to-catalog/gitops/github-app-gitops/github-app-gitops.md) - to create your services;
-- Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) - to create your deployment service pods;
+- Port's [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md) - to create your deployment service pods;
 
 By the end of this guide, you will have a _Basic Model_ of a software catalog.
 
@@ -556,7 +556,7 @@ print(response.json())
 
 A deployment service pod represents an instance of a deployed service. A deployment service pod has a `deployment config` tied to it, which represents the deployed service that the pod is an instance of.
 
-Below is a `config.yaml` configuration file to use as the [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) config:
+Below is a `config.yaml` configuration file to use as the [Kubernetes Exporter](../build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md) config:
 
 <details>
 <summary>Click here to see the config</summary>

@@ -65,16 +65,16 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Kubernetes
 
-- [K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
-- [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/istio.md)
-- [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/knative.md)
-- [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/openshift.md)
-- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy.md)
+- [K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
+- [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/istio.md)
+- [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/knative.md)
+- [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/openshift.md)
+- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/trivy.md)
 - [Ingest Trivy vulnerabilities into your catalog using GitHub file ingesting feature](/guides/all/ingest-trivy-vulnerabilities-into-your-catalog)
-- [Map Kyverno](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/kyverno.md)
-- [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/fluxcd.md)
-- [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
-- [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
+- [Map Kyverno](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/kyverno.md)
+- [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/fluxcd.md)
+- [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/custom-crds.md)
+- [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/port-crd.md)
 - [Create and managed Kubernetes cluster](/guides/all/manage-clusters)
 - [Change deployment replica count](/guides/all/change-replica-count)
 
