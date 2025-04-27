@@ -17,10 +17,10 @@ By the end of this guide, your developers will receive automated, contextual ins
 
 ## Common use cases
 
-- Automatically provide context when developers start working on tasks
-- Identify related issues and pull requests
-- Suggest potential collaborators based on task context
-- Enable easy commenting on Jira issues through Port
+- Automatically provide context when developers start working on tasks.
+- Identify related issues and pull requests.
+- Suggest potential collaborators based on task context.
+- Enable easy commenting on Jira issues through Port.
 
 
 ## Prerequisites
