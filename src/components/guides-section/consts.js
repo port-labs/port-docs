@@ -973,15 +973,15 @@ export const availableGuides = [
         tags: ["AI","Jira","GitHub","Slack"],
         logos: ["AI"],
         link: "/guides/all/setup-task-manager-ai-agent",
-	},
-	{
+	  },
+	  {
         title: "Set up the Incident Manager AI agent",
         description: "Set up an AI agent that helps developers track and manage incidents efficiently",
         tags: ["AI","PagerDuty","Slack","Incident management"],
         logos: ["AI"],
         link: "/guides/all/setup-incident-manager-ai-agent",
-	},
-	{
+	  },
+	  {
         title: "Create a GitHub issue",
         description: "Create a self-service action that creates a GitHub issue",
         tags: ["GitHub", "Actions", "Webhook"],
@@ -1009,4 +1009,25 @@ export const availableGuides = [
         logos: ["AI"],
         link: "/guides/all/setup-pr-enricher-ai-agent",
     },
+    {
+        title: "Enforce Branch Protection Rules with Scorecards",
+        description: "Create a scorecard that tracks branch protection rules and enforces security policies",
+        tags: ["Security", "GitHub", "Scorecards"],
+        logos: ["GitHub"],
+        link: "/guides/all/setup-branch-protection-rules",
+    },
+    {
+        title: "Ignore Snyk Vulnerability",
+        description: "Create a self-service action that ignores a Snyk vulnerability",
+        tags: ["Security","Snyk","Actions","Webhook"],
+        logos: ["Snyk"],
+        link: "/guides/all/ignore-snyk-vulnerability",
+    },
+    {
+        title: "Enforce code maturity with GitLab file search",
+        description: "Create a scorecard that tracks GitLab code maturity based on file existence",
+        tags: ["Security", "GitLab", "Scorecards"],
+        logos: ["GitLab"],
+        link: "/guides/all/track-gitlab-project-maturity-with-scorecards",
+    }
 ]

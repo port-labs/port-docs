@@ -48,6 +48,8 @@ import RepositoryAdminAppConfig from './example-repository-admins/\_github_expor
 import TagBlueprint from './example-repository-release-tag/\_github_exporter_example_tag_blueprint.mdx'
 import ReleaseBlueprint from './example-repository-release-tag/\_github_exporter_example_release_blueprint.mdx'
 import RepositoryTagReleaseAppConfig from './example-repository-release-tag/\_github_exporter_example_release_tag_port_app_config.mdx'
+import RepositoryCustomPropertiesAppConfig from './example-repository-custom-properties/\_github_exporter_example_custom_properties_port_app_config.mdx'
+import RepositoryCustomPropertiesBlueprint from './example-repository-custom-properties/\_github_exporter_example_repository_with_custom_properties_blueprint.mdx'
 
 import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
@@ -320,7 +322,13 @@ In the following example you will ingest your GitHub repositories, their release
 
 <RepositoryTagReleaseAppConfig/>
 
+## Map repositories and repository custom properties
 
+The following example shows how to ingest your GitHub repositories and their custom properties to Port.  
+You can use the following blueprint definitions and `port-app-config.yml`:
+
+<RepositoryCustomPropertiesBlueprint/>
+<RepositoryCustomPropertiesAppConfig/>
 
 ## Map supported resources
 

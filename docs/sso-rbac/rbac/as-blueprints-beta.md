@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem'
 :::warning Migration required
 Starting **January 14, 2025**, a new default behavior for managing users & teams is applied to all new Port accounts.
 
-If you created your account **before** this date, you will need to migrate to the new behavior using this [migration guide](/sso-rbac/rbac/migration) by **May 1, 2025**.
+If you created your account **before** this date, you will need to migrate to the new behavior using this [migration guide](/sso-rbac/rbac/migration) by **July 1, 2025**.
 
 If you enabled the `"Users & teams as blueprints beta feature"` in your organization and do not wish to migrate yet, continue reading this page, which describes the **beta version behavior**.  
 :::

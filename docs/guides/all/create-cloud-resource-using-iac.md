@@ -288,7 +288,7 @@ Now we want to write the logic that our action will trigger.
           # Checkout the service's repository
           - uses: actions/checkout@v4
             with:
-              repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}"
+              repository: "${{ fromJson(inputs.port_context).entity }}"
               path: ./targetRepo
               token: ${{ secrets.ORG_ADMIN_TOKEN }}
           - name: Copy template file
@@ -325,7 +325,7 @@ Now we want to write the logic that our action will trigger.
               blueprint: githubRepository
               properties: |-
                 {
-                  "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}/blob/main/resources/"
+                  "resource_definitions": "${{ github.server_url }}/${{ fromJson(inputs.port_context).entity }}/blob/main/resources/"
                 }
               clientId: ${{ secrets.PORT_CLIENT_ID }}
               clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
