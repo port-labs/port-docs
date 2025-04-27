@@ -7,6 +7,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md'
+import AIAgentRegistration from "/src/components/AIAgentRegistration"
 
 # AI agents overview
 
@@ -16,6 +17,10 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 Port AI agents are customizable building blocks that enhance your developer portal with intelligent assistance.  
 These agents help your developers find information faster and complete tasks more efficiently across your development ecosystem.
+
+<img src="/img/ai-agents/AIAgentIncidentManagerAgentPage.png" width="80%" border="1px" />
+<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border="1px" />
+
 
 ## What can AI agents do?
 
@@ -28,13 +33,13 @@ AI agents serve two primary functions:
 ### Example use cases
 
 **Questions your agents can answer:**
-- "Which services are failing security checks?"
-- "When was the last successful deployment of the payment service?"
-- "Who is the owner for this component?"
+- "Which services are failing security checks?".
+- "When was the last successful deployment of the payment service?".
+- "Who is the owner for this component?".
 
 **Actions your agents can help with:**
-- "Can you help me deploy service X to production?"
-- "Please notify the reviewers of PR #1234"
+- "Can you help me deploy service X to production?".
+- "Please notify the reviewers of PR #1234".
 
 ## Getting started with AI agents
 
@@ -58,7 +63,7 @@ To start working with AI agents, follow these steps:
 AI agents are designed with security as a priority:
 - Agents only have access to the data you explicitly provide.
 - Your data remains within Port's secure infrastructure.
-- LLM processing happens within our cloud infrastructure. 
+- LLM processing happens within our cloud infrastructure.
 - Your data is not used for model training.
 
 ## Start simple & expand as needed
@@ -68,12 +73,9 @@ As your team builds confidence in the agents, you can expand their capabilities 
 
 ## Access to the feature
 
-Currently, AI agents are in closed beta access, and you must get approved for the feature first. Once approved, you can enable the feature in your Port organization by calling this API:
+Currently, AI agents are in closed beta access, and you must get approved for the feature first. Once approved, you can enable the feature in your Port organization using the interactive tool below:
 
-```bash showLineNumbers
-curl --location --request PATCH 'https://api.getport.io/v1/organization/ai/register' \
---header 'Authorization: Bearer <YOUR_PORT_API_TOKEN>'
-```
+<AIAgentRegistration />
 
 Your organization now has the system blueprints required for the feature to work.
 
@@ -104,18 +106,18 @@ Port AI supports two primary interaction types:
 <details>
 <summary>How do users interact with Port AI? (Click to expand)</summary>
 
-- Primary interface is through our Slack app
-- Full API availability
+- Primary interface is through our [Slack app](/ai-agents/slack-app).
+- Full API availability.
 </details>
 
 <details>
 <summary>Can customers customize the AI agents? (Click to expand)</summary>
 
 Yes - you can create custom AI agents within Port. Customization includes:
-- Creating new agents using Port's blueprint system
-- Configuring agent knowledge base and access to tools
-- Adjusting prompts and agent behaviors
-- Setting permissions and usage boundaries
+- Creating new agents using Port's blueprint system.
+- Configuring agent knowledge base and access to tools.
+- Adjusting prompts and agent behaviors.
+- Setting permissions and usage boundaries.
 
 All agents operate within Port's secure framework and governance controls.
 </details>

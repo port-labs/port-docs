@@ -1,0 +1,32 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: folder
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      folders: # Specify the repositories and folders to include under this relative path.
+        - path: integrations/* # Relative path to the folders within the repositories.
+          repos:  # List of repositories to include folders from.
+            - name: port-repo-3 # the name of the repository to include folders from.
+              branch: new # Optional; branch name to map the folders from, defaults to the repository's default branch.
+        - path: integrations/**/*
+          repos:
+            - name: port-repo-3
+    port:
+      entity:
+        mappings:
+          identifier: .folder.path
+          title: .folder.path | split("/") | last
+          blueprint: '"bitbucketRepository"'
+          properties:
+            url: >-
+              .repo.links.html.href + "/src/" + .repo.mainbranch.name + "/" +
+              .folder.path
+            defaultBranch: .repo.mainbranch.name
+            readme: file://README.md
+```
+
+</details>

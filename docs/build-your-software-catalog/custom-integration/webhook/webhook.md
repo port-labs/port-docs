@@ -12,7 +12,7 @@ By using Port's generic webhook integration you can ingest data into the softwar
 
 <center>
 
-<Image img={WebhookArchitecture}></Image>
+<Image img="/img/build-your-software-catalog/sync-data-to-catalog/webhook/webhook-architecture.png" border="1px" style={{borderRadius: "8px"}}></Image>
 
 </center>
 

@@ -85,7 +85,7 @@ Sign-in and account access logs are retained for 30 days.
 
 ### Data removal
 
-When a customer terminates their contract or explicitly asks for a deletion of their account and its data, all data related to the account including blueprints, entities, actions, automations, runs, users, teams and more is deleted along with the account itself and becomes inaccessible to the customer. The data is retained for 7 days as part of the backup process utilized by Port, after 7 days the data is also removed from the backups, and can no longer be retrieved.
+When a customer terminates their contract or explicitly asks for a deletion of their account and its data, all data related to the account including blueprints, entities, actions, automations, runs, users, teams and more is deleted along with the account itself and becomes inaccessible to the customer. The data is retained for 14 days as part of the backup process utilized by Port, after 14 days the data is also removed from the backups, and can no longer be retrieved.
 
 Data can also be deleted upon request and via Port’s REST API and UI.
 

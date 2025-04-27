@@ -246,7 +246,7 @@ First, choose `Run Azure Pipeline` as the invocation type. Then fill out the for
 
 <br/>
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 The action's frontend is now ready 🥳
 
@@ -292,12 +292,13 @@ If the GitHub organization which will house your workflow is not the same as the
      <br/><br/>
 
 3. Now let's create the workflow file that contains our logic.  
-   First, ensure that you have a `.github/workflows` directory, then create a new file named `port-create-service.yml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 15 to your GitHub organization name):
+   First, ensure that you have a `.github/workflows` directory, then create a new file named `port-create-service.yml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` to your GitHub organization name):
 
-    :::tip
-    The GitHub workflow example below assumes that you will use the cookiecutter template specified in line 27.  
+    :::tip Using a different cookiecutter template
+    The following GitHub workflow example assumes that you will use the specified cookiecutter template. (Using this [cookiecutter Github action](https://github.com/port-labs/cookiecutter-gha))
     If you would instead prefer to use a template from a private repository, replace the line in the template below with the following, ensuring to specify the GitHub org and repo name where instructed:  
     `cookiecutterTemplate: https://oauth2:$ORG_ADMIN_TOKEN@github.com/$<GITHUB-ORG-NAME>/$<TEMPLATE-REPO>.git`.  
+
     If the template GitHub repo is not within the same organization where this repo will be placed, please ensure you replace the `ORG_ADMIN_TOKEN` parameter with a token containing the same parameters used when you created the token in the previous step.
     :::
 
@@ -327,6 +328,7 @@ If the GitHub organization which will house your workflow is not the same as the
       scaffold-service:
         runs-on: ubuntu-latest
         env:
+          //highlight-next-line
           ORG_NAME: <Your ORG name>
           PORT_RUN_ID: ${{ fromJson(inputs.port_context).runId }}
     
@@ -355,7 +357,7 @@ If the GitHub organization which will house your workflow is not the same as the
               cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
               blueprintIdentifier: "githubRepository"
               organizationName: ${{ env.ORG_NAME }}
-    
+              createPortEntity: false
     
     
           - name: Create Service in Port with Repository Relation
@@ -370,7 +372,7 @@ If the GitHub organization which will house your workflow is not the same as the
               blueprint: "service"
               relations: |
                 {
-                  "repository": "${{ inputs.service_name }}"
+                  "repository": "${{ env.ORG_NAME }}/${{ inputs.service_name }}"
                 }
     
           - name: Create a log message
@@ -386,10 +388,6 @@ If the GitHub organization which will house your workflow is not the same as the
     ```
     
     </details>
-
-    :::tip
-    This workflow uses Port's [cookiecutter Github action](https://github.com/port-labs/cookiecutter-gha) to scaffold the new repository.
-    :::
 
 </TabItem> 
 
@@ -1261,11 +1259,7 @@ Head back to the [Self-service page](https://app.getport.io/self-serve) of your 
     
     </Tabs>  
 
-4. Click `Execute`. On the top right corner of the page,  click on the action button to view the action progress.:
-
-    <img src='/img/guides/executionDetails.png' width='45%' border="1px" />
-    
-    <br/><br/>
+4. Click `Execute`. On the top right corner of the page,  click on the <img src="/img/icons/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button to view the action's progress.
 
 5. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
 

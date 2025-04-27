@@ -34,6 +34,8 @@ import ProjectMemberPortAppConfig from './example-projects-members/\_gitlab_expo
 
 import PackageBlueprint from './example-file/\_gitlab_exporter_example_package_blueprint.mdx'
 import PortPackageAppConfig from './example-file/\_gitlab_exporter_example_package_port_app_config.mdx'
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 
 # Examples
 
@@ -47,7 +49,7 @@ In the following example you will ingest your GitLab projects, their README.md f
 
 <PortAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -80,7 +82,7 @@ In the following example you will ingest your GitLab groups, subgroups and proje
 
 <PortGroupsAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -101,7 +103,7 @@ In the following example you will ingest your GitLab projects, their pipelines a
 
 <PortPipelineJobAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -121,7 +123,6 @@ In the following example you will ingest your GitLab projects and their monorepo
 
 <MonoRepoAppConfig/>
 
-:::tip To Learn more
 To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
 
 ```yaml
@@ -135,11 +136,7 @@ To retrieve the root folders of your monorepo, you can use this following syntax
           - frontend-service
 ```
 
-:::
-
-:::tip
-
-You can also specify different path for each monorepo repository, for example:
+You can also specify a different path for each monorepo repository, for example:
 
 ```yaml
 - kind: folder
@@ -154,9 +151,8 @@ You can also specify different path for each monorepo repository, for example:
           - backend-services
 ```
 
-:::
 
-:::tip
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -175,7 +171,7 @@ In the following example you will ingest your GitLab projects and their folders 
 
 <PortFoldersAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -194,7 +190,7 @@ In the following example you will ingest your GitLab projects and their issues t
 
 <PortIssueAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -210,15 +206,12 @@ After creating the blueprints and saving the integration configuration, you will
 
 In the following example you will ingest your GitLab members to Port, you may use the following Port blueprint definitions and integration configuration:
 
-:::tip Prerequisites
+### Prerequisites
 
-<b> Offering: GiLab Self Hosted </b>
- - An admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
+- When using **GitLab Self Hosted**, an admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
+- When using **GitLab Enterprise**, accounts can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
 
-<b> Offering: GitLab Enterprise </b>
-- Enterprise accounts can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
 
-:::
 
 :::caution GitLab free plan limitation
 Primary email addresses are not available for GitLab "Free plan" users.
@@ -227,19 +220,20 @@ Primary email addresses are not available for GitLab "Free plan" users.
 
 <MemberBlueprint/>
 <MemberPortAppConfig/>
+<Tabs groupId="config" queryString="parameter">
 
-:::tip Include Bot Members
+<TabItem label="Include Bot Members" value="includeBotMembers">
 
 GitLab allows the creation of tokens (bots) for automated tasks, which can be associated with groups or projects via access tokens.
-The `includeBotMembers` parameter is used to filter out bot members from the actual gitlab members.
-By default, this parameter is set to `true`, which means the integration will sync actual and bot members.
+The `includeBotMembers` parameter is used to filter out bot members from the actual GitLab members.
+By default, this selector is set to `false`, which means the integration will only sync actual members.
 
 ```yaml
   - kind: group-with-members
     selector:
       query: 'true'
       # highlight-next-line
-      includeBotMembers: 'true'
+      includeBotMembers: false
 ```
 
 ```yaml
@@ -247,12 +241,13 @@ By default, this parameter is set to `true`, which means the integration will sy
     selector:
       query: 'true'
       # highlight-next-line
-      includeBotMembers: 'true'
+      includeBotMembers: false
 ```
-:::
+</TabItem>
 
-:::tip Include Inherited and Invited Members
-You can also specify the `includeInheritedMembers` flag to control the inclusion of inherited members in the member data.
+<TabItem value="includeInheritedMembers" label="Include Inherited and Invited Members">
+
+You can also specify the `includeInheritedMembers` selector to control the inclusion of inherited members in the member data.
 By default, this parameter is set to `false`, and the integration will sync only direct members without inherited members.
 
 ```yaml
@@ -260,7 +255,7 @@ By default, this parameter is set to `false`, and the integration will sync only
     selector:
       query: 'true'
       # highlight-next-line
-      includeInheritedMembers: 'false'
+      includeInheritedMembers: false
 ```
 
 ```yaml
@@ -268,9 +263,32 @@ By default, this parameter is set to `false`, and the integration will sync only
     selector:
       query: 'true'
       # highlight-next-line
-      includeInheritedMembers: 'false'
+      includeInheritedMembers: false
 ```
-:::
+</TabItem>
+
+<TabItem value="includeVerboseMemberObject" label="Include Verbose Member Object">
+
+By default, the integration syncs only essential member properties (id, username, and email) to optimize memory usage. To include all member properties available in the GitLab API (like name, state, web_url, etc.), set the `includeVerboseMemberObject` selector to `true`. This gives you access to the complete member object but may increase memory consumption. If you must change this setting, we recommend you change the value of this selector only for the kind you intend to use for parsing members (not groups).
+
+```yaml
+  - kind: group-with-members
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeVerboseMemberObject: false
+```
+
+```yaml
+  - kind: project-with-members
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeVerboseMemberObject: false
+```
+</TabItem>
+
+</Tabs>
 
 ### Mapping members and groups
 
@@ -300,7 +318,8 @@ Real time webhook events are not supported for the `project-with-members` kind.
 
 ## Mapping supported resources
 
-The above examples shows a specific use cases, but Port's GitLab integration supports the ingestion of many other GitLab objects, to adapt the examples above, use the GitLab API reference to learn about the available fields for the different supported objects:
+The examples above show specific use cases, but Port's GitLab integration supports the ingestion of many other GitLab objects.
+To adapt the examples above, use the GitLab API reference to learn about the available fields for the different supported objects:
 
 <GitlabResources/>
 

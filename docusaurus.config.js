@@ -117,7 +117,7 @@ const config = {
             className: "header-github-link",
           },
           {
-            to: "https://www.getport.io/community",
+            to: "https://port.io/community",
             position: "right",
             target: "_blank",
             className: "header-slack-link",
@@ -182,7 +182,7 @@ const config = {
               },
               {
                 label: "Kubernetes",
-                to: "/build-your-software-catalog/sync-data-to-catalog/kubernetes",
+                to: "/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes",
               },
               {
                 label: "Git",
@@ -203,7 +203,7 @@ const config = {
             items: [
               {
                 label: "Slack",
-                href: "https://www.getport.io/community",
+                href: "https://port.io/community",
               },
               {
                 label: "Twitter",
@@ -220,15 +220,15 @@ const config = {
             items: [
               {
                 label: "Release notes",
-                href: "https://roadmap.getport.io/changelog",
+                href: "https://roadmap.port.io/changelog",
               },
               {
                 label: "Blog",
-                href: "https://www.getport.io/blog",
+                href: "https://port.io/blog",
               },
               {
                 label: "Demo",
-                href: "https://demo.getport.io",
+                href: "https://demo.port.io",
               },
               {
                 label: "GitHub",
@@ -236,7 +236,11 @@ const config = {
               },
               {
                 label: "Port",
-                href: "https://getport.io",
+                href: "https://port.io",
+              },
+              {
+                label: "Status",
+                href: "https://status.port.io",
               },
             ],
           },
@@ -245,11 +249,11 @@ const config = {
             items: [
               {
                 label: "Terms of Service",
-                href: "https://getport.io/legal/terms-of-service",
+                href: "https://port.io/legal/terms-of-service",
               },
               {
                 label: "Privacy Policy",
-                href: "https://getport.io/legal/privacy-policy",
+                href: "https://port.io/legal/privacy-policy",
               },
             ],
           },
@@ -339,7 +343,6 @@ const config = {
       {
         createRedirects(existingPath) {
           if (!existingPath.includes("/docs") && existingPath !== "/") {
-            // Support URLs without /docs prepended and route them to /docs
             return [existingPath.replace("/", "/docs/", 1)];
           }
           return undefined;
@@ -349,12 +352,12 @@ const config = {
     [
       "docusaurus-plugin-openapi-docs",
       {
-        id: "api", // plugin id
-        docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
+        id: "api",
+        docsPluginId: "classic",
         config: {
-          port: { // the <id> referenced when running CLI commands
-            specPath: './static/apispec.yaml', // path to OpenAPI spec, URLs supported
-            outputDir: "docs/api-reference-temp", // dir of generated files, REMEMBER to move them to /api-reference when ready
+          port: {
+            specPath: './static/apispec.yaml',
+            outputDir: "docs/api-reference-temp",
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",
@@ -368,9 +371,9 @@ const config = {
       "@docusaurus/plugin-ideal-image",
       {
         quality: 70,
-        max: 1000, // max resized image's size.
-        min: 300, // min resized image's size. if original is lower, use that size.
-        steps: 7, // the max number of images generated between min and max (inclusive)
+        max: 1000,
+        min: 300,
+        steps: 7,
         disableInDev: false,
       },
     ],
@@ -390,20 +393,20 @@ const config = {
       "data-modal-title": "Port AI Assistant",
       "data-modal-ask-ai-input-placeholder": "Ask me anything about Port...",
       "data-submit-query-button-bg-color": "#000000",
-      "data-modal-example-questions": "Which SSO providers are supported?, How can I install Port's Datadog integration without using k8s?, How can I create a table that shows all services belonging to my team?",
+      "data-modal-example-questions": "How can I create a table that shows all services belonging to my team?, Write me a scorecard definition that ensures each repository has a readme file, Which SSO providers are supported?, How can I install Port's Datadog integration without using k8s?",
       "data-font-family": "DM Sans",
       "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nWe would appreciate your feedback (👍🏽/👎🏽) on answers you receive in order to improve the results 🙏🏽",
       "data-modal-example-questions-title": "Example Questions",
       "data-modal-example-questions-col-span": "12",
-      "data-modal-disclaimer-font-size": "0.85rem", // default is 0.75rem
-      "data-example-question-button-font-size": "0.85rem", // default is not set
+      "data-modal-disclaimer-font-size": "0.85rem",
+      "data-example-question-button-font-size": "0.85rem",
       // "data-search-mode-enabled": "true",
       // "data-modal-search-input-placeholder": "What are you looking for?",
       // "data-modal-title-search": "Search Port's documentation",
       // "data-search-result-secondary-text-color": "#000000",
       // "data-search-result-primary-text-color": "#000000",
       async: true,
-    },
+    }
   ],
 };
 

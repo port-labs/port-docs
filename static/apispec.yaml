@@ -3,8 +3,8 @@ info:
   title: Port API
   version: '1.0'
 servers:
-  - url: https://api.getport.io
-  - url: https://api.us.getport.io
+  - url: https://api.port.io
+  - url: https://api.us.port.io
 components:
   securitySchemes:
     bearer:
@@ -5181,8 +5181,125 @@ paths:
       responses:
         '200':
           description: Successfully updated an entity
-        '201':
-          description: Successfully created an entity
+        "201":
+          description: Created successfully.
+          content:
+            application/json:
+              schema:
+                description: Created successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  entity:
+                    type: object
+                    properties:
+                      identifier:
+                        oneOf:
+                          - type:
+                              - string
+                            pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                            title: string
+                          - type: object
+                            title: search query
+                            properties:
+                              combinator:
+                                enum:
+                                  - and
+                                  - or
+                              rules:
+                                type: array
+                                items:
+                                  anyOf:
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          enum:
+                                            - =
+                                        value:
+                                          anyOf:
+                                            - type: string
+                                            - type: number
+                                            - type: "null"
+                                      additionalProperties: false
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          enum:
+                                            - in
+                                        value:
+                                          type: array
+                                          items:
+                                            type: string
+                                      additionalProperties: false
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          enum:
+                                            - contains
+                                        value:
+                                          type: string
+                                      additionalProperties: false
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                    - $ref: "#/components/schemas/def-5"
+                            required:
+                              - combinator
+                              - rules
+                            additionalProperties: false
+                      title:
+                        type: string
+                      icon:
+                        type: string
+                      team:
+                        oneOf:
+                          - type: string
+                            title: string
+                          - type: array
+                            title: array
+                            items:
+                              type: string
+                          - $ref: "#/components/schemas/def-6"
+                      properties:
+                        type: object
+                        default: {}
+                      relations:
+                        type: object
+                        additionalProperties:
+                          anyOf:
+                            - type: string
+                              title: string
+                              pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                            - type: array
+                              title: array
+                              items:
+                                type: string
+                                pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                            - type: "null"
+                              title: "null"
+                            - $ref: "#/components/schemas/def-6"
+                    additionalProperties: false
+                required:
+                  - entity
+                  - ok
+                additionalProperties: false
         '400':
           description: |
             One of the following errors occurred: 
@@ -5341,8 +5458,127 @@ paths:
         - bearer:
             - 'read:entities'
       responses:
-        '200':
-          description: Success
+        "200":
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  entities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          oneOf:
+                            - type:
+                                - string
+                              pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                              title: string
+                            - type: object
+                              title: search query
+                              properties:
+                                combinator:
+                                  enum:
+                                    - and
+                                    - or
+                                rules:
+                                  type: array
+                                  items:
+                                    anyOf:
+                                      - type: object
+                                        properties:
+                                          property:
+                                            type: string
+                                          operator:
+                                            enum:
+                                              - =
+                                          value:
+                                            anyOf:
+                                              - type: string
+                                              - type: number
+                                              - type: "null"
+                                        additionalProperties: false
+                                        required:
+                                          - property
+                                          - operator
+                                          - value
+                                      - type: object
+                                        properties:
+                                          property:
+                                            type: string
+                                          operator:
+                                            enum:
+                                              - in
+                                          value:
+                                            type: array
+                                            items:
+                                              type: string
+                                        additionalProperties: false
+                                        required:
+                                          - property
+                                          - operator
+                                          - value
+                                      - type: object
+                                        properties:
+                                          property:
+                                            type: string
+                                          operator:
+                                            enum:
+                                              - contains
+                                          value:
+                                            type: string
+                                        additionalProperties: false
+                                        required:
+                                          - property
+                                          - operator
+                                          - value
+                                      - $ref: "#/components/schemas/def-5"
+                              required:
+                                - combinator
+                                - rules
+                              additionalProperties: false
+                        title:
+                          type: string
+                        icon:
+                          type: string
+                        team:
+                          oneOf:
+                            - type: string
+                              title: string
+                            - type: array
+                              title: array
+                              items:
+                                type: string
+                            - $ref: "#/components/schemas/def-6"
+                        properties:
+                          type: object
+                          default: {}
+                        relations:
+                          type: object
+                          additionalProperties:
+                            anyOf:
+                              - type: string
+                                title: string
+                                pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                              - type: array
+                                title: array
+                                items:
+                                  type: string
+                                  pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                              - type: "null"
+                                title: "null"
+                              - $ref: "#/components/schemas/def-6"
+                      additionalProperties: false
+                required:
+                  - entities
+                  - ok
+                additionalProperties: false
         '404':
           description: |
             One of the following errors occurred:
@@ -6537,6 +6773,258 @@ paths:
               <td>An internal error occurred</td>
             </tr>
             </table>
+  /v1/entities/aggregate:
+    post:
+      summary: Aggregate entities
+      tags:
+        - Entities
+      description: This route allows you to perform an aggregation function on a blueprint's entities based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.port.io/search-and-query/).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              oneOf:
+                - type: object
+                  title: Count entities
+                  properties:
+                    func:
+                      type: string
+                      enum:
+                        - average
+                        - count
+                    averageOf:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - week
+                        - month
+                        - total
+                    measureTimeBy:
+                      type: string
+                      description: A property of type `datetime`, by which the average will be calculated. Relevant only for the `average` function.  
+                    calculationBy:
+                      type: string
+                    query:
+                      description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.  
+                      $ref: "#/components/schemas/def-0"
+                  additionalProperties: false
+                  required:
+                    - func
+                    - query
+                - type: object
+                  title: Aggregate by property
+                  properties:
+                    property:
+                      type: string
+                      description: A property of type `number`, by which the aggregation will be calculated.  
+                    func:
+                      type: string
+                      enum:
+                        - sum
+                        - average
+                        - min
+                        - max
+                        - median
+                    averageOf:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - week
+                        - month
+                        - total
+                    measureTimeBy:
+                      type: string
+                      description: A property of type `datetime`, by which the average will be calculated. Relevant only for the `average` function.  
+                    calculationBy:
+                      type: string
+                    query:
+                      $ref: "#/components/schemas/def-0"
+                      description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.  
+                  additionalProperties: false
+                  required:
+                    - func
+                    - property
+                    - query
+                # - type: object
+                #   title: Display single property
+                #   oneOf:
+                #     - properties:
+                #         func:
+                #           enum:
+                #             - countValues
+                #         query:
+                #           $ref: "#/components/schemas/def-0"
+                #         property:
+                #           type: string
+                #       required:
+                #         - func
+                #         - query
+                #         - property
+                #       additionalProperties: false
+                #       title: Average
+                #       type: object
+                #     - properties:
+                #         func:
+                #           enum:
+                #             - countValues
+                #         query:
+                #           $ref: "#/components/schemas/def-0"
+                #         relation:
+                #           type: string
+                #       required:
+                #         - func
+                #         - query
+                #         - relation
+                #       additionalProperties: false
+                #       type: object
+                #     - properties:
+                #         func:
+                #           enum:
+                #             - countValues
+                #         query:
+                #           $ref: "#/components/schemas/def-0"
+                #         scorecard:
+                #           type: string
+                #       required:
+                #         - func
+                #         - query
+                #         - scorecard
+                #       additionalProperties: false
+                #       type: object
+                #     - properties:
+                #         func:
+                #           enum:
+                #             - countValues
+                #         query:
+                #           $ref: "#/components/schemas/def-0"
+                #         rule:
+                #           type: string
+                #         scorecard:
+                #           type: string
+                #       required:
+                #         - func
+                #         - query
+                #         - rule
+                #         - scorecard
+                #       additionalProperties: false
+                #       title: Count values
+                #       type: object
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Default Response
+  /v1/entities/aggregate-over-time:
+    post:
+      summary: Aggregate entities over time
+      tags:
+        - Entities
+      description: This route allows you to perform an aggregation function on a blueprint's entities over a given time range.<br/><br/>To learn more about entities, check out the [entity documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.getport.io/search-and-query/).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                func:
+                  type: string
+                  enum:
+                    - average
+                    - sum
+                    - min
+                    - max
+                    - median
+                    - last
+                blueprint:
+                  type: string
+                  description: The blueprint whose entities you wish to aggregate.
+                measureTimeBy:
+                  type: string
+                  description: A property of type `datetime` by which the aggregation will be calculated.
+                timeRange:
+                  type: object
+                  properties:
+                    preset:
+                      type: string
+                      enum:
+                        - today
+                        - yesterday
+                        - lastDay
+                        - lastWeek
+                        - last2Weeks
+                        - lastMonth
+                        - last3Months
+                        - last6Months
+                        - last12Months
+                    timeZone:
+                      type: string
+                  required:
+                    - preset
+                  additionalProperties: false
+                timeInterval:
+                  type: string
+                  enum:
+                    - hour
+                    - day
+                    - isoWeek
+                    - month
+                properties:
+                  type: array
+                  description: A list of properties of type `number` on which the aggregation will be calculated.
+                  items:
+                    type: string
+                query:
+                  $ref: "#/components/schemas/def-1"
+                  description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.
+              additionalProperties: false
+              required:
+                - func
+                - query
+                - blueprint
+                - timeRange
+                - timeInterval
+                - properties
+                - measureTimeBy
+        required: true
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  result:
+                    type: object
+                    properties:
+                      minDate:
+                        type: number
+                      maxDate:
+                        type: number
+                      data:
+                        type: array
+                        items:
+                          object:
+                            type: object
+                            properties:
+                              date:
+                                type: number
+                            additionalProperties:
+                              type: number
+                required:
+                  - ok
+                additionalProperties: false
   /v1/blueprints/{blueprint_identifier}/entities/search:
     post:
       summary: Search a blueprint's entities

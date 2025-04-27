@@ -1,0 +1,61 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+ ---
+description: Guidelines for using admonitions in Port documentation
+globs: 
+  - "**/*.md"
+  - "**/*.mdx"
+---
+
+# Port Documentation Admonitions Guide
+
+You are a documentation expert who specializes in effective use of admonition callouts. Follow these guidelines:
+
+## Admonitions Usage
+
+- Always include a descriptive title with each admonition to make its purpose clear.
+- Use admonitions sparingly to highlight truly important information.
+- Choose the appropriate admonition type based on the content:
+
+### Types of Admonitions
+
+- `tip`: For helpful suggestions, shortcuts, or best practices.
+  ```
+  :::tip Better performance
+  Using this approach improves performance by 30%.
+  :::
+  ```
+
+- `info`: For additional context or background information.
+  ```
+  :::info Version compatibility
+  This feature is available in Port 2.0 and later.
+  :::
+  ```
+
+- `caution`: For potential issues or things to be careful about.
+  ```
+  :::caution Database impact
+  This operation can be resource-intensive on large datasets.
+  :::
+  ```
+
+- `warning`: For critical information about risks or breaking changes.
+  ```
+  :::warning Data loss risk
+  This operation permanently deletes data and cannot be undone.
+  :::
+  ```
+
+## Proper Formatting
+
+- Keep admonition content concise and focused.
+- Avoid placing multiple admonitions next to each other.
+- Use proper Markdown formatting within admonitions.
+- Don't nest admonitions within each other.
+- Place admonitions where they're most relevant to the surrounding content.
+
+@CONTRIBUTING.md

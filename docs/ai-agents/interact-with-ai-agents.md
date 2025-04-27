@@ -35,6 +35,59 @@ Use the agent router when having a more natural conversation, such as through Sl
 ## Interaction methods
 
 <Tabs groupId="interaction-methods" queryString>
+<TabItem value="widget" label="Widget">
+
+You can add AI agents directly to your dashboards as interactive widgets, providing easy access to their capabilities right where you need them.
+
+Follow these steps to add an AI agent widget:
+
+1. Go to a dashboard.
+2. Click on `+ Widget`.
+3. Select the `AI Agent`.
+4. Choose the agent and position it in the widget grid.
+
+<img src='/img/ai-agents/AIAgentWidgetMenu.png' width='80%' border='1px' />
+
+The widget provides a chat interface where you can ask questions and receive responses from the agent without leaving your dashboard.
+
+</TabItem>
+<TabItem value="slack-integration" label="Slack Integration">
+
+The Slack integration provides the most natural way to interact with Port's AI agents. This method abstracts all technical details, allowing for free-flowing conversations.
+
+You can interact with agents in two ways:
+
+1. **Direct messaging** the [Port Slack app](/ai-agents/slack-app).
+2. **Mentioning** the app in any channel it's invited to.
+
+When you send a message, the app will:
+1. Open a thread.
+2. Respond with the agent's answer.
+
+<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border='1px' />
+<br/><br/>
+
+#### Tips for effective Slack interactions
+
+- To target a specific agent, include the agent's nickname at the beginning of your message (e.g., "@Port DevAgent what are our production services?").
+- Send follow-up messages in the same thread and mention the app again to continue the conversation.
+- Keep conversations focused on the same topic for best results.
+- Limit threads to five consecutive messages for optimal performance.
+- For best results, start new threads for new topics or questions.
+
+</TabItem>
+<TabItem value="actions-automations" label="Actions and automations">
+
+You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows.
+
+For example, when a new incident is created in Port, you can trigger an agent that:
+- Triages the incident.
+- Summarizes relevant information.
+- Sends a notification to Slack.
+
+<img src='/img/ai-agents/AIAgentsAutomationExample.png' width='80%' border='1px' />
+
+</TabItem>
 <TabItem value="api-integration" label="API integration">
 
 Port is an API-first platform, allowing you to integrate AI agents into your custom workflows.  
@@ -44,7 +97,7 @@ The interaction process follows these steps:
 2. Receive an invocation ID.
 3. Poll the entity until the generation is completed.
 
-<img src='/img/ai-agents/AIAgentTriggerFlowDiagram.png' width='70%' />
+<img src='/img/ai-agents/AIAgentTriggerFlowDiagram.png' width='70%' border='1px' />
 
 <details>
 <summary><b>API example (Click to expand)</b></summary>
@@ -92,43 +145,6 @@ print(result['response'])
 </details>
 
 </TabItem>
-<TabItem value="actions-automations" label="Actions and automations">
-
-You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows.
-
-For example, when a new incident is created in Port, you can trigger an agent that:
-- Triages the incident.
-- Summarizes relevant information.
-- Sends a notification to Slack.
-
-<img src='/img/ai-agents/AIAgentsAutomationExample.png' width='80%'/>
-
-</TabItem>
-<TabItem value="slack-integration" label="Slack Integration">
-
-The Slack integration provides the most natural way to interact with Port's AI agents. This method abstracts all technical details, allowing for free-flowing conversations.
-
-You can interact with agents in two ways:
-
-1. **Direct messaging** the Port Slack app.
-2. **Mentioning** the app in any channel it's invited to.
-
-When you send a message, the app will:
-1. Open a thread.
-2. Respond with the agent's answer.
-
-<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%'/>
-<br/><br/>
-
-#### Tips for effective Slack interactions
-
-- To target a specific agent, include the agent's nickname at the beginning of your message (e.g., "@Port DevAgent what are our production services?").
-- Send follow-up messages in the same thread and mention the app again to continue the conversation.
-- Keep conversations focused on the same topic for best results.
-- Limit threads to five consecutive messages for optimal performance.
-- For best results, start new threads for new topics or questions.
-
-</TabItem>
 </Tabs>
 
 ## AI interaction details
@@ -139,7 +155,7 @@ Every AI agent interaction creates an entity in Port, allowing you to track and 
 
 The plan shows how the agent decided to tackle your request and the steps it intended to take. This provides insight into the agent's reasoning process.
 
-<img src='/img/ai-agents/AIAgentsPlan.png' width='80%'/>
+<img src='/img/ai-agents/AIAgentsPlan.png' width='80%' border='1px' />
 
 
 ### Tools used
@@ -150,7 +166,7 @@ This section displays the actual steps the agent took and the APIs it used to co
 - Chose an inappropriate property.
 - Made other logical errors.
 
-<img src='/img/ai-agents/AIAgentsTools.png' width='80%'/>
+<img src='/img/ai-agents/AIAgentsTools.png' width='80%' border='1px' />
 
 
 ### Tokens
@@ -191,6 +207,7 @@ If responses consistently take longer than this, consider:
 <summary><b>How can I interact with the agent? (Click to expand)</b></summary>
 
 Currently, you can interact with Port AI agents through:
+- The AI agent widget in the dashboards.
 - Slack integration.
 - API integration.
 
@@ -228,7 +245,7 @@ Remember that AI agents are constantly learning and improving, but they're not i
 <summary><b>My agent isn't responding in Slack (Click to expand)</b></summary>
 
 Ensure that:
-- The Port Slack app is properly installed in your workspace.
+- The [Port Slack app](/ai-agents/slack-app) is properly installed in your workspace.
 - The app has been invited to the channel where you're mentioning it.
 - You're correctly mentioning the app (@Port).
 - You've completed the authentication flow with the app.

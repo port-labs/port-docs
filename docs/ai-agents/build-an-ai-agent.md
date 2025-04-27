@@ -21,8 +21,8 @@ Let's walk through the process of creating an agent that can assist your develop
 To create a new agent, head to the AI Agents catalog page (this page will be created for you when you activate the feature).
 
 Click on the "New AI Agent" button and fill the form with the agent details.
-<img src='/img/ai-agents/AIAgentsList.png' width='80%' />
-<img src='/img/ai-agents/AIAgentsAddAgentModal.png' width='80%' />
+<img src='/img/ai-agents/AIAgentsList.png' width='80%' border='1px' />
+<img src='/img/ai-agents/AIAgentsAddAgentModal.png' width='80%' border='1px' />
 
 We recommend following the steps below.
 
@@ -36,7 +36,7 @@ Here we will determine whether the agent will:
 
 We recommend starting with a simple use case that a junior assistant with access to your data could assist with. 
 
-<!--  For inspiration, check our [AI agents guides](/guides). -->
+For inspiration, check our [AI agents guides](/guides?tags=AI).
 
 ### Step 2: Configure data access
 
@@ -52,11 +52,6 @@ For example:
 Pay attention to relationships between entities to ensure your agent can provide comprehensive answers.
 
 ### Step 3: Configure actions (optional)
-
-:::info Limitations
-It's important to note that an AI agent cannot both run actions and answer questions simultaneously. For instance, asking "Who is the owner of this component?" and then perform an action like, "Please notify the owner to review PR X". To achieve this, you'll need to set up a workflow that involves multiple agents or rely on our agent router. Test these scenarios catefully.
-:::
-
 
 If your agent needs to run actions, you will need to:
 
@@ -118,7 +113,7 @@ When answering questions:
 - Include links to relevant resources when available
 ```
 
-<img src='/img/ai-agents/AIAgentPrompt.png' width='80%' />
+<img src='/img/ai-agents/AIAgentPrompt.png' width='80%' border='1px' />
 
 ### Step 5: Add conversation starters
 
@@ -186,6 +181,18 @@ This agent helps with deployment processes:
 
 ```markdown
 Your goal is to help developers initiate and track deployments to various environments.
+```
+
+## Formatting the agent response
+To format the agent's response, you can specify the desired format in its prompt. For optimal results when using the UI, it's recommended to request a markdown format response. 
+This allows for better presentation and readability of the information provided by the agent.
+When sending messages through Slack, our [Slack app](/ai-agents/slack-app) convert the markdown format into a Slack compatible formatting.
+
+### Example of a Markdown Response
+```markdown
+:rocket: *New version deployed!*
+[Added logs](https://www.example.com)
+From [john-123](https://github.com/john-123)
 ```
 
 ## Troubleshooting & FAQ

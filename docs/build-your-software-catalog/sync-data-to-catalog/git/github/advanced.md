@@ -91,4 +91,33 @@ gitopsMetadataProperty: myGitopsMetadata # the GitOps metadata will be sent to t
 
 </TabItem>
 
+<TabItem value="closedPullRequests" label="Fetch closed pull requests">
+
+Use the `closedPullRequests` parameter to enable the fetching of closed pull requests on re-sync.
+
+- Default value: `false` (do not fetch closed pull requests).
+- Use case: Useful for analyzing closed pull request history, such as DORA metrics.
+
+ 
+Port will fetch the last 100 updated closed pull requests or those from the past 60 days, whichever comes first.
+
+
+**Configuration example**
+
+```yaml showLineNumbers
+integrationConfig:
+    resources:
+    - kind: pull-request
+      selector:
+        query: "true"
+# highlight-next-line
+        closedPullRequests: true
+    port:
+      entity:
+        mappings:
+        ... mappings configuration
+```
+
+</TabItem>
+
 </Tabs>

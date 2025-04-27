@@ -122,7 +122,7 @@ The following definition will cause a webhook to be triggered whenever the `ttl`
     "body": {
       "entityId": "{{ .event.context.entityIdentifier }}",
       "runId": "{{ .run.id }}"
-    },
+    }
   },
   "publish": true
 }
@@ -142,7 +142,7 @@ The following example shows an automation definition that triggers this self-ser
 
 ### Automation definition
 <PortApiRegion />
-```yaml showLineNumbers
+```json showLineNumbers
 {
   "identifier": "slack_notify_on_service_failure",
   "title": "Notify via Slack on service failure",
