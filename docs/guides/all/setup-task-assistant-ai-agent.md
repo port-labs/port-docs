@@ -158,8 +158,8 @@ The value `{{cloudId}}` in the URL is your Jira Cloud ID. If you've recently ins
 
 We need to configure a self-service action which can be triggered by the agent or manually by the user to comment on issues directly from Port.
 
-1. Go to the [Self Service Actions](https://app.getport.io/self-service) page
-2. Click on `+ Action`
+1. Go to the [Self Service Actions](https://app.getport.io/self-service) page.
+2. Click on `+ Action`.
 3. Copy and paste the following JSON schema:
 
    <details>
