@@ -35,6 +35,59 @@ Use the agent router when having a more natural conversation, such as through Sl
 ## Interaction methods
 
 <Tabs groupId="interaction-methods" queryString>
+<TabItem value="widget" label="Widget">
+
+You can add AI agents directly to your dashboards as interactive widgets, providing easy access to their capabilities right where you need them.
+
+Follow these steps to add an AI agent widget:
+
+1. Go to a dashboard.
+2. Click on `+ Widget`.
+3. Select the `AI Agent`.
+4. Choose the agent and position it in the widget grid.
+
+<img src='/img/ai-agents/AIAgentWidgetMenu.png' width='80%'/>
+
+The widget provides a chat interface where you can ask questions and receive responses from the agent without leaving your dashboard.
+
+</TabItem>
+<TabItem value="slack-integration" label="Slack Integration">
+
+The Slack integration provides the most natural way to interact with Port's AI agents. This method abstracts all technical details, allowing for free-flowing conversations.
+
+You can interact with agents in two ways:
+
+1. **Direct messaging** the [Port Slack app](/ai-agents/slack-app).
+2. **Mentioning** the app in any channel it's invited to.
+
+When you send a message, the app will:
+1. Open a thread.
+2. Respond with the agent's answer.
+
+<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%'/>
+<br/><br/>
+
+#### Tips for effective Slack interactions
+
+- To target a specific agent, include the agent's nickname at the beginning of your message (e.g., "@Port DevAgent what are our production services?").
+- Send follow-up messages in the same thread and mention the app again to continue the conversation.
+- Keep conversations focused on the same topic for best results.
+- Limit threads to five consecutive messages for optimal performance.
+- For best results, start new threads for new topics or questions.
+
+</TabItem>
+<TabItem value="actions-automations" label="Actions and automations">
+
+You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows.
+
+For example, when a new incident is created in Port, you can trigger an agent that:
+- Triages the incident.
+- Summarizes relevant information.
+- Sends a notification to Slack.
+
+<img src='/img/ai-agents/AIAgentsAutomationExample.png' width='80%'/>
+
+</TabItem>
 <TabItem value="api-integration" label="API integration">
 
 Port is an API-first platform, allowing you to integrate AI agents into your custom workflows.  
@@ -90,43 +143,6 @@ print(result['response'])
 ```
 
 </details>
-
-</TabItem>
-<TabItem value="actions-automations" label="Actions and automations">
-
-You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows.
-
-For example, when a new incident is created in Port, you can trigger an agent that:
-- Triages the incident.
-- Summarizes relevant information.
-- Sends a notification to Slack.
-
-<img src='/img/ai-agents/AIAgentsAutomationExample.png' width='80%'/>
-
-</TabItem>
-<TabItem value="slack-integration" label="Slack Integration">
-
-The Slack integration provides the most natural way to interact with Port's AI agents. This method abstracts all technical details, allowing for free-flowing conversations.
-
-You can interact with agents in two ways:
-
-1. **Direct messaging** the [Port Slack app](/ai-agents/slack-app).
-2. **Mentioning** the app in any channel it's invited to.
-
-When you send a message, the app will:
-1. Open a thread.
-2. Respond with the agent's answer.
-
-<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%'/>
-<br/><br/>
-
-#### Tips for effective Slack interactions
-
-- To target a specific agent, include the agent's nickname at the beginning of your message (e.g., "@Port DevAgent what are our production services?").
-- Send follow-up messages in the same thread and mention the app again to continue the conversation.
-- Keep conversations focused on the same topic for best results.
-- Limit threads to five consecutive messages for optimal performance.
-- For best results, start new threads for new topics or questions.
 
 </TabItem>
 </Tabs>
@@ -191,6 +207,7 @@ If responses consistently take longer than this, consider:
 <summary><b>How can I interact with the agent? (Click to expand)</b></summary>
 
 Currently, you can interact with Port AI agents through:
+- The AI agent widget in the dashboards.
 - Slack integration.
 - API integration.
 

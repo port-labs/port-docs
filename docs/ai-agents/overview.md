@@ -18,6 +18,10 @@ import AIAgentRegistration from "/src/components/AIAgentRegistration"
 Port AI agents are customizable building blocks that enhance your developer portal with intelligent assistance.  
 These agents help your developers find information faster and complete tasks more efficiently across your development ecosystem.
 
+<img src="/img/ai-agents/AIAgentIncidentManagerAgentPage.png" width="80%" border="1px" />
+<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border="1px" />
+
+
 ## What can AI agents do?
 
 AI agents serve two primary functions:
