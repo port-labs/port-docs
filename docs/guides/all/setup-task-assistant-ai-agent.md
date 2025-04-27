@@ -104,8 +104,8 @@ Now that we have created the Task Assistant AI agent, we need to set up an autom
 
 Follow the steps below to set up the automation:
 
-1. Go to the [Automations](https://app.getport.io/automations) page
-2. Click on `+ Automation`
+1. Go to the [Automations](https://app.getport.io/automations) page.
+2. Click on `+ Automation`.
 3. Copy and paste the following JSON schema:
 
    <details>
