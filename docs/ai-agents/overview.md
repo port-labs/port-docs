@@ -46,7 +46,7 @@ AI agents serve two primary functions:
 To start working with AI agents, follow these steps:
 
 1. **Apply for access** - Submit your application via [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
-2. **Access the feature** - If accepted, you will be able to activate the AI agents in your Port organization.
+2. **Access the feature** - If accepted, you will be able to [activate the AI agents](/ai-agents/overview#access-to-the-feature) in your Port organization.
 3. **Build your agents** - [Create custom agents](/ai-agents/build-an-ai-agent) to meet your developers' needs.
 4. **Interact with your agents** - Engage with your agents by following our [interaction guide](/ai-agents/interact-with-ai-agents).
 
