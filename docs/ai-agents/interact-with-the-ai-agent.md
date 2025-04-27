@@ -46,7 +46,7 @@ Follow these steps to add an AI agent widget:
 3. Select the `AI Agent`.
 4. Choose the agent and position it in the widget grid.
 
-<img src='/img/ai-agents/AIAgentWidgetMenu.png' width='80%'/>
+<img src='/img/ai-agents/AIAgentWidgetMenu.png' width='80%' border='1px' />
 
 The widget provides a chat interface where you can ask questions and receive responses from the agent without leaving your dashboard.
 
@@ -64,7 +64,7 @@ When you send a message, the app will:
 1. Open a thread.
 2. Respond with the agent's answer.
 
-<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%'/>
+<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border='1px' />
 <br/><br/>
 
 #### Tips for effective Slack interactions
@@ -85,7 +85,7 @@ For example, when a new incident is created in Port, you can trigger an agent th
 - Summarizes relevant information.
 - Sends a notification to Slack.
 
-<img src='/img/ai-agents/AIAgentsAutomationExample.png' width='80%'/>
+<img src='/img/ai-agents/AIAgentsAutomationExample.png' width='80%' border='1px' />
 
 </TabItem>
 <TabItem value="api-integration" label="API integration">
@@ -97,7 +97,7 @@ The interaction process follows these steps:
 2. Receive an invocation ID.
 3. Poll the entity until the generation is completed.
 
-<img src='/img/ai-agents/AIAgentTriggerFlowDiagram.png' width='70%' />
+<img src='/img/ai-agents/AIAgentTriggerFlowDiagram.png' width='70%' border='1px' />
 
 <details>
 <summary><b>API example (Click to expand)</b></summary>
@@ -155,7 +155,7 @@ Every AI agent interaction creates an entity in Port, allowing you to track and 
 
 The plan shows how the agent decided to tackle your request and the steps it intended to take. This provides insight into the agent's reasoning process.
 
-<img src='/img/ai-agents/AIAgentsPlan.png' width='80%'/>
+<img src='/img/ai-agents/AIAgentsPlan.png' width='80%' border='1px' />
 
 
 ### Tools used
@@ -166,7 +166,7 @@ This section displays the actual steps the agent took and the APIs it used to co
 - Chose an inappropriate property.
 - Made other logical errors.
 
-<img src='/img/ai-agents/AIAgentsTools.png' width='80%'/>
+<img src='/img/ai-agents/AIAgentsTools.png' width='80%' border='1px' />
 
 
 ### Tokens

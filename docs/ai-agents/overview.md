@@ -33,13 +33,13 @@ AI agents serve two primary functions:
 ### Example use cases
 
 **Questions your agents can answer:**
-- "Which services are failing security checks?"
-- "When was the last successful deployment of the payment service?"
-- "Who is the owner for this component?"
+- "Which services are failing security checks?".
+- "When was the last successful deployment of the payment service?".
+- "Who is the owner for this component?".
 
 **Actions your agents can help with:**
-- "Can you help me deploy service X to production?"
-- "Please notify the reviewers of PR #1234"
+- "Can you help me deploy service X to production?".
+- "Please notify the reviewers of PR #1234".
 
 ## Getting started with AI agents
 
@@ -63,7 +63,7 @@ To start working with AI agents, follow these steps:
 AI agents are designed with security as a priority:
 - Agents only have access to the data you explicitly provide.
 - Your data remains within Port's secure infrastructure.
-- LLM processing happens within our cloud infrastructure. 
+- LLM processing happens within our cloud infrastructure.
 - Your data is not used for model training.
 
 ## Start simple & expand as needed
@@ -106,18 +106,18 @@ Port AI supports two primary interaction types:
 <details>
 <summary>How do users interact with Port AI? (Click to expand)</summary>
 
-- Primary interface is through our [Slack app](/ai-agents/slack-app)
-- Full API availability
+- Primary interface is through our [Slack app](/ai-agents/slack-app).
+- Full API availability.
 </details>
 
 <details>
 <summary>Can customers customize the AI agents? (Click to expand)</summary>
 
 Yes - you can create custom AI agents within Port. Customization includes:
-- Creating new agents using Port's blueprint system
-- Configuring agent knowledge base and access to tools
-- Adjusting prompts and agent behaviors
-- Setting permissions and usage boundaries
+- Creating new agents using Port's blueprint system.
+- Configuring agent knowledge base and access to tools.
+- Adjusting prompts and agent behaviors.
+- Setting permissions and usage boundaries.
 
 All agents operate within Port's secure framework and governance controls.
 </details>

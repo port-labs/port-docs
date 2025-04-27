@@ -52,9 +52,9 @@ While this guide uses GitHub, you can enhance the agent's capabilities by adding
 
 ### Create the agent configuration
 
-1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal
-2. Click on `+ AI Agent`
-3. Toggle `Json mode` on
+1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
+2. Click on `+ AI Agent`.
+3. Toggle `Json mode` on.
 4. Copy and paste the following JSON schema:
 
    <details>
@@ -84,18 +84,18 @@ While this guide uses GitHub, you can enhance the agent's capabilities by adding
    ```
    </details>
 
-5. Click on `Create` to save the agent
+5. Click on `Create` to save the agent.
 
 ### Create the automations
 
-We'll need two automations:
-1. One to trigger the AI agent when a PR is opened
-2. Another to post the agent's response as a comment
+We will need two automations:
+1. One to trigger the AI agent when a PR is opened.
+2. Another to post the agent's response as a comment.
 
 #### Trigger PR enricher AI agent
 
-1. Go to the [Automations](https://app.getport.io/automations) page
-2. Click on `+ Automation`
+1. Go to the [Automations](https://app.getport.io/automations) page.
+2. Click on `+ Automation`.
 3. Copy and paste the following JSON schema:
 
     <details>
@@ -138,7 +138,7 @@ We'll need two automations:
       ```
     </details>
 
-4. Click on `Create` to save the automation
+4. Click on `Create` to save the automation.
 
 #### Post PR enricher AI agent response on GitHub
 
@@ -210,7 +210,7 @@ Follow GitHub's guide to [create a fine-grained personal access token](https://d
     Make sure to replace 'YOUR_GITHUB_ORG' and 'YOUR_GITHUB_REPO' in the `url` field above with the actual organization and repository where your `post-pr-comment.yml` workflow resides.
     :::
 
-6. Click on `Create` to save the automation
+6. Click on `Create` to save the automation.
 
 ### Create the GitHub workflow
 
@@ -315,12 +315,12 @@ In your dedicated workflow repository, ensure you have a `.github/workflows` dir
       :::info Required GitHub Secrets
       For this workflow to function properly, you need to add the following secrets to your GitHub repository:
 
-      - `PORT_GITHUB_APP_PEM`: The private key of your GitHub App in PEM format
-      - `PORT_GITHUB_APP_ID`: The App ID of your GitHub App
-      - `PORT_GITHUB_APP_INSTALLATION_ID`: The installation ID of your GitHub App in this repository
+      - `PORT_GITHUB_APP_PEM`: The private key of your GitHub App in PEM format.
+      - `PORT_GITHUB_APP_ID`: The App ID of your GitHub App.
+      - `PORT_GITHUB_APP_INSTALLATION_ID`: The installation ID of your GitHub App in this repository.
       :::
 
-3. Commit and push the changes to your repository
+3. Commit and push the changes to your repository.
 
 ## Example response
 
@@ -336,19 +336,19 @@ This PR implements Stripe payment processing with 3D Secure authentication and a
 This pull request introduces a new payment gateway integration with Stripe, enabling secure credit card processing with 3D Secure authentication and compliance with PCI-DSS requirements.
 
 ### Key Points
-1. Adds a new `PaymentService` that implements the payment gateway interface with Stripe-specific logic
-2. Includes comprehensive error handling for payment failures, network issues, and fraud detection
-3. Adds feature flags to gradually roll out the payment system to different user segments
+1. Adds a new `PaymentService` that implements the payment gateway interface with Stripe-specific logic.
+2. Includes comprehensive error handling for payment failures, network issues, and fraud detection.
+3. Adds feature flags to gradually roll out the payment system to different user segments.
 
 ### Observations
-- **Security Impact**: 🔴 Handles sensitive payment information requiring thorough security review and PCI compliance verification
-- **Test Coverage**: 🟡 Integration tests with Stripe's test environment included, but mock tests for failure scenarios need expansion
-- **Performance**: 🟢 Initial load testing shows payment processing completes in <200ms for 99% of transactions
+- **Security Impact**: 🔴 Handles sensitive payment information requiring thorough security review and PCI compliance verification.
+- **Test Coverage**: 🟡 Integration tests with Stripe's test environment included, but mock tests for failure scenarios need expansion.
+- **Performance**: 🟢 Initial load testing shows payment processing completes in <200ms for 99% of transactions.
 
 ### Recommendations
-- **Security Review**: Request dedicated review from security team to verify proper handling of payment tokens and credentials
-- **Documentation**: Add detailed documentation about the Stripe integration configuration and failure handling for on-call engineers
-- **Monitoring**: Consider adding additional logging and alerting for payment failures to quickly identify issues in production
+- **Security Review**: Request dedicated review from security team to verify proper handling of payment tokens and credentials.
+- **Documentation**: Add detailed documentation about the Stripe integration configuration and failure handling for on-call engineers.
+- **Monitoring**: Consider adding additional logging and alerting for payment failures to quickly identify issues in production.
 
 *This integration significantly expands our payment capabilities while maintaining our security standards. The feature flags provide a safe rollout strategy.*
 ```
@@ -373,7 +373,7 @@ To get the most out of your PR Enricher agent:
 
 You can further enhance the PR Enricher setup by:
 
-- **Adding more data sources** like PagerDuty for incident context or [additional Git providers](/ai-agents/build-an-ai-agent#step-2-configure-data-access) for broader repository visibility
-- **Configuring automated actions** such as [reviewer assignment, PR labeling, or creating follow-up Jira tickets](/ai-agents/interact-with-the-ai-agent#actions-and-automations)
-- **Customizing risk assessment criteria** to align with your organization's specific guidelines and [monitoring usage patterns](/ai-agents/interact-with-the-ai-agent#ai-interaction-details)
+- **Adding more data sources** like PagerDuty for incident context or [additional Git providers](/ai-agents/build-an-ai-agent#step-2-configure-data-access) for broader repository visibility.
+- **Configuring automated actions** such as [reviewer assignment, PR labeling, or creating follow-up Jira tickets](/ai-agents/interact-with-the-ai-agent#actions-and-automations).
+- **Customizing risk assessment criteria** to align with your organization's specific guidelines and [monitoring usage patterns](/ai-agents/interact-with-the-ai-agent#ai-interaction-details).
 

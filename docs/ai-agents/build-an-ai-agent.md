@@ -21,8 +21,8 @@ Let's walk through the process of creating an agent that can assist your develop
 To create a new agent, head to the AI Agents catalog page (this page will be created for you when you activate the feature).
 
 Click on the "New AI Agent" button and fill the form with the agent details.
-<img src='/img/ai-agents/AIAgentsList.png' width='80%' />
-<img src='/img/ai-agents/AIAgentsAddAgentModal.png' width='80%' />
+<img src='/img/ai-agents/AIAgentsList.png' width='80%' border='1px' />
+<img src='/img/ai-agents/AIAgentsAddAgentModal.png' width='80%' border='1px' />
 
 We recommend following the steps below.
 
@@ -113,7 +113,7 @@ When answering questions:
 - Include links to relevant resources when available
 ```
 
-<img src='/img/ai-agents/AIAgentPrompt.png' width='80%' />
+<img src='/img/ai-agents/AIAgentPrompt.png' width='80%' border='1px' />
 
 ### Step 5: Add conversation starters
 

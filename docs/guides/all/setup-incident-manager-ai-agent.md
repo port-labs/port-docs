@@ -167,12 +167,12 @@ The Slack app is smart enough to route your request to the appropriate agent bas
 
 Here are some questions you can ask the Incident Manager agent:
 
-- "Which team has the highest number of open incidents?"
-- "How many open incidents are there currently?"
-- "Who is currently on-call for the payment gateway service?"
-- "What is our mean time to resolution?"
-- "What services were impacted by the outage on Jan 16th 2024?"
-- "Trigger an incident for the Checkout service regarding increase in response time"
+- "Which team has the highest number of open incidents?".
+- "How many open incidents are there currently?".
+- "Who is currently on-call for the payment gateway service?".
+- "What is our mean time to resolution?".
+- "What services were impacted by the outage on Jan 16th 2024?".
+- "Trigger an incident for the Checkout service regarding increase in response time".
 
 ## Best practices
 
@@ -188,4 +188,4 @@ You can further enhance the Incident Manager setup by:
 - **Integration expansion**: [Add more data sources](/ai-agents/build-an-ai-agent#step-2-configure-data-access) like Opsgenie or ServiceNow.
 - **Automated notifications**: [Configure the agent](/ai-agents/interact-with-the-ai-agent#actions-and-automations) to proactively notify about incident updates or escalations.
 - **Custom conversation starters**: Add organization-specific queries to the [conversation starters](/ai-agents/build-an-ai-agent#step-5-add-conversation-starters).
-- **Monitor and improve**: [Check how your developers are interacting](/ai-agents/interact-with-the-ai-agent#ai-interaction-details) with the agent and improve it according to feedback. 
+- **Monitor and improve**: [Check how your developers are interacting](/ai-agents/interact-with-the-ai-agent#ai-interaction-details) with the agent and improve it according to feedback.
