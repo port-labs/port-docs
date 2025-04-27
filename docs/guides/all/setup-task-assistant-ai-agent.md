@@ -26,10 +26,10 @@ By the end of this guide, your developers will receive automated, contextual ins
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature)
-- Appropriate permissions to create and configure AI agents
-- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) configured in your Port instance
-- [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) configured in your Port instance
+- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
+- Appropriate permissions to create and configure AI agents.
+- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) configured in your Port instance.
+- [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) configured in your Port instance.
 
 ## Set up data model
 
