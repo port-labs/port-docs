@@ -1002,4 +1002,11 @@ export const availableGuides = [
         logos: ["AI"],
         link: "/guides/all/setup-task-assistant-ai-agent",
     },
+    {
+        title: "Enrich pull requests using AI",
+        description: "Set up an AI agent that automatically comments on pull requests with additional context",
+        tags: ["AI","GitHub","Jira","PagerDuty"],
+        logos: ["AI"],
+        link: "/guides/all/setup-pr-enricher-ai-agent",
+    },
 ]
