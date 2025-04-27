@@ -977,7 +977,7 @@ export const availableGuides = [
 	  {
         title: "Set up the Incident Manager AI agent",
         description: "Set up an AI agent that helps developers track and manage incidents efficiently",
-        tags: ["AI","PagerDuty","Slack","Incident management"],
+        tags: ["Incident management", "AI", "PagerDuty", "Slack"],
         logos: ["AI"],
         link: "/guides/all/setup-incident-manager-ai-agent",
 	  },
