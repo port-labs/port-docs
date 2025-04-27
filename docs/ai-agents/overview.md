@@ -43,7 +43,7 @@ To start working with AI agents, follow these steps:
 1. **Apply for access** - Submit your application via [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
 2. **Access the feature** - If accepted, you will be able to activate the AI agents in your Port organization.
 3. **Build your agents** - [Create custom agents](/ai-agents/build-an-ai-agent) to meet your developers' needs.
-4. **Interact with your agents** - Engage with your agents by following our [interaction guide](/ai-agents/interact-with-the-ai-agent).
+4. **Interact with your agents** - Engage with your agents by following our [interaction guide](/ai-agents/interact-with-ai-agents).
 
 ## Customization and control
 
@@ -82,7 +82,7 @@ The data model of AI agents includes two main blueprints:
 
 1. **AI agents** - The agents themselves that you can interact with. You can build new ones and customize them as you wish. Learn more in our [Build an AI agent](/ai-agents/build-an-ai-agent) guide.
 
-2. **AI invocations** - Each interaction made with an AI agent is recorded as an invocation. This acts as a log of everything going through your AI agents so you can monitor and improve them over time. Learn more in our [Interact with the AI agent](/ai-agents/interact-with-the-ai-agent) guide.
+2. **AI invocations** - Each interaction made with an AI agent is recorded as an invocation. This acts as a log of everything going through your AI agents so you can monitor and improve them over time. Learn more in our [Interact with AI agents](/ai-agents/interact-with-ai-agents) guide.
 
 ## Frequently asked questions
 

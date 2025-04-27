@@ -1,9 +1,9 @@
 ---
 sidebar_position: 3
-title: Interact with the AI agent
+title: Interact with AI agents
 ---
 
-# Interact with the AI agent
+# Interact with AI agents
 
 import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md'
 import Tabs from "@theme/Tabs"

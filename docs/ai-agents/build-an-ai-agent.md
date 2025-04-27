@@ -152,7 +152,7 @@ Choose conversation starters that:
 When you feel your agent is ready:
 
 1. Set its status to "Active".
-2. Start interacting with it through the [available interfaces](/ai-agents/interact-with-the-ai-agent).
+2. Start interacting with it through the [available interfaces](/ai-agents/interact-with-ai-agents).
 
 ## Evaluating your agent performance
 
@@ -163,7 +163,7 @@ Continuous evaluation and improvement are essential for maintaining effective AI
 3. **Analyze execution plans**: Examine how the agent processes requests by reviewing the execution plan and tool calls for specific invocations. This helps identify where improvements are needed.
 4. **Refine the prompt**: Update your agent's prompt based on your findings to address common issues.
 
-For more details on how to view execution plans and analyze agent behavior, see [Interact with the AI agent](/ai-agents/interact-with-the-ai-agent).
+For more details on how to view execution plans and analyze agent behavior, see [Interact with AI agents](/ai-agents/interact-with-ai-agents).
 
 ## Examples
 
