@@ -84,7 +84,7 @@ Install the following integration to have access to these data sources:
          "comment_on_jira_issue"
        ],
        "executionMode": "Automatic",
-       "prompt": "A user has just started working on a task. Please greet them using their first name. Then send them a list of other other tasks that might be related to the topic of the task and the users assigned to them, and a list of other pull requests that could be related to the topic of the task and the users that created them. Note that this is an automatic process, that was not initiated by the user. \n\nThe format for the message is:\n\nHey there (Enter user's name here), it's Clarity :crystal_ball: - The Port AI agent!\nI noticed you just started working on a new task- (assigned issue here, which is a link to the port issue)\nHere's some context to help you get started :blobdance:\n\n:male-technologist: Devs who I think will have some input here\n    (put a list of at most 3 items, ordered by relevance and add the assigned person and explain why you chose it- Don't use the user which you send the message to. The list can contain less than 3 items, but if empty leave a meaningful explaination)\n\n:jira:  Similar Jira Issues\n    (put a list of at most 3 items, ordered by relevance and add the assigned person and explain why you chose it- Don't use issues im assigned to. The list can contain less than 3 items, but if empty leave a meaningful explaination)\n\n:github_on_fire:  Similar Pull Requests\n    (put a list of at most 3 items, ordered by relevance and add the assigned person and explain why you chose it- don't put pull requests im assigned to. The list can contain less than 3 items, but if empty leave a meaningful explaination)",
+       "prompt": "# Task\nWhen a user starts a task, automatically send a greeting using their first name and explain this is an automatic message. Then share three sections with emojis for helpful context.\n\n## Message Format\n\nHey there [User’s First Name], it’s Clarity :crystal_ball: - the Port AI agent!\nI noticed you just started working on a new task: [link to assigned issue].\nHere’s some context to help you get started :blobdance:\n\n:male-technologist: Devs who might have input:\nList up to 3 developers (excluding the user), explain briefly why each is relevant. If none, write a meaningful explanation.\n\n:jira: Similar Jira Issues:\nList up to 3 Jira issues (not assigned to the user), mention the assigned person and why it’s relevant. If none, explain why.\n\n:github_on_fire: Similar Pull Requests:\nList up to 3 pull requests (not assigned to the user), mention the creator and why it’s relevant. If none, explain why.\n\n## Guidelines\n- Each section can have fewer than 3 items. Always explain if empty.",
        "allowed_tools": [
          "Entities Search",
          "Entities Similarity Search",
@@ -137,7 +137,7 @@ Follow the steps below to set up the automation:
        "url": "https://api.getport.io/v1/agent/task_assistant_ai_agent/invoke",
        "synchronized": true,
        "body": {
-         "prompt": "The user's email is \"{{.event.diff.after.relations.assignee}}\" and the task's title is \"{{.event.diff.after.title}}\".",
+         "prompt": "User's email: \"{{.event.diff.after.relations.assignee}}\" . Task title: \"{{.event.diff.after.title}}\". Task identifier: \"{{.event.diff.after.identifier}}\".",
          "labels": {
            "source": "Automation"
          }
@@ -151,6 +151,10 @@ Follow the steps below to set up the automation:
 4. Click on `Create` to save the automation
 
 ### Configure the self-service action
+
+:::info Jira Cloud ID
+The value `{{cloudId}}` in the URL is your Jira Cloud ID. If you've recently installed Jira and have a "create a Jira issue" action, you can copy it from there. Otherwise, you can find your Jira Cloud ID by following [this guide](https://support.atlassian.com/jira/kb/retrieve-my-atlassian-sites-cloud-id/).
+:::
 
 We need to configure a self-service action which can be triggered by the agent or manually by the user to comment on issues directly from Port.
 
@@ -205,7 +209,7 @@ We need to configure a self-service action which can be triggered by the agent o
      },
      "invocationMethod": {
        "type": "WEBHOOK",
-       "url": "https://api.atlassian.com/ex/jira/1a2bd5d3-0dad-4011-9b5b-2098904ca3c3/rest/api/3/issue/{{ .entity.identifier }}/comment",
+       "url": "https://api.atlassian.com/ex/jira/{{cloudId}}/rest/api/3/issue/{{ .entity.identifier }}/comment",
        "agent": false,
        "synchronized": true,
        "method": "POST",
@@ -249,13 +253,11 @@ We need to configure a self-service action which can be triggered by the agent o
 
 To get the most out of your Task Assistant agent:
 
-1. **Maintain integrations**: Keep your Jira and GitHub integrations up to date.
-
-2. **Monitor responses**: Review the agent's messages to ensure they provide valuable context.
+1. **Monitor responses**: Review the agent's messages to ensure they provide valuable context.
 
 3. **Refine the prompt**: Adjust the agent's prompt based on your team's needs and feedback.
 
-4. **Test thoroughly**: Create test issues to verify both automated messages and manual comments work as expected.
+3. **Test thoroughly**: Create test issues to verify both automated messages and manual comments work as expected.
 
 ## Possible enhancements
 
@@ -264,8 +266,3 @@ You can further enhance the Task Assistant setup by:
 - **Integration expansion**: Add more data sources like Confluence or ServiceNow for broader context.
 
 - **Custom triggers**: Configure additional automation triggers based on other task events.
-
-
-- **Enhanced context**: Modify the prompt to include more specific information like deployment status or test coverage.
-
-- **Team customization**: Adjust the message format and content based on team preferences. 
