@@ -178,13 +178,13 @@ Use cases include:
 
 ### Why do I need multiple custom apps for the same GitHub organization?
 
-GitHub only allows installing a given GitHub App once per GitHub organization. To connect multiple Port organizations to the same GitHub organization, after installing the Port Github App in the first Port organization, each additional Port organization must have its own custom GitHub App. These apps can target the same repositories but function independently—ideal for multi-environment rollouts or segmented pipelines.
+GitHub only allows installing a given GitHub App once per GitHub organization. To connect multiple Port organizations to the same GitHub organization, after installing the Port Github App in the first Port organization, each additional Port organization must have its own custom GitHub App. These apps can target the same repositories but function independently, this is ideal for multi-environment rollouts or segmented pipelines.
 
-### What steps do I follow to connect the same Github organization to my Production and Staging instance?
+### How can I connect the same Github organization to my Production and Staging instance?
 
-- In your Production instance install the [Port Github app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
-- In your other (Staging or Dev) instance install the custom Github app as described in this page
-- Once completed you should see the same Github organization listed in the Github Exporter for each Port organization
+- In your Production instance install the [Port Github app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup).
+- In your other (Staging or Dev) instance install the custom Github app as described on this page.
+- Once completed you should see the same Github organization listed in the Github Exporter for each Port organization.
 
 ## Troubleshooting
 
