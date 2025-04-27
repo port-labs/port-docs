@@ -373,22 +373,7 @@ To get the most out of your PR Enricher agent:
 
 You can further enhance the PR Enricher setup by:
 
-- **Integration expansion**: [Add more data sources](/ai-agents/build-an-ai-agent#step-2-configure-data-access) like:
-  - PagerDuty for checking active incidents.
-  - GitLab or Azure DevOps for additional PR context.
-
-- **Automated actions**: [Configure the agent](/ai-agents/interact-with-the-ai-agent#actions-and-automations) to:
-  - Automatically assign reviewers based on code changes.
-  - Add relevant labels to the PR (e.g., based on Jira issue type).
-  - Create related Jira tickets for follow-up tasks.
-
-- **Custom risk assessment**: Enhance the agent's prompt to:
-  - Include organization-specific risk factors.
-  - Consider team-specific guidelines.
-  - Reference internal documentation.
-
-- **Monitor and improve**: [Check how your developers are interacting](/ai-agents/interact-with-the-ai-agent#ai-interaction-details) with the agent and:
-  - Gather feedback on the quality of comments.
-  - Track which suggestions are most helpful.
-  - Adjust the prompt based on real usage patterns.
+- **Adding more data sources** like PagerDuty for incident context or [additional Git providers](/ai-agents/build-an-ai-agent#step-2-configure-data-access) for broader repository visibility
+- **Configuring automated actions** such as [reviewer assignment, PR labeling, or creating follow-up Jira tickets](/ai-agents/interact-with-the-ai-agent#actions-and-automations)
+- **Customizing risk assessment criteria** to align with your organization's specific guidelines and [monitoring usage patterns](/ai-agents/interact-with-the-ai-agent#ai-interaction-details)
 
