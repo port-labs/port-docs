@@ -96,7 +96,7 @@ Install the following integration to have access to these data sources:
    ```
    </details>
 
-5. Click on `Create` to save the agent
+5. Click on `Create` to save the agent.
 
 ### Set up the automation trigger
 
