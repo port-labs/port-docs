@@ -54,9 +54,9 @@ Install the following integration to have access to these data sources:
 
 ### Create the agent configuration
 
-1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page
-2. Click on `+ AI Agent`
-3. Toggle `Json mode` on
+1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page.
+2. Click on `+ AI Agent`.
+3. Toggle `Json mode` on.
 4. Copy and paste the following JSON schema:
 
    <details>
