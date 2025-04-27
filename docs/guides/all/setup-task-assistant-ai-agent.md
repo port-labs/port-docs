@@ -148,7 +148,7 @@ Follow the steps below to set up the automation:
    ```
    </details>
 
-4. Click on `Create` to save the automation
+4. Click on `Create` to save the automation.
 
 ### Configure the self-service action
 
