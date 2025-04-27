@@ -93,7 +93,7 @@ For example, Opsgenie or Firehydrant.
 
 ## Interact with the Incident Manager
 
-You can interact with the Incident Manager AI agent in [several ways](/ai-agents/interact-with-the-ai-agent).  
+You can interact with the Incident Manager AI agent in [several ways](/ai-agents/interact-with-ai-agents).  
 This guide will demonstrate the two main ways.
 
 <Tabs groupId="interaction-methods" queryString>
@@ -180,12 +180,12 @@ To get the most out of your Incident Manager agent:
 
 1. **Try it out**: Start with simple queries and see how the agent responds.
 2. **Add context**: If the response isn't what you expected, try asking again with more details.
-3. **Troubleshoot**: If you're still not getting the right answers, check our [troubleshooting guide](/ai-agents/interact-with-the-ai-agent#troubleshooting--faq) for common issues and solutions.
+3. **Troubleshoot**: If you're still not getting the right answers, check our [troubleshooting guide](/ai-agents/interact-with-ai-agents#troubleshooting--faq) for common issues and solutions.
 
 ## Possible enhancements
 
 You can further enhance the Incident Manager setup by:
 - **Integration expansion**: [Add more data sources](/ai-agents/build-an-ai-agent#step-2-configure-data-access) like Opsgenie or ServiceNow.
-- **Automated notifications**: [Configure the agent](/ai-agents/interact-with-the-ai-agent#actions-and-automations) to proactively notify about incident updates or escalations.
+- **Automated notifications**: [Configure the agent](/ai-agents/interact-with-ai-agents#actions-and-automations) to proactively notify about incident updates or escalations.
 - **Custom conversation starters**: Add organization-specific queries to the [conversation starters](/ai-agents/build-an-ai-agent#step-5-add-conversation-starters).
-- **Monitor and improve**: [Check how your developers are interacting](/ai-agents/interact-with-the-ai-agent#ai-interaction-details) with the agent and improve it according to feedback.
+- **Monitor and improve**: [Check how your developers are interacting](/ai-agents/interact-with-ai-agents#ai-interaction-details) with the agent and improve it according to feedback.

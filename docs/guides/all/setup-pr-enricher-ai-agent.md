@@ -367,13 +367,13 @@ To get the most out of your PR Enricher agent:
 
 5. **Test the workflow**: Create test pull requests to verify the entire flow works as expected.
 
-6. **Troubleshoot**: If you're not getting the expected results, check our [troubleshooting guide](/ai-agents/interact-with-the-ai-agent#troubleshooting--faq) for common issues and solutions.
+6. **Troubleshoot**: If you're not getting the expected results, check our [troubleshooting guide](/ai-agents/interact-with-ai-agents#troubleshooting--faq) for common issues and solutions.
 
 ## Possible enhancements
 
 You can further enhance the PR Enricher setup by:
 
 - **Adding more data sources** like PagerDuty for incident context or [additional Git providers](/ai-agents/build-an-ai-agent#step-2-configure-data-access) for broader repository visibility.
-- **Configuring automated actions** such as [reviewer assignment, PR labeling, or creating follow-up Jira tickets](/ai-agents/interact-with-the-ai-agent#actions-and-automations).
-- **Customizing risk assessment criteria** to align with your organization's specific guidelines and [monitoring usage patterns](/ai-agents/interact-with-the-ai-agent#ai-interaction-details).
+- **Configuring automated actions** such as [reviewer assignment, PR labeling, or creating follow-up Jira tickets](/ai-agents/interact-with-ai-agents#actions-and-automations).
+- **Customizing risk assessment criteria** to align with your organization's specific guidelines and [monitoring usage patterns](/ai-agents/interact-with-ai-agents#ai-interaction-details).
 
