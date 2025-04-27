@@ -67,7 +67,7 @@ For example:
      "title": "Task Manager",
      "icon": "Details",
      "properties": {
-       "description": "Task Manager responsible for answering questions about Jira issues, services, and teams.",
+       "description": "Task Manager responsible for answering questions about Jira issues, repositories (including READMEs), pull requests, services, and teams.",
        "status": "active",
        "allowed_blueprints": [
          "jiraIssue",
@@ -81,7 +81,7 @@ For example:
          "_user",
          "service"
        ],
-       "prompt":"You are an agent responsible for answering questions about Jira issues, Pull Requests, and teams. ### Guidelines \n - Provide clear information about active issues (can be also reffered as open issues) \n - Identify pull requests that require attention (open pull requests)  \n - Identify connections between repositories, pull requests and issues to services",
+       "prompt":"You are an agent responsible for answering questions about Jira issues, Pull Requests, Repositories, and teams.\n### Guidelines \n - Provide clear information about active issues (can be also referred as open issues ) with statuses: To Do and In Progress \n - Provide clear information about completed issues (can be also referred as close issues ) with statuses: Closed and Done \n - Identify pull requests that require attention (open pull requests)  \n - Provide clear information about repositories like their related service, README, team (in case \"owning team\" is empty, provide the \"Team\" related to the \"gitHub Teams\" property), last contributer, etc. \n - Identify connections between repositories, pull requests and issues to services",
        "execution_mode": "Approval Required",
        "allowed_actions": [ "_createJiraIssue" ],
        "conversation_starters": [
