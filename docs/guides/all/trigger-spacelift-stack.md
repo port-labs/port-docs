@@ -36,55 +36,55 @@ You will need to manually create a blueprint in Port to represent your Spacelift
 
     ```json showLineNumbers
     {
-    "identifier": "space_lift_stack",
-    "title": "SpaceLift Stack",
-    "icon": "IaC",
-    "schema": {
-        "properties": {
-        "space": {
-            "type": "string",
-            "title": "Space"
-        },
-        "label": {
-            "items": {
-            "type": "string"
+        "identifier": "space_lift_stack",
+        "title": "SpaceLift Stack",
+        "icon": "IaC",
+        "schema": {
+            "properties": {
+                "space": {
+                    "type": "string",
+                    "title": "Space"
+                },
+                "label": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array",
+                    "title": "Label"
+                },
+                "description": {
+                    "type": "string",
+                    "title": "Description"
+                },
+                "repository": {
+                    "type": "string",
+                    "title": "Repository"
+                },
+                "link": {
+                    "icon": "DefaultProperty",
+                    "type": "string",
+                    "title": "Link",
+                    "format": "url"
+                },
+                "state": {
+                    "type": "string",
+                    "title": "State"
+                },
+                "git_provider": {
+                    "type": "string",
+                    "title": "Git Provider"
+                },
+                "branch": {
+                    "type": "string",
+                    "title": "Branch"
+                }
             },
-            "type": "array",
-            "title": "Label"
+            "required": []
         },
-        "description": {
-            "type": "string",
-            "title": "Description"
-        },
-        "repository": {
-            "type": "string",
-            "title": "Repository"
-        },
-        "link": {
-            "icon": "DefaultProperty",
-            "type": "string",
-            "title": "Link",
-            "format": "url"
-        },
-        "state": {
-            "type": "string",
-            "title": "State"
-        },
-        "git_provider": {
-            "type": "string",
-            "title": "Git Provider"
-        },
-        "branch": {
-            "type": "string",
-            "title": "Branch"
-        }
-        },
-        "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {}
+        "mirrorProperties": {},
+        "calculationProperties": {},
+        "aggregationProperties": {},
+        "relations": {}
     }
     ```
     </details>
@@ -138,53 +138,53 @@ To create the self-service action that will trigger the Spacelift stack:
 
     ```json showLineNumbers
     {
-    "identifier": "trigger_spacelift_stack",
-    "title": "Trigger Spacelift Stack",
-    "icon": "Git",
-    "description": "A self service action to trigger Spacelift stack",
-    "trigger": {
-        "type": "self-service",
-        "operation": "CREATE",
-        "userInputs": {
-        "properties": {
-            "stack": {
-            "title": "Stack",
-            "icon": "DefaultProperty",
-            "type": "string",
-            "blueprint": "space_lift_stack",
-            "sort": {
-                "property": "$title",
-                "order": "ASC"
-            },
-            "format": "entity"
+        "identifier": "trigger_spacelift_stack",
+        "title": "Trigger Spacelift Stack",
+        "icon": "Git",
+        "description": "A self service action to trigger Spacelift stack",
+        "trigger": {
+            "type": "self-service",
+            "operation": "CREATE",
+            "userInputs": {
+                "properties": {
+                    "stack": {
+                        "title": "Stack",
+                        "icon": "DefaultProperty",
+                        "type": "string",
+                        "blueprint": "space_lift_stack",
+                        "sort": {
+                            "property": "$title",
+                            "order": "ASC"
+                        },
+                        "format": "entity"
+                    }
+                },
+                "required": [
+                    "stack"
+                ],
+                "order": [
+                    "stack"
+                ]
             }
         },
-        "required": [
-            "stack"
-        ],
-        "order": [
-            "stack"
-        ]
-        }
-    },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "<YOUR_SPACELIFT_API_URL>",
-        "agent": false,
-        "synchronized": true,
-        "method": "POST",
-        "headers": {
-        "Authorization": "Bearer {{.secrets.SPACELIFT_TOKEN}}",
-        "Content-Type": "application/json"
+        "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "<YOUR_SPACELIFT_API_URL>",
+            "agent": false,
+            "synchronized": true,
+            "method": "POST",
+            "headers": {
+                "Authorization": "Bearer {{.secrets.SPACELIFT_TOKEN}}",
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "query": "mutation ($stackId: ID!) { runTrigger(stack: $stackId) { id title type state createdAt updatedAt branch triggeredBy driftDetection } }",
+                "variables": {
+                    "stackId": "{{.inputs.stack.identifier}}"
+                }
+            }
         },
-        "body": {
-        "query": "mutation ($stackId: ID!) { runTrigger(stack: $stackId) { id title type state createdAt updatedAt branch triggeredBy driftDetection } }",
-        "variables": {
-            "stackId": "{{.inputs.stack.identifier}}"
-        }
-        }
-    },
-    "requiredApproval": false
+        "requiredApproval": false
     }
     ```
     </details>
@@ -390,37 +390,37 @@ According to [Spacelift's documentation](https://docs.spacelift.io/integrations/
 
     ```json showLineNumbers
     {
-    "identifier": "refresh_spacelift_token",
-    "title": "Refresh Spacelift Token",
-    "icon": "Git",
-    "description": "A self service action to refresh Spacelift token",
-    "trigger": {
-        "type": "self-service",
-        "operation": "CREATE",
-        "userInputs": {
-        "properties": {},
-        "required": [],
-        "order": []
-        }
-    },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://<your-account>.app.spacelift.io/graphql",
-        "agent": false,
-        "synchronized": true,
-        "method": "POST",
-        "headers": {
-        "Content-Type": "application/json"
+        "identifier": "refresh_spacelift_token",
+        "title": "Refresh Spacelift Token",
+        "icon": "Git",
+        "description": "A self service action to refresh Spacelift token",
+        "trigger": {
+            "type": "self-service",
+            "operation": "CREATE",
+            "userInputs": {
+                "properties": {},
+                "required": [],
+                "order": []
+            }
         },
-        "body": {
-        "query": "mutation GetSpaceliftToken($id: ID!, $secret: String!) { apiKeyUser(id: $id, secret: $secret) { jwt } }",
-        "variables": {
-            "id": "{{.secrets.SPACELIFT_API_KEY_ID}}",
-            "secret": "{{.secrets.SPACELIFT_API_KEY_SECRET}}"
-        }
-        }
-    },
-    "requiredApproval": false
+        "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://<your-account>.app.spacelift.io/graphql",
+            "agent": false,
+            "synchronized": true,
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "query": "mutation GetSpaceliftToken($id: ID!, $secret: String!) { apiKeyUser(id: $id, secret: $secret) { jwt } }",
+                "variables": {
+                    "id": "{{.secrets.SPACELIFT_API_KEY_ID}}",
+                    "secret": "{{.secrets.SPACELIFT_API_KEY_SECRET}}"
+                }
+            }
+        },
+        "requiredApproval": false
     }
     ```
     </details>
@@ -441,36 +441,36 @@ Next, you'll create an automation that runs when the `Refresh Spacelift Token` a
 
     ```json showLineNumbers
     {
-    "identifier": "spacelift_token_refresh_sync",
-    "title": "Refresh Spacelift Token",
-    "description": "Updates the Port secret with the new Spacelift jwt token",
-    "trigger": {
-        "type": "automation",
-        "event": {
-        "type": "RUN_UPDATED",
-        "actionIdentifier": "refresh_spacelift_token"
+        "identifier": "spacelift_token_refresh_sync",
+        "title": "Refresh Spacelift Token",
+        "description": "Updates the Port secret with the new Spacelift jwt token",
+        "trigger": {
+            "type": "automation",
+            "event": {
+                "type": "RUN_UPDATED",
+                "actionIdentifier": "refresh_spacelift_token"
+            },
+            "condition": {
+                "type": "JQ",
+                "expressions": [
+                    ".diff.after.status == \"SUCCESS\""
+                ],
+                "combinator": "and"
+            }
         },
-        "condition": {
-        "type": "JQ",
-        "expressions": [
-            ".diff.after.status == \"SUCCESS\""
-        ],
-        "combinator": "and"
-        }
-    },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://api.port.io/v1/organization/secrets/SPACELIFT_TOKEN",
-        "agent": false,
-        "synchronized": true,
-        "method": "PATCH",
-        "headers": {},
-        "body": {
-        "secretValue": "{{ .event.diff.after.response.data.apiKeyUser.jwt  }}",
-        "description": "Refreshed Spacelift API token"
-        }
-    },
-    "publish": true
+        "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://api.port.io/v1/organization/secrets/SPACELIFT_TOKEN",
+            "agent": false,
+            "synchronized": true,
+            "method": "PATCH",
+            "headers": {},
+            "body": {
+                "secretValue": "{{ .event.diff.after.response.data.apiKeyUser.jwt  }}",
+                "description": "Refreshed Spacelift API token"
+            }
+        },
+        "publish": true
     }
     ```
     </details>
