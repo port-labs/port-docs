@@ -73,13 +73,13 @@ export default function KapaCallout() {
             color: 'var(--ifm-color-emphasis-900)',
             marginBottom: '4px',
             letterSpacing: '-0.02em',
-          }}>Port AI Assistant</div>
+          }}>Port Docs Assistant</div>
           <p style={{
             margin: 0,
             color: 'var(--ifm-color-emphasis-700)',
             fontSize: '0.95rem',
             lineHeight: '1.4',
-          }}>Want to know something about Port? Chat with our AI assistant and ask away!</p>
+          }}>Want to know something about Port? Chat with our docs assistant and ask away!</p>
         </div>
         <button 
           onClick={() => {
