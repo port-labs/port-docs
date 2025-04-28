@@ -8,7 +8,6 @@ import TabItem from '@theme/TabItem';
 
 # Trigger a Spacelift stack
 
-## Overview
 This guide demonstrates how to implement a self-service action in Port that allows you to trigger a Spacelift stack directly from Port and automate your infrastructure deployment workflows seamlessly.
 
 ## Use cases
