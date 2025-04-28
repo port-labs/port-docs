@@ -390,7 +390,7 @@ const config = {
       "data-project-logo": "https://raw.githubusercontent.com/port-labs/port-docs/refs/heads/main/static/img/logos/port-logo.svg",
       "data-button-hide": "true",
       "data-modal-override-open-class": "ask-kapa-button",
-      "data-modal-title": "Port AI Assistant",
+      "data-modal-title": "Port Docs Assistant",
       "data-modal-ask-ai-input-placeholder": "Ask me anything about Port...",
       "data-submit-query-button-bg-color": "#000000",
       "data-modal-example-questions": "How can I create a table that shows all services belonging to my team?, Write me a scorecard definition that ensures each repository has a readme file, Which SSO providers are supported?, How can I install Port's Datadog integration without using k8s?",

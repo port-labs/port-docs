@@ -80,16 +80,16 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation integration="GitLab_v2" />
+
+</TabItem>
+
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-<OceanSaasLiveEventsDescription id="GitLab_v2"/>
-<div>
-<details>
-<summary><b>Supported live event triggers</b></summary>
-<OceanSaasLiveEventsTriggersManual id="GitLab_v2" isOAuth={false} />
-</details>
-</div>
 <h2>Prerequisites</h2>
 
 <Prerequisites />
