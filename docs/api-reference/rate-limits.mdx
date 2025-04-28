@@ -16,38 +16,13 @@ import Export from "@theme/ApiExplorer/Export";
 
 # Rate limits
 
-A rate limit restricts the number of requests or actions allowed within a certain timeframe to prevent overuse or abuse.
-Port enforces multiple rate limits to control extensive usage of Port's API.
-
-Port's rate limits vary based on the API being accessed and may be more lenient for some APIs.  
-Rate limits are enforced at the **IP level**.
-
-:::info updated API rate limits starting 1.06.2025
+:::warning updated API rate limits starting 1.06.2025
 Port's API rate limits will be updated on 1.06.2025
 
 Rate limits will change from the **IP level** to the **Organization level**
 
-For more information, see the note below
-
-:::
-
-## Rate limits table
-
-| Description | Rate limit |
-|------------|-------------|
-| Unauthenticated requests | 100 requests per 5 minutes |
-| Ocean integrations | 20,000 requests per 5 minutes |
-| External exporters | 15,000 requests per 5 minutes |
-| IaC integrations and CI/CD actions | 5,000 requests per 5 minutes |
-| Entity API requests | 5,000 requests per 5 minutes | 
-| All other API requests | 2,500 requests per 5 minutes |
-
-:::note updated API rate limits starting 1.06.2025
-
 <details>
 <summary>Click here to learn about the updated rate limits</summary>
-
-Port's API rate limits will be updated on 1.06.2025
 
 The table below outlines the updated limits:
 
@@ -72,9 +47,26 @@ Each API response includes headers that provide information about your current r
 
 
 </details>
-
-
 :::
+
+A rate limit restricts the number of requests or actions allowed within a certain timeframe to prevent overuse or abuse.
+Port enforces multiple rate limits to control extensive usage of Port's API.
+
+Port's rate limits vary based on the API being accessed and may be more lenient for some APIs.  
+Rate limits are enforced at the **IP level**.
+
+
+## Rate limits table
+
+| Description | Rate limit |
+|------------|-------------|
+| Unauthenticated requests | 100 requests per 5 minutes |
+| Ocean integrations | 20,000 requests per 5 minutes |
+| External exporters | 15,000 requests per 5 minutes |
+| IaC integrations and CI/CD actions | 5,000 requests per 5 minutes |
+| Entity API requests | 5,000 requests per 5 minutes | 
+| All other API requests | 2,500 requests per 5 minutes |
+
 
 ## How to prevent getting rate limited
 
