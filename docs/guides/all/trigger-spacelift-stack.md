@@ -370,7 +370,7 @@ if __name__ == "__main__":
     
     <img src="/img/guides/spaceliftStackTrigger.png" width="600px" border="1px" />
 
-## Refreshing Spacelift token
+## Refreshing your Spacelift token
 According to [Spacelift's documentation](https://docs.spacelift.io/integrations/api#insomnia-setup), JWT tokens expire after 10 hours. If your action fails with a 401 Unauthorized error, you need to refresh the token. Follow the steps below to automate this process:
 
 <h3>Step 1: Create a self-service action to refresh token</h3>
