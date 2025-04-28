@@ -155,11 +155,12 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 
 ### Line chart
 
-Line charts display trends of `number` properties over time.  
+Line charts visualize trends over time, either by tracking `number` properties of entities or by tracking the entities themselves.
 
-Port offers two types of line charts:
+Port offers three types of line charts:
 1. [Property history (single entity)](#1-property-history-single-entity) - displays the values of one or more properties of a single entity.
 2. [Aggregate property (all entities)](#2-aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
+3. [Count entities (all entities)](#3-count-entities-all-entities) - displays an aggregation of all entities from a specific blueprint over time.
 
 #### 1. Property history (single entity)
 
@@ -256,6 +257,51 @@ For example, here is a line chart displaying the maximum cost of all services ov
 | `Properties`    | `Array`  | The chosen `number` property/ies to visualize | `null`  | `true`   |
 | `Time interval` | `String` | The time interval to display in the x-axis of the chart.<br/>Possible values: `hour`, `day`, `week`, `month` | `null` | `true` |
 | `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` | -->
+
+#### 3. Count entities (all entities)
+
+This chart type displays an aggregation of **all entities** from a specific blueprint over time.
+
+When creating this type of line chart:
+
+1. Choose the **blueprint** you want to visualize.
+
+2. Under the `Y axis` section:
+   - Give the axis a title.
+
+   - Choose one of the following functions:
+     - `count`: Counts the number of entities in each time interval.
+     - `average`: Calculates the average number of entities in each time interval.
+
+   - Optionally, break down the chart by a specific blueprint property, generating a separate line for each distinct value of that property.
+   
+   - Optionally, define [additional filters](#chart-filters) in order to include/exclude specific entities from the chart.  
+     For example, filter the entities by a specific property value, or by a specific time range.
+
+3. Under the `X axis` section:
+   - Give the axis a title.
+   
+   - Choose one of the blueprint's `datetime` properties by which to **measure the time** of the chart data.  
+     This can be the entity's creation time, last update time, or any other `datetime` property.  
+
+   - Choose a **time interval**, which is the amount of time between each data point in the chart.  
+   The selected interval also determines how the function is calculated:  
+
+        For example, if the time interval is a week, each data point will be calculated in the following manner:
+        - The count function will count the total entities that week.
+        - The average function will count the total entities that week and divide it by 7.
+
+   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
+     Note that the available time ranges differ according to the selected time interval.
+
+For example, here is a line chart displaying the average deployment rate over the span of a month, in weekly intervals, broken down by the `status` property (Success and Fail).
+<img src='/img/software-catalog/widgets/countEntitiesLineChartExample.png' width='70%' border='1px' />
+<br/><br/>
+
+**Limitations**
+
+- This chart type does not support [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/).
+- Line chart data is limited to the last 365 days.
 
 ### Markdown
 
