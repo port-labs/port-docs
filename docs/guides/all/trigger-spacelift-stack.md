@@ -359,10 +359,15 @@ if __name__ == "__main__":
 ## Let's test it!
 
 1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal.
+
 2. Choose the `Trigger Spacelift Stack` action.
+
 3. Select a stack entity.
+
 4. Click on `Execute`.
+
 5. You're done! Your stack will be triggered in Spacelift.  🎉
+    
     <img src="/img/guides/spaceliftStackTrigger.png" width="600px" border="1px" />
 
 ## Refreshing Spacelift token
