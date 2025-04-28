@@ -55,9 +55,21 @@ To send webhook events from Spacelift to an external system like Port, you must 
 
 ## Sending notifications
 
-Spacelift delivers webhook events through notification policies. You must create a policy that triggers events to Port.
+Webhook events in Spacelift are triggered through notification policies. To set this up, you need the webhook ID that Spacelift assigns when you create a webhook.
 
-To create a notification policy:
+### How to find your Webhook ID
+
+1. In your Spacelift account, go to **Webhooks**.
+
+2. Locate the webhook you created.
+
+3. Click the **three dots (...)** next to the webhook.
+
+4. Select **Copy webhook ID** to copy the webhook's unique identifier.
+
+You’ll use this ID when configuring the notification policy.
+
+### Creating a Notification Policy
 
 1. Go to **Policies** in Spacelift;
 2. Click **Create policy**;
