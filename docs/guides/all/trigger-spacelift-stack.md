@@ -24,7 +24,7 @@ This guide demonstrates how to implement a self-service action in Port that allo
 
 You will need to manually create a blueprint in Port to represent your Spacelift stacks. 
 
-<h3>Create the Spacelift stack blueprint</h3>
+### Create the Spacelift stack blueprint
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
