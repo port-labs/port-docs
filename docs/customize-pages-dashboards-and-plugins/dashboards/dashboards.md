@@ -160,7 +160,7 @@ Line charts visualize trends over time, either by tracking `number` properties o
 Port offers three types of line charts:
 1. [Property history (single entity)](#1-property-history-single-entity) - displays the values of one or more properties of a single entity.
 2. [Aggregate property (all entities)](#2-aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
-3. [Count entities (all entities)](#3-count-entities-all-entities) - displays an aggregation of all entities from a specific blueprint over time.
+3. [Count entities (all entities)](#3-count-entities-all-entities) - displays either the total count of entities or the average number of entities from a specific blueprint over time.
 
 #### 1. Property history (single entity)
 
@@ -231,7 +231,15 @@ When creating this type of line chart:
    - Choose one of the blueprint's `datetime` properties by which to **measure the time** of the chart data.  
      This can be the entity's creation time, last update time, or any other `datetime` property.  
 
-   - Choose a **time interval**, which is the amount of time between each data point in the chart.
+   - Choose a **time interval**, which is the amount of time between each data point in the chart.  
+   The selected interval also determines how the function is calculated:  
+
+        For example, if the time interval is a week, each data point will be calculated in the following manner:
+        - The `count` function will count the total entities that week.
+        - The `average` function will count the total entities that week and divide it by 7.  
+          
+      The same logic applies to all time intervals: `Hour`, `Day`, `Week`, and `Month` -  
+      when using the `average` function, the total entity count will be divided by: 60, 24, 7, and 30 respectively.
 
    - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
      Note that the available time ranges differ according to the selected time interval.
@@ -260,7 +268,8 @@ For example, here is a line chart displaying the maximum cost of all services ov
 
 #### 3. Count entities (all entities)
 
-This chart type displays an aggregation of **all entities** from a specific blueprint over time.
+This chart type displays either the total count of entities or the average number of entities from a specific blueprint over time.
+If you choose to break down the chart by a property, each line will represent a distinct value of that property.
 
 When creating this type of line chart:
 
@@ -273,7 +282,7 @@ When creating this type of line chart:
      - `count`: Counts the number of entities in each time interval.
      - `average`: Calculates the average number of entities in each time interval.
 
-   - Optionally, break down the chart by a specific blueprint property, generating a separate line for each distinct value of that property.
+   - Optionally, break down the chart by a specific blueprint `breakdown property`, generating a separate line for each distinct value of that property.
    
    - Optionally, define [additional filters](#chart-filters) in order to include/exclude specific entities from the chart.  
      For example, filter the entities by a specific property value, or by a specific time range.
@@ -288,8 +297,11 @@ When creating this type of line chart:
    The selected interval also determines how the function is calculated:  
 
         For example, if the time interval is a week, each data point will be calculated in the following manner:
-        - The count function will count the total entities that week.
-        - The average function will count the total entities that week and divide it by 7.
+        - The `count` function will count the total entities that week.
+        - The `average` function will count the total entities that week and divide it by 7.  
+          
+      The same logic applies to all time intervals: `Hour`, `Day`, `Week`, and `Month` -  
+      when using the `average` function, the total entity count will be divided by: 60, 24, 7, and 30 respectively.
 
    - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
      Note that the available time ranges differ according to the selected time interval.
