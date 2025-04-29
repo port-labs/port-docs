@@ -1,6 +1,6 @@
 export const tagsCategoryMap = {
     "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog", "Approval workflow"],
-    "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
+    "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
         "GitLab",
@@ -968,6 +968,20 @@ export const availableGuides = [
         link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
     },
     {
+        title: "Set up the Task Manager AI agent",
+        description: "Set up an AI agent that helps developers track and manage tasks efficiently",
+        tags: ["AI","Jira","GitHub","Slack"],
+        logos: ["AI"],
+        link: "/guides/all/setup-task-manager-ai-agent",
+	  },
+	  {
+        title: "Set up the Incident Manager AI agent",
+        description: "Set up an AI agent that helps developers track and manage incidents efficiently",
+        tags: ["Incident management", "AI", "PagerDuty", "Slack"],
+        logos: ["AI"],
+        link: "/guides/all/setup-incident-manager-ai-agent",
+	  },
+	  {
         title: "Create a GitHub issue",
         description: "Create a self-service action that creates a GitHub issue",
         tags: ["GitHub", "Actions", "Webhook"],
@@ -980,6 +994,20 @@ export const availableGuides = [
         tags: ["GitHub", "Actions", "Webhook", "Automations"],
         logos: ["GitHub"],
         link: "/guides/all/verify-service",
+    },
+    {
+        title: "Set up the Task Assistant AI agent",
+        description: "Set up an AI agent that provides contextual information and insights to task assignees",
+        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
+        logos: ["AI"],
+        link: "/guides/all/setup-task-assistant-ai-agent",
+    },
+    {
+        title: "Enrich pull requests using AI",
+        description: "Set up an AI agent that automatically comments on pull requests with additional context",
+        tags: ["SDLC", "AI", "GitHub", "Jira", "PagerDuty"],
+        logos: ["AI"],
+        link: "/guides/all/setup-pr-enricher-ai-agent",
     },
     {
         title: "Enforce Branch Protection Rules with Scorecards",
@@ -1001,6 +1029,13 @@ export const availableGuides = [
         tags: ["Security", "GitLab", "Scorecards"],
         logos: ["GitLab"],
         link: "/guides/all/track-gitlab-project-maturity-with-scorecards",
+    },
+    {
+        title: "Trigger Spacelift stack",
+        description: "Create a self-service action that triggers a Spacelift stack to automate infrastructure workflows",
+        tags: ["IaC for devs", "Actions"],
+        logos: ["Git"],
+        link: "/guides/all/trigger-spacelift-stack",
     },
     {
         "title": "Track health of Jira projects using scorecards",
