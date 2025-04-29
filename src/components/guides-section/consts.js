@@ -1038,10 +1038,10 @@ export const availableGuides = [
         link: "/guides/all/trigger-spacelift-stack",
     },
     {
-        "title": "Track health of Jira projects using scorecards",
-        "description": "Create a scorecard to track the health of Jira projects",
-        "tags": ["Jira", "Scorecards"],
-        "logos": ["Jira",],
-        "link": "/guides/all/track-health-of-jira-projects",
+        title: "Track health of Jira projects using scorecards",
+        description: "Create a scorecard to track the health of Jira projects",
+        tags: ["Jira", "Scorecards"],
+        logos: ["Jira",],
+        link: "/guides/all/track-health-of-jira-projects",
     }
 ]

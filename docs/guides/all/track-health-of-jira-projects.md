@@ -20,15 +20,193 @@ This guide demonstrates how to track the health and operational maturity of your
 
 ## Set up data model
 
-Depending on whether you've installed Port's [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/), follow one of the two paths below:
+If you haven't installed Port's [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/), you will need to manually create blueprints for `Jira Project` and `Jira Issue`.  
+We highly recommend that you install the Jira integration to have such resources automatically set up for you. 
 
-### You’ve already installed the Jira integration
+### Create or update the Jira project blueprint
 
-The integration automatically creates the `Jira Project` and `Jira Issue` blueprints for you.
+In this setup, we will create or update the `Jira Project` blueprint.      
+**Skip** to the [update Jira project blueprint](#update-the-jira-project-blueprint) section if you already have the blueprint.
 
-To enable health tracking for Jira projects, you’ll only need to **add aggregation properties** to the `Jira Project` blueprint.
+#### Create the Jira project blueprint
 
-<h4> Add aggregation properties to `Jira Project` </h4>
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+2. Click on `+ Blueprint`.
+3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
+4. Add this JSON schema:
+
+    <details>
+    <summary><b>Jira Project Blueprint (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+        "identifier": "jiraProject",
+        "description": "A Jira project",
+        "title": "Jira Project",
+        "icon": "Jira",
+        "schema": {
+            "properties": {
+            "url": {
+                "title": "Project URL",
+                "type": "string",
+                "format": "url",
+                "description": "URL to the project in Jira"
+            },
+            "totalIssues": {
+                "title": "Total Issues",
+                "type": "number",
+                "description": "The total number of issues in the project"
+            }
+            },
+            "required": []
+        },
+        "mirrorProperties": {},
+        "calculationProperties": {},
+        "aggregationProperties": {
+            "totalComplianceIssues": {
+            "title": "Total Compliance Issues",
+            "icon": "DefaultProperty",
+            "type": "number",
+            "target": "jiraIssue",
+            "query": {
+                "combinator": "and",
+                "rules": [
+                {
+                    "property": "labels",
+                    "operator": "containsAny",
+                    "value": [
+                    "compliance"
+                    ]
+                }
+                ]
+            },
+            "calculationSpec": {
+                "func": "count",
+                "calculationBy": "entities"
+            }
+            },
+            "openUrgentBugs": {
+            "title": "Open Urgent Bugs",
+            "icon": "DefaultProperty",
+            "type": "number",
+            "target": "jiraIssue",
+            "query": {
+                "combinator": "and",
+                "rules": [
+                {
+                    "property": "status",
+                    "operator": "!=",
+                    "value": "Done"
+                },
+                {
+                    "property": "issueType",
+                    "operator": "=",
+                    "value": "Bug"
+                },
+                {
+                    "property": "priority",
+                    "operator": "=",
+                    "value": "High"
+                }
+                ]
+            },
+            "calculationSpec": {
+                "func": "count",
+                "calculationBy": "entities"
+            }
+            },
+            "issuesWithoutAssignee": {
+            "title": "Issues Without Assignee",
+            "icon": "DefaultProperty",
+            "type": "number",
+            "target": "jiraIssue",
+            "query": {
+                "combinator": "and",
+                "rules": [
+                {
+                    "property": "assignee",
+                    "operator": "isEmpty"
+                }
+                ]
+            },
+            "calculationSpec": {
+                "func": "count",
+                "calculationBy": "entities"
+            }
+            },
+            "frequentCustomerIncidents": {
+            "title": "Frequent Customer Incidents",
+            "icon": "DefaultProperty",
+            "type": "number",
+            "target": "jiraIssue",
+            "query": {
+                "combinator": "and",
+                "rules": [
+                {
+                    "property": "labels",
+                    "operator": "containsAny",
+                    "value": [
+                    "customer"
+                    ]
+                },
+                {
+                    "property": "updated",
+                    "operator": "between",
+                    "value": {
+                    "preset": "lastMonth"
+                    }
+                }
+                ]
+            },
+            "calculationSpec": {
+                "func": "count",
+                "calculationBy": "entities"
+            }
+            },
+            "staleTickets": {
+            "title": "Stale Tickets",
+            "icon": "DefaultProperty",
+            "type": "number",
+            "description": " Issues untouched for 30+ days suggest poor ticket hygiene or delivery risk",
+            "target": "jiraIssue",
+            "query": {
+                "combinator": "and",
+                "rules": [
+                {
+                    "property": "issueType",
+                    "operator": "=",
+                    "value": "Task"
+                },
+                {
+                    "property": "status",
+                    "operator": "=",
+                    "value": "To Do"
+                },
+                {
+                    "property": "created",
+                    "operator": "between",
+                    "value": {
+                    "preset": "lastMonth"
+                    }
+                }
+                ]
+            },
+            "calculationSpec": {
+                "func": "count",
+                "calculationBy": "entities"
+            }
+            }
+        },
+        "relations": {}
+    }
+    ```
+    </details>
+5. Click `Save` to create the blueprint.
+
+
+#### Update the Jira project blueprint
+
+Let's add aggregation properties to the `Jira Project` blueprint. Follow the steps below to add these properties:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Search for the `Jira Project` blueprint.
@@ -176,187 +354,10 @@ To enable health tracking for Jira projects, you’ll only need to **add aggrega
 
 5. Click `Save` to update the blueprint.
 
-### You haven’t installed the Jira integration
+### Create the Jira issue blueprint
 
-You’ll need to manually create both the `Jira Project` and `Jira Issue` blueprints, then connect them to your Jira data source.
-
-<h4> Create the Jira project blueprint </h4>
-
-1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
-2. Click on `+ Blueprint`.
-3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
-4. Add this JSON schema:
-
-    <details>
-    <summary><b>Jira Project Blueprint (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-    "identifier": "jiraProject",
-    "description": "A Jira project",
-    "title": "Jira Project",
-    "icon": "Jira",
-    "schema": {
-        "properties": {
-        "url": {
-            "title": "Project URL",
-            "type": "string",
-            "format": "url",
-            "description": "URL to the project in Jira"
-        },
-        "totalIssues": {
-            "title": "Total Issues",
-            "type": "number",
-            "description": "The total number of issues in the project"
-        }
-        },
-        "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {
-        "totalComplianceIssues": {
-        "title": "Total Compliance Issues",
-        "icon": "DefaultProperty",
-        "type": "number",
-        "target": "jiraIssue",
-        "query": {
-            "combinator": "and",
-            "rules": [
-            {
-                "property": "labels",
-                "operator": "containsAny",
-                "value": [
-                "compliance"
-                ]
-            }
-            ]
-        },
-        "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-        }
-        },
-        "openUrgentBugs": {
-        "title": "Open Urgent Bugs",
-        "icon": "DefaultProperty",
-        "type": "number",
-        "target": "jiraIssue",
-        "query": {
-            "combinator": "and",
-            "rules": [
-            {
-                "property": "status",
-                "operator": "!=",
-                "value": "Done"
-            },
-            {
-                "property": "issueType",
-                "operator": "=",
-                "value": "Bug"
-            },
-            {
-                "property": "priority",
-                "operator": "=",
-                "value": "High"
-            }
-            ]
-        },
-        "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-        }
-        },
-        "issuesWithoutAssignee": {
-        "title": "Issues Without Assignee",
-        "icon": "DefaultProperty",
-        "type": "number",
-        "target": "jiraIssue",
-        "query": {
-            "combinator": "and",
-            "rules": [
-            {
-                "property": "assignee",
-                "operator": "isEmpty"
-            }
-            ]
-        },
-        "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-        }
-        },
-        "frequentCustomerIncidents": {
-        "title": "Frequent Customer Incidents",
-        "icon": "DefaultProperty",
-        "type": "number",
-        "target": "jiraIssue",
-        "query": {
-            "combinator": "and",
-            "rules": [
-            {
-                "property": "labels",
-                "operator": "containsAny",
-                "value": [
-                "customer"
-                ]
-            },
-            {
-                "property": "updated",
-                "operator": "between",
-                "value": {
-                "preset": "lastMonth"
-                }
-            }
-            ]
-        },
-        "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-        }
-        },
-        "staleTickets": {
-        "title": "Stale Tickets",
-        "icon": "DefaultProperty",
-        "type": "number",
-        "description": " Issues untouched for 30+ days suggest poor ticket hygiene or delivery risk",
-        "target": "jiraIssue",
-        "query": {
-            "combinator": "and",
-            "rules": [
-            {
-                "property": "issueType",
-                "operator": "=",
-                "value": "Task"
-            },
-            {
-                "property": "status",
-                "operator": "=",
-                "value": "To Do"
-            },
-            {
-                "property": "created",
-                "operator": "between",
-                "value": {
-                "preset": "lastMonth"
-                }
-            }
-            ]
-        },
-        "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-        }
-        }
-    },
-    "relations": {}
-    }
-    ```
-    </details>
-5. Click `Save` to create the blueprint.
-
-
-<h4> Create the Jira issue blueprint </h4>
+We will create the `Jira Issue` blueprint.      
+**Skip** to the [set up data source mapping](#set-up-data-source-mapping) section if you already have the blueprint.
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
@@ -484,7 +485,8 @@ You’ll need to manually create both the `Jira Project` and `Jira Issue` bluepr
 
 5. Click `Save` to create the blueprint.
 
-<h4> Set up data source mapping </h4>
+
+## Set up data source mapping
 
 1. Go to your [Data Source](https://app.getport.io/settings/data-sources) page.
 2. Select the Jira ocean integration.
@@ -554,108 +556,108 @@ Let's create a scorecard to track the health and maturity of each Jira project:
 
     ```json showLineNumbers
     {
-    "identifier": "JiraProjectHealth",
-    "title": "Jira Project Health",
-    "levels": [
-        {
-        "color": "paleBlue",
-        "title": "Basic"
-        },
-        {
-        "color": "bronze",
-        "title": "Bronze"
-        },
-        {
-        "color": "silver",
-        "title": "Silver"
-        },
-        {
-        "color": "gold",
-        "title": "Gold"
-        }
-    ],
-    "rules": [
-        {
-        "identifier": "staleTicketsLow",
-        "title": "Few stale tickets",
-        "description": "Checks if the project has fewer than 10 stale tickets",
-        "level": "Bronze",
-        "query": {
-            "combinator": "and",
-            "conditions": [
+        "identifier": "JiraProjectHealth",
+        "title": "Jira Project Health",
+        "levels": [
             {
-                "property": "staleTickets",
-                "operator": "<=",
-                "value": 10
-            }
-            ]
-        }
-        },
-        {
-        "identifier": "customerIncidentsLow",
-        "title": "Low customer incidents",
-        "description": "Checks if the project has fewer than 5 recent customer-facing incidents",
-        "level": "Silver",
-        "query": {
-            "combinator": "and",
-            "conditions": [
+            "color": "paleBlue",
+            "title": "Basic"
+            },
             {
-                "property": "frequentCustomerIncidents",
-                "operator": "<=",
-                "value": 5
-            }
-            ]
-        }
-        },
-        {
-        "identifier": "noUnassignedIssues",
-        "title": "No unassigned issues",
-        "description": "Checks if all issues are assigned",
-        "level": "Silver",
-        "query": {
-            "combinator": "and",
-            "conditions": [
+            "color": "bronze",
+            "title": "Bronze"
+            },
             {
-                "property": "issuesWithoutAssignee",
-                "operator": "=",
-                "value": 0
-            }
-            ]
-        }
-        },
-        {
-        "identifier": "noUrgentBugs",
-        "title": "No open urgent bugs",
-        "description": "Checks that there are no urgent priority bugs open",
-        "level": "Gold",
-        "query": {
-            "combinator": "and",
-            "conditions": [
+            "color": "silver",
+            "title": "Silver"
+            },
             {
-                "property": "openUrgentBugs",
-                "operator": "=",
-                "value": 0
+            "color": "gold",
+            "title": "Gold"
             }
-            ]
-        }
-        },
-        {
-        "identifier": "lowComplianceRisk",
-        "title": "Low compliance risk",
-        "description": "Checks that there are fewer than 10 compliance issues open",
-        "level": "Gold",
-        "query": {
-            "combinator": "and",
-            "conditions": [
+        ],
+        "rules": [
             {
-                "property": "totalComplianceIssues",
-                "operator": "<=",
-                "value": 10
+            "identifier": "staleTicketsLow",
+            "title": "Few stale tickets",
+            "description": "Checks if the project has fewer than 10 stale tickets",
+            "level": "Bronze",
+            "query": {
+                "combinator": "and",
+                "conditions": [
+                {
+                    "property": "staleTickets",
+                    "operator": "<=",
+                    "value": 10
+                }
+                ]
             }
-            ]
-        }
-        }
-    ]
+            },
+            {
+            "identifier": "customerIncidentsLow",
+            "title": "Low customer incidents",
+            "description": "Checks if the project has fewer than 5 recent customer-facing incidents",
+            "level": "Silver",
+            "query": {
+                "combinator": "and",
+                "conditions": [
+                {
+                    "property": "frequentCustomerIncidents",
+                    "operator": "<=",
+                    "value": 5
+                }
+                ]
+            }
+            },
+            {
+            "identifier": "noUnassignedIssues",
+            "title": "No unassigned issues",
+            "description": "Checks if all issues are assigned",
+            "level": "Silver",
+            "query": {
+                "combinator": "and",
+                "conditions": [
+                {
+                    "property": "issuesWithoutAssignee",
+                    "operator": "=",
+                    "value": 0
+                }
+                ]
+            }
+            },
+            {
+            "identifier": "noUrgentBugs",
+            "title": "No open urgent bugs",
+            "description": "Checks that there are no urgent priority bugs open",
+            "level": "Gold",
+            "query": {
+                "combinator": "and",
+                "conditions": [
+                {
+                    "property": "openUrgentBugs",
+                    "operator": "=",
+                    "value": 0
+                }
+                ]
+            }
+            },
+            {
+            "identifier": "lowComplianceRisk",
+            "title": "Low compliance risk",
+            "description": "Checks that there are fewer than 10 compliance issues open",
+            "level": "Gold",
+            "query": {
+                "combinator": "and",
+                "conditions": [
+                {
+                    "property": "totalComplianceIssues",
+                    "operator": "<=",
+                    "value": 10
+                }
+                ]
+            }
+            }
+        ]
     }
     ```
     </details>
