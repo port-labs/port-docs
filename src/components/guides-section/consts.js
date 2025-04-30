@@ -1029,5 +1029,19 @@ export const availableGuides = [
         tags: ["Security", "GitLab", "Scorecards"],
         logos: ["GitLab"],
         link: "/guides/all/track-gitlab-project-maturity-with-scorecards",
+    },
+    {
+        title: "Trigger Spacelift stack",
+        description: "Create a self-service action that triggers a Spacelift stack to automate infrastructure workflows",
+        tags: ["IaC for devs", "Actions"],
+        logos: ["Git"],
+        link: "/guides/all/trigger-spacelift-stack",
+    },
+    {
+        title: "Track health of Jira projects using scorecards",
+        description: "Create a scorecard to track the health of Jira projects",
+        tags: ["Jira", "Scorecards"],
+        logos: ["Jira",],
+        link: "/guides/all/track-health-of-jira-projects",
     }
 ]
