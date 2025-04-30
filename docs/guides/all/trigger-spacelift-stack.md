@@ -482,7 +482,7 @@ Now, every time you run the `Refresh Spacelift Token` action and it succeeds, yo
 
 ## Ingest stacks via webhook
 
-In this example you are going to create a webhook integration between [Spacelift](https://spacelift.io/) and Port, which will ingest stack entities in real time.
+In this example we will create a webhook integration between [Spacelift](https://spacelift.io/) and Port, which will ingest stack entities in real time.
 
 ### Port configuration
 
@@ -553,10 +553,10 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 <summary>Stack webhook configuration</summary>
 
 1. **Basic details** tab - fill the following details:
-   1. Title : `Spacelift Stack Mapper`;
-   2. Identifier : `spacelift_stack_mapper`;
-   3. Description : `A webhook configuration to map Spacelift stacks to Port`;
-   4. Icon : `Git`;
+   1. Title : `Spacelift Stack Mapper`.
+   2. Identifier : `spacelift_stack_mapper`.
+   3. Description : `A webhook configuration to map Spacelift stacks to Port`.
+   4. Icon : `Git`.
 2. **Integration configuration** tab - fill the following JQ mapping:
 
    ```json showLineNumbers
@@ -588,20 +588,20 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 
 ### Create a webhook in Spacelift
 
-To send webhook events from Spacelift to an external system like Port, you must first create a webhook and then link it to a notification policy. Follow the steps below to complete the setup:
+To send webhook events from Spacelift to an external system like Port, we must first create a webhook and then link it to a notification policy. Follow the steps below to complete the setup:
 
-1. Go to **Webhooks** in your Spacelift account;
-2. Click **Create webhook**;
+1. Go to **Webhooks** in your Spacelift account.
+2. Click **Create webhook**.
 3. Input the following details:
-   1. `Name` - use a meaningful name such as Port Webhook;
-   2. `Endpoint URL` - enter the value of the `url` key you received after creating the webhook configuration;
-   3. `Space` - select the space that should have access to the webhook;
-4. Enable the **Webhook** toggle;
+   1. `Name` - use a meaningful name such as Port Webhook.
+   2. `Endpoint URL` - enter the value of the `url` key you received after creating the webhook configuration.
+   3. `Space` - select the space that should have access to the webhook.
+4. Enable the **Webhook** toggle.
 5. Click **Create** to create the webhook.
 
 ### Sending notifications
 
-Webhook events in Spacelift are triggered through notification policies. To set this up, you need the webhook ID that Spacelift assigns when you create a webhook.
+Webhook events in Spacelift are triggered through notification policies. To set this up, we need the webhook ID that Spacelift assigns when you create a webhook.
 
 #### How to find your webhook ID
 
@@ -613,18 +613,18 @@ Webhook events in Spacelift are triggered through notification policies. To set 
 
 4. Select **Copy webhook ID** to copy the webhook's unique identifier.
 
-You’ll use this ID when configuring the notification policy.
+We’ll use this ID when configuring the notification policy.
 
 #### Creating a notification policy
 
-1. Go to **Policies** in Spacelift;
-2. Click **Create policy**;
+1. Go to **Policies** in Spacelift.
+2. Click **Create policy**.
 3. Input the following details:
-   1. `Name` - use a meaningful name such as Port Webhook Notification;
-   2. `Type` - select `Notification policy` from the list;
-   3. `Space` - select the space that should have access to the policy;
-   4. `Description` - add a detailed description;
-4. Click **Continue** to open the YAML editor where you can bind the notification to the webhook;
+   1. `Name` - use a meaningful name such as Port Webhook Notification.
+   2. `Type` - select `Notification policy` from the list.
+   3. `Space` - select the space that should have access to the policy.
+   4. `Description` - add a detailed description.
+4. Click **Continue** to open the YAML editor where you can bind the notification to the webhook.
 5. Add one of the following configurations:
 
     <details>
