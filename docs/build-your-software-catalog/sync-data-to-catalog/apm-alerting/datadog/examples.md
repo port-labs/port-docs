@@ -757,7 +757,7 @@ resources:
             summary: .attributes.summary
             createdAt: .attributes.created_at | todate
           relations:
-            members: if .__members then .__members[].id else [] end
+            members: if .__members then [.__members[] | .id] else [] end
 ```
 
 </details>
