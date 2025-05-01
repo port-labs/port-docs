@@ -1047,7 +1047,7 @@ export const availableGuides = [
     {
         title: "Automatically create Jira issue from Snyk vulnerability",
         description: "Create an automation that creates a Jira issue from a Snyk vulnerability",
-        tags: ["Security", "Automations", "Jira", "Snyk", "Webhook"],
+        tags: ["Security", "Jira", "Snyk", "Automations", "Webhook"],
         logos: ["Jira", "Snyk"],
         link: "/guides/all/create-jira-issue-from-snyk-vulnerability",
     }
