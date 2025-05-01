@@ -1047,7 +1047,7 @@ export const availableGuides = [
     {
         title: "Automatically create Jira issue from Datadog alert",
         description: "Create an automation that creates a Jira issue from a Datadog alert",
-        tags: ["Automations", "Jira", "Datadog", "Webhook"],
+        tags: ["Incident management", "Jira", "Datadog", "Automations"],
         logos: ["Jira", "Datadog"],
         link: "/guides/all/create-jira-issue-from-datadog-alert",
     },
