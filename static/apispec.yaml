@@ -6929,66 +6929,127 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                func:
-                  type: string
-                  enum:
-                    - average
-                    - sum
-                    - min
-                    - max
-                    - median
-                    - last
-                blueprint:
-                  type: string
-                  description: The blueprint whose entities you wish to aggregate.
-                measureTimeBy:
-                  type: string
-                  description: A property of type `datetime` by which the aggregation will be calculated.
-                timeRange:
-                  type: object
-                  properties:
-                    preset:
-                      type: string
-                      enum:
-                        - today
-                        - yesterday
-                        - lastDay
-                        - lastWeek
-                        - last2Weeks
-                        - lastMonth
-                        - last3Months
-                        - last6Months
-                        - last12Months
-                    timeZone:
-                      type: string
-                  required:
-                    - preset
-                  additionalProperties: false
-                timeInterval:
-                  type: string
-                  enum:
-                    - hour
-                    - day
-                    - isoWeek
-                    - month
-                properties:
-                  type: array
-                  description: A list of properties of type `number` on which the aggregation will be calculated.
-                  items:
-                    type: string
-                query:
-                  $ref: "#/components/schemas/def-1"
-                  description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.
-              additionalProperties: false
               required:
-                - func
-                - query
                 - blueprint
                 - timeRange
                 - timeInterval
-                - properties
+                - query
                 - measureTimeBy
+                - aggregationType
+              oneOf:
+                - type: object
+                  title: Aggregate property
+                  properties:
+                    blueprint:
+                      type: string
+                      description: The blueprint whose entities you wish to aggregate.
+                    timeRange:
+                      type: object
+                      properties:
+                        preset:
+                          type: string
+                          enum:
+                            - today
+                            - yesterday
+                            - lastDay
+                            - lastWeek
+                            - last2Weeks
+                            - lastMonth
+                            - last3Months
+                            - last6Months
+                            - last12Months
+                        timeZone:
+                          type: string
+                      required:
+                        - preset
+                      additionalProperties: false
+                    timeInterval:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - isoWeek
+                        - month
+                    query:
+                      $ref: "#/components/schemas/def-1"
+                      description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.
+                    measureTimeBy:
+                      type: string
+                      description: A property of type `datetime` by which the aggregation will be calculated.
+                    aggregationType:
+                      enum:
+                        - aggregatePropertiesValues
+                    func:
+                      type: string
+                      enum:
+                        - average
+                        - sum
+                        - min
+                        - max
+                        - median
+                        - last
+                    properties:
+                      type: array
+                      description: A list of properties of type `number` on which the aggregation will be calculated.
+                      items:
+                        type: string
+                  required:
+                    - func
+                    - properties
+                  additionalProperties: false
+                - type: object
+                  title: Count entities
+                  properties:
+                    blueprint:
+                      type: string
+                      description: The blueprint whose entities you wish to aggregate.
+                    timeRange:
+                      type: object
+                      properties:
+                        preset:
+                          type: string
+                          enum:
+                            - today
+                            - yesterday
+                            - lastDay
+                            - lastWeek
+                            - last2Weeks
+                            - lastMonth
+                            - last3Months
+                            - last6Months
+                            - last12Months
+                        timeZone:
+                          type: string
+                      required:
+                        - preset
+                      additionalProperties: false
+                    timeInterval:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - isoWeek
+                        - month
+                    query:
+                      $ref: "#/components/schemas/def-1"
+                      description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.
+                    measureTimeBy:
+                      type: string
+                      description: A property of type `datetime` by which the aggregation will be calculated.
+                    aggregationType:
+                      enum:
+                        - countEntities
+                    func:
+                      type: string
+                      enum:
+                        - count
+                        - average
+                    breakdownProperty:
+                      type: string
+                      description: A blueprint's property by which you want to break down the data.
+                  required:
+                    - func
+                  additionalProperties: false
         required: true
       security:
         - bearer:
