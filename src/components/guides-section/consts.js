@@ -1043,5 +1043,19 @@ export const availableGuides = [
         tags: ["Jira", "Scorecards"],
         logos: ["Jira",],
         link: "/guides/all/track-health-of-jira-projects",
+    },
+    {
+        title: "Automatically create Jira issue from Datadog alert",
+        description: "Create an automation that creates a Jira issue from a Datadog alert",
+        tags: ["Incident management", "Jira", "Datadog", "Automations"],
+        logos: ["Jira", "Datadog"],
+        link: "/guides/all/create-jira-issue-from-datadog-alert",
+    },
+    {
+        title: "Automatically create Jira issue from Snyk vulnerability",
+        description: "Create an automation that creates a Jira issue from a Snyk vulnerability",
+        tags: ["Security", "Jira", "Snyk", "Automations", "Webhook"],
+        logos: ["Jira", "Snyk"],
+        link: "/guides/all/create-jira-issue-from-snyk-vulnerability",
     }
 ]

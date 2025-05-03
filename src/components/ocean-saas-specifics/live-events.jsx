@@ -142,7 +142,10 @@ export const liveEvents = {
     \n\n**Jobs:** \
     \n- build \
     \n\n**Pipelines:** \
-    \n- pipeline '
+    \n- pipeline ',
+  Linear:
+    '\n- Issue \
+    \n- IssueLabel',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
