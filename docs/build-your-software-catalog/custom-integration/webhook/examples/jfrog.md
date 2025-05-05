@@ -638,4 +638,4 @@ if __name__ == "__main__":
 
 </details>
 
-Done! you can now import historical builds, repositories and projects from JFrog into Port. Port will parse the builds, repositories and projects according to the mapping and update the catalog entities accordingly.
+Done! you can now import historical builds, repositories and projects from JFrog into Port. Port will parse them according to the mapping and update the catalog entities accordingly.
