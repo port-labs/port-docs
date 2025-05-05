@@ -274,7 +274,7 @@ Create the following blueprint definitions:
 
 </details>
 :::tip Blueprint Properties
-You may modify the properties in your blueprints depending on what you want to track in your JFrog repositories, builds and projects.
+You can modify the properties in your blueprints depending on what you want to track in your JFrog repositories, builds and projects.
 :::
 
 Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
