@@ -274,4 +274,5 @@ resource "port_action" "myAction" {
 ## Multi-line text
 
 In some cases, you might want to allow users to input long text.  
-You can do so by toggling on the `multi-line input` option when creating the input.
+You can do so by toggling the `multi-line input` option when creating the input.  
+This is beneficial for use-cases such as surveys, where the person executing the action might want to provide a relatively long answer to a question. 
