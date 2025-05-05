@@ -1036,5 +1036,26 @@ export const availableGuides = [
         tags: ["IaC for devs", "Actions"],
         logos: ["Git"],
         link: "/guides/all/trigger-spacelift-stack",
+    },
+    {
+        title: "Track health of Jira projects using scorecards",
+        description: "Create a scorecard to track the health of Jira projects",
+        tags: ["Jira", "Scorecards"],
+        logos: ["Jira",],
+        link: "/guides/all/track-health-of-jira-projects",
+    },
+    {
+        title: "Automatically create Jira issue from Datadog alert",
+        description: "Create an automation that creates a Jira issue from a Datadog alert",
+        tags: ["Incident management", "Jira", "Datadog", "Automations"],
+        logos: ["Jira", "Datadog"],
+        link: "/guides/all/create-jira-issue-from-datadog-alert",
+    },
+    {
+        title: "Automatically create Jira issue from Snyk vulnerability",
+        description: "Create an automation that creates a Jira issue from a Snyk vulnerability",
+        tags: ["Security", "Jira", "Snyk", "Automations", "Webhook"],
+        logos: ["Jira", "Snyk"],
+        link: "/guides/all/create-jira-issue-from-snyk-vulnerability",
     }
 ]
