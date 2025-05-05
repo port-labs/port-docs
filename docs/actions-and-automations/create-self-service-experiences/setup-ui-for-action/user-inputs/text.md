@@ -275,4 +275,17 @@ resource "port_action" "myAction" {
 
 In some cases, you might want to allow users to input long text.  
 You can do so by toggling the `multi-line input` option when creating the input.  
+
 This is beneficial for use-cases such as surveys, where the person executing the action might want to provide a relatively long answer to a question. 
+
+```json showLineNumbers
+{
+  "myTextInput": {
+    "title": "My text input",
+    "icon": "My icon",
+    "description": "My text input",
+    "type": "string",
+    "format": "multi-line"
+  }
+}
+```
