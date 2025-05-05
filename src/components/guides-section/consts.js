@@ -1057,5 +1057,12 @@ export const availableGuides = [
         tags: ["Security", "Jira", "Snyk", "Automations", "Webhook"],
         logos: ["Jira", "Snyk"],
         link: "/guides/all/create-jira-issue-from-snyk-vulnerability",
+    },
+    {
+        title: "Notify users upon approval of self-service actions",
+        description: "Create an automation that notifies users when a self-service action is approved",
+        tags: ["Approval workflow", "Actions", "Webhook", "Automations"],
+        logos: ["Webhook"],
+        link: "/guides/all/notify-users-upon-approval-of-action",
     }
 ]
