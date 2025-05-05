@@ -202,7 +202,7 @@ After a successful sync has completed, you will be able to see how long ago it w
 
 If everything in Airbyte is working properly, and you don't see the data in your Port account, you can follow these steps to diagnose the root cause:
 
-<h3> Issues in the Webhook</h3>
+<h3>Issues with the webhook</h3>
 1. Navigate to [Data Sources page](https://app.getport.io/settings/data-sources) in your port account.
 
 2. Locate the Webhook integration you have set for the ingestion, and click on it.
