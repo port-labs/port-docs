@@ -103,7 +103,7 @@ The following snippet defines an automation that sends a Slack message to a spec
 
 You can customize messages with blocks following the [Slack formatting guidelines](https://slack.com/help/articles/202288908-Format-your-messages). 
 
-You can also insert the Slack channel dynamically:
+<!-- You can also insert the Slack channel dynamically:
 
 - Save the Slack channel ID for services/teams.
 - Mirror it into the _user blueprint.
@@ -111,7 +111,7 @@ You can also insert the Slack channel dynamically:
 
 [[need to add example and see it works]]
 
-You can also set under which name & icon the message will be sent (add example)
+You can also set under which name & icon the message will be sent (add example) -->
 
 ## Interact with Port from Slack
 

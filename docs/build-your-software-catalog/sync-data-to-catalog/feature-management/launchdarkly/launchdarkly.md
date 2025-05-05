@@ -45,7 +45,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="LaunchDarkly"/>
 
 </TabItem>
 
@@ -164,7 +164,9 @@ This table summarizes the available parameters for the installation.
 | `integration.eventListener.type`       | The event listener type                                                                                                          | ✅        |
 | `integration.config.launchdarklyHost`  | Your LaunchDarkly host. For example https://app.launchdarkly.com for the default endpoint                                        | ✅        |
 | `integration.config.launchdarklyToken` | The LaunchDarkly API token, docs can be found [here](https://docs.launchdarkly.com/home/account/api-create)                      | ✅        |
-| `integration.config.appHost`           | Your application's host url                                                                                                      | ✅        |
+| `integration.config.appHost` (deprecated)          |  The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in LauchDarkly. This field is deprecated. Please use the `baseUrl` field instead | ❌   |
+| `integration.config.webhookSecret`     | Webhook secret for authenticating incoming events.                                                                               | ❌        |
+| `baseUrl`                              | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in LaunchDarkly                             | ❌        |
 | `scheduledResyncInterval`              | The number of minutes between each resync                                                                                        | ❌        |
 | `initializePortResources`              | Default true, When set to true the integration will create default blueprints and the port App config Mapping                    | ❌        |
 | `sendRawDataExamples`                  | Default, true, Enable sending raw data examples from the third part API to port for testing and managing the integration mapping | ❌        | 
