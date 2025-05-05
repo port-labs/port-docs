@@ -1061,7 +1061,7 @@ export const availableGuides = [
     {
         title: "Notify users upon approval of self-service actions",
         description: "Create an automation that notifies users when a self-service action is approved",
-        tags: ["Approval workflow", "Actions", "Webhook", "Automations"],
+        tags: ["Approval workflow", "Actions", "Automations", "Webhook"],
         logos: ["Webhook"],
         link: "/guides/all/notify-users-upon-approval-of-action",
     }
