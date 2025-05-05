@@ -3,6 +3,7 @@ sidebar_position: 2
 displayed_sidebar: null
 description: Learn how to scaffold Azure DevOps repositories using Cookiecutter templates via Port Actions.
 ---
+import AzureDevopsTroubleshootingLink from '/docs/generalTemplates/azure-devops/_azure_devops_troubleshooting_link.mdx'
 
 # Scaffold Azure DevOps Repositories Using Cookiecutter
 
@@ -355,7 +356,6 @@ However, we highly recommend you install the Azure DevOps integration to have th
    - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
 
-  
 
 ## Let's test it!
 
@@ -368,3 +368,7 @@ However, we highly recommend you install the Azure DevOps integration to have th
    - Description.
 4. Click on `Execute`.
 5. Wait for the Azure DevOps pipeline to create your new repository with the Cookiecutter template.
+
+<AzureDevopsTroubleshootingLink />  
+
+
