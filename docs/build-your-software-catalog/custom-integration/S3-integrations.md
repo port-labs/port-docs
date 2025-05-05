@@ -217,7 +217,7 @@ If you encounter a jq error - it means you have a syntax error or the source's s
 If you encounter a JSON document list, it means the mapping is working properly, but it could be that the filters you have set in it all result in "false" (which means no entity will be created).  
 In this case you will need to look over the appropriate element in the document (with the relevant blueprint for the loaded event) and adjust the mapping so that the "filter" field will result to "true".
 
-<h3> Issues in the blueprint definition</h3>
+<h3>Issues with the blueprint definition</h3>
 1. Navigate to the [Data Sources page](https://app.getport.io/settings/data-sources) of your port account.
 
 2. Locate the webhook integration you have set for the ingestion, and click on it.
