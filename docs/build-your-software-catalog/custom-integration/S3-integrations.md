@@ -10,21 +10,21 @@ import S3IntegrationDisclaimer from "/docs/generalTemplates/_s3_integrations_dis
 
 # S3 bucket
 
-## Overview
+Port allows you to ingest any data source by using [Airbyte](https://airbyte.com/), storing the data temporarily in [S3 bucket](https://aws.amazon.com/s3/), and then triggering ingestion via a [Webhook](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).  
 
-Port allows you to ingest any data source by using [Airbyte](https://airbyte.com/), storing the data temporarily in [S3 bucket](https://aws.amazon.com/s3/), and then triggering ingestion via a [Webhook](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/). This flow is useful for syncing external data sources where no direct integration exists yet or where you need to have control over the ingestion process.
+This flow is useful for syncing external data sources where no direct integration exists yet or where you need to have control over the ingestion process.
 
 <img src="/img/guides/s3integrations.png" width="95%" border="1px" />
 <br/>
 <br/>
 <S3IntegrationDisclaimer/>
 
-## Ingestion examples
+## Detailed examples
 
-The following are examples for how to ingest any data source into Port using Airbyte, S3 and webhook:
-- [Ingest Slack data into port](https://docs.port.io/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook)
-- [Ingest Okta data into port](https://docs.port.io/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook)
-- [Ingest Hibob data into port](https://docs.port.io/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook)
+The following guides walk you through ingesting specific data sources into Port using Airbyte, S3 and webhook:
+- [Ingest Slack data into Port](https://docs.port.io/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook)
+- [Ingest Okta data into Port](https://docs.port.io/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook)
+- [Ingest Hibob data into Port](https://docs.port.io/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook)
 
 ## How it works
 
@@ -50,7 +50,7 @@ To integrate Airbyte-supported data source into Port, you will need to:
 
 ### Set up data source
 
-#### Find the connector in Airbyte
+<h3>Find the connector in Airbyte</h3>
 
 Airbyte supports a wide range of [connectors](https://airbyte.com/connectors?connector-type=Sources).
 
@@ -88,7 +88,7 @@ and during the **Select Streams** step in the connection setup, review the expec
 
 Alternatively, you can set up the connection and start the sync, then download the extracted files from S3, review them, and construct the appropriate blueprints and mappings.
 
-:::tip Important
+:::tip Resync Airbyte After Port Setup
 If you set up a connection to S3 before setting the target blueprints and mappings, you will have to execute a "resync" 
 in airbyte after the resources in Port have been properly set up.
 :::
@@ -186,7 +186,7 @@ Once you have decided on the desired blueprints you wish to set up, you can refe
 
 Once you have decided on the mappings you wish to set up, you can refer to the [webhook creation docs](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/) to set them up in your portal.
 
-:::tip Important
+:::tip Using the generated webhook URL 
 It is important that you use the generated webhook URL when setting up the Connection in Airbyte, otherwise the data will not be automatically ingested into Port from S3.
 :::
 
@@ -202,7 +202,7 @@ After a successful sync has completed, you will be able to see how long ago it w
 
 If everything in Airbyte is working properly, and you don't see the data in your Port account, you can follow these steps to diagnose the root cause:
 
-#### Issues in the Webhook
+<h3> Issues in the Webhook</h3>
 1. Navigate to [Data Sources page](https://app.getport.io/settings/data-sources) in your port account.
 
 2. Locate the Webhook integration you have set for the ingestion, and click on it.
@@ -217,7 +217,7 @@ If you encounter a jq error - it means you have a syntax error or the source's s
 If you encounter a JSON document list, it means the mapping is working properly, but it could be that the filters you have set in it all result in "false" (which means no entity will be created).  
 In this case you will need to look over the appropriate element in the document (with the relevant blueprint for the loaded event) and adjust the mapping so that the "filter" field will result to "true".
 
-#### Issues in the blueprint definition
+<h3> Issues in the blueprint definition</h3>
 1. Navigate to the [Data Sources page](https://app.getport.io/settings/data-sources) of your port account.
 
 2. Locate the webhook integration you have set for the ingestion, and click on it.
@@ -227,6 +227,6 @@ In this case you will need to look over the appropriate element in the document 
 4. You can now browse for issues in ingestion of specific entities in the audit log, or apply a filter where **Status != "Success"**.  
 If any entities were created but failed to ingest, you will see an indicative error that may lead you to the issue in the blueprint definition.
 
-#### Data is not propagating from S3 to Port
+<h3>Data is not propagating from S3 to Port</h3>
 If you're sure the Airbyte integration is working properly, there are no records in the Audit Log, and the "Load latest event" button does not produce an event in the corresponding box, there might be an issue with the pipeline set up by Port.  
 In this case, contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io) and our support team will assist in diagnosing and solving the issue.
