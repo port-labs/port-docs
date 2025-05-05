@@ -204,6 +204,10 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
 <!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
 
+## LeanIX
+
+- [Script that synchronizes data from LeanIX into Port](https://github.com/port-labs/LeanIX-Sync)
+
 ## Linear
 
 - [Linear integration](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md)
