@@ -16,6 +16,9 @@ const config = {
   organizationName: "port-labs", // Usually your GitHub org/user name.
   projectName: "port", // Usually your repo name.
   staticDirectories: ["static"],
+  future: {
+    experimental_faster: true, // turns Docusaurus Faster on globally
+  },
 
   presets: [
     [
