@@ -151,6 +151,12 @@ export const liveEvents = {
     \n- environment \
     \n- project \
     \n- auditlog',
+  Octopus:
+    '\n- spaces \
+    \n- projects \
+    \n- deployments \
+    \n- releases \
+    \n- machines',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
