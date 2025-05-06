@@ -1060,7 +1060,7 @@ export const availableGuides = [
     },
     {
         title: "Notify users upon approval of self-service actions",
-        description: "Create an automation that notifies users when a self-service action is approved",
+        description: "Create an automation that notifies users when a self-service action is approved/declined",
         tags: ["Approval workflow", "Slack", "Actions", "Automations"],
         logos: ["Slack"],
         link: "/guides/all/notify-users-upon-approval-of-action",
