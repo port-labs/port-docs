@@ -6,7 +6,7 @@ description: Learn how to automatically notify users in Slack when their self-se
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Approval Notifications for Self-Service Actions
+# Notify users upon approval of self-service actions
 
 This guide shows how to build an automation in Port that sends Slack notifications to users when their self-service actions are **approved** or **declined**. This workflow ensures transparency and closes the feedback loop after a team member submits a request.
 
@@ -21,14 +21,11 @@ This guide shows how to build an automation in Port that sends Slack notificatio
 - You have access to Slack developers page and have created a Slack webhook URL. Follow the steps in the [Slack Incoming Webhooks Guide](https://api.slack.com/messaging/webhooks) to create a webhook URL.
 
 
-## Set up data model
-
-For this tutorial, we’ll use the `Service` blueprint that comes with Port’s onboarding flow. If you haven’t gone through onboarding yet, [follow the steps here](/getting-started/overview).
-
-
 ## Set up action
 
-We’ll use an example action that locks service deployment environments — useful during maintenance or peak traffic periods. To introduce approvals, we’ll modify the action to require approval before execution.
+For this tutorial, we will use the existing `Service` blueprint that comes with Port’s onboarding flow.
+
+Here is an example action that locks service deployment environments — useful during maintenance or peak traffic periods. To introduce approvals, we will modify the action to require approval before execution.
 
 This action can be reused from our [Lock and Unlock Service guide](https://docs.port.io/guides/all/lock-and-unlock-service-in-port/).
 
@@ -95,7 +92,7 @@ This action can be reused from our [Lock and Unlock Service guide](https://docs.
 
 ## Set up automation
 
-Now let’s create an automation that sends a Slack message when the status of the self-service action changes from `WAITING_FOR_APPROVAL` to either `IN_PROGRESS` (approved) or `DECLINED` (declined).
+Now let us create an automation that sends a Slack message when the status of the self-service action changes from `WAITING_FOR_APPROVAL` to either `IN_PROGRESS` (approved) or `DECLINED` (declined).
 
 Follow the steps below to configure the automation:
 
@@ -113,42 +110,42 @@ Follow the steps below to configure the automation:
 
     ```json showLineNumbers
     {
-    "identifier": "approval_notification",
-    "title": "Notify on Action Approval/Decline",
-    "description": "Sends Slack notifications when a self-service action is approved or declined",
-    "trigger": {
-        "type": "automation",
-        "event": {
-        "type": "RUN_UPDATED",
-        "actionIdentifier": "test_approval"
-        },
-        "condition": {
-        "type": "JQ",
-        "expressions": [
-            ".diff.before.status == \"WAITING_FOR_APPROVAL\"",
-            ".diff.after.status | IN(\"DECLINED\", \"IN_PROGRESS\")"
-        ],
-        "combinator": "and"
-        }
-    },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "<SLACK_WEBHOOK_URL>",
-        "agent": false,
-        "synchronized": true,
-        "method": "POST",
-        "headers": {},
-        "body": {
-        "text": "{{ if .event.diff.after.status == \"DECLINED\" then \":x: *Your self-service request was declined.*\\n\\n*Action:* \" + .event.context.action.title + \"\\n*Status:* `\" + .event.diff.after.status + \"`\\n*Comment:* _\" + .event.diff.after.approval.description + \"_\\n\\n<https://app.getport.io/organization/run?runId=\" + .event.diff.after.id + \"|View in Port>\" else \":white_check_mark: *Your self-service request was approved!*\\n\\n*Action:* \" + .event.context.action.title + \"\\n*Status:* `\" + .event.diff.after.status + \"`\\n\\n<https://app.getport.io/organization/run?runId=\" + .event.diff.after.id + \"|View in Port>\" end }}"
-        }
-    },
-    "publish": true
+      "identifier": "approval_notification",
+      "title": "Notify on Action Approval/Decline",
+      "description": "Sends Slack notifications when a self-service action is approved or declined",
+      "trigger": {
+          "type": "automation",
+          "event": {
+          "type": "RUN_UPDATED",
+          "actionIdentifier": "test_approval"
+          },
+          "condition": {
+          "type": "JQ",
+          "expressions": [
+              ".diff.before.status == \"WAITING_FOR_APPROVAL\"",
+              ".diff.after.status | IN(\"DECLINED\", \"IN_PROGRESS\")"
+          ],
+          "combinator": "and"
+          }
+      },
+      "invocationMethod": {
+          "type": "WEBHOOK",
+          "url": "<SLACK_WEBHOOK_URL>",
+          "agent": false,
+          "synchronized": true,
+          "method": "POST",
+          "headers": {},
+          "body": {
+          "text": "{{ if .event.diff.after.status == \"DECLINED\" then \":x: *Your self-service request was declined.*\\n\\n*Action:* \" + .event.context.action.title + \"\\n*Status:* `\" + .event.diff.after.status + \"`\\n*Comment:* _\" + .event.diff.after.approval.description + \"_\\n\\n<https://app.getport.io/organization/run?runId=\" + .event.diff.after.id + \"|View in Port>\" else \":white_check_mark: *Your self-service request was approved!*\\n\\n*Action:* \" + .event.context.action.title + \"\\n*Status:* `\" + .event.diff.after.status + \"`\\n\\n<https://app.getport.io/organization/run?runId=\" + .event.diff.after.id + \"|View in Port>\" end }}"
+          }
+      },
+      "publish": true
     }
     ```
     </details>
 
 4. Click `Save`.
 
-When a user submits a self-service action and it’s reviewed, the automation sends them a Slack message indicating whether it was **approved** or **declined**:
+When a user submits a self-service action and it is reviewed, the automation sends them a Slack message indicating whether it was **approved** or **declined**:
 
 <img src="/img/guides/slackNotificationForApproval.png" width="600px" border="1px" />
