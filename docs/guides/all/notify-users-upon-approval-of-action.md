@@ -23,7 +23,7 @@ This guide shows how to build an automation in Port that sends Slack notificatio
 
 ## Set up action
 
-For this tutorial, we will use the existing `Service` blueprint that comes with Port’s onboarding flow.
+In this guide, we will use the `Service` blueprint that is created by default during the onboarding process.
 
 Here is an example action that locks service deployment environments — useful during maintenance or peak traffic periods. To introduce approvals, we will modify the action to require approval before execution.
 
