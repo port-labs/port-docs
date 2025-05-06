@@ -179,7 +179,7 @@ However, we highly recommend you install the Azure DevOps integration to have th
       vmImage: "ubuntu-latest"
 
     variables:
-      RUN_ID: "${{ parameters.port_scaffold_trigger.port_context.runId }}"
+      RUN_ID: "${{ parameters.port_trigger.port_context.runId }}"
       BLUEPRINT_ID: "${{ parameters.port_trigger.port_context.blueprint }}"
       SERVICE_NAME: "${{ parameters.port_trigger.properties.service_name }}"
       DESCRIPTION: "${{ parameters.port_trigger.properties.description }}"
@@ -190,8 +190,8 @@ However, we highly recommend you install the Azure DevOps integration to have th
 
     resources:
       webhooks:
-        - webhook: port_scaffold_trigger
-          connection: port_scaffold_trigger
+        - webhook: port_trigger
+          connection: port_trigger
 
     stages:
       - stage: fetch_port_access_token
