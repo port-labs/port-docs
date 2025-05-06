@@ -179,17 +179,19 @@ However, we highly recommend you install the Azure DevOps integration to have th
       vmImage: "ubuntu-latest"
 
     variables:
-      RUN_ID: "${{ parameters.port_trigger.port_context.runId }}"
+      RUN_ID: "${{ parameters.port_scaffold_trigger.port_context.runId }}"
       BLUEPRINT_ID: "${{ parameters.port_trigger.port_context.blueprint }}"
       SERVICE_NAME: "${{ parameters.port_trigger.properties.service_name }}"
       DESCRIPTION: "${{ parameters.port_trigger.properties.description }}"
       AZURE_ORGANIZATION: "${{ parameters.port_trigger.properties.azure_organization }}"
-      AZURE_PROJECT: "${{ parameters.port_trigger.properties.azure_project }}"
+      AZURE_PROJECT: "${{ parameters.port_trigger.properties.azure_project.title }}"
+      PROJECT_ID: "${{ parameters.port_trigger.properties.azure_project.identifier }}"
+      # Ensure that PERSONAL_ACCESS_TOKEN is set as a secret variable in your pipeline settings
 
     resources:
       webhooks:
-        - webhook: port_trigger
-          connection: port_trigger
+        - webhook: port_scaffold_trigger
+          connection: port_scaffold_trigger
 
     stages:
       - stage: fetch_port_access_token
@@ -199,7 +201,7 @@ However, we highly recommend you install the Azure DevOps integration to have th
               - script: |
                   sudo apt-get update
                   sudo apt-get install -y jq
-              - script: |
+              - script: | 
                   accessToken=$(curl -X POST \
                         -H 'Content-Type: application/json' \
                         -d '{"clientId": "$(PORT_CLIENT_ID)", "clientSecret": "$(PORT_CLIENT_SECRET)"}' \
@@ -207,6 +209,7 @@ However, we highly recommend you install the Azure DevOps integration to have th
                   echo "##vso[task.setvariable variable=accessToken;isOutput=true]$accessToken"
                 displayName: Fetch Access Token and Run ID
                 name: getToken
+
 
       - stage: scaffold
         dependsOn:
@@ -221,52 +224,82 @@ However, we highly recommend you install the Azure DevOps integration to have th
                   sudo apt-get install -y jq
                   sudo pip install cookiecutter -q
               - script: |
-                  # Create the repository
-                  PROJECT_ID=$(curl -X GET "https://dev.azure.com/${{ variables.AZURE_ORGANIZATION }}/_apis/projects/${{ variables.AZURE_PROJECT }}?api-version=7.0" \
-                  -H "Authorization: Basic $(PERSONAL_ACCESS_TOKEN)" \
-                  -H "Content-Type: application/json" \
-                  -H "Content-Length: 0" | jq .id)
+                  # Use shell variable syntax for accessing variables
+                  PAYLOAD="{\"name\":\"$SERVICE_NAME\",\"project\":{\"id\":\"$PROJECT_ID\"}}"
 
-                  if [[ -z "$PROJECT_ID" ]]; then
-                    echo "Failed to fetch Azure Devops Project ID."
+                  echo "SERVICE_NAME: $SERVICE_NAME"
+                  echo "AZURE_ORGANIZATION: $AZURE_ORGANIZATION"
+                  echo "PROJECT_ID: $PROJECT_ID"
+                  echo "PAYLOAD: $PAYLOAD"
+
+                  if [[ -z \"$PERSONAL_ACCESS_TOKEN\" ]]; then
+                    echo "PERSONAL_ACCESS_TOKEN is not set or is empty."
                     exit 1
+                  else
+                    echo "PERSONAL_ACCESS_TOKEN is set."
                   fi
 
-                  PAYLOAD='{"name":"${{ variables.SERVICE_NAME }}","project":{"id":'$PROJECT_ID'}}'
+                  # Create the repository
+                  CREATE_REPO_RESPONSE=$(curl -s -u :$PERSONAL_ACCESS_TOKEN \
+                    -X POST "https://dev.azure.com/$AZURE_ORGANIZATION/$PROJECT_ID/_apis/git/repositories?api-version=7.0" \
+                    -H "Content-Type: application/json" \
+                    -d "$PAYLOAD")
 
-                  CREATE_REPO_RESPONSE=$(curl -X POST "https://dev.azure.com/${{ variables.AZURE_ORGANIZATION }}/_apis/git/repositories?api-version=7.0" \
-                  -H "Authorization: Basic $(PERSONAL_ACCESS_TOKEN)" \
-                  -H "Content-Type: application/json" \
-                  -d $PAYLOAD)
+                  # Output the response for debugging
+                  echo "CREATE_REPO_RESPONSE: $CREATE_REPO_RESPONSE"
 
                   PROJECT_URL=$(echo $CREATE_REPO_RESPONSE | jq -r .webUrl)
 
-                  if [[ -z "$PROJECT_URL" ]]; then
-                    echo "Failed to create Azure Devops repository."
+                  if [[ -z "$PROJECT_URL" ]] || [[ "$PROJECT_URL" == "null" ]]; then
+                    echo "Failed to create Azure DevOps repository."
                     exit 1
                   fi
 
                   echo "##vso[task.setvariable variable=PROJECT_URL;isOutput=true]$PROJECT_URL"
 
+                  # Create a sanitized version of SERVICE_NAME for cookiecutter (replace underscores with hyphens)
+                  COOKIECUTTER_NAME=$(echo "$SERVICE_NAME" | tr '_' '-')
+                  echo "Original SERVICE_NAME: $SERVICE_NAME"
+                  echo "Sanitized COOKIECUTTER_NAME: $COOKIECUTTER_NAME"
+
                   cat <<EOF > cookiecutter.yaml
                   default_context:
-                    site_name: "${{ variables.SERVICE_NAME }}"
+                    site_name: "$COOKIECUTTER_NAME"
                     python_version: "3.6.0"
                   EOF
                   cookiecutter $COOKIECUTTER_TEMPLATE_URL --no-input --config-file cookiecutter.yaml --output-dir scaffold_out
+
+                  # Rename the output directory if needed to match the original SERVICE_NAME
+                  if [[ "$COOKIECUTTER_NAME" != "$SERVICE_NAME" ]]; then
+                    echo "Renaming cookiecutter output directory to match repository name..."
+                    mv "scaffold_out/$COOKIECUTTER_NAME" "scaffold_out/$SERVICE_NAME"
+                  fi
 
                   echo "Initializing new repository..."
                   git config --global user.email "scaffolder@email.com"
                   git config --global user.name "Mighty Scaffolder"
                   git config --global init.defaultBranch "main"
 
-                  cd "scaffold_out/${{ variables.SERVICE_NAME }}"
+                  cd "scaffold_out/$SERVICE_NAME"
                   git init
                   git add .
                   git commit -m "Initial commit"
-                  decoded_pat=$(echo $(PERSONAL_ACCESS_TOKEN) | base64 -d)
-                  git remote add origin https://$decoded_pat@dev.azure.com/${{ variables.AZURE_ORGANIZATION }}/${{ variables.AZURE_PROJECT }}/_git/${{ variables.SERVICE_NAME }}
+
+                  # Configure Git to use the PAT for authentication - use the URL format with credentials embedded
+                  # URL encode the project name to handle spaces correctly
+                  ENCODED_PROJECT=$(echo "$AZURE_PROJECT" | sed 's/ /%20/g')
+                  git remote add origin "https://$PERSONAL_ACCESS_TOKEN@dev.azure.com/$AZURE_ORGANIZATION/$ENCODED_PROJECT/_git/$SERVICE_NAME"
+                  
+                  # Set git timeout values to avoid connection issues
+                  git config --global http.lowSpeedLimit 1000
+                  git config --global http.lowSpeedTime 300
+
+                  # Push code to the repository
                   git push -u origin --all
+
+                env:
+                  PERSONAL_ACCESS_TOKEN: $(PERSONAL_ACCESS_TOKEN)
+                displayName: "Create Repository in Azure DevOps"
                 name: scaffold
 
       - stage: upsert_entity
@@ -290,9 +323,12 @@ However, we highly recommend you install the Azure DevOps integration to have th
                         "identifier": "${{ variables.SERVICE_NAME }}",
                         "title": "${{ variables.SERVICE_NAME }}",
                         "properties": {"description":"${{ variables.DESCRIPTION }}","url":"$(PROJECT_URL)" },
-                        "relations": {}
+                        "relations": {
+                          "project":"${{ variables.PROJECT_ID }}"
+                        }
                       }' \
                     "https://api.getport.io/v1/blueprints/${{ variables.BLUEPRINT_ID }}/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
+
 
       - stage: update_run_status
         dependsOn:
@@ -329,9 +365,10 @@ However, we highly recommend you install the Azure DevOps integration to have th
               - script: |
                   curl -X PATCH \
                     -H 'Content-Type: application/json' \
-                    -H 'Authorization: Bearer $(accessToken)' \
-                    -d '{"status":"FAILURE", "message": {"run_status": "Scaffold ${{ variables.SERVICE_NAME }} failed" }}' \
-                    "https://api.getport.io/v1/actions/runs/${{ variables.RUN_ID }}"
+                    -H "Authorization: Bearer $accessToken" \
+                    -d '{"status":"FAILURE", "message": {"run_status": "Scaffold '"$SERVICE_NAME"' failed" }}' \
+                    "https://api.getport.io/v1/actions/runs/$RUN_ID"
+
     ```
 
     </details>
