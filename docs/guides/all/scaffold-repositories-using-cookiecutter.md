@@ -16,8 +16,70 @@ This guide will help you implement a self-service action in Port that allows you
 
 ## Set up data model
 
-If you haven't installed the [Azure DevOps integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/installation), you'll need to create a blueprint for Azure DevOps repositories.  
-However, we highly recommend you install the Azure DevOps integration to have this automatically set up for you.
+If you haven't installed the [Azure DevOps integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/installation), you'll need to create blueprints for Azure DevOps repositories and projects.  
+However, we highly recommend you install the Azure DevOps integration to have these automatically set up for you.
+
+<h3> Create the Azure DevOps project blueprint </h3>
+
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+2. Click on `+ Blueprint`.
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+4. Add this JSON schema:
+
+    <details>
+    <summary><b>Azure DevOps Project Blueprint (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "project",
+      "title": "Project",
+      "icon": "AzureDevops",
+      "schema": {
+        "properties": {
+          "state": {
+            "title": "State",
+            "type": "string",
+            "icon": "AzureDevops",
+            "description": "The current lifecycle state of the project."
+          },
+          "revision": {
+            "title": "Revision",
+            "type": "string",
+            "icon": "AzureDevops",
+            "description": "The revision number, indicating how many times the project configuration has been updated."
+          },
+          "visibility": {
+            "title": "Visibility",
+            "type": "string",
+            "icon": "AzureDevops",
+            "description": "Indicates whether the project is private or public"
+          },
+          "defaultTeam": {
+            "title": "Default Team",
+            "type": "string",
+            "icon": "Team",
+            "description": "Default Team of the project"
+          },
+          "link": {
+            "title": "Link",
+            "type": "string",
+            "format": "url",
+            "icon": "AzureDevops",
+            "description": "Link to azure devops project"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
+
+    </details>
+
+5. Click "Save" to create the blueprint.
 
 <h3> Create the Azure DevOps repository blueprint </h3>
 
@@ -85,51 +147,60 @@ However, we highly recommend you install the Azure DevOps integration to have th
 4. Copy and paste the following JSON configuration:
 
     <details>
-    <summary><b>Scaffolding new repository (Click to expand)</b></summary>
+    <summary><b>Scaffold Azure Repository Action (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
       "identifier": "azure_scaffolder",
-      "title": "Azure Scaffolder",
+      "title": "Scaffold Azure Repository",
       "icon": "Azure",
+      "description": "Scaffold a new repository in Azure DevOps",
       "trigger": {
         "type": "self-service",
         "operation": "CREATE",
         "userInputs": {
           "properties": {
             "service_name": {
-              "icon": "DefaultProperty",
               "title": "Service Name",
-              "type": "string",
-              "description": "Name of the service to scaffold"
+              "description": "The new service's name",
+              "type": "string"
             },
             "azure_organization": {
               "icon": "DefaultProperty",
-              "title": "Azure Organization",
               "type": "string",
-              "description": "Your Azure DevOps organization name"
+              "title": "Azure Organization",
+              "description": "The Azure DevOps organization name",
+              "default": "<YOUR_DEFAULT_AZURE_DEVOPS_ORGANIZATION_NAME>"
+            },
+            "description": {
+              "type": "string",
+              "title": "description",
+              "description": "description of the scaffold"
             },
             "azure_project": {
               "icon": "DefaultProperty",
-              "title": "Azure Project",
+              "title": "azure project",
               "type": "string",
-              "description": "Your Azure DevOps project name"
-            },
-            "description": {
-              "icon": "DefaultProperty",
-              "title": "Description",
-              "type": "string",
-              "description": "Service description"
+              "description": "Your Azure DevOps project ID",
+              "blueprint": "project",
+              "sort": {
+                "property": "$identifier",
+                "order": "ASC"
+              },
+              "format": "entity"
             }
           },
           "required": [
-            "service_name"
+            "service_name",
+            "azure_organization",
+            "azure_project"
           ],
           "order": [
             "service_name",
             "azure_organization",
             "azure_project",
             "description"
+          
           ]
         },
         "blueprintIdentifier": "azureDevopsRepository"
@@ -142,11 +213,10 @@ However, we highly recommend you install the Azure DevOps integration to have th
           "properties": {
             "service_name": "{{.inputs.\"service_name\"}}",
             "azure_organization": "{{.inputs.\"azure_organization\"}}",
-            "azure_project": "{{.inputs.\"azure_project\"}}",
-            "description": "{{.inputs.\"description\"}}"
+            "description": "{{.inputs.\"description\"}}",
+            "azure_project": "{{.inputs.\"azure_project\"}}"
           },
           "port_context": {
-            "entity": "{{.entity}}",
             "blueprint": "{{.action.blueprint}}",
             "runId": "{{.run.id}}",
             "trigger": "{{ .trigger }}"
@@ -397,13 +467,17 @@ However, we highly recommend you install the Azure DevOps integration to have th
 ## Let's test it!
 
 1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal.
-2. Click on the `Azure Scaffolder` action.
+2. Click on the **Azure Scaffolder** action.
 3. Fill in the required details:
-   - Service Name (required).
-   - Azure Organization (if different from default).
-   - Azure Project (if different from default).
-   - Description.
-4. Click on `Execute`.
+   - **Service Name** (required)
+   - **Azure Organization** (pre-filled or enter your organization)
+   - **Description** (optional)
+   - **Azure Project**: Select an existing project from the dropdown list.
+     
+     :::info Can't find your project?
+     If you don't see your project in the dropdown, make sure it exists in your Port catalog. If you haven't installed the Azure DevOps integration, you may need to [add a project entity manually](https://app.getport.io/software-catalog) first.
+     :::
+4. Click on **Execute**.
 5. Wait for the Azure DevOps pipeline to create your new repository with the Cookiecutter template.
 
 <AzureDevopsTroubleshootingLink />  
