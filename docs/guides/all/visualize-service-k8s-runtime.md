@@ -35,7 +35,12 @@ To visualize your cluster's workloads in Port, we will first install Port’s Ku
 
 ### Install Port's Kubernetes exporter
 
-<OceanRealtimeInstallation integration="Kubernetes" />
+To install the integration using Helm:
+
+1. Go to the [Kubernetes data source page](https://app.getport.io/settings/data-sources?section=EXPORTERS&provider=Kubernetes) in your portal.
+
+2. A `helm` command will be displayed, with default values already filled out (e.g. your Port client ID, client secret, etc).  
+Copy the command, replace the placeholders with your values, then run it in your terminal to install the integration.
 
 <PortApiRegionTip/>
 
@@ -117,16 +122,16 @@ We achieved this by adding a [mapping definition](https://github.com/port-labs/t
             spec:
             containers:
                 - name: nginx
-                image: nginx:1.14.2
-                resources:
-                    limits:
-                    cpu: "200m"
-                    memory: "256Mi"
-                    requests:
-                    cpu: "100m"
-                    memory: "128Mi"
-                ports:
-                    - containerPort: 80
+                  image: nginx:1.14.2
+                  resources:
+                      limits:
+                      cpu: "200m"
+                      memory: "256Mi"
+                      requests:
+                        cpu: "100m"
+                        memory: "128Mi"
+                  ports:
+                      - containerPort: 80
     ```
 
     </details>

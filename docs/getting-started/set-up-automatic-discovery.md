@@ -394,6 +394,8 @@ Common examples for resources that can be used as a source of truth for `workloa
         identifier: .metadata.uid
         title: .metadata.name
         blueprint: '"workload"'
+        properties:
+            version: .status.summary.images[0] | split(":")[-1]
         relations:
           argo_application: .metadata.uid
 ```

@@ -3,6 +3,8 @@ displayed_sidebar: null
 description: Learn how to copy pipeline template from one repository to another using Port Actions.
 ---
 
+import AzureDevopsTroubleshootingLink from '/docs/generalTemplates/azure-devops/_azure_devops_troubleshooting_link.mdx'
+
 # Copy Pipeline Template to Target Repo
 
 This guide demonstrates how to copy pipeline templates between Azure DevOps repositories using a self-service action in Port. 
@@ -489,3 +491,5 @@ First, let's set up the necessary Azure DevOps components to handle the pipeline
 4. Select the `Target Repository` where the repository will be copied to.
 
 5. Click the `Execute` button to trigger the action.
+
+<AzureDevopsTroubleshootingLink />

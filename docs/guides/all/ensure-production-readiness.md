@@ -217,7 +217,7 @@ Now let's implement it:
             "conditions": [
               {
                 "operator": "isNotEmpty",
-                "property": "on_call"
+                "property": "pagerduty_oncall"
               }
             ]
           }

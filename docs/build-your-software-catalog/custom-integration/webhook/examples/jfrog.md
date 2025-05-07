@@ -186,6 +186,56 @@ Create the following blueprint definitions:
 </details>
 
 <details>
+<summary>Jfrog project blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "jfrogProject",
+  "description": "This blueprint represents an artifact in our JFrog project",
+  "title": "JFrog Project",
+  "icon": "JfrogXray",
+  "schema": {
+    "properties": {
+      "key": {
+        "type": "string",
+        "title": "Key",
+        "description": "Project identifier key"
+      },
+      "name": {
+        "type": "string",
+        "title": "Name",
+        "description": "Display name of the project"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "Project description"
+      },
+      "adminPrivileges": {
+        "type": "object",
+        "title": "Admin Privileges",
+        "description": "Administrative privileges configuration for the project"
+      },
+      "roles": {
+        "items": {
+          "type": "object"
+        },
+        "type": "array",
+        "title": "Roles"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
 <summary>Jfrog build blueprint</summary>
 
 ```json showLineNumbers
@@ -224,7 +274,7 @@ Create the following blueprint definitions:
 
 </details>
 :::tip Blueprint Properties
-You may modify the properties in your blueprints depending on what you want to track in your JFrog repositories and builds.
+You can modify the properties in your blueprints depending on what you want to track in your JFrog repositories, builds and projects.
 :::
 
 Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
@@ -369,7 +419,7 @@ Here is an example of the payload structure sent to the webhook URL when a JFrob
 }
 ```
 
-## Import JFrog Historical Builds And Repositories
+## Import JFrog Historical Builds, Repositories and Projects
 
 In this example you are going to use the provided Python script to fetch data from the JFrog Server API and ingest it to Port.
 
@@ -388,10 +438,10 @@ In addition, you require the following environment variables:
 Find your Port credentials using this [guide](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 :::
 
-Use the following Python script to ingest historical JFrog builds and repositories into port:
+Use the following Python script to ingest historical JFrog builds, repositories and projects into Port:
 
 <details>
-<summary>JFrog Python script for historical builds and repositories</summary>
+<summary>JFrog Python script for historical builds, repositories and projects</summary>
 
 ```python showLineNumbers
 # Dependencies to install
@@ -418,6 +468,7 @@ JFROG_HOST_URL = os.getenv("JFROG_HOST_URL")
 class Blueprint:
     REPOSITORY = "jfrogRepository"
     BUILD = "jfrogBuild"
+    PROJECT = "jfrogProject"
 
 
 ## Get Port Access Token
@@ -464,23 +515,60 @@ def add_entity_to_port(blueprint_id, entity_object, transform_function):
 def get_all_builds():
     logger.info("Getting all builds")
     url = f"{JFROG_HOST_URL}/artifactory/api/build"
-    response = requests.get(
-        url, headers={"Authorization": "Bearer " + JFROG_ACCESS_TOKEN}
-    )
-    response.raise_for_status()
-    builds = response.json()["builds"]
-    return builds
+    try:
+        response = requests.get(
+            url, headers={"Authorization": "Bearer " + JFROG_ACCESS_TOKEN}
+        )
+        response.raise_for_status()
+        builds = response.json()["builds"]
+        return builds
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error fetching JFrog builds: {e}")
+        return []
 
 
 def get_all_repositories():
     logger.info("Getting all repositories")
     url = f"{JFROG_HOST_URL}/artifactory/api/repositories"
-    response = requests.get(
-        url, headers={"Authorization": "Bearer " + JFROG_ACCESS_TOKEN}
-    )
-    response.raise_for_status()
-    repositories = response.json()
-    return repositories
+    try:
+        response = requests.get(
+            url, headers={"Authorization": "Bearer " + JFROG_ACCESS_TOKEN}
+        )
+        response.raise_for_status()
+        repositories = response.json()
+        return repositories
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error fetching JFrog repositories: {e}")
+        return []
+
+def get_all_projects():
+    logger.info("Getting all projects")
+    url = f"{JFROG_HOST_URL}/access/api/v1/projects"
+    try:
+        response = requests.get(
+            url, headers={"Authorization": "Bearer " + JFROG_ACCESS_TOKEN}
+        )
+        response.raise_for_status()
+        projects = response.json()
+        return projects
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error fetching JFrog projects: {e}")
+        return []
+
+def get_project_roles(project_key):
+    """Get roles associated with a specific JFrog project"""
+    logger.info(f"Getting roles for project: {project_key}")
+    url = f"{JFROG_HOST_URL}/access/api/v1/projects/{project_key}/roles"
+    try:
+        response = requests.get(
+            url, headers={"Authorization": "Bearer " + JFROG_ACCESS_TOKEN}
+        )
+        response.raise_for_status()
+        roles = response.json()
+        return roles
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error fetching roles for project {project_key}: {e}")
+        return []
 
 
 if __name__ == "__main__":
@@ -521,9 +609,33 @@ if __name__ == "__main__":
         }
         logger.info(f"Added build: {build_object['name']}")
         add_entity_to_port(Blueprint.BUILD, build_object, transform_build_function)
+    
+    logger.info("Completed builds, starting projects")
+    for project in get_all_projects():
+        project_key = project["project_key"]
+        project_roles = get_project_roles(project_key)
+        
+        project_object = {
+            "key": project_key,
+            "name": project.get("display_name", ""),
+            "description": project.get("description", ""),
+            "adminPrivileges": project.get("admin_privileges", {}),
+            "roles": project_roles
+        }
+        transform_project_function = lambda x: {
+            "identifier": project_object["key"],
+            "title": project_object["name"],
+            "properties": {
+                **project_object,
+            },
+        }
+        logger.info(f"Added project: {project_object['name']}")
+        add_entity_to_port(Blueprint.PROJECT, project_object, transform_project_function)
+    
+    logger.info("Port integration completed successfully")
 
 ```
 
 </details>
 
-Done! you can now import historical builds and repositories from JFrog into Port. Port will parse the builds and repository according to the mapping and update the catalog entities accordingly.
+Done! you can now import historical builds, repositories and projects from JFrog into Port. Port will parse them according to the mapping and update the catalog entities accordingly.
