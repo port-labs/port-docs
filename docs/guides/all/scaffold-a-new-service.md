@@ -7,6 +7,7 @@ description: Learn how to scaffold a new service in Port with this guide, ensuri
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import AzureDevopsTroubleshootingLink from '/docs/generalTemplates/azure-devops/_azure_devops_troubleshooting_link.mdx'
 
 # Scaffold a new service
 
@@ -357,7 +358,7 @@ If the GitHub organization which will house your workflow is not the same as the
               cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
               blueprintIdentifier: "githubRepository"
               organizationName: ${{ env.ORG_NAME }}
-    
+              createPortEntity: false
     
     
           - name: Create Service in Port with Repository Relation
@@ -372,7 +373,7 @@ If the GitHub organization which will house your workflow is not the same as the
               blueprint: "service"
               relations: |
                 {
-                  "repository": "${{ inputs.service_name }}"
+                  "repository": "${{ env.ORG_NAME }}/${{ inputs.service_name }}"
                 }
     
           - name: Create a log message
@@ -1203,6 +1204,8 @@ and `<WEBHOOK NAME>` with the name of the webhook you created in Azure DevOps wh
         - `PERSONAL_ACCESS_TOKEN` - Your Azure DevOps personal access token.
           <br/>
           <img src='/img/guides/azureDevOpsPipelineVariables.png' width='45%' border='1px' />
+
+<AzureDevopsTroubleshootingLink />
 
 </TabItem>
 

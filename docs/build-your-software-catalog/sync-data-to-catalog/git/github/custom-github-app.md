@@ -160,7 +160,7 @@ For self-hosted GitHub Enterprise instances, additional configuration is require
 - Custom GitHub Apps must have all the required permissions to function properly.
 - You cannot modify the permissions after creation (you would need to create a new app).
 - For secure credential management, Port does not expose the raw credential values after initial creation.
-- You can't identify the Gtihub app is custom from the UI
+- You can't identify the Github app is custom from the UI
 - You can't delete the Github app from the UI, you need to delete it directly from your Github organization (https://github.com/organizations/{{GITHUB_ORG_NAME}}/settings/installations)
 
 ## Frequently Asked Questions
@@ -178,7 +178,13 @@ Use cases include:
 
 ### Why do I need multiple custom apps for the same GitHub organization?
 
-GitHub only allows installing a given GitHub App once per GitHub organization. To connect multiple Port organizations to the same GitHub organization, each Port organization must have its own custom GitHub App. These apps can target the same repositories but function independently—ideal for multi-environment rollouts or segmented pipelines.
+GitHub only allows installing a given GitHub App once per GitHub organization. To connect multiple Port organizations to the same GitHub organization, after installing the Port Github App in the first Port organization, each additional Port organization must have its own custom GitHub App. These apps can target the same repositories but function independently, this is ideal for multi-environment rollouts or segmented pipelines.
+
+### How can I connect the same Github organization to my Production and Staging instance?
+
+- In your Production instance install the [Port Github app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup).
+- In your other (Staging or Dev) instance install the custom Github app as described on this page.
+- Once completed you should see the same Github organization listed in the Github Exporter for each Port organization.
 
 ## Troubleshooting
 
