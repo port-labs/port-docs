@@ -1,31 +1,31 @@
 ---
 displayed_sidebar: null
-description: Learn how to get insights into GitHub repository and developer activity by tracking pull requests, issues and visibility
+description: Learn how to gain insights into GitHub repositories and developer activity by tracking pull requests, issues, and visibility.
 ---
 
 # Visualize your GitHub repository and developer activity
 
-This guide demonstrates how to set up a monitoring solution to get insights into your GitHub repository and developer activity using Port's **GitHub** integration. 
+This guide demonstrates how to set up a monitoring solution to get insights into your GitHub workspace using Port's **GitHub** integration. You'll learn how to visualize repository visibility, monitor pull requests and issues, and track developer activity over time.
 
 <img src="/img/guides/gitHubInsightDashboard.png" width="100%" />
 
 ## Common use cases
 
-- Model and visualize repository visibility
-- Create dashboards and reports to monitor developer activity over time.
+- Visualize and monitor repository visibility (e.g., public vs. private).
+- Track developer engagement through pull requests and issues.
 
 ## Prerequisites
 
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
-- [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) configured in your Port instance.
+- [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) configured in your Port account.
 
 
 ## Set up data model
 
-In this use case, we will create three blueprints namely `Repository`, `Pull Request` and `Issue`.
+We will create three blueprints in this tutorial: `Repository`, `Pull Request` and `Issue`.
 
-We will create or update the `Repository` blueprint.   
+Let us start by creating or updating the `Repository` blueprint.   
 **Skip** to [update the repository blueprint](#update-the-repository-blueprint) if you already have the blueprint.
 
 ### Create the repository blueprint
@@ -102,7 +102,7 @@ Follow the steps below to **update** the `Repository` blueprint:
 
 ### Create the GitHub pull request blueprint
 
-We will create the `Pull Request` blueprint.      
+We will then create the `Pull Request` blueprint.      
 **Skip** to the [set up data source mapping](#set-up-data-source-mapping) section if you already have the blueprint.
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
@@ -198,7 +198,7 @@ We will create the `Pull Request` blueprint.
 
 ### Create the Github issue blueprint
 
-We will create the `Issue` blueprint.      
+And finally, we will create the `Issue` blueprint.      
 **Skip** to the [set up data source mapping](#set-up-data-source-mapping) section if you already have the blueprint.
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
@@ -371,7 +371,7 @@ We will create the `Issue` blueprint.
 
 ## Visualize metrics
 
-Now that we have ingested data into our catalog, we will learn how to create dashboards that visualizes key metrics from repository and developer activty.
+Once the GitHub data is synced, we can create a dashboard and add widgets to monitor repository visibility and developer activity.
 
 ### Create a dashboard
 
@@ -381,7 +381,7 @@ Now that we have ingested data into our catalog, we will learn how to create das
 4. Name the dashboard **GitHub - Insight**.
 5. Click `Create`.
 
-You now have a blank dashboard where you can start adding widgets to visualize your developer activities.
+We now have a blank dashboard where we can start adding widgets to visualize our developer activities.
 
 ### Add widgets
 
