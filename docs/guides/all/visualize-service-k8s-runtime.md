@@ -221,6 +221,104 @@ To get an overall picture of our workloads' availability, we can use a table ope
 
 Note that you can also set this as the default view by click on the `Save this view` button 📝
 
+
+
+## Visualization
+By leveraging Port's Dashboards, you can create custom dashboards to track your Kubernetes runtime metrics and monitor your services' performance over time.
+
+<img src='/img/guides/k8sRuntimeOverview.png' border='1px' />
+
+### Dashboard setup
+
+<img src="/img/guides/k8sRuntimeDashboardComp.png" border="1px" />
+
+1. Go to your [software catalog](https://app.getport.io/organization/catalog).
+2. Click on the `+ New` button in the left sidebar.
+3. Select **New dashboard**.
+4. Name the dashboard (K8s Runtime Metrics), choose an icon if desired, and click `Create`.
+
+This will create a new empty dashboard. Let's get ready-to-add widgets.
+
+### Adding widgets
+
+<details>
+<summary><b>Service Health Overview Widget (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Table**.
+2. Title: `Service Health Overview`, (add the `Kubernetes` icon).
+3. Select **Workload** as the **Blueprint**.
+4. Show columns:
+   - Title
+   - Health Status
+   - Available Replicas
+   - Desired Replicas
+   - Namespace
+5. Click on `Save`
+6. Click on the three dots on the widget and select `Customize table`.
+7. Click on the `Group by any Column` icon and select **Health Status**.
+8. Click on the `Save` icon.
+
+   <img src="/img/guides/serviceHealthOverview.png" width="50%" />
+
+</details>
+
+<details>
+<summary><b>Resource Usage Widget (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Line Chart**.
+2. Title: `Resource Usage Trends`, (add the `Chart` icon).
+3. Select **Workload** as the **Blueprint**.
+4. Choose `CPU Usage` and `Memory Usage` as the **Properties**.
+5. Select `day` for **Time interval**.
+6. Click on `Save`
+7. Click on the three dots on the widget and select `Customize chart`.
+8. Click on the `Group by any Column` icon and select **Workload**.
+9. Click on the `Save` icon.
+
+   <img src="/img/guides/resourceUsageTrends.png" width="50%" />
+
+</details>
+
+
+<details>
+<summary><b>Namespace Distribution Widget (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Pie Chart**.
+2. Title: `Workload Distribution by Namespace`, (add the `Namespace` icon).
+3. Select **Workload** as the **Blueprint**.
+4. Choose `Namespace` as the **Property**.
+5. Click on `Save`
+6. Click on the three dots on the widget and select `Customize chart`.
+7. Click on the `Group by any Column` icon and select **Health Status**.
+8. Click on the `Save` icon.
+
+   <img src="/img/guides/namespaceDistribution.png" width="50%" />
+
+</details>
+
+<details>
+<summary><b>Resource Allocation Widget (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Table**.
+2. Title: `Resource Allocation Overview`, (add the `Resources` icon).
+3. Select **Workload** as the **Blueprint**.
+4. Show columns:
+   - Title
+   - CPU Request
+   - CPU Limit
+   - Memory Request
+   - Memory Limit
+5. Click on `Save`
+6. Click on the three dots on the widget and select `Customize table`.
+7. Click on the `Group by any Column` icon and select **Namespace**.
+8. Click on the `Save` icon.
+
+   <img src="/img/guides/resourceAllocationOverview.png" width="50%" />
+
+</details>
+
+These widgets will give you a comprehensive view of your Kubernetes runtime, making it easy to monitor service health, resource usage, and deployment status across your cluster.
+
 ## Possible daily routine integrations
 
 - Send a slack message in the R&D channel to let everyone know that a new deployment was created.
