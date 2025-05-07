@@ -626,7 +626,7 @@ resources:
 ```
 </details>
 
-## Live Events with Slack Notifications
+## Slack notifications
 
 Using Port's automation capabilities, you can set up real-time Slack notifications when incidents are created or updated in PagerDuty.
 
