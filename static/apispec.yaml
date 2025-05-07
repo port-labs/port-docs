@@ -4879,17 +4879,19 @@ components:
               - type: object
                 title: Empty rule
                 oneOf:
-                  - properties:
-                      operator:
-                        enum:
-                          - isEmpty
-                          - isNotEmpty
-                      property:
-                        type: string
-                    required:
-                      - operator
-                      - property
-                    additionalProperties: false
+                  - type : object
+                    title: Empty rule
+                    properties:
+                        operator:
+                          enum:
+                            - isEmpty
+                            - isNotEmpty
+                        property:
+                          type: string
+                        required:
+                          - operator
+                          - property
+                        additionalProperties: false
               - type: object
                 title: Numeric rule
                 properties:
@@ -4904,7 +4906,9 @@ components:
                   value:
                     anyOf:
                       - type: number
+                        title: number
                       - type: string
+                        title: date-time
                         format: date-time
                 required:
                   - property
@@ -4915,6 +4919,7 @@ components:
                 title: String rule
                 oneOf:
                   - type: object
+                    title: String rule
                     properties:
                       property:
                         type: string
@@ -4934,13 +4939,19 @@ components:
                       value:
                         anyOf:
                           - type: "null"
+                            title: 'null'
                           - type: string
+                            title: string
                           - type: number
+                            title: number
                           - type: boolean
+                            title: boolean
                           - type: array
+                            title: array
                             items:
                               type: string
                           - type: string
+                            title: date-time
                             format: date-time
                     additionalProperties: false
                     required:
@@ -4958,7 +4969,9 @@ components:
                   value:
                     anyOf:
                       - type: string
+                        title: string
                       - type: array
+                        title: array
                         items:
                           type: string
                   direction:
@@ -5001,10 +5014,14 @@ components:
                       - contains
                   value:
                     anyOf:
-                      - type: "null"
+                      - type: 'null'
+                        title: 'null'
                       - type: string
+                        title: string
                       - type: number
+                        title: number
                       - type: boolean
+                        title: boolean
                 required:
                   - operator
                   - propertySchema
