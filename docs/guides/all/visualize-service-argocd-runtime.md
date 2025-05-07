@@ -198,28 +198,101 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
 
     <br/>
 
-## Visualize data from your Kubernetes environment
+## Visualization
+By leveraging Port's Dashboards, you can create custom dashboards to track your ArgoCD runtime metrics and monitor your applications' performance over time.
 
-We now have a lot of data about our Argo applications, and a dashboard that visualizes it in ways that will benefit the routines of our developers and managers. Since our ArgoCD application(`workload`) blueprint is connected to our `service` blueprint, we can now access some of the application's data directly in the context of the service.  
-Let's see an example of how we can add useful visualizations to our dashboard:
+<img src='/img/guides/argocdRuntimeOverview.png' border='1px' />
 
-    
-### Display all degraded workloads for the `AwesomeService` service by team
+### Set up dashboard
 
-1. Go to your [ArgoCD dashboard](https://app.getport.io/argocdDashboard), click on the `+ Add` button in the top right corner, then select `Table`.
+<img src="/img/guides/argocdRuntimeDashboardComp.png" border="1px" />
 
-2. Fill the form out like this, then click `Save`:
+1. Go to your [software catalog](https://app.getport.io/organization/catalog).
+2. Click on the `+ New` button in the left sidebar.
+3. Select **New dashboard**.
+4. Name the dashboard (ArgoCD Runtime Metrics), choose an icon if desired, and click `Create`.
 
-    <img src='/img/guides/argoTableDegradedServicesForm.png' width='50%' border='1px' />
+This will create a new empty dashboard. Let's get ready-to-add widgets.
 
-3. In your new table, click on the `Filter` icon, then on `+ Add new filter`.  
-   Add three filters by filling out the fields like this:
+### Adding widgets
 
-    <img src='/img/guides/argoTableFilterDegraded.png' width='80%' border='1px' />
+<details>
+<summary><b>ArgoCD Sync Status Widget (click to expand)</b></summary>
 
-4. Your table should now display all services belonging to your specified team, whose `Health` is `Degraded`:
+1. Click `+ Widget` and select **Table**.
+2. Title: `ArgoCD Sync Status Overview`, (add the `ArgoCD` icon).
+3. Select **Workload** as the **Blueprint**.
+4. Show columns:
+   - Title
+   - Sync Status
+   - Health Status
+   - Last Synced
+   - Namespace
+5. Click on `Save`
+6. Click on the three dots on the widget and select `Customize table`.
+7. Click on the `Group by any Column` icon and select **Sync Status**.
+8. Click on the `Save` icon.
 
-    <img src='/img/guides/argoTableDegradedServices.png' width='90%' border='1px' />
+   <img src="/img/guides/argocdSyncStatusOverview.png" width="50%" />
+
+</details>
+
+<details>
+<summary><b>Sync History Widget (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Line Chart**.
+2. Title: `Sync History Trends`, (add the `History` icon).
+3. Select **Workload** as the **Blueprint**.
+4. Choose `Sync Status` and `Health Status` as the **Properties**.
+5. Select `day` for **Time interval**.
+6. Click on `Save`
+7. Click on the three dots on the widget and select `Customize chart`.
+8. Click on the `Group by any Column` icon and select **Workload**.
+9. Click on the `Save` icon.
+
+   <img src="/img/guides/syncHistoryTrends.png" width="50%" />
+
+</details>
+
+<details>
+<summary><b>Health Status Widget (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Pie Chart**.
+2. Title: `Application Health Distribution`, (add the `Health` icon).
+3. Select **Workload** as the **Blueprint**.
+4. Choose `Health Status` as the **Property**.
+5. Click on `Save`
+6. Click on the three dots on the widget and select `Customize chart`.
+7. Click on the `Group by any Column` icon and select **Namespace**.
+8. Click on the `Save` icon.
+
+   <img src="/img/guides/applicationHealthDistribution.png" width="50%" />
+
+</details>
+
+
+<details>
+<summary><b>Resource Status Widget (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Table**.
+2. Title: `Resource Status Overview`, (add the `Resources` icon).
+3. Select **Workload** as the **Blueprint**.
+4. Show columns:
+   - Title
+   - Resource Status
+   - Resource Health
+   - Resource Kind
+   - Namespace
+5. Click on `Save`
+6. Click on the three dots on the widget and select `Customize table`.
+7. Click on the `Group by any Column` icon and select **Resource Status**.
+8. Click on the `Save` icon.
+
+   <img src="/img/guides/resourceStatusOverview.png" width="50%" />
+
+</details>
+
+These widgets will give you a comprehensive view of your ArgoCD runtime, making it easy to monitor application health, sync status, and deployment progress across your cluster.
 
 ## Possible daily routine integrations
 
