@@ -143,6 +143,14 @@ export const liveEvents = {
     \n- build \
     \n\n**Pipelines:** \
     \n- pipeline ',
+  Linear:
+    '\n- Issue \
+    \n- IssueLabel',
+  LaunchDarkly:
+    '\n- flag \
+    \n- environment \
+    \n- project \
+    \n- auditlog',
   Jenkins:
     '**Build Events:** \
     \n- run.initialize \
