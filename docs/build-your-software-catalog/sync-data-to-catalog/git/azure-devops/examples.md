@@ -110,6 +110,10 @@ The following example blueprints and integration configurations demonstrate how 
 
 <PortUsersAndTeamsAppConfig/>
 
+:::caution Azure DevOps Server limitation
+User mapping is only available for Azure DevOps Services. This integration relies on the User Entitlements API, which is not available in Azure DevOps Server.
+:::
+
 :::tip Learn more
 - Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
 - Port leverages the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure Devops objects to Port entities.
