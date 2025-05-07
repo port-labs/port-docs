@@ -151,6 +151,17 @@ export const liveEvents = {
     \n- environment \
     \n- project \
     \n- auditlog',
+  Jenkins:
+    '**Build Events:** \
+    \n- run.initialize \
+    \n- run.started \
+    \n- run.completed \
+    \n- run.finalized \
+    \n- run.deleted \
+    \n\n**Job Events:** \
+    \n- item.created \
+    \n- item.updated \
+    \n- item.deleted',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
