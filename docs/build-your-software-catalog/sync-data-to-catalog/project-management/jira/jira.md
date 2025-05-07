@@ -972,6 +972,101 @@ resources:
 </details>
 
 
+### Slack notifications
+Using Port's automation capabilities, you can set up real-time Slack notifications when issues are created or updated in Jira.
+
+<details>
+<summary>Automation for New Bug Reports</summary>
+
+```json showLineNumbers
+{
+  "identifier": "jira_new_bug_notification",
+  "title": "Notify Slack on New Jira Bug",
+  "icon": "Slack",
+  "description": "Sends a Slack notification when a new bug is created in Jira",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_CREATED",
+      "blueprintIdentifier": "jiraIssue"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.after.properties.issueType == \"Bug\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "YOUR_SLACK_WEBHOOK_URL",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "text": "🐛 New Bug Reported\n\n*Issue:* {{ .event.diff.after.title }}\n*Project:* {{ .event.diff.after.relations.project }}\n*Status:* {{ .event.diff.after.properties.status }}\n*Priority:* {{ .event.diff.after.properties.priority }}\n\n<{{ .event.diff.after.properties.url }}|View in Jira> | <https://app.getport.io/jiraIssueEntity?identifier={{ .event.context.entityIdentifier }}|View in Port>"
+    }
+  },
+  "publish": true
+}
+```
+
+</details>
+
+<details>
+<summary>Automation for High-Priority Tasks</summary>
+
+```json showLineNumbers
+{
+  "identifier": "jira_high_priority_task",
+  "title": "Notify Slack on High-Priority Jira Task",
+  "icon": "Slack",
+  "description": "Sends a Slack notification when a high-priority task is created or updated in Jira",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_UPDATED",
+      "blueprintIdentifier": "jiraIssue"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.after.properties.priority == \"Highest\" or .diff.after.properties.priority == \"High\"",
+        ".diff.before.properties.priority != \"Highest\" and .diff.before.properties.priority != \"High\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "YOUR_SLACK_WEBHOOK_URL",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "text": "⚠️ High-Priority Issue Alert\n\n*Issue:* {{ .event.diff.after.title }}\n*Type:* {{ .event.diff.after.properties.issueType }}\n*Priority:* {{ .event.diff.after.properties.priority }}\n*Status:* {{ .event.diff.after.properties.status }}\n\n<{{ .event.diff.after.properties.url }}|View in Jira> | <https://app.getport.io/jiraIssueEntity?identifier={{ .event.context.entityIdentifier }}|View in Port>"
+    }
+  },
+  "publish": true
+}
+```
+
+</details>
+
+:::tip
+Replace `YOUR_SLACK_WEBHOOK_URL` with your actual Slack incoming webhook URL. For information on creating Slack webhooks, see the [Slack API documentation](https://api.slack.com/messaging/webhooks).
+:::
+
+These automations allow your team to receive immediate notifications in Slack when bugs are reported or issues are updated with high priority, making your project management workflow more efficient.
+
+
 ## Let's Test It
 
 This section includes a sample response data from Jira. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
