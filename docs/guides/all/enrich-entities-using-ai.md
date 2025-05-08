@@ -15,7 +15,7 @@ In this guide, we will implement a security feature that uses OpenAI's API to an
 ## Prerequisites
 
 - Complete the [onboarding process](/getting-started/overview).
-- Access to OpenAI API with appropriate permissions.
+- Access to the OpenAI API with appropriate permissions.
 - A blueprint for your entity type in Port.
 
 ## Set up data model
