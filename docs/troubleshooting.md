@@ -204,6 +204,12 @@ To understand if you can embed your desired content, the first step will be to c
 
 ---
 
+## API
+
+For help troubleshooting API requests to Port's API, refer to the [API troubleshooting](/docs/api-reference/port-api.info.mdx#troubleshooting)
+
+---
+
 ## Security
 
 #### What security does Port have in place?
