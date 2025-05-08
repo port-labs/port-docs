@@ -16,7 +16,7 @@ In this guide, we will implement a security feature that uses OpenAI's API to an
 
 - Complete the [onboarding process](/getting-started/overview).
 - Access to OpenAI API with appropriate permissions (for this example).
-- A blueprint for your entity type in Port (if you don't have one already).
+- A blueprint for your entity type in Port.
 
 ## Set up data model
 
