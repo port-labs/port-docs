@@ -9,7 +9,7 @@ import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_sec
 This guide will help you implement a self-service action in Port that uses AI to enrich entity properties with data from external APIs. This pattern enables you to automatically enhance your entities with intelligent insights from various AI services, making your software catalog more informative and actionable.
 
 
-In this guide, we'll implement a security feature that uses OpenAI's API to analyze security issues and provide insights and possible remediation steps.
+In this guide, we will implement a security feature that uses OpenAI's API to analyze security issues and provide insights and possible remediation steps.
 
 
 ## Prerequisites
