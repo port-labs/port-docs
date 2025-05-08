@@ -17,26 +17,12 @@ Before troubleshooting, ensure you have:
 2. Configured the Personal Access Token (PAT) with correct scopes
 3. Verified organization and project names
 
+
 ## Understanding the Azure DevOps trigger flow
 
 The ADO trigger flow is more complex than other pipelines because it requires multiple components working together:
 
-```
-+------------+    1. Creates    +------------+    2. Requires    +------------+
-|            |----------------->|            |------------------>|            |
-|  Port SSA  |                  |  Pipeline  |                   |  Webhook   |
-|            |                  |            |                   |            |
-+------------+                  +------------+                   +------------+
-                                                                      |
-                                                                      | 3. Needs
-                                                                      v
-+------------+    5. Updates    +------------+    4. Triggers    +------------+
-|            |<-----------------|            |<------------------|            |
-|    Port    |                  |  Pipeline  |                   |  Service   |
-|  Catalog   |                  | Execution  |                   |    Hook    |
-+------------+                  +------------+                   +------------+
-```
-
+<img src="/img/self-service-actions/setup-backend/azurepipeline/ADOpipelineFlowImg.png" width="90%" border='1px' />
 
 ## How to troubleshoot Azure DevOps pipeline issues
 
@@ -80,6 +66,9 @@ Follow these steps in order to diagnose and fix common pipeline issues.
        }
      }'
      ```
+     :::tip Undefined webhook name error
+      If you see an "undefined webhook name" error in Port, this may mean your Service Connection or webhook is misconfigured or missing. Try creating a new Service Connection and re-linking your pipeline.
+     :::
 
 3. **Verify agent availability**
    - Check agent status in Agent Pools (are they online?)
@@ -101,6 +90,40 @@ Follow these steps in order to diagnose and fix common pipeline issues.
    - Ensure variables are accessible to the pipeline
    - Check for any missing or incorrect values
    - Verify PAT tokens haven't expired
+
+6. **Reset the service hook**
+   - If your pipeline triggers are still not working after completing all the above steps, try deleting and recreating the **Service Hook** in Project Settings → Service Hooks. Stale or misconfigured service hooks are a common cause of trigger issues, and recreating them often resolves the problem.
+
+7. **Last resort: Test with a new service connection, service hook, and minimal pipeline**
+   - **Create a new Service Connection** in Azure DevOps (Project Settings → Service Connections).
+   - **Create a new Service Hook** in Azure DevOps (Project Settings → Service Hooks).
+   - **Create a minimal "hello world" pipeline** using the sample YAML below.
+   - **Trigger the new pipeline** from Port and check if it runs successfully.
+
+      <details>
+      <summary><b>Sample minimal pipeline YAML</b></summary>
+
+      ```yaml showLineNumbers
+      trigger: none  # Disables automatic triggers on code commits.
+
+      resources:
+        webhooks:
+          - webhook: port_trigger
+            connection: port_trigger
+
+      jobs:
+      - job: port_trigger
+        steps:
+          - script: |
+              echo "Webhook triggered by API call"
+      ```
+      </details>
+
+      If this minimal pipeline works, the issue may be with your original pipeline's configuration or logic.   
+      If it still does not work, please contact support with details of your setup and any error messages.
+
+8. **Check parameter and variable passing**
+   - If your pipeline uses parameters or variables from Port, make sure you are passing them correctly. See [Advanced SSA form input documentation](#) for details.
 
 ### Issue: Pipeline stuck "in progress"
 
@@ -184,5 +207,7 @@ curl -X POST 'https://dev.azure.com/{organization}/{project}/_apis/pipelines/{pi
 ```
 
 For more details, see the [Azure DevOps REST API documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/pipelines?view=azure-devops-rest-7.1).
+
+
 
 
