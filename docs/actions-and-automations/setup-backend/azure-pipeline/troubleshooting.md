@@ -6,8 +6,6 @@ sidebar_position: 99
 
 # Azure DevOps Troubleshooting
 
-
-## Overview
 This page contains common problems users face when integrating Azure DevOps (ADO) with Port, and how to solve them.
 
 
