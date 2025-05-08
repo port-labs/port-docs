@@ -7,7 +7,7 @@ description: Learn how to gain insights into GitHub repositories and developer a
 
 This guide demonstrates how to set up a monitoring solution to get insights into your GitHub workspace using Port's **GitHub** integration. You'll learn how to visualize repository visibility, monitor pull requests and issues, and track developer activity over time.
 
-<img src="/img/guides/gitHubInsightDashboard.png" width="100%" />
+<img src="/img/guides/gitHubInsightDashboard.png" border="1px" width="100%" />
 
 ## Common use cases
 
@@ -18,65 +18,14 @@ This guide demonstrates how to set up a monitoring solution to get insights into
 
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
-- [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) configured in your Port account.
+- [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) installed in your Port account.
 
 
 ## Set up data model
 
-We will create three blueprints in this tutorial: `Repository`, `Pull Request` and `Issue`.
+When we install the GitHub app in Port, the `Repository` and `Pull Request` blueprints are created by default. However, the `Issue` blueprint is not created automatically, so we will need to create it manually.
 
-Let us start by creating or updating the `Repository` blueprint.   
-**Skip** to [update the repository blueprint](#update-the-repository-blueprint) if you already have the blueprint.
-
-### Create the repository blueprint
-Follow the steps below to **create** the `Repository` blueprint:
-
-1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
-2. Click on "+ Blueprint".
-3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
-4. Add this JSON schema:
-
-   <details>
-   <summary><b>GitHub repository blueprint (Click to expand)</b></summary>
-
-   ```json showLineNumbers
-    {
-        "identifier": "githubRepository",
-        "title": "Repository",
-        "icon": "Microservice",
-        "schema": {
-            "properties": {
-            "readme": {
-                "title": "README",
-                "type": "string",
-                "format": "markdown"
-            },
-            "url": {
-                "title": "Repository URL",
-                "type": "string",
-                "format": "url"
-            },
-            "defaultBranch": {
-                "title": "Default branch",
-                "type": "string"
-            },
-            "visibility": {
-                "type": "string",
-                "title": "Visibility"
-            }
-            },
-            "required": []
-        },
-        "mirrorProperties": {},
-        "calculationProperties": {},
-        "aggregationProperties": {},
-        "relations": {}
-    }
-   ```
-
-   </details>
-
-5. Click `Save` to create the blueprint.
+Additionally, we will update the `Repository` blueprint to include a `visibility` property, which is not part of the default schema.
 
 ### Update the repository blueprint
 Follow the steps below to **update** the `Repository` blueprint:
@@ -100,105 +49,9 @@ Follow the steps below to **update** the `Repository` blueprint:
 4. Click `Save`.
 
 
-### Create the GitHub pull request blueprint
-
-We will then create the `Pull Request` blueprint.      
-**Skip** to the [set up data source mapping](#set-up-data-source-mapping) section if you already have the blueprint.
-
-1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
-2. Click on `+ Blueprint`.
-3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
-4. Add this JSON schema:
-    <details>
-    <summary><b>GitHub pull request (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-        "identifier": "githubPullRequest",
-        "title": "Pull Request",
-        "icon": "Github",
-        "schema": {
-            "properties": {
-            "creator": {
-                "title": "Creator",
-                "type": "string"
-            },
-            "assignees": {
-                "title": "Assignees",
-                "type": "array"
-            },
-            "reviewers": {
-                "title": "Reviewers",
-                "type": "array"
-            },
-            "status": {
-                "title": "Status",
-                "type": "string",
-                "enum": ["merged", "open", "closed"],
-                "enumColors": {
-                "merged": "purple",
-                "open": "green",
-                "closed": "red"
-                }
-            },
-            "closedAt": {
-                "title": "Closed At",
-                "type": "string",
-                "format": "date-time"
-            },
-            "updatedAt": {
-                "title": "Updated At",
-                "type": "string",
-                "format": "date-time"
-            },
-            "mergedAt": {
-                "title": "Merged At",
-                "type": "string",
-                "format": "date-time"
-            },
-            "createdAt": {
-                "title": "Created At",
-                "type": "string",
-                "format": "date-time"
-            },
-            "link": {
-                "format": "url",
-                "type": "string"
-            },
-            "leadTimeHours": {
-                "title": "Lead Time in hours",
-                "type": "number"
-            }
-            },
-            "required": []
-        },
-        "mirrorProperties": {},
-        "calculationProperties": {
-            "days_old": {
-            "title": "Days Old",
-            "icon": "DefaultProperty",
-            "calculation": "(now / 86400) - (.properties.createdAt | capture(\"(?<date>\\\\d{4}-\\\\d{2}-\\\\d{2})\") | .date | strptime(\"%Y-%m-%d\") | mktime / 86400) | floor",
-            "type": "number"
-            }
-        },
-        "relations": {
-            "repository": {
-            "title": "Repository",
-            "target": "githubRepository",
-            "required": false,
-            "many": false
-            }
-        }
-    }
-    ```
-    </details>
-
-5. Click `Save` to create the blueprint.
-
-
 ### Create the Github issue blueprint
 
-And finally, we will create the `Issue` blueprint.      
+We will then create the `Issue` blueprint.      
 **Skip** to the [set up data source mapping](#set-up-data-source-mapping) section if you already have the blueprint.
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
@@ -386,7 +239,7 @@ We now have a blank dashboard where we can start adding widgets to visualize our
 ### Add widgets
 
 <details>
-<summary><b>Repository visibility widget (click to expand)</b></summary>
+<summary><b>Repository visibility (click to expand)</b></summary>
 
 1. Click **`+ Widget`** and select **Pie chart**.
 2. Title: `Repository Visibility`.
