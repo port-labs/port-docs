@@ -6,7 +6,7 @@ import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_sec
 
 # Enrich entities using AI
 
-This guide will help you implement a self-service action in Port that uses AI to enrich entity properties with data from external APIs. This pattern enables you to automatically enhance your entities with intelligent insights from various AI services, making your software catalog more informative and actionable.
+This guide will demonstrate how to implement a self-service action in Port that uses AI to enrich entity properties with data from external APIs. This pattern enables you to automatically enhance your entities with intelligent insights from various AI services, making your software catalog more informative and actionable.
 
 
 In this guide, we will implement a security feature that uses OpenAI's API to analyze security issues and provide insights and possible remediation steps.
@@ -15,7 +15,7 @@ In this guide, we will implement a security feature that uses OpenAI's API to an
 ## Prerequisites
 
 - Complete the [onboarding process](/getting-started/overview).
-- Access to OpenAI API with appropriate permissions (for this example).
+- Access to OpenAI API with appropriate permissions.
 - A blueprint for your entity type in Port.
 
 ## Set up data model
@@ -44,6 +44,9 @@ However, if you don't have a security integration installed, follow these steps 
 3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
 4. Copy and paste the following JSON configuration into the editor.
 
+    <details>
+    <summary><b>Security Issue Blueprint (Click to expand)</b></summary>
+
     ```json showLineNumbers
     {
       "identifier": "security_issue",
@@ -65,6 +68,7 @@ However, if you don't have a security integration installed, follow these steps 
       }
     }
     ```
+    </details>
 5. Click `Save`.
 
 ## Implementation
