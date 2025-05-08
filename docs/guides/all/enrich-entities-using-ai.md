@@ -6,7 +6,6 @@ import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_sec
 
 # Enrich entities using AI
 
-## Overview
 This guide will help you implement a self-service action in Port that uses AI to enrich entity properties with data from external APIs. This pattern enables you to automatically enhance your entities with intelligent insights from various AI services, making your software catalog more informative and actionable.
 
 
