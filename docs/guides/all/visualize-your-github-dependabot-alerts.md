@@ -1,6 +1,6 @@
 ---
 displayed_sidebar: null
-description: Learn how to monitor GitHub Dependabot alerts and gain security insights using Port.
+description: Learn how to monitor GitHub Dependabot alerts and gain security insights using dashboards.
 ---
 
 # Visualize your GitHub dependency security alerts
