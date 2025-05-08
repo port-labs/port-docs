@@ -949,7 +949,7 @@ export const availableGuides = [
     {
         title: "Enrich entities using AI",
         description: "Enrich entities with AI-powered insights from external APIs",
-        tags: [ "Security", "Actions", "Automations"],
+        tags: [ "Security", "Actions", "Automations", "AI"],
         logos: ["Snyk","Wiz","SonarQube"],
         link: "/guides/all/enrich-entities-using-ai",
     },
