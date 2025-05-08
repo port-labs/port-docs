@@ -101,7 +101,7 @@ After creating the blueprints and saving the integration configuration, you will
 ## Mapping users and teams
 
 :::caution Azure DevOps Server limitation
-User kind is only available for Azure DevOps Services. This integration relies on the User Entitlements API, which is not available in Azure DevOps Server.
+The `user` kind is only available for Azure DevOps Services. This integration relies on the User Entitlements API, which is not available in Azure DevOps Server.
 :::
 
 The following example blueprints and integration configurations demonstrate how to ingest Azure Devops users and teams into Port:
