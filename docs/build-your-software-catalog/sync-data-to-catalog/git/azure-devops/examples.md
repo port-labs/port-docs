@@ -240,6 +240,8 @@ Before implementing file mapping, please note the following:
 - **Performance**: For optimal performance, we recommend limiting the number of tracked files per repository.
 - **File Tracking**: Each file specified in the configuration will be tracked as a separate entity in Port
 - **Change Detection**: Changes to tracked files will be reflected in Port during the next sync
+- **File Content**: The `.file.content` field in the response body is an object containing two keys: `raw` and `parsed`. The `raw` key returns a string representation of the actual file whereas the `parsed` key returns a JSON object.
+
 
 ### Configuration
 
