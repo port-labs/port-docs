@@ -23,7 +23,8 @@ This guide assumes the following:
 
 ## Set up data model
 
-When we install the GitHub app in Port, the `Repository` and `Pull Request` blueprints are created by default. However, the `Issue` blueprint is not created automatically, so we will need to create it manually.
+When installing the GitHub app in Port, the `Repository` and `Pull Request` blueprints are created by default.  
+However, the `Issue` blueprint is not created automatically, so we will need to create it manually.
 
 Additionally, we will update the `Repository` blueprint to include a `visibility` property, which is not part of the default schema.
 
