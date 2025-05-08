@@ -1064,5 +1064,12 @@ export const availableGuides = [
         tags: ["Approval workflow", "Slack", "Actions", "Automations"],
         logos: ["Slack"],
         link: "/guides/all/notify-users-upon-approval-of-action",
+    },
+    {
+        title: "Visualize your GitHub repository and developer activity",
+        description: "Create a dashboard that visualizes your GitHub repository and developer activity",
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-your-github-repository-activity",
     }
 ]
