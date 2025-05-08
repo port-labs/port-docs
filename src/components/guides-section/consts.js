@@ -1,6 +1,6 @@
 export const tagsCategoryMap = {
     "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog", "Approval workflow"],
-    "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
+    "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
         "GitLab",
@@ -975,6 +975,20 @@ export const availableGuides = [
         link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
     },
     {
+        title: "Set up the Task Manager AI agent",
+        description: "Set up an AI agent that helps developers track and manage tasks efficiently",
+        tags: ["AI","Jira","GitHub","Slack"],
+        logos: ["AI"],
+        link: "/guides/all/setup-task-manager-ai-agent",
+	  },
+	  {
+        title: "Set up the Incident Manager AI agent",
+        description: "Set up an AI agent that helps developers track and manage incidents efficiently",
+        tags: ["Incident management", "AI", "PagerDuty", "Slack"],
+        logos: ["AI"],
+        link: "/guides/all/setup-incident-manager-ai-agent",
+	  },
+	  {
         title: "Create a GitHub issue",
         description: "Create a self-service action that creates a GitHub issue",
         tags: ["GitHub", "Actions", "Webhook"],
@@ -988,5 +1002,82 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/verify-service",
     },
+    {
+        title: "Set up the Task Assistant AI agent",
+        description: "Set up an AI agent that provides contextual information and insights to task assignees",
+        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
+        logos: ["AI"],
+        link: "/guides/all/setup-task-assistant-ai-agent",
+    },
+    {
+        title: "Enrich pull requests using AI",
+        description: "Set up an AI agent that automatically comments on pull requests with additional context",
+        tags: ["SDLC", "AI", "GitHub", "Jira", "PagerDuty"],
+        logos: ["AI"],
+        link: "/guides/all/setup-pr-enricher-ai-agent",
+    },
+    {
+        title: "Enforce Branch Protection Rules with Scorecards",
+        description: "Create a scorecard that tracks branch protection rules and enforces security policies",
+        tags: ["Security", "GitHub", "Scorecards"],
+        logos: ["GitHub"],
+        link: "/guides/all/setup-branch-protection-rules",
+    },
+    {
+        title: "Ignore Snyk Vulnerability",
+        description: "Create a self-service action that ignores a Snyk vulnerability",
+        tags: ["Security","Snyk","Actions","Webhook"],
+        logos: ["Snyk"],
+        link: "/guides/all/ignore-snyk-vulnerability",
+    },
+    {
+        title: "Enforce code maturity with GitLab file search",
+        description: "Create a scorecard that tracks GitLab code maturity based on file existence",
+        tags: ["Security", "GitLab", "Scorecards"],
+        logos: ["GitLab"],
+        link: "/guides/all/track-gitlab-project-maturity-with-scorecards",
+    },
+    {
+        title: "Trigger Spacelift stack",
+        description: "Create a self-service action that triggers a Spacelift stack to automate infrastructure workflows",
+        tags: ["IaC for devs", "Actions"],
+        logos: ["Git"],
+        link: "/guides/all/trigger-spacelift-stack",
+    },
+    {
+        title: "Track health of Jira projects using scorecards",
+        description: "Create a scorecard to track the health of Jira projects",
+        tags: ["Jira", "Scorecards"],
+        logos: ["Jira",],
+        link: "/guides/all/track-health-of-jira-projects",
+    },
+    {
+        title: "Automatically create Jira issue from Datadog alert",
+        description: "Create an automation that creates a Jira issue from a Datadog alert",
+        tags: ["Incident management", "Jira", "Datadog", "Automations"],
+        logos: ["Jira", "Datadog"],
+        link: "/guides/all/create-jira-issue-from-datadog-alert",
+    },
+    {
+        title: "Automatically create Jira issue from Snyk vulnerability",
+        description: "Create an automation that creates a Jira issue from a Snyk vulnerability",
+        tags: ["Security", "Jira", "Snyk", "Automations", "Webhook"],
+        logos: ["Jira", "Snyk"],
+        link: "/guides/all/create-jira-issue-from-snyk-vulnerability",
+    },
+    {
+        title: "Notify users upon approval of self-service actions",
+        description: "Create an automation that notifies users when a self-service action is approved/declined",
+        tags: ["Approval workflow", "Slack", "Actions", "Automations"],
+        logos: ["Slack"],
+        link: "/guides/all/notify-users-upon-approval-of-action",
+    },
+    {
+        title: "Visualize your GitHub repository and developer activity",
+        description: "Create a dashboard that visualizes your GitHub repository and developer activity",
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-your-github-repository-activity",
+    }
 ]
 

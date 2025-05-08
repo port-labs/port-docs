@@ -192,8 +192,8 @@ resource "port_action" "myAction" {
 
 Text validations support the following operators:
 
-- `minLength` - enforce minimal string length;
-- `maxLength` - enforce maximal string length;
+- `minLength` - enforce minimal string length.
+- `maxLength` - enforce maximal string length.
 - `pattern` - enforce Regex patterns.
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
@@ -270,3 +270,22 @@ resource "port_action" "myAction" {
 </TabItem>
 
 </Tabs>
+
+## Multi-line text
+
+In some cases, you might want to allow users to input long text.  
+You can do so by toggling the `multi-line input` option when creating the input.  
+
+This is beneficial for use-cases such as surveys, where the person executing the action might want to provide a relatively long answer to a question. 
+
+```json showLineNumbers
+{
+  "myTextInput": {
+    "title": "My text input",
+    "icon": "My icon",
+    "description": "My text input",
+    "type": "string",
+    "format": "multi-line"
+  }
+}
+```
