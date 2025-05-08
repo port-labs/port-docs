@@ -117,11 +117,12 @@ Follow these steps in order to diagnose and fix common pipeline issues.
       ```
       </details>
 
-      If this minimal pipeline works, the issue may be with your original pipeline's configuration or logic.   
-      If it still does not work, please contact support with details of your setup and any error messages.
+      - If this minimal pipeline works, the issue may be with your original pipeline's configuration or logic.   
+      - If it still does not work, please contact support with details of your setup and any error messages.
 
 8. **Check parameter and variable passing**
-   - If your pipeline uses parameters or variables from Port, make sure you are passing them correctly. See [Advanced SSA form input documentation](#) for details.
+   - If your pipeline uses parameters or variables from Port, make sure you are passing them correctly.   
+   See [Advanced SSA form input documentation](#) for details.
 
 ### Issue: Pipeline stuck "in progress"
 
