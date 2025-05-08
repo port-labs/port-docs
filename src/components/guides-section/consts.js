@@ -968,6 +968,13 @@ export const availableGuides = [
         link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
     },
     {
+        title: "Fetch Historical GitHub Data for DORA Metrics",
+        description: "Create a self-service action that fetches historical GitHub data for DORA metrics",
+        tags: ["Engineering metrics","GitHub","Actions"],
+        logos: ["GitHub"],
+        link: "/guides/all/fetch-historical-github-data-for-dora-metric",
+    },
+    {
         title: "Set up the Task Manager AI agent",
         description: "Set up an AI agent that helps developers track and manage tasks efficiently",
         tags: ["AI","Jira","GitHub","Slack"],
