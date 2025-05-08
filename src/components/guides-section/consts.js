@@ -947,6 +947,13 @@ export const availableGuides = [
         link: "/guides/all/trigger-firehydrant-incident",
     },
     {
+        title: "Enrich entities using AI",
+        description: "Enrich entities with AI-powered insights from external APIs",
+        tags: [ "Security", "Actions", "Automations", "AI"],
+        logos: ["Snyk","Wiz","SonarQube"],
+        link: "/guides/all/enrich-entities-using-ai",
+    },
+    {
         title: "Monitor integrations",
         description: "Monitor and manage your Port Ocean integrations",
         tags: [],
@@ -1073,3 +1080,4 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-github-repository-activity",
     }
 ]
+
