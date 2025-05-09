@@ -96,6 +96,10 @@ Follow the steps below to create the `Dependabot Alert` blueprint.
                 "title": "CVE ID",
                 "type": "string"
             },
+            "cvssScore": {
+                "type": "number",
+                "title": "CVSS Score"
+            },
             "url": {
                 "title": "URL",
                 "type": "string",
@@ -185,6 +189,7 @@ Follow the steps below to create the `Dependabot Alert` blueprint.
                 scope: .dependency.scope
                 ghsaID: .security_advisory.ghsa_id
                 cveID: .security_advisory.cve_id
+                cvssScore: .security_advisory.cvss.score
                 url: .html_url
                 references: "[.security_advisory.references[].url]"
                 alertCreatedAt: .created_at
@@ -331,6 +336,24 @@ We now have a blank dashboard where we can start adding widgets to visualize ins
    <img src="/img/guides/dismissedDependabotAlerts.png" width="50%"/>
 
 6. Click `Save`.
+
+</details>
+
+<details>
+<summary><b>Average CVSS score over time (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Line Chart**.
+2. Title: `Average CVSS Score Over Time`, (add the `LineChart` icon).
+3. Select `Aggregate Property (All Entities)` **Chart type** and choose **Dependabot Alert** as the **Blueprint**.
+4. Input `CVSS Score` as the **Y axis** **Title** and choose `CVSS Score` as the **Property**.
+5. Set `average` as the **Function**.
+6. Input `Months` as the **X axis** **Title** and choose `alertCreatedAt` as the **Measure time by**.
+7. Set **Time Interval** to `Month` and **Time Range** to `In the past 365 days`.
+
+   <img src="/img/guides/avgCsvvAlertsChart.png"  width="50%"/>
+   <img src="/img/guides/avgCsvvAlertsChartAxisConfig.png"  width="50%"/>
+
+8. Click `Save`.
 
 </details>
 
