@@ -1078,6 +1078,14 @@ export const availableGuides = [
         tags: ["Engineering metrics", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-repository-activity",
-    }
+    },
+    {
+        title: "Visualize your Wiz vulnerabilities",
+        description: "Create a dashboard that visualizes your Wiz vulnerabilities",
+        tags: ["Security", "Wiz", "Dashboards"],
+        logos: ["Wiz"],
+        link: "/guides/all/visualize-your-wiz-vulnerabilities",
+    },
+    
 ]
 
