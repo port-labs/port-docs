@@ -317,3 +317,69 @@ The query below filters the array produced by the `executingUser` query down to 
 
 The next query (`.results.approvingUsers.entities[]`) takes the *entire* array from the `approvingUsers` query, then applies a filter to include *only* the approving users from that array who are on the same team as the executing user (`select(.relations.team == $executerTeam)`). Finally, the array is filtered to yield only an array of the `.identifier` property of all approvers, which Port then uses to *dynamically* evaluate who may approve this self-service action.
 
+---
+
+# Prevent Self-Approval (Segregation of Duties)
+
+In this example, we'll implement a security best practice known as "segregation of duties" by ensuring that the user who executes an action cannot also approve it. This is particularly important for sensitive operations like production deployments, infrastructure changes, or permission modifications.
+
+```json
+{
+  "execute": {
+    "roles": ["Member", "Admin"],
+    "users": [],
+    "teams": [],
+    "ownedByTeam": false
+  },
+  "approve": {
+    "roles": [],
+    "users": [],
+    "teams": [],
+    "policy": {
+      "queries": {
+        "approvingUsers": {
+          "rules": [
+            {
+              "value": "_user",
+              "operator": "=",
+              "property": "$blueprint"
+            },
+            {
+              "value": "Moderator",
+              "operator": "=",
+              "property": "port_role"
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "conditions": [
+        "[.results.approvingUsers.entities[] | select(.identifier != \"{{.trigger.user.email}}\") | .identifier]"
+      ]
+    }
+  }
+}
+```
+
+## Explanation
+
+This permissions configuration implements a "four-eyes principle" (also known as the "two-person rule"), which requires that sensitive actions be verified by a second person before being executed.
+
+Here's what's happening in each part:
+
+1. **Execute Permissions**: Any user with either the `Member` or `Admin` role can execute this action.
+
+2. **Approve Permissions**: The approval process is governed by a policy that:
+   - Queries all users from the `_user` blueprint who have the `Moderator` role
+   - Uses a JQ condition to filter out the specific user who executed the action
+
+3. **The Key Condition**:
+   ```json
+   "[.results.approvingUsers.entities[] | select(.identifier != \"{{.trigger.user.email}}\") | .identifier]"
+   ```
+   This JQ expression:
+   - Takes all moderator users from our query results
+   - Filters out any user whose identifier matches the email of the person who triggered the action
+   - Returns only the identifiers of the remaining users
+
+The result is a dynamic list of all users who are authorized to approve the action, excluding the original executor. This ensures that no single person can both initiate and approve a sensitive change, enforcing proper oversight and reducing the risk of unauthorized or accidental changes.
