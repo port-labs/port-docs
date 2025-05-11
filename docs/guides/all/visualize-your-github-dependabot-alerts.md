@@ -20,7 +20,7 @@ This guide demonstrates how to set up a monitoring solution to gain visibility i
 
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
-- [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) installed in your Port account.
+- Port's [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
 
 
 ## Set up data model
