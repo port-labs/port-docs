@@ -371,8 +371,8 @@ Here's what's happening in each part:
 1. **Execute Permissions**: Any user with either the `Member` or `Admin` role can execute this action.
 
 2. **Approve Permissions**: The approval process is governed by a policy that:
-   - Queries all users from the `_user` blueprint who have the `Moderator` role
-   - Uses a JQ condition to filter out the specific user who executed the action
+   - Queries all users from the `_user` blueprint who have the `Moderator` role.
+   - Uses a JQ condition to filter out the specific user who executed the action.
 
 3. **The Key Condition**:
    ```json
