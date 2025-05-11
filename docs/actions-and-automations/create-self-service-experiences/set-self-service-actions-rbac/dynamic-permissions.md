@@ -364,7 +364,7 @@ This is particularly important for sensitive operations like production deployme
 
 #### Explanation
 
-This permissions configuration implements a "four-eyes principle" (also known as the "two-person rule"), which requires that sensitive actions be verified by a second person before being executed.
+This configuration implements a "four-eyes principle", which requires that sensitive actions be verified by a second person before being executed.
 
 Here's what's happening in each part:
 
