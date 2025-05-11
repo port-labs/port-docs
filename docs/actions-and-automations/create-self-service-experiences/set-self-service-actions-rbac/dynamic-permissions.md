@@ -321,7 +321,8 @@ The next query (`.results.approvingUsers.entities[]`) takes the *entire* array f
 
 ### Prevent self-approval (segregation of duties)
 
-In this example, we'll implement a security best practice known as "segregation of duties" by ensuring that the user who executes an action cannot also approve it. This is particularly important for sensitive operations like production deployments, infrastructure changes, or permission modifications.
+In this example, we will implement a security best practice known as "segregation of duties" by ensuring that the user who executes an action cannot also approve it.  
+This is particularly important for sensitive operations like production deployments, infrastructure changes, or permission modifications.
 
 ```json
 {
