@@ -5,7 +5,8 @@ description: Learn how to monitor Wiz issues and gain security insights using da
 
 # Visualize your Wiz security issues
 
-This guide demonstrates how to set up a monitoring solution to gain visibility into security issues from your Wiz account. You’ll learn how to visualize vulnerabilities across your projects and track them over time using Port's **Wiz** integration.
+This guide demonstrates how to set up a monitoring solution to gain visibility into security issues from your Wiz account.  
+We will see how to visualize vulnerabilities across your projects and track them over time using Port's **Wiz** integration.
 
 <img src="/img/guides/wizVulnDashboard.png" border="1px" width="100%" />
 
