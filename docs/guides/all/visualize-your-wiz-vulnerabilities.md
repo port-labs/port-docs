@@ -20,7 +20,7 @@ We will see how to visualize vulnerabilities across your projects and track them
 
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
-- [Wiz ocean integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz) installed in your Port account.
+- Port's [Wiz integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz) is installed in your account.
 
 
 ## Visualize metrics
