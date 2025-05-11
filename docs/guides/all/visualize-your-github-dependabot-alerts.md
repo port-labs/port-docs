@@ -219,6 +219,8 @@ We now have a blank dashboard where we can start adding widgets to visualize ins
 
 ### Add widgets
 
+In the new dashboard, create the following widgets:
+
 <details>
 <summary><b>Vulnerability by severity (click to expand)</b></summary>
 
