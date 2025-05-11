@@ -23,6 +23,24 @@ This integration allows you to:
 - Watch for New Relic object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 
+## BaseUrl & webhook configuration
+
+:::warning AppHost deprecation
+**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
+:::
+
+The `baseUrl` parameter enables real-time updates from Octopus to Port.  
+If not provided:
+- The integration will still function normally
+- You should use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) to configure updates at a set interval.
+- Manual resyncs can be triggered via Port's UI
+
+The `integration.secrets.webhookUsername` and `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
+
+
+In order for the Octopus integration to update the data in Port on every change in the Octopus resources, you need to specify the `baseUrl` parameter.
+The `baseUrl` parameter should be set to the `url` of your NewRelic integration instance. In addition, your NewRelic instance (whether it is NewRelic SaaS or a self-hosted version of NewRelic) needs to have the option to send webhook requests to the NewRelic integration instance, so please configure your network accordingly.
+
 ### Supported Resources
 
 The resources that can be ingested from New Relic into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
@@ -39,7 +57,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="NewRelic"/>
 
 </TabItem>
 
@@ -184,7 +202,9 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.newRelicAccountID` | The New Relic account ID                                                                                      | ✅        |
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌        |
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌        |
-
+| `integration.secrets.webhookUsername`           | Webhook username used for authenticating incoming events. [Learn more](http://docs.newrelic.com/docs/alerts/get-notified/intro-notifications/)                                   | ❌        |
+| `integration.secrets.webhookSecret`           | Webhook secret for authenticating incoming events. [Learn more](http://docs.newrelic.com/docs/alerts/get-notified/intro-notifications/)                                           | ❌        |
+| `baseUrl`               | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Octopus                     | ❌        |
 <br/>
 
 <AdvancedConfig/>
