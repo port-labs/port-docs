@@ -10,7 +10,7 @@ This guide will provide you with the necessary tools for enabling our Ocean AWS 
 
 ## Prerequisites
 
-Before proceeding with the multi-account installation, make sure you are using **AWS Organization** to manage your AWS accounts.
+Before proceeding with the multi-account installation, make sure you are using **AWS Organizations** to manage your AWS accounts.
 
 ## Our Permissions model
 
