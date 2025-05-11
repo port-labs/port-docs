@@ -1080,6 +1080,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-github-repository-activity",
     },
     {
+        title: "Visualize your Wiz vulnerabilities",
+        description: "Create a dashboard that visualizes your Wiz vulnerabilities",
+        tags: ["Security", "Wiz", "Dashboards"],
+        logos: ["Wiz"],
+        link: "/guides/all/visualize-your-wiz-vulnerabilities",
+    },
+    {
         title: "Visualize your GitHub dependency security alerts",
         description: "Create a dashboard that visualizes your GitHub dependency security alerts using dependabot alerts",
         tags: ["Dependency management", "GitHub", "Dashboards"],
