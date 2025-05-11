@@ -157,6 +157,11 @@ export const liveEvents = {
     \n- deployments \
     \n- releases \
     \n- machines',
+  NewRelic:
+    '**Issues:** \
+    \n- issue_created \
+    \n- issue_updated \
+    \n- issue_closed',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
