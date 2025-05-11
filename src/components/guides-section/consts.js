@@ -1086,6 +1086,12 @@ export const availableGuides = [
         logos: ["Wiz"],
         link: "/guides/all/visualize-your-wiz-vulnerabilities",
     },
-    
+    {
+        title: "Visualize your GitHub dependency security alerts",
+        description: "Create a dashboard that visualizes your GitHub dependency security alerts using dependabot alerts",
+        tags: ["Dependency management", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-your-github-dependabot-alerts",
+    }
 ]
 

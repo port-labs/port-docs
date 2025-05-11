@@ -8,6 +8,10 @@ import CenterRoundedImage from "/src/components/CenterRoundedImage/index.jsx";
 
 This guide will provide you with the necessary tools for enabling our Ocean AWS Integration to digest multiple account's data.
 
+## Prerequisites
+
+Before proceeding with the multi-account installation, make sure you are using **AWS Organizations** to manage your AWS accounts.
+
 ## Our Permissions model
 
 A few key concepts in the AWS's permissions model:
@@ -74,11 +78,11 @@ Together with the permissions and trust policies:
 
 ### Integration Account
 
-:::tip
-The name of this role (not the ARN) is referenced as `integration_account` in this doc.
+The name of this role (not the ARN) is referenced as `integration_account` in this doc.  
+In this example, we refer to the S3 bucket permissions.
 
-If you need to read from the `integration account`, you'll need to add CloudControl (cloudformation) and the resources permissions. In this example, we refer to the S3 bucket permissions
-:::
+If you need to read from the `integration account`, you'll need to add CloudControl (cloudformation) and the resources permissions. 
+
 
 <details>
 <summary>Permissions</summary>
@@ -111,9 +115,7 @@ AWS::ReadOnlyAccess
 
 ### Member account
 
-:::tip
 The name of this role (not the ARN) is referenced as `accountReadRoleName` in this doc.
-:::
 
 <details>
 <summary>Permissions</summary>
@@ -140,9 +142,7 @@ AWS::ReadOnlyAccess
 
 ### Root Account
 
-:::tip
 The name of this role (not the ARN) is referenced as `organizationRoleArn` in this doc.
-:::
 
 <details>
 <summary>Permissions</summary>
@@ -194,13 +194,11 @@ The name of this role (not the ARN) is referenced as `organizationRoleArn` in th
 
 ## Minimum Permissions
 
+This section is designed for users who wish to manage permissions manually to maintain tighter security. It is not intended for users opting for the default integration setup.
+
 To implement the minimum permissions needed for the integration while maintaining security best practices, use this configuration. It ensures that the integration functions effectively without granting excessive access, adhering to the principle of least privilege for enhanced security and control.
 
-:::caution
-This section is designed for users who wish to manage permissions manually to maintain tighter security. It is not intended for users opting for the default integration setup.
-:::
-
-:::tip
+:::tip Customize Permissions based on imported resource
 The permissions outlined for S3 in this section are provided as an example. It is important to note that when using the CloudControl API, additional underlying permissions for each resource type are necessary to ensure successful integration. This guide uses S3 bucket permissions as a sample, but users should customize their permissions based on the specific resources they plan to import.
 :::
 
