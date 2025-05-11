@@ -361,7 +361,7 @@ In this example, we'll implement a security best practice known as "segregation 
 }
 ```
 
-## Explanation
+#### Explanation
 
 This permissions configuration implements a "four-eyes principle" (also known as the "two-person rule"), which requires that sensitive actions be verified by a second person before being executed.
 
