@@ -383,4 +383,5 @@ Here's what's happening in each part:
    - Filters out any user whose identifier matches the email of the person who triggered the action.
    - Returns only the identifiers of the remaining users.
 
-The result is a dynamic list of all users who are authorized to approve the action, excluding the original executor. This ensures that no single person can both initiate and approve a sensitive change, enforcing proper oversight and reducing the risk of unauthorized or accidental changes.
+The result is a dynamic list of all users who are authorized to approve the action, excluding the original executor.  
+This ensures that no single person can both initiate and approve a sensitive change, reducing the risk of unauthorized or accidental changes.
