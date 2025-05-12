@@ -947,6 +947,13 @@ export const availableGuides = [
         link: "/guides/all/trigger-firehydrant-incident",
     },
     {
+        title: "Enrich entities using AI",
+        description: "Enrich entities with AI-powered insights from external APIs",
+        tags: [ "Security", "Actions", "Automations", "AI"],
+        logos: ["Snyk","Wiz","SonarQube"],
+        link: "/guides/all/enrich-entities-using-ai",
+    },
+    {
         title: "Monitor integrations",
         description: "Monitor and manage your Port Ocean integrations",
         tags: [],
@@ -1064,5 +1071,27 @@ export const availableGuides = [
         tags: ["Approval workflow", "Slack", "Actions", "Automations"],
         logos: ["Slack"],
         link: "/guides/all/notify-users-upon-approval-of-action",
+    },
+    {
+        title: "Visualize your GitHub repository and developer activity",
+        description: "Create a dashboard that visualizes your GitHub repository and developer activity",
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-your-github-repository-activity",
+    },
+    {
+        title: "Visualize your Wiz vulnerabilities",
+        description: "Create a dashboard that visualizes your Wiz vulnerabilities",
+        tags: ["Security", "Wiz", "Dashboards"],
+        logos: ["Wiz"],
+        link: "/guides/all/visualize-your-wiz-vulnerabilities",
+    },
+    {
+        title: "Visualize your GitHub dependency security alerts",
+        description: "Create a dashboard that visualizes your GitHub dependency security alerts using dependabot alerts",
+        tags: ["Dependency management", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-your-github-dependabot-alerts",
     }
 ]
+

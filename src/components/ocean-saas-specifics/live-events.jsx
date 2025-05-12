@@ -151,6 +151,17 @@ export const liveEvents = {
     \n- environment \
     \n- project \
     \n- auditlog',
+  Octopus:
+    '\n- spaces \
+    \n- projects \
+    \n- deployments \
+    \n- releases \
+    \n- machines',
+  NewRelic:
+    '**Issues:** \
+    \n- issue_created \
+    \n- issue_updated \
+    \n- issue_closed',
   Jenkins:
     '**Build Events:** \
     \n- run.initialize \
