@@ -403,6 +403,22 @@ Simply choose a blueprint and a specific entity, and the widget will display inf
 
 <img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' border='1px' />
 
+### Links
+
+This widget allows you to display a list of links, both internal and external, for quick access to useful pages.
+
+<img src='/img/software-catalog/widgets/linksExample.png' width='50%' border='1px' />
+
+- **External links** - links to external websites, such as documentation, 3rd party tools, etc.  
+  These links will open in a new tab when clicked.  
+  For example: "https://www.google.com".
+
+- **Internal links** - links to internal pages in your portal, such as an entity page, a catalog page, an entity's audit log page, etc.  
+  These links will open in the same tab when clicked.  
+  For example: "https://app.getport.io/serviceEntity?identifier=frontend".
+
+During creation/editing of the widget, you can sort the links by dragging and dropping them.
+
 ## Chart filters
 
 <ChartFilters />
