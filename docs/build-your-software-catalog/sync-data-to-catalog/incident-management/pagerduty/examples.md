@@ -747,7 +747,7 @@ Using Port's automation capabilities, you can set up real-time Slack notificatio
 
 </details>
 
-:::tip
+:::tip Slack webhook URL
 Replace `YOUR_SLACK_WEBHOOK_URL` with your actual Slack incoming webhook URL. For information on creating Slack webhooks, see the [Slack API documentation](https://api.slack.com/messaging/webhooks).
 :::
 
