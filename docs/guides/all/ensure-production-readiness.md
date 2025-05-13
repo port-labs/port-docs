@@ -237,75 +237,101 @@ Now let's implement it:
 ## Visualization
 By leveraging Port's Dashboards, you can create custom dashboards to track your production readiness metrics and monitor your services' compliance over time.
 
-<img src='/img/guides/productionReadinessOverview.png' border='1px' />
-
+<img src="/img/guides/productionReadinessMetricsDashboard.png" width="100%" border="1px" />
 ### Dashboard setup
 
-<img src="/img/guides/productionReadinessDashboardComp.png" border="1px" />
-
 1. Go to your [software catalog](https://app.getport.io/organization/catalog).
+
 2. Click on the `+ New` button in the left sidebar.
+
 3. Select **New dashboard**.
-4. Name the dashboard (Production Readiness Metrics), choose an icon if desired, and click `Create`.
+
+4. Name the dashboard **Production Readiness Metrics**.
+
+5. Choose an icon (**optional**). 
+
+6. Click on `Create`. 
 
 This will create a new empty dashboard. Let's get ready-to-add widgets.
 
 ### Adding widgets
 
 <details>
-<summary><b>Production Readiness Overview Widget (click to expand)</b></summary>
+<summary><b>Production readiness overview (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Table**.
-2. Title: `Production Readiness Overview`, (add the `Production` icon).
-3. Select **Service** as the **Blueprint**.
-4. Show columns:
-   - Title
-   - Production Readiness Score
-   - On-call Status (pagerduty_oncall)
-   - Code Owner Review Status (require_code_owner_review)
-   - README Status (readme)
-5. Click on `Save`
-6. Click on the three dots on the widget and select `Customize table`.
+
+2. Type `Production readiness overview` in the **Title** field.
+
+3. Choose an icon (optional).
+
+4. Choose **Service** as the **Blueprint**.
+
+5. Click on `Save`.
+
+6. Click on the `...` on the widget and select `Customize table`.
+
 7. Click on the `Group by any Column` icon and select **Production Readiness**.
+
+8. Click on `Manage properties` and add the following:
+   - Title
+   - Lifecycle
+   - Passed scorecard rule
+   - Has a readme
+
 8. Click on the `Save` icon.
 
-   <img src="/img/guides/productionReadinessOverview.png" width="50%" />
+   <img src="/img/guides/productionReadinessOverview.png" width="90%" border="1px" />
 
 </details>
 
 <details>
-<summary><b>On-call Coverage Widget (click to expand)</b></summary>
+<summary><b>On-call coverage (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Pie Chart**.
-2. Title: `On-call Coverage Distribution`, (add the `OnCall` icon).
-3. Select **Service** as the **Blueprint**.
-4. Choose `pagerduty_oncall` as the **Property**.
-5. Click on `Save`
-6. Click on the three dots on the widget and select `Customize chart`.
-7. Click on the `Group by any Column` icon and select **On-call Status**.
-8. Click on the `Save` icon.
 
-   <img src="/img/guides/oncallCoverageDistribution.png" width="50%" />
+2. Type `On-call coverage` in the **Title** field.
+
+3. Choose an icon (optional).
+
+4. Choose **Service** as the **Blueprint**.
+
+5. Choose `Pagerduty On-call` as the **Breakdown by property**.
+
+6. Click on `Save`.
+
+
+   <img src="/img/guides/oncallCoverageDistribution.png" width="70%" />
 
 </details>
 
 
 <details>
-<summary><b>Branch Protection Status Widget (click to expand)</b></summary>
+<summary><b>Branch protection status (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Table**.
-2. Title: `Branch Protection Status`, (add the `Branch` icon).
-3. Select **Service** as the **Blueprint**.
-4. Show columns:
+
+2. Type `Branch protection status` in the **Title** field.
+
+3. Choose an icon (optional).
+
+4. Choose **Service** as the **Blueprint**.
+
+5. Click on `Save`.
+
+6. Click on the `...` on the widget and select `Customize table`.
+
+7. Click on the `Group by any Column` icon and select **Branch Protection Status**.
+
+8. Click on `Manage properties` and add the following:
    - Title
    - Required Approvals (required_approvals_for_pr)
    - Code Owner Review Required (require_code_owner_review)
-5. Click on `Save`
-6. Click on the three dots on the widget and select `Customize table`.
-7. Click on the `Group by any Column` icon and select **Branch Protection Status**.
-8. Click on the `Save` icon.
 
-   <img src="/img/guides/branchProtectionStatus.png" width="50%" />
+9. Click on the `Save` icon.
+
+
+   <img src="/img/guides/branchProtectionStatus.png" width="90%" border="1px" />
 
 </details>
 

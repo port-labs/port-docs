@@ -201,94 +201,100 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
 ## Visualization
 By leveraging Port's Dashboards, you can create custom dashboards to track your ArgoCD runtime metrics and monitor your applications' performance over time.
 
-<img src='/img/guides/argocdRuntimeOverview.png' border='1px' />
+<img src="/img/guides/argoRuntimeMetricsDashboard.png" width="100%" border="1px" />
 
 ### Set up dashboard
 
-<img src="/img/guides/argocdRuntimeDashboardComp.png" border="1px" />
-
 1. Go to your [software catalog](https://app.getport.io/organization/catalog).
+
 2. Click on the `+ New` button in the left sidebar.
+
 3. Select **New dashboard**.
-4. Name the dashboard (ArgoCD Runtime Metrics), choose an icon if desired, and click `Create`.
+
+4. Name the dashboard **ArgoCD Runtime Metrics**.
+
+5. Choose an icon (**optional**).
+
+6. Click `Create`.
 
 This will create a new empty dashboard. Let's get ready-to-add widgets.
 
 ### Adding widgets
 
 <details>
-<summary><b>ArgoCD Sync Status Widget (click to expand)</b></summary>
+<summary><b>ArgoCD sync status overview (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Table**.
-2. Title: `ArgoCD Sync Status Overview`, (add the `ArgoCD` icon).
-3. Select **Workload** as the **Blueprint**.
-4. Show columns:
-   - Title
-   - Sync Status
-   - Health Status
-   - Last Synced
-   - Namespace
-5. Click on `Save`
+
+2. Title: `ArgoCD sync status overview`.
+
+3. Choose an icon (**optional**).
+
+4. Select **Workload** as the **Blueprint**.
+
+5. Click on `Save`.
+
 6. Click on the three dots on the widget and select `Customize table`.
+
 7. Click on the `Group by any Column` icon and select **Sync Status**.
-8. Click on the `Save` icon.
 
-   <img src="/img/guides/argocdSyncStatusOverview.png" width="50%" />
+8. Click on the `Manage properties` and add the following:
+   - Title
+   - Health Status
+   - Passed scorecard rules
 
-</details>
-
-<details>
-<summary><b>Sync History Widget (click to expand)</b></summary>
-
-1. Click `+ Widget` and select **Line Chart**.
-2. Title: `Sync History Trends`, (add the `History` icon).
-3. Select **Workload** as the **Blueprint**.
-4. Choose `Sync Status` and `Health Status` as the **Properties**.
-5. Select `day` for **Time interval**.
-6. Click on `Save`
-7. Click on the three dots on the widget and select `Customize chart`.
-8. Click on the `Group by any Column` icon and select **Workload**.
 9. Click on the `Save` icon.
 
-   <img src="/img/guides/syncHistoryTrends.png" width="50%" />
+   <img src="/img/guides/argocdSyncStatusOverview.png" width="90%" border="1px" />
 
 </details>
 
+
 <details>
-<summary><b>Health Status Widget (click to expand)</b></summary>
+<summary><b>Health status distribution (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Pie Chart**.
-2. Title: `Application Health Distribution`, (add the `Health` icon).
-3. Select **Workload** as the **Blueprint**.
-4. Choose `Health Status` as the **Property**.
-5. Click on `Save`
-6. Click on the three dots on the widget and select `Customize chart`.
-7. Click on the `Group by any Column` icon and select **Namespace**.
-8. Click on the `Save` icon.
 
-   <img src="/img/guides/applicationHealthDistribution.png" width="50%" />
+2. Title: `Application health status distribution`.
+
+3. Choose an icon (**optional**).
+
+4. Select **Workload** as the **Blueprint**.
+
+5. Choose `Health Status` as the **Breakdown by property**.
+
+6. Click on `Save`.
+
+   <img src="/img/guides/applicationHealthDistribution.png" width="50%" border="1px" />
 
 </details>
 
 
 <details>
-<summary><b>Resource Status Widget (click to expand)</b></summary>
+<summary><b>Resource health status overview (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Table**.
-2. Title: `Resource Status Overview`, (add the `Resources` icon).
-3. Select **Workload** as the **Blueprint**.
-4. Show columns:
-   - Title
-   - Resource Status
-   - Resource Health
-   - Resource Kind
-   - Namespace
-5. Click on `Save`
+
+2. Title: `Resource health status overview`.
+
+3. Choose an icon (**optional**).
+
+4. Select **Workload** as the **Blueprint**.
+
+5. Click on `Save`.
+
 6. Click on the three dots on the widget and select `Customize table`.
-7. Click on the `Group by any Column` icon and select **Resource Status**.
+
+7. Click on the `Group by any Column` icon and select **Health Status**.
+
+8. Click on the `Manage properties` and add the following:
+   - Title
+   - Sync Status
+   - Health and Synced
+
 8. Click on the `Save` icon.
 
-   <img src="/img/guides/resourceStatusOverview.png" width="50%" />
+   <img src="/img/guides/resourceStatusOverview.png" width="90%" border="1px" />
 
 </details>
 

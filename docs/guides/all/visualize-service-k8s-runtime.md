@@ -231,94 +231,129 @@ Note that you can also set this as the default view by click on the `Save this v
 ## Visualization
 By leveraging Port's Dashboards, you can create custom dashboards to track your Kubernetes runtime metrics and monitor your services' performance over time.
 
-<img src='/img/guides/k8sRuntimeOverview.png' border='1px' />
+<img src="/img/guides/k8sRuntimeMetricsDashboard.png" width="100%" border="1px" />
+
 
 ### Dashboard setup
 
-<img src="/img/guides/k8sRuntimeDashboardComp.png" border="1px" />
-
 1. Go to your [software catalog](https://app.getport.io/organization/catalog).
+
 2. Click on the `+ New` button in the left sidebar.
+
 3. Select **New dashboard**.
-4. Name the dashboard (K8s Runtime Metrics), choose an icon if desired, and click `Create`.
+
+4. Name the dashboard **K8s Runtime Metrics**.
+
+5. Choose an icon (**optional**).
+
+6. Click `Create`.
 
 This will create a new empty dashboard. Let's get ready-to-add widgets.
 
 ### Adding widgets
 
 <details>
-<summary><b>Service Health Overview Widget (click to expand)</b></summary>
+<summary><b>Service health overview (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Table**.
-2. Title: `Service Health Overview`, (add the `Kubernetes` icon).
-3. Select **Workload** as the **Blueprint**.
-4. Show columns:
-   - Title
-   - Health Status
-   - Available Replicas
-   - Desired Replicas
-   - Namespace
-5. Click on `Save`
-6. Click on the three dots on the widget and select `Customize table`.
+
+2. Type `Service health overview` in the **Title** field.
+
+3. Choose an icon (**optional**).
+
+4. Choose **Workload** as the **Blueprint**.
+
+5. Click on `Save`.
+
+6. Click on the `...` on the widget and select `Customize table`.
+
 7. Click on the `Group by any Column` icon and select **Health Status**.
-8. Click on the `Save` icon.
 
-   <img src="/img/guides/serviceHealthOverview.png" width="50%" />
+8. Click on `Manage properties` and add the following:
+   - Title
+   - Owning Team
+   - Revision
+   - Last Update
 
-</details>
-
-<details>
-<summary><b>Resource Usage Widget (click to expand)</b></summary>
-
-1. Click `+ Widget` and select **Line Chart**.
-2. Title: `Resource Usage Trends`, (add the `Chart` icon).
-3. Select **Workload** as the **Blueprint**.
-4. Choose `CPU Usage` and `Memory Usage` as the **Properties**.
-5. Select `day` for **Time interval**.
-6. Click on `Save`
-7. Click on the three dots on the widget and select `Customize chart`.
-8. Click on the `Group by any Column` icon and select **Workload**.
 9. Click on the `Save` icon.
 
-   <img src="/img/guides/resourceUsageTrends.png" width="50%" />
+   <img src="/img/guides/serviceHealthOverview.png" width="90%" border="1px" />
+
+</details>
+
+<details>
+<summary><b>Resource usage trends (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Line Chart**.
+
+2. Type `Resource usage trends` in the **Title** field.
+
+3. Choose an icon (**optional**).
+
+4. Choose `Aggregate Property (All Entities)` as the **Chart type**.
+
+5. Choose **Workload** as the **Blueprint**.
+
+6. Choose `High Throughput`, `Open Issues Count`, `Error Rate` as the **Y axis Property**.
+
+7. Choose `createdAt` as the **X axis Property**.
+
+8. Select `Hour` for **Time interval**.
+
+9. Select `Today` for **Time range**.
+
+10. Click on `Save`
+
+   <img src="/img/guides/resourceUsageTrends.png" width="50%" border="1px" />
 
 </details>
 
 
 <details>
-<summary><b>Namespace Distribution Widget (click to expand)</b></summary>
+<summary><b>Namespace distribution (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Pie Chart**.
-2. Title: `Workload Distribution by Namespace`, (add the `Namespace` icon).
-3. Select **Workload** as the **Blueprint**.
-4. Choose `Namespace` as the **Property**.
-5. Click on `Save`
-6. Click on the three dots on the widget and select `Customize chart`.
-7. Click on the `Group by any Column` icon and select **Health Status**.
-8. Click on the `Save` icon.
 
-   <img src="/img/guides/namespaceDistribution.png" width="50%" />
+2. Title: `Workload distribution by namespace`.
+
+3. Choose an icon (**optional**).
+
+4. Select **Workload** as the **Blueprint**.
+
+5. Choose `Service Label` as the **Breakdown by Property**.
+
+6. Click on `Save`
+
+   <img src="/img/guides/namespaceDistribution.png" width="50%" border="1px" />
 
 </details>
 
 <details>
-<summary><b>Resource Allocation Widget (click to expand)</b></summary>
+<summary><b>Resource allocation overview(click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Table**.
-2. Title: `Resource Allocation Overview`, (add the `Resources` icon).
-3. Select **Workload** as the **Blueprint**.
-4. Show columns:
-   - Title
-   - CPU Request
-   - CPU Limit
-   - Memory Request
-   - Memory Limit
-5. Click on `Save`
-6. Click on the three dots on the widget and select `Customize table`.
-7. Click on the `Group by any Column` icon and select **Namespace**.
-8. Click on the `Save` icon.
 
-   <img src="/img/guides/resourceAllocationOverview.png" width="50%" />
+2. Title: `Resource allocation overview`.
+
+3. Choose an icon (**optional**).
+
+4. Select **Workload** as the **Blueprint**.
+
+5. Click on `Save`.
+
+6. Click on the `...` on the widget and select `Customize table`.
+
+7. Click on the `Group by any Column` icon and select **Service Label**.
+
+8. Click on `Manage properties` and add the following:
+   - Title
+   - Health Status
+   - Standardization
+   - Environment
+
+9. Click on the `Save` icon.
+
+   <img src="/img/guides/resourceAllocationOverview.png" width="90%" border="1px" />
 
 </details>
 
