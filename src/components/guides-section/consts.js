@@ -1092,6 +1092,13 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-dependabot-alerts",
+    },
+    {
+        title: "Interact with ServiceNow records",
+        description: "Create a self-service action that interacts with ServiceNow records",
+        tags: ["Incident management", "ServiceNow", "Actions"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/interact-with-servicenow",
     }
 ]
 
