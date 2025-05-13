@@ -131,7 +131,7 @@ resources:
 Using Port's automation capabilities, you can set up real-time Slack notifications when issues are created or updated in Jira.
 
 <details>
-<summary>Automation for New Bug Reports</summary>
+<summary><b>Automation for new bug reports (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
