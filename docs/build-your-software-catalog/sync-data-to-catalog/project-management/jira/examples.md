@@ -173,7 +173,7 @@ Using Port's automation capabilities, you can set up real-time Slack notificatio
 </details>
 
 <details>
-<summary>Automation for High-Priority Tasks</summary>
+<summary><b>Automation for high-priority tasks (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
