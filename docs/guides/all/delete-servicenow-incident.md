@@ -132,7 +132,7 @@ To add a secret to your portal:
 
 5. Click `Save`.
 
-Now you should see the `Delect ServiceNow Incident` action in the self-service page. 🎉
+Now you should see the `Delect ServiceNow Incident` action in the [self-service](https://app.getport.io/self-serve) page. 🎉
 
 ### Create an automation to remove entity from Port
 
