@@ -88,7 +88,7 @@ It can be deployed on any platform that allows deploying images as containers su
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.16.0
+docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.16.7
 ```
 
 Run the following command to start the app:
@@ -105,7 +105,7 @@ docker run \
   -e PORT_CLIENT_SECRET=<CLIENT_SECRET> \
   -e PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
   -p <PORT>:<PORT> \
-  ghcr.io/port-labs/port-self-hosted-github-app:0.16.0
+  ghcr.io/port-labs/port-self-hosted-github-app:0.16.7
 ```
 
 | Env variable         | Description                                                                         |
