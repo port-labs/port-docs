@@ -1092,6 +1092,13 @@ export const availableGuides = [
         tags: ["Dependency management", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-dependabot-alerts",
+    },
+    {
+        title: "Automate admin role assignment",
+        description: "Set up automated user role assignment when they are added to Admins group.",
+        tags: ["Automations", "Security", "RBAC"],
+        logos: ["Actions"],
+        link: "/guides/all/automate-user-role-update",
     }
 ]
 
