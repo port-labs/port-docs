@@ -255,7 +255,7 @@ By leveraging Port's Dashboards, you can create custom dashboards to track your 
 This will create a new empty dashboard. Let's get ready-to-add widgets.
 
 ### Adding widgets
-
+In your new dashboard, create the following widgets:
 <details>
 <summary><b>Production readiness overview (click to expand)</b></summary>
 
