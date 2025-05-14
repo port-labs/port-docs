@@ -25,7 +25,7 @@ By combining synced webhooks with Port's automation, you can keep your software 
 
 By default, the `identifier` of the `incident` kind is mapped to the incident number (`.number`). However, deleting records in ServiceNow via API requires the system's internal ID (`.sys_id`). To fix this:
 
-1. Go to your [Data Source](https://app.getport.io/settings/data-sources) page.
+1. Go to the [Data Sources](https://app.getport.io/settings/data-sources) page of your portal.
 2. Select the ServiceNow integration.
 3. Add the following YAML block into the editor to update the incident data:
 
