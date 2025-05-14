@@ -62,7 +62,7 @@ In order to expose your Azure groups to Port via the application, do the followi
 
 Alternatively, if you are syncing your groups from an on-prem AD into Entra, configure the group claim like so (sAMAccountName as source attribute, and box checked):
 
-![](/img/sso/azure-saml/azureSamlGroups.png)
+<img src="/img/sso/azure-saml/azureSamlGroups.png" width="60%" border="1px" />
 
 ## SCIM Configuration (beta)
 
