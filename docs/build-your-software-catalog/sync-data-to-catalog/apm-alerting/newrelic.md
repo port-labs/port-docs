@@ -204,7 +204,7 @@ This table summarizes the available parameters for the installation.
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌        |
 | `integration.secrets.webhookUsername`           | Webhook username used for authenticating incoming events. [Learn more](http://docs.newrelic.com/docs/alerts/get-notified/intro-notifications/)                                   | ❌        |
 | `integration.secrets.webhookSecret`           | Webhook secret for authenticating incoming events. [Learn more](http://docs.newrelic.com/docs/alerts/get-notified/intro-notifications/)                                           | ❌        |
-| `baseUrl`               | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Octopus                     | ❌        |
+| `baseUrl`               | The base url of the instance where the New Relic integration is hosted, used for real-time updates. (e.g.`https://mynewrelicoceanintegration.com`)                     | ❌        |
 <br/>
 
 <AdvancedConfig/>
