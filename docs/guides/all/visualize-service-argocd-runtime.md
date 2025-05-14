@@ -199,7 +199,7 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
     <br/>
 
 ## Visualization
-By leveraging Port's Dashboards, you can create custom dashboards to track your ArgoCD runtime metrics and monitor your applications' performance over time.
+By leveraging Port's dashboards, you can create custom views to track your ArgoCD runtime metrics and monitor your applications' performance over time.
 
 <img src="/img/guides/argoRuntimeMetricsDashboard.png" width="100%" border="1px" />
 
@@ -217,9 +217,10 @@ By leveraging Port's Dashboards, you can create custom dashboards to track your 
 
 6. Click `Create`.
 
-This will create a new empty dashboard. Let's get ready-to-add widgets.
 
-### Adding widgets
+### Add widgets
+
+In your new dashboard, create the following widgets:
 
 <details>
 <summary><b>ArgoCD sync status overview (click to expand)</b></summary>

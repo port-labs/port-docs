@@ -229,7 +229,7 @@ Note that you can also set this as the default view by click on the `Save this v
 
 
 ## Visualization
-By leveraging Port's Dashboards, you can create custom dashboards to track your Kubernetes runtime metrics and monitor your services' performance over time.
+By leveraging Port's dashboards, you can create custom views to track your Kubernetes runtime metrics and monitor your services' performance over time.
 
 <img src="/img/guides/k8sRuntimeMetricsDashboard.png" width="100%" border="1px" />
 
@@ -248,9 +248,10 @@ By leveraging Port's Dashboards, you can create custom dashboards to track your 
 
 6. Click `Create`.
 
-This will create a new empty dashboard. Let's get ready-to-add widgets.
 
-### Adding widgets
+### Add widgets
+
+In your new dashboard, create the following widgets:
 
 <details>
 <summary><b>Service health overview (click to expand)</b></summary>

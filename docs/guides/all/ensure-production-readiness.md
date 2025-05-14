@@ -254,7 +254,9 @@ By leveraging Port's dashboards, you can create custom views to track your produ
 
 
 ### Add widgets
+
 In your new dashboard, create the following widgets:
+
 <details>
 <summary><b>Production readiness overview (click to expand)</b></summary>
 
