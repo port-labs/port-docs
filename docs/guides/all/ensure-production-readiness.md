@@ -235,7 +235,7 @@ Now let's implement it:
     <img src='/img/guides/prodReadinessEntityAfterScorecard.png' width='100%' border='1px' />
 
 ## Visualization
-By leveraging Port's Dashboards, you can create custom dashboards to track your production readiness metrics and monitor your services' compliance over time.
+By leveraging Port's dashboards, you can create custom views to track your production readiness metrics and monitor your services' compliance over time.
 
 <img src="/img/guides/productionReadinessMetricsDashboard.png" width="100%" border="1px" />
 ### Dashboard setup
