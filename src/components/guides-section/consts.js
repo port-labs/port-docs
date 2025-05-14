@@ -1089,7 +1089,7 @@ export const availableGuides = [
     {
         title: "Visualize your GitHub dependency security alerts",
         description: "Create a dashboard that visualizes your GitHub dependency security alerts using dependabot alerts",
-        tags: ["Dependency management", "GitHub", "Dashboards"],
+        tags: ["Security", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-dependabot-alerts",
     },
