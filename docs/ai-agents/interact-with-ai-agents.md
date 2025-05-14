@@ -177,6 +177,11 @@ Each interaction records both input and output tokens, helping you understand yo
 - Optimizing prompts for efficiency.
 - Managing costs effectively.
 
+### Data handling
+
+We store data from your interactions with AI agents for up to 30 days. We use this data to ensure agents function correctly and to identify and prevent problematic or inappropriate AI behavior. 
+We limit this data storage strictly to these purposes. You can contact us to opt-out of this data storage.
+
 ## Limits
 
 Port applies limits to AI agent interactions to ensure fair usage across all customers:
@@ -256,6 +261,13 @@ Ensure that:
 <summary><b>How can I provide feedback on agent responses? (Click to expand)</b></summary>
 
 The AI invocation entity contains the `feedback` property where you can mark is as `Negative` or `Positive`. We're working on adding a more convenient way to rate conversation from Slack and from the UI.
+</details>
+
+<details>
+<summary><b>How is my data with AI agents handled? (Click to expand)</b></summary>
+
+We store data from your interactions with AI agents for up to 30 days. We use this data to ensure agents function correctly and to identify and prevent problematic or inappropriate AI behavior. 
+We limit this data storage strictly to these purposes. You can contact us to opt-out of this data storage.
 </details>
 
 ## Security considerations
