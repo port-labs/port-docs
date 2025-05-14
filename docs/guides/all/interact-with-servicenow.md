@@ -120,7 +120,7 @@ The following steps will walk you through configuring each self-service action, 
 
 5. Click `Save`.
 
-Now you should see the `Create ServiceNow Record` action in the self-service page. 🎉
+Now you should see the `Create ServiceNow Record` action in the [self-service](https://app.getport.io/self-serve) page. 🎉
 
 #### Update a ServiceNow record
 
@@ -194,7 +194,7 @@ Now you should see the `Create ServiceNow Record` action in the self-service pag
 
 5. Click `Save`.
 
-Now you should see the `Update ServiceNow Record` action in the self-service page. 🎉
+Now you should see the `Update ServiceNow Record` action in the [self-service](https://app.getport.io/self-serve) page. 🎉
 
 #### Delete a ServiceNow record
 
@@ -260,4 +260,4 @@ Now you should see the `Update ServiceNow Record` action in the self-service pag
 
 5. Click `Save`.
 
-Now you should see the `Delete ServiceNow Record` action in the self-service page. 🎉
+Now you should see the `Delete ServiceNow Record` action in the [self-service](https://app.getport.io/self-serve) page. 🎉

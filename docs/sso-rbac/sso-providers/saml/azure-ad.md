@@ -60,6 +60,10 @@ In order to expose your Azure groups to Port via the application, do the followi
 3. Select `Groups assigned to the application` and in the source attribute select `Cloud-only group display names`.
 4. Assign the relevant groups you want to expose to the application, these will be ingested into Port as teams you can use to manage user permissions and RBAC in your Port account.
 
+Alternatively, if you are syncing your groups from an on-prem AD into Entra, configure the group claim like so (sAMAccountName as source attribute, and box checked):
+
+<img src="/img/sso/azure-saml/azureSamlGroups.png" width="60%" border="1px" />
+
 ## SCIM Configuration (beta)
 
 AzureAD SAML applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 

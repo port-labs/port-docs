@@ -1094,6 +1094,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-github-dependabot-alerts",
     },
     {
+        title: "Delete a ServiceNow incident",
+        description: "Create a self-service action that deletes a ServiceNow incident",
+        tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/delete-servicenow-incident",
+    },
+    {
         title: "Interact with ServiceNow records",
         description: "Create a self-service action that interacts with ServiceNow records",
         tags: ["Incident management", "ServiceNow", "Actions"],
