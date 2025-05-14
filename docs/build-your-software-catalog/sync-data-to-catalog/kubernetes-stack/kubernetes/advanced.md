@@ -198,9 +198,9 @@ NO_PROXY=http://127.0.0.1,google.com
 </TabItem>
 <TabItem value="createMissingRelatedEntities">
 <CreateMissingRelatedEntities/>
-- Default: `false` (disabled)
-- Use case: Creation of missing related Port entities. For example:
-  - Creation of related entity that has no matching resource kind in K8s, like `cluster`;
-  - Creation of an entity and its related entity, even though the related entity doesn't exist yet in Port.
+  - Default value: `true` - missing related entities in Port will be created. For example:
+    - Creation of related entity that has no matching resource kind in K8s, like `cluster`.
+    - Creation of an entity and its related entities, even though the related entity doesn't exist yet in Port.
+  - Use case: use `false` if you do not want this default behavior (do not create missing related entities).
 </TabItem>
 </Tabs>

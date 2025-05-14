@@ -15,7 +15,7 @@ To use the advanced configuration and additional flags, add them as a root key t
 
 ```yaml showLineNumbers
 # highlight-next-line
-createMissingRelatedEntities: true
+createMissingRelatedEntities: false
 resources:
   - kind: merge-request
     selector:
@@ -69,8 +69,8 @@ The `enableMergeEntity` parameter specifies whether to use the [create/update](/
 
 The `createMissingRelatedEntities` parameter is used to enable the creation of missing related Port entities automatically in cases where the target related entity does not exist in the software catalog yet.
 
-- Default value: `false` (do not create missing related entities)
-- Use case: use `true` if you want GitLab app to create barebones related entities, in case those related entities do not exist in the software catalog.
+- Default value: `true`to allow the GitLab app to create barebones related entities, in case those related entities do not exist in the software catalog.
+- Use case: use `false` if you do not want this default behavior (do not create missing related entities).
 
 </TabItem>
 
