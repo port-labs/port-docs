@@ -138,7 +138,7 @@ Now you should see the `Delect ServiceNow Incident` action in the self-service p
 
 Once the incident is deleted from ServiceNow, we want to automatically remove the corresponding entity in Port. To achieve this behaviour:
 
-1. Head to the [automation](https://app.getport.io/settings/automations) page.
+1. Head to the [automations](https://app.getport.io/settings/automations) page.
 
 2. Click on the `+ Automation` button.
 
