@@ -36,8 +36,8 @@ The following advanced configuration parameters are available:
 
 The `resyncInterval` parameter specifies the interval in minutes to send a repeated sync event for all known existing objects (in addition to new cluster events).
 
-- Default value: `0` (re-sync disabled)
-- Use case: Re-sync every X minutes. This parameter is useful when reporting entities with relations inside your cluster in instances where an entity is reported before its related target has been created in Port. The initial sync will fail, but later when the target entity is available, the entity creation will succeed.
+- **Default value**: `0` (re-sync disabled)
+- **Use case**: Re-sync every X minutes. This parameter is useful when reporting entities with relations inside your cluster in instances where an entity is reported before its related target has been created in Port. The initial sync will fail, but later when the target entity is available, the entity creation will succeed.
 
 </TabItem>
 
@@ -45,9 +45,9 @@ The `resyncInterval` parameter specifies the interval in minutes to send a repea
 
 The `stateKey` parameter specifies a unique state key per K8s exporter installation. Enables deletion of stale Port entities that had been created by the exporter, and shouldn't be synced (anymore) according to your existing exporter app configuration. The exporter will check for pending deletions during pod initialization, and also respond to deletion events in the cluster.
 
-- Default: `""`.
+- **Default value**: `""`.
   - When empty, a `UUID` will be automatically generated and kept in the ConfigMap. Changing the state key will cause the existing exporter to lose track of entities it reported previously from the cluster, and will therefore not delete them from Port.
-- Use case: Deletion of stale Port entities. For example:
+- **Use case**: Deletion of stale Port entities. For example:
   - Removal of entire resource (like `pods`) from the exporter app config, will also remove them from the software catalog.
   - Modification of an entity's identifier will cause the stale entity to be removed and created again with the correct identifier.
 
@@ -87,8 +87,8 @@ If a new resync trigger consistently aborts a running resync, it means that your
 
 The `verbosity` parameter is used to control the verbosity level of info logs in K8s exporter's pod.
 
-- Default: `0` (show all info and error logs, including info logs of successful updates)
-- Use case: Set the value to `-1`, if you want to clear out info logs of successful entity updates. Error logs and some info logs (initialization and teardown logs), will be reported.
+- **Default value**: `0` (show all info and error logs, including info logs of successful updates)
+- **Use case**: Set the value to `-1`, if you want to clear out info logs of successful entity updates. Error logs and some info logs (initialization and teardown logs), will be reported.
 
 </TabItem>
 
@@ -98,7 +98,7 @@ The `crdsToDiscover` parameter is used to specify a filter for the CRDs that the
 
 For more information how to use the `crdsToDiscover` parameter, please refer to the [K8S API extension guide](/guides/all/manage-resources-using-k8s-crds.md)
 
-- Default: `""` (no filter)
+- **Default value**: `""` (no filter)
 
 </TabItem>
 
@@ -193,14 +193,12 @@ NO_PROXY=http://127.0.0.1,google.com
 ]} >
 <TabItem value="deleteDependents">
 <DeleteDependents/>
-- Default: `false` (disabled)
-- Use case: Deletion of dependent Port entities. Must be enabled if you want to delete a target entity (and its source entities) when the entity's blueprint has required relations.
+- **Default value**: `false` (disabled)
+- **Use case**: Deletion of dependent Port entities. Must be enabled if you want to delete a target entity (and its source entities) when the entity's blueprint has required relations.
 </TabItem>
 <TabItem value="createMissingRelatedEntities">
 <CreateMissingRelatedEntities/>
-  - Default value: `true` - missing related entities in Port will be created. For example:
-    - Creation of related entity that has no matching resource kind in K8s, like `cluster`.
-    - Creation of an entity and its related entities, even though the related entity doesn't exist yet in Port.
-  - Use case: use `false` if you do not want this default behavior (do not create missing related entities).
+  - **Default value**: `true` to allow the Kubernetes app to create barebones related entities, in case those related entities do not exist in the software catalog.
+  - **Use case**: use `false` if you do not want this default behavior (do not create missing related entities).
 </TabItem>
 </Tabs>

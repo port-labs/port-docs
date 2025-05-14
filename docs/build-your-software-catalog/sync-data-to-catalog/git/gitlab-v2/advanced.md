@@ -36,7 +36,7 @@ Let's look at the advanced configuration parameters we can add to the [integrati
 
 <DeleteDependents/>
 
-- **Default**: `false` (disabled).  
+- **Default value**: `false` (disabled).  
 - **Use case**: Enable this flag if dependent entities should be deleted when the target entity is deleted.
 
 </TabItem>
@@ -45,7 +45,7 @@ Let's look at the advanced configuration parameters we can add to the [integrati
 
 With the `enableMergeEntity` parameter, you can specify whether to use the [create/update](/build-your-software-catalog/custom-integration/api?operation=create-update#usage) or [create/override](/build-your-software-catalog/custom-integration/api?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
 
-- **Default**: `false` (uses create/override).  
+- **Default value**: `false` (uses create/override).  
 - **Use case**: Set to `true` to allow external sources to update some properties while GitLab remains the source of truth for others.
 
 </TabItem>
@@ -54,7 +54,7 @@ With the `enableMergeEntity` parameter, you can specify whether to use the [crea
 
 The `createMissingRelatedEntities` parameter enables automatic creation of placeholder entities in Port when they're referenced in relationships but don't yet exist in your software catalog.
 
-- **Default**: `true` to allow the GitLab app to create barebones related entities, in case those related entities do not exist in the software catalog.
+- **Default value**: `true` to allow the GitLab app to create barebones related entities, in case those related entities do not exist in the software catalog.
 - **Use case**: use `false` if you do not want this default behavior (do not create missing related entities).
 
 </TabItem>
