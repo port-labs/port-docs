@@ -148,7 +148,7 @@ resources:
 ```
 
 :::info Create Missing Related Entities flag in protected blueprints
-You cannot use the `createMissingRelatedEntities` flag to create entities in protected blueprints such as `_user` and `_team`.
+Note that you cannot use the `createMissingRelatedEntities` flag to create entities in protected blueprints such as `_user` and `_team`.
 :::
 
 ### Test your mapping - JQ playground
