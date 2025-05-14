@@ -193,7 +193,7 @@ This table summarizes the available parameters for the installation.
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                           | ❌        |
 | `sendRawDataExamples`               | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                     | ❌        |
 | `integration.secrets.webhookSecret`           | Webhook secret for authenticating incoming events. [Learn more](https://octopus.com/docs/administration/managing-infrastructure/subscriptions)                                           | ❌        |
-| `baseUrl`               | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Octopus                     | ❌        |
+| `baseUrl`               | The base url of the instance where the Octopus integration is hosted, used for real-time updates. (e.g.`https://myoctopusdeployoceanintegration.com`)                    | ❌        |
 <br/>
 
 <AdvancedConfig/>
