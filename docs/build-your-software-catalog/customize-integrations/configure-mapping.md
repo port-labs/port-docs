@@ -147,6 +147,10 @@ resources:
     ...
 ```
 
+:::info Create Missing Related Entities flag in protected blueprints
+You cannot use the `createMissingRelatedEntities` flag to create entities in protected blueprints such as `_user` and `_team`.
+:::
+
 ### Test your mapping - JQ playground
 
 The mapping configuration window contains a JQ playground that allows you to test your JQ queries against example responses from the API of the integrated tool. This is useful for validating your queries and ensuring they return the expected results.
