@@ -252,7 +252,6 @@ By leveraging Port's Dashboards, you can create custom dashboards to track your 
 
 6. Click on `Create`. 
 
-This will create a new empty dashboard. Let's get ready-to-add widgets.
 
 ### Add widgets
 In your new dashboard, create the following widgets:
