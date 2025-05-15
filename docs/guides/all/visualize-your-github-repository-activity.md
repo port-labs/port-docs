@@ -276,7 +276,7 @@ We now have a blank dashboard where we can start adding widgets to visualize our
 3. Select `Count entities` **Chart type** and choose **Repository** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `public` repositories:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -306,7 +306,7 @@ We now have a blank dashboard where we can start adding widgets to visualize our
 3. Select `Count entities` **Chart type** and choose **Pull Request** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `open` pull requests:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -336,7 +336,7 @@ We now have a blank dashboard where we can start adding widgets to visualize our
 3. Select `Count entities` **Chart type** and choose **Pull Request** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `merged` pull requests updated in the last month:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -373,7 +373,7 @@ We now have a blank dashboard where we can start adding widgets to visualize our
 3. Select `Count entities` **Chart type** and choose **Issue** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `open` issues:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
