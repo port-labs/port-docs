@@ -20,8 +20,8 @@ The following advanced configuration parameters are available:
 
 <DeleteDependents/>
 
-- Default: `false` (disabled)
-- Use case: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
+- **Default value**: `false` (disabled)
+- **Use case**: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
 
 </TabItem>
 
@@ -29,8 +29,8 @@ The following advanced configuration parameters are available:
 
 The `createMissingRelatedEntities` parameter is used to enable the creation of missing related Port entities automatically in cases where the target related entity does not exist in the software catalog yet.
 
-- Default value: `true` to allow the Bitbucket app to create barebones related entities, in case those related entities do not exist in the software catalog.
-- Use case: use `false` if you do not want this default behavior (do not create missing related entities).
+- **Default value**: `true` to allow the Bitbucket app to create barebones related entities, in case those related entities do not exist in the software catalog.
+- **Use case**: use `false` if you do not want this default behavior (do not create missing related entities).
 
 </TabItem>
 
