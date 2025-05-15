@@ -234,6 +234,110 @@ Now let's implement it:
 
     <img src='/img/guides/prodReadinessEntityAfterScorecard.png' width='100%' border='1px' />
 
+## Visualization
+By leveraging Port's dashboards, you can create custom views to track your production readiness metrics and monitor your services' compliance over time.
+
+<img src="/img/guides/productionReadinessMetricsDashboard.png" width="100%" border="1px" />
+### Dashboard setup
+
+1. Go to your [software catalog](https://app.getport.io/organization/catalog).
+
+2. Click on the `+ New` button in the left sidebar.
+
+3. Select **New dashboard**.
+
+4. Name the dashboard **Production Readiness Metrics**.
+
+5. Choose an icon (**optional**). 
+
+6. Click on `Create`. 
+
+
+### Add widgets
+
+In your new dashboard, create the following widgets:
+
+<details>
+<summary><b>Production readiness overview (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Table**.
+
+2. Type `Production readiness overview` in the **Title** field.
+
+3. Choose an icon (optional).
+
+4. Choose **Service** as the **Blueprint**.
+
+5. Click on `Save`.
+
+6. Click on the `...` on the widget and select `Customize table`.
+
+7. Click on the `Group by any Column` icon and select **Production Readiness**.
+
+8. Click on `Manage properties` and add the following:
+   - Title
+   - Lifecycle
+   - Passed scorecard rule
+   - Has a readme
+
+8. Click on the `Save` icon.
+
+   <img src="/img/guides/productionReadinessOverview.png" width="90%" border="1px" />
+
+</details>
+
+<details>
+<summary><b>On-call coverage (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Pie Chart**.
+
+2. Type `On-call coverage` in the **Title** field.
+
+3. Choose an icon (optional).
+
+4. Choose **Service** as the **Blueprint**.
+
+5. Choose `Pagerduty On-call` as the **Breakdown by property**.
+
+6. Click on `Save`.
+
+
+   <img src="/img/guides/oncallCoverageDistribution.png" width="70%" />
+
+</details>
+
+
+<details>
+<summary><b>Branch protection status (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Table**.
+
+2. Type `Branch protection status` in the **Title** field.
+
+3. Choose an icon (optional).
+
+4. Choose **Service** as the **Blueprint**.
+
+5. Click on `Save`.
+
+6. Click on the `...` on the widget and select `Customize table`.
+
+7. Click on the `Group by any Column` icon and select **Branch Protection Status**.
+
+8. Click on `Manage properties` and add the following:
+   - Title
+   - Required Approvals (required_approvals_for_pr)
+   - Code Owner Review Required (require_code_owner_review)
+
+9. Click on the `Save` icon.
+
+
+   <img src="/img/guides/branchProtectionStatus.png" width="90%" border="1px" />
+
+</details>
+
+These widgets will give you a comprehensive view of your services' production readiness status, making it easy to identify areas that need attention.
+
 ## Possible daily routine integrations
 
 - Use Port's API to check for scorecard compliance from your CI and pass/fail it accordingly.
