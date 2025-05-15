@@ -1099,6 +1099,13 @@ export const availableGuides = [
         tags: ["Automations", "Security", "RBAC"],
         logos: ["Actions"],
         link: "/guides/all/automate-user-role-update",
+    },
+    {
+        title: "Delete a ServiceNow incident",
+        description: "Create a self-service action that deletes a ServiceNow incident",
+        tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/delete-servicenow-incident",
     }
 ]
 
