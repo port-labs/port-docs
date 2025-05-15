@@ -220,7 +220,7 @@ However, the `S3` and `RDS Instance` blueprints are not created automatically so
 5. Click `Save` to create the blueprint.
 
 
-## Set up data source mapping
+## Update integration mapping
 
 1. Go to the [Data Sources](https://app.getport.io/settings/data-sources) page of your portal.
 2. Select the AWS integration.
