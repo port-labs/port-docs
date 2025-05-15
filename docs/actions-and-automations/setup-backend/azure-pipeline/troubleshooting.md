@@ -6,40 +6,40 @@ sidebar_position: 99
 
 # Azure DevOps troubleshooting
 
-This page contains common problems users face when integrating Azure DevOps (ADO) with Port, and how to solve them.
+This page contains common problems users face when using Azure DevOps (ADO) pipelines as a backend for Port actions and automations, and how to solve them.
 
 
 ## Prerequisites
 Before troubleshooting, ensure you have:
-1. Properly installed the [Azure DevOps integration](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/installation)
-2. Configured the Personal Access Token (PAT) with correct scopes
-3. Verified organization and project names
+1. Properly installed the [Azure DevOps integration](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/installation).
+2. Configured the Personal Access Token (PAT) with correct scopes.
+3. Verified organization and project names.
 
 
-## Understanding the Azure DevOps trigger flow
+## Understanding the trigger flow
 
 The ADO trigger flow is more complex than other pipelines because it requires multiple components working together:
 
 <img src="/img/self-service-actions/setup-backend/azurepipeline/ADOpipelineFlowImg.png" width="90%" border='1px' />
 
-## How to troubleshoot Azure DevOps pipeline issues
+## Troubleshoot pipeline issues
 
 Follow these steps in order to diagnose and fix common pipeline issues.
 
-### Issue: Pipeline not triggering
+### Issue: pipeline not triggering
 
 **Symptoms you might be seeing:**
-- Pipeline doesn't start automatically when expected
-- No webhook events appear in the ADO logs
-- Manual pipeline runs work, but automatic triggers don't
-- You're making changes but pipelines aren't being triggered
+- Pipeline doesn't start automatically when expected.
+- No webhook events appear in the ADO logs.
+- Manual pipeline runs work, but automatic triggers don't.
+- You're making changes but pipelines aren't being triggered.
 
 **Troubleshooting flow:**
 
 1. **Verify pipeline configuration**
-   - Ensure the pipeline YAML file is correctly configured and adheres to Azure DevOps syntax
-   - **Important:** Trigger the pipeline manually in the UI first (this is required for initial setup)
-   - Check if the pipeline is enabled in Project Settings → Pipelines
+   - Ensure the pipeline YAML file is correctly configured and adheres to Azure DevOps syntax.
+   - **Important:** Trigger the pipeline manually in the UI first (this is required for initial setup).
+   - Check if the pipeline is enabled in Project Settings → Pipelines.
    - Validate the YAML syntax:
      ```bash
      az pipelines validate --name <pipeline-name> --path <path-to-yaml>
@@ -50,9 +50,9 @@ Follow these steps in order to diagnose and fix common pipeline issues.
       :::
 
 2. **Check webhook configuration**
-   - Verify webhook presence in Project Settings → Service Connections
-   - Check webhook logs for any failed attempts
-   - Check if the webhook name matches the one referenced in your pipeline
+   - Verify webhook presence in Project Settings → Service Connections.
+   - Check webhook logs for any failed attempts.
+   - Check if the webhook name matches the one referenced in your pipeline.
    - Test webhook manually:
      ```bash
      curl -X POST 'https://dev.azure.com/{org_name}/_apis/public/distributedtask/webhooks/{webhook_name}?api-version=6.0-preview' \
@@ -70,9 +70,9 @@ Follow these steps in order to diagnose and fix common pipeline issues.
 
 3. **Verify agent availability**
    - Check agent status in Agent Pools (are they online?)
-   - For self-hosted agents, verify network/firewall rules
-   - Ensure sufficient runners are available (not all in use)
-   - Check if there are any queued jobs that aren't starting
+   - For self-hosted agents, verify network/firewall rules.
+   - Ensure sufficient runners are available (not all in use).
+   - Check if there are any queued jobs that aren't starting.
 
 4. **Review pipeline logs**
    - If you see partial runs, enable debug logging:
@@ -80,14 +80,14 @@ Follow these steps in order to diagnose and fix common pipeline issues.
      variables:
        system.debug: 'true'
      ```
-   - Check run history for detailed error messages
-   - Look for permission errors or timeout issues
+   - Check run history for detailed error messages.
+   - Look for permission errors or timeout issues.
 
 5. **Inspect variable and secret management**
-   - Verify all required variables are defined
-   - Ensure variables are accessible to the pipeline
-   - Check for any missing or incorrect values
-   - Verify PAT tokens haven't expired
+   - Verify all required variables are defined.
+   - Ensure variables are accessible to the pipeline.
+   - Check for any missing or incorrect values.
+   - Verify PAT tokens haven't expired.
 
 6. **Reset the service hook**
    - If your pipeline triggers are still not working after completing all the above steps, try deleting and recreating the **Service Hook** in Project Settings → Service Hooks. Stale or misconfigured service hooks are a common cause of trigger issues, and recreating them often resolves the problem.
@@ -124,59 +124,59 @@ Follow these steps in order to diagnose and fix common pipeline issues.
    - If your pipeline uses parameters or variables from Port, make sure you are passing them correctly.   
    See [Advanced SSA form input documentation](#) for details.
 
-### Issue: Pipeline stuck "in progress"
+### Issue: pipeline stuck "in progress"
 
 **Symptoms you might be seeing:**
-- Pipeline shows as running but makes no progress
-- Agent appears to be processing but status doesn't update
-- Pipeline has been running for an unusually long time
-- The job seems to hang at a specific step
+- Pipeline shows as running but makes no progress.
+- Agent appears to be processing but status doesn't update.
+- Pipeline has been running for an unusually long time.
+- The job seems to hang at a specific step.
 
 **Troubleshooting flow:**
 
 1. **Check run history and logs**
-   - Review the [run history](https://dev.azure.com/) for errors
-   - Verify pipeline status in the UI
+   - Review the [run history](https://dev.azure.com/) for errors.
+   - Verify pipeline status in the UI.
    - Check agent status in Agent Pools (is it still connected?)
-   - Look for timeout errors or hanging processes
+   - Look for timeout errors or hanging processes.
 
 2. **Verify service connections**
-   - Ensure all external service connections are valid
-   - Check permissions on service connections
-   - Verify PAT token hasn't expired
-   - Check if you can manually use the service connections
+   - Ensure all external service connections are valid.
+   - Check permissions on service connections.
+   - Verify PAT token hasn't expired.
+   - Check if you can manually use the service connections.
 
 3. **Investigate resource issues**
-   - Check if the agent is running out of disk space
-   - Verify memory/CPU usage isn't causing the agent to hang
-   - Check if any long-running processes are blocking the pipeline
+   - Check if the agent is running out of disk space.
+   - Verify memory/CPU usage isn't causing the agent to hang.
+   - Check if any long-running processes are blocking the pipeline.
 
-### Issue: Pipeline runs but port catalog not updated
+### Issue: pipeline runs but port catalog not updated
 
 **Symptoms you might be seeing:**
-- Pipeline completes successfully in ADO
-- Changes aren't reflected in your Port catalog
-- No obvious errors in pipeline logs
-- Port entities aren't being created/updated
+- Pipeline completes successfully in ADO.
+- Changes aren't reflected in your Port catalog.
+- No obvious errors in pipeline logs.
+- Port entities aren't being created/updated.
 
-**Troubleshooting Flow:**
+**Troubleshooting flow:**
 
 1. **Check Port integration**
-   - Verify Port SSA configuration is correctly set up
-   - Ensure entity mappings are defined properly
-   - Check Port API credentials are valid
-   - Verify API endpoints are correct and accessible
+   - Verify Port SSA configuration is correctly set up.
+   - Ensure entity mappings are defined properly.
+   - Check Port API credentials are valid.
+   - Verify API endpoints are correct and accessible.
 
 2. **Review pipeline output**
-   - Look for Port API call errors (status codes 4xx or 5xx)
-   - Verify entity data format matches your blueprint
-   - Check for rate limiting issues
-   - Verify payload formatting (JSON structure)
+   - Look for Port API call errors (status codes 4xx or 5xx).
+   - Verify entity data format matches your blueprint.
+   - Check for rate limiting issues.
+   - Verify payload formatting (JSON structure).
 
 3. **Validate Port permissions**
-   - Ensure the API token has sufficient permissions
-   - Verify the blueprint exists and is properly configured
-   - Check if you can create entities manually in Port
+   - Ensure the API token has sufficient permissions.
+   - Verify the blueprint exists and is properly configured.
+   - Check if you can create entities manually in Port.
 
 ## Advanced troubleshooting tools
 
