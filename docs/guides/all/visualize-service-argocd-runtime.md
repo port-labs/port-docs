@@ -198,28 +198,108 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
 
     <br/>
 
-## Visualize data from your Kubernetes environment
+## Visualization
+By leveraging Port's dashboards, you can create custom views to track your ArgoCD runtime metrics and monitor your applications' performance over time.
 
-We now have a lot of data about our Argo applications, and a dashboard that visualizes it in ways that will benefit the routines of our developers and managers. Since our ArgoCD application(`workload`) blueprint is connected to our `service` blueprint, we can now access some of the application's data directly in the context of the service.  
-Let's see an example of how we can add useful visualizations to our dashboard:
+<img src="/img/guides/argoRuntimeMetricsDashboard.png" width="100%" border="1px" />
 
-    
-### Display all degraded workloads for the `AwesomeService` service by team
+### Set up dashboard
 
-1. Go to your [ArgoCD dashboard](https://app.getport.io/argocdDashboard), click on the `+ Add` button in the top right corner, then select `Table`.
+1. Go to your [software catalog](https://app.getport.io/organization/catalog).
 
-2. Fill the form out like this, then click `Save`:
+2. Click on the `+ New` button in the left sidebar.
 
-    <img src='/img/guides/argoTableDegradedServicesForm.png' width='50%' border='1px' />
+3. Select **New dashboard**.
 
-3. In your new table, click on the `Filter` icon, then on `+ Add new filter`.  
-   Add three filters by filling out the fields like this:
+4. Name the dashboard **ArgoCD Runtime Metrics**.
 
-    <img src='/img/guides/argoTableFilterDegraded.png' width='80%' border='1px' />
+5. Choose an icon (**optional**).
 
-4. Your table should now display all services belonging to your specified team, whose `Health` is `Degraded`:
+6. Click `Create`.
 
-    <img src='/img/guides/argoTableDegradedServices.png' width='90%' border='1px' />
+
+### Add widgets
+
+In your new dashboard, create the following widgets:
+
+<details>
+<summary><b>ArgoCD sync status overview (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Table**.
+
+2. Title: `ArgoCD sync status overview`.
+
+3. Choose an icon (**optional**).
+
+4. Select **Workload** as the **Blueprint**.
+
+5. Click on `Save`.
+
+6. Click on the three dots on the widget and select `Customize table`.
+
+7. Click on the `Group by any Column` icon and select **Sync Status**.
+
+8. Click on the `Manage properties` and add the following:
+   - Title
+   - Health Status
+   - Passed scorecard rules
+
+9. Click on the `Save` icon.
+
+   <img src="/img/guides/argocdSyncStatusOverview.png" width="90%" border="1px" />
+
+</details>
+
+
+<details>
+<summary><b>Health status distribution (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Pie Chart**.
+
+2. Title: `Application health status distribution`.
+
+3. Choose an icon (**optional**).
+
+4. Select **Workload** as the **Blueprint**.
+
+5. Choose `Health Status` as the **Breakdown by property**.
+
+6. Click on `Save`.
+
+   <img src="/img/guides/applicationHealthDistribution.png" width="50%" border="1px" />
+
+</details>
+
+
+<details>
+<summary><b>Resource health status overview (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Table**.
+
+2. Title: `Resource health status overview`.
+
+3. Choose an icon (**optional**).
+
+4. Select **Workload** as the **Blueprint**.
+
+5. Click on `Save`.
+
+6. Click on the three dots on the widget and select `Customize table`.
+
+7. Click on the `Group by any Column` icon and select **Health Status**.
+
+8. Click on the `Manage properties` and add the following:
+   - Title
+   - Sync Status
+   - Health and Synced
+
+8. Click on the `Save` icon.
+
+   <img src="/img/guides/resourceStatusOverview.png" width="90%" border="1px" />
+
+</details>
+
+These widgets will give you a comprehensive view of your ArgoCD runtime, making it easy to monitor application health, sync status, and deployment progress across your cluster.
 
 ## Possible daily routine integrations
 
