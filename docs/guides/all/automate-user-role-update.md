@@ -38,61 +38,47 @@ Follow these steps to add the automation:
 3. Copy and paste the following JSON into the editor.
 
 
-<details>
-<summary>Automation: Assign Admin Role (click to expand)</summary>
+    <details>
+    <summary>Automation: Assign Admin Role (click to expand)</summary>
 
-```json showLineNumbers
-{
-  "identifier": "newAdmin",
-  "title": "Make user an admin",
-  "trigger": {
-    "type": "automation",
-    "event": {
-      "type": "ENTITY_UPDATED",
-      "blueprintIdentifier": "_user"
-    },
-    "condition": {
-      "type": "JQ",
-      "expressions": [
-        # highlight-start
-        ".diff.before.team | index(\"admins\") == null",
-        ".diff.after.team | index(\"admins\") != null"
-        # highlight-end
-      ],
-      "combinator": "and"
+    ```json showLineNumbers
+    {
+      "identifier": "newAdmin",
+      "title": "Make user an admin",
+      "trigger": {
+        "type": "automation",
+        "event": {
+          "type": "ENTITY_UPDATED",
+          "blueprintIdentifier": "_user"
+        },
+        "condition": {
+          "type": "JQ",
+          "expressions": [
+            # highlight-start
+            ".diff.before.team | index(\"admins\") == null",
+            ".diff.after.team | index(\"admins\") != null"
+            # highlight-end
+          ],
+          "combinator": "and"
+        }
+      },
+      "invocationMethod": {
+        "type": "UPSERT_ENTITY",
+        "blueprintIdentifier": "_user",
+        "mapping": {
+          "identifier": "{{.event.context.entityIdentifier}}",
+          "properties": {
+            "port_role": "Admin"
+          }
+        }
+      },
+      "publish": true
     }
-  },
-  "invocationMethod": {
-    "type": "UPSERT_ENTITY",
-    "blueprintIdentifier": "_user",
-    "mapping": {
-      "identifier": "{{.event.context.entityIdentifier}}",
-      "properties": {
-        "port_role": "Admin"
-      }
-    }
-  },
-  "publish": true
-}
-```
+    ```
 
-</details>
+    </details>
         
 :::tip Change the group's name
 Make sure to change the `admins` group name in the script's highlighted lines if yours is named differently.
 :::
-
-## Let's test it!
-
-The process runs automatically when a user is added to the `admins` team. You can also test it manually to verify that it works as expected.
-
-1. Head over to your [Software catalog Users page](https://app.getport.io/services)
-
-2. Select a user whose role is either `Member` or `Moderator` and edit their `team` property.
-
-3. Choose the `admins` team.
-
-4. After a short while, you should see that the user's role changed to `Admin`.
-
-
 

@@ -1096,8 +1096,8 @@ export const availableGuides = [
     {
         title: "Automate admin role assignment",
         description: "Set up automated user role assignment when they are added to Admins group.",
-        tags: ["Automations", "Security", "RBAC"],
-        logos: ["Actions"],
+        tags: ["Security", "Automations", "RBAC"],
+        logos: ["Automations"],
         link: "/guides/all/automate-user-role-update",
     }
 ]
