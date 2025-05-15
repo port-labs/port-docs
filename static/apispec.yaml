@@ -16304,14 +16304,14 @@ paths:
           name: external_run_id
           description: The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>
           required: false
-        # - schema:
-        #     type: string
-        #     enum:
-        #       - v1
-        #       - v2
-        #   in: query
-        #   name: version
-        #   required: false
+        - schema:
+            type: string
+            enum:
+              - v1
+              - v2
+          in: query
+          name: version
+          required: false
       security:
         - bearer:
             - 'read:runs'
