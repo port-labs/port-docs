@@ -47,7 +47,7 @@ To add a secret to your portal:
     - `SERVICENOW_INSTANCE_URL` - The ServiceNow instance URL. For example https://example-id.service-now.com.
     - `SERVICENOW_API_TOKEN`: A base64 encoded string of your servicenow instance credentials generated as:
     
-        ```bash showLineNumbers
+        ```bash
         echo -n "your-instance-username:your-instance-password" | base64
         ```
 
