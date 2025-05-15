@@ -1094,6 +1094,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-github-dependabot-alerts",
     },
     {
+        title: "Automate admin role assignment",
+        description: "Set up automated user role assignment when they are added to Admins group.",
+        tags: ["Security", "Automations", "RBAC"],
+        logos: ["Automations"],
+        link: "/guides/all/automate-user-role-update",
+    },
+    {
         title: "Delete a ServiceNow incident",
         description: "Create a self-service action that deletes a ServiceNow incident",
         tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
