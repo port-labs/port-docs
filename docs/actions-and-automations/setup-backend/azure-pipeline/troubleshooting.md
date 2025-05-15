@@ -4,7 +4,7 @@ description: Common questions and solutions for Azure DevOps integration and pip
 sidebar_position: 99
 ---
 
-# Azure DevOps Troubleshooting
+# Azure DevOps troubleshooting
 
 This page contains common problems users face when integrating Azure DevOps (ADO) with Port, and how to solve them.
 
