@@ -46,6 +46,10 @@ To install Port's GitHub app, follow these steps:
 
 ## Configuration
 
+:::info Closed pull requests default behavior
+By default, the **Port GitHub App** does not fetch closed pull requests.  
+To enable this behavior, use the [closedPullRequests parameter](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/advanced/?parameter=closedPullRequests#using-advanced-configurations) in your configuration.
+:::
 
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 

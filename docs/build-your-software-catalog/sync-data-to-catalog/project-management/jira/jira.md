@@ -11,15 +11,9 @@ import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integra
 import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
 import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-import JiraUserBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_exporter_example_user_blueprint.mdx"
-import JiraUserConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_exporter_example_user_configuration.mdx"
 import JiraUserExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_user_example_response.mdx"
 import JiraUserEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_user_example_entity.mdx"
 import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_issue_example_entity.mdx"
-import JiraIssueExampleBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_example_issue_blueprint.mdx"
-import JiraIssueExampleConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_example_issue_configuration.mdx"
-import JiraTeamBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_exporter_example_team_blueprint.mdx"
-import JiraTeamConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_exporter_example_team_configuration.mdx"
 import JiraTeamExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_response.mdx"
 import JiraTeamEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_entity.mdx"
 
@@ -858,118 +852,7 @@ This is because the Jira API requires the use of an API token for authentication
 
 To view and test the integration's mapping against examples of the third-party API responses, use the **jq playground** in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
-Examples of blueprints and the relevant integration configurations:
-
-### Project
-
-<details>
-<summary><b>Project blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "jiraProject",
-  "title": "Jira Project",
-  "icon": "Jira",
-  "description": "A Jira project",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Project URL",
-        "type": "string",
-        "format": "url",
-        "description": "URL to the project in Jira"
-      },
-      "totalIssues": {
-        "title": "Total Issues",
-        "type": "number",
-        "description": "The total number of issues in the project"
-      }
-    }
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-The `project` kind has a selector property, `expand` that specifies additional fields to be included in the response. It accepts a comma-separated string that allows you to include more fields in the response data that can be used in the mapping configuration. Possible values are `description`, `lead`, `issueTypes`, `url`, `projectKeys`, `insight`.
-
-If not specified, it defaults to `"insight"`.
-
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: project
-    selector:
-      query: "true"
-      expand: "description,lead,issueTypes,url,projectKeys,insight"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"jiraProject"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
-            totalIssues: .insight.totalIssueCount
-```
-
-</details>
-
-### User
-
-<details>
-<summary><b>User blueprint (Click to expand)</b></summary>
-
-<JiraUserBlueprint/>
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-<JiraUserConfiguration/>
-
-</details>
-
-### Team
-
-<details>
-<summary><b>Team blueprint</b></summary>
-
-<JiraTeamBlueprint/>
-
-</details>
-
-<details>
-<summary><b>Integration configuration</b></summary>
-
-<JiraTeamConfiguration/>
-
-</details>
-
-### Issue
-
-<details>
-<summary><b>Issue blueprint (Click to expand)</b></summary>
-
-<JiraIssueExampleBlueprint/>
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-<JiraIssueExampleConfiguration/>
-
-</details>
+Additional examples of blueprints and the relevant integration configurations can be found on the jira [examples page](examples.md)
 
 
 ## Let's Test It
