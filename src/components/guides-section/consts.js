@@ -1101,6 +1101,13 @@ export const availableGuides = [
         link: "/guides/all/delete-servicenow-incident",
     },
     {
+        title: "Visualize your AWS storage and security configuration",
+        description: "Create a dashboard that visualizes your AWS storage and security configuration",
+        tags: ["Security", "AWS", "Dashboards"],
+        logos: ["AWS"],
+        link: "/guides/all/visualize-your-aws-storage-configuration",
+    },
+    {
         title: "Interact with ServiceNow records",
         description: "Create a self-service action that interacts with ServiceNow records",
         tags: ["Incident management", "ServiceNow", "Actions"],
