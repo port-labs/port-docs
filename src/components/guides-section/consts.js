@@ -1089,7 +1089,7 @@ export const availableGuides = [
     {
         title: "Visualize your GitHub dependency security alerts",
         description: "Create a dashboard that visualizes your GitHub dependency security alerts using dependabot alerts",
-        tags: ["Dependency management", "GitHub", "Dashboards"],
+        tags: ["Security", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-dependabot-alerts",
     },
@@ -1099,6 +1099,13 @@ export const availableGuides = [
         tags: ["Security", "Automations", "RBAC"],
         logos: ["Automations"],
         link: "/guides/all/automate-user-role-update",
+    },
+    {
+        title: "Delete a ServiceNow incident",
+        description: "Create a self-service action that deletes a ServiceNow incident",
+        tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/delete-servicenow-incident",
     }
 ]
 
