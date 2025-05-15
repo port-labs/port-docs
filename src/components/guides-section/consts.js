@@ -1113,6 +1113,13 @@ export const availableGuides = [
         tags: ["Security", "AWS", "Dashboards"],
         logos: ["AWS"],
         link: "/guides/all/visualize-your-aws-storage-configuration",
+    },
+    {
+        title: "Interact with ServiceNow records",
+        description: "Create a self-service action that interacts with ServiceNow records",
+        tags: ["Incident management", "ServiceNow", "Actions"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/interact-with-servicenow",
     }
 ]
 
