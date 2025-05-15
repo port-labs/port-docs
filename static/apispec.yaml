@@ -16285,6 +16285,12 @@ paths:
           description: The email of the user who initiated the action run.<br/>
           required: false
         - schema:
+            type: string
+          in: query
+          name: user_id
+          description: The id of the user who initiated the action run.<br/>
+          required: false
+        - schema:
             type: number
             minimum: 1
             maximum: 50
