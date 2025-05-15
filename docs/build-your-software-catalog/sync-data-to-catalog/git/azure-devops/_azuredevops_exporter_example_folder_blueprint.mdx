@@ -1,0 +1,45 @@
+<details>
+<summary>Repository blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "folder",
+  "title": "folder",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "url": {
+        "type": "string",
+        "title": "url"
+      },
+      "description": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "title": "description"
+      },
+      "project": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "title": "project"
+      }
+    },
+    "required": [
+      "description",
+      "project"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "repository",
+      "target": "azureDevopsRepository",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
