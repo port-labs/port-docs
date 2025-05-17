@@ -1,0 +1,35 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: folder
+    selector:
+      query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
+      folders: # Specify the repositories and folders to include under this relative path.
+        - path: src/ # Relative path to the folders within the repositories.
+          repos: # List of repositories to include folders from.
+            - name: sample_repo  
+              branch: main
+    port:
+      entity:
+        mappings:
+          identifier: .objectId
+          title: .path
+          url: .__repository.url
+          blueprint: '"folder"'
+          properties:
+            url: .__repository.project.url
+            description: .__repository.project.description
+            project: .__repository.project.name
+            repo: .__repository.name
+            path: .path
+            branch: .__branch
+          relations:
+            repository: >-
+              .__repository.project.name + "/" + .__repository.name | gsub(" ";
+              "")
+```
+
+</details>
