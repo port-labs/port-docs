@@ -194,7 +194,28 @@ Usage limits may change without prior notice. Once a limit is reached, you will 
 If you attempt to interact with an agent after reaching a limit, you will receive an error message indicating that the limit has been exceeded.
 :::
 
+## Common errors
 
+Here are some common errors you might encounter when working with AI agents and how to resolve them:
+
+<details>
+<summary><b>Missing Blueprints Error (Click to expand)</b></summary>
+
+**Error message:**  
+`{"missingBlueprints":["{{blueprint name}}","{{blueprint name}}"]}`
+
+**What it means:**  
+This error occurs when an AI agent tries to execute a self-service action that requires selecting entities from specific blueprints, but the agent doesn't have access to those blueprints.
+
+**How to fix:**  
+Add the missing blueprints listed in the error message to the agent's configuration.
+</details>
+
+## Security considerations
+
+AI agent interactions in Port are designed with security and privacy as a priority.
+
+For more information on security and data handling, see our [AI agents overview](/ai-agents/overview#security-and-data-handling). 
 
 ## Troubleshooting & FAQ
 
@@ -268,10 +289,4 @@ The AI invocation entity contains the `feedback` property where you can mark is 
 
 We store data from your interactions with AI agents for up to 30 days. We use this data to ensure agents function correctly and to identify and prevent problematic or inappropriate AI behavior. 
 We limit this data storage strictly to these purposes. You can contact us to opt-out of this data storage.
-</details>
-
-## Security considerations
-
-AI agent interactions in Port are designed with security and privacy as a priority.
-
-For more information on security and data handling, see our [AI agents overview](/ai-agents/overview#security-and-data-handling). 
+</details> 
