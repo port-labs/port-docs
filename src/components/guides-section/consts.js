@@ -1092,6 +1092,34 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-dependabot-alerts",
+    },
+    {
+        title: "Automate admin role assignment",
+        description: "Set up automated user role assignment when they are added to Admins group.",
+        tags: ["Security", "Automations", "RBAC"],
+        logos: ["Automations"],
+        link: "/guides/all/automate-user-role-update",
+    },
+    {
+        title: "Delete a ServiceNow incident",
+        description: "Create a self-service action that deletes a ServiceNow incident",
+        tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/delete-servicenow-incident",
+    },
+    {
+        title: "Visualize your AWS storage and security configuration",
+        description: "Create a dashboard that visualizes your AWS storage and security configuration",
+        tags: ["Security", "AWS", "Dashboards"],
+        logos: ["AWS"],
+        link: "/guides/all/visualize-your-aws-storage-configuration",
+    },
+    {
+        title: "Interact with ServiceNow records",
+        description: "Create a self-service action that interacts with ServiceNow records",
+        tags: ["Incident management", "ServiceNow", "Actions"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/interact-with-servicenow",
     }
 ]
 
