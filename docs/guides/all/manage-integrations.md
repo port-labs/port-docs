@@ -188,9 +188,9 @@ The `Integration Kind Metrics` blueprint tracks detailed metrics for specific in
     "properties": {
       "kind": ".body.kind",
       "duration": ".body.metrics.phase.resync.duration_seconds|round",
-      "raw_objects": ".body.metrics.phase.extract.object_count",
-      "transformed_objects": ".body.metrics.phase.transform.object_count",
-      "entities_ingested": ".body.metrics.phase.load.object_count",
+      "raw_objects": ".body.metrics.phase.extract.object_count_type.raw_extracted.object_count",
+      "transformed_objects": ".body.metrics.phase.transform.object_count_type.transformed.object_count",
+      "entities_ingested": ".body.metrics.phase.load.object_count_type.loaded.object_count",
       "last_completion_status": "if .body.metrics.phase.resync.success == 1 then \"SUCCESS\" else \"FAILED\" end",
       "last_sync_at": "now | todateiso8601"
     },
