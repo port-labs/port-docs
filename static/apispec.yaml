@@ -16285,6 +16285,12 @@ paths:
           description: The email of the user who initiated the action run.<br/>
           required: false
         - schema:
+            type: string
+          in: query
+          name: user_id
+          description: The id of the user who initiated the action run.<br/>
+          required: false
+        - schema:
             type: number
             minimum: 1
             maximum: 50
@@ -16298,14 +16304,14 @@ paths:
           name: external_run_id
           description: The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>
           required: false
-        # - schema:
-        #     type: string
-        #     enum:
-        #       - v1
-        #       - v2
-        #   in: query
-        #   name: version
-        #   required: false
+        - schema:
+            type: string
+            enum:
+              - v1
+              - v2
+          in: query
+          name: version
+          required: false
       security:
         - bearer:
             - 'read:runs'
