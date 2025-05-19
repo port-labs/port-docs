@@ -7172,62 +7172,115 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                func:
-                  type: string
-                  enum:
-                    - average
-                    - sum
-                    - min
-                    - max
-                    - median
-                    - last
-                blueprint:
-                  type: string
-                measureTimeBy:
-                  type: string
-                timeRange:
-                  type: object
-                  properties:
-                    preset:
-                      type: string
-                      enum:
-                        - today
-                        - yesterday
-                        - lastDay
-                        - lastWeek
-                        - last2Weeks
-                        - lastMonth
-                        - last3Months
-                        - last6Months
-                        - last12Months
-                    timeZone:
-                      type: string
-                  required:
-                    - preset
-                  additionalProperties: false
-                timeInterval:
-                  type: string
-                  enum:
-                    - hour
-                    - day
-                    - isoWeek
-                    - month
-                properties:
-                  type: array
-                  items:
-                    type: string
-                query:
-                  $ref: "#/components/schemas/def-1"
-              additionalProperties: false
               required:
-                - func
-                - query
                 - blueprint
                 - timeRange
                 - timeInterval
-                - properties
+                - query
                 - measureTimeBy
+                - aggregationType
+              oneOf:
+                - properties:
+                    blueprint:
+                      type: string
+                    timeRange:
+                      type: object
+                      properties:
+                        preset:
+                          type: string
+                          enum:
+                            - today
+                            - yesterday
+                            - lastDay
+                            - lastWeek
+                            - last2Weeks
+                            - lastMonth
+                            - last3Months
+                            - last6Months
+                            - last12Months
+                        timeZone:
+                          type: string
+                      required:
+                        - preset
+                      additionalProperties: false
+                    timeInterval:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - isoWeek
+                        - month
+                    query:
+                      $ref: "#/components/schemas/def-1"
+                    measureTimeBy:
+                      type: string
+                    aggregationType:
+                      enum:
+                        - aggregatePropertiesValues
+                    func:
+                      type: string
+                      enum:
+                        - average
+                        - sum
+                        - min
+                        - max
+                        - median
+                        - last
+                    properties:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                    - func
+                    - properties
+                  additionalProperties: false
+                - properties:
+                    blueprint:
+                      type: string
+                    timeRange:
+                      type: object
+                      properties:
+                        preset:
+                          type: string
+                          enum:
+                            - today
+                            - yesterday
+                            - lastDay
+                            - lastWeek
+                            - last2Weeks
+                            - lastMonth
+                            - last3Months
+                            - last6Months
+                            - last12Months
+                        timeZone:
+                          type: string
+                      required:
+                        - preset
+                      additionalProperties: false
+                    timeInterval:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - isoWeek
+                        - month
+                    query:
+                      $ref: "#/components/schemas/def-1"
+                    measureTimeBy:
+                      type: string
+                    aggregationType:
+                      enum:
+                        - countEntities
+                    func:
+                      type: string
+                      enum:
+                        - count
+                        - average
+                    breakdownProperty:
+                      type: string
+                  required:
+                    - func
+                  additionalProperties: false
         required: true
       security:
         - bearer:
@@ -18431,6 +18484,11 @@ paths:
             type: string
           in: query
           name: user_email
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: user_id
           required: false
         - schema:
             type: number

@@ -4818,6 +4818,220 @@ components:
         - rules
       additionalProperties: false
       title: Additional query
+    def-8:
+      type: object
+      properties:
+        combinator:
+          enum:
+            - and
+            - or
+        rules:
+          type: array
+          items:
+            anyOf:
+              - type: object
+                title: Date rule
+                properties:
+                  property:
+                    type: string
+                  operator:
+                    enum:
+                      - between
+                      - notBetween
+                      - =
+                  value:
+                    type: object
+                    oneOf:
+                      - type: object
+                        title: Date range
+                        properties:
+                          from:
+                            type: string
+                            format: date-time
+                          to:
+                            type: string
+                            format: date-time
+                        required:
+                          - from
+                          - to
+                      - type: object
+                        title: Date preset
+                        properties:
+                          preset:
+                            type: string
+                            enum:
+                              - today
+                              - tomorrow
+                              - yesterday
+                              - lastWeek
+                              - last2Weeks
+                              - lastMonth
+                              - last3Months
+                              - last6Months
+                              - last12Months
+                        required:
+                          - preset
+                required:
+                  - property
+                  - operator
+                  - value
+                additionalProperties: false
+              - type: object
+                title: Empty rule
+                oneOf:
+                  - type : object
+                    title: Empty rule
+                    properties:
+                        operator:
+                          enum:
+                            - isEmpty
+                            - isNotEmpty
+                        property:
+                          type: string
+                        required:
+                          - operator
+                          - property
+                        additionalProperties: false
+              - type: object
+                title: Numeric rule
+                properties:
+                  property:
+                    type: string
+                  operator:
+                    enum:
+                      - ">"
+                      - ">="
+                      - <
+                      - <=
+                  value:
+                    anyOf:
+                      - type: number
+                        title: number
+                      - type: string
+                        title: date-time
+                        format: date-time
+                required:
+                  - property
+                  - operator
+                  - value
+                additionalProperties: false
+              - type: object
+                title: String rule
+                oneOf:
+                  - type: object
+                    title: String rule
+                    properties:
+                      property:
+                        type: string
+                      operator:
+                        enum:
+                          - =
+                          - "!="
+                          - containsAny
+                          - contains
+                          - doesNotContains
+                          - beginsWith
+                          - doesNotBeginsWith
+                          - endsWith
+                          - doesNotEndsWith
+                          - in
+                          - notIn
+                      value:
+                        anyOf:
+                          - type: "null"
+                            title: 'null'
+                          - type: string
+                            title: string
+                          - type: number
+                            title: number
+                          - type: boolean
+                            title: boolean
+                          - type: array
+                            title: array
+                            items:
+                              type: string
+                          - type: string
+                            title: date-time
+                            format: date-time
+                    additionalProperties: false
+                    required:
+                      - property
+                      - operator
+                      - value
+              - type: object
+                title: Relation rule
+                properties:
+                  operator:
+                    enum:
+                      - relatedTo
+                  blueprint:
+                    type: string
+                  value:
+                    anyOf:
+                      - type: string
+                        title: string
+                      - type: array
+                        title: array
+                        items:
+                          type: string
+                  direction:
+                    enum:
+                      - upstream
+                      - downstream
+                  required:
+                    type: boolean
+                additionalProperties: false
+                required:
+                  - operator
+                  - value
+                  - blueprint
+              - type: object
+                title: Property schema rule  
+                properties:
+                  propertySchema:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      format:
+                        type: string
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                          format:
+                            type: string
+                        required:
+                          - type
+                    required:
+                      - type
+                    additionalProperties: false
+                  operator:
+                    enum:
+                      - =
+                      - "!="
+                      - contains
+                  value:
+                    anyOf:
+                      - type: 'null'
+                        title: 'null'
+                      - type: string
+                        title: string
+                      - type: number
+                        title: number
+                      - type: boolean
+                        title: boolean
+                required:
+                  - operator
+                  - propertySchema
+                additionalProperties: false
+              - $ref: "#/components/schemas/def-8"
+      required:
+        - combinator
+        - rules
+      additionalProperties: false
+      title: /schemas/entitiesQuery
 paths:
   '/v1/blueprints/{blueprint_identifier}/permissions':
     get:
@@ -6929,66 +7143,127 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                func:
-                  type: string
-                  enum:
-                    - average
-                    - sum
-                    - min
-                    - max
-                    - median
-                    - last
-                blueprint:
-                  type: string
-                  description: The blueprint whose entities you wish to aggregate.
-                measureTimeBy:
-                  type: string
-                  description: A property of type `datetime` by which the aggregation will be calculated.
-                timeRange:
-                  type: object
-                  properties:
-                    preset:
-                      type: string
-                      enum:
-                        - today
-                        - yesterday
-                        - lastDay
-                        - lastWeek
-                        - last2Weeks
-                        - lastMonth
-                        - last3Months
-                        - last6Months
-                        - last12Months
-                    timeZone:
-                      type: string
-                  required:
-                    - preset
-                  additionalProperties: false
-                timeInterval:
-                  type: string
-                  enum:
-                    - hour
-                    - day
-                    - isoWeek
-                    - month
-                properties:
-                  type: array
-                  description: A list of properties of type `number` on which the aggregation will be calculated.
-                  items:
-                    type: string
-                query:
-                  $ref: "#/components/schemas/def-1"
-                  description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.
-              additionalProperties: false
               required:
-                - func
-                - query
                 - blueprint
                 - timeRange
                 - timeInterval
-                - properties
+                - query
                 - measureTimeBy
+                - aggregationType
+              oneOf:
+                - type: object
+                  title: Aggregate property
+                  properties:
+                    blueprint:
+                      type: string
+                      description: The blueprint whose entities you wish to aggregate.
+                    timeRange:
+                      type: object
+                      properties:
+                        preset:
+                          type: string
+                          enum:
+                            - today
+                            - yesterday
+                            - lastDay
+                            - lastWeek
+                            - last2Weeks
+                            - lastMonth
+                            - last3Months
+                            - last6Months
+                            - last12Months
+                        timeZone:
+                          type: string
+                      required:
+                        - preset
+                      additionalProperties: false
+                    timeInterval:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - isoWeek
+                        - month
+                    query:
+                      $ref: "#/components/schemas/def-8"
+                      description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.
+                    measureTimeBy:
+                      type: string
+                      description: A property of type `datetime` by which the aggregation will be calculated.
+                    aggregationType:
+                      enum:
+                        - aggregatePropertiesValues
+                    func:
+                      type: string
+                      enum:
+                        - average
+                        - sum
+                        - min
+                        - max
+                        - median
+                        - last
+                    properties:
+                      type: array
+                      description: A list of properties of type `number` on which the aggregation will be calculated.
+                      items:
+                        type: string
+                  required:
+                    - func
+                    - properties
+                  additionalProperties: false
+                - type: object
+                  title: Count entities
+                  properties:
+                    blueprint:
+                      type: string
+                      description: The blueprint whose entities you wish to aggregate.
+                    timeRange:
+                      type: object
+                      properties:
+                        preset:
+                          type: string
+                          enum:
+                            - today
+                            - yesterday
+                            - lastDay
+                            - lastWeek
+                            - last2Weeks
+                            - lastMonth
+                            - last3Months
+                            - last6Months
+                            - last12Months
+                        timeZone:
+                          type: string
+                      required:
+                        - preset
+                      additionalProperties: false
+                    timeInterval:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - isoWeek
+                        - month
+                    query:
+                      $ref: "#/components/schemas/def-8"
+                      description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.
+                    measureTimeBy:
+                      type: string
+                      description: A property of type `datetime` by which the aggregation will be calculated.
+                    aggregationType:
+                      enum:
+                        - countEntities
+                    func:
+                      type: string
+                      enum:
+                        - count
+                        - average
+                    breakdownProperty:
+                      type: string
+                      description: A blueprint's property by which you want to break down the data.
+                  required:
+                    - func
+                  additionalProperties: false
         required: true
       security:
         - bearer:
@@ -16010,6 +16285,12 @@ paths:
           description: The email of the user who initiated the action run.<br/>
           required: false
         - schema:
+            type: string
+          in: query
+          name: user_id
+          description: The id of the user who initiated the action run.<br/>
+          required: false
+        - schema:
             type: number
             minimum: 1
             maximum: 50
@@ -16023,14 +16304,14 @@ paths:
           name: external_run_id
           description: The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>
           required: false
-        # - schema:
-        #     type: string
-        #     enum:
-        #       - v1
-        #       - v2
-        #   in: query
-        #   name: version
-        #   required: false
+        - schema:
+            type: string
+            enum:
+              - v1
+              - v2
+          in: query
+          name: version
+          required: false
       security:
         - bearer:
             - 'read:runs'

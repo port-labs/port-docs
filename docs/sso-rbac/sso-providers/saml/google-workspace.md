@@ -112,12 +112,13 @@ Press `Continue`
 
 <br/>
 
-6. Create the following mappings:
+6. Create the following mappings (email_verified needs to be a constant for all users, with the value `true` ):
 
 _Google Directory attributes_:
 
 - **`Primary email`** -> `email`
 - **`First name`** -> `name`
+- **`email_verified`** -> `email_verified`
 
 _Google membership_ (optional): This mapping is only relevant if you wish to pass groups to Port.
 
