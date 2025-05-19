@@ -23,7 +23,7 @@ This guide assumes the following:
 
 ## Set up data model
 
-When installing the GitHub app in Port, the `Repository` blueprint is created by default.  
+When installing Port's GitHub app, the `Repository` blueprint is created by default.  
 However, the `GitHub User` and `GitHub Team` blueprints are not created automatically, so we will need to create them manually.
 
 ### Create the Github user blueprint
