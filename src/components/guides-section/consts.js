@@ -1120,6 +1120,13 @@ export const availableGuides = [
         tags: ["Incident management", "ServiceNow", "Actions"],
         logos: ["ServiceNow"],
         link: "/guides/all/interact-with-servicenow",
+    },
+    {
+        title: "Visualize your GitHub identity and access management",
+        description: "Create a dashboard that visualizes your GitHub identity and access management",
+        tags: ["Security", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-your-github-identity-and-access-management",
     }
 ]
 
