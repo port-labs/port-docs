@@ -8,8 +8,12 @@ import TabItem from "@theme/TabItem"
 
 # Set up deployments using GitLab merge requests or jobs
 
-This guide adapts the [Create & track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal) guide by demonstrating how to define deployments in Port using GitLab's Merge Requests (MRs) and Jobs.
-By the end of this guide, you’ll be able to leverage DORA metrics using GitLab and gain accurate deployment insights in your portal. 
+The [Create & track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal) guide walks you through the installation of the DORA metrics experience in Port, using GitHub as the default Git provider.
+
+This guide assumes you have implemented the aforementioned guide, and shows how to adapt it for GitLab users. 
+
+It will show how to define deployments in Port using GitLab's Merge Requests (MRs) and Jobs.  
+By the end of this guide, you will be able to leverage DORA metrics using GitLab and gain accurate deployment insights in your portal. 
 
 ## Prerequisites
 
