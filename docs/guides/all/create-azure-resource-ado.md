@@ -6,6 +6,7 @@ description: Follow this guide to create Azure resources for ADO in Port, ensuri
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import AzureDevopsTroubleshootingLink from '/docs/generalTemplates/azure-devops/_azure_devops_troubleshooting_link.mdx'
 
 # Create Azure Resource with Terraform
 
@@ -141,8 +142,7 @@ Follow these steps to get started:
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false 
 }
 ```
 
@@ -394,3 +394,5 @@ jobs:
 </details>
 
 6. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+
+<AzureDevopsTroubleshootingLink />

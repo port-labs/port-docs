@@ -8,10 +8,17 @@ import PortYmlStructure from '../../\_port_yml_gitops_structure_template.md'
 import BasicFileProperties from '../../\_basic_file_properties_template.md'
 import RelativeFileProperties from '../../\_relative_file_properties_template.md'
 import GitOpsPushEvent from '../../\_git_gitops_push_events_explanation.mdx'
+import PortYmlIngestionPattern from '../../\_port_yml_ingestion_pattern_template.md'
 
 # GitOps
 
 Port's Bitbucket integration makes it possible to manage Port entities with a GitOps approach, making your code repositories into the source of truth for the various infrastructure assets you want to manage.
+
+:::info Bitbucket Server (Self-Hosted)
+This documentation covers GitOps for **Bitbucket Cloud**. 
+For information about GitOps with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server GitOps documentation](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/gitops.md).
+:::
+
 
 ## 💡 Bitbucket GitOps common use cases
 
@@ -103,6 +110,12 @@ Since both of the valid `port.yml` formats follow the same structure, the follow
 ## Examples
 
 Check out the [example repository](https://github.com/port-labs/github-app-setup-example) for a microservice blueprint and a matching `port.yml` file which specifies a microservice entity.
+
+## Capabilities
+
+### Port.yml ingestion pattern
+
+<PortYmlIngestionPattern provider="Bitbucket" />
 
 ## Advanced
 

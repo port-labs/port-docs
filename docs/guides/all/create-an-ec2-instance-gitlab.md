@@ -824,8 +824,7 @@ Before we continue, add some entities onto the AMI blueprint. The **identifier**
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -852,8 +851,6 @@ Before we continue, add some entities onto the AMI blueprint. The **identifier**
 
 4. Click on `Execute`
 5. Wait for the EC2 Instance to be created in AWS
-
-Congrats 🎉 You've created an EC2 Instance in Port 🔥
 
 ## Next Steps
 

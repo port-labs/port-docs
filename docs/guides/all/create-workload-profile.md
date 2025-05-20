@@ -230,8 +230,6 @@ Now you should see the `Create Workload Profile` action in the self-service page
 5. Click on `Execute`
 6. Done! wait for the workload profile to be created in Humanitec
 
-Congrats 🎉 You've created a workload profile in Humanitec from Port 🔥
-
 ## More Self Service Humanitec Actions Examples
 - [Create Humanitec application](/guides/all/create-humanitec-application.md)
 - [Deploy Humanitec application](/guides/all/deploy-humanitec-application.md)

@@ -7,6 +7,17 @@ import BitbucketResources from './\_bitbucket_exporter_supported_resources.mdx'
 
 Port's Bitbucket integration allows you to model Bitbucket resources in your software catalog and ingest data into them.
 
+:::warning Deprecation Notice
+This app will be deprecated in the future and support for the app will be discontinued soon.
+
+To integrate Port with Bitbucket Cloud, we recommend using the [Bitbucket Cloud integration](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-cloud/).
+:::
+
+:::info Bitbucket Server (Self-Hosted)
+This documentation covers Port's integration with **Bitbucket Cloud**. 
+For information about integrating with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server integration documentation](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/bitbucket-server.md).
+:::
+
 
 ## Overview
 
@@ -102,7 +113,7 @@ The app allows you to ingest a variety of objects resources provided by the Bitb
 
 The Bitbucket app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-After installing the app, Port will automatically create a `service` blueprint in your catalog (representing a BitBucket repository), along with a default YAML configuration file that defines where the data fetched from BitBucket's API should go in the blueprint.
+After installing the app, Port will automatically create a `repository` blueprint in your catalog (representing a BitBucket repository), along with a default YAML configuration file that defines where the data fetched from BitBucket's API should go in the blueprint.
 
 
 

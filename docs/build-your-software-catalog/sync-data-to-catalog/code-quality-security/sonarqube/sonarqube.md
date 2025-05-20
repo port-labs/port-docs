@@ -26,6 +26,19 @@ This integration allows you to:
 - Map and organize your desired SonarQube resources and their metadata in Port (see supported resources below).
 - Watch for SonarQube object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
+## BaseUrl & Webhook Configuration
+
+:::warning AppHost deprecation
+**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
+:::
+
+
+The `baseUrl` parameter enables real-time updates from Datadog to Port. If not provided:
+- The integration will still function normally
+- You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
+- Manual resyncs can be triggered via Port's UI
+
+The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events
 
 ### Supported Resources
 
@@ -52,7 +65,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="SonarQube"/>
 
 </TabItem>
 
@@ -170,8 +183,9 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                |                                  | ✅        |
 | `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                   | ✅        |
 | `integration.config.sonarIsOnPremise`    | A boolean value indicating whether the SonarQube instance is on-premise. The default value is `false`                                                                                        | false                            | ✅        |
-| `integration.config.appHost`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com | ✅        |
+| `baseUrl`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com | ❌         |
 | `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-instance.com    | ❌        |
+| `integration.secrets.webhookSecret`    | A secret token used to secure webhooks between SonarQube and the integration.                                                                  |         | ❌ |
 
 <HelmParameters />
 
@@ -811,15 +825,15 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 ## Migration from SonarQube integration version `<=0.1.121`
-Versions prior to `v0.1.115` used SonarQube's internal API for components to retrieve projects. However, this API apart from being internal and subject to change without notification by SonarQube is also inconsistent and will intermittently return an empty response causing previously ingested entities to be deleted. This deletion is because Ocean and therefore Port assumes these entities no longer exist.
+Versions prior to `v0.1.115` used SonarQube's internal API for components to retrieve projects. Since this API is internal and subject to change, it is not globally available and not recommended for new users.
 
-To remedy this, we have switched to the globally available API for projects instead for new users of the SonarQube integration. This comes with a few changes below
+To remedy this, we have switched to the globally available API for projects instead for new users of the SonarQube integration. This comes with a few changes that are listed below.
 
 ### Changes to the SonarQube integration
 
 - The `project` kind is deprecated in support for the `projects_ga` kind. *Deprecation effective: 2024-02-23*
 
-- Since `tags` property is only available with the internal API, the tags property will read `null` for existing users.
+- Since the `tags` property is only available with the internal API, it will read `null` for existing users of the SonarQube integration.
 
 - Minor but backwards compatible changes have been made to the `sonarQubeProject` blueprint:
 

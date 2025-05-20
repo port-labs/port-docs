@@ -11,7 +11,7 @@ This guide will demonstrate how to ingest security issues from `.sarif` files an
 
 ## Prerequisites
 
-- Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
+- Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - The `Service` blueprint should be created during the onboarding process.
 - Ensure you have [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) or [Gitlab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) installed and configured in your environment.
 
@@ -34,52 +34,52 @@ Add the `Security Issue` blueprint:
 
 ```json showLineNumbers
 {
-      "identifier": "security_issue",
-      "description": "A security issue parsed from SARIF format",
-      "title": "Security Issue",
-      "icon": "Alert",
-      "schema": {
-        "properties": {
-          "rule_name": {
-            "type": "string",
-            "title": "Rule Name"
-          },
-          "rule_desc": {
-            "type": "string",
-            "title": "Rule Description"
-          },
-          "location": {
-            "type": "string",
-            "title": "Location"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          },
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "ai_summary": {
-            "type": "string",
-            "title": "ai_summary",
-            "format": "markdown"
-          }
-        },
-        "required": []
+  "identifier": "security_issue",
+  "description": "A security issue parsed from SARIF format",
+  "title": "Security Issue",
+  "icon": "Alert",
+  "schema": {
+    "properties": {
+      "rule_name": {
+        "type": "string",
+        "title": "Rule Name"
       },
-      "mirrorProperties": {},
-      "calculationProperties": {},
-      "aggregationProperties": {},
-      "relations": {
-        "issue_service": {
-          "title": "issue service",
-          "description": "The service this issue was found in",
-          "target": "service",
-          "required": false,
-          "many": false
-        }
+      "rule_desc": {
+        "type": "string",
+        "title": "Rule Description"
+      },
+      "location": {
+        "type": "string",
+        "title": "Location"
+      },
+      "message": {
+        "type": "string",
+        "title": "Message"
+      },
+      "title": {
+        "type": "string",
+        "title": "Title"
+      },
+      "ai_summary": {
+        "type": "string",
+        "title": "ai_summary",
+        "format": "markdown"
       }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "issue_service": {
+      "title": "issue service",
+      "description": "The service this issue was found in",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 

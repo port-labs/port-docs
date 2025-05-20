@@ -430,8 +430,7 @@ Create a new self service action using the following JSON configuration.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -446,8 +445,6 @@ Now you should see the `Restart Application` action in the self-service page. �
 4. Select the application you want to sync. The `application_name` field should auto-fill after this, if not, manually enter the application name.
 5. Click on `Execute`
 6. Done! wait for the applicatioin flag's status to be restarted in Argo CD.
-
-Congrats 🎉 You've restarted your first Argo CD Application from Port 🔥
 
 ## More Self Service Argo CD Actions Examples
 - [Rollback Argo CD Deployment](/guides/all/rollback-argocd-deployment) using Port's self-service actions.

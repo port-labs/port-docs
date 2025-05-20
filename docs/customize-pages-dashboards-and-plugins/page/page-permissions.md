@@ -8,142 +8,20 @@ import TabItem from "@theme/TabItem"
 
 # Page permissions
 
-Pages have 4 regular CRUD permissions: `create`, `read`, `update` and `delete`.
+Page permissions are used to control access to [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page) and [dashboard pages](/customize-pages-dashboards-and-plugins/page/dashboard-page) in the software catalog.
 
-Currently only `read` permission can be modified.
-
-## Get page permissions
-
-Any user can get the permissions of a specific page, using any of the following methods:
-
-<Tabs groupId="view-permissions" queryString values={[
-{label: "UI", value: "ui"},
-{label: "API", value: "api"},
-{label: "Pulumi", value: "pulumi"}
-]}>
-
-<TabItem value="ui">
-
-In your software catalog, choose the page for which you would like to view permissions, then click on `Permissions`:
-
-<img src='/img/software-catalog/pages/viewPagePermissions.gif' width='70%' />
-
-</TabItem>
-
-<TabItem value="api">
-
-:::info
-
-- Remember that an access token is needed to make API requests, refer back to [Getting an API token](/build-your-software-catalog/custom-integration/api/api.md#get-api-token) if you need to generate a new one.
-- Currently in order to see the page identifiers you can request all pages by making a  
-  GET request to `https://api.getport.io/v1/pages`
-
-:::
-
-Make an **HTTP GET** request to the URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
-
-The response will contain the roles and users that are allowed to read (view) the requested page:
-
-```json showLineNumbers
-{
-  "read": {
-    "roles": ["Admin", "Member"],
-    "users": ["exampleUser1@example.com", "exampleUser2@example.com"],
-    "teams": ["team1", "team2"]
-  }
-}
-```
-
-This response body indicates that those roles, users and teams have permissions to read the page.
-In addition, every role, user and team which does not appear in this request body does not have permission to view the page.
-
-</TabItem>
-
-<TabItem value="pulumi">
-
-:::info Port Pulumi
-See all the supported variables in the Port Pulumi [documentation](https://www.pulumi.com/registry/packages/port/api-docs/pagepermissions/#look-up)
-:::
-
-<Tabs groupId="pulumi-view-permissions" queryString values={[
-{label: "Python", value: "python"},
-{label: "Typescript", value: "typescript"},
-{label: "Golang", value: "go"}
-]}>
-
-<TabItem value="python">
-
-```python showLineNumbers
-from port_pulumi import Page, PagePermissions
-
-# get an existing object
-
-existing_permissions = PagePermissions.get(
-"microservices_permissions", // The unique name of the resulting resource.
-"microservice_blueprint_page" // The unique provider ID of the resource to lookup.
-)
-
-# Access properties of the retrieved resource
-
-print(existing_permissions.read)
-
-````
-
-</TabItem>
-
-<TabItem value="typescript">
-
-```typescript showLineNumbers
-import * as port from "@port-labs/port";
-
-// ... other code
-const portPermissionsId = "microservice_blueprint_page"
-
-const existingPermissions = port.PagePermissions.get("my-permissions", portPermissionsId);
-
-// Access properties of the retrieved resource
-console.log(existingPermissions.read);
-````
-
-</TabItem>
-
-<TabItem value="go">
-```go showLineNumbers
-import (
-"fmt"
-"github.com/port-labs/pulumi-port/sdk/go/port"
-)
-
-// ... other code
-
-// Retrieve existing permissions
-existingPermissions, err := port.PagePermissions.Get(
-"my-permissions", // The unique name of the resulting resource.
-"microservice_blueprint_page" // The unique provider ID of the resource to lookup.
-)
-if err != nil {
-// Handle error
-}
-
-// Access properties of the retrieved resource
-fmt.Println(existingPermissions.Read)
-
-````
-</TabItem>
-
-</Tabs>
-
-</TabItem>
-
-</Tabs>
-
-:::note
-Only page permissions of software catalog pages can be requested. For example, the permissions for the Builder page and the audit log page cannot be changed.
-:::
+Using these permissions, you can control which users and/or teams can **view** or **edit** a specific page.
 
 ## Update page permissions
 
-Only users with the `admin` role can update the permissions of a catalog page, using any of the following methods:
+Only users with the `admin` role can update the permissions of a catalog page.
+
+Admins can:
+- Define which users and/or teams can **view** the page.
+- Define which users and/or teams can **edit** the page.
+- Allow all users in the organization to **view** the page.
+
+Update page permissions using one of the following methods:
 
 <Tabs groupId="edit-permissions" queryString values={[
 {label: "UI", value: "ui"},
@@ -154,10 +32,11 @@ Only users with the `admin` role can update the permissions of a catalog page, u
 
 <TabItem value="ui">
 
-In your software catalog, choose the page for which you would like to edit permissions, then click on `Permissions`.
-Choose the user/s or team/s that you would like to give permissions to, then click on `Done`.
+Click on the permissions <img src="/img/icons/permissions.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner of the page.
 
-<img src='/img/software-catalog/pages/editPagePermissions.gif' width='70%' />
+Choose the user/s or team/s that you would like to give `view` or `edit` permissions to, then click on `Done`.
+
+To allow all users in the organization to view the page, use the toggle in the bottom of the permissions modal.
 
 </TabItem>
 
@@ -167,7 +46,7 @@ To update page permissions, you will need to specify the roles, teams or users t
 
 To perform an update, make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
 
-Here is an example request body:
+Here is an example request body that updates the permissions to allow all users in the organization to **view** the page:
 
 ```json showLineNumbers
 {
@@ -177,13 +56,24 @@ Here is an example request body:
 }
 ````
 
-:::tip
+Here is another example that updates the permissions to allow a specific user and team to **edit** the page:
+
+```json showLineNumbers
+{
+  "update": {
+    "users": ["user1@example.com"],
+    "teams": ["team1"]
+  }
+}
+````
+
+:::tip Page permissions API
 
 The `PATCH` API will perform updates only to keys that are specified in the request body. Be sure to include only the relevant keys in the request body (users, roles or teams)
 
 If you do not specify a specific key (for example `users` in the request, user permissions to the specific page will remain unchanged).
 
-When making changes to permissions, any role, user or team that does not appear in the corresponding key in the request body will lose permissions to the page (this is how you remove permissions to a page).
+When making changes to permissions, any role, user or team that does not appear in the corresponding key in the request body will lose permissions to the page (this is how you remove permissions).
 
 :::
 
@@ -360,9 +250,18 @@ Locking the page affects widgets that have Filter and/or Hide functionality.
 See the section below for the different methods to lock a page:
 
 <Tabs values={[
+{label: "UI", value: "ui"},
 {label: "API", value: "api"},
-{label: "UI", value: "ui"}
 ]}>
+
+<TabItem value="ui">
+
+Users that have permissions to update a page (usually users with the `admin` role) can lock the page's widgets.
+
+1. Save the page in the desired view by clicking the `save page` button.
+2. Open the page menu and click on `lock page`.
+
+</TabItem>
 
 <TabItem value="api">
 
@@ -378,24 +277,10 @@ with the following body:
 
 </TabItem>
 
-<TabItem value="ui">
-
-Users that have permissions to update a page (Usually users with the admin role) can lock the page's widgets.
-
-1. Save the page in the desired view by clicking the `save page` button;
-2. Open the page menu and click on `lock page`.
-
-</TabItem>
-
 </Tabs>
 
-:::note
-A locked page will have the `Lock` icon next to the page's title.
+A locked page will have the `Lock` icon next to the page's title:
 
-<center>
+<img src="/img/software-catalog/pages/LockedPage.png" border='1px' width='30%' />
 
-![Locked Page](../../../static/img/software-catalog/pages/LockedPage.png)
 
-</center>
-
-:::

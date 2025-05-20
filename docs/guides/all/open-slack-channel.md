@@ -404,9 +404,8 @@ on:
         type: array
         required: false
       port_context:
-        description: Details of the action and general port_context (blueprint, run ID, etc...).
+        description: Details of the action and general port_context (blueprint, run ID, entity identifier from Port, etc...).
         required: true
-        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   open-slack-channel:
@@ -664,8 +663,7 @@ Create a new self service action using the following JSON configuration.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -680,5 +678,3 @@ Now you should see the `Open Slack Channel` action in the self-service page. �
 3. Enter your preferred details for `channel_name` and optionally add `members`. You can toggle the `is_private` flag to make the channel private.
 6. Click on `Execute`
 7. Done! wait for the channel to be created in slack.
-
-Congrats 🎉 You've successfully opened a slack channel in Port 🔥

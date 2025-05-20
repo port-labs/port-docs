@@ -12,7 +12,7 @@ By using Port's generic webhook integration you can ingest data into the softwar
 
 <center>
 
-<Image img={WebhookArchitecture}></Image>
+<Image img="/img/build-your-software-catalog/sync-data-to-catalog/webhook/webhook-architecture.png" border="1px" style={{borderRadius: "8px"}}></Image>
 
 </center>
 
@@ -164,7 +164,7 @@ Below is an example of a mapping configuration:
     {
       "blueprint": "pullRequest",
       "operation": "create",
-      "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"",
+      "filter": ".headers.\"x-github-event\" == \"pull_request\"",
       "entity": {
         "identifier": ".body.pull_request.id | tostring",
         "title": ".body.pull_request.title",
@@ -197,7 +197,7 @@ Below is an example of a mapping configuration:
       {
         blueprint = "pullRequest"
         operation = "create"
-        filter = ".headers.\"X-GitHub-Event\" == \"pull_request\""
+        filter = ".headers.\"x-github-event\" == \"pull_request\""
         entity = {
           identifier = ".body.pull_request.id | tostring"
           title = ".body.pull_request.title"
@@ -230,7 +230,8 @@ When configuring the mapping, the following keys are available for use in the JQ
 | `.item`        | A reference to items in the array specified in `itemsToParse`. Will be available in the JQ context if `itemsToParse` is used. |
 
 :::warning Known issues
-As the webhook custom integration is receiving the requests from AWS API Gateway, there are some issues that might affect the value of the fields in one of the context keys. For example, the `headers` key might not have the expected casing.
+As the webhook custom integration is receiving the requests from AWS API Gateway, there are some issues that might affect the value of the fields in one of the context keys. For example, the keys in the `headers` object might not have the expected casing, we recommend that you always reference keys from the `headers` object using lowercase versions of the header names (for example - `x-port-signature`).
+
 Please refer to the [AWS API Gateway known issues](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-known-issues.html#api-gateway-known-issues-rest-apis) for more information.
 :::
 
@@ -264,7 +265,7 @@ Now let's explore the structure of a single mapping object:
     {
       // highlight-next-line
       "blueprint": "pullRequest",
-      "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"",
+      "filter": ".headers.\"x-github-event\" == \"pull_request\"",
       ...
     }
   ]
@@ -308,7 +309,7 @@ Now let's explore the structure of a single mapping object:
     {
       "blueprint": "pullRequest",
       // highlight-next-line
-      "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"" # JQ boolean query. If evaluated to false - skip the payload.
+      "filter": ".headers.\"x-github-event\" == \"pull_request\"" # JQ boolean query. If evaluated to false - skip the payload.
       ...
     }
   ]
@@ -359,7 +360,7 @@ Now let's explore the structure of a single mapping object:
   "mappings": [
     {
       ...
-      "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"",
+      "filter": ".headers.\"x-github-event\" == \"pull_request\"",
       // highlight-start
       "entity": {
         "identifier": ".body.pull_request.id | tostring",
@@ -447,10 +448,10 @@ Here is an example security configuration:
   // highlight-start
   "security": {
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   // highlight-end
 }
@@ -471,10 +472,10 @@ resource "port_webhook" "myWebhook" {
     // highlight-start
     security = {
       secret = "WEBHOOK_SECRET"
-      signature_header_name = "X-Hub-Signature-256"
+      signature_header_name = "x-hub-signature-256"
       signature_algorithm = "sha256"
       signature_prefix = "sha256="
-      request_identifier_path = ".headers.\"X-GitHub-Delivery\""
+      request_identifier_path = ".headers.\"x-github-delivery\""
     }
     // highlight-end
 }
@@ -501,10 +502,10 @@ If you do not want to supply a security configuration with your webhook configur
   // highlight-next-line
   "security": {
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -518,10 +519,10 @@ If you do not want to supply a security configuration with your webhook configur
   "security": {
     // highlight-next-line
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -535,10 +536,10 @@ If you do not want to supply a security configuration with your webhook configur
   "security": {
     "secret": "WEBHOOK_SECRET",
     // highlight-next-line
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -552,11 +553,11 @@ If you do not want to supply a security configuration with your webhook configur
   ...
   "security": {
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     // highlight-next-line
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -573,11 +574,11 @@ When using the `plain` algorithm, no hashing will be performed and the value of 
   ...
   "security": {
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     // highlight-next-line
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -585,17 +586,17 @@ When using the `plain` algorithm, no hashing will be performed and the value of 
 
 - The `requestIdentifierPath` key is used to specify a JQ pattern resulting in a unique identifier of the webhook payload:
   - This key is used to prevent Port from processing an event more than once;
-  - For example, in GitHub webhooks, the `X-GitHub-Delivery` header contains a GUID used to identify the delivery. So the webhook should be configured with: `"requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""`;
+  - For example, in GitHub webhooks, the `x-github-delivery` header contains a GUID used to identify the delivery. So the webhook should be configured with: `"requestIdentifierPath": ".headers.\"x-github-delivery\""`;
 
 ```json showLineNumbers
   ...
   "security": {
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
     // highlight-next-line
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }

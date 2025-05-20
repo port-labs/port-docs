@@ -106,7 +106,7 @@ After the `error_description`, you can see `User%20is%20not%20assigned%20to%20th
 <summary><b>Answer (click to expand)</b></summary>
 
 When using the free tier, Port allows you to be connected to a single organization. If your colleague is in another organization, you will not be able to invite him/her.  
-Reach out to us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io), and we will help you resolve the issue.
+Reach out to us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io), and we will help you resolve the issue.
 
 </details>
 
@@ -126,7 +126,7 @@ If you are facing issues after installing an Ocean integration, follow these ste
 3. In your [builder](https://app.getport.io/settings/data-model) page, make sure that the new `blueprints` were created with the correct properties/relations.
 4. If you tried to install a `self-hosted` integration, check the integration's documentation to ensure you included the necessary parameters.
 
-If you are still facing issues, reach out to us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io), and we will help you resolve the issue.
+If you are still facing issues, reach out to us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io), and we will help you resolve the issue.
 
 </details>
 
@@ -201,6 +201,12 @@ To understand if you can embed your desired content, the first step will be to c
     - Configure the end service with the application credentials, in order to receive the authentication requests.
     - Make sure the application is able to get a JWT from the token URL. This is how the application authenticates the user.
 </details>
+
+---
+
+## API
+
+To troubleshoot requests to Port's API, refer to the [API troubleshooting](/docs/api-reference/port-api.info.mdx#troubleshooting) section.
 
 ---
 

@@ -186,8 +186,7 @@ This option is way easier but if you do not want this, you can simply type in re
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -278,4 +277,3 @@ jobs:
 5. Trigger the action from Port's [Self Serve](https://app.getport.io/self-serve). 
 6. Done! wait for the ECR repository to be tagged.
 
-Congrats 🎉 You've tagged your ECR repository for the first time from Port!

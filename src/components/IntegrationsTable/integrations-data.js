@@ -71,7 +71,7 @@ export const integrations = [
     category: 'kubernetes',
     icon: '/img/guides/icons/Kubernetes.svg',
     darkIcon: '/img/guides/icons/dark/Kubernetes.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/kubernetes',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes',
   },
   {
     name: 'AWS',
@@ -219,11 +219,25 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka',
   },
   {
+    name: 'Amplication',
+    category: 'other',
+    icon: '/img/guides/icons/Amplication.svg',
+    darkIcon: '/img/guides/icons/dark/Amplication.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/amplication',
+  },
+  {
     name: 'Backstage',
     category: 'other',
     icon: '/img/guides/icons/Backstage.svg',
     darkIcon: '/img/guides/icons/dark/Backstage.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/backstage',
+  },
+  {
+    name: 'Github Copilot',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/GithubCopilot.svg',
+    darkIcon: '/img/guides/icons/dark/GithubCopilot.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/github-copilot',
   }
 ];
 
@@ -241,5 +255,6 @@ export const categories = {
   'Cloud cost': 'cost',
   'Event processing': 'event',
   'CI/CD': 'cicd',
+  'AI agents': 'ai-agents',
   'Other': 'other',
 }; 

@@ -79,6 +79,30 @@ Since these teams are synced from your IdP the following actions cannot be perfo
 
 :::
 
+### Terraform support
+
+Since the `User` and `Team` blueprints can only be extended, to configure them using Terraform you need use the `port_system_blueprint` resource.  
+These blueprints can not be created so don't forget to **import** them to your Terraform state`.
+
+The `port_system_blueprint` resource is supported in Terraform starting from version **2.2.0**.
+
+For example:
+
+```hcl showLineNumbers
+resource "port_system_blueprint" "user" {
+  identifier = "_user"
+  # Only new properties that will be added to the blueprint
+  properties = {
+    string_props = {
+      "age" = {
+        type  = "number"
+        title = "Age"
+      }
+    }
+  }
+}
+```
+
 ## User status
 
 A user can have one of the following statuses at any given time:
@@ -100,9 +124,14 @@ Here admins can also change a user's status, and invite new users.
 
 ## Ownership
 
+Clear ownership of resources in an organization is critical for driving clear decision-making, maintaining consistency, and enabling rapid issue resolution.
+Port allows you to define which team/s are responsible for specific entities in your software catalog, using the `ownership` property and the `$team` meta-property as described below.
+
 ### The `team` meta-property
 
-Each entity has a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) named `team`, that is used to define the team/s that own the entity.  
+The value returned by the `$team` meta-property depends on the [ownership type](#the-ownership-property) defined for the blueprint - it will be empty for blueprints with no ownership, directly set for blueprints with Direct ownership, or inherited for blueprints with Inherited ownership.
+
+Each entity has a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) named `team`, that stores which teams own the entity.  
 As an `admin`, you can also set blueprint permissions according to this field.
 
 The `team` meta-property is an array of the owning teams' `identifiers`.  
@@ -136,7 +165,7 @@ For example, in a search query:
 
 ### The `ownership` property
 
-All blueprints have an `ownership` property that defines ownership for its entities.  
+All blueprints have an `ownership` property that tells Port how to set team ownership for its entities.  
 This field is not mandatory.
 
 :::info Terraform support
@@ -168,7 +197,7 @@ These are the available options for the `ownership` property:
       "identifier": "packageVersion",
       "title": "Package Version",
       "ownership": {
-      "type": "Direct"
+        "type": "Direct"
       }
       ...
     }
@@ -232,7 +261,7 @@ You can also change the `title` of the ownership property. The default value is 
                "property": "$team",
                "operator": "containsAny",
                "value": {
-                 "jqQuery": "[.user.team]"
+                 "jqQuery": ".user.team" 
                }
              }
            ]
@@ -268,7 +297,7 @@ You can also change the `title` of the ownership property. The default value is 
        },
        "conditions": [
          // highlight-next-line
-         ".user.properties.role == \"Manager\""
+         ".user.properties.port_role == \"Manager\""
        ]
      }
    }
@@ -314,7 +343,6 @@ Creating a service account has two limitations:
 
    ```
    </details>
-   ```
 
 ### Using service accounts
 

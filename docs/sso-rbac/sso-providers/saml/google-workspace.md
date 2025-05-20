@@ -16,6 +16,7 @@ import userAccessInApp from "/static/img/sso/google-workspace/userAccessInApp.pn
 import turnAccessOn from "/static/img/sso/google-workspace/turnAccessOn.png"
 import loginUsingApp from "/static/img/sso/google-workspace/loginUsingApp.png"
 import acsURLandEntityID from "/static/img/sso/google-workspace/acsURLandEntityID.png"
+import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
 # How to configure Google Workspace
 
@@ -98,7 +99,7 @@ Press `Continue`.
 - `Entity ID` - `urn:auth0:port-prod:{CONNECTION_NAME}`
 
 :::note
-We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
 :::
 
 Press `Continue`
@@ -111,12 +112,13 @@ Press `Continue`
 
 <br/>
 
-6. Create the following mappings:
+6. Create the following mappings (email_verified needs to be a constant for all users, with the value `true` ):
 
 _Google Directory attributes_:
 
 - **`Primary email`** -> `email`
 - **`First name`** -> `name`
+- **`email_verified`** -> `email_verified`
 
 _Google membership_ (optional): This mapping is only relevant if you wish to pass groups to Port.
 
@@ -165,3 +167,5 @@ Make sure that for any of the options you would like to enable the app for, you 
 <Image img={loginUsingApp} style={{ width: 250 }} />
 
 </center>
+
+<DirectUrl/>

@@ -51,7 +51,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [BitBucket GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md)
 - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
 - [Bitbucket scaffolder](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
-- [Webhook integration between Bitbucket (self-hosted) server and Port](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server.md)
+- [Webhook integration between Bitbucket (self-hosted) server and Port](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/bitbucket-server.md)
 
 ### Azure DevOps
 
@@ -65,16 +65,16 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Kubernetes
 
-- [K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
-- [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/istio.md)
-- [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/knative.md)
-- [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/openshift.md)
-- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy.md)
+- [K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
+- [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/istio.md)
+- [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/knative.md)
+- [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/openshift.md)
+- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/trivy.md)
 - [Ingest Trivy vulnerabilities into your catalog using GitHub file ingesting feature](/guides/all/ingest-trivy-vulnerabilities-into-your-catalog)
-- [Map Kyverno](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/kyverno.md)
-- [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/fluxcd.md)
-- [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
-- [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
+- [Map Kyverno](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/kyverno.md)
+- [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/fluxcd.md)
+- [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/custom-crds.md)
+- [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/port-crd.md)
 - [Create and managed Kubernetes cluster](/guides/all/manage-clusters)
 - [Change deployment replica count](/guides/all/change-replica-count)
 
@@ -159,7 +159,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [SonarQube/SonarCloud integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md)
 - [SonarCloud webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube#alternative-installation-via-webhook)
 - [Connect GitHub PR to SonarQube analysis](/guides/all/connect-github-pr-with-sonar-analysis)
-- [Connect SonarQube project to service](/guides/all/connect-sonar-project-to-service)
+<!-- - [Connect SonarQube project to service](/guides/all/connect-sonar-project-to-service) -->
 
 ## Snyk
 
@@ -202,7 +202,11 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 - [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
-- [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service)
+<!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
+
+## LeanIX
+
+- [Script that synchronizes data from LeanIX into Port](https://github.com/port-labs/LeanIX-Sync)
 
 ## Linear
 
@@ -229,6 +233,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## FireHydrant
 
 - [FireHydrant integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant.md)
+- [Self-service action to trigger a FireHydrant incident](https://docs.port.io/guides/all/create-firehydrant-incident)
 
 ## KubeCost
 
@@ -327,3 +332,12 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Swagger
 - [Ingest Swagger paths into your catalog](/guides/all/ingest-swagger-paths-into-your-catalog)
+
+## Kratix (by Syntasso)
+- [Combine Kratix and Port](https://www.syntasso.io/solutions/port-and-kratix)
+- [Combine Kratix and Port (demo video)](https://www.youtube.com/watch?v=7nKx4CnEvoY)
+
+## AI Agents
+
+### GitHub Copilot
+- [Ingest Copilot usage metrics into your catalog](/build-your-software-catalog/sync-data-to-catalog/ai-agents/github-copilot/github-copilot.md)

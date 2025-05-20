@@ -51,13 +51,12 @@ The aggregation property supports calculations by entities or by property.
 
 <Tabs groupId="api-definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
-{label: "Terraform", value: "tf"},
-{label: "Pulumi", value: "pulumi"}
+{label: "Terraform", value: "tf"}
 ]}>
 
 <TabItem value="api">
 
-### Calculate By Entities
+<h3> Calculate by entities </h3>
 
 Calculate by entities is used to calculate metrics based on the entities that match the query.
 
@@ -154,7 +153,7 @@ The `aggregationProperties` contains a key called `averageDeploymentFrequency` w
 
 </Tabs>
 
-### Calculate By Property
+<h3> Calculate by property </h3>
 
 Calculate by property is used to calculate metrics based on the property of the entities that match the query.
 
@@ -411,7 +410,7 @@ The `aggregationProperties` contains a key called `medianCpuUsage` which is the 
 
 <TabItem value="tf">
 
-### Calculate By Entities
+<h3> Calculate by entities </h3>
 
 Calculate by entities is used to calculate metrics based on the entities that match the query.
 
@@ -529,7 +528,7 @@ resource "port_aggregation_properties" "microservice_aggregation_properties" {
 
 </Tabs>
 
-### Calculate By Property
+<h3> Calculate by property </h3>
 
 Calculate by property is used to calculate metrics based on the property of the entities that match the query.
 
@@ -818,13 +817,13 @@ resource "port_aggregation_properties" "microservice_aggregation_properties" {
 </Tabs>
 
 
-### Using Query in Aggregation Property
+<h3> Using a `query` in aggregation properties </h3>
 
 You can use the query to filter the entities you want to perform the calculation on.
 
 The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 
-#### Query Example
+<h4> Query Example </h4>
 
 Create a repository blueprint and a pull request blueprint and an aggregation property to calculate the average of fix pull request per month:
 
@@ -894,16 +893,19 @@ resource "port_aggregation_properties" "repository_aggregation_properties" {
 
 </TabItem>
 
-<TabItem value="pulumi">
+<!-- <TabItem value="pulumi">
 
-## Coming soon...
+Coming soon...
 
-</TabItem>
+</TabItem> -->
 
 
 </Tabs>
 
 
-### Limitations
+## Limitations
 
-The aggregation property result for all entities of a blueprint will be recalculated every 15 minutes.
+- The aggregation property value for all entities of a blueprint will be recalculated **every 15 minutes**.
+
+- The maximum number of entities based on the blueprint where the aggregation property is defined is **20,000**.
+

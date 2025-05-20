@@ -20,11 +20,11 @@ Port's REST API is served through a network of Application Load Balancers (ALBs)
 For cases where your internal network has strict limitations on the addresses that outbound requests can be made to, you will need to add the following addresses to your network's allowlist:
 
 - For Port's EU tenant:
-  - [https://api.getport.io](https://api.getport.io)
-  - [https://ingest.getport.io](https://ingest.getport.io)
+  - [https://api.port.io](https://api.port.io)
+  - [https://ingest.port.io](https://ingest.port.io)
 - For Port's US tenant:
-  - [https://api.us.getport.io](https://api.us.getport.io)
-  - [https://ingest.us.getport.io](https://ingest.us.getport.io)
+  - [https://api.us.port.io](https://api.us.port.io)
+  - [https://ingest.us.port.io](https://ingest.us.port.io)
 
 ## AWS PrivateLink
 
@@ -44,11 +44,46 @@ In step 5 of the guide, you are required to provide the **Service name**, which 
 
 | Service       | Public Address                                               | PrivateLink Region | PrivateLink Service Name                                  |
 | ------------- | ------------------------------------------------------------ | ------------------ | --------------------------------------------------------- |
-| Port API EU   | [https://api.getport.io](https://api.getport.io)             | `eu-west-1`        | `com.amazonaws.vpce.eu-west-1.vpce-svc-02addcefd47049d3f` |
-| Ingest API EU | [https://ingest.getport.io](https://ingest.getport.io)       | `eu-west-1`        | `com.amazonaws.vpce.eu-west-1.vpce-svc-01c8de843e5776402` |
-| Port API US   | [https://api.us.getport.io](https://api.us.getport.io)       | `us-east-1`        | `com.amazonaws.vpce.us-east-1.vpce-svc-047de27e65a0392a7` |
-| Ingest API US | [https://ingest.us.getport.io](https://ingest.us.getport.io) | `us-east-1`        | `com.amazonaws.vpce.us-east-1.vpce-svc-052d7ea18ebda9652` |
+| Port API EU   | [https://api.port.io](https://api.port.io)             | `eu-west-1`        | `com.amazonaws.vpce.eu-west-1.vpce-svc-02addcefd47049d3f` |
+| Ingest API EU | [https://ingest.port.io](https://ingest.port.io)       | `eu-west-1`        | `com.amazonaws.vpce.eu-west-1.vpce-svc-01c8de843e5776402` |
+| Port API US   | [https://api.us.port.io](https://api.us.port.io)       | `us-east-1`        | `com.amazonaws.vpce.us-east-1.vpce-svc-047de27e65a0392a7` |
+| Ingest API US | [https://ingest.us.port.io](https://ingest.us.port.io) | `us-east-1`        | `com.amazonaws.vpce.us-east-1.vpce-svc-052d7ea18ebda9652` |
 
 **Note:** In case your AWS resources are in a different region than the ones Port's PrivateLinks are hosted at, refer to step 6 of the guide to setup a cross region connection.
 
-After following the guide, please contact Port's support team using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) and we will finalize the setup.
+After following the guide, please contact Port's support team using chat/Slack/mail to [support@getport.io](mailto:support@getport.io) and we will finalize the setup.
+
+## IP address restriction (beta)
+
+<EnterpriseNote />
+
+To provide an additional layer of security when using Port and its API, Port provides the option to pre-define specific IP addresses which will be able to make API requests to a Port account and interact with the account.
+
+This can be useful if you are looking to restrict account access only to users joining from a specific location (i.e. from the office), those using a certain VPN, or more.
+
+### How the IP restriction works
+
+With the IP restriction feature, you can define a set of allowed IP addresses on your account. Any user attempting to log to Port's UI in with an IP address that does not match an address on the allowed list will receive an error and they will not have the ability to proceed.
+
+The same applies to API requests made to Port's API - `api.getport.io` or `api.port.io` (either by a user, script or self-hosted integration) - requests made from an IP address that does not match an address on the allowed list will receive an error and the request will fail.
+
+Both when using Port's UI and when making an API request from an IP address which is not allowed, the user will receive a `403` status code and the following error message: `IP not whitelisted. Found x-forwarded-for header: <SOURCE_IP>, orgId: <ORG_ID>`
+
+### Providing the IP restriction list
+
+:::info providing the IP restriction list
+
+Managing a customer's IP restriction list is performed by Port's staff, to specify your IP restriction list contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io).
+
+:::
+
+Port supports IP address restriction lists in the following formats:
+
+- Single IP address: `1.1.1.1`
+- IP address range: `1.1.1.0-1.1.2.250`
+- IP CIDR notation: `127.0.0.1/24`
+
+It is also to possible to provide a combination of these formats to encompass a varied list of IP addresses.
+
+
+

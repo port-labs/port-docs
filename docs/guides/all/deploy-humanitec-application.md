@@ -177,7 +177,5 @@ Now you should see the `Deploy Application` action in the self-service page. �
 6. Click on `Execute`
 7. Done! wait for the application to be deployed in Humanitec
 
-Congrats 🎉 You've deployed a Humanitec application in Port 🔥
-
 ## More Self Service Humanitec Actions Examples
 - [Create Humanitec application](/guides/all/create-humanitec-application.md)

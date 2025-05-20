@@ -7,8 +7,7 @@ resources:
   - kind: project-with-members
     selector:
       query: 'true'
-      includeBotMembers: 'true'
-      includeInheritedMembers: 'true'
+      includeVerboseMemberObject: 'true'
     port:
       itemsToParse: .__members
       entity:
@@ -24,14 +23,12 @@ resources:
   - kind: project-with-members
     selector:
       query: 'true'
-      includeInheritedMembers: 'false'
-      includeBotMembers: 'true'
     port:
       entity:
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"service"'
+          blueprint: '"gitlabRepository"'
           properties:
             url: .web_url
             readme: file://README.md

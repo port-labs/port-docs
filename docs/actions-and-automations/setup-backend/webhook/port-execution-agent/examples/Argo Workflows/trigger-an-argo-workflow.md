@@ -249,8 +249,7 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>

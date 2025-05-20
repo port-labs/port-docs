@@ -15,7 +15,7 @@ The mapping of an integration's data source defines the ingested data and its de
 Integration mapping is configured in the [data sources page](https://app.getport.io/settings/data-sources) of your portal, under `Exporters`.  
 Each integration has its own mapping, written in `YAML`.
 
-To understand how mapping works, let's take a look at an example. After you complete the [onboarding](/quickstart) and connect your Git provider to Port, you will see an exporter entry in your [data sources page](https://app.getport.io/settings/data-sources):
+To understand how mapping works, let's take a look at an example. After you complete the [onboarding](/getting-started/overview) and connect your Git provider to Port, you will see an exporter entry in your [data sources page](https://app.getport.io/settings/data-sources):
 
 <img src='/img/software-catalog/customize-integrations/mappingExampleEntry.png' width='55%' />
 
@@ -146,6 +146,10 @@ resources:
   - kind: repository
     ...
 ```
+
+:::info Create Missing Related Entities flag in protected blueprints
+Note that you cannot use the `createMissingRelatedEntities` flag to create entities in protected blueprints such as `_user` and `_team`.
+:::
 
 ### Test your mapping - JQ playground
 
@@ -381,40 +385,3 @@ The object returned from Jira for which we would apply this mapping might look l
 ```
 </details>
 
-## Common use-cases
-
-### Splitting a `kind` block
-Sometimes the `CreateMissingRelatedEntities` flag is passed as `false` to prevent generation of additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog.  
-To handle such cases, you can split a single `kind` to multiple mappings like this:
-
-
-```yaml showLineNumbers
-createMissingRelatedEntities: false
-  - kind: services
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .name
-          blueprint: '"service"'
-          properties: 
-            #Properties mapping
-  - kind: services
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .name
-          blueprint: '"service"'
-          properties: {}
-          relations:
-            pagerduty_service: .id
-```
-
-Looking at this mapping configuration we see the following:
-* The first `kind` block is used to create the entity along with all of its properties.
-* The second `kind` block is used to update the same entity (notice the mapping for the identifier is the same in both configurations) with relations. If the target entity of the relation does not exist (i.e. you have no matching PagerDuty service), the update itself will fail, but the data ingestion will still complete successfully.
-
-This case can also be expanded for handling multiple relation, for each relation that might not be established, you can split it into another kind mapping.

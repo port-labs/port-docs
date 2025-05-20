@@ -265,8 +265,7 @@ Create a new self service action using the following JSON configuration.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -281,8 +280,6 @@ Now you should see the `Sync Argo CD Application` action in the self-service pag
 4. Select the application you want to sync. The `application_name` field should auto-fill after this, if not, manually enter the application name.
 5. Click on `Execute`
 6. Done! wait for the application to be synchronized.
-
-Congrats 🎉 You've successfully synchronized your Argo CD Application in Port 🔥
 
 ## More Self Service Argo CD Actions Examples
 - [Rollback Argo CD Deployment](/guides/all/rollback-argocd-deployment) using Port's self-service actions.

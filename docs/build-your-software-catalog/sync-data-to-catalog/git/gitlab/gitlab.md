@@ -5,6 +5,12 @@ import TabItem from "@theme/TabItem"
 
 Port's GitLab integration allows you to model GitLab resources in your software catalog and ingest data into them.
 
+:::warning Deprecation notice
+This integration will be deprecated in the future and support for it will be discontinued soon.
+
+To integrate Port with GitLab, we recommend using the [GitLab V2 integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/).
+:::
+
 ## Overview
 
 This integration allows you to:
@@ -388,7 +394,8 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 #### Limitations
 
 - Currently only files up to 1MB in size are supported.
-- Only JSON and YAML formats are automatically parsed. Other file formats can be ingested as raw files.
+- Only JSON and YAML formats are automatically parsed.  
+  Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
 - GLOB patterns are supported for file pattern matching, but wildcards at the end (e.g., `**/*`) are not allowed, in order to prevent matching all files indiscriminately.
 - Currently only the default branch of the repository is supported.
 

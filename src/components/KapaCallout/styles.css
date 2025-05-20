@@ -1,0 +1,7 @@
+.kapa-button-text {
+  color: #FFFFFF !important;
+}
+
+[data-theme='dark'] .kapa-button-text {
+  color: #000000 !important;
+} 

@@ -10,7 +10,7 @@ import AzureDevopsResources from './\_azuredevops_exporter_supported_resources.m
 import PipelineBlueprint from './example-pipeline/\_azuredevops_exporter_example_pipeline_blueprint.mdx'
 import PortPipelineAppConfig from './example-pipeline/\_azuredevops_exporter_example_pipeline_port_app_config.mdx'
 
-import TeamsBlueprint from './example-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
+import TeamsBlueprintDeprecated from './example-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
 import MembersBlueprint from './example-teams/\_azuredevops_exporter_example_member_blueprint.mdx'
 import PortTeamsAppConfig from './example-teams/\_azuredevops_exporter_example_teams_port_app_config.mdx'
 
@@ -25,8 +25,16 @@ import PortBoardAppConfig from './example-board/\_azuredevops_exporter_example_b
 import ReleaseBlueprint from './example-release/\_azuredevops_exporter_example_release_blueprint.mdx'
 import PortReleaseAppConfig from './example-release/\_azuredevops_exporter_example_release_port_app_config.mdx'
 
+import FileBlueprint from './example-file/\_azuredevops_exporter_example_file_blueprint.mdx'
+import PortFileAppConfig from './example-file/\_azuredevops_exporter_example_file_port_app_config.mdx'
+
 import ColumnBlueprint from './example-columns/\_azuredevops_exporter_example_column_blueprint.mdx'
 import PortColumnAppConfig from './example-columns/\_azuredevops_exporter_example_column_port_app_config.mdx'
+
+import PortUsersAndTeamsAppConfig from './example-users-and-teams/\_azuredevops_exporter_example_teams_port_app_config.mdx'
+import UsersBlueprint from './example-users-and-teams/\_azuredevops_exporter_example_user_blueprint.mdx'
+import TeamsBlueprint from './example-users-and-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
+
 
 
 # Examples
@@ -90,8 +98,37 @@ In the following example you will ingest your Azure Devops pipelines to Port, yo
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port.
 
+## Mapping users and teams
 
-## Mapping teams and members
+:::caution Azure DevOps Server limitation
+The `user` kind is only available for Azure DevOps Services. This integration relies on the User Entitlements API, which is not available in Azure DevOps Server.
+:::
+
+The following example blueprints and integration configurations demonstrate how to ingest Azure Devops users and teams into Port:
+
+<ProjectBlueprint/>
+
+<UsersBlueprint/>
+
+<TeamsBlueprint/>
+
+<PortUsersAndTeamsAppConfig/>
+
+:::tip Learn more
+- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
+- Port leverages the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure Devops objects to Port entities.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/teams/get%20all%20teams?view=azure-devops-rest-7.1#team) for the Azure Devops team object structure.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/memberentitlementmanagement/user-entitlements/list?view=azure-devops-rest-4.1&tabs=HTTP) for the Azure Devops User object structure.
+
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your teams alongside their members.
+
+## Mapping teams and members (Deprecated)
+
+:::caution Deprecation notice
+This section is deprecated and will be removed in a future version. Please refer to the [Mapping users and teams](#mapping-users-and-teams) section for the current implementation.
+:::
 
 In the following example you will ingest your Azure Devops teams and their members to Port, you may use the following Port blueprint definitions and integration configuration:
 
@@ -99,9 +136,9 @@ In the following example you will ingest your Azure Devops teams and their membe
 
 <RepositoryBlueprint/>
 
-<TeamsBlueprint/>
-
 <MembersBlueprint/>
+
+<TeamsBlueprintDeprecated/>
 
 <PortTeamsAppConfig/>
 
@@ -175,13 +212,57 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PortReleaseAppConfig/>
 
-
-:::tip To Learn more
-- Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/release/releases/list?view=azure-devops-rest-7.1&tabs=HTTP) for the Azure DevOps release object structure.
+:::tip Learn more
+Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/release/releases/list?view=azure-devops-rest-7.1&tabs=HTTP) for the Azure DevOps release object structure.
 :::
 
+## Mapping files
 
-After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your releases.
+The example below shows how to ingest specific files from your Azure DevOps repositories into Port. This integration allows you to track and monitor individual files across your repositories.
+
+### Capabilities and Limitations
+
+Before implementing file mapping, please note the following:
+
+- **Explicit Paths Only**: The integration supports explicit file paths relative to the repository root. Wildcard/glob patterns (e.g., `*.yaml` or `**/*.json`) are not yet supported.
+- **File Types**: Any plain-text or structured file (e.g., `.yaml`, `.json`, `.md`, `.py`) can be ingested.
+- **Path Structure**: Only relative paths from the repository root are currently supported. For example:
+  - ✅ Correct paths:
+    - `README.md`
+    - `docs/getting-started.md`
+    - `src/config/default.json`
+    - `deployment/k8s/production.yaml`
+  - ❌ Incorrect paths:
+    - `/README.md` (leading slash)
+    - `C:/repo/config.json` (absolute path)
+    - `../other-repo/file.txt` (parent directory reference)
+    - `*.yaml` (glob pattern)
+- **Performance**: For optimal performance, we recommend limiting the number of tracked files per repository.
+- **File Tracking**: Each file specified in the configuration will be tracked as a separate entity in Port
+- **Change Detection**: Changes to tracked files will be reflected in Port during the next sync
+- **File Content**: The `.file.content` field in the response body is an object containing two keys: `raw` and `parsed`. The `raw` key returns a string representation of the actual file whereas the `parsed` key returns a JSON object.
+
+
+### Configuration
+
+You can use the following Port blueprint definitions and integration configuration:
+
+<FileBlueprint/>
+
+<PortFileAppConfig/>
+
+### Example Use Cases
+
+Common scenarios for file mapping include:
+- Tracking configuration files (e.g., `deployment.yaml`, `config.json`)
+- Monitoring documentation files (e.g., `README.md`, `CONTRIBUTING.md`)
+- Tracking infrastructure definitions (e.g., `terraform.tf`, `docker-compose.yml`)
+
+:::tip Learn more
+Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1&tabs=HTTP#download) for the Azure DevOps file object structure.
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your specified files.
 
 ## Mapping supported resources
 

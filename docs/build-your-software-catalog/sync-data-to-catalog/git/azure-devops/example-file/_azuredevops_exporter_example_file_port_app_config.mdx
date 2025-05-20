@@ -1,0 +1,67 @@
+<details>
+
+<summary>Integration mapping</summary>
+
+:::tip Configuration Mapping for Azure DevOps File Ingestion
+The `selector` section within a `file` resource demonstrates how to configure file ingestion from Azure DevOps repositories. You can control:
+
+- **path:** Specify explicit file paths to ingest specific files (e.g., `src/config.yaml`, `deployment/helm/values.yaml`).
+- **repos:** Target specific repositories or leave blank to scan all repositories.
+
+:::
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        path: "src/config.yaml" # Pass a single explicit file path
+        repos: ["my-repo", "another-repo"]  # Optional: specific repositories to scan
+    port:
+      entity:
+        mappings:
+          identifier: .file.path | gsub(" "; "")
+          title: .file.path
+          blueprint: '"file"'
+          properties:
+            path: .file.path
+            size: .file.size
+            content: .file.content.raw
+            link: .repo.remoteUrl + "?path=" + (.file.path)
+            isFolder: .file.isFolder
+            extension: .file.extension
+          relations:
+            repository: >-
+              "\(.repo.project.name | ascii_downcase | gsub("[ ();]";
+              ""))/\(.repo.name | ascii_downcase | gsub("[ ();]"; ""))"
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        path: # Pass an array of explicit file paths
+          - "deployment/helm/values.yaml"
+          - "config/settings.json"
+          - "docs/README.md"
+          - "package.json"
+    port:
+      entity:
+        mappings:
+          identifier: .repo.name + "/" + .file.objectId
+          title: .file.path
+          blueprint: '"file"'
+          properties:
+            path: .file.path
+            size: .file.size
+            content: .file.content.raw
+            link: .repo.remoteUrl + "?path=" + (.file.path)
+            isFolder: .file.isFolder
+            extension: .file.extension
+          relations:
+            repository: >-
+              "\(.repo.project.name | ascii_downcase | gsub("[ ();]";
+              ""))/\(.repo.name | ascii_downcase | gsub("[ ();]"; ""))"
+
+```
+
+</details>

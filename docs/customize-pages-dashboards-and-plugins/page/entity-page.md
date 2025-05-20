@@ -6,59 +6,45 @@ import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates
 
 # Entity page
 
-Each [entity](../../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) has a dedicated page that contains 3 tabs (by default):
+Each [entity](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) has a dedicated page that contains 4 tabs (by default):
 
-- [`Overview`](#overview)
-- [`Runs`](#runs)
-- [`Audit log`](#audit-log)
+- [Overview](#overview)
+- [Related entities](#related-entities)
+- [Runs](#runs)
+- [Audit log](#audit-log)
 
 ## Overview
 
-The Overview tab is comprised of two widgets:
+The overview tab is a dashboard, used to display [widgets](/customize-pages-dashboards-and-plugins/dashboards/) related to the entity.
 
-### Details
+By default, each entity will have a `Details` widget, which displays the entity's properties and their values, and other metadata.
 
-Here you will find the entity's properties and their values, its scorecards and their values, and other metadata.
+Additional widgets can be added by clicking on the `+ Widget` button in the top right corner of the dashboard.
 
-### Related entities
+## Related entities
 
 By default, all related entities in the same direction will automatically appear in this table. This is true for both forward-related and backward-related entities. Indirectly-related entities will not appear.
 
-:::info Default table columns
-By default, the `related entities` table will display the following columns for each entity:  
+For example:
+
+`Workflow Run` has a forward-relation to `Deployment Workflow`, which has a forward-relation to `Service`, which has a **backward**-relation to `Deployment`.  
+Since we changed direction midway, this relation is **indirect**:
+
+<img src='/img/software-catalog/pages/builderRelationsExample.png' border='1px' />
+
+When looking at the entity page of a certain `Workflow Run`, the related entities `Deployment Workflow` and `Service` automatically appear, but `Deployment` does not, since its relation is in the other direction.
+
+You can add additional entities to the `Related entities` table by clicking on the `+` button above the table.  
+
+In the form that appears, the `Related blueprint` dropdown will display all entities that are related in any way to the current entity. In our `Workflow Run` example above, we can use this button to add a `Deployment` tab to our widget.
+
+#### Show/hide columns
+
+By default, the related entities table will display the following columns for each entity:  
 `Title`, `Last update time`, and `Creation time`.  
 Other properties will be hidden by default.  
 
 You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
-:::
-
-For example:
-
-`Workflow Run` has a forward-relation to `Workflow`, which has a forward-relation to `Microservice`. `Microservice` has a **backward**-relation to `Pull Request`. Since we changed direction midway, this relation is **indirect**:
-
-![builderRelationsExample](../../../static/img/software-catalog/pages/builderRelationsExample.png)
-
-As you can see, when looking at the entity page of a certain `Workflow Run`, `Workflow` and `Microservice` automatically appear, but `Pull Request` does not, since its relation is in the other direction:
-
-![entityRelationsExample](../../../static/img/software-catalog/pages/entityRelationsExample.png)
-
-#### New related entity tab
-
-You can add additional entities to the `Related entities` table by clicking on the `+ New Tab` button. In the dialog, the `Related blueprint` dropdown will display all entities that are related in any way to the current entity. In our `Workflow run` example above, we can use this button to add a `Pull request` tab to our widget.
-
-![afterNewTab](../../../static/img/software-catalog/pages/afterNewTab.png)
-
-In some cases, the related blueprint may be reachable by more than one relation, like this:
-
-![multipleRelations](../../../static/img/software-catalog/pages/multipleRelations.png)
-
-Say we want to add a `Cluster` tab to `ServiceInEnv`'s related entities. In such a case, the `related property` dropdown will display the possible relations for us to choose from:
-
-![multiplePaths](../../../static/img/software-catalog/pages/multiplePaths.png)
-
-#### Hide tabs
-
-The `Hide tabs` button on the right allows you to control which tabs are visible in this widget.
 
 ## Runs
 
@@ -66,108 +52,12 @@ If the entity's blueprint has any [actions](/actions-and-automations/create-self
 
 ## Audit log
 
-This tab displays all actions (including CRUD) that caused any change to the entity's configuration. For each change, useful metadata will be shown such as the initiator, diff before and after the change, relevant blueprint, and more.
-
-## Dashboard widgets
-
-[Visualization widgets](/customize-pages-dashboards-and-plugins/dashboards/) can be added to an entity page to display data using graphic elements.
-
-You can add widgets to an entity page by clicking on the `+ Widget` button in the top right corner:
-
-<img src='/img/software-catalog/pages/addVisualizations.png' width='100%' border='1px' />
-<br/><br/>
-
-Let's create a simple number chart that displays the number of `System` entities related to this `Domain`:
-
-<img src='/img/software-catalog/pages/demoNumberChart.png' width='350rem' />
-<br/><br/>
-
-After the first widget is created, a new tab called `dashboard` will be created in the entity page displaying the new widget:
-
-![entityAfterVisualization](/img/software-catalog/pages/entityAfterVisualization.png)
-
-Each additional visualization will be added as a widget to the `dashboard` tab.
-
-### Chart filters
-
-<ChartFilters />
-
-Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
-
-<img src='/img/software-catalog/pages/defaultInternalChartFilters.png' width='35%' border='1px' />
-<br/><br/>
-
-These are used internally in Port and cannot be modified/removed.
-You can add additional filters as you wish, by adding new objects to the `rules` array, for example:
-
-<details>
-<summary><b>Filter with additional rule example (click to expand)</b></summary>
-
-```json
-{
-  "combinator": "and",
-  "rules": [
-    {
-      "operator": "=",
-      "value": "service",
-      "property": "$blueprint"
-    },
-    {
-      "operator": "relatedTo",
-      "blueprint": "{{blueprint}}",
-      "value": "{{url.identifier}}"
-    },
-    {
-      "operator": "=",
-      "value": "someValue",
-      "property": "someProp"
-    }
-  ]
-}
-```
-</details>
-
-If you want to add additional rules with a different combinator, you can nest them inside a new object, for example:
-
-<details>
-<summary><b>Filter with nested rules example (click to expand)</b></summary>
-
-```json
-{
-  "combinator": "and",
-  "rules": [
-    {
-      "operator": "=",
-      "value": "service",
-      "property": "$blueprint"
-    },
-    {
-      "operator": "relatedTo",
-      "blueprint": "{{blueprint}}",
-      "value": "{{url.identifier}}"
-    },
-    {
-      "combinator": "or",
-      "rules": [
-        {
-          "operator": "=",
-          "value": "someValue",
-          "property": "someProp"
-        },
-        {
-          "operator": "=",
-          "value": "anotherValue",
-          "property": "anotherProp"
-        }
-      ]
-    }
-  ]
-}
-```
-</details>
+This tab displays all actions (including CRUD) that caused any change to the entity's configuration.  
+For each change, useful metadata will be shown such as the initiator, diff before and after the change, relevant blueprint, and more.
 
 ## Additional tabs
 
+### Visual properties
 Some of the [available property types](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties) are visual by nature. When defining one of these properties in a blueprint, an additional tab will be automatically created in each entity page related to this blueprint, displaying the property's content in the relevant visual format.
 
 The following property types are supported:
@@ -176,13 +66,19 @@ The following property types are supported:
 - [Embedded URL](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url)
 - [Swagger UI](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/swagger)
 
-## Entity page operations
+### Scorecards
 
-Each page type has a set of operations that can be performed from the UI.  
-The table below summarizes the available operations for an entity page:
+If the entity's blueprint has any [scorecards](/promote-scorecards/) configured, a `Scorecards` tab will be automatically created in the entity page.
 
-| Page type   | Save a view | Save view as<br /> a new page | Edit page | Delete page | Lock page |
-| ----------- | :---------: | :---------------------------: | :-------: | :---------: | :-------: |
-| Entity page |     ✅      |              ❌               |    ❌     |     ❌      |    ✅     |
+The tab will display the entity's compliance status with each of its scorecards.
 
-For more information about each operation, see [page operations](/customize-pages-dashboards-and-plugins/page/catalog-page#page-operations).
+### Dashboard tabs
+
+You can add additional, customizable dashboard tabs to an entity page by clicking the `+` button.  
+Each dashboard tab name can be customized and edited.
+
+#### Limitations
+- You can add up to 5 dashboard tabs per entity page.
+- Dashboard tab names must be unique and are limited to 30 characters.
+
+

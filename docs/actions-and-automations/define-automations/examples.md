@@ -6,6 +6,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import SlackTeamsMessagingWebhook from "/docs/actions-and-automations/define-automations/templates/_slack_teams_webhook_setup_instructions.mdx"
+import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
 
 # Examples
 
@@ -121,7 +122,7 @@ The following definition will cause a webhook to be triggered whenever the `ttl`
     "body": {
       "entityId": "{{ .event.context.entityIdentifier }}",
       "runId": "{{ .run.id }}"
-    },
+    }
   },
   "publish": true
 }
@@ -131,6 +132,69 @@ The following definition will cause a webhook to be triggered whenever the `ttl`
 
 Since the webhook implementation is entirely up to you, it can be used to terminate the environment, clean up resources, send a notification to the relevant team, and anything else that you want to happen as part of the termination process.  
 The run id can be used to [interact with the execution in Port](/actions-and-automations/reflect-action-progress/) - send log messages and/or update the execution's status.
+
+---
+
+## Automatically trigger a self-service action
+
+Say you have a self-service action that sends a Slack notification, with the identifier `slack_notify`.  
+The following example shows an automation definition that triggers this self-service action, when a service's `passed` property changes from `Passed` to `Not passed`:
+
+### Automation definition
+<PortApiRegion />
+```json showLineNumbers
+{
+  "identifier": "slack_notify_on_service_failure",
+  "title": "Notify via Slack on service failure",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_UPDATED",
+      "blueprintIdentifier": "service"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.before.properties.passed == \"Passed\"",
+        ".diff.after.properties.passed == \"Not passed\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/actions/slack_notify/runs?run_as=user-email@gmail.com",
+    "synchronized": true,
+    "method": "POST",
+    "body": {
+      "properties": {
+        "message": "Service {{ .event.diff.before.title }} has degraded from `Passed` to `Not passed`."
+      }
+    }
+  },
+  "publish": true
+}
+```
+
+### Backend - direct API call (webhook)
+
+In this example, the automation directly triggers an existing self-service action by making a request to [Port's API](/api-reference/execute-a-self-service-action).
+
+The webhook will trigger the `slack_notify` action with the specified message whenever a service's `passed` property changes from `Passed` to `Not passed`.
+
+Note the following:
+
+- `synchronized` must be set to `true`, so that the automation's status will be updated when the action is triggered.
+
+- In the `url` field, you can add `run_as` to the url to specify the user that will execute the action (replace `user-email@gmail.com` with the desired user's email).  
+  If you don't specify a user, the action will be executed using the organization's default credentials.
+
+- The `body.properties` object contains the action's user inputs. If the action does not require any inputs, pass an empty object:
+   ```json
+   "body": {
+      "properties": {}
+   }
+   ```
 
 ---
 

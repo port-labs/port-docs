@@ -135,8 +135,7 @@ Install [Port's Jira Integration](https://docs.port.io/build-your-software-catal
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -341,5 +340,3 @@ Trigger the action from Port's [self-service hub](https://app.getport.io/self-se
 
 <br />
 <br />
-
-Congrats 🎉 You've created your first bug in Jira from Port!

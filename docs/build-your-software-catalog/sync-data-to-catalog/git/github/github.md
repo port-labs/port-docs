@@ -46,6 +46,10 @@ To install Port's GitHub app, follow these steps:
 
 ## Configuration
 
+:::info Closed pull requests default behavior
+By default, the **Port GitHub App** does not fetch closed pull requests.  
+To enable this behavior, use the [closedPullRequests parameter](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/advanced/?parameter=closedPullRequests#using-advanced-configurations) in your configuration.
+:::
 
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
@@ -109,7 +113,7 @@ The app allows you to ingest a variety of objects resources provided by the GitH
 
 The GitHub app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-After installing the app, Port will automatically create a `service` blueprint in your catalog (representing a GitHub repository), along with a default YAML configuration file that defines where the data fetched from Github's API should go in the blueprint.
+After installing the app, Port will automatically create a `repository` blueprint in your catalog (representing a GitHub repository), along with a default YAML configuration file that defines where the data fetched from Github's API should go in the blueprint.
 
 ### Ingest files from your repositories
 
@@ -460,7 +464,8 @@ resources:
 #### Limitations
 
 - Currently only files up to 512KB in size are supported.
-- Only JSON and YAML formats are automatically parsed. Other file formats can be ingested as raw files.
+- Only JSON and YAML formats are automatically parsed.  
+  Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
 - GLOB patterns are supported for file pattern matching, but wildcards at the end (e.g., `**/*`) are not allowed, in order to prevent matching all files indiscriminately.
 - Currently only the default branch of the repository is supported.
 

@@ -305,8 +305,7 @@ Create a new self service action using the following JSON configuration.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -315,15 +314,17 @@ Now you should see the `Change Incident Owner` action in the self-service page. 
 
 ## Let's test it!
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
+
 2. Click on the `Change Incident Owner` action
+
 3. Choose the jira ticket you want to change the status and assignee for (In case you didn't install the [PagerDuty integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty), it means you don't have any PagerDuty incidents in Port yet, so you will need to create one manually in Port to test this action)
+
 4. Select the new incident
 <!-- 5. Enter the email address of a valid user associated with the account making the request. -->
-6. Click on `Execute`
-7. Done! wait for the incident's status to be changed in PagerDuty
+5. Click on `Execute`
 
-Congrats 🎉 You've successfully changed a pagerduty incident owner in Port 🔥
+6. Done! wait for the incident's status to be changed in PagerDuty
 
 ## More Self Service PagerDuty Actions Examples
 - [Acknowledge Incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)

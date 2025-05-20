@@ -229,10 +229,7 @@ The `conditions` query checks if the resulting array is empty or not, and return
 
 In this example we create rules that state that execution of an action can be **approved** only by the team leader of the user that asked to execute the action.
 
-Note that this example assumes that you have:
-- A `user` blueprint in your catalog representing a user in the organization.
-- A `team` blueprint in your catalog representing a team in the organization.
-- A [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between the `user` and `team` blueprints.
+**Note** that this example assumes that the relevant team leader has the `Moderator` role, as you can see in the `approvingUsers` section of the permissions JSON below.
 
 The example contains two queries:
 1. `executingUser` - fetches the user who executed the action.
@@ -264,7 +261,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
           "rules": [
             // fetches all users from user blueprint
             {
-              "value": "user",
+              "value": "_user",
               "operator": "=",
               "property": "$blueprint"
             },
@@ -283,16 +280,15 @@ The `condition` checks if the approver is the executer's team leader, via the re
           "rules": [
             // fetches all users from user blueprint
             {
-              "value": "user",
+              "value": "_user",
               "operator": "=",
               "property": "$blueprint"
             },
-            // filters all users from immediately previous query
-            // to find all users who are approvers
+            // fetches all users with the `Moderator` role
             {
-              "value": "Approver",
+              "value": "Moderator",
               "operator": "=",
-              "property": "role"
+              "property": "port_role"
             }
           ],
           "combinator": "and" // both of the conditions above must be true
@@ -311,7 +307,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
 
 #### Explanation
 
-The `conditions` query uses the two arrays produced as a result of the `executingUser` and `approvingUsers` queries and returns an array of users who may approve the self-service action. While the Port public documentation site does not provide exhaustive guidance on how to use the [JQ JSON processor](https://jqlang.github.io/jq/manual/), the following explanation is provided to ensure users can craft their own JQ queries when configuring dynamic permissions.
+The `conditions` query uses the two arrays produced as a result of the `executingUser` and `approvingUsers` queries and returns an array of users who may approve the self-service action. 
 
 The query below filters the array produced by the `executingUser` query down to only the first element in the array, then further filters this array to show only the contents of the `.relations.team` key. This newly filtered array is saved as a variable (`$`) called `executerTeam`.
 
@@ -321,3 +317,71 @@ The query below filters the array produced by the `executingUser` query down to 
 
 The next query (`.results.approvingUsers.entities[]`) takes the *entire* array from the `approvingUsers` query, then applies a filter to include *only* the approving users from that array who are on the same team as the executing user (`select(.relations.team == $executerTeam)`). Finally, the array is filtered to yield only an array of the `.identifier` property of all approvers, which Port then uses to *dynamically* evaluate who may approve this self-service action.
 
+---
+
+### Prevent self-approval
+
+In this example, we will implement a security best practice known as "segregation of duties" by ensuring that the user who executes an action cannot also approve it.  
+This is particularly important for sensitive operations like production deployments, infrastructure changes, or permission modifications.
+
+```json
+{
+  "execute": {
+    "roles": ["Member", "Admin"],
+    "users": [],
+    "teams": [],
+    "ownedByTeam": false
+  },
+  "approve": {
+    "roles": [],
+    "users": [],
+    "teams": [],
+    "policy": {
+      "queries": {
+        "approvingUsers": {
+          "rules": [
+            {
+              "value": "_user",
+              "operator": "=",
+              "property": "$blueprint"
+            },
+            {
+              "value": "Moderator",
+              "operator": "=",
+              "property": "port_role"
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "conditions": [
+        "[.results.approvingUsers.entities[] | select(.identifier != \"{{.trigger.user.email}}\") | .identifier]"
+      ]
+    }
+  }
+}
+```
+
+#### Explanation
+
+This configuration implements a "four-eyes principle", which requires that sensitive actions be verified by a second person before being executed.
+
+Here's what's happening in each part:
+
+1. **Execute Permissions**: Any user with either the `Member` or `Admin` role can execute this action.
+
+2. **Approve Permissions**: The approval process is governed by a policy that:
+   - Queries all users from the `_user` blueprint who have the `Moderator` role.
+   - Uses a JQ condition to filter out the specific user who executed the action.
+
+3. **The Key Condition**:
+   ```json
+   "[.results.approvingUsers.entities[] | select(.identifier != \"{{.trigger.user.email}}\") | .identifier]"
+   ```
+   This JQ expression:
+   - Takes all moderator users from our query results.
+   - Filters out any user whose identifier matches the email of the person who triggered the action.
+   - Returns only the identifiers of the remaining users.
+
+The result is a dynamic list of all users who are authorized to approve the action, excluding the original executor.  
+This ensures that no single person can both initiate and approve a sensitive change, reducing the risk of unauthorized or accidental changes.

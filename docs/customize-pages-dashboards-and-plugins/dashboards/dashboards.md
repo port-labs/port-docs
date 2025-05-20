@@ -72,11 +72,33 @@ You can choose one of these chart types:
 * **Count entities** - display the amount of related entities or show an average by time.  
 * **Aggregate by property** - apply an aggregation function on number properties from multiple entities. 
 
-:::note
+:::info Filtering entities
 You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 ::: 
 
-![Number Chart](/img/software-catalog/widgets/numberChartExample.png)
+#### Conditional formatting
+
+You can customize the appearance of a number chart based on specific conditions, helping viewers to quickly understand what the value indicates.
+When configuring a condition, you will need to provide the following:
+- `Operator` - select an **operator** from the available ones to define the condition.
+
+- `Value` -  enter the reference **value** to evaluate against the widget’s data.
+
+- `Color` - choose the **color** the widget will display when the condition is met.
+
+- `Message` - provide a short **message** to display above the number when the condition is met.
+
+- `Description` - add a **tooltip** message that appears when clicking the label, offering additional context about the value's significance.
+
+:::tip Multiple met conditions behavior
+Suppose you define two conditions using the `<` operator:
+- `< 8` → Green widget
+- `< 6` → Yellow widget 
+If the number chart’s value is 5, both conditions (`< 8` and `< 6`) are technically true.
+However, since 5 is closer to 6 than to 8, the widget will be colored yellow - the color associated with the closest matching condition.
+:::
+
+<img src='/img/software-catalog/widgets/numberChartConditionExample.png' width='50%' border='1px' />
 
 #### Number chart properties
 
@@ -87,6 +109,7 @@ You can also filter entities so the aggregation number chart will only apply to 
 | `Description`     | `String` | Number Chart description                                                                                                                                                                                                                    | `null`     | `false`  |
 | `Chart type`    | `String` | Defines the operation type for the chart. Possible values: `Display single property`, `Count entities`, `Aggregate by property`                                                                                                                      | `null` | `true`   |
 | `Blueprint`       | `String` | The chosen blueprint from which related entities data is visualized from                                                                                                                                                                    | `null`     | `true`   |
+| `Condition`       | `Object` | Defines the condition under which the number chart widget will update its color, display a status label, and have a tooltip message                                                                                                                                                                    | `null`     | `false`   |
 
 **Chart type: display single property** 
 
@@ -124,7 +147,7 @@ You can also filter entities so the aggregation number chart will only apply to 
 
 
 
-:::note
+:::info Calculation of average time intervals
 When performing calculations of average time intervals, such as by hour, day, week, or month, it is important to note that any partial interval is considered as a full interval. This approach ensures consistency across different time units.
 
 For example, if the dataset includes information spanning across 2 hours and 20 minutes, but the selected average timeframe is `hour`, then the summed value will be divided by 3 hours.
@@ -134,23 +157,94 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 
 Line charts display trends of `number` properties over time.  
 
-When creating a line chart, you need to choose a blueprint, then choose one of its entities, and finally choose one or more of the entity's `number` properties to visualize.  
+Port offers two types of line charts:
+1. [Property history (single entity)](#1-property-history-single-entity) - displays the values of one or more properties of a single entity.
+2. [Aggregate property (all entities)](#2-aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
+
+#### 1. Property history (single entity)
+
+This chart type displays the values of one or more properties of a **single entity** over time.  
+
+When creating this type of line chart:
+
+1. Choose the **blueprint** you want to visualize.
+
+2. Under the `Y axis` section
+   - Give the axis a title.
+   
+   - Choose the **entity** you want to visualize.
+   
+   - Select one or more of the entity's `number` **properties** to visualize.
+
+3. Under the `X axis` section:
+   - Give the axis a title.
+
+   - Choose a **time interval**, which is the amount of time between each data point in the chart.
+
+   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
+     Note that the available time ranges differ according to the selected time interval.
 
 :::tip Specific entity page
 When creating a line chart in an [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets), the chosen entity will be the entity whose page you are on.
 :::
 
-Additionally, you need to specify the following properties:
-- **Time interval** - the amount of time between each data point in the chart.
-- **Time range** - how far back in time the chart will display data (limited to the last year).
-
-The chart will display the property values over the span of the selected time range, using the selected intervals.  
-The x-axis represents the time and the y-axis representing the property values.
-
 For example, here is a line chart displaying a service's resource usage over the span of a week, in daily intervals:
 <img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' border='1px' />
+<br/><br/>
 
-#### Line chart properties
+**Limitations**
+
+- This chart type displays data starting from the time the property was created on the blueprint.  
+  Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
+- Line chart data is limited to the last 365 days.
+
+#### 2. Aggregate property (all entities)
+
+This chart type displays the aggregated values of one or more properties across **all entities** of a specific blueprint.  
+Each property will be displayed as a separate line in the chart.
+
+When creating this type of line chart:
+
+1. Choose the **blueprint** you want to visualize.
+
+2. Under the `Y axis` section:
+   - Give the axis a title.
+
+   - Choose one or more of the blueprint's `number` **properties** to visualize.  
+
+   - Choose an **aggregation function**, which is the operation to apply to the selected properties across all entities, for each time interval.  
+     The possible values are:
+     - `average`: The average value of each selected property.
+     - `median`: The median value of each selected property.
+     - `sum`: The sum of values in each selected property.
+     - `max`: The maximum value of each selected property.
+     - `min`: The minimum value of each selected property.
+     - `last`: The last value of each selected property.
+
+   - Optionally, define [additional filters](#chart-filters) in order to include/exclude specific entities from the chart.  
+     For example, you can filter the entities by a specific property value, or by a specific time range.
+
+3. Under the `X axis` section:
+   - Give the axis a title.
+   
+   - Choose one of the blueprint's `datetime` properties by which to **measure the time** of the chart data.  
+     This can be the entity's creation time, last update time, or any other `datetime` property.  
+
+   - Choose a **time interval**, which is the amount of time between each data point in the chart.
+
+   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
+     Note that the available time ranges differ according to the selected time interval.
+
+For example, here is a line chart displaying the maximum cost of all services over the span of a month, in weekly intervals:
+<img src='/img/software-catalog/widgets/lineChartAggregationExample.png' width='100%' border='1px' />
+<br/><br/>
+
+**Limitations**
+
+- This chart type does not support [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/).
+- Line chart data is limited to the last 365 days.
+
+<!-- #### Line chart properties
 
 | Field           | Type     | Description                                   | Default | Required |
 | --------------- | -------- | --------------------------------------------- | ------- | -------- |
@@ -161,24 +255,7 @@ For example, here is a line chart displaying a service's resource usage over the
 | `Entity`        | `String` | The chosen entity                             | `null`  | `true`   |
 | `Properties`    | `Array`  | The chosen `number` property/ies to visualize | `null`  | `true`   |
 | `Time interval` | `String` | The time interval to display in the x-axis of the chart.<br/>Possible values: `hour`, `day`, `week`, `month` | `null` | `true` |
-| `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` |
-
-#### Potential use cases
-
-Line charts can display data for any `number` property, including [aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) and [calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) properties.  
-
-Consider the following use case:  
-Say you have a Kubernetes `cluster` blueprint, with a related `node` blueprint representing the cluster's nodes. Each `node` has a `cost` property indicating its monthly cost.  
-
-We can create an aggregation property on the `cluster` blueprint, which sums the `cost` properties of all related `node` entities.  
-Then, we can create a line chart displaying the `cost` property of the `cluster` entity over time, showing the total cost of the cluster.
-
-#### Limitations
-
-- Line charts display data starting from the time the property was created on the blueprint.  
-  Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
-
-- Line chart data is limited to the last 365 days.
+| `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` | -->
 
 ### Markdown
 
@@ -271,6 +348,11 @@ You can create an iframe widget to display an embedded url in the dashboard. The
 
 The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
 
+:::info Embedded Dashboard Access
+Note that the iframe request is made directly from the end user’s browser, not from Port’s backend.  
+If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
+:::
+
 ![iFrame](/img/software-catalog/widgets/iframeWidget.png)
 
 #### Widget properties
@@ -320,6 +402,22 @@ This widget displays information about a specific entity, including its properti
 Simply choose a blueprint and a specific entity, and the widget will display information similar to that found on the entity's page.
 
 <img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' border='1px' />
+
+### Links
+
+This widget allows you to display a list of links, both internal and external, for quick access to useful pages.
+
+<img src='/img/software-catalog/widgets/linksExample.png' width='50%' border='1px' />
+
+- **External links** - links to external websites, such as documentation, 3rd party tools, etc.  
+  These links will open in a new tab when clicked.  
+  For example: "https://www.google.com".
+
+- **Internal links** - links to internal pages in your portal, such as an entity page, a catalog page, an entity's audit log page, etc.  
+  These links will open in the same tab when clicked.  
+  For example: "https://app.getport.io/serviceEntity?identifier=frontend".
+
+During creation/editing of the widget, you can sort the links by dragging and dropping them.
 
 ## Chart filters
 

@@ -5,25 +5,19 @@ description: "This route allows you to delete a specific scorecard. A scorecard 
 sidebar_label: "Delete a scorecard"
 hide_title: true
 hide_table_of_contents: true
-api: eJzlVE1v2zAM/SuCTi3gxc2ORlGgQHsY1kPRdqcgGBSbiYXakitR6TLD/32kP9POHbB2t11sfZAU+d4ja5mBT52uUFsjE/mQay+cDQhCFYV99uJgg0ArMiiAD4WvINVbnQqfWgepctlCXE4bQf5kBCjsVrhQgBeYKyT/rTZAaxBPQRUaD2ygxKYIUDltcHG+cfFF+3mwogDljCgpqFAbSmd6wEcizSF9FHzK4VaZTUMJBhXXsD7JESufxDEd+8UOsLIOF9rGlbOlRfg0RYpPFzKSqHZeJit5P57LdSQr5VRJFTu+q6WnN0slk1rioQICyiMlvSP3UpsbMDvMZbJsIqkZxUrRNpKGIrDpEPi7zihNAg8c3b4GHsR0zdhwbROsTMOzMjhx0QFGgRw8Be0gkwm6AE30sWxHQv4+29FVPOfWvy97gt5DGhwJpAV+Q0KgBJLVmq8c+MoaD55r+3x2xr+XmV3BVoUCxV1vKRsqk4jMLb0gu7dl1NWcyHi/jMesfVzPFd/ER4qp58hsJCft9oNYgiso9qBDVekjGUrm53eD4F/YHKFwz1x2BQ9YjLSS51c4TNxdBqrT6Z9tJ8ie3hxURl5NS/fWtu4aC7a/pffE5e0XMuXkOwSXizNKUlbWY6kMm/fRr8YRMGDwWhe1TK1BguU/nSQdKwg/MK4KRegTji3XdS+4ldwvyXCSHG2SNzpuis5Gs0OEZEKNhhy3rjfKwzdXNA0fPwVw3EC03Cun1Yb5Jmlm2vOaemGrCg9/4O/krm/MU/GB2TQLyaBew9LdKyqfdrR8JC2/MS65a/5h7u+aVO+oZZbaZn08kq6ub64frslDBVbIcW8/tr3dL5i92cdeN333Mn8ZtFmXc+p5QZPjYjTvbt506GfIYM2lr5um+QWZ9d/2
+api: eJzlVE1v2zAM/SsCTy2gxc2OxjCgQHsY1kPRdqfAGBSbqYXakktR6TLD/32gP+KsTQes3W0Xf0hPFPkeH1soMORkG7beQQp3pQ2KfGRUpqr8U1A7HxV7VWCFsqhCg7nd2FyF3BPmhoqFOp9/lA0CQlZ+oyhWGBSXhlWBG+tQcYnqMZrK8k4ARq2riA1Zx4tPa0o+9487ryo05FTtCZVZ+8jzBUGrvMT8QcmqhFsVPo81OjZSQ3ZSMjchTZLC52HReOKF9UlDvvaMH+YwyekCNLC5D5Cu4Ha/DpmGxpCpkZFkr4WQl1gbSFvgXYOQQmCy7h401NZdobvnEtJlp8EKhY3hEjQ4U/fQKfB3W6Bju7FIoF+wjmreFmKksJlT0eDJOJ6FGNgCDYSP0RIWkDJF7PT7st2r8ffZ7o+qp9KHt2WfaQiYR7K864lfoyEkSFeZbBGGxruAQWr7eHYmr98zu8CNiRWrmxEJXaehRi59ASkMd4Meak4h2S6TfdYhaY8V3yUHHdMeE7MDSZq2U7NEqiCFqQlNY6ceBBHn5W4MM+Cg/ltRcSh1YmEvqGnsV9zNqp1HLj3Zn70BYBS2RFMg9QxYt/H9ccuV4K89sTq//gIaJO2Bu+XiDDoNjQ9cGyfwMfrF3vlT9c87ooXcO0bH/+MAGSRh/MFJUxnrhMRe5XbssxVsl6BnawXQkL5itDm6gI7OjkxD6QNL3LZdm4DfqOo6WX6MSOKbTMPWkDVrEXvVQmGDfBeQbkwV8A/indyMfjxV7xhJRymZWtdJ325NFeUPNDzg7rUpKX75h7m/aUC9oZaj0nbZ4SS6uLy6vLsEDSZKhxwa+6E39vgh6h297Lnjh5vlKaQdPdK2w9jouj1+2Hr1xDhBJrTUnnVd9wslIdys
 sidebar_class_name: "delete api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"delete"}
   path={"/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -51,56 +46,26 @@ This route allows you to delete a specific scorecard. A scorecard is a set of ru
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"scorecard_identifier","description":"The identifier of the scorecard you want to delete.<br/>","required":true},{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecard you want to delete.<br/>","required":true}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string","minLength":1},"in":"path","name":"scorecard_identifier","description":"The identifier of the scorecard you want to delete.<br/>","required":true}}
-      >
-        
-      </ParamsItem><ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecard you want to delete.<br/>","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       

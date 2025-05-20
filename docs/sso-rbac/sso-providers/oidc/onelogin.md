@@ -4,6 +4,9 @@ sidebar_position: 3
 description: Integrate Onelogin with Port
 ---
 
+import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
+import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
+
 # How to configure Onelogin
 
 Follow this step-by-step guide to configure the integration between Port and Onelogin.
@@ -54,12 +57,10 @@ In the Port app, go to the `Configuration` menu and follow these steps:
 
 1. Under `Login URL` paste the following login URL:
 
-```text showLineNumbers
-https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
-```
+<SSOEndpoints/>
 
 :::note
-We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
 :::
 
 2. Under `Redirect URI's` set: `https://auth.getport.io/login/callback`.
@@ -151,6 +152,8 @@ Click `Save`.
 After completing these steps, users with roles that the Port app was assigned to, will see the Port app in their Portal and upon clicking it, will be logged in to Port:
 
 [Onelogin Portal With Port App](/img/sso/onelogin/OneloginPortalWithApp.png)
+
+<DirectUrl/>
 
 ---
 

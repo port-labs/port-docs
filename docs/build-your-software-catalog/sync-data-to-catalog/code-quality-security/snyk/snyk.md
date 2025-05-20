@@ -22,7 +22,7 @@ This integration allows you to:
 
 ### Supported Resources
 
-The resources that can be ingested from Snyk into Port are listed below. it is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+The resources that can be ingested from Snyk into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
 - [`Organization`](https://snyk.docs.apiary.io/#reference/organizations/the-snyk-organization-for-a-request/list-all-the-organizations-a-user-belongs-to)
 - [`Target`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
@@ -37,7 +37,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="Snyk" />
 
 </TabItem>
 

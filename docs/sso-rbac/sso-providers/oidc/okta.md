@@ -6,6 +6,8 @@ description: Integrate Okta with Port
 
 import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
 import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/_scim_oidc_limitation.mdx"
+import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
+import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
 # How to configure Okta
 
@@ -70,7 +72,7 @@ Get your `Okta Domain` by clicking on your user mail at the top-right corner of 
 
 Under `General` tab:
 
-1. Copy the `Client ID` and send it to Port along with the `Okta Domain` from the previous step (using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+1. Copy the `Client ID` and send it to Port along with the `Okta Domain` from the previous step (using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
 
    ![Okta app settings](/img/sso/okta/OktaAppSettingsPage.png)
 
@@ -88,12 +90,10 @@ Under `General` tab:
 
    2.4 Under `initiate login URI` paste the following URI:
 
-   ```text showLineNumbers
-   https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
-   ```
+   <SSOEndpoints/>
 
    :::note
-   We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+   We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
    :::
 
    ![Okta app settings login flow](/img/sso/okta/OktaAppLoginflowSettings.png)
@@ -101,6 +101,8 @@ Under `General` tab:
    2.5 Click `Save` and you’re done! now you’ll have the Port app on your Okta dashboard.
 
    ![Okta dashboard with Port app](/img/sso/okta/OktaDashboard.png)
+
+   <DirectUrl/>
 
 ## How to allow pulling Okta groups to Port
 
