@@ -110,6 +110,14 @@ export const availableGuides = [
         link: "/guides/all/create-and-track-dora-metrics-in-your-portal",
     },
     {
+        title: "Set up deployments using GitLab merge requests or jobs",
+        description: "Set up deployments using GitLab merge requests or jobs",
+        tags: ["Engineering metrics"],
+        logos: ["Actions"],
+        category: "Experiences",
+        link: "/guides/all/set-up-deployments-dora-gitlab",
+    },
+    {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["Cloud access management", "Actions", "RBAC"],
