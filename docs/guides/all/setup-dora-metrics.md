@@ -111,7 +111,7 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 :::tip Missing Lead Time
 If you do not have the **lead time** configured, you can follow the example guides below to map resources for your Git provider's respective blueprint:
 
-- **Open the Pull Request Blueprint**: [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests)
+- **Open the Pull Request Blueprint**: [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples#map-repositories-and-pull-requests)
 - **Open the Merge Request Blueprint**: [GitLab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)
 - **Open the Pull Request Blueprint**: [Azure DevOps](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests) 
 
@@ -155,7 +155,7 @@ The lead time for these merges is calculated as the difference between when the 
 
   Here is how you can implement this:
 
-  1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**.
+  1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples/#map-repositories-and-pull-requests)**.
 
   2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration:
 
@@ -774,7 +774,7 @@ Here is how you can implement this:
 :::tip Mapping Repositories, Releases and Tags
 This configuration maps the repository, release, and tag information to deployment entities in Port.
 You can find more details about setting up GitHub integrations for repositories, releases,
-and tags [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-repository-releases-and-tags).
+and tags [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples/#map-repositories-repository-releases-and-tags).
 You can modify the query to match your naming conventions and requirements. this example tracks release with **Production** in the name.
 :::
 

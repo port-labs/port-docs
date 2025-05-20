@@ -26,7 +26,7 @@ In this guide, we are going to use [self-service actions](/actions-and-automatio
 ## Prerequisites
 
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#mapping-repositories-file-contents-and-pull-requests) first.
+2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples#mapping-repositories-file-contents-and-pull-requests) first.
 3. A repository to contain your action resources i.e. the github workflow file.
 4. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
    - AWS Credentials. Follow this [guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-authentication-user.html) to create them.

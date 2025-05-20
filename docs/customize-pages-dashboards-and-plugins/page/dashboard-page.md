@@ -230,7 +230,7 @@ microservice_dashboard_page = Page(
 4. Let us now add helper functions to create <PortTooltip id="dataset">dataset</PortTooltip> dependent widgets.
 
 :::tip
-If you have not already, we recommend [installing](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) the GitHub app in order to get some data into your Port account. Subsequently, you can use the blueprints from this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-file-contents-and-pull-requests) and follow along for tangible results.
+If you have not already, we recommend [installing](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) the GitHub app in order to get some data into your Port account. Subsequently, you can use the blueprints from this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples.md#mapping-repositories-file-contents-and-pull-requests) and follow along for tangible results.
 :::
 
 <details>
