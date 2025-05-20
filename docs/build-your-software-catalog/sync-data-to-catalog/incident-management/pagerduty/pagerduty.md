@@ -32,7 +32,7 @@ This integration allows you to:
 - Watch for PagerDuty object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from PagerDuty into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -775,7 +775,7 @@ To view and test the integration's mapping against examples of the third-party A
 Additional examples of blueprints and the relevant integration configurations can be found on the pagerduty [examples page](examples.md)
 
 
-## Let's Test It
+## Let's test it
 This section includes sample response data from Pagerduty.
 In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
 
@@ -1111,7 +1111,7 @@ Here is an example of the payload structure from Pagerduty:
 ```
 </details>
 
-### Mapping Result
+### Mapping result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
@@ -1140,10 +1140,13 @@ The combination of the sample payload and the Ocean configuration generates the 
 ```
 </details>
 
-## Relevant Guides
+## Relevant guides
 
 For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=PagerDuty).
 
+## Support
+
+For any questions or issues, contact us at [support@getport.io](mailto:support@getport.io) or via our [Community Slack channel](https://port.io/community).
 
 ## Alternative installation via webhook
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from PagerDuty. If so, use the following instructions:
