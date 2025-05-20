@@ -247,7 +247,7 @@ Create the Dependabot Alert blueprint using this schema:
 
 :::tip Mapping Dependabot Alerts to Repository Blueprint
 To effectively manage your Dependabot alerts, map them to your `Repository` blueprint in Port. This allows you to categorize and link alerts to the appropriate repositories within your catalog, enhancing visibility and traceability. 
-Follow this [resource mapping guide](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples#map-repositories-dependabot-alerts-and-code-scan-alerts) for detailed steps on how to map Dependabot alerts.
+Follow this [resource mapping guide](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#map-repositories-dependabot-alerts-and-code-scan-alerts) for detailed steps on how to map Dependabot alerts.
 :::
 
 ## Implementation

@@ -25,7 +25,7 @@ To use this automation, ensure you have:
 
 ## Data Model Setup
 
-For this guide, we will be using the same data model as in the [GitHub installation](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) and the [Resource mapping examples](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples#map-repositories-and-pull-requests) guide.
+For this guide, we will be using the same data model as in the [GitHub installation](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) and the [Resource mapping examples](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#map-repositories-and-pull-requests) guide.
 
 ### Update the `Service` blueprint
 

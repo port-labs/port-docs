@@ -19,7 +19,7 @@ In the following guide, you are going to create a self-service action in Port th
 
 ## Prerequisites
 1. **Port's GitHub Integration**: Install it by clicking [here](https://github.com/apps/getport-io/installations/new). This is essential for Port to interact with your GitHub repositories.
-2. **GitHub Data in Port**: Ensure your repositories are synced with Port. If you haven't set this up yet, follow this quick [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples.md#mapping-repositories-file-contents-and-pull-requests).
+2. **GitHub Data in Port**: Ensure your repositories are synced with Port. If you haven't set this up yet, follow this quick [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/#mapping-repositories-file-contents-and-pull-requests).
 3. **Workflow Repository**: Decide on an existing repository where you'll store your GitHub workflow file, or create a dedicated repository for your Port actions.
 
 
