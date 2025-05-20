@@ -1,7 +1,6 @@
-
 # Slack application
 
-Port's Slack app brings your developer portal experience into your team’s daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates.
+Port's Slack app brings your developer portal experience into your team's daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates.
 
 ## Use-cases
 
@@ -42,9 +41,9 @@ To install the Slack app, follow these steps:
 
 - Click on the "Add to Slack" button.
 
-- Select the workspace where you’d like to install the app, then click “Allow”.
+- Select the workspace where you'd like to install the app, then click "Allow".
 
-- Once installed, you will receive a Slack message from Port’s bot with a summary of the app’s capabilities:
+- Once installed, you will receive a Slack message from Port's bot with a summary of the app's capabilities:
 
     <img src='/img/ai-agents/SlackAppInstallMessage.png' width='80%'/>
 
@@ -61,7 +60,7 @@ To view your system secrets, click on the `...` button in the top right corner o
 
 ### Usage example
 
-The following snippet defines an automation that sends a Slack message to a specific channel when a new PagerDuty incident is created in Port, using the Slack app’s bot token:
+The following snippet defines an automation that sends a Slack message to a specific channel when a new PagerDuty incident is created in Port, using the Slack app's bot token:
 
 ```json
 {
@@ -124,21 +123,39 @@ When a new team member first tries to use the Slack app, a private message with 
 
 Once the user is authenticated, they can:
 
-- Mention `@Port` in any channel it's invited to.
-- Start interacting with Port directly from Slack.
+- Mention `@Port` in any channel it's invited to.
+- Start interacting with Port directly from Slack.
 
 ### Slash commands
 
-The Slack app responds to the `/port` slash command with these options:
+The Slack app responds to the `/port` slash command with these options:
 
-- `/port` (or `/port help`)- Shows general help and available actions.
-- `/port agents` - Lists all Port AI agents in your organization.
+- `/port` (or `/port help`) - Shows general help and available actions.
+- `/port agents` - Lists all Port AI agents in your organization.
 
 To ask the app a question, simply mention `@Port` and ask away, for example:
 
 ```text
 @Port is there an active incident for the service 'x'?
 ```
+
+## Advanced configuration
+
+### Renaming the Slack Bot
+
+You can rename the Port Slack bot in your workspace. This can be useful if you want the bot to have a name that is more recognizable to your organization, instead of the default "Port".
+
+Follow these steps to rename the bot:
+
+1.  In your Slack workspace, find the Port app. Right-click on it and select "View app details".
+    <img src='/img/ai-agents/SlackAppViewAppDetails.png' alt='View Port App Details in Slack' width='60%'/>
+
+2.  In the app details view, click on the "Configuration" tab. This will open a new page in your web browser. Scroll down to the "Bot User" section.
+    <img src='/img/ai-agents/SlackAppEditBot.png' alt='Slack App Configuration Page - Bot User Section' width='80%'/>
+
+3.  Click on the "Edit" button next to the bot user. In the modal that appears, enter the new desired name for your bot and click "Save Changes". The change will apply immediately.
+    <img src='/img/ai-agents/SlackAppEditBotModal.png' alt='Edit Bot Name Modal in Slack' width='60%'/>
+
 
 ## Limitations
 
