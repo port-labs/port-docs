@@ -139,7 +139,7 @@ To ask the app a question, simply mention `@Port` and ask away, for example:
 @Port is there an active incident for the service 'x'?
 ```
 
-### Using Slack AI assistant interface
+### Use the Slack AI assistant interface
 
 On paid Slack workspaces, you can also interact with Port through Slack's AI assistant interface, which provides enhanced features:
 
