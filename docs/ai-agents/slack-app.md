@@ -139,6 +139,23 @@ To ask the app a question, simply mention `@Port` and ask away, for example:
 @Port is there an active incident for the service 'x'?
 ```
 
+### Using Slack AI assistant interface
+
+On paid Slack workspaces, you can also interact with Port through Slack's AI assistant interface, which provides enhanced features:
+
+1. Chat history for previous interactions with Port is available when using direct messages with the app.
+   <img src='/img/ai-agents/SlackAppAgentChat.png' alt='Slack app chat history with Port' width='80%'/>
+
+2. You can start a new conversation easily using the "New Chat" button in the top-right corner.
+
+3. For quicker access, add Port to your Slack top bar by clicking the three dots menu and selecting "Add assistant to top bar".
+   <img src='/img/ai-agents/SlackAppAddTopBar.png' alt='Adding Port to Slack top bar' width='80%'/>
+
+4. Once added, you can access Port from anywhere in Slack through a side panel, without leaving your current conversation.
+   <img src='/img/ai-agents/SlackAppAgentInteraction.png' alt='Interacting with Port through Slack side panel' width='60%'/>
+
+This provides a more seamless way to interact with your Port AI agents while working in Slack.
+
 ## Advanced configuration
 
 ### Renaming the Slack Bot
