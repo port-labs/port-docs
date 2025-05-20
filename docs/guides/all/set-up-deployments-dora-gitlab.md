@@ -26,8 +26,8 @@ To set up GitLab merge requests or jobs for DORA metrics in your portal, you wil
     - Go to the **Builder** -> **Data Sources** then click on the GitLab integration
     - Add a new mapping to ingest GitLab merge requests as deployment entities.
 
-:::note
-Keep in mind that the mapping ingests the deployments into the dora_deployment_event blueprint, for further information visit Create & track DORA metrics in your portal.
+:::info Technical note: how deployments are mapped
+Keep in mind that the mapping ingests the deployments into the `dora_deployment_event` blueprint, for further information visit [Create & track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal).
 :::
 
     ```yaml showLineNumbers
