@@ -28,7 +28,7 @@ This guide assumes the following:
 
 To connect scan data with the correct pull requests, you'll need to link the `Pull Request` blueprint with the `SonarQube Analysis` blueprint.
 
-Follow our [Connect GitHub PR to SonarQube analysis guide](https://docs.port.io/guides/all/connect-github-pr-with-sonar-analysis) to set this up.
+Follow the [Connect GitHub PR to SonarQube analysis guide](https://docs.port.io/guides/all/connect-github-pr-with-sonar-analysis) to set this up.
 
 
 ## Set up automation
