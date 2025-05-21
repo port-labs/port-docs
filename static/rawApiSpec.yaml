@@ -18486,6 +18486,11 @@ paths:
           name: user_email
           required: false
         - schema:
+            type: string
+          in: query
+          name: user_id
+          required: false
+        - schema:
             type: number
             minimum: 1
             maximum: 1000

@@ -947,6 +947,13 @@ export const availableGuides = [
         link: "/guides/all/trigger-firehydrant-incident",
     },
     {
+        title: "Enrich entities using AI",
+        description: "Enrich entities with AI-powered insights from external APIs",
+        tags: [ "Security", "Actions", "Automations", "AI"],
+        logos: ["Snyk","Wiz","SonarQube"],
+        link: "/guides/all/enrich-entities-using-ai",
+    },
+    {
         title: "Monitor integrations",
         description: "Monitor and manage your Port Ocean integrations",
         tags: [],
@@ -1064,5 +1071,62 @@ export const availableGuides = [
         tags: ["Approval workflow", "Slack", "Actions", "Automations"],
         logos: ["Slack"],
         link: "/guides/all/notify-users-upon-approval-of-action",
+    },
+    {
+        title: "Visualize your GitHub repository and developer activity",
+        description: "Create a dashboard that visualizes your GitHub repository and developer activity",
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-your-github-repository-activity",
+    },
+    {
+        title: "Visualize your Wiz vulnerabilities",
+        description: "Create a dashboard that visualizes your Wiz vulnerabilities",
+        tags: ["Security", "Wiz", "Dashboards"],
+        logos: ["Wiz"],
+        link: "/guides/all/visualize-your-wiz-vulnerabilities",
+    },
+    {
+        title: "Visualize your GitHub dependency security alerts",
+        description: "Create a dashboard that visualizes your GitHub dependency security alerts using dependabot alerts",
+        tags: ["Security", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-your-github-dependabot-alerts",
+    },
+    {
+        title: "Automate admin role assignment",
+        description: "Set up automated user role assignment when they are added to Admins group.",
+        tags: ["Security", "Automations", "RBAC"],
+        logos: ["Automations"],
+        link: "/guides/all/automate-user-role-update",
+    },
+    {
+        title: "Delete a ServiceNow incident",
+        description: "Create a self-service action that deletes a ServiceNow incident",
+        tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/delete-servicenow-incident",
+    },
+    {
+        title: "Visualize your AWS storage and security configuration",
+        description: "Create a dashboard that visualizes your AWS storage and security configuration",
+        tags: ["Security", "AWS", "Dashboards"],
+        logos: ["AWS"],
+        link: "/guides/all/visualize-your-aws-storage-configuration",
+    },
+    {
+        title: "Interact with ServiceNow records",
+        description: "Create a self-service action that interacts with ServiceNow records",
+        tags: ["Incident management", "ServiceNow", "Actions"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/interact-with-servicenow",
+    },
+    {
+        title: "Visualize your GitHub identity and access management",
+        description: "Create a dashboard that visualizes your GitHub identity and access management",
+        tags: ["Security", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-your-github-identity-and-access-management",
     }
 ]
+

@@ -15,7 +15,7 @@ To use the advanced configuration and additional flags, add them as a root key t
 
 ```yaml showLineNumbers
 # highlight-next-line
-createMissingRelatedEntities: true
+createMissingRelatedEntities: false
 resources:
   - kind: merge-request
     selector:
@@ -40,9 +40,9 @@ By default this parameter is not set and the integration will sync all projects 
 
 The `specPath` parameter specifies a list of [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)[] that Port's GitLab app will search for `port.yml` files in.
 
-- Default value: `**/port.yml`
-- Use case:
-  - If you want the app to scan a different file than `port.yml` (for example, change configure the app to scan files named `my-port-config.yml` using the pattern `**/my-port-config.yml`);
+- **Default value**: `**/port.yml`
+- **Use case**:
+  - If you want the app to scan a different file than `port.yml` (for example, change configure the app to scan files named `my-port-config.yml` using the pattern `**/my-port-config.yml`).
   - If you want the app to ignore `port.yml` files in certain paths.
 
 </TabItem>
@@ -51,8 +51,8 @@ The `specPath` parameter specifies a list of [globPatterns](https://www.malikbro
 
 <DeleteDependents/>
 
-- Default: `false` (disabled)
-- Use case: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
+- **Default value**: `false` (disabled)
+- **Use case**: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
 
 </TabItem>
 
@@ -60,8 +60,8 @@ The `specPath` parameter specifies a list of [globPatterns](https://www.malikbro
 
 The `enableMergeEntity` parameter specifies whether to use the [create/update](/build-your-software-catalog/custom-integration/api?operation=create-update#usage) or [create/override](/build-your-software-catalog/custom-integration/api?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
 
-- Default value: `false` (use create/override)
-- Use case: use `false` if you want GitLab to be the source-of-truth for catalog entities. Use `true` if you want to use GitLab as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
+- **Default value**: `false` (use create/override)
+- **Use case**: use `false` if you want GitLab to be the source-of-truth for catalog entities. Use `true` if you want to use GitLab as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
 
 </TabItem>
 
@@ -69,8 +69,8 @@ The `enableMergeEntity` parameter specifies whether to use the [create/update](/
 
 The `createMissingRelatedEntities` parameter is used to enable the creation of missing related Port entities automatically in cases where the target related entity does not exist in the software catalog yet.
 
-- Default value: `false` (do not create missing related entities)
-- Use case: use `true` if you want GitLab app to create barebones related entities, in case those related entities do not exist in the software catalog.
+- **Default value**: `true` to allow the GitLab app to create barebones related entities, in case those related entities do not exist in the software catalog.
+- **Use case**: use `false` if you do not want this default behavior (do not create missing related entities).
 
 </TabItem>
 

@@ -8,6 +8,10 @@ import TabItem from "@theme/TabItem"
 
 # Create & track DORA metrics in your portal
 
+<center>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/Tnef7-mdKes" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+</center><br/>
+
 This guide will walk you through the setup and use of DORA metrics in your portal.  
 
 We will learn how to configure DORA metrics, track them, and view insights to drive engineering improvements.
