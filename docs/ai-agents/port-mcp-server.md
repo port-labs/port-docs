@@ -44,7 +44,7 @@ Gain insights into service health, compliance, and quality by leveraging Port's 
 
 ![Identifying services lacking proper monitoring](/img/ai-agents/MCPClaudeMonitoringServices.png)
 
-### Streamline Development and Operations
+### Streamline development and operations
 
 Receive assistance with common development and operational tasks, directly within your workflow.
 
