@@ -6,7 +6,7 @@ title: Port MCP Server
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Understanding and Using the Port MCP Server
+# Port MCP server
 
 ## What is the Port MCP Server?
 
