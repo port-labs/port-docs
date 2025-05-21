@@ -54,7 +54,7 @@ Receive assistance with common development and operational tasks, directly withi
 
 ![Getting instructions for new service setup](/img/ai-agents/MCPClaudeServiceSetup.png)
 
-## Why Integrate LLMs with Your Developer Portal?
+## Why integrate LLMs with your developer portal?
 
 The primary advantage of the Port MCP Server is the ability to bring your developer portal's data and actions into the conversational interfaces you already use. This offers several benefits:
 
