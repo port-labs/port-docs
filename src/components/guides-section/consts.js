@@ -1127,6 +1127,13 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-identity-and-access-management",
+    },
+    {
+        title: "Auto-label your GitHub PRs with Sonar Scans",
+        description: "Create an automation that applies labels to GitHub pull requests based on SonarQube scans",
+        tags: ["Security", "GitHub", "SonarQube", "Automations"],
+        logos: ["GitHub", "SonarQube"],
+        link: "/guides/all/apply-labels-to-github-pr-based-on-sonar-scans",
     }
 ]
 
