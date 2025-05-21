@@ -13,8 +13,10 @@ import TabItem from "@theme/TabItem"
 </center><br/>
 
 This guide will walk you through the setup and use of DORA metrics in your portal.  
-
 We will learn how to configure DORA metrics, track them, and view insights to drive engineering improvements.
+
+This guide sets up all the foundational components and works out of the box with [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/) and [PagerDuty](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/) integrations. For customizing DORA with other tools, see the following guides:
+- [GitLab](/guides/all/set-up-deployments-dora-gitlab)
 
 ## Port DORA metrics overview
 
