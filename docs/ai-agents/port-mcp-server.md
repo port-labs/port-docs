@@ -19,7 +19,7 @@ The Port MCP Server provides significant value on its own, even if you are not u
 
 The Port MCP Server enables you to interact with your Port data and capabilities directly through natural language within your chosen LLM-powered tools. Here's what you can achieve:
 
-### Find Information Quickly
+### Find information quickly
 
 Effortlessly query your software catalog and get immediate answers. This eliminates the need to navigate through UIs or write complex API queries when you need information.
 
