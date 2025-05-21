@@ -6,7 +6,7 @@
 resources:
   - kind: folder
     selector:
-      project: 'project_001' # Project ID in Azure DevOps that contains the repositories
+      project: 'project_001' # Project name in Azure DevOps that contains the repositories
       query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
       folders: # Specify the repositories and folders to include under this relative path.
         - path: src/ # Relative path to the folders within the repositories.
