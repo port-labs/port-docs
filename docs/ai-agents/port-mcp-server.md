@@ -69,7 +69,7 @@ As one user put it:
 
 The Port MCP Server directly enables these kinds of valuable, in-context interactions.
 
-## Getting Started
+## Get started
 
 Setting up the Port MCP Server involves a few key steps.
 
