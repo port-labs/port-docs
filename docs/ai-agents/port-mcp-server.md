@@ -15,6 +15,21 @@ The Port Model Context Protocol (MCP) Server acts as a bridge, enabling Large La
 The Port MCP Server provides significant value on its own, even if you are not using the [Port AI Agents feature](/ai-agents/overview). You can configure it directly with your LLM-powered tools (e.g., in your IDE via Cursor or VS Code, or with Claude Desktop) to unlock powerful interactions with your Port instance. Access to the Port AI Agents feature is not required to use the MCP Server.
 :::
 
+## Why integrate LLMs with your developer portal?
+
+The primary advantage of the Port MCP Server is the ability to bring your developer portal's data and actions into the conversational interfaces you already use. This offers several benefits:
+
+*   **Reduced Context Switching:** Access Port information and initiate actions without leaving your IDE or chat tool.
+*   **Increased Efficiency:** Get answers and perform tasks faster using natural language commands.
+*   **Improved Developer Experience:** Make your developer portal more accessible and intuitive to interact with.
+*   **Enhanced Data-Driven Decisions:** Easily pull specific data points from Port to inform your work in real-time.
+
+As one user put it:
+
+> "It would be interesting to build a use case where a developer could ask Copilot from his IDE about stuff Port knows about, without actually having to go to Port."
+
+The Port MCP Server directly enables these kinds of valuable, in-context interactions.
+
 ## Key capabilities and use-cases
 
 The Port MCP Server enables you to interact with your Port data and capabilities directly through natural language within your chosen LLM-powered tools. Here's what you can achieve:
@@ -53,21 +68,6 @@ Receive assistance with common development and operational tasks, directly withi
 *   Ask: "Help me add a rule to the 'Tier1Services' scorecard that requires an on-call schedule to be defined."
 
 ![Getting instructions for new service setup](/img/ai-agents/MCPClaudeServiceSetup.png)
-
-## Why integrate LLMs with your developer portal?
-
-The primary advantage of the Port MCP Server is the ability to bring your developer portal's data and actions into the conversational interfaces you already use. This offers several benefits:
-
-*   **Reduced Context Switching:** Access Port information and initiate actions without leaving your IDE or chat tool.
-*   **Increased Efficiency:** Get answers and perform tasks faster using natural language commands.
-*   **Improved Developer Experience:** Make your developer portal more accessible and intuitive to interact with.
-*   **Enhanced Data-Driven Decisions:** Easily pull specific data points from Port to inform your work in real-time.
-
-As one user put it:
-
-> "It would be interesting to build a use case where a developer could ask Copilot from his IDE about stuff Port knows about, without actually having to go to Port."
-
-The Port MCP Server directly enables these kinds of valuable, in-context interactions.
 
 ## Get started
 
