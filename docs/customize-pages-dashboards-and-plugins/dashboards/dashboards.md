@@ -306,6 +306,7 @@ For example, here is a line chart displaying the average deployment rate over th
 
 - This chart type does not support [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/).
 - Line chart data is limited to the last 365 days.
+- The chart can display up to 10 separate lines when choosing to break down by property. 
 
 ### Markdown
 
