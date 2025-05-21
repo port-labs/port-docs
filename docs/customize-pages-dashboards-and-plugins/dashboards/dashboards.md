@@ -399,6 +399,11 @@ You can create an iframe widget to display an embedded url in the dashboard. The
 
 The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
 
+:::info Embedded Dashboard Access
+Note that the iframe request is made directly from the end user’s browser, not from Port’s backend.  
+If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
+:::
+
 ![iFrame](/img/software-catalog/widgets/iframeWidget.png)
 
 #### Widget properties
