@@ -15,7 +15,7 @@ The Port Model Context Protocol (MCP) Server acts as a bridge, enabling Large La
 The Port MCP Server provides significant value on its own, even if you are not using the [Port AI Agents feature](/ai-agents/overview). You can configure it directly with your LLM-powered tools (e.g., in your IDE via Cursor or VS Code, or with Claude Desktop) to unlock powerful interactions with your Port instance. Access to the Port AI Agents feature is not required to use the MCP Server.
 :::
 
-## Key Capabilities and Use Cases
+## Key capabilities and use-cases
 
 The Port MCP Server enables you to interact with your Port data and capabilities directly through natural language within your chosen LLM-powered tools. Here's what you can achieve:
 
