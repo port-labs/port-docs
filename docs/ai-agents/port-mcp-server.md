@@ -30,7 +30,7 @@ Effortlessly query your software catalog and get immediate answers. This elimina
 
 ![Querying the service catalog from an IDE](/img/ai-agents/MCPCopilotAskServices.png)
 
-### Analyze Scorecards and Quality
+### Analyze scorecards and quality
 
 Gain insights into service health, compliance, and quality by leveraging Port's scorecard data. Identify areas for improvement and track progress against your standards.
 
