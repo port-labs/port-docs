@@ -45,6 +45,24 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
+### Required OAuth Scopes
+
+:::warning Jira API token deprecation
+Jira is deprecating API tokens without scopes. When using OAuth authentication, ensure you configure the following required scopes for the integration to function properly.
+:::
+
+The Port Jira integration requires the following OAuth scopes:
+
+| Scope | What it lets the app do | Why the integration needs it |
+|-------|-------------------------|------------------------------|
+| **read:account** | Read the basic Atlassian ID profile (account ID, display name, avatar). | Map actions and audit trails to the correct end-user and comply with GDPR "right to access/erase". |
+| **read:jira-user** | View Jira user profiles (names, emails, avatars). | Display assignees/reporters and resolve user IDs when creating or updating issues. |
+| **read:jira-work** | View Jira projects, issues, attachments, comments, worklogs, etc. | Sync Jira data into Port dashboards and run read-only analytics. |
+| **write:jira-work** | Create or update issues, comments, worklogs; transition issues. | Push findings or automated actions back into Jira (e.g., open a ticket, add a comment, close an issue). |
+| **manage:jira-project** | Create/edit project-level configuration (components, versions, custom fields). | Automatically provision required project settings or keep custom fields in sync. |
+| **manage:jira-webhook** | Register, update, or delete dynamic webhooks. | Receive real-time callbacks when issues change instead of polling. |
+
+
 Choose one of the following installation methods:
 
 
