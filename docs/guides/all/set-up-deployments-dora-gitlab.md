@@ -21,8 +21,7 @@ To set up GitLab merge requests or jobs for DORA metrics in your portal, you wil
 
 - Admin permissions (in order to install the experience and execute self-service actions).
 - An installed DORA Metrics experience - based on this guide: [Create & track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal)
-- An installed GitLab integration.
-
+- An installed [GitLab integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation).
 
 ## Configure your deployments
 
