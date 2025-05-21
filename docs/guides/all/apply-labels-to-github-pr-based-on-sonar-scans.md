@@ -103,7 +103,8 @@ To add a secret to your portal:
             "inputs": {
                 "prNumber": "{{ .event.diff.after.properties.prNumber | tostring }}",
                 "repository": "{{ .event.diff.after.relations.repository }}",
-                "sonarEntity": "{{ .event.diff.after.relations.sonarAnalysis }}"
+                "sonarEntity": "{{ .event.diff.after.relations.sonarAnalysis }}",
+                "runID": "{{ .run.id }}"
             }
             }
         },
@@ -143,13 +144,13 @@ In your dedicated workflow repository, ensure you have a `.github/workflows` dir
             sonarEntity:
                 required: true
                 type: string
-
+            runID:
+                required: true
+                type: string
         jobs:
         analyze_sonar:
             runs-on: ubuntu-latest
             env:
-            PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
-            PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
             GH_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
             steps:
             - name: Checkout
@@ -190,6 +191,7 @@ In your dedicated workflow repository, ensure you have a `.github/workflows` dir
                 echo "DUPLICATIONS=$DUPLICATIONS" >> "$GITHUB_ENV"
 
             - name: Classify and Apply Sonar Labels
+                id: apply_pr_label
                 run: |
                 set -e
 
@@ -283,6 +285,26 @@ In your dedicated workflow repository, ensure you have a `.github/workflows` dir
                     -H "Authorization: Bearer $GH_TOKEN" \
                     -H "Accept: application/vnd.github+json" \
                     -d "{\"labels\": [\"${labels_to_apply[0]}\", \"${labels_to_apply[1]}\", \"${labels_to_apply[2]}\", \"${labels_to_apply[3]}\"]}"
+
+            - name: Update Port action status
+                if: always()
+                run: |
+                if [ "${{ steps.apply_pr_label.outcome }}" == "failure" ]; then
+                    STATUS="FAILURE"
+                else
+                    STATUS="SUCCESS"
+                fi
+            
+                curl -L -X PATCH "https://api.port.io/v1/actions/runs/${{ github.event.inputs.runID }}" \
+                -H "Content-Type: application/json" \
+                -H "Accept: application/json" \
+                -H "Authorization: Bearer ${{ env.PORT_ACCESS_TOKEN }}" \
+                -d '{
+                    "status": "'"$STATUS"'",
+                    "statusLabel": "'"$STATUS"'",
+                    "link": "'"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"'",
+                    "summary": "Pull request labeling completed with status: '"$STATUS"'"
+                }'
         ```
       </details>
 
