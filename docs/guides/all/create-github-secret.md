@@ -43,7 +43,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
         "title": "Secret Key",
         "type": "string",
         "description": "All Uppercase",
-        "pattern": "^[^a-z]*$"
+        "pattern": "[^a-z]*$"
       },
       "secret_value": {
         "icon": "Github",
