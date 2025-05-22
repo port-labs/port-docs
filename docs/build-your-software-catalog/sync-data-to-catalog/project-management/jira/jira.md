@@ -45,13 +45,13 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
-### Required OAuth Scopes
+### Required API Token Scopes
 
 :::warning Jira API token deprecation
-Jira is deprecating API tokens without scopes. When using OAuth authentication, ensure you configure the following required scopes for the integration to function properly.
+Jira is deprecating API tokens without scopes. When creating Jira API tokens, you must configure the following required scopes for the integration to function properly.
 :::
 
-The Port Jira integration requires the following OAuth scopes:
+The Port Jira integration requires the following API token scopes:
 
 | Scope | What it lets the app do | Why the integration needs it |
 |-------|-------------------------|------------------------------|
