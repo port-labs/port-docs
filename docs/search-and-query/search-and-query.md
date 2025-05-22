@@ -453,8 +453,9 @@ Since we don't have context of the logged-in user when using the API, these func
 
 #### contexed query rules
 
-:::info close beta
-contexed query is currently in a close beta
+:::info Closed beta feature
+This capability is currently in closed beta, and is not yet generally available.
+If you would like to join the beta, please reach out to us.
 :::
 you can use contexted properties, the context will be applyed by the user executing the query.
 

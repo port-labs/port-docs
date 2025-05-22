@@ -158,11 +158,15 @@ To give `read` permissions to members of the owning team of an entity, change th
 
 <TabItem value="policy" label="Policy">
 
-:::info Close Beta
-dynamic permission policy is currently in a close beta 
+:::info Closed beta feature
+This capability is currently in closed beta, and is not yet generally available.
+If you would like to join the beta, please reach out to us.
 :::
 
 To give a <b>dynamic</b> `read` permissions to users, change the `policy` key - with the `policy` key you can add search query as dynamic permission policy.
+:::tip
+you can use [contexed query rules](/search-and-query/#contexed-query-rules), to hav the context of the user executing the query.
+:::
 
 in this example `on-call` users are grented `read` access only to entities that share the same `region` as one of their owning teams:
 
@@ -203,8 +207,9 @@ in this example `on-call` users are grented `read` access only to entities that 
 }
 ```
 
-:::info Policy Behavior
+:::info Policy taking effect
 policy will take effect only if the user is not effected by any other `read` permission key.
+if the user is having full `read` permisison or `ownedByTeam` permission this query will not take effect
 :::
 
 </TabItem>
