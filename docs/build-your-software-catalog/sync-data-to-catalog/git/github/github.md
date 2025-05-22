@@ -516,7 +516,7 @@ You can reconfigure the app at any time, giving it access to new repositories, o
 
 ## Examples
 
-Refer to the [examples](./examples/resource-mapping-examples.md) page for practical configurations and their corresponding blueprint definitions.
+Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
 
 ## Relevant Guides
 

@@ -110,6 +110,14 @@ export const availableGuides = [
         link: "/guides/all/create-and-track-dora-metrics-in-your-portal",
     },
     {
+        title: "Set up deployments using GitLab merge requests or jobs",
+        description: "Set up deployments using GitLab merge requests or jobs",
+        tags: ["Engineering metrics"],
+        logos: ["Actions"],
+        category: "Experiences",
+        link: "/guides/all/set-up-deployments-dora-gitlab",
+    },
+    {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["Cloud access management", "Actions", "RBAC"],
@@ -1127,6 +1135,13 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-identity-and-access-management",
+    },
+    {
+        title: "Auto-label your GitHub PRs with Sonar Scans",
+        description: "Create an automation that applies labels to GitHub pull requests based on SonarQube scans",
+        tags: ["Security", "GitHub", "SonarQube", "Automations"],
+        logos: ["GitHub", "SonarQube"],
+        link: "/guides/all/apply-labels-to-github-pr-based-on-sonar-scans",
     }
 ]
 
