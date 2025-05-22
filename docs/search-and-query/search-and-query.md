@@ -396,7 +396,7 @@ And the result shall be:
 
 ### Dynamic properties
 
-#### UI functions
+#### Widgets query
 
 When using Port's UI, you can use properties of the logged-in user when writing rules by using the following functions:
 
@@ -451,70 +451,87 @@ Since we don't have context of the logged-in user when using the API, these func
 ]
 ```
 
-#### contexed query rules
+#### contextual query rules
 
 :::info Closed beta feature
 This capability is currently in closed beta, and is not yet generally available.
 If you would like to join the beta, please reach out to us.
 :::
-you can use contexted properties, the context will be applyed by the user executing the query.
+To filter and costomise queries, you can add the context of the user trigring the query, You can use contextual query rules with other rules as well to fully costomise the response.
 
-- `user` the user entitiy
-- `userTeams` the teams entities owning by the user
+##### Available contexts:
+| Context       | Description                                                                               |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| `user`  | The entity of the user triggering the query |
+| `userTeams` | The entities of the owning teams of the user triggering the query                                                                     |
 
-this context can be used in either `value` and `property` keys-
 
+<Tabs groupId="context" defaultValue="property" values={[
+{label: "Property", value: "property"},
+{label: "Value", value: "value"},
+]}>
+<TabItem value="property">
 ```json showLineNumbers
 {
-  "context": "user" | "userTeams",
-  "property": "prop"
+   ...other rule keys
+   "property": {
+      "context": "user" | "userTeams",
+      "property": "prop"
+  }
 }
 ```
+</TabItem>
+<TabItem value="value">
+```json showLineNumbers
+{
+  ...other rule keys
+   "value": {
+      "context": "user" | "userTeams",
+      "property": "prop"
+  }
+}
+```
+</TabItem>
+</Tabs>
 
-:::info user only
-only users can use this syntax, Since we don't have context of user or teams entities when executing query as an app
-:::
-
-:::info usage
-these rules can help you filter and costomise each query for each of the users trigring it 
-:::
 ##### Usage examples
 
 ```json showLineNumbers
-[
-  {
-    "property": {
-      "context": "user",
-      "property": "name"
-    },
-    "operator": "=",
-    "value": "hadar"
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
-    "property": {
-      "context": "userTeams",
-      "property": "$identifier"
-    },
-    "operator": "containsAny",
-    "value": ["Spider Team", "Builder Team"]
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
+[ 
+  ...other rules
+  { // filter entities with the same department as the user
     "property": "department",
     "operator": "containsAny",
     "value": {
       "context": "user",
       "property": "department"
     }
+  }
+]
+```
+```json showLineNumbers
+[ 
+  ...other rules
+  { // only users with `manager` role will get the entities
+    "property": {
+      "context": "user",
+      "property": "role"
+    },
+    "operator": "=",
+    "value": "manager"
+  }
+]
+```
+```json showLineNumbers
+[
+  ...other rules
+  { // only users in these team will get the entities
+    "property": {
+      "context": "userTeams",
+      "property": "$identifier"
+    },
+    "operator": "containsAny",
+    "value": ["Spider Team", "Builder Team"]
   }
 ]
 ```
