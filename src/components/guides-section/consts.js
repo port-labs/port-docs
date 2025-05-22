@@ -1142,6 +1142,13 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "SonarQube", "Automations"],
         logos: ["GitHub", "SonarQube"],
         link: "/guides/all/apply-labels-to-github-pr-based-on-sonar-scans",
+    },
+    {
+        title: "Create an Azure DevOps Work Item",
+        description: "Create a self-service action that creates an Azure DevOps work item",
+        tags: ["SDLC", "Azure DevOps", "Actions"],
+        logos: ["AzureDevops", "Webhook"],
+        link: "/guides/all/create-azure-devops-work-item",
     }
 ]
 
