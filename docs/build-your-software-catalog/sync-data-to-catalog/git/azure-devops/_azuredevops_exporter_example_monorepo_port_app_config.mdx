@@ -9,7 +9,7 @@ resources:
       project_name: 'project_001' # Project name in Azure DevOps that contains the repositories
       query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
       folders: # Specify the repositories and folders to include under this relative path.
-        - path: src/ # Relative path to the folders within the repositories.
+        - path: src/ # path to the folders within the repositories.
           repos: # List of repositories to include folders from.
             - name: sample_repo  
               branch: main
