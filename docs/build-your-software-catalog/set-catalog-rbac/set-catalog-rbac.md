@@ -32,18 +32,19 @@ Catalog RBAC allows admins to finely control which users have access to specific
 - Allow a user to edit a single specific property on an entity.
 - Create a fully read-only view for a developer.
 
-## Set *global* access controls to catalog data
+## Set _global_ access controls to catalog data
 
 The default permissions assigned to every blueprint upon creation specify that users with the `admin` role, and users with the specific blueprint `moderator` role, can perform any action on a blueprint.  
 See [RBAC permissions](/sso-rbac/rbac/) for more information about the different roles.
 
 It is possible to assign global permissions controls on **entities**, using these steps:
-1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal. 
+
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
 2. Select your desired blueprint, click on the `...` button in the top-right corner, and select `Permissions`:
 
-    <img src='/img/software-catalog/role-based-access-control/permissions/editEntityPermissions.png' width='30%' border='1px' />
-3. A JSON editor will open, where you can set the permissions for the blueprint.  
-   
+<img src='/img/software-catalog/role-based-access-control/permissions/editEntityPermissions.png' width='30%' border='1px' />
+
+3. A JSON editor will open, where you can set the permissions for the blueprint.
 
 <Tabs groupId="permission" defaultValue="read" queryString="permission">
 
@@ -66,7 +67,11 @@ To give `read` permissions to another role, add it to the `roles` array:
       "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
       "users": [],
       "teams": [],
-      "ownedByTeam": false
+      "ownedByTeam": false,
+      "policy": {
+        "combinator": "and",
+        "rules": []
+      }
     }
   }
 }
@@ -87,7 +92,11 @@ To give `read` permissions to another user, add it to the `users` array:
       // highlight-next-line
       "users": ["my-user@example.com"], // added my-user@example.com
       "teams": [],
-      "ownedByTeam": false
+      "ownedByTeam": false,
+      "policy": {
+        "combinator": "and",
+        "rules": []
+      }
     }
   }
 }
@@ -108,7 +117,11 @@ To give `read` permissions to another team, add it to the `teams` array:
       "users": [],
       // highlight-next-line
       "teams": ["my-team"], // added my-team
-      "ownedByTeam": false
+      "ownedByTeam": false,
+      "policy": {
+        "combinator": "and",
+        "rules": []
+      }
     }
   }
 }
@@ -131,7 +144,11 @@ To give `read` permissions to members of the owning team of an entity, change th
       "users": [],
       "teams": [],
       // highlight-next-line
-      "ownedByTeam": true // changed from false
+      "ownedByTeam": true, // changed from false
+      "policy": {
+        "combinator": "and",
+        "rules": []
+      }
     }
   }
 }
@@ -139,9 +156,61 @@ To give `read` permissions to members of the owning team of an entity, change th
 
 </TabItem>
 
+<TabItem value="policy" label="Policy">
+
+:::info Close Beta
+dynamic permission policy is currently in a close beta 
+:::
+
+To give a <b>dynamic</b> `read` permissions to users, change the `policy` key - with the `policy` key you can add search query as dynamic permission policy.
+
+in this example `on-call` users are grented `read` access only to entities that share the same `region` as one of their owning teams:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "read": {
+      "roles": ["my-blueprint-moderator", "Admin"],
+      "users": [],
+      "teams": [],
+      "ownedByTeam": false,
+      // highlight-start
+      "policy": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": {
+              "context" : "user",
+              "property": "isOnCall"
+            },
+            "operator": "=",
+            "value": "true"
+          },
+          {
+            "property": "region",
+            "operator": "containsAny",
+            "value": {
+              "context" : "userteams",
+              "property": "region"
+            }
+          },
+        ]
+      }
+      // highlight-end
+    }
+  }
+}
+```
+
+:::info Policy Behavior
+policy will take effect only if the user is not effected by any other `read` permission key.
+:::
+
+</TabItem>
 </Tabs>
 
-**Note** that assigning `create`, `update`, or `delete` permissions to a user or team will automatically grant them `read` permissions as well, as they need to be able to see the entities they are allowed to interact with. 
+**Note** that assigning `create`, `update`, or `delete` permissions to a user or team will automatically grant them `read` permissions as well, as they need to be able to see the entities they are allowed to interact with.
 
 :::tip Affected components
 Setting `read` permissions on entities takes effect at the API level, meaning that any component in Port that fetches entities will be affected by these permissions.  
@@ -444,7 +513,7 @@ To give `delete` permissions to members of the owning team of an entity, change 
 
 </Tabs>
 
-## Set *granular* access controls to catalog data
+## Set _granular_ access controls to catalog data
 
 It is possible to assign more granular permissions controls on **entities**, allowing you to prevent users from editing certain properties or relations.
 

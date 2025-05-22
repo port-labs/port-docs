@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Search & query
 
-Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used across the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list. 
+Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used across the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list.
 
 ## Common queries usage
 
@@ -19,7 +19,7 @@ High quality search is essential to effectively track assets in your software ca
 - Find all running services that are not healthy.
 - List all libraries that have known vulnerabilities.
 - Filter all services running in a specific cluster (in a query or self service form).
-- Catalog initial filters based on the logged in user's properties. 
+- Catalog initial filters based on the logged in user's properties.
 
 ## Search request
 
@@ -135,17 +135,17 @@ Port has 2 types of search rule operators:
 
 #### Structure
 
-| Field      | Description                                                                                                                                                                                                                                                                                                                                                    |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `operator` | Search operator to use when evaluating this rule, see a list of available operators below                                                                                                                                                                                                                                                                      |
+| Field      | Description                                                                                                                                                                                                                                                                                                                                                                                          |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `operator` | Search operator to use when evaluating this rule, see a list of available operators below                                                                                                                                                                                                                                                                                                            |
 | `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or one of the [standard properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md#available-properties) |
-| `value`    | The value to filter by                                                                                                                                                                                                                                                                                                                                         |
+| `value`    | The value to filter by                                                                                                                                                                                                                                                                                                                                                                               |
 
 #### Operators
 
 A wide variety of operators are available, see them [here](./comparison-operators).
 
-___
+---
 
 ### Relation operators
 
@@ -184,6 +184,7 @@ The operator also supports multiple related entities as the searched value:
   "value": ["myFirstEntity", "mySecondEntity"]
 }
 ```
+
 This query will return all of the entities that are related to one or more of the identifiers in the value array.
 
 <h4> Required </h4>
@@ -395,6 +396,8 @@ And the result shall be:
 
 ### Dynamic properties
 
+#### UI functions
+
 When using Port's UI, you can use properties of the logged-in user when writing rules by using the following functions:
 
 - `getUserTeams` - a list of the teams the user belongs to.
@@ -406,7 +409,7 @@ When using Port's UI, you can use properties of the logged-in user when writing 
 Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
 :::
 
-#### Usage examples
+##### Usage examples
 
 ```json showLineNumbers
 [
@@ -444,6 +447,73 @@ Since we don't have context of the logged-in user when using the API, these func
     "property": "$blueprint",
     "operator": "=",
     "value": "{{blueprint}}"
+  }
+]
+```
+
+#### contexed query rules
+
+:::info close beta
+contexed query is currently in a close beta
+:::
+you can use contexted properties, the context will be applyed by the user executing the query.
+
+- `user` the user entitiy
+- `userTeams` the teams entities owning by the user
+
+this context can be used in either `value` and `property` keys-
+
+```json showLineNumbers
+{
+  "context": "user" | "userTeams",
+  "property": "prop"
+}
+```
+
+:::info user only
+only users can use this syntax, Since we don't have context of user or teams entities when executing query as an app
+:::
+
+:::info usage
+these rules can help you filter and costomise each query for each of the users trigring it 
+:::
+##### Usage examples
+
+```json showLineNumbers
+[
+  {
+    "property": {
+      "context": "user",
+      "property": "name"
+    },
+    "operator": "=",
+    "value": "hadar"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": {
+      "context": "userTeams",
+      "property": "$identifier"
+    },
+    "operator": "containsAny",
+    "value": ["Spider Team", "Builder Team"]
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "department",
+    "operator": "containsAny",
+    "value": {
+      "context": "user",
+      "property": "department"
+    }
   }
 ]
 ```
