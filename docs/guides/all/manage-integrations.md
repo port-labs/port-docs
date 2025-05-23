@@ -181,21 +181,21 @@ The `Integration Kind Metrics` blueprint tracks detailed metrics for specific in
 {
   "blueprint": "integration_kind_metrics",
   "operation": "create",
-  "filter": ".body.kind_identifier != '__runtime__'",
+  "filter": ".body.kindIdentifier != '__runtime__'",
   "entity": {
-    "identifier": ".body.kind_identifier",
-    "title": ".body.kind_identifier",
+    "identifier": ".body.kindIdentifier",
+    "title": ".body.kindIdentifier",
     "properties": {
       "kind": ".body.kind",
-      "duration": ".body.metrics.phase.resync.duration_seconds|round",
-      "raw_objects": ".body.metrics.phase.extract.object_count_type.raw_extracted.object_count",
-      "transformed_objects": ".body.metrics.phase.transform.object_count_type.transformed.object_count",
-      "entities_ingested": ".body.metrics.phase.load.object_count_type.loaded.object_count",
+      "duration": ".body.metrics.phase.resync.durationSeconds|round",
+      "raw_objects": ".body.metrics.phase.extract.objectCountType.rawExtracted.objectCount",
+      "transformed_objects": ".body.metrics.phase.transform.objectCountType.transformed.objectCount",
+      "entities_ingested": ".body.metrics.phase.load.objectCountType.loaded.objectCount",
       "last_completion_status": "if .body.metrics.phase.resync.success == 1 then \"SUCCESS\" else \"FAILED\" end",
       "last_sync_at": "now | todateiso8601"
     },
     "relations": {
-      "integration": ".body.integration_type + \"-\" + .body.integration_identifier"
+      "integration": ".body.integrationType + \"-\" + .body.integrationIdentifier"
     }
   }
 }
@@ -211,12 +211,12 @@ The `Integration Kind Metrics` blueprint tracks detailed metrics for specific in
 {
   "blueprint": "integration",
   "operation": "create",
-  "filter": ".body.kind_identifier == '__runtime__'",
+  "filter": ".body.kindIdentifier == '__runtime__'",
   "entity": {
-    "identifier": ".body.integration_type + \"-\" + .body.integration_identifier",
-    "title": ".body.integration_identifier",
+    "identifier": ".body.integrationType + \"-\" + .body.integrationIdentifier",
+    "title": ".body.integrationIdentifier",
     "properties": {
-      "last_resync_duration": ".body.metrics.phase.resync.duration_seconds|round",
+      "last_resync_duration": ".body.metrics.phase.resync.durationSeconds|round",
       "last_resync_completion_status": "if .body.metrics.phase.resync.success == 1 then \"SUCCESS\" else \"FAILED\" end",
       "last_resync_at": "now | todateiso8601"
     }
