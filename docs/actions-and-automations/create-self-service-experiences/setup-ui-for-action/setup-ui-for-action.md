@@ -48,7 +48,7 @@ If the `Action card button text` field is left empty, the button label will defa
 
 The `condition` field allows you to define rules using Port's [search & query syntax](/search-and-query/#rules) to determine which entities the action will be available for.  
 
-:::info Requisites
+:::info Requirements
 - Since conditions require an existing entity to evaluate, they are only available for actions with `DAY-2` or `DELETE` operations.
 - For the same reason, the action must be tied to a blueprint (see above).
 :::
@@ -75,16 +75,35 @@ Note that the `combinator` field can be set to `and` or `or`, to define how mult
 
 Port allows you to create a wizard-like experience for your developers by utilizing a variety of input types they will need to fill, while also including input validations.  
 
+This is done in the **User Form** tab of the action creation form:
+
+<img src='/img/self-service-actions/setup-frontend/actionFormUserForm.png' width='80%' border='1px' />
+
+### Input types
+
+Actions can contain a variety of input types, including text fields, dropdowns, numbers, and much more.
+
 See the [user inputs](./user-inputs/user-inputs.md) page for more details about the available input types.
+
+### Titles
+
+Titles can be used to create visual and logical groupings of inputs, by dividing the form into sections.  
+
+To add a title, click the `+ Title` button in the form (see the screenshot above).
+
+- When creating a title, you can also provide a `description` to help the user understand each section's purpose. The description will be displayed below the title.
+- You can add any number of titles to a form.
+- After adding titles and/or inputs, you can reorder them by dragging and dropping.
+
+When a user executes the action, he/she will see the titles and their inputs in the order they were defined:
+
+<img src='/img/self-service-actions/setup-frontend/actionFormTitleExample.png' width='50%' border='1px' />
 
 ### Steps
 
 In cases where an action contains a large number of inputs, you may want to break the form into multiple steps. Users executing the action will see and fill each step at a time, which can help guide them through the process and make the action easier to understand.  
 
-In the UI, after creating at least one input, a `+ Step` button will appear:
-
-<img src='/img/self-service-actions/setup-frontend/actionFormSteps.png' width='80%' border='1px' />
-<br/><br/>
+In the UI, after creating at least one input, a `+ Step` button will appear (see the screenshot above).
 
 Each step can contain multiple inputs, and you can define as many steps as you need.
 
