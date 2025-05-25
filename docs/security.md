@@ -222,7 +222,7 @@ Any and all secrets shared with Port are encrypted both at rest and in transit. 
 
 ### Malware protection
 
-At Port, we believe that good security practices start with our own team, so we go out of our way to protect against internal threats and local vulnerabilities. All company-provided workstations are enrolled in Endpoint Detection and Response (EDR) solutions provided by [SentinelOne](https://www.sentinelone.com/) to enforce security settings including full-disk encryption, and OS updates.
+At Port, we believe that good security practices start with our own team, so we go out of our way to protect against internal threats and local vulnerabilities. All company-provided workstations are enrolled in Endpoint Detection and Response (EDR) solutions to enforce security settings including full-disk encryption, and OS updates.
 
 ### Security policies
 

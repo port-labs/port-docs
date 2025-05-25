@@ -196,7 +196,7 @@ export const availableGuides = [
     {
         title: "Ingest cloud resources using Dynatrace",
         description: "Ingest any cloud resources from your Dynatrace environment into Port",
-        tags: ["Engineering metrics", "Dynatrace"],
+        tags: ["SDLC", "Dynatrace"],
         logos: ["Dynatrace"],
         // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-dynatrace",
@@ -812,7 +812,7 @@ export const availableGuides = [
     {
         title: "Ingest cloud resources using New Relic",
         description: "Ingest cloud resources from your New Relic environment into Port",
-        tags: ["Engineering metrics", "New Relic"],
+        tags: ["SDLC", "New Relic"],
         logos: ["New Relic"],
         // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-newrelic",
@@ -886,7 +886,7 @@ export const availableGuides = [
     {
         title: "Assign teams to monitored entities", 
         description: "Configure your Dynatrace data sources to map entities to teams",
-        tags: ["Engineering metrics", "Dynatrace"],
+        tags: ["SDLC", "Dynatrace"],
         logos: ["Dynatrace"],
         link: "/guides/all/connect-dynatrace-team-with-entities"
     },
