@@ -14,6 +14,7 @@
 import { ClassNames } from '@emotion/react';
 import apiSidebar from './docs/api-reference/sidebar.ts';
 import guidessidebar from './docs/guides/sidebar.ts';
+import academySidebar from './docs/academy/sidebar.ts';
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
@@ -24,7 +25,10 @@ const sidebars = {
   ],
   "guides-sidebar": [
     guidessidebar,
-  ]
+  ],
+  "academy-sidebar": [
+    academySidebar,
+  ],
   // But you can create a sidebar manually
   /*
   tutorialSidebar: [
