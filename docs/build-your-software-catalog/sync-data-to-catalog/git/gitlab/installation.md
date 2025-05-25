@@ -11,6 +11,7 @@ import AdvancedConfig from '/docs/generalTemplates/_ocean_advanced_configuration
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation_oauth.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import MemoryManagement from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_memory_management.mdx"
 
 
 # Installation
@@ -213,6 +214,8 @@ You can configure multiple tokens, and multiple groups per token (the token shou
 - All of the groups in all of the tokens must be non-hierarchical to each other, and not identical (duplicated).
 - The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
 - The events for each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
+
+<MemoryManagement/>
 
 ## Deploy the GitLab integration
 

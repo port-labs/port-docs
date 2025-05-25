@@ -1,0 +1,21 @@
+### Memory Management
+
+Ocean based integrations can be configured to run each kind in a separate process, which helps manage memory usage and prevents OOM (Out of Memory) issues at the kind level rather than affecting the entire process. This is particularly useful when dealing with large organizations or when processing many resources.
+
+To enable this feature:
+
+1. For Docker installations, add the environment variable:
+    ```bash
+    -e OCEAN__MULTIPROCESSING_ENABLED=true
+    ```
+
+2. For Helm installations, use the `extraEnv` parameter:
+    ```bash
+    --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
+    --set extraEnv[0].value="true"
+    ```
+
+This configuration is recommended for larger integrations, especially when:
+- You're experiencing memory-related issues
+- You want to ensure that a single kind's failure doesn't affect the entire integration
+- You're using multi-account/multi-subscription setups

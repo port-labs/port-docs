@@ -4,6 +4,7 @@ sidebar_position: 0
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import MemoryManagement from "../../../templates/_ocean_memory_management.mdx"
 
 # Installation
 
@@ -53,7 +54,9 @@ helm upgrade --install aws port-labs/port-ocean \
   --set integration.eventListener.type="POLLING"  \
   --set integration.config.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
   --set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"  \
-  --set integration.config.maximumConcurrentAccounts=50
+  --set integration.config.maximumConcurrentAccounts=50 \
+  --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
+  --set extraEnv[0].value="true"
 ```
 
 ### IRSA
@@ -81,7 +84,9 @@ helm upgrade --install aws port-labs/port-ocean \
   --set integration.type="aws"  \
   --set integration.eventListener.type="POLLING"  \
   --set integration.maximumConcurrentAccounts=50  \
-  --set podServiceAccount.name="$SERVICE_ACCOUNT"
+  --set podServiceAccount.name="$SERVICE_ACCOUNT" \
+  --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
+  --set extraEnv[0].value="true"
 ```
 
 ### Multiple account support
@@ -109,7 +114,9 @@ helm upgrade --install aws port-labs/port-ocean \
   --set podServiceAccount.name="$SERVICE_ACCOUNT"  \ 
   --set integration.config.accountReadRoleName="$YOUR_ACCOUNT_READ_ROLE_NAME"  \ 
   --set integration.config.organizationRoleArn="$YOUR_ORGANIZATION_ROLE_ARN"  \
-  --set integration.config.maximumConcurrentAccounts=50
+  --set integration.config.maximumConcurrentAccounts=50 \
+  --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
+  --set extraEnv[0].value="true"
 ```
 
   </TabItem>
@@ -233,6 +240,9 @@ The AWS integration uses the following AWS infrastructure:
 | `OCEAN__EVENT_LISTENER`                              | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                                                                                                                                                            |
 | `OCEAN__INTEGRATION__IDENTIFIER`                     | The identifier of the integration.                                                                                                                                                                                                                                   |
 | `OCEAN__INTEGRATION__TYPE`                           | should be set to `aws`.                                                                                                                                                                                                                                              |
+| `OCEAN__MULTIPROCESSING_ENABLED`                     | When set to true, enables running each kind in a separate process. This helps manage memory usage and prevents OOM (Out of Memory) issues at the kind level rather than affecting the entire process. Recommended for cloud provider integrations. |
+
+<MemoryManagement integrationName="AWS" />
 
 </details>
 
@@ -248,7 +258,8 @@ docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__EVENT_LISTENER='{"type": "ONCE"}' \
   -e OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
   -e OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-  -e OCEAN__INTEGRATION__CONFIG__MAXIMUM_CONCURRENT_ACCOUNTS=50
+  -e OCEAN__INTEGRATION__CONFIG__MAXIMUM_CONCURRENT_ACCOUNTS=50 \
+  -e OCEAN__MULTIPROCESSING_ENABLED=true
 ghcr.io/port-labs/port-ocean-aws:latest
 ```
 

@@ -10,6 +10,7 @@ import DockerParameters from "./\_azure_docker_params.mdx"
 import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import AzureAppRegistration from "./\_azure_app_registration_guide.mdx"
+import MemoryManagement from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_memory_management.mdx"
 
 # Installation
 
@@ -69,7 +70,9 @@ helm upgrade --install azure port-labs/port-ocean \
   --set integration.eventListener.type="POLLING"  \
   --set integration.config.azureClientId="<AZURE_CLIENT_ID>"  \
   --set integration.config.azureClientSecret="<AZURE_CLIENT_SECRET>" \
-  --set integration.config.azureTenantId="<AZURE_TENANT_ID>"
+  --set integration.config.azureTenantId="<AZURE_TENANT_ID>" \
+  --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
+  --set extraEnv[0].value="true"
 ```
 
 <PortApiRegionTip/>
@@ -464,3 +467,7 @@ If you prefer using the Terraform deployment method with Event Grid, you will ne
 
 - Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.
 - Check out the [Azure multi subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md) guide for setting up synchronization of Azure resources.
+
+<MemoryManagement/>
+
+<PortApiRegionTip/>

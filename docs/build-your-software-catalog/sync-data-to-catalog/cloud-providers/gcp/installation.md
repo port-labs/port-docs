@@ -6,6 +6,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import CreateServiceAccountAndKey from './\_create-service-account-and-key.mdx'
 import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-service-account.mdx'
+import { MemoryManagement } from "../../templates/_ocean_memory_management.mdx"
 
 # Installation
 
@@ -68,8 +69,12 @@ It is saved locally, and is NOT sent to Port at any time.
      --set integration.identifier="ocean-gcp-integration"  \
      --set integration.type="gcp"  \
      --set integration.eventListener.type="POLLING"  \
-     --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"
+     --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>" \
+     --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
+     --set extraEnv[0].value="true"
    ```
+
+<MemoryManagement integrationName="GCP" />
 
 <h2> Optional- Scale permissions for a Service account </h2>
 
@@ -200,6 +205,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
    -e OCEAN__EVENT_LISTENER='{"type": "ONCE"}' \
    -e OCEAN__INTEGRATION__CONFIG__ENCODED_ADC_CONFIGURATION="<paste_the_encoded_file_content_here>" \
+   -e OCEAN__MULTIPROCESSING_ENABLED=true \
    ghcr.io/port-labs/port-ocean-gcp:latest
    ```
 

@@ -12,6 +12,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import AzureDevopsTroubleshootingLink from '/docs/generalTemplates/azure-devops/_azure_devops_troubleshooting_link.mdx'
+import MemoryManagement from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_memory_management.mdx"
 
 
 
@@ -184,7 +185,7 @@ This table summarizes the available parameters for the installation.
 | `initializePortResources`                 | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |                                        | ❌        |
 | `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |                                        | ❌        |
 
-
+<MemoryManagement/>
 
 <br/>
 
