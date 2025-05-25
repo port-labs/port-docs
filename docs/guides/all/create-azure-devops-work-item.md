@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 # Create an Azure DevOps Work Item
 
 ## Overview
-This guide demonstrates how to use **self-service action** and **automation** in Port to create an Azure DevOps (ADO) work item directly from your developer portal.
+This guide demonstrates how to use a **self-service action** and an **automation** in Port to create an Azure DevOps (ADO) work item directly from your developer portal.
 
 
 ## Prerequisites
