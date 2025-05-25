@@ -42,7 +42,7 @@ To use a different branch, simply pass the `ref` key in the `Configure the invoc
 ```
 
 :::info Workflow file must exist in the default branch
-Due to [GitHub's behavior](https://github.com/github/docs/issues/31007), when triggering a workflow using the `workflow_dispatch` event, a workflow file must exist in the **default branch** even when using the `ref` key.
+Due to [GitHub's behavior](https://github.com/github/docs/issues/31007), to trigger a workflow that uses the `workflow_dispatch` event from a non-default branch using the `ref` key, the same workflow file must exist in the **default branch**.
 
 If you prefer not to include the full workflow file in the **default branch**, you can place a workflow file with the **same name** there to ensure the workflow executes.
 :::
