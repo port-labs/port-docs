@@ -337,7 +337,7 @@ The `User` and `Team` blueprints can not be created so don't forget to import th
 The `port_system_blueprint` resource is supported in Terraform starting from version **2.2.0**.
 
 ### Migrating from a relation to ownership
-The migration will create an Ownership property only if you have team inheritance configured on the blueprint.
+The migration will create an `ownership` property only if you have team inheritance configured on the blueprint.  
 Some users elect to manage ownership strictly on a relation, which will not translate to a correct ownership following the migration.
 
 In order to migrate from a relation to Ownership, follow these steps:
