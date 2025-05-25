@@ -351,6 +351,6 @@ In order to migrate from a relation to ownership, follow these steps:
   }
 }
 ```
-Make sure you replace `<RELATION_IDENTIFIER>` with the identifier of the relation to the `_team` blueprint.
+Make sure to replace `<RELATION_IDENTIFIER>` with the identifier of the relation to the `_team` blueprint.
 
 This migration will take the value in the relation, and insert it into the ownership property.
