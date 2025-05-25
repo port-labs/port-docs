@@ -1146,7 +1146,7 @@ export const availableGuides = [
     {
         title: "Create an Azure DevOps Work Item",
         description: "Create a self-service action that creates an Azure DevOps work item",
-        tags: ["SDLC", "Azure DevOps", "Actions"],
+        tags: ["SDLC", "AzureDevops", "Actions"],
         logos: ["AzureDevops", "Webhook"],
         link: "/guides/all/create-azure-devops-work-item",
     }
