@@ -342,7 +342,7 @@ Some users elect to manage ownership strictly on a relation, which will not tran
 
 In order to migrate from a relation to ownership, follow these steps:
 1. Make sure that the blueprint you are migrating has `Direct ownership` configured.
-2. Head to the builder and find the blueprint you want to migrate. Expand the 3 dot menu, and select `Migrate data`.
+2. Head to the builder and find the blueprint you want to migrate. Click on the `...` button, and select `Migrate data`.
 3. In the JQ mapping, paste the following:
 ```json
 {
