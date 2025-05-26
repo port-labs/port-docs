@@ -625,3 +625,130 @@ resources:
             escalationRules: .escalation_rules
 ```
 </details>
+
+## Slack notifications
+
+Using Port's automation capabilities, you can set up real-time Slack notifications when incidents are created or updated in PagerDuty.
+
+<details>
+<summary>Automation for New Incidents</summary>
+
+```json showLineNumbers
+{
+  "identifier": "pagerduty_new_incident_notification",
+  "title": "Notify Slack on New PagerDuty Incident",
+  "icon": "Slack",
+  "description": "Sends a Slack notification when a new incident is created in PagerDuty",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_CREATED",
+      "blueprintIdentifier": "pagerdutyIncident"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.after.properties.status == \"triggered\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "YOUR_SLACK_WEBHOOK_URL",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "text": "🚨 New PagerDuty Incident\n\n*Incident:* {{ .event.diff.after.title }}\n*Status:* {{ .event.diff.after.properties.status }}\n*Urgency:* {{ .event.diff.after.properties.urgency }}\n*Service:* {{ .event.diff.after.relations.pagerdutyService }}\n\n<{{ .event.diff.after.properties.url }}|View in PagerDuty> | <https://app.getport.io/pagerdutyIncidentEntity?identifier={{ .event.context.entityIdentifier }}|View in Port>"
+    }
+  },
+  "publish": true
+}
+```
+
+</details>
+
+<details>
+<summary>Automation for Incident Status Changes</summary>
+
+```json showLineNumbers
+{
+  "identifier": "pagerduty_incident_status_change",
+  "title": "Notify Slack on PagerDuty Incident Status Change",
+  "icon": "Slack",
+  "description": "Sends a Slack notification when a PagerDuty incident status changes",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_UPDATED",
+      "blueprintIdentifier": "pagerdutyIncident"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.before.properties.status != .diff.after.properties.status"
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "YOUR_SLACK_WEBHOOK_URL",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": {},
+    "body": {
+      "blocks": [
+        {
+          "type": "header",
+          "text": {
+            "type": "plain_text",
+            "text": "🔄 PagerDuty Incident Status Change",
+            "emoji": true
+          }
+        },
+        {
+          "type": "section",
+          "fields": [
+            {
+              "type": "mrkdwn",
+              "text": "*Incident:*\n{{ .event.diff.after.title }}"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*Status:*\n{{ if eq .event.diff.after.properties.status \"resolved\" }}✅ Resolved{{ else if eq .event.diff.after.properties.status \"acknowledged\" }}👀 Acknowledged{{ else }}🚨 {{ .event.diff.after.properties.status }}{{ end }}"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "fields": [
+            {
+              "type": "mrkdwn",
+              "text": "*Previous Status:*\n{{ .event.diff.before.properties.status }}"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*Updated:*\n{{ .event.diff.after.properties.updated_at }}"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "publish": true
+}
+```
+
+</details>
+
+:::tip Slack webhook URL
+Replace `YOUR_SLACK_WEBHOOK_URL` with your actual Slack incoming webhook URL. For information on creating Slack webhooks, see the [Slack API documentation](https://api.slack.com/messaging/webhooks).
+:::
+
+These automations allow your team to receive immediate notifications in Slack when incidents are created or change status, making incident response faster and more efficient.

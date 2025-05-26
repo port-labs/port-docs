@@ -11,15 +11,9 @@ import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integra
 import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
 import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-import JiraUserBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_exporter_example_user_blueprint.mdx"
-import JiraUserConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_exporter_example_user_configuration.mdx"
 import JiraUserExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_user_example_response.mdx"
 import JiraUserEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_user_example_entity.mdx"
 import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_issue_example_entity.mdx"
-import JiraIssueExampleBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_example_issue_blueprint.mdx"
-import JiraIssueExampleConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_example_issue_configuration.mdx"
-import JiraTeamBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_exporter_example_team_blueprint.mdx"
-import JiraTeamConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_exporter_example_team_configuration.mdx"
 import JiraTeamExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_response.mdx"
 import JiraTeamEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_entity.mdx"
 
@@ -50,6 +44,24 @@ It is possible to reference any field that appears in the API responses linked b
 
 
 ## Setup
+
+### Required API Token Scopes
+
+:::warning Jira API token deprecation
+Jira is deprecating API tokens without scopes. When creating Jira API tokens, you must configure the following required scopes for the integration to function properly.
+:::
+
+The Port Jira integration requires the following API token scopes:
+
+| Scope | What it lets the app do | Why the integration needs it |
+|-------|-------------------------|------------------------------|
+| **read:account** | Read the basic Atlassian ID profile (account ID, display name, avatar). | Map actions and audit trails to the correct end-user and comply with GDPR "right to access/erase". |
+| **read:jira-user** | View Jira user profiles (names, emails, avatars). | Display assignees/reporters and resolve user IDs when creating or updating issues. |
+| **read:jira-work** | View Jira projects, issues, attachments, comments, worklogs, etc. | Sync Jira data into Port dashboards and run read-only analytics. |
+| **write:jira-work** | Create or update issues, comments, worklogs; transition issues. | Push findings or automated actions back into Jira (e.g., open a ticket, add a comment, close an issue). |
+| **manage:jira-project** | Create/edit project-level configuration (components, versions, custom fields). | Automatically provision required project settings or keep custom fields in sync. |
+| **manage:jira-webhook** | Register, update, or delete dynamic webhooks. | Receive real-time callbacks when issues change instead of polling. |
+
 
 Choose one of the following installation methods:
 
@@ -182,7 +194,7 @@ This table summarizes the available parameters for the installation.
 | `port.clientSecret`                      | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
 | `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
 | `integration.secrets.atlassianUserEmail` | The email of the user used to query Jira                                                                                                                                                                                                                                                       | user@example.com                 | ✅        |
-| `integration.secrets.atlassianUserToken` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user                                                                                                                                                     |                                  | ✅        |
+| `integration.secrets.atlassianUserToken` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user. Make sure to configure the [required scopes](#required-api-token-scopes).                                                                          |                                  | ✅        |
 | `integration.config.atlassianOrganizationId` | Your Atlassian Organization ID is required to sync teams and team members. [Follow the Atlassian documentation](https://confluence.atlassian.com/jirakb/what-it-is-the-organization-id-and-where-to-find-it-1207189876.html) on how to find your Organization ID | | ❌ |
 | `integration.config.jiraHost`            | The URL of your Jira                                                                                                                                                                                                                                                                           | https://example.atlassian.net    | ✅        |
 | `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jira                                                                                                                                                                             | https://my-ocean-integration.com | ✅        |
@@ -217,7 +229,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `port_base_url`                  | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |                               | ✅        |
 | `config -> jira_host`            | The URL of your Jira                                                                                                                                                                                                                                                                     | https://example.atlassian.net | ✅        |
 | `config -> atlassian_user_email` | The email of the user used to query Jira                                                                                                                                                                                                                                                 | user@example.com              | ✅        |
-| `config -> atlassian_user_token` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user                                                                                                                                               |                               | ✅        |
+| `config -> atlassian_user_token` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user. Make sure to configure the [required scopes](#required-api-token-scopes).                                                                    |                               | ✅        |
 | `config -> atlassian_organization_id` |Your Atlassian Organization ID is required to sync teams and team members. [Follow the Atlassian documentation](https://confluence.atlassian.com/jirakb/what-it-is-the-organization-id-and-where-to-find-it-1207189876.html) on how to find your Organization ID |                         | ❌        |
 | `initialize_port_resources`      | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |                               | ❌        |
 | `send_raw_data_examples`         | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      |                               | ❌        |
@@ -858,118 +870,7 @@ This is because the Jira API requires the use of an API token for authentication
 
 To view and test the integration's mapping against examples of the third-party API responses, use the **jq playground** in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
-Examples of blueprints and the relevant integration configurations:
-
-### Project
-
-<details>
-<summary><b>Project blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "jiraProject",
-  "title": "Jira Project",
-  "icon": "Jira",
-  "description": "A Jira project",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Project URL",
-        "type": "string",
-        "format": "url",
-        "description": "URL to the project in Jira"
-      },
-      "totalIssues": {
-        "title": "Total Issues",
-        "type": "number",
-        "description": "The total number of issues in the project"
-      }
-    }
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-The `project` kind has a selector property, `expand` that specifies additional fields to be included in the response. It accepts a comma-separated string that allows you to include more fields in the response data that can be used in the mapping configuration. Possible values are `description`, `lead`, `issueTypes`, `url`, `projectKeys`, `insight`.
-
-If not specified, it defaults to `"insight"`.
-
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: project
-    selector:
-      query: "true"
-      expand: "description,lead,issueTypes,url,projectKeys,insight"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"jiraProject"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
-            totalIssues: .insight.totalIssueCount
-```
-
-</details>
-
-### User
-
-<details>
-<summary><b>User blueprint (Click to expand)</b></summary>
-
-<JiraUserBlueprint/>
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-<JiraUserConfiguration/>
-
-</details>
-
-### Team
-
-<details>
-<summary><b>Team blueprint</b></summary>
-
-<JiraTeamBlueprint/>
-
-</details>
-
-<details>
-<summary><b>Integration configuration</b></summary>
-
-<JiraTeamConfiguration/>
-
-</details>
-
-### Issue
-
-<details>
-<summary><b>Issue blueprint (Click to expand)</b></summary>
-
-<JiraIssueExampleBlueprint/>
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-<JiraIssueExampleConfiguration/>
-
-</details>
+Additional examples of blueprints and the relevant integration configurations can be found on the jira [examples page](examples.md)
 
 
 ## Let's Test It
@@ -1535,7 +1436,8 @@ In addition, it requires a Jira API token that is provided as a parameter to the
 1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens).
 2. Click Create API token.
 3. From the dialog that appears, enter a memorable and concise Label for your token and click **Create**.
-4. Click **Copy** to copy the token to your clipboard, you will not have another opportunity to view the token value after you leave this page.
+4. Make sure to configure the [required scopes](#required-api-token-scopes) for the token.
+5. Click **Copy** to copy the token to your clipboard, you will not have another opportunity to view the token value after you leave this page.
 
 Use the following Python script to ingest historical Jira issues into port:
 

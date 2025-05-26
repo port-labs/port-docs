@@ -8,6 +8,10 @@ import TabItem from "@theme/TabItem"
 
 # Create & use surveys in your portal
 
+<center>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/TJo0FXoEIiE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+</center><br/>
+
 This guide will walk you through the setup and use of surveys in your portal.  
 
 We will learn how to configure a survey, collect responses, and view feedback insights from developers to drive engineering improvements.

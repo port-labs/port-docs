@@ -41,6 +41,12 @@ To use a different branch, simply pass the `ref` key in the `Configure the invoc
 }
 ```
 
+:::info Workflow file must exist in the default branch
+Due to [GitHub's behavior](https://github.com/github/docs/issues/31007), to trigger a workflow that uses the `workflow_dispatch` event from a non-default branch using the `ref` key, the same workflow file must exist in the **default branch**.
+
+TIP: If you prefer not to include the full workflow file in the **default branch**, placing a workflow file with the **same name** is enough for the correct workflow in the non-branch to run successfully.
+:::
+
 ### Automatic workflow status update
 
 Additionally, you can define whether or not Port should automatically use the workflow's end status (`SUCCESS`/`FAILURE`) to update the action/automation status in Port.  

@@ -110,6 +110,14 @@ export const availableGuides = [
         link: "/guides/all/create-and-track-dora-metrics-in-your-portal",
     },
     {
+        title: "Set up deployments using GitLab merge requests or jobs",
+        description: "Set up deployments using GitLab merge requests or jobs",
+        tags: ["Engineering metrics"],
+        logos: ["Actions"],
+        category: "Experiences",
+        link: "/guides/all/set-up-deployments-dora-gitlab",
+    },
+    {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["Cloud access management", "Actions", "RBAC"],
@@ -188,7 +196,7 @@ export const availableGuides = [
     {
         title: "Ingest cloud resources using Dynatrace",
         description: "Ingest any cloud resources from your Dynatrace environment into Port",
-        tags: ["Engineering metrics", "Dynatrace"],
+        tags: ["SDLC", "Dynatrace"],
         logos: ["Dynatrace"],
         // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-dynatrace",
@@ -804,7 +812,7 @@ export const availableGuides = [
     {
         title: "Ingest cloud resources using New Relic",
         description: "Ingest cloud resources from your New Relic environment into Port",
-        tags: ["Engineering metrics", "New Relic"],
+        tags: ["SDLC", "New Relic"],
         logos: ["New Relic"],
         // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-newrelic",
@@ -878,7 +886,7 @@ export const availableGuides = [
     {
         title: "Assign teams to monitored entities", 
         description: "Configure your Dynatrace data sources to map entities to teams",
-        tags: ["Engineering metrics", "Dynatrace"],
+        tags: ["SDLC", "Dynatrace"],
         logos: ["Dynatrace"],
         link: "/guides/all/connect-dynatrace-team-with-entities"
     },
@@ -1082,7 +1090,7 @@ export const availableGuides = [
     {
         title: "Visualize your GitHub dependency security alerts",
         description: "Create a dashboard that visualizes your GitHub dependency security alerts using dependabot alerts",
-        tags: ["Dependency management", "GitHub", "Dashboards"],
+        tags: ["Security", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-dependabot-alerts",
     },
@@ -1093,5 +1101,53 @@ export const availableGuides = [
         logos: ["Slack", "AWS", "Webhook"],
         link: "/guides/all/ingest-slack-data-via-fivetran-s3-and-webhook"
     },
+        title: "Automate admin role assignment",
+        description: "Set up automated user role assignment when they are added to Admins group.",
+        tags: ["Security", "Automations", "RBAC"],
+        logos: ["Automations"],
+        link: "/guides/all/automate-user-role-update",
+    },
+    {
+        title: "Delete a ServiceNow incident",
+        description: "Create a self-service action that deletes a ServiceNow incident",
+        tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/delete-servicenow-incident",
+    },
+    {
+        title: "Visualize your AWS storage and security configuration",
+        description: "Create a dashboard that visualizes your AWS storage and security configuration",
+        tags: ["Security", "AWS", "Dashboards"],
+        logos: ["AWS"],
+        link: "/guides/all/visualize-your-aws-storage-configuration",
+    },
+    {
+        title: "Interact with ServiceNow records",
+        description: "Create a self-service action that interacts with ServiceNow records",
+        tags: ["Incident management", "ServiceNow", "Actions"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/interact-with-servicenow",
+    },
+    {
+        title: "Visualize your GitHub identity and access management",
+        description: "Create a dashboard that visualizes your GitHub identity and access management",
+        tags: ["Security", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-your-github-identity-and-access-management",
+    },
+    {
+        title: "Auto-label your GitHub PRs with Sonar Scans",
+        description: "Create an automation that applies labels to GitHub pull requests based on SonarQube scans",
+        tags: ["Security", "GitHub", "SonarQube", "Automations"],
+        logos: ["GitHub", "SonarQube"],
+        link: "/guides/all/apply-labels-to-github-pr-based-on-sonar-scans",
+    },
+    {
+        title: "Create an Azure DevOps Work Item",
+        description: "Create a self-service action that creates an Azure DevOps work item",
+        tags: ["SDLC", "AzureDevops", "Actions"],
+        logos: ["AzureDevops", "Webhook"],
+        link: "/guides/all/create-azure-devops-work-item",
+    }
 ]
 

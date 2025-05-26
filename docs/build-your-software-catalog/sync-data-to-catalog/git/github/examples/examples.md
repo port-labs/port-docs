@@ -55,7 +55,7 @@ import PackageBlueprint from './example-file-kind/\_example_package_blueprint.md
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
 
-# Resource mapping examples
+# Examples
 
 :::warning General permissions limitation with gitHub cloud app
 When using the GitHub Cloud app with Port, certain fields and data points may not be accessible due to the lack of `write` API permissions. These limitations affect advanced repository settings, security features (such as code scanning and secret scanning status), and other GitHub objects that require elevated permissions to retrieve data.

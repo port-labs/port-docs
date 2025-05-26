@@ -256,7 +256,7 @@ In the new dashboard, create the following widgets:
 3. Select `Count entities` **Chart type** and choose **Dependabot Alert** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `open` alerts updated in the last 6 months:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -293,7 +293,7 @@ In the new dashboard, create the following widgets:
 3. Select `Count entities` **Chart type** and choose **Dependabot Alert** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `fixed` alerts:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -321,7 +321,7 @@ In the new dashboard, create the following widgets:
 3. Select `Count entities` **Chart type** and choose **Dependabot Alert** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `Dismissed alerts` alerts:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",

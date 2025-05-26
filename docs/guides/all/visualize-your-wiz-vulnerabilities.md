@@ -92,7 +92,7 @@ In the new dashboard, create the following widgets:
 3. Select `Count entities` **Chart type** and choose **Wiz Issue** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `OPEN` issues created in the last 6 months:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -127,7 +127,7 @@ In the new dashboard, create the following widgets:
 3. Select `Count entities` **Chart type** and choose **Wiz Issue** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `RESOLVED` issues:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -155,7 +155,7 @@ In the new dashboard, create the following widgets:
 3. Select `Count entities` **Chart type** and choose **Wiz Issue** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `OPEN` and `CRITICAL` issues:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
