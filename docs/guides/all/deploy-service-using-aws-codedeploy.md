@@ -12,8 +12,8 @@ This guide walks you through implementing a self-service action in Port that tri
 
 ## Prerequisites
 
-- Complete the [onboarding process](/getting-started/overview).
-- Access to an AWS account with permissions to manage S3, CodeDeploy and EC2.
+- Complete the [onboarding process](/getting-started/overview)
+- Access to an AWS account with permissions to manage S3, CodeDeploy and EC2
 - An existing [AWS CodeDeploy application and deployment group](https://docs.aws.amazon.com/codedeploy/latest/userguide/getting-started-codedeploy.html)
 - A GitHub repository containing your application code
 
