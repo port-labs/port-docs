@@ -145,7 +145,7 @@ Port has 2 types of search rule operators:
 
 A wide variety of operators are available, see them [here](./comparison-operators).
 
----
+___
 
 ### Relation operators
 
@@ -184,7 +184,6 @@ The operator also supports multiple related entities as the searched value:
   "value": ["myFirstEntity", "mySecondEntity"]
 }
 ```
-
 This query will return all of the entities that are related to one or more of the identifiers in the value array.
 
 <h4> Required </h4>
