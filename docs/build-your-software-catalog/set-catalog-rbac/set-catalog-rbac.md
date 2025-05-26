@@ -32,19 +32,18 @@ Catalog RBAC allows admins to finely control which users have access to specific
 - Allow a user to edit a single specific property on an entity.
 - Create a fully read-only view for a developer.
 
-## Set _global_ access controls to catalog data
+## Set *global* access controls to catalog data
 
 The default permissions assigned to every blueprint upon creation specify that users with the `admin` role, and users with the specific blueprint `moderator` role, can perform any action on a blueprint.  
 See [RBAC permissions](/sso-rbac/rbac/) for more information about the different roles.
 
 It is possible to assign global permissions controls on **entities**, using these steps:
-
 1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
 2. Select your desired blueprint, click on the `...` button in the top-right corner, and select `Permissions`:
 
-<img src='/img/software-catalog/role-based-access-control/permissions/editEntityPermissions.png' width='30%' border='1px' />
+    <img src='/img/software-catalog/role-based-access-control/permissions/editEntityPermissions.png' width='30%' border='1px' />
+3. A JSON editor will open, where you can set the permissions for the blueprint.  
 
-3. A JSON editor will open, where you can set the permissions for the blueprint.
 
 <Tabs groupId="permission" defaultValue="read" queryString="permission">
 
@@ -518,7 +517,7 @@ To give `delete` permissions to members of the owning team of an entity, change 
 
 </Tabs>
 
-## Set _granular_ access controls to catalog data
+## Set *granular* access controls to catalog data
 
 It is possible to assign more granular permissions controls on **entities**, allowing you to prevent users from editing certain properties or relations.
 
