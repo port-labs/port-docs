@@ -1101,6 +1101,7 @@ export const availableGuides = [
         logos: ["Slack", "AWS", "Webhook"],
         link: "/guides/all/ingest-slack-data-via-fivetran-s3-and-webhook"
     },
+    {
         title: "Automate admin role assignment",
         description: "Set up automated user role assignment when they are added to Admins group.",
         tags: ["Security", "Automations", "RBAC"],
