@@ -28,7 +28,7 @@ resources:
 
 ## Using advanced configurations
 
-Let's look at the advanced configuration parameters we can add to the [integration configuration](./gitlab-v2.md#configuration):
+Let's look at the advanced configuration parameters we can add to the [integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#configuration):
 
 <Tabs groupId="config" queryString="parameter">
 
