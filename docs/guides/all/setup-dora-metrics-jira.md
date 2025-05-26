@@ -20,7 +20,7 @@ To set up Jira issues for DORA metrics in your portal, you will need:
 
 - Admin permissions (to install the experience and execute self-service actions).
 - An installed DORA Metrics experience, based on: [Create & track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal).
-- An installed [Jira integration](/build-your-software-catalog/sync-data-to-catalog/issue-trackers/jira/installation).
+- An installed [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/).
 
 ## Configure your deployments and incidents
 
