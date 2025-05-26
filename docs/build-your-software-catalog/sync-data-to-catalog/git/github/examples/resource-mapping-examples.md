@@ -268,6 +268,7 @@ In the following example you will ingest your GitHub repositories and their bran
 
 In the following example you will ingest your GitHub repositories and their last contributor to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
+<BranchBlueprint/>
 <LastContributorBlueprint/>
 <LastContributorAppConfig/>
 
