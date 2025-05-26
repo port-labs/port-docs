@@ -194,7 +194,7 @@ in this example `on-call` users are grented `read` access only to entities that 
             "property": "region",
             "operator": "containsAny",
             "value": {
-              "context" : "userteams",
+              "context" : "userTeams",
               "property": "region"
             }
           },
