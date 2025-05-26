@@ -395,8 +395,6 @@ And the result shall be:
 
 ### Dynamic properties
 
-#### Widgets query
-
 When using Port's UI, you can use properties of the logged-in user when writing rules by using the following functions:
 
 - `getUserTeams` - a list of the teams the user belongs to.
@@ -408,7 +406,7 @@ When using Port's UI, you can use properties of the logged-in user when writing 
 Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
 :::
 
-##### Usage examples
+#### Usage examples
 
 ```json showLineNumbers
 [
@@ -450,7 +448,7 @@ Since we don't have context of the logged-in user when using the API, these func
 ]
 ```
 
-#### contextual query rules
+### contextual query rules
 
 :::info Closed beta feature
 This capability is currently in closed beta, and is not yet generally available.
@@ -458,7 +456,7 @@ If you would like to join the beta, please reach out to us.
 :::
 To filter and costomise queries, you can add the context of the user trigring the query, You can use contextual query rules with other rules as well to fully costomise the response.
 
-##### Available contexts:
+#### Available contexts
 | Context       | Description                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------- |
 | `user`  | The entity of the user triggering the query |
@@ -493,7 +491,7 @@ To filter and costomise queries, you can add the context of the user trigring th
 </TabItem>
 </Tabs>
 
-##### Usage examples
+#### Usage examples
 
 ```json showLineNumbers
 [ 
