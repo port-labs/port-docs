@@ -28,7 +28,7 @@ resources:
 
 ## Using advanced configurations
 
-Let's look at the advanced configuration parameters we can add to the [integration configuration](./gitlab-v2.md#the-integration-configuration):
+Let's look at the advanced configuration parameters we can add to the [integration configuration](./gitlab-v2.md#configuration):
 
 <Tabs groupId="config" queryString="parameter">
 
