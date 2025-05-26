@@ -40,9 +40,6 @@ By using the webhook mapping you can:
 
 ## Create a custom webhook
 
-Choose your preferred method to create a custom webhook:
-<Tabs>
-<TabItem value="ui" label="UI">
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 
 2. Click on the `+ Data source` button in the top right corner.
@@ -50,11 +47,7 @@ Choose your preferred method to create a custom webhook:
 3. Select the `Webhook` tab.
 
 4. Click on `Custom integration`.
-</TabItem>
-<TabItem value="api" label="API">
-See the [Create a webhook route](/api-reference/create-a-webhook) in the API reference.
-</TabItem>
-</Tabs>
+
 
 ## Webhook configuration
 
