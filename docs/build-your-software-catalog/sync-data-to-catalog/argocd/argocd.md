@@ -450,6 +450,119 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the ArgoCD integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: cluster
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name
+        blueprint: '"argocdCluster"'
+        properties:
+          applicationsCount: .info.applicationsCount
+          serverVersion: .serverVersion
+          labels: .labels
+          updatedAt: .connectionState.attemptedAt
+          server: .server
+- kind: cluster
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name + "-" + .item | tostring
+        title: .name + "-" + .item
+        blueprint: '"argocdNamespace"'
+        relations:
+          cluster: .name
+    itemsToParse: .namespaces
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.name
+        title: .metadata.name
+        blueprint: '"argocdProject"'
+        properties:
+          createdAt: .metadata.creationTimestamp
+          description: .spec.description
+- kind: application
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.uid
+        title: .metadata.name
+        blueprint: '"argocdApplication"'
+        properties:
+          gitRepo: .spec.source.repoURL
+          gitPath: .spec.source.path
+          destinationServer: .spec.destination.server
+          revision: .status.sync.revision
+          targetRevision: .spec.source.targetRevision
+          syncStatus: .status.sync.status
+          healthStatus: .status.health.status
+          createdAt: .metadata.creationTimestamp
+          labels: .metadata.labels
+          annotations: .metadata.annotations
+        relations:
+          project: .spec.project
+          namespace: .metadata.namespace
+          environment:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"argoCluster"'
+              value: .spec.destination.server
+          cluster:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"server"'
+              value: .spec.destination.server
+- kind: application
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.uid + "-" + (.item.id | tostring)
+        title: .metadata.name + "-" + (.item.id | tostring)
+        blueprint: '"argocdDeploymentHistory"'
+        properties:
+          deployedAt: .item.deployedAt
+          deployStartedAt: .item.deployStartedAt
+          revision: .item.source.repoURL + "/commit/" + .item.revision
+          initiatedBy: .item.initiatedBy.username
+          repoURL: .item.source.repoURL
+          sourcePath: .item.source.path
+        relations:
+          application: .metadata.uid
+          anotherRelation: .item.source.repoURL
+    itemsToParse: .status.history // []
+```
+
+</details>
+
+
+
 
 ## Capabilities
 

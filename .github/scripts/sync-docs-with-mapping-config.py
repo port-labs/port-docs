@@ -30,27 +30,43 @@ OCEAN_TEST_PATH = os.environ.get('OCEAN_TEST_PATH', '../ocean-test')
 DOCS_REPO_PATH = os.environ.get('DOCS_REPO_PATH', '../port-docs')
 
 def format_yaml_consistently(config: Dict[str, Any]) -> str:
-    """
-    Format YAML consistently to avoid unnecessary newlines and formatting differences.
-    This ensures that identical content produces identical YAML strings.
-    """
-    # Use consistent YAML dump settings
+    """Format YAML consistently to avoid unnecessary newlines and formatting differences."""
+    
+    # Custom YAML representer for multi-line strings
+    def represent_multiline_str(dumper, data):
+        if '\n' in data:
+            # Use literal block scalar (|) for multi-line strings
+            return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
+        return dumper.represent_scalar('tag:yaml.org,2002:str', data)
+    
+    # Custom YAML representer for long single-line strings that should be folded
+    def represent_long_str(dumper, data):
+        # Check for specific patterns that should use folded style
+        if (len(data) > 80 and 
+            ('type IN (' in data or 'type in (' in data or 
+             'AWSEC2INSTANCE' in data or 'AZUREVIRTUALMACHINE' in data)):
+            return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='>')
+        elif '\n' in data:
+            return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
+        return dumper.represent_scalar('tag:yaml.org,2002:str', data)
+    
+    # Create a custom dumper
+    class CustomDumper(yaml.SafeDumper):
+        pass
+    
+    # Add the custom representer
+    CustomDumper.add_representer(str, represent_long_str)
+    
     yaml_str = yaml.dump(
         config, 
+        Dumper=CustomDumper,
         default_flow_style=False, 
         sort_keys=False,
         allow_unicode=True,
-        width=1000,  # Prevent line wrapping
+        width=1000,
         indent=2
     )
-    
-    # Ensure consistent line endings and remove any trailing whitespace
-    yaml_str = yaml_str.strip()
-    
-    # Normalize line endings to \n
-    yaml_str = yaml_str.replace('\r\n', '\n').replace('\r', '\n')
-    
-    return yaml_str
+    return yaml_str.strip().replace('\r\n', '\n').replace('\r', '\n')
 
 def extract_typescript_config(integration: str) -> Optional[Dict[str, Any]]:
     """Extract integration configuration from TypeScript file in Port-monorepo."""
@@ -203,21 +219,24 @@ def get_integration_config(integration: str, source_type: str = "auto") -> Optio
             return None
 
 def find_markdown_file(integration: str) -> Optional[str]:
-    """
-    Find the markdown documentation file for an integration.
-    Searches recursively in the docs directory for {integration}.md files.
-    
-    Special cases:
-    - k8sExporter -> kubernetes.md
-    """
+    """Find the markdown documentation file for an integration."""
     docs_search_path = os.path.join(DOCS_REPO_PATH, "docs", "build-your-software-catalog")
     
-    # Handle special case mappings
-    if integration == "k8sExporter":
-        target_filename = "kubernetes.md"
-        print(f"[INFO] Special case: {integration} -> {target_filename}")
+    # Mapping from integration names to documentation file names
+    INTEGRATION_TO_DOCS_MAPPING = {
+        'k8sExporter': 'kubernetes',
+        'azureDevops': 'azure-devops',
+        'newRelic': 'newrelic',
+        'octopus': 'octopus-deploy',
+    }
+    
+    # Determine the target filename based on mappings
+    if integration in INTEGRATION_TO_DOCS_MAPPING:
+        target_filename = f"{INTEGRATION_TO_DOCS_MAPPING[integration]}.md"
+        print(f"[INFO] Mapping: {integration} -> {target_filename}")
     else:
         target_filename = f"{integration}.md"
+        print(f"[INFO] Direct mapping: {integration} -> {target_filename}")
     
     # Search for the target markdown file
     for root, dirs, files in os.walk(docs_search_path):

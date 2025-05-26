@@ -340,6 +340,92 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the LaunchDarkly integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .name
+        blueprint: '"launchDarklyProject"'
+        properties:
+          tags: .tags
+- kind: flag
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key + "-" + .__projectKey
+        title: .name
+        blueprint: '"launchDarklyFeatureFlag"'
+        properties:
+          kind: .kind
+          description: .description
+          creationDate: .creationDate / 1000 | strftime("%Y-%m-%dT%H:%M:%SZ")
+          clientSideAvailability: .clientSideAvailability
+          temporary: .temporary
+          tags: .tags
+          maintainer: ._maintainer.email
+          deprecated: .deprecated
+          variations: .variations
+          customProperties: .customProperties
+          archived: .archived
+        relations:
+          project: .__projectKey
+- kind: environment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key + "-" + .__projectKey
+        title: .name
+        blueprint: '"launchDarklyEnvironment"'
+        properties:
+          defaultTtl: .defaultTtl
+          secureMode: .secureMode
+          defaultTrackEvents: .defaultTrackEvents
+          requireComments: .requireComments
+          confirmChanges: .confirmChanges
+          tags: .tags
+          critical: .critical
+        relations:
+          project: .__projectKey
+- kind: flag-status
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: . as $root | ._links.self.href | split("/") | last as $last | "\($last)-\($root.__environmentKey)"
+        title: . as $root | ._links.self.href | split("/") | last as $last | "\($last)-\($root.__environmentKey)"
+        blueprint: '"launchDarklyFFInEnvironment"'
+        properties:
+          status: .name
+        relations:
+          environment: .__environmentKey + "-" + .__projectKey
+          featureFlag: . as $input | $input._links.self.href | split("/") | .[-1] + "-" + $input.__projectKey
+```
+
+</details>
+
+
+
+
 
 ## Examples
 

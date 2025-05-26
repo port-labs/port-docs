@@ -105,6 +105,170 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Backstage integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+resources:
+- kind: component
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.identifier
+        title: .metadata.title // .metadata.name
+        blueprint: '"component"'
+        properties:
+          type: .spec.type
+          lifecycle: .spec.lifecycle
+          language: .spec.language
+          description: .metadata.description
+          labels: .metadata.labels
+          annotations: .metadata.annotations
+          links: .metadata.links
+          tags: .metadata.tags
+        relations:
+          owningUser: .relations[] | select(.type == "ownedBy" and (.targetRef | startswith("user:"))) | .targetRef
+          owningGroup: .relations[] | select(.type == "ownedBy" and (.targetRef | startswith("group:"))) | .targetRef
+          system: '"system:" + (.metadata.namespace // "default") + "/" + .spec.system'
+          subcomponentOf: .relations[] | select(.type == "subcomponentOf" and (.targetRef | startswith("component:"))) | .targetRef
+          providesApis: .relations[] | select(.type == "providesApi" and (.targetRef | startswith("api:"))) | .targetRef
+          consumesApis: .relations[] | select(.type == "consumesApi" and (.targetRef | startswith("api:"))) | .targetRef
+          dependsOnComponent: .relations[] | select(.type == "dependsOn" and (.targetRef | startswith("component:"))) | .targetRef
+          dependsOnResource: .relations[] | select(.type == "dependsOn" and (.targetRef | startswith("resource:"))) | .targetRef
+- kind: API
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.identifier
+        title: .metadata.title // .metadata.name
+        blueprint: '"api"'
+        properties:
+          type: .spec.type
+          lifecycle: .spec.lifecycle
+          definition: .spec.definition | tostring
+          definitionOpenAPI: if .spec.type == "open-api" then .spec.definition else null end
+          definitionAsyncAPI: if .spec.type == "async-api" then .spec.definition else null end
+          definitionGRPC: if .spec.type == "grpc" then .spec.definition else null end
+          definitionGraphQL: if .spec.type == "graphql" then .spec.definition else null end
+          description: .metadata.description
+          labels: .metadata.labels
+          annotations: .metadata.annotations
+          links: .metadata.links
+          tags: .metadata.tags
+        relations:
+          owningUser: .relations[] | select(.type == "ownedBy" and (.targetRef | startswith("user:"))) | .targetRef
+          owningGroup: .relations[] | select(.type == "ownedBy" and (.targetRef | startswith("group:"))) | .targetRef
+          system: '"system:" + (.metadata.namespace // "default") + "/" + .spec.system'
+- kind: group
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.identifier
+        title: .metadata.title // .metadata.name
+        blueprint: '"group"'
+        properties:
+          description: .metadata.description
+          type: .metadata.type
+          email: .metadata.email
+          labels: .metadata.labels
+          annotations: .metadata.annotations
+          links: .metadata.links
+          tags: .metadata.tags
+        relations:
+          parent: .relations[] | select(.type == "childOf" and (.targetRef | startswith("group:"))) | .targetRef
+          members: .relations[] | select(.type == "hasMember" and (.targetRef | startswith("user:"))) | .targetRef
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.identifier
+        title: .metadata.title // .metadata.name
+        blueprint: '"user"'
+        properties:
+          email: .metadata.email
+          description: .metadata.description
+          labels: .metadata.labels
+          annotations: .metadata.annotations
+          links: .metadata.links
+          tags: .metadata.tags
+- kind: resource
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.identifier
+        title: .metadata.title // .metadata.name
+        blueprint: '"resource"'
+        properties:
+          type: .spec.type
+          description: .metadata.description
+          labels: .metadata.labels
+          annotations: .metadata.annotations
+          links: .metadata.links
+          tags: .metadata.tags
+        relations:
+          owningUser: .relations[] | select(.type == "ownedBy" and (.targetRef | startswith("user:"))) | .targetRef
+          owningGroup: .relations[] | select(.type == "ownedBy" and (.targetRef | startswith("group:"))) | .targetRef
+          system: '"system:" + (.metadata.namespace // "default") + "/" + .spec.system'
+          dependsOnResource: .relations[] | select(.type == "dependsOn" and (.targetRef | startswith("resource:"))) | .targetRef
+          dependsOnComponent: .relations[] | select(.type == "dependsOn" and (.targetRef | startswith("component:"))) | .targetRef
+- kind: system
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.identifier
+        title: .metadata.title // .metadata.name
+        blueprint: '"system"'
+        properties:
+          description: .metadata.description
+          labels: .metadata.labels
+          annotations: .metadata.annotations
+          links: .metadata.links
+          tags: .metadata.tags
+        relations:
+          owningUser: .relations[] | select(.type == "ownedBy" and (.targetRef | startswith("user:"))) | .targetRef
+          owningGroup: .relations[] | select(.type == "ownedBy" and (.targetRef | startswith("group:"))) | .targetRef
+          domain: .relations[] | select(.type == "partOf" and (.targetRef | startswith("domain:"))) | .targetRef
+- kind: domain
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.identifier
+        title: .metadata.title // .metadata.name
+        blueprint: '"domain"'
+        properties:
+          description: .metadata.description
+          labels: .metadata.labels
+          annotations: .metadata.annotations
+          links: .metadata.links
+          tags: .metadata.tags
+        relations:
+          owningUser: .relations[] | select(.type == "ownedBy" and (.targetRef | startswith("user:"))) | .targetRef
+          owningGroup: .relations[] | select(.type == "ownedBy" and (.targetRef | startswith("group:"))) | .targetRef
+```
+
+</details>
+
+
+
 ## Limitations
 
 Currently, the integration does not support [custom entity](https://backstage.io/docs/features/software-catalog/extending-the-model/#implementing-custom-model-extensions) kinds. 

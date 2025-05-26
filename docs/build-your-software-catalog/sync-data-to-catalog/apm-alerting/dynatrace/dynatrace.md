@@ -420,6 +420,87 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Dynatrace integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: entity
+  selector:
+    query: 'true'
+    entityFields: firstSeenTms,lastSeenTms,tags
+    entityTypes:
+    - APPLICATION
+    - SERVICE
+  port:
+    entity:
+      mappings:
+        identifier: .entityId
+        title: .displayName
+        blueprint: '"dynatraceEntity"'
+        properties:
+          firstSeen: (.firstSeenTms // 0) / 1000 | todate
+          lastSeen: (.lastSeenTms // 0) / 1000 | todate
+          type: .type
+          tags: .tags // [] | .[].stringRepresentation
+- kind: problem
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .problemId
+        title: .title
+        blueprint: '"dynatraceProblem"'
+        properties:
+          entityTags: .entityTags[].stringRepresentation
+          evidenceDetails: .evidenceDetails.details // [] | .[].displayName
+          managementZones: .managementZones[].name
+          problemFilters: .problemFilters[].name
+          severityLevel: .severityLevel
+          status: .status
+          startTime: .startTime / 1000 | todate
+          endTime: .endTime | if . == -1 then null else (./1000 | todate) end
+        relations:
+          impactedEntities: .impactedEntities[].entityId.id
+          linkedProblemInfo: .linkedProblemInfo.problemId
+          rootCauseEntity: .rootCauseEntity.entityId.id
+- kind: slo
+  selector:
+    query: 'true'
+    attachRelatedEntities: true
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"dynatraceSlo"'
+        properties:
+          status: .status
+          target: .target
+          enabled: .enabled
+          warning: .warning
+          error: .error
+          errorBudget: .errorBudget
+          evaluatedPercentage: .evaluatedPercentage
+          evaluationType: .evaluationType
+          filter: .filter
+        relations:
+          entities: if .__entities != null then .__entities | map(.entityId) else [] end
+```
+
+</details>
+
+
 ### Ingest additional resource types
 By default, the `entity` kind ingests only entities of type `APPLICATION` and `SERVICE` due to the large number of available resources. However, you can configure the `entity` kind mapping to ingest entities of other types.
 

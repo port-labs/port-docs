@@ -54,6 +54,81 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Bitbucket integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: repository
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name
+        blueprint: '"bitbucketRepository"'
+        properties:
+          url: .links.html.href
+          defaultBranch: .main_branch
+          last_activity: .updated_on
+- kind: pull-request
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .destination.repository.name + (.id|tostring)
+        title: .title
+        blueprint: '"bitbucketPullRequest"'
+        properties:
+          status: .state
+          createdAt: .created_on
+          updatedAt: .updated_on
+          link: .links.html.href
+        relations:
+          repository: .destination.repository.name
+          bitbucket_creator: .author.display_name | gsub(" ";"_")
+          bitbucket_assignees: .participants | map(.user.display_name) | map(gsub(" ";"_"))
+          bitbucket_reviewers: .reviewers | map(.display_name) | map(gsub(" ";"_"))
+          service:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"bitbucket_repository"'
+              value: .destination.repository.name
+          creator:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"bitbucket_username"'
+              value: .author.display_name | gsub(" ";"_")
+          assignees:
+            combinator: '"and"'
+            rules:
+            - operator: '"in"'
+              property: '"bitbucket_username"'
+              value: .participants | map(.user.display_name) | map(gsub(" ";"_"))
+          reviewers:
+            combinator: '"and"'
+            rules:
+            - operator: '"in"'
+              property: '"bitbucket_username"'
+              value: .reviewers | map(.display_name) | map(gsub(" ";"_"))
+```
+
+</details>
+
+
+
 To ingest Bitbucket objects, use one of the following methods:
 
 <Tabs queryString="method">

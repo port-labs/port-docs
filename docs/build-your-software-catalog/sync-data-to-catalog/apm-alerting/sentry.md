@@ -398,6 +398,106 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Sentry integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .email
+        title: .user.name
+        blueprint: '"sentryUser"'
+        properties:
+          username: .user.username
+          isActive: .user.isActive
+          dateJoined: .user.dateJoined
+          lastLogin: .user.lastLogin
+          orgRole: .orgRole
+          inviteStatus: .inviteStatus
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .email
+        blueprint: '"_user"'
+        relations:
+          sentry_user: .email
+- kind: project-tag
+  selector:
+    query: 'true'
+    tag: environment
+  port:
+    entity:
+      mappings:
+        identifier: .slug + "-" + .__tags.name
+        title: .name + "-" + .__tags.name
+        blueprint: '"sentryProjectEnvironment"'
+        properties:
+          dateCreated: .dateCreated
+          platform: .platform
+          status: .status
+          link: .organization.links.organizationUrl + "/projects/" + .name
+- kind: issue-tag
+  selector:
+    query: 'true'
+    tag: environment
+  port:
+    itemsToParse: .__tags
+    entity:
+      mappings:
+        identifier: .id + "-" + .item.name
+        title: .title + " -" + " " + .item.name
+        blueprint: '"sentryIssue"'
+        properties:
+          link: .permalink + "?environment=" + .item.name
+          status: .status
+          isUnhandled: .isUnhandled
+        relations:
+          projectEnvironment: (.project.slug as $slug | .item | "\($slug)-\(.name)")
+          assignee:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"$identifier"'
+              value: .assignedTo.email
+- kind: team
+  selector:
+    query: 'true'
+    includeMembers: true
+  port:
+    entity:
+      mappings:
+        identifier: .slug
+        title: .name
+        blueprint: '"sentryTeam"'
+        properties:
+          dateCreated: .dateCreated
+          memberCount: .memberCount
+          roles: .teamRole
+          projects: .projects | map (.slug)
+        relations:
+          members: if .__members != null then .__members | map(.user.email) | map(select(. != null)) else [] end
+```
+
+</details>
+
+
+
 
 ## Examples
 

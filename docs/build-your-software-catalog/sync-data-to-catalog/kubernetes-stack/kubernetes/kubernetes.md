@@ -154,6 +154,202 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Kubernetes integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: v1/namespaces
+  selector:
+    query: .metadata.name | contains("kube-system")
+  port:
+    entity:
+      mappings:
+      - identifier: env.CLUSTER_NAME
+        title: env.CLUSTER_NAME
+        blueprint: '"k8s_cluster"'
+- kind: v1/namespaces
+  selector:
+    query: .metadata.name | startswith("kube") | not
+  port:
+    entity:
+      mappings:
+      - identifier: .metadata.name + "-" + env.CLUSTER_NAME
+        title: .metadata.name
+        blueprint: '"k8s_namespace"'
+        properties:
+          creationTimestamp: .metadata.creationTimestamp
+          labels: .metadata.labels
+        relations:
+          Cluster: env.CLUSTER_NAME
+- kind: v1/nodes
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+      - identifier: (.metadata.name) | (split(".")|join("_")) + "-" + env.CLUSTER_NAME
+        title: .metadata.name + "-" + env.CLUSTER_NAME
+        blueprint: '"k8s_node"'
+        properties:
+          creationTimestamp: .metadata.creationTimestamp
+          totalCPU: .status.allocatable.cpu
+          totalMemory: .status.allocatable.memory
+          labels: .metadata.labels
+          kubeletVersion: .status.nodeInfo.kubeletVersion | split("-") | .[0]
+          ready: .status.conditions[] | select(.type == "Ready") | .status
+        relations:
+          Cluster: env.CLUSTER_NAME
+- kind: apps/v1/deployments
+  selector:
+    query: .metadata.namespace | startswith("kube") | not
+  port:
+    entity:
+      mappings:
+      - identifier: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+        title: .metadata.name
+        blueprint: '"k8s_workload"'
+        properties:
+          kind: '"Deployment"'
+          creationTimestamp: .metadata.creationTimestamp
+          replicas: .spec.replicas
+          hasPrivileged: .spec.template.spec.containers | [.[].securityContext.privileged] | any
+          hasLatest: .spec.template.spec.containers[].image | contains(":latest")
+          hasLimits: .spec.template.spec.containers | all(has("resources") and (.resources.limits.memory and .resources.limits.cpu))
+          strategyConfig: .spec.strategy // {}
+          strategy: .spec.strategy.type
+          availableReplicas: .status.availableReplicas
+          labels: .metadata.labels
+          containers: (.spec.template.spec.containers | map({name, image, resources}))
+          isHealthy: if .spec.replicas == .status.availableReplicas then "Healthy" else "Unhealthy" end
+        relations:
+          Namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+- kind: apps/v1/daemonsets
+  selector:
+    query: .metadata.namespace | startswith("kube") | not
+  port:
+    entity:
+      mappings:
+      - identifier: .metadata.name + "-DaemonSet-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+        title: .metadata.name
+        blueprint: '"k8s_workload"'
+        properties:
+          kind: '"DaemonSet"'
+          creationTimestamp: .metadata.creationTimestamp
+          replicas: .spec.replicas
+          strategyConfig: .spec.strategy // {}
+          availableReplicas: .status.availableReplicas
+          hasPrivileged: .spec.template.spec.containers | [.[].securityContext.privileged] | any
+          labels: .metadata.labels
+          hasLatest: .spec.template.spec.containers[].image | contains(":latest")
+          hasLimits: .spec.template.spec.containers | all(has("resources") and (.resources.limits.memory and .resources.limits.cpu))
+          containers: (.spec.template.spec.containers | map({name, image, resources}))
+          isHealthy: if .spec.replicas == .status.availableReplicas then "Healthy" else "Unhealthy" end
+        relations:
+          Namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+- kind: apps/v1/statefulsets
+  selector:
+    query: .metadata.namespace | startswith("kube") | not
+  port:
+    entity:
+      mappings:
+      - identifier: .metadata.name + "-StatefulSet-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+        title: .metadata.name
+        blueprint: '"k8s_workload"'
+        properties:
+          kind: '"StatefulSet"'
+          labels: .metadata.labels
+          creationTimestamp: .metadata.creationTimestamp
+          strategyConfig: .spec.strategy // {}
+          replicas: .spec.replicas
+          availableReplicas: .status.availableReplicas
+          hasLatest: .spec.template.spec.containers[].image | contains(":latest")
+          hasPrivileged: .spec.template.spec.containers | [.[].securityContext.privileged] | any
+          hasLimits: .spec.template.spec.containers | all(has("resources") and (.resources.limits.memory and .resources.limits.cpu))
+          containers: (.spec.template.spec.containers | map({name, image, resources}))
+          isHealthy: if .spec.replicas == .status.availableReplicas then "Healthy" else "Unhealthy" end
+        relations:
+          Namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+- kind: apps/v1/replicasets
+  selector:
+    query: .metadata.namespace | startswith("kube") | not
+  port:
+    entity:
+      mappings:
+      - identifier: .metadata.name + "-ReplicaSet-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+        title: .metadata.name
+        blueprint: '"k8s_replicaSet"'
+        properties:
+          creationTimestamp: .metadata.creationTimestamp
+          replicas: .spec.replicas
+          hasPrivileged: .spec.template.spec.containers | [.[].securityContext.privileged] | any
+          hasLatest: .spec.template.spec.containers[].image | contains(":latest")
+          hasLimits: .spec.template.spec.containers | all(has("resources") and (.resources.limits.memory and .resources.limits.cpu))
+          strategy: .spec.strategy.type
+          availableReplicas: .status.availableReplicas
+          labels: .metadata.labels
+          containers: (.spec.template.spec.containers | map({name, image, resources}))
+          isHealthy: if .spec.replicas == .status.availableReplicas then "Healthy" else "Unhealthy" end
+        relations:
+          replicaSetManager: .metadata.ownerReferences[0].name + "-" + .metadata.ownerReferences[0].kind + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME // []
+          workload:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"workload_identifier"'
+              value: .metadata.ownerReferences[0].name + "-" + .metadata.ownerReferences[0].kind + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME // []
+- kind: v1/pods
+  selector:
+    query: (.metadata.ownerReferences[0].kind == "ReplicaSet") and (.metadata.namespace | startswith("kube") | not)
+  port:
+    entity:
+      mappings:
+      - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+        title: .metadata.name
+        blueprint: '"k8s_pod"'
+        properties:
+          startTime: .status.startTime
+          phase: .status.phase
+          labels: .metadata.labels
+        relations:
+          replicaSet: .metadata.ownerReferences[0].name + "-" + "ReplicaSet" + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          Node: (.spec.nodeName) | (split(".")|join("_")) + "-" + env.CLUSTER_NAME
+- kind: v1/pods
+  selector:
+    query: (.metadata.ownerReferences[0].kind != "ReplicaSet") and (.metadata.namespace | startswith("kube") | not)
+  port:
+    entity:
+      mappings:
+      - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+        title: .metadata.name
+        blueprint: '"k8s_pod"'
+        properties:
+          startTime: .status.startTime
+          phase: .status.phase
+          labels: .metadata.labels
+        relations:
+          k8s_workload: .metadata.ownerReferences[0].name + "-" + .metadata.ownerReferences[0].kind + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          Node: (.spec.nodeName) | (split(".")|join("_")) + "-" + env.CLUSTER_NAME
+          workload:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"workload_identifier"'
+              value: .metadata.ownerReferences[0].name + "-" + .metadata.ownerReferences[0].kind + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+```
+
+</details>
+
+
+
 
 ## Capabilities
 

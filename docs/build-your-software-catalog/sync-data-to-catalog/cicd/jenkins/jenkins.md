@@ -424,6 +424,68 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Jenkins integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: job
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-") | .[:-1]
+        title: .fullName
+        blueprint: '"jenkinsJob"'
+        properties:
+          jobName: .name
+          url: .url
+          jobStatus: '{"notbuilt": "created", "blue": "passing", "red": "failing"}[.color]'
+          timestamp: .time
+          parentJob: .__parentJob
+- kind: build
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-") | .[:-1]
+        title: .displayName
+        blueprint: '"jenkinsBuild"'
+        properties:
+          buildStatus: .result
+          buildUrl: .url
+          buildDuration: .duration
+          timestamp: .timestamp / 1000 | todate
+        relations:
+          parentJob: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-") | .[:-1] | gsub("-[0-9]+$"; "")
+          previousBuild: .previousBuild.url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-") | .[:-1]
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .user.id
+        title: .user.fullName
+        blueprint: '"jenkinsUser"'
+        properties:
+          url: .user.absoluteUrl
+          lastUpdateTime: if .lastChange then (.lastChange/1000) else now end | strftime("%Y-%m-%dT%H:%M:%SZ")
+```
+
+</details>
+
+
+
 
 ## Examples
 

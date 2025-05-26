@@ -403,6 +403,77 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the ServiceNow integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+
+```yaml showLineNumbers
+
+resources:
+- kind: sys_user_group
+  selector:
+    query: 'true'
+    apiQueryParams:
+      sysparmDisplayValue: 'true'
+      sysparmExcludeReferenceLink: 'false'
+  port:
+    entity:
+      mappings:
+        identifier: .sys_id
+        title: .name
+        blueprint: '"servicenowGroup"'
+        properties:
+          description: .description
+          isActive: .active
+          createdOn: .sys_created_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))
+          createdBy: .sys_created_by
+- kind: sc_catalog
+  selector:
+    query: 'true'
+    apiQueryParams:
+      sysparmDisplayValue: 'true'
+      sysparmExcludeReferenceLink: 'false'
+  port:
+    entity:
+      mappings:
+        identifier: .sys_id
+        title: .title
+        blueprint: '"servicenowCatalog"'
+        properties:
+          description: .description
+          isActive: .active
+          createdOn: .sys_created_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))
+          createdBy: .sys_created_by
+- kind: incident
+  selector:
+    query: 'true'
+    apiQueryParams:
+      sysparmDisplayValue: 'true'
+      sysparmExcludeReferenceLink: 'false'
+  port:
+    entity:
+      mappings:
+        identifier: .number | tostring
+        title: .short_description
+        blueprint: '"servicenowIncident"'
+        properties:
+          category: .category
+          reopenCount: .reopen_count
+          severity: .severity
+          assignedTo: .assigned_to.link
+          urgency: .urgency
+          contactType: .contact_type
+          createdOn: .sys_created_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))
+          createdBy: .sys_created_by
+          isActive: .active
+          priority: .priority
+```
+
+</details>
 
 
 

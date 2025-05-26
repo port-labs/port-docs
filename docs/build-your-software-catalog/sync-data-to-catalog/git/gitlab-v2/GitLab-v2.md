@@ -37,6 +37,87 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the GitLab integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+resources:
+- kind: project
+  selector:
+    query: 'true'
+    includeLanguages: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .path_with_namespace | gsub(" "; "")
+        title: .name
+        blueprint: '"service"'
+        properties:
+          url: .web_url
+          readme: file://README.md
+          language: .__languages | to_entries | max_by(.value) | .key
+- kind: member
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .username
+        title: .name
+        blueprint: '"gitlabMember"'
+        properties:
+          url: .web_url
+          state: .state
+          email: .email
+          locked: .locked
+- kind: group-with-members
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .full_path
+        title: .name
+        blueprint: '"gitlabGroup"'
+        properties:
+          url: .web_url
+          visibility: .visibility
+          description: .description
+        relations:
+          gitlabMembers: .__members | map(.username)
+- kind: merge-request
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .title
+        blueprint: '"gitlabMergeRequest"'
+        properties:
+          creator: .author.name
+          status: .state
+          createdAt: .created_at
+          updatedAt: .updated_at
+          mergedAt: .merged_at
+          link: .web_url
+          leadTimeHours: (.created_at as $createdAt | .merged_at as $mergedAt | ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp | if $mergedTimestamp == null then null else (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
+          reviewers: .reviewers | map(.name)
+        relations:
+          project: .references.full | gsub("!.+"; "")
+```
+
+</details>
+
+
+
 ## Capabilities
 
 ### Ingest files from your repositories

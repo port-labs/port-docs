@@ -447,6 +447,112 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Jira integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+
+```yaml showLineNumbers
+
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .accountId
+        title: .displayName
+        blueprint: '"jiraUser"'
+        properties:
+          emailAddress: .emailAddress
+          displayName: .displayName
+          active: .active
+          accountType: .accountType
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .name
+        blueprint: '"jiraProject"'
+        properties:
+          url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
+- kind: issue
+  selector:
+    query: 'true'
+    jql: (statusCategory != Done) OR (created >= -1w) OR (updated >= -1w)
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .fields.summary
+        blueprint: '"jiraIssue"'
+        properties:
+          url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
+          status: .fields.status.name
+          issueType: .fields.issuetype.name
+          components: .fields.components
+          creator: .fields.creator.emailAddress
+          priority: .fields.priority.name
+          labels: .fields.labels
+          created: .fields.created
+          updated: .fields.updated
+          resolutionDate: .fields.resolutiondate
+        relations:
+          project: .fields.project.key
+          parentIssue: .fields.parent.key
+          subtasks: .fields.subtasks | map(.key)
+          jira_user_assignee: .fields.assignee.accountId
+          jira_user_reporter: .fields.reporter.accountId
+          assignee:
+            combinator: '"or"'
+            rules:
+            - property: '"jira_user_id"'
+              operator: '"="'
+              value: .fields.assignee.accountId
+            - property: '"$identifier"'
+              operator: '"="'
+              value: .fields.assignee.email
+          reporter:
+            combinator: '"or"'
+            rules:
+            - property: '"jira_user_id"'
+              operator: '"="'
+              value: .fields.reporter.accountId
+            - property: '"$identifier"'
+              operator: '"="'
+              value: .fields.reporter.email
+- kind: issue
+  selector:
+    query: 'true'
+    jql: (statusCategory != Done) OR (created >= -1w) OR (updated >= -1w)
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .fields.summary
+        blueprint: '"jiraIssue"'
+        relations:
+          pull_request:
+            combinator: '"and"'
+            rules:
+            - property: '"$title"'
+              operator: '"contains"'
+              value: .key
+```
+
+</details>
+
+
 ### JQL support for issues
 
 The Ocean Jira integration supports querying objects from the `issue` kind using [JQL](https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/), making it possible to specifically filter the issues that are queried from Jira and ingested to Port.

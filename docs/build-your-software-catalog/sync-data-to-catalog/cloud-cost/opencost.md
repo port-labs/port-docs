@@ -369,6 +369,71 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Opencost integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: cost
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        blueprint: '"openCostResourceAllocation"'
+        identifier: .name
+        title: .name
+        properties:
+          cluster: .properties.cluster
+          namespace: .properties.namespace
+          startDate: .start
+          endDate: .end
+          cpuCoreHours: .cpuCoreHours
+          cpuCost: .cpuCost
+          cpuEfficiency: .cpuEfficiency
+          gpuHours: .gpuHours
+          gpuCost: .gpuCost
+          networkCost: .networkCost
+          loadBalancerCost: .loadBalancerCost
+          pvCost: .pvCost
+          ramBytes: .ramBytes
+          ramCost: .ramCost
+          ramEfficiency: .ramEfficiency
+          sharedCost: .sharedCost
+          externalCost: .externalCost
+          totalCost: .totalCost
+          totalEfficiency: .totalEfficiency
+- kind: cloudcost
+  selector:
+    query: 'true'
+    cloudcostAggregate: provider
+  port:
+    entity:
+      mappings:
+        blueprint: '"openCostCloudcost"'
+        identifier: .properties.provider + "-" + .window.start + "-" + .window.end
+        title: .properties.provider + "-" + .window.start + "-" + .window.end
+        properties:
+          startDate: .window.start
+          endDate: .window.end
+          listCost: .listCost.cost
+          netCost: .netCost.cost
+          amortizedNetCost: .amortizedNetCost.cost
+          invoicedCost: .invoicedCost.cost
+          amortizedCost: .amortizedCost.cost
+```
+
+</details>
+
+
+
 
 ## Examples
 
