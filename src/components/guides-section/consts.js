@@ -911,13 +911,6 @@ export const availableGuides = [
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
     },
     {
-        title: "Ingest any data source with Airbyte, S3 & webhook",
-        description: "Send any data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["AWS", "Webhook"],
-        logos: ["AWS", "Webhook"],
-        link: "/guides/all/ingest-any-data-via-airbyte-s3-and-webhook"
-    },
-    {
         title: "Create a FireHydrant Incident",
         description: "Create a self-service action that creates a FireHydrant incident",
         tags: ["Incident management", "FireHydrant", "GitHub", "Actions","Webhook", "Automations"],
@@ -1092,6 +1085,13 @@ export const availableGuides = [
         tags: ["Dependency management", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-dependabot-alerts",
-    }
+    },
+    {
+        title: "Ingest Slack channels data with Fivetran, S3 & webhook",
+        description: "Send Slack channel data to S3 with Fivetran, then ingest it into Port via a custom webhook integration",
+        tags: ["Slack", "AWS", "Webhook"],
+        logos: ["Slack", "AWS", "Webhook"],
+        link: "/guides/all/ingest-slack-data-via-fivetran-s3-and-webhook"
+    },
 ]
 
