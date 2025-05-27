@@ -955,11 +955,11 @@ export const availableGuides = [
         link: "/guides/all/trigger-firehydrant-incident",
     },
     {
-        title: "Enrich entities using AI",
-        description: "Enrich entities with AI-powered insights from external APIs",
-        tags: [ "Security", "Actions", "Automations", "AI"],
-        logos: ["Snyk","Wiz","SonarQube"],
-        link: "/guides/all/enrich-entities-using-ai",
+        title: "Enrich security vulnerabilities using AI",
+        description: "Leverage AI tools to get detailed analysis and remediation strategies for security vulnerabilities",
+        tags: ["Security", "AI", "Actions", "Automations"],
+        logos: ["Snyk", "Wiz", "SonarQube"],
+        link: "/guides/all/enrich-security-vulnerability-using-ai",
     },
     {
         title: "Monitor integrations",
