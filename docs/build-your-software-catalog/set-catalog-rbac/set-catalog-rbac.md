@@ -206,9 +206,9 @@ in this example `on-call` users are grented `read` access only to entities that 
 }
 ```
 
-:::info Policy taking effect
-policy will take effect only if the user is not effected by any other `read` permission key.
-if the user is having full `read` permisison or `ownedByTeam` permission this query will not take effect.
+:::info Policy usage
+The `policy` key will take effect only if the user is not affected by any other `read` permission keys.  
+For example, if the user has full `read` permissions or `ownedByTeam` permissions, this query will not take effect.
 :::
 
 </TabItem>
