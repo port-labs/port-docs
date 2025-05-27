@@ -67,7 +67,7 @@ When you send a message, the app will:
 <img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border='1px' />
 <br/><br/>
 
-#### Tips for effective Slack interactions
+**Tips for effective Slack interactions**
 
 - To target a **specific agent** instead of using the router, include the agent's nickname at the beginning of your message (e.g., "@Port DevAgent what are our production services?").
 - Send follow-up messages in the same thread and mention the app again to continue the conversation.
@@ -90,60 +90,136 @@ For example, when a new incident is created in Port, you can trigger an agent th
 </TabItem>
 <TabItem value="api-integration" label="API integration">
 
-Port is an API-first platform, allowing you to integrate AI agents into your custom workflows. When using the API, you can choose to invoke a **specific agent** or send the request to the **agent router**. {/* TODO: Add link to API reference once available */}
+Port is an API-first platform, allowing you to integrate AI agents into your custom workflows. You can interact with agents in two main ways: by **streaming responses** as Server-Sent Events (SSE) for real-time updates, or by **polling for a complete response**.
 
-The interaction process follows these steps:
+<Tabs groupId="api-interaction-methods" queryString>
+<TabItem value="streaming" label="Streaming (Recommended)" default>
 
-1. Invoke the agent (or agent router) with your request.
-2. Receive an invocation ID.
-3. Poll the entity until the generation is completed.
+**Streaming Responses (Recommended)**
+
+Streaming allows you to receive parts of the agent's response as they are generated, providing a more interactive experience. This is achieved by adding the `stream=true` query parameter to the invoke API call. The response will be in `text/event-stream` format.
+
+**Interaction Process (Streaming):**
+
+1.  Invoke the agent with the `stream=true` parameter.
+2.  The API will start sending Server-Sent Events.
+3.  Your client should process these events as they arrive. Each event provides a piece of information about the agent's progress or the final response.
+
+**cURL Example for Streaming:**
+
+The following example shows how to invoke a specific agent, but the router agent be similarly used as well.
+
+```bash
+curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true' \\
+  -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
+  -H 'Content-Type: application/json' \\
+  --data-raw '{"prompt":"What is my next task?"}'
+```
+
+**Streaming Response Details (Server-Sent Events):**
+
+The API will respond with `Content-Type: text/event-stream; charset=utf-8`.
+
+Each event in the stream has the following format:
+```text
+event: <event_name>
+data: <json_payload_or_string>
+
+```
+Note the blank line after `data: ...` which separates events.
+
+Here's an example sequence of events:
+```text
+event: plan
+data: { "plan": "...", "toolCalls": [...] }
+
+event: execution
+data: Your final answer from the agent.
+
+event: done
+data: {}
+```
+
+**Possible Event Types:**
+
+<details>
+<summary><b><code>agentSelection</code> (Click to expand)</b></summary>
+
+Provides the result from the agent router.
+
+```json
+{
+  "type": "SELECTED_AGENT",
+  "identifier": "agent_id",
+  "thought_process": "Why this agent was selected..."
+}
+```
+    *   `type` can also be `"NO_AGENT_MATCH"` if no suitable agent is found.
+</details>
+
+<details>
+<summary><b><code>checkIfActionRequested</code> (Click to expand)</b></summary>
+
+Indicates which self-service action, if any, the agent has decided to run.
+
+```json
+{
+  "actionIdentifier": "action_id"
+}
+```
+    *   Can also be `{"actionIdentifier": null}` if no action is requested.
+</details>
+
+<details>
+<summary><b><code>plan</code> (Click to expand)</b></summary>
+
+Details the agent's reasoning and intended steps (tools to be called, etc.).
+
+```json
+{
+  "plan": "Detailed plan...",
+  "toolCalls": [
+    {
+      "name": "tool_name",
+      "arguments": {}
+    }
+  ]
+}
+```
+</details>
+
+<details>
+<summary><b><code>execution</code> (Click to expand)</b></summary>
+
+The final textual answer or a chunk of the answer from the agent for the user. For longer responses, multiple `execution` events might be sent.
+</details>
+
+<details>
+<summary><b><code>done</code> (Click to expand)</b></summary>
+
+Signals that the agent has finished processing and the response stream is complete.
+
+```json
+{}
+```
+</details>
+
+</TabItem>
+<TabItem value="polling" label="Polling">
+
+**Polling for Responses**
+
+If you prefer to get the entire response at once after processing is complete, or if your client doesn't support streaming, you can use the polling method.
+
+1.  Invoke the agent (or agent router) with your request (without `stream=true`).
+2.  Receive an `invocationId` in the response.
+3.  Periodically poll the AI invocation endpoint using the `invocationId` until the `status` field indicates completion (e.g., `Completed` or `Failed`).
+4.  The final response will be available in the polled data once completed.
 
 <img src='/img/ai-agents/AIAgentTriggerFlowDiagram.png' width='70%' border='1px' />
 
-<details>
-<summary><b>API example (Click to expand)</b></summary>
-
-```python showLineNumbers
-# Example API call to invoke an agent
-import requests
-import time
-
-# Invoke the agent
-response = requests.post(
-    'https://api.getport.io/v1/agent/{agentIdentifier}/invoke',
-    headers={
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer YOUR_API_TOKEN'
-    },
-    json={
-        'message': 'What services are currently experiencing incidents?'
-    }
-)
-
-invocation_id = response.json()['invocationId']
-
-# Function to check status
-def check_status():
-    status_response = requests.get(
-        f'https://api.getport.io/v1/agent/invoke/{invocation_id}',
-        headers={
-            'Authorization': 'Bearer YOUR_API_TOKEN'
-        }
-    )
-    return status_response.json()
-
-# Poll until complete
-result = None
-while True:
-    time.sleep(5)
-    result = check_status()
-    if result['status'] == 'Completed':
-        break
-
-print(result['response'])
-```
-
-</details>
+</TabItem>
+</Tabs>
 
 </TabItem>
 </Tabs>
