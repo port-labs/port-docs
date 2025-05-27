@@ -14,10 +14,6 @@ import PortYmlIngestionPattern from '../../_port_yml_ingestion_pattern_template.
 
 # GitOps
 
-:::warning GitOps deprecation
-**GitOps functionality will be removed in future releases**.
-:::
-
 Port's Azure DevOps integration makes it possible to manage Port entities with a GitOps approach, making your code projects into the source of truth for the various infrastructure assets you want to manage.
 
 ## Common use cases
