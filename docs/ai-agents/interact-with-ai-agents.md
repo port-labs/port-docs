@@ -285,12 +285,13 @@ We limit this data storage strictly to these purposes. You can contact us to opt
 
 Port applies limits to AI agent interactions to ensure fair usage across all customers:
 
-- **Daily query limit**: 20 queries per minute.
-- **Token usage limit**: 200,000 tokens per minute.
+- **Query limit**: ~40 queries per hour.
+- **Token usage limit**: 800,000 tokens per hour.
 
 :::caution Usage limits
 Usage limits may change without prior notice. Once a limit is reached, you will need to wait until it resets.  
 If you attempt to interact with an agent after reaching a limit, you will receive an error message indicating that the limit has been exceeded.
+The query limit is estimated and depends on the actual token usage.
 :::
 
 ## Common errors
