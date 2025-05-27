@@ -1,0 +1,71 @@
+---
+id: create-an-invocation
+title: "Create an invocation"
+description: "This route allows you to create an invocation without choosing a specific agent.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview)."
+sidebar_label: "Create an invocation"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVU1v2zgQ/SsEL9sCjpXs0SgWcD8OaYEmaLynwEBH0jhiQ4lakrKrCv7vOzOUbKdx21Mv9UGWOV9v3ryhB11iKLxpo3GNXuhVZYLyrouowFq3C6p3nYpOFR6BDxtlmq0rgP3VzsSKfFVRORdM86BAhRYLszGFggds4vxV7rN/5LFyyiL4RtXOU56c45bXyS3MKAUWj4oPY4XqvnRFV5NF6qxfVDG2YZFldBzmrfNxblwG5iJFZ26Lfmtw93KuZzrCQ9CLe7281uuZ9vhfhyG+dmWvF4MuXBMphF+hba1JjWRfAnc/6EAwauC32LdIfLj8CxaRsrbeteijwXBI8zWec3zK57JRyaK6gCUTWfYN1FTX2p6oFNMWLGGkX2Tm7qlW3ca53ktZej2pE6Inop/VWVEYVfB/BVVjCMSLcl5R677norkkLchCIPJeqkzkSx0LOdrw635u5AUsVYlwUUKEcZSc8agMyikfagA8kC96nskZgnPnSBaNFNpAZ6nXDdiAFGq4oLRAViJtbB+hfgbreqM+R9/h55kA8Rha1wQkgVqrQuV2CgKLU6KV2xDUjfN1UrFpQkQo+RjU+7ubj4d4lhMLyHgsJ1ykqYBF503spaOcRI2eBUe5ywURakQl672oLyUSZv++vOSvp8jfpq7Vp9FTM2lEWOWoom5dEPFBrOhXtr3KZGQZM/2ImqH47cRt5y05TasCrZk2hQZ8ztqFo8NJV3c8ooR46u0wLQr7gCfjWHYE1JtvQqQeR1YRDxTFjfBefTpu4LuvULcWn27QicqP6j7ocS9C2DgBYSIH61tCrZa31+THzScir+aXsjDEWA2yzCPGN2duru8FdHIx/BFXYJoWE5y1FmgqxIwIYBi1dK+3V+QowTI30ROpoGLFkXkYcgj4r7f7PR+nNWSVlSZAbg/78BMif+NSnm3wkZR5ckPIrUoHIu4teMOwqYU1uY4S5X5S1JuE+mLFiY+xz/4jONdhO29v7lbknI//LbUrOcbDjq8NelLtmXbCjKyTnA2k7eahI+bJnnKyxqHjsZwu2qMs2vjCSCdT058g/H4DUzv85KU/GzIMaY1pspN/Mv0wYqRr8ma614T6f8eO22Y=
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create an invocation"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/agent/invoke"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create an invocation without choosing a specific agent.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean","default":false},"in":"query","name":"stream","description":"If `true`, the response will show as a stream of information instead of a JSON response.","required":false}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"context":{"type":"object","description":"An object used to dynamically inject values into the prompt."},"prompt":{"type":"string","description":"The user's message or query to be processed by the AI agent."},"labels":{"type":"object","description":"Optional meta-data about the invocation."}}}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
+      

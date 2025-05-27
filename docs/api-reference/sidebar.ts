@@ -590,6 +590,30 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "AI",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-an-invocations-result",
+          label: "Get an invocation's result",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-an-agents-invocation",
+          label: "Create an agent's invocation",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-an-invocation",
+          label: "Create an invocation",
+          className: "api-method post",
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Apps",
       items: [
         {
