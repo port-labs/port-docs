@@ -21262,7 +21262,7 @@ paths:
           description: Default Response
   "/v1/agent/{agentIdentifier}/invoke":
     post:
-      summary: Create an agent's invocation
+      summary: Invoke a specific agent
       description: This route allows you to create an agent's invocation.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
       tags:
         - AI
@@ -21303,7 +21303,7 @@ paths:
           description: Default Response
   /v1/agent/invoke:
     post:
-      summary: Create an invocation
+      summary: Invoke an agent
       description: This route allows you to create an invocation without choosing a specific agent.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
       tags:
         - AI

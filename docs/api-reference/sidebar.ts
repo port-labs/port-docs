@@ -600,14 +600,14 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/create-an-agents-invocation",
-          label: "Create an agent's invocation",
+          id: "api-reference/invoke-a-specific-agent",
+          label: "Invoke a specific agent",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api-reference/create-an-invocation",
-          label: "Create an invocation",
+          id: "api-reference/invoke-an-agent",
+          label: "Invoke an agent",
           className: "api-method post",
         },
       ],
