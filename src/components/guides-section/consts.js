@@ -1149,6 +1149,13 @@ export const availableGuides = [
         tags: ["SDLC", "AzureDevops", "Actions"],
         logos: ["AzureDevops", "Webhook"],
         link: "/guides/all/create-azure-devops-work-item",
+    },
+    {
+        title: "Deploy a service using AWS CodeDeploy",
+        description: "Create a self-service action that deploys a service using AWS CodeDeploy",
+        tags: ["SDLC", "AWS", "Actions"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/deploy-service-using-aws-codedeploy",
     }
 ]
 
