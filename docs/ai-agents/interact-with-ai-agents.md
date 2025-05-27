@@ -97,7 +97,7 @@ Port is an API-first platform, allowing you to integrate AI agents into your cus
 
 **Streaming Responses (Recommended)**
 
-Streaming allows you to receive parts of the agent's response as they are generated, providing a more interactive experience. This is achieved by adding the `stream=true` query parameter to the invoke API call. The response will be in `text/event-stream` format.
+Streaming allows you to receive parts of the agent's response as they are generated, providing a more interactive experience. This is achieved by adding the `stream=true` query parameter to the invoke API call (see [Invoke a specific agent API](/api-reference/invoke-a-specific-agent) or [Invoke an agent API](/api-reference/invoke-an-agent)). The response will be in `text/event-stream` format.
 
 **Interaction Process (Streaming):**
 
@@ -211,9 +211,9 @@ Signals that the agent has finished processing and the response stream is comple
 
 If you prefer to get the entire response at once after processing is complete, or if your client doesn't support streaming, you can use the polling method.
 
-1.  Invoke the agent (or agent router) with your request (without `stream=true`).
+1.  Invoke the agent (see [Invoke a specific agent API](/api-reference/invoke-a-specific-agent)) or agent router (see [Invoke an agent API](/api-reference/invoke-an-agent)) with your request (without `stream=true`).
 2.  Receive an `invocationId` in the response.
-3.  Periodically poll the AI invocation endpoint using the `invocationId` until the `status` field indicates completion (e.g., `Completed` or `Failed`).
+3.  Periodically poll the AI invocation endpoint (see [Get an invocation's result API](/api-reference/get-an-invocations-result)) using the `invocationId` until the `status` field indicates completion (e.g., `Completed` or `Failed`).
 4.  The final response will be available in the polled data once completed.
 
 <img src='/img/ai-agents/AIAgentTriggerFlowDiagram.png' width='70%' border='1px' />
