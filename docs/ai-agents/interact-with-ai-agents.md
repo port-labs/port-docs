@@ -22,12 +22,12 @@ You have two main approaches when interacting with AI agents in Port:
 <Tabs groupId="interaction-approach" queryString>
 <TabItem value="specific-agent" label="Specific agent">
 
-Choose a specific agent when you have a structured scenario, such as triggering an agent from an automation. This approach works best when you know exactly which agent has the expertise needed for your task.
+Choose a specific agent when you have a structured scenario, such as triggering an agent from an automation or using an AI widget. This approach works best when you know exactly which agent has the expertise needed for your task, or when the interaction method requires you to select a specific agent.
 
 </TabItem>
 <TabItem value="agent-router" label="Agent router">
 
-Use the agent router when having a more natural conversation, such as through Slack. The router intelligently determines which agent is best suited to handle your request based on its content and context.
+The agent router is used when you prefer a more conversational interaction, or when the interaction method doesn't allow for selecting a specific agent directly. The router intelligently determines which agent is best suited to handle your request based on its content and context. This is the default for interactions via Slack, unless a specific agent is targeted. For API and action-based interactions, you can choose to direct your request to the agent router.
 
 </TabItem>
 </Tabs>
@@ -48,17 +48,17 @@ Follow these steps to add an AI agent widget:
 
 <img src='/img/ai-agents/AIAgentWidgetMenu.png' width='80%' border='1px' />
 
-The widget provides a chat interface where you can ask questions and receive responses from the agent without leaving your dashboard.
+The widget provides a chat interface where you can ask questions and receive responses from the **specific agent you configured** without leaving your dashboard.
 
 </TabItem>
 <TabItem value="slack-integration" label="Slack Integration">
 
-The Slack integration provides the most natural way to interact with Port's AI agents. This method abstracts all technical details, allowing for free-flowing conversations.
+The Slack integration provides the most natural way to interact with Port's AI agents. This method abstracts all technical details, allowing for free-flowing conversations. By default, messages sent to the Port Slack app (either via direct message or by mentioning it in a channel) are handled by the **agent router**.
 
 You can interact with agents in two ways:
 
-1. **Direct messaging** the [Port Slack app](/ai-agents/slack-app).
-2. **Mentioning** the app in any channel it's invited to.
+1. **Direct messaging** the [Port Slack app](/ai-agents/slack-app). This will use the agent router.
+2. **Mentioning** the app in any channel it's invited to. This will also use the agent router.
 
 When you send a message, the app will:
 1. Open a thread.
@@ -69,7 +69,7 @@ When you send a message, the app will:
 
 #### Tips for effective Slack interactions
 
-- To target a specific agent, include the agent's nickname at the beginning of your message (e.g., "@Port DevAgent what are our production services?").
+- To target a **specific agent** instead of using the router, include the agent's nickname at the beginning of your message (e.g., "@Port DevAgent what are our production services?").
 - Send follow-up messages in the same thread and mention the app again to continue the conversation.
 - Keep conversations focused on the same topic for best results.
 - Limit threads to five consecutive messages for optimal performance.
@@ -78,7 +78,7 @@ When you send a message, the app will:
 </TabItem>
 <TabItem value="actions-automations" label="Actions and automations">
 
-You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows.
+You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows. When configuring an action or automation, you can choose to invoke a **specific agent** or send the request to the **agent router**.
 
 For example, when a new incident is created in Port, you can trigger an agent that:
 - Triages the incident.
@@ -90,10 +90,11 @@ For example, when a new incident is created in Port, you can trigger an agent th
 </TabItem>
 <TabItem value="api-integration" label="API integration">
 
-Port is an API-first platform, allowing you to integrate AI agents into your custom workflows.  
+Port is an API-first platform, allowing you to integrate AI agents into your custom workflows. When using the API, you can choose to invoke a **specific agent** or send the request to the **agent router**. {/* TODO: Add link to API reference once available */}
+
 The interaction process follows these steps:
 
-1. Invoke the agent with your request.
+1. Invoke the agent (or agent router) with your request.
 2. Receive an invocation ID.
 3. Poll the entity until the generation is completed.
 
