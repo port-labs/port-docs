@@ -158,7 +158,7 @@ To give `read` permissions to members of the owning team of an entity, change th
 <TabItem value="policy" label="Policy">
 
 :::info Closed beta feature
-This capability is currently in closed beta, and is not yet generally available.
+This capability is currently in closed beta, and is not yet generally available.  
 If you would like to join the beta, please reach out to us.
 :::
 
