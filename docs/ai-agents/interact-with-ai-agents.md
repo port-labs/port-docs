@@ -224,6 +224,28 @@ If you prefer to get the entire response at once after processing is complete, o
 </TabItem>
 </Tabs>
 
+## Discovering Available Agents
+
+:::info AI Agents as Entities
+AI agents are standard Port entities belonging to the `_ai_agent` blueprint. This means you can query, manage, and interact with them using the same API endpoints and methods you use for any other entity in your software catalog.
+:::
+
+You can discover available AI agents in your Port environment in a couple of ways:
+
+1.  **AI Agents Catalog Page**: Navigate to the AI Agents catalog page in Port. This page lists all the agents that have been created in your organization. For more details on creating agents, refer to the [Build an AI agent guide](/ai-agents/build-an-ai-agent).
+2.  **Via API**: Programmatically retrieve a list of all AI agents using the Port API. AI agents are entities of the `_ai_agent` blueprint. You can use the [Get all entities of a blueprint API endpoint](https://docs.port.io/api-reference/get-all-entities-of-a-blueprint) to fetch them, specifying `_ai_agent` as the blueprint identifier.
+
+<details>
+<summary>cURL Example</summary>
+
+```bash
+curl -L 'https://api.port.io/v1/blueprints/_ai_agent/entities' \
+    -H 'Accept: application/json' \
+    -H 'Authorization: Bearer <YOUR_API_TOKEN>'
+```
+
+</details>
+
 ## AI interaction details
 
 Every AI agent interaction creates an entity in Port, allowing you to track and analyze the interaction. This information helps you understand how the agent processed your request and identify opportunities for improvement.
