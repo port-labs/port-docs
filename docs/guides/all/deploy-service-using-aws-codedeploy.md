@@ -167,13 +167,13 @@ Now you should see the `Trigger AWS CodeDeploy Application` action in the self-s
 
 ## Let's test it!
 
-1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal.
 
-2. Choose the `Trigger AWS CodeDeploy Application` action
+2. Choose the `Trigger AWS CodeDeploy Application` action.
 
-3. Enter the required information
+3. Enter the required information.
 
-4. Click on `Execute`
+4. Click on `Execute`.
 
 5. Wait for deployment completion 🎉
 
