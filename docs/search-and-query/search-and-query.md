@@ -451,7 +451,7 @@ Since we don't have context of the logged-in user when using the API, these func
 ### Contextual query rules
 
 :::info Closed beta feature
-This capability is currently in closed beta, and is not yet generally available.
+This capability is currently in closed beta, and is not yet generally available.  
 If you would like to join the beta, please reach out to us.
 :::
 To filter and customise queries, you can add the context of the user trigring the query, You can use contextual query rules with other rules as well to fully costomise the response.
