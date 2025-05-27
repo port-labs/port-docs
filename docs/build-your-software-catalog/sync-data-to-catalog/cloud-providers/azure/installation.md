@@ -80,6 +80,45 @@ helm upgrade --install azure port-labs/port-ocean \
 
 <Tabs groupId="ci-methods" defaultValue="github" queryString="ci-methods">
 
+<TabItem value="azureDevOps" label="Azure DevOps">
+
+The Azure exporter is deployed using Azure DevOps pipline, which supports scheduled resyncs of resources from Azure to Port.
+
+<h2> Prerequisites </h2>
+
+-
+- 
+
+<AzureAppRegistration/>
+
+<h2> Installation </h2>
+
+Now that you have the Azure App Registration details, you can setup the Azure exporter using Azure DevOps pipline.
+
+Make sure to configure the following [seceret variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash):
+
+- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+	- `PORT_CLIENT_ID`
+	- `PORT_CLIENT_SECRET`
+- Azure Credentials:
+	- `OCEAN__SECRET__AZURE_CLIENT_ID`: The Application (client) ID from the Azure App Registration.
+	- `OCEAN__SECRET__AZURE_CLIENT_SECRET`: The Application (client) Secret from the Azure App Registration.
+	- `OCEAN__SECRET__AZURE_TENANT_ID`: The Directory (tenant) ID from the Azure App Registration.
+
+Here is an example for `azure-pipeline-integration.yml` workflow file:
+
+<details>
+<summary>Azure pipline integration</summary>
+
+```yaml showLineNumbers
+name: Azure Exporter Workflow
+
+```
+
+</details>
+
+</TabItem>
+
 <TabItem value="github" label="GitHub Actions">
 
 The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of resources from Azure to Port.
@@ -129,11 +168,11 @@ jobs:
           type: azure
           port_client_id: ${{ secrets.PORT_CLIENT_ID }}
           port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-					port_base_url: "https://api.getport.io"
-					config: |
-						azure_client_id: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
-						azure_client_secret: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
-						azure_tenant_id: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
+		  port_base_url: "https://api.getport.io"
+		  config: |
+		  azure_client_id: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
+		  azure_client_secret: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
+		  azure_tenant_id: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
 ```
 
 </TabItem>
