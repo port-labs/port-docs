@@ -162,6 +162,11 @@ export const liveEvents = {
     \n- issue_created \
     \n- issue_updated \
     \n- issue_closed',
+  AzureDevOps:
+    '**Code Events:** \
+    \n- git.pullrequest.created \
+    \n- git.pullrequest.updated \
+    \n- git.push',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

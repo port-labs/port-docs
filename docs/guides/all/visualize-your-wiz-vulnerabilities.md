@@ -9,6 +9,8 @@ This guide demonstrates how to set up a monitoring solution to gain visibility i
 We will see how to visualize vulnerabilities across your projects and track them over time using Port's **Wiz** integration.
 
 <img src="/img/guides/wizVulnDashboard.png" border="1px" width="100%" />
+<img src="/img/guides/wizVulnDashboard2.png" border="1px" width="100%" />
+
 
 ## Common use cases
 
@@ -92,7 +94,7 @@ In the new dashboard, create the following widgets:
 3. Select `Count entities` **Chart type** and choose **Wiz Issue** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `OPEN` issues created in the last 6 months:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -127,7 +129,7 @@ In the new dashboard, create the following widgets:
 3. Select `Count entities` **Chart type** and choose **Wiz Issue** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `RESOLVED` issues:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -155,7 +157,7 @@ In the new dashboard, create the following widgets:
 3. Select `Count entities` **Chart type** and choose **Wiz Issue** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `OPEN` and `CRITICAL` issues:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
