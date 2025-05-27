@@ -454,14 +454,9 @@ Since we don't have context of the logged-in user when using the API, these func
 This capability is currently in closed beta, and is not yet generally available.  
 If you would like to join the beta, please reach out to us.
 :::
-To filter and customise queries, you can add the context of the user trigring the query, You can use contextual query rules with other rules as well to fully costomise the response.
-
-#### Available contexts
-| Context       | Description                                                                               |
-| ----------- | ----------------------------------------------------------------------------------------- |
-| `user`  | The entity of the user triggering the query |
-| `userTeams` | The entities of the owning teams of the user triggering the query                                                                     |
-
+To implement specific and/or complex queries, you can add the context of the triggering user to a query rule, allowing you to access that user's entity and/or owning teams.  
+You can mix contextual query rules freely with other rules as part of your queries.
+This can be used in either the `property` or `value` key in a query rule:
 
 <Tabs groupId="context" defaultValue="property" values={[
 {label: "Property", value: "property"},
@@ -490,6 +485,12 @@ To filter and customise queries, you can add the context of the user trigring th
 ```
 </TabItem>
 </Tabs>
+
+#### Available contexts
+| Context       | Description                                                                               |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| `user`  | The entity of the user triggering the query |
+| `userTeams` | The entities of the owning teams of the user triggering the query                                                                     |
 
 #### Usage examples
 
