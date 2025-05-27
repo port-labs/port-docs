@@ -162,12 +162,11 @@ This capability is currently in closed beta, and is not yet generally available.
 If you would like to join the beta, please reach out to us.
 :::
 
-To give a <b>dynamic</b> `read` permissions to users, change the `policy` key - with the `policy` key you can add search query as dynamic permission policy.
-:::tip
-you can use [contextual query rules](/search-and-query/#contextual-query-rules), to have the context of the user executing the query.
-:::
+The `policy` key allows you to give **dynamic** `read` permissions to users, by using [search queries](/search-and-query/#rules).
 
-in this example `on-call` users are grented `read` access only to entities that share the same `region` as one of their owning teams:
+You can also use [contextual query rules](/search-and-query/#contextual-query-rules) to get the context of the user executing the query.
+
+In the following example, `on-call` users are granted `read` access only to entities that share the same `region` as one of their owning teams:
 
 ```json showLineNumbers
 {
