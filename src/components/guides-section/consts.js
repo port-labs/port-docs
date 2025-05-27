@@ -955,7 +955,7 @@ export const availableGuides = [
         link: "/guides/all/trigger-firehydrant-incident",
     },
     {
-        title: "Enrich security vulnerability using AI",
+        title: "Enrich security vulnerabilities using AI",
         description: "Leverage AI tools to get detailed analysis and remediation strategies for security vulnerabilities",
         tags: ["Security", "AI", "Actions", "Automations"],
         logos: ["Snyk", "Wiz", "SonarQube"],
