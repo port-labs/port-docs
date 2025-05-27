@@ -13,6 +13,7 @@ resources:
           blueprint: '"github_branch"'
           properties:
             last_contributor: .branch.commit.commit.author.email | ascii_downcase
+            last_push: .branch.commit.commit.committer.date
   - kind: repository
     selector:
       query: 'true'
