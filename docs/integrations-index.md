@@ -19,8 +19,8 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub GitOps](/build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md)
 - [GitHub action for GitHub workflow](/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/github-workflow.md)
 - [GitHub workflow self-service actions](/actions-and-automations/setup-backend/github-workflow/github-workflow.md)
-- [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md)
-- [Sync Dependabot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-dependabot-alerts)
+- [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples.md)
+- [Sync Dependabot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/examples.md#mapping-repositories-and-dependabot-alerts)
 - [GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
 - [GitHub scaffolder using Jenkins pipelines](/guides/all/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/actions-and-automations/setup-backend/webhook/examples/software-templates.md)
@@ -65,16 +65,16 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Kubernetes
 
-- [K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
-- [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/istio.md)
-- [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/knative.md)
-- [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/openshift.md)
-- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy.md)
+- [K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
+- [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/istio.md)
+- [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/knative.md)
+- [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/openshift.md)
+- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/trivy.md)
 - [Ingest Trivy vulnerabilities into your catalog using GitHub file ingesting feature](/guides/all/ingest-trivy-vulnerabilities-into-your-catalog)
-- [Map Kyverno](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/kyverno.md)
-- [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/fluxcd.md)
-- [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
-- [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
+- [Map Kyverno](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/kyverno.md)
+- [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/fluxcd.md)
+- [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/custom-crds.md)
+- [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/port-crd.md)
 - [Create and managed Kubernetes cluster](/guides/all/manage-clusters)
 - [Change deployment replica count](/guides/all/change-replica-count)
 
@@ -203,6 +203,10 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 - [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
 <!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
+
+## LeanIX
+
+- [Script that synchronizes data from LeanIX into Port](https://github.com/port-labs/LeanIX-Sync)
 
 ## Linear
 

@@ -24,7 +24,7 @@ resources:
               .folder.path
             description: .repo.description
             namespace: .repo.namespace.name
-            full_path: .repo.path_with_namespace + "/" + folder.path
+            full_path: .repo.path_with_namespace + "/" + .folder.path
             language: .repo.__languages | to_entries | max_by(.value) | .key
             readme: file://README.md
 ```

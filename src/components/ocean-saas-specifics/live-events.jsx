@@ -121,19 +121,52 @@ export const liveEvents = {
     \n- service_check \
     \n- synthetics_alert \
     \n- trace_analytics_alert',
+  GitLab_v2:
+    '**Groups:** \
+    \n- group_create \
+    \n- group_destroy \
+    \n- subgroup_create \
+    \n- subgroup_destroy \
+    \n\n**Projects:** \
+    \n- push \
+    \n\n**Issues:** \
+    \n- issue \
+    \n\n**Merge Requests:** \
+    \n- merge_request \
+    \n\n**Files and Folders:** \
+    \n- push \
+    \n\n**Members:** \
+    \n- user_remove_from_group \
+    \n- user_update_for_group \
+    \n- user_add_to_group \
+    \n\n**Jobs:** \
+    \n- build \
+    \n\n**Pipelines:** \
+    \n- pipeline ',
+  Linear:
+    '\n- Issue \
+    \n- IssueLabel',
+  LaunchDarkly:
+    '\n- flag \
+    \n- environment \
+    \n- project \
+    \n- auditlog',
+  Octopus:
+    '\n- spaces \
+    \n- projects \
+    \n- deployments \
+    \n- releases \
+    \n- machines',
+  NewRelic:
+    '**Issues:** \
+    \n- issue_created \
+    \n- issue_updated \
+    \n- issue_closed',
   AzureDevOps:
     '**Code Events:** \
     \n- git.pullrequest.created \
     \n- git.pullrequest.updated \
     \n- git.push',
-    GitLab_v2:
-    '**Group:** \
-    \n- merge_requests_events \
-    \n- issues_events \
-    \n- releases_events \
-    \n- subgroup_events \
-    \n- push_events \
-    \n- tag_push_events',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

@@ -327,10 +327,30 @@ Please note that running the script after completing the migration may still sho
 If you need to verify your migration status, please review the actual changes made to your resources directly.
 :::
 
-## Terraform migration
+## Post migration
+
+### Terraform migration
 In order to properly manage the `User` and `Team` blueprints using Terraform, you need to use the `port_system_blueprint` resource (and not the `port_blueprint` resource).  
 This resource will extend the defined blueprint with the new specified properties and relations. This will make sure no drift will happen in the future if the base structure of the system blueprint will change.
 The `User` and `Team` blueprints can not be created so don't forget to import them to your Terraform state.
 
 The `port_system_blueprint` resource is supported in Terraform starting from version **2.2.0**.
 
+### Migrating from a relation to ownership
+The migration will create an `ownership` property only if you have team inheritance configured on the blueprint.  
+Some users elect to manage ownership strictly on a relation, which will not translate to a correct ownership following the migration.
+
+In order to migrate from a relation to ownership, follow these steps:
+1. Make sure that the blueprint you are migrating has `Direct ownership` configured.
+2. Head to the builder and find the blueprint you want to migrate. Click on the `...` button, and select `Migrate data`.
+3. In the JQ mapping, paste the following:
+```json
+{
+  "entity": {
+    "team": ".relations.<RELATION_IDENTIFIER>"
+  }
+}
+```
+Make sure to replace `<RELATION_IDENTIFIER>` with the identifier of the relation to the `_team` blueprint.
+
+This migration will take the value in the relation, and insert it into the ownership property.

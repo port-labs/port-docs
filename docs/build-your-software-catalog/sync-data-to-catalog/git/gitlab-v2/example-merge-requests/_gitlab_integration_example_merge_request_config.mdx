@@ -1,0 +1,47 @@
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: "true"
+      includeLanguages: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"gitlabRepository"'
+          properties:
+            url: .web_url
+            readme: file://README.md
+            description: .description
+            language: .__languages | to_entries | max_by(.value) | .key
+            namespace: .namespace.name
+            fullPath: .namespace.full_path
+            defaultBranch: .default_branch
+  - kind: merge-request
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .title
+          blueprint: '"gitlabMergeRequest"'
+          properties:
+            creator: .author.name
+            status: .state
+            createdAt: .created_at
+            updatedAt: .updated_at
+            mergedAt: .merged_at
+            link: .web_url
+            leadTimeHours: >-
+                (.created_at as $createdAt | .merged_at as $mergedAt |
+                ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp |
+                ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") |
+                strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp |
+                if $mergedTimestamp == null then null else
+                (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
+            reviewers: .reviewers | map(.name)
+          relations:
+            project: .references.full | gsub("!.+"; "")
+```

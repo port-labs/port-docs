@@ -3,8 +3,8 @@ info:
   title: Port API
   version: '1.0'
 servers:
-  - url: https://api.getport.io
-  - url: https://api.us.getport.io
+  - url: https://api.port.io
+  - url: https://api.us.port.io
 components:
   securitySchemes:
     bearer:
@@ -4818,6 +4818,220 @@ components:
         - rules
       additionalProperties: false
       title: Additional query
+    def-8:
+      type: object
+      properties:
+        combinator:
+          enum:
+            - and
+            - or
+        rules:
+          type: array
+          items:
+            anyOf:
+              - type: object
+                title: Date rule
+                properties:
+                  property:
+                    type: string
+                  operator:
+                    enum:
+                      - between
+                      - notBetween
+                      - =
+                  value:
+                    type: object
+                    oneOf:
+                      - type: object
+                        title: Date range
+                        properties:
+                          from:
+                            type: string
+                            format: date-time
+                          to:
+                            type: string
+                            format: date-time
+                        required:
+                          - from
+                          - to
+                      - type: object
+                        title: Date preset
+                        properties:
+                          preset:
+                            type: string
+                            enum:
+                              - today
+                              - tomorrow
+                              - yesterday
+                              - lastWeek
+                              - last2Weeks
+                              - lastMonth
+                              - last3Months
+                              - last6Months
+                              - last12Months
+                        required:
+                          - preset
+                required:
+                  - property
+                  - operator
+                  - value
+                additionalProperties: false
+              - type: object
+                title: Empty rule
+                oneOf:
+                  - type : object
+                    title: Empty rule
+                    properties:
+                        operator:
+                          enum:
+                            - isEmpty
+                            - isNotEmpty
+                        property:
+                          type: string
+                        required:
+                          - operator
+                          - property
+                        additionalProperties: false
+              - type: object
+                title: Numeric rule
+                properties:
+                  property:
+                    type: string
+                  operator:
+                    enum:
+                      - ">"
+                      - ">="
+                      - <
+                      - <=
+                  value:
+                    anyOf:
+                      - type: number
+                        title: number
+                      - type: string
+                        title: date-time
+                        format: date-time
+                required:
+                  - property
+                  - operator
+                  - value
+                additionalProperties: false
+              - type: object
+                title: String rule
+                oneOf:
+                  - type: object
+                    title: String rule
+                    properties:
+                      property:
+                        type: string
+                      operator:
+                        enum:
+                          - =
+                          - "!="
+                          - containsAny
+                          - contains
+                          - doesNotContains
+                          - beginsWith
+                          - doesNotBeginsWith
+                          - endsWith
+                          - doesNotEndsWith
+                          - in
+                          - notIn
+                      value:
+                        anyOf:
+                          - type: "null"
+                            title: 'null'
+                          - type: string
+                            title: string
+                          - type: number
+                            title: number
+                          - type: boolean
+                            title: boolean
+                          - type: array
+                            title: array
+                            items:
+                              type: string
+                          - type: string
+                            title: date-time
+                            format: date-time
+                    additionalProperties: false
+                    required:
+                      - property
+                      - operator
+                      - value
+              - type: object
+                title: Relation rule
+                properties:
+                  operator:
+                    enum:
+                      - relatedTo
+                  blueprint:
+                    type: string
+                  value:
+                    anyOf:
+                      - type: string
+                        title: string
+                      - type: array
+                        title: array
+                        items:
+                          type: string
+                  direction:
+                    enum:
+                      - upstream
+                      - downstream
+                  required:
+                    type: boolean
+                additionalProperties: false
+                required:
+                  - operator
+                  - value
+                  - blueprint
+              - type: object
+                title: Property schema rule  
+                properties:
+                  propertySchema:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      format:
+                        type: string
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                          format:
+                            type: string
+                        required:
+                          - type
+                    required:
+                      - type
+                    additionalProperties: false
+                  operator:
+                    enum:
+                      - =
+                      - "!="
+                      - contains
+                  value:
+                    anyOf:
+                      - type: 'null'
+                        title: 'null'
+                      - type: string
+                        title: string
+                      - type: number
+                        title: number
+                      - type: boolean
+                        title: boolean
+                required:
+                  - operator
+                  - propertySchema
+                additionalProperties: false
+              - $ref: "#/components/schemas/def-8"
+      required:
+        - combinator
+        - rules
+      additionalProperties: false
+      title: /schemas/entitiesQuery
 paths:
   '/v1/blueprints/{blueprint_identifier}/permissions':
     get:
@@ -6773,6 +6987,319 @@ paths:
               <td>An internal error occurred</td>
             </tr>
             </table>
+  /v1/entities/aggregate:
+    post:
+      summary: Aggregate entities
+      tags:
+        - Entities
+      description: This route allows you to perform an aggregation function on a blueprint's entities based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.port.io/search-and-query/).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              oneOf:
+                - type: object
+                  title: Count entities
+                  properties:
+                    func:
+                      type: string
+                      enum:
+                        - average
+                        - count
+                    averageOf:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - week
+                        - month
+                        - total
+                    measureTimeBy:
+                      type: string
+                      description: A property of type `datetime`, by which the average will be calculated. Relevant only for the `average` function.  
+                    calculationBy:
+                      type: string
+                    query:
+                      description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.  
+                      $ref: "#/components/schemas/def-0"
+                  additionalProperties: false
+                  required:
+                    - func
+                    - query
+                - type: object
+                  title: Aggregate by property
+                  properties:
+                    property:
+                      type: string
+                      description: A property of type `number`, by which the aggregation will be calculated.  
+                    func:
+                      type: string
+                      enum:
+                        - sum
+                        - average
+                        - min
+                        - max
+                        - median
+                    averageOf:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - week
+                        - month
+                        - total
+                    measureTimeBy:
+                      type: string
+                      description: A property of type `datetime`, by which the average will be calculated. Relevant only for the `average` function.  
+                    calculationBy:
+                      type: string
+                    query:
+                      $ref: "#/components/schemas/def-0"
+                      description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.  
+                  additionalProperties: false
+                  required:
+                    - func
+                    - property
+                    - query
+                # - type: object
+                #   title: Display single property
+                #   oneOf:
+                #     - properties:
+                #         func:
+                #           enum:
+                #             - countValues
+                #         query:
+                #           $ref: "#/components/schemas/def-0"
+                #         property:
+                #           type: string
+                #       required:
+                #         - func
+                #         - query
+                #         - property
+                #       additionalProperties: false
+                #       title: Average
+                #       type: object
+                #     - properties:
+                #         func:
+                #           enum:
+                #             - countValues
+                #         query:
+                #           $ref: "#/components/schemas/def-0"
+                #         relation:
+                #           type: string
+                #       required:
+                #         - func
+                #         - query
+                #         - relation
+                #       additionalProperties: false
+                #       type: object
+                #     - properties:
+                #         func:
+                #           enum:
+                #             - countValues
+                #         query:
+                #           $ref: "#/components/schemas/def-0"
+                #         scorecard:
+                #           type: string
+                #       required:
+                #         - func
+                #         - query
+                #         - scorecard
+                #       additionalProperties: false
+                #       type: object
+                #     - properties:
+                #         func:
+                #           enum:
+                #             - countValues
+                #         query:
+                #           $ref: "#/components/schemas/def-0"
+                #         rule:
+                #           type: string
+                #         scorecard:
+                #           type: string
+                #       required:
+                #         - func
+                #         - query
+                #         - rule
+                #         - scorecard
+                #       additionalProperties: false
+                #       title: Count values
+                #       type: object
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Default Response
+  /v1/entities/aggregate-over-time:
+    post:
+      summary: Aggregate entities over time
+      tags:
+        - Entities
+      description: This route allows you to perform an aggregation function on a blueprint's entities over a given time range.<br/><br/>To learn more about entities, check out the [entity documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.getport.io/search-and-query/).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - blueprint
+                - timeRange
+                - timeInterval
+                - query
+                - measureTimeBy
+                - aggregationType
+              oneOf:
+                - type: object
+                  title: Aggregate property
+                  properties:
+                    blueprint:
+                      type: string
+                      description: The blueprint whose entities you wish to aggregate.
+                    timeRange:
+                      type: object
+                      properties:
+                        preset:
+                          type: string
+                          enum:
+                            - today
+                            - yesterday
+                            - lastDay
+                            - lastWeek
+                            - last2Weeks
+                            - lastMonth
+                            - last3Months
+                            - last6Months
+                            - last12Months
+                        timeZone:
+                          type: string
+                      required:
+                        - preset
+                      additionalProperties: false
+                    timeInterval:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - isoWeek
+                        - month
+                    query:
+                      $ref: "#/components/schemas/def-8"
+                      description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.
+                    measureTimeBy:
+                      type: string
+                      description: A property of type `datetime` by which the aggregation will be calculated.
+                    aggregationType:
+                      enum:
+                        - aggregatePropertiesValues
+                    func:
+                      type: string
+                      enum:
+                        - average
+                        - sum
+                        - min
+                        - max
+                        - median
+                        - last
+                    properties:
+                      type: array
+                      description: A list of properties of type `number` on which the aggregation will be calculated.
+                      items:
+                        type: string
+                  required:
+                    - func
+                    - properties
+                  additionalProperties: false
+                - type: object
+                  title: Count entities
+                  properties:
+                    blueprint:
+                      type: string
+                      description: The blueprint whose entities you wish to aggregate.
+                    timeRange:
+                      type: object
+                      properties:
+                        preset:
+                          type: string
+                          enum:
+                            - today
+                            - yesterday
+                            - lastDay
+                            - lastWeek
+                            - last2Weeks
+                            - lastMonth
+                            - last3Months
+                            - last6Months
+                            - last12Months
+                        timeZone:
+                          type: string
+                      required:
+                        - preset
+                      additionalProperties: false
+                    timeInterval:
+                      type: string
+                      enum:
+                        - hour
+                        - day
+                        - isoWeek
+                        - month
+                    query:
+                      $ref: "#/components/schemas/def-8"
+                      description: A [search query](https://docs.getport.io/search-and-query) used to filter the entities before the aggregation is calculated.
+                    measureTimeBy:
+                      type: string
+                      description: A property of type `datetime` by which the aggregation will be calculated.
+                    aggregationType:
+                      enum:
+                        - countEntities
+                    func:
+                      type: string
+                      enum:
+                        - count
+                        - average
+                    breakdownProperty:
+                      type: string
+                      description: A blueprint's property by which you want to break down the data.
+                  required:
+                    - func
+                  additionalProperties: false
+        required: true
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  result:
+                    type: object
+                    properties:
+                      minDate:
+                        type: number
+                      maxDate:
+                        type: number
+                      data:
+                        type: array
+                        items:
+                          object:
+                            type: object
+                            properties:
+                              date:
+                                type: number
+                            additionalProperties:
+                              type: number
+                required:
+                  - ok
+                additionalProperties: false
   /v1/blueprints/{blueprint_identifier}/entities/search:
     post:
       summary: Search a blueprint's entities
@@ -15758,6 +16285,12 @@ paths:
           description: The email of the user who initiated the action run.<br/>
           required: false
         - schema:
+            type: string
+          in: query
+          name: user_id
+          description: The id of the user who initiated the action run.<br/>
+          required: false
+        - schema:
             type: number
             minimum: 1
             maximum: 50
@@ -15771,14 +16304,14 @@ paths:
           name: external_run_id
           description: The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>
           required: false
-        # - schema:
-        #     type: string
-        #     enum:
-        #       - v1
-        #       - v2
-        #   in: query
-        #   name: version
-        #   required: false
+        - schema:
+            type: string
+            enum:
+              - v1
+              - v2
+          in: query
+          name: version
+          required: false
       security:
         - bearer:
             - 'read:runs'
@@ -20001,119 +20534,6 @@ paths:
         '200':
           description: Default Response
   /v1/webhooks:
-    post:
-      summary: Create a webhook
-      description: This route allows you to create a webhook in your Port organization. Webhooks provide a way to ingest data from an external tool/platform into Port. You can also create a webhook via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
-      tags:
-        - Webhook
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                identifier:
-                  type: string
-                  description: A unique identifier for the webhook.<br/>
-                  maxLength: 30
-                title:
-                  type: string
-                  description: The title of the webhook, which will be displayed in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
-                  maxLength: 30
-                description:
-                  type: string
-                  description: A description for the webhook.<br/>
-                  maxLength: 200
-                icon:
-                  type: string
-                  description: The icon of the webhook.<br/>
-                mappings:
-                  description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      blueprint:
-                        type: string
-                        description: The identifier of the blueprint to map the data into.<br/>
-                      filter:
-                        type: string
-                        description: A `jq` query used to filter exactly which payloads sent to the webhook are processed. If set to `"true"`, all payloads will be processed.<br/>
-                      itemsToParse:
-                        type: string
-                        description: A `jq` query that evaluates to an array of items, used to create multiple entities from a single webhook event.<br/>
-                      entity:
-                        description: An object defining how to map the data from the webhook payload into Port entities.<br/>
-                        type: object
-                        properties:
-                          identifier:
-                            type: string
-                            description: A `jq` expression used to get data from the webhook payload, to be used as an identifier for the entity.<br/>
-                          title:
-                            type: string
-                            description: A `jq` expression used to get data from the webhook payload, to be used as the title of the entity.<br/>
-                          icon:
-                            type: string
-                            description: The icon of the entity.<br/>
-                          team:
-                            type: string
-                            description: The team the entity belongs to.<br/>
-                          properties:
-                            type: object
-                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
-                            propertyNames:
-                              type: string
-                          relations:
-                            type: object
-                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
-                            propertyNames:
-                              type: string
-                        additionalProperties: false
-                        required:
-                          - identifier
-                    additionalProperties: false
-                    required:
-                      - blueprint
-                      - entity
-                enabled:
-                  type: boolean
-                  description: Determines whether the webhook is active or not. If `false`, any incoming events will be dropped.<br/>
-                  default: true
-                security:
-                  type: object
-                  description: The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
-                  properties:
-                    secret:
-                      type: string
-                    signatureHeaderName:
-                      type: string
-                    signatureAlgorithm:
-                      type: string
-                      enum:
-                        - sha1
-                        - sha256
-                        - plain
-                    signaturePrefix:
-                      type: string
-                    requestIdentifierPath:
-                      type: string
-                  additionalProperties: false
-                integrationType:
-                  type: string
-                  enum:
-                    - custom
-                    # - template
-              additionalProperties: false
-              required:
-                - title
-                - enabled
-        required: true
-      security:
-        - bearer:
-            - 'create:integrations'
-      responses:
-        '200':
-          description: Default Response
     get:
       summary: Get all webhooks
       description: This route allows you to fetch all webhooks configured in your Port organization. You can also see them in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
@@ -20139,67 +20559,202 @@ paths:
               properties:
                 identifier:
                   type: string
-                  description: The new identifier of the webhook.<br/>
+                  description: The identifier of the webhook.<br/>
                   maxLength: 30
                 title:
                   type: string
-                  description: The new title of the webhook, which will be displayed in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
+                  description: The title of the webhook, which is displayed in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
                   maxLength: 30
                 description:
                   type: string
-                  description: A new description for the webhook.<br/>
+                  description: The description of the webhook.<br/>
                   maxLength: 200
                 icon:
                   type: string
-                  description: The new icon of the webhook.<br/>
+                  description: The icon of the webhook.<br/>
                 mappings:
                   type: array
                   description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                   items:
                     type: object
                     properties:
-                      blueprint:
-                        type: string
-                        description: The identifier of the blueprint to map the data into.<br/>
-                      filter:
-                        type: string
-                        description: A `jq` query used to filter exactly which payloads sent to the webhook are processed. If set to `"true"`, all payloads will be processed.<br/>
-                      itemsToParse:
-                        type: string
-                        description: A `jq` query that evaluates to an array of items, used to create multiple entities from a single webhook event.<br/>
-                      entity:
-                        type: object
-                        description: An object defining how to map the data from the webhook payload into Port entities.<br/>
-                        properties:
-                          identifier:
-                            type: string
-                            description: A `jq` expression used to get data from the webhook payload, to be used as an identifier for the entity.<br/>
-                          title:
-                            type: string
-                            description: A `jq` expression used to get data from the webhook payload, to be used as the title of the entity.<br/>
-                          icon:
-                            type: string
-                            description: The icon of the entity.<br/>
-                          team:
-                            type: string
-                            description: The team the entity belongs to.<br/>
+                      operation:
+                        oneOf:
+                          - type: object
+                            title: 'create'
+                            description: |
+                              If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. 
+                              For example:
+                              ```json
+                              {
+                                "operation": "create",
+                                "blueprint": "blueprint_identifier",
+                                "filter": "true",
+                                "itemsToParse": "true",
+                                "entity": {
+                                    "identifier": "new-webhook",
+                                    "title": "MyNewWebhook",
+                                    "icon": "webhook",
+                                    "team": [],
+                                    "properties": {
+                                      "content": "my content"
+                                    },
+                                    "relations": {}
+                                }
+                              }
+                              ```
+                            enum:
+                              - create
+                          - type: object
+                            title: 'create'
+                            properties:
+                              type:
+                                enum:
+                                  - create
+                            required:
+                              - type
+                            additionalProperties: false
+                          - type: object
+                            title: 'delete'
+                            description: |
+                              If the selected operation is `delete`, a blueprint identifier, and entity identifier must be provided, for example: 
+                              ```json
+                              {
+                                "operation": "delete",
+                                "filter": "true",
+                                "itemsToParse": "true",
+                                "blueprint": "blueprint_identifier",
+                                "entity": {
+                                  "identifier": "entity_identifier"
+                                  }
+                                }
+                              }
+                              ```
+                            enum:
+                              - delete
+                          - type: object  
+                            title: 'delete'
+                            properties:
+                              type:
+                                enum:
+                                  - delete
+                              deleteDependents:
+                                type: boolean
+                            required:
+                              - type
+                            additionalProperties: false
+                    if:
+                      properties:
+                        operation:
+                          oneOf:
+                            - enum:
+                                - delete
+                            - type: object
+                              properties:
+                                type:
+                                  enum:
+                                    - delete
+                                deleteDependents:
+                                  type: boolean
+                              required:
+                                - type
+                              additionalProperties: false
+                      required:
+                        - operation
+                    then:
+                      properties:
+                        operation:
+                          oneOf:
+                            - enum:
+                                - delete
+                            - type: object
+                              properties:
+                                type:
+                                  enum:
+                                    - delete
+                                deleteDependents:
+                                  type: boolean
+                              required:
+                                - type
+                              additionalProperties: false
+                        blueprint:
+                          type: string
+                        filter:
+                          type: string
+                        itemsToParse:
+                          type: string
+                        entity:
+                          type: object
                           properties:
-                            type: object
-                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
-                            propertyNames:
+                            identifier:
                               type: string
-                          relations:
-                            type: object
-                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
-                            propertyNames:
+                          additionalProperties: false
+                          required:
+                            - identifier
+                      required:
+                        - blueprint
+                        - entity
+                      additionalProperties: true
+                    else:
+                      properties:
+                        operation:
+                          oneOf:
+                            - enum:
+                                - create
+                            - type: object
+                              properties:
+                                type:
+                                  enum:
+                                    - create
+                              required:
+                                - type
+                              additionalProperties: false
+                        blueprint:
+                          type: string
+                        filter:
+                          type: string
+                        itemsToParse:
+                          type: string
+                        entity:
+                          type: object
+                          properties:
+                            identifier:
+                              oneOf:
+                                - type: string
+                                - type: object
+                                  properties:
+                                    combinator:
+                                      type: string
+                                    rules:
+                                      type: array
+                                      items:
+                                        type: object
+                                        additionalProperties: true
+                                  additionalProperties: false
+                                  required:
+                                    - combinator
+                                    - rules
+                            title:
                               type: string
-                        additionalProperties: false
-                        required:
-                          - identifier
-                    additionalProperties: false
-                    required:
-                      - blueprint
-                      - entity
+                            icon:
+                              type: string
+                            team:
+                              type: string
+                            properties:
+                              type: object
+                              propertyNames:
+                                type: string
+                            relations:
+                              type: object
+                              propertyNames:
+                                type: string
+                          additionalProperties: false
+                          required:
+                            - identifier
+                      required:
+                        - blueprint
+                        - entity
+                      additionalProperties: false
                 enabled:
                   type: boolean
                   description: Determines whether the webhook is active or not. If `false`, any incoming events will be dropped.<br/>
@@ -20227,7 +20782,7 @@ paths:
                   type: string
                   enum:
                     - custom
-                    # - template
+                    - template
               additionalProperties: false
       parameters:
         - schema:
@@ -20255,67 +20810,202 @@ paths:
               properties:
                 identifier:
                   type: string
-                  description: The new identifier of the webhook.<br/>
+                  description: The identifier of the webhook.<br/>
                   maxLength: 30
                 title:
                   type: string
-                  description: The new title of the webhook, which will be displayed in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
+                  description: The title of the webhook, which will be displayed in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
                   maxLength: 30
                 description:
                   type: string
-                  description: A new description for the webhook.<br/>
+                  description: A description for the webhook.<br/>
                   maxLength: 200
                 icon:
                   type: string
-                  description: The new icon of the webhook.<br/>
+                  description: The icon of the webhook.<br/>
                 mappings:
                   type: array
                   description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                   items:
                     type: object
                     properties:
-                      blueprint:
-                        type: string
-                        description: The identifier of the blueprint to map the data into.<br/>
-                      filter:
-                        type: string
-                        description: A `jq` query used to filter exactly which payloads sent to the webhook are processed. If set to `"true"`, all payloads will be processed.<br/>
-                      itemsToParse:
-                        type: string
-                        description: A `jq` query that evaluates to an array of items, used to create multiple entities from a single webhook event.<br/>
-                      entity:
-                        type: object
-                        description: An object defining how to map the data from the webhook payload into Port entities.<br/>
-                        properties:
-                          identifier:
-                            type: string
-                            description: A `jq` expression used to get data from the webhook payload, to be used as an identifier for the entity.<br/>
-                          title:
-                            type: string
-                            description: A `jq` expression used to get data from the webhook payload, to be used as the title of the entity.<br/>
-                          icon:
-                            type: string
-                            description: The icon of the entity.<br/>
-                          team:
-                            type: string
-                            description: The team the entity belongs to.<br/>
+                      operation:
+                        oneOf:
+                          - type: object
+                            title: 'create'
+                            description: |
+                              If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. 
+                              For example:
+                              ```json
+                              {
+                                "operation": "create",
+                                "blueprint": "blueprint_identifier",
+                                "filter": "true",
+                                "itemsToParse": "true",
+                                "entity": {
+                                    "identifier": "new-webhook",
+                                    "title": "MyNewWebhook",
+                                    "icon": "webhook",
+                                    "team": [],
+                                    "properties": {
+                                      "content": "my content"
+                                    },
+                                    "relations": {}
+                                }
+                              }
+                              ```
+                            enum:
+                              - create
+                          - type: object
+                            title: 'create'
+                            properties:
+                              type:
+                                enum:
+                                  - create
+                            required:
+                              - type
+                            additionalProperties: false
+                          - type: object
+                            title: 'delete'
+                            description: |
+                              If the selected operation is `delete`, a blueprint identifier, and entity identifier must be provided, for example: 
+                              ```json
+                              {
+                                "operation": "delete",
+                                "filter": "true",
+                                "itemsToParse": "true",
+                                "blueprint": "blueprint_identifier",
+                                "entity": {
+                                  "identifier": "entity_identifier"
+                                  }
+                                }
+                              }
+                              ```
+                            enum:
+                              - delete
+                          - type: object
+                            title: 'delete'
+                            properties:
+                              type:
+                                enum:
+                                  - delete
+                              deleteDependents:
+                                type: boolean
+                            required:
+                              - type
+                            additionalProperties: false
+                    if:
+                      properties:
+                        operation:
+                          oneOf:
+                            - enum:
+                                - delete
+                            - type: object
+                              properties:
+                                type:
+                                  enum:
+                                    - delete
+                                deleteDependents:
+                                  type: boolean
+                              required:
+                                - type
+                              additionalProperties: false
+                      required:
+                        - operation
+                    then:
+                      properties:
+                        operation:
+                          oneOf:
+                            - enum:
+                                - delete
+                            - type: object
+                              properties:
+                                type:
+                                  enum:
+                                    - delete
+                                deleteDependents:
+                                  type: boolean
+                              required:
+                                - type
+                              additionalProperties: false
+                        blueprint:
+                          type: string
+                        filter:
+                          type: string
+                        itemsToParse:
+                          type: string
+                        entity:
+                          type: object
                           properties:
-                            type: object
-                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
-                            propertyNames:
+                            identifier:
                               type: string
-                          relations:
-                            type: object
-                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
-                            propertyNames:
+                          additionalProperties: false
+                          required:
+                            - identifier
+                      required:
+                        - blueprint
+                        - entity
+                      additionalProperties: true
+                    else:
+                      properties:
+                        operation:
+                          oneOf:
+                            - enum:
+                                - create
+                            - type: object
+                              properties:
+                                type:
+                                  enum:
+                                    - create
+                              required:
+                                - type
+                              additionalProperties: false
+                        blueprint:
+                          type: string
+                        filter:
+                          type: string
+                        itemsToParse:
+                          type: string
+                        entity:
+                          type: object
+                          properties:
+                            identifier:
+                              oneOf:
+                                - type: string
+                                - type: object
+                                  properties:
+                                    combinator:
+                                      type: string
+                                    rules:
+                                      type: array
+                                      items:
+                                        type: object
+                                        additionalProperties: true
+                                  additionalProperties: false
+                                  required:
+                                    - combinator
+                                    - rules
+                            title:
                               type: string
-                        additionalProperties: false
-                        required:
-                          - identifier
-                    additionalProperties: false
-                    required:
-                      - blueprint
-                      - entity
+                            icon:
+                              type: string
+                            team:
+                              type: string
+                            properties:
+                              type: object
+                              propertyNames:
+                                type: string
+                            relations:
+                              type: object
+                              propertyNames:
+                                type: string
+                          additionalProperties: false
+                          required:
+                            - identifier
+                      required:
+                        - blueprint
+                        - entity
+                      additionalProperties: false
                 enabled:
                   type: boolean
                   description: Determines whether the webhook is active or not. If `false`, any incoming events will be dropped.<br/>
@@ -20343,7 +21033,7 @@ paths:
                   type: string
                   enum:
                     - custom
-                    # - template
+                    - template
               additionalProperties: false
               required:
                 - title

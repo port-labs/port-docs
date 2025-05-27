@@ -5,25 +5,19 @@ description: "This route allows you to fetch a specific webhook in your Port org
 sidebar_label: "Get a webhook"
 hide_title: true
 hide_table_of_contents: true
-api: eJztVE1r20AQ/SvLnhKwraRHEQKBlFB6CWlKKcGH1WokLZZ3ld1Zu67Qf++MPmwluD0UeutF3o+Z2ffmzXMrcwjamwaNszKVz5UJwruIIFRdu30QBxcFOlEA6kooERrQpjBa7CGrnNsIYznEi0fnUThfKmt+Kq62Et8pVStLlYITAUAY5HCsQLzkCqkYJWoIolElrC8qxCakSaKaZlUCNlRwZVwSANHYMiScshxTLoUrZu8qrV20uLrJfHLbf56dqEF5K7bOE5eMKE2Qw0LoCvRG8NkAxum4BYs97hMQOg5zJFk0db7kVwlGgXvlYakJVO3KRMeAbrs0FqH0fZ1kfC65XMmFRFUGmb7Ib8OhXC9ko7zaAoLni1YGArVVMm0lHhogLQJ64i27hTQsTaOwokKWcmhncsJLQoCns/caUqeP19woJjnpxXrulcWjqEPTqIqH12g85DJFH6EjhAF09AYPPb6M2kmvEQcPKk9nTINcc7SH0NAGAnP4cHXFP2+R3UOhYo3iaYyUHZGjFlSOHpXUabkYaKYy2V1PDQxJe6LTSYbld1PXoq8p+jQ6ZiYYte5cQAxvYmY8v7AEA/6J7VENyvwMh5MAd5Fg+3HW5ahRRZ2hrK7XrHB9usGa4/s5vXv8RKEMfmjI9eqK9W1cwK2yHD5WfwAa6kmz9wq3UjvqvsX/hv2Hhh1kR/iBSVMrkpeE6oepHWf0Re6uKXACSct05koaq4pk5bC2zVSAr77uOj5+jeDZUrTcKW9UxvNBo5ybwGuyQkECwB9Ev3garXop/tbsZ+lNo255zneqjryj5YYG/81fTreeG/fh4zMFqchNmftl0/tlXDDDs/XfG2l4jL9s37MpN+QjQW68PYYPN79NGH15ZGKZQdf9AlB5cMs=
+api: eJztVEtr20AQ/ivLnhKwpaRHUQqBlFB6CWlKKcGH1WokLZZ3ld1Zu67Qf++MHrZj3B4KvfUi72Nm9nvMuJMFBO1Ni8ZZmcnn2gThXUQQqmncLoi9iwKdKAF1LZQILWhTGi12kNfOrYWxHOLFo/MonK+UNT8VV0vEd0rVylKl4EQAEAY5HGsQL4VCKkaJGoJoVQWrqxqxDVmaqrZNKsCWCibGpQEQja1CyinLKeVauPLkXaW1ixaT97lPPwyfZycaUN6KjfPEJSdKM+SwELoGvRZ8NoJxOm7A4oD7CISOQzLDyKNpiiU/SRhK3CkPS02IGlelOgZ0m6WxCJUfiqTTW+l1IhcSVRVk9iK/jYdytZCt8moDCJ4vOhkI0UbJrJO4b4GMCOiJtOwX0rAvrcKaClnKoZ0pCCy5AJ7Ozg0kmQ/XrBIznM1iM3fK4sHRUTGq4uE1Gg+FzNBH6AlhAB29wf2ALyct6TXi4EEV2QnTIFcc7SG0tIHAHN7d3PDPW2T3UKrYoHiaImVP5EiC2tGjkgyXi5FmJtPt7SxgSLsjnV4yLL+dVYu+oehj35jZLdLt0m0Mx4AThl9Y/BH5zPPgA6V9hv1R+rtIgP3U4nJypyZNKKsf3CrdkG6w4fihPe8eP1Eowx6luE1u2NnWBdwoy+FT9QegXp7dOve2k9qR7hb/z+m/mtPRc4QfmLaNIm/JpaGNuqk1X+T2lgJnhLTMToaReqomTzms63IV4Ktv+p6PXyN4niRabpU3KufmoA4uTOA1TUBJ6sMfHL96mib0WvztjF+kN/e55SbfqibyjpZr6vo3/zT96nReHz4+U5CKLMrpsKyHYZkWzPBi/fMpGh/jLw/uxZSuG0ex7w/x49VvM6apPFCxTKHvfwFl1W2B
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/webhooks/{identifier}"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -51,51 +46,26 @@ This route allows you to fetch a specific webhook in your Port organization. You
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the webhook you want to fetch.<br/>","required":true}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the webhook you want to fetch.<br/>","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       

@@ -5,25 +5,19 @@ description: "This route allows you to fetch all scorecards in your Port organiz
 sidebar_label: "Get all scorecards"
 hide_title: true
 hide_table_of_contents: true
-api: eJzdUsFu2zAM/RVBpw3w7GTHoChQYEMx7FKs2SnIQbaZWKgtaRTlLTP87yMdp3OK7Ad2kS3y8Yl8fIOuIVZoA1nv9EZvGxsV+kSgTNv6n1GdfFLk1QGoaiSmYuURKoN1VNZJGtWTR1Iej8bZ30aY8rsSi/vp2HrVgkGnOi5TpmTuBUWmqgaqFyVRakDtal+lDhxNNPt3DVGIm6LgcMyPQIFfyq0vAvrOE3z4y1S8z3WmyRyj3uz082tc7zMdoUpo6cSZQZfcDaCAEEy9iQvkyFiEGLyLwDSD/rhayedao09wMKkl9W1G6nHMdAfU+Jqz3CT3EQw1fCn6dbF4QDrBHjBOjSRsGXKZ0AS7GFCP2S1AileYxWjPrGN3bvoy4KDpFIAZuPIrnPh1Zzq5PyTuFedVcdjKVA2LwVUyi3UHP5VbagU/rffh6QtDpfmzCut8xU3q4CN1xgl8Zn8EeuMTrrtScNCVd8RL/h8Md5aY4BcVoTUsJYsyLW6YTbDT/Vo2f+XIhmWT1DCUJsJ3bMdRwj8SoLiUf3uD1pSi/26/9Nfj5y2zmSTUyw2/TBuef8Rel5STeG/adGv1E3g6xXA3S+5484r9c/8KP2f+WTA76YIWSfbjOP4Bx/WGsw==
+api: eJzVUsGO0zAQ/RVrTiCZpuUYIaSVQCvEZcWWU5WDm8w21iaeMB4XSuR/R5OmuykqH8DFSWaeX+bNeyM0GGv2g3gKUMK29dEwJUHjuo5+RnOiZITME0rdas3Emhhrx000PmibzQOxGOKDC/63U6bVhz0XH6djS6ZDx8H0xGjcnpIsKKypW6yfjValRbNrqE49BploqjetyBDLomiojquBWFaeioGpJ8F3rzTF2xVYEHeIUO7g8aUOlYWIdWIvJyh3I+zRMbKCGF1TxgUyVxYY40AhYoRyhPfrtT6uF/QJn1zqxHybkZCzhR6lpQZKOKCAhcFJCyUUx02x+IFOwkfkOA2SuIMSLvLc4C/qINtb3RRfAQtRj3WL/Xnci7QR5DQglOAG/xVPYCG4Xr/vkrTEs0NgwaueFl2DPKnw4Ymm6146xU+u3j18AQs69ln/ZrWGbGGgKL0LCp/Z71H+igfY692NUFMQDPLf5+y8X8FfUgyd80E3Mlk2zt7v4LhRw6+C2FIUbY3j3kX8zl3OWv6RkDWclYWjY+/2uvxdtYzV/ectWHBJqZf2Pk/2zi+aqksraP3ounTL9wk8nRq1m1fG8RyenF/w59Y/b8w5uqB1J1XO+Q8Ac4Np
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/scorecards"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -43,27 +38,26 @@ import TabItem from "@theme/TabItem";
 
 This route allows you to fetch all scorecards in your Port organization.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.port.io/promote-scorecards/).
 
-<div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       

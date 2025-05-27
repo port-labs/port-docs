@@ -156,21 +156,33 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/search-a-blueprints-entities",
-          label: "Search a blueprint's entities",
-          className: "api-method post",
-        },        
-        {
-          type: "doc",
           id: "api-reference/search-entities",
           label: "Search entities",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/aggregate-entities",
+          label: "Aggregate entities",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/aggregate-entities-over-time",
+          label: "Aggregate entities over time",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/search-a-blueprints-entities",
+          label: "Search a blueprint's entities",
           className: "api-method post",
         },
       ],
     },
     {
       type: "category",
-      label: "Actions & automations",
+      label: "Actions",
       items: [
         {
           type: "doc",
@@ -240,6 +252,18 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/approve-an-action-run",
+          label: "Approve an action run",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-action-runs-approvers",
+          label: "Get an action run's approvers",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
           id: "api-reference/get-all-action-runs",
           label: "Get all action runs",
           className: "api-method get",
@@ -254,18 +278,6 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api-reference/get-an-actions-run-logs",
           label: "Get an action's run logs",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/approve-an-action-run",
-          label: "Approve an action run",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-an-action-runs-approvers",
-          label: "Get an action run's approvers",
           className: "api-method get",
         },
       ],
@@ -367,44 +379,98 @@ const sidebar: SidebarsConfig = {
         {
           type: "doc",
           id: "api-reference/create-a-scorecard",
-          label: "Create a scorecard for a blueprint",
+          label: "Create a scorecard",
           className: "api-method post",
         },
         {
           type: "doc",
           id: "api-reference/change-scorecards",
-          label: "Change a blueprints' scorecards",
+          label: "Change scorecards",
           className: "api-method put",
         },
         {
           type: "doc",
           id: "api-reference/get-a-blueprints-scorecards",
-          label: "Get a blueprints' scorecards",
+          label: "Get a blueprint's scorecards",
           className: "api-method get",
         },
         {
           type: "doc",
           id: "api-reference/change-a-scorecard",
-          label: "Change a blueprint's scorecard",
+          label: "Change a scorecard",
           className: "api-method put",
         },
         {
           type: "doc",
           id: "api-reference/get-a-scorecard",
-          label: "Get a blueprint's scorecard",
+          label: "Get a scorecard",
           className: "api-method get",
         },
         {
           type: "doc",
           id: "api-reference/delete-a-scorecard",
-          label: "Delete a blueprint's scorecard",
+          label: "Delete a scorecard",
           className: "api-method delete",
         },
         {
           type: "doc",
           id: "api-reference/get-all-scorecards",
-          label: "Get all scoreboards",
+          label: "Get all scorecards",
           className: "api-method get",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Organization",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-organization-details",
+          label: "Get organization details",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-organization-details",
+          label: "Update organization details",
+          className: "api-method put",
+        },
+        {
+          type: "doc",
+          id: "api-reference/patch-organization-details",
+          label: "Patch organization details",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-all-organization-secrets",
+          label: "Get all organization secrets",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-an-organization-secret",
+          label: "Create an organization secret",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-organization-secret",
+          label: "Get an organization secret",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/patch-an-organization-secret",
+          label: "Patch an organization secret",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-an-organization-secret",
+          label: "Delete an organization secret",
+          className: "api-method delete",
         },
       ],
     },
@@ -462,12 +528,6 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/create-a-webhook",
-          label: "Create a webhook",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/get-all-webhooks",
           label: "Get all webhooks",
           className: "api-method get",
@@ -504,15 +564,15 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/create-a-migration",
-          label: "Create a migration",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/get-all-migrations",
           label: "Get all migrations",
           className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-a-migration",
+          label: "Create a migration",
+          className: "api-method post",
         },
         {
           type: "doc",
@@ -525,60 +585,6 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/cancel-a-migration",
           label: "Cancel a migration",
           className: "api-method post",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Organization",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/get-organization-details",
-          label: "Get an organization",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/patch-organization-details",
-          label: "Patch an organization",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/update-organization-details",
-          label: "Change an organization",
-          className: "api-method put",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-all-organization-secrets",
-          label: "Get all organization secrets",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/create-an-organization-secret",
-          label: "Create an organization secret",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-an-organization-secret",
-          label: "Get an organization secret",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/patch-an-organization-secret",
-          label: "Patch an organization secret",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/delete-an-organization-secret",
-          label: "Delete an organization secret",
-          className: "api-method delete",
         },
       ],
     },
@@ -622,7 +628,7 @@ const sidebar: SidebarsConfig = {
       type: "doc",
       id: "api-reference/pages",
       label: "Pages",
-    }
+    },
   ],
 };
 

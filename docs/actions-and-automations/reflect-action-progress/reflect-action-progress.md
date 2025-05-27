@@ -15,7 +15,7 @@ This page will teach you how to use Port's API to obtain existing action runs an
 
 `Members` and `moderators` can find their existing/finished action runs using one of the following methods:
 
-- The `My latest runs` list - click on the <img src="/img/self-service-actions/reflect-action-progress/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner of the page.  
+- The `My latest runs` list - click on the <img src="/img/icons/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner of the page.  
   
   This will display the latest action runs that have been executed by the logged-in user:  
   <img src='/img/self-service-actions/reflect-action-progress/myLatestRuns.png' width='35%' border='1px' />
@@ -29,8 +29,8 @@ This page will teach you how to use Port's API to obtain existing action runs an
 In addition to the methods mentioned above, `admins` can find action runs using one of the following methods:
 
 - The dedicated `Runs history` table:
-  - **Self-service actions** - go to the [self-service page](https://app.getport.io/self-serve) of your portal, then click on the <img src="/img/self-service-actions/reflect-action-progress/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner.
-  - **Automations** - go to the [automations page](https://app.getport.io/settings/automations) of your portal, then click on the <img src="/img/self-service-actions/reflect-action-progress/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner.
+  - **Self-service actions** - go to the [self-service page](https://app.getport.io/self-serve) of your portal, then click on the <img src="/img/icons/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner.
+  - **Automations** - go to the [automations page](https://app.getport.io/settings/automations) of your portal, then click on the <img src="/img/icons/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner.
 - Go to the [audit logs](https://app.getport.io/settings/AuditLog) page of your portal, then select the `Runs` tab.  
    This page will display all action runs that have been executed in your organization.
 
