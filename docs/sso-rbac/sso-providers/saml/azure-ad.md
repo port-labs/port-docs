@@ -39,8 +39,10 @@ The details listed are for organizations hosted in EU.
 
 For US, you will need to use `https://auth.us.getport.io/login/callback?connection={CONNECTION_NAME}` and `https://auth.us.getport.io/logout`.
 :::
-
-6. Under `SAML certificates` (step 3), Click the Edit button to expand the certificates section. Click the 3 dot icon next to the Active certificate, and choose `PEM certificate download`.
+6. In the `Single sign-on` tab, head to the 2nd section (Attributes & Claims), Click on `Edit` and add a new claim:
+    - `Name`: `email_verified`
+    - `Source attribute`: `user.accountenabled`
+7. Under `SAML certificates` (step 3), Click the Edit button to expand the certificates section. Click the 3 dot icon next to the Active certificate, and choose `PEM certificate download`.
 
 Send the **PEM certificate file** along with the **Login URL** (Which can be found in the Single Sign-on section, Card 4 (Set up)) to Port.
 

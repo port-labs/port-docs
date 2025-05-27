@@ -47,8 +47,8 @@ The basic structure of a relation object:
 }
 ```
 
-:::info
-A relation exists under the `relations` key in the [Blueprint JSON schema](../setup-blueprint/setup-blueprint.md#blueprint-schema-structure)
+:::info relation declaration
+A relation exists under the `relations` key in the [Blueprint JSON schema](../setup-blueprint/setup-blueprint.md#blueprint-schema-structure).
 :::
 
 ## Structure table
@@ -73,7 +73,7 @@ A single type relation is used to map a single target entity to the source.
 - Map a **package version** to the **package**.
 - Map a **K8s cluster** to the **cloud account** it is provisioned in.
 
-In this [live demo](https://demo.getport.io/packageVersionEntity?identifier=AnalyticsTracker_1_2_9) example, we can see a specific package version and its related core packages. 🎬
+In this [live demo](https://demo.getport.io/githubWorkflowEntity?identifier=wish_list_build_185674921&activeTab=3) example, we can see a specific Deployment Workflow and its related Service. 🎬
 
 #### Single Relation Structure
 
@@ -132,7 +132,7 @@ A many type relation is used to map multiple target entities to the source.
 - Map the **cloud resources** used by a **service**.
 - Map the **services deployed** in a **developer environment**.
 
-In this [live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) example, we can see a specific Jira issue and its related services. 🎬
+In this [live demo](https://demo.getport.io/jiraIssueEntity?identifier=WISH-789&activeTab=1) example, we can see a specific Jira issue and its related Services. 🎬
 
 #### Many Relation Structure
 
@@ -180,8 +180,8 @@ resource "port_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-:::note
-A Relation can't be configured with both `many` and `required` set to `true`
+:::note Relation Configuration Restriction
+A Relation can't be configured with both `many` and `required` set to `true`.
 :::
 
 ## Configure relations in Port

@@ -14,6 +14,7 @@ import PortWfWfrAppConfig from './example-workflow-workflowrun/\_github_exporter
 import BranchProtectionBlueprint from './example-branch/\_git_exporter_example_branch_protection_blueprint.mdx'
 import PortBranchProtectionAppConfig from './example-branch/\_github_exporter_example_branch_protection_port_app_config.mdx'
 import BranchBlueprint from './example-branch/\_git_exporter_example_branch_blueprint.mdx'
+import LastContributorBranchBlueprint from './example-branch/\_git_exporter_example_last_contributor_branch_blueprint.mdx'
 import PortBrAppConfig from './example-branch/\_github_exporter_example_branch_port_app_config.mdx'
 import LastContributorAppConfig from './example-branch/\_github_exporter_example_last_contributor_port_app_config.mdx'
 import LastContributorBlueprint from './example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
@@ -55,7 +56,7 @@ import PackageBlueprint from './example-file-kind/\_example_package_blueprint.md
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
 
-# Resource mapping examples
+# Examples
 
 :::warning General permissions limitation with gitHub cloud app
 When using the GitHub Cloud app with Port, certain fields and data points may not be accessible due to the lack of `write` API permissions. These limitations affect advanced repository settings, security features (such as code scanning and secret scanning status), and other GitHub objects that require elevated permissions to retrieve data.
@@ -268,6 +269,7 @@ In the following example you will ingest your GitHub repositories and their bran
 
 In the following example you will ingest your GitHub repositories and their last contributor to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
+<LastContributorBranchBlueprint/>
 <LastContributorBlueprint/>
 <LastContributorAppConfig/>
 

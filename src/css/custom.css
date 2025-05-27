@@ -783,6 +783,10 @@ html[data-theme="dark"] .navbar-signup-button {
   cursor: pointer;
 }
 
+.navbar__items {
+  gap: 0.2rem;
+}
+
 /* Responsive video container */
 @media screen and (max-width: 768px) {
   .video-container {
