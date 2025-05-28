@@ -8,6 +8,7 @@ description: Learn how to gain insights into GitHub repositories and developer a
 This guide demonstrates how to set up a monitoring solution to get insights into your GitHub workspace using Port's **GitHub** integration. You'll learn how to visualize repository visibility, monitor pull requests and issues, and track developer activity over time.
 
 <img src="/img/guides/gitHubInsightDashboard.png" border="1px" width="100%" />
+<img src="/img/guides/gitHubInsightDashboard2.png" border="1px" width="100%" />
 
 ## Common use cases
 

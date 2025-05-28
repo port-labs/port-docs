@@ -435,13 +435,13 @@ For example, if your ingress or load balancer exposes the OpsGenie Ocean integra
 
 ## Limitations
 
-### Maximum offset in Alerts API
+### Maximum offset in OpsGenie APIs
 
-When querying the [OpsGenie Alert API](https://docs.opsgenie.com/docs/alert-api#list-alerts), pagination restricts the sum of `offset` and `limit` parameters to 20,000 records. As a result, we cannot retrieve more than 20,000 alerts in a single query session.
+The OpsGenie APIs for [Alerts](https://docs.opsgenie.com/docs/alert-api#list-alerts) and [Incidents](https://docs.opsgenie.com/docs/incident-api#list-incidents) have a pagination limit where the sum of `offset` and `limit` parameters cannot exceed 20,000 records. This means you can retrieve up to 20,000 records in a single query session for each resource type.
 
-:::tip Accessing alerts beyond the limitation
-To access specific alerts beyond the 20,000 offset limit, we can apply filters to narrow the result set. Filtering retrieves only relevant data, reducing the number of records and effectively bypassing the offset limitation.  
-Check the [alerts examples](examples.md#alert) section for details on supported alert filters and implementation examples.
+:::tip Working with large datasets
+To access records beyond the 20,000 limit, use filters to narrow your result set. This approach reduces the number of records returned and helps you bypass the offset limitation.  
+For implementation details and supported filter options, see the [examples](examples.md#alert) section.
 :::
 
 ## Examples

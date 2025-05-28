@@ -8,6 +8,8 @@ description: Learn how to monitor GitHub Dependabot alerts and gain security ins
 This guide demonstrates how to set up a monitoring solution to gain visibility into security alerts from GitHub’s Dependabot. You’ll learn how to visualize vulnerability alerts across your repositories and track them over time using Port's **GitHub** integration.
 
 <img src="/img/guides/gitHubDependabotInsightDashboard.png" border="1px" width="100%" />
+<img src="/img/guides/gitHubDependabotInsightDashboard2.png" border="1px" width="100%" />
+
 
 ## Common use cases
 

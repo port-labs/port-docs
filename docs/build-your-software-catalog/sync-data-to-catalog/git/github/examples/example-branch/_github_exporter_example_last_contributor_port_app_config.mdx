@@ -3,6 +3,17 @@
 
 ```yaml showLineNumbers
 resources:
+  - kind: branch
+    selector:
+      query: .branch.name == .repository.default_branch
+    port:
+      entity:
+        mappings:
+          identifier: .repository.name + "-" + .branch.name
+          blueprint: '"github_branch"'
+          properties:
+            last_contributor: .branch.commit.commit.author.email | ascii_downcase
+            last_push: .branch.commit.commit.committer.date
   - kind: repository
     selector:
       query: 'true'
@@ -15,17 +26,8 @@ resources:
           properties:
             readme: file://README.md
             url: .html_url
-            defaultBranch: .default_branch
-  - kind: branch
-    selector:
-      query: '.repository.default_branch == .branch.name'
-    port:
-      entity:
-        mappings:
-          identifier: .repository.name
-          blueprint: '"githubRepository"'
-          properties:
-            last_contributor: .branch.commit.commit.author.email
-            last_push: .branch.commit.commit.committer.date
+            language: .language
+          relations:
+            default_branch: .name + "-" + .default_branch
 ```
 </details>

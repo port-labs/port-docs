@@ -1,0 +1,71 @@
+---
+id: invoke-a-specific-agent
+title: "Invoke a specific agent"
+description: "This route allows you to create an agent's invocation.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview)."
+sidebar_label: "Invoke a specific agent"
+hide_title: true
+hide_table_of_contents: true
+api: eJzVVU1v4zYQ/SsEL02AxEp6NIoC3m0PboFNkLinwEBGEh0xoUQtSdlRBf33zgwlW7HdXbRAD81BYcj5eO/NRzqZK585XQdtKzmXq0J74WwTlABj7M6L1jYiWJE5BXRZCXhRVfjBC11tbQbkN/spdcnP/FlZYRS4SpTWoXWKkcRiGX38lcgKlb0JugyFEk+5zZoSXzjK+qIIofbzJMFrP6utCzNtE9DX0TuxW+W2Wu0uZ/JKBnjxcv4kF0u5vpJOfW2UD59s3sp5JzNbBXShI9S10RFm8uqJYyc9wiiBTqGtFbK26avKAkatna2VC1r5fZj3cM7wo2qLSsQX0XiVk1x5W0GJeY1pUSh+2oJBjPgXPhN7zFXWYSZ7TovHSR4fnK5eTvKs0A0zOFS/VN6jLsI6gdRdS0lTDprhC4JIW84yis95DKTK+O/zueMDGMwS4DqHAEMpKeKk7rLnHyQADtBWOarJGYFTa7EtKk60gcYg1w0Yr9BVU0KmgK8o2kBfQXkCa7kRz8E16vmKgTjla1t5JXbaGOELuxPgBYjoLewGoW6sKxkrnn1QkNM1iN8e777s/amdqIG0U/ke1xkSQ1FGzDWE4gCZRV7m+NEbrdzZ0un9M6EgCuzFI7YDPGANqf9o0EjdKSzi3WOne5U1ToeWdU5x1DAXjgEyzucUnXt33fNMRHpc7x9vbujXR0y/xFqIh8FSUimxjIXNiZ/1PBJEcy6T7W3CaJPuiGqfUEe8KUng3HbsgcYZdBtHGmo9TrQkcU9fG38wmPB8pCpEDiPbfUHQ7Xc1aZtFg9Cd/pMLLocyFagMehE1mv+Hw6b49R3K2qiPkz6ZxsMU7uem5+JvLIPQgZzlPaIWi/sl2hH5KO3t7IYHGzUsgZfOgHHJWlGX1ipD/bLYA8f9Mtlh/6OdHMtCSia1AZQfJeBKd0MbPcntLRqOlOenUzP0EnZAQf2HHl2Xgld/ONP3dB1XBXVYrj2kZj+z31DwP1wcZzm/YVdOthhvfrzgxt6C0wT7H1K4eBhWwaX4d6vkLNBxkKp2CnMkcFydfo0uwzwR+mj1OWK8XlGsQ5STf7xEfr9c7u8eV2icDv+wS5uTj4MdLT38MgrLOvDs812Hg1i9NAgL32NMGkhoqLWmW+GNt8JwIKRneR6vi0iHvrShzrp0Xdw52IqjfXz6W49BrtGaZF8j6r8AtTtHXQ==
+sidebar_class_name: "post api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Invoke a specific agent"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/agent/{agentIdentifier}/invoke"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create an agent's invocation.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean","default":false},"in":"query","name":"stream","description":"If `true`, the response will show as a stream of information instead of a JSON response.","required":false},{"schema":{"type":"string"},"in":"path","name":"agentIdentifier","description":"The identifier of the agent you want to operate on.","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"context":{"type":"object","description":"An object used to dynamically inject values into the prompt."},"prompt":{"type":"string","description":"The user's message or query to be processed by the AI agent."},"labels":{"type":"object","description":"Optional meta-data about the invocation."}}}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
+      
