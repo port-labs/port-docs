@@ -21241,6 +21241,101 @@ paths:
       responses:
         "200":
           description: Default Response
+  "/v1/agent/invoke/{invocation_identifier}":
+    get:
+      summary: Get an invocation's result
+      description: This route allows you to get a specific invocation result.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
+      tags:
+        - AI
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: invocation_identifier
+          description: A unique identifier for the agent invocation.
+          required: true
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Default Response
+  "/v1/agent/{agentIdentifier}/invoke":
+    post:
+      summary: Invoke a specific agent
+      description: This route allows you to create an agent's invocation.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
+      tags:
+        - AI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  type: object
+                  description: An object used to dynamically inject values into the prompt.
+                prompt:
+                  type: string
+                  description: The user's message or query to be processed by the AI agent.
+                labels:
+                  type: object
+                  description: Optional meta-data about the invocation.
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: stream
+          description: If `true`, the response will show as a stream of information instead of a JSON response.
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: agentIdentifier
+          description: The identifier of the agent you want to operate on.
+          required: true
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Default Response
+  /v1/agent/invoke:
+    post:
+      summary: Invoke an agent
+      description: This route allows you to create an invocation without choosing a specific agent.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
+      tags:
+        - AI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context: 
+                  type: object
+                  description: An object used to dynamically inject values into the prompt.
+                prompt:
+                  type: string
+                  description: The user's message or query to be processed by the AI agent.
+                labels:
+                  type: object
+                  description: Optional meta-data about the invocation.
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: stream
+          description: If `true`, the response will show as a stream of information instead of a JSON response.
+          required: false
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Default Response
   /v1/organization/secrets:
     get:
       description: This route allows you to retrieve all of the secrets in your organization.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.port.io/sso-rbac/port-secrets).
