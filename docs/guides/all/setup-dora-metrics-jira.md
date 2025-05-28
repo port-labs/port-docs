@@ -97,10 +97,10 @@ priority: .fields.customfield_00000
 
 After you save the mappings, Port will begin ingesting matching Jira issues as deployments or incidents.
 
-### **(Optional) Filtering or tagging**
+### Filtering or tagging (optional)
 
-    - You can filter or tag deployments and incidents by project, issue types, statuses, or other criteria.
-    This can be accomplished by using JQL (Jira Query Language) within your mapping configuration. For additional information, refer to [JQL documentation]( https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#jql-support-for-issues)
+You can filter or tag deployments and incidents by project, issue types, statuses, or other criteria.  
+This can be accomplished by using JQL (Jira Query Language) within your mapping configuration. For additional information, refer to [JQL documentation]( https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#jql-support-for-issues).
 
 
 ### **Test your configuration**
