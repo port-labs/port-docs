@@ -7794,6 +7794,28 @@ paths:
       responses:
         "200":
           description: Default Response
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  result:
+                    type: object
+                    properties:
+                      minDate:
+                        type: number
+                      maxDate:
+                        type: number
+                      data:
+                        type: array
+                        items:
+                          type: number
+                required:
+                  - ok
+                additionalProperties: false
   /v1/blueprints:
     get:
       tags:
@@ -35474,6 +35496,22 @@ paths:
                   - ok
                 additionalProperties: false
                 description: Updated successfully.
+  "/v1/rotate-credentials/{user_email}":
+    post:
+      tags:
+        - Authentication / Authorization
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: user_email
+          required: true
+      security:
+        - bearer:
+            - update:users
+      responses:
+        "200":
+          description: Default Response  
   /v1/roles:
     get:
       tags:
