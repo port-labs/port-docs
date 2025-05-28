@@ -87,9 +87,7 @@ These mappings ingest Jira events into the `dora_deployment_event` or `dora_inci
     ```
 
 
-:::info Note
 You can map Jira custom fields to track additional incident information. Here's an example of mapping custom fields for urgency, status, and priority:
-:::
 
 ```yaml
 urgency: .fields.customfield_00000
