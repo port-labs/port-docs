@@ -103,7 +103,7 @@ You can filter or tag deployments and incidents by project, issue types, statuse
 This can be accomplished by using JQL (Jira Query Language) within your mapping configuration. For additional information, refer to [JQL documentation]( https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#jql-support-for-issues).
 
 
-### **Test your configuration**
+### Test your configuration
 
     - Create or move to done a Jira ticket matching your mappings.
     - In Port, navigate to the corresponding deployment or incident blueprint to verify that the new entity appears correctly.
