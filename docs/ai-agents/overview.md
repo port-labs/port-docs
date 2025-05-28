@@ -110,7 +110,7 @@ Port AI supports two primary interaction types:
 <summary>How do users interact with Port AI? (Click to expand)</summary>
 
 - Primary interface is through our [Slack app](/ai-agents/slack-app).
-- Full API availability.
+- Full [API availability](/api-reference/port-api/).
 </details>
 
 <details>

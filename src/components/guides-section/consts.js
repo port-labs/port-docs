@@ -110,6 +110,22 @@ export const availableGuides = [
         link: "/guides/all/create-and-track-dora-metrics-in-your-portal",
     },
     {
+        title: "Set up deployments using GitLab merge requests or jobs",
+        description: "Set up deployments using GitLab merge requests or jobs",
+        tags: ["Engineering metrics"],
+        logos: ["GitLab"],
+        category: "Experiences",
+        link: "/guides/all/set-up-deployments-dora-gitlab",
+    },
+    {
+        title: "Set up DORA metrics using Jira",
+        description: "Configure DORA metrics tracking using Jira for both deployments and incidents",
+        tags: ["Engineering metrics", "Jira"],
+        logos: ["Jira"],
+        category: "Experiences",
+        link: "/guides/all/setup-dora-metrics-jira",
+    },
+    {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["Cloud access management", "Actions", "RBAC"],
@@ -188,7 +204,7 @@ export const availableGuides = [
     {
         title: "Ingest cloud resources using Dynatrace",
         description: "Ingest any cloud resources from your Dynatrace environment into Port",
-        tags: ["Engineering metrics", "Dynatrace"],
+        tags: ["SDLC", "Dynatrace"],
         logos: ["Dynatrace"],
         // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-dynatrace",
@@ -804,7 +820,7 @@ export const availableGuides = [
     {
         title: "Ingest cloud resources using New Relic",
         description: "Ingest cloud resources from your New Relic environment into Port",
-        tags: ["Engineering metrics", "New Relic"],
+        tags: ["SDLC", "New Relic"],
         logos: ["New Relic"],
         // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-newrelic",
@@ -878,7 +894,7 @@ export const availableGuides = [
     {
         title: "Assign teams to monitored entities", 
         description: "Configure your Dynatrace data sources to map entities to teams",
-        tags: ["Engineering metrics", "Dynatrace"],
+        tags: ["SDLC", "Dynatrace"],
         logos: ["Dynatrace"],
         link: "/guides/all/connect-dynatrace-team-with-entities"
     },
@@ -947,11 +963,11 @@ export const availableGuides = [
         link: "/guides/all/trigger-firehydrant-incident",
     },
     {
-        title: "Enrich entities using AI",
-        description: "Enrich entities with AI-powered insights from external APIs",
-        tags: [ "Security", "Actions", "Automations", "AI"],
-        logos: ["Snyk","Wiz","SonarQube"],
-        link: "/guides/all/enrich-entities-using-ai",
+        title: "Enrich security vulnerabilities using AI",
+        description: "Leverage AI tools to get detailed analysis and remediation strategies for security vulnerabilities",
+        tags: ["Security", "AI", "Actions", "Automations"],
+        logos: ["Snyk", "Wiz", "SonarQube"],
+        link: "/guides/all/enrich-security-vulnerability-using-ai",
     },
     {
         title: "Monitor integrations",
@@ -1134,6 +1150,20 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "SonarQube", "Automations"],
         logos: ["GitHub", "SonarQube"],
         link: "/guides/all/apply-labels-to-github-pr-based-on-sonar-scans",
+    },
+    {
+        title: "Create an Azure DevOps Work Item",
+        description: "Create a self-service action that creates an Azure DevOps work item",
+        tags: ["SDLC", "AzureDevops", "Actions"],
+        logos: ["AzureDevops", "Webhook"],
+        link: "/guides/all/create-azure-devops-work-item",
+    },    
+    {
+        title: "Deploy a service using AWS CodeDeploy",
+        description: "Create a self-service action that deploys a service using AWS CodeDeploy",
+        tags: ["SDLC", "AWS", "Actions"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/deploy-service-using-aws-codedeploy",
     }
 ]
 

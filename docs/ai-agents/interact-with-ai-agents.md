@@ -22,12 +22,12 @@ You have two main approaches when interacting with AI agents in Port:
 <Tabs groupId="interaction-approach" queryString>
 <TabItem value="specific-agent" label="Specific agent">
 
-Choose a specific agent when you have a structured scenario, such as triggering an agent from an automation. This approach works best when you know exactly which agent has the expertise needed for your task.
+Choose a specific agent when you have a structured scenario, such as triggering an agent from an automation or using an AI widget. This approach works best when you know exactly which agent has the expertise needed for your task, or when the interaction method requires you to select a specific agent.
 
 </TabItem>
 <TabItem value="agent-router" label="Agent router">
 
-Use the agent router when having a more natural conversation, such as through Slack. The router intelligently determines which agent is best suited to handle your request based on its content and context.
+The agent router is used when you prefer a more conversational interaction, or when the interaction method doesn't allow for selecting a specific agent directly. The router intelligently determines which agent is best suited to handle your request based on its content and context. This is the default for interactions via Slack, unless a specific agent is targeted. For API and action-based interactions, you can choose to direct your request to the agent router.
 
 </TabItem>
 </Tabs>
@@ -48,17 +48,17 @@ Follow these steps to add an AI agent widget:
 
 <img src='/img/ai-agents/AIAgentWidgetMenu.png' width='80%' border='1px' />
 
-The widget provides a chat interface where you can ask questions and receive responses from the agent without leaving your dashboard.
+The widget provides a chat interface where you can ask questions and receive responses from the **specific agent you configured** without leaving your dashboard.
 
 </TabItem>
 <TabItem value="slack-integration" label="Slack Integration">
 
-The Slack integration provides the most natural way to interact with Port's AI agents. This method abstracts all technical details, allowing for free-flowing conversations.
+The Slack integration provides the most natural way to interact with Port's AI agents. This method abstracts all technical details, allowing for free-flowing conversations. By default, messages sent to the Port Slack app (either via direct message or by mentioning it in a channel) are handled by the **agent router**.
 
 You can interact with agents in two ways:
 
-1. **Direct messaging** the [Port Slack app](/ai-agents/slack-app).
-2. **Mentioning** the app in any channel it's invited to.
+1. **Direct messaging** the [Port Slack app](/ai-agents/slack-app). This will use the agent router.
+2. **Mentioning** the app in any channel it's invited to. This will also use the agent router.
 
 When you send a message, the app will:
 1. Open a thread.
@@ -67,9 +67,9 @@ When you send a message, the app will:
 <img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border='1px' />
 <br/><br/>
 
-#### Tips for effective Slack interactions
+**Tips for effective Slack interactions**
 
-- To target a specific agent, include the agent's nickname at the beginning of your message (e.g., "@Port DevAgent what are our production services?").
+- To target a **specific agent** instead of using the router, include the agent's nickname at the beginning of your message (e.g., "@Port DevAgent what are our production services?").
 - Send follow-up messages in the same thread and mention the app again to continue the conversation.
 - Keep conversations focused on the same topic for best results.
 - Limit threads to five consecutive messages for optimal performance.
@@ -78,7 +78,7 @@ When you send a message, the app will:
 </TabItem>
 <TabItem value="actions-automations" label="Actions and automations">
 
-You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows.
+You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows. When configuring an action or automation, you can choose to invoke a **specific agent** or send the request to the **agent router**.
 
 For example, when a new incident is created in Port, you can trigger an agent that:
 - Triages the incident.
@@ -90,62 +90,161 @@ For example, when a new incident is created in Port, you can trigger an agent th
 </TabItem>
 <TabItem value="api-integration" label="API integration">
 
-Port is an API-first platform, allowing you to integrate AI agents into your custom workflows.  
-The interaction process follows these steps:
+Port is an API-first platform, allowing you to integrate AI agents into your custom workflows. You can interact with agents in two main ways: by **streaming responses** as Server-Sent Events (SSE) for real-time updates, or by **polling for a complete response**.
 
-1. Invoke the agent with your request.
-2. Receive an invocation ID.
-3. Poll the entity until the generation is completed.
+<Tabs groupId="api-interaction-methods" queryString>
+<TabItem value="streaming" label="Streaming (Recommended)" default>
 
-<img src='/img/ai-agents/AIAgentTriggerFlowDiagram.png' width='70%' border='1px' />
+**Streaming Responses (Recommended)**
 
-<details>
-<summary><b>API example (Click to expand)</b></summary>
+Streaming allows you to receive parts of the agent's response as they are generated, providing a more interactive experience. This is achieved by adding the `stream=true` query parameter to the invoke API call (see [Invoke a specific agent API](/api-reference/invoke-a-specific-agent) or [Invoke an agent API](/api-reference/invoke-an-agent)). The response will be in `text/event-stream` format.
 
-```python showLineNumbers
-# Example API call to invoke an agent
-import requests
-import time
+**Interaction Process (Streaming):**
 
-# Invoke the agent
-response = requests.post(
-    'https://api.getport.io/v1/agent/{agentIdentifier}/invoke',
-    headers={
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer YOUR_API_TOKEN'
-    },
-    json={
-        'message': 'What services are currently experiencing incidents?'
-    }
-)
+1.  Invoke the agent with the `stream=true` parameter.
+2.  The API will start sending Server-Sent Events.
+3.  Your client should process these events as they arrive. Each event provides a piece of information about the agent's progress or the final response.
 
-invocation_id = response.json()['invocationId']
+**cURL Example for Streaming:**
 
-# Function to check status
-def check_status():
-    status_response = requests.get(
-        f'https://api.getport.io/v1/agent/invoke/{invocation_id}',
-        headers={
-            'Authorization': 'Bearer YOUR_API_TOKEN'
-        }
-    )
-    return status_response.json()
+The following example shows how to invoke a specific agent, but the router agent be similarly used as well.
 
-# Poll until complete
-result = None
-while True:
-    time.sleep(5)
-    result = check_status()
-    if result['status'] == 'Completed':
-        break
-
-print(result['response'])
+```bash
+curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true' \\
+  -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
+  -H 'Content-Type: application/json' \\
+  --data-raw '{"prompt":"What is my next task?"}'
 ```
 
+**Streaming Response Details (Server-Sent Events):**
+
+The API will respond with `Content-Type: text/event-stream; charset=utf-8`.
+
+Each event in the stream has the following format:
+```text
+event: <event_name>
+data: <json_payload_or_string>
+
+```
+Note the blank line after `data: ...` which separates events.
+
+Here's an example sequence of events:
+```text
+event: plan
+data: { "plan": "...", "toolCalls": [...] }
+
+event: execution
+data: Your final answer from the agent.
+
+event: done
+data: {}
+```
+
+**Possible Event Types:**
+
+<details>
+<summary><b><code>agentSelection</code> (Click to expand)</b></summary>
+
+Provides the result from the agent router.
+
+```json
+{
+  "type": "SELECTED_AGENT",
+  "identifier": "agent_id",
+  "thought_process": "Why this agent was selected..."
+}
+```
+    *   `type` can also be `"NO_AGENT_MATCH"` if no suitable agent is found.
+</details>
+
+<details>
+<summary><b><code>checkIfActionRequested</code> (Click to expand)</b></summary>
+
+Indicates which self-service action, if any, the agent has decided to run.
+
+```json
+{
+  "actionIdentifier": "action_id"
+}
+```
+    *   Can also be `{"actionIdentifier": null}` if no action is requested.
+</details>
+
+<details>
+<summary><b><code>plan</code> (Click to expand)</b></summary>
+
+Details the agent's reasoning and intended steps (tools to be called, etc.).
+
+```json
+{
+  "plan": "Detailed plan...",
+  "toolCalls": [
+    {
+      "name": "tool_name",
+      "arguments": {}
+    }
+  ]
+}
+```
+</details>
+
+<details>
+<summary><b><code>execution</code> (Click to expand)</b></summary>
+
+The final textual answer or a chunk of the answer from the agent for the user. For longer responses, multiple `execution` events might be sent.
+</details>
+
+<details>
+<summary><b><code>done</code> (Click to expand)</b></summary>
+
+Signals that the agent has finished processing and the response stream is complete.
+
+```json
+{}
+```
 </details>
 
 </TabItem>
+<TabItem value="polling" label="Polling">
+
+**Polling for Responses**
+
+If you prefer to get the entire response at once after processing is complete, or if your client doesn't support streaming, you can use the polling method.
+
+1.  Invoke the agent (see [Invoke a specific agent API](/api-reference/invoke-a-specific-agent)) or agent router (see [Invoke an agent API](/api-reference/invoke-an-agent)) with your request (without `stream=true`).
+2.  Receive an `invocationId` in the response.
+3.  Periodically poll the AI invocation endpoint (see [Get an invocation's result API](/api-reference/get-an-invocations-result)) using the `invocationId` until the `status` field indicates completion (e.g., `Completed` or `Failed`).
+4.  The final response will be available in the polled data once completed.
+
+<img src='/img/ai-agents/AIAgentTriggerFlowDiagram.png' width='70%' border='1px' />
+
+</TabItem>
 </Tabs>
+
+</TabItem>
+</Tabs>
+
+## Discovering Available Agents
+
+:::info AI Agents as Entities
+AI agents are standard Port entities belonging to the `_ai_agent` blueprint. This means you can query, manage, and interact with them using the same API endpoints and methods you use for any other entity in your software catalog.
+:::
+
+You can discover available AI agents in your Port environment in a couple of ways:
+
+1.  **AI Agents Catalog Page**: Navigate to the AI Agents catalog page in Port. This page lists all the agents that have been created in your organization. For more details on creating agents, refer to the [Build an AI agent guide](/ai-agents/build-an-ai-agent).
+2.  **Via API**: Programmatically retrieve a list of all AI agents using the Port API. AI agents are entities of the `_ai_agent` blueprint. You can use the [Get all entities of a blueprint API endpoint](https://docs.port.io/api-reference/get-all-entities-of-a-blueprint) to fetch them, specifying `_ai_agent` as the blueprint identifier.
+
+<details>
+<summary>cURL Example</summary>
+
+```bash
+curl -L 'https://api.port.io/v1/blueprints/_ai_agent/entities' \
+    -H 'Accept: application/json' \
+    -H 'Authorization: Bearer <YOUR_API_TOKEN>'
+```
+
+</details>
 
 ## AI interaction details
 
@@ -186,12 +285,13 @@ We limit this data storage strictly to these purposes. You can contact us to opt
 
 Port applies limits to AI agent interactions to ensure fair usage across all customers:
 
-- **Daily query limit**: 20 queries per minute.
-- **Token usage limit**: 200,000 tokens per minute.
+- **Query limit**: ~40 queries per hour.
+- **Token usage limit**: 800,000 tokens per hour.
 
 :::caution Usage limits
 Usage limits may change without prior notice. Once a limit is reached, you will need to wait until it resets.  
 If you attempt to interact with an agent after reaching a limit, you will receive an error message indicating that the limit has been exceeded.
+The query limit is estimated and depends on the actual token usage.
 :::
 
 ## Common errors
