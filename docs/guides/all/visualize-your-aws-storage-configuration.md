@@ -8,6 +8,8 @@ description: Learn how to monitor your AWS data and storage security, including 
 This guide demonstrates how to set up a monitoring solution to gain visibility into security configurations from your AWS S3 and RDS instances using Port's **AWS** integration.
 
 <img src="/img/guides/awsStorageAndSecurityDashboard.png" border="1px" width="100%" />
+<img src="/img/guides/awsStorageAndSecurityDashboard2.png" border="1px" width="100%" />
+
 
 ## Common use cases
 
