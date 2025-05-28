@@ -12,7 +12,7 @@ The [Create & track DORA metrics in your portal](/guides/all/create-and-track-do
 
 This guide assumes you have already completed that setup and shows how to adapt it for Jira users.
 
-By following this guide, you'll define deployments and incidents in Port using Jira issues. By the end, you'll leverage DORA metrics using Jira, providing accurate deployment and incident insights in your portal.
+By following this guide, you will see how to define deployments and incidents in Port using Jira issues. By the end, you will be able to leverage DORA metrics using Jira, providing accurate deployment and incident insights in your portal.
 
 ## Prerequisites
 
@@ -24,13 +24,13 @@ To set up Jira issues for DORA metrics in your portal, you will need:
 
 ## Configure your deployments and incidents
 
-1. **Map Jira issues as deployments or incidents**
+### **Map Jira issues as deployments or incidents**
 
-- Navigate to **Builder** → **Data Sources** and select your Jira integration.
+- Navigate to [**Data Sources**](https://app.getport.io/settings/data-sources) and select your Jira integration.
 - Add new mappings to ingest Jira issues as deployment or incident entities.
 
 :::info Technical note: mapping deployments and incidents
-These mappings ingest Jira events into the `dora_deployment_event` or `dora_incident_event` blueprints. For more details, visit [Create & track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal).
+These mappings ingest Jira events into the `dora_deployment_event` or `dora_incident_event` blueprints. For more details, see the [Create & track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal).
 :::
 
 **Deployments using Jira issues:**
@@ -99,13 +99,13 @@ priority: .fields.customfield_00000
 
 - Save the mappings. Port will begin ingesting matching Jira issues as deployments or incidents.
 
-2. **(Optional) Filtering or tagging**
+### **(Optional) Filtering or tagging**
 
     - You can filter or tag deployments and incidents by project, issue types, statuses, or other criteria.
     This can be accomplished by using JQL (Jira Query Language) within your mapping configuration. For additional information, refer to [JQL documentation]( https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#jql-support-for-issues)
 
 
-3. **Test your configuration**
+### **Test your configuration**
 
     - Create or move to done a Jira ticket matching your mappings.
     - In Port, navigate to the corresponding deployment or incident blueprint to verify that the new entity appears correctly.

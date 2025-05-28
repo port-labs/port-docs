@@ -26,7 +26,7 @@ To set up GitLab merge requests or jobs for DORA metrics in your portal, you wil
 ## Configure your deployments
 
 1. **Map merge requests and/or jobs as deployments**
-    - Go to the **Builder** -> **Data Sources** then click on the GitLab integration
+    - Go to the [**Data Sources**](https://app.getport.io/settings/data-sources) then click on the GitLab integration
     - Add a new mapping to ingest GitLab merge requests as deployment entities.
 
 :::info Technical note: how deployments are mapped
