@@ -24,7 +24,7 @@ To set up Jira issues for DORA metrics in your portal, you will need:
 
 ## Configure your deployments and incidents
 
-### **Map Jira issues as deployments or incidents**
+### Map Jira issues as deployments or incidents
 
 - Navigate to [**Data Sources**](https://app.getport.io/settings/data-sources) and select your Jira integration.
 - Add new mappings to ingest Jira issues as deployment or incident entities.
