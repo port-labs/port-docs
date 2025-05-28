@@ -5,6 +5,7 @@ import TabItem from "@theme/TabItem"
 
 <TabItem value="ui" label="UI">
 
+
 1. Login to your Airbyte application (cloud or self-hosted).
 
 2. In the left-side pane, click on `Destinations`.
@@ -23,6 +24,7 @@ import TabItem from "@theme/TabItem"
 
 5. Click `Test and save` and wait for Airbyte to confirm the Destination is set up correctly.
 
+<img src="/img/build-your-software-catalog/custom-integration/s3integrations/airbyteDestinationSetupExample.png" border="1px" />
 
 </TabItem>
 

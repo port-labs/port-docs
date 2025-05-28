@@ -7,7 +7,9 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
+import AirbyteLocalSetup from "/docs/generalTemplates/_airbyte_local_setup.md"
 import S3IntegrationDisclaimer from "/docs/generalTemplates/_s3_integrations_disclaimer.md"
+import S3IntegrationMappingSetup from "/docs/generalTemplates/_s3_integrations_mapping_setup.md"
 
 
 # Ingest Okta data into Port via Airbyte, S3 and webhook
@@ -15,7 +17,6 @@ import S3IntegrationDisclaimer from "/docs/generalTemplates/_s3_integrations_dis
 This guide will demonstrate how to ingest Okta data into Port using [Airbyte](https://airbyte.com/), [S3](https://aws.amazon.com/s3/) and a [webhook integration](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
 
 <S3IntegrationDisclaimer/>
-
 
 ## Prerequisites
 
@@ -25,12 +26,13 @@ This guide will demonstrate how to ingest Okta data into Port using [Airbyte](ht
 
 - Access to an available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart).
 
-- An Okta **Personal API Token** used to retrieve data.
+<AirbyteLocalSetup/>
 
+- An Okta **Personal API Token** used to retrieve data.
 
 ## Data model setup
 
-### Add Blueprints 
+### Add Blueprints
 
 Add the `Okta Permission` blueprint:
 
@@ -273,21 +275,7 @@ Add the `Okta User` blueprint in the same way:
 
 <br/>
 
-### Create Webhook Integration
-
-Create a webhook integration to ingest the data into Port:
-
-1. Go to the [Data sources page](https://app.getport.io/settings/data-sources) of your portal.
-
-2. Click on "+ Data source".
-
-3. In the top selection bar, click on Webhook, then select `Custom Integration`.
-
-4. Enter a **name** for your Integration (for example: "Okta Integration"), enter a **description** (optional), then click on `Next`.
-
-5. Copy the Webhook URL that was generated and include set up the airbyte connection (see Below).
-
-6. Scroll down to the section titled "Map the data from the external system into Port" and paste the following mapping:
+<S3IntegrationMappingSetup/>
 
 <details>
 <summary><b>Okta Webhook Mapping (Click to expand)</b></summary>
@@ -375,6 +363,7 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
 ### Set up Okta Connection
 
 1. Follow Airbyte's guide to set up [Okta connector](https://docs.airbyte.com/integrations/sources/okta).
+  More information on [setting source connectors](http://docs.port.io/build-your-software-catalog/custom-integration/S3-integrations#set-up-data-source)
 
 2. After the Source is set up, proceed to create a "+ New Connection".
 
@@ -391,7 +380,8 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
 :::tip Important
   If for any reason you have entered different values than the ones specified in this guide,
   inform us so we can assist to ensure the integration will run smoothly.
-::: 
+:::
 
-### Additional relevant guides
-- [Ingest Any data into port](https://docs.port.io/guides/all/ingest-any-data-via-airbyte-s3-and-webhook/)
+## Additional relevant guides
+
+- [Ingest Any data into port via Airbyte](https://docs.port.io/build-your-software-catalog/custom-integration/S3-integrations)
