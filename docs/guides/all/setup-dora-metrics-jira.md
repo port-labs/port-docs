@@ -95,7 +95,7 @@ status: .fields.customfield_00000
 priority: .fields.customfield_00000
 ```
 
-- Save the mappings. Port will begin ingesting matching Jira issues as deployments or incidents.
+After you save the mappings, Port will begin ingesting matching Jira issues as deployments or incidents.
 
 ### **(Optional) Filtering or tagging**
 
