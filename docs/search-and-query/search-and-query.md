@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Search & query
 
-Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used across the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list. 
+Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used across the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list.
 
 ## Common queries usage
 
@@ -19,7 +19,7 @@ High quality search is essential to effectively track assets in your software ca
 - Find all running services that are not healthy.
 - List all libraries that have known vulnerabilities.
 - Filter all services running in a specific cluster (in a query or self service form).
-- Catalog initial filters based on the logged in user's properties. 
+- Catalog initial filters based on the logged in user's properties.
 
 ## Search request
 
@@ -444,6 +444,92 @@ Since we don't have context of the logged-in user when using the API, these func
     "property": "$blueprint",
     "operator": "=",
     "value": "{{blueprint}}"
+  }
+]
+```
+
+### Contextual query rules
+
+:::info Closed beta feature
+This capability is currently in closed beta, and is not yet generally available.  
+If you would like to join the beta, please reach out to us.
+:::
+To implement specific and/or complex queries, you can add the context of the triggering user to a query rule, allowing you to access that user's entity and/or owning teams.  
+You can mix contextual query rules freely with other rules as part of your queries.
+This can be used in either the `property` or `value` key in a query rule:
+
+<Tabs groupId="context" defaultValue="property" values={[
+{label: "Property", value: "property"},
+{label: "Value", value: "value"},
+]}>
+<TabItem value="property">
+```json showLineNumbers
+{
+   ...other rule keys
+   "property": {
+      "context": "user" | "userTeams",
+      "property": "prop"
+  }
+}
+```
+</TabItem>
+<TabItem value="value">
+```json showLineNumbers
+{
+  ...other rule keys
+   "value": {
+      "context": "user" | "userTeams",
+      "property": "prop"
+  }
+}
+```
+</TabItem>
+</Tabs>
+
+#### Available contexts
+| Context       | Description                                                                               |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| `user`  | The entity of the user triggering the query |
+| `userTeams` | The entities of the owning teams of the user triggering the query                                                                     |
+
+#### Usage examples
+
+```json showLineNumbers
+[ 
+  ...other rules
+  { // filter entities with the same department as the user
+    "property": "department",
+    "operator": "containsAny",
+    "value": {
+      "context": "user",
+      "property": "department"
+    }
+  }
+]
+```
+```json showLineNumbers
+[ 
+  ...other rules
+  { // only users with `manager` role will get the entities
+    "property": {
+      "context": "user",
+      "property": "role"
+    },
+    "operator": "=",
+    "value": "manager"
+  }
+]
+```
+```json showLineNumbers
+[
+  ...other rules
+  { // only users in these team will get the entities
+    "property": {
+      "context": "userTeams",
+      "property": "$identifier"
+    },
+    "operator": "containsAny",
+    "value": ["Spider Team", "Builder Team"]
   }
 ]
 ```
