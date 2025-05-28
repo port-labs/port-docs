@@ -70,8 +70,7 @@ It is saved locally, and is NOT sent to Port at any time.
      --set integration.type="gcp"  \
      --set integration.eventListener.type="POLLING"  \
      --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>" \
-     --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
-     --set extraEnv[0].value="true"
+     --set integration.processExecution.mode="multi_process"
    ```
 
 <MemoryManagement integrationName="GCP" />

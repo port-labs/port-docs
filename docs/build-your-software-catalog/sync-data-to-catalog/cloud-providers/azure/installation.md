@@ -71,8 +71,7 @@ helm upgrade --install azure port-labs/port-ocean \
   --set integration.config.azureClientId="<AZURE_CLIENT_ID>"  \
   --set integration.config.azureClientSecret="<AZURE_CLIENT_SECRET>" \
   --set integration.config.azureTenantId="<AZURE_TENANT_ID>" \
-  --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
-  --set extraEnv[0].value="true"
+  --set integration.processExecution.mode="multi_process"
 ```
 
 <PortApiRegionTip/>

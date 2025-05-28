@@ -9,11 +9,11 @@ To enable this feature:
     -e OCEAN__MULTIPROCESSING_ENABLED=true
     ```
 
-2. For Helm installations, use the `extraEnv` parameter:
+2. For Helm installations, use the `integration.processExecution.mode=` parameter:
     ```bash
-    --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
-    --set extraEnv[0].value="true"
+    --set integration.processExecution.mode="multi_process"
     ```
+   If needed, you can override the default `PPROMETHEUS_MULTIPROC_DIR` by using the `integration.processExecution.prometheusMultiProcessDir` parameter.
 
 This configuration is recommended for larger integrations, especially when:
 - You're experiencing memory-related issues

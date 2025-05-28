@@ -55,8 +55,7 @@ helm upgrade --install aws port-labs/port-ocean \
   --set integration.config.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
   --set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"  \
   --set integration.config.maximumConcurrentAccounts=50 \
-  --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
-  --set extraEnv[0].value="true"
+  --set integration.processExecution.mode="multi_process"
 ```
 
 ### IRSA
@@ -85,8 +84,7 @@ helm upgrade --install aws port-labs/port-ocean \
   --set integration.eventListener.type="POLLING"  \
   --set integration.maximumConcurrentAccounts=50  \
   --set podServiceAccount.name="$SERVICE_ACCOUNT" \
-  --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
-  --set extraEnv[0].value="true"
+  --set integration.processExecution.mode="multi_process"
 ```
 
 ### Multiple account support
@@ -115,8 +113,7 @@ helm upgrade --install aws port-labs/port-ocean \
   --set integration.config.accountReadRoleName="$YOUR_ACCOUNT_READ_ROLE_NAME"  \ 
   --set integration.config.organizationRoleArn="$YOUR_ORGANIZATION_ROLE_ARN"  \
   --set integration.config.maximumConcurrentAccounts=50 \
-  --set extraEnv[0].name="OCEAN__MULTIPROCESSING_ENABLED" \
-  --set extraEnv[0].value="true"
+  --set integration.processExecution.mode="multi_process"
 ```
 
   </TabItem>
