@@ -113,9 +113,17 @@ export const availableGuides = [
         title: "Set up deployments using GitLab merge requests or jobs",
         description: "Set up deployments using GitLab merge requests or jobs",
         tags: ["Engineering metrics"],
-        logos: ["Actions"],
+        logos: ["GitLab"],
         category: "Experiences",
         link: "/guides/all/set-up-deployments-dora-gitlab",
+    },
+    {
+        title: "Set up DORA metrics using Jira",
+        description: "Configure DORA metrics tracking using Jira for both deployments and incidents",
+        tags: ["Engineering metrics", "Jira"],
+        logos: ["Jira"],
+        category: "Experiences",
+        link: "/guides/all/setup-dora-metrics-jira",
     },
     {
         title: "IAM permission management",
@@ -1149,7 +1157,7 @@ export const availableGuides = [
         tags: ["SDLC", "AzureDevops", "Actions"],
         logos: ["AzureDevops", "Webhook"],
         link: "/guides/all/create-azure-devops-work-item",
-    },
+    },    
     {
         title: "Deploy a service using AWS CodeDeploy",
         description: "Create a self-service action that deploys a service using AWS CodeDeploy",

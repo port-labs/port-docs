@@ -70,6 +70,13 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
+:::caution API Token authentication recommended
+For production, we recommend using **API Token authentication** for Port’s Jira integration.  
+It ensures stable data syncing and prevents issues caused by user account changes.  
+
+OAuth is best suited for the **initial setup** phase, such as configuring mappings.
+:::
+
 <OceanSaasInstallation integration="Jira" />
 
 </TabItem>
