@@ -73,7 +73,7 @@ It is saved locally, and is NOT sent to Port at any time.
      --set integration.processExecution.mode="multi_process"
    ```
 
-<MemoryManagement integrationName="GCP" />
+<MemoryManagement/>
 
 <h2> Optional- Scale permissions for a Service account </h2>
 
@@ -204,7 +204,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
    -e OCEAN__EVENT_LISTENER='{"type": "ONCE"}' \
    -e OCEAN__INTEGRATION__CONFIG__ENCODED_ADC_CONFIGURATION="<paste_the_encoded_file_content_here>" \
-   -e OCEAN__MULTIPROCESSING_ENABLED=true \
+   -e OCEAN__PROCESS_EXECUTION_MODE="multi_process" \
    ghcr.io/port-labs/port-ocean-gcp:latest
    ```
 

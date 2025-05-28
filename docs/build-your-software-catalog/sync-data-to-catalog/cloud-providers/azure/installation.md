@@ -468,5 +468,3 @@ If you prefer using the Terraform deployment method with Event Grid, you will ne
 - Check out the [Azure multi subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md) guide for setting up synchronization of Azure resources.
 
 <MemoryManagement/>
-
-<PortApiRegionTip/>

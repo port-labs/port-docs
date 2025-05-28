@@ -237,9 +237,9 @@ The AWS integration uses the following AWS infrastructure:
 | `OCEAN__EVENT_LISTENER`                              | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                                                                                                                                                            |
 | `OCEAN__INTEGRATION__IDENTIFIER`                     | The identifier of the integration.                                                                                                                                                                                                                                   |
 | `OCEAN__INTEGRATION__TYPE`                           | should be set to `aws`.                                                                                                                                                                                                                                              |
-| `OCEAN__MULTIPROCESSING_ENABLED`                     | When set to true, enables running each kind in a separate process. This helps manage memory usage and prevents OOM (Out of Memory) issues at the kind level rather than affecting the entire process. Recommended for cloud provider integrations. |
+| `OCEAN__PROCESS_EXECUTION_MODE`                     | Controls how kinds are executed. Allowed values: `multi_process` (each kind in a separate process), `single_process` (all kinds in one process). Recommended: `multi_process` for large or high-memory integrations. |
 
-<MemoryManagement integrationName="AWS" />
+<MemoryManagement/>
 
 </details>
 
@@ -256,7 +256,7 @@ docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
   -e OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
   -e OCEAN__INTEGRATION__CONFIG__MAXIMUM_CONCURRENT_ACCOUNTS=50 \
-  -e OCEAN__MULTIPROCESSING_ENABLED=true
+  -e OCEAN__PROCESS_EXECUTION_MODE="multi_process" \
 ghcr.io/port-labs/port-ocean-aws:latest
 ```
 
