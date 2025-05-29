@@ -66,11 +66,7 @@ To give `read` permissions to another role, add it to the `roles` array:
       "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
       "users": [],
       "teams": [],
-      "ownedByTeam": false,
-      "policy": {
-        "combinator": "and",
-        "rules": []
-      }
+      "ownedByTeam": false
     }
   }
 }
@@ -91,11 +87,7 @@ To give `read` permissions to another user, add it to the `users` array:
       // highlight-next-line
       "users": ["my-user@example.com"], // added my-user@example.com
       "teams": [],
-      "ownedByTeam": false,
-      "policy": {
-        "combinator": "and",
-        "rules": []
-      }
+      "ownedByTeam": false
     }
   }
 }
@@ -116,11 +108,7 @@ To give `read` permissions to another team, add it to the `teams` array:
       "users": [],
       // highlight-next-line
       "teams": ["my-team"], // added my-team
-      "ownedByTeam": false,
-      "policy": {
-        "combinator": "and",
-        "rules": []
-      }
+      "ownedByTeam": false
     }
   }
 }
@@ -143,11 +131,7 @@ To give `read` permissions to members of the owning team of an entity, change th
       "users": [],
       "teams": [],
       // highlight-next-line
-      "ownedByTeam": true, // changed from false
-      "policy": {
-        "combinator": "and",
-        "rules": []
-      }
+      "ownedByTeam": true // changed from false
     }
   }
 }
