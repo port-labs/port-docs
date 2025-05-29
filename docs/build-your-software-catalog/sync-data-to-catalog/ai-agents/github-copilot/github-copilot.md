@@ -383,13 +383,12 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 
 ### Default mapping configuration
 
-This is the default mapping configuration you get after installing the GitHub Copilot integration.
+This is the default mapping configuration for this integration:
 
 <details>
 <summary><b>Default mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
-
 entityDeletionThreshold: 0
 resources:
 - kind: copilot-team-metrics

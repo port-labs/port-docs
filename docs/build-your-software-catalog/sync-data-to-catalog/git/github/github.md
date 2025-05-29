@@ -107,13 +107,12 @@ When **using Port's UI**, the specified configuration will override any `port-ap
 
 ### Default mapping configuration
 
-This is the default mapping configuration you get after installing the GitHub integration.
+This is the default mapping configuration for this integration:
 
 <details>
 <summary><b>Default mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
-
 deleteDependentEntities: true
 createMissingRelatedEntities: true
 enableMergeEntity: true
