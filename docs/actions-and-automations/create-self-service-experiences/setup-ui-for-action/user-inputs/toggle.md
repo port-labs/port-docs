@@ -14,6 +14,18 @@ import TabItem from "@theme/TabItem"
 Toggle is a basic boolean input that has one of two possible values - `true` and `false`.  
 In Port, this input type is represented by a switch that can be toggled on or off.
 
+:::warning Required field behavior
+The "required" property has no effect on toggle inputs since they always have a value (either `true` or `false` based on the default). Unlike other input types, users cannot leave a toggle in an empty state, so the required validation doesn't apply.
+
+If you need a boolean input that can be left unset (null), consider using a [select input](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/user-inputs/select) with options for `true`, `false`, and `null`.
+:::
+
+:::info Toggle vs Boolean properties
+Toggle inputs in actions differ from Boolean properties in blueprints:
+- **Toggle inputs** (actions): Always have a value (`true` or `false`) and appear as a switch
+- **Boolean properties** (blueprints): Can be `null`, `true`, or `false` and support optional/unset states
+:::
+
 ## 💡 Common toggle usage
 
 This input type can be used to store any true/false gate, for example:
