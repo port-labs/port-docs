@@ -426,6 +426,181 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: monitor
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name
+        blueprint: '"datadogMonitor"'
+        properties:
+          tags: .tags
+          monitorType: .type
+          overallState: .overall_state
+          thresholds: .thresholds
+          priority: .priority
+          createdBy: .creator.email
+          createdAt: .created
+          updatedAt: .modified
+          link: ("https://app.datadoghq.com/monitors/" + (.id | tostring))
+        relations:
+          owner_team_datadog: .tags | map(select(startswith("team:"))) | unique | map(split(":")[1])
+          service_datadog: .tags | map(select(startswith("service:"))) | unique | map(split(":")[1])
+          service:
+            combinator: '"and"'
+            rules:
+            - property: '"datadog_service_id"'
+              operator: '"in"'
+              value: .tags | map(select(startswith("service:"))) | unique | map(split(":")[1])
+- kind: service
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .attributes.schema."dd-service"
+        title: .attributes.schema."dd-service"
+        blueprint: '"datadogService"'
+        properties:
+          application: .attributes.schema.application
+          languages: .attributes.schema.languages
+          description: .attributes.schema.description
+          tags: .attributes.schema.tags
+          type: .attributes.schema.type
+          links: ("https://app.datadoghq.com/services?selectedService=" + (.attributes.schema."dd-service"))
+          owners: '[.attributes.schema.contacts[]? | select(.type == "email") | .contact]'
+        relations:
+          owner_team_datadog: .team_it_doesnt_work_yet
+- kind: slo
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name
+        blueprint: '"datadogSlo"'
+        properties:
+          tags: .tags
+          sloType: .type
+          description: .description
+          warningThreshold: .warning_threshold
+          targetThreshold: .target_threshold
+          createdBy: .creator.email
+          createdAt: .created_at | todate
+          updatedAt: .modified_at | todate
+          link: ("https://app.datadoghq.com/slo/manage?sp=" + ("%5B%7B%22p%22%3A%7B%22id%22%3A%22" + (.id | tostring) + "%22%7D%2C%22i%22%3A%22slo-panel%22%7D%5D"))
+        relations:
+          monitors: .monitor_ids | map(tostring)
+          owner_team_datadog: .monitor_tags + .tags | map(select(startswith("team:"))) | unique | map(split(":")[1])
+          service_datadog: .monitor_tags + .tags | map(select(startswith("service:"))) | unique | map(split(":")[1])
+          service:
+            combinator: '"and"'
+            rules:
+            - property: '"datadog_service_id"'
+              operator: '"in"'
+              value: .monitor_tags + .tags | map(select(startswith("service:"))) | unique | map(split(":")[1])
+- kind: host
+  selector:
+    query: '[.sources[] | . as $source | ["azure", "gcp", "gce", "aws"] | contains([$source])] | any(.)'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .aws_name // .host_name
+        blueprint: '"datadogCloudResource"'
+        properties:
+          up: .up
+          host_name: .host_name
+          platform: .meta.platform
+          is_muted: .is_muted
+          machine: .meta.machine
+          description: .description
+          sources: .sources
+          cpu_cores: .meta.cpuCores
+          agent_version: .meta.agent_version
+          tags: .tags_by_source
+- kind: host
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .aws_name // .host_name
+        blueprint: '"datadogHost"'
+        properties:
+          up: .up
+          host_name: .host_name
+          platform: .meta.platform
+          is_muted: .is_muted
+          machine: .meta.machine
+          description: .description
+          sources: .sources
+          cpu_cores: .meta.cpuCores
+          agent_version: .meta.agent_version
+          tags: .tags_by_source
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .attributes.name
+        blueprint: '"datadogUser"'
+        properties:
+          email: .attributes.email
+          handle: .attributes.handle
+          status: .attributes.status
+          disabled: .attributes.disabled
+          verified: .attributes.verified
+          createdAt: .attributes.created_at | todate
+- kind: team
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .id
+        blueprint: '"datadogTeam"'
+- kind: team
+  selector:
+    query: 'true'
+    includeMembers: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .attributes.name
+        blueprint: '"datadogTeam"'
+        properties:
+          description: .attributes.description
+          handle: .attributes.handle
+          userCount: .attributes.user_count
+          summary: .attributes.summary
+          createdAt: .attributes.created_at | todate
+        relations:
+          members: if .__members then .__members[].id else [] end
+```
+
+</details>
+
 ## Examples
 
 To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.

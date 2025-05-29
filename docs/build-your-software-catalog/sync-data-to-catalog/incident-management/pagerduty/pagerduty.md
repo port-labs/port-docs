@@ -404,6 +404,227 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: services
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"pagerdutyService"'
+        properties:
+          status: .status
+          url: .html_url
+          oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+          secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
+          escalationLevels: .__oncall_user | map(.escalation_level) | unique | length
+          meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
+          meanSecondsToFirstAck: .__analytics.mean_seconds_to_first_ack
+          meanSecondsToEngage: .__analytics.mean_seconds_to_engage
+- kind: incidents
+  selector:
+    query: 'true'
+    apiQueryParams:
+      include:
+      - assignees
+      - first_trigger_log_entries
+      statuses:
+      - resolved
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .title
+        blueprint: '"pagerdutyIncident"'
+        properties:
+          status: .status
+          url: .html_url
+          urgency: .urgency
+          escalation_policy: .escalation_policy.summary
+          created_at: .created_at
+          updated_at: .updated_at
+          priority: if .priority != null then .priority.summary else null end
+          description: .description
+          triggered_by: .first_trigger_log_entry.agent.summary
+        relations:
+          pagerdutyService: .service.id
+          service:
+            combinator: '"and"'
+            rules:
+            - property: '"pagerdutyServiceId"'
+              operator: '"="'
+              value: .service.id
+- kind: incidents
+  selector:
+    query: 'true'
+    apiQueryParams:
+      include:
+      - assignees
+      - first_trigger_log_entries
+      statuses:
+      - triggered
+      - acknowledged
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .title
+        blueprint: '"pagerdutyIncident"'
+        properties:
+          status: .status
+          url: .html_url
+          urgency: .urgency
+          escalation_policy: .escalation_policy.summary
+          created_at: .created_at
+          updated_at: .updated_at
+          priority: if .priority != null then .priority.summary else null end
+          description: .description
+          resolvedAt: .resolved_at
+          recoveryTime: |-
+            (.created_at as $createdAt | .resolved_at as $resolvedAt | if $resolvedAt == null then null else  ( ($resolvedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
+              ($createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) ) / 60 | floor end)
+          triggered_by: .first_trigger_log_entry.agent.summary
+        relations:
+          pagerdutyService: .service.id
+          incident_port_assignee:
+            combinator: '"and"'
+            rules:
+            - property: '"pagerduty_user_id"'
+              operator: '"in"'
+              value: .assignments | map(.assignee.id)
+          incident_pagerduty_assignee: .assignments | map(.assignee.id)
+- kind: schedules
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"pagerdutySchedule"'
+        properties:
+          url: .html_url
+          timezone: .time_zone
+          description: .description
+          users: '[.users[] | select(has("__email")) | .__email]'
+- kind: oncalls
+  selector:
+    query: 'true'
+    apiQueryParams:
+      include:
+      - users
+  port:
+    entity:
+      mappings:
+        identifier: .user.id + "-" + .schedule.id + "-" + .start
+        title: .user.name
+        blueprint: '"pagerdutyOncall"'
+        properties:
+          startDate: .start
+          endDate: .end
+          url: .schedule.html_url
+        relations:
+          pagerdutySchedule: .schedule.id
+          pagerdutyEscalationPolicy: .escalation_policy.id
+          pagerduty_user: .user.id
+          port_user:
+            combinator: '"and"'
+            rules:
+            - property: '"$identifier"'
+              operator: '"="'
+              value: .user.email
+- kind: escalation_policies
+  selector:
+    query: 'true'
+    attachOncallUsers: true
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"pagerdutyEscalationPolicy"'
+        properties:
+          url: .html_url
+          summary: .summary
+          primaryOncall: .__oncall_users | sort_by(.escalation_level) | .[0].user.email
+          escalationRules: .escalation_rules
+- kind: users
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"pagerdutyUser"'
+        properties:
+          url: .html_url
+          time_zone: .time_zone
+          email: .email
+          description: .description
+          role: .role
+          job_title: .job_title
+          teams: .teams
+          contact_methods: .contact_methods
+- kind: incidents
+  selector:
+    query: 'true'
+    apiQueryParams:
+      include:
+      - assignees
+      - first_trigger_log_entries
+      statuses:
+      - resolved
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        blueprint: '"pagerdutyIncident"'
+        relations:
+          original_alert: .first_trigger_log_entry.channel.details.id
+          extrakey: if .kind == "Incident" then .children.edges[].node.identifier else null end
+          additionalField: .some.new.field.value
+- kind: incidents
+  selector:
+    query: 'true'
+    apiQueryParams:
+      include:
+      - assignees
+      - first_trigger_log_entries
+      statuses:
+      - triggered
+      - acknowledged
+      inducer:
+      - assignees
+      - first_trigger_log_entries
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        blueprint: '"pagerdutyIncident"'
+        relations:
+          original_alert: .first_trigger_log_entry.channel.details.id
+          extrakey: if .kind == "Incident" then .children.edges[].node.identifier else null end
+
+```
+
+</details>
+
+
 
 ## Capabilities
 

@@ -378,6 +378,76 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: kubesystem
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        blueprint: '"kubecostResourceAllocation"'
+        identifier: .name
+        title: .name
+        properties:
+          cluster: .properties.cluster
+          namespace: .properties.namespace
+          startDate: .start
+          endDate: .end
+          cpuCoreHours: .cpuCoreHours
+          cpuCost: .cpuCost
+          cpuEfficiency: .cpuEfficiency
+          gpuHours: .gpuHours
+          gpuCost: .gpuCost
+          networkCost: .networkCost
+          loadBalancerCost: .loadBalancerCost
+          pvCost: .pvCost
+          pvBytes: .pvBytes
+          ramBytes: .ramBytes
+          ramCost: .ramCost
+          ramEfficiency: .ramEfficiency
+          sharedCost: .sharedCost
+          externalCost: .externalCost
+          totalCost: .totalCost
+          totalEfficiency: .totalEfficiency
+- kind: cloud
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        blueprint: '"kubecostCloudAllocation"'
+        identifier: .properties.provider + "/" + .properties.providerID + "/" + .properties.category + "/" + .properties.service | gsub("[^A-Za-z0-9@_.:\\\\/=-]"; "-")
+        title: .properties.provider + "/" + .properties.service
+        properties:
+          provider: .properties.provider
+          accountID: .properties.accountID
+          invoiceEntityID: .properties.invoiceEntityID
+          startDate: .window.start
+          endDate: .window.end
+          listCost: .listCost.cost
+          listCostPercent: .listCost.kubernetesPercent
+          netCost: .netCost.cost
+          netCostPercent: .netCost.kubernetesPercent
+          amortizedNetCost: .amortizedNetCost.cost
+          amortizedNetCostPercent: .amortizedNetCost.kubernetesPercent
+          invoicedCost: .invoicedCost.cost
+          invoicedCostPercent: .invoicedCost.kubernetesPercent
+```
+
+</details>
+  
+
+
 
 ## Examples
 

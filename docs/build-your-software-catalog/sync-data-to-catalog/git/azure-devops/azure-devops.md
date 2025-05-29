@@ -33,6 +33,143 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: project
+  selector:
+    query: 'true'
+    defaultTeam: 'false'
+  port:
+    entity:
+      mappings:
+        identifier: .id | gsub(" "; "")
+        blueprint: '"azureDevopsProject"'
+        title: .name
+        properties:
+          state: .state
+          revision: .revision
+          visibility: .visibility
+          defaultTeam: .defaultTeam.name
+          link: .url | gsub("_apis/projects/"; "")
+- kind: repository
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .project.name + "/" + .name | gsub(" "; "")
+        title: .name
+        blueprint: '"azureDevopsRepository"'
+        properties:
+          url: .url
+          readme: file://README.md
+          id: .id
+          last_activity: .project.lastUpdateTime
+        relations:
+          project: .project.id | gsub(" "; "")
+- kind: repository-policy
+  selector:
+    query: .type.displayName=="Minimum number of reviewers"
+  port:
+    entity:
+      mappings:
+        identifier: .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
+        blueprint: '"azureDevopsRepository"'
+        properties:
+          minimumApproverCount: .settings.minimumApproverCount
+- kind: repository-policy
+  selector:
+    query: .type.displayName=="Work item linking"
+  port:
+    entity:
+      mappings:
+        identifier: .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
+        blueprint: '"azureDevopsRepository"'
+        properties:
+          workItemLinking: .isEnabled and .isBlocking
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .user.displayName
+        blueprint: '"azureDevopsMember"'
+        properties:
+          url: .user.url
+          email: .user.mailAddress
+- kind: team
+  selector:
+    query: 'true'
+    includeMembers: true
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"azureDevopsTeam"'
+        properties:
+          url: .url
+          description: .description
+        relations:
+          project: .projectId | gsub(" "; "")
+          members: .__members | map(.identity.id)
+- kind: pull-request
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .repository.project.name + "/" + .repository.name + (.pullRequestId | tostring) | gsub(" "; "")
+        blueprint: '"azureDevopsPullRequest"'
+        properties:
+          status: .status
+          createdAt: .creationDate
+          leadTimeHours: (.creationDate as $createdAt | .status as $status | .closedDate as $closedAt | ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | ($closedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $closedTimestamp | if $status == "completed" and $closedTimestamp != null then (((($closedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) else null end)
+        relations:
+          repository: .repository.project.name + "/" + .repository.name | gsub(" "; "")
+          service:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"ado_repository_id"'
+              value: .repository.id
+          creator:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"$identifier"'
+              value: .createdBy.uniqueName
+          reviewers:
+            combinator: '"and"'
+            rules:
+            - operator: '"in"'
+              property: '"$identifier"'
+              value: '[.reviewers[].uniqueName]'
+          azure_devops_reviewers: '[.reviewers[].id]'
+          azure_devops_creator: .createdBy.id
+
+
+
+
+
+```
+
+</details>
+
+
+
 
 ## Examples
 
