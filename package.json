@@ -48,8 +48,8 @@
     "pretty-quick": "^4.1.1",
     "typescript": "~5.8.3"
   },
-  "overrides": {
-    "js-yaml": "^4.0.0"
+  "resolutions": {
+    "js-yaml": "4.0.0^"
   },
   "browserslist": {
     "production": [
