@@ -113,9 +113,17 @@ export const availableGuides = [
         title: "Set up deployments using GitLab merge requests or jobs",
         description: "Set up deployments using GitLab merge requests or jobs",
         tags: ["Engineering metrics"],
-        logos: ["Actions"],
+        logos: ["GitLab"],
         category: "Experiences",
         link: "/guides/all/set-up-deployments-dora-gitlab",
+    },
+    {
+        title: "Set up DORA metrics using Jira",
+        description: "Configure DORA metrics tracking using Jira for both deployments and incidents",
+        tags: ["Engineering metrics", "Jira"],
+        logos: ["Jira"],
+        category: "Experiences",
+        link: "/guides/all/setup-dora-metrics-jira",
     },
     {
         title: "IAM permission management",
@@ -1149,13 +1157,21 @@ export const availableGuides = [
         tags: ["SDLC", "AzureDevops", "Actions"],
         logos: ["AzureDevops", "Webhook"],
         link: "/guides/all/create-azure-devops-work-item",
-    },
+    },    
     {
         title: "Deploy a service using AWS CodeDeploy",
         description: "Create a self-service action that deploys a service using AWS CodeDeploy",
         tags: ["SDLC", "AWS", "Actions"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/deploy-service-using-aws-codedeploy",
+    },
+
+        {
+        title: "Auto approve and merge Dependabot PRs",
+        description: "Create an automation that approves and merges Dependabot pull requests",
+        tags: ["SDLC", "GitHub", "Automations"],
+        logos: ["GitHub"],
+        link: "/guides/all/auto-approve-and-merge-dependabot-prs",
     }
 ]
 

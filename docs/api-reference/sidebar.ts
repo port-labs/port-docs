@@ -100,6 +100,12 @@ const sidebar: SidebarsConfig = {
           label: "Create an access token",
           className: "api-method post",
         },
+        {
+          type: "doc",
+          id: "api-reference/rotate-a-users-credentials",
+          label: "Rotate a user's credentials",
+          className: "api-method post",
+        },
       ],
     },
     {
@@ -170,6 +176,12 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api-reference/aggregate-entities-over-time",
           label: "Aggregate entities over time",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/fetch-the-history-of-an-entitys-properties",
+          label: "Fetch the history of an entity’s properties",
           className: "api-method post",
         },
         {
