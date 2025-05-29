@@ -85,9 +85,9 @@ helm upgrade --install azure port-labs/port-ocean \
 The Azure exporter is deployed using Azure DevOps pipline, which supports scheduled resyncs of resources from Azure to Port.
 
 <h2> Prerequisites </h2>
-
--
-- 
+- A Port account with client credentials.
+- An Azure App Registration with the necessary permissions to read your Azure resources.
+- Access to an Azure DevOps project with permission to configure pipelines and secrets.
 
 <AzureAppRegistration/>
 
@@ -95,7 +95,7 @@ The Azure exporter is deployed using Azure DevOps pipline, which supports schedu
 
 Now that you have the Azure App Registration details, you can setup the Azure exporter using Azure DevOps pipline.
 
-Make sure to configure the following [seceret variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash):
+Make sure to configure the following [seceret variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash) in a variable group:
 
 - Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 	- `PORT_CLIENT_ID`
@@ -112,6 +112,46 @@ Here is an example for `azure-pipeline-integration.yml` workflow file:
 
 ```yaml showLineNumbers
 name: Azure Exporter Workflow
+
+# schedules:
+#   - cron: "0 */12 * * *"
+#     displayName: Twice daily sync
+#     branches:
+#       include:
+#         - main
+#     always: true
+
+trigger:
+  branches:
+    include:
+      - main
+
+variables:
+  - group: port-azure-installation-variable-group
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install port-azure-exporter
+    displayName: 'Install Azure Exporter'
+
+  - script: |
+      port-azure-exporter sync \
+        --client-id "$(PORT_CLIENT_ID)" \
+        --client-secret "$(PORT_CLIENT_SECRET)" \
+        --azure-client-id "$(ARM_CLIENT_ID)" \
+        --azure-client-secret "$(ARM_CLIENT_SECRET)" \
+        --azure-tenant-id "$(ARM_TENANT_ID)" \
+        --azure-subscription-id "$(ARM_SUBSCRIPTION_ID)"
+    displayName: 'Run Azure Exporter Sync'
 
 ```
 
