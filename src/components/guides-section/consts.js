@@ -1165,13 +1165,19 @@ export const availableGuides = [
         logos: ["AWS", "Webhook"],
         link: "/guides/all/deploy-service-using-aws-codedeploy",
     },
-
-        {
+    {
         title: "Auto approve and merge Dependabot PRs",
         description: "Create an automation that approves and merges Dependabot pull requests",
         tags: ["SDLC", "GitHub", "Automations"],
         logos: ["GitHub"],
         link: "/guides/all/auto-approve-and-merge-dependabot-prs",
+    },
+    {
+        title: "Send TypeForm survey results to Port",
+        description: "Create a webhook integration that sends TypeForm survey results to Port",
+        tags: ["Engineering metrics", "Webhook"],
+        logos: ["Webhook"],
+        link: "/guides/all/send-typeform-survey-results-to-port",
     }
 ]
 
