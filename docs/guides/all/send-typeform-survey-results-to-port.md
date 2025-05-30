@@ -25,7 +25,7 @@ This guide walks you through setting up a webhook integration between [TypeForm]
 
 First, create a custom blueprint in Port to store the survey responses.
 
-### Create the TypeForm stack blueprint
+### Create the TypeForm blueprint
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page if your portal.
 2. Click on `+ Blueprint`.
