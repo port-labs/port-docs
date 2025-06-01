@@ -37,7 +37,7 @@ This way of deployment supports scheduled resyncs of resources from Azure to Por
 <h2> Prerequisites </h2>
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 - [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0
-- [Azure App Registration Credentials](#azure-app-registration)
+- Azure App Registration Credentials
 
 <AzureAppRegistration/>
 
@@ -85,15 +85,16 @@ helm upgrade --install azure port-labs/port-ocean \
 The Azure exporter is deployed using Azure DevOps pipline, which supports scheduled resyncs of resources from Azure to Port.
 
 <h2> Prerequisites </h2>
-- A Port account with client credentials.
-- An Azure App Registration with the necessary permissions to read your Azure resources.
+
+- [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+- An Azure App Registration Credentials with the necessary permissions to read your Azure resources.
 - Access to an Azure DevOps project with permission to configure pipelines and secrets.
 
 <AzureAppRegistration/>
 
 <h2> Installation </h2>
 
-Now that you have the Azure App Registration details, you can setup the Azure exporter using Azure DevOps pipline.
+Now that you have the Azure App Registration details, you can set up the Azure exporter using an Azure DevOps pipeline.
 
 Make sure to configure the following [seceret variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash) in a variable group:
 
@@ -105,13 +106,13 @@ Make sure to configure the following [seceret variables](https://learn.microsoft
 	- `OCEAN__SECRET__AZURE_CLIENT_SECRET`: The Application (client) Secret from the Azure App Registration.
 	- `OCEAN__SECRET__AZURE_TENANT_ID`: The Directory (tenant) ID from the Azure App Registration.
 
-Here is an example for `azure-pipeline-integration.yml` workflow file:
+Here is an example for `azure-pipeline-integration.yml` workflow file:  
+Make sure to change the highlighted line to your variable group's name.
 
 <details>
 <summary>Azure pipline integration</summary>
 
 ```yaml showLineNumbers
-# azure-exporter-pipeline.yml
 name: Azure Exporter Pipeline
 
 trigger: none
@@ -125,7 +126,9 @@ schedules:
     always: true
 
 variables:
+  # highlight-start
   - group: port-azure-exporter-secrets  # Contains the secrets used below
+    # highlight-end
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -176,14 +179,14 @@ steps:
 The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of resources from Azure to Port.
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-- [Azure App Registration Credentials](?ci-methods=github#azure-app-registration)
+- Azure App Registration Credentials
 
 <AzureAppRegistration/>
 
 
 <h2> Installation </h2>
 
-Now that you have the Azure App Registration details, you can setup the Azure exporter using Github Actions.
+Now that you have the Azure App Registration details, you can set up the Azure exporter using Github Actions.
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -201,30 +204,34 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 
 Here is an example for `azure-integration.yml` workflow file:
 
-```yaml showLineNumbers
-name: Azure Exporter Workflow
+<details>
+<summary> GitHub Action integration </summary>
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 */4 * * *' 
+		```yaml showLineNumbers
+		name: Azure Exporter Workflow
 
-jobs:
-  run-integration:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run azure Integration
-        uses: port-labs/ocean-sail@v1
-        with:
-          type: azure
-          port_client_id: ${{ secrets.PORT_CLIENT_ID }}
-          port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-          port_base_url: "https://api.getport.io"
-          config: |
-            azure_client_id: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
-            azure_client_secret: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
-            azure_tenant_id: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
-```
+		on:
+		workflow_dispatch:
+		schedule:
+			- cron: '0 */4 * * *' 
+
+		jobs:
+		run-integration:
+			runs-on: ubuntu-latest
+			steps:
+			- name: Run azure Integration
+				uses: port-labs/ocean-sail@v1
+				with:
+				type: azure
+				port_client_id: ${{ secrets.PORT_CLIENT_ID }}
+				port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
+				port_base_url: "https://api.getport.io"
+				config: |
+					azure_client_id: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
+					azure_client_secret: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
+					azure_tenant_id: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
+		```
+</details>
 
 </TabItem>
 
@@ -233,7 +240,7 @@ jobs:
 <h2> Prerequisites </h2>
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-- [Azure App Registration Credentials](?ci-methods=github#azure-app-registration)
+- Azure App Registration Credentials
 - [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) >= 2.0.0
 
 
@@ -264,45 +271,49 @@ Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT
 Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 :::
 
-  <summary>ArgoCD Application</summary>
-```yaml showLineNumbers
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: my-ocean-azure-integration
-  namespace: argocd
-spec:
-  destination:
-    namespace: mmy-ocean-azure-integration
-    server: https://kubernetes.default.svc
-  project: default
-  sources:
-  - repoURL: 'https://port-labs.github.io/helm-charts/'
-    chart: port-ocean
-    targetRevision: 0.1.14
-    helm:
-      valueFiles:
-      - $values/argocd/my-ocean-azure-integration/values.yaml
-      // highlight-start
-      parameters:
-        - name: port.clientId
-          value: YOUR_PORT_CLIENT_ID
-        - name: port.clientSecret
-          value: YOUR_PORT_CLIENT_SECRET
-        - name: port.baseUrl
-          value: https://api.getport.io
-			// highlight-end
-  - repoURL: YOUR_GIT_REPO_URL
-  // highlight-end
-    targetRevision: main
-    ref: values
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
+<details>
+<summary>ArgoCD Application</summary>
+
+		```yaml showLineNumbers
+		apiVersion: argoproj.io/v1alpha1
+		kind: Application
+		metadata:
+		name: my-ocean-azure-integration
+		namespace: argocd
+		spec:
+		destination:
+			namespace: mmy-ocean-azure-integration
+			server: https://kubernetes.default.svc
+		project: default
+		sources:
+		- repoURL: 'https://port-labs.github.io/helm-charts/'
+			chart: port-ocean
+			targetRevision: 0.1.14
+			helm:
+			valueFiles:
+			- $values/argocd/my-ocean-azure-integration/values.yaml
+			// highlight-start
+			parameters:
+				- name: port.clientId
+				value: YOUR_PORT_CLIENT_ID
+				- name: port.clientSecret
+				value: YOUR_PORT_CLIENT_SECRET
+				- name: port.baseUrl
+				value: https://api.getport.io
+					// highlight-end
+		- repoURL: YOUR_GIT_REPO_URL
+		// highlight-end
+			targetRevision: main
+			ref: values
+		syncPolicy:
+			automated:
+			prune: true
+			selfHeal: true
+			syncOptions:
+			- CreateNamespace=true
 ```
+</details>
+
 <PortApiRegionTip/>
 
 3. Apply the `azure-integration.yaml` manifest to your Kubernetes cluster.
