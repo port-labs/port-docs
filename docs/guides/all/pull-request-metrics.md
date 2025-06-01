@@ -11,7 +11,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 :::warning Deprecated
 This guide is deprecated and is no longer recommended for use. Please refer to the new guides for the most up-to-date information:
 
-- [Track DORA metrics](https://docs.port.io/guides/all/setup-dora-metrics)
+- [Track DORA metrics](https://docs.port.io/guides/all/create-and-track-dora-metrics-in-your-portal)
 - [Measuring pull request standards](https://docs.port.io/guides/all/working_agreements_and_measuring_pr_standards)
 :::
 

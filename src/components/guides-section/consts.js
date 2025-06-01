@@ -877,13 +877,13 @@ export const availableGuides = [
         logos: ["Actions"],
         link: "/guides/all/setup-portal-announcements",
     },
-    {
-        title: "Set up DORA Metrics benchmark",
-        description: "Track and improve engineering performance by setting up DORA metrics benchmark",
-        tags: ["Engineering metrics","Scorecards","Dashboards"],
-        logos: ["Git"],
-        link: "/guides/all/setup-dora-metrics-benchmark"
-    },
+    // {
+    //     title: "Set up DORA Metrics benchmark",
+    //     description: "Track and improve engineering performance by setting up DORA metrics benchmark",
+    //     tags: ["Engineering metrics","Scorecards","Dashboards"],
+    //     logos: ["Git"],
+    //     link: "/guides/all/setup-dora-metrics-benchmark"
+    // },
     {
         title: "Manage service deployments using GitLab and ServiceNow", 
         description: "Create a chain of self-service actions that deploy a service using GitLab and ServiceNow",
