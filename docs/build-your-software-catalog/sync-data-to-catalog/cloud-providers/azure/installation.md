@@ -111,47 +111,59 @@ Here is an example for `azure-pipeline-integration.yml` workflow file:
 <summary>Azure pipline integration</summary>
 
 ```yaml showLineNumbers
-name: Azure Exporter Workflow
+# azure-exporter-pipeline.yml
+name: Azure Exporter Pipeline
 
-# schedules:
-#   - cron: "0 */12 * * *"
-#     displayName: Twice daily sync
-#     branches:
-#       include:
-#         - main
-#     always: true
+trigger: none
 
-trigger:
-  branches:
-    include:
-      - main
+schedules:
+  - cron: "0 */4 * * *"
+    displayName: Every 4 Hours
+    branches:
+      include:
+        - main
+    always: true
 
 variables:
-  - group: port-azure-installation-variable-group
+  - group: port-azure-exporter-secrets  # Contains the secrets used below
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - task: UsePythonVersion@0
+  - task: Bash@3
+    displayName: 'Run Ocean Sail (Azure)'
     inputs:
-      versionSpec: '3.x'
-      addToPath: true
+      targetType: 'inline'
+      script: |
+        set -euo pipefail
 
-  - script: |
-      python -m pip install --upgrade pip
-      pip install port-azure-exporter
-    displayName: 'Install Azure Exporter'
+        echo "Building .env file for Ocean Sail..."
 
-  - script: |
-      port-azure-exporter sync \
-        --client-id "$(PORT_CLIENT_ID)" \
-        --client-secret "$(PORT_CLIENT_SECRET)" \
-        --azure-client-id "$(ARM_CLIENT_ID)" \
-        --azure-client-secret "$(ARM_CLIENT_SECRET)" \
-        --azure-tenant-id "$(ARM_TENANT_ID)" \
-        --azure-subscription-id "$(ARM_SUBSCRIPTION_ID)"
-    displayName: 'Run Azure Exporter Sync'
+        echo "OCEAN__PORT__CLIENT_ID=$(PORT_CLIENT_ID)" > .sail-env
+        echo "OCEAN__PORT__CLIENT_SECRET=$(PORT_CLIENT_SECRET)" >> .sail-env
+        echo "OCEAN__PORT__BASE_URL=https://api.getport.io" >> .sail-env
+
+        echo "OCEAN__EVENT_LISTENER={\"type\":\"ONCE\"}" >> .sail-env
+        echo "OCEAN__INITIALIZE_PORT_RESOURCES=true" >> .sail-env
+
+        echo "OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_ID=$(OCEAN__SECRET__AZURE_CLIENT_ID)" >> .sail-env
+        echo "OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_SECRET=$(OCEAN__SECRET__AZURE_CLIENT_SECRET)" >> .sail-env
+        echo "OCEAN__INTEGRATION__CONFIG__AZURE_TENANT_ID=$(OCEAN__SECRET__AZURE_TENANT_ID)" >> .sail-env
+
+        echo "Running Ocean Sail container..."
+        docker run -i --rm \
+          --platform=linux/amd64 \
+          --env-file .sail-env \
+          ghcr.io/port-labs/port-ocean-azure:latest
+
+  - task: Bash@3
+    displayName: 'Clean up .env file'
+    condition: always()
+    inputs:
+      targetType: 'inline'
+      script: |
+        rm -f .sail-env
 
 ```
 
@@ -195,12 +207,11 @@ name: Azure Exporter Workflow
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */4 * * *' # Determines the scheduled interval for this workflow. This example runs every 4 hours.
+    - cron: '0 */4 * * *' 
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
-
     steps:
       - name: Run azure Integration
         uses: port-labs/ocean-sail@v1
@@ -208,11 +219,11 @@ jobs:
           type: azure
           port_client_id: ${{ secrets.PORT_CLIENT_ID }}
           port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-		  port_base_url: "https://api.getport.io"
-		  config: |
-		  azure_client_id: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
-		  azure_client_secret: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
-		  azure_tenant_id: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
+          port_base_url: "https://api.getport.io"
+          config: |
+            azure_client_id: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
+            azure_client_secret: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
+            azure_tenant_id: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
 ```
 
 </TabItem>
