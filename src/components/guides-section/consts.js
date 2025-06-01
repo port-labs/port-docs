@@ -775,13 +775,13 @@ export const availableGuides = [
         logos: ["Datadog"],
         link: "/guides/all/ingest-cloud-resources-using-datadog",
     },
-    {
-        title: "Track DORA Metrics",
-        description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
-        logos: ["Git"],
-        link: "/guides/all/setup-dora-metrics",
-    },
+    // {
+    //     title: "Track DORA Metrics",
+    //     description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
+    //     tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
+    //     logos: ["Git"],
+    //     link: "/guides/all/setup-dora-metrics",
+    // },
     {
         title: "Ingest a swagger.json file into your catalog",
         description: "Ingest API paths from a `swagger.json` file in a GitHub repository into Port",
@@ -898,13 +898,13 @@ export const availableGuides = [
         logos: ["Dynatrace"],
         link: "/guides/all/connect-dynatrace-team-with-entities"
     },
-    {
-        title: "Create surveys in your portal",
-        description: "Create surveys to collect feedback from your developers",
-        tags: ["Engineering metrics", "Actions", "Dashboards"],
-        logos: ["Engineering metrics"],
-        link: "/guides/all/create-surveys",
-    },
+    // {
+    //     title: "Create surveys in your portal",
+    //     description: "Create surveys to collect feedback from your developers",
+    //     tags: ["Engineering metrics", "Actions", "Dashboards"],
+    //     logos: ["Engineering metrics"],
+    //     link: "/guides/all/create-surveys",
+    // },
     {
         title: "Ingest Slack channels data with Airbyte, S3 & webhook",
         description: "Send Slack channel data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
