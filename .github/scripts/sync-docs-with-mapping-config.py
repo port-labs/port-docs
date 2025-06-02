@@ -3,7 +3,7 @@
 Synchronize integration configurations to Markdown documentation files.
 This script can handle two source types:
 1. TypeScript integration configurations from Port-monorepo (priority)
-2. YAML integration configurations from ocean-test (fallback)
+2. YAML integration configurations from ocean repo (fallback)
 
 The script:
 1. Extracts integration configurations from source repositories
@@ -14,9 +14,8 @@ import os
 import sys
 import re
 import yaml
-import difflib
 import argparse
-from typing import Dict, Any, List, Union, Optional
+from typing import Dict, Any, Optional
 import traceback
 
 # Add the current directory to the Python path
@@ -25,19 +24,12 @@ if current_dir not in sys.path:
     sys.path.insert(0, current_dir)
 
 # Default paths - can be overridden by environment variables
-PORT_MONOREPO_PATH = os.environ.get('PORT_MONOREPO_PATH', '../Port-monorepo')
-OCEAN_TEST_PATH = os.environ.get('OCEAN_TEST_PATH', '../ocean-test')
+PORT_MONOREPO_PATH = os.environ.get('PORT_MONOREPO_PATH', '../port')
+OCEAN_REPO_PATH = os.environ.get('OCEAN_REPO_PATH', '../ocean')
 DOCS_REPO_PATH = os.environ.get('DOCS_REPO_PATH', '../port-docs')
 
 def format_yaml_consistently(config: Dict[str, Any]) -> str:
     """Format YAML consistently to avoid unnecessary newlines and formatting differences."""
-    
-    # Custom YAML representer for multi-line strings
-    def represent_multiline_str(dumper, data):
-        if '\n' in data:
-            # Use literal block scalar (|) for multi-line strings
-            return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
-        return dumper.represent_scalar('tag:yaml.org,2002:str', data)
     
     # Custom YAML representer for long single-line strings that should be folded
     def represent_long_str(dumper, data):
@@ -134,9 +126,9 @@ def extract_typescript_config(integration: str) -> Optional[Dict[str, Any]]:
         raise Exception(f"TypeScript extraction failed for {integration}: {e}")
 
 def extract_yaml_config(integration: str) -> Optional[Dict[str, Any]]:
-    """Extract integration configuration from YAML file in ocean-test."""
+    """Extract integration configuration from YAML file in ocean repo."""
     yaml_file = os.path.join(
-        OCEAN_TEST_PATH,
+        OCEAN_REPO_PATH,
         "integrations",
         integration,
         ".port",
@@ -380,7 +372,7 @@ def main():
     """Main function for the script."""
     parser = argparse.ArgumentParser(description='Sync integration configurations to documentation.')
     parser.add_argument('--integrations', nargs='+', help='List of integrations to process')
-    parser.add_argument('--source-type', choices=['ocean-test', 'port-monorepo', 'auto'], 
+    parser.add_argument('--source-type', choices=['ocean', 'port', 'auto'], 
                        default='auto', help='Source type for determining priority')
     parser.add_argument('--all', action='store_true', help='Process all integrations')
     args = parser.parse_args()
@@ -399,8 +391,8 @@ def main():
                 if filename.endswith('.ts') and filename != 'index.ts' and not filename.startswith('_'):
                     integrations.append(os.path.splitext(filename)[0])
         
-        # Also find integrations in ocean-test
-        ocean_integrations_dir = os.path.join(OCEAN_TEST_PATH, 'integrations')
+        # Also find integrations in ocean repo
+        ocean_integrations_dir = os.path.join(OCEAN_REPO_PATH, 'integrations')
         if os.path.isdir(ocean_integrations_dir):
             for integration_dir in os.listdir(ocean_integrations_dir):
                 integration_path = os.path.join(ocean_integrations_dir, integration_dir)
