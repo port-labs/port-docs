@@ -40,12 +40,6 @@ Just like catalog pages, tables support the following customization options:
 - [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
 - [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
-:::tip Improve performance with initial filters and property exclusion
-Setting initial filters limits the number of entities loaded and displayed by default, which can significantly reduce page load times for large blueprints. Excluding properties that are not needed in the table view also reduces the amount of data fetched and rendered, improving performance.
-
-**Recommendation:** Always define initial filters for tables or dashboards expected to display many entities, and exclude large or infrequently used properties, such as documentation fields or logs, from default views.
-:::
-
 #### Limitations
 
 - Tables are limited to displaying up to **100,000** entities.  
@@ -479,10 +473,6 @@ During creation/editing of the widget, you can sort the links by dragging and dr
 ## Chart filters
 
 Chart filters allow you to limit which entities are included in your dashboard visualizations, making your charts more relevant and performant.
-
-:::tip Use chart filters to optimize performance
-Applying chart filters ensures that only relevant data is loaded and visualized, which helps dashboards load faster and remain responsive, even with large datasets.
-:::
 
 <ChartFilters />
 
