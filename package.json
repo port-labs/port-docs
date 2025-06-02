@@ -45,7 +45,7 @@
     "@docusaurus/tsconfig": "^3.8.0",
     "@docusaurus/types": "^3.8.0",
     "husky": "^9.1.7",
-    "pretty-quick": "^4.1.1",
+    "pretty-quick": "^4.2.0",
     "typescript": "~5.8.3"
   },
   "resolutions": {
