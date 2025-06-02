@@ -18,6 +18,14 @@ const sidebar: SidebarsConfig = {
       type: "doc",
       id: "academy/developer-track",
     },
+    {
+      type: "doc",
+      id: "academy/next-steps",
+    },
+    {
+      type: "doc",
+      id: "academy/example-course",
+    },
     // {
     //   type: "doc",
     //   id: "guides/guides",

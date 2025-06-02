@@ -8,7 +8,9 @@ This track is designed for the personas who will be **using** (as opposed to bui
 
 It is focused on describing the different components of your portal (software catalog, actions, scorecards, etc.) and how to use them to accommodate your routines and workflows.
 
-## Available Courses
+## Available courses
+
+Courses are designed to be self-contained and can be taken in any order:
 
 <div className={styles.courseGrid}>
   <div className={styles.courseCard}>
@@ -89,7 +91,3 @@ It is focused on describing the different components of your portal (software ca
     </a>
   </div>
 </div>
-
-:::tip Course Navigation
-Each course is designed to be self-contained and can be taken in any order. However, we recommend starting with "Getting Started with Port" if you're new to the platform.
-:::

@@ -8,6 +8,12 @@ This track is designed for the personas who will be **building** and **scaling**
 
 It is focused on creating experiences for the developers who will be using the portal, using blueprints, actions, automations, scorecards, and all the other features that Port has to offer.
 
+## Available courses
+
+The content is organized into two tiers: beginner and advanced.
+
+The beginner tier focuses on fundamental concepts and basic implementations, while the advanced tier covers complex use-cases and capabilities. We recommend completing the beginner tier before moving to advanced topics.
+
 <Tabs queryString="level">
 
 <TabItem value="beginner" label="Beginner" default>
@@ -178,7 +184,3 @@ It is focused on creating experiences for the developers who will be using the p
 
 </TabItem>
 </Tabs>
-
-:::tip Track Progression
-The beginner track focuses on fundamental concepts and basic implementations, while the advanced track covers complex patterns and enterprise-scale solutions. We recommend completing the beginner track before moving to advanced topics.
-::: 
