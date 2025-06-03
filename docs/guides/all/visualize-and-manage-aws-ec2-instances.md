@@ -422,7 +422,7 @@ jobs:
 4. Copy and paste the following JSON configuration into the editor.
 
     <details>
-    <summary><b>Reboot EC2 enstance action (Click to expand)</b></summary>
+    <summary><b>Reboot EC2 instance action (Click to expand)</b></summary>
 
     <GithubActionModificationHint/>
 
