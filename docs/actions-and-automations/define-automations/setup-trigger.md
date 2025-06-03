@@ -90,9 +90,9 @@ The following trigger events are available for each type:
     ```
     </details>
 
-    The above automation will **not** get triggered in either case:
-    - When a related entity of `developmentenv` blueprint is deleted (causing the relation to become null)
-    - When the source value of a `developmentenv` blueprint's mirror property changes
+    This automation will **not** be triggered in the following cases:
+    - When a related entity of a `developmentenv` entity is deleted (causing the relation to become null).
+    - When the source value of a `developmentenv` entity's mirror property changes.
 
 ## Trigger JSON structure
 
