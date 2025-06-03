@@ -91,8 +91,8 @@ The following trigger events are available for each type:
     </details>
 
     This automation will **not** be triggered in the following cases:
-    - When a related entity of a `developmentenv` entity is deleted (causing the relation to become null).
-    - When the source value of a `developmentenv` entity's mirror property changes.
+    - When a [related entity](/customize-pages-dashboards-and-plugins/page/entity-page#related-entities) of a `developmentenv` entity is deleted (causing the relation to become null).
+    - When the source value of a `developmentenv` entity's [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) changes.
 
 ## Trigger JSON structure
 
