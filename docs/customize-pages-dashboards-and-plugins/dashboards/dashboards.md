@@ -472,6 +472,8 @@ During creation/editing of the widget, you can sort the links by dragging and dr
 
 ## Chart filters
 
+Chart filters allow you to limit which entities are included in your dashboard visualizations, making your charts more relevant and performant.
+
 <ChartFilters />
 
 Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
