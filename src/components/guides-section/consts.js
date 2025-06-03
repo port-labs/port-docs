@@ -1178,6 +1178,13 @@ export const availableGuides = [
         tags: ["Engineering metrics", "Webhook"],
         logos: ["Webhook"],
         link: "/guides/all/send-typeform-survey-results-to-port",
+    },
+    {
+        title: "Visualize and manage your EC2 instances",
+        description: "Create a dashboard that visualizes and manages your AWS EC2 instances",
+        tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/visualize-and-manage-aws-ec2-instances",
     }
 ]
 
