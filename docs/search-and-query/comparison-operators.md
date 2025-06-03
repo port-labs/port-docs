@@ -31,6 +31,21 @@ This operator can also be used to check the value of `boolean` properties:
 }
 ```
 
+For datetime properties, the `=` operator only supports ISO8601 format strings:
+
+```json showLineNumbers
+{
+  "operator": "=",
+  "property": "$createdAt",
+  "value": "2022-07-26T16:38:06.839Z"
+}
+```
+
+:::info DateTime format support
+The `=` operator only supports ISO8601 format strings for datetime values.   
+To use preset date ranges (like "lastWeek", "today", etc.), use the [between](#between) or [notBetween](#notbetween) operators instead.
+:::
+
 ### != (Not Equal)
 
 The `!=` operator checks exact matches of the specified value and returns all results that fail to satisfy the check:
