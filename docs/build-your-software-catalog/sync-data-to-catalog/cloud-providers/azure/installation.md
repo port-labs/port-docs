@@ -37,7 +37,7 @@ This way of deployment supports scheduled resyncs of resources from Azure to Por
 <h2> Prerequisites </h2>
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 - [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0
-- Azure App Registration Credentials
+- Azure App Registration Credentials (See below)
 
 <AzureAppRegistration/>
 
@@ -87,7 +87,7 @@ The Azure exporter is deployed using Azure DevOps pipline, which supports schedu
 <h2> Prerequisites </h2>
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-- An Azure App Registration Credentials with the necessary permissions to read your Azure resources.
+- Azure App Registration Credentials (See below)
 - Access to an Azure DevOps project with permission to configure pipelines and secrets.
 
 <AzureAppRegistration/>
@@ -179,7 +179,7 @@ steps:
 The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of resources from Azure to Port.
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-- Azure App Registration Credentials
+- Azure App Registration Credentials (See below)
 
 <AzureAppRegistration/>
 
@@ -240,7 +240,7 @@ Here is an example for `azure-integration.yml` workflow file:
 <h2> Prerequisites </h2>
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-- Azure App Registration Credentials
+- Azure App Registration Credentials (See below)
 - [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) >= 2.0.0
 
 
