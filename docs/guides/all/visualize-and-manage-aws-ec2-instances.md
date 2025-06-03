@@ -617,7 +617,7 @@ In the new dashboard, create the following widgets:
 2. Title: `Instance by state` (add the `EC2` icon).
 3. Choose the **EC2 Instance** blueprint.
 4. Under `Breakdown by property`, select the **Instance State** property
-   <img src="/img/guides/ec2State.png" width="50%" />
+    <img src="/img/guides/totalEC2Instances.png" width="50%" />
 
 5. Click **Save**.
 
