@@ -113,9 +113,17 @@ export const availableGuides = [
         title: "Set up deployments using GitLab merge requests or jobs",
         description: "Set up deployments using GitLab merge requests or jobs",
         tags: ["Engineering metrics"],
-        logos: ["Actions"],
+        logos: ["GitLab"],
         category: "Experiences",
         link: "/guides/all/set-up-deployments-dora-gitlab",
+    },
+    {
+        title: "Set up DORA metrics using Jira",
+        description: "Configure DORA metrics tracking using Jira for both deployments and incidents",
+        tags: ["Engineering metrics", "Jira"],
+        logos: ["Jira"],
+        category: "Experiences",
+        link: "/guides/all/setup-dora-metrics-jira",
     },
     {
         title: "IAM permission management",
@@ -767,13 +775,13 @@ export const availableGuides = [
         logos: ["Datadog"],
         link: "/guides/all/ingest-cloud-resources-using-datadog",
     },
-    {
-        title: "Track DORA Metrics",
-        description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
-        logos: ["Git"],
-        link: "/guides/all/setup-dora-metrics",
-    },
+    // {
+    //     title: "Track DORA Metrics",
+    //     description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
+    //     tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
+    //     logos: ["Git"],
+    //     link: "/guides/all/setup-dora-metrics",
+    // },
     {
         title: "Ingest a swagger.json file into your catalog",
         description: "Ingest API paths from a `swagger.json` file in a GitHub repository into Port",
@@ -869,13 +877,13 @@ export const availableGuides = [
         logos: ["Actions"],
         link: "/guides/all/setup-portal-announcements",
     },
-    {
-        title: "Set up DORA Metrics benchmark",
-        description: "Track and improve engineering performance by setting up DORA metrics benchmark",
-        tags: ["Engineering metrics","Scorecards","Dashboards"],
-        logos: ["Git"],
-        link: "/guides/all/setup-dora-metrics-benchmark"
-    },
+    // {
+    //     title: "Set up DORA Metrics benchmark",
+    //     description: "Track and improve engineering performance by setting up DORA metrics benchmark",
+    //     tags: ["Engineering metrics","Scorecards","Dashboards"],
+    //     logos: ["Git"],
+    //     link: "/guides/all/setup-dora-metrics-benchmark"
+    // },
     {
         title: "Manage service deployments using GitLab and ServiceNow", 
         description: "Create a chain of self-service actions that deploy a service using GitLab and ServiceNow",
@@ -890,13 +898,13 @@ export const availableGuides = [
         logos: ["Dynatrace"],
         link: "/guides/all/connect-dynatrace-team-with-entities"
     },
-    {
-        title: "Create surveys in your portal",
-        description: "Create surveys to collect feedback from your developers",
-        tags: ["Engineering metrics", "Actions", "Dashboards"],
-        logos: ["Engineering metrics"],
-        link: "/guides/all/create-surveys",
-    },
+    // {
+    //     title: "Create surveys in your portal",
+    //     description: "Create surveys to collect feedback from your developers",
+    //     tags: ["Engineering metrics", "Actions", "Dashboards"],
+    //     logos: ["Engineering metrics"],
+    //     link: "/guides/all/create-surveys",
+    // },
     {
         title: "Ingest Slack channels data with Airbyte, S3 & webhook",
         description: "Send Slack channel data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
@@ -955,11 +963,11 @@ export const availableGuides = [
         link: "/guides/all/trigger-firehydrant-incident",
     },
     {
-        title: "Enrich entities using AI",
-        description: "Enrich entities with AI-powered insights from external APIs",
-        tags: [ "Security", "Actions", "Automations", "AI"],
-        logos: ["Snyk","Wiz","SonarQube"],
-        link: "/guides/all/enrich-entities-using-ai",
+        title: "Enrich security vulnerabilities using AI",
+        description: "Leverage AI tools to get detailed analysis and remediation strategies for security vulnerabilities",
+        tags: ["Security", "AI", "Actions", "Automations"],
+        logos: ["Snyk", "Wiz", "SonarQube"],
+        link: "/guides/all/enrich-security-vulnerability-using-ai",
     },
     {
         title: "Monitor integrations",
@@ -1149,6 +1157,27 @@ export const availableGuides = [
         tags: ["SDLC", "AzureDevops", "Actions"],
         logos: ["AzureDevops", "Webhook"],
         link: "/guides/all/create-azure-devops-work-item",
+    },    
+    {
+        title: "Deploy a service using AWS CodeDeploy",
+        description: "Create a self-service action that deploys a service using AWS CodeDeploy",
+        tags: ["SDLC", "AWS", "Actions"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/deploy-service-using-aws-codedeploy",
+    },
+    {
+        title: "Auto approve and merge Dependabot PRs",
+        description: "Create an automation that approves and merges Dependabot pull requests",
+        tags: ["SDLC", "GitHub", "Automations"],
+        logos: ["GitHub"],
+        link: "/guides/all/auto-approve-and-merge-dependabot-prs",
+    },
+    {
+        title: "Send TypeForm survey results to Port",
+        description: "Create a webhook integration that sends TypeForm survey results to Port",
+        tags: ["Engineering metrics", "Webhook"],
+        logos: ["Webhook"],
+        link: "/guides/all/send-typeform-survey-results-to-port",
     }
 ]
 

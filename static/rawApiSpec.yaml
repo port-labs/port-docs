@@ -7794,6 +7794,28 @@ paths:
       responses:
         "200":
           description: Default Response
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  result:
+                    type: object
+                    properties:
+                      minDate:
+                        type: number
+                      maxDate:
+                        type: number
+                      data:
+                        type: array
+                        items:
+                          type: number
+                required:
+                  - ok
+                additionalProperties: false
   /v1/blueprints:
     get:
       tags:
@@ -35474,6 +35496,22 @@ paths:
                   - ok
                 additionalProperties: false
                 description: Updated successfully.
+  "/v1/rotate-credentials/{user_email}":
+    post:
+      tags:
+        - Authentication / Authorization
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: user_email
+          required: true
+      security:
+        - bearer:
+            - update:users
+      responses:
+        "200":
+          description: Default Response  
   /v1/roles:
     get:
       tags:
@@ -37340,6 +37378,85 @@ paths:
             maximum: 100
           in: query
           name: size
+          required: false
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Default Response
+  "/v1/agent/invoke/{invocation_identifier}":
+    get:
+      tags:
+        - AI
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: invocation_identifier
+          required: true
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Default Response
+  "/v1/agent/{agentIdentifier}/invoke":
+    post:
+      tags:
+        - AI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  type: object
+                prompt:
+                  type: string
+                labels:
+                  type: object
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: stream
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: agentIdentifier
+          required: true
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "200":
+          description: Default Response
+  /v1/agent/invoke:
+    post:
+      tags:
+        - AI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  type: object
+                prompt:
+                  type: string
+                labels:
+                  type: object
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: stream
           required: false
       security:
         - bearer:

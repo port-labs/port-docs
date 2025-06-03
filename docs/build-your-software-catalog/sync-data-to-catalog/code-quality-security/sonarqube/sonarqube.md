@@ -33,7 +33,7 @@ This integration allows you to:
 :::
 
 
-The `baseUrl` parameter enables real-time updates from Datadog to Port. If not provided:
+The `baseUrl` parameter enables real-time updates from SonarQube to Port. If not provided:
 - The integration will still function normally
 - You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
 - Manual resyncs can be triggered via Port's UI
