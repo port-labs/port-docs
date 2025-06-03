@@ -18,7 +18,7 @@ Let's walk through the process of creating an agent that can assist your develop
 
 ## Create a new AI agent
 
-To create a new agent, head to the AI Agents catalog page (this page will be created for you when you activate the feature).
+To create a new agent, head to the AI Agents catalog page (this page will be created for you when you [activate the feature](/ai-agents/overview#access-to-the-feature)).
 
 Click on the "New AI Agent" button and fill the form with the agent details.
 <img src='/img/ai-agents/AIAgentsList.png' width='80%' border='1px' />
@@ -200,7 +200,7 @@ From [john-123](https://github.com/john-123)
 <details>
 <summary><b>I don't see an option to add an AI agent (Click to expand)</b></summary>
 
-Make sure you have access to the AI agents feature. Note that it's currently in closed beta and requires special access. If you believe you should have access, please contact our support.
+Make sure you have [access to the AI agents feature](/ai-agents/overview#access-to-the-feature). Note that it's currently in closed beta and requires special access. If you believe you should have access, please contact our support.
 </details>
 
 <details>
