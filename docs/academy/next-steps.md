@@ -9,6 +9,8 @@
 - Implementation guide - from some feedback we got, it is not being used very often. Regardless, Eric and his colleagues are working on enhancing it.  
   I think we should remove it and incorporate it as material for relevant courses.
 
+- The sidebar will only have an intro page and the 2 tracks.
+
 ## Next steps
 
 - Finish mapping out the courses for all tracks and tiers.
