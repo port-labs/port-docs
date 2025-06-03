@@ -271,12 +271,11 @@ Each module includes practical exercises to reinforce your learning:
 
 - [Port Documentation](/)
 - [Community Forums](https://community.getport.io)
-- [API Reference](/api-reference)
-- [Example Catalogs](/examples)
+- [API Reference](/)
+- [Example Catalogs](/)
 
 :::tip Next Steps
 After completing this course, we recommend:
-- Exploring the [Advanced Catalog Management](/academy/advanced-catalog) course
 - Joining our [community forums](https://community.getport.io)
 - Checking out our [example catalogs](/examples)
 :::
