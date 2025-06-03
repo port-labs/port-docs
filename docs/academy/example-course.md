@@ -277,7 +277,7 @@ Each module includes practical exercises to reinforce your learning:
 :::tip Next Steps
 After completing this course, we recommend:
 - Joining our [community forums](https://community.getport.io)
-- Checking out our [example catalogs](/examples)
+- Checking out our [example catalogs](/)
 :::
 
 ## Course Completion
