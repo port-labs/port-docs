@@ -37,7 +37,7 @@ This way of deployment supports scheduled resyncs of resources from Azure to Por
 <h2> Prerequisites </h2>
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 - [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0
-- Azure App Registration Credentials (See below)
+- [Azure App Registration Credentials](See below)
 
 <AzureAppRegistration/>
 
@@ -78,7 +78,7 @@ helm upgrade --install azure port-labs/port-ocean \
 
 <TabItem value="ci" label="CI/CD (Scheduled)">
 
-<Tabs groupId="ci-methods" defaultValue="github" queryString="ci-methods">
+<Tabs groupId="ci-methods" defaultValue="azureDevOps" queryString="ci-methods">
 
 <TabItem value="azureDevOps" label="Azure DevOps">
 
@@ -87,8 +87,8 @@ The Azure exporter is deployed using Azure DevOps pipline, which supports schedu
 <h2> Prerequisites </h2>
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-- Azure App Registration Credentials (See below)
 - Access to an Azure DevOps project with permission to configure pipelines and secrets.
+- Azure App Registration Credentials (See below)
 
 <AzureAppRegistration/>
 
@@ -110,7 +110,7 @@ Here is an example for `azure-pipeline-integration.yml` workflow file:
 Make sure to change the highlighted line to your variable group's name.
 
 <details>
-<summary>Azure pipline integration</summary>
+<summary><b>Azure pipline integration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 name: Azure Exporter Pipeline
@@ -205,7 +205,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 Here is an example for `azure-integration.yml` workflow file:
 
 <details>
-<summary> GitHub Action integration </summary>
+<summary><b>GitHub Action integration (Click to expand)</b></summary>
 
 		```yaml showLineNumbers
 		name: Azure Exporter Workflow
@@ -240,9 +240,8 @@ Here is an example for `azure-integration.yml` workflow file:
 <h2> Prerequisites </h2>
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-- Azure App Registration Credentials (See below)
 - [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) >= 2.0.0
-
+- Azure App Registration Credentials (See below)
 
 <AzureAppRegistration/>
 
@@ -272,7 +271,7 @@ Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readth
 :::
 
 <details>
-<summary>ArgoCD Application</summary>
+<summary><b>ArgoCD Application (Click to expand)</b></summary>
 
 		```yaml showLineNumbers
 		apiVersion: argoproj.io/v1alpha1
