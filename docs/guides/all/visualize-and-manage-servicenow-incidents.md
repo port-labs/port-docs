@@ -418,7 +418,7 @@ In the new dashboard, create the following widgets:
 </details>
 
 <details>
-<summary><b>Servicenow incidents view (click to expand)</b></summary>
+<summary><b>All Servicenow incidents view (click to expand)</b></summary>
 
 1. Click **`+ Widget`** and select **Table**.
 2. Title the widget **All Incidents**.
@@ -429,9 +429,10 @@ In the new dashboard, create the following widgets:
 4. Click **Save** to add the widget to the dashboard.
 5. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
 6. In the top right corner of the table, click on `Manage Properties` and add the following properties:
-    - **Incident State**: The current state of the instance.
-    - **Incident Type**: The instance type.
-    - **Account**: The name of each related AWS account.
+    - **State**: The current state of the incident.
+    - **Assigned To**: The assignee of the incident.
+    - **Priority**: The incident priority.
+    - **Entity Creation Date**: The date the incident was created in Port.
 7. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
 </details>
