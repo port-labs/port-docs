@@ -57,7 +57,7 @@ To add a secret to your portal:
 4. Click on `+ Secret` and add the following secret:
     - `SERVICENOW_API_TOKEN`: A base64 encoded string of your ServiceNow credentials generated as:
     
-        ```bash showLineNumbers
+        ```bash
         echo -n "your-instance-username:your-instance-password" | base64
         ```
 
