@@ -1180,6 +1180,13 @@ export const availableGuides = [
         link: "/guides/all/send-typeform-survey-results-to-port",
     },
     {
+        title: "Visualize and manage your EC2 instances",
+        description: "Create a dashboard that visualizes and manages your AWS EC2 instances",
+        tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/visualize-and-manage-aws-ec2-instances",
+    },
+    {
         title: "Visualize and manage your ServiceNow incidents",
         description: "Create a dashboard that visualizes and manages your ServiceNow incidents",
         tags: ["Incident management", "ServiceNow", "Actions", "Dashboards"],
