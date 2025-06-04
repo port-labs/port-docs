@@ -100,7 +100,7 @@ const config = {
             label: "Home",
             position: "left",
             className: "header-home-link",
-            activeBaseRegex: "^((?!api-reference|guides).)*$",
+            activeBaseRegex: "^((?!api-reference|guides|solutions).)*$",
           },
           {
             to: "/api-reference/port-api",
@@ -115,6 +115,13 @@ const config = {
             position: "left",
             className: "header-guides-link",
             activeBasePath: "guides",
+          },
+          {
+            to: "/solutions",
+            label: "Solutions",
+            position: "left",
+            className: "header-solutions-link",
+            activeBasePath: "solutions",
           },
           {
             to: "https://github.com/port-labs/port-docs",
