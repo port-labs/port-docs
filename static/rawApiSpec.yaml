@@ -5910,6 +5910,181 @@ paths:
                   - entities
                   - ok
                 additionalProperties: false
+  "/v1/blueprints/{blueprint_identifier}/entities/bulk":
+    post:
+      tags:
+        - Entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entities:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: true
+                  description: Array of entities to create
+                  minItems: 1
+                  maxItems: 20
+              required:
+                - entities
+              additionalProperties: false
+        required: true
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: upsert
+          required: true
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: validation_only
+          required: false
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: create_missing_related_entities
+          required: false
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: merge
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: run_id
+          required: false
+        - schema:
+            type: string
+            minLength: 1
+          in: path
+          name: blueprint_identifier
+          required: true
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Created successfully.
+          content:
+            application/json:
+              schema:
+                description: Created successfully.
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  entities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        created:
+                          type: boolean
+                        identifier:
+                          type: string
+                        index:
+                          type: number
+                        additionalData:
+                          type: object
+                          additionalProperties: true
+                      required:
+                        - created
+                        - identifier
+                        - index
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          type: string
+                        index:
+                          type: number
+                        statusCode:
+                          type: number
+                        error:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                        - identifier
+                        - index
+                        - statusCode
+                        - error
+                        - message
+                    description: Failed entities with error details
+                required:
+                  - ok
+                  - entities
+                  - errors
+                  - ok
+                additionalProperties: false
+        "207":
+          description: Partially created successfully. Some entities were created while
+            others failed.
+          content:
+            application/json:
+              schema:
+                description: Partially created successfully. Some entities were created while
+                  others failed.
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  entities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        created:
+                          type: boolean
+                        identifier:
+                          type: string
+                        index:
+                          type: number
+                        additionalData:
+                          type: object
+                          additionalProperties: true
+                      required:
+                        - created
+                        - identifier
+                        - index
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          type: string
+                        index:
+                          type: number
+                        statusCode:
+                          type: number
+                        error:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                        - identifier
+                        - index
+                        - statusCode
+                        - error
+                        - message
+                    description: Failed entities with error details
+                required:
+                  - ok
+                  - entities
+                  - errors
+                  - ok
+                additionalProperties: false
   "/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}":
     patch:
       tags:

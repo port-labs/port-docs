@@ -126,6 +126,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/create-multiple-entities",
+          label: "Create multiple entities",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "api-reference/patch-an-entity",
           label: "Patch an entity",
           className: "api-method patch",

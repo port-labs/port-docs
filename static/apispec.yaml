@@ -5835,6 +5835,189 @@ paths:
               <td>An internal error occurred</td>
             </tr>
             </table>
+  "/v1/blueprints/{blueprint_identifier}/entities/bulk":
+    post:
+      summary: Create multiple entities
+      description: This route allows you to create multiple entities (No more than 20 entities per request) in your software catalog based on an existing blueprint in your data model. It can also be used to overwrite or update existing entities.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      tags:
+        - Entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entities:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: true
+                  description: Array of entity objects (maximum 20).
+                  minItems: 1
+                  maxItems: 20
+              required:
+                - entities
+              additionalProperties: false
+        required: true
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: upsert
+          required: true
+          description: If `true`, this call will override the entire entity, for all the listed entities, if they already exist.<br/>
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: validation_only
+          required: false
+          description: If `true`, this call will only validate the entities and return the validation errors.<br/>
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: create_missing_related_entities
+          required: false
+          description: If `true`, this call will also create missing related entities.<br/>This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.<br/>
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: merge
+          required: false
+          description: If `true` and `upsert` is also `true`, this call will update the entities if they already exist.<br/>
+        - schema:
+            type: string
+          in: query
+          name: run_id
+          required: false
+          description: You can provide a `run_id` to associate the created entities with a specific [action run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
+        - schema:
+            type: string
+            minLength: 1
+          in: path
+          name: blueprint_identifier
+          required: true
+          description: The identifier of the blueprint to operate on.<br/>
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Created successfully.
+          content:
+            application/json:
+              schema:
+                description: Created successfully.
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  entities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        created:
+                          type: boolean
+                        identifier:
+                          type: string
+                        index:
+                          type: number
+                        additionalData:
+                          type: object
+                          additionalProperties: true
+                      required:
+                        - created
+                        - identifier
+                        - index
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          type: string
+                        index:
+                          type: number
+                        statusCode:
+                          type: number
+                        error:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                        - identifier
+                        - index
+                        - statusCode
+                        - error
+                        - message
+                    description: Failed entities with error details
+                required:
+                  - ok
+                  - entities
+                  - errors
+                  - ok
+                additionalProperties: false
+        "207":
+          description: Partially created successfully. Some entities were created while
+            others failed.
+          content:
+            application/json:
+              schema:
+                description: Partially created successfully. Some entities were created while
+                  others failed.
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  entities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        created:
+                          type: boolean
+                        identifier:
+                          type: string
+                        index:
+                          type: number
+                        additionalData:
+                          type: object
+                          additionalProperties: true
+                      required:
+                        - created
+                        - identifier
+                        - index
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          type: string
+                        index:
+                          type: number
+                        statusCode:
+                          type: number
+                        error:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                        - identifier
+                        - index
+                        - statusCode
+                        - error
+                        - message
+                    description: Failed entities with error details
+                required:
+                  - ok
+                  - entities
+                  - errors
+                  - ok
+                additionalProperties: false
   '/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}':
     patch:
       summary: Patch an entity
