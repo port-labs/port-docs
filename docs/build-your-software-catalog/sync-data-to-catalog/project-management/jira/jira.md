@@ -71,7 +71,7 @@ Choose one of the following installation methods:
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
 :::caution API Token authentication recommended
-For production, we recommend using **API Token authentication** for Port’s Jira integration.  
+For production, we recommend using **API Token authentication** for Port's Jira integration.  
 It ensures stable data syncing and prevents issues caused by user account changes.  
 
 OAuth is best suited for the **initial setup** phase, such as configuring mappings.
@@ -977,6 +977,12 @@ When installing the integration [via OAuth](/build-your-software-catalog/sync-da
 
 If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**.  
 This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password.
+
+### API token scopes
+
+:::caution Webhook Registration with Scoped Tokens
+While Atlassian recommends using scoped tokens, the `manage:jira-webhook` scope cannot register webhooks. To register webhooks we recommend the use of an unscoped token.
+:::
 
 ## Examples
 
