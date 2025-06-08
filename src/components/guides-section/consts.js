@@ -1185,6 +1185,13 @@ export const availableGuides = [
         tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
         logos: ["AWS", "GitHub"],
         link: "/guides/all/visualize-and-manage-aws-ec2-instances",
+    },
+    {
+        title: "Visualize and manage your ServiceNow incidents",
+        description: "Create a dashboard that visualizes and manages your ServiceNow incidents",
+        tags: ["Incident management", "ServiceNow", "Actions", "Dashboards"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/visualize-and-manage-servicenow-incidents",
     }
 ]
 
