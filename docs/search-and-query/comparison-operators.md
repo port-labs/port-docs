@@ -249,15 +249,39 @@ The `notBetween` operator checks datetime values and returns entities whose rele
 
 ### contains
 
-The `contains` operator checks if the specified substring exists in the specified property:
+The `contains` operator compares string properties based on the target property type:
+
+<Tabs values={[
+{label: "String property", value: "stringProp"},
+{label: "Array property", value: "arrayProp"}
+]}>
+
+<TabItem value="stringProp">
+When used on a string property, the operator will check if the value is contained inside the property:
 
 ```json showLineNumbers
 {
-  "operator": "contains",
   "property": "myStringProperty",
+  "operator": "myStringProperty",
   "value": "mySubString"
 }
 ```
+
+</TabItem>
+
+<TabItem value="arrayProp">
+When used on a string array property, the operator will check if the value is equal to one of the strings in the array:
+
+```json showLineNumbers
+{
+  "property": "myStringArrayProp",
+  "operator": "contains",
+  "value": "myString"
+}
+```
+</TabItem>
+
+</Tabs>
 
 ### doesNotContains
 
