@@ -15,7 +15,7 @@ import JenkinsBuildWebhookConfig from './\_example_jenkins_build_webhook_configu
 import JenkinsJobBlueprint from './\_example_jenkins_job_blueprint.mdx'
 import JenkinsJobWebhookConfig from './\_example_jenkins_job_webhook_configuration.mdx'
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Jenkins
 
@@ -484,7 +484,7 @@ resources:
 </details>
 
 
-
+<MetricsAndSyncStatus/>
 
 ## Examples
 

@@ -11,7 +11,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 
 # LaunchDarkly
@@ -423,7 +423,7 @@ resources:
 </details>
 
 
-
+<MetricsAndSyncStatus/>
 
 
 ## Examples

@@ -7,7 +7,7 @@ import DockerParameters from "./\_kafka_one_time_docker_params.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 
 # Kafka
@@ -429,7 +429,7 @@ resources:
 
 </details>
 
-
+<MetricsAndSyncStatus/>
 
 
 ## Examples
