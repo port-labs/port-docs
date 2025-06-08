@@ -45,7 +45,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
-### API base URLs for scoped and unscoped tokens
+### Base URLs for scoped and unscoped tokens
 
 Atlassian is deprecating API tokens without scopes in favor of scoped tokens. This change introduces different base URLs depending on whether you're using scoped or unscoped tokens. To ensure your Port Jira integration functions correctly, please use the appropriate URL based on your token type:
 
@@ -53,6 +53,7 @@ Atlassian is deprecating API tokens without scopes in favor of scoped tokens. Th
     * To find your Jira Cloud instance ID (the `{cloudid}`), refer to the official Atlassian guide: [How to retrieve your Atlassian Cloud ID](https://support.atlassian.com/jira/kb/retrieve-my-atlassian-sites-cloud-id/).
 * **Unscoped Tokens**: Use `https://{your-domain}.atlassian.net/rest`, replacing `{your-domain}` with your specific Jira instance domain.
 
+### Required API Token Scopes
 
 The Port Jira integration requires the following API token scopes:
 
