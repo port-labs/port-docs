@@ -1,0 +1,71 @@
+---
+id: get-an-integrations-metrics-and-sync-status
+title: "Get an integration's metrics and sync status"
+description: "This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/)."
+sidebar_label: "Get an integration's metrics and sync status"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWd9v4zYM/lcEv+wOyI922F6CYUCBG4pgOKC46wYMRdCTJTrRRZF8Ep1eFuR/P0p2Eidx6vahyx780DSWSIof+YkxyHUiwQunclTWJKPkfqY8c7ZAYFxr++TZyhYMLZsCMs58DkJlSjBlEKaOB62fPFsAOiU840YyvzKCeeRYeAYKZ+AYfTDNETwya4BZxzL6q1lzELQGv6Vu+Hv8uLdMA3eGLawjT1JyqH6k7zExAzFnYT1Yf5BWFAswGLcn72aIuR8Nh7TsB7l1OFB2mBZKyz7hcX1vM3ziDvqCI9d2Ogzn9yU99NHuFt8Pkl6CfOqT0UPyscSYTHpJzh0nyODCxjrx5MuCJ6N1gqscKIieJM002fQSFWL6rQC3IkuGlOixBDuWtOLgW6EcyGSUce2hd5IMYOMPzGYNsWLjjJBTsjIFWjL6oiFDBoscV716xEt5FrCxJ6U1S4HWsHAG5IB8bPc/5zjbu19Lw5i+OsP1ERZ0xTNQgms1G5FfT9xgIJnNgVaJIeZlns2AS3B7324KnFmn/o2W2+P7D1GB3dyN6eg5mAG7L2musMemNvgTuMIe7og/jAthC4N7avE83zHrPfFRK+JjAPdlMBh8YWmBaE3MhKlv3oIpMe7O3crG2yNsvoqC00pOVs4lm0nA43NiP/gQkp+vrsK/Q0gfIOOFRvapkqQgCEvRNhhkyWfyJEZn+NUHhYYY2/QrCCTF3IV8oCqPs/OaTGot3U8TEhHDUtsyxSKlnNBOoFxtgzvHwzVQCAvffl6NI/dRsJEEey5KwkgXhI5ukfyb7q0qsZ+IWUGonhOYKyNbjgoi53WNhO+N0YIlWR03a4Yb/JlqW3MUUl1ATg/YuFvV5vaA5zPuoV2srCftcrIow/3ogRgofSNoXwgBvmmPNrmUKljg+q5mOd5k2tWWyxewNi4/RpI+4iGPzqj4ucpzeKXtZgT7+vNwKD1pQ5dxpS/tQ4jwpX1w/OkRvqPjAi/tCjlhPL24LC7tSKY0/e6CfKS3n8t6IkHDhfPSUieesVyWg1aMFfu6UtOVmq7UdKXmLUvNLu1dsemKTVdsumLzlsWmxNhVmq7SdJWmqzRvV2leZ75sQrWGTTgIvdGbhpYXZZcYxmknNCChj2oBodVU5PJ1KkeeHfcjz3UfG3uNR53Fkz5i1TXcdwHrPb99D68OvI6oLQXHOZwn275t1aVtNUAWfrm6jn29C/ebwTnb3HhdgPd82tQjbcJf2nkJ8F//H432/xp42TueWdJMphD9DIOgUTJcXg9rHB+uG0dCmzhT+7hjrge33E7MCqfD9GY3SVHbSUqc+pzuFn4vMAmmROEUrj6HiJZBS4G7g348qf0Jtanb8WioPj/axAFBZqO6Qh3k49Dn5m5MosvtPCC5HlyFeOfW44LHpFbWb8N01LxsKpocjaHWe+J049fT8WuZTqRXmGGuuYpXITJkXfHxIVleH1ZdehqdG1PWSUlUmlEqg4n1OqUfnr+c3mzCcjmyDVSVyvNUnxshHubuzae1Z8IxJ6IfzJWXXBdBLN6WJXcqQHglnHefqsLxnr1+eHvG0e3dNKu6k1sAzSnbTEixuqgBQSl7IwTkWLNyUnED9F39uv3jnm75D3WIwtk=
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an integration's metrics and sync status"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/integration/{integrationInternalId}/syncMetrics"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"query","name":"resyncId","required":false,"description":"The ID of a specific resync. If this field is left empty, the latest resync data will be returned."},{"schema":{"type":"string"},"in":"path","name":"integrationInternalId","required":true,"description":"The ID of the integration you want to operate on."},{"schema":{"type":"string"},"in":"header","name":"Authorization","required":false,"description":"Your API token. To get it, go to your [Port account](https://app.port.io/), click the `...` button, then click the `Generate API token` button and copy the generated token."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"count":{"type":"number"},"data":{"type":"array","items":{"type":"object","properties":{"integrationType":{"type":"string"},"integrationIdentifier":{"type":"string"},"integrationVersion":{"type":"string"},"oceanVersion":{"type":"string"},"kindIdentifier":{"type":"string"},"kind":{"type":"string"},"kindIndex":{"type":"number"},"eventId":{"type":"string"},"syncState":{"type":"string"},"blueprint":{"type":"string"},"metrics":{"type":"object","properties":{"phase":{"type":"object","properties":{"resync":{"type":"object","properties":{"duration_seconds":{"type":"number"},"success":{"type":"number"}},"additionalProperties":false},"load":{"type":"object","properties":{"object_count_type":{"type":"object","properties":{"skipped":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"failed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"loaded":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"raw_extracted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"transformed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"filtered_out":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"deleted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false}},"additionalProperties":false}},"required":["object_count_type"],"additionalProperties":false},"extract":{"type":"object","properties":{"object_count_type":{"type":"object","properties":{"skipped":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"failed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"loaded":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"raw_extracted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"transformed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"filtered_out":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"deleted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false}},"additionalProperties":false}},"required":["object_count_type"],"additionalProperties":false},"transform":{"type":"object","properties":{"object_count_type":{"type":"object","properties":{"skipped":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"failed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"loaded":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"raw_extracted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"transformed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"filtered_out":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"deleted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false}},"additionalProperties":false}},"required":["object_count_type"],"additionalProperties":false},"delete":{"type":"object","properties":{"object_count_type":{"type":"object","properties":{"skipped":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"failed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"loaded":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"raw_extracted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"transformed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"filtered_out":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"deleted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false}},"additionalProperties":false}},"required":["object_count_type"],"additionalProperties":false}},"additionalProperties":false}},"required":["phase"],"additionalProperties":false},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"}},"required":["integrationType","integrationIdentifier","integrationVersion","oceanVersion","kindIdentifier","kind","eventId","syncState","metrics","createdAt","updatedAt"],"additionalProperties":false}}},"required":["ok","count","data"],"additionalProperties":false}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
