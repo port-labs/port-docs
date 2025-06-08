@@ -257,7 +257,7 @@ The `contains` operator compares string properties based on the target property 
 ]}>
 
 <TabItem value="stringProp">
-When used on a string property, the operator will check if the value is contained inside the property
+When used on a string property, the operator will check if the value is contained inside the property:
 
 ```json showLineNumbers
 {
