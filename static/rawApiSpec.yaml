@@ -5912,8 +5912,14 @@ paths:
                 additionalProperties: false
   "/v1/blueprints/{blueprint_identifier}/entities/bulk":
     post:
+      summary: Create multiple entities
       tags:
         - Entities
+      description: This route allows you to create multiple entities (No more than 20
+        entities per request) in your software catalog based on an existing
+        blueprint in your data model. It can also be used to overwrite or update
+        existing entities.<br/><br/>To learn more about entities, check out the
+        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       requestBody:
         content:
           application/json:
@@ -5924,6 +5930,59 @@ paths:
                   type: array
                   items:
                     type: object
+                    properties:
+                      identifier:
+                        oneOf:
+                          - type:
+                              - string
+                            pattern: ^(?!\.{1,2}$)[A-Za-z0-9@_.+:\\/=-]+$
+                            title: String identifier
+                            description: The identifier of the entity.
+                          - $ref: "#/components/schemas/def-5"
+                            title: Search query
+                      title:
+                        type: string
+                        description: The title of the entity.
+                      icon:
+                        type: string
+                        description: The icon of the entity.
+                      team:
+                        oneOf:
+                          - type: string
+                            description: The Port team/s to which the entity will belong.
+                          - type: array
+                            items:
+                              type: string
+                            description: The Port team/s to which the entity will belong.
+                          - $ref: "#/components/schemas/def-6"
+                      properties:
+                        type: object
+                        default: {}
+                        description: An object containing the properties of the entity, in
+                          `"key":"value"` pairs where the `key` is the
+                          property's identifier, and the `value` is its value.
+                      relations:
+                        type: object
+                        description: An object containing the relations of the entity, in
+                          `"key":"value"` pairs where the `key` is the
+                          relation's identifier, and the `value` is the related
+                          entity's identifier.<br/>You can also use a [search
+                          query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries)
+                          to define relations based on a property of the related
+                          entity.
+                        additionalProperties:
+                          anyOf:
+                            - type: string
+                              pattern: ^(?!\.{1,2}$)[A-Za-z0-9@_.+:\\/=-]+$
+                              title: string
+                            - type: array
+                              items:
+                                type: string
+                                pattern: ^(?!\.{1,2}$)[A-Za-z0-9@_.+:\\/=-]+$
+                              title: array
+                            - type: "null"
+                              title: "null"
+                            - $ref: "#/components/schemas/def-6"
                     additionalProperties: true
                   description: Array of entities to create
                   minItems: 1
@@ -5939,35 +5998,49 @@ paths:
           in: query
           name: upsert
           required: true
+          description: If `true`, this call will override the entire entity/ies, if
+            it/they already exist/s.
         - schema:
             type: boolean
             default: false
           in: query
           name: validation_only
           required: false
+          description: If `true`, this call will only validate the entity/ies and return
+            the validation errors.
         - schema:
             type: boolean
             default: false
           in: query
           name: create_missing_related_entities
           required: false
+          description: If `true`, this call will also create missing related
+            entities.<br/>This is useful when you want to create an entity and
+            its related entities in one call, or if you want to create an entity
+            whose related entity does not exist yet.
         - schema:
             type: boolean
             default: false
           in: query
           name: merge
           required: false
+          description: If `true` and `upsert` is also `true`, this call will update the
+            entity/ies, if it/they already exist/s.
         - schema:
             type: string
           in: query
           name: run_id
           required: false
+          description: You can provide a `run_id` to associate the created entities with a
+            specific [action
+            run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).
         - schema:
             type: string
             minLength: 1
           in: path
           name: blueprint_identifier
           required: true
+          description: The identifier of the blueprint to operate on.
       security:
         - bearer: []
       responses:
@@ -6085,6 +6158,75 @@ paths:
                   - errors
                   - ok
                 additionalProperties: false
+        "401":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
+        "413":
+          description: Request body is too large (limit is 1MiB)
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+                description: Request body is too large (limit is 1MiB)
+        "422":
+          description: The json provided does not match the route's schema
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: The json provided does not match the route's schema
   "/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}":
     patch:
       tags:
