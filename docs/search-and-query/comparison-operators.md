@@ -270,7 +270,7 @@ When used on a string property, the operator will check if the value is containe
 </TabItem>
 
 <TabItem value="arrayProp">
-When used on a string array property, the operator will check if the value is equal to one of the strings in the array
+When used on a string array property, the operator will check if the value is equal to one of the strings in the array:
 
 ```json showLineNumbers
 {
