@@ -10,8 +10,9 @@ Port offers two ways to control the payload sent to your backend:
 :::
 
 Some of the 3rd party applications that you may want to integrate with may not accept the raw payload incoming from
-Port's
-self-service actions. The Port agent allows you to control the payload that is sent to every 3rd party application.
+Port's self-service actions. The Port agent allows you to control the payload that is sent to every 3rd party application.
+
+For the latest updates and source code, see the [Port Agent GitHub repository](https://github.com/port-labs/port-agent).
 
 You can alter the requests sent to your third-party application by providing a payload mapping config file when
 deploying the
@@ -92,7 +93,8 @@ Here is the mapping file schema:
         "link": JQ, # Optional. Should return the wanted link or a list of links
         "summary": JQ, # Optional. Should return the wanted summary
         "externalRunId": JQ # Optional. Should return the wanted external run id
-      }
+      },
+      "fieldsToDecryptPaths": ["dot.separated.path"] # Optional. List of dot-separated string paths to fields to decrypt by PORT_CLIENT_SECRET
   }
 ]
 ```
@@ -227,3 +229,18 @@ The `response` field contains the following fields:
 - `json` - The response body as a json object
 - `text` - The response body as a string
 - `headers` - The response headers as a json object
+
+## Decrypting Encrypted Fields
+
+When using `secret` type input fields in your actions, the Port agent can automatically decrypt encrypted values before sending requests to third-party applications. Use the `fieldsToDecryptPaths` field in your mapping to specify which fields should be decrypted.
+
+For example, to decrypt an API key stored in `payload.entity.properties.api_key`:
+
+```json showLineNumbers
+{
+  "fieldsToDecryptPaths": ["payload.entity.properties.api_key"],
+  // ... other mapping fields
+}
+```
+
+The agent will decrypt the encrypted values using your configured `PORT_CLIENT_SECRET` before sending the request.
