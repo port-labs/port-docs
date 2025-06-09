@@ -92,7 +92,8 @@ Here is the mapping file schema:
         "link": JQ, # Optional. Should return the wanted link or a list of links
         "summary": JQ, # Optional. Should return the wanted summary
         "externalRunId": JQ # Optional. Should return the wanted external run id
-      }
+      },
+      "fieldsToDecryptPaths": ["dot.separated.path"] # Optional. List of dot-separated string paths to fields to decrypt by PORT_CLIENT_SECRET
   }
 ]
 ```
@@ -227,3 +228,18 @@ The `response` field contains the following fields:
 - `json` - The response body as a json object
 - `text` - The response body as a string
 - `headers` - The response headers as a json object
+
+## Decrypting Encrypted Fields
+
+When using `secret` type input fields in your actions, the Port agent can automatically decrypt encrypted values before sending requests to third-party applications. Use the `fieldsToDecryptPaths` field in your mapping to specify which fields should be decrypted.
+
+For example, to decrypt an API key stored in `payload.entity.properties.api_key`:
+
+```json showLineNumbers
+{
+  "fieldsToDecryptPaths": ["payload.entity.properties.api_key"],
+  // ... other mapping fields
+}
+```
+
+The agent will decrypt the encrypted values using your configured `PORT_CLIENT_SECRET` before sending the request.
