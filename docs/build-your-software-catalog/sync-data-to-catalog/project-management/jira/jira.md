@@ -53,6 +53,11 @@ Atlassian is deprecating API tokens without scopes in favor of scoped tokens. Th
     * To find your Jira Cloud instance ID (the `{cloudid}`), refer to the official Atlassian guide: [How to retrieve your Atlassian Cloud ID](https://support.atlassian.com/jira/kb/retrieve-my-atlassian-sites-cloud-id/).
 * **Unscoped Tokens**: Use `https://{your-domain}.atlassian.net/rest`, replacing `{your-domain}` with your specific Jira instance domain.
 
+:::warning Scoped token limitation for webhooks
+
+Scoped tokens are currently not supported for webhook registration. To enable real-time updates, you can either configure webhooks manually using the [Webhook installation method](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook) or use an unscoped token with the appropriate base url.
+:::
+
 ### Required API Token Scopes
 
 The Port Jira integration requires the following API token scopes:
@@ -981,13 +986,6 @@ When installing the integration [via OAuth](/build-your-software-catalog/sync-da
 
 If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**.  
 This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password.
-
-### API token scopes
-
-:::warning Scoped token limitation for webhooks
-
-Scoped tokens are currently not supported for webhook registration. To enable real-time updates, you can either configure webhooks manually using the [Webhook installation method](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook) or use an unscoped token with the appropriate base url.
-:::
 
 ## Examples
 
