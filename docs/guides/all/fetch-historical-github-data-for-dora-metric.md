@@ -30,7 +30,8 @@ These workflows are designed for **one-time or on-demand use** to help you backf
 
 ## Track deployments
 
-In this section, we focus on **deployment tracking**. A deployment refers to shipping code to a live environment such as Production, Staging, or QA. We'll provide ready-to-use GitHub Actions that extract historical deployment-related data and send it to Port.
+In this section, we focus on **deployment tracking**.  
+A deployment refers to shipping code to a live environment such as Production, Staging, or QA. We'll provide ready-to-use GitHub Actions that extract historical deployment-related data and send it to Port.
 
 ### Data model setup
 
