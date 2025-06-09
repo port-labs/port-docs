@@ -71,6 +71,10 @@ html[data-theme="dark"] .guides-search-bar::placeholder {
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+
+    /* Override anchor tag defaults */
+    text-decoration: none;
+    color: inherit;
 }
 
 html[data-theme="dark"] .guide-card {
@@ -85,6 +89,11 @@ html[data-theme="light"] .guide-card:hover {
 
 html[data-theme="dark"] .guide-card:hover {
     border: 1px solid var(--Border-Medium, #444);
+}
+
+.guide-card:hover {
+    text-decoration: none;
+    color: inherit;
 }
 
 

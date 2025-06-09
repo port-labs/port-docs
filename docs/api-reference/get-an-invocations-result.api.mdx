@@ -1,0 +1,71 @@
+---
+id: get-an-invocations-result
+title: "Get an invocation's result"
+description: "This route allows you to get a specific invocation result.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview)."
+sidebar_label: "Get an invocation's result"
+hide_title: true
+hide_table_of_contents: true
+api: eJzVU0tr20AQ/ivLXJqAa9k9ilIwtATTS0jdkzFlLY2txfKusg+lrtj/3pmVHDtBCfTYi7SPmZ35HtNBia6wqvHKaMhhVSknrAkehaxr8+TEyQThjdijF1K4Bgu1U4VQujWF5CRh0YXaTz9vbfYlfVZG1CitFkdj6ZktvSYWSyH3qL2biKLC4iD40Fco1qUpwpFu0mObm8r7xuVZRsdu2hjrp8pkUn3sszPTom0VPt1OYQJe7h3ka1gsYTOBRlp5RI+WzzpwVOcoIe/AnxokaM5bpfcQJ6AYaSN9RW9oyqHdBc8vVVIlAomWrl+ysxBBq8eA4hIjdsYmIKnBK164QYuPQVksIfc2YKQmHRbBKn9KLW6JJapCCCzKMucnvUIHG44kWhujHW0JwqfZjH8vu/mKO0nMi4chEiJhIwYqQwWBBINJjzKHrJ1nqcGMGzxg1o0CjsAd2vbMYbA1JZ8lkY06K0Isjt0Gdwm4AvuDpeiBnCE/q0Jp3/F0EWIRqH+r/qTWYNCqInooKybtdialK19z/D3VE4v7JYVy2z0z8+mMdW6M80epOXx4/Y5drK9U+uAG/77WuoPCaE/E/HdD0fPq8bfPmloSf8REkqob3LCGdk6BKTkxzI6gRT4+BCRkRURyXtdtpcOfto6Rj2kSLDuZlq20Sm5ZEbJNqRyvyYU7WTt8h9mbh2FCbsW/ztYozrOpNDuqlXXgHS0PZLG3hjxursfm7tuKuQlM1LVJD8mkw4JBjpZ67d6+Ln95YEZTuq4fgRif4/urNzOGabigYggx/gVN2QHR
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an invocation's result"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/agent/invoke/{invocation_identifier}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to get a specific invocation result.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"invocation_identifier","description":"A unique identifier for the agent invocation.","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem"
 
 # Set up deployments using GitLab merge requests or jobs
 
-The [Create & track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal) guide walks you through the installation of the DORA metrics experience in Port, using GitHub as the default Git provider.
+The [Create & track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal) guide walks you through the installation of the DORA metrics experience in Port, using GitHub and PagerDuty as the default deployment and incident methods.
 
 This guide assumes you have implemented the aforementioned guide, and shows how to adapt it for GitLab users. 
 
@@ -26,7 +26,7 @@ To set up GitLab merge requests or jobs for DORA metrics in your portal, you wil
 ## Configure your deployments
 
 1. **Map merge requests and/or jobs as deployments**
-    - Go to the **Builder** -> **Data Sources** then click on the GitLab integration
+    - Go to the [**Data Sources**](https://app.getport.io/settings/data-sources) then click on the GitLab integration
     - Add a new mapping to ingest GitLab merge requests as deployment entities.
 
 :::info Technical note: how deployments are mapped

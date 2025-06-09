@@ -41,3 +41,142 @@ For examples on how to map resources head to the [resource templates](/build-you
 
 - Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.
 - Check out the [Azure Multi Subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md) guide for setting up synchronization of Azure resources.
+
+## Configuration
+
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Azure integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+- kind: subscription
+  selector:
+    query: 'true'
+    apiVersion: '2022-09-01'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .display_name
+        blueprint: '"azureSubscription"'
+        properties:
+          tags: .tags
+- kind: Microsoft.Resources/resourceGroups
+  selector:
+    query: 'true'
+    apiVersion: '2022-09-01'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureResourceGroup"'
+        properties:
+          location: .location
+          provisioningState: .properties.provisioningState + .properties.provisioning_state
+          tags: .tags
+        relations:
+          subscription: .id | split("/") | .[1] |= ascii_downcase |.[2] |= ascii_downcase
+            | .[:3] |join("/")
+- kind: Microsoft.App/containerApps
+  selector:
+    query: 'true'
+    apiVersion: '2022-03-01'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureCloudResource"'
+        properties:
+          location: .location
+          type: .type
+          tags: .tags
+        relations:
+          resource_group: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:5] |join("/")
+- kind: Microsoft.Storage/storageAccounts
+  selector:
+    query: 'true'
+    apiVersion: '2023-01-01'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureCloudResource"'
+        properties:
+          location: .location
+          type: .type
+          tags: .tags
+        relations:
+          resource_group: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:5] |join("/")
+- kind: Microsoft.Compute/virtualMachines
+  selector:
+    query: 'true'
+    apiVersion: '2023-03-01'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureCloudResource"'
+        properties:
+          location: .location
+          type: .type
+          tags: .tags
+        relations:
+          resource_group: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:5] |join("/")
+- kind: Microsoft.ContainerService/managedClusters
+  selector:
+    query: 'true'
+    apiVersion: '2023-05-01'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureCloudResource"'
+        properties:
+          location: .location
+          type: .type
+          tags: .tags
+        relations:
+          resource_group: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:5] |join("/")
+- kind: Microsoft.Network/loadBalancers
+  selector:
+    query: 'true'
+    apiVersion: '2023-02-01'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureCloudResource"'
+        properties:
+          location: .location
+          type: .type
+          tags: .tags
+        relations:
+          resource_group: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:5] |join("/")
+```
+
+</details>

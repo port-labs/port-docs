@@ -384,6 +384,79 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Komodor integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+
+```yaml showLineNumbers
+
+deleteDependentEntities: true
+createMissingRelatedEntities: false
+enableMergeEntity: true
+resources:
+- kind: komodorService
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .kind + "-" + .cluster + "-" + .namespace + "-" + .service
+        title: .service
+        blueprint: '"komodorService"'
+        properties:
+          service_id: .uid
+          status: .status
+          cluster_name: .cluster
+          workload_kind: .kind
+          namespace_name: .namespace
+          service_name: .service
+          komodor_link: .link + "&utmSource=port"
+          labels: .labels
+          last_deploy_at: .lastDeploy.endTime | todate
+          last_deploy_status: .lastDeploy.status
+- kind: komodorHealthMonitoring
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .komodorUid | gsub("\\|"; "-") | sub("-+$"; "")
+        blueprint: '"komodorHealthMonitoring"'
+        properties:
+          status: .status
+          resource_identifier: .komodorUid | gsub("\\|"; "-") | sub("-+$"; "")
+          severity: .severity
+          supporting_data: .supportingData
+          komodor_link: .link + "&utmSource=port"
+          created_at: .createdAt | todate
+          last_evaluated_at: .lastEvaluatedAt | todate
+          check_type: .checkType
+          workload_type: .komodorUid | split("|") | .[0]
+          cluster_name: .komodorUid | split("|") | .[1]
+          namespace_name: .komodorUid | split("|") | .[2]
+          workload_name: .komodorUid | split("|") | .[3]
+- kind: komodorHealthMonitoring
+  selector:
+    query: ( .komodorUid | split("|") as $parts | (length == 4 and all($parts[]; length > 0)) )
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .komodorUid | gsub("\\|"; "-") | sub("-+$"; "")
+        blueprint: '"komodorHealthMonitoring"'
+        properties: {}
+        relations:
+          service: .komodorUid | gsub("\\|"; "-")
+```
+
+</details>
+
+
 ## Examples
 Examples of blueprints and the relevant integration configurations:
 ### Services

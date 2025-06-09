@@ -40,7 +40,7 @@ It is possible to reference any field that appears in the API responses linked b
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
 - [`User`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-users/#api-group-users)
 - [`Team`](https://developer.atlassian.com/platform/teams/rest/v1/api-group-teams-public-api/#api-group-teams-public-api)
-- [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
+- [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-jql-get)
 
 
 ## Setup
@@ -69,6 +69,13 @@ Choose one of the following installation methods:
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+:::caution API Token authentication recommended
+For production, we recommend using **API Token authentication** for Port’s Jira integration.  
+It ensures stable data syncing and prevents issues caused by user account changes.  
+
+OAuth is best suited for the **initial setup** phase, such as configuring mappings.
+:::
 
 <OceanSaasInstallation integration="Jira" />
 
@@ -446,6 +453,111 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .accountId
+        title: .displayName
+        blueprint: '"jiraUser"'
+        properties:
+          emailAddress: .emailAddress
+          displayName: .displayName
+          active: .active
+          accountType: .accountType
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .name
+        blueprint: '"jiraProject"'
+        properties:
+          url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
+- kind: issue
+  selector:
+    query: 'true'
+    jql: (statusCategory != Done) OR (created >= -1w) OR (updated >= -1w)
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .fields.summary
+        blueprint: '"jiraIssue"'
+        properties:
+          url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
+          status: .fields.status.name
+          issueType: .fields.issuetype.name
+          components: .fields.components
+          creator: .fields.creator.emailAddress
+          priority: .fields.priority.name
+          labels: .fields.labels
+          created: .fields.created
+          updated: .fields.updated
+          resolutionDate: .fields.resolutiondate
+        relations:
+          project: .fields.project.key
+          parentIssue: .fields.parent.key
+          subtasks: .fields.subtasks | map(.key)
+          jira_user_assignee: .fields.assignee.accountId
+          jira_user_reporter: .fields.reporter.accountId
+          assignee:
+            combinator: '"or"'
+            rules:
+            - property: '"jira_user_id"'
+              operator: '"="'
+              value: .fields.assignee.accountId
+            - property: '"$identifier"'
+              operator: '"="'
+              value: .fields.assignee.email
+          reporter:
+            combinator: '"or"'
+            rules:
+            - property: '"jira_user_id"'
+              operator: '"="'
+              value: .fields.reporter.accountId
+            - property: '"$identifier"'
+              operator: '"="'
+              value: .fields.reporter.email
+- kind: issue
+  selector:
+    query: 'true'
+    jql: (statusCategory != Done) OR (created >= -1w) OR (updated >= -1w)
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .fields.summary
+        blueprint: '"jiraIssue"'
+        relations:
+          pull_request:
+            combinator: '"and"'
+            rules:
+            - property: '"$title"'
+              operator: '"contains"'
+              value: .key
+```
+
+</details>
+
 
 ### JQL support for issues
 
