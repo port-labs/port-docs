@@ -160,9 +160,10 @@ This table summarizes the available parameters for the installation.
 | `port.clientSecret`                | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
 | `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
 | `integration.secrets.linearApiKey` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                               |                                  | ✅        |
-| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                                                                                                                                                                           | https://my-ocean-integration.com | ✅        |
 | `integration.eventListener.type`   | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
 | `integration.type`                 | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |
+| `integration.config.appHost` (deprecated)       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear. This field is deprecated. Please use the `baseUrl` field instead                                                                                                                                                                           | https://my-ocean-integration.com | ❌        |
+| `baseUrl`                 | The base url of the instance where the Linear integration is hosted, used for real-time updates.                                                                                                                                                                                                                                                               | https://my-ocean-integration.com | ❌      |
 | `scheduledResyncInterval`          | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |                                  | ❌        |
 | `initializePortResources`          | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |                                  | ❌        |
 | `sendRawDataExamples`              | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |                                  | ❌        |
@@ -196,6 +197,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `identifier`                | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌        |
 | `version`                   | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌        |`
 | `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      | true    |          | ❌       |
+| `baseUrl`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
 <br/>
 
 :::tip Ocean Sail Github Action
@@ -393,6 +395,73 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the Linear integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+
+```yaml showLineNumbers
+
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: team
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .name
+        blueprint: '"linearTeam"'
+        properties:
+          description: .description
+          workspaceName: .organization.name
+          url: '"https://linear.app/" + .organization.urlKey + "/team/" + .key'
+- kind: label
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"linearLabel"'
+        properties:
+          isGroup: .isGroup
+        relations:
+          parentLabel: .parent.id
+          childLabels: '[.children.edges[].node.id]'
+- kind: issue
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .identifier
+        title: .title
+        blueprint: '"linearIssue"'
+        properties:
+          url: .url
+          status: .state.name
+          assignee: .assignee.email
+          creator: .creator.email
+          priority: .priorityLabel
+          created: .createdAt
+          updated: .updatedAt
+        relations:
+          team: .team.key
+          labels: .labelIds
+          parentIssue: .parent.identifier
+          childIssues: .children.edges[].node.identifier
+```
+
+</details>
+
 
 
 

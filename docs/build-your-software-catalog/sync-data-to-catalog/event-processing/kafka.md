@@ -351,6 +351,86 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+- kind: cluster
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name
+        blueprint: '"kafkaCluster"'
+        properties:
+          controllerId: .controller_id
+- kind: broker
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .cluster_name + "_" + (.id | tostring)
+        title: .cluster_name + " " + (.id | tostring)
+        blueprint: '"kafkaBroker"'
+        properties:
+          address: .address
+          region: .config."broker.rack"
+          version: .config."inter.broker.protocol.version"
+          config: .config
+        relations:
+          cluster: .cluster_name
+- kind: topic
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .cluster_name + "_" + .name
+        title: .cluster_name + " " + .name
+        blueprint: '"kafkaTopic"'
+        properties:
+          replicas: .partitions[0].replicas | length
+          partitions: .partitions | length
+          compaction: .config."cleanup.policy" | contains("compact")
+          retention: .config."cleanup.policy" | contains("delete")
+          deleteRetentionTime: .config."delete.retention.ms"
+          partitionsMetadata: .partitions
+          config: .config
+        relations:
+          cluster: .cluster_name
+          brokers: '[.cluster_name + "_" + (.partitions[].replicas[] | tostring)] | unique'
+- kind: consumer_group
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .cluster_name + "_" + .group_id
+        title: .group_id
+        blueprint: '"kafkaConsumerGroup"'
+        properties:
+          state: .state
+          members: '[.members[].client_id]'
+          coordinator: .coordinator.id
+          partition_assignor: .partition_assignor
+          is_simple_consumer_group: .is_simple_consumer_group
+          authorized_operations: .authorized_operations
+        relations:
+          cluster: .cluster_name
+```
+
+</details>
+
+
+
 
 ## Examples
 

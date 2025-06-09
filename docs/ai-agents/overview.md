@@ -66,6 +66,9 @@ AI agents are designed with security as a priority:
 - LLM processing happens within our cloud infrastructure.
 - Your data is not used for model training.
 
+We store data from your interactions with AI agents for up to 30 days. We use this data to ensure agents function correctly and to identify and prevent problematic or inappropriate AI behavior. 
+We limit this data storage strictly to these purposes. You can contact us to opt-out of this data storage.
+
 ## Start simple & expand as needed
 
 Begin with focused use cases that deliver immediate value, such as helping developers find service information or streamlining incident management.  
@@ -107,7 +110,7 @@ Port AI supports two primary interaction types:
 <summary>How do users interact with Port AI? (Click to expand)</summary>
 
 - Primary interface is through our [Slack app](/ai-agents/slack-app).
-- Full API availability.
+- Full [API availability](/api-reference/port-api/).
 </details>
 
 <details>
@@ -125,7 +128,10 @@ All agents operate within Port's secure framework and governance controls.
 <details>
 <summary>How is customer data handled? (Click to expand)</summary>
 
-All data processing occurs within our cloud infrastructure, and no data used for model training. We ensure complete logical separation between different customers' data.
+All data processing occurs within our cloud infrastructure, and no data used for model training. We ensure complete logical separation between different customers' data. 
+
+We store data from your interactions with AI agents for up to 30 days. We use this data to ensure agents function correctly and to identify and prevent problematic or inappropriate AI behavior. 
+We limit this data storage strictly to these purposes. You can contact us to opt-out of this data storage.
 </details>
 
 <details>

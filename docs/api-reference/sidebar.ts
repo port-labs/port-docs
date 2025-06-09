@@ -100,6 +100,12 @@ const sidebar: SidebarsConfig = {
           label: "Create an access token",
           className: "api-method post",
         },
+        {
+          type: "doc",
+          id: "api-reference/rotate-a-users-credentials",
+          label: "Rotate a user's credentials",
+          className: "api-method post",
+        },
       ],
     },
     {
@@ -117,6 +123,12 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/get-all-entities-of-a-blueprint",
           label: "Get all entities of a blueprint",
           className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-multiple-entities",
+          label: "Create multiple entities",
+          className: "api-method post",
         },
         {
           type: "doc",
@@ -170,6 +182,12 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api-reference/aggregate-entities-over-time",
           label: "Aggregate entities over time",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/fetch-the-history-of-an-entitys-properties",
+          label: "Fetch the history of an entity’s properties",
           className: "api-method post",
         },
         {
@@ -528,12 +546,6 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/create-a-webhook",
-          label: "Create a webhook",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/get-all-webhooks",
           label: "Get all webhooks",
           className: "api-method get",
@@ -590,6 +602,30 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api-reference/cancel-a-migration",
           label: "Cancel a migration",
+          className: "api-method post",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "AI",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-an-invocations-result",
+          label: "Get an invocation's result",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/invoke-a-specific-agent",
+          label: "Invoke a specific agent",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/invoke-an-agent",
+          label: "Invoke an agent",
           className: "api-method post",
         },
       ],

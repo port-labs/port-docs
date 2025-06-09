@@ -3,6 +3,7 @@ sidebar_position: 2
 displayed_sidebar: null
 description: Learn how to scaffold Azure DevOps repositories using Cookiecutter templates via Port Actions.
 ---
+import AzureDevopsTroubleshootingLink from '/docs/generalTemplates/azure-devops/_azure_devops_troubleshooting_link.mdx'
 
 # Scaffold Azure DevOps Repositories Using Cookiecutter
 
@@ -15,8 +16,70 @@ This guide will help you implement a self-service action in Port that allows you
 
 ## Set up data model
 
-If you haven't installed the [Azure DevOps integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/installation), you'll need to create a blueprint for Azure DevOps repositories.  
-However, we highly recommend you install the Azure DevOps integration to have this automatically set up for you.
+If you haven't installed the [Azure DevOps integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/installation), you'll need to create blueprints for Azure DevOps repositories and projects.  
+However, we highly recommend you install the Azure DevOps integration to have these automatically set up for you.
+
+<h3> Create the Azure DevOps project blueprint </h3>
+
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+2. Click on `+ Blueprint`.
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+4. Add this JSON schema:
+
+    <details>
+    <summary><b>Azure DevOps Project Blueprint (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "project",
+      "title": "Project",
+      "icon": "AzureDevops",
+      "schema": {
+        "properties": {
+          "state": {
+            "title": "State",
+            "type": "string",
+            "icon": "AzureDevops",
+            "description": "The current lifecycle state of the project."
+          },
+          "revision": {
+            "title": "Revision",
+            "type": "string",
+            "icon": "AzureDevops",
+            "description": "The revision number, indicating how many times the project configuration has been updated."
+          },
+          "visibility": {
+            "title": "Visibility",
+            "type": "string",
+            "icon": "AzureDevops",
+            "description": "Indicates whether the project is private or public"
+          },
+          "defaultTeam": {
+            "title": "Default Team",
+            "type": "string",
+            "icon": "Team",
+            "description": "Default Team of the project"
+          },
+          "link": {
+            "title": "Link",
+            "type": "string",
+            "format": "url",
+            "icon": "AzureDevops",
+            "description": "Link to azure devops project"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
+
+    </details>
+
+5. Click "Save" to create the blueprint.
 
 <h3> Create the Azure DevOps repository blueprint </h3>
 
@@ -84,51 +147,60 @@ However, we highly recommend you install the Azure DevOps integration to have th
 4. Copy and paste the following JSON configuration:
 
     <details>
-    <summary><b>Scaffolding new repository (Click to expand)</b></summary>
+    <summary><b>Scaffold Azure Repository Action (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
       "identifier": "azure_scaffolder",
-      "title": "Azure Scaffolder",
+      "title": "Scaffold Azure Repository",
       "icon": "Azure",
+      "description": "Scaffold a new repository in Azure DevOps",
       "trigger": {
         "type": "self-service",
         "operation": "CREATE",
         "userInputs": {
           "properties": {
             "service_name": {
-              "icon": "DefaultProperty",
               "title": "Service Name",
-              "type": "string",
-              "description": "Name of the service to scaffold"
+              "description": "The new service's name",
+              "type": "string"
             },
             "azure_organization": {
               "icon": "DefaultProperty",
-              "title": "Azure Organization",
               "type": "string",
-              "description": "Your Azure DevOps organization name"
+              "title": "Azure Organization",
+              "description": "The Azure DevOps organization name",
+              "default": "<YOUR_DEFAULT_AZURE_DEVOPS_ORGANIZATION_NAME>"
+            },
+            "description": {
+              "type": "string",
+              "title": "description",
+              "description": "description of the scaffold"
             },
             "azure_project": {
               "icon": "DefaultProperty",
-              "title": "Azure Project",
+              "title": "azure project",
               "type": "string",
-              "description": "Your Azure DevOps project name"
-            },
-            "description": {
-              "icon": "DefaultProperty",
-              "title": "Description",
-              "type": "string",
-              "description": "Service description"
+              "description": "Your Azure DevOps project ID",
+              "blueprint": "project",
+              "sort": {
+                "property": "$identifier",
+                "order": "ASC"
+              },
+              "format": "entity"
             }
           },
           "required": [
-            "service_name"
+            "service_name",
+            "azure_organization",
+            "azure_project"
           ],
           "order": [
             "service_name",
             "azure_organization",
             "azure_project",
             "description"
+          
           ]
         },
         "blueprintIdentifier": "azureDevopsRepository"
@@ -141,11 +213,10 @@ However, we highly recommend you install the Azure DevOps integration to have th
           "properties": {
             "service_name": "{{.inputs.\"service_name\"}}",
             "azure_organization": "{{.inputs.\"azure_organization\"}}",
-            "azure_project": "{{.inputs.\"azure_project\"}}",
-            "description": "{{.inputs.\"description\"}}"
+            "description": "{{.inputs.\"description\"}}",
+            "azure_project": "{{.inputs.\"azure_project\"}}"
           },
           "port_context": {
-            "entity": "{{.entity}}",
             "blueprint": "{{.action.blueprint}}",
             "runId": "{{.run.id}}",
             "trigger": "{{ .trigger }}"
@@ -183,7 +254,9 @@ However, we highly recommend you install the Azure DevOps integration to have th
       SERVICE_NAME: "${{ parameters.port_trigger.properties.service_name }}"
       DESCRIPTION: "${{ parameters.port_trigger.properties.description }}"
       AZURE_ORGANIZATION: "${{ parameters.port_trigger.properties.azure_organization }}"
-      AZURE_PROJECT: "${{ parameters.port_trigger.properties.azure_project }}"
+      AZURE_PROJECT: "${{ parameters.port_trigger.properties.azure_project.title }}"
+      PROJECT_ID: "${{ parameters.port_trigger.properties.azure_project.identifier }}"
+      # Ensure that PERSONAL_ACCESS_TOKEN is set as a secret variable in your pipeline settings
 
     resources:
       webhooks:
@@ -198,7 +271,7 @@ However, we highly recommend you install the Azure DevOps integration to have th
               - script: |
                   sudo apt-get update
                   sudo apt-get install -y jq
-              - script: |
+              - script: | 
                   accessToken=$(curl -X POST \
                         -H 'Content-Type: application/json' \
                         -d '{"clientId": "$(PORT_CLIENT_ID)", "clientSecret": "$(PORT_CLIENT_SECRET)"}' \
@@ -206,6 +279,7 @@ However, we highly recommend you install the Azure DevOps integration to have th
                   echo "##vso[task.setvariable variable=accessToken;isOutput=true]$accessToken"
                 displayName: Fetch Access Token and Run ID
                 name: getToken
+
 
       - stage: scaffold
         dependsOn:
@@ -220,52 +294,82 @@ However, we highly recommend you install the Azure DevOps integration to have th
                   sudo apt-get install -y jq
                   sudo pip install cookiecutter -q
               - script: |
-                  # Create the repository
-                  PROJECT_ID=$(curl -X GET "https://dev.azure.com/${{ variables.AZURE_ORGANIZATION }}/_apis/projects/${{ variables.AZURE_PROJECT }}?api-version=7.0" \
-                  -H "Authorization: Basic $(PERSONAL_ACCESS_TOKEN)" \
-                  -H "Content-Type: application/json" \
-                  -H "Content-Length: 0" | jq .id)
+                  # Use shell variable syntax for accessing variables
+                  PAYLOAD="{\"name\":\"$SERVICE_NAME\",\"project\":{\"id\":\"$PROJECT_ID\"}}"
 
-                  if [[ -z "$PROJECT_ID" ]]; then
-                    echo "Failed to fetch Azure Devops Project ID."
+                  echo "SERVICE_NAME: $SERVICE_NAME"
+                  echo "AZURE_ORGANIZATION: $AZURE_ORGANIZATION"
+                  echo "PROJECT_ID: $PROJECT_ID"
+                  echo "PAYLOAD: $PAYLOAD"
+
+                  if [[ -z \"$PERSONAL_ACCESS_TOKEN\" ]]; then
+                    echo "PERSONAL_ACCESS_TOKEN is not set or is empty."
                     exit 1
+                  else
+                    echo "PERSONAL_ACCESS_TOKEN is set."
                   fi
 
-                  PAYLOAD='{"name":"${{ variables.SERVICE_NAME }}","project":{"id":'$PROJECT_ID'}}'
+                  # Create the repository
+                  CREATE_REPO_RESPONSE=$(curl -s -u :$PERSONAL_ACCESS_TOKEN \
+                    -X POST "https://dev.azure.com/$AZURE_ORGANIZATION/$PROJECT_ID/_apis/git/repositories?api-version=7.0" \
+                    -H "Content-Type: application/json" \
+                    -d "$PAYLOAD")
 
-                  CREATE_REPO_RESPONSE=$(curl -X POST "https://dev.azure.com/${{ variables.AZURE_ORGANIZATION }}/_apis/git/repositories?api-version=7.0" \
-                  -H "Authorization: Basic $(PERSONAL_ACCESS_TOKEN)" \
-                  -H "Content-Type: application/json" \
-                  -d $PAYLOAD)
+                  # Output the response for debugging
+                  echo "CREATE_REPO_RESPONSE: $CREATE_REPO_RESPONSE"
 
                   PROJECT_URL=$(echo $CREATE_REPO_RESPONSE | jq -r .webUrl)
 
-                  if [[ -z "$PROJECT_URL" ]]; then
-                    echo "Failed to create Azure Devops repository."
+                  if [[ -z "$PROJECT_URL" ]] || [[ "$PROJECT_URL" == "null" ]]; then
+                    echo "Failed to create Azure DevOps repository."
                     exit 1
                   fi
 
                   echo "##vso[task.setvariable variable=PROJECT_URL;isOutput=true]$PROJECT_URL"
 
+                  # Create a sanitized version of SERVICE_NAME for cookiecutter (replace underscores with hyphens)
+                  COOKIECUTTER_NAME=$(echo "$SERVICE_NAME" | tr '_' '-')
+                  echo "Original SERVICE_NAME: $SERVICE_NAME"
+                  echo "Sanitized COOKIECUTTER_NAME: $COOKIECUTTER_NAME"
+
                   cat <<EOF > cookiecutter.yaml
                   default_context:
-                    site_name: "${{ variables.SERVICE_NAME }}"
+                    site_name: "$COOKIECUTTER_NAME"
                     python_version: "3.6.0"
                   EOF
                   cookiecutter $COOKIECUTTER_TEMPLATE_URL --no-input --config-file cookiecutter.yaml --output-dir scaffold_out
+
+                  # Rename the output directory if needed to match the original SERVICE_NAME
+                  if [[ "$COOKIECUTTER_NAME" != "$SERVICE_NAME" ]]; then
+                    echo "Renaming cookiecutter output directory to match repository name..."
+                    mv "scaffold_out/$COOKIECUTTER_NAME" "scaffold_out/$SERVICE_NAME"
+                  fi
 
                   echo "Initializing new repository..."
                   git config --global user.email "scaffolder@email.com"
                   git config --global user.name "Mighty Scaffolder"
                   git config --global init.defaultBranch "main"
 
-                  cd "scaffold_out/${{ variables.SERVICE_NAME }}"
+                  cd "scaffold_out/$SERVICE_NAME"
                   git init
                   git add .
                   git commit -m "Initial commit"
-                  decoded_pat=$(echo $(PERSONAL_ACCESS_TOKEN) | base64 -d)
-                  git remote add origin https://$decoded_pat@dev.azure.com/${{ variables.AZURE_ORGANIZATION }}/${{ variables.AZURE_PROJECT }}/_git/${{ variables.SERVICE_NAME }}
+
+                  # Configure Git to use the PAT for authentication - use the URL format with credentials embedded
+                  # URL encode the project name to handle spaces correctly
+                  ENCODED_PROJECT=$(echo "$AZURE_PROJECT" | sed 's/ /%20/g')
+                  git remote add origin "https://$PERSONAL_ACCESS_TOKEN@dev.azure.com/$AZURE_ORGANIZATION/$ENCODED_PROJECT/_git/$SERVICE_NAME"
+                  
+                  # Set git timeout values to avoid connection issues
+                  git config --global http.lowSpeedLimit 1000
+                  git config --global http.lowSpeedTime 300
+
+                  # Push code to the repository
                   git push -u origin --all
+
+                env:
+                  PERSONAL_ACCESS_TOKEN: $(PERSONAL_ACCESS_TOKEN)
+                displayName: "Create Repository in Azure DevOps"
                 name: scaffold
 
       - stage: upsert_entity
@@ -289,9 +393,12 @@ However, we highly recommend you install the Azure DevOps integration to have th
                         "identifier": "${{ variables.SERVICE_NAME }}",
                         "title": "${{ variables.SERVICE_NAME }}",
                         "properties": {"description":"${{ variables.DESCRIPTION }}","url":"$(PROJECT_URL)" },
-                        "relations": {}
+                        "relations": {
+                          "project":"${{ variables.PROJECT_ID }}"
+                        }
                       }' \
                     "https://api.getport.io/v1/blueprints/${{ variables.BLUEPRINT_ID }}/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
+
 
       - stage: update_run_status
         dependsOn:
@@ -328,9 +435,10 @@ However, we highly recommend you install the Azure DevOps integration to have th
               - script: |
                   curl -X PATCH \
                     -H 'Content-Type: application/json' \
-                    -H 'Authorization: Bearer $(accessToken)' \
-                    -d '{"status":"FAILURE", "message": {"run_status": "Scaffold ${{ variables.SERVICE_NAME }} failed" }}' \
-                    "https://api.getport.io/v1/actions/runs/${{ variables.RUN_ID }}"
+                    -H "Authorization: Bearer $accessToken" \
+                    -d '{"status":"FAILURE", "message": {"run_status": "Scaffold '"$SERVICE_NAME"' failed" }}' \
+                    "https://api.getport.io/v1/actions/runs/$RUN_ID"
+
     ```
 
     </details>
@@ -355,16 +463,23 @@ However, we highly recommend you install the Azure DevOps integration to have th
    - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
 
-  
 
 ## Let's test it!
 
 1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal.
-2. Click on the `Azure Scaffolder` action.
+2. Click on the **Azure Scaffolder** action.
 3. Fill in the required details:
-   - Service Name (required).
-   - Azure Organization (if different from default).
-   - Azure Project (if different from default).
-   - Description.
-4. Click on `Execute`.
+   - **Service Name** (required)
+   - **Azure Organization** (pre-filled or enter your organization)
+   - **Description** (optional)
+   - **Azure Project**: Select an existing project from the dropdown list.
+     
+     :::info Can't find your project?
+     If you don't see your project in the dropdown, make sure it exists in your Port catalog. If you haven't installed the Azure DevOps integration, you may need to [add a project entity manually](https://app.getport.io/software-catalog) first.
+     :::
+4. Click on **Execute**.
 5. Wait for the Azure DevOps pipeline to create your new repository with the Cookiecutter template.
+
+<AzureDevopsTroubleshootingLink />  
+
+

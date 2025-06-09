@@ -43,6 +43,7 @@ The Port team will provide you with your `CONNECTION_NAME`, which will be used i
     - `email`, with the `Value` set to `user.email`
     - `given_name`, with the `Value` set to `user.firstName`
     - `family_name`, with the `Value` set to `user.lastName`
+    - `email_verified`, with the `Value` set to `true`
 
 8. Click `Next` and then `Finish` to create the application.
 

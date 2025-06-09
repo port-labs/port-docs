@@ -16,23 +16,24 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.7.0",
-    "@docusaurus/plugin-client-redirects": "^3.7.0",
-    "@docusaurus/plugin-google-tag-manager": "^3.7.0",
-    "@docusaurus/plugin-ideal-image": "^3.7.0",
-    "@docusaurus/preset-classic": "^3.7.0",
-    "@docusaurus/theme-live-codeblock": "^3.7.0",
-    "@easyops-cn/docusaurus-search-local": "^0.49.2",
+    "@docusaurus/core": "^3.8.1",
+    "@docusaurus/faster": "^3.8.1",
+    "@docusaurus/plugin-client-redirects": "^3.8.1",
+    "@docusaurus/plugin-google-tag-manager": "^3.8.1",
+    "@docusaurus/plugin-ideal-image": "^3.8.1",
+    "@docusaurus/preset-classic": "^3.8.1",
+    "@docusaurus/theme-live-codeblock": "^3.8.1",
+    "@easyops-cn/docusaurus-search-local": "^0.50.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mdx-js/react": "^3.1.0",
-    "@mui/material": "^7.0.2",
+    "@mui/material": "^7.1.1",
     "@stackql/docusaurus-plugin-hubspot": "^1.0.1",
     "clsx": "^2.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
     "docusaurus-plugin-image-zoom": "^3.0.1",
-    "docusaurus-plugin-openapi-docs": "^4.3.7",
-    "docusaurus-theme-openapi-docs": "^4.3.7",
+    "docusaurus-plugin-openapi-docs": "^4.4.0",
+    "docusaurus-theme-openapi-docs": "^4.4.0",
     "prettier": "^3.5.3",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.1.0",
@@ -40,12 +41,15 @@
     "react-tooltip": "^5.28.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.7.0",
-    "@docusaurus/tsconfig": "^3.7.0",
-    "@docusaurus/types": "^3.7.0",
+    "@docusaurus/module-type-aliases": "^3.8.1",
+    "@docusaurus/tsconfig": "^3.8.1",
+    "@docusaurus/types": "^3.8.1",
     "husky": "^9.1.7",
-    "pretty-quick": "^4.1.1",
+    "pretty-quick": "^4.2.2",
     "typescript": "~5.8.3"
+  },
+  "resolutions": {
+    "js-yaml": "4.0.0^"
   },
   "browserslist": {
     "production": [

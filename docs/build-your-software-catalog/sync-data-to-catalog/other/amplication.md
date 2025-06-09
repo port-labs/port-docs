@@ -398,6 +398,74 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+resources:
+- kind: amplication_template
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"AmplicationTemplate"'
+        properties:
+          description: .description
+          project: .project.name
+          project_id: .project.id
+          blueprint: .blueprint.name
+          blueprint_id: .blueprint.id
+- kind: amplication_resource
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"AmplicationResource"'
+        properties:
+          description: .description
+          project: .project.name
+          project_id: .project.id
+          blueprint: .blueprint.name
+          blueprint_id: .blueprint.id
+          git_organization: .gitRepository.gitOrganization.provider
+          git_repository: .gitRepository.gitOrganization.name + "/" + .gitRepository.name
+        relations:
+          template: if .serviceTemplate != null then .serviceTemplate.id else null end
+- kind: amplication_alert
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: 'if .block != null then .type + ": " + .block.displayName else .type end'
+        blueprint: '"AmplicationAlert"'
+        properties:
+          block_id: if .block != null then .block.id else null end
+          block_displayName: if .block != null then .block.displayName else null end
+          type: .type
+          outdatedVersion: .outdatedVersion
+          latestVersion: .latestVersion
+          status: .status
+        relations:
+          resource: .resourceId
+```
+
+</details>
+
+
 
 ## Examples
 

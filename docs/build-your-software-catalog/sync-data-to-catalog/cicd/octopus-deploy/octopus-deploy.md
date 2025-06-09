@@ -37,6 +37,24 @@ Some of the resources that can be ingested from Octopus Deploy into Port are lis
 The integration supports additional resources, see the [ingest additional resources](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy/mapping-extra-resources) page for more information
 :::
 
+## BaseUrl & webhook configuration
+
+:::warning AppHost deprecation
+**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
+:::
+
+The `baseUrl` parameter enables real-time updates from Octopus to Port.  
+If not provided:
+- The integration will still function normally
+- You should use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) to configure updates at a set interval.
+- Manual resyncs can be triggered via Port's UI
+
+The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
+
+
+In order for the Octopus integration to update the data in Port on every change in the Octopus resources, you need to specify the `baseUrl` parameter.
+The `baseUrl` parameter should be set to the `url` of your Octopus integration instance. In addition, your Octopus instance (whether it is Octopus SaaS or a self-hosted version of Octopus) needs to have the option to send webhook requests to the Octopus integration instance, so please configure your network accordingly.
+
 ## Setup
 
 Choose one of the following installation methods:
@@ -45,7 +63,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="Octopus"/>
 
 </TabItem>
 
@@ -170,12 +188,12 @@ This table summarizes the available parameters for the installation.
 | `integration.eventListener.type`    | The event listener type                                                                                                                                 | ✅        |
 | `integration.secrets.octopusApiKey` | The Octopus API Key, docs can be found [here](https://octopus.com/docs/octopus-rest-api/how-to-create-an-api-key)                                       | ✅        |
 | `integration.config.serverUrl`      | The Octopus host                                                                                                                                        | ✅        |
-| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Octopus                                   | ❌        |
+| `integration.config.appHost(deprecated)`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Octopus                                   | ❌        |
 | `scheduledResyncInterval`           | The number of minutes between each resync                                                                                                               | ❌        |
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                           | ❌        |
 | `sendRawDataExamples`               | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                     | ❌        |
-
-
+| `integration.secrets.webhookSecret`           | Webhook secret for authenticating incoming events. [Learn more](https://octopus.com/docs/administration/managing-infrastructure/subscriptions)                                           | ❌        |
+| `baseUrl`               | The base url of the instance where the Octopus integration is hosted, used for real-time updates. (e.g.`https://myoctopusdeployoceanintegration.com`)                    | ❌        |
 <br/>
 
 <AdvancedConfig/>
@@ -391,6 +409,108 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: space
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .Name
+        blueprint: '"octopusSpace"'
+        properties:
+          url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .Id
+          description: .Description
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .Name
+        blueprint: '"octopusProject"'
+        properties:
+          url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .SpaceId + "/projects/" + .Id
+          description: .Description
+          isDisabled: .IsDisabled
+          tenantedDeploymentMode: .TenantedDeploymentMode
+        relations:
+          space: .SpaceId
+- kind: release
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .ProjectId + "(" + .Version + ")"
+        blueprint: '"octopusRelease"'
+        properties:
+          version: .Version
+          assembledDate: .Assembled
+          channelId: .ChannelId
+          releaseNotes: .ReleaseNotes
+          url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .SpaceId + "/releases/" + .Id
+        relations:
+          project: .ProjectId
+- kind: deployment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .Name
+        blueprint: '"octopusDeployment"'
+        properties:
+          createdAt: .Created
+          deployedBy: .DeployedBy
+          taskId: .TaskId
+          failureEncountered: .FailureEncountered
+          comments: .Comments
+          url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .SpaceId + "/deployments/" + .Id
+        relations:
+          release: .ReleaseId
+          project: .ProjectId
+- kind: machine
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .Name
+        blueprint: '"octopusMachine"'
+        properties:
+          roles: .Roles
+          status: .HealthStatus
+          url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .SpaceId + "/infrastructure/machines/" + .Id + "/settings"
+          isDisabled: .IsDisabled
+          operatingSystem: .OperatingSystem
+          architecture: .Architecture
+          statusSummary: .StatusSummary
+          endpointType: .Endpoint.DeploymentTargetTypeId
+          communicationStyle: .Endpoint.CommunicationStyle
+        relations:
+          space: .SpaceId
+```
+
+</details>
+
+
 
 
 ## Examples

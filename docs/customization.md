@@ -47,13 +47,13 @@ To change the theme of the portal to dark mode:
 
 ## Accessibility
 
-Port supports various hotkeys to help you navigate the portal using keyboard only.
+Port supports various hotkeys to help you navigate the portal using a keyboard.
 
 ### Widget card navigation
 
 In dashboards, you can use `Shift + Alt/Option + ArrowLeft/ArrowRight` to jump between widget cards (wrapping around is supported).
 
-<video controls autoPlay muted loop playsInline width="2560"
+<video controls muted loop playsInline width="2560"
   height="1440"
   style={{
     maxWidth: '100%',
@@ -70,7 +70,7 @@ In dashboards, you can use `Shift + Alt/Option + ArrowLeft/ArrowRight` to jump b
 
 In tables, you can use `Ctrl/Cmd + C` to copy cell contents, and `Ctrl/Cmd + E` to edit or expand a cell.
 
-<video controls autoPlay muted loop playsInline width="2560"
+<video controls muted loop playsInline width="2560"
   height="1440"
   style={{
     maxWidth: '100%',
@@ -89,7 +89,7 @@ Some components have an actions menu that can be opened by clicking on the compo
 
 This can also be used to drag/rearrange widgets in dashboards, or files/folders in the catalog sidebar:
 
-<video controls autoPlay muted loop playsInline width="2560"
+<video controls muted loop playsInline width="2560"
   height="1440"
   style={{
     maxWidth: '100%',

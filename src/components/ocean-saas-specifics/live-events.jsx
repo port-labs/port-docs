@@ -142,7 +142,31 @@ export const liveEvents = {
     \n\n**Jobs:** \
     \n- build \
     \n\n**Pipelines:** \
-    \n- pipeline '
+    \n- pipeline ',
+  Linear:
+    '\n- Issue \
+    \n- IssueLabel',
+  LaunchDarkly:
+    '\n- flag \
+    \n- environment \
+    \n- project \
+    \n- auditlog',
+  Octopus:
+    '\n- spaces \
+    \n- projects \
+    \n- deployments \
+    \n- releases \
+    \n- machines',
+  NewRelic:
+    '**Issues:** \
+    \n- issue_created \
+    \n- issue_updated \
+    \n- issue_closed',
+  AzureDevOps:
+    '**Code Events:** \
+    \n- git.pullrequest.created \
+    \n- git.pullrequest.updated \
+    \n- git.push',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

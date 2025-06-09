@@ -39,8 +39,10 @@ The details listed are for organizations hosted in EU.
 
 For US, you will need to use `https://auth.us.getport.io/login/callback?connection={CONNECTION_NAME}` and `https://auth.us.getport.io/logout`.
 :::
-
-6. Under `SAML certificates` (step 3), Click the Edit button to expand the certificates section. Click the 3 dot icon next to the Active certificate, and choose `PEM certificate download`.
+6. In the `Single sign-on` tab, head to the 2nd section (Attributes & Claims), Click on `Edit` and add a new claim:
+    - `Name`: `email_verified`
+    - `Source attribute`: `user.accountenabled`
+7. Under `SAML certificates` (step 3), Click the Edit button to expand the certificates section. Click the 3 dot icon next to the Active certificate, and choose `PEM certificate download`.
 
 Send the **PEM certificate file** along with the **Login URL** (Which can be found in the Single Sign-on section, Card 4 (Set up)) to Port.
 
@@ -59,6 +61,10 @@ In order to expose your Azure groups to Port via the application, do the followi
 2. Press the `Add a group claim` button
 3. Select `Groups assigned to the application` and in the source attribute select `Cloud-only group display names`.
 4. Assign the relevant groups you want to expose to the application, these will be ingested into Port as teams you can use to manage user permissions and RBAC in your Port account.
+
+Alternatively, if you are syncing your groups from an on-prem AD into Entra, configure the group claim like so (sAMAccountName as source attribute, and box checked):
+
+<img src="/img/sso/azure-saml/azureSamlGroups.png" width="60%" border="1px" />
 
 ## SCIM Configuration (beta)
 

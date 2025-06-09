@@ -155,11 +155,12 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 
 ### Line chart
 
-Line charts display trends of `number` properties over time.  
+Line charts visualize trends over time, either by tracking `number` properties of entities or by tracking the entities themselves.
 
-Port offers two types of line charts:
+Port offers three types of line charts:
 1. [Property history (single entity)](#1-property-history-single-entity) - displays the values of one or more properties of a single entity.
 2. [Aggregate property (all entities)](#2-aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
+3. [Count entities (all entities)](#3-count-entities-all-entities) - displays either the total count of entities or the average number of entities from a specific blueprint over time.
 
 #### 1. Property history (single entity)
 
@@ -257,6 +258,56 @@ For example, here is a line chart displaying the maximum cost of all services ov
 | `Time interval` | `String` | The time interval to display in the x-axis of the chart.<br/>Possible values: `hour`, `day`, `week`, `month` | `null` | `true` |
 | `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` | -->
 
+#### 3. Count entities (all entities)
+
+This chart type displays either the total count of entities or the average number of entities from a specific blueprint over time.  
+If you choose to break down the chart by a property, each line will represent a distinct value of that property.
+
+When creating this type of line chart:
+
+1. Choose the **blueprint** you want to visualize.
+
+2. Under the `Y axis` section:
+   - Give the axis a title.
+
+   - Choose one of the following functions:
+     - `count`: Counts the number of entities in each time interval.
+     - `average`: Calculates the average number of entities in each time interval.
+
+   - Optionally, break down the chart by a specific blueprint `breakdown property`, generating a separate line for each distinct value of that property.
+   
+   - Optionally, define [additional filters](#chart-filters) in order to include/exclude specific entities from the chart.  
+     For example, filter the entities by a specific property value, or by a specific time range.
+
+3. Under the `X axis` section:
+   - Give the axis a title.
+   
+   - Choose one of the blueprint's `datetime` properties by which to **measure the time** of the chart data.  
+     This can be the entity's creation time, last update time, or any other `datetime` property.  
+
+   - Choose a **time interval**, which is the amount of time between each data point in the chart.  
+   The selected interval also determines how the function is calculated:  
+
+        For example, if the time interval is a week, each data point will be calculated in the following manner:
+        - The `count` function will count the total entities that week.
+        - The `average` function will count the total entities that week and divide it by 7.  
+          
+      The same logic applies to all time intervals: `Hour`, `Day`, `Week`, and `Month` -  
+      when using the `average` function, the total entity count will be divided by: 60, 24, 7, and 30 respectively.
+
+   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
+     Note that the available time ranges differ according to the selected time interval.
+
+For example, here is a line chart displaying the average deployment rate over the span of a month, in weekly intervals, broken down by the `status` property (Success and Fail).
+<img src='/img/software-catalog/widgets/countEntitiesLineChartExample.png' width='70%' border='1px' />
+<br/><br/>
+
+**Limitations**
+
+- This chart type does not support [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/).
+- Line chart data is limited to the last 365 days.
+- The chart can display up to 10 separate lines when choosing to break down by property. 
+
 ### Markdown
 
 This widget allows you to display any markdown content you wish in formatted form:
@@ -348,6 +399,11 @@ You can create an iframe widget to display an embedded url in the dashboard. The
 
 The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
 
+:::info Embedded Dashboard Access
+Note that the iframe request is made directly from the end user’s browser, not from Port’s backend.  
+If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
+:::
+
 ![iFrame](/img/software-catalog/widgets/iframeWidget.png)
 
 #### Widget properties
@@ -398,7 +454,25 @@ Simply choose a blueprint and a specific entity, and the widget will display inf
 
 <img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' border='1px' />
 
+### Links
+
+This widget allows you to display a list of links, both internal and external, for quick access to useful pages.
+
+<img src='/img/software-catalog/widgets/linksExample.png' width='50%' border='1px' />
+
+- **External links** - links to external websites, such as documentation, 3rd party tools, etc.  
+  These links will open in a new tab when clicked.  
+  For example: "https://www.google.com".
+
+- **Internal links** - links to internal pages in your portal, such as an entity page, a catalog page, an entity's audit log page, etc.  
+  These links will open in the same tab when clicked.  
+  For example: "https://app.getport.io/serviceEntity?identifier=frontend".
+
+During creation/editing of the widget, you can sort the links by dragging and dropping them.
+
 ## Chart filters
+
+Chart filters allow you to limit which entities are included in your dashboard visualizations, making your charts more relevant and performant.
 
 <ChartFilters />
 
