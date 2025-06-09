@@ -17,12 +17,12 @@ This guide demonstrates how to **fetch historical GitHub data** using GitHub Act
 This data will become the foundation for building and visualizing your engineering metrics such as deployment frequency, lead time for changes, and more.
 
 ### Use cases
-These workflows are designed for **one-time or on-demand use** to help you backfill historical data. This is especially useful when onboarding to Port or when certain types of data (e.g., old PRs, releases, workflow runs) were never synced in real time.
+These workflows are designed for **one-time or on-demand use** to help you backfill historical data. This is especially useful when onboarding to Port or when certain types of data (e.g., old PRs, releases, workflow runs) were not synced in real time.
 
 
 ### Prerequisites
 - Complete the [Port onboarding process](https://docs.port.io/getting-started/overview).
-- Access to a GitHub repository that is connected to Port.
+- Port's [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
 - In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
     - `GH_TOKEN` - A GitHub personal access token (PAT) with access to read PR, release, workflow run, and deployment.
     - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
@@ -30,81 +30,21 @@ These workflows are designed for **one-time or on-demand use** to help you backf
 
 ## Track deployments
 
-In this section, we focus on **deployment tracking**.  
-A deployment refers to shipping code to a live environment such as Production, Staging, or QA. We'll provide ready-to-use GitHub Actions that extract historical deployment-related data and send it to Port.
+In this section, we will focus on **deployment tracking**.  
+A deployment refers to shipping code to a live environment such as Production, Staging, or QA. We will provide ready-to-use GitHub Actions that extract historical deployment-related data and send it to Port.
 
-### Data model setup
+### Set up data model
 
-You will need to manually create blueprints for Github **Repository** and **User** as you will need them when defining the self service actions.
+When installing Port's GitHub app, the `Repository` blueprint is created by default.  
+However, the `GitHub User` blueprint is not created automatically, so we will need to create it manually.
 
-1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+<h4>Create the Github user blueprint</h4>
+
+1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint` button to create a new blueprint.
 3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
 4. Add the following JSON schemas separately into the editor while clicking `Save` to create the blueprint one after the other:
 
-    <details>
-    <summary><b>GitHub Repository Blueprint (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-    "identifier": "githubRepository",
-    "title": "Repository",
-    "icon": "Github",
-    "ownership": {
-        "type": "Direct"
-    },
-    "schema": {
-        "properties": {
-        "readme": {
-            "title": "README",
-            "type": "string",
-            "format": "markdown"
-        },
-        "url": {
-            "icon": "DefaultProperty",
-            "title": "Repository URL",
-            "type": "string",
-            "format": "url"
-        },
-        "defaultBranch": {
-            "title": "Default branch",
-            "type": "string"
-        },
-        "last_contributor": {
-            "title": "Last contributor",
-            "icon": "TwoUsers",
-            "type": "string",
-            "format": "user"
-        },
-        "last_push": {
-            "icon": "GitPullRequest",
-            "title": "Last push",
-            "description": "Last commit to the main branch",
-            "type": "string",
-            "format": "date-time"
-        },
-        "require_code_owner_review": {
-            "title": "Require code owner review",
-            "type": "boolean",
-            "icon": "DefaultProperty",
-            "description": "Requires review from code owners before a pull request can be merged"
-        },
-        "require_approval_count": {
-            "title": "Require approvals",
-            "type": "number",
-            "icon": "DefaultProperty",
-            "description": "The number of approvals required before merging a pull request"
-        }
-        },
-        "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {}
-    }
-    ```
-    </details>
 
 
     <details>
@@ -435,7 +375,7 @@ jobs:
 <h3> Step 2: Set Up Self-Service Action </h3>
 
 Create a self-service action in Port to run this workflow.
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
 2. Click on the `+ New Action` button.
 3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration into the editor.
@@ -980,7 +920,7 @@ jobs:
 <h3> Step 2: Set Up Self-Service Action </h3>
 
 Create a self-service action in Port to run this workflow.
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
 2. Click on the `+ New Action` button.
 3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration into the editor.
@@ -1470,7 +1410,7 @@ jobs:
 <h3> Step 2: Set Up Self-Service Action </h3>
 
 Create a self-service action in Port to run this workflow.
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
 2. Click on the `+ New Action` button.
 3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration into the editor.
@@ -1963,7 +1903,7 @@ jobs:
 <h3> Step 2: Set Up Self-Service Action </h3>
 
 Create a self-service action in Port to run this workflow.
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
 2. Click on the `+ New Action` button.
 3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration into the editor.
