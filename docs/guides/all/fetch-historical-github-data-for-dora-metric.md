@@ -28,7 +28,7 @@ These workflows are designed for **one-time or on-demand use** to help you backf
     - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
     - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
-## Tracking deployments
+## Track deployments
 
 In this section, we focus on **deployment tracking**. A deployment refers to shipping code to a live environment such as Production, Staging, or QA. We'll provide ready-to-use GitHub Actions that extract historical deployment-related data and send it to Port.
 
