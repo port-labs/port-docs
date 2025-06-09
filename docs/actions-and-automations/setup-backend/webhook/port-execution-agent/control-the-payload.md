@@ -10,8 +10,9 @@ Port offers two ways to control the payload sent to your backend:
 :::
 
 Some of the 3rd party applications that you may want to integrate with may not accept the raw payload incoming from
-Port's
-self-service actions. The Port agent allows you to control the payload that is sent to every 3rd party application.
+Port's self-service actions. The Port agent allows you to control the payload that is sent to every 3rd party application.
+
+For the latest updates and source code, see the [Port Agent GitHub repository](https://github.com/port-labs/port-agent).
 
 You can alter the requests sent to your third-party application by providing a payload mapping config file when
 deploying the
