@@ -900,21 +900,21 @@ export const availableGuides = [
     {
         title: "Ingest Slack channels data with Airbyte, S3 & webhook",
         description: "Send Slack channel data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["Slack", "AWS", "Webhook"],
+        tags: ["SDLC", "Slack", "AWS", "Webhook"],
         logos: ["Slack", "AWS", "Webhook"],
         link: "/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook"
     },
     {
         title: "Ingest HiBob data with Airbyte, S3 & webhook",
         description: "Send Hibob data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["AWS", "Webhook"],
+        tags: ["SDLC", "AWS", "Webhook"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook"
     },
     {
         title: "Ingest Okta data with Airbyte, S3 & webhook",
         description: "Send Okta data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["AWS", "Webhook"],
+        tags: ["SDLC", "AWS", "Webhook"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
     },
@@ -1097,7 +1097,7 @@ export const availableGuides = [
     {
         title: "Ingest Slack channels data with Fivetran, S3 & webhook",
         description: "Send Slack channel data to S3 with Fivetran, then ingest it into Port via a custom webhook integration",
-        tags: ["Slack", "AWS", "Webhook"],
+        tags: ["SDLC", "Slack", "AWS", "Webhook"],
         logos: ["Slack", "AWS", "Webhook"],
         link: "/guides/all/ingest-slack-data-via-fivetran-s3-and-webhook"
     },
