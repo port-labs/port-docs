@@ -17,7 +17,7 @@ This guide demonstrates how to **fetch historical GitHub data** using GitHub Act
 This data will become the foundation for building and visualizing your engineering metrics such as deployment frequency, lead time for changes, and more.
 
 ### Use cases
-- These workflows are designed for **one-time or on-demand use** to help you backfill historical data. This is especially useful when onboarding to Port or when certain types of data (e.g., old PRs, releases, workflow runs) were never synced in real time.
+These workflows are designed for **one-time or on-demand use** to help you backfill historical data. This is especially useful when onboarding to Port or when certain types of data (e.g., old PRs, releases, workflow runs) were never synced in real time.
 
 
 ### Prerequisites
