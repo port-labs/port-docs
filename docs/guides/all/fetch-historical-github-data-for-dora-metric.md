@@ -13,7 +13,8 @@ import GithubActionModificationHint from '/docs/guides/templates/github/_github_
 
 Organizations using Port often want to track **engineering metrics** like DORA. These metrics provide insight into how teams build, test, and deploy software. But to calculate meaningful metrics, you first need data.
 
-This guide walks you through how to **fetch historical GitHub data** using GitHub Actions. This data will become the foundation for building and visualizing your engineering metrics—like deployment frequency, lead time for changes, and more.
+This guide demonstrates how to **fetch historical GitHub data** using GitHub Actions.  
+This data will become the foundation for building and visualizing your engineering metrics such as deployment frequency, lead time for changes, and more.
 
 ### Use cases
 - These workflows are designed for **one-time or on-demand use** to help you backfill historical data. This is especially useful when onboarding to Port or when certain types of data (e.g., old PRs, releases, workflow runs) were never synced in real time.
