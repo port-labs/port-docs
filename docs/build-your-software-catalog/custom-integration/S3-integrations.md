@@ -1,5 +1,5 @@
 ---
-title: S3 bucket
+title: S3 Bucket
 ---
 
 import Tabs from "@theme/Tabs"
@@ -8,13 +8,13 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
 import S3IntegrationDisclaimer from "/docs/generalTemplates/_s3_integrations_disclaimer.md"
 
-# S3 bucket
+# S3 Bucket
 
 Port allows you to ingest any data source by using [Airbyte](https://airbyte.com/), storing the data temporarily in [S3 bucket](https://aws.amazon.com/s3/), and then triggering ingestion via a [Webhook](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).  
 
 This flow is useful for syncing external data sources where no direct integration exists yet or where you need to have control over the ingestion process.
 
-<img src="/img/guides/s3integrations.png" width="95%" border="1px" />
+<img src="/img/build-your-software-catalog/custom-integration/s3integrations/s3IntegrationsAirbyte.png" width="100%" border="1px" />
 <br/>
 <br/>
 <S3IntegrationDisclaimer/>
@@ -25,6 +25,9 @@ The following guides walk you through ingesting specific data sources into Port 
 - [Ingest Slack data into Port](https://docs.port.io/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook)
 - [Ingest Okta data into Port](https://docs.port.io/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook)
 - [Ingest Hibob data into Port](https://docs.port.io/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook)
+
+It is also available to ingest data sources into Port using Fivetran, S3 and webhook:
+- [Ingest Slack data into Port with Fivetran](https://docs.port.io/guides/all/ingest-slack-data-via-fivetran-s3-and-webhook)
 
 ## How it works
 
@@ -60,7 +63,15 @@ and some connectors may require extra steps (like creating a Slack app).
 If a connector doesn’t exist yet, you can [request it](https://airbyte.com/connector-requests) from the Airbyte
 community or build your own.
 
-### Set up the connection in Airbyte
+<img src="/img/build-your-software-catalog/custom-integration/s3integrations/airbyteConnectorSearchExample.png" width="70%" border="1px" />
+
+<h3>Configure the source connector</h3>
+
+Follow the guides provided by Airbyte, visible on the right side of the application, see below:
+
+<img src="/img/build-your-software-catalog/custom-integration/s3integrations/airbyteSourceSetupExample.png" width="70%" border="1px" />
+
+### Set up the connection
 
 1. In the Airbyte "Connections" page, create a "+ New Connection".
 
@@ -72,8 +83,9 @@ community or build your own.
 
 5. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and enter the webhook URL you copied when setting up the webhook, for example: "wSLvwtI1LFwQzXXX".
 
-6. **Click on Finish & Sync** to apply and start the Integration process!
+<img src="/img/build-your-software-catalog/custom-integration/s3integrations/airbyteConnectionSetupExample.png" width="70%" border="1px" />
 
+6. **Click on Finish & Sync** to apply and start the Integration process!
 
 ## Data model setup
 
@@ -83,7 +95,7 @@ To define the data model, you will need to know the schema of the data you want 
 If you are unsure about the schema that the connector extracts, you can always set up the Airbyte connection to S3 first,
 and during the **Select Streams** step in the connection setup, review the expected schema for each stream and construct the appropriate blueprints and mappings:
 
-<img src="/img/guides/airbyteSelectStreamsScreenshot.png" width="70%" border="1px" />
+<img src="/img/build-your-software-catalog/custom-integration/s3integrations/airbyteSelectStreamsScreenshot.png" width="70%" border="1px" />
 <br/>
 
 Alternatively, you can set up the connection and start the sync, then download the extracted files from S3, review them, and construct the appropriate blueprints and mappings.
