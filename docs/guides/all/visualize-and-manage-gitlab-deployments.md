@@ -355,7 +355,7 @@ Now you should see the `Retry Pipeline` action in the self-service page. 🎉
           "required": [],
           "order": []
         },
-        "blueprintIdentifier": "gitlabPipelinev2"
+        "blueprintIdentifier": "gitlabPipeline"
       },
       "invocationMethod": {
         "type": "WEBHOOK",
