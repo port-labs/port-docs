@@ -1,19 +1,18 @@
 ---
-title: Ingest Slack channels data into Port via Airbyte, S3 and Webhook
+title: Ingest Slack channels data into Port via Fivetran, S3 and Webhook
 displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
-import AirbyteLocalSetup from "/docs/generalTemplates/_airbyte_local_setup.md"
 import S3IntegrationDisclaimer from "/docs/generalTemplates/_s3_integrations_disclaimer.md"
 import S3IntegrationMappingSetup from "/docs/generalTemplates/_s3_integrations_mapping_setup.md"
 
-# Ingest Slack channels data into Port via Airbyte, S3 and webhook
 
-This guide will demonstrate how to ingest Slack channels and channel membership data into Port using [Airbyte](https://airbyte.com/), [S3](https://aws.amazon.com/s3/) and a [webhook integration](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+# Ingest Slack channels data into Port via Fivetran, S3 and webhook
+
+This guide will demonstrate how to ingest Slack channels and channel membership data into Port using [Fivetran](https://Fivetran.com/), [S3](https://aws.amazon.com/s3/) and a [webhook integration](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
 
 <S3IntegrationDisclaimer/>
 
@@ -23,15 +22,20 @@ This guide will demonstrate how to ingest Slack channels and channel membership 
 
 - This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via chat, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
 
-- Access to an available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart).
+:::tip Important
 
-<AirbyteLocalSetup/>
+  1. In order to configure your Fivetran ARN Role, you will need to provide us the "External ID" that Fivetran will produce
+     in the UI when configuring the S3 destinstaion. For that purpose, you can start creating the Destination, copy the External ID value, and Click on "Save for later". You can resume the Destination setup once the rest of the details will
+     be provided by Port.
 
-- Setup a Slack Airbyte exporter app - follow [Airbyte's guide for slack connector](https://docs.airbyte.com/integrations/sources/slack).
+  2. To set up multiple Destinsations with different S3 Prefix Path's for each data source (Fivetran does not allow
+     multiple more than one prefix for the same Destination) - you will need to provide the each External ID to Port's
+     representative to add it to the IAM Role.
+:::
 
-  :::tip Include email data
-  If you wish to include email data, in addition to the permissions listed in the guide above, you will need to include `user.email:read` in the app's permissions.
-  :::
+- Access to an available Fivetran Account (for the purpose of this guide, it could be completed within the free trial period)
+
+- Access to Slack account with privileges to approve Fivetran Slack app installation
 
 ## Data model setup
 
@@ -120,7 +124,7 @@ Add the `Slack Channel` blueprint in the same way:
         "description": "ID of the user who created the channel."
       },
       "createdAt": {
-        "type": "number",
+        "type": "string",
         "description": "Timestamp of when the channel was created."
       },
       "is_ext_shared": {
@@ -273,13 +277,13 @@ Add the `Slack User` blueprint in the same way:
   {
     "blueprint": "slack_channel",
     "operation": "create",
-    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"channels\"))",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and ( .body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[3] | IN(\"channel\") )",
     "entity": {
       "identifier": ".body.id | tostring",
       "title": ".body.name_normalized | tostring",
       "properties": {
+        "purpose": ".body.purpose_value",
         "is_private": ".body.is_private",
-        "purpose": ".body.purpose.value",
         "context_team_id": ".body.context_team_id",
         "is_shared": ".body.is_shared",
         "previous_names": ".body.previous_names",
@@ -310,7 +314,7 @@ Add the `Slack User` blueprint in the same way:
   {
     "blueprint": "slack_user",
     "operation": "create",
-    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"users\"))",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and ( .body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[3] | IN(\"users\") )",
     "entity": {
       "identifier": ".body.id | tostring",
       "title": ".body.name | tostring",
@@ -334,53 +338,66 @@ Add the `Slack User` blueprint in the same way:
   {
     "blueprint": "slack_channel_membership",
     "operation": "create",
-    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"channel_members\"))",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and ( .body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[3] | IN(\"channel_member\")  )",
     "entity": {
-      "identifier": ".body.channel_id + \"_\" + .body.member_id | tostring",
-      "title": ".body.channel_id + \"_\" + .body.member_id | tostring",
+      "identifier": ".body.channel_id + \"_\" + .body.user_id | tostring",
+      "title": ".body.channel_id + \"_\" + .body.user_id | tostring",
       "properties": {
-        "member_id": ".body.member_id",
+        "member_id": ".body.user_id",
         "channel_id": ".body.channel_id"
       }
     }
   }
 ]
-
 ```
 
 </details>
 
-## Airbyte Setup
+## Fivetran Setup
 
 ### Set up S3 Destination
 
-If you haven't already set up S3 Destination for Port S3, follow these steps:
+When using Fivetran with Port's S3-integration, you will have to set up S3 Data Lake Destination for each data source you woul like to integrate:
 
-<AirbyteS3DestinationSetup/>
+1. Login to your Fivetran account, and navigate to [Destinations](https://fivetran.com/dashboard/destinations).
+
+2. Click on `Add Destination`.
+
+3. Locate the `S3 Data Lake` option under Fivetran Managed Data Lake Service, and click `set up`.
+
+4. Give the destination a name, and Click `Add`.
+
+5. Input the S3 Credentials provided to you by Port:
+   - Under **Storage Provider** select `AWS`.
+   - Under **Bucket** enter the bucket name (example: "org-xxx").
+   - Under **Fivetran Role ARN** enter your IAM Role ARN.
+   - Under **S3 Bucket Path** enter `data/<Webhook URL>` of the Webhook you have copied when setting up the webhook, for example: `data/wSLvwtI1LFwQzXXX`
+   - Under **S3 Bucket Region** enter the appropriate region.
+   - Keep **Update AWS Glue Catalog** toggled off. Data catalog updates are not supported.
+   - Keep **Update Databricks Unity Catalog** toggled off. Data catalog updates are not supported.
+
+5. Click `Save & Test` and wait for Fivetran to confirm the Destination is set up correctly.
+
+<img src="/img/build-your-software-catalog/custom-integration/s3integrations/fivetranDestinationSetupExample.png" width="95%" border="1px" />
 
 ### Set up Slack Connection
 
-1. Follow Airbyte's guide to set up a [Slack connector](https://docs.airbyte.com/integrations/sources/slack).
+1. Follow Fivetran's guide to set up a [Slack connector](https://fivetran.com/docs/connectors/applications/slack/setup-guide).
 
     :::tip Private Channels
-      Airbyte will not read information from private channels by default.
+      Fivetran will not read information from private channels by default.
       If you wish to include private channels: tick the "include private channels" option,
       and manually add the Slack-export App to your desired private channels.
     :::
-  More information on [setting source connectors](http://docs.port.io/build-your-software-catalog/custom-integration/S3-integrations#set-up-data-source)
 
+2. For **Destination**, choose the S3 Destination you have set up in the previous step.
 
-2. After the Source is set up, proceed to create a "+ New Connection".
+3. In the **Schema** tab, make sure only "channel", "users" are marked for synchronization.
 
-3. For **Source**, choose the Slack source you have set up.
+4. Click **Start Initial Sync** to apply and start the Integration process!
 
-4. For **Destination**, choose the S3 Destination you have set up.
+<img src="/img/build-your-software-catalog/custom-integration/s3integrations/fivetranConnectionExample.png" width="95%" border="1px" />
 
-5. In the **Select Streams** step, make sure only "channel_members", "channels" and "users" are marked for synchronization.
-
-6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"**, for example: "wSLvwtI1LFwQzXXX".
-
-7. **Click on Finish & Sync** to apply and start the Integration process!
 
 :::tip Important
   If for any reason you have entered different values than the ones specified in this guide,
@@ -390,3 +407,4 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
 ## Additional relevant guides
 
 - [Ingest Any data into port via Airbyte](https://docs.port.io/build-your-software-catalog/custom-integration/S3-integrations)
+- [Ingest Slack data into Port via Airbyte](https://docs.port.io/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook)
