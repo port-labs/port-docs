@@ -33,8 +33,7 @@ This guide assumes the following:
 
 ## Set up data model
 
-As part of the onboarding process, the `Service` blueprint is created by default.  
-However, the `GitLab Pipeline` blueprint is not created automatically so we will need to create it manually.
+The `GitLab Pipeline` blueprint is not created automatically when installing the GitLab integration, so we will need to create it manually.
 
 ### Create the GitLab pipeline blueprint
 
