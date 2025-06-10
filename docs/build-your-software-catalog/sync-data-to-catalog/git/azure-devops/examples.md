@@ -276,9 +276,9 @@ When adding the ingestion of other resources, remember to add an entry to the `r
 
 ## Mapping repositories and monorepos
 
-In the following example you will ingest your Azure Devops repositories and their folders to Port. By following this example you can map your different repositories, packages and libraries from your monorepo into separate entities in Port:
+The following example shows how to ingest your Azure Devops repositories and their folders into Port. By following this example you can map your different repositories, packages and libraries from your monorepo into separate entities in Port.
 
-Note: Mapping is done per project, so you need to create a separate mapping configuration for each project you want to ingest.
+**Note** that mapping is configured per project, so you need to create a separate mapping block for each project you want to ingest.
 
 <RepositoryBlueprint/>
 
