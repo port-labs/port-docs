@@ -1192,6 +1192,13 @@ export const availableGuides = [
         tags: ["Incident management", "ServiceNow", "Actions", "Dashboards"],
         logos: ["ServiceNow"],
         link: "/guides/all/visualize-and-manage-servicenow-incidents",
-    }
+    },
+    {
+        title: "Visualize and manage your GitLab deployments",
+        description: "Create a dashboard that visualizes and manages your GitLab deployments",
+        tags: ["SDLC", "GitLab", "Actions", "Dashboards"],
+        logos: ["GitLab"],
+        link: "/guides/all/visualize-and-manage-gitlab-deployments",
+    },
 ]
 
