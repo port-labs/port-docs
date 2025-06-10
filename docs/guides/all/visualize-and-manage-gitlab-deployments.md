@@ -184,7 +184,7 @@ To add a secret to your portal:
 3. Click on the `Secrets` tab.
 
 4. Click on `+ Secret` and add the following secret:
-    - `GITLAB_TRIGGER_TOKEN`: The token used to authenticate the request. To obtain this token, [see our documentation](https://docs.port.io/actions-and-automations/setup-backend/gitlab-pipeline/saas#create-the-webhook-url).
+    - `GITLAB_TRIGGER_TOKEN`: The token used to authenticate the request. To obtain this token, [see the documentation](https://docs.port.io/actions-and-automations/setup-backend/gitlab-pipeline/saas#create-the-webhook-url).
 
 
 ### Trigger a new pipeline
