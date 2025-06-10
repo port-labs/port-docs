@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 ---
-
+import PortMonoRepoAppConfig from './\_azuredevops_exporter_example_monorepo_port_app_config.mdx'
 import RepositoryBlueprint from './\_azuredevops_exporter_example_repository_blueprint.mdx'
 import PRBlueprint from './\_azuredevops_exporter_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_azuredevops_exporter_example_port_app_config.mdx'
@@ -271,3 +271,16 @@ The above examples shows a specific use cases, but Port's Azure Devops integrati
 <AzureDevopsResources/>
 
 When adding the ingestion of other resources, remember to add an entry to the `resources` array and change the value provided to the `kind` key accordingly.
+
+
+
+## Mapping repositories and monorepos
+
+The following example shows how to ingest your Azure Devops repositories and their folders into Port. By following this example you can map your different repositories, packages and libraries from your monorepo into separate entities in Port.
+
+**Note** that mapping is configured per project, so you need to create a separate mapping block for each project you want to ingest.
+
+<RepositoryBlueprint/>
+
+<PortMonoRepoAppConfig/>
+
