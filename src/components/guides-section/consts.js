@@ -460,8 +460,8 @@ export const availableGuides = [
     {
         title: "Create and Manage Statuspage Incidents",
         description: "Create self-service actions that manage Statuspage incidents",
-        tags: ["Incident management", "GitHub", "Actions"],
-        logos: ["GitHub"],
+        tags: ["Incident management", "GitHub", "Statuspage", "Actions"],
+        logos: ["GitHub", "Statuspage"],
         // category: "Getting started",
         link: "/guides/all/manage-statuspage-incident",
     },
@@ -1199,6 +1199,13 @@ export const availableGuides = [
         tags: ["SDLC", "GitLab", "Actions", "Dashboards"],
         logos: ["GitLab"],
         link: "/guides/all/visualize-and-manage-gitlab-deployments",
+    },
+    {
+        title: "Visualize and manage your Statuspage components",
+        description: "Create a dashboard that visualizes and manages your Statuspage components",
+        tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
+        logos: ["StatusPage"],
+        link: "/guides/all/visualize-and-manage-statuspage-components",
     },
 ]
 
