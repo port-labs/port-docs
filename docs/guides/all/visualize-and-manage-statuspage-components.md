@@ -3,9 +3,6 @@ displayed_sidebar: null
 description: Learn how to monitor and manage your Statuspage components using dashboards and self-service actions in Port.
 ---
 
-import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
-import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
-
 # Visualize and manage your Statuspage components
 
 This guide demonstrates how to bring your Statuspage components management experience into Port. You will learn how to:
