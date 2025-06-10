@@ -33,7 +33,7 @@ This guide assumes the following:
 
 ## Set up data model
 
-When installing the GitLab integration in Port, the `Service` blueprint is created by default.  
+As part of the onboarding process, the `Service` blueprint is created by default.  
 However, the `GitLab Pipeline` blueprint is not created automatically so we will need to create it manually.
 
 ### Create the GitLab pipeline blueprint
