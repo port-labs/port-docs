@@ -35,7 +35,7 @@ We will create a self-service action in Port to directly interact with the Statu
 The action will be configured via JSON and triggered using **synced webhooks** secured with secrets. To implement this use-case, follow the steps below:
 
 
-<h3>Add Port secrets</h3>
+### Add Port secrets
 
 To add a secret to your portal:
 
