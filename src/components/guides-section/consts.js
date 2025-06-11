@@ -460,8 +460,8 @@ export const availableGuides = [
     {
         title: "Create and Manage Statuspage Incidents",
         description: "Create self-service actions that manage Statuspage incidents",
-        tags: ["Incident management", "GitHub", "Statuspage", "Actions"],
-        logos: ["GitHub", "Statuspage"],
+        tags: ["Incident management", "GitHub", "StatusPage", "Actions"],
+        logos: ["GitHub", "StatusPage"],
         // category: "Getting started",
         link: "/guides/all/manage-statuspage-incident",
     },
