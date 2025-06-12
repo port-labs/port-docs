@@ -1207,5 +1207,12 @@ export const availableGuides = [
         logos: ["StatusPage"],
         link: "/guides/all/visualize-and-manage-statuspage-components",
     },
+    {
+        title: "Visualize and manage your Statuspage incidents",
+        description: "Create a dashboard that visualizes and manages your Statuspage incidents",
+        tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
+        logos: ["StatusPage"],
+        link: "/guides/all/visualize-and-manage-statuspage-incidents",
+    },
 ]
 
