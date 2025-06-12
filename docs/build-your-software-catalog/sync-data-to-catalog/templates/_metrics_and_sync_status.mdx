@@ -25,11 +25,11 @@ There are two main methods to access the monitoring metrics and sync status:
           In this section, you will find the following fields:
           - Ingested: Number of objects that were ingested successfully.
           - Not changed: Number of objects that were already up to date, so no changes were made to them.
-          - Failed: Number of objects that failed to ingest, to know more about the failure reasons, see the `Event log` tab.
+          - Failed: Number of objects that failed to ingest. To learn more about the failure reasons, see the `Event log` tab.
       - **Details**: Displays the duration of the sync.
     - **Reconciliation**:  
     This section provides visibility into both the reingestion and deletion processeses.  
-      When the [`createMissingRelatedEntities`](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/advanced#using-advanced-configurations) flag is set to `false`, Port will **not** automatically create related entities that are referenced but not yet present in Port.
+      When the `createMissingRelatedEntities` flag is set to `false`, Port will **not** automatically create related entities that are referenced in the mapping but not yet present in Port.  
       The reingestion process ensures that once the missing related entities are ingested, the dependent entities will be reingested.  
       The deletion process ensures that entities that are no longer present in the data source are removed.
       - **Reconciliation overview**: 
