@@ -264,16 +264,6 @@ Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/g
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your specified files.
 
-## Mapping supported resources
-
-The above examples shows a specific use cases, but Port's Azure Devops integration supports the ingestion of many other Azure Devops objects, to adapt the examples above, use the Azure Devops API reference to learn about the available fields for the different supported objects:
-
-<AzureDevopsResources/>
-
-When adding the ingestion of other resources, remember to add an entry to the `resources` array and change the value provided to the `kind` key accordingly.
-
-
-
 ## Mapping repositories and monorepos
 
 The following example shows how to ingest your Azure Devops repositories and their folders into Port. By following this example you can map your different repositories, packages and libraries from your monorepo into separate entities in Port.
@@ -283,4 +273,13 @@ The following example shows how to ingest your Azure Devops repositories and the
 <RepositoryBlueprint/>
 
 <PortMonoRepoAppConfig/>
+
+## Mapping supported resources
+
+The above examples shows a specific use cases, but Port's Azure Devops integration supports the ingestion of many other Azure Devops objects, to adapt the examples above, use the Azure Devops API reference to learn about the available fields for the different supported objects:
+
+<AzureDevopsResources/>
+
+When adding the ingestion of other resources, remember to add an entry to the `resources` array and change the value provided to the `kind` key accordingly.
+
 
