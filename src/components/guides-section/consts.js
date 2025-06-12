@@ -521,14 +521,14 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/report-a-bug",
     },
-    {
-        title: "Toggle LaunchDarkly Feature Flag",
-        description: "Create a self-service action that toggles a LaunchDarkly feature flag",
-        tags: ["Feature flag management", "Launchdarkly", "GitHub", "Actions", "Webhook", "Automations"],
-        logos: ["Launchdarkly", "GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/toggle-launchdarkly-feature-flag",
-    },
+    // {
+    //     title: "Toggle LaunchDarkly Feature Flag",
+    //     description: "Create a self-service action that toggles a LaunchDarkly feature flag",
+    //     tags: ["Feature flag management", "Launchdarkly", "GitHub", "Actions", "Webhook", "Automations"],
+    //     logos: ["Launchdarkly", "GitHub"],
+    //     // category: "Getting started",
+    //     link: "/guides/all/toggle-launchdarkly-feature-flag",
+    // },
     {
         title: "Create an Opsgenie Incident",
         description: "Create a self-service action that creates an Opsgenie incident",
@@ -1206,6 +1206,13 @@ export const availableGuides = [
         tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
         logos: ["StatusPage"],
         link: "/guides/all/visualize-and-manage-statuspage-components",
+    },
+    {
+        title: "Manage and visualize your LaunchDarkly feature flags",
+        description: "Create a comprehensive feature flag management system to create, toggle, and archive flags",
+        tags: ["Feature flag management","Launchdarkly", "Actions", "Webhook", "Automations"],
+        logos: ["Launchdarkly"],
+        link: "/guides/all/manage-and-visualize-your-launchdarkly-feature-flags",
     },
 ]
 
