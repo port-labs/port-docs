@@ -28,7 +28,7 @@ resources:
       entity:
         mappings:
           identifier: .login
-          title: .login
+          title: if (.name != "") then .name else .login end
           blueprint: '"githubUser"'
           relations:
             user: .email
