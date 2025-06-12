@@ -667,11 +667,6 @@ const sidebar: SidebarsConfig = {
       ],
     },
     {
-      type: "doc",
-      id: "api-reference/pages",
-      label: "Pages",
-    },
-    {
       type: "category",
       label: "Metrics",
       items: [
@@ -682,6 +677,11 @@ const sidebar: SidebarsConfig = {
           className: "api-method get",
         },
       ],
+    },
+    {
+      type: "doc",
+      id: "api-reference/pages",
+      label: "Pages",
     },
   ],
 };
