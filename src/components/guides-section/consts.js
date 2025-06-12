@@ -1194,7 +1194,7 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-servicenow-incidents",
     },
     {
-        title: "LaunchDarkly feature flag manager",
+        title: "Manage and visualize your LaunchDarkly feature flags",
         description: "Create a comprehensive feature flag management system to create, toggle, and archive flags",
         tags: ["Feature flag management","Launchdarkly", "Actions", "Webhook", "Automations"],
         logos: ["Launchdarkly"],
