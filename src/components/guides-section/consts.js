@@ -460,8 +460,8 @@ export const availableGuides = [
     {
         title: "Create and Manage Statuspage Incidents",
         description: "Create self-service actions that manage Statuspage incidents",
-        tags: ["Incident management", "GitHub", "Actions"],
-        logos: ["GitHub"],
+        tags: ["Incident management", "GitHub", "StatusPage", "Actions"],
+        logos: ["GitHub", "StatusPage"],
         // category: "Getting started",
         link: "/guides/all/manage-statuspage-incident",
     },
@@ -1201,6 +1201,14 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-gitlab-deployments",
     },
     {
+
+        title: "Visualize and manage your Statuspage components",
+        description: "Create a dashboard that visualizes and manages your Statuspage components",
+        tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
+        logos: ["StatusPage"],
+        link: "/guides/all/visualize-and-manage-statuspage-components",
+    },
+   {
         title: "LaunchDarkly feature flag manager",
           description: "Create a comprehensive feature flag management system to create, toggle, and archive flags",
           tags: ["Feature flag management","Launchdarkly", "Actions", "Webhook", "Automations"],
