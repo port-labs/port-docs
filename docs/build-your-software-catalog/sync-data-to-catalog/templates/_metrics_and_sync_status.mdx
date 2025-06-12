@@ -21,14 +21,14 @@ There are two main methods to access the monitoring metrics and sync status:
           - Filtered out: Number of objects that were filtered out according to the mapping conditions.
           - Failed: Number of objects that failed to map, you can find more information about the failure reasons in the **Troubleshooting tips** section below or refer to the `Event log` tab.
         - **Ingest to Port**:  
-        The final step is ingesting the mapped objects to Port.  
+        Final step is ingesting the mapped objects to Port.  
           In this section, you will find the following fields:
           - Ingested: Number of objects that were ingested successfully.
           - Not changed: Number of objects that were already up to date, so no changes were made to them.
           - Failed: Number of objects that failed to ingest. To learn more about the failure reasons, see the `Event log` tab.
       - **Details**: Displays the duration of the sync.
     - **Reconciliation**:  
-    This section provides visibility into both the reingestion and deletion processeses.  
+    This section provides visibility into both the reingestion and deletion processes.  
       When the `createMissingRelatedEntities` flag is set to `false`, Port will **not** automatically create related entities that are referenced in the mapping but not yet present in Port.  
       The reingestion process ensures that once the missing related entities are ingested, the dependent entities will be reingested.  
       The deletion process ensures that entities that are no longer present in the data source are removed.
