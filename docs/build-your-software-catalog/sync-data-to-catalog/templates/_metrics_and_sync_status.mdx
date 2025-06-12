@@ -5,7 +5,7 @@ To access the integration's monitoring metrics and sync status, navigate to the 
     The `Sync Status` tab offers a detailed overview of the data ingestion and reconciliation processeses.  
     It includes the following sections:  
 
-    ### Sync by kind 
+    <h3>Sync by kind</h3>
     Shows the montioring metrics and sync status for each `kind`.  
 
     **Sync stages overview**:
@@ -29,7 +29,7 @@ To access the integration's monitoring metrics and sync status, navigate to the 
       
     **Details**: Displays the duration of the sync.  
 
-    ### Reconciliation
+    <h3>Reconciliation</h3>
     This section provides visibility into both the reingestion and deletion processes.  
     When the `createMissingRelatedEntities` flag is set to `false`, Port will **not** automatically create related entities that are referenced in the mapping but not yet present in Port.  
 
@@ -37,11 +37,13 @@ To access the integration's monitoring metrics and sync status, navigate to the 
 
     The deletion process ensures that entities that are no longer present in the data source are removed.  
     
-    **Reconciliation overview**: 
-    - **Reingest**:  
+    In this section, you will find the following data:  
+    
+    **Reingest**:  
       -   Reingested entities: Displays the number of entities that were ingested successfully on retry after dependencies resolved.  
-      -  Failed: Displays the number of entities that failed to reingest.
-    - **Delete**: 
+      -  Failed: Displays the number of entities that failed to reingest. 
+
+    **Delete**: 
       -   Deleted entities: Displays the number of entities that were removed from Port to match the data source.
       -   Failed: Displays the number of entities that failed to delete.  
     
@@ -50,6 +52,5 @@ To access the integration's monitoring metrics and sync status, navigate to the 
     **Note**: The same data is also available through the [Get an integration's metrics and sync status](https://docs.port.io/api-reference/get-an-integrations-metrics-and-sync-status) API endpoint.
 
 :::tip Prometheus Metrics Endpoint
- **Prometheus Metrics Endpoint**  
   If you are using the **self hosted integration method**, you can get raw Prometheus metrics by accessing the following endpoint: `{your_integration's_base_url}/metrics/`.
 :::
