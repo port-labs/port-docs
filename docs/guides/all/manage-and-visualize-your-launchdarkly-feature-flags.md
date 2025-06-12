@@ -726,10 +726,3 @@ In the new dashboard, create the following widgets:
 
 </details>
 
-
-## More relevant guides and examples
-
-- [Connect LaunchDarkly flag to a service](/guides/all/connect-launchdarkly-flag-to-service)
-- [Connect GitHub repository with LaunchDarkly project](/guides/all/connect-github-repository-with-launchdarkly-project)
-- [Port's LaunchDarkly integration](/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly)
-- [Self-service actions overview](/actions-and-automations/create-self-service-experiences/)
