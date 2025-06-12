@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # GitLab
 
@@ -511,6 +512,8 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 - Currently only the default branch of the repository is supported.
 
 For a list of known limitations with GitLab’s Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

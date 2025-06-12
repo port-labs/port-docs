@@ -11,6 +11,7 @@ import DatadogBlueprint from "../resources/datadog/\_example_datadog_alert_bluep
 import DatadogConfiguration from "../resources/datadog/\_example_datadog_webhook_configuration.mdx"
 import DatadogMicroserviceBlueprint from "../resources/datadog/\_example_datadog_microservice.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 
 # Datadog
@@ -600,6 +601,8 @@ resources:
 ```
 
 </details>
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

@@ -16,6 +16,7 @@ import JiraUserEntity from "/docs/build-your-software-catalog/sync-data-to-catal
 import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_issue_example_entity.mdx"
 import JiraTeamExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_response.mdx"
 import JiraTeamEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_entity.mdx"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Jira
 
@@ -986,6 +987,8 @@ When installing the integration [via OAuth](/build-your-software-catalog/sync-da
 
 If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**.  
 This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password.
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

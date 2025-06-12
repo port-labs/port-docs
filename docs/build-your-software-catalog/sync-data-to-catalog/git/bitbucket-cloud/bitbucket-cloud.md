@@ -1,7 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import BitbucketResources from './\_bitbucket_integration_supported_resources.mdx'
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Bitbucket
 
@@ -350,6 +350,8 @@ Port's Bitbucket integration requires the following scopes to be enabled on eith
 :::tip Default permissions
 You will be prompted to add these permissions while creating a new workspace token or app password.
 :::
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

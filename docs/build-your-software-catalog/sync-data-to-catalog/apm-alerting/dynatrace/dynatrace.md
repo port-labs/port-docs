@@ -8,6 +8,7 @@ import DynatraceProblemConfiguration from "/docs/build-your-software-catalog/syn
 import DynatraceMicroserviceBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/apm-alerting/resources/dynatrace/\_example_dynatrace_microservice_blueprint.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_helm_prerequisites_block.mdx"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Dynatrace
 
@@ -934,6 +935,7 @@ your webhook `URL` should be `https://myservice.domain.com/integration/webhook/p
     7. Leave the rest of the fields as is.
 6. Click **Save changes**.
 
+<MetricsAndSyncStatus/>
 
 ## Examples
 

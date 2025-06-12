@@ -6,7 +6,7 @@ import DockerParameters from "./\_opencost-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # OpenCost
 
@@ -431,7 +431,7 @@ resources:
 
 </details>
 
-
+<MetricsAndSyncStatus/>
 
 
 ## Examples

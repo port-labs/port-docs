@@ -38043,3 +38043,401 @@ paths:
       responses:
         "200":
           description: Default Response
+  "/v1/integration/{integrationInternalId}/syncMetrics":
+      get:
+        tags:
+          - Metrics
+        parameters:
+          - schema:
+              type: string
+            in: query
+            name: resyncId
+            required: false
+          - schema:
+              type: string
+            in: path
+            name: integrationInternalId
+            required: true
+          - schema:
+              type: string
+            in: header
+            name: Authorization
+            required: false
+        responses:
+          "200":
+            description: Default Response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    ok:
+                      type: boolean
+                    count:
+                      type: number
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          integrationType:
+                            type: string
+                          integrationIdentifier:
+                            type: string
+                          integrationVersion:
+                            type: string
+                          oceanVersion:
+                            type: string
+                          kindIdentifier:
+                            type: string
+                          kind:
+                            type: string
+                          kindIndex:
+                            type: number
+                          eventId:
+                            type: string
+                          syncState:
+                            type: string
+                          blueprint:
+                            type: string
+                          metrics:
+                            type: object
+                            properties:
+                              phase:
+                                type: object
+                                properties:
+                                  resync:
+                                    type: object
+                                    properties:
+                                      duration_seconds:
+                                        type: number
+                                      success:
+                                        type: number
+                                    additionalProperties: false
+                                  load:
+                                    type: object
+                                    properties:
+                                      object_count_type:
+                                        type: object
+                                        properties:
+                                          skipped:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          failed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          loaded:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          raw_extracted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          transformed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          filtered_out:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          deleted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                        additionalProperties: false
+                                    required:
+                                      - object_count_type
+                                    additionalProperties: false
+                                  extract:
+                                    type: object
+                                    properties:
+                                      object_count_type:
+                                        type: object
+                                        properties:
+                                          skipped:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          failed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          loaded:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          raw_extracted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          transformed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          filtered_out:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          deleted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                        additionalProperties: false
+                                    required:
+                                      - object_count_type
+                                    additionalProperties: false
+                                  transform:
+                                    type: object
+                                    properties:
+                                      object_count_type:
+                                        type: object
+                                        properties:
+                                          skipped:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          failed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          loaded:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          raw_extracted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          transformed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          filtered_out:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          deleted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                        additionalProperties: false
+                                    required:
+                                      - object_count_type
+                                    additionalProperties: false
+                                  delete:
+                                    type: object
+                                    properties:
+                                      object_count_type:
+                                        type: object
+                                        properties:
+                                          skipped:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          failed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          loaded:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          raw_extracted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          transformed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          filtered_out:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          deleted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                        additionalProperties: false
+                                    required:
+                                      - object_count_type
+                                    additionalProperties: false
+                                additionalProperties: false
+                            required:
+                              - phase
+                            additionalProperties: false
+                          createdAt:
+                            type: string
+                            format: date-time
+                          updatedAt:
+                            type: string
+                            format: date-time
+                        required:
+                          - integrationType
+                          - integrationIdentifier
+                          - integrationVersion
+                          - oceanVersion
+                          - kindIdentifier
+                          - kind
+                          - eventId
+                          - syncState
+                          - metrics
+                          - createdAt
+                          - updatedAt
+                        additionalProperties: false
+                  required:
+                    - ok
+                    - count
+                    - data
+                  additionalProperties: false
+          "401":
+            description: Default Response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    ok:
+                      type: boolean
+                    error:
+                      type: string
+                    message:
+                      type: string
+                  required:
+                    - ok
+                    - error
+                  additionalProperties: false
+          "500":
+            description: Default Response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    ok:
+                      type: boolean
+                    error:
+                      type: string
+                    message:
+                      type: string
+                  required:
+                    - ok
+                    - error
+                  additionalProperties: false
+    

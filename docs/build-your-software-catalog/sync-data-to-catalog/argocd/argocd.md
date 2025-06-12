@@ -10,7 +10,7 @@ import ArgoCDEventWebhookConfig from '/docs/build-your-software-catalog/custom-i
 import ArgoCDEventManifest from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_events_manifest.mdx'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # ArgoCD
 
@@ -660,6 +660,7 @@ kubectl apply -n <your-namespace> -f <path-to-yaml-file>
 
 This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Ocean to receive real-time events.
 
+<MetricsAndSyncStatus/>
 
 ## Examples
 

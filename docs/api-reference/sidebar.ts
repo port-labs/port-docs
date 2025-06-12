@@ -667,6 +667,18 @@ const sidebar: SidebarsConfig = {
       ],
     },
     {
+      type: "category",
+      label: "Metrics",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-metrics-and-sync-status",
+          label: "Get an integration's metrics and sync status",
+          className: "api-method get",
+        },
+      ],
+    },
+    {
       type: "doc",
       id: "api-reference/pages",
       label: "Pages",
