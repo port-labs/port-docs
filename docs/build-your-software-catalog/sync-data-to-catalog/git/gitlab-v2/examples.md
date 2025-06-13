@@ -73,6 +73,55 @@ In the following example you will ingest your GitLab projects, their README.md f
 <MergeRequestConfig />
 </details>
 
+### Merge Request Configuration Options
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="States" value="states">
+
+The `states` selector allows you to filter merge requests based on their state. You can specify one or more states to include in the sync.
+
+Allowed values:
+- `opened`: Merge requests that are currently open
+- `closed`: Merge requests that have been closed without merging
+- `merged`: Merge requests that have been merged
+
+By default, if not specified, only `opened` merge requests will be synced.
+
+```yaml
+  - kind: merge-request
+    selector:
+      query: 'true'
+      # highlight-next-line
+      states:
+        - merged
+        - opened
+```
+</TabItem>
+
+<TabItem label="Updated After" value="updatedAfter">
+
+The `updatedAfter` selector allows you to filter merge requests based on when they were last updated. This helps you focus on recent changes and reduce the amount of historical data being synced.
+
+The value represents the number of days to look back for merge requests. For example, setting it to `90` will only sync merge requests that have been updated in the last 90 days.
+
+:::note Important
+The `updatedAfter` parameter only affects merge requests that are not in the "opened" state. Open merge requests will always be synced regardless of their last update time.
+:::
+
+By default, if not specified, it is set to `90` days.
+
+```yaml
+  - kind: merge-request
+    selector:
+      query: 'true'
+      # highlight-next-line
+      updatedAfter: 90
+```
+</TabItem>
+
+</Tabs>
+
 :::tip Learn more
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
