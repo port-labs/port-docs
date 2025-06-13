@@ -1207,5 +1207,12 @@ export const availableGuides = [
         logos: ["StatusPage"],
         link: "/guides/all/visualize-and-manage-statuspage-components",
     },
+    {
+        title: "Manage PagerDuty on-call schedules",
+        description: "Track on-call engineers across different teams and services with dashboards and self-service actions",
+        tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+        logos: ["PagerDuty"],
+        link: "/guides/all/manage-pagerduty-on-call-schedules",
+    },
 ]
 
