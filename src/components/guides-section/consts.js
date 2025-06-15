@@ -1207,5 +1207,12 @@ export const availableGuides = [
         logos: ["StatusPage"],
         link: "/guides/all/visualize-and-manage-statuspage-components",
     },
+    {
+        title: "Manage and visualize your PagerDuty incidents",
+        description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
+        tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+        logos: ["PagerDuty"],
+        link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+    },
 ]
 
