@@ -82,9 +82,9 @@ In the following example you will ingest your GitLab projects, their README.md f
 The `states` selector allows you to filter merge requests based on their state. You can specify one or more states to include in the sync.
 
 Allowed values:
-- `opened`: Merge requests that are currently open
-- `closed`: Merge requests that have been closed without merging
-- `merged`: Merge requests that have been merged
+- `opened`: Merge requests that are currently open.
+- `closed`: Merge requests that have been closed without merging.
+- `merged`: Merge requests that have been merged.
 
 By default, if not specified, only `opened` merge requests will be synced.
 
