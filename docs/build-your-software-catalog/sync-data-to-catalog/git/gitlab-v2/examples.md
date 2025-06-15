@@ -73,7 +73,7 @@ In the following example you will ingest your GitLab projects, their README.md f
 <MergeRequestConfig />
 </details>
 
-### Merge Request Configuration Options
+### Merge request configuration options
 
 <Tabs groupId="config" queryString="parameter">
 
