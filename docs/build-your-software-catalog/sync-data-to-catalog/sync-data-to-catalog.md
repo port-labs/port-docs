@@ -97,13 +97,13 @@ By default, each entity has the following meta-properties: `identifier`, `title`
 The Monitoring and Sync Status data is available for all Ocean integrations.
 To access the integration's monitoring metrics and sync status, navigate to the [data sources](https://app.getport.io/settings/data-sources) page, under the `Exporters` section select your integration.  
 
-  The `Sync Status` tab offers a detailed overview of the data ingestion and reconciliation processeses.  
-  It includes the following sections:  
+The `Sync Status` tab offers a detailed overview of the data ingestion and reconciliation processeses.  
+It includes the following sections:  
 
-  <h3>Sync by kind</h3>
-  Shows the monitoring metrics and sync status for each `kind`.  
+### Sync by kind
+Shows the monitoring metrics and sync status for each `kind`.  
 
-  **Sync stages overview**:
+ **Sync stages overview**:
       - **Fetch data**:  
         The first step in the data ingestion process is fetching the data from the data source.  
           In this section, you will find the following fields:
@@ -122,9 +122,9 @@ To access the integration's monitoring metrics and sync status, navigate to the 
           - Not changed: Number of objects that were already up to date, so no changes were made to them.
           - Failed: Number of objects that failed to ingest. To learn more about the failure reasons, see the `Audit log` or `Event log` tabs, available in the same window.
       
-  **Details**: Displays the duration of the sync.  
+**Details**: Displays the duration of the sync.  
 
-  <h3>Reconciliation</h3>
+### Reconciliation
   This section provides visibility into both the reingestion and deletion processes.  
 
   When the `createMissingRelatedEntities` flag is set to `false`, Port will **not** automatically create related entities that are referenced in the mapping but not yet present in Port. The reingestion process ensures that once the missing related entities are ingested, the dependent entities will be reingested.  
@@ -148,3 +148,47 @@ To access the integration's monitoring metrics and sync status, navigate to the 
 :::tip Prometheus Metrics Endpoint
   If you are using the **self hosted integration method**, you can get raw Prometheus metrics by accessing the following endpoint: `{your_integration's_base_url}/metrics/`.
 :::
+
+### FAQ
+
+<details>
+<summary><b>Which integrations support this view? (Click to expand)</b></summary>
+
+The monitoring view is available for all Ocean integrations, including both SaaS and on-premise environments.
+</details>
+
+<details>
+<summary><b>Can I view previous syncs data? (Click to expand)</b></summary>
+
+The monitoring page displays data only from the most recent sync. Historical sync information is not currently retained in this view.
+</details>
+
+<details>
+<summary><b>What are the troubleshooting tips based on? (Click to expand)</b></summary>
+
+The troubleshooting tips are based on the observed metrics at each sync stage. They offer context-aware suggestions depending on the sync outcome. For example, if no data is fetched, the tip might recommend checking the integration's permissions. These tips are not tied to error logs.
+</details>
+
+<details>
+<summary><b>When is the monitoring view updated? (Click to expand)</b></summary>
+
+The monitoring view is updated following every sync, whether it is scheduled or manually triggered.
+</details>
+
+<details>
+<summary><b>Does ingestion retry always attempt to process all failures? (Click to expand)</b></summary>
+
+No, retries only apply when `CreateMissingRelatedEntities` is set to `false`.
+</details>
+
+<details>
+<summary><b>Can I see the reasons for sync failures? (Click to expand)</b></summary>
+
+The monitoring view includes potential failure via troubleshooting tips, but they are not definitive. For more detailed and precise insights, refer to the `Audit Log` and `Event Log` tabs at the top of the modal.
+</details>
+
+<details>
+<summary><b>What happens if the same `kind` appears more than once in the mapping? (Click to expand)</b></summary>
+
+If a `kind` appears multiple times in the mapping file, it will also appear multiple times in the monitoring view, following the exact order defined in the mapping.
+</details>
