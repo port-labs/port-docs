@@ -105,7 +105,7 @@ The `updatedAfter` selector allows you to filter merge requests based on when th
 
 The value represents the number of days to look back for merge requests. For example, setting it to `90` will only sync merge requests that have been updated in the last 90 days.
 
-:::note Important
+:::info Important
 The `updatedAfter` parameter only affects merge requests that are not in the "opened" state. Open merge requests will always be synced regardless of their last update time.
 :::
 
