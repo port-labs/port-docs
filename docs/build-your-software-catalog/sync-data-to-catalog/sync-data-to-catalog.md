@@ -92,10 +92,11 @@ By default, each entity has the following meta-properties: `identifier`, `title`
 | `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the blueprint definition**, and each value matches the `type` of the property.                                                                                                      |
 | `relations`  | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints) that is defined on the blueprint. |
 
-## Monitoring and Sync Status
+## Monitoring and sync status
 
-The Monitoring and Sync Status data is available for all Ocean integrations.
-To access the integration's monitoring metrics and sync status, navigate to the [data sources](https://app.getport.io/settings/data-sources) page, under the `Exporters` section select your integration.  
+Every integration has a dedicated page that displays detailed monitoring metrics and sync status, helping you track the data ingestion process. This monitoring view is available for all Ocean integrations.
+
+To access the integration's monitoring metrics and sync status, navigate to the [data sources](https://app.getport.io/settings/data-sources) page. Under the `Exporters` section, select your integration.  
 
 The `Sync Status` tab offers a detailed overview of the data ingestion and reconciliation processeses.  
 It includes the following sections:  
