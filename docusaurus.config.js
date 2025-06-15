@@ -18,9 +18,9 @@ const config = {
   staticDirectories: ["static"],
   future: {
     experimental_faster: true, // turns Docusaurus Faster on globally
-    // v4: {
-    //   removeLegacyPostBuildHeadAttribute: true, // required
-    // },
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true, // required
+    },
   },
 
   presets: [
