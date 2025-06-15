@@ -19,27 +19,26 @@ To access the integration's monitoring metrics and sync status, navigate to the 
           In this section, you will find the following fields:
           - Transformed: Number of objects that were mapped to blueprint entities.
           - Filtered out: Number of objects that were filtered out according to the mapping conditions.
-          - Failed: Number of objects that failed to map, you can find more information about the failure reasons in the **Troubleshooting tips** section below in the UI or refer to the `Event log` tab, available in the same window.
+          - Failed: Number of objects that failed to map, you can find more information about the failure reasons in the **Troubleshooting tips** section below in the UI or refer to the `Audit log` or `Event log` tabs, available in the same window.
         - **Ingest to Port**:  
         Final step is ingesting the mapped objects to Port.  
           In this section, you will find the following fields:
-          - Ingested: Number of objects that were ingested successfully.
+          - Ingested: Number of objects that were inserted or upated successfully.
           - Not changed: Number of objects that were already up to date, so no changes were made to them.
-          - Failed: Number of objects that failed to ingest. To learn more about the failure reasons, see the `Event log` tab, available in the same window.
+          - Failed: Number of objects that failed to ingest. To learn more about the failure reasons, see the `Audit log` or `Event log` tabs, available in the same window.
       
     **Details**: Displays the duration of the sync.  
 
     <h3>Reconciliation</h3>
     This section provides visibility into both the reingestion and deletion processes.  
-    When the `createMissingRelatedEntities` flag is set to `false`, Port will **not** automatically create related entities that are referenced in the mapping but not yet present in Port.  
 
-    The reingestion process ensures that once the missing related entities are ingested, the dependent entities will be reingested.  
+    When the `createMissingRelatedEntities` flag is set to `false`, Port will **not** automatically create related entities that are referenced in the mapping but not yet present in Port. The reingestion process ensures that once the missing related entities are ingested, the dependent entities will be reingested.  
 
     The deletion process ensures that entities that are no longer present in the data source are removed.  
     
     In this section, you will find the following data:  
-    
-    **Reingest**:  
+
+    **Ingestion retry**:  
       -   Reingested entities: Displays the number of entities that were ingested successfully on retry after dependencies resolved.  
       -  Failed: Displays the number of entities that failed to reingest. 
 
