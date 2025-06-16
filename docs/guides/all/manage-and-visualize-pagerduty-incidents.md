@@ -14,6 +14,12 @@ You will learn how to:
 - Set up **self-service actions** to manage incidents (trigger, acknowledge, and resolve).
 - Build **dashboards** in Port to monitor and take action on your incident response.
 
+<img src="/img/guides/pagerDutyDashboard1.png" border="1px" width="100%" />
+
+<img src="/img/guides/pagerDutyDashboard2.png" border="1px" width="100%" />
+
+
+
 
 ## Common use cases
 
@@ -477,7 +483,6 @@ Create an automation to update Port when PagerDuty incidents are resolved:
 
 With your incident management actions in place and data flowing, we can create a dedicated dashboard in Port to visualize all incidents by status, urgency, or service using customizable widgets. 
 
-<img src="/img/guides/pagerduty-incident-management-dashboard.png" border="1px" />
 
 
 ### Create a dashboard
