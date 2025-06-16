@@ -5,6 +5,7 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Image from "@theme/IdealImage";
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Azure
 
@@ -180,3 +181,6 @@ resources:
 ```
 
 </details>
+
+<MetricsAndSyncStatus/>
+
