@@ -1208,11 +1208,19 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-statuspage-components",
     },
     {
+
         title: "Manage and visualize your LaunchDarkly feature flags",
         description: "Create a comprehensive feature flag management system to create, toggle, and archive flags",
         tags: ["Feature flag management","Launchdarkly", "Actions", "Webhook", "Automations"],
         logos: ["Launchdarkly"],
         link: "/guides/all/manage-and-visualize-your-launchdarkly-feature-flags",
     },
+  {
+     title: "Manage and visualize your PagerDuty incidents",
+      description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
+      tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+      logos: ["PagerDuty"],
+      link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+  }
 ]
 
