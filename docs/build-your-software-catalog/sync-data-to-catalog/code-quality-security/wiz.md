@@ -10,7 +10,7 @@ import FindCredentials from "/docs/build-your-software-catalog/custom-integratio
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Wiz
 
@@ -556,7 +556,7 @@ resources:
 </details>
 
 
-
+<MetricsAndSyncStatus/>
 
 ## Examples
 

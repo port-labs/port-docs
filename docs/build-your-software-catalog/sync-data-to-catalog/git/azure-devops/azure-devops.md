@@ -1,7 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import AzureDevopsResources from './\_azuredevops_exporter_supported_resources.mdx'
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Azure DevOps
 
@@ -168,7 +168,7 @@ resources:
 
 </details>
 
-
+<MetricsAndSyncStatus/>
 
 
 ## Examples

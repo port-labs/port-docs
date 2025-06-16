@@ -460,8 +460,8 @@ export const availableGuides = [
     {
         title: "Create and Manage Statuspage Incidents",
         description: "Create self-service actions that manage Statuspage incidents",
-        tags: ["Incident management", "GitHub", "Actions"],
-        logos: ["GitHub"],
+        tags: ["Incident management", "GitHub", "StatusPage", "Actions"],
+        logos: ["GitHub", "StatusPage"],
         // category: "Getting started",
         link: "/guides/all/manage-statuspage-incident",
     },
@@ -521,14 +521,14 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/report-a-bug",
     },
-    {
-        title: "Toggle LaunchDarkly Feature Flag",
-        description: "Create a self-service action that toggles a LaunchDarkly feature flag",
-        tags: ["Feature flag management", "Launchdarkly", "GitHub", "Actions", "Webhook", "Automations"],
-        logos: ["Launchdarkly", "GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/toggle-launchdarkly-feature-flag",
-    },
+    // {
+    //     title: "Toggle LaunchDarkly Feature Flag",
+    //     description: "Create a self-service action that toggles a LaunchDarkly feature flag",
+    //     tags: ["Feature flag management", "Launchdarkly", "GitHub", "Actions", "Webhook", "Automations"],
+    //     logos: ["Launchdarkly", "GitHub"],
+    //     // category: "Getting started",
+    //     link: "/guides/all/toggle-launchdarkly-feature-flag",
+    // },
     {
         title: "Create an Opsgenie Incident",
         description: "Create a self-service action that creates an Opsgenie incident",
@@ -1200,5 +1200,35 @@ export const availableGuides = [
         logos: ["GitLab"],
         link: "/guides/all/visualize-and-manage-gitlab-deployments",
     },
+    {
+        title: "Visualize and manage your Statuspage components",
+        description: "Create a dashboard that visualizes and manages your Statuspage components",
+        tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
+        logos: ["StatusPage"],
+        link: "/guides/all/visualize-and-manage-statuspage-components",
+    },
+    {
+
+        title: "Manage PagerDuty on-call schedules",
+        description: "Track on-call engineers across different teams and services with dashboards and self-service actions",
+        tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+        logos: ["PagerDuty"],
+        link: "/guides/all/manage-pagerduty-on-call-schedules",
+      },
+     {
+
+        title: "Manage and visualize your LaunchDarkly feature flags",
+        description: "Create a comprehensive feature flag management system to create, toggle, and archive flags",
+        tags: ["Feature flag management","Launchdarkly", "Actions", "Webhook", "Automations"],
+        logos: ["Launchdarkly"],
+        link: "/guides/all/manage-and-visualize-your-launchdarkly-feature-flags",
+      },
+      {
+         title: "Manage and visualize your PagerDuty incidents",
+          description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
+          tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+          logos: ["PagerDuty"],
+          link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+      }
 ]
 
