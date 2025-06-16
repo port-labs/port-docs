@@ -5,6 +5,13 @@ sidebar_label: Configure mapping
 
 # Configure mapping
 
+<center>
+
+<iframe width="568" height="320" src="https://www.youtube.com/embed/tx4aWVKY5x4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+<br/>
+
 The mapping of an integration's data source defines the ingested data and its destination. It allows you to specify:
 
 - **Which data** you wish to ingest from the integrated tool.
@@ -385,3 +392,13 @@ The object returned from Jira for which we would apply this mapping might look l
 ```
 </details>
 
+## Follow-up video
+
+The following video follows up on the video at the top of this page.  
+It demonstrates how to add new properties to a blueprint and map data into them:
+<center>
+
+<iframe width="568" height="320" src="https://www.youtube.com/embed/YeNyq_WJsvY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+<br/>
