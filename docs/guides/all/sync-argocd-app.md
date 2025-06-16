@@ -148,7 +148,7 @@ In the following guide, we are going to create a self-service action in Port tha
 ```
 </details>
 
-4. Create a workflow file under `.github/workflows/sync-argocd-app.yaml` with the following content:
+5. Create a workflow file under `.github/workflows/sync-argocd-app.yaml` with the following content:
 
 <GithubDedicatedRepoHint/>
 

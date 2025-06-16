@@ -5,6 +5,7 @@ sidebar_position: 2
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Image from "@theme/IdealImage";
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # GCP
 
@@ -154,3 +155,5 @@ resources:
 ```
 
 </details>
+
+<MetricsAndSyncStatus/>
