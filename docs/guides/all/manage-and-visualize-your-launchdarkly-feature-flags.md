@@ -13,6 +13,12 @@ This guide demonstrates how to bring your LaunchDarkly feature flag management e
 - Set up **self-service actions** to manage feature flags (create, toggle, and archive).
 - Build **dashboards** in Port to monitor and take action on your feature flag resources.
 
+<img src="/img/guides/launchDarklyDashboard1.png" border="1px" width="100%" />
+
+<img src="/img/guides/launchDarklyDashboard2.png" border="1px" width="100%" />
+
+
+
 ## Common use cases
 
 - Monitor the status and usage of all feature flags across projects from a single dashboard.
@@ -602,8 +608,6 @@ You do not need to create an automation if you have installed the [LaunchDarkly 
 ## Visualize metrics
 
 With your feature flags synced and actions configured, we can create a dedicated dashboard in Port to monitor and manage LaunchDarkly feature flags using customizable widgets. In addition, you can trigger flag management actions directly from the dashboard.
-
-<img src="/img/guides/launchdarklyDashboard.png" border="1px" width="100%" />
 
 
 ### Create a dashboard
