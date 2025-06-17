@@ -86,6 +86,7 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
 
 - The `port.entity.mappings` key contains the section used to map the object fields to Port entities.  
   Here you can specify the `blueprint` in Port to which the data should be mapped, and which API object will be ingested to each of its properties.
+  To map properties, specify the property identifier as the key inside the `properties` object.
 
   ```yaml showLineNumbers
   resources:
@@ -227,8 +228,11 @@ After ingesting all of our services and PagerDuty services, we want to connect e
              blueprint: '"service"'
              properties: {}
              relations:
+             # highlight-start
                pagerduty_service: .id
+              # highlight-end
      ```
+     In this mapping configuration, `pagerduty_service` is the relation identifier, and `.id` is the JQ expression which calculates the PagerDuty service identifier. In order to relate entities, the JQ expression must evaluate to the identifier of the target entity (In this case, the identifier of the PagerDuty service entity)
 
      Now, if a `service's` **identifier** is equal to a `PagerDuty service's` **name**, that service will automatically have its on-call property filled with the relevant PagerDuty service.  
       This is just the convention we chose for this example, but you can use a different one if you'd like.
