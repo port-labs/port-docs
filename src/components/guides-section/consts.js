@@ -1208,11 +1208,11 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-statuspage-components",
     },
     {
-        title: "Manage ECS Tasks",
+        title: "Manage and visualize ECS Tasks",
         description: "Select from your clusters and services, and easily scale tasks up or down",
         tags: ["Cloud access management", "AWS", "GitHub", "Actions", "Dashboards"],
         logos: ["AWS", "GitHub"],
-        link: "/guides/all/manage-ecs-tasks",
+        link: "/guides/all/manage-and-visualize-ecs-tasks",
     },
 ]
 
