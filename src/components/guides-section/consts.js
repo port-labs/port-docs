@@ -521,14 +521,14 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/report-a-bug",
     },
-    {
-        title: "Toggle LaunchDarkly Feature Flag",
-        description: "Create a self-service action that toggles a LaunchDarkly feature flag",
-        tags: ["Feature flag management", "Launchdarkly", "GitHub", "Actions", "Webhook", "Automations"],
-        logos: ["Launchdarkly", "GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/toggle-launchdarkly-feature-flag",
-    },
+    // {
+    //     title: "Toggle LaunchDarkly Feature Flag",
+    //     description: "Create a self-service action that toggles a LaunchDarkly feature flag",
+    //     tags: ["Feature flag management", "Launchdarkly", "GitHub", "Actions", "Webhook", "Automations"],
+    //     logos: ["Launchdarkly", "GitHub"],
+    //     // category: "Getting started",
+    //     link: "/guides/all/toggle-launchdarkly-feature-flag",
+    // },
     {
         title: "Create an Opsgenie Incident",
         description: "Create a self-service action that creates an Opsgenie incident",
@@ -1207,7 +1207,30 @@ export const availableGuides = [
         logos: ["StatusPage"],
         link: "/guides/all/visualize-and-manage-statuspage-components",
     },
-    {
+     {
+        title: "Manage PagerDuty on-call schedules",
+        description: "Track on-call engineers across different teams and services with dashboards and self-service actions",
+        tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+        logos: ["PagerDuty"],
+        link: "/guides/all/manage-pagerduty-on-call-schedules",
+      },
+     {
+
+        title: "Manage and visualize your LaunchDarkly feature flags",
+        description: "Create a comprehensive feature flag management system to create, toggle, and archive flags",
+        tags: ["Feature flag management","Launchdarkly", "Actions", "Webhook", "Automations"],
+        logos: ["Launchdarkly"],
+        link: "/guides/all/manage-and-visualize-your-launchdarkly-feature-flags",
+      },
+      {
+         title: "Manage and visualize your PagerDuty incidents",
+          description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
+          tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+          logos: ["PagerDuty"],
+          link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+      },
+     {
+
         title: "Manage and visualize ECS Tasks",
         description: "Select from your clusters and services, and easily scale tasks up or down",
         tags: ["Cloud access management", "AWS", "GitHub", "Actions", "Dashboards"],
