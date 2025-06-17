@@ -398,6 +398,17 @@ And the result shall be:
 
 You can search for entities that are related through a specific path of relations. This is useful when you want to find entities that are connected through a specific chain of relationships.
 
+
+<h4> Structure </h4>
+
+| Field                     | Description                                                                                                          |
+|---------------------------|----------------------------------------------------------------------------------------------------------------------|
+| `property.path`           | An array containing the full path of relation identifiers to traverse.                                               |
+| `property.fromBlueprint`  | *(Optional)* The blueprint to start the path traversal from. If omitted, traversal starts from the target blueprint. |
+| `operator`                | The search operator to use. For this feature, use `"matchAny"`.                                                      |
+| `value`                   | The value or list of values to match against the target entity identifiers at the end of the path.                   |
+
+
 <h4> For upstream paths: </h4>
 
 ```json showLineNumbers
