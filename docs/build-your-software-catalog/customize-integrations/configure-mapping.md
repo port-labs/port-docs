@@ -232,7 +232,7 @@ After ingesting all of our services and PagerDuty services, we want to connect e
                pagerduty_service: .id
               # highlight-end
      ```
-     In this mapping configuration, `pagerduty_service` is the relation identifier, and `.id` is the JQ expression which calculates the PagerDuty service identifier. In order to relate entities, the JQ expression must evaluate to the identifier of the target entity (In this case, the identifier of the PagerDuty service entity)
+     In this mapping configuration, `pagerduty_service` is the relation identifier, and `.id` is the JQ expression which calculates the PagerDuty service identifier. In order to relate entities, the JQ expression must evaluate to the identifier of the target entity (in this case, the identifier of the PagerDuty service entity).
 
      Now, if a `service's` **identifier** is equal to a `PagerDuty service's` **name**, that service will automatically have its on-call property filled with the relevant PagerDuty service.  
       This is just the convention we chose for this example, but you can use a different one if you'd like.
