@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # GitLab
 
@@ -9,6 +10,8 @@ Port's GitLab integration allows you to model GitLab resources in your software 
 This integration will be deprecated in the future and support for it will be discontinued soon.
 
 To integrate Port with GitLab, we recommend using the [GitLab V2 integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/).
+
+A migration guide from v1 to v2 of the integration will be available soon. Stay tuned!
 :::
 
 ## Overview
@@ -511,6 +514,8 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 - Currently only the default branch of the repository is supported.
 
 For a list of known limitations with GitLab’s Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

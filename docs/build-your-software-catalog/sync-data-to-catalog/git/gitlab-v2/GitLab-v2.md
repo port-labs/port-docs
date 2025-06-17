@@ -2,12 +2,15 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 import GitLabResources from './_gitlab_integration_supported_resources.mdx'
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # GitLab v2
 
 :::info GitLab v2 documentation
 This page documents the latest GitLab integration, released in April 2025.  
 For documentation of the previous integration, check out the [GitLab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/) page.  
+
+For users upgrading from the v1 integration, a migration guide will be available soon. Stay tuned!
 :::
 
 Port's GitLab-v2 integration allows you to model GitLab resources in your software catalog and ingest data into them.
@@ -462,6 +465,8 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 - Currently only the default branch of the repository is supported.
 
 For a list of known limitations with GitLab’s Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 
