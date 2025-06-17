@@ -41,8 +41,11 @@ The actions will be configured via JSON and triggered using **synced webhooks** 
 To add a secret to your portal:
 
 1. Click on the `...` button in the top right corner of your Port application.
+
 2. Click on **Credentials**.
+
 3. Click on the `Secrets` tab.
+
 4. Click on `+ Secret` and add the following secret:
     - `_STATUSPAGE_API_KEY`: Your Statuspage API key. Follow the Statuspage documentation on how to [create the API key](https://support.atlassian.com/statuspage/docs/create-and-manage-api-keys/).
 
