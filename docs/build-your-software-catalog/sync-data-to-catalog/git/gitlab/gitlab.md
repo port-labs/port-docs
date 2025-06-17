@@ -11,7 +11,7 @@ This integration will be deprecated in the future and support for it will be dis
 
 To integrate Port with GitLab, we recommend using the [GitLab V2 integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/).
 
-A migration guide from V1 to V2 is coming soon. Stay tuned for more updates!
+A migration guide from v1 to v2 of the integration will be available soon. Stay tuned!
 :::
 
 ## Overview
