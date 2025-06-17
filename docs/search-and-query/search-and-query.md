@@ -68,6 +68,7 @@ The query above searches for all entities based on the `myBlueprint` blueprint w
 
 ```json showLineNumbers
 {
+  // highlight-next-line
   "combinator": "and",
   "rules": [
     {
@@ -90,6 +91,7 @@ The query above searches for all entities based on the `myBlueprint` blueprint w
 
 ```json showLineNumbers
 {
+  // highlight-next-line
   "combinator": "or",
   "rules": [
     {
