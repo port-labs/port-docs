@@ -9,6 +9,8 @@ import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to
 :::info GitLab v2 documentation
 This page documents the latest GitLab integration, released in April 2025.  
 For documentation of the previous integration, check out the [GitLab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/) page.  
+
+For users upgrading from the v1 integration, a migration guide will be available soon. Stay tuned!
 :::
 
 Port's GitLab-v2 integration allows you to model GitLab resources in your software catalog and ingest data into them.

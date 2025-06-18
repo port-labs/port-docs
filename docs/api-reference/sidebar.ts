@@ -642,12 +642,6 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/create-credentials",
-          label: "Create credentials",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/rotate-secret",
           label: "Rotate secret",
           className: "api-method post",
