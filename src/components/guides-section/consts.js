@@ -1117,6 +1117,13 @@ export const availableGuides = [
         link: "/guides/all/automate-user-role-update",
     },
     {
+        title: "Automatically set relations between entities with automation",
+        description: "Save time and reduce errors by automating entity relations without writing integration code",
+        tags: ["Automations"],
+        logos: ["Automations"],
+        link: "/guides/all/automatically-set-relations-between-entities-with-automation",
+    },
+    {
         title: "Delete a ServiceNow incident",
         description: "Create a self-service action that deletes a ServiceNow incident",
         tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
