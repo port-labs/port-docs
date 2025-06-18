@@ -35638,55 +35638,6 @@ paths:
                   - ok
                 additionalProperties: false
                 description: Retrieved successfully.
-    post:
-      tags:
-        - Apps
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              additionalProperties: false
-              required:
-                - name
-        required: true
-      security:
-        - bearer:
-            - update:apps
-      responses:
-        "200":
-          description: Created successfully.
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    enum:
-                      - true
-                  app:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      enabled:
-                        type: boolean
-                      id:
-                        type: string
-                      createdAt:
-                        type: string
-                        format: date-time
-                      updatedAt:
-                        type: string
-                        format: date-time
-                      secret:
-                        type: string
-                required:
-                  - ok
-                additionalProperties: false
-                description: Created successfully.
   "/v1/apps/{id}/rotate-secret":
     post:
       tags:
