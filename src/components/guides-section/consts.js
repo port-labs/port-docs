@@ -1118,8 +1118,8 @@ export const availableGuides = [
     },
     {
         title: "Automatically set relations between entities with automation",
-        description: "Save time and reduce errors by automating entity relations without writing integration code",
-        tags: ["Automations"],
+        description: "Set up automations to set relations between entities based on integrations metadata",
+        tags: ["Automations", "GitHub"],
         logos: ["Automations"],
         link: "/guides/all/automatically-set-relations-between-entities-with-automation",
     },
