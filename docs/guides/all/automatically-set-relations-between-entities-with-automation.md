@@ -23,7 +23,7 @@ This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - Port's [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
 - You have setup [automatic discovery](https://docs.port.io/getting-started/set-up-automatic-discovery) between the `service` and `repository` blueprints.
-- Permissions to create and edit Port [automations](/automations/overview).
+- Permissions to create and edit Port [automations](https://docs.port.io/actions-and-automations/define-automations/).
 
 ## Set up data model
 
