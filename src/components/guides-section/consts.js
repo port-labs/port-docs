@@ -1235,6 +1235,13 @@ export const availableGuides = [
         tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
         logos: ["PagerDuty"],
         link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+    },
+    {
+        title: "Manage and visualize your Jira issues",
+        description: "Create a comprehensive Jira issue management system to create, update, and archive issues",
+        tags: ["Incident management", "Jira", "Actions", "Dashboards"],
+        logos: ["Jira"],
+        link: "/guides/all/manage-and-visualize-jira-issues",
     }
 ]
 
