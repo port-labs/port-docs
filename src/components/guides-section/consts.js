@@ -1235,6 +1235,13 @@ export const availableGuides = [
         tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
         logos: ["PagerDuty"],
         link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+    },
+    {
+        title: "Manage and visualize your AWS SQS queues",
+         description: "Manage your AWS SQS queues with self-service actions and create dashboards for visualization",
+         tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
+         logos: ["AWS", "GitHub"],
+         link: "/guides/all/manage-and-visualize-aws-sqs-queues",
     }
 ]
 
