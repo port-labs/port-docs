@@ -30,6 +30,8 @@ This guide demonstrates how to bring your AWS SQS management experience into Por
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - Port's [AWS integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) is installed in your account.
+<GithubDedicatedRepoHint/>
+
 
 
 ## Set up data model
@@ -200,8 +202,6 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 
 Create the file `.github/workflows/purge-queue.yaml` in the `.github/workflows` folder of your repository.
 
-<GithubDedicatedRepoHint/>
-
 <details>
 <summary><b>Purge SQS Queue GitHub workflow (Click to expand)</b></summary>
 
@@ -323,8 +323,6 @@ Now you should see the `Purge SQS Queue` action in the self-service page. ðŸŽ‰
 <h4> Add GitHub workflow </h4>
 
 Create the file `.github/workflows/redrive-queue.yaml` in the `.github/workflows` folder of your repository.
-
-<GithubDedicatedRepoHint/>
 
 <details>
 <summary><b>Redrive DLQ GitHub workflow (Click to expand)</b></summary>
@@ -478,8 +476,6 @@ Now you should see the `Redrive DLQ Messages` action in the self-service page. ð
 <h4> Add GitHub workflow </h4>
 
 Create the file `.github/workflows/delete-queue.yaml` in the `.github/workflows` folder of your repository.
-
-<GithubDedicatedRepoHint/>
 
 <details>
 <summary><b>Delete SQS Queue GitHub workflow (Click to expand)</b></summary>
