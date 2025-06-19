@@ -1669,7 +1669,7 @@ Here is an example of the payload structure from Dynatrace:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary>Entity entity in Port</summary>
+<summary>Entity in Port</summary>
 
 ```json showLineNumbers
 {
