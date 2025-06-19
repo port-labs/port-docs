@@ -22328,60 +22328,7 @@ paths:
                   - ok
                 additionalProperties: false
                 description: Retrieved successfully.
-    post:
-      summary: Create credentials
-      description: This route allows you to create a set of credentials in your Port organization, containing a `client ID` and `client secret`.<br/>
-      tags:
-        - Apps
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The name of the credentials set.<br/>
-              additionalProperties: false
-              required:
-                - name
-        required: true
-      security:
-        - bearer:
-            - update:apps
-      responses:
-        "200":
-          description: Created successfully.
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    type: any
-                    enum:
-                      - true
-                  app:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      enabled:
-                        type: boolean
-                      id:
-                        type: string
-                      createdAt:
-                        type: string
-                        format: date-time
-                      updatedAt:
-                        type: string
-                        format: date-time
-                      secret:
-                        type: string
-                required:
-                  - ok
-                additionalProperties: false
-                description: Created successfully.
-  "/v1/apps/{id}/rotate-secret":
+    "/v1/apps/{id}/rotate-secret":
     post:
       summary: Rotate secret
       description: This route allows you to rotate the secret of a set of credentials in your Port organization.<br/>
