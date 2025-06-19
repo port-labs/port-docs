@@ -98,7 +98,9 @@ Every integration has a dedicated page that displays detailed monitoring metrics
 
 To access the integration's monitoring metrics and sync status, navigate to the [data sources](https://app.getport.io/settings/data-sources) page. Under the `Exporters` section, select your integration.  
 
-The `Sync Status` tab offers a detailed overview of the data ingestion and reconciliation processeses.  
+The `Sync Status` tab offers a detailed overview of the data ingestion and reconciliation processes.  
+It updates on initial installation, manual resyncs, and at scheduled intervals. Note that it does not reflect changes from **live events**.
+
 It includes the following sections:  
 
 ### Sync by kind
