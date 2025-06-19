@@ -14,7 +14,8 @@ const limitations = {
     defaultLimitations.ttl + '\n' +
     '- For OAuth based installations:'+ '\n' +
     '    - Due to restrictions on the [Jira OAuth Dynamic Webhooks API](https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-webhooks/#api-group-webhooks), Only issue related live events are supported.' + '\n' +
-    '    - Due to restrictions on the [Jira OAuth2 App](https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-webhooks/#api-rest-api-2-webhook-post), Only a single OAuth Jira installation will recieve live events.' + '\n',
+    '    - Due to restrictions on the [Jira OAuth2 App](https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-webhooks/#api-rest-api-2-webhook-post), Only a single(first) OAuth Jira installation will recieve live events.' + '\n' +
+    '    - Due to restrictions on the [Jira OAuth2 App](https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-webhooks/#api-rest-api-2-webhook-post), Webhooks are not deleted when the app is deleted, so to replace webhook destenation contact support.' + '\n',
   Gitlab:
     defaultLimitations.ttl + '\n' +
     '- For OAuth based installations:' + '\n' +
