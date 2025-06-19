@@ -14,17 +14,20 @@ This guide demonstrates how to bring your Jira issue management experience into 
 <img src="/img/guides/jiraDashboard1.png" border="1px" width="100%" />
 <img src="/img/guides/jiraDashboard2.png" border="1px" width="100%" />
 
+
 ## Common use cases
 
 - Monitor the status and health of all Jira issues from a centralized dashboard.
 - Empower teams to manage tickets and perform day-2 operations via self-service actions.
 - Track high-priority bugs and their resolution progress.
 
+
 ## Prerequisites
 
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - Port's [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) is installed in your account.
+
 
 ## Set up self-service actions
 
@@ -37,6 +40,7 @@ We will create self-service actions in Port to directly interact with the Jira R
 3. Add comments to an issue.
 
 Each action will be configured via JSON and triggered using **synced webhooks** secured with secrets. To implement these use-cases, follow the steps below:
+
 
 ### Add Port secrets
 
@@ -58,6 +62,7 @@ To add a secret to your portal:
         :::info One time generation
         The base64 encoded string only needs to be generated once and will work for all webhook calls until you change your API token.
         :::
+
 
 ### Create a new issue
 
@@ -358,7 +363,7 @@ Now you should see the `Add Comment to Issue` action in the self-service page. ð
 
 ## Visualize metrics
 
-With issues ingested and actions configured, the next step is building a dashboard to monitor Jira data directly in Port. We can visualize tickets by status, track them over time, and monitor high-priority bugs using customizable widgets.
+With issues ingested and actions configured, the next step is building a dashboard to monitor Jira data directly in Port. We can visualize key metrics using the following widgets: ticket status distribution, delivery timelines, and high-priority bug tracking. These customizable widgets provide insights into your Jira issues, helping you manage and prioritize effectively.
 
 
 ### Create a dashboard
@@ -379,38 +384,91 @@ We now have a blank dashboard where we can start adding widgets to visualize ins
 In the new dashboard, create the following widgets:
 
 <details>
-<summary><b>Issues over time (click to expand)</b></summary>
+<summary><b>Average monthly closed bugs (click to expand)</b></summary>
 
-1. Click `+ Widget` and select **Line Chart**.
-2. Title: `Issues over time`, (add the `LineChart` icon).
-3. Select `Count Entities (All Entities)` **Chart type** and choose **Jira Issue** as the **Blueprint**.
-4. Input `Number of issues` as the **Y axis Title**.
-5. Set `count` as the **Function**.
-6. Input `Date` as the **X axis** **Title** and choose `created` as the **Measure time by**.
-7. Set **Time Interval** to `Week` and **Time Range** to `In the past 90 days`.
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `Monthly closed bugs` (add the `Jira` icon).
+3. Select `Count entities` **Chart type** and choose **Jira Issue** as the **Blueprint**.
+4. Select `average` for the **Function** and choose `month` under **Average of**.
+5. Select `resolutionDate` for the **Measure time by**.
+6. Add this JSON to the **Additional filters** editor to filter closed bugs in the current month:
+    ```json showLineNumbers
+    [
+        {
+            "combinator":"and",
+            "rules":[
+                {
+                    "property":"issueType",
+                    "operator":"=",
+                    "value": "Bug"
+                },
+                {
+                    "property":"status",
+                    "operator":"=",
+                    "value": "Done"
+                }
+            ]
+        }
+    ]
+    ```
+7. Select `custom` as the **Unit** and input `bugs` as the **Custom unit**.
 8. Click `Save`.
 
 </details>
 
 <details>
-<summary><b>Issues by status (click to expand)</b></summary>
+<summary><b>Mean time to resolve (MTTR) in days (click to expand)</b></summary>
 
-1. Click **`+ Widget`** and select **Pie chart**.
-2. Title: `Issues by status` (add the `Jira` icon).
-3. Choose the **Jira Issue** blueprint.
-4. Under `Breakdown by property`, select the **Status** property.
-5. Click **Save**.
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `Mean time to resolve (MTTR)` (add the `Jira` icon).
+3. Select `Aggregate by property` **Chart type** and choose **Jira Issue** as the **Blueprint**.
+4. Select `Handling Duration (Days)` for the **Property** and choose `median` for the **Function**.
+5. Select `custom` as the **Unit** and input `days` as the **Custom unit**.
+6. Click `Save`.
 
 </details>
 
 <details>
-<summary><b>High priority bugs (click to expand)</b></summary>
+<summary><b>Total critical issues found per month (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Number Chart**.
-2. Title: `High priority bugs` (add the `Jira` icon).
+2. Title: `Critical issues found per month` (add the `Jira` icon).
+3. Select `Count entities` **Chart type** and choose **Jira Issue** as the **Blueprint**.
+4. Select `average` for the **Function** and choose `month` under **Average of**.
+5. Select `created` for the **Measure time by**.
+6. Add this JSON to the **Additional filters** editor to filter critical issues created this month:
+    ```json showLineNumbers
+    [
+        {
+            "combinator":"and",
+            "rules":[
+                {
+                    "property":"priority",
+                    "operator":"in",
+                    "value": ["High", "Now (Urgent)"]
+                },
+                {
+                    "property":"issueType",
+                    "operator":"=",
+                    "value": "Bug"
+                }
+            ]
+        }
+    ]
+    ```
+7. Select `custom` as the **Unit** and input `issues` as the **Custom unit**.
+8. Click `Save`.
+
+</details>
+
+<details>
+<summary><b>High open priority bugs (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `High open priority bugs` (add the `Jira` icon).
 3. Select `Count entities` **Chart type** and choose **Jira Issue** as the **Blueprint**.
 4. Select `count` for the **Function**.
-5. Add this JSON to the **Additional filters** editor to filter high priority bugs:
+5. Add this JSON to the **Additional filters** editor to filter high priority open bugs:
     ```json showLineNumbers
     [
         {
@@ -423,8 +481,8 @@ In the new dashboard, create the following widgets:
                 },
                 {
                     "property":"priority",
-                    "operator":"=",
-                    "value": "High"
+                    "operator":"in",
+                    "value": ["Now (Urgent)", "High"]
                 },
                 {
                     "property":"status",
@@ -441,7 +499,7 @@ In the new dashboard, create the following widgets:
 </details>
 
 <details>
-<summary><b>Create issue action (click to expand)</b></summary>
+<summary><b>Create Jira issue action (click to expand)</b></summary>
 
 1. Click **`+ Widget`** and select **Action card**.
 2. Choose the **Create Jira Issue** action we created in this guide.
@@ -450,25 +508,43 @@ In the new dashboard, create the following widgets:
 </details>
 
 <details>
-<summary><b>All ongoing issues (click to expand)</b></summary>
+<summary><b>Critical ongoing bugs in the past week (click to expand)</b></summary>
 
 1. Click **`+ Widget`** and select **Table**.
-2. Title the widget **All Ongoing Issues**.
+2. Title the widget **Critical ongoing bugs**.
 3. Choose the **Jira Issue** blueprint.
-4. Add this JSON to the **Additional filters** editor to show only ongoing issues:
+4. Add this JSON to the **Additional filters** editor to show only high/critical issues in progress or code review:
     ```json showLineNumbers
-    [
+    {
+      "combinator": "and",
+      "rules": [
         {
-            "combinator":"and",
-            "rules":[
-                {
-                    "property":"status",
-                    "operator":"!=",
-                    "value": "Done"
-                }
-            ]
+          "property": "status",
+          "operator": "in",
+          "value": [
+            "In Progress",
+            "Code Review"
+          ]
+        },
+        {
+          "property": "issueType",
+          "operator": "=",
+          "value": "Bug"
+        },
+        {
+          "property": "created",
+          "operator": "between",
+          "value": {
+            "preset": "lastWeek"
+          }
+        },
+        {
+          "operator": "=",
+          "value": "jiraIssue",
+          "property": "$blueprint"
         }
-    ]
+      ]
+    }
     ```
 5. Click **Save** to add the widget to the dashboard.
 6. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
@@ -476,9 +552,36 @@ In the new dashboard, create the following widgets:
     - **Status**: The current status of the issue.
     - **Assignee**: The assignee of the issue.
     - **Priority**: The issue priority.
-    - **Issue Type**: The type of issue (Bug, Task, Story, etc.).
     - **Created**: The date the issue was created.
     - **Project**: The related Jira project.
 8. Click on the **save icon** in the top right corner of the widget to save the customized table.
+
+</details>
+
+<details>
+<summary><b>Issue types distribution (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Pie chart**.
+2. Title: `Issue types distribution` (add the `Jira` icon).
+3. Choose the **Jira Issue** blueprint.
+4. Under `Breakdown by property`, select the **Type** property.
+5. Add this JSON to the **Additional filters** editor to show only issues created in the past 3 months:
+    ```json showLineNumbers
+    [
+        {
+            "combinator":"and",
+            "rules":[
+                {
+                    "property":"created",
+                    "operator":"between",
+                    "value": {
+                        "preset":"last3Months"
+                    }
+                }
+            ]
+        }
+    ]
+    ```
+6. Click **Save**.
 
 </details>
