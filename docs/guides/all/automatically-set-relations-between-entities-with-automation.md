@@ -148,7 +148,7 @@ You can customize this automation to fit your specific naming conventions:
     "owning_team": "{{ .event.diff.after.relations.repository | split(\"_\") | .[0] | split(\"/\") | .[1] }}"
     ```
 
-3. If your team names have regional suffixes (e.g., `acme-corp-latam` → `acme_corp_latam`):
+3. If your team names have regional suffixes (e.g., `acme-corp-region` → `acme_corp_region`):
     ```json
     "owning_team": "{{ .event.diff.after.relations.repository | split(\"_\") | .[0] | split(\"/\") | .[1] | gsub(\"-\"; \"_\") }}"
     ```
@@ -158,7 +158,7 @@ You can customize this automation to fit your specific naming conventions:
     "owning_team": "{{ .event.diff.after.relations.repository | split(\"_\") | .[0] | split(\"/\") | .[1] | gsub(\"-\"; \"_\") }}"
     ```
 
-5. If your team names are complex with multiple segments (e.g., `rnd-developer-team-telaviv` → `rnd_developer_team_aviv`):
+5. If your team names are complex with multiple segments (e.g., `rnd-developer-team-product` → `rnd_developer_team_product`):
     ```json
     "owning_team": "{{ .event.diff.after.relations.repository | split(\"_\") | .[0] | split(\"/\") | .[1] | gsub(\"-\"; \"_\") }}"
     ```
