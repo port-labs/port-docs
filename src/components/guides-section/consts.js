@@ -1229,6 +1229,21 @@ export const availableGuides = [
         link: "/guides/all/manage-and-visualize-your-launchdarkly-feature-flags",
     },
     {
+         title: "Manage and visualize your PagerDuty incidents",
+          description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
+          tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+          logos: ["PagerDuty"],
+          link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+    },
+    {
+
+        title: "Manage and visualize ECS Tasks",
+        description: "Select from your clusters and services, and easily scale tasks up or down",
+        tags: ["Cloud access management", "AWS", "GitHub", "Actions", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-ecs-tasks",
+    },
+    {
         title: "Manage and visualize your PagerDuty incidents",
         description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
         tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
