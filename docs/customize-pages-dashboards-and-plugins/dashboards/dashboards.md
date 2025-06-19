@@ -59,6 +59,7 @@ Pie charts illustrate data from entities in your software catalog divided by cat
 | `Title`                 | `String` | Pie chart title                                                                                                              | `null`  | `true`   |
 | `Icon`                  | `String` | Pie chart Icon                                                                                                               | `null`  | `false`  |
 | `Description`           | `String` | Pie chart description                                                                                                        | `null`  | `false`  |
+| `Empty state text`      | `String` | Pie chart empty state text                                                  | `No data for this widget`  | `false`  |
 | `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
@@ -107,6 +108,7 @@ However, since 5 is closer to 6 than to 8, the widget will be colored yellow - t
 | `Title`           | `String` | Number Chart title                                                                                                                                                                                                                          | `null`     | `true`   |
 | `Icon`            | `String` | Number Chart Icon                                                                                                                                                                                                                           | `null`     | `false`  |
 | `Description`     | `String` | Number Chart description                                                                                                                                                                                                                    | `null`     | `false`  |
+| `Empty state text`      | `String` | Number chart empty state text         | `No data for this widget`  | `false`  |
 | `Chart type`    | `String` | Defines the operation type for the chart. Possible values: `Display single property`, `Count entities`, `Aggregate by property`                                                                                                                      | `null` | `true`   |
 | `Blueprint`       | `String` | The chosen blueprint from which related entities data is visualized from                                                                                                                                                                    | `null`     | `true`   |
 | `Condition`       | `Object` | Defines the condition under which the number chart widget will update its color, display a status label, and have a tooltip message                                                                                                                                                                    | `null`     | `false`   |
@@ -561,6 +563,21 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
 ### Dynamic filters
 
 You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when filtering a widget.
+
+## Custom empty state
+
+The custom empty state field gives you the ability to define a custom message that appears when a widget has no data. This message can provide useful context to users such as setup instructions, relevant explanations, or helpful links.
+
+The custom message supports Markdown formatting, so you can include links and other rich text elements. These will be rendered directly in the widget, making your guidance more actionable.
+
+If you leave this field blank, the widget will display a default message: **"No data for this widget"**.
+
+The following widget types support the custom empty state message:
+
+- [Pie chart](/customize-pages-dashboards-and-plugins/dashboards/#pie-chart)
+- [Number chart](/customize-pages-dashboards-and-plugins/dashboards/#number-chart)
+- [Line chart](/customize-pages-dashboards-and-plugins/dashboards/#line-chart)
+- [Tables](/customize-pages-dashboards-and-plugins/dashboards/#table)
 
 ## Widget type identifiers (Terraform)
 
