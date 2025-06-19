@@ -26,7 +26,7 @@ In this step-by-step guide, we will create Port blueprints and actions, which wi
 ## Prerequisites
 
 A List of prerequisites this guide has. Some common examples:
-- Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+- Prepare your Port organization's `Client ID` and `Client Secret`. To find your Port credentials, click [here](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 - In your GitHub organization, create a new repository called `XXXXXX`. You will use this repository to maintain your GitHub workflows, and other dependency files.
 - In this guide, we will be deploying X using Helm. Prepare a K8s cluster.
 
@@ -138,13 +138,13 @@ jobs:
     steps:
       - run: |
           echo "Doing X"
-  do-x:
+  do-y:
     name: Do Y
     runs-on: ubuntu-latest
     steps:
       - run: |
           echo "Doing X"
-  do-x:
+  do-z:
     name: Do Z
     runs-on: ubuntu-latest
     steps:
@@ -181,7 +181,7 @@ Don't know how to create Port actions using JSONs in the Port UI?
 Click [here](/docs/actions-and-automations/create-self-service-experiences/setup-ui-for-action/?configure=ui#configuring-actions-in-port)!
 :::
 
-Let's create the Port actions to tirgger the workflows we just created:
+Let's create the Port actions to trigger the workflows we just created:
 <details>
     <summary>`...` Port action</summary>
 
@@ -222,7 +222,7 @@ In this section, everything is set up and ready to use. We just need to create a
 
 
 EXAMPLE:
-Now after evething is set up, we just need to create a few entities.
+Now after everything is set up, we just need to create a few entities.
 
 ### Defining entities for the usecase
 We will be using entities from blueprint `X` to handle our ..... Navigate to the [X](https://app.getport.io/X) catalog page to create some entities.
@@ -235,24 +235,24 @@ We will be using entities from blueprint `X` to handle our ..... Navigate to the
 We are all set!
 
 ### Using the use-case
-After the use-case setup is complete, we want to instruct the reader how to use the use-case. This include running the actions, updating entities, aquiring data regarding his entities etc...
+After the use-case setup is complete, we want to instruct the reader how to use the use-case. This includes running the actions, updating entities, aquiring data regarding his entities, etc...
 
 EXAMPLE:
 Now that we finished setting up our Port environment, and our action backends, we are ready to do X,Y,Z.
 
 #### Doing X
-Let's start by ruuning action ...
+Let's start by running action ...
 
 Click on the `...` at the top right of the entity screen -> click `RUN ACTION` -> choose an `INPUT`  -> click `Execute`.
 
 This will trigger a new action run which will appear in the right action runs bar. Click on the action run to navigate to the run page.
 
-When the Port action run will end, you will get action logs which will show you info regarding:
+When the Port action run ends, you will get action logs which will show you info regarding:
 - A
 - B
 - C
 
-The actoin will also create a new `X` entity which you can see in the [X](https://app.getport.io/X) catalog page.
+The action will also create a new `X` entity which you can see in the [X](https://app.getport.io/X) catalog page.
 
 Click the link the the action logs to do reach X.
 
