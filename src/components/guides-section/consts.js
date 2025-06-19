@@ -1229,7 +1229,6 @@ export const availableGuides = [
         link: "/guides/all/manage-pagerduty-on-call-schedules",
     },
     {
-
         title: "Manage and visualize your LaunchDarkly feature flags",
         description: "Create a comprehensive feature flag management system to create, toggle, and archive flags",
         tags: ["Feature flag management","Launchdarkly", "Actions", "Webhook", "Automations"],
@@ -1237,11 +1236,40 @@ export const availableGuides = [
         link: "/guides/all/manage-and-visualize-your-launchdarkly-feature-flags",
     },
     {
+         title: "Manage and visualize your PagerDuty incidents",
+          description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
+          tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+          logos: ["PagerDuty"],
+          link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+    },
+    {
+
+        title: "Manage and visualize ECS Tasks",
+        description: "Select from your clusters and services, and easily scale tasks up or down",
+        tags: ["Cloud access management", "AWS", "GitHub", "Actions", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-ecs-tasks",
+    },
+    {
         title: "Manage and visualize your PagerDuty incidents",
         description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
         tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
         logos: ["PagerDuty"],
         link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+    },
+    {
+        title: "Manage and visualize your AWS SQS queues",
+        description: "Manage your AWS SQS queues with self-service actions and create dashboards for visualization",
+        tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-aws-sqs-queues",
+    },
+    {
+        title: "Manage and visualize your Jira issues",
+        description: "Create a comprehensive Jira issue management system to create, update, and archive issues",
+        tags: ["Incident management", "Jira", "Actions", "Dashboards"],
+        logos: ["Jira"],
+        link: "/guides/all/manage-and-visualize-jira-issues",
     }
 ]
 
