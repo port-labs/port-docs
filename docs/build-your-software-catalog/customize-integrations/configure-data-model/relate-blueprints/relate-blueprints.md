@@ -188,11 +188,22 @@ A Relation can't be configured with both `many` and `required` set to `true`.
 
 Relations are part of the structure of a [blueprint](../setup-blueprint/setup-blueprint.md#blueprint-structure).
 
-<Tabs groupId="definition" queryString defaultValue="api" values={[
-{label: "API", value: "api"},
+<Tabs groupId="definition" queryString defaultValue="ui" values={[
 {label: "UI", value: "ui"},
+{label: "API", value: "api"},
 {label: "Terraform", value: "tf"}
 ]}>
+
+<TabItem value="ui">
+
+1. Go to the [Builder page](https://app.getport.io/settings) of your portal.
+2. Expand the blueprint from which you would like to create a relation.
+3. Click on the `+ New relation` button:
+   
+    <img src='/img/software-catalog/customize-integrations/createRelation.png' width='30%' border='1px' />
+4. Fill in the form with your desired values, then click `Create`.
+
+</TabItem>
 
 <TabItem value="api">
 
@@ -221,17 +232,6 @@ Relations are part of the structure of a [blueprint](../setup-blueprint/setup-bl
 ```
 
 <ApiRef />
-
-</TabItem>
-
-<TabItem value="ui">
-
-1. Go to the [Builder page](https://app.getport.io/settings) of your portal.
-2. Expand the blueprint from which you would like to create a relation.
-3. Click on the `+ New relation` button:
-   
-    <img src='/img/software-catalog/customize-integrations/createRelation.png' width='30%' border='1px' />
-4. Fill in the form with your desired values, then click `Create`.
 
 </TabItem>
 
