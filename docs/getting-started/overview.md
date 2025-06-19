@@ -16,7 +16,7 @@ This section will walk you through the phases of the onboarding process, and des
 
 ## Onboarding steps
 
-1. [Connect your tools](./connect-tools.md) - Select the tools and platforms used in your organization, and connect them to to your portal.
+1. [Connect your tools](./connect-tools.md) - Select the tools and platforms used in your organization, and connect them to your portal.
 
 2. [Set up your service catalog](./set-up-service-catalog.md) - Create some core components to start populating your software catalog with data from your tools.
 
