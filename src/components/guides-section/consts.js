@@ -1222,7 +1222,6 @@ export const availableGuides = [
         link: "/guides/all/manage-pagerduty-on-call-schedules",
     },
     {
-
         title: "Manage and visualize your LaunchDarkly feature flags",
         description: "Create a comprehensive feature flag management system to create, toggle, and archive flags",
         tags: ["Feature flag management","Launchdarkly", "Actions", "Webhook", "Automations"],
@@ -1235,6 +1234,13 @@ export const availableGuides = [
         tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
         logos: ["PagerDuty"],
         link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+    },
+    {
+        title: "Manage and visualize your AWS SQS queues",
+        description: "Manage your AWS SQS queues with self-service actions and create dashboards for visualization",
+        tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-aws-sqs-queues",
     },
     {
         title: "Manage and visualize your Jira issues",
