@@ -28,7 +28,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Deploy Azure resources using Terraform](/guides/all/create-azure-resource.md)
 - [Create GitHub secret using GitHub workflows](/guides/all/create-github-secret.md)
 - [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
-- [Lock service deployment](/guides/all/service-lock-github-workflow)
+- [Lock service deployment](/guides/all/lock-and-unlock-service-in-port)
 - [Nudge PR reviewers](/guides/all/nudge-pr-reviewers)
 - [Promote to production](/guides/all/promote-to-production)
 - [Self-service action to lock and unlock a service](/guides/all/lock-and-unlock-service-in-port)

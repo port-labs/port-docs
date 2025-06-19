@@ -133,14 +133,14 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/iam-permissions-guide",
     },
-    {
-        title: "Lock service deployment",
-        description: "Implement a service locking mechanism using Port's GitHub Action",
-        tags: ["SDLC", "Actions"],
-        logos: ["GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/service-lock-github-workflow",
-    },
+    // {
+    //     title: "Lock service deployment",
+    //     description: "Implement a service locking mechanism using Port's GitHub Action",
+    //     tags: ["SDLC", "Actions"],
+    //     logos: ["GitHub"],
+    //     // category: "Getting started",
+    //     link: "/guides/all/service-lock-github-workflow",
+    // },
     {
         title: "Automate Slack alerts for Overdue PRs",
         description: "Send a Slack notification for pull requests that have been open longer than a specified time using an automation",
