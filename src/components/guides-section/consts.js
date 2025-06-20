@@ -1132,9 +1132,9 @@ export const availableGuides = [
     },
     {
         title: "Manage and visualize your AWS S3 buckets and RDS instances",
-        description: "Create a dashboard that visualizes your AWS storage and security configuration",
-        tags: ["Security", "AWS", "Dashboards"],
-        logos: ["AWS"],
+        description: "Create a dashboard that manages and visualizes your AWS S3 buckets and RDS instances",
+        tags: ["Security", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub",],
         link: "/guides/all/visualize-your-aws-storage-configuration",
     },
     {
