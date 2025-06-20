@@ -1131,7 +1131,7 @@ export const availableGuides = [
         link: "/guides/all/delete-servicenow-incident",
     },
     {
-        title: "Visualize your AWS storage and security configuration",
+        title: "Manage and visualize your AWS S3 buckets and RDS instances",
         description: "Create a dashboard that visualizes your AWS storage and security configuration",
         tags: ["Security", "AWS", "Dashboards"],
         logos: ["AWS"],
