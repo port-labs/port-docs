@@ -446,3 +446,30 @@ jobs:
 
 11. If using the GitHub workflow approach, push code again - the workflow should now succeed
 
+
+
+Here are some visual examples of the workflow in action:
+
+<h4>When a service is locked:</h4>  
+
+If you try to push code to your repository when the `locked_in_prod` field is set to `true`, the deployment workflow will stop:
+
+<img src="/img/guides/serviceInProdLocked.png" border="1px" />
+
+When you look at the step that failed, you will see that the failure is due to the value of the locked field:
+
+<img src="/img/guides/serviceInProdLockedDetails.png" border="1px" />
+
+**When a service is unlocked:**
+
+If you set the value of the `locked_in_prod` field to `false`, the workflow will perform the deployment without any issue:
+
+<img src="/img/guides/serviceInProdNotLocked.png" border="1px" />
+
+**Slack notifications:**
+
+Below is the result of successful service lock and unlock alerts sent to a Slack channel after triggering the actions:
+
+<img src="/img/guides/lockServiceSlackAlert.png" border="1px" />
+<img src="/img/guides/unlockServiceSlackAlert.png" border="1px" />
+
