@@ -12,7 +12,7 @@ import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/c
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # SonarQube
 
@@ -420,6 +420,85 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: projects_ga
+  selector:
+    query: 'true'
+    apiFilters:
+      qualifier:
+      - TRK
+    metrics:
+    - code_smells
+    - coverage
+    - bugs
+    - vulnerabilities
+    - duplicated_files
+    - security_hotspots
+    - new_violations
+    - new_coverage
+    - new_duplicated_lines_density
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .name
+        blueprint: '"sonarQubeProject"'
+        properties:
+          organization: .organization
+          link: .__link
+          qualityGateStatus: .__branch.status.qualityGateStatus
+          lastAnalysisDate: .analysisDate
+          numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
+          numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
+          numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
+          numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
+          numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
+          coverage: .__measures[]? | select(.metric == "coverage") | .value
+          mainBranch: .__branch.name
+          revision: .revision
+          managed: .managed
+        relations:
+          group: '"all_teams"'
+- kind: issues
+  selector:
+    query: 'true'
+    apiFilters:
+      resolved: 'false'
+    projectApiFilters: {}
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .message
+        blueprint: '"sonarQubeIssue"'
+        properties:
+          type: .type
+          severity: .severity
+          link: .__link
+          status: .status
+          assignees: .assignee
+          tags: .tags
+          createdAt: .creationDate
+        relations:
+          sonarQubeProject: .project
+```
+
+</details>
+
+
+<MetricsAndSyncStatus/>
 
 
 ## Examples

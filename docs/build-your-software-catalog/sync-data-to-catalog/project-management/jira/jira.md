@@ -16,6 +16,7 @@ import JiraUserEntity from "/docs/build-your-software-catalog/sync-data-to-catal
 import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_issue_example_entity.mdx"
 import JiraTeamExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_response.mdx"
 import JiraTeamEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_entity.mdx"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Jira
 
@@ -45,11 +46,20 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
-### Required API Token Scopes
+### Base URLs for scoped and unscoped tokens
 
-:::warning Jira API token deprecation
-Jira is deprecating API tokens without scopes. When creating Jira API tokens, you must configure the following required scopes for the integration to function properly.
+Atlassian is deprecating API tokens without scopes in favor of scoped tokens. This change introduces different base URLs depending on whether you're using scoped or unscoped tokens. To ensure your Port Jira integration functions correctly, please use the appropriate URL based on your token type:
+
+* **Scoped Tokens**: Use `https://api.atlassian.com/ex/jira/{cloudid}`.
+    * To find your Jira Cloud instance ID (the `{cloudid}`), refer to the official Atlassian guide: [How to retrieve your Atlassian Cloud ID](https://support.atlassian.com/jira/kb/retrieve-my-atlassian-sites-cloud-id/).
+* **Unscoped Tokens**: Use `https://{your-domain}.atlassian.net/rest`, replacing `{your-domain}` with your specific Jira instance domain.
+
+:::warning Scoped token limitation for webhooks
+
+Scoped tokens are currently not supported for webhook registration. To enable real-time updates, you can either configure webhooks manually using the [Webhook installation method](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook) or use an unscoped token with the appropriate base url.
 :::
+
+### Required API Token Scopes
 
 The Port Jira integration requires the following API token scopes:
 
@@ -71,7 +81,7 @@ Choose one of the following installation methods:
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
 :::caution API Token authentication recommended
-For production, we recommend using **API Token authentication** for Port’s Jira integration.  
+For production, we recommend using **API Token authentication** for Port's Jira integration.  
 It ensures stable data syncing and prevents issues caused by user account changes.  
 
 OAuth is best suited for the **initial setup** phase, such as configuring mappings.
@@ -453,6 +463,111 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .accountId
+        title: .displayName
+        blueprint: '"jiraUser"'
+        properties:
+          emailAddress: .emailAddress
+          displayName: .displayName
+          active: .active
+          accountType: .accountType
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .name
+        blueprint: '"jiraProject"'
+        properties:
+          url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
+- kind: issue
+  selector:
+    query: 'true'
+    jql: (statusCategory != Done) OR (created >= -1w) OR (updated >= -1w)
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .fields.summary
+        blueprint: '"jiraIssue"'
+        properties:
+          url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
+          status: .fields.status.name
+          issueType: .fields.issuetype.name
+          components: .fields.components
+          creator: .fields.creator.emailAddress
+          priority: .fields.priority.name
+          labels: .fields.labels
+          created: .fields.created
+          updated: .fields.updated
+          resolutionDate: .fields.resolutiondate
+        relations:
+          project: .fields.project.key
+          parentIssue: .fields.parent.key
+          subtasks: .fields.subtasks | map(.key)
+          jira_user_assignee: .fields.assignee.accountId
+          jira_user_reporter: .fields.reporter.accountId
+          assignee:
+            combinator: '"or"'
+            rules:
+            - property: '"jira_user_id"'
+              operator: '"="'
+              value: .fields.assignee.accountId
+            - property: '"$identifier"'
+              operator: '"="'
+              value: .fields.assignee.email
+          reporter:
+            combinator: '"or"'
+            rules:
+            - property: '"jira_user_id"'
+              operator: '"="'
+              value: .fields.reporter.accountId
+            - property: '"$identifier"'
+              operator: '"="'
+              value: .fields.reporter.email
+- kind: issue
+  selector:
+    query: 'true'
+    jql: (statusCategory != Done) OR (created >= -1w) OR (updated >= -1w)
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .fields.summary
+        blueprint: '"jiraIssue"'
+        relations:
+          pull_request:
+            combinator: '"and"'
+            rules:
+            - property: '"$title"'
+              operator: '"contains"'
+              value: .key
+```
+
+</details>
+
 
 ### JQL support for issues
 
@@ -872,6 +987,8 @@ When installing the integration [via OAuth](/build-your-software-catalog/sync-da
 
 If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**.  
 This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password.
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

@@ -31,6 +31,21 @@ This operator can also be used to check the value of `boolean` properties:
 }
 ```
 
+For datetime properties, the `=` operator only supports ISO8601 format strings:
+
+```json showLineNumbers
+{
+  "operator": "=",
+  "property": "$createdAt",
+  "value": "2022-07-26T16:38:06.839Z"
+}
+```
+
+:::info DateTime format support
+The `=` operator only supports ISO8601 format strings for datetime values.   
+To use preset date ranges (like "lastWeek", "today", etc.), use the [between](#between) or [notBetween](#notbetween) operators instead.
+:::
+
 ### != (Not Equal)
 
 The `!=` operator checks exact matches of the specified value and returns all results that fail to satisfy the check:
@@ -234,15 +249,39 @@ The `notBetween` operator checks datetime values and returns entities whose rele
 
 ### contains
 
-The `contains` operator checks if the specified substring exists in the specified property:
+The `contains` operator compares string properties based on the target property type:
+
+<Tabs values={[
+{label: "String property", value: "stringProp"},
+{label: "Array property", value: "arrayProp"}
+]}>
+
+<TabItem value="stringProp">
+When used on a string property, the operator will check if the value is contained inside the property:
 
 ```json showLineNumbers
 {
-  "operator": "contains",
   "property": "myStringProperty",
+  "operator": "myStringProperty",
   "value": "mySubString"
 }
 ```
+
+</TabItem>
+
+<TabItem value="arrayProp">
+When used on a string array property, the operator will check if the value is equal to one of the strings in the array:
+
+```json showLineNumbers
+{
+  "property": "myStringArrayProp",
+  "operator": "contains",
+  "value": "myString"
+}
+```
+</TabItem>
+
+</Tabs>
 
 ### doesNotContains
 

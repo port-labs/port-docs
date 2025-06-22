@@ -52,7 +52,7 @@ In the following example you will ingest your Bitbucket repositories and their f
 
 ## Mapping files
 
-In the following example you will ingest files from a specific repository. You will be able to map files and and file contents from specific repositories as entities in Port:
+In the following example you will ingest files from a specific repository. You will be able to map files and file contents from specific repositories as entities in Port:
 
 <FileBlueprint/>
 

@@ -39,7 +39,7 @@ You can check out the Helm chart [here](https://github.com/port-labs/helm-charts
 - [A logged in aws CLI 2](https://aws.amazon.com/cli/)
 - [AWS Access Key ID and Secret Access Key](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html#id_users_creds)
 
-```bash
+```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws port-labs/port-ocean \
   --set port.clientId="$PORT_CLIENT_ID"  \
@@ -68,7 +68,7 @@ You'll need to:
 - create a service account in your K8s cluster.
   Then you can set the following values, after [assigning the appropriate IAM role to the service account](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html):
 
-```bash
+```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws port-labs/port-ocean \
   --set port.clientId="$PORT_CLIENT_ID"  \
@@ -94,7 +94,7 @@ For running the AWS integration using helm, you'll need to make sure that you ha
 
 Then, you'll be able to run the integration: (You can switch the `podServiceAccount.name` configuration to your `integration.config.awsAccessKeyId`, `integration.config.awsSecretAccessKey` configurations)
 
-```bash
+```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws port-labs/port-ocean \
   --set port.clientId="$PORT_CLIENT_ID"  \
@@ -117,7 +117,7 @@ helm upgrade --install aws port-labs/port-ocean \
   The AWS integration is deployed using Terraform on AWS ECS cluster service.  
   It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
-## Prerequisites
+<h2>Prerequisites</h2>
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 1.9.1
 - [A logged in aws CLI 2](https://aws.amazon.com/cli/)
@@ -129,7 +129,7 @@ It does not take into consideration the **live-events** infrastructure **which i
 The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) are optional and can be removed if not needed.
 :::
 
-```bash
+```bash showLineNumbers
 	# Logging into you AWS account
 	aws sso login
 	# Copying the following module into a main.tf file
@@ -206,7 +206,7 @@ The AWS integration uses the following AWS infrastructure:
 </TabItem>
 <TabItem value="on-prem" label="On Prem (Once)">
 
-## Prerequisites
+<h2>Prerequisites</h2>
 
 - Create an IAM user with the following permissions:
   - `arn:aws:iam::aws:policy/ReadOnlyAccess`
