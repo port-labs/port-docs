@@ -988,7 +988,6 @@ export const availableGuides = [
         description: "Set up a Task Manager AI agent to help developers track and manage tasks efficiently",
         tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
         logos: ["AI", "Jira", "GitHub"],
-        category: "AI",
         link: "/guides/all/setup-task-manager-ai-agent",
     },
     {
@@ -1003,7 +1002,6 @@ export const availableGuides = [
         description: "Set up an AI agent that provides contextual information and insights to task assignees",
         tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
         logos: ["AI", "Jira", "GitHub"],
-        category: "AI",
         link: "/guides/all/enrich-tasks-with-ai",
     },
     {
@@ -1012,6 +1010,13 @@ export const availableGuides = [
         tags: ["SDLC", "AI", "GitHub", "Jira", "PagerDuty"],
         logos: ["AI", "GitHub", "Jira"],
         link: "/guides/all/setup-pr-enricher-ai-agent",
+    },
+    {
+        title: "Set up the Service Explorer AI agent",
+        description: "Set up an AI agent that helps developers explore and understand your software catalog",
+        tags: ["AI", "GitHub"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/setup-service-explorer-ai-agent",
     },
     {
         title: "Create a GitHub issue",
