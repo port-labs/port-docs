@@ -1133,7 +1133,7 @@ export const availableGuides = [
     {
         title: "Interact with ServiceNow records and delete incidents",
         description: "Create a self-service action that interacts with ServiceNow records and delete ServiceNow incidents",
-        tags: ["Incident management", "ServiceNow", "Actions"],
+        tags: ["Incident management", "ServiceNow", "Actions","Webhook","Automations"],
         logos: ["ServiceNow"],
         link: "/guides/all/interact-with-servicenow",
     },

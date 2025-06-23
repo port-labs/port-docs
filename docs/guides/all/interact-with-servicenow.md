@@ -22,51 +22,11 @@ You will learn how to create, update and delete records and delete incidents in 
 - Complete the [onboarding process](/getting-started/overview).
 - Access to your ServiceNow account with permissions to manage records in relevant tables.
 
-## Set up data source mapping
-
-Before we can delete a ServiceNow incident, we need to update the data source mapping for the ServiceNow incident mapping, by default, the `identifier` of the `incident` kind is mapped to the incident number (`.number`). However, deleting records in ServiceNow via API requires the system's internal ID (`.sys_id`). To fix this:
-
-1. Go to the [Data Sources](https://app.getport.io/settings/data-sources) page of your portal.
-2. Select the ServiceNow integration.
-3. Add the following YAML block into the editor to update the incident data:
-
-    <details>
-    <summary><b>Updated ServiceNow integration configuration (Click to expand)</b></summary>
-    ```yaml showLineNumbers
-    resources:
-    - kind: incident
-        selector:
-        query: 'true'
-        apiQueryParams:
-            sysparmDisplayValue: 'true'
-            sysparmExcludeReferenceLink: 'false'
-        port:
-        entity:
-            mappings:
-            # highlight-next-line
-            identifier: .sys_id
-            title: .short_description
-            blueprint: '"servicenowIncident"'
-            properties:
-                category: .category
-                reopenCount: .reopen_count
-                severity: .severity
-                assignedTo: .assigned_to.link
-                urgency: .urgency
-                contactType: .contact_type
-                createdOn: '.sys_created_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))'
-                createdBy: .sys_created_by
-                isActive: .active
-                priority: .priority
-    ```
-    </details>
-    
-4. Click `Save & Resync` to apply the mapping.
 
 
 ## Implementation
 
-To enable interaction with ServiceNow from Port, we will configure three self-service actions:
+To enable interaction with ServiceNow from Port, we will configure four self-service actions:
 
 1. Create a ServiceNow record
 2. Update a ServiceNow record
