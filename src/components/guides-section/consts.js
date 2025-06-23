@@ -1131,8 +1131,8 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-aws-storage-configuration",
     },
     {
-        title: "Interact with ServiceNow records",
-        description: "Create a self-service action that interacts with ServiceNow records",
+        title: "Interact with ServiceNow records and delete incidents",
+        description: "Create a self-service action that interacts with ServiceNow records and delete ServiceNow incidents",
         tags: ["Incident management", "ServiceNow", "Actions"],
         logos: ["ServiceNow"],
         link: "/guides/all/interact-with-servicenow",
