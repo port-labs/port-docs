@@ -959,7 +959,7 @@ export const availableGuides = [
         title: "Enrich security vulnerabilities using AI",
         description: "Leverage AI tools to get detailed analysis and remediation strategies for security vulnerabilities",
         tags: ["Security", "AI", "Actions", "Automations"],
-        logos: ["Snyk", "Wiz", "SonarQube"],
+        logos: ["AI", "Snyk", "Wiz"],
         link: "/guides/all/enrich-security-vulnerability-using-ai",
     },
     {
@@ -985,19 +985,35 @@ export const availableGuides = [
     },
     {
         title: "Set up the Task Manager AI agent",
-        description: "Set up an AI agent that helps developers track and manage tasks efficiently",
-        tags: ["AI","Jira","GitHub","Slack"],
-        logos: ["AI"],
+        description: "Set up a Task Manager AI agent to help developers track and manage tasks efficiently",
+        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
+        logos: ["AI", "Jira", "GitHub"],
+        category: "AI",
         link: "/guides/all/setup-task-manager-ai-agent",
-	  },
-	  {
+    },
+    {
         title: "Set up the Incident Manager AI agent",
         description: "Set up an AI agent that helps developers track and manage incidents efficiently",
         tags: ["Incident management", "AI", "PagerDuty", "Slack"],
-        logos: ["AI"],
+        logos: ["AI", "PagerDuty", "Slack"],
         link: "/guides/all/setup-incident-manager-ai-agent",
-	  },
-	  {
+    },
+    {
+        title: "Enrich tasks with AI",
+        description: "Set up an AI agent that provides contextual information and insights to task assignees",
+        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
+        logos: ["AI", "Jira", "GitHub"],
+        category: "AI",
+        link: "/guides/all/enrich-tasks-with-ai",
+    },
+    {
+        title: "Enrich pull requests using AI",
+        description: "Set up an AI agent that automatically comments on pull requests with additional context",
+        tags: ["SDLC", "AI", "GitHub", "Jira", "PagerDuty"],
+        logos: ["AI", "GitHub", "Jira"],
+        link: "/guides/all/setup-pr-enricher-ai-agent",
+    },
+    {
         title: "Create a GitHub issue",
         description: "Create a self-service action that creates a GitHub issue",
         tags: ["GitHub", "Actions", "Webhook"],
@@ -1010,20 +1026,6 @@ export const availableGuides = [
         tags: ["GitHub", "Actions", "Webhook", "Automations"],
         logos: ["GitHub"],
         link: "/guides/all/verify-service",
-    },
-    {
-        title: "Set up the Task Assistant AI agent",
-        description: "Set up an AI agent that provides contextual information and insights to task assignees",
-        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
-        logos: ["AI"],
-        link: "/guides/all/setup-task-assistant-ai-agent",
-    },
-    {
-        title: "Enrich pull requests using AI",
-        description: "Set up an AI agent that automatically comments on pull requests with additional context",
-        tags: ["SDLC", "AI", "GitHub", "Jira", "PagerDuty"],
-        logos: ["AI"],
-        link: "/guides/all/setup-pr-enricher-ai-agent",
     },
     {
         title: "Enforce Branch Protection Rules with Scorecards",

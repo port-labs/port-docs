@@ -1,12 +1,12 @@
 ---
 displayed_sidebar: null
-description: Set up a Task Assistant AI agent to provide contextual information and insights to task assignees
+description: Enrich tasks with AI-powered context, providing developers with automated insights, related issues, and potential collaborators.
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Set up the Task Assistant AI agent
+# Enrich Tasks with AI-Powered Context
 
 ## Overview
 
@@ -84,7 +84,7 @@ Install the following integration to have access to these data sources:
          "comment_on_jira_issue"
        ],
        "executionMode": "Automatic",
-       "prompt": "# Task\nWhen a user starts a task, automatically send a greeting using their first name and explain this is an automatic message. Then share three sections with emojis for helpful context.\n\n## Message Format\n\nHey there [User’s First Name], it’s Clarity :crystal_ball: - the Port AI agent!\nI noticed you just started working on a new task: [link to assigned issue].\nHere’s some context to help you get started :blobdance:\n\n:male-technologist: Devs who might have input:\nList up to 3 developers (excluding the user), explain briefly why each is relevant. If none, write a meaningful explanation.\n\n:jira: Similar Jira Issues:\nList up to 3 Jira issues (not assigned to the user), mention the assigned person and why it’s relevant. If none, explain why.\n\n:github_on_fire: Similar Pull Requests:\nList up to 3 pull requests (not assigned to the user), mention the creator and why it’s relevant. If none, explain why.\n\n## Guidelines\n- Each section can have fewer than 3 items. Always explain if empty.",
+       "prompt": "# Task\nWhen a user starts a task, automatically send a greeting using their first name and explain this is an automatic message. Then share three sections with emojis for helpful context.\n\n## Message Format\n\nHey there [User's First Name], it's Clarity :crystal_ball: - the Port AI agent!\nI noticed you just started working on a new task: [link to assigned issue].\nHere's some context to help you get started :blobdance:\n\n:male-technologist: Devs who might have input:\nList up to 3 developers (excluding the user), explain briefly why each is relevant. If none, write a meaningful explanation.\n\n:jira: Similar Jira Issues:\nList up to 3 Jira issues (not assigned to the user), mention the assigned person and why it's relevant. If none, explain why.\n\n:github_on_fire: Similar Pull Requests:\nList up to 3 pull requests (not assigned to the user), mention the creator and why it's relevant. If none, explain why.\n\n## Guidelines\n- Each section can have fewer than 3 items. Always explain if empty.",
        "allowed_tools": [
          "Entities Search",
          "Entities Similarity Search",
