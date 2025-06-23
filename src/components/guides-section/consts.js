@@ -1263,6 +1263,13 @@ export const availableGuides = [
         tags: ["Incident management", "Jira", "Actions", "Dashboards"],
         logos: ["Jira"],
         link: "/guides/all/manage-and-visualize-jira-issues",
+    },
+    {
+        title: "Add custom context to AI agents using entities",
+        description: "Learn how to enhance AI agents with custom context like Root Cause Analysis documents using entities",
+        tags: ["AI", "Incident management", "Actions"],
+        logos: ["AI"],
+        link: "/guides/all/add-context-to-incident-manager-ai-agent",
     }
 ]
 
