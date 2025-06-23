@@ -6,13 +6,16 @@ description: Learn how to monitor and manage your AWS ACM certificates using sel
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 
-# Manage your ACM certificates
+# Manage and visualize your ACM certificates
 
 This guide demonstrates how to bring your AWS ACM certificate management experience into Port. You will learn how to:
 
 - Ingest ACM certificate data into Port's software catalog using **Port's AWS** integration.
 - Set up **self-service actions** to manage ACM certificates (request new certificates, renew certificates, and delete certificates).
+- Build **dashboards** in Port to monitor and take action on your ACM resources.
 
+<img src="/img/guides/acmDashboard1.png" border="1px" width="100%" />
+<img src="/img/guides/acmDashboard2.png" border="1px" width="100%" />
 
 ## Common use cases
 
@@ -642,3 +645,106 @@ Now you should see the `Delete ACM Certification` action in the self-service pag
 :::warning Data loss risk
 The delete action permanently removes the certificate and its associated private key. This operation cannot be undone, so use it carefully.
 :::
+
+## Visualize certificate metrics
+
+With your data and actions in place, we can create a dedicated dashboard in Port to visualize all ACM certificates by status, usage, and expiration. In addition, we can trigger actions (request new certificate, renew, delete) directly from the dashboard.
+
+### Create a dashboard
+
+1. Navigate to the [Catalog](https://app.getport.io/organization/catalog) page of your portal.
+2. Click on the **`+ New`** button in the left sidebar.
+3. Select **New dashboard**.
+4. Name the dashboard **ACM Certificate Management**.
+5. Input `Monitor and manage your AWS ACM certificates` under **Description**.
+6. Select the `AWS` icon.
+7. Click `Create`.
+
+We now have a blank dashboard where we can start adding widgets to visualize insights from our AWS ACM certificates.
+
+### Add widgets
+
+In the new dashboard, create the following widgets:
+
+<details>
+<summary><b>Certificates not in use (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Number Chart**.
+2. Title: `Certificates not in use` (add the `AWS` icon).
+3. Select `Count entities` **Chart type** and choose **ACM Certificate** as the **Blueprint**.
+4. Select `count` for the **Function**.
+5. Add this JSON to the **Additional filters** editor to filter certificates not in use:
+    ```json showlineNumbers
+    [
+        {
+            "combinator":"and",
+            "rules":[
+                {
+                    "property":"inUse",
+                    "operator":"=",
+                    "value": false
+                }
+            ]
+        }
+    ]
+    ```
+6. Select `custom` as the **Unit** and input `certificates` as the **Custom unit**.
+7. Click **Save**.
+
+</details>
+
+<details>
+<summary><b>Certificates by status (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Pie chart**.
+2. Title: `Certificates by status` (add the `AWS` icon).
+3. Choose the **ACM Certificate** blueprint.
+4. Under `Breakdown by property`, select the **Status** property.
+5. Click **Save**.
+
+</details>
+
+<details>
+<summary><b>Expired certificates table (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Table**.
+2. Title: `Expired certificates` (add the `AWS` icon).
+3. Choose the **ACM Certificate** blueprint.
+5. Add this JSON to the **Additional filters** editor to filter expired certificates:
+    ```json showlineNumbers
+    {
+      "combinator":"and",
+      "rules":[
+          {
+            "operator":"=",
+            "value":"acmCertificate",
+            "property":"$blueprint"
+          },
+          {
+            "operator":"=",
+            "value":"EXPIRED",
+            "property":"status"
+          }
+      ]
+    }
+    ```
+5. Click **Save** to add the widget to the dashboard.
+6. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
+7. In the top right corner of the table, click on `Manage Properties` and add the following properties:
+   - **Title**: The certificate domain name.
+   - **Status**: The current status of the certificate.
+   - **Expiration Date**: When the certificate expired.
+   - **Account**: The name of each related AWS account.
+   - **In Use**: Whether the certificate is currently in use.
+8. Click on the **save icon** in the top right corner of the widget to save the customized table.
+
+</details>
+
+<details>
+<summary><b>Request new certificate action (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Action card**.
+2. Choose the **Request ACM Certificate** action we created in this guide.
+3. Click **Save**.
+
+</details>
