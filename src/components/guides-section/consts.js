@@ -1263,6 +1263,13 @@ export const availableGuides = [
         tags: ["Incident management", "Jira", "Actions", "Dashboards"],
         logos: ["Jira"],
         link: "/guides/all/manage-and-visualize-jira-issues",
+    },
+    {
+        title: "Manage your ACM certificates",
+        description: "Create a comprehensive certificate management system to create, renew, and delete certificates",
+        tags: ["Security", "AWS", "GitHub", "Actions"],
+        logos: ["AWS","GitHub"],
+        link: "/guides/all/manage-your-acm-certificates",
     }
 ]
 
