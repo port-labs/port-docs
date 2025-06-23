@@ -15,7 +15,7 @@ Port's Bitbucket integration makes it possible to manage Port entities with a Gi
 
 :::info Bitbucket Server (Self-Hosted)
 This documentation covers GitOps for **Bitbucket Cloud**. 
-For information about GitOps with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server GitOps documentation](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/gitops.md).
+For information about GitOps with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server GitOps documentation](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/gitops.md).
 :::
 
 

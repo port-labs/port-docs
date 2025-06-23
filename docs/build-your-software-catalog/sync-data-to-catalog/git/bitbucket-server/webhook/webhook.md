@@ -1,16 +1,16 @@
 ---
-sidebar_position: 19
+sidebar_position: 1
 description: Ingest Bitbucket Server projects, repositories and pull requests into your catalog
 ---
 
-import BitbucketProjectBlueprint from "../resources/bitbucket-server/\_example_bitbucket_project_blueprint.mdx";
-import BitbucketUserBlueprint from "../resources/bitbucket-server/\_example_bitbucket_user_blueprint.mdx";
-import BitbucketPullrequestBlueprint from "../resources/bitbucket-server/\_example_bitbucket_pull_request_blueprint.mdx";
-import BitbucketRepositoryBlueprint from "../resources/bitbucket-server/\_example_bitbucket_repository_blueprint.mdx";
-import BitbucketWebhookConfiguration from "../resources/bitbucket-server/\_example_bitbucket_webhook_config.mdx";
-import BitbucketServerPythonScript from "../resources/bitbucket-server/\_example_bitbucket_python_script.mdx";
+import BitbucketProjectBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources\_example_bitbucket_project_blueprint.mdx";
+import BitbucketUserBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources\_example_bitbucket_user_blueprint.mdx";
+import BitbucketPullrequestBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources\_example_bitbucket_pull_request_blueprint.mdx";
+import BitbucketRepositoryBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources\_example_bitbucket_repository_blueprint.mdx";
+import BitbucketWebhookConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources\_example_bitbucket_webhook_config.mdx";
+import BitbucketServerPythonScript from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources\_example_bitbucket_python_script.mdx";
 
-# Bitbucket (Self-Hosted)
+# Ingesting Bitbucket data via webhooks
 
 In this example you are going to create a webhook integration between your Bitbucket Server and Port. The integration will facilitate the ingestion of Bitbucket user, project, repository and pull request entities into Port.
 
