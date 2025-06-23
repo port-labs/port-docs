@@ -1124,13 +1124,6 @@ export const availableGuides = [
         link: "/guides/all/automatically-set-relations-between-entities-with-automation",
     },
     {
-        title: "Delete a ServiceNow incident",
-        description: "Create a self-service action that deletes a ServiceNow incident",
-        tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
-        logos: ["ServiceNow"],
-        link: "/guides/all/delete-servicenow-incident",
-    },
-    {
         title: "Visualize your AWS storage and security configuration",
         description: "Create a dashboard that visualizes your AWS storage and security configuration",
         tags: ["Security", "AWS", "Dashboards"],
@@ -1138,9 +1131,9 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-aws-storage-configuration",
     },
     {
-        title: "Interact with ServiceNow records",
-        description: "Create a self-service action that interacts with ServiceNow records",
-        tags: ["Incident management", "ServiceNow", "Actions"],
+        title: "Interact with ServiceNow records and delete incidents",
+        description: "Create a self-service action that interacts with ServiceNow records and delete ServiceNow incidents",
+        tags: ["Incident management", "ServiceNow", "Actions","Webhook","Automations"],
         logos: ["ServiceNow"],
         link: "/guides/all/interact-with-servicenow",
     },
