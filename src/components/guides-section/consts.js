@@ -1012,6 +1012,13 @@ export const availableGuides = [
         link: "/guides/all/setup-pr-enricher-ai-agent",
     },
     {
+        title: "Set up the Platform Request Triage AI agent",
+        description: "Set up an AI agent that helps developers submit and track requests to the platform team",
+        tags: ["AI", "Actions", "Automations", "Slack"],
+        logos: ["AI", "Slack"],
+        link: "/guides/all/setup-platform-request-triage-ai-agent",
+    },
+    {
         title: "Set up the Service Explorer AI agent",
         description: "Set up an AI agent that helps developers explore and understand your software catalog",
         tags: ["AI", "GitHub"],
