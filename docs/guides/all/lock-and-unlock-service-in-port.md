@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Lock and unlock service in Port
+# Lock and unlock services
 
 ## Overview
 This guide will help you implement a comprehensive service locking mechanism in Port that allows you to lock and unlock services during critical periods while ensuring deployment safety through automated checks.
