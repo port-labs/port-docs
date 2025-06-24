@@ -294,4 +294,4 @@ stages:
 ```
 
 ## Troubleshoot
-You can find more information on how to troubleshoot Azure DevOps pipelines in our [troubleshooting guide](/docs/actions-and-automations/setup-backend/azure-pipeline/troubleshooting).
+You can find more information on how to troubleshoot Azure DevOps pipelines in our [troubleshooting guide](/actions-and-automations/setup-backend/azure-pipeline/troubleshooting).
