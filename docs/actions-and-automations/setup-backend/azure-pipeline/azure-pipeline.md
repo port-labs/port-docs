@@ -62,6 +62,12 @@ When using this backend, you need to provide the following:
 - **ADO organization name** - can be found in your URL: `https://dev.azure.com/{AZURE-DEVOPS-ORG}`.
 - **Webhook name** - the name you gave to the webhook resource in the Azure yaml pipeline file.
 
+## Advanced configuration
+
+### Trigger pipelines in non-default branches
+
+By default, Azure DevOps pipelines triggered through Port run from the repository's default branch. If you need to trigger pipelines from a specific branch or allow users to select which branch to run from, see our guide on [triggering pipelines in non-default branches](./trigger-non-default-branch).
+
 ## Examples
 
 For complete examples of self-service actions using Azure pipelines as the backend, check out the [guides section](/guides?tags=Azure&tags=Actions).
