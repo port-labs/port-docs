@@ -27,10 +27,10 @@ This guide will walk you through setting up a "Service Explorer" AI agent in Por
 This guide assumes you have:
 - A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
 - Appropriate permissions to create and configure AI agents.
-- **Minimum**: A [service catalog](/build-your-software-catalog/software-catalog/) and [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/).
+- [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) installed.
 - **Optional but recommended integrations for richer context**:
     - [PagerDuty](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/) for incident management.
-    - [Kubernetes](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/) / [ArgoCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/argocd/) for deployment information.
+    - [Kubernetes](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/) tools for deployment information.
     - Monitoring tools (e.g., [New Relic](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic/)) for service health.
 
 ## Set up
