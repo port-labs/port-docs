@@ -33,7 +33,7 @@ Metrics are essential for assessing how well teams adhere to their working agree
 They enable teams to track compliance, identify bottlenecks, and drive continuous improvement.
 
 For detailed insights into key metrics like `deployment frequency`, `lead time for changes`, and `change failure rate`,  
-please refer to our [DORA Metrics guide](/guides/all/setup-dora-metrics).
+please refer to our [DORA Metrics guide](https://docs.port.io/guides/all/create-and-track-dora-metrics-in-your-portal).
 :::
 
 

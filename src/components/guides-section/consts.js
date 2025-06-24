@@ -460,8 +460,8 @@ export const availableGuides = [
     {
         title: "Create and Manage Statuspage Incidents",
         description: "Create self-service actions that manage Statuspage incidents",
-        tags: ["Incident management", "GitHub", "Actions"],
-        logos: ["GitHub"],
+        tags: ["Incident management", "GitHub", "StatusPage", "Actions"],
+        logos: ["GitHub", "StatusPage"],
         // category: "Getting started",
         link: "/guides/all/manage-statuspage-incident",
     },
@@ -521,14 +521,14 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/report-a-bug",
     },
-    {
-        title: "Toggle LaunchDarkly Feature Flag",
-        description: "Create a self-service action that toggles a LaunchDarkly feature flag",
-        tags: ["Feature flag management", "Launchdarkly", "GitHub", "Actions", "Webhook", "Automations"],
-        logos: ["Launchdarkly", "GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/toggle-launchdarkly-feature-flag",
-    },
+    // {
+    //     title: "Toggle LaunchDarkly Feature Flag",
+    //     description: "Create a self-service action that toggles a LaunchDarkly feature flag",
+    //     tags: ["Feature flag management", "Launchdarkly", "GitHub", "Actions", "Webhook", "Automations"],
+    //     logos: ["Launchdarkly", "GitHub"],
+    //     // category: "Getting started",
+    //     link: "/guides/all/toggle-launchdarkly-feature-flag",
+    // },
     {
         title: "Create an Opsgenie Incident",
         description: "Create a self-service action that creates an Opsgenie incident",
@@ -775,13 +775,13 @@ export const availableGuides = [
         logos: ["Datadog"],
         link: "/guides/all/ingest-cloud-resources-using-datadog",
     },
-    {
-        title: "Track DORA Metrics",
-        description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
-        logos: ["Git"],
-        link: "/guides/all/setup-dora-metrics",
-    },
+    // {
+    //     title: "Track DORA Metrics",
+    //     description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
+    //     tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
+    //     logos: ["Git"],
+    //     link: "/guides/all/setup-dora-metrics",
+    // },
     {
         title: "Ingest a swagger.json file into your catalog",
         description: "Ingest API paths from a `swagger.json` file in a GitHub repository into Port",
@@ -877,13 +877,13 @@ export const availableGuides = [
         logos: ["Actions"],
         link: "/guides/all/setup-portal-announcements",
     },
-    {
-        title: "Set up DORA Metrics benchmark",
-        description: "Track and improve engineering performance by setting up DORA metrics benchmark",
-        tags: ["Engineering metrics","Scorecards","Dashboards"],
-        logos: ["Git"],
-        link: "/guides/all/setup-dora-metrics-benchmark"
-    },
+    // {
+    //     title: "Set up DORA Metrics benchmark",
+    //     description: "Track and improve engineering performance by setting up DORA metrics benchmark",
+    //     tags: ["Engineering metrics","Scorecards","Dashboards"],
+    //     logos: ["Git"],
+    //     link: "/guides/all/setup-dora-metrics-benchmark"
+    // },
     {
         title: "Manage service deployments using GitLab and ServiceNow", 
         description: "Create a chain of self-service actions that deploy a service using GitLab and ServiceNow",
@@ -898,40 +898,33 @@ export const availableGuides = [
         logos: ["Dynatrace"],
         link: "/guides/all/connect-dynatrace-team-with-entities"
     },
-    {
-        title: "Create surveys in your portal",
-        description: "Create surveys to collect feedback from your developers",
-        tags: ["Engineering metrics", "Actions", "Dashboards"],
-        logos: ["Engineering metrics"],
-        link: "/guides/all/create-surveys",
-    },
+    // {
+    //     title: "Create surveys in your portal",
+    //     description: "Create surveys to collect feedback from your developers",
+    //     tags: ["Engineering metrics", "Actions", "Dashboards"],
+    //     logos: ["Engineering metrics"],
+    //     link: "/guides/all/create-surveys",
+    // },
     {
         title: "Ingest Slack channels data with Airbyte, S3 & webhook",
         description: "Send Slack channel data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["Slack", "AWS", "Webhook"],
+        tags: ["SDLC", "Slack", "AWS", "Webhook"],
         logos: ["Slack", "AWS", "Webhook"],
         link: "/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook"
     },
     {
         title: "Ingest HiBob data with Airbyte, S3 & webhook",
         description: "Send Hibob data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["AWS", "Webhook"],
+        tags: ["SDLC", "AWS", "Webhook"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook"
     },
     {
         title: "Ingest Okta data with Airbyte, S3 & webhook",
         description: "Send Okta data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["AWS", "Webhook"],
+        tags: ["SDLC", "AWS", "Webhook"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
-    },
-    {
-        title: "Ingest any data source with Airbyte, S3 & webhook",
-        description: "Send any data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["AWS", "Webhook"],
-        logos: ["AWS", "Webhook"],
-        link: "/guides/all/ingest-any-data-via-airbyte-s3-and-webhook"
     },
     {
         title: "Create a FireHydrant Incident",
@@ -1110,11 +1103,25 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-github-dependabot-alerts",
     },
     {
+        title: "Ingest Slack channels data with Fivetran, S3 & webhook",
+        description: "Send Slack channel data to S3 with Fivetran, then ingest it into Port via a custom webhook integration",
+        tags: ["SDLC", "Slack", "AWS", "Webhook"],
+        logos: ["Slack", "AWS", "Webhook"],
+        link: "/guides/all/ingest-slack-data-via-fivetran-s3-and-webhook"
+    },
+    {
         title: "Automate admin role assignment",
         description: "Set up automated user role assignment when they are added to Admins group.",
         tags: ["Security", "Automations", "RBAC"],
         logos: ["Automations"],
         link: "/guides/all/automate-user-role-update",
+    },
+    {
+        title: "Automatically set relations between entities with automation",
+        description: "Set up automations to set relations between entities based on integrations metadata",
+        tags: ["Automations", "GitHub"],
+        logos: ["Automations"],
+        link: "/guides/all/automatically-set-relations-between-entities-with-automation",
     },
     {
         title: "Delete a ServiceNow incident",
@@ -1124,10 +1131,10 @@ export const availableGuides = [
         link: "/guides/all/delete-servicenow-incident",
     },
     {
-        title: "Visualize your AWS storage and security configuration",
-        description: "Create a dashboard that visualizes your AWS storage and security configuration",
-        tags: ["Security", "AWS", "Dashboards"],
-        logos: ["AWS"],
+        title: "Manage and visualize your AWS S3 buckets and RDS instances",
+        description: "Create a dashboard that manages and visualizes your AWS S3 buckets and RDS instances",
+        tags: ["Security", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub",],
         link: "/guides/all/visualize-your-aws-storage-configuration",
     },
     {
@@ -1164,6 +1171,98 @@ export const availableGuides = [
         tags: ["SDLC", "AWS", "Actions"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/deploy-service-using-aws-codedeploy",
+    },
+    {
+        title: "Auto approve and merge Dependabot PRs",
+        description: "Create an automation that approves and merges Dependabot pull requests",
+        tags: ["SDLC", "GitHub", "Automations"],
+        logos: ["GitHub"],
+        link: "/guides/all/auto-approve-and-merge-dependabot-prs",
+    },
+    {
+        title: "Send TypeForm survey results to Port",
+        description: "Create a webhook integration that sends TypeForm survey results to Port",
+        tags: ["Engineering metrics", "Webhook"],
+        logos: ["Webhook"],
+        link: "/guides/all/send-typeform-survey-results-to-port",
+    },
+    {
+        title: "Visualize and manage your EC2 instances",
+        description: "Create a dashboard that visualizes and manages your AWS EC2 instances",
+        tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/visualize-and-manage-aws-ec2-instances",
+    },
+    {
+        title: "Visualize and manage your ServiceNow incidents",
+        description: "Create a dashboard that visualizes and manages your ServiceNow incidents",
+        tags: ["Incident management", "ServiceNow", "Actions", "Dashboards"],
+        logos: ["ServiceNow"],
+        link: "/guides/all/visualize-and-manage-servicenow-incidents",
+    },
+    {
+        title: "Visualize and manage your GitLab deployments",
+        description: "Create a dashboard that visualizes and manages your GitLab deployments",
+        tags: ["SDLC", "GitLab", "Actions", "Dashboards"],
+        logos: ["GitLab"],
+        link: "/guides/all/visualize-and-manage-gitlab-deployments",
+    },
+    {
+        title: "Visualize and manage your Statuspage components",
+        description: "Create a dashboard that visualizes and manages your Statuspage components",
+        tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
+        logos: ["StatusPage"],
+        link: "/guides/all/visualize-and-manage-statuspage-components",
+    },
+    {
+        title: "Visualize and manage your Statuspage incidents",
+        description: "Create a dashboard that visualizes and manages your Statuspage incidents",
+        tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
+        logos: ["StatusPage"],
+        link: "/guides/all/visualize-and-manage-statuspage-incidents",
+    },
+    {
+        title: "Manage PagerDuty on-call schedules",
+        description: "Track on-call engineers across different teams and services with dashboards and self-service actions",
+        tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+        logos: ["PagerDuty"],
+        link: "/guides/all/manage-pagerduty-on-call-schedules",
+    },
+    {
+        title: "Manage and visualize your LaunchDarkly feature flags",
+        description: "Create a comprehensive feature flag management system to create, toggle, and archive flags",
+        tags: ["Feature flag management","Launchdarkly", "Actions", "Webhook", "Automations"],
+        logos: ["Launchdarkly"],
+        link: "/guides/all/manage-and-visualize-your-launchdarkly-feature-flags",
+    },
+    {
+         title: "Manage and visualize your PagerDuty incidents",
+          description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
+          tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+          logos: ["PagerDuty"],
+          link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+    },
+    {
+
+        title: "Manage and visualize ECS Tasks",
+        description: "Select from your clusters and services, and easily scale tasks up or down",
+        tags: ["Cloud access management", "AWS", "GitHub", "Actions", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-ecs-tasks",
+    },
+    {
+        title: "Manage and visualize your AWS SQS queues",
+        description: "Manage your AWS SQS queues with self-service actions and create dashboards for visualization",
+        tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-aws-sqs-queues",
+    },
+    {
+        title: "Manage and visualize your Jira issues",
+        description: "Create a comprehensive Jira issue management system to create, update, and archive issues",
+        tags: ["Incident management", "Jira", "Actions", "Dashboards"],
+        logos: ["Jira"],
+        link: "/guides/all/manage-and-visualize-jira-issues",
     }
 ]
 

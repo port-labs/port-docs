@@ -11,7 +11,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 
 # LaunchDarkly
@@ -339,6 +339,91 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .name
+        blueprint: '"launchDarklyProject"'
+        properties:
+          tags: .tags
+- kind: flag
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key + "-" + .__projectKey
+        title: .name
+        blueprint: '"launchDarklyFeatureFlag"'
+        properties:
+          kind: .kind
+          description: .description
+          creationDate: .creationDate / 1000 | strftime("%Y-%m-%dT%H:%M:%SZ")
+          clientSideAvailability: .clientSideAvailability
+          temporary: .temporary
+          tags: .tags
+          maintainer: ._maintainer.email
+          deprecated: .deprecated
+          variations: .variations
+          customProperties: .customProperties
+          archived: .archived
+        relations:
+          project: .__projectKey
+- kind: environment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key + "-" + .__projectKey
+        title: .name
+        blueprint: '"launchDarklyEnvironment"'
+        properties:
+          defaultTtl: .defaultTtl
+          secureMode: .secureMode
+          defaultTrackEvents: .defaultTrackEvents
+          requireComments: .requireComments
+          confirmChanges: .confirmChanges
+          tags: .tags
+          critical: .critical
+        relations:
+          project: .__projectKey
+- kind: flag-status
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: . as $root | ._links.self.href | split("/") | last as $last | "\($last)-\($root.__environmentKey)"
+        title: . as $root | ._links.self.href | split("/") | last as $last | "\($last)-\($root.__environmentKey)"
+        blueprint: '"launchDarklyFFInEnvironment"'
+        properties:
+          status: .name
+        relations:
+          environment: .__environmentKey + "-" + .__projectKey
+          featureFlag: . as $input | $input._links.self.href | split("/") | .[-1] + "-" + $input.__projectKey
+```
+
+</details>
+
+
+<MetricsAndSyncStatus/>
 
 
 ## Examples

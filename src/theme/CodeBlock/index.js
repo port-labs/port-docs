@@ -64,6 +64,7 @@ function isTokenExpired(token) {
 function AuthModal({ onClose, onAuthenticated }) {
   const [token, setToken] = useState('');
   const [error, setError] = useState('');
+  const [region, setRegion] = useState('EU'); // Default to EU
 
   const handleSaveToken = () => {
     if (!token) {
@@ -82,6 +83,7 @@ function AuthModal({ onClose, onAuthenticated }) {
     }
 
     sessionStorage.setItem('portToken', token);
+    sessionStorage.setItem('portRegion', region); // Store the selected region
     if (onAuthenticated) {
       onAuthenticated();
     }
@@ -95,6 +97,34 @@ function AuthModal({ onClose, onAuthenticated }) {
         <p>To identify your Port account, please enter a <i>bearer token</i>.</p>
         <p>The token will be saved in your browser and used when you create resources from the documentation.</p>
         <p>To obtain a token, click on the <code>...</code> button in the top-right corner of your portal, and select <code>Credentials</code> → <code>Generate API token</code>.</p>
+        
+        {/* Region selection */}
+        <div className={styles.regionSelection}>
+          <label>Select your Port region:</label>
+          <div className={styles.regionOptions}>
+            <label className={styles.regionOption}>
+              <input
+                type="radio"
+                name="region"
+                value="EU"
+                checked={region === 'EU'}
+                onChange={(e) => setRegion(e.target.value)}
+              />
+              EU (Europe)
+            </label>
+            <label className={styles.regionOption}>
+              <input
+                type="radio"
+                name="region"
+                value="US"
+                checked={region === 'US'}
+                onChange={(e) => setRegion(e.target.value)}
+              />
+              US (United States)
+            </label>
+          </div>
+        </div>
+        
         <input
           type="password"
           value={token}
@@ -237,6 +267,12 @@ function stripJsonComments(jsonString) {
   return chunks.join('');
 }
 
+// Function to get API base URL based on region
+function getApiBaseUrl() {
+  const region = sessionStorage.getItem('portRegion') || 'EU';
+  return region === 'US' ? 'https://api.us.port.io/v1' : 'https://api.port.io/v1';
+}
+
 // Regex patterns for Port resources
 const PATTERNS = {
   blueprint: /{\s*"(?:(?!"schema"|"trigger").)*"schema":\s*{\s*"properties":\s*{/s,
@@ -331,9 +367,10 @@ export default function CodeBlockWrapper(props) {
     });
 
     try {
+      const baseUrl = getApiBaseUrl();
       const endpoint = resourceType === 'blueprint' ? 
-        `https://api.getport.io/v1/${resourceType}s` : 
-        'https://api.getport.io/v1/actions';
+        `${baseUrl}/${resourceType}s` : 
+        `${baseUrl}/actions`;
 
       // Clean the JSON string by removing comments
       const cleanedJson = stripJsonComments(props.children);
@@ -357,7 +394,7 @@ export default function CodeBlockWrapper(props) {
         show: true,
         loading: false,
         success: true,
-        message: `The ${resourceType} was successfully created in your portal!\n\nView it in your <a href="${resourceType === 'blueprint' ? 'https://app.getport.io/settings/data-model' : resourceType === 'action' ? 'https://app.getport.io/self-serve' : 'https://app.getport.io/settings/automations'}" target="_blank" rel="noopener noreferrer">${resourceType === 'blueprint' ? 'data model' : resourceType === 'action' ? 'self-service' : 'automations'}</a> page.`
+        message: `The ${resourceType} was successfully created in your portal!\n\nView it in your <a href="${resourceType === 'blueprint' ? 'https://app.port.io/settings/data-model' : resourceType === 'action' ? 'https://app.port.io/self-serve' : 'https://app.port.io/settings/automations'}" target="_blank" rel="noopener noreferrer">${resourceType === 'blueprint' ? 'data model' : resourceType === 'action' ? 'self-service' : 'automations'}</a> page.`
       });
     } catch (error) {
       console.error('Error creating resource:', error);
