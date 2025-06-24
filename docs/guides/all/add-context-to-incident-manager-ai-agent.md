@@ -24,8 +24,8 @@ For this guide, we will leverage on the [Incident Manager AI agent](/guides/all/
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature)
-- An existing [Incident Manager AI agent](/guides/all/setup-incident-manager-ai-agent) (or similar)
+- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
+- An existing [Incident Manager AI agent](/guides/all/setup-incident-manager-ai-agent) (or similar).
 
 ## Set up data model
 
