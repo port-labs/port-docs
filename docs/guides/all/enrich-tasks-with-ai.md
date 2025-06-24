@@ -6,7 +6,7 @@ description: Enrich tasks with AI-powered context, providing developers with aut
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Enrich Tasks with AI-Powered Context
+# Enrich tasks with AI-powered context
 
 ## Overview
 
