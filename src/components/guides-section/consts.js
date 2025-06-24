@@ -998,7 +998,7 @@ export const availableGuides = [
         link: "/guides/all/setup-incident-manager-ai-agent",
     },
     {
-        title: "Enrich tasks with AI",
+        title: "Enrich tasks with AI-powered context",
         description: "Set up an AI agent that provides contextual information and insights to task assignees",
         tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
         logos: ["AI", "Jira", "GitHub"],
