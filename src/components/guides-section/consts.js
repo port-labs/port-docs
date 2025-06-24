@@ -1266,7 +1266,7 @@ export const availableGuides = [
     },
     {
         title: "Add custom context to AI agents",
-        description: "Learn how to enhance AI agents with custom context like Root Cause Analysis documents using entities",
+        description: "Enhance AI agents with custom context like Root Cause Analysis documents",
         tags: ["AI", "Incident management", "Actions"],
         logos: ["AI"],
         link: "/guides/all/add-context-to-incident-manager-ai-agent",
