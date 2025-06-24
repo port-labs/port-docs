@@ -12,11 +12,14 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 # Lock and unlock services
 
 ## Overview
-This guide will help you implement a comprehensive service locking mechanism in Port that allows you to lock and unlock services during critical periods while ensuring deployment safety through automated checks.
+This guide demonstrates a comprehensive service locking mechanism in Port that allows you to lock and unlock services during critical periods while ensuring deployment safety through automated checks.
 
-You can implement this functionality in two ways:
-1. **Self-service actions**: A streamlined approach using Port's built-in capabilities for locking/unlocking services with automated notifications (recommended).
-2. **GitHub workflow checks**: An automated approach that checks lock status during CI/CD pipelines and blocks deployments when services are locked.
+We will leverage on two approaches for implementing the service locking and unlocking functionality, depending on your needs:
+
+1. **Basic locking without deployment checks**: Uses self-service actions with synced webhooks to update service lock status directly.   
+
+2. **Advanced locking with deployment checks**: Integrates with your CI/CD pipeline (GitHub workflows) to automatically check service lock status before deployments. 
+
 
 
 ## Common use cases
@@ -94,14 +97,14 @@ The `service` blueprint that was created for you as part of the onboarding proce
 
 ## Implementation
 
-<Tabs>
+### Lock services without deployment checks
 
-<TabItem value="self-service-actions" label="Self-service actions" default>
+We will implement the service locking and unlocking functionality using Port's **synced webhooks** in self-service actions and an automation to update the service entities.
 
-You can implement service locking functionality using Port's self-service actions combined with automations.   
-This approach provides a user-friendly interface for managing service locks with automatic notifications.
+Follow these steps to set it up:
 
-<h3>Create self-service actions</h3>
+
+<h4>Create self-service actions</h4>
 
 Follow these steps to create the lock and unlock actions:
 
@@ -241,7 +244,7 @@ Follow these steps to create the lock and unlock actions:
 
 7. Click `Save`.
 
-<h3>Set up Slack notifications</h3>
+<h4>Set up Slack notifications</h4> 
 
 Create an automation that sends Slack notifications when service lock status changes.
 
@@ -295,19 +298,22 @@ Create an automation that sends Slack notifications when service lock status cha
 
 4. Click `Save`.
 
-</TabItem>
 
-<TabItem value="github-workflow" label="GitHub workflow">
 
-To implement deployment checks using GitHub workflows, follow these steps:
+### Lock services with deployment checks
+This option integrates with a CI/CD pipeline to check the lock status of a service before deployment.  
+We leverge on Port's **Run Github workflow** backend in the self-service action to perform the lock/unlock operation.  
+This approach provides comprehensive deployment protection by blocking builds when services are locked.
 
-<h3>Add GitHub secrets</h3>
+Follow these steps to set it up:
+
+<h4>Add GitHub secrets</h4>
 
 In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
 - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
-<h3>Add GitHub workflow</h3>
+<h4>Add GitHub workflow</h4>
 
 Create the file `.github/workflows/check-service-lock.yml` in the `.github/workflows` folder of your repository.
 
@@ -418,33 +424,21 @@ jobs:
 <PortApiRegionTip/>
 </details>
 
-</TabItem>
-
-</Tabs>
 
 ## Let's test it!
 
-1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
+1. **Lock a service**:
+   - Head to the [self-service page](https://app.getport.io/self-serve) and click on the `Lock Service` action.
+   - Choose the service you want to lock and enter a reason (e.g., "Maintenance window for database upgrade")
+   - Select the environment (Production, Staging, or Development) and click `Execute`
 
-2. Click on the `Lock Service` action
+2. **Verify the lock works**:
+   - Check your Slack channel for the lock notification (if configured)
+   - If using the GitHub workflow approach, try pushing code to your repository - the workflow should fail with a lock message.
 
-3. Choose the service you want to lock
-
-4. Enter a reason for the lock (e.g., "Maintenance window for database upgrade")
-
-5. Select the environment (Production, Staging, or Development)
-
-6. Click on `Execute`
-
-7. Check your Slack channel for the lock notification (if configured)
-
-8. If using the GitHub workflow approach, try pushing code to your repository - the workflow should fail with a lock message
-
-9. Execute the `Unlock Service` action to unlock the service
-
-10. Check your Slack channel for the unlock notification
-
-11. If using the GitHub workflow approach, push code again - the workflow should now succeed
+3. **Test unlocking**:
+   - Execute the `Unlock Service` action to unlock the service.
+   - Check your Slack channel for the unlock notification and try pushing code again - the workflow should now succeed.
 
 
 
@@ -471,5 +465,6 @@ If you set the value of the `locked_in_prod` field to `false`, the workflow will
 Below is the result of successful service lock and unlock alerts sent to a Slack channel after triggering the actions:
 
 <img src="/img/guides/lockServiceSlackAlert.png" border="1px" />
+
 <img src="/img/guides/unlockServiceSlackAlert.png" border="1px" />
 

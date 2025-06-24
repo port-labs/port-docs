@@ -133,14 +133,6 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/iam-permissions-guide",
     },
-    // {
-    //     title: "Lock service deployment",
-    //     description: "Implement a service locking mechanism using Port's GitHub Action",
-    //     tags: ["SDLC", "Actions"],
-    //     logos: ["GitHub"],
-    //     // category: "Getting started",
-    //     link: "/guides/all/service-lock-github-workflow",
-    // },
     {
         title: "Automate Slack alerts for Overdue PRs",
         description: "Send a Slack notification for pull requests that have been open longer than a specified time using an automation",
@@ -330,12 +322,12 @@ export const availableGuides = [
         link: "/guides/all/broadcast-api-consumers-message",
     },
     {
-        title: "Lock and Unlock Service",
+        title: "Lock and Unlock Services",
         description: "Create a self-service action that locks and unlocks a service",
         tags: ["SDLC", "Actions", "GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
-        link: "/guides/all/lock-and-unlock-service-in-port",
+        link: "/guides/all/lock-and-unlock-services-in-port",
     },
     {
         title: "Create Slack channel for Incident Management",
@@ -1244,4 +1236,3 @@ export const availableGuides = [
          link: "/guides/all/manage-and-visualize-aws-sqs-queues",
     }
 ]
-
