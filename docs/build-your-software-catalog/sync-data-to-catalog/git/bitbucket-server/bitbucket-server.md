@@ -42,13 +42,24 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
+:::info GitOps Support
+
+The Bitbucket Server Ocean integration does not support GitOps yet. This capability is planned for a future release and is WIP. If you really need GitOps support, you can use the [webhook gitops](docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/gitops.md) installation method.
+
+:::
+
+:::warning Bitbucket Server version
+When using the Real-Time (self-hosted) or Hosted by Port installation method, you should set the `bitbucketIsVersion8Point7OrOlder` parameter to `true` if you are using Bitbucket Server version 8.7 or older. This is because webhook events are setup differently in Bitbucket Server 8.8 and above.
+:::
+
+
 Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation integration="Bitbucket Server"/>
+<OceanSaasInstallation integration="BitbucketServer"/>
 
 </TabItem>
 

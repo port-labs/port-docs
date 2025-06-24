@@ -15,7 +15,7 @@ To integrate Port with Bitbucket Cloud, we recommend using the [Bitbucket Cloud 
 
 :::info Bitbucket Server (Self-Hosted)
 This documentation covers Port's integration with **Bitbucket Cloud**. 
-For information about integrating with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server integration documentation](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/bitbucket-server.md).
+For information about integrating with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server integration documentation](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/bitbucket-server.md).
 :::
 
 
