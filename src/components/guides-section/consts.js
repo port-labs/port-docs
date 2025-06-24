@@ -1014,7 +1014,7 @@ export const availableGuides = [
     {
         title: "Set up the Platform Request Triage AI agent",
         description: "Set up an AI agent that helps developers submit and track requests to the platform team",
-        tags: ["AI", "Actions", "Automations", "Slack"],
+        tags: ["AI", "Slack", "Actions", "Automations"],
         logos: ["AI", "Slack"],
         link: "/guides/all/setup-platform-request-triage-ai-agent",
     },
