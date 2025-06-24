@@ -39,9 +39,9 @@ Follow the steps below to create the blueprint:
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 
-2. Click on `+ Blueprint`
+2. Click on `+ Blueprint`.
 
-3. Click on `{...} Edit JSON`
+3. Click on `{...} Edit JSON`.
 
 4. Copy and paste the JSON schema from below:
 
@@ -124,7 +124,7 @@ Follow the steps below to create the blueprint:
     ```
     </details>
 
-5. Click `Create` to save the blueprint
+5. Click `Create` to save the blueprint.
 
 
 
@@ -136,9 +136,9 @@ Now let's add some sample RCA documents that our AI agent can reference.
 
 Let's create our first RCA entity:
 
-1. Go to your [software catalog](https://app.getport.io/organization)
+1. Go to your [software catalog](https://app.getport.io/organization).
 
-2. Find the "Root Cause Analysis" tab and click on `+ Root Cause Analysis`
+2. Find the "Root Cause Analysis" tab and click on `+ Root Cause Analysis`.
 
 3. Toggle JSON mode and copy and paste the following JSON:
     <details>
@@ -171,13 +171,13 @@ Let's create our first RCA entity:
     ```
     </details>
 
-4. Click `Create` to save the RCA entity
+4. Click `Create` to save the RCA entity.
 
 <h4> Memory Leak incident</h4>
 
 Let us add another RCA entity:
 
-1. Click on `+ Root Cause Analysis`
+1. Click on `+ Root Cause Analysis`.
 
 2. Toggle JSON mode and copy and paste the following JSON:
 
@@ -228,7 +228,7 @@ Now we'll modify the Incident Manager AI agent to include access to our RCA docu
 
 2. Find the **Incident Manager** agent and click on the `...` on the far right of the row.
 
-3. Click on `Edit`
+3. Click on `Edit`.
 
 4. In the `allowed_blueprints` array, add `"rootCauseAnalysis"`:
 
