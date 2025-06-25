@@ -48,6 +48,52 @@ The following trigger events are available for each type:
   
   - When a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property) based on a mirror property changes, the automation **will not** be triggered. 
 
+  - When a [related entity](/customize-pages-dashboards-and-plugins/page/entity-page#related-entities) is deleted, the automation **will not** be triggered on the entity that has a relation to the deleted entity.
+
+    <h3> Example scenario</h3>
+    Consider an automation that triggers when a `developmentenv` entity's `namespace` relation becomes null:
+
+    <details>
+    <summary><b>Example automation (click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "delete_developmentenv_entity_on_relation_change",
+      "title": "Delete developer env when namespace becomes null",
+      "trigger": {
+        "type": "automation",
+        "event": {
+          "type": "ANY_ENTITY_CHANGE",
+          "blueprintIdentifier": "developmentenv"
+        },
+        "condition": {
+          "type": "JQ",
+          "expressions": [
+            ".diff.after.relations.namespace == null",
+            ".diff.before.relations.namespace != null"
+          ],
+          "combinator": "and"
+        }
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://api.getport.io/v1/blueprints/developmentenv/entities/{{ .event.context.entityIdentifier}}",
+        "synchronized": true,
+        "method": "DELETE",
+        "headers": {
+          "Content-type": "application/json",
+          "RUN_ID": "{{ .run.id }}"
+        }
+      },
+      "publish": true
+    }
+    ```
+    </details>
+
+    This automation will **not** be triggered in the following cases:
+    - When a [related entity](/customize-pages-dashboards-and-plugins/page/entity-page#related-entities) of a `developmentenv` entity is deleted (causing the relation to become null).
+    - When the source value of a `developmentenv` entity's [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) changes.
+
 ## Trigger JSON structure
 
 An automation's trigger is defined under the `trigger` key:

@@ -2,12 +2,15 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 import GitLabResources from './_gitlab_integration_supported_resources.mdx'
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # GitLab v2
 
 :::info GitLab v2 documentation
 This page documents the latest GitLab integration, released in April 2025.  
 For documentation of the previous integration, check out the [GitLab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/) page.  
+
+For users upgrading from the v1 integration, a migration guide will be available soon. Stay tuned!
 :::
 
 Port's GitLab-v2 integration allows you to model GitLab resources in your software catalog and ingest data into them.
@@ -36,6 +39,86 @@ To install Port's GitLab integration, see the [installation](./installation.md#s
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party API into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+resources:
+- kind: project
+  selector:
+    query: 'true'
+    includeLanguages: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .path_with_namespace | gsub(" "; "")
+        title: .name
+        blueprint: '"service"'
+        properties:
+          url: .web_url
+          readme: file://README.md
+          language: .__languages | to_entries | max_by(.value) | .key
+- kind: member
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .username
+        title: .name
+        blueprint: '"gitlabMember"'
+        properties:
+          url: .web_url
+          state: .state
+          email: .email
+          locked: .locked
+- kind: group-with-members
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .full_path
+        title: .name
+        blueprint: '"gitlabGroup"'
+        properties:
+          url: .web_url
+          visibility: .visibility
+          description: .description
+        relations:
+          gitlabMembers: .__members | map(.username)
+- kind: merge-request
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .title
+        blueprint: '"gitlabMergeRequest"'
+        properties:
+          creator: .author.name
+          status: .state
+          createdAt: .created_at
+          updatedAt: .updated_at
+          mergedAt: .merged_at
+          link: .web_url
+          leadTimeHours: (.created_at as $createdAt | .merged_at as $mergedAt | ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp | if $mergedTimestamp == null then null else (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
+          reviewers: .reviewers | map(.name)
+        relations:
+          project: .references.full | gsub("!.+"; "")
+```
+
+</details>
+
+
 
 ## Capabilities
 
@@ -382,6 +465,8 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 - Currently only the default branch of the repository is supported.
 
 For a list of known limitations with GitLab’s Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

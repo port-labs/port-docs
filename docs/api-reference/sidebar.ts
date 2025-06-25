@@ -126,6 +126,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/create-multiple-entities",
+          label: "Create multiple entities",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "api-reference/patch-an-entity",
           label: "Patch an entity",
           className: "api-method patch",
@@ -636,12 +642,6 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/create-credentials",
-          label: "Create credentials",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/rotate-secret",
           label: "Rotate secret",
           className: "api-method post",
@@ -657,6 +657,18 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/update-credentials",
           label: "Update credentials",
           className: "api-method put",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Metrics",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-metrics-and-sync-status",
+          label: "Get an integration's metrics and sync status",
+          className: "api-method get",
         },
       ],
     },

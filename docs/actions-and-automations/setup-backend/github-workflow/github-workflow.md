@@ -26,8 +26,14 @@ An example flow would be:
 
 ## Configuration
 
-When using this backend, you need to provide the GitHub organization and repository where the workflow is located, as well as the workflow name.  
-The workflow must reside in the repository's `.github/workflows/` directory.
+When using this backend, you need to provide the GitHub **organization** and **repository** where the workflow is located, as well as the workflow **name**.  
+
+Important notes:
+
+- The workflow must reside in the repository's `.github/workflows/` directory.
+
+- The workflow must use the [workflow_dispatch](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow) trigger.  
+  For example, see the workflow implementation in [this guide](/guides/all/manage-pull-requests#guide).
 
 ### Specify a branch
 

@@ -149,7 +149,16 @@ ___
 
 ### Relation operators
 
-#### Structure
+<Tabs groupId="relation" defaultValue="relatedTo" values={[
+{label: "RelatedTo", value: "relatedTo"},
+{label: "MatchAny", value: "matchAny"}
+]}>
+
+<TabItem value="relatedTo">
+
+The `relatedTo` operator will return all entities that have a relationship with the specified entity:
+
+<h4> Structure </h4>
 
 | Field       | Description                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------- |
@@ -157,15 +166,6 @@ ___
 | `blueprint` | Blueprint of the entity identifier specified in the `value` field                         |
 | `value`     | Value to filter by                                                                        |
 
-#### Operators
-
-<Tabs groupId="relation" defaultValue="relatedTo" values={[
-{label: "RelatedTo", value: "relatedTo"},
-]}>
-
-<TabItem value="relatedTo">
-
-The `relatedTo` operator will return all entities that have a relationship with the specified entity:
 
 ```json showLineNumbers
 {
@@ -391,6 +391,102 @@ And the result shall be:
 </details>
 
 </TabItem>
+
+<TabItem value="matchAny">
+
+<h4> Related to by specific path </h4>
+
+You can search for entities that are related through a specific path of relations. This is useful when you want to find entities that are connected through a specific chain of relationships.
+
+
+<h4> Structure </h4>
+
+| Field                     | Description                                                                                                          |
+|---------------------------|----------------------------------------------------------------------------------------------------------------------|
+| `property.path`           | An array containing the full path of relation identifiers to traverse.                                               |
+| `property.fromBlueprint`  | *(Optional)* The blueprint to start the path traversal from. If omitted, traversal starts from the target blueprint. |
+| `operator`                | The search operator to use. For this feature, use `"matchAny"`.                                                      |
+| `value`                   | The value or list of values to match against the target entity identifiers at the end of the path.                   |
+
+
+<h4> For upstream paths: </h4>
+
+```json showLineNumbers
+{
+  "property": {
+    "path": ["relation1", "relation2", "relation3"]
+  },
+  "operator": "matchAny",
+  "value": "targetEntity"
+}
+```
+
+<h4> For downstream paths: </h4>
+
+```json showLineNumbers
+{
+  "property": {
+    "path": ["relation1", "relation2", "relation3"],
+    "fromBlueprint": "sourceBlueprint"
+  },
+  "operator": "matchAny",
+  "value": "targetEntity"
+}
+```
+
+When using downstream paths, the `fromBlueprint` parameter specifies the source blueprint from which to start the path traversal. 
+
+Instead of thinking about the path as downstream from the target, we treat it as upstream from the specified blueprint to the target blueprint. This means that the path will be traversed starting from entities of the specified `fromBlueprint`.
+
+<h4> Examples </h4>
+
+Suppose you have the following data model:
+
+![Dependency graph upstream downstream diagram](/img/software-catalog/search-in-port/specific-path-diagram-example.png)
+
+<h4> Example 1: Find all services related to a cluster (upstream) </h4>
+
+To find all services that are related to a specific cluster (e.g., "production-cluster"):
+
+```json showLineNumbers
+{
+  "property": {
+    "path": ["deployedOn"]
+  },
+  "operator": "matchAny",
+  "value": "production-cluster"
+}
+```
+
+This will return all services that have a deployment in the "production-cluster".
+
+---
+
+<h4> Example 2: Find all deployments related to a specific service (downstream) </h4>
+
+To find all deployments related to a specific service (e.g., "production-service"):
+
+```json showLineNumbers
+{
+  "property": {
+    "path": ["deployedOn", "deployments"],
+    "fromBlueprint": "service"
+  },
+  "operator": "matchAny",
+  "value": "production-service"
+}
+```
+
+This will return all deployments that are related to the "production-service".
+
+---
+
+The `matchAny` operator will match entities based on your input:
+- If you specify a single value, it will find all entities with the same identifier.
+- If you provide a list of values, it will match any entity whose identifier is in the list.
+
+</TabItem>
+
 </Tabs>
 
 ### Dynamic properties

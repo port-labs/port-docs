@@ -22,3 +22,6 @@ yarn-error.log*
 # IDEA
 .idea
 .vscode
+
+#workflow cache
+.github/script/__pycache__

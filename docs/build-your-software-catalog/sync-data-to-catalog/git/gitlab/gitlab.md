@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # GitLab
 
@@ -9,6 +10,8 @@ Port's GitLab integration allows you to model GitLab resources in your software 
 This integration will be deprecated in the future and support for it will be discontinued soon.
 
 To integrate Port with GitLab, we recommend using the [GitLab V2 integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/).
+
+A migration guide from v1 to v2 of the integration will be available soon. Stay tuned!
 :::
 
 ## Overview
@@ -47,6 +50,117 @@ To create a group access token, follow the instructions in the [installation](./
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: group-with-members
+  selector:
+    query: 'true'
+    includeBotMembers: 'true'
+    includeInheritedMembers: 'true'
+  port:
+    itemsToParse: .__members
+    entity:
+      mappings:
+        identifier: .item.username
+        title: .item.name
+        blueprint: '"gitlabMember"'
+        properties:
+          link: .item.web_url
+          state: .item.state
+          email: .item.email
+          locked: .item.locked
+- kind: group-with-members
+  selector:
+    query: 'true'
+    includeBotMembers: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .full_path
+        title: .name
+        blueprint: '"gitlabGroup"'
+        properties:
+          url: .web_url
+          visibility: .visibility
+          description: .description
+        relations:
+          gitlabMembers: .__members | map(.username)
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .path_with_namespace | gsub(" "; "")
+        title: .name
+        blueprint: '"gitlabRepository"'
+        properties:
+          url: .web_url
+          readme: file://README.md
+          description: .description
+          language: .__languages | to_entries | max_by(.value) | .key
+- kind: merge-request
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .title
+        blueprint: '"gitlabMergeRequest"'
+        properties:
+          status: .state
+          createdAt: .created_at
+          updatedAt: .updated_at
+          mergedAt: .merged_at
+          link: .web_url
+          leadTimeHours: (.created_at as $createdAt | .merged_at as $mergedAt | ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp | if $mergedTimestamp == null then null else (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
+        relations:
+          repository: .references.full | gsub("!.+"; "")
+          assignees_git_lab: .assignees | map(.username)
+          reviewers_git_lab: .reviewers | map(.username)
+          creator_git_lab: .author.username
+          reviewers:
+            combinator: '"and"'
+            rules:
+            - operator: '"in"'
+              property: '"git_lab_username"'
+              value: .reviewers | map(.username)
+          assignees:
+            combinator: '"and"'
+            rules:
+            - operator: '"in"'
+              property: '"git_lab_username"'
+              value: .assignees | map(.username)
+          service:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"git_lab_repository_identifier"'
+              value: .references.full | gsub("!.+"; "")
+          creator:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"git_lab_username"'
+              value: .author.username
+```
+
+</details>
+
+
+
 
 ## Capabilities
 
@@ -400,6 +514,8 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 - Currently only the default branch of the repository is supported.
 
 For a list of known limitations with GitLab’s Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 
