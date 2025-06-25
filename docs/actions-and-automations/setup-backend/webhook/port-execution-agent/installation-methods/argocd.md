@@ -22,80 +22,74 @@ This page will walk you through the installation of the Port execution agent in 
 - The connection credentials to Kafka are provided to you by Port.
 - If you want to trigger a GitLab Pipeline, you need to have a [GitLab trigger token](https://docs.gitlab.com/ee/ci/triggers/)
 
-:::tip
-<FindCredentials />
-:::
-
-
 ## Installation
 
 1. In your git repo, create a directory called `argocd`.
-```bash
-mkdir argocd
-```
+  ```bash
+  mkdir argocd
+  ```
 
 2. Inside your `argocd` directory create another directory for the current installation. For our example we use `my-port-agent`.
-```bash
-mkdir -p argocd/my-port-agent
-```
+  ```bash
+  mkdir -p argocd/my-port-agent
+  ```
 
 3. Create a `values.yaml` file in your `my-port-agent` directory, you can use it to override the helm chart values. Commit the changes to your git repository.
 
-4. Install the `my-port-agent` ArgoCD Application by creating the following `my-port-agent.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_ORG_ID`, `YOUR_KAFKA_CONSUMER_GROUP`, `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+4. Install the `my-port-agent` ArgoCD Application by creating the following `my-port-agent.yaml` manifest:  
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
-:::
+    Remember to replace the placeholders for `YOUR_ORG_ID`, `YOUR_KAFKA_CONSUMER_GROUP`, `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
-<details>
-  <summary>ArgoCD Application</summary>
+    Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 
-```yaml showLineNumbers
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: my-port-agent
-  namespace: argocd
-spec:
-  destination:
-    namespace: my-port-agent
-    server: https://kubernetes.default.svc
-  project: default
-  sources:
-  - repoURL: 'https://port-labs.github.io/helm-charts/'
-    chart: port-agent
-    targetRevision: 0.7.2
-    helm:
-      valueFiles:
-        - $values/argocd/my-port-agent/values.yaml
-      parameters:
-        - name: env.normal.KAFKA_CONSUMER_GROUP_ID
-          value: YOUR_KAFKA_CONSUMER_GROUP
-        - name: env.normal.PORT_ORG_ID
-          value: YOUR_ORG_ID
-        - name: env.secret.PORT_CLIENT_ID
-          value: YOUR_PORT_CLIENT_ID
-        - name: env.secret.PORT_CLIENT_SECRET
-          value: YOUR_PORT_CLIENT_SECRET
-  - repoURL: YOUR_GIT_REPO_URL
-    targetRevision: main
-    ref: values
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
-```
+    <details>
+      <summary>ArgoCD Application</summary>
 
-</details>
-<br/>
+    ```yaml showLineNumbers
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: my-port-agent
+      namespace: argocd
+    spec:
+      destination:
+        namespace: my-port-agent
+        server: https://kubernetes.default.svc
+      project: default
+      sources:
+      - repoURL: 'https://port-labs.github.io/helm-charts/'
+        chart: port-agent
+        targetRevision: 0.7.2
+        helm:
+          valueFiles:
+            - $values/argocd/my-port-agent/values.yaml
+          parameters:
+            - name: env.normal.KAFKA_CONSUMER_GROUP_ID
+              value: YOUR_KAFKA_CONSUMER_GROUP
+            - name: env.normal.PORT_ORG_ID
+              value: YOUR_ORG_ID
+            - name: env.secret.PORT_CLIENT_ID
+              value: YOUR_PORT_CLIENT_ID
+            - name: env.secret.PORT_CLIENT_SECRET
+              value: YOUR_PORT_CLIENT_SECRET
+      - repoURL: YOUR_GIT_REPO_URL
+        targetRevision: main
+        ref: values
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+    ```
 
-6. Apply your application manifest with `kubectl`:
-```bash
-kubectl apply -f my-port-agent.yaml
-```
+    </details>
+    <br/>
+
+5. Apply your application manifest with `kubectl`:
+    ```bash
+    kubectl apply -f my-port-agent.yaml
+    ```
 Done! The exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
 
 ## Next Steps
