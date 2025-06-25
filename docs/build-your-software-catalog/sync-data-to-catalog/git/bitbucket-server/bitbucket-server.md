@@ -14,12 +14,12 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 
-# Bitbucket Server
+# Bitbucket (Self Hosted)
 
-Port's Bitbucket Server integration allows you to model Bitbucket Server resources in your software catalog and ingest data into them.
+Port's Bitbucket Self Hosted (Server / Data Center) integration allows you to model Bitbucket Server / Bitbucket Data Center resources in your software catalog and ingest data into them. It is referred to as Bitbucket Server in Ocean.
 
-:::info Bitbucket Server (Self-Hosted)
-This documentation covers Port's integration with **Bitbucket Server (Self-Hosted)**. 
+:::info Bitbucket Self Hosted
+This documentation covers Port's integration with **Bitbucket (Self-Hosted)**. 
 For information about integrating with Bitbucket Cloud, please refer to the [Bitbucket Cloud integration documentation](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-cloud/bitbucket-cloud.md).
 :::
 
@@ -27,12 +27,12 @@ For information about integrating with Bitbucket Cloud, please refer to the [Bit
 ## Overview
 This integration allows you to:
 
-- Map and organize your desired Bitbucket Server resources and their metadata in Port (see supported resources below).
-- Watch for Bitbucket Server object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
+- Map and organize your desired Bitbucket resources and their metadata in Port (see supported resources below).
+- Watch for Bitbucket object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
 ### Supported Resources
 
-The resources that can be ingested from Bitbucket Server into Port are listed below.  
+The resources that can be ingested from Bitbucket (Self-Hosted) into Port are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
 - [Project](https://developer.atlassian.com/server/bitbucket/rest/v906/api-group-project/#api-api-latest-projects-get)
@@ -44,12 +44,12 @@ It is possible to reference any field that appears in the API responses linked b
 
 :::info GitOps Support
 
-The Bitbucket Server Ocean integration does not support GitOps yet. This capability is planned for a future release and is WIP. If you really need GitOps support, you can use the [webhook gitops](docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/gitops.md) installation method.
+The Bitbucket (Self-Hosted) integration does not support GitOps yet. This capability is planned for a future release and is WIP. If you really need GitOps support, you can use the [webhook gitops](docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/gitops.md) installation method.
 
 :::
 
-:::warning Bitbucket Server version
-When using the Real-Time (self-hosted) or Hosted by Port installation method, you should set the `bitbucketIsVersion8Point7OrOlder` parameter to `true` if you are using Bitbucket Server version 8.7 or older. This is because webhook events are setup differently in Bitbucket Server 8.8 and above.
+:::warning Bitbucket (Self-Hosted) version
+When using the Real-Time (self-hosted) or Hosted by Port installation method, you should set the `bitbucketIsVersion8Point7OrOlder` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.8 and above.
 :::
 
 
@@ -77,7 +77,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="Bitbucket Server" />
+<OceanRealtimeInstallation integration="Bitbucket Self Hosted" />
 
 <PortApiRegionTip/>
 
@@ -195,7 +195,7 @@ This table summarizes the available parameters for the installation.
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
 | `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
-| `baseUrl`                        | The base url of the instance where the Bitbucket Server integration is hosted, used for real-time updates. (e.g.`https://mybitbucket-server-ocean-integration.com`)                 | ❌        |
+| `baseUrl`                        | The base url of the instance where the Bitbucket (Self-Hosted) integration is hosted, used for real-time updates. (e.g.`https://mybitbucket-self-hosted-ocean-integration.com`)                 | ❌        |
 
 
 
@@ -207,7 +207,7 @@ This table summarizes the available parameters for the installation.
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
-This workflow/pipeline will run the Bitbucket Server integration once and then exit, this is useful for **scheduled** ingestion of data.
+This workflow/pipeline will run the Bitbucket (Self-Hosted) integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning Real-time updates
 If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
@@ -236,7 +236,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 <br/>
 
 :::tip Ocean Sail Github Action
-The following example uses the **Ocean Sail** Github Action to run the Bitbucket Server integration.
+The following example uses the **Ocean Sail** Github Action to run the Bitbucket (Self-Hosted) integration.
 For further information about the action, please visit the [Ocean Sail Github Action](https://github.com/marketplace/actions/ocean-sail)
 :::
 
