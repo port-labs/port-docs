@@ -440,6 +440,6 @@ jobs:
 Now you should see the `Delete EKS Cluster` action in the self-service page. 🎉
 
 
-### Related guides
+## Related guides
 - [Manage and visualize your EC2 instances](/guides/all/visualize-and-manage-aws-ec2-instances)
 - [Manage and visualize your ECS tasks](/guides/all/manage-and-visualize-ecs-tasks)
