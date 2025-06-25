@@ -951,7 +951,7 @@ export const availableGuides = [
         title: "Enrich security vulnerabilities using AI",
         description: "Leverage AI tools to get detailed analysis and remediation strategies for security vulnerabilities",
         tags: ["Security", "AI", "Actions", "Automations"],
-        logos: ["Snyk", "Wiz", "SonarQube"],
+        logos: ["AI", "Snyk", "Wiz"],
         link: "/guides/all/enrich-security-vulnerability-using-ai",
     },
     {
@@ -977,19 +977,47 @@ export const availableGuides = [
     },
     {
         title: "Set up the Task Manager AI agent",
-        description: "Set up an AI agent that helps developers track and manage tasks efficiently",
-        tags: ["AI","Jira","GitHub","Slack"],
-        logos: ["AI"],
+        description: "Set up a Task Manager AI agent to help developers track and manage tasks efficiently",
+        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
+        logos: ["AI", "Jira", "GitHub"],
         link: "/guides/all/setup-task-manager-ai-agent",
-	  },
-	  {
+    },
+    {
         title: "Set up the Incident Manager AI agent",
         description: "Set up an AI agent that helps developers track and manage incidents efficiently",
         tags: ["Incident management", "AI", "PagerDuty", "Slack"],
-        logos: ["AI"],
+        logos: ["AI", "PagerDuty", "Slack"],
         link: "/guides/all/setup-incident-manager-ai-agent",
-	  },
-	  {
+    },
+    {
+        title: "Enrich tasks with AI-powered context",
+        description: "Set up an AI agent that provides contextual information and insights to task assignees",
+        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
+        logos: ["AI", "Jira", "GitHub"],
+        link: "/guides/all/enrich-tasks-with-ai",
+    },
+    {
+        title: "Enrich pull requests using AI",
+        description: "Set up an AI agent that automatically comments on pull requests with additional context",
+        tags: ["SDLC", "AI", "GitHub", "Jira", "PagerDuty"],
+        logos: ["AI", "GitHub", "Jira"],
+        link: "/guides/all/setup-pr-enricher-ai-agent",
+    },
+    {
+        title: "Set up the Platform Request Triage AI agent",
+        description: "Set up an AI agent that helps developers submit and track requests to the platform team",
+        tags: ["AI", "Slack", "Actions", "Automations"],
+        logos: ["AI", "Slack"],
+        link: "/guides/all/setup-platform-request-triage-ai-agent",
+    },
+    {
+        title: "Set up the Service Explorer AI agent",
+        description: "Set up an AI agent that helps developers explore and understand your software catalog",
+        tags: ["AI", "GitHub"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/setup-service-explorer-ai-agent",
+    },
+    {
         title: "Create a GitHub issue",
         description: "Create a self-service action that creates a GitHub issue",
         tags: ["GitHub", "Actions", "Webhook"],
@@ -1002,20 +1030,6 @@ export const availableGuides = [
         tags: ["GitHub", "Actions", "Webhook", "Automations"],
         logos: ["GitHub"],
         link: "/guides/all/verify-service",
-    },
-    {
-        title: "Set up the Task Assistant AI agent",
-        description: "Set up an AI agent that provides contextual information and insights to task assignees",
-        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
-        logos: ["AI"],
-        link: "/guides/all/setup-task-assistant-ai-agent",
-    },
-    {
-        title: "Enrich pull requests using AI",
-        description: "Set up an AI agent that automatically comments on pull requests with additional context",
-        tags: ["SDLC", "AI", "GitHub", "Jira", "PagerDuty"],
-        logos: ["AI"],
-        link: "/guides/all/setup-pr-enricher-ai-agent",
     },
     {
         title: "Enforce Branch Protection Rules with Scorecards",
@@ -1109,6 +1123,13 @@ export const availableGuides = [
         link: "/guides/all/automate-user-role-update",
     },
     {
+        title: "Automatically set relations between entities with automation",
+        description: "Set up automations to set relations between entities based on integrations metadata",
+        tags: ["Automations", "GitHub"],
+        logos: ["Automations"],
+        link: "/guides/all/automatically-set-relations-between-entities-with-automation",
+    },
+    {
         title: "Delete a ServiceNow incident",
         description: "Create a self-service action that deletes a ServiceNow incident",
         tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
@@ -1116,10 +1137,10 @@ export const availableGuides = [
         link: "/guides/all/delete-servicenow-incident",
     },
     {
-        title: "Visualize your AWS storage and security configuration",
-        description: "Create a dashboard that visualizes your AWS storage and security configuration",
-        tags: ["Security", "AWS", "Dashboards"],
-        logos: ["AWS"],
+        title: "Manage and visualize your AWS S3 buckets and RDS instances",
+        description: "Create a dashboard that manages and visualizes your AWS S3 buckets and RDS instances",
+        tags: ["Security", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub",],
         link: "/guides/all/visualize-your-aws-storage-configuration",
     },
     {
@@ -1214,7 +1235,6 @@ export const availableGuides = [
         link: "/guides/all/manage-pagerduty-on-call-schedules",
     },
     {
-
         title: "Manage and visualize your LaunchDarkly feature flags",
         description: "Create a comprehensive feature flag management system to create, toggle, and archive flags",
         tags: ["Feature flag management","Launchdarkly", "Actions", "Webhook", "Automations"],
@@ -1222,17 +1242,39 @@ export const availableGuides = [
         link: "/guides/all/manage-and-visualize-your-launchdarkly-feature-flags",
     },
     {
-        title: "Manage and visualize your PagerDuty incidents",
-        description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
-        tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
-        logos: ["PagerDuty"],
-        link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+         title: "Manage and visualize your PagerDuty incidents",
+          description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
+          tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+          logos: ["PagerDuty"],
+          link: "/guides/all/manage-and-visualize-pagerduty-incidents",
+    },
+    {
+
+        title: "Manage and visualize ECS Tasks",
+        description: "Select from your clusters and services, and easily scale tasks up or down",
+        tags: ["Cloud access management", "AWS", "GitHub", "Actions", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-ecs-tasks",
     },
     {
         title: "Manage and visualize your AWS SQS queues",
-         description: "Manage your AWS SQS queues with self-service actions and create dashboards for visualization",
-         tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
-         logos: ["AWS", "GitHub"],
-         link: "/guides/all/manage-and-visualize-aws-sqs-queues",
+        description: "Manage your AWS SQS queues with self-service actions and create dashboards for visualization",
+        tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-aws-sqs-queues",
+    },
+    {
+        title: "Manage and visualize your Jira issues",
+        description: "Create a comprehensive Jira issue management system to create, update, and archive issues",
+        tags: ["Incident management", "Jira", "Actions", "Dashboards"],
+        logos: ["Jira"],
+        link: "/guides/all/manage-and-visualize-jira-issues",
+    },
+    {
+        title: "Add custom context to AI agents",
+        description: "Enhance AI agents with custom context like Root Cause Analysis documents",
+        tags: ["Incident management", "AI", "Actions"],
+        logos: ["AI"],
+        link: "/guides/all/add-context-to-incident-manager-ai-agent",
     }
 ]

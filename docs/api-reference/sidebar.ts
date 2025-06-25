@@ -538,6 +538,12 @@ const sidebar: SidebarsConfig = {
           label: "Delete an integration",
           className: "api-method delete",
         },
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-metrics-and-sync-status",
+          label: "Get an integration's metrics and sync status",
+          className: "api-method get",
+        },
       ],
     },
     {
@@ -657,18 +663,6 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/update-credentials",
           label: "Update credentials",
           className: "api-method put",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Metrics",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/get-an-integrations-metrics-and-sync-status",
-          label: "Get an integration's metrics and sync status",
-          className: "api-method get",
         },
       ],
     },
