@@ -1291,6 +1291,13 @@ export const availableGuides = [
         tags: ["Cloud access management", "AWS", "GitHub", "Actions"],
         logos: ["AWS", "GitHub"],
         link: "/guides/all/manage-your-eks-clusters",
+    },
+    {
+        title: "Manage and visualize your ACM certificates",
+        description: "Create a comprehensive certificate management system to create, renew, and delete certificates",
+        tags: ["Security", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-acm-certificates",
     }
 ]
 
