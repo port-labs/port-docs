@@ -232,14 +232,16 @@ To achieve this, we have two options:
      In this mapping configuration, `pager_duty_service` is the name of the relation identifier, and `.id` is a JQ expression that extracts the identifier of the `PagerDuty service` from the ingested data.  
 
      When the data is ingested:
-      - If a `Service` entity with the same identifier (`.name`) already exists in your catalog, Port will update it, adding the `pager_duty_service` relation and other associated data, such as the on-call property.
-      - If no such `Service` exists, Port will create a new `Service` entity with that identifier and attach the related `PagerDuty service` and the on-call property.
+      - If a `service` entity with the same identifier (`.name`) already exists in your catalog, Port will update it, adding the `pager_duty_service` relation and other associated data, such as the on-call property.
+      - If no such `service` exists, Port will create a new `service` entity with that identifier and attach the related `PagerDuty service` and the on-call property.
 
      This configuration ensures your catalog stays up to date automatically. You can also customize the relation logic, for example, using search-based relations, depending on your naming conventions or data structure.
 
 2. **Assigning relations manually in the UI**
 
-   - Go to the [Services page](https://app.getport.io/services) of your software catalog.
+    You can also assign relations manually using Port's UI:
+
+   - Go to the [services page](https://app.getport.io/services) of your software catalog.
    - Choose a service you want to assign a PagerDuty service to. Hover over it, click on the `...` button on the right, and select `Edit`.
    - In the `PagerDuty service` field, select the relevant `PagerDuty service` from the dropdown list, then click `Update`.
 
