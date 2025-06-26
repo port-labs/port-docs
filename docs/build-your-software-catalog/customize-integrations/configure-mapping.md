@@ -205,13 +205,7 @@ For instance, a `Service` blueprint can be related to a `PagerDuty service` blue
 After ingesting all of our Services and PagerDuty services, we want to connect each `Service` to its corresponding `PagerDuty service`.  
 To achieve this, we have two options:
 
-1. **Assigning relations manually in the UI**
-
-   - Go to the [Services page](https://app.getport.io/services) of your software catalog.
-   - Choose a service you want to assign a PagerDuty service to. Hover over it, click on the `...` button on the right, and select `Edit`.
-   - In the `PagerDuty service` field, select the relevant `PagerDuty service` from the dropdown list, then click `Update`.
-
-2. **Assigning relations automatically using the mapping Configuration**
+1. **Assigning relations automatically using the mapping Configuration**
 
    You can define the relation in the mapping file of your data source (e.g. PagerDuty) so that relations are assigned automatically during ingestion.  
    Here's an example:  
@@ -235,12 +229,19 @@ To achieve this, we have two options:
               # highlight-end
      ```
 
-     In this mapping configuration, `pager_duty_service` is the name of the relation identifier, and `.id` is a JQ expression that extracts the identifier of the `PagerDuty service` from the ingested data.
+     In this mapping configuration, `pager_duty_service` is the name of the relation identifier, and `.id` is a JQ expression that extracts the identifier of the `PagerDuty service` from the ingested data.  
+
      When the data is ingested:
       - If a `Service` entity with the same identifier (`.name`) already exists in your catalog, Port will update it, adding the `pager_duty_service` relation and other associated data, such as the on-call property.
       - If no such `Service` exists, Port will create a new `Service` entity with that identifier and attach the related `PagerDuty service` and the on-call property.
 
      This configuration ensures your catalog stays up to date automatically. You can also customize the relation logic, for example, using search-based relations, depending on your naming conventions or data structure.
+
+2. **Assigning relations manually in the UI**
+
+   - Go to the [Services page](https://app.getport.io/services) of your software catalog.
+   - Choose a service you want to assign a PagerDuty service to. Hover over it, click on the `...` button on the right, and select `Edit`.
+   - In the `PagerDuty service` field, select the relevant `PagerDuty service` from the dropdown list, then click `Update`.
 
 
 ### Mapping relations using search queries
