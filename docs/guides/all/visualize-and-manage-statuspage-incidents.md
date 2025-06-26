@@ -1,16 +1,16 @@
 ---
 displayed_sidebar: null
-description: Learn how to monitor and manage your Statuspage incidents using dashboards and self-service actions in Port.
+description: Learn how to monitor and manage your Statuspage incidents and components using dashboards and self-service actions in Port.
 ---
 
-# Visualize and manage your Statuspage incidents
+# Visualize and manage your Statuspage incidents and components
 
-This guide demonstrates how to bring your Statuspage incidents management experience into Port. You will learn how to:
+This guide demonstrates how to bring your Statuspage incidents and components management experience into Port. You will learn how to:
 
-- Ingest Statuspage incidents data into Port's software catalog using **Port's Statuspage** integration.
-- Set up **self-service actions** to create and update incidents.
-- Create an **automation** to reflect incident changes in Port.
-- Build **dashboards** in Port to monitor and act on incidents.
+- Ingest Statuspage incidents and components data into Port's software catalog using **Port's Statuspage** integration.
+- Set up **self-service actions** to create, update, and manage incidents and components.
+- Create **automations** to reflect changes in Port.
+- Build **dashboards** in Port to monitor and act on both incidents and components.
 
 <img src="/img/guides/statuspageIncidentDash1.png" border="1px" width="100%" />
 <img src="/img/guides/statuspageIncidentDash2.png" border="1px" width="100%" />
@@ -18,8 +18,9 @@ This guide demonstrates how to bring your Statuspage incidents management experi
 
 ## Common use cases
 
-- Monitor and manage all Statuspage incidents from a centralized dashboard.
+- Monitor and manage all Statuspage incidents and components from a centralized dashboard.
 - Empower teams to create and update incidents through self-service actions.
+- Automate component status updates and incident management workflows.
 
 
 ## Prerequisites
@@ -31,7 +32,7 @@ This guide assumes the following:
 
 ## Set up self-service actions
 
-We will create two self-service actions in Port to directly interact with the Statuspage REST API. These actions will let users create new incidents and update existing ones.
+We will create three self-service actions in Port to directly interact with the Statuspage REST API. These actions will let users create new incidents, update existing incidents, and manage component statuses.
 
 The actions will be configured via JSON and triggered using **synced webhooks** secured with secrets. To implement this use-case, follow the steps below:
 
@@ -310,7 +311,80 @@ To add a secret to your portal:
 
 5. Click `Save`.
 
-Now you should see the `Create Statuspage Incident` and `Update Statuspage Incident` actions in the self-service page. 🎉
+
+### Update component status
+
+1. Go to the [Self-service](https://app.getport.io/self-serve) page of your portal.
+2. Click on the `+ New Action` button.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration into the editor.
+
+    <details>
+    <summary><b>Update Statuspage component status action (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "update_status_page_component",
+      "title": "Update Statuspage Component Status",
+      "icon": "StatusPage",
+      "description": "Updates the status of an existing Statuspage component",
+      "trigger": {
+        "type": "self-service",
+        "operation": "DAY-2",
+        "userInputs": {
+          "properties": {
+            "status": {
+              "type": "string",
+              "title": "Status",
+              "enum": [
+                "operational",
+                "degraded_performance",
+                "partial_outage",
+                "major_outage",
+                "under_maintenance"
+              ],
+              "enumColors": {
+                "operational": "green",
+                "degraded_performance": "yellow",
+                "partial_outage": "orange",
+                "major_outage": "red",
+                "under_maintenance": "blue"
+              }
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "order": [
+            "status"
+          ]
+        },
+        "blueprintIdentifier": "statuspageComponent"
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://api.statuspage.io/v1/pages/{{.entity.relations.statuspage}}/components/{{.entity.identifier}}",
+        "agent": false,
+        "synchronized": true,
+        "method": "PATCH",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "OAuth {{.secrets._STATUSPAGE_API_KEY}}"
+        },
+        "body": {
+          "component": {
+            "status": "{{ .inputs.status }}"
+          }
+        }
+      },
+      "requiredApproval": false
+    }
+    ```
+    </details>
+
+5. Click `Save`.
+
+Now you should see the `Create Statuspage Incident`, `Update Statuspage Incident` and `Update Statuspage Component Status` actions in the self-service page. 🎉
 
 
 ## Set up automation
@@ -425,23 +499,23 @@ We will create an automation to reflect incident changes in Port's software cata
 
 ## Visualize metrics
 
-With incidents ingested and actions configured, the next step is building a dashboard to monitor Statuspage data directly in Port. We can visualize all incidents using customizable widgets and trigger remediation workflows right from your dashboard.
+With incidents and components ingested and actions configured, the next step is building dashboards to monitor Statuspage data directly in Port. We can visualize all incidents and components using customizable widgets and trigger remediation workflows right from your dashboard.
 
 ### Create a dashboard
 
 1. Navigate to the [Catalog](https://app.getport.io/organization/catalog) page of your portal.
 2. Click on the **`+ New`** button in the left sidebar.
 3. Select **New dashboard**.
-4. Name the dashboard **Statuspage Incident Manager**.
-5. Input `Monitor and manage Statuspage incidents across pages` under **Description**.
+4. Name the dashboard **Statuspage Incident and Component Manager**.
+5. Input `Monitor and manage Statuspage incidents and components across pages` under **Description**.
 6. Select the `StatusPage` icon.
 7. Click `Create`.
 
-We now have a blank dashboard where we can start adding widgets to visualize insights from our Statuspage incidents.
+We now have a blank dashboard where we can start adding widgets to visualize insights from our Statuspage incidents and components.
 
-### Add widgets
+### Add incident widgets
 
-In the new dashboard, create the following widgets:
+In the new dashboard, create the following incident-related widgets:
 
 <details>
 <summary><b>Total incidents created in the last month (click to expand)</b></summary>
@@ -616,6 +690,11 @@ In the new dashboard, create the following widgets:
 
 </details>
 
+
+### Add component widgets
+
+Now add the following component-related widgets to the same dashboard:
+
 <details>
 <summary><b>Total affected components (click to expand)</b></summary>
 
@@ -642,5 +721,66 @@ In the new dashboard, create the following widgets:
    <img src="/img/guides/affectedStatuspageComponent.png" width="50%"/>
 
 7. Click `Save`.
+
+</details>
+
+<details>
+<summary><b>Total operational components (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `Total operational components` (add the `StatusPage` icon).
+3. Select `Count entities` **Chart type** and choose **Statuspage Component** as the **Blueprint**.
+4. Select `count` for the **Function**.
+5. Add this JSON to the **Additional filters** editor to filter `operational` components:
+    ```json showLineNumbers
+    [
+        {
+            "combinator":"and",
+            "rules":[
+                {
+                    "property":"status",
+                    "operator":"=",
+                    "value":"operational"
+                }
+            ]
+        }
+    ]
+    ```
+6. Select `custom` as the **Unit** and input `components` as the **Custom unit**
+   <img src="/img/guides/totalOperationalComponent.png" width="50%"/>
+
+7. Click `Save`.
+
+</details>
+
+<details>
+<summary><b>Components by status (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Pie chart**.
+2. Title: `Components by status` (add the `StatusPage` icon).
+3. Choose the **Statuspage Component** blueprint.
+4. Under `Breakdown by property`, select the **Current Status** property
+    <img src="/img/guides/statuspageComponentByStatus.png" width="50%" />
+
+5. Click **Save**.
+
+</details>
+
+<details>
+<summary><b>All StatusPage components view (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Table**.
+2. Title the widget **All Components**.
+3. Choose the **Statuspage Component** blueprint
+   <img src="/img/guides/allStatuspageComponents.png" width="50%" />
+
+4. Click **Save** to add the widget to the dashboard.
+5. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
+6. In the top right corner of the table, click on `Manage Properties` and add the following properties:
+    - **Current Status**: The current status of the component.
+    - **Description**: The description of the component.
+    - **Last Updated At**: The date the component was last updated.
+    - **Status Page**: The related Statuspage.
+7. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
 </details>
