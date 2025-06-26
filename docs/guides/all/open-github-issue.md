@@ -164,7 +164,7 @@ Follow these steps to create the self-service action:
     },
     "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "https://api.github.com/{{ .secrets.GITHUB_ORG }}/{{ .entity.identifier }}/issues",
+        "url": "https://api.github.com/repos/{{ .secrets.GITHUB_ORG }}/{{ .entity.identifier }}/issues",
         "agent": false,
         "synchronized": true,
         "method": "POST",
