@@ -239,7 +239,8 @@ To achieve this, we have two options:
 
 2. **Assigning relations manually in the UI**
 
-    You can also assign relations manually using Port's UI:
+    You can also assign relations manually using Port's UI.  
+    For example:
 
    - Go to the [services page](https://app.getport.io/services) of your software catalog.
    - Choose a service you want to assign a PagerDuty service to. Hover over it, click on the `...` button on the right, and select `Edit`.
