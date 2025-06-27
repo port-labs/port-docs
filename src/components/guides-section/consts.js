@@ -959,7 +959,7 @@ export const availableGuides = [
         title: "Enrich security vulnerabilities using AI",
         description: "Leverage AI tools to get detailed analysis and remediation strategies for security vulnerabilities",
         tags: ["Security", "AI", "Actions", "Automations"],
-        logos: ["Snyk", "Wiz", "SonarQube"],
+        logos: ["AI", "Snyk", "Wiz"],
         link: "/guides/all/enrich-security-vulnerability-using-ai",
     },
     {
@@ -985,19 +985,47 @@ export const availableGuides = [
     },
     {
         title: "Set up the Task Manager AI agent",
-        description: "Set up an AI agent that helps developers track and manage tasks efficiently",
-        tags: ["AI","Jira","GitHub","Slack"],
-        logos: ["AI"],
+        description: "Set up a Task Manager AI agent to help developers track and manage tasks efficiently",
+        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
+        logos: ["AI", "Jira", "GitHub"],
         link: "/guides/all/setup-task-manager-ai-agent",
-	  },
-	  {
+    },
+    {
         title: "Set up the Incident Manager AI agent",
         description: "Set up an AI agent that helps developers track and manage incidents efficiently",
         tags: ["Incident management", "AI", "PagerDuty", "Slack"],
-        logos: ["AI"],
+        logos: ["AI", "PagerDuty", "Slack"],
         link: "/guides/all/setup-incident-manager-ai-agent",
-	  },
-	  {
+    },
+    {
+        title: "Enrich tasks with AI-powered context",
+        description: "Set up an AI agent that provides contextual information and insights to task assignees",
+        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
+        logos: ["AI", "Jira", "GitHub"],
+        link: "/guides/all/enrich-tasks-with-ai",
+    },
+    {
+        title: "Enrich pull requests using AI",
+        description: "Set up an AI agent that automatically comments on pull requests with additional context",
+        tags: ["SDLC", "AI", "GitHub", "Jira", "PagerDuty"],
+        logos: ["AI", "GitHub", "Jira"],
+        link: "/guides/all/setup-pr-enricher-ai-agent",
+    },
+    {
+        title: "Set up the Platform Request Triage AI agent",
+        description: "Set up an AI agent that helps developers submit and track requests to the platform team",
+        tags: ["AI", "Slack", "Actions", "Automations"],
+        logos: ["AI", "Slack"],
+        link: "/guides/all/setup-platform-request-triage-ai-agent",
+    },
+    {
+        title: "Set up the Service Explorer AI agent",
+        description: "Set up an AI agent that helps developers explore and understand your software catalog",
+        tags: ["AI", "GitHub"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/setup-service-explorer-ai-agent",
+    },
+    {
         title: "Create a GitHub issue",
         description: "Create a self-service action that creates a GitHub issue",
         tags: ["GitHub", "Actions", "Webhook"],
@@ -1010,20 +1038,6 @@ export const availableGuides = [
         tags: ["GitHub", "Actions", "Webhook", "Automations"],
         logos: ["GitHub"],
         link: "/guides/all/verify-service",
-    },
-    {
-        title: "Set up the Task Assistant AI agent",
-        description: "Set up an AI agent that provides contextual information and insights to task assignees",
-        tags: ["AI", "Jira", "GitHub", "Actions", "Automations"],
-        logos: ["AI"],
-        link: "/guides/all/setup-task-assistant-ai-agent",
-    },
-    {
-        title: "Enrich pull requests using AI",
-        description: "Set up an AI agent that automatically comments on pull requests with additional context",
-        tags: ["SDLC", "AI", "GitHub", "Jira", "PagerDuty"],
-        logos: ["AI"],
-        link: "/guides/all/setup-pr-enricher-ai-agent",
     },
     {
         title: "Enforce Branch Protection Rules with Scorecards",
@@ -1263,6 +1277,27 @@ export const availableGuides = [
         tags: ["Incident management", "Jira", "Actions", "Dashboards"],
         logos: ["Jira"],
         link: "/guides/all/manage-and-visualize-jira-issues",
+    },
+    {
+        title: "Add custom context to AI agents",
+        description: "Enhance AI agents with custom context like Root Cause Analysis documents",
+        tags: ["Incident management", "AI", "Actions"],
+        logos: ["AI"],
+        link: "/guides/all/add-context-to-incident-manager-ai-agent",
+    },
+    {
+        title: "Manage your EKS clusters",
+        description: "Create self-service actions that manage your EKS clusters",
+        tags: ["Cloud access management", "AWS", "GitHub", "Actions"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-your-eks-clusters",
+    },
+    {
+        title: "Manage and visualize your ACM certificates",
+        description: "Create a comprehensive certificate management system to create, renew, and delete certificates",
+        tags: ["Security", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-acm-certificates",
     }
 ]
 
