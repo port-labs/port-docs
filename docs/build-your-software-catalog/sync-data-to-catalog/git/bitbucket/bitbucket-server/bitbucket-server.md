@@ -8,7 +8,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
 import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
-import DockerParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources/_bitbucket_cloud_one_time_docker_parameters.mdx"
+import DockerParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/webhook/_resources/_bitbucket_cloud_one_time_docker_parameters.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
@@ -20,7 +20,7 @@ Port's Bitbucket Self Hosted (Server / Data Center) integration allows you to mo
 
 :::info Bitbucket Self Hosted
 This documentation covers Port's integration with **Bitbucket (Self-Hosted)**. 
-For information about integrating with Bitbucket Cloud, please refer to the [Bitbucket Cloud integration documentation](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-cloud/bitbucket-cloud.md).
+For information about integrating with Bitbucket Cloud, please refer to the [Bitbucket Cloud integration documentation](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/bitbucket-cloud.md).
 :::
 
 
@@ -44,7 +44,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 :::info GitOps Support
 
-The Bitbucket (Self-Hosted) integration does not support GitOps yet. This capability is planned for a future release and is WIP. If you really need GitOps support, you can use the [webhook gitops](docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/gitops.md) installation method.
+The Bitbucket (Self-Hosted) integration does not support GitOps yet. This capability is planned for a future release and is WIP. If you really need GitOps support, you can use the [webhook gitops](docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/webhook/gitops.md) installation method.
 
 :::
 

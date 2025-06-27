@@ -3,12 +3,12 @@ sidebar_position: 1
 description: Ingest Bitbucket Server projects, repositories and pull requests into your catalog
 ---
 
-import BitbucketProjectBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources/\_example_bitbucket_project_blueprint.mdx";
-import BitbucketUserBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources/\_example_bitbucket_user_blueprint.mdx";
-import BitbucketPullrequestBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources/\_example_bitbucket_pull_request_blueprint.mdx";
-import BitbucketRepositoryBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources/\_example_bitbucket_repository_blueprint.mdx";
-import BitbucketWebhookConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources/\_example_bitbucket_webhook_config.mdx";
-import BitbucketServerPythonScript from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/webhook/_resources/\_example_bitbucket_python_script.mdx";
+import BitbucketProjectBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/webhook/_resources/\_example_bitbucket_project_blueprint.mdx";
+import BitbucketUserBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/webhook/_resources/\_example_bitbucket_user_blueprint.mdx";
+import BitbucketPullrequestBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/webhook/_resources/\_example_bitbucket_pull_request_blueprint.mdx";
+import BitbucketRepositoryBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/webhook/_resources/\_example_bitbucket_repository_blueprint.mdx";
+import BitbucketWebhookConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/webhook/_resources/\_example_bitbucket_webhook_config.mdx";
+import BitbucketServerPythonScript from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/webhook/_resources/\_example_bitbucket_python_script.mdx";
 
 # Ingesting Bitbucket data via webhooks
 

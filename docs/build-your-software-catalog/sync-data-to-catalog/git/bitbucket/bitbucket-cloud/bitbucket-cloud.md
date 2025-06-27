@@ -9,7 +9,7 @@ Port's Bitbucket integration allows you to model Bitbucket cloud resources in yo
 
 :::info Bitbucket Server (Self-Hosted)
 This documentation covers Port's integration with **Bitbucket Cloud**. 
-For information about integrating with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server integration documentation](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket-server/bitbucket-server.md).
+For information about integrating with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server integration documentation](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/bitbucket-server.md).
 :::
 
 
