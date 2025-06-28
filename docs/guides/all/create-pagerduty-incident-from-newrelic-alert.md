@@ -13,8 +13,14 @@ import TabItem from '@theme/TabItem';
 # Create a PagerDuty incident from a New Relic alert
 
 ## Overview
-This guide will help you implement a self-service action in Port that allows you to create PagerDuty incidents from a New Relic alert.
-This functionality streamlines incident management by enabling users to create incidents directly from New Relic alert without leaving Port.
+This guide demonstrates how to implement a self-service action in Port that allows you to create **PagerDuty incidents** from a **New Relic alert**.  
+
+We will create **PagerDuty incidents** with **New Relic alert** context like APM metrics, service relationships, and automatic service mapping based on your software catalog.
+
+This implementation leverages the relationships between **New Relic alerts** and **PagerDuty services** to provide enhanced incident context. 
+The system automatically correlates monitoring data (APM metrics, error rates, throughput) with service ownership and on-call information, enabling incident creation with pre-populated service mappings, alert details, and proper routing based on established tool relationships. 
+
+This approach ensures that incidents are created with the right context and routing, making it easier to triage and resolve issues.
 
 You can implement this action in two ways:
 1. **Synced webhooks**: A simpler approach that directly interacts with PagerDuty's API through Port, ideal for quick implementation and minimal setup.
