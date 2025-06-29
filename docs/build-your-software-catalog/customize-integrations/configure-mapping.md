@@ -290,8 +290,9 @@ When using a search query rule to map a relation, Port will query all entities o
   - A ["single type" relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#bust_in_silhouette-single) expects a single entity to be returned.
   - A ["many type" relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#-many) expects an array of entities to be returned.
 - The maximum number of entities returned by the search query rule is 100.
-- Mirror and calculation properties are currently not supported.
-- Only the `=` and `in` operators are supported for the search query rule.
+- Calculation properties are currently not supported.
+- Mirror properties are supported only for a single type relation and one level deep.
+- Only the following operators are supported in the search query rule: `=`, `in`, and `contains`.
 
 ## Map by property
 
