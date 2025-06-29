@@ -303,12 +303,18 @@ In the following example you will ingest your GitHub repositories, their admins 
 
 <RepositoryAdminAppConfig/>
 
-:::info supported GitHub user types
-As Github has strict privacy policies, the GitHub API will only return emails in the following cases:
+ <h3>Supported GitHub user types</h3>
+
+As Github has strict privacy policies, the GitHub API will only return emails in the following cases:  
+
 1. The user has a public email address
 2. Your organization is working with a GitHub Enterprise Cloud plan, and the user has an SAML SSO identity configured inside the GitHub organization.
 
 In other cases, the GitHub API will return a `null` value for the user's email.
+
+:::tip User supported fields 
+For the `user` kind, only the following fields are supported: `.name`, `.login`, and `.email`.  
+Other fields from the [GitHub User API](https://docs.github.com/en/rest/users/users#get-a-user) are not available.
 :::
 
 

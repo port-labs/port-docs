@@ -7,7 +7,9 @@
 - [`issue`](https://docs.github.com/en/rest/issues/issues#get-an-issue)
 - [`folder`](https://docs.github.com/en/rest/git/trees#get-a-tree)
 - [`file`](/build-your-software-catalog/sync-data-to-catalog/git/github/#ingest-files-from-your-repositories)
-- [`user`](https://docs.github.com/en/rest/users/users#get-a-user)
+- [`user`](https://docs.github.com/en/rest/users/users#get-a-user)  
+    For the `user` kind, only the following fields are supported: `.name`, `.login`, and `.email`.  
+    Other fields from the [GitHub User API](https://docs.github.com/en/rest/users/users#get-a-user) are not available.
 - [`team`](https://docs.github.com/en/rest/teams/teams#get-a-team-by-name)
 - [`dependabot-alert`](https://docs.github.com/en/rest/dependabot/alerts#list-dependabot-alerts-for-a-repository)
 - [`branches`](https://docs.github.com/en/rest/branches/branches#get-a-branch)
