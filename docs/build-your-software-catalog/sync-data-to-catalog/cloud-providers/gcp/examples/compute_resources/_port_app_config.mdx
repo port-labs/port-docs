@@ -63,21 +63,26 @@ resources:
             project: ".__project.name"
   - kind: compute.googleapis.com/Instance
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
-          identifier: ".id"
-          title:  ".name"
+          identifier: .id
+          title: .name
           blueprint: '"gcpComputeInstance"'
           properties:
-            location: .location
-            machineType: ".machineType"
-            subnetworks: ".networkInterfaces[].subnetwork"
-            cpuPlatform: ".cpuPlatform"
-            selfLink: ".selfLink"
+            machineType: .machineType
+            createdAt: .creationTimestamp
+            status: .status
+            subnetworks: .networkInterfaces[].subnetwork
+            cpuPlatform: .cpuPlatform
+            selfLink: .selfLink
+            tags: .tags
+            deletionProtection: .deletionProtection
+            lastStartedAt: .lastStartTimestamp
+            zone: .zone | split("/")[-1]
           relations:
-            project: ".__project.name"
+            project: .__project.name
 ```
 
 </details>
