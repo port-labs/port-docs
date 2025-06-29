@@ -37997,7 +37997,7 @@ paths:
   "/v1/integration/{integrationInternalId}/syncMetrics":
       get:
         tags:
-          - Metrics
+          - Integrations
         parameters:
           - schema:
               type: string
