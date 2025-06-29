@@ -1298,6 +1298,13 @@ export const availableGuides = [
         tags: ["Security", "AWS", "GitHub", "Dashboards"],
         logos: ["AWS", "GitHub"],
         link: "/guides/all/manage-and-visualize-acm-certificates",
+    },
+    {
+        title: "Manage and visualize your GCP Compute Engine instances",
+        description: "Create a dashboard that manages and visualizes your GCP Compute Engine instances",
+        tags: ["Cloud access management", "GCP", "GitHub", "Dashboards"],
+        logos: ["GCP", "GitHub"],
+        link: "/guides/all/manage-and-visualize-gcp-compute-engine-instances",
     }
 ]
 

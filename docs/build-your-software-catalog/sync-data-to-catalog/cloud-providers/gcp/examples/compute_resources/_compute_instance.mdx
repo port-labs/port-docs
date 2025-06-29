@@ -5,18 +5,10 @@
 {
   "identifier": "gcpComputeInstance",
   "description": "This blueprint represents a GCP Compute Instance in our software catalog",
-  "title": "ComputeInstance",
-  "icon": "GoogelCloud",
+  "title": "Compute Instance",
+  "icon": "GoogleCloud",
   "schema": {
     "properties": {
-      "location": {
-        "title": "Location",
-        "type": "string"
-      },
-      "machineType": {
-        "title": "Provisioning State",
-        "type": "string"
-      },
       "subnetworks": {
         "title": "Subnetwork",
         "type": "array"
@@ -25,21 +17,59 @@
         "title": "CPU Platform",
         "type": "string"
       },
-      "selfLink": {
-        "title": "Self Link",
-        "type": "string"
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "RUNNING",
+          "STOPPING",
+          "TERMINATED"
+        ],
+        "enumColors": {
+          "RUNNING": "green",
+          "STOPPING": "lightGray",
+          "TERMINATED": "red"
+        }
       },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "relations": {
-      "project": {
-        "target": "gcpProject",
-        "title": "Project",
-        "required": false,
-        "many": false
+      "createdAt": {
+        "type": "string",
+        "title": "Created At",
+        "format": "date-time"
+      },
+      "tags": {
+        "type": "object",
+        "title": "Tags"
+      },
+      "deletionProtection": {
+        "type": "boolean",
+        "title": "Deletion Protection"
+      },
+      "lastStartedAt": {
+        "type": "string",
+        "title": "Last Started At",
+        "format": "date-time"
+      },
+      "selfLink": {
+        "type": "string",
+        "title": "Self Link",
+        "format": "url"
+      },
+      "zone": {
+        "type": "string",
+        "title": "Zone"
       }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "gcpProject",
+      "required": false,
+      "many": false
     }
   }
 }
