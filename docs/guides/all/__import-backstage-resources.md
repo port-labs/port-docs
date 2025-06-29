@@ -56,4 +56,4 @@ Once all of the data has been imported to Port, you will likely want to start ma
 
 This will download all the specification files to your local machine. You can then push them to your GitOps repository and begin managing them from there.
 
-To learn more about managing your Port entities using GitOps, refer to the [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md) and [Bitbucket](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md) GitOps pages.
+To learn more about managing your Port entities using GitOps, refer to the [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md) and [Bitbucket](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/gitops/gitops.md) GitOps pages.

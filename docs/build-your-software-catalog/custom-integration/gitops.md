@@ -13,5 +13,5 @@ To use Gitops with Port, head over to your desired Git provider:
 
 - [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/gitops)
 - [GitLab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/gitops)
-- [Bitbucket](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops)
+- [Bitbucket](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/gitops)
 - [Azure DevOps](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/gitops)

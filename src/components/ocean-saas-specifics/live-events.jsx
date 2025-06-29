@@ -167,6 +167,26 @@ export const liveEvents = {
     \n- git.pullrequest.created \
     \n- git.pullrequest.updated \
     \n- git.push',
+  BitbucketServer: 
+    '**Pull Request:** \
+    \n- pr:modified \
+    \n- pr:opened \
+    \n- pr:merged \
+    \n- pr:reviewer:updated \
+    \n- pr:declined \
+    \n- pr:deleted \
+    \n- pr:comment:deleted \
+    \n- pr:from_ref_updated \
+    \n- pr:comment:edited \
+    \n- pr:reviewer:unapproved \
+    \n- pr:reviewer:needs_work \
+    \n- pr:reviewer:approved \
+    \n- pr:comment:added \
+    \n\n**Repository:** \
+    \n- repo:modified \
+    \n- repo:refs_changed \
+    \n\n**Project:** \
+    \n- project:modified',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

@@ -22,7 +22,7 @@ In the following example you will ingest your Bitbucket repositories, their READ
 
 :::tip
 
-- Refer to the [setup](bitbucket.md#setup) section to learn more about the `port-app-config.yml` setup process;
+- Refer to the [setup](bitbucket-app.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Bitbucket objects to Port Entities;
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) for the Bitbucket repository object structure.
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-get) for the Bitbucket pull request object structure.
@@ -41,7 +41,7 @@ In the following example you will ingest your Bitbucket repositories and their f
 
 :::tip
 
-- Refer to the [setup](bitbucket.md#setup) section to learn more about the `port-app-config.yml` setup process;
+- Refer to the [setup](bitbucket-app.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) for the Bitbucket repository object structure.
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-source/#api-repositories-workspace-repo-slug-src-commit-path-get) for the Bitbucket folder object structure.

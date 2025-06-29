@@ -149,7 +149,7 @@ No matter what backend you choose to trigger self-service actions or automations
 
 Port provides native applications for GitHub and Bitbucket which seamlessly integrate with the Git providers to ingest information and keep an up-to-date catalog available in Port. These integrations use OAuth 2.0 for authentication and permissions to your Git provider.
 
-As part of the installation of Port's Git provider apps, the apps gain a limited set of permissions ([GitHub](/docs/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#permissions), [Bitbucket](/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket.md#permissions)). In addition, it is possible to selectively authorize access to a limited set of repositories.
+As part of the installation of Port's Git provider apps, the apps gain a limited set of permissions ([GitHub](/docs/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#permissions), [Bitbucket](/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/bitbucket-app.md#permissions)). In addition, it is possible to selectively authorize access to a limited set of repositories.
 
 By default the Git integrations will not ingest any source code, and will only search for `README.md` files specifically. It is possible to configure the apps to not ingest any source code files at all, or to ingest additional files that are relevant to your use case.
 

@@ -19,7 +19,7 @@ export const integrations = [
     category: 'git',
     icon: '/img/guides/icons/BitBucket.svg',
     darkIcon: '/img/guides/icons/dark/BitBucket.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/git/bitbucket',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud',
   },
   {
     name: 'AzureDevops',

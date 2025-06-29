@@ -4,7 +4,7 @@ sidebar_position: 4
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_git_explanation_template.md'
+import DeleteDependents from '../../../../../generalTemplates/\_delete_dependents_git_explanation_template.md'
 
 # Advanced
 
@@ -57,4 +57,4 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 
 </Tabs>
 
-All of the advanced configurations listed below can be added to the [`port-app-config.yml`](./bitbucket.md#port-app-configyml-file) file.
+All of the advanced configurations listed above can be added to the [`port-app-config.yml`](./bitbucket-app.md#port-app-configyml-file) file.
