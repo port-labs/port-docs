@@ -1298,6 +1298,13 @@ export const availableGuides = [
         tags: ["Security", "AWS", "GitHub", "Dashboards"],
         logos: ["AWS", "GitHub"],
         link: "/guides/all/manage-and-visualize-acm-certificates",
+    },
+    {
+        title: "Manage and visualize your Azure web apps",
+        description: "Create a comprehensive web app management system to start, stop and restart web apps",
+        tags: ["Cloud access management", "Azure", "GitHub", "Dashboards"],
+        logos: ["Azure", "GitHub"],
+        link: "/guides/all/manage-and-visualize-azure-web-apps",
     }
 ]
 
