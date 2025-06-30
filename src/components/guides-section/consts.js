@@ -1300,6 +1300,13 @@ export const availableGuides = [
         link: "/guides/all/manage-and-visualize-acm-certificates",
     },
     {
+        title: "Manage and visualize your GCP Compute Engine instances",
+        description: "Create a dashboard that manages and visualizes your GCP Compute Engine instances",
+        tags: ["Cloud access management", "GCP", "GitHub", "Dashboards"],
+        logos: ["GCP", "GitHub"],
+        link: "/guides/all/manage-and-visualize-gcp-compute-engine-instances",
+    },
+    {
         title: "Manage and visualize your Azure web apps",
         description: "Create a comprehensive web app management system to start, stop and restart web apps",
         tags: ["Cloud access management", "Azure", "GitHub", "Dashboards"],
