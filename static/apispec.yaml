@@ -12736,6 +12736,7 @@ paths:
               type: string
           in: query
           name: action_identifier
+          explode: true
           description: The identifier/s of the action/s and/or automation/s you want to fetch.<br/>
           required: false
         - schema:
@@ -12744,6 +12745,7 @@ paths:
               type: string
           in: query
           name: blueprint_identifier
+          explode: true
           description: The identifier/s of the blueprint/s whose actions/automations you wish to fetch.<br/>
           required: false
         - schema:
