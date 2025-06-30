@@ -13,19 +13,21 @@ import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
 This guide demonstrates how to configure Single Sign-On (SSO) integration between Port and Microsoft Entra ID (AzureAD) using OIDC.
 
 Once implemented:
-- Users can connect to Port via an AzureAD app
-- AzureAD teams will be automatically synced with Port upon user sign-in
-- You can set granular permissions in Port according to your AzureAD groups
+- Users can connect to Port via an AzureAD app.
+- AzureAD teams will be automatically synced with Port upon user sign-in.
+- You can set granular permissions in Port according to your AzureAD groups.
 
 ## Prerequisites
 
 Before starting the configuration, ensure you have:
 
-- Access to the Microsoft Azure Portal with permissions to create and configure applications
-- Users who need access to Port must have a valid value in their `Email` field in Azure AD
-- Contact information ready to share with Port support team for the final configuration steps
+- Access to the Microsoft Azure Portal with permissions to create and configure applications.
+- Users who need access to Port must have a valid value in their `Email` field in Azure AD.
+- Contact information ready to share with Port support team for the final configuration steps.
 
+:::info Contact us
 To complete the process you will need to contact us to receive the information you require, as well as provide Port with specific application details outlined in this guide.
+:::
 
 ## Register a new application
 
@@ -36,7 +38,7 @@ To complete the process you will need to contact us to receive the information y
 
    <img src="/img/sso/azure-ad/AzureADNavBar.png" width="30%" border="1px" />
 
-3. Click on `New registration` at the top of the page
+3. Click on `New registration` at the top of the page.
 
    <img src="/img/sso/azure-ad/AzureNewRegistration.png" width="100%" border="1px" />
 
@@ -124,7 +126,14 @@ To complete the process you will need to contact us to receive the information y
    3.3 Search and mark the following permissions:
    - `email`, `openid`, `profile`, `User.read`
 
-   If you wish to pull in AzureAD groups into Port, you will also need to add the `Directory.Read.All` permission. See [Permissions required to pull AzureAD groups to Port](#enable-azuread-groups-integration).
+   <br/>
+
+   :::info AzureAD groups integration
+   If you wish to pull in AzureAD groups into Port, you will also need to add the `Directory.Read.All` permission.   
+   See [Permissions required to pull AzureAD groups to Port](#enable-azuread-groups-integration) for more details.
+   :::
+
+   <br/>
 
    <img src="/img/sso/azure-ad/AzureAppAPIPermissionsSettings.png" width="100%" border="1px" />
 
@@ -176,7 +185,7 @@ To complete the process you will need to contact us to receive the information y
 
    3.2 **Expires**: Select when the secret expires.
 
-   **Important**: Be sure to mark on your calendar the expiration date of the secret. The secret needs to be replaced before its expiration, otherwise login to Port will be disabled.
+   Be sure to mark on your calendar the expiration date of the secret. The secret needs to be replaced before its expiration, otherwise login to Port will be disabled.
 
    3.3 Click `Add`.
 
@@ -188,7 +197,7 @@ To complete the process you will need to contact us to receive the information y
 
 Port needs the following information to complete the integration:
 
-- The `Client Secret` value that you created in the previous step
+- The `Client Secret` value that you created in the previous step.
 - The `Application (Client) ID`, which appears on the Port application overview page:
 
 <img src="/img/sso/azure-ad/AzureAppDetailsSection.png" width="100%" border="1px" />
@@ -230,10 +239,15 @@ After the app setup is complete, you can assign it to your organization's users 
    <img src="/img/sso/azure-ad/AzureAppProperties.png" width="40%" border="1px" />
 
 3. Set the application properties:
-   - Mark `Enabled for users to sign-in?` as `Yes`
-   - Mark `Visible to users?` as `Yes`
+   - Mark `Enabled for users to sign-in?` as `Yes`.
+   - Mark `Visible to users?` as `Yes`.
 
+   <br/>
+   :::info Assignment required?
    By default the `Assignment required?` flag is set to `No`, meaning any user with the Homepage URL to the Port app can access it, even if the app isn't directly assigned to them. Changing the flag to `Yes` means only users and groups the app is directly assigned to can use and access it.
+   :::
+
+   <br/>
 
    <img src="/img/sso/azure-ad/AzureAppPropertiesValues.png" width="100%" border="1px" />
 
@@ -251,14 +265,14 @@ However, note that in this instance you **will not** be able to use Port's main 
 
 In that case you have the following options:
 
-- Use the [https://myapplications.microsoft.com](https://myapplications.microsoft.com) dashboard provided by Azure AD and select the desired Port environment to connect to
-- Use the manual login URL for each environment directly, by specifying the desired environment based on its respective `CONNECTION_NAME` value
+- Use the [https://myapplications.microsoft.com](https://myapplications.microsoft.com) dashboard provided by Azure AD and select the desired Port environment to connect to.
+- Use the manual login URL for each environment directly, by specifying the desired environment based on its respective `CONNECTION_NAME` value.
 
 ## Enable AzureAD groups integration
 
 Port can query the group membership of users who log in through the AzureAD SSO, and add their teams as team entities inside Port. This allows platform engineers to take advantage of both existing groups from AzureAD and teams created manually inside Port to manage permissions and access to resources inside Port's catalog.
 
-**Important**: In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission.
+In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission.
 
 ## SCIM Configuration (beta)
 
@@ -274,8 +288,8 @@ To set up SCIM for Entra ID OIDC based applications, contact Port's support team
 
 You will be provided with:
 
-- An SCIM `endpoint`
-- An SCIM `token`
+- An SCIM `endpoint`.
+- An SCIM `token`.
 
 The `endpoint` and `token` will be used to set up the SCIM integration in your identity provider.
 
