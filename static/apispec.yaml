@@ -12758,6 +12758,7 @@ paths:
                 - DAY-2
           in: query
           name: operation
+          explode: true
           description: The [operation type/s](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>
           required: false
         - schema:
