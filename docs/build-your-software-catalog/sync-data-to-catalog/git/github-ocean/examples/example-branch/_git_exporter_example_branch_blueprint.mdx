@@ -1,0 +1,43 @@
+<details>
+<summary>Branch blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "branch",
+  "title": "Branch",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "is_protected": {
+        "title": "Is branch protected",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "commit_sha": {
+        "title": "Commit SHA",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "commit_url": {
+        "title": "Commit URL",
+        "type": "string",
+        "format": "url"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "Repository",
+      "target": "githubRepository",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

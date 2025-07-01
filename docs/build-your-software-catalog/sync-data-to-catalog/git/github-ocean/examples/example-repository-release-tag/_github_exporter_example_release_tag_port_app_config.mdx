@@ -1,0 +1,51 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".name" # The Entity identifier will be the repository name.
+          title: ".name"
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+  - kind: release
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .release.name
+          title: .release.name
+          blueprint: '"release"'
+          properties:
+            author: .release.author.login
+            description: .release.body
+            release_creation_time: .release.created_at
+          relations:
+            tag: .release.tag_name
+            repository: .repo.name
+  - kind: tag
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .tag.name
+          title: .tag.name
+          blueprint: '"tag"'
+          properties:
+            commit_sha: .commit.sha
+          relations:
+            repository: .repo.name
+```
+
+</details>
