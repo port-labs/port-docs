@@ -11,7 +11,7 @@ import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catal
 import DockerParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/_bitbucket_cloud_one_time_docker_parameters.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanSaasInstallation from "./\_templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import BitbucketProjectBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_project_blueprint.mdx";
 import BitbucketUserBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_user_blueprint.mdx";
@@ -20,11 +20,13 @@ import BitbucketRepositoryBlueprint from "/docs/build-your-software-catalog/sync
 import BitbucketWebhookConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_webhook_config.mdx";
 import BitbucketServerPythonScript from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_python_script.mdx";
 
-# Bitbucket (Self Hosted)
+# Bitbucket (Self-Hosted)
 
-Port's Bitbucket Self Hosted (Server / Data Center) integration allows you to model Bitbucket Server / Bitbucket Data Center resources in your software catalog and ingest data into them. It is referred to as Bitbucket Server in Ocean.
+Port's Bitbucket (Self-Hosted) integration allows you to model Bitbucket Server / Bitbucket Data Center resources in your software catalog and ingest data into them.
 
-:::info Bitbucket Self Hosted
+**Note:** While Bitbucket Server has been [deprecated and replaced by Bitbucket Data Center](https://www.atlassian.com/blog/announcements/journey-to-cloud), they expose the same set of APIs and this integration covers both.
+
+:::info Bitbucket Self-Hosted
 This documentation covers Port's integration with **Bitbucket (Self-Hosted)**. 
 For information about integrating with Bitbucket Cloud, please refer to the [Bitbucket Cloud integration documentation](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/bitbucket-cloud.md).
 :::
@@ -36,7 +38,7 @@ This integration allows you to:
 - Map and organize your desired Bitbucket resources and their metadata in Port (see supported resources below).
 - Watch for Bitbucket object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Bitbucket (Self-Hosted) into Port are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
@@ -47,15 +49,7 @@ It is possible to reference any field that appears in the API responses linked b
 - [User](https://developer.atlassian.com/server/bitbucket/rest/v906/api-group-permission-management/#api-api-latest-admin-users-get)
 
 
-### Limitations
-
-- The Bitbucket (Self-Hosted) Ocean integration by itself does not support GitOps yet. This capability is planned for a future release and is WIP. If you really need GitOps support, you can use the [webhook gitops](gitops.md) installation method.
-
 ## Setup
-
-:::warning Bitbucket Server version
-When using the Real-Time (self-hosted) or Hosted by Port installation method, you should set the `bitbucketIsVersion8Point7OrOlder` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.8 and above.
-:::
 
 
 Choose one of the following installation methods:
@@ -82,7 +76,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="Bitbucket Self Hosted" />
+<OceanRealtimeInstallation integration="Bitbucket Self-Hosted" />
 
 <PortApiRegionTip/>
 
@@ -105,10 +99,11 @@ integration:
   eventListener:
     type: POLLING
   config:
-  // highlight-next-line
+  // highlight-start
     bitbucketBaseUrl: BITBUCKET_BASE_URL
     bitbucketUsername: BITBUCKET_USERNAME
     bitbucketIsVersion8Point7OrOlder: BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER
+  // highlight-end
   secrets:
   // highlight-start
     bitbucketPassword: BITBUCKET_PASSWORD
@@ -203,6 +198,8 @@ This table summarizes the available parameters for the installation.
 | `baseUrl`                        | The base url of the instance where the Bitbucket (Self-Hosted) integration is hosted, used for real-time updates. (e.g.`https://mybitbucket-self-hosted-ocean-integration.com`)                 | ❌        |
 
 
+**Note:** You should set the `integration.config.bitbucketIsVersion8Point7OrOlder` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
+
 
 <br/>
 
@@ -237,7 +234,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `identifier`                | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌        |
 | `version`                   | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌        |`
 | `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      | true    |          | ❌       |
-| `baseUrl`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Bitbucket Server                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
+| `baseUrl`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Bitbucket (Self-Hosted)                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
 <br/>
 
 :::tip Ocean Sail Github Action
@@ -250,7 +247,7 @@ For further information about the action, please visit the [Ocean Sail Github Ac
 Here is an example for `bitbucket-server-integration.yml` workflow file:
 
 ```yaml showLineNumbers
-name: Bitbucket Server Exporter Workflow
+name: Bitbucket (Self-Hosted) Exporter Workflow
 
 on:
   workflow_dispatch:
@@ -277,6 +274,8 @@ jobs:
             bitbucket_is_version_8_point_7_or_older: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER }}
 ```
 
+**Note:** You should set the `bitbucket_is_version_8_point_7_or_older` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
+
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
 
@@ -298,7 +297,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Run Bitbucket Server Integration') {
+        stage('Run Bitbucket Self-Hosted Integration') {
             steps {
                 script {
                     withCredentials([
@@ -338,6 +337,8 @@ pipeline {
     }
 }
 ```
+
+**Note:** You should set the `OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
 
   </TabItem>
   <TabItem value="azure" label="Azure Devops">
@@ -384,6 +385,8 @@ steps:
       exit $?
     displayName: "Ingest Data into Port"
 ```
+
+**Note:** You should set the `OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
 
   </TabItem>
   <TabItem value="gitlab" label="GitLab">
@@ -436,6 +439,8 @@ ingest_data:
     - if: '$CI_COMMIT_BRANCH == "main"'
 ```
 
+**Note:** You should set the `OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
+
 </TabItem>
 
   </Tabs>
@@ -445,6 +450,8 @@ ingest_data:
   <AdvancedConfig/>
 
 </TabItem>
+
+
 
 </Tabs>
 
@@ -862,13 +869,13 @@ resources:
 </details>
 
 
-## Let's Test It
+## Let's test it
 
-This section includes sample response data from Bitbucket Server. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+This section includes sample response data from Bitbucket (Self-Hosted). In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
 
 ### Payload
 
-Here is an example of the payload structure from Bitbucket Server:
+Here is an example of the payload structure from Bitbucket (Self-Hosted):
 
 <details>
 <summary> Project response data</summary>
@@ -1175,7 +1182,7 @@ Here is an example of the payload structure from Bitbucket Server:
 
 </details>
 
-### Mapping Result
+### Mapping result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
@@ -1296,11 +1303,20 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-## Alternative Installation Via Webhooks
 
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Bitbucket Server. In this example you are going to create a webhook integration between your Bitbucket Server and Port. The integration will facilitate the ingestion of Bitbucket user, project, repository and pull request entities into Port.
+## GitOps
+The Bitbucket (Self-Hosted) Ocean integration by itself does not support GitOps yet. This capability is planned for a future release and is WIP. If you really need GitOps support, you can use the [webhook gitops](gitops.md) installation method.
 
-### Port configuration
+## Alternative installation via webhooks
+
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest users, projects, repositories and pull request entities from Bitbucket (Self-Hosted). If so, use the following instructions:
+
+**Note** that when using this method, data will be ingested into Port only when the webhook is triggered.
+
+<details>
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+<h3>Port configuration</h3>
 
 Create the following blueprint definitions:
 
@@ -1336,11 +1352,11 @@ Create the following blueprint definitions:
 You may modify the properties in your blueprints depending on what you want to track in your Bitbucket account.
 :::
 
-### Let's Test It
+<h3>Let's test it</h3>
 
 This section includes a sample webhook event sent from Bitbucket when a pull request is merged. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
 
-#### Payload
+<h4>Payload</h4>
 
 Here is an example of the payload structure sent to the webhook URL when a Bitbucket pull request is merged:
 
@@ -1544,7 +1560,7 @@ Here is an example of the payload structure sent to the webhook URL when a Bitbu
 
 
 <details>
-<summary> Mapping Result </summary>
+<summary> Mapping result </summary>
 
 ```json showLineNumbers
 {
@@ -1571,11 +1587,11 @@ Here is an example of the payload structure sent to the webhook URL when a Bitbu
 ```
 </details>
 
-### Import Bitbucket Historical Issues
+<h3>Import Bitbucket historical issues</h3>
 
-In this example you are going to use the provided Python script to set up webhooks and fetch data from the Bitbucket Server API and ingest it to Port.
+In this example you are going to use the provided Python script to set up webhooks and fetch data from the Bitbucket Server / Bitbucket Data Center API and ingest it to Port.
 
-#### Prerequisites
+<h4>Prerequisites</h4>
 
 This example utilizes the [blueprint](#port-configuration) definition from the previous section.
 
@@ -1583,7 +1599,7 @@ In addition, provide the following environment variables:
 
 - `PORT_CLIENT_ID` - Your Port client id
 - `PORT_CLIENT_SECRET` - Your Port client secret
-- `BITBUCKET_HOST` - Bitbucket server host such as `http://localhost:7990`
+- `BITBUCKET_HOST` - Bitbucket Server / Bitbucket Data Center host such as `http://localhost:7990`
 - `BITBUCKET_USERNAME` - Bitbucket username to use when accessing the Bitbucket resources
 - `BITBUCKET_PASSWORD` - Bitbucket account password
 - `BITBUCKET_PROJECTS_FILTER` - An optional comma separated list of Bitbucket projects to filter. If not provided, all projects will be fetched.
@@ -1624,6 +1640,4 @@ You can pull the latest version of this code by cloning this [repository](https:
 
 Done! you are now able to import historical users, projects, repositories and pull requests from Bitbucket into Port and any change that happens to your project, repository or pull requests in Bitbucket will trigger a webhook event to the webhook URL provided by Port. Port will parse the events and objects according to the mapping and update the catalog entities accordingly.
 
-## GitOps
-
-Port's Bitbucket (Self-Hosted) integration also provides GitOps capabilities, refer to the [GitOps](./gitops.md) page to learn more.
+</details>

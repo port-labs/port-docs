@@ -9,9 +9,9 @@ import TabItem from "@theme/TabItem"
 
 Port's Bitbucket (Self-Hosted) makes it possible to manage Port entities with a GitOps approach, making your code repositories into the source of truth for the various infrastructure assets you want to manage.
 
-## 💡 Bitbucket (Self-Hosted) GitOps common use cases
+## 💡 Bitbucket GitOps common use cases
 
-- Use Bitbucket server as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets.
+- Use Bitbucket (Self-Hosted) as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets.
 - Allow developers to keep the catalog up-to-date, by making updates to files in their Git repositories.
 - Create a standardized way to document software catalog assets in your organization.
 
@@ -36,7 +36,7 @@ root
 
 The `port.yaml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yaml` file will also be reflected inside Port.
 
-This configuration turns your Bitbucket server repositories to the source-of-truth for the software catalog.
+This configuration turns your Bitbucket (Self-Hosted) repositories to the source-of-truth for the software catalog.
 
 ### GitOps port.yaml file
 
@@ -109,19 +109,19 @@ The `port.yaml` file has the following structure:
 
 To implement GitOps with Bitbucket (Self-Hosted), you can use the provided Python script that will scan your repositories for `port.yaml` files and create or update entities in Port accordingly.
 
-### Prerequisites
+<h3>Prerequisites</h3>
 
 To use the GitOps functionality, you need to provide the following environment variables:
 
 - `PORT_CLIENT_ID` - Your Port client id
 - `PORT_CLIENT_SECRET` - Your Port client secret
-- `BITBUCKET_HOST` - Bitbucket server host such as `http://localhost:7990`
+- `BITBUCKET_HOST` - Bitbucket (Self-Hosted) host such as `http://localhost:7990`
 - `BITBUCKET_USERNAME` - Bitbucket username to use when accessing the Bitbucket resources
 - `BITBUCKET_PASSWORD` - Bitbucket account password
 - `BITBUCKET_PROJECTS_FILTER` - An optional comma separated list of Bitbucket projects to filter. If not provided, all projects will be fetched.
 - `PORT_API_URL` - An optional variable that defaults to the EU Port API `https://api.getport.io/v1`. For US organizations use `https://api.us.getport.io/v1` instead.
 
-### Python Script
+<h3>Python Script</h3>
 
 Here's a Python script that you can use to implement GitOps with Bitbucket (Self-Hosted):
 
@@ -415,18 +415,18 @@ if __name__ == "__main__":
 
 </details>
 
-### Running the Script
+<h3>Running the Script</h3>
 
-You can run this script periodically (e.g., using a cron job or CI/CD pipeline) to scan your Bitbucket Server repositories for `port.yaml` files and create or update entities in Port accordingly.
+You can run this script periodically (e.g., using a cron job or CI/CD pipeline) to scan your Bitbucket (Self-Hosted) repositories for `port.yaml` files and create or update entities in Port accordingly.
 
 For example, you can create a GitHub Actions workflow that runs this script on a schedule:
 
 :::info Host accessibility
-If you're running this script using GitHub Actions or any other external CI/CD service, your Bitbucket Server host must be accessible over the internet. If your Bitbucket Server is deployed in a private network or behind a firewall, you'll need to ensure it's properly exposed or consider running the script from a machine within the same network that has access to both the Bitbucket Server and the internet.
+If you're running this script using GitHub Actions or any other external CI/CD service, your Bitbucket (Self-Hosted) host must be accessible over the internet. If your Bitbucket (Self-Hosted) is deployed in a private network or behind a firewall, you'll need to ensure it's properly exposed or consider running the script from a machine within the same network that has access to both the Bitbucket (Self-Hosted) and the internet.
 :::
 
 ```yaml showLineNumbers
-name: Bitbucket Server GitOps
+name: Bitbucket (Self-Hosted) GitOps
 
 on:
   schedule:
@@ -485,11 +485,11 @@ This will create or update a microservice entity in Port with the specified prop
 
 ## Limitations
 
-The GitOps script has a limitation regarding entity deletion - when an entity is removed from the `port.yaml` file, it will not be automatically deleted from your Port catalog. The script only handles creation and updates of entities that are explicitly defined in the `port.yaml` files.
+- The GitOps script has a limitation regarding entity deletion - when an entity is removed from the `port.yaml` file, it will not be automatically deleted from your Port catalog. The script only handles creation and updates of entities that are explicitly defined in the `port.yaml` files. To remove entities that are no longer needed in your catalog, you will need to delete them manually through Port's UI or API.
 
-To remove entities that are no longer needed in your catalog, you will need to delete them manually through Port's UI or API.
+- The Bitbucket (Self-Hosted) Ocean integration by itself does not support GitOps yet. This capability is planned for a future release and is WIP. GitOps support is provided in this guide instead.
 
 
 ## Conclusion
 
-Using GitOps with Bitbucket Server allows you to manage your Port entities directly from your code repositories, making it easier to keep your software catalog up-to-date and accurate. By adding a `port.yaml` file to your repositories, you can define the entities that should be created or updated in Port, and the provided Python script will handle the synchronization for you. 
+Using GitOps with Bitbucket (Self-Hosted) allows you to manage your Port entities directly from your code repositories, making it easier to keep your software catalog up-to-date and accurate. By adding a `port.yaml` file to your repositories, you can define the entities that should be created or updated in Port, and the provided Python script will handle the synchronization for you. 
