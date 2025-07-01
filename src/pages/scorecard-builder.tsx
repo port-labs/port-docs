@@ -41,6 +41,7 @@ export default function ScorecardBuilder() {
   const [blueprints, setBlueprints] = useState<Blueprint[]>([]);
   const [selectedBlueprint, setSelectedBlueprint] = useState('');
   const [prompt, setPrompt] = useState('');
+  const [kapaResponse, setKapaResponse] = useState('');
   const [notification, setNotification] = useState({ show: false, message: '', isError: false });
   const [scorecard, setScorecard] = useState<Scorecard>({
     identifier: '',
@@ -103,6 +104,58 @@ export default function ScorecardBuilder() {
         }
       ]
     }));
+  };
+
+  const parseKapaResponse = (response: string): object | null => {
+    try {
+      // Find content between ``` markers
+      const matches = response.match(/```(.*?)```/);
+      if (!matches || !matches[1]) return null;
+      
+      // Get the content between ``` and remove newlines
+      const content = matches[1].replace(/\n/g, '');
+      
+      // Find the JSON object
+      const start = content.indexOf('{');
+      const end = content.indexOf('}') + 1;
+      
+      if (start === -1 || end === -1) return null;
+      
+      // Extract and parse the JSON string
+      const jsonStr = content.slice(start, end);
+      return JSON.parse(jsonStr);
+    } catch (error) {
+      console.error('Failed to parse Kapa response:', error);
+      return null;
+    }
+  };
+
+  const handleAskKapa = async () => {
+    try {
+      const response = await fetch(`https://api.kapa.ai/query/v1/projects/e64464bc-19b5-4cd2-9779-2930e2ca0b81/chat/`, {
+        method: 'POST',
+        headers: {
+          'X-API-KEY': `qAXsx14v.VFogcsfqUTmi4zypTW4oS7EGiT1rbQyI`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          data: prompt
+        })
+      });
+
+      const responseText = await response.text();
+      const parsedJson = parseKapaResponse(responseText);
+      
+      if (parsedJson) {
+        setKapaResponse(JSON.stringify(parsedJson));
+        // Optionally update the scorecard state with the parsed JSON
+        setScorecard(parsedJson as Scorecard);
+      } else {
+        showNotification('Failed to parse AI response', true);
+      }
+    } catch (error) {
+      showNotification('AI request failed. Please try again.', true);
+    }
   };
 
   const handleDryRun = async () => {
@@ -194,6 +247,23 @@ export default function ScorecardBuilder() {
             rows={3}
           />
         </div>
+
+        <button
+            onClick={handleAskKapa}
+            disabled={!bearerToken || !selectedBlueprint}
+            className={styles.button}
+          >
+            Ask AI
+          </button>
+
+          {kapaResponse && (
+            <div className={styles.section}>
+              <h2>Kapa Response</h2>
+              <pre className={styles.jsonPreview}>
+                {kapaResponse}
+              </pre>
+            </div>
+          )}
 
         {/* Scorecard Form */}
         <div className={styles.section}>
