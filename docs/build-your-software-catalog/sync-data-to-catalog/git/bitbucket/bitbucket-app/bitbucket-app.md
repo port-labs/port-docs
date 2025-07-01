@@ -3,9 +3,9 @@ import TabItem from "@theme/TabItem"
 import BitbucketResources from './\_bitbucket_exporter_supported_resources.mdx'
 
 
-# Bitbucket (App)
+# Bitbucket App (Deprecated)
 
-Port's Bitbucket (App) integration allows you to model Bitbucket resources in your software catalog and ingest data into them.
+Port's Bitbucket App integration allows you to model Bitbucket resources in your software catalog and ingest data into them.
 
 :::warning Deprecation Notice
 This app will be deprecated in the future and support for the app will be discontinued soon.
@@ -13,10 +13,8 @@ This app will be deprecated in the future and support for the app will be discon
 To integrate Port with Bitbucket Cloud, we recommend using the [Bitbucket Cloud integration](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/).
 :::
 
-:::info Bitbucket Server (Self-Hosted)
 This documentation covers Port's integration with **Bitbucket Cloud**. 
 For information about integrating with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server integration documentation](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/bitbucket-server.md).
-:::
 
 
 ## Overview
