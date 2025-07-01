@@ -91,11 +91,7 @@ To complete the process you will need to contact us to receive the information y
 
    We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
 
-   2.2 **Add the Port logo** (optional):
-
-   <img src="/img/sso/general-assets/PortLogo.png" width="10%" border="1px" />
-
-   2.3 **Publisher domain**: Select the domain matching your user emails (for example `getport.io`).
+   2.2 **Publisher domain**: Select the domain matching your user emails (for example `getport.io`).
 
    <img src="/img/sso/azure-ad/AzureAppBrandingForm.png" width="100%" border="1px" />
 
