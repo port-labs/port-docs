@@ -105,7 +105,7 @@ docker run \
   -e OCEAN__EVENT_LISTENER__TYPE=POLLING \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<Github Organization> \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
-  -p 8000:<PORT> \
+  -p 8000:8000 \
   ghcr.io/port-labs/port-ocean-github-ocean:0.4.0-dev
 ```
 
