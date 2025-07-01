@@ -377,6 +377,8 @@ The widget also supports a wide variety of HTML tags, allowing you to create ric
 ```
 </details>
 
+**Note:** For external video URLs from providers such as YouTube, use the [iframe visualization widget](/customize-pages-dashboards-and-plugins/dashboards/#iframe-visualization).
+
 :::tip Practical example
 A practical example of using HTML in a markdown widget can be found in Port's [live demo](https://demo.getport.io/organization/home), in the `Catalog quick access` widget. 
 :::
