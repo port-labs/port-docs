@@ -80,14 +80,14 @@ In order to make use of [Self-Service Actions using GitHub Workflow](../../../..
 
 ## Docker
 
-To use our GitHub app you will need to deploy our official GitHub app docker image on your VPC.
+To use our GitHub app you will need to deploy our official integration Docker image, replacing Github personal access token with an App ID and App private key..
 
 It can be deployed on any platform that allows deploying images as containers such as: K8S, ECS, AWS App Runner, etc.
 
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.16.0
+docker pull ghcr.io/port-labs/port-ocean-github-ocean:0.4.0-dev
 ```
 
 Run the following command to start the app:
@@ -106,7 +106,7 @@ docker run \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<Github Organization> \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
   -p 8000:<PORT> \
-  ghcr.io/port-labs/port-self-hosted-github-app:0.16.0
+  ghcr.io/port-labs/port-ocean-github-ocean:0.4.0-dev
 ```
 
 | Env variable         | Description                                                                         |
