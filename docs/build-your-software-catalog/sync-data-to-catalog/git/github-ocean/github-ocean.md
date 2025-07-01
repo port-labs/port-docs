@@ -130,22 +130,24 @@ resources:
     selector:
       query: 'true'
       files:
-        # Note that glob patterns are supported, so you can use wildcards to match multiple files
+          # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
-        # The `repos` key can be used to filter the repositories from which the files will be fetched
+            # The `repos` key can be used to filter the repositories and branch where files should be fetched
           repos:
-            - "MyRepo"
-            - "MyOtherRepo"
+            - repo: MyRepo
+              branch: main
+            - repo: MyOtherRepo
+              branch: main
     port:
       entity:
         mappings:
-          identifier: .file.path
-          title: .file.name
+          identifier: .path
+          title: .name
           blueprint: '"manifest"'
           properties:
-            project_name: .file.content.name
-            project_version: .file.content.version
-            license: .file.content.license
+            project_name: .content.name
+            project_version: .content.version
+            license: .content.license
 ```
 
 :::tip Test your mapping

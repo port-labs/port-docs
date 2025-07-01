@@ -26,23 +26,21 @@ This page outlines the following steps:
 ## Prerequisites
 
 - A Github account with permissions to create access tokens.
-- If you choose the real time & always on installation method, you will need a kubernetes cluster on which to install the integration.
 - Your Port user role is set to `Admin`.
 
 ## Setup
 
 ### Configure access token
 
-To allow Port to fetch data from your GitLab instance, you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and group access tokens.
+To allow Port to fetch data from your Github Organization, you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and Github app installation tokens.
 
 #### Personal access token (PAT)
 
 A Personal Access Token (PAT) is suitable if you're the only one managing the integration and don't need frequent credential rotation.  
-To create a personal access token see the GitLab [personal access token guide](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html).
+To create a personal access token see the Github [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
 
-- The token must belong to a user with access to the relevant GitLab resources (e.g., projects, groups).
+- The token must belong to a user with access to the relevant Github resources (e.g., repositories, teams).
 
-#### Group access token
 
 A Group Access Token is recommended when multiple team members manage the integration or when it's set up at the group level.   
 To create a group access token, see the GitLab [group access token guide](https://docs.gitlab.com/ee/user/group/access_tokens.html).
