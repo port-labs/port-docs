@@ -28,20 +28,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
-To install Port's GitHub app, follow these steps:
-
-1. Go to the [GitHub App page](https://github.com/apps/getport-io).
-
-2. Click on the `Configure` button.
-
-3. Choose the organization in which to install the app.
-
-4. Within the selected organization, choose the repositories in which to install the app.
-
-
-5. Click on the `Install` button.
-
-6. Once the installation has finished, you will be redirected to Port.
+To install Port's GitHub integration, see [our dedicated installation guides](./installation.md).
 
 
 ## Configuration
@@ -368,9 +355,10 @@ resources:
         - path: '**/package.json'
         # Note that in this case we are fetching from a specific repository
           repos:
-            - "MyRepo"
+            - repo: MyRepo
+              branch: main
     port:
-      itemsToParse: .file.content.dependencies | to_entries
+      itemsToParse: .content.dependencies | to_entries
       entity:
         mappings:
           # Since identifier cannot contain special characters, we are using jq to remove them
@@ -390,7 +378,7 @@ Once the array is parsed, we can use the `item` key to refer to each item in the
 
 #### Multi-document YAML files
 
-For multi-document YAML files (a single file containing multiple YAML documents separated by `---`), `.file.content` will not resolve to an object, but to an array of objects.
+For multi-document YAML files (a single file containing multiple YAML documents separated by `---`), `.content` will not resolve to an object, but to an array of objects.
 
 You can use one of these methods to ingest multi-document YAML files:
 
@@ -401,7 +389,7 @@ You can use one of these methods to ingest multi-document YAML files:
 If you have both single-document and multi-document YAML files in your repositories, you can use the `itemsToParse` key like this to handle both cases:
 
 ```yaml
-itemsToParse: .file.content | if type== "object" then [.] else . end
+itemsToParse: .content | if type== "object" then [.] else . end
 ```
 :::
 
@@ -460,7 +448,7 @@ resources:
             .repo.name + "-values"
           blueprint: '"file"'
           properties:
-            content: .file.content
+            content: .content
 ```
 
 #### Limitations
