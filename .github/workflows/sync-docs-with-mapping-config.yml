@@ -1,0 +1,141 @@
+name: Sync Integration Docs with Mapping Config
+
+on:
+  repository_dispatch:
+    types: [sync-docs]
+
+jobs:
+  sync-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout port-docs (automation tools)
+        uses: actions/checkout@v4
+        with:
+          path: port-docs
+
+      - name: Checkout ocean-test (YAML configs source)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/ocean-test
+          token: ${{ secrets.MAPPING_PAT }}
+          path: ocean-test
+          ref: main
+
+      - name: Checkout Port-monorepo (TypeScript source)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/Port-monorepo
+          token: ${{ secrets.MAPPING_PAT }}
+          path: Port-monorepo
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r port-docs/.github/scripts/requirements.txt
+
+      - name: Parse changed files and determine source
+        id: parse-changes
+        run: |
+          # Parse the client payload
+          CHANGED_FILES="${{ github.event.client_payload.changed_files }}"
+          SOURCE_REPO="${{ github.event.client_payload.repository }}"
+          
+          echo "Source repository: $SOURCE_REPO"
+          echo "Changed files: $CHANGED_FILES"
+          
+          INTEGRATION_NAMES=""
+          
+          if [[ "$SOURCE_REPO" == *"ocean-test"* ]]; then
+            echo "Processing changes from ocean-test repository"
+            # Extract integration names from ocean-test paths like integrations/jira/.port/resources/port-app-config.yaml
+            for file in $CHANGED_FILES; do
+              if [[ "$file" == integrations/*/\.port/resources/port-app-config.yaml ]]; then
+                integration_name=$(echo "$file" | cut -d'/' -f2)
+                INTEGRATION_NAMES="$INTEGRATION_NAMES $integration_name"
+              fi
+            done
+            echo "source_type=ocean-test" >> $GITHUB_OUTPUT
+          elif [[ "$SOURCE_REPO" == *"Port-monorepo"* ]]; then
+            echo "Processing changes from Port-monorepo repository"
+            # Extract integration names from TypeScript files
+            for file in $CHANGED_FILES; do
+              if [[ "$file" == *"/resources/"*".ts" ]]; then
+                filename=$(basename "$file")
+                integration_name="${filename%.*}"
+                INTEGRATION_NAMES="$INTEGRATION_NAMES $integration_name"
+              fi
+            done
+            echo "source_type=port-monorepo" >> $GITHUB_OUTPUT
+          else
+            echo "Unknown source repository: $SOURCE_REPO"
+            exit 1
+          fi
+          
+          # Remove duplicates and clean up
+          INTEGRATION_NAMES=$(echo $INTEGRATION_NAMES | tr ' ' '\n' | sort -u | tr '\n' ' ')
+          echo "Integration names: $INTEGRATION_NAMES"
+          echo "integration_names=$INTEGRATION_NAMES" >> $GITHUB_OUTPUT
+
+      - name: Sync docs
+        id: sync
+        run: |
+          cd port-docs
+          INTEGRATION_NAMES="${{ steps.parse-changes.outputs.integration_names }}"
+          SOURCE_TYPE="${{ steps.parse-changes.outputs.source_type }}"
+          
+          if [[ -n "$INTEGRATION_NAMES" ]]; then
+            echo "Processing integrations: $INTEGRATION_NAMES with source type: $SOURCE_TYPE"
+            python .github/scripts/sync-docs-with-mapping-config.py --integrations $INTEGRATION_NAMES --source-type $SOURCE_TYPE
+          else
+            echo "No valid integration changes detected"
+            exit 0
+          fi
+        env:
+          PORT_MONOREPO_PATH: ${{ github.workspace }}/Port-monorepo
+          OCEAN_TEST_PATH: ${{ github.workspace }}/ocean-test
+          DOCS_REPO_PATH: ${{ github.workspace }}/port-docs
+
+      - name: Create PR if changes detected
+        id: create-pr
+        run: |
+          cd port-docs
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "Changes detected, creating PR"
+            git config --global user.name "GitHub Actions Bot"
+            git config --global user.email "github-actions-bot@users.noreply.github.com"
+            
+            # Create a branch for the changes
+            BRANCH_NAME="update-integration-docs-$(date +%Y%m%d%H%M%S)"
+            git checkout -b $BRANCH_NAME
+            
+            # Add and commit changes
+            git add .
+            git commit -m "Update integration documentation from ${{ steps.parse-changes.outputs.source_type }}"
+            
+            # Push changes
+            git push origin $BRANCH_NAME
+            
+            # Create PR
+            gh pr create --title "Update integration documentation" \
+                         --body "This PR updates the integration documentation based on changes from ${{ steps.parse-changes.outputs.source_type }}." \
+                         --base main \
+                         --head $BRANCH_NAME
+            
+            echo "PR created successfully"
+            echo "pr_created=true" >> $GITHUB_OUTPUT
+          else
+            echo "No changes detected, skipping PR creation"
+            echo "pr_created=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.MAPPING_PAT }} 

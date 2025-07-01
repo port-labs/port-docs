@@ -28,6 +28,12 @@ Calculation properties make it easier to define properties that are based on val
 - Calculate the number of code owners;
 - etc.
 
+:::tip Performance impact of calculation properties
+Calculation properties are evaluated dynamically for each entity. Defining complex or numerous calculation properties (especially on blueprints with a large number of entities) can impact page load performance.
+
+It is recommended to use calculation properties only when necessary and prefer simple calculations over complex ones.
+:::
+
 In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Slack Notifications` calculation property. 🎬
 
 ## Definition

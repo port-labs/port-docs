@@ -652,6 +652,12 @@ html[data-theme="dark"] .openapi-schema__list-item {
   display: block;
   margin-right: 0;
   margin-left: auto;
+  background-color: black !important;
+}
+
+html[data-theme="dark"] .openapi-explorer__request-btn {
+  background-color: white !important;
+  color: black !important;
 }
 
 .openapi-tabs__mime-item {
@@ -781,6 +787,10 @@ html[data-theme="dark"] .navbar-signup-button {
 .navbar-live-demo-button:hover {
   background-color: rgba(255, 255, 255, .3);
   cursor: pointer;
+}
+
+.navbar__items {
+  gap: 0.2rem;
 }
 
 /* Responsive video container */

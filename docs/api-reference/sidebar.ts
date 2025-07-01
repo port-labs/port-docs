@@ -100,6 +100,12 @@ const sidebar: SidebarsConfig = {
           label: "Create an access token",
           className: "api-method post",
         },
+        {
+          type: "doc",
+          id: "api-reference/rotate-a-users-credentials",
+          label: "Rotate a user's credentials",
+          className: "api-method post",
+        },
       ],
     },
     {
@@ -117,6 +123,12 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/get-all-entities-of-a-blueprint",
           label: "Get all entities of a blueprint",
           className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-multiple-entities",
+          label: "Create multiple entities",
+          className: "api-method post",
         },
         {
           type: "doc",
@@ -170,6 +182,12 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api-reference/aggregate-entities-over-time",
           label: "Aggregate entities over time",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/fetch-the-history-of-an-entitys-properties",
+          label: "Fetch the history of an entity’s properties",
           className: "api-method post",
         },
         {
@@ -520,18 +538,18 @@ const sidebar: SidebarsConfig = {
           label: "Delete an integration",
           className: "api-method delete",
         },
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-metrics-and-sync-status",
+          label: "Get an integration's metrics and sync status",
+          className: "api-method get",
+        },
       ],
     },
     {
       type: "category",
       label: "Webhook",
       items: [
-        {
-          type: "doc",
-          id: "api-reference/create-a-webhook",
-          label: "Create a webhook",
-          className: "api-method post",
-        },
         {
           type: "doc",
           id: "api-reference/get-all-webhooks",
@@ -596,6 +614,30 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "AI",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-an-invocations-result",
+          label: "Get an invocation's result",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/invoke-a-specific-agent",
+          label: "Invoke a specific agent",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/invoke-an-agent",
+          label: "Invoke an agent",
+          className: "api-method post",
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Apps",
       items: [
         {
@@ -603,12 +645,6 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/get-all-credentials",
           label: "Get all credentials",
           className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/create-credentials",
-          label: "Create credentials",
-          className: "api-method post",
         },
         {
           type: "doc",

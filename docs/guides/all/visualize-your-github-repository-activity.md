@@ -8,6 +8,7 @@ description: Learn how to gain insights into GitHub repositories and developer a
 This guide demonstrates how to set up a monitoring solution to get insights into your GitHub workspace using Port's **GitHub** integration. You'll learn how to visualize repository visibility, monitor pull requests and issues, and track developer activity over time.
 
 <img src="/img/guides/gitHubInsightDashboard.png" border="1px" width="100%" />
+<img src="/img/guides/gitHubInsightDashboard2.png" border="1px" width="100%" />
 
 ## Common use cases
 
@@ -276,7 +277,7 @@ We now have a blank dashboard where we can start adding widgets to visualize our
 3. Select `Count entities` **Chart type** and choose **Repository** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `public` repositories:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -306,7 +307,7 @@ We now have a blank dashboard where we can start adding widgets to visualize our
 3. Select `Count entities` **Chart type** and choose **Pull Request** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `open` pull requests:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -336,7 +337,7 @@ We now have a blank dashboard where we can start adding widgets to visualize our
 3. Select `Count entities` **Chart type** and choose **Pull Request** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `merged` pull requests updated in the last month:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",
@@ -373,7 +374,7 @@ We now have a blank dashboard where we can start adding widgets to visualize our
 3. Select `Count entities` **Chart type** and choose **Issue** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter `open` issues:
-    ```json showlineNumbers
+    ```json showLineNumbers
     [
         {
             "combinator":"and",

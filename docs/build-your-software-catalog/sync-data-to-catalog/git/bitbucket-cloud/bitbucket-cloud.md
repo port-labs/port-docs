@@ -1,7 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import BitbucketResources from './\_bitbucket_integration_supported_resources.mdx'
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Bitbucket
 
@@ -40,6 +40,69 @@ To install Port's Bitbucket cloud integration, see the [installation](./installa
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .uuid | gsub("[{-}]"; "")
+        title: .name
+        blueprint: '"bitbucketProject"'
+        properties:
+          private: .is_private
+          description: .description
+          type: .type
+          url: .links.html.href
+- kind: repository
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name
+        blueprint: '"bitbucketRepository"'
+        properties:
+          url: .links.html.href
+          defaultBranch: .mainbranch.name
+          readme: file://README.md
+        relations:
+          project: .project.uuid | gsub("[{-}]"; "")
+- kind: pull-request
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .destination.repository.name + (.id|tostring)
+        title: .title
+        blueprint: '"bitbucketPullRequest"'
+        properties:
+          creator: .author.display_name
+          assignees: '[.participants[].user.display_name]'
+          reviewers: '[.reviewers[].user.display_name]'
+          status: .state
+          createdAt: .created_on
+          updatedAt: .updated_on
+          link: .links.html.href
+        relations:
+          repository: .destination.repository.name
+```
+
+</details>
+
+
 
 
 ## Capabilities
@@ -287,6 +350,8 @@ Port's Bitbucket integration requires the following scopes to be enabled on eith
 :::tip Default permissions
 You will be prompted to add these permissions while creating a new workspace token or app password.
 :::
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

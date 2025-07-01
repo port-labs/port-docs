@@ -7,7 +7,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # New Relic
 
@@ -204,7 +204,7 @@ This table summarizes the available parameters for the installation.
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌        |
 | `integration.secrets.webhookUsername`           | Webhook username used for authenticating incoming events. [Learn more](http://docs.newrelic.com/docs/alerts/get-notified/intro-notifications/)                                   | ❌        |
 | `integration.secrets.webhookSecret`           | Webhook secret for authenticating incoming events. [Learn more](http://docs.newrelic.com/docs/alerts/get-notified/intro-notifications/)                                           | ❌        |
-| `baseUrl`               | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Octopus                     | ❌        |
+| `baseUrl`               | The base url of the instance where the New Relic integration is hosted, used for real-time updates. (e.g.`https://mynewrelicoceanintegration.com`)                     | ❌        |
 <br/>
 
 <AdvancedConfig/>
@@ -430,6 +430,155 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: newRelicService
+  selector:
+    query: 'true'
+    newRelicTypes:
+    - SERVICE
+    - APPLICATION
+    calculateOpenIssueCount: true
+    entityQueryFilter: type in ('SERVICE','APPLICATION')
+    entityExtraPropertiesQuery: |-
+      ... on ApmApplicationEntityOutline {
+        guid
+        name
+        apmSummary {
+          apdexScore
+          errorRate
+          hostCount
+          instanceCount
+          responseTimeAverage
+          throughput
+        }
+      }
+  port:
+    entity:
+      mappings:
+        identifier: .guid
+        title: .name
+        blueprint: '"newRelicService"'
+        properties:
+          has_apm: if .domain | contains("APM") then "true" else "false" end
+          link: .permalink
+          open_issues_count: .open_issues_count
+          reporting: .reporting
+          tags: .tags
+          type: .type
+          throughput: .apmSummary.throughput
+          error_rate: .apmSummary.errorRate
+          response_time_avg: .apmSummary.responseTimeAverage
+          instance_count: .apmSummary.instanceCount
+          apdex: .apmSummary.apdexScore
+- kind: newRelicAlert
+  selector:
+    query: .state == "ACTIVATED" or .state == "CREATED"
+    newRelicTypes:
+    - ISSUE
+  port:
+    entity:
+      mappings:
+        identifier: .issueId
+        title: .title[0]
+        blueprint: '"newRelicAlert"'
+        properties:
+          priority: .priority
+          state: .state
+          sources: .sources
+          conditionName: .conditionName
+          alertPolicyNames: .policyName
+          activatedAt: if .activatedAt == null then null else .activatedAt / 1000 | todate end
+          link: '"https://one.newrelic.com/launcher/nrai.launcher?pane=" + ("{\"isPhoton\": true, \"id\": \"\(.issueId)\", \"nerdletId\": \"nrai.issue-redirect\"}" | @base64)'
+          description: .description
+        relations:
+          alert_to_workload: .__APPLICATION.entity_guids + .__SERVICE.entity_guids
+          cloud_resource:
+            combinator: '"and"'
+            rules:
+            - property: '"guid"'
+              operator: '"in"'
+              value: .entityGuids
+- kind: newRelicServiceLevel
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .serviceLevel.indicators[0].id
+        title: .serviceLevel.indicators[0].name
+        blueprint: '"newRelicServiceLevel"'
+        properties:
+          description: .serviceLevel.indicators[0].description
+          targetThreshold: .serviceLevel.indicators[0].objectives[0].target
+          createdAt: if .serviceLevel.indicators[0].createdAt != null then (.serviceLevel.indicators[0].createdAt | tonumber / 1000 | todate) else null end
+          updatedAt: .serviceLevel.indicators[0].updatedAt
+          createdBy: .serviceLevel.indicators[0].createdBy.email
+          sli: .__SLI.SLI
+          tags: .tags
+          slo_compliance: .__SLI.SLI >= .serviceLevel.indicators[0].objectives[0].target
+        relations:
+          workload: .tags."nr.associatedEntityGuid"[0]
+- kind: entity
+  selector:
+    query: 'true'
+    entityQueryFilter: >-
+      type IN ( 'AWSEC2INSTANCE', 'AWSS3BUCKET', 'AWSRDSDBINSTANCE', 'AWSLAMBDAFUNCTION', 'AWSELBLOADBALANCER', 'AZUREVIRTUALMACHINE', 'AZURESQLDATABASE', 'GCPCOMPUTEINSTANCE', 'GCPSTORAGEBUCKET', 'GCPSQLDATABASEINSTANCE' )
+  port:
+    entity:
+      mappings:
+        identifier: .guid
+        title: .name
+        blueprint: '"newRelicCloudResource"'
+        properties:
+          infrastructureIntegrationType: .type
+          reporting: .reporting
+          link: .permalink
+          tags: .tags
+- kind: entities
+  selector:
+    query: 'true'
+    entityQueryFilter: type IN ( 'DASHBOARD' )
+  port:
+    entity:
+      mappings:
+        identifier: .guid
+        title: .name
+        blueprint: '"newRelicDashboards"'
+        properties:
+          dashboard_link: .permalink
+- kind: newRelicService
+  selector:
+    query: 'true'
+    newRelicTypes:
+    - SERVICE
+    - APPLICATION
+    entityQueryFilter: type in ('SERVICE','APPLICATION')
+  port:
+    entity:
+      mappings:
+        identifier: .guid
+        title: .name
+        blueprint: '"workload"'
+        relations:
+          new_relic_workload: .guid
+
+```
+
+</details>
+
+
+
 ### Additional Configuration
 
   - **newRelicTypes** - An array of Newrelic entity types that will be fetched. The default value is ['SERVICE', 'APPLICATION']. This is related to the type field in the Newrelic entity.
@@ -476,7 +625,7 @@ Before mapping, this integration performs a transformation on each `tag`, after 
 tags = ["coreCount":"10","hostStatus":"running"]
 ```
 
-
+<MetricsAndSyncStatus/>
 
 ## Examples
 

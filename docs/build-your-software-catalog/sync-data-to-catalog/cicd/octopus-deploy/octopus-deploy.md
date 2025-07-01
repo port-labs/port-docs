@@ -11,7 +11,7 @@ import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configu
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Octopus Deploy Integration
 
@@ -193,7 +193,7 @@ This table summarizes the available parameters for the installation.
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                           | ❌        |
 | `sendRawDataExamples`               | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                     | ❌        |
 | `integration.secrets.webhookSecret`           | Webhook secret for authenticating incoming events. [Learn more](https://octopus.com/docs/administration/managing-infrastructure/subscriptions)                                           | ❌        |
-| `baseUrl`               | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Octopus                     | ❌        |
+| `baseUrl`               | The base url of the instance where the Octopus integration is hosted, used for real-time updates. (e.g.`https://myoctopusdeployoceanintegration.com`)                    | ❌        |
 <br/>
 
 <AdvancedConfig/>
@@ -410,6 +410,108 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: space
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .Name
+        blueprint: '"octopusSpace"'
+        properties:
+          url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .Id
+          description: .Description
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .Name
+        blueprint: '"octopusProject"'
+        properties:
+          url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .SpaceId + "/projects/" + .Id
+          description: .Description
+          isDisabled: .IsDisabled
+          tenantedDeploymentMode: .TenantedDeploymentMode
+        relations:
+          space: .SpaceId
+- kind: release
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .ProjectId + "(" + .Version + ")"
+        blueprint: '"octopusRelease"'
+        properties:
+          version: .Version
+          assembledDate: .Assembled
+          channelId: .ChannelId
+          releaseNotes: .ReleaseNotes
+          url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .SpaceId + "/releases/" + .Id
+        relations:
+          project: .ProjectId
+- kind: deployment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .Name
+        blueprint: '"octopusDeployment"'
+        properties:
+          createdAt: .Created
+          deployedBy: .DeployedBy
+          taskId: .TaskId
+          failureEncountered: .FailureEncountered
+          comments: .Comments
+          url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .SpaceId + "/deployments/" + .Id
+        relations:
+          release: .ReleaseId
+          project: .ProjectId
+- kind: machine
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .Name
+        blueprint: '"octopusMachine"'
+        properties:
+          roles: .Roles
+          status: .HealthStatus
+          url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .SpaceId + "/infrastructure/machines/" + .Id + "/settings"
+          isDisabled: .IsDisabled
+          operatingSystem: .OperatingSystem
+          architecture: .Architecture
+          statusSummary: .StatusSummary
+          endpointType: .Endpoint.DeploymentTargetTypeId
+          communicationStyle: .Endpoint.CommunicationStyle
+        relations:
+          space: .SpaceId
+```
+
+</details>
+
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

@@ -7,7 +7,7 @@ import SnykConfiguration from "/docs/build-your-software-catalog/custom-integrat
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Snyk
 
@@ -494,6 +494,139 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: organization
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.name
+        blueprint: '"snykOrganization"'
+        properties:
+          slug: .attributes.slug
+          url: ("https://app.snyk.io/org/" + .attributes.slug | tostring)
+        relations:
+          group: '"all_teams"'
+- kind: project
+  selector:
+    query: 'true'
+    attachIssuesToProject: false
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.name
+        blueprint: '"snykProject"'
+        properties:
+          url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
+          businessCriticality: .attributes.business_criticality
+          environment: .attributes.environment
+          lifeCycle: .attributes.lifecycle
+          highOpenVulnerabilities: .meta.latest_issue_counts.high
+          mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
+          lowOpenVulnerabilities: .meta.latest_issue_counts.low
+          criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
+          tags: .attributes.tags
+          targetOrigin: .attributes.origin
+          snyk_product_type: ".attributes.type | if (. ==\"dockerfile\" or .==\"apk\" or .==\"linux\" or .==\"rpm\" or\t.==\"deb\") then \"Snyk Container\" elif((.|contains(\"config\")) or .==\"terraformplan\") then \"Snyk IaC\" elif .==\"sast\" then \"Snyk Code\" else \"Snyk Open Source\" end"
+        relations:
+          snyk_target: .relationships.target.data.id
+          service:
+            combinator: '"and"'
+            rules:
+            - property: '"snyk_target_name"'
+              operator: '"="'
+              value: .relationships.target.data.attributes.display_name
+- kind: target
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.display_name
+        blueprint: '"snykTarget"'
+        properties:
+          origin: .relationships.integration.data.attributes.integration_type
+          snyk_project_types: .__projects | map(.attributes.type) | unique
+          snyk_product_types: ".__projects | map(.attributes.type) | unique |\tmap(if(.==\"dockerfile\" or .==\"apk\" or .==\"linux\" or .==\"rpm\" or\t.==\"deb\") then \"Snyk Container\" elif((.|contains(\"config\")) or .==\"terraformplan\") then \"Snyk IaC\" elif.==\"sast\" then \"Snyk Code\" else \"Snyk Open Source\" end) | unique"
+        relations:
+          snyk_organization: .relationships.organization.data.id
+- kind: vulnerability
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.title
+        blueprint: '"snykVulnerability"'
+        properties:
+          score: .attributes.risk.score.value
+          packageNames: '[.attributes.coordinates[].representations[].dependency?.package_name | select(. != null)]'
+          packageVersions: '[.attributes.coordinates[].representations[].dependency?.package_version | select(. != null)]'
+          severity: .attributes.effective_severity_level
+          url: ("https://app.snyk.io/project/" + .relationships.scan_item.data.id + "#issue-" + .attributes.key | tostring)
+          nvd_url: .attributes.problems[] | select(.source == "NVD") | .url
+          publicationTime: .attributes.created_at
+          status: .attributes.status
+          type: .attributes.type
+          is_ignored: .attributes.ignored
+          resolved_at: .attributes.resolution.resolved_at
+          resolution_type: .attributes.resolution.type
+          snyk_problem_id: .attributes.key
+        relations:
+          project: .relationships.scan_item.data.id
+- kind: target
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.display_name
+        blueprint: '"snykTarget"'
+        relations:
+          repository:
+            combinator: '"and"'
+            rules:
+            - property: '"$identifier"'
+              operator: '"="'
+              value: .attributes.display_name
+- kind: target
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier:
+          combinator: '"and"'
+          rules:
+          - property: '"$identifier"'
+            operator: '"="'
+            value: .attributes.display_name
+        blueprint: '"githubRepository"'
+        relations:
+          snyk_target: .id
+```
+
+</details>
+
+<MetricsAndSyncStatus/>
 
 
 ## Examples

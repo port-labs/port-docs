@@ -71,7 +71,7 @@ If you prefer to use Port's API directly:
    ```
 
 4. The response will contain a `url` and a `manifest` object.
-5. Submit the manifest to the URL to create your GitHub App.
+5. Create an HTML form with a button that triggers a POST request to the `url` provided by Port's API. The request should include the GitHub App `manifest` as the payload. This will initiate the creation of your GitHub App. To learn more, refer to [GitHub's documentation](https://docs.github.com/en/apps/sharing-github-apps/registering-a-github-app-from-a-manifest#examples) on registering a GitHub App from a manifest.
 
 :::tip
 You'll need your Port API credentials for this process:

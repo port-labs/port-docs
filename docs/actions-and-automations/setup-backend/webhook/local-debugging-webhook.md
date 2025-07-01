@@ -213,6 +213,7 @@ Here is the action JSON:
   "invocationMethod": {
     "type": "WEBHOOK",
     "url": "https://your-webhook-url.com",
+    "synchronized": true,
     "body": {
       "action": "{{ .action.identifier[(\"vm_\" | length):] }}",
       "resourceType": "run",
@@ -401,7 +402,7 @@ node index.js
 
 ## Triggering the action
 
-Login to port and go to the VM page and trigger the action via the **Create VM** action button:
+Login to Port and go to the VM page and trigger the action via the **Create VM** action button:
 
 ![Create VM button](/img/self-service-actions/CreateVMDropdown.png)
 
@@ -412,6 +413,8 @@ Fill the wanted details and click on `Create`
 And that's it, the `Success!` output shows that your local server really did receive your webhook payload:
 
 ![Webhook server response](/img/self-service-actions/HelloWorldLog.png)
+
+Since `synchronized` is set to `true` in the action JSON, the action's run status will also be updated to `Success` in Port. 
 
 :::tip
 Now that webhook requests are forwarded to your local machine, you can use your IDE to place breakpoints, examine the structure of the webhook request and iterate on your custom handler logic.

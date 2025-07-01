@@ -13,7 +13,7 @@ import OpsGenieAlertConfiguration from "/docs/build-your-software-catalog/custom
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Opsgenie
 
@@ -395,6 +395,194 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: team
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"opsGenieTeam"'
+        properties:
+          description: .description
+          url: .links.web
+- kind: schedule
+  selector:
+    query: 'true'
+    apiQueryParams:
+      expand: rotation
+  port:
+    entity:
+      mappings:
+        identifier: .id + "_" + .item.id
+        title: .name + "_" + .item.name
+        blueprint: '"opsGenieSchedule"'
+        properties:
+          timezone: .timezone
+          description: .description
+          startDate: .item.startDate
+          endDate: .item.endDate
+          rotationType: .item.type
+        relations:
+          owner_opsgenie_team: .ownerTeam.id
+          schedule_opsgenie_users: '[.item.participants[] | select(has("username")) | .username]'
+          schedule_users:
+            combinator: '"and"'
+            rules:
+            - property: '"_opsGenieUserId"'
+              operator: '"in"'
+              value: '[.item.participants[] | select(has("username")) | .username]'
+    itemsToParse: .rotations
+- kind: service
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"opsGenieService"'
+        properties:
+          description: .description
+          url: .links.web
+          tags: .tags
+        relations:
+          owner_opsgenie_team: .teamId
+- kind: alert
+  selector:
+    query: 'true'
+    apiQueryParams:
+      status: open
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .message
+        blueprint: '"opsGenieAlert"'
+        properties:
+          status: .status
+          acknowledged: .acknowledged
+          priority: .priority
+          sourceName: .source
+          tags: .tags
+          count: .count
+          createdBy: .owner
+          createdAt: .createdAt
+          updatedAt: .updatedAt
+          description: .description
+          integration: .integration.name
+        relations:
+          relatedIncident: if (.alias | contains("_")) then (.alias | split("_")[0]) else null end
+          responding_opsgenie_team: .responders | [.[] | select(.type == "team") | .id]
+          responding_team:
+            combinator: '"and"'
+            rules:
+            - property: '"opsgenie_team_id"'
+              operator: '"in"'
+              value: .responders | [.[] | select(.type == "team") | .id]
+          responding_opsgenie_user: .responders | [.[] | select(.type == "user") | .id]
+          responding_user:
+            combinator: '"and"'
+            rules:
+            - property: '"_opsGenieUserId"'
+              operator: '"in"'
+              value: .responders | [.[] | select(.type == "user") | .id]
+- kind: incident
+  selector:
+    query: 'true'
+    apiQueryParams:
+      status: open
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .message
+        blueprint: '"opsGenieIncident"'
+        properties:
+          status: .status
+          priority: .priority
+          tags: .tags
+          url: .links.web
+          createdAt: .createdAt
+          updatedAt: .updatedAt
+          description: .description
+        relations:
+          impacted_opsgenie_services: .impactedServices
+          impacted_services:
+            combinator: '"and"'
+            rules:
+            - property: '"_opsGenieServiceId"'
+              operator: '"in"'
+              value: .impactedServices
+          responding_opsgenie_team: .responders | [.[] | select(.type == "team") | .id]
+          responding_team:
+            combinator: '"and"'
+            rules:
+            - property: '"opsgenie_team_id"'
+              operator: '"in"'
+              value: .responders | [.[] | select(.type == "team") | .id]
+          responding_opsgenie_user: .responders | [.[] | select(.type == "user") | .id]
+          responding_user:
+            combinator: '"and"'
+            rules:
+            - property: '"_opsGenieUserId"'
+              operator: '"in"'
+              value: .responders | [.[] | select(.type == "user") | .id]
+- kind: schedule-oncall
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .ownerTeam.id
+        title: .ownerTeam.name
+        blueprint: '"opsGenieTeam"'
+        properties:
+          oncallUsers: .__currentOncalls.onCallRecipients
+        relations:
+          schedule_opsgenie_users: .__currentOncalls.onCallRecipients
+          schedule_users:
+            combinator: '"and"'
+            rules:
+            - property: '"_opsGenieUserId"'
+              operator: '"in"'
+              value: .__currentOncalls.onCallRecipients
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .fullName
+        blueprint: '"opsGenieUser"'
+        properties:
+          email: .username
+          role: .role.name
+          timeZone: .timeZone
+          isVerified: .verified
+          isBlocked: .blocked
+          address: .userAddress
+          createdAt: .createdAt
+```
+
+</details>
+
+
+
 
 ## Capabilities
 
@@ -433,6 +621,18 @@ For example, if your ingress or load balancer exposes the OpsGenie Ocean integra
 7. Click **Save integration**.
 
 
+## Limitations
+
+### Maximum offset in OpsGenie APIs
+
+The OpsGenie APIs for [Alerts](https://docs.opsgenie.com/docs/alert-api#list-alerts) and [Incidents](https://docs.opsgenie.com/docs/incident-api#list-incidents) have a pagination limit where the sum of `offset` and `limit` parameters cannot exceed 20,000 records. This means you can retrieve up to 20,000 records in a single query session for each resource type.
+
+:::tip Working with large datasets
+To access records beyond the 20,000 limit, use filters to narrow your result set. This approach reduces the number of records returned and helps you bypass the offset limitation.  
+For implementation details and supported filter options, see the [examples](examples.md#alert) section.
+:::
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 
