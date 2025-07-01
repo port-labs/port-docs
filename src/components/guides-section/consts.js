@@ -1276,5 +1276,26 @@ export const availableGuides = [
         tags: ["Incident management", "AI", "Actions"],
         logos: ["AI"],
         link: "/guides/all/add-context-to-incident-manager-ai-agent",
+    },
+    {
+        title: "Manage your EKS clusters",
+        description: "Create self-service actions that manage your EKS clusters",
+        tags: ["Cloud access management", "AWS", "GitHub", "Actions"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-your-eks-clusters",
+    },
+    {
+        title: "Manage and visualize your ACM certificates",
+        description: "Create a comprehensive certificate management system to create, renew, and delete certificates",
+        tags: ["Security", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-acm-certificates",
+    },
+    {
+        title: "Manage and visualize your GCP Compute Engine instances",
+        description: "Create a dashboard that manages and visualizes your GCP Compute Engine instances",
+        tags: ["Cloud access management", "GCP", "GitHub", "Dashboards"],
+        logos: ["GCP", "GitHub"],
+        link: "/guides/all/manage-and-visualize-gcp-compute-engine-instances",
     }
 ]
