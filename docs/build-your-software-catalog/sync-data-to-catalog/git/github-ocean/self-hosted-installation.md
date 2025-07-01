@@ -111,7 +111,7 @@ docker run \
 
 | Env variable         | Description                                                                         |
 |----------------------|-------------------------------------------------------------------------------------|
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY`             | Application ID, you can find it in the edit GitHub App page                         |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`             | Application ID, you can find it in the edit GitHub Integration page                         |
 | `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`     | Will be used to create webhook                            |
 | `OCEAN__INTEGRATION__IDENTIFIER`           | Your organization's self-hosted GitHub hostname                                     |
 | `OCEAN__BASE_URL`   | Integration base url, will be used to register webhook.
@@ -129,27 +129,27 @@ A health check is a route that is used to check the health of a repository. It i
 
 Our GitHub App image exposes a health check route at `https://host:port/health` to monitor its status.
 
-## Installing Port's GitHub application
+## Installing Port's GitHub integration
 
-After you have the app registered in your organization and the Docker is up and running, you can install the app and select the repositories to integrate it with:
+After you have the integration registered in your organization and the Docker is up and running, you can install the integration and select the repositories to integrate it with:
 
 1. First, navigate to your organization inside your self-hosted GitHub and click on Settings:
 
 ![Org view](../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
 
-2. Inside the settings view, click on Developer Settings -> and then select GitHub Apps:
+2. Inside the settings view, click on Developer Settings -> and then select GitHub Integrations:
 
 ![Settings view](../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
 
-3. Click `edit` on the GitHub app created at the step before:
+3. Click `edit` on the GitHub integration created at the step before:
 
-![GitHub app installation page](../../../../../static/img/integrations/github-app/SelfHostedEditGitHubApp.png)
+![GitHub integration installation page](../../../../../static/img/integrations/github-app/SelfHostedEditGitHubApp.png)
 
 4. Go to Install App -> and select the installation button on your wanted organization;
 
-5. Choose the repositories you want the app to be installed for:
+5. Choose the repositories you want the integration to be installed for:
 
-![GitHub app installation chooses repositories](../../../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)
+![GitHub integration installation chooses repositories](../../../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)
 
 ## Limitations
 

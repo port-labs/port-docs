@@ -84,7 +84,7 @@ In other cases, the GitHub API will return a `null` value for the user's email.
 
 ## Map supported resources
 
-The examples above show specific use cases, but Port's GitHub app supports the ingestion of many other GitHub objects.
+The examples above show specific use cases, but Port's GitHub integration supports the ingestion of many other GitHub objects.
 To adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
 
 <GitHubResources/>

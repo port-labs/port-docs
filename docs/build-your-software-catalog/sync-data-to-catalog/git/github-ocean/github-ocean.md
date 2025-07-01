@@ -89,7 +89,7 @@ This will clear the configuration in Port's UI.
 When configuring the integration **using GitHub**, you can choose either a global or granular configuration:
 
 - **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
-  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
+  - Using this method applies the configuration to all repositories that the GitHub integration has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
 - **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository.
   - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
 
@@ -509,10 +509,10 @@ Port's GitHub integration requires the following permissions:
   - Release
 
 :::info Default permissions
-You will be prompted to confirm the above listed permissions when first installing the App.
+You will be prompted to confirm the above listed permissions when first installing the integration.
 
 Permissions can be given to selected repositories in your organization, or to all repositories.   
-You can reconfigure the app at any time, giving it access to new repositories, or removing access.
+You can reconfigure the integration at any time, giving it access to new repositories, or removing access.
 
 :::
 
@@ -527,10 +527,6 @@ For relevant guides and examples, see the [guides section](https://docs.port.io/
 ## GitOps
 
 Port's GitHub app also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
-
-## Advanced
-
-Refer to the [advanced](./advanced.md) page for advanced use cases and examples.
 
 ## Self-hosted installation
 

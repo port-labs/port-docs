@@ -38,7 +38,6 @@ To allow Port to fetch data from your Github Organization, you need to create an
 
 A Personal Access Token (PAT) is suitable if you're the only one managing the integration and don't need frequent credential rotation.  
 To create a personal access token see the Github [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
-
 - The token must belong to a user with access to the relevant Github resources (e.g., repositories, teams).
 
 

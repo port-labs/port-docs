@@ -35,10 +35,10 @@ Note that the `port.yml` file is not the same as the [`port-app-config.yml` file
 
 The `port.yml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yml` file will also be reflected inside Port.
 
-:::tip Github app
-To manage entities using GitOps and the `port.yml` file, Port's [Github app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) must be installed, as it listens to `push` events sent from Github.
+:::tip GitHub integration
+To manage entities using GitOps and the `port.yml` file, Port's [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) must be installed, as it listens to `push` events sent from Github.
 
-This means that if the `port.yml` file exists in the repository before installing the app, it will not be picked up automatically. You will need to make some update to the `port.yml` file and push it to the repository in order for the Git app to properly track and ingest the entity information.
+This means that if the `port.yml` file exists in the repository before installing the integration, it will not be picked up automatically. You will need to make some update to the `port.yml` file and push it to the repository in order for the Git integration to properly track and ingest the entity information.
 :::
 
 The `port.yml` file is how you specify your Port entities that are managed using GitOps and whose data is ingested from your Git repositories.
@@ -167,7 +167,3 @@ Check out the [example repository](https://github.com/port-labs/github-app-setup
 ### Port.yml ingestion pattern
 
 <PortYmlIngestionPattern provider="GitHub" />
-
-## Advanced
-
-Refer to the [advanced](../advanced.md) page for advanced use cases and configurations.
