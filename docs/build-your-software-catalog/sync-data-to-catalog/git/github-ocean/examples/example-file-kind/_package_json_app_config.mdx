@@ -3,27 +3,26 @@
 <summary>Port config YAML</summary>
 
 ```yaml showLineNumbers
-resources:
-  - kind: file
+ - kind: file
     selector:
       query: 'true'
       files:
-        - path: '**/package.json'
-        - repos:
-            - stale
+        - path: package.json
+          repos:
+            - repo: vscode
+              branch: main
     port:
-      itemsToParse: .file.content.dependencies | to_entries
+      itemsToParse: .content.dependencies | to_entries
       entity:
         mappings:
           identifier: >-
             .item.key + "_" + if (.item.value | startswith("^")) then
-            .item.value[1:] else . end
+            .item.value[1:] else .item.value end
           title: .item.key + "@" + .item.value
           blueprint: '"package"'
           properties:
             package: .item.key
             version: .item.value
-          relations: {}
 ```
 
 </details>
