@@ -1,5 +1,5 @@
 ---
-title: Setup backend
+title: Set up backend
 ---
 
 import DocCardList from '@theme/DocCardList';
@@ -9,7 +9,7 @@ import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_p
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
 import ExecuteActionLocations from '/docs/actions-and-automations/create-self-service-experiences/templates/_execute_action_locations.mdx'
 
-# Setup backend
+# Set up backend
 
 <center>
 

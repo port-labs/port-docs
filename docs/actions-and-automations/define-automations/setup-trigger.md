@@ -1,17 +1,22 @@
 ---
 sidebar_position: 1
-title: Setup trigger
+title: Set up trigger
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Setup trigger
+# Set up trigger
+
+After specifying your automation’s basic details including the `title`, `identifier`, `description`, `icon`, and `active` status, the next step is to choose a **trigger** for the automation.
 
 Automation triggers events in your software catalog that you want to act upon.  
 Port supports two types of triggers:
 - **Entity**: Triggered when an an entity of a specified blueprint is modified.
 - **Action run**: Triggered when an [action run](/actions-and-automations/reflect-action-progress/) of a specified action is modified.
+
+If you select an entity trigger, you will need to specify the relevant blueprint.  
+If you select an action run trigger, you will need to specify the corresponding action.
 
 ## Available triggers
 
