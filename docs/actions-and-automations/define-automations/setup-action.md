@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Setup backend
+title: Set up backend
 ---
 
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
@@ -8,15 +8,16 @@ import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_p
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Setup backend
+# Set up backend
 
 The automation's backend is the logic that you want to execute when a trigger event occurs. It will run on all entities tied to the blueprint specified in the automation's definition, whenever the trigger event occurs.
 
+The automation's backend is defined under the `Backend` tab of the automation creation form in the UI.  
 Port uses the same backend types for automations and for [self-service actions](/actions-and-automations/create-self-service-experiences/).
 
 ## Backend JSON structure
 
-The backend is defined under the `invocationMethod` key in the automation's JSON structure:
+The backend can also be edited under the `invocationMethod` key in the automation's JSON structure:
 
 ```json showLineNumbers
 {
