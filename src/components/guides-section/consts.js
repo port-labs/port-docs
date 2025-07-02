@@ -1297,5 +1297,19 @@ export const availableGuides = [
         tags: ["Cloud access management", "GCP", "GitHub", "Dashboards"],
         logos: ["GCP", "GitHub"],
         link: "/guides/all/manage-and-visualize-gcp-compute-engine-instances",
+    },
+    {
+        title: "Manage and visualize your Azure web apps",
+        description: "Create a comprehensive web app management system to start, stop and restart web apps",
+        tags: ["Cloud access management", "Azure", "GitHub", "Dashboards"],
+        logos: ["Azure", "GitHub"],
+        link: "/guides/all/manage-and-visualize-azure-web-apps",
+    },
+    {
+        title: "Manage your Azure Virtual Machines",
+        description: "Create a comprehensive VM management system to start, deallocate and restart virtual machines",
+        tags: ["Cloud access management", "Azure", "GitHub", "Dashboards"],
+        logos: ["Azure", "GitHub"],
+        link: "/guides/all/manage-and-visualize-azure-virtual-machines",
     }
 ]
