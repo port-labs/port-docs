@@ -669,7 +669,7 @@ resources:
       entity:
         mappings:
           identifier: >-
-            .repo.name + "-values"
+            .repository.name + "-values"
           blueprint: '"file"'
           properties:
             content: .content
