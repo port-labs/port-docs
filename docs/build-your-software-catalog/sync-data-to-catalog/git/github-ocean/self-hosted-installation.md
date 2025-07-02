@@ -112,7 +112,7 @@ docker run \
 
 | Env variable                                         | Description                                                                         |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub Integration page.                |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                |
 | `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | Will be used to create webhook                                                      |
 | `OCEAN__INTEGRATION__IDENTIFIER`                     | Your organization's self-hosted GitHub hostname                                     |
 | `OCEAN__BASE_URL`                                    | Integration base url, will be used to register webhook.                             |
@@ -122,7 +122,7 @@ docker run \
 | `OCEAN__INTEGRATION__IDENTIFIER`                     | Identifier for the integration                                                      |
 | `OCEAN__EVENT_LISTENER__TYPE`                        | How Ocean will retrieve config changes from Port.                                   |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                           |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. You can use a tool like https://www.base64encode.org/ |
 
 ## Health check route
 
