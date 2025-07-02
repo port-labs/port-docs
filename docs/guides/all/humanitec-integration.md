@@ -29,7 +29,7 @@ import HumanitecSharedValues from "/docs/guides/templates/humanitec/_humanitec_s
 
 ## Overview 
 
-In this example, you are going to create a github worklow integration to facilitate the ingestion of Humanitec applications, environments, workloads, resources and resource graphs into your port catalog on schedule
+In this example, you are going to create a github worklow integration to facilitate the ingestion of Humanitec applications, environments, workloads, resources, resource graphs, pipelines, deployment deltas, deployment sets, secret stores, shared values, value set versions, users, groups into your port catalog on schedule
 
 :::info Prerequisites
 
@@ -172,5 +172,5 @@ jobs:
 </details>
 
 
-Done! Any change that happens to your application, environment, workloads or resources in Humanitec will be synced to Port on the schedule interval defined in the GitHub workflow.
+Done! Any change that happens to your application, environment, workloads, resources, resource graphs, pipelines, deployment deltas, deployment sets, secret stores, shared values, value set versions, users, groups in Humanitec will be synced to Port on the schedule interval defined in the GitHub workflow.
 
