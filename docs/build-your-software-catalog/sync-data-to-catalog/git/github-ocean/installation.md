@@ -97,13 +97,14 @@ Remember to replace the placeholders for `GITHUB_TOKEN` and your GitHub URL.
 initializePortResources: true
 scheduledResyncInterval: 120
 integration:
-  identifier: my-ocean-Github-integration
+  identifier: my-ocean-github-integration
   type: Github-Ocean
   eventListener:
     type: POLLING
   config:
   // highlight-next-line
     githubHost: https://api.github.com # Or your self-hosted GitHub URL
+    GithubOrganization: <your github organization>
   secrets:
   // highlight-next-line
     githubToken: GITHUB_TOKEN
