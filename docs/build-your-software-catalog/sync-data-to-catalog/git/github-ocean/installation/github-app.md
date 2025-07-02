@@ -37,7 +37,6 @@ In organizations that have a self-hosted GitHub installation there is no access 
 
 - **GitHub App name:** port.io
 - **Homepage URL:** https://getport.io
-- **Setup URL:** https://app.getport.io
 - **Repository Permissions:**
   - Actions: Read and Write (for executing self-service action using GitHub workflow)
   - Checks: Read and Write (for validating `Port.yml`)
