@@ -1271,11 +1271,11 @@ export const availableGuides = [
         link: "/guides/all/manage-and-visualize-jira-issues",
     },
     {
-        title: "Add custom context to AI agents",
-        description: "Enhance AI agents with custom context like Root Cause Analysis documents",
+        title: "Add RCA context to AI agents",
+        description: "Enhance AI agents with Root Cause Analysis context",
         tags: ["Incident management", "AI", "Actions"],
         logos: ["AI"],
-        link: "/guides/all/add-context-to-incident-manager-ai-agent",
+        link: "/guides/all/add-rca-context-to-ai-agents",
     },
     {
         title: "Manage your EKS clusters",
