@@ -167,6 +167,17 @@ export const liveEvents = {
     \n- git.pullrequest.created \
     \n- git.pullrequest.updated \
     \n- git.push',
+  GithubOcean: 
+  ' **Repository:** \
+    \n - created \
+    \n - edited \
+    \n - renamed \
+    \n - transferred \
+    \n - unarchived \
+    \n - publicized \
+    \n - privatized',
+
+  
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

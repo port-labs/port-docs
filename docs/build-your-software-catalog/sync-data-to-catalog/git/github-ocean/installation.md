@@ -19,7 +19,7 @@ This page details how to install Port's Github integration (powered by the Ocean
 
 This page outlines the following steps:
 
-- How to [create](#create-an-access-token) an access token to give the integration permissions to query your Github instance.
+- How to [create](#create-an-access-token) an access token to give the integration permissions to query your Github organization.
 - How to [configure](#configure-the-integration) and customize the integration before deploying it.
 - How to [deploy](#deploy-the-integration) the integration in the configuration that fits your use case.
 
@@ -61,7 +61,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation integration="Github-Ocean" />
+<OceanSaasInstallation integration="GithubOcean" />
 
 </TabItem>
 
