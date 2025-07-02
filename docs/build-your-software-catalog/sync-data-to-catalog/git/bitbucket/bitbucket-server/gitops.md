@@ -415,7 +415,7 @@ if __name__ == "__main__":
 
 </details>
 
-<h3>Running the Script</h3>
+<h3>Running the script</h3>
 
 You can run this script periodically (e.g., using a cron job or CI/CD pipeline) to scan your Bitbucket (Self-Hosted) repositories for `port.yaml` files and create or update entities in Port accordingly.
 
