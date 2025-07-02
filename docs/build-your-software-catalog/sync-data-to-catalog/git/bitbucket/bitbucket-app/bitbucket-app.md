@@ -3,7 +3,7 @@ import TabItem from "@theme/TabItem"
 import BitbucketResources from './\_bitbucket_exporter_supported_resources.mdx'
 
 
-# Bitbucket App (Deprecated)
+# Bitbucket app (deprecated)
 
 Port's Bitbucket App integration allows you to model Bitbucket resources in your software catalog and ingest data into them.
 
