@@ -79,7 +79,7 @@ It can be deployed on any platform that allows deploying images as containers su
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-ocean-github-ocean:lastest
+docker pull ghcr.io/port-labs/port-ocean-github-ocean:latest
 ```
 
 Run the following command to start the app:
@@ -115,11 +115,6 @@ docker run \
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                                      |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. You can use a tool like https://www.base64encode.org/ |
 
-## Health check route
-
-A health check is a route that is used to check the health of a repository. It is a means to ensure that the service is running properly and can perform its intended function.
-
-Our GitHub integration image exposes a health check route at `https://host:port/health` to monitor its status.
 
 ## Installing Port's GitHub integration
 
