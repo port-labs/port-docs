@@ -182,9 +182,9 @@ This table summarizes the available parameters for the installation.
 | `integration.identifier`                 | Change the identifier to describe your integration                                                                                  | ✅       |
 | `integration.type`                       | The integration type                                                                                                                | ✅       |
 | `integration.eventListener.type`         | The event listener type                                                                                                             | ✅       |
+| `integration.config.GithubOrganization` | The GitHub access token                                                                                                             | ✅       |
 | `integration.config.GithubHost`          | The GitHub instance URL                                                                                                             | ✅       |
 | `integration.secrets.GithubToken`        | The GitHub access token                                                                                                             | ✅       |
-| `integration.secrets.GithubOrganization` | The GitHub access token                                                                                                             | ✅       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                                           | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌       |
 | `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌       |
