@@ -98,20 +98,20 @@ initializePortResources: true
 scheduledResyncInterval: 120
 integration:
   identifier: my-ocean-github-integration
-  type: Github-Ocean
+  type: github-ocean
   eventListener:
     type: POLLING
   config:
   // highlight-next-line
     githubHost: https://api.github.com # Or your self-hosted GitHub URL
-    GithubOrganization: <your github organization>
+    githubOrganization: <your github organization>
   secrets:
   // highlight-next-line
     githubToken: GITHUB_TOKEN
 ```
 
 <br/>
-2. Install the `my-ocean-Github-integration` ArgoCD Application by creating the following `my-ocean-github-integration.yaml` manifest:
+2. Install the `my-ocean-github-integration` ArgoCD Application by creating the following `my-ocean-github-integration.yaml` manifest:
 :::note
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
@@ -125,20 +125,20 @@ Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readth
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: my-ocean-Github-integration
+  name: my-ocean-github-integration
   namespace: argocd
 spec:
   destination:
-    namespace: my-ocean-Github-integration
+    namespace: my-ocean-github-integration
     server: https://kubernetes.default.svc
   project: default
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.8.5
     helm:
       valueFiles:
-      - $values/argocd/my-ocean-Github-integration/values.yaml
+      - $values/argocd/my-ocean-github-integration/values.yaml
       // highlight-start
       parameters:
         - name: port.clientId
@@ -166,7 +166,7 @@ spec:
 1. Apply your application manifest with `kubectl`:
 
 ```bash
-kubectl apply -f my-ocean-Github-integration.yaml
+kubectl apply -f my-ocean-github-integration.yaml
 ```
 
 </TabItem>
