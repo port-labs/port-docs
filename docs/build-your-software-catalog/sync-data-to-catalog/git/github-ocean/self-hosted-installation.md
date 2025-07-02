@@ -46,6 +46,7 @@ In organizations that have a self-hosted GitHub installation there is no access 
   - Issues: Readonly
   - Pull Request: Read and Write
   - Dependabot alerts: Readonly
+  - code scanning alerts: Readonly
   - Administration: Readonly (for syncing github teams)
 - **Organization Permissions:**
   - Members: Readonly (for syncing github teams)
