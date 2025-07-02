@@ -708,5 +708,3 @@ You can reconfigure the permission at any time, giving it access to new reposito
 ## Examples
 
 Refer to the [examples](./examples/resource-mapping-examples.md) page for practical configurations and their corresponding blueprint definitions.
-
-

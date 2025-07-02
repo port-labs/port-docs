@@ -21,7 +21,7 @@ In organizations that have a self-hosted GitHub installation there is no access 
 
 ## Register Port's GitHub integration
 
-1. Navigate to your organization inside your self-hosted GitHub and click on Settings:
+1. Navigate to your Github organization and click on Settings:
 
 ![Org view](../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
 
@@ -120,7 +120,7 @@ docker run \
 
 After you have the integration registered in your organization and the Docker is up and running, you can install the integration and select the repositories to integrate it with:
 
-1. First, navigate to your organization inside your self-hosted GitHub and click on Settings:
+1. First, navigate to your organization and click on Settings:
 
 ![Org view](../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
 
