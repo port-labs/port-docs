@@ -23,15 +23,15 @@ In organizations that have a self-hosted GitHub installation there is no access 
 
 1. Navigate to your Github organization and click on Settings:
 
-![Org view](../../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
+![Org view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizaionView.png)
 
 2. Inside the settings view, click on **Developer Settings** -> and then select **GitHub Apps**:
 
-![Settings view](../../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
+![Settings view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizationSettings.png)
 
 3. Click on "New GitHub App":
 
-![New GitHub App](../../../../../../static/img/integrations/github-app/SelfHostedNewGitHubApp.png)
+![New GitHub App](../../../../../../static/img/integrations/github-ocean/SelfHostedNewGitHubApp.png)
 
 4. Insert the following properties:
 
@@ -69,9 +69,31 @@ You will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 
 In order to make use of [Self-Service Actions using GitHub Workflow](../../../../../actions-and-automations/setup-backend/github-workflow/github-workflow.md), please contact us at support@getport.io.
 
+## Installing Port's GitHub integration
+
+After you have the app registered in your organization, you can install it and select the repositories to integrate it with:
+
+1. First, navigate to your organization and click on Settings:
+
+![Org view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizaionView.png)
+
+2. Inside the settings view, click on Developer Settings -> and then select GitHub Integrations:
+
+![Settings view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizationSettings.png)
+
+3. Click `edit` on the GitHub integration created at the step before:
+
+![GitHub integration installation page](../../../../../../static/img/integrations/github-ocean/SelfHostedEditGitHubApp.png)
+
+4. Go to Install App -> and select the installation button on your wanted organization;
+
+5. Choose the repositories you want the integration to be installed for:
+
+![GitHub integration installation chooses repositories](../../../../../../static/img/integrations/github-ocean/SelfHostedInstallationRepoSelection.png)
+
 ## Docker
 
-To use our GitHub integration, you will need to deploy our official integration Docker image, replacing the GitHub personal access token with an App ID and App private key.
+To use our GitHub integration as an app, you will need to deploy our official integration Docker image - providing an app id and an app private key.
 
 It can be deployed on any platform that allows deploying images as containers such as: K8S, ECS, AWS App Runner, etc.
 
@@ -113,25 +135,3 @@ docker run \
 | `OCEAN__EVENT_LISTENER__TYPE`                        | How Ocean will retrieve config changes from Port.                                              |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                                      |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. You can use a tool like https://www.base64encode.org/ |
-
-## Installing Port's GitHub integration
-
-After you have the integration registered in your organization and the Docker is up and running, you can install the integration and select the repositories to integrate it with:
-
-1. First, navigate to your organization and click on Settings:
-
-![Org view](../../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
-
-2. Inside the settings view, click on Developer Settings -> and then select GitHub Integrations:
-
-![Settings view](../../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
-
-3. Click `edit` on the GitHub integration created at the step before:
-
-![GitHub integration installation page](../../../../../../static/img/integrations/github-app/SelfHostedEditGitHubApp.png)
-
-4. Go to Install App -> and select the installation button on your wanted organization;
-
-5. Choose the repositories you want the integration to be installed for:
-
-![GitHub integration installation chooses repositories](../../../../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)
