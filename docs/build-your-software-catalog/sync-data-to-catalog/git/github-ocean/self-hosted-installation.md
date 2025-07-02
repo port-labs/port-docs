@@ -156,6 +156,6 @@ After you have the integration registered in your organization and the Docker is
 
 As this is a self-hosted version, there are some limitations due to security considerations and the fact that we don't have access to your GitHub instance
 
-- The configuration must be included as part of the repository, and cannot be configured via Port's UI/API. Refer to the [GitHub Configuration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/?method=github#configuration) for more details.
+- The configuration must be included as part of the repository, and cannot be configured via Port's UI/API. Refer to the [GitHub Configuration](../github-ocean#configuration) for more details.
 
 - To use self-service actions, you will need [Kafka Credentials](/actions-and-automations/setup-backend/webhook/kafka/kafka.md) configured for your organization;
