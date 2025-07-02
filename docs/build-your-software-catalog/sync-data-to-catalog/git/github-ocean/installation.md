@@ -59,11 +59,6 @@ Choose the installation method that best suits your needs:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
-
-<OceanSaasInstallation integration="GithubOcean" />
-
-</TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
