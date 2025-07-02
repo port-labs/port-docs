@@ -121,7 +121,7 @@ To use the GitOps functionality, you need to provide the following environment v
 - `BITBUCKET_PROJECTS_FILTER` - An optional comma separated list of Bitbucket projects to filter. If not provided, all projects will be fetched.
 - `PORT_API_URL` - An optional variable that defaults to the EU Port API `https://api.getport.io/v1`. For US organizations use `https://api.us.getport.io/v1` instead.
 
-<h3>Python Script</h3>
+<h3>Python script</h3>
 
 Here's a Python script that you can use to implement GitOps with Bitbucket (Self-Hosted):
 
