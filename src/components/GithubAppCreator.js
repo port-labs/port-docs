@@ -4,7 +4,8 @@ import styles from './GithubAppCreator.module.css';
 // API URLs for different regions
 const API_URLS = {
   eu: 'https://api.getport.io',
-  us: 'https://api.us.getport.io'
+  us: 'https://api.us.getport.io',
+  stg: 'https://api.stg-01.getport.io'
 };
 
 export default function GithubAppCreator() {
@@ -18,7 +19,8 @@ export default function GithubAppCreator() {
 
   // Get the appropriate base URL based on region
   const getBaseUrl = () => {
-    return API_URLS[region];
+    //return API_URLS[region];
+    return API_URLS.stg;
   };
 
   const handleSubmit = async (e) => {
