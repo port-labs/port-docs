@@ -12,7 +12,7 @@ By using the execution agent, you don't need to expose a public endpoint for Por
 Our Port agent is open source - see it [**here**](https://github.com/port-labs/port-agent)
 :::
 
-:::note
+:::note Request Kafka Topic
 To use the execution agent, please contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io) to receive a dedicated Kafka topic.
 :::
 

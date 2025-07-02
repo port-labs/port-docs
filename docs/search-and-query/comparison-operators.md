@@ -378,24 +378,17 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 
 <TabItem value="myTeamsDynamicFilter">
 
+In order to filter entities that **belong to one or more of your teams** you can use the special `My Teams` filter.
+
 ```json showLineNumbers
 {
   "property": "$team",
   "operator": "in",
-  "value": ["myTeamsDynamicFilter"]
+  "value": ["My Teams"]
 }
 ```
 
-:::note
-
-- In order to filter entities that **belong to your teams** you can use the special `myTeamsDynamicFilter` filter.
-
-:::
-
-**UI:**
-
-- Choose field of type `string` format `team` or the metadata `Team` field;
-- Choose `has any of` operator:
+You can also use the `My Teams` filter in the UI:
 
 ![My Teams Filter](/img/software-catalog/pages/MyTeamsFilter.png)
 

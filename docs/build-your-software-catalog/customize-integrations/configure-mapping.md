@@ -199,23 +199,19 @@ To perform a simple resync of an integration via the API without changing its ma
 </center>
 <br/>
 
-You can use the mapping YAML file to set the value of a relation between entities. This is very useful when you want to automatically assign an entity to the relation of another entity using a convention of your choice.
+In Port, [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) define how [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) are connected to one another.  
+For instance, a `Service` blueprint can be related to a `PagerDuty service` blueprint.
 
-For example, say we have a `service` blueprint and a `PagerDuty Service` blueprint with a relation between them:
+After ingesting all of our Services and PagerDuty services, we want to connect each `Service` to its corresponding `PagerDuty service`.  
+To achieve this, we have two options:
 
-<img src='/img/software-catalog/customize-integrations/relationExample.png' width='70%' border='1px' />
+1. **Assigning relations automatically using the mapping Configuration**
 
-<br/><br/>
-
-After ingesting all of our services and PagerDuty services, we want to connect each `service` to its corresponding `PagerDuty service`. To achieve this, we have two options:
-
-1. **Option 1** - use the integration's mapping YAML. In our example, we can add an entry to the mapping of the PagerDuty integration:
-
+   You can define the relation in the mapping file of your data source (e.g. PagerDuty) so that relations are assigned automatically during ingestion.  
+   Here's an example:  
+   
    - Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the PagerDuty exporter:
-
-      <img src='/img/software-catalog/customize-integrations/dataSourcesPdIntegration.png' width='100%' border='1px' />
-
-   - Add the following entry to the mapping YAML:
+   - In the bottom left panel, edit the mapping YAML file, and add the following entry to it:
 
      ```yaml showLineNumbers
      - kind: services
@@ -229,21 +225,27 @@ After ingesting all of our services and PagerDuty services, we want to connect e
              properties: {}
              relations:
              # highlight-start
-               pagerduty_service: .id
+               pager_duty_service: .id
               # highlight-end
      ```
-     In this mapping configuration, `pagerduty_service` is the relation identifier, and `.id` is the JQ expression which calculates the PagerDuty service identifier. In order to relate entities, the JQ expression must evaluate to the identifier of the target entity (in this case, the identifier of the PagerDuty service entity).
 
-     Now, if a `service's` **identifier** is equal to a `PagerDuty service's` **name**, that service will automatically have its on-call property filled with the relevant PagerDuty service.  
-      This is just the convention we chose for this example, but you can use a different one if you'd like.
+     In this mapping configuration, `pager_duty_service` is the name of the relation identifier, and `.id` is a JQ expression that extracts the identifier of the `PagerDuty service` from the ingested data.  
 
-2. **Option 2** - manually assign a PagerDuty service to each service using the UI:
+     When the data is ingested:
+      - If a `service` entity with the same identifier (`.name`) already exists in your catalog, Port will update it, adding the `pager_duty_service` relation and other associated data, such as the on-call property.
+      - If no such `service` exists, Port will create a new `service` entity with that identifier and attach the related `PagerDuty service` and the on-call property.
 
-   - Go to the [Services page](https://app.getport.io/services) of your software catalog.
+     This configuration ensures your catalog stays up to date automatically. You can also customize the relation logic, for example, using search-based relations, depending on your naming conventions or data structure.
+
+2. **Assigning relations manually in the UI**
+
+    You can also assign relations manually using Port's UI.  
+    For example:
+
+   - Go to the [services page](https://app.getport.io/services) of your software catalog.
    - Choose a service you want to assign a PagerDuty service to. Hover over it, click on the `...` button on the right, and select `Edit`.
-   - In the `PagerDuty service` field, select the relevant PagerDuty service from the dropdown list, then click `Update`:
+   - In the `PagerDuty service` field, select the relevant `PagerDuty service` from the dropdown list, then click `Update`.
 
-     <img src='/img/software-catalog/customize-integrations/relationManualAssign.png' width='40%' border='1px' />
 
 ### Mapping relations using search queries
 
@@ -288,8 +290,9 @@ When using a search query rule to map a relation, Port will query all entities o
   - A ["single type" relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#bust_in_silhouette-single) expects a single entity to be returned.
   - A ["many type" relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#-many) expects an array of entities to be returned.
 - The maximum number of entities returned by the search query rule is 100.
-- Mirror and calculation properties are currently not supported.
-- Only the `=` and `in` operators are supported for the search query rule.
+- Calculation properties are currently not supported.
+- Mirror properties are supported only for a single type relation and one level deep.
+- Only the following operators are supported in the search query rule: `=`, `in`, and `contains`.
 
 ## Map by property
 
