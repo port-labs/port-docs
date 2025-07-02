@@ -270,7 +270,7 @@ pipeline {
                     ]) {
                         sh('''
                             #Set Docker image and run the container
-                            integration_type="Github-v2"
+                            integration_type="github-ocean"
                             version="latest"
                             image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
                             docker run -i --rm --platform=linux/amd64 \
@@ -336,7 +336,7 @@ steps:
 ```
 
   </TabItem>
-<TabItem value="Github" label="GitLab">
+<TabItem value="GitLab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
