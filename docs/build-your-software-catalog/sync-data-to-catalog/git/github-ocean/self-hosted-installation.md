@@ -43,21 +43,12 @@ In organizations that have a self-hosted GitHub installation there is no access 
   - Checks: Read and Write (for validating `Port.yml`)
   - Contents: Readonly (for reading port configuration files and repository files)
   - Metadata: Readonly
-  - Issues: Readonly
   - Pull Request: Read and Write
-  - Dependabot alerts: Readonly
-  - code scanning alerts: Readonly
-  - Administration: Readonly (for syncing github teams)
 - **Organization Permissions:**
-  - Members: Readonly (for syncing github teams)
   - Webhooks: Read and Write (to allow the integration create webhooks)
 - **Repository Events** (required to receive webhook changes from GitHub):
-  - Issues
   - Pull Request
   - Push
-  - Workflow Run
-  - Team
-  - Dependabot alerts
 
 Then select "Create GitHub App"
 
@@ -151,11 +142,3 @@ After you have the integration registered in your organization and the Docker is
 5. Choose the repositories you want the integration to be installed for:
 
 ![GitHub integration installation chooses repositories](../../../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)
-
-## Limitations
-
-As this is a self-hosted version, there are some limitations due to security considerations and the fact that we don't have access to your GitHub instance
-
-- The configuration must be included as part of the repository, and cannot be configured via Port's UI/API. Refer to the [GitHub Configuration](../github-ocean#configuration) for more details.
-
-- To use self-service actions, you will need [Kafka Credentials](/actions-and-automations/setup-backend/webhook/kafka/kafka.md) configured for your organization;

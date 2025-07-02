@@ -7,11 +7,6 @@ import PRBlueprint from './\_github_exporter_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_github_exporter_example_port_app_config.mdx'
 import GitHubResources from '../\_github_exporter_supported_resources.mdx'
 
-import UsersBlueprint from './example-repository-admins/\_github_exporter_example_users_blueprint.mdx'
-import GithubUsersBlueprint from './example-repository-admins/\_github_exporter_example_github_users_blueprint.mdx'
-import RepositoryAdminBlueprint from './example-repository-admins/\_github_export_example_repository_with_admins_relation_blueprint.mdx'
-import RepositoryAdminAppConfig from './example-repository-admins/\_github_exporter_example_admins_users_port_app_config.mdx'
-
 import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
@@ -59,26 +54,6 @@ The following example demonstrates ingestion of dependencies from a `package.jso
 
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/#ingest-files-from-your-repositories).
-
-## Map repositories, repository admins and users
-
-In the following example you will ingest your GitHub repositories, their admins and related users to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
-
-<RepositoryAdminBlueprint/>
-
-<GithubUsersBlueprint/>
-
-<UsersBlueprint/>
-
-<RepositoryAdminAppConfig/>
-
-:::info supported GitHub user types
-As Github has strict privacy policies, the GitHub API will only return emails in the following cases:
-1. The user has a public email address
-2. Your organization is working with a GitHub Enterprise Cloud plan, and the user has an SAML SSO identity configured inside the GitHub organization.
-
-In other cases, the GitHub API will return a `null` value for the user's email.
-:::
 
 
 

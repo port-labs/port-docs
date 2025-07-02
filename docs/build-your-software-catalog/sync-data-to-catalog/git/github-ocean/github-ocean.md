@@ -2,7 +2,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
-# GitHub
+# GitHub Self-Hosted (Beta)
 
 You can use Port's GitHub integration to ingest and model your GitHub resources in Port's software catalog. 🐙
 
@@ -32,11 +32,6 @@ To install Port's GitHub integration, see [our dedicated installation guides](./
 
 ## Configuration
 
-:::info Closed pull requests default behavior
-By default, the **Port GitHub App** does not fetch closed pull requests.  
-To enable this behavior, use the [closedPullRequests parameter](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/advanced/?parameter=closedPullRequests#using-advanced-configurations) in your configuration.
-:::
-
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
@@ -61,33 +56,7 @@ When configuring the integration **using Port**, the YAML configuration is globa
 
 </TabItem>
 
-<TabItem label="Using GitHub" value="github">
-
-To manage your GitHub integration configuration using a config file in GitHub:
-
-1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
-2. Under `Exporters`, click on your desired GitHub organization.
-3. A window will open containing the default YAML configuration of your GitHub integration.
-4. Scroll all the way down, and turn on the `Manage this integration using the "port-app-config.yml" file` toggle.
-
-This will clear the configuration in Port's UI.
-
-When configuring the integration **using GitHub**, you can choose either a global or granular configuration:
-
-- **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
-  - Using this method applies the configuration to all repositories that the GitHub integration has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
-- **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository.
-  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
-
-When using global configuration **using GitHub**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
-
-</TabItem>
-
 </Tabs>
-
-:::info Important
-When **using Port's UI**, the specified configuration will override any `port-app-config.yml` file in your GitHub repository/ies.
-:::
 
 ## Capabilities
 
@@ -689,7 +658,7 @@ To enable file validation, add the `validationCheck` flag to your file kind mapp
 resources:
   - kind: file
     selector:
-      query: .repo.name == "port"
+      query: .repository.name == "port"
       files:
         - path: data-model/domains/*.yaml
           validationCheck: true
@@ -749,41 +718,20 @@ Port's GitHub integration requires the following permissions:
 - Repository permissions:
 
   - **Actions:** Read and Write (for executing self-service action using GitHub workflow).
-  - **Administration:** Readonly (for exporting repository teams)
   - **Checks:** Read and Write (for validating `port.yml`).
   - **Contents:** Readonly.
   - **Metadata:** Readonly.
-  - **Issues:** Readonly.
   - **Pull requests:** Read and write.
-  - **Dependabot alerts:** Readonly.
-  - **Deployments:** Readonly.
-  - **Environments:** Readonly.
-  - **Code scanning alerts:** Readonly.
-
-- Organization permissions:
-
-  - **Members:** Readonly (for exporting organization teams).
-  - **Administration:** Readonly (for exporting organization users).
 
 - Repository events (required to receive changes via webhook from GitHub and apply the `port-app-config.yml` configuration on them):
-  - Issues
   - Pull requests
   - Push
-  - Workflow run
-  - Team
-  - Dependabot Alerts
-  - Deployment
-  - Branch protection rule
-  - Code scanning alert
-  - Member
-  - Membership
-  - Release
 
 :::info Default permissions
-You will be prompted to confirm the above listed permissions when first installing the integration.
+You will be prompted to confirm the above listed permissions when creating a personal access token.
 
 Permissions can be given to selected repositories in your organization, or to all repositories.   
-You can reconfigure the integration at any time, giving it access to new repositories, or removing access.
+You can reconfigure the permission at any time, giving it access to new repositories, or removing access.
 
 :::
 
@@ -791,18 +739,8 @@ You can reconfigure the integration at any time, giving it access to new reposit
 
 Refer to the [examples](./examples/resource-mapping-examples.md) page for practical configurations and their corresponding blueprint definitions.
 
-## Relevant Guides
-
-For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=GitHub).
-
-## GitOps
-
-Port's GitHub integration also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
 
 ## Self-hosted installation
 
 Port's GitHub integration also supports a self-hosted installation, refer to the [self-hosted installation](./self-hosted-installation.md) page to learn more.
 
-## Additional resources
-
-- [Connect GitHub PR with Jira issue](/guides/all/connect-github-pr-with-jira-issue)
