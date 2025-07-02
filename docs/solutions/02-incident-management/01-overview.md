@@ -25,6 +25,7 @@ Regardless of whether it's your first on-call or hundredth, the story above high
 ## Your Advantage in Port
 
 You're able to close more incidents with less time and stress, thanks to some key features of our portal:
+- prevent incidents with scorecards that improve your posture and production readiness
 - technological and business context in the software catalog (like data on past incidents, recent changes, people with subject matter expertise and active company-wide initiatives)
 - time-saving automations and self-service actions (like automated updates of statuspages, requests for privileged access or incident lifecycle management)
 - streamlined approvals and dynamic permissions (optionally gating key decisions and requests, but allowing for escalation or approval by leadership)
