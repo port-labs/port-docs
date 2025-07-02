@@ -4,10 +4,10 @@ sidebar_position: 5
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
-import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
-import DockerParameters from "./\_github_docker_parameters.mdx"
-import AdvancedConfig from '../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
+import Prerequisites from "../../../templates/\_ocean_helm_prerequisites_block.mdx"
+import HelmParameters from "../../../templates/\_ocean-advanced-parameters-helm.mdx"
+import DockerParameters from "../\_github_docker_parameters.mdx"
+import AdvancedConfig from '../../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_realtime_installation.mdx"
@@ -58,7 +58,6 @@ If it is not provided, the integration will continue to function correctly. In s
 Choose the installation method that best suits your needs:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
-
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 

@@ -1,10 +1,10 @@
 ---
-sidebar_position: 6
+sidebar_position: 2
 ---
 
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx"
 
-# Github App Installation
+# Github App
 
 :::note Prerequisites
 
@@ -23,15 +23,15 @@ In organizations that have a self-hosted GitHub installation there is no access 
 
 1. Navigate to your Github organization and click on Settings:
 
-![Org view](../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
+![Org view](../../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
 
 2. Inside the settings view, click on **Developer Settings** -> and then select **GitHub Apps**:
 
-![Settings view](../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
+![Settings view](../../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
 
 3. Click on "New GitHub App":
 
-![New GitHub App](../../../../../static/img/integrations/github-app/SelfHostedNewGitHubApp.png)
+![New GitHub App](../../../../../../static/img/integrations/github-app/SelfHostedNewGitHubApp.png)
 
 4. Insert the following properties:
 
@@ -54,7 +54,7 @@ Then select "Create GitHub App"
 
 5. Go to the settings of the created GitHub app and generate a private key. Save the downloaded file:
 
-![Generate Private key](../../../../../static/img/integrations/github-app/SelfHosetdGeneratePrivayKey.png)
+![Generate Private key](../../../../../../static/img/integrations/github-app/SelfHosetdGeneratePrivayKey.png)
 
 Keep the file, you will need it for the deployment step.
 
@@ -68,7 +68,7 @@ You will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 
 :::
 
-In order to make use of [Self-Service Actions using GitHub Workflow](../../../../actions-and-automations/setup-backend/github-workflow/github-workflow.md), please contact us at support@getport.io.
+In order to make use of [Self-Service Actions using GitHub Workflow](../../../../../actions-and-automations/setup-backend/github-workflow/github-workflow.md), please contact us at support@getport.io.
 
 ## Docker
 
@@ -115,25 +115,24 @@ docker run \
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                                      |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. You can use a tool like https://www.base64encode.org/ |
 
-
 ## Installing Port's GitHub integration
 
 After you have the integration registered in your organization and the Docker is up and running, you can install the integration and select the repositories to integrate it with:
 
 1. First, navigate to your organization and click on Settings:
 
-![Org view](../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
+![Org view](../../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
 
 2. Inside the settings view, click on Developer Settings -> and then select GitHub Integrations:
 
-![Settings view](../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
+![Settings view](../../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
 
 3. Click `edit` on the GitHub integration created at the step before:
 
-![GitHub integration installation page](../../../../../static/img/integrations/github-app/SelfHostedEditGitHubApp.png)
+![GitHub integration installation page](../../../../../../static/img/integrations/github-app/SelfHostedEditGitHubApp.png)
 
 4. Go to Install App -> and select the installation button on your wanted organization;
 
 5. Choose the repositories you want the integration to be installed for:
 
-![GitHub integration installation chooses repositories](../../../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)
+![GitHub integration installation chooses repositories](../../../../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)

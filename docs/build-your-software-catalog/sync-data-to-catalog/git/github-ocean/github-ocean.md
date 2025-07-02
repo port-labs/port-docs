@@ -27,7 +27,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
-To install Port's GitHub integration, see [our dedicated installation guides](./installation.md).
+To install Port's GitHub integration, see [our dedicated installation guides](./installation).
 
 
 ## Configuration
