@@ -175,8 +175,18 @@ export const liveEvents = {
     \n - transferred \
     \n - unarchived \
     \n - publicized \
-    \n - privatized',
-
+    \n - privatized \
+    \n - archived \
+    \n - deleted \
+    \n\n **pull_request:** \
+     \n - opened \
+     \n - edited \
+     \n - ready_for_review \
+     \n - reopened \
+     \n - synchronize \
+     \n - unassigned \
+     \n - review_request_removed \
+     \n - closed '
   
 };
 
