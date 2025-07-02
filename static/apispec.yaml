@@ -5652,6 +5652,7 @@ paths:
           in: query
           name: include
           required: false
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
@@ -5659,6 +5660,7 @@ paths:
               type: string
           in: query
           name: exclude
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
           required: false
         - schema:
@@ -6688,6 +6690,7 @@ paths:
           in: query
           name: include
           required: false
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
@@ -6696,6 +6699,7 @@ paths:
           in: query
           name: exclude
           required: false
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         # - schema:
         #     type: boolean
@@ -7251,6 +7255,7 @@ paths:
           in: query
           name: include
           required: false
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
@@ -7259,6 +7264,7 @@ paths:
           in: query
           name: exclude
           required: false
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         # - schema:
         #     type: boolean
@@ -12736,6 +12742,7 @@ paths:
               type: string
           in: query
           name: action_identifier
+          explode: true
           description: The identifier/s of the action/s and/or automation/s you want to fetch.<br/>
           required: false
         - schema:
@@ -12744,6 +12751,7 @@ paths:
               type: string
           in: query
           name: blueprint_identifier
+          explode: true
           description: The identifier/s of the blueprint/s whose actions/automations you wish to fetch.<br/>
           required: false
         - schema:
@@ -12756,6 +12764,7 @@ paths:
                 - DAY-2
           in: query
           name: operation
+          explode: true
           description: The [operation type/s](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>
           required: false
         - schema:
@@ -17590,6 +17599,7 @@ paths:
                 - users.status
           in: query
           name: fields
+          explode: true
           description: The fields you want to fetch for each team. If used, only the specified fields will be included in the response.<br/>
           required: false
       security:
@@ -17748,6 +17758,7 @@ paths:
                 - users.status
           in: query
           name: fields
+          explode: true
           description: The fields you want to fetch for the team. If used, only the specified fields will be included in the response.<br/>
           required: false
         - schema:
@@ -18024,6 +18035,7 @@ paths:
                 - roles.updatedAt
           in: query
           name: fields
+          explode: true
           description: The fields you want to fetch for each user. If used, only the specified fields will be included in the response.<br/>
           required: false
       security:
@@ -18415,6 +18427,7 @@ paths:
               type: string
           in: query
           name: origin
+          explode: true
           description: Fetch all audit logs coming from the specified origin/s. This refers to the integration/s that triggered the log. For operations performed via Port's UI, the origin will be `UI`.<br/>
           required: false
         - schema:
@@ -18454,6 +18467,7 @@ paths:
             #       - action
           in: query
           name: resources
+          explode: true
           description: Fetch all audit logs related to the specified resource type/s.<br/>
           required: false
         - schema:
@@ -18471,6 +18485,7 @@ paths:
                 - message
           in: query
           name: includes
+          explode: true
           description: The fields you want to include in the response. If used, only the specified fields will be included in the response.<br/>
           required: false
         - schema:
@@ -22291,6 +22306,7 @@ paths:
                 - enabled
           in: query
           name: fields
+          explode: true
           description: The fields to include in the response. If not specified, all fields will be included.<br/>
           required: false
       security:
