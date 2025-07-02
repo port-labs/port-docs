@@ -1238,3 +1238,111 @@ The combination of the sample payload and the webhook configuration generates th
   }
 ```
 </details>
+
+## Alternative authentication via OAuth
+
+This guide outlines how your team can configure and manage your own Ocean integration with ServiceNow using OAuth 2.0 authentication.
+
+<details>
+
+<summary><b>Migration Path to OAuth (click to expand)</b></summary>
+
+The existing ServiceNow integration uses basic authentication configured via `integrations/servicenow/.port/spec.yaml`, requiring:
+- `servicenowUrl`  
+- `servicenowUsername`
+- `servicenowPassword`
+
+The OAuth approach replaces this with secure token management handled by Port.
+
+#### Step 1: Modify Configuration (spec.yaml)
+
+Update your `spec.yaml` file to use Port's SaaS OAuth flow:
+
+```yaml
+saas:
+  enabled: true
+  liveEvents:
+    enabled: false
+  oauthConfiguration:
+    requiredSecrets:
+      - name: servicenowToken
+        value: '.oauthData.accessToken'
+        description: 'Access Token for ServiceNow OAuth2 integration'
+    valuesOverride:
+      integrationSpec:
+        apiUrl: '{{ .configs.servicenowUrl }}'
+```
+
+This configuration:
+- Enables OAuth authentication
+- Instructs Port to manage token exchange
+- Makes tokens securely available to your integration code
+- Maintains URL configuration flexibility
+
+#### Step 2: Refactor Integration Client (client.py)
+
+Replace the basic auth logic with a subclass of `OAuthClient`:
+
+```python
+from port_ocean.clients.auth.oauth_client import OAuthClient
+
+class ServicenowClient(OAuthClient):
+    def __init__(self, servicenow_url: str, servicenow_token: str | None = None):
+        super().__init__()
+        self.servicenow_url = servicenow_url
+        self.servicenow_token = servicenow_token
+        self.http_client = http_async_client
+        self.http_client.headers.update(self.headers)
+
+    def _get_auth_header(self) -> str:
+        token = self.external_access_token or self.servicenow_token
+        if not token:
+            raise ValueError("ServiceNow token not found")
+        return f"Bearer {token}"
+
+    def refresh_request_auth_creds(self, request: httpx.Request) -> httpx.Request:
+        request.headers["Authorization"] = self._get_auth_header()
+        return request
+
+    @property
+    def headers(self) -> dict[str, Any]:
+        return {
+            "Authorization": self._get_auth_header(),
+            "Content-Type": "application/json",
+        }
+
+```
+
+### Troubleshooting OAuth Integration
+
+#### Common Issues
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Token not found | OAuth not configured | Check `spec.yaml` configuration |
+| 401 Unauthorized | Invalid/expired token | Verify OAuth setup in ServiceNow |
+| Connection timeout | Network/firewall issues | Check connectivity and timeout settings |
+
+#### Debugging Steps
+
+1. **Verify OAuth Configuration**:
+   ```bash
+   # Check if OAuth is enabled
+   grep -A 10 "oauthConfiguration" .port/spec.yaml
+   ```
+
+2. **Check Token Availability**:
+   ```python
+   # In your integration code
+   logger.info(f"External token available: {bool(self.external_access_token)}")
+   logger.info(f"Local token available: {bool(self.servicenow_token)}")
+   ```
+
+3. **Test API Connectivity**:
+   ```python
+   # Test basic connectivity
+   response = await client.http_client.get(f"{base_url}/api/now/table/sys_user")
+   logger.info(f"API Response Status: {response.status_code}")
+   ```
+
+</details>
