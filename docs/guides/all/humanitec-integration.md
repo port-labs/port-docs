@@ -15,6 +15,15 @@ import HumanitecExporterMainScript from "/docs/guides/templates/humanitec/_human
 import HumanitecExporterRequirements from "/docs/guides/templates/humanitec/_humanitec_exporter_requirements.mdx";
 import HumanitecExporterPortClient from "/docs/guides/templates/humanitec/_humanitec_exporter_port_client.mdx";
 import HumanitecExporterHumanitecClient from "/docs/guides/templates/humanitec/_humanitec_exporter_humanitec_client.mdx";
+import HumanitecGroups from "/docs/guides/templates/humanitec/_humanitec_groups.mdx";
+import HumanitecUsers from "/docs/guides/templates/humanitec/_humanitec_users.mdx";
+import HumanitecPipelines from "/docs/guides/templates/humanitec/_humanitec_pipelines.mdx";
+import HumanitecDeploymentDeltas from "/docs/guides/templates/humanitec/_humanitec_deployment_deltas.mdx";
+import HumanitecDeploymentSets from "/docs/guides/templates/humanitec/_humanitec_deployment_sets.mdx";
+import HumanitecSecretStores from "/docs/guides/templates/humanitec/_humanitec_secret_stores.mdx";
+import HumanitecValueSetVersions from "/docs/guides/templates/humanitec/_humanitec_value_set_versions.mdx";
+import HumanitecSharedValues from "/docs/guides/templates/humanitec/_humanitec_shared_values.mdx";
+
 
 # Humanitec Integration
 
@@ -45,6 +54,23 @@ Create the following blueprint definitions in port:
 
 <HumanitecResourceBlueprint/>
 
+<HumanitecSecretStores/>
+
+<HumanitecSharedValues/>
+
+<HumanitecValueSetVersions/>
+
+<HumanitecDeploymentSets/>
+
+<HumanitecPipelines/>
+
+<HumanitecDeploymentDeltas/>
+
+<HumanitecUsers/>
+
+<HumanitecGroups/>
+
+
 :::tip Blueprint Properties
 You may select the blueprints depending on what you want to track in your Humanitec account.
 :::
@@ -54,7 +80,7 @@ You may select the blueprints depending on what you want to track in your Humani
 :::tip
 Fork our [humanitec integration repository](https://github.com/port-labs/humanitec-integration-script.git) to get started.
 :::
-1. Create the following Python files in a folder name `integration` folder at the root of your GitHub repository:
+1. Create the following Python files in a folder named `integration` at the base directory of your GitHub repository:
     1. `main.py` - Orchestrates the synchronization of data from Humanitec to Port, ensuring that resource entities are accurately mirrored and updated on your port catalog.
     2. `requirements.txt` - This file contains the dependencies or necessary external packages need to run the integration
   

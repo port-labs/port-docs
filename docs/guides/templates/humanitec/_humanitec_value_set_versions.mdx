@@ -1,0 +1,53 @@
+<details>
+<summary>Humanitec Value Set Versions</summary>
+
+```json showLineNumbers
+{
+    "identifier": "humanitecValueSetVersion",
+    "title": "Humanitec Value Set Version",
+    "icon": "Version",
+    "schema": {
+      "properties": {
+        "version": {
+          "title": "Version",
+          "description": "The version number",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "createdAt": {
+          "title": "Created At",
+          "description": "The date and time when the value set version was created",
+          "type": "string",
+          "format": "date-time",
+          "icon": "DefaultProperty"
+        },
+        "createdBy": {
+          "title": "Created By",
+          "description": "The user who created the value set version",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "comment": {
+          "title": "Comment",
+          "description": "Comment for the value set version",
+          "type": "string",
+          "icon": "DefaultProperty"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "humanitecApplication": {
+        "title": "Application",
+        "target": "humanitecApplication",
+        "required": false,
+        "many": false
+      }
+    }
+}
+```
+
+</details>

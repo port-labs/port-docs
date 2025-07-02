@@ -1,0 +1,71 @@
+<details>
+<summary>Humanitec Pipelines</summary>
+
+```json showLineNumbers
+{
+    "identifier": "humanitecPipeline",
+    "title": "Humanitec Pipeline",
+    "icon": "Pipeline",
+    "schema": {
+      "properties": {
+        "etag": {
+          "title": "ETag",
+          "description": "Entity tag for the pipeline",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "name": {
+          "title": "Name",
+          "description": "The name of the pipeline",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "status": {
+          "title": "Status",
+          "description": "The status of the pipeline",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "version": {
+          "title": "Version",
+          "description": "The version of the pipeline",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "createdAt": {
+          "title": "Created At",
+          "description": "The date and time when the pipeline was created",
+          "type": "string",
+          "format": "date-time",
+          "icon": "DefaultProperty"
+        },
+        "triggerTypes": {
+          "title": "Trigger Types",
+          "description": "Types of triggers for the pipeline",
+          "type": "array",
+          "icon": "DefaultProperty"
+        },
+        "metadata": {
+          "title": "Metadata",
+          "description": "Additional metadata for the pipeline",
+          "type": "object",
+          "icon": "DefaultProperty"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "humanitecApplication": {
+        "title": "Application",
+        "target": "humanitecApplication",
+        "required": false,
+        "many": false
+      }
+    }
+}
+```
+
+</details>

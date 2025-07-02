@@ -1,0 +1,90 @@
+<details>
+<summary>Humanitec Shared Values</summary>
+
+```json showLineNumbers
+{
+    "identifier": "humanitecSharedValue",
+    "title": "Humanitec Shared Value",
+    "icon": "Settings",
+    "schema": {
+      "properties": {
+        "description": {
+          "title": "Description",
+          "description": "A human friendly description of what the Shared Value is",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "isSecret": {
+          "title": "Is Secret",
+          "description": "Specified that the Shared Value contains a secret",
+          "type": "boolean",
+          "icon": "DefaultProperty"
+        },
+        "secretKey": {
+          "title": "Secret Key",
+          "description": "Location of the secret value in the secret store",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "secretVersion": {
+          "title": "Secret Version",
+          "description": "Version of the current secret value as returned by the secret store",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "source": {
+          "title": "Source",
+          "description": "Source of the value, 'app' for app level, 'env' for app env level",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "value": {
+          "title": "Value",
+          "description": "The value that will be stored (will be always empty for secrets)",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "createdAt": {
+          "title": "Created At",
+          "description": "The date and time when the shared value was created",
+          "type": "string",
+          "format": "date-time",
+          "icon": "DefaultProperty"
+        },
+        "updatedAt": {
+          "title": "Updated At",
+          "description": "The date and time when the shared value was last updated",
+          "type": "string",
+          "format": "date-time",
+          "icon": "DefaultProperty"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "humanitecApplication": {
+        "title": "Application",
+        "target": "humanitecApplication",
+        "required": false,
+        "many": false
+      },
+      "humanitecEnvironment": {
+        "title": "Environment",
+        "target": "humanitecEnvironment",
+        "required": false,
+        "many": false
+      },
+      "humanitecSecretStore": {
+        "title": "Secret Store",
+        "target": "humanitecSecretStore",
+        "required": false,
+        "many": false
+      }
+    }
+}
+```
+
+</details>
