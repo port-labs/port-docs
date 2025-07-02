@@ -4,7 +4,7 @@ sidebar_position: 6
 
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx"
 
-# Self Hosted Installation
+# Github App Installation
 
 :::note Prerequisites
 
@@ -101,18 +101,18 @@ docker run \
   ghcr.io/port-labs/port-ocean-github-ocean:0.5.0-dev
 ```
 
-| Env variable                                         | Description                                                                         |
-| ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                |
-| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | Will be used to create webhook                                                      |
-| `OCEAN__INTEGRATION__IDENTIFIER`                     | Your organization's self-hosted GitHub hostname                                     |
-| `OCEAN__BASE_URL`                                    | Integration base url, will be used to register webhook.                             |
-| `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                 |
-| `OCEAN__PORT__CLIENT_ID`                             | Port client id for interacting with the API                                         |
-| `OCEAN__PORT__CLIENT_SECRET`                         | Port client secret for interacting with the API                                     |
-| `OCEAN__INTEGRATION__IDENTIFIER`                     | Identifier for the integration                                                      |
-| `OCEAN__EVENT_LISTENER__TYPE`                        | How Ocean will retrieve config changes from Port.                                   |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                           |
+| Env variable                                         | Description                                                                                    |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                                   |
+| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | Will be used to create webhook                                                                 |
+| `OCEAN__INTEGRATION__IDENTIFIER`                     | Your organization's self-hosted GitHub hostname                                                |
+| `OCEAN__BASE_URL`                                    | Integration base url, will be used to register webhook.                                        |
+| `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                            |
+| `OCEAN__PORT__CLIENT_ID`                             | Port client id for interacting with the API                                                    |
+| `OCEAN__PORT__CLIENT_SECRET`                         | Port client secret for interacting with the API                                                |
+| `OCEAN__INTEGRATION__IDENTIFIER`                     | Identifier for the integration                                                                 |
+| `OCEAN__EVENT_LISTENER__TYPE`                        | How Ocean will retrieve config changes from Port.                                              |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                                      |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. You can use a tool like https://www.base64encode.org/ |
 
 ## Health check route

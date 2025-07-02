@@ -41,9 +41,9 @@ To create a personal access token see Github's [managing your personal access to
 
 - The token must belong to a user with access to the relevant Github resources (e.g., repositories, teams).
 
-#### Self-hosted Github app
+#### Github app
 
-Refer to our [self-hosted installation guide](./self-hosted-installation.md)
+Refer to our [Github app installation guide](./github-app.md)
 
 ### Configure Realtime webhook events
 
@@ -78,7 +78,7 @@ For details about the available parameters for the installation, see the table b
 <Tabs groupId="deploy" queryString="deploy">
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="Github-Ocean" />
+<OceanRealtimeInstallation integration="GithubOcean" />
 
 <PortApiRegionTip/>
 
@@ -87,7 +87,7 @@ For details about the available parameters for the installation, see the table b
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-Github-integration` in your git repository with the content:
+1. Create a `values.yaml` file in `argocd/my-ocean-github-integration` in your git repository with the content:
 
 :::note
 Remember to replace the placeholders for `GITHUB_TOKEN` and your GitHub URL.
@@ -175,21 +175,21 @@ kubectl apply -f my-ocean-github-integration.yaml
 
 This table summarizes the available parameters for the installation.
 
-| Parameter | Description | Required |
-| --- | --- | --- |
-| `port.clientId` | Your Port client ID. | ✅ |
-| `port.clientSecret` | Your Port client secret. | ✅ |
-| `port.baseUrl` | Your Port API URL (`https://api.getport.io` for EU, `https://api.us.getport.io` for US). | ✅ |
-| `integration.identifier` | A unique identifier for your integration. | ✅ |
-| `integration.type` | The integration type. | ✅ |
-| `integration.eventListener.type` | The event listener type. | ✅ |
-| `integration.config.githubOrganization` | The GitHub organization to sync data from. | ✅ |
-| `integration.config.githubHost` | The GitHub instance URL. | ✅ |
-| `integration.secrets.githubToken` | The GitHub access token. | ✅ |
-| `scheduledResyncInterval` | The number of minutes between each resync. | ❌ |
-| `initializePortResources` | When `true`, the integration will create default blueprints and port-app-config.yml mapping. | ❌ |
-| `sendRawDataExamples` | When `true`, sends raw data examples from the third-party API to Port for testing and managing the integration mapping. | ❌ |
-| `baseUrl` | The base URL of the GitHub integration instance, used for real-time updates. | ❌ |
+| Parameter                               | Description                                                                                                             | Required |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
+| `port.clientId`                         | Your Port client ID.                                                                                                    | ✅       |
+| `port.clientSecret`                     | Your Port client secret.                                                                                                | ✅       |
+| `port.baseUrl`                          | Your Port API URL (`https://api.getport.io` for EU, `https://api.us.getport.io` for US).                                | ✅       |
+| `integration.identifier`                | A unique identifier for your integration.                                                                               | ✅       |
+| `integration.type`                      | The integration type.                                                                                                   | ✅       |
+| `integration.eventListener.type`        | The event listener type.                                                                                                | ✅       |
+| `integration.config.githubOrganization` | The GitHub organization to sync data from.                                                                              | ✅       |
+| `integration.config.githubHost`         | The GitHub instance URL.                                                                                                | ✅       |
+| `integration.secrets.githubToken`       | The GitHub access token.                                                                                                | ✅       |
+| `scheduledResyncInterval`               | The number of minutes between each resync.                                                                              | ❌       |
+| `initializePortResources`               | When `true`, the integration will create default blueprints and port-app-config.yml mapping.                            | ❌       |
+| `sendRawDataExamples`                   | When `true`, sends raw data examples from the third-party API to Port for testing and managing the integration mapping. | ❌       |
+| `baseUrl`                               | The base URL of the GitHub integration instance, used for real-time updates.                                            | ❌       |
 
 <br/>
 
@@ -228,7 +228,7 @@ jobs:
     steps:
       - uses: port-labs/ocean-sail@v1
         with:
-          type: "Github-Ocean"
+          type: "github-ocean"
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           port_base_url: https://api.getport.io
@@ -294,7 +294,6 @@ pipeline {
 }
 ```
 
-
   </TabItem>
 
   <TabItem value="azure" label="Azure Devops">
@@ -317,7 +316,7 @@ variables:
 steps:
   - script: |
       # Set Docker image and run the container
-      integration_type="Github-Ocean"
+      integration_type="github-ocean"
       version="latest"
       image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
@@ -356,7 +355,7 @@ default:
     - docker info
 
 variables:
-  INTEGRATION_TYPE: Github-v2
+  INTEGRATION_TYPE: github-ocean
   VERSION: latest
 stages:
   - ingest
