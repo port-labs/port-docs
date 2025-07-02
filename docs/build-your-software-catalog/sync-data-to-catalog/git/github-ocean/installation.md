@@ -183,9 +183,9 @@ This table summarizes the available parameters for the installation.
 | `integration.identifier` | A unique identifier for your integration. | ✅ |
 | `integration.type` | The integration type. | ✅ |
 | `integration.eventListener.type` | The event listener type. | ✅ |
-| `integration.config.GithubOrganization` | The GitHub organization to sync data from. | ✅ |
-| `integration.config.GithubHost` | The GitHub instance URL. | ✅ |
-| `integration.secrets.GithubToken` | The GitHub access token. | ✅ |
+| `integration.config.githubOrganization` | The GitHub organization to sync data from. | ✅ |
+| `integration.config.githubHost` | The GitHub instance URL. | ✅ |
+| `integration.secrets.githubToken` | The GitHub access token. | ✅ |
 | `scheduledResyncInterval` | The number of minutes between each resync. | ❌ |
 | `initializePortResources` | When `true`, the integration will create default blueprints and port-app-config.yml mapping. | ❌ |
 | `sendRawDataExamples` | When `true`, sends raw data examples from the third-party API to Port for testing and managing the integration mapping. | ❌ |
@@ -233,9 +233,9 @@ jobs:
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           port_base_url: https://api.getport.io
           config: |
-            GithubHost: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_HOST }}
-            GithubToken: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN }}
-            GithubOrganization: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION }}
+            githubHost: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_HOST }}
+            githubToken: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN }}
+            githubOrganization: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION }}
 ```
 
   </TabItem>
@@ -263,6 +263,7 @@ pipeline {
                 script {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_URL', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_URL'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
@@ -278,6 +279,7 @@ pipeline {
                                 -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__GITHUB_URL=$OCEAN__INTEGRATION__CONFIG__GITHUB_URL \
                                 -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN \
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
