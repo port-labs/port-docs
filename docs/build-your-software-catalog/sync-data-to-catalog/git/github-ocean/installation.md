@@ -41,7 +41,7 @@ To create a personal access token see Github's [managing your personal access to
 
 - The token must belong to a user with access to the relevant Github resources (e.g., repositories, teams).
 
-#### Github app
+#### Github app installation
 
 Refer to our [Github app installation guide](./github-app.md)
 
