@@ -14,7 +14,7 @@ import PortYmlIngestionPattern from '../../\_port_yml_ingestion_pattern_template
 
 # GitOps
 
-Port's GitHub integration makes it possible to manage Port entities with a GitOps approach, making your code repositories the source of truth for the various infrastructure assets you want to manage.
+Port's GitHub integration allows you to manage Port entities with a GitOps approach, making your code repositories the source of truth for your infrastructure assets.
 
 Some common use cases include:
 
@@ -24,7 +24,7 @@ Some common use cases include:
 
 Port offers two ways to manage entities using GitOps:
 
-1. Using a dedicated `port.yml` file in your repository.
+1. Using a dedicated `port.yml` file in your repository. 
 2. Using the GitHub integration mapping in your portal.
 
 ## Option 1: Use a `port.yml` file
@@ -33,7 +33,7 @@ This approach requires adding a `port.yml` file to the **default branch** (usual
 
 Note that the `port.yml` file is not the same as the [`port-app-config.yml` file](/build-your-software-catalog/sync-data-to-catalog/git/github/#port-app-configyml-file) used to configure the GitHub integration, and does not replace it. 
 
-The `port.yml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yml` file will also be reflected inside Port.
+The `port.yml` file can specify one or more Port entities that will be ingested to Port. Any change made to the `port.yml` file will also be reflected inside Port.
 
 :::tip GitHub integration
 To manage entities using GitOps and the `port.yml` file, Port's [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) must be installed, as it listens to `push` events sent from Github.

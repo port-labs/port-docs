@@ -15,7 +15,7 @@ import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, live
 
 # Installation
 
-This page details how to install Port's Github integration (powered by the Ocean framework).
+This page details how to install Port's GitHub integration (powered by the Ocean framework).
 
 This page outlines the following steps:
 
@@ -25,14 +25,14 @@ This page outlines the following steps:
 
 ## Prerequisites
 
-- A Github account with permissions to create access tokens.
+- A GitHub account with permissions to create access tokens.
 - Your Port user role is set to `Admin`.
 
 ## Setup
 
 ### Configure access token
 
-To allow Port to fetch data from your Github Organization, you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and Github app installation tokens.
+To allow Port to fetch data from your GitHub Organization, you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and GitHub app installation tokens.
 
 #### Personal access token (PAT)
 
@@ -55,7 +55,7 @@ If it is not provided, the integration will continue to function correctly. In s
 
 ## Deploy the integration
 
-Choose one of the following installation methods:
+Choose the installation method that best suits your needs:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -90,7 +90,7 @@ To install the integration using ArgoCD:
 1. Create a `values.yaml` file in `argocd/my-ocean-Github-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `Github_TOKEN` and your Github URL.
+Remember to replace the placeholders for `GITHUB_TOKEN` and your GitHub URL.
 :::
 
 ```yaml showLineNumbers
@@ -103,14 +103,14 @@ integration:
     type: POLLING
   config:
   // highlight-next-line
-    githubHost: https://api.github.com # Or your self-hosted Github URL
+    githubHost: https://api.github.com # Or your self-hosted GitHub URL
   secrets:
   // highlight-next-line
     githubToken: GITHUB_TOKEN
 ```
 
 <br/>
-2. Install the `my-ocean-Github-integration` ArgoCD Application by creating the following `my-ocean-gitlab-integration.yaml` manifest:
+2. Install the `my-ocean-Github-integration` ArgoCD Application by creating the following `my-ocean-github-integration.yaml` manifest:
 :::note
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
@@ -174,21 +174,21 @@ kubectl apply -f my-ocean-Github-integration.yaml
 
 This table summarizes the available parameters for the installation.
 
-| Parameter                                | Description                                                                                                                         | Required |
-| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                          | Your port client id                                                                                                                 | ✅       |
-| `port.clientSecret`                      | Your port client secret                                                                                                             | ✅       |
-| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                             | ✅       |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                                                  | ✅       |
-| `integration.type`                       | The integration type                                                                                                                | ✅       |
-| `integration.eventListener.type`         | The event listener type                                                                                                             | ✅       |
-| `integration.config.GithubOrganization` | The GitHub access token                                                                                                             | ✅       |
-| `integration.config.GithubHost`          | The GitHub instance URL                                                                                                             | ✅       |
-| `integration.secrets.GithubToken`        | The GitHub access token                                                                                                             | ✅       |
-| `scheduledResyncInterval`                | The number of minutes between each resync                                                                                           | ❌       |
-| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌       |
-| `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌       |
-| `baseUrl`                                | The base url of the Github integration instance, used for real-time updates.                                                        | ❌       |
+| Parameter | Description | Required |
+| --- | --- | --- |
+| `port.clientId` | Your Port client ID. | ✅ |
+| `port.clientSecret` | Your Port client secret. | ✅ |
+| `port.baseUrl` | Your Port API URL (`https://api.getport.io` for EU, `https://api.us.getport.io` for US). | ✅ |
+| `integration.identifier` | A unique identifier for your integration. | ✅ |
+| `integration.type` | The integration type. | ✅ |
+| `integration.eventListener.type` | The event listener type. | ✅ |
+| `integration.config.GithubOrganization` | The GitHub organization to sync data from. | ✅ |
+| `integration.config.GithubHost` | The GitHub instance URL. | ✅ |
+| `integration.secrets.GithubToken` | The GitHub access token. | ✅ |
+| `scheduledResyncInterval` | The number of minutes between each resync. | ❌ |
+| `initializePortResources` | When `true`, the integration will create default blueprints and port-app-config.yml mapping. | ❌ |
+| `sendRawDataExamples` | When `true`, sends raw data examples from the third-party API to Port for testing and managing the integration mapping. | ❌ |
+| `baseUrl` | The base URL of the GitHub integration instance, used for real-time updates. | ❌ |
 
 <br/>
 
@@ -198,7 +198,7 @@ This table summarizes the available parameters for the installation.
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
-This workflow/pipeline will run the Github integration once and then exit, this is useful for **scheduled** ingestion of data.
+This workflow/pipeline will run the GitHub integration once and then exit. This is useful for **scheduled** ingestion of data.
 
 :::warning Real-time updates
 If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
@@ -212,7 +212,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 
 <br/>
 
-Here is an example for `Github-integration.yml` workflow file:
+Here is an example for a `github-integration.yml` workflow file:
 
 ```yaml showLineNumbers
 name: Github Exporter Workflow
@@ -251,7 +251,7 @@ of `Secret Text` type:
 
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+Here is an example for a `Jenkinsfile` groovy pipeline file:
 
 ```text showLineNumbers
 pipeline {
@@ -261,8 +261,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__Github_URL', variable: 'OCEAN__INTEGRATION__CONFIG__GITLAB_URL'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__Github_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_URL', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_URL'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
@@ -275,8 +275,8 @@ pipeline {
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__Github_URL=$OCEAN__INTEGRATION__CONFIG__GITLAB_URL \
-                                -e OCEAN__INTEGRATION__CONFIG__Github_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN \
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_URL=$OCEAN__INTEGRATION__CONFIG__GITHUB_URL \
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -291,6 +291,7 @@ pipeline {
 }
 ```
 
+
   </TabItem>
 
   <TabItem value="azure" label="Azure Devops">
@@ -301,7 +302,7 @@ Make sure to configure the following [Azure DevOps pipeline variables](https://l
 
 <br/>
 
-Here is an example for `Github-integration.yml` pipeline file:
+Here is an example for a `github-integration.yml` pipeline file:
 
 ```yaml showLineNumbers
 trigger:
@@ -335,13 +336,13 @@ steps:
   </TabItem>
 <TabItem value="Github" label="GitLab">
 
-Make sure to [configure the following Github variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
 <DockerParameters/>
 
 <br/>
 
-Here is an example for `.Github-ci.yml` pipeline file:
+Here is an example for a `.gitlab-ci.yml` pipeline file:
 
 ```yaml showLineNumbers
 default:

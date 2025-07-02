@@ -13,19 +13,19 @@ import FindCredentials from "/docs/build-your-software-catalog/custom-integratio
 
 :::
 
-In organizations that have a self-hosted GitHub installation there is no access to our official public app, therefore there are some extra steps you need to take to install the GitHub app:
+In organizations that have a self-hosted GitHub installation there is no access to our official public app, therefore there are some extra steps you need to take to install the GitHub integration:
 
-1. [Register](#register-ports-github-app) Port's GitHub app in your GitHub organization;
-2. [Deploy](#deployment) Port's GitHub app Docker image inside your VPC;
-3. [Install](#installing-ports-github-application) Port's GitHub app in your GitHub organization and on select repositories.
+1. [Register](#register-ports-github-integration) Port's GitHub integration in your GitHub organization;
+2. [Deploy](#deployment) Port's GitHub integration Docker image inside your VPC;
+3. [Install](#installing-ports-github-integration) Port's GitHub integration in your GitHub organization and on select repositories.
 
-## Register Port's GitHub App
+## Register Port's GitHub integration
 
 1. Navigate to your organization inside your self-hosted GitHub and click on Settings:
 
 ![Org view](../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
 
-2. Inside the settings view, click on Developer Settings -> and then select GitHub Apps:
+2. Inside the settings view, click on **Developer Settings** -> and then select **GitHub Apps**:
 
 ![Settings view](../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
 
@@ -61,7 +61,7 @@ In organizations that have a self-hosted GitHub installation there is no access 
 
 Then select "Create GitHub App"
 
-5. Go to the settings of the created GitHub App and generate a private key and save the downloaded file:
+5. Go to the settings of the created GitHub app and generate a private key. Save the downloaded file:
 
 ![Generate Private key](../../../../../static/img/integrations/github-app/SelfHosetdGeneratePrivayKey.png)
 
@@ -81,7 +81,7 @@ In order to make use of [Self-Service Actions using GitHub Workflow](../../../..
 
 ## Docker
 
-To use our GitHub app you will need to deploy our official integration Docker image, replacing Github personal access token with an App ID and App private key..
+To use our GitHub integration, you will need to deploy our official integration Docker image, replacing the GitHub personal access token with an App ID and App private key.
 
 It can be deployed on any platform that allows deploying images as containers such as: K8S, ECS, AWS App Runner, etc.
 
@@ -95,10 +95,10 @@ Run the following command to start the app:
 
 ```bash showLineNumbers
 docker run \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<Github APP ID> \ 
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<Github APP ID> \
   -e OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET="test" \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GH BASE URL>
-  -e OCEAN__BASE_URL=https://test.com \ 
+  -e OCEAN__BASE_URL=https://test.com \
   -e OCEAN__PORT__BASE_URL=https://api.getport.io \
   -e OCEAN__PORT__CLIENT_ID=<PORT CLIENT ID> \
   -e OCEAN__PORT__CLIENT_SECRET=<PORT CLIENT SECRET> \
@@ -110,25 +110,25 @@ docker run \
   ghcr.io/port-labs/port-ocean-github-ocean:0.4.0-dev
 ```
 
-| Env variable         | Description                                                                         |
-|----------------------|-------------------------------------------------------------------------------------|
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`             | Application ID, you can find it in the edit GitHub Integration page                         |
-| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`     | Will be used to create webhook                            |
-| `OCEAN__INTEGRATION__IDENTIFIER`           | Your organization's self-hosted GitHub hostname                                     |
-| `OCEAN__BASE_URL`   | Integration base url, will be used to register webhook.
-| `OCEAN__PORT__BASE_URL`           | Port's API Base URL                                                                 |
-| `OCEAN__PORT__CLIENT_ID`     | Port client id for interacting with the API                                         |
-| `OCEAN__PORT__CLIENT_SECRET` | Port client secret for interacting with the API                                     |
-| `OCEAN__INTEGRATION__IDENTIFIER` | Identifier for the integration |
-| `OCEAN__EVENT_LISTENER__TYPE` | How Ocean will retrieve config changes from Port |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION` | Github organization the app was installed in |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY`        | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |
+| Env variable                                         | Description                                                                         |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub Integration page.                |
+| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | Will be used to create webhook                                                      |
+| `OCEAN__INTEGRATION__IDENTIFIER`                     | Your organization's self-hosted GitHub hostname                                     |
+| `OCEAN__BASE_URL`                                    | Integration base url, will be used to register webhook.                             |
+| `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                 |
+| `OCEAN__PORT__CLIENT_ID`                             | Port client id for interacting with the API                                         |
+| `OCEAN__PORT__CLIENT_SECRET`                         | Port client secret for interacting with the API                                     |
+| `OCEAN__INTEGRATION__IDENTIFIER`                     | Identifier for the integration                                                      |
+| `OCEAN__EVENT_LISTENER__TYPE`                        | How Ocean will retrieve config changes from Port.                                   |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                           |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |
 
 ## Health check route
 
 A health check is a route that is used to check the health of a repository. It is a means to ensure that the service is running properly and can perform its intended function.
 
-Our GitHub App image exposes a health check route at `https://host:port/health` to monitor its status.
+Our GitHub integration image exposes a health check route at `https://host:port/health` to monitor its status.
 
 ## Installing Port's GitHub integration
 

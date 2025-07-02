@@ -4,13 +4,12 @@ import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
 # GitHub
 
-Port's GitHub integration allows you to model GitHub resources in your software catalog and ingest data into them.
+You can use Port's GitHub integration to ingest and model your GitHub resources in Port's software catalog. 🐙
 
 
 ## Overview
 
-This integration allows you to:
-
+Here's what you can do with the GitHub integration:
 
 - Map and organize your desired GitHub resources and their metadata in Port (see supported resources below).
 - Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
@@ -94,13 +93,11 @@ When **using Port's UI**, the specified configuration will override any `port-ap
 
 ### Ingesting Git objects
 
-By using Port's GitHub app, you can automatically ingest GitHub resources into Port based on real-time events.
+Using Port's GitHub integration, you can automatically ingest GitHub resources into Port based on real-time events.
 
 The app allows you to ingest a variety of objects resources provided by the GitHub API, including repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
 
-The GitHub app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
-
-After installing the app, Port will automatically create a `repository` blueprint in your catalog (representing a GitHub repository), along with a default YAML configuration file that defines where the data fetched from Github's API should go in the blueprint.
+The GitHub integration uses a YAML configuration file to describe the ETL process to load data into the developer portal. This approach provides a flexible and powerful way to model your Git data without being overly opinionated or complex.
 
 ### Ingest files from your repositories
 
@@ -414,8 +411,6 @@ resources:
           // the rest of your mapping configuration
 ```
 
-When a PR modifies a matching file, you will see a new check in your PR with the validation results.
-
 Example for a successful validation:
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunSuccessfulCheck.png' width='70%' />
 
@@ -514,11 +509,11 @@ For relevant guides and examples, see the [guides section](https://docs.port.io/
 
 ## GitOps
 
-Port's GitHub app also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
+Port's GitHub integration also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
 
 ## Self-hosted installation
 
-Port's GitHub app also supports a self-hosted installation, refer to the [self-hosted installation](./self-hosted-installation.md) page to learn more.
+Port's GitHub integration also supports a self-hosted installation, refer to the [self-hosted installation](./self-hosted-installation.md) page to learn more.
 
 ## Additional resources
 
