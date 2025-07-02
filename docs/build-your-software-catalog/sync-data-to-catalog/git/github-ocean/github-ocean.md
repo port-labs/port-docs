@@ -705,11 +705,9 @@ resources:
 
 #### Limitations
 
-- Currently only files up to 512KB in size are supported.
+- Currently only files up to 1MB in size are supported.
 - Only JSON and YAML formats are automatically parsed.  
   Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
-- GLOB patterns are supported for file pattern matching, but wildcards at the end (e.g., `**/*`) are not allowed, in order to prevent matching all files indiscriminately.
-- Currently only the default branch of the repository is supported.
 
 ## Permissions
 
