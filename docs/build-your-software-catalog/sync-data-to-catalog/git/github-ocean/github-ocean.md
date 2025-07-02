@@ -738,7 +738,3 @@ You can reconfigure the permission at any time, giving it access to new reposito
 Refer to the [examples](./examples/resource-mapping-examples.md) page for practical configurations and their corresponding blueprint definitions.
 
 
-## Self-hosted installation
-
-Port's GitHub integration also supports a self-hosted installation, refer to the [self-hosted installation](./self-hosted-installation.md) page to learn more.
-
