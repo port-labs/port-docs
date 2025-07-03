@@ -171,7 +171,7 @@ However, the `Auto Scaling Group` blueprint is not created automatically so we w
 
 ## Set up self-service action
 
-Now let us create a self-service action to manage your Auto Scaling Groups directly from Port using GitHub Actions. You will implement a workflow to scale an Auto Scaling Group by changing its desired capacity.
+Now let us create a self-service action to manage your Auto Scaling Groups directly from Port using GitHub Actions. You will implement a workflow that provides predefined scaling operations based on the Auto Scaling Group's current configuration.
 
 To implement this use-case, follow the steps below:
 
@@ -207,9 +207,9 @@ name: Scale Auto Scaling Group
 on:
   workflow_dispatch:
     inputs:
-      desired_capacity:
+      operation:
         required: true
-        description: 'The desired capacity for the Auto Scaling Group'
+        description: 'The scaling operation to perform'
         type: string
       port_context:
         required: true
@@ -228,7 +228,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_context).runId}}
-          logMessage: Configuring AWS credentials to scale Auto Scaling Group ${{ fromJson(inputs.port_context).entity.title }} to desired capacity ${{ inputs.desired_capacity }}
+          logMessage: Configuring AWS credentials to perform ${{ inputs.operation }} operation on Auto Scaling Group ${{ fromJson(inputs.port_context).entity.title }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -237,43 +237,65 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Validate desired capacity
+      - name: Calculate new desired capacity
         run: |
+          CURRENT_DESIRED=${{ fromJson(inputs.port_context).entity.properties.desiredCapacity }}
           MIN_SIZE=${{ fromJson(inputs.port_context).entity.properties.minSize }}
-          DESIRED_CAPACITY=${{ inputs.desired_capacity }}
+          MAX_SIZE=${{ fromJson(inputs.port_context).entity.properties.maxSize }}
+          OPERATION="${{ inputs.operation }}"
           
-          # Convert to integer for comparison
-          DESIRED_INT=$(echo "$DESIRED_CAPACITY" | bc)
-          MIN_INT=$(echo "$MIN_SIZE" | bc)
+          case $OPERATION in
+            "scale up")
+              NEW_DESIRED=$((CURRENT_DESIRED + 1))
+              echo "📈 Scaling up from $CURRENT_DESIRED to $NEW_DESIRED"
+              ;;
+            "scale down")
+              NEW_DESIRED=$((CURRENT_DESIRED - 1))
+              echo "📉 Scaling down from $CURRENT_DESIRED to $NEW_DESIRED"
+              ;;
+            "scale to max")
+              NEW_DESIRED=$MAX_SIZE
+              echo "🚀 Scaling to maximum capacity: $NEW_DESIRED"
+              ;;
+            "scale to min")
+              NEW_DESIRED=$MIN_SIZE
+              echo "📉 Scaling to minimum capacity: $NEW_DESIRED"
+              ;;
+            *)
+              echo "❌ Unknown operation: $OPERATION"
+              exit 1
+              ;;
+          esac
           
-          if [ "$DESIRED_INT" -lt "$MIN_INT" ]; then
-            echo "❌ Desired capacity $DESIRED_CAPACITY cannot be lower than minimum size $MIN_SIZE"
+          # Validate the new desired capacity
+          if [ "$NEW_DESIRED" -lt "$MIN_SIZE" ]; then
+            echo "❌ Cannot scale down below minimum size $MIN_SIZE"
             exit 1
           fi
           
-          echo "✅ Desired capacity $DESIRED_CAPACITY validation passed"
+          echo "NEW_DESIRED=$NEW_DESIRED" >> $GITHUB_ENV
+          echo "MAX_SIZE=$MAX_SIZE" >> $GITHUB_ENV
+          echo "✅ New desired capacity calculated: $NEW_DESIRED"
 
       - name: Scale Auto Scaling Group
         run: |
-          MAX_SIZE=${{ fromJson(inputs.port_context).entity.properties.maxSize }}
-          DESIRED_CAPACITY=${{ inputs.desired_capacity }}
           
           # Convert to integers for comparison
-          DESIRED_INT=$(echo "$DESIRED_CAPACITY" | bc)
-          MAX_INT=$(echo "$MAX_SIZE" | bc)
+          NEW_DESIRED_INT=$(echo "$NEW_DESIRED" | bc)
+          MAX_SIZE_INT=$(echo "$MAX_SIZE" | bc)
           
           # If desired capacity exceeds max size, update both desired and max
-          if [ "$DESIRED_INT" -gt "$MAX_INT" ]; then
-            echo "📈 Desired capacity $DESIRED_CAPACITY exceeds max size $MAX_SIZE. Updating both values..."
+          if [ "$NEW_DESIRED_INT" -gt "$MAX_SIZE_INT" ]; then
+            echo "📈 Desired capacity $NEW_DESIRED_INT exceeds max size $MAX_SIZE_INT. Updating both values..."
             aws autoscaling update-auto-scaling-group \
               --auto-scaling-group-name ${{ fromJson(inputs.port_context).entity.title }} \
-              --desired-capacity $DESIRED_CAPACITY \
-              --max-size $DESIRED_CAPACITY
+              --desired-capacity $NEW_DESIRED \
+              --max-size $NEW_DESIRED
           else
-            echo "📊 Updating desired capacity to $DESIRED_CAPACITY..."
+            echo "📊 Updating desired capacity to $NEW_DESIRED..."
             aws autoscaling update-auto-scaling-group \
               --auto-scaling-group-name ${{ fromJson(inputs.port_context).entity.title }} \
-              --desired-capacity $DESIRED_CAPACITY
+              --desired-capacity $NEW_DESIRED
           fi
 
       - name: Inform Port about Auto Scaling Group scaling success
@@ -286,7 +308,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           status: 'SUCCESS'
-          logMessage: ✅ Auto Scaling Group ${{ fromJson(inputs.port_context).entity.title }} scaled to desired capacity ${{ inputs.desired_capacity }} successfully
+          logMessage: ✅ Auto Scaling Group ${{ fromJson(inputs.port_context).entity.title }} ${{ inputs.operation }} operation completed successfully
           summary: Auto Scaling Group scaling completed successfully
 
       - name: Inform Port about Auto Scaling Group scaling failure
@@ -299,7 +321,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           status: 'FAILURE'
-          logMessage: ❌ Failed to scale Auto Scaling Group ${{ fromJson(inputs.port_context).entity.title }} to desired capacity ${{ inputs.desired_capacity }}
+          logMessage: ❌ Failed to perform ${{ inputs.operation }} operation on Auto Scaling Group ${{ fromJson(inputs.port_context).entity.title }}
           summary: Auto Scaling Group scaling failed
 ```
 </details>
@@ -318,27 +340,35 @@ jobs:
 
     ```json showLineNumbers
     {
-      "identifier": "scale_autoscaling_group",
+      "identifier": "scale_auto_scaling_group",
       "title": "Scale Auto Scaling Group",
       "icon": "AWS",
-      "description": "The desired capacity for the Auto Scaling Group (must be at least the minimum size; max size will be automatically increased if needed)",
+      "description": "Set the size of the specified Auto Scaling group",
       "trigger": {
         "type": "self-service",
         "operation": "DAY-2",
         "userInputs": {
           "properties": {
-            "desired_capacity": {
-              "icon": "DefaultProperty",
-              "type": "number",
-              "title": "Desired Capacity",
-              "description": "The desired capacity for the Auto Scaling Group"
+            "operation": {
+              "type": "string",
+              "title": "Operation",
+              "enum": [
+                "scale up",
+                "scale down",
+                "scale to max",
+                "scale to min"
+              ],
+              "enumColors": {
+                "scale up": "lightGray",
+                "scale down": "lightGray",
+                "scale to max": "lightGray",
+                "scale to min": "lightGray"
+              }
             }
           },
-          "required": [
-            "desired_capacity"
-          ],
+          "required": [],
           "order": [
-            "desired_capacity"
+            "operation"
           ]
         },
         "blueprintIdentifier": "autoScalingGroup"
@@ -349,7 +379,7 @@ jobs:
         "repo": "<GITHUB-REPO>",
         "workflow": "scale-autoscaling-group.yaml",
         "workflowInputs": {
-          "desired_capacity": "{{ .inputs.desired_capacity | tostring}}",
+          "{{ spreadValue() }}": "{{ .inputs }}",
           "port_context": {
             "runId": "{{ .run.id }}",
             "entity": "{{ .entity }}"
@@ -364,11 +394,12 @@ jobs:
 
 5. Click `Save`.
 
-Now you should see the `Scale Auto Scaling Group` action in the self-service page. 🎉
+Now you should see the `Scale Auto Scaling Groups` action in the self-service page. 🎉
 
-:::tip AWS Auto Scaling behavior
-The configuration validates that the desired capacity is at least the minimum size. If the desired capacity exceeds the maximum size, the workflow will automatically update both the desired capacity and maximum size to match your input, just like in the AWS console.
+:::tip Predefined scaling operations
+The action provides four simple scaling operations that automatically calculate the appropriate desired capacity based on the Auto Scaling Group's current configuration and limits.
 :::
+
 
 ## Related guides
 - [Manage and visualize your EC2 instances](/guides/all/visualize-and-manage-aws-ec2-instances)
