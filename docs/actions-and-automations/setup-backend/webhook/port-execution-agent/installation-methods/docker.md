@@ -10,9 +10,7 @@ This page we will walk you through the installation of the Port execution agent 
 
 ## Installation
 
-:::note
-Remember to replace the placeholders for `<PORT_CLIENT_ID>`, `<PORT_CLIENT_SECRET>`, `<PORT_ORG_ID>` and `<KAFKA_CONSUMER_GROUP_ID>`.
-:::
+**Remember to replace the placeholders for `<PORT_CLIENT_ID>`, `<PORT_CLIENT_SECRET>`, `<PORT_ORG_ID>` and `<KAFKA_CONSUMER_GROUP_ID>`.**
 
 ```bash showLineNumbers
 docker run \

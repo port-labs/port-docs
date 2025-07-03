@@ -10,7 +10,7 @@ import FindCredentials from "/docs/build-your-software-catalog/custom-integratio
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Wiz
 
@@ -468,6 +468,95 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        blueprint: '"wizProject"'
+        identifier: .id
+        title: .name
+        properties:
+          archived: .archived
+          businessUnit: .businessUnit
+          description: .description
+- kind: issue
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        blueprint: '"wizIssue"'
+        identifier: .id
+        title: .entitySnapshot.name + " | " + .entitySnapshot.type
+        properties:
+          url: .id as $id | "https://app.wiz.io/issues#~(issue~'" + $id + ")"
+          status: .status
+          severity: .severity
+          vulnerabilityType: .type
+          notes: .notes
+          wizIssueID: .entitySnapshot.id
+          cloudResourceType: .entitySnapshot.type
+          resourceName: .entitySnapshot.name
+          cloudPlatform: .entitySnapshot.cloudPlatform
+          linkToResource: if .entitySnapshot.cloudProviderURL == "" then null else .entitySnapshot.cloudProviderURL end
+          cloudResourceID: .entitySnapshot.providerId
+          cloudRegion: .entitySnapshot.region
+          resourceGroupExternalId: .entitySnapshot.resourceGroupExternalId
+          subscriptionExternalId: .entitySnapshot.subscriptionExternalId
+          subscriptionName: .entitySnapshot.subscriptionName
+          subscriptionTags: .entitySnapshot.subscriptionTags
+          resourceTags: .entitySnapshot.tags
+          vulnerability: .entitySnapshot
+          createdAt: .createdAt
+          updatedAt: .updatedAt
+          statusChangedAt: .statusChangedAt
+          resolvedAt: .resolvedAt
+        relations:
+          projects: .projects | map(.id)
+          serviceTickets: .serviceTickets[].externalId
+          control: .sourceRule.id
+- kind: control
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        blueprint: '"wizControl"'
+        identifier: .id
+        title: .name
+        properties:
+          controlDescription: .controlDescription
+          resolutionRecommendation: .resolutionRecommendation
+- kind: serviceTicket
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        blueprint: '"wizServiceTicket"'
+        identifier: .externalId
+        title: .name
+        properties:
+          url: .url
+```
+
+</details>
+
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

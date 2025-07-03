@@ -2,13 +2,10 @@ import React from 'react';
 import Tag from '/src/components/guides-section/Tag/Tag.jsx'
 import "/src/components/guides-section/styles.css";
 import { Typography } from '@mui/material';
-import { useHistory } from 'react-router-dom';
 import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
 
 function GuideCard({ title, description, tags, logos, category, link }) {
-    const history = useHistory();
-
-    return <div className="guide-card" onClick={() => history.push(link)}>
+    return <a className="guide-card" href={link}>
         <div className='guide-card-header'>
             <div className='guide-card-header-left'>
                 {logos.map((logo) => (
@@ -30,7 +27,7 @@ function GuideCard({ title, description, tags, logos, category, link }) {
         <div className='guide-card-tags'>
             {tags.map(tag => <Tag className="unclickable-label" tag={tag} />)}
         </div>
-    </div>;
+    </a>;
 }
 
 export default GuideCard;

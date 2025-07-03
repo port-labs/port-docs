@@ -208,6 +208,40 @@
   font-family: var(--ifm-font-family-monospace);
 }
 
+.regionSelection {
+  margin: 16px 0;
+}
+
+.regionSelection > label {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--ifm-font-color-base);
+  font-weight: 500;
+}
+
+.regionOptions {
+  display: flex;
+  gap: 20px;
+}
+
+.regionOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.regionOption input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.regionOption:hover {
+  color: var(--ifm-color-primary);
+}
+
 .errorMessage {
   color: var(--ifm-color-danger);
   margin: 8px 0;

@@ -126,6 +126,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/create-multiple-entities",
+          label: "Create multiple entities",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "api-reference/patch-an-entity",
           label: "Patch an entity",
           className: "api-method patch",
@@ -532,6 +538,12 @@ const sidebar: SidebarsConfig = {
           label: "Delete an integration",
           className: "api-method delete",
         },
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-metrics-and-sync-status",
+          label: "Get an integration's metrics and sync status",
+          className: "api-method get",
+        },
       ],
     },
     {
@@ -633,12 +645,6 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/get-all-credentials",
           label: "Get all credentials",
           className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/create-credentials",
-          label: "Create credentials",
-          className: "api-method post",
         },
         {
           type: "doc",

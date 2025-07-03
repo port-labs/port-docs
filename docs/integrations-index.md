@@ -28,10 +28,10 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Deploy Azure resources using Terraform](/guides/all/create-azure-resource.md)
 - [Create GitHub secret using GitHub workflows](/guides/all/create-github-secret.md)
 - [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
-- [Lock service deployment](/guides/all/service-lock-github-workflow)
+- [Lock service deployment](/guides/all/lock-and-unlock-services-in-port)
 - [Nudge PR reviewers](/guides/all/nudge-pr-reviewers)
 - [Promote to production](/guides/all/promote-to-production)
-- [Self-service action to lock and unlock a service](/guides/all/lock-and-unlock-service-in-port)
+- [Self-service action to lock and unlock a service](/guides/all/lock-and-unlock-services-in-port)
 - [Connect GitHub Codeowners with Service, Team and User](/guides/all/connect-github-codeowners-with-service-team-and-user)
 - [Ingest Javascript packages into your catalog using GitHub file ingesting feature](/guides/all/ingest-javascript-packages-into-your-catalog)
 
@@ -47,11 +47,16 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### Bitbucket
 
-- [Bitbucket app](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket.md)
-- [BitBucket GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md)
-- [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
+- [Bitbucket App (Deprecated)](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/bitbucket-app.md)
+    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/gitops/gitops.md)
+    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/examples.md)
+- [Bitbucket Cloud](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/bitbucket-cloud.md)
+    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/gitops/gitops.md)
+    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/examples.md)
+
 - [Bitbucket scaffolder](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
-- [Webhook integration between Bitbucket (self-hosted) server and Port](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/bitbucket-server.md)
+- [Bitbucket Server Integration](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/bitbucket-server.md)
+- [Bitbucket Server GitOps with webhooks](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/gitops.md)
 
 ### Azure DevOps
 

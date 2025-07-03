@@ -9,9 +9,10 @@ Port offers two ways to control the payload sent to your backend:
 - In any other case, you can define the payload [directly via Port](/actions-and-automations/create-self-service-experiences/setup-the-backend/#define-the-actions-payload).
 :::
 
-Some of the 3rd party applications that you may want to integrate with may not accept the raw payload incoming from
-Port's
-self-service actions. The Port agent allows you to control the payload that is sent to every 3rd party application.
+Some of the third-party applications that you may want to integrate with may not accept the raw payload incoming from
+Port's self-service actions. The Port agent allows you to control the payload that is sent to every third-party application.
+
+For the latest updates and source code, see the [Port Agent GitHub repository](https://github.com/port-labs/port-agent).
 
 You can alter the requests sent to your third-party application by providing a payload mapping config file when
 deploying the
@@ -67,14 +68,15 @@ To provide the mapping to the agent, mount the mapping file to the container by 
 
 ### Control the payload mapping
 
-The payload mapping file is a json file that contains a list of mappings. Each mapping contains the request fields that
-will be overridden and sent to the 3rd party application.
+The payload mapping file is a JSON file that specifies how to transform the request sent to the Port agent to the request that is sent to the third-party application.
 
-You can see examples showing how to deploy the Port agent with different mapping configurations for various common use
-cases below.
+The payload mapping file is mounted to the Port agent as a volume. The path to the payload mapping file is set in the CONTROL_THE_PAYLOAD_CONFIG_PATH environment variable. By default, the Port agent will look for the payload mapping file at ~/control_the_payload_config.json.
 
-Each of the mapping fields can be constructed by JQ expressions. The JQ expression will be evaluated against the
-original payload that is sent to the port agent from Port and the result will be sent to the 3rd party application.
+The payload mapping file is a json file that contains a list of mappings. Each mapping contains the request fields that will be overridden and sent to the third-party application.
+
+You can see examples showing how to deploy the Port agent with different mapping configurations for various common use cases below.  
+
+Each of the mapping fields can be constructed by JQ expressions. The JQ expression will be evaluated against the original payload that is sent to the port agent from Port and the result will be sent to the third-party application.  
 
 Here is the mapping file schema:
 
@@ -87,12 +89,13 @@ Here is the mapping file schema:
       "headers": dict[str, JQ], # Optional. default is {}
       "body": ".body", # Optional. default is the whole payload incoming from Port.
       "query": dict[str, JQ] # Optional. default is {},
-      "report" { # Optional. Used to report the run status back to Port right after the request is sent to the 3rd party application
+      "report" { # Optional. Used to report the run status back to Port right after the request is sent to the third-party application
         "status": JQ, # Optional. Should return the wanted runs status
         "link": JQ, # Optional. Should return the wanted link or a list of links
         "summary": JQ, # Optional. Should return the wanted summary
         "externalRunId": JQ # Optional. Should return the wanted external run id
-      }
+      },
+      "fieldsToDecryptPaths": ["dot.separated.path"] # Optional. List of dot-separated string paths to fields to decrypt by PORT_CLIENT_SECRET
   }
 ]
 ```
@@ -137,6 +140,11 @@ Assuming a `webhook` invocation action is configured to forward the request to t
 Invoking the action with the input 8080 to the property `network_port` will cause the agent to send the webhook request to `http://test.com/8080`.
 
 ### The incoming message to base your mapping on
+
+Below is an example for incoming event:
+
+<details>
+<summary>Example for incoming event (Click to expand)</summary>
 
 ```json showLineNumbers
 {
@@ -197,12 +205,13 @@ Invoking the action with the input 8080 to the property `network_port` will caus
   }
 }
 ```
+</details>
 
 ## Report action status back to Port
 
 The agent is capable of reporting the action status back to Port using the `report` field in the mapping.
 
-The report request will be sent to the Port API right after the request to the 3rd party application is sent and update
+The report request will be sent to the Port API right after the request to the third-party application is sent and update
 the run status in Port.
 
 The agent uses the JQ in the `report` field to construct the report request body.
@@ -210,16 +219,16 @@ The agent uses the JQ in the `report` field to construct the report request body
 The available fields are:
 
 - `status` - The status of the run. Can be one of the following values: `SUCCESS` / `FAILURE`
-- `link` - A link to the run in the 3rd party application. Can be a string or a list of strings.
+- `link` - A link to the run in the third-party application. Can be a string or a list of strings.
 - `summary` - A string summary of the run.
-- `externalRunId` - The external run id in the 3rd party application. The external run id is used to allow a search of
+- `externalRunId` - The external run id in the third-party application. The external run id is used to allow a search of
   the action runs in Port by the external run id.
 
 The report mapping can use the following fields:
 
 `.body` - The incoming message as mentioned [above](#the-incoming-message-to-base-your-mapping-on)
-`.request` - The request that was calculated using the control the payload mapping and sent to the 3rd party application
-`.response` - The response that was received from the 3rd party application
+`.request` - The request that was calculated using the control the payload mapping and sent to the third-party application
+`.response` - The response that was received from the third-party application
 
 The `response` field contains the following fields:
 
@@ -227,3 +236,154 @@ The `response` field contains the following fields:
 - `json` - The response body as a json object
 - `text` - The response body as a string
 - `headers` - The response headers as a json object
+
+## Decrypting Encrypted Fields
+
+When using `secret` type input fields in your actions such as API keys, tokens, or passwords, the Port agent can automatically decrypt these encrypted values before sending requests to third-party applications.  
+Use the `fieldsToDecryptPaths` field in your mapping to specify which fields should be decrypted.  
+
+**Important Notes:**
+- **Path Format**: Use dot-separated paths **without** a leading dot (`.`). The paths should start directly with the field name.
+- **Array Elements**: For arrays, you must specify the exact index (e.g. `secrets.0.value`, `secrets.1.value`) rather than using wildcards like `secrets[*].value`.
+- **Path Context**: The paths are relative to the root of the incoming message structure, not relative to the `.body` field used in other mappings.
+
+<details>
+<summary>Basic Example - Simple Fields (Click to expand)</summary>
+
+```json showLineNumbers
+{
+  "action": "deploy_service",
+  "resourceType": "service",
+  "status": "TRIGGERED",
+  "trigger": {
+    "by": {
+      "orgId": "org_123",
+      "userId": "auth0|abc123",
+      "user": {
+        "email": "user@example.com",
+        "firstName": "Alice",
+        "lastName": "Smith"
+      }
+    },
+    "origin": "UI",
+    "at": "2024-06-01T12:00:00.000Z"
+  },
+  "context": {
+    "entity": "e_456",
+    "blueprint": "microservice",
+    "runId": "r_789"
+  },
+  "payload": {
+    "entity": {
+      "identifier": "e_456",
+      "title": "My Service",
+      "blueprint": "microservice",
+      "team": ["devops"],
+      "properties": {
+        "api_key": "<ENCRYPTED_VALUE>",
+        "db_password": "<ENCRYPTED_VALUE>",
+        "region": "us-east-1"
+      }
+    },
+    "action": {
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "agent": true,
+        "synchronized": false,
+        "method": "POST",
+        "url": "https://myservice.com/deploy"
+      },
+      "trigger": "DEPLOY"
+    },
+    "properties": {},
+    "censoredProperties": []
+  }
+}
+```
+
+To have the agent automatically decrypt the `api_key` and `db_password` fields, add their dot-separated paths to `fieldsToDecryptPaths` in your mapping configuration:
+
+```json showLineNumbers
+[
+  {
+    "fieldsToDecryptPaths": [
+      "payload.entity.properties.api_key",
+      "payload.entity.properties.db_password"
+    ],
+    // ... other mapping fields ...
+  }
+]
+```
+</details>
+
+<details>
+<summary>Advanced Example - Array Elements (Click to expand)</summary>
+
+For payloads containing arrays of objects with encrypted values, you must specify each array element individually by its index:
+
+```json showLineNumbers
+{
+  "payload": {
+    "action": {
+      "invocationMethod": {
+        "body": {
+          "secrets": [
+            {
+              "key": "porttest123",
+              "value": "<ENCRYPTED_VALUE>"
+            },
+            {
+              "key": "porttest456", 
+              "value": "<ENCRYPTED_VALUE>"
+            }
+          ],
+          "users": [
+            {
+              "username": "user1",
+              "password": "<ENCRYPTED_VALUE>"
+            },
+            {
+              "username": "user2",
+              "password": "<ENCRYPTED_VALUE>"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+**Correct Configuration** (specify each array index individually):
+```json showLineNumbers
+[
+  {
+    "fieldsToDecryptPaths": [
+      "payload.action.invocationMethod.body.secrets.0.value",
+      "payload.action.invocationMethod.body.secrets.1.value",
+      "payload.action.invocationMethod.body.users.0.password",
+      "payload.action.invocationMethod.body.users.1.password"
+    ],
+    // ... other mapping fields ...
+  }
+]
+```
+
+**Incorrect Configurations** (these will NOT work):
+```json
+// ❌ Wildcards are not supported
+"fieldsToDecryptPaths": ["payload.action.invocationMethod.body.secrets[*].value"]
+
+// ❌ Leading dot is incorrect
+"fieldsToDecryptPaths": [".payload.action.invocationMethod.body.secrets.0.value"]
+
+// ❌ Case sensitive - field names must match exactly
+// If the field is named 'secrets' (lowercase), this won't work:
+"fieldsToDecryptPaths": ["payload.action.invocationMethod.body.Secrets.0.value"]
+```
+
+**How it works:**
+- The agent will look for the fields at the specified paths in the incoming message.
+- If it finds encrypted values there, it will decrypt them using your configured `PORT_CLIENT_SECRET`.
+- You can add more fields to the list as needed.
+</details>

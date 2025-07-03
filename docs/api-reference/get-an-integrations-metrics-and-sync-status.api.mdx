@@ -1,0 +1,71 @@
+---
+id: get-an-integrations-metrics-and-sync-status
+title: "Get an integration's metrics and sync status"
+description: "This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/)."
+sidebar_label: "Get an integration's metrics and sync status"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWd1r40YQ/1cWvfQC/khK+2JKIXBtMKUQ7tJCCSa3lsb2nle7ut2RHdf4f7+ZlWzLthwlD6n7oIc4aOdj5+M3IzGzjhLwsVMZKmuiQfQwU144myMIqbVderGyuUArpoBCCp9BrCYqFsogTJ1kqR+8SAGdir2QJhF+ZWLhUWLuBSicgRP0I7RE8CisAWGdmNBfRZsDlur9Mnb9X8PPEOkMc2d8EGYqXQPPEOd85VY/35cASqUh2RmR0Y1zRRS+BGQ8E9lMerp2stNV3CR+Z4ZnmWYaOoFm8nRM0sQ5AYxnpNSOv0KMnvytGhKohdpORWjLjDOJYgkORCqzjLSU0vykzHQrSEoqLj9YoUE6I1JLgnJMOahG2XcEGRTPBZ+zssfExnkKBgN59GGGmPlBv0/HvpdZhz1l++Nc6aRLKXRdbye4lA66sUSp7bTPvnQTeuii3R1e9aJOhHLqo8FjNKxcH406USadpCiDY+o68mRQKqPBOsJVBgQeTwkw02jTiRRj6VsObkXqDAnRY5HkYUInDr7lykESDSZSUyhOQAhi+JEjeooRMeQ0EkgnCjRF1lPUJiggzXDVqSKt4BfsoFgqrcUYSkxB0iMbm+3PJM725ldywXFxRuojX9DlL7jCplV0hLpaSoNcXJYwS1ZTdbzOshnIBNzettscZ9apf4Pm5vj+Q3gQt/dDunoOpiceivJW2BFTy/YwYMTjPYFIyDi2ucE9vgjDO3hdESi1IlCyc196vd4XMc4RrQmZMFXiHZjCx929W95QxbHNVoFxWvIlpXHRZsT++IwwCJ5D8uP1Nf87dOkjTGSuUXwqOSkIsaVoG2RespksCdHpf/UsUBPjonpJMHOcD1TFdXZe4RlbS0VqOBEhLBVS0QaYwpCrEKRzkstAIaS++b4KRh4CYy0I9lhMyEcqELq6gfNvqltV+H7CZmPy6iUGbqgNVzHLeVmTwHNttGBBWof1klzBn6nB1UdhrHPI6AFrqeXroDngoRs3sxX9pJkvyYtwP3kgBCa+1mmfxzH4OhoRZZIo1iD1fUVzqGSiaiuTV6A2HD8FkD7hIY7OiPi54pfV23TXe7DvP4+H3KMm7ybhXX5ZGzjCl7bByeUTPKOTMV7aFDLCePqWSi9tyERpeu9C8kSfQJe1JAENF85LQ594QXPRDhp9LNHXtpq21bStpm0179lqdmlvm03bbNpm0zab92w2hY9tp2k7Tdtp2k7zfp3mbeqLIVRj2GIHPBu9rRl5UXYJYZIoPICELqoUeNSUZ8nbRI4sO55Hnps+1s4ajyaLJ3PEcmq4nwJWZ377GV7V8apHTSk4zuE82s5tyyltowLS8NP1TZjrXXjeDM7Z+sFrCt7Lad2MtM7/Qs9rHP/5/zFo/68dL2bHM0uS0RSCnbwIGkT9xU2/gvH+unYltAmLtT93yPXgFtuNWe40b292mxS13aSErc8pNfd7hhGrinOncPWZI1oEbQzSHczjSewPqGzdjldD1f3RJiwIJjaIK9TMH5Y+t/dDYl1s9wHRTe+a451Zj6kMSS213/FW2LxuGxwdraHWe+C0a+d27dzZIhjpq62faalC9YeiWJcl+Bgtbg5fNPQ0OLeZrdYhVc+M0Msq1usxxeEvpzcbPi621FydifJyrM9tTQ/h+u4L6jPhmFNtH6zSF1LnzBYaxEI6xS680Z0Pn8peeSXevq8+Y+i2HZlV1citA/Up24xIsOxN7EHBexvHkGFFy8lLhl3ftey73x6osX0Hb2JyLg==
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an integration's metrics and sync status"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/integration/{integrationInternalId}/syncMetrics"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"query","name":"resyncId","required":false,"description":"The ID of a specific resync. If this field is left empty, the latest resync data will be returned."},{"schema":{"type":"string"},"in":"path","name":"integrationInternalId","required":true,"description":"The ID of the integration you want to operate on."},{"schema":{"type":"string"},"in":"header","name":"Authorization","required":false,"description":"Your API token. To get it, go to your [Port account](https://app.port.io/), click the `...` button, then click the `Generate API token` button and copy the generated token."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"count":{"type":"number"},"data":{"type":"array","items":{"type":"object","properties":{"integrationType":{"type":"string"},"integrationIdentifier":{"type":"string"},"integrationVersion":{"type":"string"},"oceanVersion":{"type":"string"},"kindIdentifier":{"type":"string"},"kind":{"type":"string"},"kindIndex":{"type":"number"},"eventId":{"type":"string"},"syncState":{"type":"string"},"blueprint":{"type":"string"},"metrics":{"type":"object","properties":{"phase":{"type":"object","properties":{"resync":{"type":"object","properties":{"duration_seconds":{"type":"number"},"success":{"type":"number"}},"additionalProperties":false},"load":{"type":"object","properties":{"object_count_type":{"type":"object","properties":{"skipped":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"failed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"loaded":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"raw_extracted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"transformed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"filtered_out":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"deleted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false}},"additionalProperties":false}},"required":["object_count_type"],"additionalProperties":false},"extract":{"type":"object","properties":{"object_count_type":{"type":"object","properties":{"skipped":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"failed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"loaded":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"raw_extracted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"transformed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"filtered_out":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"deleted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false}},"additionalProperties":false}},"required":["object_count_type"],"additionalProperties":false},"transform":{"type":"object","properties":{"object_count_type":{"type":"object","properties":{"skipped":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"failed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"loaded":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"raw_extracted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"transformed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"filtered_out":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"deleted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false}},"additionalProperties":false}},"required":["object_count_type"],"additionalProperties":false},"delete":{"type":"object","properties":{"object_count_type":{"type":"object","properties":{"skipped":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"failed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"loaded":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"raw_extracted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"transformed":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"filtered_out":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false},"deleted":{"type":"object","properties":{"object_count":{"type":"number"}},"required":["object_count"],"additionalProperties":false}},"additionalProperties":false}},"required":["object_count_type"],"additionalProperties":false}},"additionalProperties":false}},"required":["phase"],"additionalProperties":false},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"}},"required":["integrationType","integrationIdentifier","integrationVersion","oceanVersion","kindIdentifier","kind","eventId","syncState","metrics","createdAt","updatedAt"],"additionalProperties":false}}},"required":["ok","count","data"],"additionalProperties":false}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

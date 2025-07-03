@@ -5,6 +5,7 @@ sidebar_position: 2
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Image from "@theme/IdealImage";
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # AWS
 
@@ -38,3 +39,96 @@ Continue to the [installation](./installations/installation.md) guide to learn h
 ## Multiple accounts support
 
 To properly configure permissions for production and to enable multiple accounts collection check out our [multiple accounts guide](./installations/multi_account.md)
+
+## Configuration
+
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the AWS integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+- kind: AWS::Organizations::Account
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Id
+        title: .Name
+        blueprint: '"awsAccount"'
+        properties:
+          arn: .Arn
+          email: .Email
+          status: .Status
+          joined_method: .JoinedMethod
+          joined_timestamp: .JoinedTimestamp | sub(" "; "T")
+- kind: AWS::S3::Bucket
+  selector:
+    query: 'true'
+    useGetResourceAPI: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Identifier
+        title: .Identifier
+        blueprint: '"cloudResource"'
+        properties:
+          kind: .__Kind
+          region: .Properties.RegionalDomainName | capture(".*\\.(?<region>[^\\.]+)\\.amazonaws\\.com")
+            | .region
+          tags: .Properties.Tags
+          arn: .Properties.Arn
+          link: .Properties | select(.Arn != null) | "https://console.aws.amazon.com/go/view?arn="
+            + .Arn
+        relations:
+          account: .__AccountId
+- kind: AWS::EC2::Instance
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Identifier
+        title: .Identifier
+        blueprint: '"cloudResource"'
+        properties:
+          kind: .__Kind
+          region: .__Region
+          tags: .Properties.Tags
+          arn: .Properties.Arn
+          link: .Properties | select(.Arn != null) | "https://console.aws.amazon.com/go/view?arn="
+            + .Arn
+        relations:
+          account: .__AccountId
+- kind: AWS::ECS::Cluster
+  selector:
+    query: 'true'
+    useGetResourceAPI: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Properties.Arn
+        title: .Identifier
+        blueprint: '"cloudResource"'
+        properties:
+          kind: .__Kind
+          region: .__Region
+          tags: .Properties.Tags
+          arn: .Properties.Arn
+          link: .Properties | select(.Arn != null) | "https://console.aws.amazon.com/go/view?arn="
+            + .Arn
+        relations:
+          account: .__AccountId
+```
+
+</details>
+
+<MetricsAndSyncStatus/>

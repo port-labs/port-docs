@@ -5,6 +5,7 @@ sidebar_position: 2
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Image from "@theme/IdealImage";
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # GCP
 
@@ -34,3 +35,125 @@ The GCP integration allows you to perform extract, transform, load (ETL) on data
 ## Getting started
 
 Continue to the [installation](./installation.md) guide to learn how to install the GCP integration.
+
+## Configuration
+
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration you get after installing the GCP integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+- kind: cloudresourcemanager.googleapis.com/Project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        blueprint: '"gcpProject"'
+        title: .display_name
+        properties:
+          labels: .labels
+- kind: container.googleapis.com/Cluster
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name | split("/") | last
+        blueprint: '"gcpCloudResource"'
+        properties:
+          type: .name | split("/") | .[-2]
+          location: .location
+          labels: .labels
+        relations:
+          project: .__project.name
+- kind: cloudfunctions.googleapis.com/CloudFunction
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name | split("/") | last
+        blueprint: '"gcpCloudResource"'
+        properties:
+          type: .name | split("/") | .[-2]
+          location: .location
+          labels: .labels
+        relations:
+          project: .__project.name
+- kind: pubsub.googleapis.com/Topic
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name | split("/") | last
+        blueprint: '"gcpCloudResource"'
+        properties:
+          type: .name | split("/") | .[-2]
+          location: .location
+          labels: .labels
+        relations:
+          project: .__project.name
+- kind: compute.googleapis.com/Disk
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name | split("/") | last
+        blueprint: '"gcpCloudResource"'
+        properties:
+          type: .name | split("/") | .[-2]
+          location: .location
+          labels: .labels
+        relations:
+          project: .__project.name
+- kind: pubsub.googleapis.com/Subscription
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name | split("/") | last
+        blueprint: '"gcpCloudResource"'
+        properties:
+          type: .name | split("/") | .[-2]
+          location: .location
+          labels: .labels
+        relations:
+          project: .__project.name
+- kind: iam.googleapis.com/ServiceAccount
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name | split("/") | last
+        blueprint: '"gcpCloudResource"'
+        properties:
+          type: .name | split("/") | .[-2]
+          location: .location
+          labels: .labels
+        relations:
+          project: .__project.name
+```
+
+</details>
+
+<MetricsAndSyncStatus/>
