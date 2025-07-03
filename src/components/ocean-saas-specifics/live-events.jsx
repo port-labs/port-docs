@@ -1,18 +1,16 @@
 import Markdown from "@theme/Markdown";
 
 const defaultLiveEvents = {
-  unsupported:
-    `Currently, live events are not supported for this integration. \
+  unsupported: `Currently, live events are not supported for this integration. \
     \nResyncs will be performed **periodically** (with a configurable interval), or **manually** triggered by you via Port's UI. \
     \n\nTherefore, real-time events (including GitOps) will not be ingested into Port immediately. \
     \nLive events support for this integration is WIP and will be supported in the near future.`,
   supported:
-    'This integration supports live events, allowing real-time updates to your software catalog without waiting for the next scheduled sync.',
+    "This integration supports live events, allowing real-time updates to your software catalog without waiting for the next scheduled sync.",
 };
 
 export const liveEvents = {
-  Jira:
-    '**Issue:** \
+  Jira: "**Issue:** \
     \n- jira:issue_created \
     \n- jira:issue_updated \
     \n- jira:issue_deleted \
@@ -23,17 +21,16 @@ export const liveEvents = {
     \n\n**User:** \
     \n- user_created \
     \n- user_updated \
-    \n- user_deleted',
+    \n- user_deleted",
   Jira_OAuth:
-    '**Issue:** \
+    "**Issue:** \
     \n- jira:issue_created \
     \n- jira:issue_updated \
-    \n- jira:issue_deleted',
-  Snyk:
-   '\n- Project related events \
-    \n- Target related events',
+    \n- jira:issue_deleted",
+  Snyk: "\n- Project related events \
+    \n- Target related events",
   BitbucketCloud:
-    '**Repository:** \
+    "**Repository:** \
     \n- repository:created \
     \n- repository:updated \
     \n- repository:push \
@@ -43,9 +40,9 @@ export const liveEvents = {
     \n- pullrequest:approved \
     \n- pullrequest:unapproved \
     \n- pullrequest:fulfilled \
-    \n- pullrequest:rejected',
+    \n- pullrequest:rejected",
   PagerDuty:
-    '**Service:** \
+    "**Service:** \
     \n- service.created \
     \n- service.deleted \
     \n- service.updated \
@@ -62,9 +59,9 @@ export const liveEvents = {
     \n- incident.responder.added \
     \n- incident.responder.replied \
     \n- incident.triggered \
-    \n- incident.unacknowledged',
+    \n- incident.unacknowledged",
   PagerDuty_OAuth:
-    '**Service:** \
+    "**Service:** \
     \n- service.created \
     \n- service.deleted \
     \n- service.updated \
@@ -81,12 +78,12 @@ export const liveEvents = {
     \n- incident.responder.added \
     \n- incident.responder.replied \
     \n- incident.triggered \
-    \n- incident.unacknowledged',
+    \n- incident.unacknowledged",
   SonarQube:
-    '\n- Analysis completion events \
-     \n- Quality gate status change events',
-  Datadog: 
-    '**Monitoring Alerts:** \
+    "\n- Analysis completion events \
+     \n- Quality gate status change events",
+  Datadog:
+    "**Monitoring Alerts:** \
     \n- ci_pipelines_alert \
     \n- ci_tests_alert \
     \n- composite_monitor \
@@ -102,9 +99,9 @@ export const liveEvents = {
     \n- rum_alert \
     \n- service_check \
     \n- synthetics_alert \
-    \n- trace_analytics_alert',
-  Datadog_OAuth: 
-    '**Monitoring Alerts:** \
+    \n- trace_analytics_alert",
+  Datadog_OAuth:
+    "**Monitoring Alerts:** \
     \n- ci_pipelines_alert \
     \n- ci_tests_alert \
     \n- composite_monitor \
@@ -120,9 +117,9 @@ export const liveEvents = {
     \n- rum_alert \
     \n- service_check \
     \n- synthetics_alert \
-    \n- trace_analytics_alert',
+    \n- trace_analytics_alert",
   GitLab_v2:
-    '**Groups:** \
+    "**Groups:** \
     \n- group_create \
     \n- group_destroy \
     \n- subgroup_create \
@@ -142,33 +139,53 @@ export const liveEvents = {
     \n\n**Jobs:** \
     \n- build \
     \n\n**Pipelines:** \
-    \n- pipeline ',
+    \n- pipeline ",
   Linear:
-    '\n- Issue \
-    \n- IssueLabel',
+    "\n- Issue \
+    \n- IssueLabel",
   LaunchDarkly:
-    '\n- flag \
+    "\n- flag \
     \n- environment \
     \n- project \
-    \n- auditlog',
+    \n- auditlog",
   Octopus:
-    '\n- spaces \
+    "\n- spaces \
     \n- projects \
     \n- deployments \
     \n- releases \
-    \n- machines',
+    \n- machines",
   NewRelic:
-    '**Issues:** \
+    "**Issues:** \
     \n- issue_created \
     \n- issue_updated \
-    \n- issue_closed',
+    \n- issue_closed",
   AzureDevOps:
-    '**Code Events:** \
+    "**Code Events:** \
     \n- git.pullrequest.created \
     \n- git.pullrequest.updated \
-    \n- git.push',
-  GithubOcean: 
-  ' **Repository:** \
+    \n- git.push",
+  BitbucketServer:
+    "**Pull Request:** \
+    \n- pr:modified \
+    \n- pr:opened \
+    \n- pr:merged \
+    \n- pr:reviewer:updated \
+    \n- pr:declined \
+    \n- pr:deleted \
+    \n- pr:comment:deleted \
+    \n- pr:from_ref_updated \
+    \n- pr:comment:edited \
+    \n- pr:reviewer:unapproved \
+    \n- pr:reviewer:needs_work \
+    \n- pr:reviewer:approved \
+    \n- pr:comment:added \
+    \n\n**Repository:** \
+    \n- repo:modified \
+    \n- repo:refs_changed \
+    \n\n**Project:** \
+    \n- project:modified",
+  GithubOcean:
+    " **Repository:** \
     \n - created \
     \n - edited \
     \n - renamed \
@@ -187,24 +204,15 @@ export const liveEvents = {
      \n - unassigned \
      \n - review_request_removed \
      \n - closed \
-    \n\n **push:** '
-    
-  };
+    \n\n **push:** ",
+};
 
-  export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
-    return (
-      <Markdown>
-      {liveEvents[id + "_OAuth"]}
-      </Markdown>
-    );
-  };
+export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
+  return <Markdown>{liveEvents[id + "_OAuth"]}</Markdown>;
+};
 
-  export const OceanSaasLiveEventsTriggersManual = ({ id, isOAuth = false }) => {
-    return (
-      <Markdown>
-      {liveEvents[id]}
-      </Markdown>
-  );
+export const OceanSaasLiveEventsTriggersManual = ({ id, isOAuth = false }) => {
+  return <Markdown>{liveEvents[id]}</Markdown>;
 };
 
 export const OceanSaasLiveEventsDescription = ({ id }) => {

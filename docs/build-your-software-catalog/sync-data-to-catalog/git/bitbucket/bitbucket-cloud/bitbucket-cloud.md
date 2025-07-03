@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import BitbucketResources from './\_bitbucket_integration_supported_resources.mdx'
@@ -9,7 +13,7 @@ Port's Bitbucket integration allows you to model Bitbucket cloud resources in yo
 
 :::info Bitbucket Server (Self-Hosted)
 This documentation covers Port's integration with **Bitbucket Cloud**. 
-For information about integrating with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server integration documentation](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/bitbucket-server.md).
+For information about integrating with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server integration documentation](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/bitbucket-server.md).
 :::
 
 
@@ -20,7 +24,7 @@ This integration allows you to:
 - Map and organize your desired Bitbucket cloud resources and their metadata in Port (see supported resources below).
 - Watch for Bitbucket object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Map and ingest monorepo repositories.
-- Manage port entities using GitOps.
+- Manage Port entities using GitOps.
 
 ### Supported resources
 
