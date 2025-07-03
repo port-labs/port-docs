@@ -1,0 +1,53 @@
+<details>
+<summary>Humanitec Deployment Sets</summary>
+
+```json showLineNumbers
+{
+    "identifier": "humanitecDeploymentSet",
+    "title": "Humanitec Deployment Set",
+    "icon": "Deployment",
+    "schema": {
+      "properties": {
+        "version": {
+          "title": "Version",
+          "description": "The version of the deployment set",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "createdAt": {
+          "title": "Created At",
+          "description": "The date and time when the deployment set was created",
+          "type": "string",
+          "format": "date-time",
+          "icon": "DefaultProperty"
+        },
+        "createdBy": {
+          "title": "Created By",
+          "description": "The user who created the deployment set",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "comment": {
+          "title": "Comment",
+          "description": "Comment for the deployment set",
+          "type": "string",
+          "icon": "DefaultProperty"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "humanitecApplication": {
+        "title": "Application",
+        "target": "humanitecApplication",
+        "required": false,
+        "many": false
+      }
+    }
+}
+```
+
+</details>
