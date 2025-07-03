@@ -40,7 +40,7 @@ In this example, you are going to create a github worklow integration to facilit
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 :::
 
-## Port blueprints
+## Set up data model
 
 Create the following blueprint definitions in port:
 
