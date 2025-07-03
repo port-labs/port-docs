@@ -39,7 +39,8 @@ To install, follow these steps:
 
 Every integration hosted by Port has the following customizable application settings, which are configurable after installation:
 
-- `Resync interval`: The frequency at which Port will ingest data from the integration. There are various options available, ranging from every 1 hour to once a day. If a sync is still in progress when the next one is due, the new sync will be skipped  (up to 24 hours delay). This ensures that all kinds are fully synchronized and that cleanup of stale entities always takes place at the end of each sync.
+- `Resync interval`: The frequency at which Port will ingest data from the integration. There are various options available, ranging from every 1 hour to once a day. If a sync is still in progress when the next one is due, the new sync will be skipped (up to 24 hours delay).  
+This ensures that all kinds are fully synchronized and that cleanup of stale entities always takes place at the end of each sync.
 
 - `Send raw data examples`: A boolean toggle (`enabled` by default). If enabled, raw data examples will be sent from the integration to Port. These examples are used when [testing your mapping configuration](/build-your-software-catalog/customize-integrations/configure-mapping#test-your-mapping---jq-playground), they allow you to run your `jq` expressions against real data and see the results.
 
