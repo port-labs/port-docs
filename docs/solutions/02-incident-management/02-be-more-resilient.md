@@ -32,7 +32,6 @@ A clear, up-to-date software catalog is the foundation of resilience. Know what 
 
 Don't wait for things to break. Use Port to automate health checks, enforce best practices, and trigger remediation workflows before users are impacted.
 
-[]
 <iframe
   width="560"
   height="315"
