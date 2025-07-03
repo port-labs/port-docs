@@ -4,14 +4,14 @@ title: "Learn from Every Incident: Build a Culture of Continuous Improvement"
 
 # Learn from Every Incident: Build a Culture of Continuous Improvement
 
-The best teams know that every incident is an opportunity to get stronger. At Port, we believe that learning from history—through postmortems, RCAs, and data-driven insights—is the secret to building resilient systems and high-performing teams.
+Every incident is an opportunity to learn and grow. Learning from history—through postmortems, RCAs, and data-driven insights—is the secret to building resilient systems and high-performing teams. But with the right tooling, the lessons from the past are not left there - they are indexed and available in each incident to come.
 
 ## Why Learning from Incidents Matters
 
 Incidents are inevitable, but repeated mistakes don't have to be. Teams that invest in learning:
 - Prevent future outages by addressing root causes
 - Improve processes and automations
-- Build trust and psychological safety
+- Build trust and psychological safety in your tea
 
 ## How Port Enables Learning from History
 

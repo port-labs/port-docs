@@ -24,8 +24,8 @@ There's a better way:
 
 Connect all your monitoring and alerting tools to Port. Our integrations make it easy to centralize alerts from sources like Datadog, PagerDuty, and more.
 
-- [Prometheus](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/examples/prometheus)
-- [Grafana](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/examples/grafana)
+- [Prometheus](../../build-your-software-catalog/custom-integration/webhook/examples/prometheus)
+- [Grafana](../../build-your-software-catalog/custom-integration/webhook/examples/grafana)
 
 ### Enrich with Context
 

@@ -24,6 +24,9 @@ Port brings all your incident actions together, so you can:
 - Take action directly from the incident view, with no tab-switching or manual handoffs
 - Automate repetitive tasks and approvals, so engineers can focus on resolution
 
+<img src="/img/guides/pagerDutyDashboard1.png" border="1px" width="100%" />
+<img src="/img/guides/pagerDutyDashboard2.png" border="1px" width="100%" />
+
 ## Step-by-Step: What Great Teams Do in Port
 
 ### 1. Acknowledge or Reassign Incidents
@@ -37,8 +40,8 @@ Loop in additional teams or leadership with a single action.
 
 ### 3. Grant Temporary Permissions
 Unblock engineers by granting just-in-time access to the systems and data they need to investigate the incident.
-- [IAM Permissions Guide](https://docs.port.io/guides/all/iam-permissions-guide/)
-- [Automatically Approve Actions](https://docs.port.io/guides/all/automatically-approve-action-using-automation/)
+- [IAM Permissions Guide](../../guides/all/iam-permissions-guide/)
+- [Automatically Approve Actions](../../guides/all/automatically-approve-action-using-automation/)
 
 ### 4. Update Status Pages and Stakeholders
 Keep everyone informed, internally and externally.

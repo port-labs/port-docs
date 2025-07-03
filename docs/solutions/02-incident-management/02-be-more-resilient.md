@@ -43,9 +43,10 @@ Don't wait for things to break. Use Port to automate health checks, enforce best
   allowfullscreen
 ></iframe>
 
-- [Ensure Production Readiness](https://docs.port.io/guides/all/ensure-production-readiness/)
-- [Track SLOs and SLIs for Services](https://docs.port.io/guides/all/track-slos-and-slis-for-services/)
-- [See our automation and scorecard guides](../../promote-scorecards/promote-scorecards.md)
+- [Configure the AI Incident Manager Agent](../../guides/all/setup-incident-manager-ai-agent)
+- [Ensure Production Readiness](../../guides/all/ensure-production-readiness)
+- [Track SLOs and SLIs for Services](../../guides/all/track-slos-and-slis-for-services)
+- [See our automation and scorecard guides](../../promote-scorecards/promote-scorecards)
 
 :::caution Don't skip ownership
 Resilience depends on clear ownership. Make sure every service and component in your catalog has an owner—otherwise, incidents will fall through the cracks.
@@ -61,9 +62,3 @@ After every incident, use Port to capture what happened, analyze root causes, an
 - **Faster recovery**: When incidents do happen, you know exactly who to call and what to fix.
 - **Continuous improvement**: Every incident makes your system stronger.
 
-## Ready to Build Resilience?
-
-Explore our guides to start building resilient, always-ready services with Port:
-
-- [Build Your Software Catalog](../../build-your-software-catalog/build-your-software-catalog.md)
-- [Set Standards](../../promote-scorecards/promote-scorecards.md)
