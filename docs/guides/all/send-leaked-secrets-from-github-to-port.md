@@ -216,7 +216,7 @@ You can customize the workflow triggers based on your needs. For example, you mi
 
 ## Let's Test It
 
-This section includes a sample response data from Gitleaks. In addition, it includes the entity created from the event based on the configuration provided in the previous section. To test your integration, you can create a test commit with a fake secret or use the sample data provided below.
+To test your integration, you can create a test commit with a fake secret or use the sample data provided below. This section includes a sample webhook response from Gitleaks and the corresponding Port entity that would be created.
 
 
 ### Payload
