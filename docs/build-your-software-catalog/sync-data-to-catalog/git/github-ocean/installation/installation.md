@@ -72,7 +72,7 @@ For details about the available parameters for the installation, see the table b
 <Tabs groupId="deploy" queryString="deploy">
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="GithubOcean" />
+<OceanRealtimeInstallation integration="github-ocean" />
 
 <PortApiRegionTip/>
 
