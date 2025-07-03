@@ -32,15 +32,23 @@ Centralize all your signals in Port.
 - [Connect Tools](../../getting-started/connect-tools.md)
 
 ### 2. Map Alerts to Incidents
+
 Use blueprints and integrations to ensure every alert can trigger an incident.
+
 - [Prometheus Integration](../../build-your-software-catalog/custom-integration/webhook/examples/prometheus.md)
 - [Datadog Monitors](../../build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples.md)
 - [Dynatrace Problems](../../build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace)
 - [New Relic Issues](../../build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
 
 ### 3. Automate Incident Creation
+
 Set up automations to create incidents, notify responders, and start workflows.
+
+- [Start PagerDuty Incident from NewRelic Alert](../../guides/all/create-pagerduty-incident-from-newrelic-alert)
 - [Automate Incident Workflows](../../actions-and-automations/actions-and-automations.md)
+- [Trigger Your Incident.io incident](../../guides/all/create-incident-io-incident)
+- [Trigger a Firehydrant incident](../../guides/all/trigger-firehydrant-incident)
+
 
 :::tip Review Your Automation Rules
 Automate what matters, but avoid alert fatigue. Regularly review your automation rules to ensure only actionable signals trigger incidents.

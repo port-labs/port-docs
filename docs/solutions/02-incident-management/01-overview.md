@@ -22,6 +22,8 @@ Your palms sweat, you open your refurbished macbook pro and start logging into e
 
 Regardless of whether it's your first on-call or hundredth, the story above highlights the fact that our fragmented toolchains and complex application architecture takes lots of time away from incident triage, investigation and remediation, towards manual tasks around communication and investigation of the incident itself.
 
+![Incident Management Solution Architecture](../../../static/img/solutions/incident-management/incident_management_solution_architecture.png)
+
 ## Your Advantage in Port
 
 You're able to close more incidents with less time and stress, thanks to some key features of our portal:
@@ -30,3 +32,4 @@ You're able to close more incidents with less time and stress, thanks to some ke
 - time-saving automations and self-service actions (like automated updates of statuspages, requests for privileged access or incident lifecycle management)
 - streamlined approvals and dynamic permissions (optionally gating key decisions and requests, but allowing for escalation or approval by leadership)
 - no-code per-role and identity personalization of dashboards (allowing for unique experiences and collaboration between different devs and SREs across different teams and on-call shifts)
+
