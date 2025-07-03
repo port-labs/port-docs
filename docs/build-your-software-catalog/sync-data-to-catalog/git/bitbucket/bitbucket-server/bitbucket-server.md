@@ -20,7 +20,7 @@ import BitbucketRepositoryBlueprint from "/docs/build-your-software-catalog/sync
 import BitbucketWebhookConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_webhook_config.mdx";
 import BitbucketServerPythonScript from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_python_script.mdx";
 
-# Bitbucket (Self-Hosted)
+# Bitbucket (self-hosted)
 
 Port's Bitbucket (Self-Hosted) integration allows you to model Bitbucket Server / Bitbucket Data Center resources in your software catalog and ingest data into them.
 
