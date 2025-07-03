@@ -45,7 +45,7 @@ Don't wait for things to break. Use Port to automate health checks, enforce best
 - [Configure the AI Incident Manager Agent](../../guides/all/setup-incident-manager-ai-agent)
 - [Ensure Production Readiness](../../guides/all/ensure-production-readiness)
 - [Track SLOs and SLIs for Services](../../guides/all/track-slos-and-slis-for-services)
-- [See our automation and scorecard guides](../../promote-scorecards/promote-scorecards)
+- [See our automation and scorecard guides](../../promote-scorecards)
 
 :::caution Don't skip ownership
 Resilience depends on clear ownership. Make sure every service and component in your catalog has an owner—otherwise, incidents will fall through the cracks.
