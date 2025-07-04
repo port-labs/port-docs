@@ -552,6 +552,12 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
+          id: "api-reference/create-a-webhook",
+          label: "Create a webhook",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "api-reference/get-all-webhooks",
           label: "Get all webhooks",
           className: "api-method get",
