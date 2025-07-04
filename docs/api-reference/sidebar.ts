@@ -516,12 +516,6 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/create-an-integration",
-          label: "Create an integration",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/get-an-integration",
           label: "Get an integration",
           className: "api-method get",
