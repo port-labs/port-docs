@@ -500,8 +500,8 @@ To test your integration, you can create a test commit with a fake secret or use
             ],
             "partialFingerprints": {
               "commitSha": "df4331ee30d70b6c93d3a350067ba0560eef7e84",
-              "email": "isaac.p.coffie@gmail.com",
-              "author": "Pages Coffie",
+              "email": "developer@domain.com",
+              "author": "John Smith",
               "date": "2025-07-03T18:36:25Z",
               "commitMessage": "update secret for twitter"
             },
@@ -534,8 +534,8 @@ To test your integration, you can create a test commit with a fake secret or use
             ],
             "partialFingerprints": {
               "commitSha": "df4331ee30d70b6c93d3a350067ba0560eef7e84",
-              "email": "isaac.p.coffie@gmail.com",
-              "author": "Pages Coffie",
+              "email": "developer@domain.com",
+              "author": "John Smith",
               "date": "2025-07-03T18:36:25Z",
               "commitMessage": "update secret for twitter"
             },
@@ -568,8 +568,8 @@ To test your integration, you can create a test commit with a fake secret or use
             ],
             "partialFingerprints": {
               "commitSha": "df4331ee30d70b6c93d3a350067ba0560eef7e84",
-              "email": "isaac.p.coffie@gmail.com",
-              "author": "Pages Coffie",
+              "email": "developer@domain.com",
+              "author": "John Smith",
               "date": "2025-07-03T18:36:25Z",
               "commitMessage": "update secret for twitter"
             },
@@ -602,8 +602,8 @@ To test your integration, you can create a test commit with a fake secret or use
             ],
             "partialFingerprints": {
               "commitSha": "df4331ee30d70b6c93d3a350067ba0560eef7e84",
-              "email": "isaac.p.coffie@gmail.com",
-              "author": "Pages Coffie",
+              "email": "developer@domain.com",
+              "author": "John Smith",
               "date": "2025-07-03T18:36:25Z",
               "commitMessage": "update secret for twitter"
             },
