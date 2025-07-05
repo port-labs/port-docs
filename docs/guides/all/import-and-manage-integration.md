@@ -20,7 +20,7 @@ This guide demonstrates how to use the Import State feature of Terraform to mana
 ## Prerequisites
 
 - Complete the [onboarding process](/getting-started/overview).
-- Install the [integration](/integrations-index) whose mapping you want to manage. 
+- Install the [integration](/build-your-software-catalog/sync-data-to-catalog/#available-plug--play-integrations) whose mapping you want to manage. 
 
 :::info Installation Id
 Take note of the installation ID of your integration when installing it - you'll need this ID to import and manage the integration with Terraform.
