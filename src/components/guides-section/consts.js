@@ -1311,5 +1311,12 @@ export const availableGuides = [
         tags: ["Cloud access management", "Azure", "GitHub", "Dashboards"],
         logos: ["Azure", "GitHub"],
         link: "/guides/all/manage-and-visualize-azure-virtual-machines",
+    },
+    {
+        title: "Send leaked secrets from GitHub to Port",
+        description: "Create a webhook integration that sends leaked secrets from GitHub to Port",
+        tags: ["Security", "GitHub", "Webhook"],
+        logos: ["GitHub", "Webhook"],
+        link: "/guides/all/send-leaked-secrets-from-github-to-port",
     }
 ]
