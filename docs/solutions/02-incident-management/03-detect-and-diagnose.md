@@ -53,7 +53,7 @@ Teams that have rich context on incidents resolve them up to 40% faster. Make su
 
 Every alert in Port is automatically enriched with context of all the related data: who owns the service, what dependencies are involved, and recent changes. This means faster diagnosis and fewer escalations.
 
-[Learn how to build your software catalog](../../build-your-software-catalog/build-your-software-catalog)
+[Learn how to build your software catalog](../../getting-started/overview)
 
 ## Real-World Benefits
 
