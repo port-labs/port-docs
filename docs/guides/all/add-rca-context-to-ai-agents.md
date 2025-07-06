@@ -6,7 +6,7 @@ description: Learn how to enhance AI agents with custom context like Root Cause 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Add custom context to AI agents
+# Add RCA context to AI agents
 
 ## Overview
 

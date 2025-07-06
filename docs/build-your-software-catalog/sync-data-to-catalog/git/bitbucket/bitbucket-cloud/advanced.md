@@ -4,7 +4,7 @@ sidebar_position: 4
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_git_explanation_template.md'
+import DeleteDependents from '../../../../../generalTemplates/\_delete_dependents_git_explanation_template.md'
 
 # Advanced
 
