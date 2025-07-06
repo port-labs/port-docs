@@ -1,5 +1,5 @@
 ---
-title: "Detect, Diagnose and Trigger: Unify Alerts, Enrich with Context and Automate Creation"
+title: Detect, Diagnose and Trigger
 ---
 
 # Detect, Diagnose and Trigger: Unify Alerts, Enrich with Context and Automate Creation

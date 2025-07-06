@@ -1,5 +1,5 @@
 ---
-title: "Take Action: Operate and Resolve Incidents, Lower your MTTR"
+title: "Operate and Resolve Fast"
 ---
 
 # Operate and Resolve Incidents, Lower Your MTTR

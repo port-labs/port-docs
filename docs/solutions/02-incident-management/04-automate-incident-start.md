@@ -1,5 +1,5 @@
 ---
-title: "Automate Incident Start: Kick it Off Right"
+title: "Start the Incident"
 ---
 
 # Automate Incident Start: Kick it off Right

@@ -1,5 +1,5 @@
 ---
-title: "Learn from Every Incident: Build a Culture of Continuous Improvement"
+title: "Learn and Improve"
 ---
 
 # Learn from Every Incident: Build a Culture of Continuous Improvement

@@ -1,5 +1,5 @@
 ---
-title: "Resilience by Design: Prevent and Minimize Your Incidents"
+title: "Prevent or Minimize Your Incidents"
 ---
 
 # Resilience by Design: Prevent and Minimize Your Incidents
@@ -26,7 +26,7 @@ A focus on learning from the past and a culture of continuous improvement can sw
 
 A clear, up-to-date software catalog is the foundation of resilience. Know what you have, who owns it, and how everything connects.
 
-[Start building your software catalog](../../build-your-software-catalog/build-your-software-catalog.md)
+[Start building your software catalog](../../getting-started/overview)
 
 ### Automate: Proactive Checks and Self-Healing
 

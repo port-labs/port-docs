@@ -1,5 +1,5 @@
 ---
-title: "Keep Everyone in the Loop: Communicate Internally and Externally"
+title: "Keep Everyone in the Loop"
 ---
 
 # Keep Everyone in the Loop: Communicate Internally and Externally
