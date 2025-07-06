@@ -22,8 +22,10 @@ In high-pressure moments, clear and timely communication prevents confusion, bui
 ## Learn More & Get Practical
 
 - [Create Slack Channel for Incident](../../guides/all/create-slack-channel-for-reported-incident)
-- [Visualize and Manage Statuspage Incident](../../guides/all/visualize-and-manage-statuspage-incidents)
-- [Manage Statuspage Incident](../../guides/all/manage-statuspage-incident)
+- [Visualize and Manage PagerDuty Incidents](../../guides/all/manage-and-visualize-pagerduty-incidents/)
+- [Visualize and Manage Statuspage Incidents](../../guides/all/visualize-and-manage-statuspage-incidents)
+- [Visualize and Managem your ServiceNow Incidents](../../guides/all/visualize-and-manage-servicenow-incidents/)
+- [Setup Incident Manager AI Agent](../../guides/all/setup-incident-manager-ai-agent)
 
 :::tip Over-communicate in a Crisis
 When in doubt, share more. Frequent, clear updates—internally and externally—reduce stress and build trust during incidents.

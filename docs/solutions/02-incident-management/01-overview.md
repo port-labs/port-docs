@@ -27,9 +27,10 @@ Regardless of whether it's your first on-call or hundredth, the story above high
 ## Your Advantage in Port
 
 You're able to close more incidents with less time and stress, thanks to some key features of our portal:
-- prevent incidents with scorecards that improve your posture and production readiness
-- technological and business context in the software catalog (like data on past incidents, recent changes, people with subject matter expertise and active company-wide initiatives)
-- time-saving automations and self-service actions (like automated updates of statuspages, requests for privileged access or incident lifecycle management)
-- streamlined approvals and dynamic permissions (optionally gating key decisions and requests, but allowing for escalation or approval by leadership)
-- no-code per-role and identity personalization of dashboards (allowing for unique experiences and collaboration between different devs and SREs across different teams and on-call shifts)
+- Prevent incidents with scorecards that improve your posture and production readiness
+- Technological and business context in the software catalog (like data on past incidents, recent changes, people with subject matter expertise and active company-wide initiatives)
+- Time-saving automations and self-service actions (like automated updates of statuspages, requests for privileged access or incident lifecycle management)
+- Streamlined approvals and dynamic permissions (optionally gating key decisions and requests, but allowing for escalation or approval by leadership)
+- No-code per-role and identity personalization of dashboards (allowing for unique experiences and collaboration between different devs and SREs across different teams and on-call shifts)
+- Drive down MTTR, from time saving automation and self-service actions, but even moreso as a result of continuous improvement of standards and improvement of engineering practices
 

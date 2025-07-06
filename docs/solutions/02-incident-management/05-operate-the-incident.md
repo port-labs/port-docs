@@ -6,6 +6,8 @@ title: "Operate and Resolve Fast"
 
 When incidents strike, the best teams don't just react—they operate with speed, clarity, and confidence. At Port, we believe that incident response should empower engineers to take decisive action, automate away friction, and keep everyone in the loop—all from a single, unified portal.
 
+<img src="/img/solutions/incident-management/operate_incident.png" border="1px" width="100%" />
+
 ## Why Real-Time Action Matters
 
 Every minute counts during an incident. The longer it takes to acknowledge, escalate, or resolve, the greater the impact on your users and your business. Our most successful customers give their engineers the tools and context to:
@@ -31,25 +33,27 @@ Port brings all your incident actions together, so you can:
 
 ### 1. Acknowledge or Reassign Incidents
 Take ownership or hand off to the right responder, fast.
-- [Acknowledge Incident](../../guides/all/acknowledge-incident.md)
-- [Change PagerDuty Incident Owner](../../guides/all/change-pagerduty-incident-owner.md)
+- [Acknowledge Incident](../../guides/all/acknowledge-incident)
+- [Change PagerDuty Incident Owner](../../guides/all/change-pagerduty-incident-owner)
 
 ### 2. Escalate When Needed
 Loop in additional teams or leadership with a single action.
-- [Escalate an Incident](../../guides/all/escalate-an-incident.md)
+- [Escalate an Incident](../../guides/all/escalate-an-incident)
 
 ### 3. Grant Temporary Permissions
 Unblock engineers by granting just-in-time access to the systems and data they need to investigate the incident.
 - [IAM Permissions Guide](../../guides/all/iam-permissions-guide/)
 - [Automatically Approve Actions](../../guides/all/automatically-approve-action-using-automation/)
 
-### 4. Update Status Pages and Stakeholders
+### 4. Update Status Pages, Incident State and Stakeholders
 Keep everyone informed, internally and externally.
-- [Manage Statuspage Incident](../../guides/all/manage-statuspage-incident.md)
+- [Manage Statuspage Incident](../../guides/all/manage-statuspage-incident)
+- [Update ServiceNow Incident](../../guides/all/interact-with-servicenow/)
 
 ### 5. Resolve and Close Out
 Wrap up the incident, document what happened, and return to normal.
-- [Resolve Incident](../../guides/all/resolve-incident.md)
+- [Resolve Incident](../../guides/all/resolve-incident)
+- [Delete a ServiceNow Incident](../../guides/all/delete-servicenow-incident/)
 
 :::tip Act Fast, But With Context
 The best responders move quickly—but never blindly. Use Port's unified context to make informed decisions and avoid costly mistakes.
@@ -59,6 +63,3 @@ The best responders move quickly—but never blindly. Use Port's unified context
 - **Lower MTTR**: Incidents are resolved faster, with less stress
 - **Fewer handoffs**: Everything you need is in one place
 - **More control**: Engineers are empowered to act, not wait
-
-## Ready to Operate Like the Best?
-Explore our guides above, automate your workflows, and give your team the power to resolve incidents with confidence—every time.
