@@ -4,16 +4,17 @@ title: Set up backend
 ---
 
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
-import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import BackendDefintion from '/docs/actions-and-automations/templates/_define_the_backend_self_service_and_automations.md'
 
 # Set up backend
 
 The automation's backend is the logic that you want to execute when a trigger event occurs. It will run on all entities tied to the blueprint specified in the automation's definition, whenever the trigger event occurs.
 
-The automation's backend is defined under the `Backend` tab of the automation creation form in the UI.  
 Port uses the same backend types for automations and for [self-service actions](/actions-and-automations/create-self-service-experiences/).
+
+<BackendDefintion />
 
 ## Backend JSON structure
 
@@ -391,5 +392,3 @@ The other trigger events have the same structure, with the following differences
 
 </TabItem>
 </Tabs>
-
-<PayloadAdvancedFunctions />

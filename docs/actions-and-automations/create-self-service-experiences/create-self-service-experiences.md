@@ -26,8 +26,8 @@ Port's action model is designed to be flexible and can be used to cover a wide r
 
 ## 💡 Common self-service actions
 
-- **Scaffold** a new service.
-- **Create** a cloud resource.
+- [**Scaffold** a new service](https://docs.port.io/guides/all/scaffold-a-new-service/).
+- [**Create** a cloud resource](https://docs.port.io/guides/all/create-cloud-resource-using-iac).
 - **Provision** a temporary developer environment.
 - **Redeploy** an image tag.
 - **Rollback** a running service.

@@ -8,15 +8,16 @@ import TabItem from "@theme/TabItem"
 
 # Set up trigger
 
-After specifying your automation’s basic details including the `title`, `identifier`, `description`, `icon`, and `active` status, the next step is to choose a **trigger** for the automation.
+The next step is to choose a **trigger** for the automation.  
+Triggers are events in your software catalog that initiate an automation when they occur.  
 
-Automation triggers events in your software catalog that you want to act upon.  
-Port supports two types of triggers:
-- **Entity**: Triggered when an an entity of a specified blueprint is modified.
-- **Action run**: Triggered when an [action run](/actions-and-automations/reflect-action-progress/) of a specified action is modified.
-
-If you select an entity trigger, you will need to specify the relevant blueprint.  
+Port supports two types of **triggers**:
+- **Entity**: Triggered when an entity of a specified blueprint is modified.  
+If you select an entity trigger, you will need to specify the relevant blueprint. 
+- **Action run**: Triggered when an [action run](/actions-and-automations/reflect-action-progress/) of a specified action is modified.  
 If you select an action run trigger, you will need to specify the corresponding action.
+
+In the second tab of the creation form, the `Trigger` tab, choose the automation's `trigger`.
 
 ## Available triggers
 
@@ -30,7 +31,7 @@ The following trigger events are available for each type:
 | Entity creation | Triggered when any entity based on the selected blueprint is **created**. | `ENTITY_CREATED` |
 | Entity update | Triggered when any entity based on the selected blueprint is **updated**. | `ENTITY_UPDATED` |
 | Entity deletion | Triggered when any entity based on the selected blueprint is **deleted**. | `ENTITY_DELETED` |
-| Any entity change | Triggered when any entity based on the selected blueprint is **created**, **updated**, or **deleted**. | `ANY_ENTITY_CHANGE` |
+| Any entity change | Triggered when any entity based on the selected blueprint is **changed**: **created**, **updated**, or **deleted**. | `ANY_ENTITY_CHANGE` |
 | Timer expiration | Triggered when the selected timer property set on an entity based on the selected blueprint **expires**. | `TIMER_PROPERTY_EXPIRED` |
 
 </TabItem>
@@ -39,15 +40,15 @@ The following trigger events are available for each type:
 | Trigger | Description | JSON event type identifier |
 | --- | --- | --- |
 | Action run creation | Triggered when an action run is **created**. In other words, whenever the specified action is executed. | `RUN_CREATED` |
-| Action run update | Triggered when an action run is [patched](https://docs.port.io/api-reference/patch-an-action-run/) or [approved](https://docs.port.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).<br/>**Note** that sending logs to the action run will **not** count as a trigger. | `RUN_UPDATED` |
-| Any action run change | Triggered when an action run is **created**, **patched**, or **approved**. | `ANY_RUN_CHANGE` |
+| Action run update | Triggered when an action run is **updated**: [patched](https://docs.port.io/api-reference/patch-an-action-run/) or [approved](https://docs.port.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).<br/>**Note** that sending logs to the action run will **not** count as a trigger. | `RUN_UPDATED` |
+| Any action run change | Triggered when an action run is **changed**: **created**, **patched**, or **approved**. | `ANY_RUN_CHANGE` |
 
 </TabItem>
 </Tabs>
 
 ### Limitations
 
-- Regarding the `ANY_ENTITY_CHANGE` trigger:
+Regarding the `Any entity change` trigger:
   - When a [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) on the entity changes, the automation **will not** be triggered.  
   However, if the target of the relation changes from one entity to another, the automation **will** be triggered.
   
