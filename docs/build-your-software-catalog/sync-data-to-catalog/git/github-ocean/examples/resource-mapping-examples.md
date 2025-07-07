@@ -24,9 +24,15 @@ In the following example you will ingest your GitHub repositories, their README.
 
 :::info repository type
 
-# AI! rewrite this info tip, make it more comprehensive and more succint
-repositoryType is used to select what type of repository we should retrieve pull requests from. default is "all", which means all repositories provided access token can access, other options are "private", "public", and "forks",
-see [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) on Github
+The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
+
+Possible values:
+*   `all` (default): All repositories accessible to the provided token.
+*   `public`: Public repositories.
+*   `private`: Private repositories.
+*   `forks`: Only forked repositories.
+*   `sources`: Only non-forked repositories.
+*   `member`: Repositories where the user is a member.
 
 :::
 
