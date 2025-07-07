@@ -55,10 +55,26 @@ Some teams become really adept at closing our incidents quickly, and engineering
 
 Don't wait for things to break. Use Port to automate health checks, enforce best practices, and trigger remediation workflows before users are impacted.
 
-- [Configure the AI Incident Manager Agent](../../guides/all/setup-incident-manager-ai-agent)
+#### Scorecards
+
+Scorecards allow your central governance functions to define what good looks like for all non-functional aspects of software development. AppSec teams can create Application Security scorecards, SRE teams can define Reliability scorecards and your Platform teams can create scorecards around the needs of the development platform (Ownership, Tagging, Pipeline Health, Supply Chain Health).
+
+Our most successful customers define Production Readiness scorecards. Think about Production Readiness as almost a breadth-first approach to covering many needs across a variety of scorecards. Production Readiness for example:
+- may not include all layers of an Application Security scorecard, but it may include a check that security tools are configured and that there are no critical vulnerabilities
+- may not include all expectations of an Ownership scorecard, but may enforce an expectation that the service being deployed has an owning team configured
+- may not include all rules from a Reliability scorecard, but may enforce the presence of one availability SLO for the service being deployed
+
+Leverage a Production Readiness scorecard to make sure that your incident response teams have covered the baseline needs of what will be required to respond to an incident.
+
 - [Ensure Production Readiness](../../guides/all/ensure-production-readiness)
+- [See our scorecard guides](../../promote-scorecards)
+
+#### Beyond Scorecards
+
+Beyond Production readiness and other deeper, more specialized scorecards, consider tracking all SLOs and SLIs for your services in Port, for a better view of your Reliability posture. Configure the AI Incident Manager Agent to assist with exploring and learning from the incidents from the past.
+
+- [Configure the AI Incident Manager Agent](../../guides/all/setup-incident-manager-ai-agent)
 - [Track SLOs and SLIs for Services](../../guides/all/track-slos-and-slis-for-services)
-- [See our automation and scorecard guides](../../promote-scorecards)
 
 :::caution Don't skip ownership
 Resilience depends on clear ownership. Make sure every service and component in your catalog has an owner—otherwise, incidents will fall through the cracks.
