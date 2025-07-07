@@ -16,10 +16,10 @@ The workflow involves adding a resource block to a Terraform `main.tf` file and 
 
 ## Common use cases
 
-- Automate infrastructure provisioning by creating pull requests for Terraform changes
-- Enable developers to request infrastructure resources through self-service actions
-- Maintain proper GitOps workflows with automated branch creation and PR generation
-- Streamline the process of adding new cloud resources to your infrastructure codebase
+- Automate infrastructure provisioning by creating pull requests for Terraform changes.
+- Enable developers to request infrastructure resources through self-service actions.
+- Maintain proper GitOps workflows with automated branch creation and PR generation.
+- Streamline the process of adding new cloud resources to your infrastructure codebase.
 
 ## Prerequisites
 
@@ -184,7 +184,7 @@ We will now create a simple `.tf` file that will serve as a template for our new
 
 Now let's create the pipeline file:
 
-    1. [Enable webhook trigger for a pipeline](/actions-and-automations/setup-backend/jenkins-pipeline#enabling-webhook-trigger-for-a-pipeline)
+    1. [Enable webhook trigger for a pipeline](/actions-and-automations/setup-backend/jenkins-pipeline#enabling-webhook-trigger-for-a-pipeline).
 
     2. [Define variables for a pipeline](/actions-and-automations/setup-backend/jenkins-pipeline#defining-variables): Define the STORAGE_NAME, STORAGE_LOCATION, REPO_URL and PORT_RUN_ID variables.
 

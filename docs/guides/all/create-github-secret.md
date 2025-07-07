@@ -14,19 +14,19 @@ In this example we are using a pre-defined GitHub Action from GitHub Marketplace
 
 ## Common use cases
 
-- **CI/CD Management**: Store API keys, deployment tokens, and other credentials needed for automated workflows
-- **Environment Configuration**: Manage environment-specific secrets for different deployment stages
-- **Security Compliance**: Centralize secret creation with proper approval workflows and audit trails
-- **Developer Productivity**: Enable developers to create secrets without requiring direct repository access
+- **CI/CD Management**: Store API keys, deployment tokens, and other credentials needed for automated workflows.
+- **Environment Configuration**: Manage environment-specific secrets for different deployment stages.
+- **Security Compliance**: Centralize secret creation with proper approval workflows and audit trails.
+- **Developer Productivity**: Enable developers to create secrets without requiring direct repository access.
 
 ## Prerequisites
 
-- Complete the [onboarding process](/getting-started/overview)
-- [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed in your GitHub organization
+- Complete the [onboarding process](/getting-started/overview).
+- [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed in your GitHub organization.
 - A [Classic Personal Access Token](https://github.com/settings/tokens) with the following scopes:
-  - `repo` (Full control of private repositories)
-  - `admin:org` (Full control of orgs and teams, read and write org projects)
-- Port Client ID and Client Secret ([learn more](/build-your-software-catalog/custom-integration/api/#get-api-token))
+  - `repo` (Full control of private repositories).
+  - `admin:org` (Full control of orgs and teams, read and write org projects).
+- Port Client ID and Client Secret ([learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)).
 
 ## Set up data model
 
@@ -91,8 +91,8 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 
   ![Token Scopes](/img/self-service-actions/setup-backend/github-workflow/pat-scopes.png)
 
-- `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
+- `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
 
 ### Add GitHub workflow
 
@@ -251,24 +251,24 @@ Now you should see the `Create GitHub Secret` action in the self-service page. ð
 
 ## Let's test it!
 
-1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal.
 
-2. Click on the `Create GitHub Secret` action
+2. Click on the `Create GitHub Secret` action.
 
 3. Fill in the secret details:
-   - **Secret Key**: Enter a name for your secret (all uppercase, e.g., `MY_API_KEY`)
-   - **Secret Value**: Enter the secret value (this will be encrypted)
+   - **Secret Key**: Enter a name for your secret (all uppercase, e.g., `MY_API_KEY`).
+   - **Secret Value**: Enter the secret value (this will be encrypted).
 
-4. Click on `Execute`
+4. Click on `Execute`.
 
-5. Wait for the workflow to complete
+5. Wait for the workflow to complete.
 
 6. Verify the secret was created:
-   - Check your GitHub repository's secrets in **Settings > Secrets and variables > Actions**
-   - Verify the new entity appears in your Port catalog under the GitHub Secret blueprint
+   - Check your GitHub repository's secrets in **Settings > Secrets and variables > Actions**.
+   - Verify the new entity appears in your Port catalog under the GitHub Secret blueprint.
 
 :::tip Action permissions
 You may want to restrict this action to specific users or teams. To do this:
-- Edit the action by hovering over it and clicking on the `...` button, then selecting `Edit`
-- In the `Permissions` tab, select the users or teams who can execute the action
+- Edit the action by hovering over it and clicking on the `...` button, then selecting `Edit`.
+- In the `Permissions` tab, select the users or teams who can execute the action.
 :::
