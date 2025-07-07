@@ -34,7 +34,7 @@ Port connects to all your alert sources— APM, monitoring, cloud, and more. Wit
 - [Trigger a PagerDuty Incident](../../guides/all/create-pagerduty-incident)
 - [Trigger a Firehydrant Incident](../../guides/all/trigger-firehydrant-incident)
 - [Trigger an OpsGenie Incident](../../guides/all/create-an-opsgenie-incident)
-- [Trigger Your Incident.io incident](../../guides/all/create-incident-io-incident)
+- [Trigger an Incident.io incident](../../guides/all/create-incident-io-incident)
 - [Trigger a ServiceNow Incident](../../guides/all/trigger-servicenow-incident/)
 - [Trigger a Datadog Incident](../../guides/all/trigger-datadog-incident/)
 - [Trigger a StatusPage Incident](../../guides/all/manage-statuspage-incident/)
@@ -44,6 +44,8 @@ Port connects to all your alert sources— APM, monitoring, cloud, and more. Wit
 Set up automations to create incidents, notify responders, and start workflows.
 
 - [Trigger Pagerduty Incident from New Relic Alert](../../guides/all/create-pagerduty-incident-from-newrelic-alert/)
+- [Create JIRA issue from a Datadog Alert](../../guides/all/create-jira-issue-from-datadog-alert/)
+- [Create JIRA issue from a New Relic Alert](../../guides/all/create-jira-issue-from-newrelic/)
 
 Do you have bespoke logic or a more complex workflow around incident creation? Try this:
 

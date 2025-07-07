@@ -31,8 +31,6 @@ Connect all your monitoring and alerting tools to Port. Our integrations make it
 - [Datadog Monitors](../../build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples)
 - [Dynatrace Problems](../../build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace)
 - [New Relic Issues](../../build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic)
-- [Create JIRA issue from a Datadog Alert](../../guides/all/create-jira-issue-from-datadog-alert/)
-- [Create JIRA issue from a New Relic Alert](../../guides/all/create-jira-issue-from-newrelic/)
 
 <iframe
   width="560"

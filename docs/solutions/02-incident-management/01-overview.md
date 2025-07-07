@@ -32,5 +32,5 @@ You're able to close more incidents with less time and stress, thanks to some ke
 - Time-saving automations and self-service actions (like automated updates of statuspages, requests for privileged access or incident lifecycle management)
 - Streamlined approvals and dynamic permissions (optionally gating key decisions and requests, but allowing for escalation or approval by leadership)
 - No-code per-role and identity personalization of dashboards (allowing for unique experiences and collaboration between different devs and SREs across different teams and on-call shifts)
-- Drive down MTTR, from time saving automation and self-service actions, but even moreso as a result of continuous improvement of standards and improvement of engineering practices
+- Drive down MTTR, from time saving automation and self-service actions, but even more so as a result of continuous improvement of standards and improvement of engineering practices
 
