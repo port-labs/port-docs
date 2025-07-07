@@ -5767,6 +5767,7 @@ paths:
               type: string
           in: query
           name: include
+          explode: true
           required: false
         - schema:
             type: array
@@ -5774,6 +5775,7 @@ paths:
               type: string
           in: query
           name: exclude
+          explode: true
           required: false
         - schema:
             type: boolean
@@ -6481,6 +6483,7 @@ paths:
               type: string
           in: query
           name: include
+          explode: true
           required: false
         - schema:
             type: array
@@ -6488,6 +6491,7 @@ paths:
               type: string
           in: query
           name: exclude
+          explode: true
           required: false
         - schema:
             type: boolean
@@ -6823,6 +6827,7 @@ paths:
               type: string
           in: query
           name: include
+          explode: true
           required: false
         - schema:
             type: array
@@ -6830,6 +6835,7 @@ paths:
               type: string
           in: query
           name: exclude
+          explode: true
           required: false
         - schema:
             type: boolean
@@ -12120,6 +12126,7 @@ paths:
               type: string
           in: query
           name: action_identifier
+          explode: true
           required: false
         - schema:
             type: array
@@ -12127,6 +12134,7 @@ paths:
               type: string
           in: query
           name: blueprint_identifier
+          explode: true
           required: false
         - schema:
             type: array
@@ -12138,6 +12146,7 @@ paths:
                 - CREATE
           in: query
           name: operation
+          explode: true
           required: false
         - schema:
             type: boolean
@@ -34653,6 +34662,7 @@ paths:
               type: string
           in: query
           name: origin
+          explode: true
           required: false
         - schema:
             type: string
@@ -34680,6 +34690,7 @@ paths:
                   - action
           in: query
           name: resources
+          explode: true
           required: false
         - schema:
             type: array
@@ -34696,6 +34707,7 @@ paths:
                 - message
           in: query
           name: includes
+          explode: true
           required: false
         - schema:
             type: string
@@ -34765,6 +34777,7 @@ paths:
                 - users.status
           in: query
           name: fields
+          explode: true
           required: false
       security:
         - bearer:
@@ -34913,6 +34926,7 @@ paths:
                 - users.status
           in: query
           name: fields
+          explode: true
           required: false
         - schema:
             type: string
@@ -35166,6 +35180,7 @@ paths:
                 - roles.updatedAt
           in: query
           name: fields
+          explode: true
           required: false
       security:
         - bearer:
@@ -35653,6 +35668,7 @@ paths:
                 - enabled
           in: query
           name: fields
+          explode: true
           required: false
       security:
         - bearer:
@@ -37568,6 +37584,7 @@ paths:
                 - PENDING_CANCELLATION
           in: query
           name: status
+          explode: true
           required: false
         - schema:
             type: string
