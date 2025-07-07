@@ -528,6 +528,7 @@ However, we highly recommend you install the PagerDuty integration to have these
 5. Done! Wait for the service to be created in PagerDuty.
 
 ## Related guides
+
 - [Acknowledge Incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident).
 - [Change On-Call User](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user).
 - [Create PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-incident).
