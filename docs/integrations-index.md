@@ -10,7 +10,113 @@ sidebar_class_name: custom-sidebar-item sidebar-menu-integrations-index
 
 This page contains a list of Port's available integrations, organized by the platform/product.
 
+## AI Agents
+
+### GitHub Copilot
+- [Ingest Copilot usage metrics into your catalog](/build-your-software-catalog/sync-data-to-catalog/ai-agents/github-copilot/github-copilot.md)
+
+## ArgoCD
+
+- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
+- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/argocd/argocd.md#argocd-events)
+- [Rollback ArgoCD deployment](/guides/all/rollback-argocd-deployment)
+- [Self-service action to synchronize ArgoCD application](/guides/all/sync-argocd-app)
+
+## Checkmarx
+- [Ingest Checkmarx KICS scan into your catalog](/guides/all/ingest-checkmarx-kics-scan-into-your-catalog)
+
+## CircleCI
+
+- [Sync CircleCI workflows](/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/circleci-workflow.md)
+- [CircleCI actions](/actions-and-automations/setup-backend/webhook/circle-ci)
+
+<!-- ## Backstage
+
+- [Import catalog from Backstage](/guides-and-tutorials/import-backstage-resources.md) -->
+
+## Cloud providers
+
+### AWS
+
+- [AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
+- [Map AWS Resources to your integration](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
+- [Deploy AWS resources using AWS CloudFormation](/guides/all/deploy-cloudformation-template.md)
+- [Terraform manage S3 buckets lifecycle](/guides/all/s3-bucket.md)
+- [Terraform manage developer environment](/guides/all/create-dev-env.md)
+- [Connect ECR repository to Service](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples/connect-ecr-repo-to-service-using-tags.md)
+- [Script to ingest ECR Images and Repositories](https://github.com/port-labs/example-ecr-images)
+- [Self-service action to create EC2 instance](/guides/all/create-an-ec2-instance)
+- [Provision AWS cloud resource using Terraform Plan and Apply](/guides/all/terraform-plan-and-apply-aws-resource)
+- [Add tags to ECR repository](/guides/all/add-tags-to-ecr-repository)
+- [Generate ECR image with tags](/guides/all/push-image-to-ecr)
+
+### Azure
+
+- [Azure exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md)
+- [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/oidc/azure-ad.md)
+- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md)
+- [Add tags to Azure resources](/guides/all/tag-azure-resource)
+
+### GCP
+
+- [GCP integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/gcp.md)
+- [Sync Projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/mapping_extra_resources.md)
+
+#### Google cloud build
+
+- [Cloud build self-service action](/actions-and-automations/setup-backend/webhook/cloudbuild-pipeline/cloudbuild-pipeline.md)
+
+## CodeFresh
+
+- [CodeFresh workflow template](/build-your-software-catalog/custom-integration/api/ci-cd/codefresh-workflow-template/codefresh-workflow-template.md)
+
+## Codecov
+
+- [Codecov coverage script and webhook](/build-your-software-catalog/custom-integration/webhook/examples/codecov.md)
+
+## Cookiecutter
+
+- [Cookiecutter GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
+- [Cookiecutter GitHub scaffolder using Jenkins pipelines](/guides/all/scaffold-github-using-cookiecutter.md)
+- [Cookiecutter GitHub scaffolder using FastAPI backend](/actions-and-automations/setup-backend/webhook/examples/software-templates.md)
+- [Cookiecutter GitLab scaffolder using GitLab pipelines](/guides/all/scaffold-a-new-service.md?git-provider=gitlab)
+- [Cookiecutter Bitbucket scaffolder using Jenkins pipelines](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
+- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/guides/all/scaffold-repositories-using-cookiecutter.md)
+
+## Datadog
+
+- [Datadog integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog)
+- [Embed dashboards from Datadog](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
+- [Self-service action to trigger Datadog incident](/guides/all/trigger-datadog-incident)
+
+## Dynatrace
+
+- [Dynatrace integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace)
+
+## FireHydrant
+
+- [FireHydrant integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant.md)
+- [Self-service action to trigger a FireHydrant incident](https://docs.port.io/guides/all/create-firehydrant-incident)
+
 ## Git
+
+### Azure DevOps
+
+- [Sync Azure pipelines](/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/azure-pipelines.md)
+- [Azure pipelines self-service actions](/actions-and-automations/setup-backend/azure-pipeline/azure-pipeline.md)
+- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/guides/all/scaffold-repositories-using-cookiecutter.md)
+
+### Bitbucket
+
+- [Bitbucket App (Deprecated)](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/bitbucket-app.md)
+    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/gitops/gitops.md)
+    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/examples.md)
+- [Bitbucket Cloud](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/bitbucket-cloud.md)
+    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/gitops/gitops.md)
+    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/examples.md)
+- [Bitbucket scaffolder](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
+- [Bitbucket Server Integration](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/bitbucket-server.md)
+- [Bitbucket Server GitOps with webhooks](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/gitops.md)
 
 ### GitHub
 
@@ -45,52 +151,24 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitLab scaffolder](/guides/all/scaffold-a-new-service.md?git-provider=gitlab)
 - [Sync projects, file contents, merge-requests and more](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
 
-### Bitbucket
-
-- [Bitbucket App (Deprecated)](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/bitbucket-app.md)
-    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/gitops/gitops.md)
-    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/examples.md)
-- [Bitbucket Cloud](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/bitbucket-cloud.md)
-    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/gitops/gitops.md)
-    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/examples.md)
-
-- [Bitbucket scaffolder](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
-- [Bitbucket Server Integration](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/bitbucket-server.md)
-- [Bitbucket Server GitOps with webhooks](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/gitops.md)
-
-### Azure DevOps
-
-- [Sync Azure pipelines](/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/azure-pipelines.md)
-- [Azure pipelines self-service actions](/actions-and-automations/setup-backend/azure-pipeline/azure-pipeline.md)
-- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/guides/all/scaffold-repositories-using-cookiecutter.md)
-
 ### GitOps using Port CRDs
 
 - [Mapping resources using Port CRDs](/build-your-software-catalog/sync-data-to-catalog/git/gitops-using-port-crd.md)
 
-## Kubernetes
+## Grafana
 
-- [K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
-- [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/istio.md)
-- [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/knative.md)
-- [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/openshift.md)
-- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/trivy.md)
-- [Ingest Trivy vulnerabilities into your catalog using GitHub file ingesting feature](/guides/all/ingest-trivy-vulnerabilities-into-your-catalog)
-- [Map Kyverno](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/kyverno.md)
-- [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/fluxcd.md)
-- [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/custom-crds.md)
-- [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/port-crd.md)
-- [Create and managed Kubernetes cluster](/guides/all/manage-clusters)
-- [Change deployment replica count](/guides/all/change-replica-count)
+- [Embed dashboards from Grafana](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication.md#examples)
+- [Grafana webhook](/build-your-software-catalog/custom-integration/webhook/examples/grafana.md)
 
-## ArgoCD
-
-- [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
-- [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/argocd/argocd.md#argocd-events)
-- [Rollback ArgoCD deployment](/guides/all/rollback-argocd-deployment)
-- [Self-service action to synchronize ArgoCD application](/guides/all/sync-argocd-app)
+## Incident IO
+- [Sync Port Services to Incident IO](/guides/all/sync-service-entities-to-incident-io)
 
 ## Infrastructure as Code (IaC)
+
+### Pulumi
+
+- [Pulumi provider](/build-your-software-catalog/custom-integration/iac/pulumi/pulumi.md)
+- [Pulumi managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/pulumi-managed-blueprint.md)
 
 ### Terraform
 
@@ -107,82 +185,84 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Terraform cloud](/build-your-software-catalog/sync-data-to-catalog/terraform-cloud)
 - [Terraform cloud actions](/actions-and-automations/setup-backend/webhook/terraform-cloud)
 
-### Pulumi
+## Jenkins
 
-- [Pulumi provider](/build-your-software-catalog/custom-integration/iac/pulumi/pulumi.md)
-- [Pulumi managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/pulumi-managed-blueprint.md)
+- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins)
+- [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
+- [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
+- [GitHub scaffolder using Jenkins](/guides/all/scaffold-github-using-cookiecutter.md)
+- [Bitbucket scaffolder using Jenkins](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
+- [Create Github pull request](/guides/all/create-github-pull-request)
 
-## Cloud providers
+## JFrog
 
-### AWS
+- [Sync JFrog Artifacts, Docker tags, and build entities](/build-your-software-catalog/custom-integration/webhook/examples/jfrog)
+- [Script to ingest JFrog X-ray alerts, repositories and artifacts](https://github.com/port-labs/example-jfrog-xray-alerts)
+- [Script to ingest JFrog container image builds and repositories](https://github.com/port-labs/example-jfrog-container-images)
 
-- [AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
-- [Map AWS Resources to your integration](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
-- [Deploy AWS resources using AWS CloudFormation](/guides/all/deploy-cloudformation-template.md)
-- [Terraform manage S3 buckets lifecycle](/guides/all/s3-bucket.md)
-- [Terraform manage developer environment](/guides/all/create-dev-env.md)
-- [Connect ECR repository to Service](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples/connect-ecr-repo-to-service-using-tags.md)
-- [Script to ingest ECR Images and Repositories](https://github.com/port-labs/example-ecr-images)
-- [Self-service action to create EC2 instance](/guides/all/create-an-ec2-instance)
-- [Provision AWS cloud resource using Terraform Plan and Apply](/guides/all/terraform-plan-and-apply-aws-resource)
-- [Add tags to ECR repository](/guides/all/add-tags-to-ecr-repository)
-- [Generate ECR image with tags](/guides/all/push-image-to-ecr)
+## Jira
 
-### Azure
+- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/jira.md)
+- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook)
+- [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
+- [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
+- [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
+<!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
 
-- [Azure exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md)
-- [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/oidc/azure-ad.md)
-- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md)
-- [Add tags to Azure resources](/guides/all/tag-azure-resource)
+## Kafka
 
-### GCP
+- [Kafka integration](/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka.md)
+- [Kafka queue for self-service actions](/actions-and-automations/setup-backend/webhook/kafka/kafka.md)
 
-- [GCP integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/gcp.md)
-- [Sync Projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/mapping_extra_resources.md)
+## Kratix (by Syntasso)
+- [Combine Kratix and Port](https://www.syntasso.io/solutions/port-and-kratix)
+- [Combine Kratix and Port (demo video)](https://www.youtube.com/watch?v=7nKx4CnEvoY)
 
-#### Google cloud build
+## KubeCost
 
-- [Cloud build self-service action](/actions-and-automations/setup-backend/webhook/cloudbuild-pipeline/cloudbuild-pipeline.md)
+- [KubeCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/kubecost/kubecost.md)
 
-## Cookiecutter
+## Kubernetes
 
-- [Cookiecutter GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
-- [Cookiecutter GitHub scaffolder using Jenkins pipelines](/guides/all/scaffold-github-using-cookiecutter.md)
-- [Cookiecutter GitHub scaffolder using FastAPI backend](/actions-and-automations/setup-backend/webhook/examples/software-templates.md)
-- [Cookiecutter GitLab scaffolder using GitLab pipelines](/guides/all/scaffold-a-new-service.md?git-provider=gitlab)
-- [Cookiecutter Bitbucket scaffolder using Jenkins pipelines](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
-- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/guides/all/scaffold-repositories-using-cookiecutter.md)
+- [K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
+- [Map Istio](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/istio.md)
+- [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/knative.md)
+- [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/openshift.md)
+- [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/trivy.md)
+- [Ingest Trivy vulnerabilities into your catalog using GitHub file ingesting feature](/guides/all/ingest-trivy-vulnerabilities-into-your-catalog)
+- [Map Kyverno](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/kyverno.md)
+- [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/fluxcd.md)
+- [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/custom-crds.md)
+- [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/port-crd.md)
+- [Create and managed Kubernetes cluster](/guides/all/manage-clusters)
+- [Change deployment replica count](/guides/all/change-replica-count)
 
-## Slack
+## LeanIX
 
-- [Manual approval for self-service actions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#slack)
-- [Scorecard notifications](/promote-scorecards/manage-using-3rd-party-apps/slack)
-- [Broadcast message to API consumers](/guides/all/broadcast-api-consumers-message)
+- [Script that synchronizes data from LeanIX into Port](https://github.com/port-labs/LeanIX-Sync)
 
-## SonarQube / SonarCloud
+## Linear
 
-- [SonarQube/SonarCloud integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md)
-- [SonarCloud webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube#alternative-installation-via-webhook)
-- [Connect GitHub PR to SonarQube analysis](/guides/all/connect-github-pr-with-sonar-analysis)
-<!-- - [Connect SonarQube project to service](/guides/all/connect-sonar-project-to-service) -->
+- [Linear integration](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md)
+- [Linear webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md#alternative-installation-via-webhook)
 
-## Snyk
+## New Relic
 
-- [Snyk integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk)
+- [New Relic integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
+- [Embed dashboards from New Relic](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#new-relic-chart)
 
-## Wiz
+## Octopus Deploy
 
-- [Wiz integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz.md)
+- [Octopus Deploy integration](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
 
-## ServiceNow
+## OpenCost
 
-- [ServiceNow integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
-- [Self-service action to trigger ServiceNow incident](/guides/all/trigger-servicenow-incident)
+- [OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost.md)
 
-## Statuspage
+## OpsGenie
 
-- [Statuspage integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
-- [Self-service action to create and manage Statuspage Incidents](/guides/all/manage-statuspage-incident)
+- [OpsGenie integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie/opsgenie.md)
+- [Self-service action to trigger an OpsGenie incident](https://docs.port.io/guides/all/create-an-opsgenie-incident)
 
 ## PagerDuty
 
@@ -200,125 +280,42 @@ This page contains a list of Port's available integrations, organized by the pla
     - [Automation to handle PagerDuty incidents](https://docs.port.io/guides/all/create-slack-channel-for-reported-incident)
     - [Self-service action to resolve Pagerduty incidents](https://docs.port.io/guides-and-tutorials/resolve-pagerduty-incident) - including Slack channel notification and closing GitHub issue.
 
-## Jira
+## Prometheus
 
-- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/jira.md)
-- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook)
-- [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
-- [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
-- [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
-<!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
+- [Prometheus webhook](/build-your-software-catalog/custom-integration/webhook/examples/prometheus.md)
 
-## LeanIX
+## SBOM
+- [Ingest software bill of material (SBOM) into your catalog](/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog)
 
-- [Script that synchronizes data from LeanIX into Port](https://github.com/port-labs/LeanIX-Sync)
+## ServiceNow
 
-## Linear
-
-- [Linear integration](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md)
-- [Linear webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md#alternative-installation-via-webhook)
+- [ServiceNow integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
+- [Self-service action to trigger ServiceNow incident](/guides/all/trigger-servicenow-incident)
 
 ## Sentry
 
 - [Sentry integration and webhook](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry.md)
 
-## New Relic
+## Slack
 
-- [New Relic integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
-- [Embed dashboards from New Relic](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#new-relic-chart)
+- [Manual approval for self-service actions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#slack)
+- [Scorecard notifications](/promote-scorecards/manage-using-3rd-party-apps/slack)
+- [Broadcast message to API consumers](/guides/all/broadcast-api-consumers-message)
 
-## OpsGenie
+## Snyk
 
-- [OpsGenie integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie/opsgenie.md)
-- [Self-service action to trigger an OpsGenie incident](https://docs.port.io/guides/all/create-an-opsgenie-incident)
+- [Snyk integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk)
 
-## Incident IO
-- [Sync Port Services to Incident IO](/guides/all/sync-service-entities-to-incident-io)
+## SonarQube / SonarCloud
 
-## FireHydrant
-
-- [FireHydrant integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant.md)
-- [Self-service action to trigger a FireHydrant incident](https://docs.port.io/guides/all/create-firehydrant-incident)
-
-## KubeCost
-
-- [KubeCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/kubecost/kubecost.md)
-
-## OpenCost
-
-- [OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost.md)
-
-## Dynatrace
-
-- [Dynatrace integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace)
-
-## Datadog
-
-- [Datadog integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog)
-- [Embed dashboards from Datadog](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
-- [Self-service action to trigger Datadog incident](/guides/all/trigger-datadog-incident)
-
-## Prometheus
-
-- [Prometheus webhook](/build-your-software-catalog/custom-integration/webhook/examples/prometheus.md)
-
-## Kafka
-
-- [Kafka integration](/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka.md)
-- [Kafka queue for self-service actions](/actions-and-automations/setup-backend/webhook/kafka/kafka.md)
+- [SonarQube/SonarCloud integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md)
+- [SonarCloud webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube#alternative-installation-via-webhook)
+- [Connect GitHub PR to SonarQube analysis](/guides/all/connect-github-pr-with-sonar-analysis)
+<!-- - [Connect SonarQube project to service](/guides/all/connect-sonar-project-to-service) -->
 
 ## Split
 
 - [Split webhook](/build-your-software-catalog/custom-integration/webhook/examples/split.md)
-
-## Grafana
-
-- [Embed dashboards from Grafana](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication.md#examples)
-- [Grafana webhook](/build-your-software-catalog/custom-integration/webhook/examples/grafana.md)
-
-## StackHawk
-
-- [StackHawk webhook](/build-your-software-catalog/custom-integration/webhook/examples/stackhawk.md)
-
-## Jenkins
-
-- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins)
-- [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
-- [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
-- [GitHub scaffolder using Jenkins](/guides/all/scaffold-github-using-cookiecutter.md)
-- [Bitbucket scaffolder using Jenkins](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
-- [Create Github pull request](/guides/all/create-github-pull-request)
-
-## Octopus Deploy
-
-- [Octopus Deploy integration](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
-
-## CodeFresh
-
-- [CodeFresh workflow template](/build-your-software-catalog/custom-integration/api/ci-cd/codefresh-workflow-template/codefresh-workflow-template.md)
-
-## CircleCI
-
-- [Sync CircleCI workflows](/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/circleci-workflow.md)
-- [CircleCI actions](/actions-and-automations/setup-backend/webhook/circle-ci)
-
-<!-- ## Backstage
-
-- [Import catalog from Backstage](/guides-and-tutorials/import-backstage-resources.md) -->
-
-## JFrog
-
-- [Sync JFrog Artifacts, Docker tags, and build entities](/build-your-software-catalog/custom-integration/webhook/examples/jfrog)
-- [Script to ingest JFrog X-ray alerts, repositories and artifacts](https://github.com/port-labs/example-jfrog-xray-alerts)
-- [Script to ingest JFrog container image builds and repositories](https://github.com/port-labs/example-jfrog-container-images)
-
-## Codecov
-
-- [Codecov coverage script and webhook](/build-your-software-catalog/custom-integration/webhook/examples/codecov.md)
-
-## Webhook
-
-- [Create generic webhook for 3rd-party](/build-your-software-catalog/custom-integration/webhook/webhook.md)
 
 ## SSO
 
@@ -329,20 +326,22 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Azure Active Directory (AD) SSO OIDC](/sso-rbac/sso-providers/oidc/azure-ad.md)
 - [Azure Active Directory (AD) SSO SAML](/sso-rbac/sso-providers/saml/azure-ad.md)
 
-## Checkmarx
-- [Ingest Checkmarx KICS scan into your catalog](/guides/all/ingest-checkmarx-kics-scan-into-your-catalog)
+## StackHawk
 
-## SBOM
-- [Ingest software bill of material (SBOM) into your catalog](/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog)
+- [StackHawk webhook](/build-your-software-catalog/custom-integration/webhook/examples/stackhawk.md)
+
+## Statuspage
+
+- [Statuspage integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
+- [Self-service action to create and manage Statuspage Incidents](/guides/all/manage-statuspage-incident)
 
 ## Swagger
 - [Ingest Swagger paths into your catalog](/guides/all/ingest-swagger-paths-into-your-catalog)
 
-## Kratix (by Syntasso)
-- [Combine Kratix and Port](https://www.syntasso.io/solutions/port-and-kratix)
-- [Combine Kratix and Port (demo video)](https://www.youtube.com/watch?v=7nKx4CnEvoY)
+## Webhook
 
-## AI Agents
+- [Create generic webhook for 3rd-party](/build-your-software-catalog/custom-integration/webhook/webhook.md)
 
-### GitHub Copilot
-- [Ingest Copilot usage metrics into your catalog](/build-your-software-catalog/sync-data-to-catalog/ai-agents/github-copilot/github-copilot.md)
+## Wiz
+
+- [Wiz integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wiz.md)
