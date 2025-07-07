@@ -35,15 +35,20 @@ In organizations that have a self-hosted GitHub installation there is no access 
 
 4. Insert the following properties:
 
-- **GitHub App name:** port.io
+- **GitHub App name:** Choose any name e.g. port.io
 - **Homepage URL:** https://getport.io
+- **Callback URL:** Leave this empty
+- **Setup URL:** Leave this empty
+- Uncheck **Active** under Webhooks, we'll create a webhook from the integration. 
 - **Repository Permissions:**
   - Actions: Read and Write (for executing self-service action using GitHub workflow)
   - Checks: Read and Write (for validating `Port.yml`)
   - Contents: Readonly (for reading port configuration files and repository files)
   - Metadata: Readonly
   - Pull Request: Read and Write
+  - Administration: Readonly (for syncing github teams)
 - **Organization Permissions:**
+  - Members: Readonly (for syncing github teams)
   - Webhooks: Read and Write (to allow the integration create webhooks)
 - **Repository Events** (required to receive webhook changes from GitHub):
   - Pull Request
@@ -67,7 +72,6 @@ You will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 
 :::
 
-In order to make use of [Self-Service Actions using GitHub Workflow](../../../../../actions-and-automations/setup-backend/github-workflow/github-workflow.md), please contact us at support@getport.io.
 
 ## Installing Port's GitHub integration
 
@@ -77,7 +81,7 @@ After you have the app registered in your organization, you can install it and s
 
 ![Org view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizaionView.png)
 
-2. Inside the settings view, click on Developer Settings -> and then select GitHub Integrations:
+2. Inside the settings view, click on Developer Settings -> and then select GitHub Apps:
 
 ![Settings view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizationSettings.png)
 
@@ -108,9 +112,9 @@ Run the following command to start the app:
 ```bash showLineNumbers
 docker run \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<Github APP ID> \
-  -e OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET="test" \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GH BASE URL ie github.compay.com> \
-  -e OCEAN__BASE_URL=https://test.com \
+  -e OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET=<test webhook secret> \
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GH BASE URL ie https://api.github.compay.com> \
+  -e OCEAN__BASE_URL=<https.example.com> \
   -e OCEAN__PORT__BASE_URL=https://api.getport.io \
   -e OCEAN__PORT__CLIENT_ID=<PORT CLIENT ID> \
   -e OCEAN__PORT__CLIENT_SECRET=<PORT CLIENT SECRET> \
@@ -127,7 +131,7 @@ docker run \
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                                   |
 | `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | Will be used to create webhook                                                                 |
 | `OCEAN__INTEGRATION__IDENTIFIER`                     | Your organization's self-hosted GitHub hostname                                                |
-| `OCEAN__BASE_URL`                                    | Integration base url, will be used to register webhook.                                        |
+| `OCEAN__BASE_URL`                                    | Integration instance base url, will be used to register webhook.                                        |
 | `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                            |
 | `OCEAN__PORT__CLIENT_ID`                             | Port client id for interacting with the API                                                    |
 | `OCEAN__PORT__CLIENT_SECRET`                         | Port client secret for interacting with the API                                                |
