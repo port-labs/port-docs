@@ -21,6 +21,7 @@ resources:
   - kind: pull-request
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      state: "open"
     port:
       entity:
         mappings:

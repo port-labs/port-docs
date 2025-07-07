@@ -16,7 +16,7 @@ import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
 ## Map repositories and pull requests
 
-In the following example you will ingest your GitHub repositories, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+In the following example you will ingest your GitHub repositories, their README.md file contents and open pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
