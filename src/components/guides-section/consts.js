@@ -1311,5 +1311,19 @@ export const availableGuides = [
         tags: ["Cloud access management", "Azure", "GitHub", "Dashboards"],
         logos: ["Azure", "GitHub"],
         link: "/guides/all/manage-and-visualize-azure-virtual-machines",
+    },
+    {
+        title: "Manage your AWS Autoscaling Groups",
+        description: "Create a comprehensive autoscaling group management system to scale up and down",
+        tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-aws-autoscaling-groups",
+    },
+    {
+        title: "Send leaked secrets from GitHub to Port",
+        description: "Create a webhook integration that sends leaked secrets from GitHub to Port",
+        tags: ["Security", "GitHub", "Webhook"],
+        logos: ["GitHub", "Webhook"],
+        link: "/guides/all/send-leaked-secrets-from-github-to-port",
     }
 ]

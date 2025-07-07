@@ -13,7 +13,7 @@ resources:
     selector:
       query: "true"
       files:
-        - path: "**/port.yml"
+        - path: "port.yml"
     port:
       entity:
         mappings:
@@ -37,7 +37,7 @@ resources:
     selector:
       query: "true"
       files:
-        - path: "**/port.yml"
+        - path: "port.yml"
     port:
       itemsToParse: .file.content.parsed
       entity:
