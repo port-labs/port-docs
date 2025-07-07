@@ -36,7 +36,7 @@ In organizations that have a self-hosted GitHub installation there is no access 
 4. Insert the following properties:
 
 - **GitHub App name:** Choose any name e.g. port.io
-- **Homepage URL:** https://getport.io
+- **Homepage URL:** https://port.io
 - **Callback URL:** Leave this empty
 - **Setup URL:** Leave this empty
 - Uncheck **Active** under Webhooks, we'll create a webhook from the integration. 
@@ -50,9 +50,6 @@ In organizations that have a self-hosted GitHub installation there is no access 
 - **Organization Permissions:**
   - Members: Readonly (for syncing github teams)
   - Webhooks: Read and Write (to allow the integration create webhooks)
-- **Repository Events** (required to receive webhook changes from GitHub):
-  - Pull Request
-  - Push
 
 Then select "Create GitHub App"
 
@@ -113,7 +110,7 @@ Run the following command to start the app:
 docker run \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<Github APP ID> \
   -e OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET=<test webhook secret> \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GH BASE URL ie https://api.github.compay.com> \
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GH BASE URL ie https://api.github.com> \
   -e OCEAN__BASE_URL=<https.example.com> \
   -e OCEAN__PORT__BASE_URL=https://api.getport.io \
   -e OCEAN__PORT__CLIENT_ID=<PORT CLIENT ID> \
