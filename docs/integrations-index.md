@@ -100,6 +100,24 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Git
 
+### Azure DevOps
+
+- [Sync Azure pipelines](/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/azure-pipelines.md)
+- [Azure pipelines self-service actions](/actions-and-automations/setup-backend/azure-pipeline/azure-pipeline.md)
+- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/guides/all/scaffold-repositories-using-cookiecutter.md)
+
+### Bitbucket
+
+- [Bitbucket App (Deprecated)](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/bitbucket-app.md)
+    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/gitops/gitops.md)
+    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/examples.md)
+- [Bitbucket Cloud](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/bitbucket-cloud.md)
+    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/gitops/gitops.md)
+    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/examples.md)
+- [Bitbucket scaffolder](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
+- [Bitbucket Server Integration](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/bitbucket-server.md)
+- [Bitbucket Server GitOps with webhooks](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/gitops.md)
+
 ### GitHub
 
 - [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md)
@@ -133,25 +151,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitLab scaffolder](/guides/all/scaffold-a-new-service.md?git-provider=gitlab)
 - [Sync projects, file contents, merge-requests and more](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
 
-### Bitbucket
-
-- [Bitbucket App (Deprecated)](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/bitbucket-app.md)
-    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/gitops/gitops.md)
-    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/examples.md)
-- [Bitbucket Cloud](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/bitbucket-cloud.md)
-    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/gitops/gitops.md)
-    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/examples.md)
-
-- [Bitbucket scaffolder](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
-- [Bitbucket Server Integration](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/bitbucket-server.md)
-- [Bitbucket Server GitOps with webhooks](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/gitops.md)
-
-### Azure DevOps
-
-- [Sync Azure pipelines](/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/azure-pipelines.md)
-- [Azure pipelines self-service actions](/actions-and-automations/setup-backend/azure-pipeline/azure-pipeline.md)
-- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/guides/all/scaffold-repositories-using-cookiecutter.md)
-
 ### GitOps using Port CRDs
 
 - [Mapping resources using Port CRDs](/build-your-software-catalog/sync-data-to-catalog/git/gitops-using-port-crd.md)
@@ -165,6 +164,11 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Sync Port Services to Incident IO](/guides/all/sync-service-entities-to-incident-io)
 
 ## Infrastructure as Code (IaC)
+
+### Pulumi
+
+- [Pulumi provider](/build-your-software-catalog/custom-integration/iac/pulumi/pulumi.md)
+- [Pulumi managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/pulumi-managed-blueprint.md)
 
 ### Terraform
 
@@ -180,11 +184,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Terraform cloud](/build-your-software-catalog/sync-data-to-catalog/terraform-cloud)
 - [Terraform cloud actions](/actions-and-automations/setup-backend/webhook/terraform-cloud)
-
-### Pulumi
-
-- [Pulumi provider](/build-your-software-catalog/custom-integration/iac/pulumi/pulumi.md)
-- [Pulumi managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/pulumi-managed-blueprint.md)
 
 ## Jenkins
 
