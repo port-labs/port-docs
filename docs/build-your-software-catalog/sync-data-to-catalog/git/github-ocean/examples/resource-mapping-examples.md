@@ -13,16 +13,6 @@ import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
 # Resource mapping examples
 
-:::warning General permissions limitation with gitHub cloud app
-When using the GitHub Cloud app with Port, certain fields and data points may not be accessible due to the lack of `write` API permissions. These limitations affect advanced repository settings, security features (such as code scanning and secret scanning status), and other GitHub objects that require elevated permissions to retrieve data.
-
-If you need to ingest these fields, consider one of the following approaches:
-- Use our [self-hosted](/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation) GitHub app which gives you options to enable appropriate `write` permissions.
-
-- Implement a GitHub workflow to manually gather and send the required data to Port.
-
-Refer to specific sections below where these limitations might apply.
-:::
 
 ## Map repositories and pull requests
 
@@ -32,11 +22,18 @@ In the following example you will ingest your GitHub repositories, their README.
 
 <PRBlueprint/>
 
+:::info repository type
+
+# AI! rewrite this info tip, make it more comprehensive and more succint
+repositoryType is used to select what type of repository we should retrieve pull requests from. default is "all", which means all repositories provided access token can access, other options are "private", "public", and "forks",
+see [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) on Github
+
+:::
+
 <PortAppConfig/>
 
 :::tip learn more
 
-- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
 - Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
 - Click [Here](https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request) for the GitHub pull request object structure.
