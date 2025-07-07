@@ -66,13 +66,13 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Cloud build self-service action](/actions-and-automations/setup-backend/webhook/cloudbuild-pipeline/cloudbuild-pipeline.md)
 
-## Codecov
-
-- [Codecov coverage script and webhook](/build-your-software-catalog/custom-integration/webhook/examples/codecov.md)
-
 ## CodeFresh
 
 - [CodeFresh workflow template](/build-your-software-catalog/custom-integration/api/ci-cd/codefresh-workflow-template/codefresh-workflow-template.md)
+
+## Codecov
+
+- [Codecov coverage script and webhook](/build-your-software-catalog/custom-integration/webhook/examples/codecov.md)
 
 ## Cookiecutter
 
