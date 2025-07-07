@@ -26,13 +26,16 @@ In the following example you will ingest your GitHub repositories, their README.
 
 The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
 
-Possible values:
+<details>
+<summary>Possible values:</summary>
+
 *   `all` (default): All repositories accessible to the provided token.
 *   `public`: Public repositories.
 *   `private`: Private repositories.
 *   `forks`: Only forked repositories.
 *   `sources`: Only non-forked repositories.
 *   `member`: Repositories where the user is a member.
+</details>
 
 :::
 

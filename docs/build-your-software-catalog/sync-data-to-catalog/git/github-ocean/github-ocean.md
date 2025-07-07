@@ -4,7 +4,7 @@ import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
 # GitHub Self-Hosted (Beta)
 
-You can use Port's GitHub integration to ingest and model your GitHub resources in Port's software catalog. 🐙
+Port's GitHub integration allows you to model GitHub resources in your software catalog and ingest data into them.
 
 
 ## Overview

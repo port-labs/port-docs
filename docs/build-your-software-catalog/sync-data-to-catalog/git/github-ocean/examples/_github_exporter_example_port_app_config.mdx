@@ -3,6 +3,7 @@
 <summary> Port port-app-config.yml </summary>
 
 ```yaml showLineNumbers
+repositoryType: 'all'
 resources:
   - kind: repository
     selector:
@@ -30,7 +31,7 @@ resources:
             creator: ".user.login"
             assignees: "[.assignees[].login]"
             reviewers: "[.requested_reviewers[].login]"
-            status: ".status" # merged, closed, opened
+            status: ".state" # merged, closed, opened
             closedAt: ".closed_at"
             updatedAt: ".updated_at"
             mergedAt: ".merged_at"
