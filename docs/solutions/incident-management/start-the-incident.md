@@ -23,7 +23,7 @@ Manual incident is slow, error-prone, and easy to forget—especially when alert
 
 Port connects to all your alert sources— APM, monitoring, cloud, and more. With blueprints, self-service actions and automations, you can:
 
-- [Ingest and unify alerts](./detect-and-diagnose#unify-alerts) from any tool (Prometheus, Datadog, Dynatrace, etc.) 
+- [Ingest and unify alerts](./detect-and-diagnose-incidents#unify-alerts) from any tool (Prometheus, Datadog, Dynatrace, etc.) 
 - Either:
     - Automatically trigger incident creation based on alert conditions
     - Provide developers with self-service action for very fast and simple incident creation
