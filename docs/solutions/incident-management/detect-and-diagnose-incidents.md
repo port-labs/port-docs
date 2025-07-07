@@ -1,18 +1,19 @@
 ---
-title: Detect and Diagnose 
+title: Detect & diagnose incidents
+sidebar_position: 3
 ---
 
-# Detect and Diagnose: Unify Alerts and Enrich Signals with Context
+# Detect & diagnose incidents
 
 Modern incident management is broken. Too many tools, too many silos, and not enough context. At Port, we believe incident management should be unified, contextual, and automated—so teams can focus on resolution, not wrangling alerts.
 
 <img src="/img/solutions/incident-management/unify_alerts.png" border="1px" width="100%" />
 
-## Why Incident Management Needs to Change
+## Why incident management needs to change
 
 Traditional incident management is reactive and fragmented. Alerts come from everywhere, context is missing, and manual processes slow everything down. This leads to longer outages, frustrated teams, and unhappy users.
 
-## The Port Approach: Unify, Enrich, Automate
+## The Port approach: unify, enrich, automate
 
 There's a better way:
 
@@ -20,9 +21,9 @@ There's a better way:
 2. **Enrich with Context**: Automatically add relevant metadata, ownership, and dependencies to every incident.
 3. **Automate Creation**: Trigger incident workflows, notifications, and remediation steps—no manual handoffs.
 
-## How to Put This Into Practice
+## How to put this into practice
 
-### Unify Alerts
+### Unify alerts
 
 Connect all your monitoring and alerting tools to Port. Our integrations make it easy to centralize alerts from sources like Datadog, PagerDuty, and more.
 
@@ -43,7 +44,7 @@ Connect all your monitoring and alerting tools to Port. Our integrations make it
 ></iframe>
 
 
-### Enrich with Context
+### Enrich with context
 
 :::tip Context is everything
 Teams that have rich context on incidents resolve them up to 40% faster. Make sure your catalog is up to date!
@@ -53,7 +54,7 @@ Every alert in Port is automatically enriched with context of all the related da
 
 [Learn how to build your software catalog](../../getting-started/overview)
 
-## Real-World Benefits
+## Real-world benefits
 
 - **Fewer False Positives**: Fewer False Positives - meaning incident teams aren't exhausted from alerts "crying wolf".
 - **Better Incident Assignment**: The right people are looped in for an incident, based on context, not just a hardcoded automation rule in your APM tooling.

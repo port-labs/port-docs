@@ -117,7 +117,7 @@ const config = {
             activeBasePath: "guides",
           },
           {
-            to: "/solutions/about",
+            to: "/solutions/overview",
             label: "Solutions",
             position: "left",
             className: "header-solutions-link",

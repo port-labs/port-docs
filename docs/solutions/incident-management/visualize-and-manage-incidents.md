@@ -1,14 +1,15 @@
 ---
-title: "Visualize and Manage Incidents"
+title: "Visualize & manage incidents"
+sidebar_position: 7
 ---
 
-# Visualize and Manage Incidents
+# Visualize & manage incidents
 
 Incidents don't occur in isolation. It's vitally important that your incident management teams, leadership teams and others across the business can understand at a glance, what's happening now and how our teams are trending with respect to incidents from the past.
 
 <img src="/img/guides/pagerDutyDashboard1.png" border="1px" width="100%" />
 
-## Key Guides
+## Key guides
 
 Follow these guides to create your incident management workbench.
 

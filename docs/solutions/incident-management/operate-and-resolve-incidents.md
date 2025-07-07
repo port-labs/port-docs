@@ -1,14 +1,15 @@
 ---
-title: "Operate and Resolve Fast"
+title: "Operate & resolve incidents"
+sidebar_position: 5
 ---
 
-# Operate and Resolve Incidents, Lower Your MTTR
+# Operate & resolve incidents
 
 When incidents strike, the best teams don't just react—they operate with speed, clarity, and confidence. At Port, we believe that incident response should empower engineers to take decisive action, automate away friction, and keep everyone in the loop—all from a single, unified portal.
 
 <img src="/img/solutions/incident-management/operate_incident.png" border="1px" width="100%" />
 
-## Why Real-Time Action Matters
+## Why real-time action matters
 
 Every minute counts during an incident. The longer it takes to acknowledge, escalate, or resolve, the greater the impact on your users and your business. Our most successful customers give their engineers the tools and context to:
 
@@ -18,7 +19,7 @@ Every minute counts during an incident. The longer it takes to acknowledge, esca
 - **Update stakeholders and status pages** with a click
 - **Resolve and close out** incidents, all in one place
 
-## How Port Enables Best-in-Class Incident Operations
+## How Port enables best-in-class incident operations
 
 Port brings all your incident actions together, so you can:
 
@@ -26,7 +27,7 @@ Port brings all your incident actions together, so you can:
 - Take action directly from the incident view, with no tab-switching or manual handoffs
 - Automate repetitive tasks and approvals, so engineers can focus on resolution
 
-## Step-by-Step: What Great Teams Do in Port
+## Step-by-step: what great teams do in Port
 
 ### 1. Manage the full incident lifecycle centrally
 
@@ -36,24 +37,25 @@ Take ownership or hand off to the right responder, fast.
 - [Change PagerDuty Incident Owner](../../guides/all/change-pagerduty-incident-owner)
 
 Loop in additional teams or leadership with a single action.
-- [Escalate an Incident](../../guides/all/escalate-an-incident)
+- [Escalate an Incident](/guides/all/escalate-an-incident)
 
 Wrap up the incident, document what happened, and return to normal.
-- [Resolve Incident](../../guides/all/resolve-incident)
-- [Delete a ServiceNow Incident](../../guides/all/delete-servicenow-incident/)
+- [Resolve Incident](/guides/all/resolve-incident)
+- [Delete a ServiceNow Incident](/guides/all/delete-servicenow-incident/)
 
-### 2. Grant Temporary Permissions
+### 2. Grant temporary permissions
 
 Unblock engineers by granting just-in-time access to the systems and data they need to investigate the incident.
-- [IAM Permissions Guide](../../guides/all/iam-permissions-guide/)
-- [Automatically Approve Actions](../../guides/all/automatically-approve-action-using-automation/)
+- [IAM Permissions Guide](/guides/all/iam-permissions-guide/)
+- [Automatically Approve Actions](/guides/all/automatically-approve-action-using-automation/)
 
 
 :::tip Act Fast, But With Context
 The best responders move quickly—but never blindly. Use Port's strong RBAC, self-service and dynamic permissions to enable your incident to gain appropriate access and take actions quickly.
 :::
 
-## Real-World Benefits
+## Real-world benefits
+
 - **Lower MTTR**: Incidents are resolved faster, with less stress
 - **Fewer handoffs**: Everything you need is in one place
 - **More control**: Engineers are empowered to act, not wait

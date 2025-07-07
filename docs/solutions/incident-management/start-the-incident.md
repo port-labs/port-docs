@@ -1,8 +1,9 @@
 ---
-title: "Start the Incident"
+title: "Start the incident"
+sidebar_position: 4
 ---
 
-# Simplify Incident Start: Kick it off Right
+# Start the incident
 
 When incidents happen, speed and clarity matter. But when your alerts are scattered across tools and workflows for managing an incident's lifecycle are fragmented, even simple incidents can spiral into slow, chaotic responses.
 
@@ -10,7 +11,7 @@ This solution page, will show you how to standardize and even automate the respo
 
 <img src="/img/solutions/incident-management/trigger_incident.png" border="1px" width="60%" />
 
-## Why Streamline Incident Start?
+## Why streamline incident start?
 
 Manual incident is slow, error-prone, and easy to forget—especially when alerts are flying in from every direction. Whether you create a self-service action for teams to use, or leverage automation, standardization ensures:
 
@@ -18,7 +19,7 @@ Manual incident is slow, error-prone, and easy to forget—especially when alert
 - **Faster response**: Incidents are created instantly, not after minutes of confusion
 - **Less manual work**: Engineers focus on resolution, not paperwork in filling out fields that can easily be mapped to data that already exists in your software catalog
 
-## How Port Enables Better Incident Creation
+## How Port enables better incident creation
 
 Port connects to all your alert sources— APM, monitoring, cloud, and more. With blueprints, self-service actions and automations, you can:
 
@@ -29,7 +30,7 @@ Port connects to all your alert sources— APM, monitoring, cloud, and more. Wit
 - Enrich every incident with context: affected services, owners, recent changes, and more
 - Kick off workflows, notifications, and even remediation steps off the back of incident creation, regardless of how is was created
 
-## Enable Manual Incident Creation
+## Enable manual incident creation
 
 - [Trigger a PagerDuty Incident](../../guides/all/create-pagerduty-incident)
 - [Trigger a Firehydrant Incident](../../guides/all/trigger-firehydrant-incident)
@@ -39,7 +40,7 @@ Port connects to all your alert sources— APM, monitoring, cloud, and more. Wit
 - [Trigger a Datadog Incident](../../guides/all/trigger-datadog-incident/)
 - [Trigger a StatusPage Incident](../../guides/all/manage-statuspage-incident/)
 
-## Automated Incident Creation
+## Enable automated incident creation
 
 Set up automations to create incidents, notify responders, and start workflows.
 
@@ -55,7 +56,8 @@ Do you have bespoke logic or a more complex workflow around incident creation? T
 Automate what matters, but avoid alert fatigue. Regularly review your automation rules to ensure only actionable signals trigger incidents.
 :::
 
-## Real-World Benefits
+## Real-world benefits
+
 - **Faster response**: Incidents are created the moment a true signal is identified
 - **Fewer missed incidents**: No more relying on manual triage
 - **More focus on resolution**: Engineers spend time fixing, not creating tickets in disparate systems
