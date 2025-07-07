@@ -6,8 +6,7 @@ title: "Keep Everyone in the Loop"
 
 Great incident response is as much about communication as it is about investigation or remediation. The best teams keep everyone aligned-engineers, stakeholders, and customers—by making communication a first-class part of their incident management process.
 
-<img src="/img/guides/statuspageIncidentDash1.png" border="1px" width="100%" />
-<img src="/img/guides/statuspageIncidentDash2.png" border="1px" width="100%" />
+<img src="/img/guides/slackIncidentGuide/updatedIncidentEntity.png" border="1px" width="100%" />
 
 ## Why Communication Matters
 
@@ -19,12 +18,11 @@ In high-pressure moments, clear and timely communication prevents confusion, bui
 - **Single source of truth**: All communication, context, and updates live with the incident in Port.
 - **Internal and external alignment**: Keep your team and your users informed, every step of the way.
 
-## Learn More & Get Practical
+## Get Started 
 
 - [Create Slack Channel for Incident](../../guides/all/create-slack-channel-for-reported-incident)
-- [Visualize and Manage PagerDuty Incidents](../../guides/all/manage-and-visualize-pagerduty-incidents/)
-- [Visualize and Manage Statuspage Incidents](../../guides/all/visualize-and-manage-statuspage-incidents)
-- [Visualize and Managem your ServiceNow Incidents](../../guides/all/visualize-and-manage-servicenow-incidents/)
+- [Create and Update Statuspage Incidents](../../guides/all/manage-statuspage-incident)
+- [Update ServiceNow Incident](../../guides/all/interact-with-servicenow/)
 - [Setup Incident Manager AI Agent](../../guides/all/setup-incident-manager-ai-agent)
 
 :::tip Over-communicate in a Crisis

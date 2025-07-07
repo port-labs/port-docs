@@ -26,37 +26,31 @@ Port brings all your incident actions together, so you can:
 - Take action directly from the incident view, with no tab-switching or manual handoffs
 - Automate repetitive tasks and approvals, so engineers can focus on resolution
 
-<img src="/img/guides/pagerDutyDashboard1.png" border="1px" width="100%" />
-<img src="/img/guides/pagerDutyDashboard2.png" border="1px" width="100%" />
-
 ## Step-by-Step: What Great Teams Do in Port
 
-### 1. Acknowledge or Reassign Incidents
+### 1. Manage the full incident lifecycle centrally
+
+<img src="/img/guides/pagerDutyDashboard2.png" border="1px" width="100%" />
 Take ownership or hand off to the right responder, fast.
 - [Acknowledge Incident](../../guides/all/acknowledge-incident)
 - [Change PagerDuty Incident Owner](../../guides/all/change-pagerduty-incident-owner)
 
-### 2. Escalate When Needed
 Loop in additional teams or leadership with a single action.
 - [Escalate an Incident](../../guides/all/escalate-an-incident)
 
-### 3. Grant Temporary Permissions
-Unblock engineers by granting just-in-time access to the systems and data they need to investigate the incident.
-- [IAM Permissions Guide](../../guides/all/iam-permissions-guide/)
-- [Automatically Approve Actions](../../guides/all/automatically-approve-action-using-automation/)
-
-### 4. Update Status Pages, Incident State and Stakeholders
-Keep everyone informed, internally and externally.
-- [Manage Statuspage Incident](../../guides/all/manage-statuspage-incident)
-- [Update ServiceNow Incident](../../guides/all/interact-with-servicenow/)
-
-### 5. Resolve and Close Out
 Wrap up the incident, document what happened, and return to normal.
 - [Resolve Incident](../../guides/all/resolve-incident)
 - [Delete a ServiceNow Incident](../../guides/all/delete-servicenow-incident/)
 
+### 2. Grant Temporary Permissions
+
+Unblock engineers by granting just-in-time access to the systems and data they need to investigate the incident.
+- [IAM Permissions Guide](../../guides/all/iam-permissions-guide/)
+- [Automatically Approve Actions](../../guides/all/automatically-approve-action-using-automation/)
+
+
 :::tip Act Fast, But With Context
-The best responders move quickly—but never blindly. Use Port's unified context to make informed decisions and avoid costly mistakes.
+The best responders move quickly—but never blindly. Use Port's strong RBAC, self-service and dynamic permissions to enable your incident to gain appropriate access and take actions quickly.
 :::
 
 ## Real-World Benefits

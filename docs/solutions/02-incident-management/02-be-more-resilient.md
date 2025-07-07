@@ -69,12 +69,17 @@ Leverage a Production Readiness scorecard to make sure that your incident respon
 - [Ensure Production Readiness](../../guides/all/ensure-production-readiness)
 - [See our scorecard guides](../../promote-scorecards)
 
-#### Beyond Scorecards
+#### Tracking SLOs and SLIs 
 
 Beyond Production readiness and other deeper, more specialized scorecards, consider tracking all SLOs and SLIs for your services in Port, for a better view of your Reliability posture. Configure the AI Incident Manager Agent to assist with exploring and learning from the incidents from the past.
 
-- [Configure the AI Incident Manager Agent](../../guides/all/setup-incident-manager-ai-agent)
 - [Track SLOs and SLIs for Services](../../guides/all/track-slos-and-slis-for-services)
+
+#### Have AI Assist with Building Resilience
+
+Whether it's finding out about incident resolution trends, or discovering more about current on-call assignments and active incidents, an AI Incident Manager Agent can help you.
+
+- [Configure the AI Incident Manager Agent](../../guides/all/setup-incident-manager-ai-agent)
 
 :::caution Don't skip ownership
 Resilience depends on clear ownership. Make sure every service and component in your catalog has an owner—otherwise, incidents will fall through the cracks.
