@@ -69,7 +69,7 @@ You will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 :::
 
 :::note Self-Service Actions
-To use [Self-Service Actions with GitHub Workflows](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/), you also need to install our [public GitHub Cloud App](../../github#setup).
+To use [Self-Service Actions with GitHub Workflows](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/), you need to install our [public GitHub Cloud App](../../github#setup).
 :::
 
 
