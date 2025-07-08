@@ -168,6 +168,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/delete-multiple-entities",
+          label: "Delete multiple entities",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
           id: "api-reference/search-entities",
           label: "Search entities",
           className: "api-method post",
