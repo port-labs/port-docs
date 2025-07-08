@@ -7052,7 +7052,7 @@ paths:
       description: This route allows you to delete multiple entities (up to 100
         entities per request) from a specific blueprint in your software
         catalog. All entities must belong to the same blueprint.<br/><br/>If any
-        entity has dependent entities and delete_dependents is false, the entire
+        entity has dependent entities and `delete_dependents` is `false`, the entire
         operation will fail and no entities will be deleted.<br/><br/>To learn
         more about entities, check out the
         [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
