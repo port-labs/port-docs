@@ -42,13 +42,13 @@ In organizations that have a self-hosted GitHub installation there is no access 
 - Uncheck **Active** under Webhooks, we'll create a webhook from the integration. 
 - **Repository Permissions:**
   - Actions: Read and Write (for executing self-service action using GitHub workflow)
+  - Administration: Readonly
   - Checks: Read and Write (for validating `Port.yml`)
   - Contents: Readonly (for reading port configuration files and repository files)
   - Metadata: Readonly
   - Pull Request: Read and Write
-  - Administration: Readonly (for syncing github teams)
 - **Organization Permissions:**
-  - Members: Readonly (for syncing github teams)
+  - Members: Readonly
   - Webhooks: Read and Write (to allow the integration create webhooks)
 
 Then select "Create GitHub App"
@@ -82,7 +82,7 @@ After you have the app registered in your organization, you can install it and s
 
 ![Settings view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizationSettings.png)
 
-3. Click `edit` on the GitHub integration created at the step before:
+3. Click `edit` on the GitHub app created at the step before:
 
 ![GitHub integration installation page](../../../../../../static/img/integrations/github-ocean/SelfHostedEditGitHubApp.png)
 
@@ -101,7 +101,7 @@ It can be deployed on any platform that allows deploying images as containers su
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-ocean-github-ocean:latest
+docker pull ghcr.io/port-labs/port-ocean-github-ocean:1.0.1-beta
 ```
 
 Run the following command to start the app:
@@ -120,7 +120,7 @@ docker run \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<Github Organization> \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
   -p 8000:8000 \
-  ghcr.io/port-labs/port-ocean-github-ocean:latest
+  ghcr.io/port-labs/port-ocean-github-ocean:1.0.1-beta
 ```
 
 | Env variable                                         | Description                                                                                    |
