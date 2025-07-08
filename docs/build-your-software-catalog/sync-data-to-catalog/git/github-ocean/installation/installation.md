@@ -283,7 +283,7 @@ pipeline {
                         sh('''
                             #Set Docker image and run the container
                             integration_type="github-ocean"
-                            version="1.0.1-beta"
+                            version="1.0.4-beta"
                             image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
@@ -329,7 +329,7 @@ steps:
   - script: |
       # Set Docker image and run the container
       integration_type="github-ocean"
-      version="1.0.1-beta"
+      version="1.0.4-beta"
       image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
       docker run -i --rm --platform=linux/amd64 \
@@ -368,7 +368,7 @@ default:
 
 variables:
   INTEGRATION_TYPE: github-ocean
-  VERSION: 1.0.1-beta
+  VERSION: 1.0.4-beta
 stages:
   - ingest
 ingest_data:

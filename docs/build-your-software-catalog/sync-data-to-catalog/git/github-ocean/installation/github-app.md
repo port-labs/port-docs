@@ -104,7 +104,7 @@ It can be deployed on any platform that allows deploying images as containers su
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-ocean-github-ocean:1.0.1-beta
+docker pull ghcr.io/port-labs/port-ocean-github-ocean:1.0.4-beta
 ```
 
 Run the following command to start the app:
@@ -129,7 +129,7 @@ docker run \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<GITHUB_APP_ID> \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=<BASE_64_ENCODED_PRIVATEKEY> \
   -p 8000:8000 \
-  ghcr.io/port-labs/port-ocean-github-ocean:1.0.1-beta
+  ghcr.io/port-labs/port-ocean-github-ocean:1.0.4-beta
 ```
 
 | Env variable                                         | Description                                                                                    |
