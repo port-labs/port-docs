@@ -1,3 +1,7 @@
+---
+sidebar_class_name: hidden
+---
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
