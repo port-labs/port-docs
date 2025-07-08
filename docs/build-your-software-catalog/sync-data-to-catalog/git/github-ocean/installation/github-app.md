@@ -109,7 +109,7 @@ Run the following command to start the app:
 
 :::tip Docker parameters
 
-Replace all arguments in bracket with actual values. #AI! improve this
+The command below contains placeholder values in angle brackets (e.g., `<PORT CLIENT ID>`). Be sure to replace them with your actual values before running the command.
 
 :::
 
