@@ -105,7 +105,9 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 1. Create the following Python files in a folder named `integration` at the base directory of your GitHub repository:
     - `main.py` - Orchestrates the synchronization of data from Humanitec to Port, ensuring that resource entities are accurately mirrored and updated on your Port catalog.
     - `requirements.txt` - This file contains the dependencies or necessary external packages need to run the integration
-  
+
+
+
 <details>
 <summary><b>Main Executable Script (Click to expand)</b></summary>
 
@@ -126,6 +128,8 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
     - `port_client.py` – Manages authentication and API requests to Port, facilitating the creation and updating of entities within Port's system.
     - `humanitec_client.py` – Handles API interactions with Humanitec, including retrieving data with caching mechanisms to optimize performance.
     - `cache.py` - Provides an in-memory caching mechanism with thread-safe operations for setting, retrieving, and deleting cache entries asynchronously.
+
+
 
 <details>
 <summary><b>Port Client (Click to expand)</b></summary>
@@ -156,6 +160,7 @@ Create the file `.github/workflows/humanitec-exporter.yaml` in the `.github/work
 :::tip Cron
 Adjust the cron expression to fit your schedule. By default, the workflow is set to run at 2:00 AM every Monday ('0 2 * * 1').
 :::
+
 
 <details>
 <summary><b>GitHub Workflow (Click to expand)</b></summary>
