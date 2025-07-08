@@ -39,7 +39,7 @@ In organizations that have a self-hosted GitHub installation there is no access 
 - **Homepage URL:** https://port.io
 - **Callback URL:** Leave this empty.
 - **Setup URL:** Leave this empty.
-- Uncheck **Active** under Webhooks, Webhook will be created by the integration if `OCEAN__BASE_URL` variable is configured. #AI! improve this
+- Uncheck **Active** under Webhooks. The integration will automatically create the webhook if the `OCEAN__BASE_URL` variable is configured.
 - **Repository Permissions:**
   - Actions: Read and Write (for executing self-service action using GitHub workflow).
   - Checks: Read and Write (for validating `Port.yml`).
