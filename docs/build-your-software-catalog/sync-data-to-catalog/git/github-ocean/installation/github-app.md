@@ -68,7 +68,7 @@ You will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 
 :::
 
-In order to make use of [Self-Service Actions using GitHub Workflow](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/), please contact us at support@getport.io.
+In order to make use of [Self-Service Actions using GitHub Workflow](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/), you need to install our [Github Cloud app](../../github#setup). #AI! Improve this
 
 
 ## Installing Port's GitHub integration
@@ -109,14 +109,14 @@ Run the following command to start the app:
 
 :::tip Docker parameters
 
-The command below contains placeholder values in angle brackets (e.g., `<PORT CLIENT ID>`). Be sure to replace them with your actual values before running the command.
+The command below contains placeholder values in angle brackets (e.g., `<PORT_CLIENT_ID>`). Be sure to replace them with your actual values before running the command.
 
 :::
 
 ```bash showLineNumbers
 docker run \
-  -e OCEAN__PORT__CLIENT_ID=<PORT CLIENT ID> \
-  -e OCEAN__PORT__CLIENT_SECRET=<PORT CLIENT SECRET> \
+  -e OCEAN__PORT__CLIENT_ID=<PORT_CLIENT_ID> \
+  -e OCEAN__PORT__CLIENT_SECRET=<PORT_CLIENT_SECRET> \
   -e OCEAN__PORT__BASE_URL=https://api.getport.io \
   -e OCEAN__BASE_URL=<https.example.com> \
   -e OCEAN__EVENT_LISTENER__TYPE=POLLING \
