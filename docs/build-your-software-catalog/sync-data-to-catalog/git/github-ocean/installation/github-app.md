@@ -47,7 +47,7 @@ In organizations that have a self-hosted GitHub installation there is no access 
   - Metadata: Readonly.
   - Pull Request: Read and Write.
 - **Organization Permissions:**
-  - Webhooks: Read and Write (to allow the integration create webhooks).
+  - Webhooks: Read and Write (to allow the integration create webhook).
 
 Then select "Create GitHub App"
 

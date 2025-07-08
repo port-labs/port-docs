@@ -1,6 +1,3 @@
----
-sidebar_class_name: hidden
----
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -711,4 +708,4 @@ You can reconfigure the permission at any time, giving it access to new reposito
 
 ## Examples
 
-Refer to the [examples](./examples/resource-mapping-examples.md) page for practical configurations and their corresponding blueprint definitions.
+Refer to the [examples](./examples) page for practical configurations and their corresponding blueprint definitions.
