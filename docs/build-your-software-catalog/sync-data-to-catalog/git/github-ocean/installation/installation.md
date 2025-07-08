@@ -73,13 +73,13 @@ For details about the available parameters for the installation, see the table b
 <TabItem value="helm" label="Helm" default>
 To install the integration using Helm:
 
-1. Add helm repo to your cluster: #AI! improve this text
+1. Add Port's Helm chart repository:
 ```showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 ```
-2. Run the following helm command: #AI! improve this text
+2. Install the Helm chart:
 ```showLineNumbers
-helm upgrade --install azure-devops port-labs/port-ocean \
+helm upgrade --install github-ocean port-labs/port-ocean \
 	--set port.clientId="<PORT_CLIENT_ID>"  \
 	--set port.clientSecret="<PORT_CLIENT_SECRET>"  \
 	--set port.baseUrl="https://api.port.io"  \
