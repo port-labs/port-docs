@@ -106,6 +106,14 @@ docker pull ghcr.io/port-labs/port-ocean-github-ocean:1.0.1-beta
 
 Run the following command to start the app:
 
+:::tip Docker parameters
+
+.
+
+<FindCredentials/>
+
+:::
+
 ```bash showLineNumbers
 docker run \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<Github APP ID> \
@@ -127,6 +135,7 @@ docker run \
 | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                                   |
 | `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | Will be used to create webhook                                                                 |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_HOST`         | Your organizations Github hostname. Will default to https://api.github.com if nothing is provided. #AI! improve this description                                                                  |
 | `OCEAN__INTEGRATION__IDENTIFIER`                     | Your organization's self-hosted GitHub hostname                                                |
 | `OCEAN__BASE_URL`                                    | Integration instance base url, will be used to register webhook.                                        |
 | `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                            |
