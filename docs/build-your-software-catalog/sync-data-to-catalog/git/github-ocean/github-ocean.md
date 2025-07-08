@@ -49,7 +49,7 @@ To ingest GitHub objects, use one of the following methods:
 To manage your GitHub integration configuration using Port:
 
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
-2. Under `Exporters`, click on your desired GitHub organization.
+2. Under `Exporters`, click on the installed integration.
 3. A window will open containing the default YAML configuration of your GitHub integration.
 4. Here you can modify the configuration to suit your needs, by adding/removing entries.
 5. When finished, click `resync` to apply any changes.
