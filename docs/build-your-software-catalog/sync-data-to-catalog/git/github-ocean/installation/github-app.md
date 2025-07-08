@@ -136,12 +136,11 @@ docker run \
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                                   |
 | `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | Will be used to create webhook                                                                 |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_HOST`         | The API endpoint for your GitHub instance. For GitHub Enterprise, this will be `https://<your-github-hostname>/api/v3`. Defaults to `https://api.github.com` if not provided. |
-| `OCEAN__INTEGRATION__IDENTIFIER`                     | custom Identifier of the integration for your organization #AI! improve this description                                                |
 | `OCEAN__BASE_URL`                                    | Integration instance base url, will be used to register webhook.                                        |
 | `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                            |
 | `OCEAN__PORT__CLIENT_ID`                             | Port client id for interacting with the API                                                    |
 | `OCEAN__PORT__CLIENT_SECRET`                         | Port client secret for interacting with the API                                                |
-| `OCEAN__INTEGRATION__IDENTIFIER`                     | Identifier for the integration                                                                 |
+| `OCEAN__INTEGRATION__IDENTIFIER`                     | A unique identifier for the integration instance. Useful if you are running multiple self-hosted GitHub integrations. Defaults to `github-ocean`. |
 | `OCEAN__EVENT_LISTENER__TYPE`                        | How Ocean will retrieve config changes from Port.                                              |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                                      |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. You can use a tool like https://www.base64encode.org/ |
