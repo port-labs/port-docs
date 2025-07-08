@@ -607,9 +607,9 @@ You can configure multiple clusters in the same mapping by adding additional clu
 
 
 :::caution Security considerations
-- Store sensitive information like passwords and API keys securely using your platform's secret management system
-- For Kubernetes deployments, use Kubernetes secrets to store the `clusterConfMapping` value
-- For CI/CD pipelines, use environment variable encryption features provided by your CI/CD platform
+- Store sensitive information like passwords and API keys securely using your platform's secret management system.
+- For Kubernetes deployments, use Kubernetes secrets to store the `clusterConfMapping` value.
+- For CI/CD pipelines, use environment variable encryption features provided by your CI/CD platform.
 :::
 
 ## Configuration
