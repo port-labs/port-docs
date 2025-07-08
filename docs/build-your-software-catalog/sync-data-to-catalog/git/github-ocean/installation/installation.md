@@ -117,7 +117,7 @@ integration:
     type: POLLING
   config:
     githubHost: https://api.github.com # Or your self-hosted GitHub URL
-    githubOrganization: <GITHUB_ORGANIZATION>
+    githubOrganization: <GITHUB_ORGANIZATION> # your github organization, e.g port-labs
   secrets:
     githubToken: <GITHUB_TOKEN>
 ```
