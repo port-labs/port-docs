@@ -89,6 +89,7 @@ helm upgrade --install github-ocean port-labs/port-ocean \
 	--set integration.config.githubOrganization=<GITHUB_ORGANIZATION>  \
 	--set integration.config.githubHost=<GITHUB_HOST>  \
 	--set integration.secrets.githubToken="<GITHUB_PAT>"  \
+	--set integration.version="1.0.4-beta"  \
 	--set initializePortResources=true  \
 	--set sendRawDataExamples=true  \
 	--set scheduledResyncInterval=360  \
@@ -113,6 +114,7 @@ scheduledResyncInterval: 120
 integration:
   identifier: my-ocean-github-integration
   type: github-ocean
+  version: 1.0.4-beta
   eventListener:
     type: POLLING
   config:
