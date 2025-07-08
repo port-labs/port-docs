@@ -104,7 +104,7 @@ To install the integration using ArgoCD:
 1. Create a `values.yaml` file in `argocd/my-ocean-github-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `GITHUB_TOKEN`, `GITHUB_ORGANIZATION`, and `GITHUB_HOST`.
+Remember to replace the placeholders for `GITHUB_TOKEN` and `GITHUB_ORGANIZATION`, and update the `githubHost` value if you're using a self-hosted Github instance. #AI! improve this
 :::
 
 ```yaml showLineNumbers
@@ -116,11 +116,9 @@ integration:
   eventListener:
     type: POLLING
   config:
-  // highlight-next-line
     githubHost: https://api.github.com # Or your self-hosted GitHub URL
     githubOrganization: <GITHUB_ORGANIZATION>
   secrets:
-  // highlight-next-line
     githubToken: <GITHUB_TOKEN>
 ```
 
@@ -156,12 +154,12 @@ spec:
       // highlight-start
       parameters:
         - name: port.clientId
-          value: YOUR_PORT_CLIENT_ID
+          value: <YOUR_PORT_CLIENT_ID>
         - name: port.clientSecret
-          value: YOUR_PORT_CLIENT_SECRET
+          value: <YOUR_PORT_CLIENT_SECRET>
         - name: port.baseUrl
           value: https://api.getport.io
-  - repoURL: YOUR_GIT_REPO_URL
+  - repoURL: <YOUR_GIT_REPO_URL>
   // highlight-end
     targetRevision: main
     ref: values
