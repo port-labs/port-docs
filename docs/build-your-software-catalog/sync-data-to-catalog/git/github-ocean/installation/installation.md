@@ -71,8 +71,28 @@ For details about the available parameters for the installation, see the table b
 
 <Tabs groupId="deploy" queryString="deploy">
 <TabItem value="helm" label="Helm" default>
+To install the integration using Helm:
 
-<OceanRealtimeInstallation integration="github-ocean" />
+1. Add helm repo to your cluster: #AI! improve this text
+```showLineNumbers
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+```
+2. Run the following helm command: #AI! improve this text
+```showLineNumbers
+helm upgrade --install azure-devops port-labs/port-ocean \
+	--set port.clientId="<PORT_CLIENT_ID>"  \
+	--set port.clientSecret="<PORT_CLIENT_SECRET>"  \
+	--set port.baseUrl="https://api.port.io"  \
+	--set integration.identifier="github-ocean"  \
+	--set integration.type="github-ocean"  \
+	--set integration.eventListener.type="POLLING"  \
+	--set integration.config.githubOrganization=<GITHUB_ORGANIZATION>  \
+	--set integration.config.githubHost=<GITHUB_HOST>  \
+	--set integration.secrets.githubToken="<GITHUB_PAT>"  \
+	--set initializePortResources=true  \
+	--set sendRawDataExamples=true  \
+	--set scheduledResyncInterval=360  \
+```
 
 <PortApiRegionTip/>
 
@@ -84,7 +104,7 @@ To install the integration using ArgoCD:
 1. Create a `values.yaml` file in `argocd/my-ocean-github-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `GITHUB_TOKEN` and your GitHub URL.
+Remember to replace the placeholders for `GITHUB_TOKEN`, `GITHUB_ORGANIZATION`, and `GITHUB_HOST`.
 :::
 
 ```yaml showLineNumbers
@@ -98,10 +118,10 @@ integration:
   config:
   // highlight-next-line
     githubHost: https://api.github.com # Or your self-hosted GitHub URL
-    githubOrganization: <your github organization>
+    githubOrganization: <GITHUB_ORGANIZATION>
   secrets:
   // highlight-next-line
-    githubToken: GITHUB_TOKEN
+    githubToken: <GITHUB_TOKEN>
 ```
 
 <br/>
