@@ -35,7 +35,7 @@ In organizations that have a self-hosted GitHub installation there is no access 
 
 4. Insert the following properties:
 
-- **GitHub App name:** Choose a unique name, app names are global on Github # AI! improve this
+- **GitHub App name:** Choose a unique name for the app. Note that GitHub App names must be globally unique.
 - **Homepage URL:** https://port.io
 - **Callback URL:** Leave this empty
 - **Setup URL:** Leave this empty
