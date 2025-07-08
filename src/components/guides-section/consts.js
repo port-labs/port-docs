@@ -1328,8 +1328,8 @@ export const availableGuides = [
     },
     {
         title: "Manage your Kubernetes deployments",
-        description: "Create a comprehensive Kubernetes deployment management system to restart, scale and delete deployments",
-        tags: ["Cloud access management", "Kubernetes", "GitHub", "Dashboards"],
+        description: "Create a comprehensive Kubernetes deployment management system to restart and delete deployments",
+        tags: ["Cloud access management", "Kubernetes", "GitHub", "Actions"],
         logos: ["Kubernetes", "GitHub"],
         link: "/guides/all/manage-your-kubernetes-deployment",
     }
