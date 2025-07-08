@@ -100,58 +100,10 @@ Regarding the `Any entity change` trigger:
     - When a [related entity](/customize-pages-dashboards-and-plugins/page/entity-page#related-entities) of a `developmentenv` entity is deleted (causing the relation to become null).
     - When the source value of a `developmentenv` entity's [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) changes.
 
-## Trigger JSON structure
-
-An automation's trigger is defined under the `trigger` key:
-
-```json showLineNumbers
-{
-  "identifier": "unique_id",
-  "title": "Title",
-  "icon": "icon_identifier",
-  "description": "automation description",
-  # highlight-start
-  "trigger": {
-    "type": "automation",
-    "event": {
-      "type": "event_type",
-      // Only one of "blueprintIdentifier" or "actionIdentifier" should be present depending on the trigger type
-      "blueprintIdentifier": "blueprint_id",
-      // OR
-      "actionIdentifier": "action_id"
-    },
-    "condition": {
-      "type": "JQ",
-      "expressions": ["expression1", "expression2"],
-      "combinator": "and"
-    }
-  },
-  # highlight-end
-  "invocationMethod": {
-    "type": "WEBHOOK",
-    "url": "https://example.com"
-  },
-  "publish": false
-}
-```
-<br/>
-
-The table below describes the fields in the JSON structure under the `trigger` key (fields in **bold** are required):
-
-| Field | Description |
-| --- | --- |
-| **`type`** | The automation's trigger type. Should be set to `automation`. |
-| **`event`** | An object containing data about the event that triggers the automation. |
-| **`event.type`** | The [trigger event type](/actions-and-automations/define-automations/setup-trigger#available-triggers). |
-| **`event.blueprintIdentifier`**<br/>or<br/>**`event.actionIdentifier`** | If using an *entity trigger* - the identifier of the blueprint whose entities will trigger the automation.<br/>If using an *action run trigger* - the identifier of the action whose runs will trigger the automation. |
-| `condition` | An optional object containing `jq` expressions used to determine which entities the automation will be triggered for. |
-| `condition.type` | The type of condition. Should be set to `JQ`. |
-| `condition.expressions` | An array of expressions used to filter the entities for which the automation will be triggered. |
-| `condition.combinator` | The combinator used to combine the expressions. Should be set to `and` or `or`. |
-
 ## Conditions
 
-You can use the `condition` key to filter the entities for which the automation will be triggered.  
+Once you choose your `Trigger` and the relevant `Blueprint` or `Action`, you can optionally define a `Condition` at the bottom of the widget.
+This condition allows you to filter entities for which the automation will be triggered.  
 
 The following condition example contains a single expression that will cause the automation to trigger only for entities with a `status` property set to `Active`:
 
@@ -169,6 +121,8 @@ The data that is available to you when writing expressions contains useful infor
 
 Here is an example of what this object could look like for an automation that triggers whenever a `service` entity is **updated**:
 
+<details>
+<summary><b>Automation JSON file example (Click to expand)</b></summary>
 ```json showLineNumbers
 {
   "action": "UPDATE",
@@ -236,6 +190,7 @@ Here is an example of what this object could look like for an automation that tr
   }
 }
 ```
+</details>
 
 The example above is for an automation that uses the `ENTITY_UPDATED` trigger event. The `diff` object contains data from `before` and `after` the update.  
 
@@ -248,3 +203,52 @@ The other trigger events have the same structure, with the following differences
 - `ANY_ENTITY_CHANGE` - The `diff` object will contain `before` and `after` data according to the entity change.
 
 - `TIMER_PROPERTY_EXPIRED` - In the `diff` object, there will be an `after` object containing the entity data.
+
+## Trigger JSON structure
+
+An automation's trigger is defined under the `trigger` key:
+
+```json showLineNumbers
+{
+  "identifier": "unique_id",
+  "title": "Title",
+  "icon": "icon_identifier",
+  "description": "automation description",
+  # highlight-start
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "event_type",
+      // Only one of "blueprintIdentifier" or "actionIdentifier" should be present depending on the trigger type
+      "blueprintIdentifier": "blueprint_id",
+      // OR
+      "actionIdentifier": "action_id"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": ["expression1", "expression2"],
+      "combinator": "and"
+    }
+  },
+  # highlight-end
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://example.com"
+  },
+  "publish": false
+}
+```
+<br/>
+
+The table below describes the fields in the JSON structure under the `trigger` key (fields in **bold** are required):
+
+| Field | Description |
+| --- | --- |
+| **`type`** | The automation's trigger type. Should be set to `automation`. |
+| **`event`** | An object containing data about the event that triggers the automation. |
+| **`event.type`** | The [trigger event type](/actions-and-automations/define-automations/setup-trigger#available-triggers). |
+| **`event.blueprintIdentifier`**<br/>or<br/>**`event.actionIdentifier`** | If using an *entity trigger* - the identifier of the blueprint whose entities will trigger the automation.<br/>If using an *action run trigger* - the identifier of the action whose runs will trigger the automation. |
+| `condition` | An optional object containing `jq` expressions used to determine which entities the automation will be triggered for. |
+| `condition.type` | The type of condition. Should be set to `JQ`. |
+| `condition.expressions` | An array of expressions used to filter the entities for which the automation will be triggered. |
+| `condition.combinator` | The combinator used to combine the expressions. Should be set to `and` or `or`. |
