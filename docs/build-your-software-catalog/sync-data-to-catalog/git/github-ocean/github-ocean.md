@@ -697,10 +697,6 @@ Port's GitHub integration requires the following permissions:
   - **Metadata:** Readonly.
   - **Pull requests:** Read and write.
 
-- Repository events (required to receive changes via webhook from GitHub and apply the `port-app-config.yml` configuration on them):
-  - Pull requests
-  - Push
-
 :::info Default permissions
 You will be prompted to confirm the above listed permissions when creating a personal access token.
 

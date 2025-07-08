@@ -67,6 +67,8 @@ You will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 
 :::
 
+In order to make use of [Self-Service Actions using GitHub Workflow](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/), please contact us at support@getport.io.
+
 
 ## Installing Port's GitHub integration
 
