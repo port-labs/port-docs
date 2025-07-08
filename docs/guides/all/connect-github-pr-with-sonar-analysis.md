@@ -424,4 +424,3 @@ More relevant guides and examples:
 
 - [Port's SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
 - [Integrate scorecards with Slack](https://docs.port.io/promote-scorecards/manage-using-3rd-party-apps/slack)
-- [Connect GitHub repository with SonarQube Project](https://docs.port.io/guides/all/connect-github-repository-with-sonarqube-project)

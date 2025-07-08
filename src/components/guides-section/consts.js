@@ -134,14 +134,6 @@ export const availableGuides = [
         link: "/guides/all/iam-permissions-guide",
     },
     {
-        title: "Lock service deployment",
-        description: "Implement a service locking mechanism using Port's GitHub Action",
-        tags: ["SDLC", "Actions"],
-        logos: ["GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/service-lock-github-workflow",
-    },
-    {
         title: "Automate Slack alerts for Overdue PRs",
         description: "Send a Slack notification for pull requests that have been open longer than a specified time using an automation",
         tags: ["SDLC", "Automations"],
@@ -330,12 +322,12 @@ export const availableGuides = [
         link: "/guides/all/broadcast-api-consumers-message",
     },
     {
-        title: "Lock and Unlock Service",
+        title: "Lock and Unlock Services",
         description: "Create a self-service action that locks and unlocks a service",
         tags: ["SDLC", "Actions", "GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
-        link: "/guides/all/lock-and-unlock-service-in-port",
+        link: "/guides/all/lock-and-unlock-services-in-port",
     },
     {
         title: "Create Slack channel for Incident Management",
@@ -1279,11 +1271,59 @@ export const availableGuides = [
         link: "/guides/all/manage-and-visualize-jira-issues",
     },
     {
-        title: "Add custom context to AI agents",
-        description: "Enhance AI agents with custom context like Root Cause Analysis documents",
+        title: "Add RCA context to AI agents",
+        description: "Enhance AI agents with Root Cause Analysis context",
         tags: ["Incident management", "AI", "Actions"],
         logos: ["AI"],
-        link: "/guides/all/add-context-to-incident-manager-ai-agent",
+        link: "/guides/all/add-rca-context-to-ai-agents",
+    },
+    {
+        title: "Manage your EKS clusters",
+        description: "Create self-service actions that manage your EKS clusters",
+        tags: ["Cloud access management", "AWS", "GitHub", "Actions"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-your-eks-clusters",
+    },
+    {
+        title: "Manage and visualize your ACM certificates",
+        description: "Create a comprehensive certificate management system to create, renew, and delete certificates",
+        tags: ["Security", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-acm-certificates",
+    },
+    {
+        title: "Manage and visualize your GCP Compute Engine instances",
+        description: "Create a dashboard that manages and visualizes your GCP Compute Engine instances",
+        tags: ["Cloud access management", "GCP", "GitHub", "Dashboards"],
+        logos: ["GCP", "GitHub"],
+        link: "/guides/all/manage-and-visualize-gcp-compute-engine-instances",
+    },
+    {
+        title: "Manage and visualize your Azure web apps",
+        description: "Create a comprehensive web app management system to start, stop and restart web apps",
+        tags: ["Cloud access management", "Azure", "GitHub", "Dashboards"],
+        logos: ["Azure", "GitHub"],
+        link: "/guides/all/manage-and-visualize-azure-web-apps",
+    },
+    {
+        title: "Manage your Azure Virtual Machines",
+        description: "Create a comprehensive VM management system to start, deallocate and restart virtual machines",
+        tags: ["Cloud access management", "Azure", "GitHub", "Dashboards"],
+        logos: ["Azure", "GitHub"],
+        link: "/guides/all/manage-and-visualize-azure-virtual-machines",
+    },
+    {
+        title: "Manage your AWS Autoscaling Groups",
+        description: "Create a comprehensive autoscaling group management system to scale up and down",
+        tags: ["Cloud access management", "AWS", "GitHub", "Dashboards"],
+        logos: ["AWS", "GitHub"],
+        link: "/guides/all/manage-and-visualize-aws-autoscaling-groups",
+    },
+    {
+        title: "Send leaked secrets from GitHub to Port",
+        description: "Create a webhook integration that sends leaked secrets from GitHub to Port",
+        tags: ["Security", "GitHub", "Webhook"],
+        logos: ["GitHub", "Webhook"],
+        link: "/guides/all/send-leaked-secrets-from-github-to-port",
     }
 ]
-
