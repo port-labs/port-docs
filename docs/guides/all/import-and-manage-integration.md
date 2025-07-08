@@ -13,16 +13,17 @@ import TabItem from "@theme/TabItem"
 
 # Manage integration mapping using Terraform
 
-In this example we'll use the Import State feature of Terraform, then manage our Port integration's mapping with Terraform.
+This guide demonstrates how to use the Import State feature of Terraform to manage your Port integration's mapping with Terraform.
+
 
 
 ## Prerequisites
 
-The [Kubernetes](/guides/all/visualize-service-k8s-runtime) integration needs to be installed.
+- Complete the [onboarding process](/getting-started/overview).
+- Install the [integration](/build-your-software-catalog/sync-data-to-catalog/#available-plug--play-integrations) whose mapping you want to manage. 
 
-
-:::info  Installation Id
-Take note of the installation Id of the Kubernetes integration when installing it.
+:::info Installation Id
+Take note of the installation ID of your integration when installing it - you'll need this ID to import and manage the integration with Terraform.
 :::
 
 

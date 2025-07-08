@@ -516,12 +516,6 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/create-an-integration",
-          label: "Create an integration",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/get-an-integration",
           label: "Get an integration",
           className: "api-method get",
@@ -550,6 +544,12 @@ const sidebar: SidebarsConfig = {
       type: "category",
       label: "Webhook",
       items: [
+        {
+          type: "doc",
+          id: "api-reference/create-a-webhook",
+          label: "Create a webhook",
+          className: "api-method post",
+        },
         {
           type: "doc",
           id: "api-reference/get-all-webhooks",

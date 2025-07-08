@@ -47,11 +47,16 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### Bitbucket
 
-- [Bitbucket app](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket.md)
-- [BitBucket GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md)
-- [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
+- [Bitbucket App (Deprecated)](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/bitbucket-app.md)
+    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/gitops/gitops.md)
+    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/examples.md)
+- [Bitbucket Cloud](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/bitbucket-cloud.md)
+    - [GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/gitops/gitops.md)
+    - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/examples.md)
+
 - [Bitbucket scaffolder](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
-- [Webhook integration between Bitbucket (self-hosted) server and Port](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/bitbucket-server.md)
+- [Bitbucket Server Integration](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/bitbucket-server.md)
+- [Bitbucket Server GitOps with webhooks](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/gitops.md)
 
 ### Azure DevOps
 

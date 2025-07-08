@@ -4,11 +4,11 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
-import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
-import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
+import AzurePremise from "../../../templates/\_ocean_azure_premise.mdx"
+import Prerequisites from "../../../templates/\_ocean_helm_prerequisites_block.mdx"
+import HelmParameters from "../../../templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_bitbucket_cloud_one_time_docker_parameters.mdx"
-import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '../../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
@@ -142,7 +142,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.8.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-bitbucket-cloud-integration/values.yaml
