@@ -42,7 +42,7 @@ This integration allows you to:
 
 To generate a token for authenticating the Jenkins API calls:
 1. In the Jenkins banner frame, click your user name to open the user menu.
-2. Navigate to Your **Username** > **Configure** > **API Token**.
+2. Navigate to your **Username** > **Configure** > **API Token**.
 3. Click Add new Token.
 4. Click Generate.
 5. Copy the API token that is generated to use as the `JENKINS_TOKEN`.
@@ -149,7 +149,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.8.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-jenkins-integration/values.yaml

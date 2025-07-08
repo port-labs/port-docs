@@ -168,6 +168,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/delete-multiple-entities",
+          label: "Delete multiple entities",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
           id: "api-reference/search-entities",
           label: "Search entities",
           className: "api-method post",
@@ -516,12 +522,6 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/create-an-integration",
-          label: "Create an integration",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/get-an-integration",
           label: "Get an integration",
           className: "api-method get",
@@ -550,6 +550,12 @@ const sidebar: SidebarsConfig = {
       type: "category",
       label: "Webhook",
       items: [
+        {
+          type: "doc",
+          id: "api-reference/create-a-webhook",
+          label: "Create a webhook",
+          className: "api-method post",
+        },
         {
           type: "doc",
           id: "api-reference/get-all-webhooks",
