@@ -104,7 +104,7 @@ To install the integration using ArgoCD:
 1. Create a `values.yaml` file in `argocd/my-ocean-github-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `GITHUB_TOKEN` and `GITHUB_ORGANIZATION`, and update the `githubHost` value if you're using a self-hosted Github instance. #AI! improve this
+Be sure to replace the `<GITHUB_TOKEN>` and `<GITHUB_ORGANIZATION>` placeholders with your actual values. If you are using a self-hosted GitHub instance, update the `githubHost` value to point to your instance.
 :::
 
 ```yaml showLineNumbers
