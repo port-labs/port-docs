@@ -37,19 +37,17 @@ In organizations that have a self-hosted GitHub installation there is no access 
 
 - **GitHub App name:** Choose a unique name for the app. Note that GitHub App names must be globally unique.
 - **Homepage URL:** https://port.io
-- **Callback URL:** Leave this empty
-- **Setup URL:** Leave this empty
-- Uncheck **Active** under Webhooks, we'll create a webhook from the integration. 
+- **Callback URL:** Leave this empty.
+- **Setup URL:** Leave this empty.
+- Uncheck **Active** under Webhooks, Webhook will be created by the integration if `OCEAN__BASE_URL` variable is configured. #AI! improve this
 - **Repository Permissions:**
-  - Actions: Read and Write (for executing self-service action using GitHub workflow)
-  - Administration: Readonly
-  - Checks: Read and Write (for validating `Port.yml`)
-  - Contents: Readonly (for reading port configuration files and repository files)
-  - Metadata: Readonly
-  - Pull Request: Read and Write
+  - Actions: Read and Write (for executing self-service action using GitHub workflow).
+  - Checks: Read and Write (for validating `Port.yml`).
+  - Contents: Readonly (for reading port configuration files and repository files).
+  - Metadata: Readonly.
+  - Pull Request: Read and Write.
 - **Organization Permissions:**
-  - Members: Readonly
-  - Webhooks: Read and Write (to allow the integration create webhooks)
+  - Webhooks: Read and Write (to allow the integration create webhooks).
 
 Then select "Create GitHub App"
 
