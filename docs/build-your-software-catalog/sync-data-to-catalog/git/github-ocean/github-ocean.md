@@ -1,3 +1,6 @@
+---
+sidebar_class_name: hidden
+---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
