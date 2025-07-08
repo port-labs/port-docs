@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx"
@@ -108,24 +108,22 @@ Run the following command to start the app:
 
 :::tip Docker parameters
 
-.
-
-<FindCredentials/>
+Replace all arguments with the actual values.
 
 :::
 
 ```bash showLineNumbers
 docker run \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<Github APP ID> \
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<GITHUB_APP_ID> \
   -e OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET=<test webhook secret> \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GH BASE URL ie https://api.github.com> \
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<Github BASE URL i.e https://api.github.com> \
   -e OCEAN__BASE_URL=<https.example.com> \
   -e OCEAN__PORT__BASE_URL=https://api.getport.io \
   -e OCEAN__PORT__CLIENT_ID=<PORT CLIENT ID> \
   -e OCEAN__PORT__CLIENT_SECRET=<PORT CLIENT SECRET> \
   -e OCEAN__INTEGRATION__IDENTIFIER=github-ocean \
   -e OCEAN__EVENT_LISTENER__TYPE=POLLING \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<Github Organization> \
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<GITHUB_ORGANIZATION> \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
   -p 8000:8000 \
   ghcr.io/port-labs/port-ocean-github-ocean:1.0.1-beta
@@ -135,8 +133,8 @@ docker run \
 | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                                   |
 | `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | Will be used to create webhook                                                                 |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_HOST`         | The API endpoint for your GitHub instance. For GitHub Enterprise, this will be `https://<your-github-hostname>/api/v3`. Defaults to `https://api.github.com` if not provided. |
-| `OCEAN__BASE_URL`                                    | Integration instance base url, will be used to register webhook.                                        |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_HOST`         | The API endpoint for your GitHub instance. For GitHub Enterprise, this will be `https://<org_name.ghe.com>`. Defaults to `https://api.github.com` if not provided. |
+| `OCEAN__BASE_URL`                                    | Integration instance base url, real-time live events will be enabled if this is configured.                                        |
 | `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                            |
 | `OCEAN__PORT__CLIENT_ID`                             | Port client id for interacting with the API                                                    |
 | `OCEAN__PORT__CLIENT_SECRET`                         | Port client secret for interacting with the API                                                |
