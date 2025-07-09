@@ -204,7 +204,7 @@ This table summarizes the available parameters for the installation.
 | `scheduledResyncInterval`               | The number of minutes between each resync.                                                                              | ❌       |
 | `initializePortResources`               | When `true`, the integration will create default blueprints and port-app-config.yml mapping.                            | ❌       |
 | `sendRawDataExamples`                   | When `true`, sends raw data examples from the third-party API to Port for testing and managing the integration mapping. | ❌       |
-| `baseUrl`                               | The base URL of the GitHub integration instance, used for real-time updates.                                            | ❌       |
+| `baseUrl`                               | Integration instance base url, real-time live events will be enabled if this is configured.                                          | ❌       |
 
 <br/>
 
