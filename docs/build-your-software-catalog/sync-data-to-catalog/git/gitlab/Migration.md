@@ -10,9 +10,9 @@ This guide helps you migrate from Port's GitLab integration to the new GitLab-v2
 
 GitLab-v2 introduces significant authentication and performance improvements:
 
-- **Simplified authentication**: Replace multiple group tokens with a single service account token
-- **Enhanced performance**: Faster resync with improved API efficiency  
-- **New capabilities**: Support for pipeline jobs and enhanced group handling
+- **Simplified authentication**: Replace multiple group tokens with a single service account token.
+- **Enhanced performance**: Faster resync with improved API efficiency.
+- **New capabilities**: Support for pipeline jobs and enhanced group handling.
 
 ## What's changing
 
