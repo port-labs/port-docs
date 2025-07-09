@@ -2,7 +2,7 @@
 hide_table_of_contents: true
 sidebar_label: All guides
 sidebarClassName: hidden
-# displayed_sidebar: null
+displayed_sidebar: null
 ---
 
 import GuidePage from '/src/components/guides-section/GuidePage/GuidePage.jsx'

@@ -5767,6 +5767,7 @@ paths:
               type: string
           in: query
           name: include
+          explode: true
           required: false
         - schema:
             type: array
@@ -5774,6 +5775,7 @@ paths:
               type: string
           in: query
           name: exclude
+          explode: true
           required: false
         - schema:
             type: boolean
@@ -6481,6 +6483,7 @@ paths:
               type: string
           in: query
           name: include
+          explode: true
           required: false
         - schema:
             type: array
@@ -6488,6 +6491,7 @@ paths:
               type: string
           in: query
           name: exclude
+          explode: true
           required: false
         - schema:
             type: boolean
@@ -6616,6 +6620,151 @@ paths:
                 additionalProperties: false
                 required:
                   - ok
+  "/v1/blueprints/{blueprint_identifier}/bulk/entities":
+    delete:
+      summary: Delete multiple entities
+      tags:
+        - Entities
+      description: This route allows you to delete multiple entities (up to 100
+        entities per request) from a specific blueprint in your software
+        catalog. All entities must belong to the same blueprint.<br/><br/>If any
+        entity has dependent entities and delete_dependents is false, the entire
+        operation will fail and no entities will be deleted.<br/><br/>To learn
+        more about entities, check out the
+        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entities:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of entity identifiers to delete
+                  minItems: 1
+                  maxItems: 100
+              required:
+                - entities
+              additionalProperties: false
+        required: true
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: delete_dependents
+          required: true
+          description: If `true`, this call will also delete all entities with a relation
+            to the deleted entity.
+        - schema:
+            type: string
+          in: query
+          name: run_id
+          required: false
+          description: You can provide a `run_id` to associate the created entities with a
+            specific [action
+            run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).
+        - schema:
+            type: string
+            minLength: 1
+          in: path
+          name: blueprint_identifier
+          required: true
+          description: The identifier of the blueprint to operate on.
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Entities deleted successfully.
+          content:
+            application/json:
+              schema:
+                description: Entities deleted successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  deletedEntities:
+                    type: array
+                    items:
+                      type: string
+                    description: Array of deleted entity IDs
+                required:
+                  - deletedEntities
+                  - ok
+                additionalProperties: false
+        "401":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
+        "413":
+          description: Request body is too large (limit is 1MiB)
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+                description: Request body is too large (limit is 1MiB)
+        "422":
+          description: The json provided does not match the route's schema
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: The json provided does not match the route's schema
   /v1/entities/search:
     post:
       tags:
@@ -6823,6 +6972,7 @@ paths:
               type: string
           in: query
           name: include
+          explode: true
           required: false
         - schema:
             type: array
@@ -6830,6 +6980,7 @@ paths:
               type: string
           in: query
           name: exclude
+          explode: true
           required: false
         - schema:
             type: boolean
@@ -12120,6 +12271,7 @@ paths:
               type: string
           in: query
           name: action_identifier
+          explode: true
           required: false
         - schema:
             type: array
@@ -12127,6 +12279,7 @@ paths:
               type: string
           in: query
           name: blueprint_identifier
+          explode: true
           required: false
         - schema:
             type: array
@@ -12138,6 +12291,7 @@ paths:
                 - CREATE
           in: query
           name: operation
+          explode: true
           required: false
         - schema:
             type: boolean
@@ -33189,202 +33343,6 @@ paths:
       responses:
         "200":
           description: Default Response
-    post:
-      tags:
-        - Integrations
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                installationId:
-                  type: string
-                  minLength: 1
-                title:
-                  type: string
-                  nullable: true
-                installationType:
-                  type: string
-                  enum:
-                    - Saas
-                    - OnPrem
-                  default: OnPrem
-                installationAppType:
-                  type: string
-                version:
-                  type: string
-                spec:
-                  type: object
-                  additionalProperties: true
-                config:
-                  type:
-                    - object
-                    - "null"
-                  additionalProperties: true
-                  properties:
-                    deleteDependentEntities:
-                      type: boolean
-                    createMissingRelatedEntities:
-                      type: boolean
-                    resources:
-                      type: array
-                      items:
-                        type: object
-                        required:
-                          - kind
-                          - selector
-                          - port
-                        properties:
-                          kind:
-                            type: string
-                          selector:
-                            type: object
-                            properties:
-                              query:
-                                type: string
-                          port:
-                            type: object
-                            required:
-                              - entity
-                            properties:
-                              entity:
-                                type: object
-                                required:
-                                  - mappings
-                                properties:
-                                  mappings:
-                                    oneOf:
-                                      - type: array
-                                        items:
-                                          type: object
-                                          required:
-                                            - identifier
-                                            - blueprint
-                                          properties:
-                                            identifier:
-                                              oneOf:
-                                                - type: string
-                                                - type: object
-                                                  properties:
-                                                    combinator:
-                                                      type: string
-                                                    rules:
-                                                      type: array
-                                                      items:
-                                                        type: object
-                                                        additionalProperties: true
-                                                  additionalProperties: false
-                                                  required:
-                                                    - combinator
-                                                    - rules
-                                            title:
-                                              type: string
-                                            blueprint:
-                                              type: string
-                                            properties:
-                                              type: object
-                                              additionalProperties: true
-                                            relations:
-                                              type: object
-                                              additionalProperties: true
-                                      - type: object
-                                        required:
-                                          - identifier
-                                          - blueprint
-                                        properties:
-                                          identifier:
-                                            oneOf:
-                                              - type: string
-                                              - type: object
-                                                properties:
-                                                  combinator:
-                                                    type: string
-                                                  rules:
-                                                    type: array
-                                                    items:
-                                                      type: object
-                                                      additionalProperties: true
-                                                additionalProperties: false
-                                                required:
-                                                  - combinator
-                                                  - rules
-                                          title:
-                                            type: string
-                                          blueprint:
-                                            type: string
-                                          properties:
-                                            type: object
-                                            additionalProperties: true
-                                          relations:
-                                            type: object
-                                            additionalProperties: true
-                changelogDestination:
-                  type: object
-                  properties:
-                    type:
-                      type: string
-                      enum:
-                        - WEBHOOK
-                        - KAFKA
-                  oneOf:
-                    - type: object
-                      properties: {}
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - KAFKA
-                      required:
-                        - type
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - WEBHOOK
-                        agent:
-                          type: boolean
-                        url:
-                          type: string
-                          format: uri
-                      required:
-                        - url
-                        - type
-                      additionalProperties: false
-              additionalProperties: false
-              required:
-                - installationId
-              if:
-                properties:
-                  installationType:
-                    enum:
-                      - Saas
-                required:
-                  - installationType
-              then:
-                properties:
-                  installationId:
-                    type: string
-                    minLength: 1
-                    maxLength: 20
-        required: true
-      parameters:
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: upsert
-          required: false
-      security:
-        - bearer:
-            - create:integrations
-      responses:
-        "200":
-          description: Default Response
   "/v1/integration/{identifier}":
     get:
       tags:
@@ -33919,8 +33877,14 @@ paths:
           description: Default Response
   /v1/webhooks:
     post:
+      summary: Create a webhook
       tags:
         - Webhook
+      description: This route allows you to create a webhook in your Port
+        organization. You can also create it via the [data sources
+        page](https://app.getport.io/settings/data-sources) of your Port
+        account.<br/><br/>To learn more about webhooks, check out the
+        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
       requestBody:
         content:
           application/json:
@@ -33930,14 +33894,20 @@ paths:
                 identifier:
                   type: string
                   maxLength: 30
+                  description: The identifier of the webhook.
                 title:
                   type: string
                   maxLength: 30
+                  description: The title of the webhook, which will be displayed in the [data
+                    sources page](https://app.getport.io/settings/data-sources)
+                    of your Port account.
                 description:
                   type: string
                   maxLength: 200
+                  description: A description for the webhook.
                 icon:
                   type: string
+                  description: The icon of the webhook.
                 mappings:
                   type: array
                   items:
@@ -33945,9 +33915,36 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - enum:
+                          - title: create
+                            description: >-
+                              If the operation is `create`, the [entity
+                              JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
+                              properties must be provided. For example:
+
+                              ```json
+
+                              {
+                                "operation": "create",
+                                "blueprint": "blueprint_identifier",
+                                "filter": "true",
+                                "itemsToParse": "true",
+                                "entity": {
+                                    "identifier": "new-webhook",
+                                    "title": "MyNewWebhook",
+                                    "icon": "webhook",
+                                    "team": [],
+                                    "properties": {
+                                      "content": "my content"
+                                    },
+                                    "relations": {}
+                                }
+                              }
+
+                              ```
+                            enum:
                               - create
                           - type: object
+                            title: create
                             properties:
                               type:
                                 enum:
@@ -33955,9 +33952,29 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - enum:
+                          - title: delete
+                            description: >-
+                              If the selected operation is `delete`, a blueprint
+                              identifier, and entity identifier must be
+                              provided, for example:
+
+                              ```json
+
+                              {
+                                "operation": "delete",
+                                "filter": "true",
+                                "itemsToParse": "true",
+                                "blueprint": "blueprint_identifier",
+                                "entity": {
+                                  "identifier": "entity_identifier"
+                                }
+                              }
+
+                              ```
+                            enum:
                               - delete
                           - type: object
+                            title: delete
                             properties:
                               type:
                                 enum:
@@ -33967,13 +33984,38 @@ paths:
                             required:
                               - type
                             additionalProperties: false
+                        description: If the selected operation is `delete`, a blueprint identifier, and
+                          entity identifier must be provided. If the operation
+                          is `create`, the [entity
+                          JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
+                          properties must be provided.
                     if:
                       properties:
                         operation:
                           oneOf:
-                            - enum:
+                            - title: delete
+                              description: >-
+                                If the selected operation is `delete`, a
+                                blueprint identifier, and entity identifier must
+                                be provided, for example:
+
+                                ```json
+
+                                {
+                                  "operation": "delete",
+                                  "filter": "true",
+                                  "itemsToParse": "true",
+                                  "blueprint": "blueprint_identifier",
+                                  "entity": {
+                                    "identifier": "entity_identifier"
+                                  }
+                                }
+
+                                ```
+                              enum:
                                 - delete
                             - type: object
+                              title: delete
                               properties:
                                 type:
                                   enum:
@@ -33989,9 +34031,29 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - enum:
+                            - title: delete
+                              description: >-
+                                If the selected operation is `delete`, a
+                                blueprint identifier, and entity identifier must
+                                be provided, for example:
+
+                                ```json
+
+                                {
+                                  "operation": "delete",
+                                  "filter": "true",
+                                  "itemsToParse": "true",
+                                  "blueprint": "blueprint_identifier",
+                                  "entity": {
+                                    "identifier": "entity_identifier"
+                                  }
+                                }
+
+                                ```
+                              enum:
                                 - delete
                             - type: object
+                              title: delete
                               properties:
                                 type:
                                   enum:
@@ -34003,10 +34065,16 @@ paths:
                               additionalProperties: false
                         blueprint:
                           type: string
+                          description: The identifier of the blueprint to map the data into.
                         filter:
                           type: string
+                          description: A `jq` query used to filter exactly which payloads sent to the
+                            webhook are processed. If set to `"true"`, all
+                            payloads will be processed.
                         itemsToParse:
                           type: string
+                          description: A `jq` query that evaluates to an array of items, used to create
+                            multiple entities from a single webhook event.
                         entity:
                           type: object
                           properties:
@@ -34023,9 +34091,36 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - enum:
+                            - title: create
+                              description: >-
+                                If the operation is `create`, the [entity
+                                JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
+                                properties must be provided. For example:
+
+                                ```json
+
+                                {
+                                  "operation": "create",
+                                  "blueprint": "blueprint_identifier",
+                                  "filter": "true",
+                                  "itemsToParse": "true",
+                                  "entity": {
+                                      "identifier": "new-webhook",
+                                      "title": "MyNewWebhook",
+                                      "icon": "webhook",
+                                      "team": [],
+                                      "properties": {
+                                        "content": "my content"
+                                      },
+                                      "relations": {}
+                                  }
+                                }
+
+                                ```
+                              enum:
                                 - create
                             - type: object
+                              title: create
                               properties:
                                 type:
                                   enum:
@@ -34035,16 +34130,26 @@ paths:
                               additionalProperties: false
                         blueprint:
                           type: string
+                          description: The identifier of the blueprint to map the data into.
                         filter:
                           type: string
+                          description: A `jq` query used to filter exactly which payloads sent to the
+                            webhook are processed. If set to `"true"`, all
+                            payloads will be processed.
                         itemsToParse:
                           type: string
+                          description: A `jq` query that evaluates to an array of items, used to create
+                            multiple entities from a single webhook event.
                         entity:
                           type: object
+                          description: An object defining how to map the data from the webhook payload
+                            into Port entities.
                           properties:
                             identifier:
                               oneOf:
                                 - type: string
+                                  description: A `jq` expression used to get data from the webhook payload, to be
+                                    used as an identifier for the entity.
                                 - type: object
                                   properties:
                                     combinator:
@@ -34060,16 +34165,39 @@ paths:
                                     - rules
                             title:
                               type: string
+                              description: A `jq` expression used to get data from the webhook payload, to be
+                                used as the title of the entity.
                             icon:
                               type: string
+                              description: The icon of the entity.
                             team:
-                              type: string
+                              oneOf:
+                                - type: string
+                                - type: object
+                                  properties:
+                                    combinator:
+                                      type: string
+                                    rules:
+                                      type: array
+                                      items:
+                                        type: object
+                                        additionalProperties: true
+                                  additionalProperties: false
+                                  required:
+                                    - combinator
+                                    - rules
                             properties:
                               type: object
+                              description: An object containing the properties of the entity and their values.
+                                For more information and examples, check out the
+                                [documentation](${DOCS_URL}/build-your-software-catalog/custom-integration/webhook/).
                               propertyNames:
                                 type: string
                             relations:
                               type: object
+                              description: An object containing the relations of the entity and their values.
+                                For more information and examples, check out the
+                                [documentation](${DOCS_URL}/build-your-software-catalog/custom-integration/webhook/).
                               propertyNames:
                                 type: string
                           additionalProperties: false
@@ -34079,9 +34207,15 @@ paths:
                         - blueprint
                         - entity
                       additionalProperties: false
+                  description: The mapping definitions used to map the data from the webhook into
+                    Port entities. For more information and examples, check out
+                    the
+                    [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
                 enabled:
                   type: boolean
                   default: true
+                  description: Determines whether the webhook is active or not. If `false`, any
+                    incoming events will be dropped.
                 security:
                   type: object
                   properties:
@@ -34100,6 +34234,11 @@ paths:
                     requestIdentifierPath:
                       type: string
                   additionalProperties: false
+                  description: The security configuration of the webhook, used to tell Port how to
+                    verify the hashed signature sent with incoming
+                    requests.<br/>For more information and examples, check out
+                    the
+                    [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).
                 integrationType:
                   type: string
                   enum:
@@ -34114,8 +34253,75 @@ paths:
         - bearer:
             - create:integrations
       responses:
-        "200":
+        "401":
           description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
+        "413":
+          description: Request body is too large (limit is 1MiB)
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+                description: Request body is too large (limit is 1MiB)
+        "422":
+          description: The json provided does not match the route's schema
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: The json provided does not match the route's schema
     get:
       tags:
         - Webhook
@@ -34601,6 +34807,7 @@ paths:
               type: string
           in: query
           name: origin
+          explode: true
           required: false
         - schema:
             type: string
@@ -34628,6 +34835,7 @@ paths:
                   - action
           in: query
           name: resources
+          explode: true
           required: false
         - schema:
             type: array
@@ -34644,6 +34852,7 @@ paths:
                 - message
           in: query
           name: includes
+          explode: true
           required: false
         - schema:
             type: string
@@ -34713,6 +34922,7 @@ paths:
                 - users.status
           in: query
           name: fields
+          explode: true
           required: false
       security:
         - bearer:
@@ -34861,6 +35071,7 @@ paths:
                 - users.status
           in: query
           name: fields
+          explode: true
           required: false
         - schema:
             type: string
@@ -35114,6 +35325,7 @@ paths:
                 - roles.updatedAt
           in: query
           name: fields
+          explode: true
           required: false
       security:
         - bearer:
@@ -35601,6 +35813,7 @@ paths:
                 - enabled
           in: query
           name: fields
+          explode: true
           required: false
       security:
         - bearer:
@@ -37516,6 +37729,7 @@ paths:
                 - PENDING_CANCELLATION
           in: query
           name: status
+          explode: true
           required: false
         - schema:
             type: string
@@ -37997,7 +38211,7 @@ paths:
   "/v1/integration/{integrationInternalId}/syncMetrics":
       get:
         tags:
-          - Metrics
+          - Integrations
         parameters:
           - schema:
               type: string

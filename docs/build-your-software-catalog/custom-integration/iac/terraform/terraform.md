@@ -422,7 +422,9 @@ To delete an entity using Terraform, simply remove the `port_entity` resource de
 {label: "Entity", value: "entity"},
 {label: "Scorecard", value: "scorecard"},
 {label: "Aggregation Property", value: "aggregation"},
-{label: "Actions/Automations", value: "action"}
+{label: "Actions/Automations", value: "action"},
+{label: "Webhook", value: "webhook"},
+{label: "Integration", value: "integration"}
 ]} >
 
 <TabItem value="blueprint">
@@ -524,6 +526,50 @@ Then run the following command to import the action to the Terraform state:
 ```shell showLineNumbers
 terraform import port_action.myAction "{actionIdentifier}"
 ```
+
+</TabItem>
+
+<TabItem value="webhook">
+
+To import an existing webhook to the Terraform state, add a `port_webhook` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+# highlight-start
+resource "port_webhook" "myWebhook" {
+  ...
+}
+# highlight-end
+```
+
+Then run the following command to import the webhook to the Terraform state:
+
+```shell showLineNumbers
+terraform import port_webhook.myWebhook "{webhookIdentifier}"
+```
+
+</TabItem>
+
+<TabItem value="integration">
+
+To import an existing integration to the Terraform state, add a `port_integration` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+# highlight-start
+resource "port_integration" "myIntegration" {
+  ...
+}
+# highlight-end
+```
+
+Then run the following command to import the integration to the Terraform state:
+
+```shell showLineNumbers
+terraform import port_integration.myIntegration "{integrationId}"
+```
+
+:::tip Advanced integration management
+For a comprehensive example of how to manage Port integrations using Terraform, including downloading existing configurations and importing state, see [this detailed guide](/guides/all/import-and-manage-integration).
+:::
 
 </TabItem>
 

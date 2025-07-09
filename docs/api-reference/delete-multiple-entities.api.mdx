@@ -1,0 +1,71 @@
+---
+id: delete-multiple-entities
+title: "Delete multiple entities"
+description: "This route allows you to delete multiple entities (up to 100 entities per request) from a specific blueprint in your software catalog. All entities must belong to the same blueprint.<br/><br/>If any entity has dependent entities and `delete_dependents` is `false`, the entire operation will fail and no entities will be deleted.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities)."
+sidebar_label: "Delete multiple entities"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWEtv4zYQ/iuE9tAEiC073ZNRFPA2PgTdAos0PRSGEVPSyOaGIlWSiuMa/u+dISVL8SObBC0QLHpRzNc8vvlmhswmcnxho9E0mignnAAbzS6iDGxqROmEVtEoul0Ky4yuHDAupV5ZttYVc5plIAEni0o6UUpgUItgZ1VJ68PBoJ0rwTADf1Vg3TnLjS4YZ7aEVOQiZYmsoDRCOSYUSTfM6tytuAGWcselXvTZWMpWWlFZxxKQWi1Ik1sCs7yAVlD/p8TEP/vPdc64Woeza7bkFg0vQWU40QrkKmPz4NDdbtnOGbo+z7m0ML/wWugAWqXRHU74sJVAu3IupBehdCvSryRQw5R1LLrVTAI3ihUaZfEEsd0du2DpEtJ7RnOkcJrptCpw1aubnS2dK+0ojnHa9kttXF/oOKmEzHoEXK8BrlcDF9u1SnsZDnpO7yY/NOrO+9FFVMflk87W0WgTpVo5XKefvCylSL3q+KslOmwiiwYWnH65dQlIEJ18hdShnNIQLp5FuNqo6OzkxvA1bhQOiu68dRizRbTdp96Y9jOdN8ETFBVkDBjbEhDlFUJdB5FDHPDHZjAYbLfBPQxaRjSHDs15lglSxOWXjuE+2tun55ypACdKbpBkDrWjqCNAJFpjXFVEbuQc06KRhh6TO4iyIfcVSsHhAd2ifZ37eCCV5zTvyYjUTDEhA89QzS4heTdTVsItMdUMyMDXOltqUtbA9hH6I/60YTlmvqnUncie2Oy93Tf6T6wWKVcM2fGAAURj5uHonIzh1upUcDSbzEoN8J1ZHfN3lWLKU+8GSjiRC0FEz4LM8WMeRAo9eMTwClAp2NhALpGuvSCoh1YtDFgbf3BrdLbXaKZs4arZherOnwfJk/AzqIVbIvEayEqOwx1iu+p01xL5mzG/RVja7ZQMBFRbMRHDUI2wKim0EYltIa0MhtWzNMFKg2pG0xktoaulVjZk5eVgQH+e6msawY4itkoRN5tXUq6pWry4PLxS7vPVRN+HmlIV6ArhNPPVwoua/IuV5mlisOsrG+3XkH2tF2TcN+sJCvk4GB7ichVKBbupI/MahI9BhIdtp/CAMdocBaBA8PkCjqzt+YtyGzkv8/LjoZdjrEAW+1MKIaWJw3VByLr0XmF7VtqxXFcqe9dQtKeeB+WAaW9CooZ2+OMhtDehe7ME2zfdV5zG6wU3C2BnUhTC0dzwN/Hp/F3D+ToQX+5zDdzl5SFwVFnJ8xb+TEMAveAuDaHxF98fLKuhec8QvpWRb8FhG3DF29BSZ7u7DFVt6nijKH4YxrseZePNsda3xXurvI+hraPUr5vbVWUkymlaPC9F0+F9Gz5crWy7odMDfyd7QwiaTtg2iVL8Cp0bzbhCb4z420c0qlv4EniGp8hbAummvStPHnmB756nd91pE6iZvwPk2usTjvZFX9BANv5yjbLJzwD/sD+giJfauoJ7DtXmXJ14X0V7Aezc2P9/rH33j7Wauw4eXVxKjhxF8vh02NTJN40ehrixTT8cjE7cPSkDqYB0nkVLTSVqGm02Cbfwh5HbLU2H2z9lZiYsT+Sp+36XjWc3daU6Z//d0+UEJPeY2cffWA8cscA1X0he7sz38455FrHds66FaUYDIwintxPgle+YEzY2lVutuxY2th8l+ZYqcV3Fyfqw9ZdgY++WBLaiDlo6cSScGONzpXTP7p11OuLV5PPkdkIpVv9bpdCZfzbzFb358OsN1x4135/83CaSXC0q3/ujIJVaD68os7ud6953rvoH+XUUmv2WFlyhLzl29MhmE/oipn2zPyydPFGD2+ymSM3Q6n8AXM8zIg==
+sidebar_class_name: "delete api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete multiple entities"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/blueprints/{blueprint_identifier}/bulk/entities"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to delete multiple entities (up to 100 entities per request) from a specific blueprint in your software catalog. All entities must belong to the same blueprint.<br/><br/>If any entity has dependent entities and `delete_dependents` is `false`, the entire operation will fail and no entities will be deleted.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean","default":false},"in":"query","name":"delete_dependents","required":true,"description":"If `true`, this call will also delete all entities with a relation to the deleted entity."},{"schema":{"type":"string"},"in":"query","name":"run_id","required":false,"description":"You can provide a `run_id` to associate the created entities with a specific [action run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run)."},{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint to operate on."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"entities":{"type":"array","items":{"type":"string"},"description":"Array of entity identifiers to delete","minItems":1,"maxItems":100}},"required":["entities"],"additionalProperties":false}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Entities deleted successfully.","content":{"application/json":{"schema":{"description":"Entities deleted successfully.","type":"object","properties":{"ok":{"enum":[true]},"deletedEntities":{"type":"array","items":{"type":"string"},"description":"Array of deleted entity IDs"}},"required":["deletedEntities","ok"],"additionalProperties":false}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -69,7 +69,7 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Rea-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -137,7 +137,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.8.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-sonarqube-integration/values.yaml
