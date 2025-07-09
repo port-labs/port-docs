@@ -129,7 +129,7 @@ docker run \
 
 :::tip Docker parameters
 
-The command below contains placeholder values in angle brackets (e.g., `<PORT_CLIENT_ID>`). Be sure to replace them with your actual values before running the command.
+The command above contains placeholder values in angle brackets (e.g., `<PORT_CLIENT_ID>`). Be sure to replace them with your actual values before running the command.
 
 :::
 
