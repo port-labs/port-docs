@@ -1326,8 +1326,7 @@ export const availableGuides = [
         logos: ["PagerDuty"],
         link: "/guides/all/track-and-show-mtbf-for-services",
     },
-   {
-
+    {
         title: "Manage your Kubernetes deployments",
         description: "Create a comprehensive Kubernetes deployment management system to restart deployments and delete pods",
         tags: ["K8s for devs", "Kubernetes", "GitHub", "Actions"],

@@ -9,15 +9,11 @@ import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_sec
 
 # Track and show MTBF for services
 
-This guide demonstrates how to implement **Mean Time Between Failures (MTBF)** tracking for your PagerDuty services using Port's. 
-You will learn how to calculate, visualize, and monitor MTBF metrics to improve service reliability.
+This demonstrates how to implement **Mean Time Between Failures (MTBF)** tracking for your PagerDuty services using Port. MTBF measures the average time between service failures and helps identify reliability trends.
 
+**MTBF = Total Operational Time ÷ Number of Failures**
 
-**MTBF (Mean Time Between Failures)** measures the average operational time between successive failures of a service.   
-Unlike MTTR which shows how fast you recover from incidents, MTBF shows how often failures occur - making it a critical reliability metric.
-
-
-**Mean Time Between Failures** = **Total Operational Time** / **Number of Failures**. That is, if a service runs for **720** hours and experiences **3** incidents, the **MTBF** is **240** hours. Higher **MTBF** values indicate better reliability and fewer incidents and vice versa.
+For example: A service running 720 hours with 3 incidents has an MTBF of 240 hours. Higher MTBF values indicate better reliability.
 
 <img src="/img/guides/mtbfDashboard.png" border="1px" width="100%" />
 
@@ -234,14 +230,13 @@ First, add the required secrets to your portal:
 3. Click on the `Secrets` tab.
 
 4. Click on `+ Secret` and add the following secret:
-   - `PAGERDUTY_API_KEY`: Your PagerDuty API token
+   - `PAGERDUTY_API_KEY`: Your PagerDuty API token.
 
 
 
 ### Set reliability target action
 
 Create an action to set MTBF targets for services:
-
 
 1. Click on the `+ New Action` button.
 
@@ -312,9 +307,9 @@ Create an action to set MTBF targets for services:
 Before creating the automation, we need to set up a dedicated PagerDuty service to receive MTBF threshold breach alerts. This ensures all MTBF-related incidents are centrally managed and don't get mixed with incidents from the monitored services themselves.
 
 Create a new PagerDuty service with the following details:
-- **Name**: `MTBF Threshold Monitor`
-- **Description**: `Monitors MTBF thresholds across all services and alerts when targets are breached`
-- **Integration Type**: Events API v2
+- **Name**: `MTBF Threshold Monitor`.
+- **Description**: `Monitors MTBF thresholds across all services and alerts when targets are breached`.
+- **Integration Type**: Events API v2.
 
 :::tip Create PagerDuty service
 If you need help creating a PagerDuty service, you can use Port's self-service action described in our [Create PagerDuty Service guide](/guides/all/create-pagerduty-service). This provides both webhook and GitHub workflow options for automated service creation.
@@ -333,8 +328,8 @@ Once you've created your MTBF monitoring service, add its routing key to Port se
 4. Click on the `Secrets` tab.
 
 5. Click on `+ Secret` and add the following:
-   - **Key**: `MONITORING_SVC_PAGERDUTY_ROUTING_KEY`
-   - **Value**: Your MTBF monitoring service integration key (e.g., `a1b2c3d4e5f6789012345678901234567890abcd`)
+   - **Key**: `MONITORING_SVC_PAGERDUTY_ROUTING_KEY`.
+   - **Value**: Your MTBF monitoring service integration key (e.g., `a1b2c3d4e5f6789012345678901234567890abcd`).
 
 6. Click `Save`.
 
@@ -431,7 +426,7 @@ Create the following widgets in your new dashboard:
 
 1. Click **`+ Widget`** and select **Number Chart**.
 
-2. Title: `Average MTBF (30 days)` (add the `pagerduty` icon)
+2. Title: `Average MTBF (30 days)` (add the `pagerduty` icon).
 
 3. Select `Aggregate by property` chart type and choose **PagerDuty Service** blueprint.
 
@@ -449,7 +444,7 @@ Create the following widgets in your new dashboard:
 
 1. Click **`+ Widget`** and select **Table**.
 
-2. Title: `Services Requiring Attention` (add the `Alert` icon)
+2. Title: `Services Requiring Attention` (add the `Alert` icon).
 
 3. Choose the **PagerDuty Service** blueprint.
 
@@ -483,7 +478,7 @@ Create the following widgets in your new dashboard:
 
 1. Click **`+ Widget`** and select **Number Chart**.
 
-2. Title: `Total Incidents (30 days)` (add the `Alert` icon)
+2. Title: `Total Incidents (30 days)` (add the `Alert` icon).
 
 3. Select `Count entities` chart type and choose **PagerDuty Service** blueprint.
 
@@ -517,37 +512,37 @@ Create the following widgets in your new dashboard:
 ## Let's test it!
 
 1. **Verify MTBF calculations:**
-   - Navigate to your [PagerDuty Service catalog](https://app.getport.io/organization/catalog) 
-   - Open any service and check that MTBF values are populated
-   - Verify the MTBF trend shows the correct status
+   - Navigate to your [PagerDuty Service catalog](https://app.getport.io/organization/catalog). 
+   - Open any service and check that MTBF values are populated.
+   - Verify the MTBF trend shows the correct status.
 
 2. **Test the Generate MTBF Report action:**
-   - Go to a service with incident history
-   - Click `Generate MTBF Report`
-   - Select a time range and execute the action
-   - Review the detailed service information returned
+   - Go to a service with incident history.
+   - Click `Generate MTBF Report`.
+   - Select a time range and execute the action.
+   - Review the detailed service information returned.
 
 3. **Set reliability targets:**
-   - Click `Set MTBF Target` on a critical service
-   - Set an appropriate target (e.g., 168 hours for weekly failures)
-   - Configure warning (75%) and critical (50%) thresholds
+   - Click `Set MTBF Target` on a critical service.
+   - Set an appropriate target (e.g., 168 hours for weekly failures).
+   - Configure warning (75%) and critical (50%) thresholds.
 
 4. **Monitor the dashboard:**
-   - Open your **Service Reliability (MTBF) Monitoring** dashboard
-   - Review services requiring attention
-   - Check MTBF trends and target compliance
+   - Open your **Service Reliability (MTBF) Monitoring** dashboard.
+   - Review services requiring attention.
+   - Check MTBF trends and target compliance.
 
 ## Best practices
 
-- **Set realistic targets**: Base MTBF targets on historical performance and business requirements
-- **Monitor trends**: Focus on trend direction rather than absolute values - improving trends indicate better reliability
-- **Investigate degrading services**: Services with declining MTBF need immediate attention and investigation
-- **Regular review**: Schedule weekly reviews of MTBF metrics with engineering teams
-- **Combine with MTTR**: Use MTBF alongside MTTR metrics for comprehensive reliability monitoring
+- **Set realistic targets**: Base MTBF targets on historical performance and business requirements.
+- **Monitor trends**: Focus on trend direction rather than absolute values - improving trends indicate better reliability.
+- **Investigate degrading services**: Services with declining MTBF need immediate attention and investigation.
+- **Regular review**: Schedule weekly reviews of MTBF metrics with engineering teams.
+- **Combine with MTTR**: Use MTBF alongside MTTR metrics for comprehensive reliability monitoring.
 
 ## Related guides
 
-- **[Manage and visualize your PagerDuty incidents](/guides/all/manage-and-visualize-pagerduty-incidents)**: Complete incident management with PagerDuty
-- **[Track SLOs and SLIs for services](/guides/all/track-slos-and-slis-for-services)**: Implement comprehensive service level monitoring  
-- **[Acknowledge Incident In PagerDuty](/guides/all/acknowledge-incident)**: Handle incident acknowledgment workflows
-- **[Resolve an Incident in PagerDuty](/guides/all/resolve-incident)**: Manage incident resolution processes 
+- **[Manage and visualize your PagerDuty incidents](/guides/all/manage-and-visualize-pagerduty-incidents)**: Complete incident management with PagerDuty.
+- **[Track SLOs and SLIs for services](/guides/all/track-slos-and-slis-for-services)**: Implement comprehensive service level monitoring.  
+- **[Acknowledge Incident In PagerDuty](/guides/all/acknowledge-incident)**: Handle incident acknowledgment workflows.
+- **[Resolve an Incident in PagerDuty](/guides/all/resolve-incident)**: Manage incident resolution processes.
