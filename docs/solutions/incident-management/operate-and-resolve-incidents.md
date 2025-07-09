@@ -41,7 +41,7 @@ Loop in additional teams or leadership with a single action.
 
 Wrap up the incident, document what happened, and return to normal.
 - [Resolve Incident](/guides/all/resolve-incident)
-- [Delete a ServiceNow Incident](/guides/all/delete-servicenow-incident/)
+- [Delete a ServiceNow Incident](/guides/all/interact-with-servicenow#delete-a-servicenow-incident)
 
 ### 2. Grant temporary permissions
 
