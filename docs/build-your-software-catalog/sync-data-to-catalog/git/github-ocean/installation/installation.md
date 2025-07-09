@@ -89,7 +89,7 @@ helm upgrade --install github-ocean port-labs/port-ocean \
 	--set integration.config.githubOrganization=<GITHUB_ORGANIZATION>  \
 	--set integration.config.githubHost=<GITHUB_HOST>  \
 	--set integration.secrets.githubToken="<GITHUB_PAT>"  \
-	--set integration.version="1.0.4-beta"  \
+	--set integration.version="1.0.5-beta"  \
 	--set initializePortResources=true  \
 	--set sendRawDataExamples=true  \
 	--set scheduledResyncInterval=360  \
@@ -114,7 +114,7 @@ scheduledResyncInterval: 120
 integration:
   identifier: my-ocean-github-integration
   type: github-ocean
-  version: 1.0.4-beta
+  version: 1.0.5-beta
   eventListener:
     type: POLLING
   config:
@@ -286,7 +286,7 @@ pipeline {
                         sh('''
                             #Set Docker image and run the container
                             integration_type="github-ocean"
-                            version="1.0.4-beta"
+                            version="1.0.5-beta"
                             image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
@@ -332,7 +332,7 @@ steps:
   - script: |
       # Set Docker image and run the container
       integration_type="github-ocean"
-      version="1.0.4-beta"
+      version="1.0.5-beta"
       image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
       docker run -i --rm --platform=linux/amd64 \
@@ -371,7 +371,7 @@ default:
 
 variables:
   INTEGRATION_TYPE: github-ocean
-  VERSION: 1.0.4-beta
+  VERSION: 1.0.5-beta
 stages:
   - ingest
 ingest_data:
