@@ -199,6 +199,7 @@ This table summarizes the available parameters for the installation.
 | `integration.eventListener.type`        | The event listener type.                                                                                                | ✅       |
 | `integration.config.githubOrganization` | The GitHub organization to sync data from.                                                                              | ✅       |
 | `integration.config.githubHost`         | The GitHub instance URL.                                                                                                | ✅       |
+| `integration.config.webhookSecret`         | A secret to secure webhooks from GitHub. This is optional but highly recommended for security.                                                                                               | ❌      |
 | `integration.secrets.githubToken`       | The GitHub access token.                                                                                                | ✅       |
 | `scheduledResyncInterval`               | The number of minutes between each resync.                                                                              | ❌       |
 | `initializePortResources`               | When `true`, the integration will create default blueprints and port-app-config.yml mapping.                            | ❌       |
