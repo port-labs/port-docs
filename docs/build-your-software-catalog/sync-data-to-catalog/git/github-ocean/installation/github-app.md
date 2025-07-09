@@ -141,7 +141,7 @@ base64 -i <path/to/downloaded/private_key.pem>
 
 You can accomplish the same on Windows using Powershell, replace "private key text" with the content of your downloaded github app private key:
 ```powershell
-[Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\path\to\downloaded\private_key.pem"))
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("path\to\downloaded\private_key.pem"))
 
 ```
 
