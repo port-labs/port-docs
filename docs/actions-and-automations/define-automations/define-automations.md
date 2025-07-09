@@ -52,8 +52,7 @@ Click on the `+ Automation` button in the top-right corner, then follow the step
 
 ## Automation JSON structure
 
-Automations can also be defined using a JSON format.  
-The JSON structure looks like this:
+The basic structure of an automation looks like this:
 
 ```json showLineNumbers
 {
@@ -81,7 +80,7 @@ The JSON structure looks like this:
 }
 ```
 <br/>
-Make sure to set the `publish` field to `true` if you want to enable the automation.
+Make sure the `publish` field is set to `true` if you want to enable the automation.
 
 The table below describes the fields in the JSON structure (fields in **bold** are required):
 | Field | Description |

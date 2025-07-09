@@ -206,7 +206,8 @@ The other trigger events have the same structure, with the following differences
 
 ## Trigger JSON structure
 
-An automation's trigger is defined under the `trigger` key:
+In some cases, you may prefer to define the trigger using a JSON object.  
+The trigger is defined under the `trigger` object in the automation's JSON structure.
 
 ```json showLineNumbers
 {
