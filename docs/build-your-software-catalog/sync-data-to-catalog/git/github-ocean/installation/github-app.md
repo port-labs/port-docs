@@ -120,7 +120,7 @@ docker run \
   -e OCEAN__PORT__CLIENT_ID=<PORT_CLIENT_ID> \
   -e OCEAN__PORT__CLIENT_SECRET=<PORT_CLIENT_SECRET> \
   -e OCEAN__PORT__BASE_URL=https://api.getport.io \
-  -e OCEAN__BASE_URL=<https.example.com> \
+  -e OCEAN__BASE_URL=<https.example.com> \ #optional, only required if you want to enable live-events
   -e OCEAN__EVENT_LISTENER__TYPE=POLLING \
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GITHUB_HOST> \ # e.g https://api.github.com
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<GITHUB_ORGANIZATION> \
@@ -131,19 +131,19 @@ docker run \
   ghcr.io/port-labs/port-ocean-github-ocean:1.0.4-beta
 ```
 
-| Env variable                                         | Description                                                                                    |
-| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `OCEAN__PORT__CLIENT_ID`                             | Port client id for interacting with the API                                                    |
-| `OCEAN__PORT__CLIENT_SECRET`                         | Port client secret for interacting with the API                                                |
-| `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                            |
-| `OCEAN__BASE_URL`                                    | Integration instance base url, real-time live events will be enabled if this is configured.                                        |
-| `OCEAN__EVENT_LISTENER__TYPE`                        | How Ocean will retrieve config changes from Port.                                              |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_HOST`         | The API endpoint for your GitHub instance. For GitHub Enterprise, this will be `https://<org_name.ghe.com>`. Defaults to `https://api.github.com` if not provided. |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                                      |
-| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | A secret to secure webhooks from GitHub. This is optional but highly recommended for security. |
-| `OCEAN__INTEGRATION__IDENTIFIER`                     | A unique identifier for the integration instance. Useful if you are running multiple self-hosted GitHub integrations. Defaults to `github-ocean`. |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                                   |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. You can use a tool like https://www.base64encode.org/ |
+| Env variable                                         | Description                                                                                    | Required |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------ |
+| `OCEAN__PORT__CLIENT_ID`                             | Port client id for interacting with the API                                                    | ✅  |
+| `OCEAN__PORT__CLIENT_SECRET`                         | Port client secret for interacting with the API                                                | ✅  |
+| `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                            | ✅  |
+| `OCEAN__BASE_URL`                                    | Integration instance base url, real-time live events will be enabled if this is configured.   |  ❌ | 
+| `OCEAN__EVENT_LISTENER__TYPE`                        | How Ocean will retrieve config changes from Port.                                              | ✅  |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_HOST`         | The API endpoint for your GitHub instance. For GitHub Enterprise, this will be `https://<org_name.ghe.com>`. Defaults to `https://api.github.com` if not provided. | ❌   |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                                      | ✅  |
+| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | A secret to secure webhooks from GitHub. This is optional but highly recommended for security. |  ❌ |
+| `OCEAN__INTEGRATION__IDENTIFIER`                     | A unique identifier for the integration instance. Useful if you are running multiple self-hosted GitHub integrations. Defaults to `github-ocean`. | ✅  |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                                   | ✅  |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. You can use a tool like https://www.base64encode.org/ | ✅  |
 
 
 <PortApiRegionTip/>
