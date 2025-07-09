@@ -1325,5 +1325,13 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "Webhook"],
         logos: ["GitHub", "Webhook"],
         link: "/guides/all/send-leaked-secrets-from-github-to-port",
+    },
+    {
+        title: "Track and show MTBF for services",
+        description: "Track Mean Time Between Failures (MTBF) for your services to measure reliability and identify improvement opportunities",
+        tags: ["Incident management", "Engineering metrics", "Dashboards", "Scorecards"],
+        additionalTags: ["PagerDuty", "GitHub"],
+        logos: ["PagerDuty"],
+        link: "/guides/all/track-and-show-mtbf-for-services",
     }
 ]
