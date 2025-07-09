@@ -109,11 +109,6 @@ docker pull ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
 
 Run the following command to start the app:
 
-:::tip Docker parameters
-
-The command below contains placeholder values in angle brackets (e.g., `<PORT_CLIENT_ID>`). Be sure to replace them with your actual values before running the command.
-
-:::
 
 ```bash showLineNumbers
 docker run \
@@ -131,6 +126,29 @@ docker run \
   ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
 ```
 
+
+:::tip Docker parameters
+
+The command below contains placeholder values in angle brackets (e.g., `<PORT_CLIENT_ID>`). Be sure to replace them with your actual values before running the command.
+
+:::
+
+:::tip base64 encoding
+On MacOS and Linux you can get base64 encoded private key by using:
+```sh
+base64 -i <path/to/downloaded/private_key.pem>
+```
+
+You can accomplish the same on Windows using Powershell, replace "private key text" with the content of your downloaded github app private key:
+```powershell
+[Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\path\to\downloaded\private_key.pem"))
+
+```
+
+Online:
+https://www.base64encode.org/ 
+:::
+
 | Env variable                                         | Description                                                                                    | Required |
 | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------ |
 | `OCEAN__PORT__CLIENT_ID`                             | Port client id for interacting with the API                                                    | ✅  |
@@ -143,7 +161,7 @@ docker run \
 | `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | A secret to secure webhooks from GitHub. This is optional but highly recommended for security. |  ❌ |
 | `OCEAN__INTEGRATION__IDENTIFIER`                     | A unique identifier for the integration instance. Useful if you are running multiple self-hosted GitHub integrations. Defaults to `github-ocean`. | ✅  |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                                   | ✅  |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. You can use a tool like https://www.base64encode.org/ | ✅  |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. | ✅  |
 
 
 <PortApiRegionTip/>
