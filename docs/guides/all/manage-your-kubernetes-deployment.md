@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 
-# Manage your Kubernetes deployment
+# Manage your Kubernetes deployments
 
 This guide demonstrates how to bring your Kubernetes deployment management experience into Port. You will learn how to:
 
