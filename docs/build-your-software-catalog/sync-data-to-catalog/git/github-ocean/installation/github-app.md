@@ -155,10 +155,10 @@ https://www.base64encode.org/
 | `OCEAN__PORT__CLIENT_SECRET`                         | Port client secret for interacting with the API                                                | ✅  |
 | `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                            | ✅  |
 | `OCEAN__BASE_URL`                                    | Integration instance base url, real-time live events will be enabled if this is configured.   |  ❌ | 
+| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | A secret to secure webhooks from GitHub. This is optional but highly recommended for security if you enable live-events. |  ❌ |
 | `OCEAN__EVENT_LISTENER__TYPE`                        | Define the appropriate event listener type to handle incoming events and resync requests from Port. This listener will forward the events to the GitHub Ocean integration. For more details, see the [Port Event Listener documentation](https://ocean.getport.io/framework/features/event-listener)                                              | ✅  |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_HOST`         | The API endpoint for your GitHub instance. For GitHub Enterprise, this will be `https://<org_name.ghe.com>`. Defaults to `https://api.github.com` if not provided. | ❌   |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                                      | ✅  |
-| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | A secret to secure webhooks from GitHub. This is optional but highly recommended for security. |  ❌ |
 | `OCEAN__INTEGRATION__IDENTIFIER`                     | A unique identifier for the integration instance. Useful if you are running multiple self-hosted GitHub integrations. Defaults to `github-ocean`. | ✅  |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                                   | ✅  |
 | `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. | ✅  |
