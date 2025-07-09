@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Interact with ServiceNow records
 
-This guide demonstrates how to implement a self-service action that interacts with any ServiceNow record and delete ServiceNow incidents directly from Port using **synced webhooks**.
+This guide demonstrates how to implement self-service actions that interact with any ServiceNow record and delete ServiceNow incidents directly from Port using **synced webhooks**.
 
 ## Use cases
 - Provide developers and managers with safe, self-serve CRUD operations on ServiceNow records.
