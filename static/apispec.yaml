@@ -7044,6 +7044,151 @@ paths:
               <td>An internal error occurred</td>
             </tr>
             </table>
+  "/v1/blueprints/{blueprint_identifier}/bulk/entities":
+    delete:
+      summary: Delete multiple entities
+      tags:
+        - Entities
+      description: This route allows you to delete multiple entities (up to 100
+        entities per request) from a specific blueprint in your software
+        catalog. All entities must belong to the same blueprint.<br/><br/>If any
+        entity has dependent entities and `delete_dependents` is `false`, the entire
+        operation will fail and no entities will be deleted.<br/><br/>To learn
+        more about entities, check out the
+        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entities:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of entity identifiers to delete
+                  minItems: 1
+                  maxItems: 100
+              required:
+                - entities
+              additionalProperties: false
+        required: true
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: delete_dependents
+          required: true
+          description: If `true`, this call will also delete all entities with a relation
+            to the deleted entity.
+        - schema:
+            type: string
+          in: query
+          name: run_id
+          required: false
+          description: You can provide a `run_id` to associate the created entities with a
+            specific [action
+            run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).
+        - schema:
+            type: string
+            minLength: 1
+          in: path
+          name: blueprint_identifier
+          required: true
+          description: The identifier of the blueprint to operate on.
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Entities deleted successfully.
+          content:
+            application/json:
+              schema:
+                description: Entities deleted successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  deletedEntities:
+                    type: array
+                    items:
+                      type: string
+                    description: Array of deleted entity IDs
+                required:
+                  - deletedEntities
+                  - ok
+                additionalProperties: false
+        "401":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
+        "413":
+          description: Request body is too large (limit is 1MiB)
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+                description: Request body is too large (limit is 1MiB)
+        "422":
+          description: The json provided does not match the route's schema
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: The json provided does not match the route's schema
   /v1/entities/search:
     post:
       summary: Search entities
