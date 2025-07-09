@@ -1,7 +1,7 @@
 | Parameter | Description | Example | Required |
 | --------- | ----------- | ------- | -------- |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN` | A GitHub Personal Access Token (PAT) with `repo` and `admin:org` scopes to authenticate with your GitHub Organization. | | ✅  |
-| `OCEAN__INTEGRATION__CONFIG__GTIHUB_HOST` | The URL of your Github organization (will default to https://api.github.com, pass your self-hosted URL) | https://api.github.com | ❌  |
+| `OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN` | A GitHub Personal Access Token (PAT) with authenticate with your GitHub Organization. | | ✅  |
+| `OCEAN__INTEGRATION__CONFIG__GTIHUB_HOST` | The API endpoint for your GitHub instance. For GitHub Enterprise Cloud, this will be `https://<org_name.ghe.com>`. Defaults to `https://api.github.com` if not provided.  | | ❌  |
 | `OCEAN__INTEGRATION__CONFIG__GTIHUB_ORGANIZATION` | The name of your Github organization | | ✅ |
 | `OCEAN__PORT__CLIENT_ID` | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id | | ✅ |
 | `OCEAN__PORT__CLIENT_SECRET` | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | | ✅ |

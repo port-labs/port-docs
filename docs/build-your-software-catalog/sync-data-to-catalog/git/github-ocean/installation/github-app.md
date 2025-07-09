@@ -139,7 +139,7 @@ On MacOS and Linux you can get base64 encoded private key by using:
 base64 -i <path/to/downloaded/private_key.pem>
 ```
 
-You can accomplish the same on Windows using Powershell, replace "private key text" with the content of your downloaded github app private key:
+You can accomplish the same on Windows using Powershell:
 ```powershell
 [Convert]::ToBase64String([IO.File]::ReadAllBytes("path\to\downloaded\private_key.pem"))
 
