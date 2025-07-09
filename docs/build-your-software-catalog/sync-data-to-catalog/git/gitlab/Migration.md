@@ -2,7 +2,7 @@
 sidebar_position: 6
 ---
 
-# Migration Guide to GitLab-v2
+# Migration guide to the v2 integration
 
 This guide helps you migrate from Port's GitLab integration to the new GitLab-v2 integration.
 
