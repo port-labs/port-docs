@@ -565,7 +565,6 @@ Groups in GitLab-v2 provide cleaner member resync and better hierarchy handling.
 | **File sync issues** | Incorrect search syntax | Update file paths to use GitLab Advanced Search syntax (e.g., `*package.json` instead of `**/package.json`) |
 | **Repository not found errors** | Outdated repository names in file/folder selectors | Update repo names to use full namespace format (`org/repo`) |
 
-## Getting help
 
 If you encounter issues during migration:
 
