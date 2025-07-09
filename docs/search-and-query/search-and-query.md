@@ -450,15 +450,25 @@ To find all services that are related to a specific cluster (e.g., "production-c
 
 ```json showLineNumbers
 {
-  "property": {
-    "path": ["deployedOn"]
-  },
-  "operator": "matchAny",
-  "value": "production-cluster"
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "$blueprint",
+      "operator": "=",
+      "value": "service"
+    },
+    {
+      "property": {
+        "path": ["deployedOn"]
+      },
+      "operator": "matchAny",
+      "value": "production-cluster"
+    }
+  ]
 }
 ```
 
-This will return all services that have a deployment in the "production-cluster".
+This will return all **services** that have a deployment in the "production-cluster".
 
 ---
 
@@ -468,16 +478,26 @@ To find all deployments related to a specific service (e.g., "production-service
 
 ```json showLineNumbers
 {
-  "property": {
-    "path": ["deployedOn", "deployments"],
-    "fromBlueprint": "service"
-  },
-  "operator": "matchAny",
-  "value": "production-service"
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "$blueprint",
+      "operator": "=",
+      "value": "deployment"
+    },
+    {
+      "property": {
+        "path": ["deployedOn", "deployments"],
+        "fromBlueprint": "service"
+      },
+      "operator": "matchAny",
+      "value": "production-service"
+    }
+  ]
 }
 ```
 
-This will return all deployments that are related to the "production-service".
+This will return all **deployments** that are related to the "production-service".
 
 ---
 

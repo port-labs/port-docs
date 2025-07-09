@@ -27,7 +27,7 @@ In this guide, we will use the `Service` blueprint that is created by default du
 
 Here is an example action that locks service deployment environments — useful during maintenance or peak traffic periods. To introduce approvals, we will modify the action to require approval before execution.
 
-This action can be reused from our [Lock and Unlock Service guide](https://docs.port.io/guides/all/lock-and-unlock-service-in-port/).
+This action can be reused from our [Lock and Unlock Service guide](https://docs.port.io/guides/all/lock-and-unlock-services-in-port/).
 
 <details>
 <summary><b> Updated lock service action (Click to expand) </b></summary>

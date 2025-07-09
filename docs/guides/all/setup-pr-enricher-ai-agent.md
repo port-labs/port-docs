@@ -122,14 +122,14 @@ We will need two automations:
         },
         "invocationMethod": {
           "type": "WEBHOOK",
-          "url": "https://api.getport.io/v1/agent/pr_review_assistant/invoke",
+          "url": "https://api.getport.io/v1/agent/pr_assistant_ai_agent/invoke",
           "synchronized": true,
           "body": {
-            "prompt": "Analyze pull request with pull request identifier '{{ .event.diff.after.properties.prNumber }}'",
+            "prompt": "Analyze pull request with entity identifier '{{ .event.diff.after.identifier }}'",
             "labels": {
               "source": "Automation",
-              "prNumber": "{{ .event.diff.after.properties.prNumber }}",
-              "repo": "{{ .event.diff.after.relations.repository }} "
+              "prNumber": "{{ .event.diff.after.properties.prNumber | tostring }}",
+              "repo": "{{ (.event.diff.after.properties.link | tostring | split(\"/\"))[3] + \"/\" + ((.event.diff.after.properties.link | tostring | split(\"/\"))[4]) }}"
             }
           }
         },
@@ -153,10 +153,10 @@ Follow GitHub's guide to [create a fine-grained personal access token](https://d
    - Click on **Credentials**.
    - Click on the `Secrets` tab.
    - Click on `+ Secret` and add the following secret:
-      - `GITHUB_TOKEN` - Your GitHub Personal Access Token
+      - `GITHUB_TOKEN` - Your GitHub Personal Access Token.
 
-3. Go back to the [Automations](https://app.getport.io/automations) page
-4. Click on `+ Automation`
+3. Go back to the [Automations](https://app.getport.io/automations) page.
+4. Click on `+ Automation`.
 5. Copy and paste the following JSON schema:
    <details>
    <summary><b>Post PR comment from agent response automation (Click to expand)</b></summary>
@@ -175,7 +175,7 @@ Follow GitHub's guide to [create a fine-grained personal access token](https://d
        "condition": {
          "type": "JQ",
          "expressions": [
-           ".event.diff.after.relations.agent == \"pr_review_assistant\"",
+           ".event.diff.after.relations.agent == \"pr_assistant_ai_agent\"",
            ".event.diff.after.properties.status == \"Completed\""
          ],
          "combinator": "and"
@@ -194,8 +194,8 @@ Follow GitHub's guide to [create a fine-grained personal access token](https://d
          "ref": "main",
          "inputs": {
            "comment": "{{ .event.diff.after.properties.response }}",
-           "pr": "{{ .event.diff.after.properties.prNumber }}",
-           "repo": "{{ .event.diff.after.relations.repository }}"
+           "pr": "{{ .event.diff.after.properties.labels.prNumber }}",
+           "repo": "{{ .event.diff.after.properties.labels.repo }}"
          }
        }
      },
@@ -218,99 +218,167 @@ Now let's create the workflow file that contains the logic to post the comment.
 
 <GithubDedicatedRepoHint/>
 
+Choose the authentication method that best fits your setup:
+
+<Tabs>
+<TabItem value="pat" label="Personal access token" default>
+
+This approach uses your personal GitHub account to comment on pull requests. It's simpler to set up but comments will appear from your personal account.
+
 In your dedicated workflow repository, ensure you have a `.github/workflows` directory.
-1. Create a new file named `post-pr-comment.yml`  
+
+1. Create a new file named `post-pr-comment.yml`.  
+
 2. Copy and paste the following snippet:
-      <details>
-      <summary><b>Post PR comment workflow (Click to expand)</b></summary>
 
-        ```yaml showLineNumbers
+    <details>
+    <summary><b>Post PR comment workflow using PAT (Click to expand)</b></summary>
 
-          name: Comment on PR
+    ```yaml showLineNumbers
+    name: Comment on PR
 
-          on:
-            workflow_dispatch:
-              inputs:
-                comment:
-                  description: 'The comment text to post'
-                  required: true
-                  type: string
-                repo:
-                  description: 'Repository in "owner/repo" format (e.g., port-labs/puddle-integrations)'
-                  required: true
-                  type: string
-                pr:
-                  description: 'Pull request number'
-                  required: true
-                  type: string
+    on:
+      workflow_dispatch:
+        inputs:
+          comment:
+            description: 'The comment text to post'
+            required: true
+            type: string
+          repo:
+            description: 'Repository in "owner/repo" format (e.g., port-labs/puddle-integrations)'
+            required: true
+            type: string
+          pr:
+            description: 'Pull request number'
+            required: true
+            type: string
 
-          jobs:
-            comment:
-              runs-on: ubuntu-latest
-              steps:
-                - name: Set up Python
-                  uses: actions/setup-python@v4
-                  with:
-                    python-version: '3.x'
+    jobs:
+      comment:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Comment on PR using PAT
+            env:
+              GITHUB_TOKEN: ${{ secrets.COMMENT_ON_PR_TOKEN }}
+              COMMENT: ${{ github.event.inputs.comment }}
+              REPO: ${{ github.event.inputs.repo }}
+              PR_NUMBER: ${{ github.event.inputs.pr }}
+            run: |
+              # Split repo into owner and name
+              OWNER=$(echo "$REPO" | cut -d'/' -f1)
+              REPO_NAME=$(echo "$REPO" | cut -d'/' -f2)
+              
+              # Post comment to PR using GitHub CLI
+              echo "$COMMENT" | gh pr comment "$PR_NUMBER" --repo "$OWNER/$REPO_NAME" --body-file -
+    ```
+    </details>
 
-                - name: Install Python dependencies
-                  run: |
-                    pip install PyJWT requests cryptography
+    :::info Required GitHub Secrets
+    For this workflow to function properly, you need to add the following secret to your GitHub repository:
 
-                - name: Comment on PR using GitHub App
-                  env:
-                    PEM: ${{ secrets.PORT_GITHUB_APP_PEM }}
-                    APP_ID: ${{ secrets.PORT_GITHUB_APP_ID }}
-                    INSTALLATION_ID: ${{ secrets.PORT_GITHUB_APP_INSTALLATION_ID }}
-                    COMMENT: ${{ github.event.inputs.comment }}
-                    REPO: ${{ github.event.inputs.repo }}
-                    PR_NUMBER: ${{ github.event.inputs.pr }}
-                  run: |
-                    python - <<'EOF'
-                    import os, time, jwt, requests
+    - `COMMENT_ON_PR_TOKEN`: Your Personal Access Token with **Read and Write** permissions for **Pull requests**. Follow [GitHub's guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) to create one.
+    :::
 
-                    # Load environment variables
-                    pem = os.environ['PEM']
-                    app_id = os.environ['APP_ID']
-                    installation_id = os.environ['INSTALLATION_ID']
-                    comment = os.environ['COMMENT']
-                    repo = os.environ['REPO']
-                    pr_number = os.environ['PR_NUMBER']
+3. Commit and push the changes to your repository.
 
-                    # Generate JWT (valid for 10 minutes)
-                    now = int(time.time())
-                    payload = {
-                        'iat': now - 60,
-                        'exp': now + (10 * 60),
-                        'iss': app_id
-                    }
-                    jwt_token = jwt.encode(payload, pem, algorithm='RS256')
+</TabItem>
+<TabItem value="app" label="GitHub app">
 
-                    # Obtain an installation access token
-                    headers = {
-                        'Authorization': f'Bearer {jwt_token}',
-                        'Accept': 'application/vnd.github+json'
-                    }
-                    token_url = f"https://api.github.com/app/installations/{installation_id}/access_tokens"
-                    resp = requests.post(token_url, headers=headers)
-                    resp.raise_for_status()
-                    token = resp.json()['token']
+This approach uses a GitHub App to comment on pull requests. Comments will appear from the app's account, providing a more professional and centralized approach.
 
-                      # Comment on the pull request (PRs are issues in GitHub API)
-                      owner, repo_name = repo.split('/')
-                      comment_url = f"https://api.github.com/repos/{owner}/{repo_name}/issues/{pr_number}/comments"
-                      comment_payload = {"body": comment}
-                      headers = {
-                          'Authorization': f'Bearer {token}',
-                          'Accept': 'application/vnd.github.v3+json',
-                          'Content-Type': 'application/json'
-                      }
-                      resp = requests.post(comment_url, headers=headers, json=comment_payload)
-                      resp.raise_for_status()
-                      print("Comment posted successfully!")
-                      EOF
-        ```
-      </details>
+In your dedicated workflow repository, ensure you have a `.github/workflows` directory.
+1. Create a new file named `post-pr-comment.yml`.  
+2. Copy and paste the following snippet:
+
+    <details>
+    <summary><b>Post PR comment workflow using GitHub App (Click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+    name: Comment on PR
+
+    on:
+      workflow_dispatch:
+        inputs:
+          comment:
+            description: 'The comment text to post'
+            required: true
+            type: string
+          repo:
+            description: 'Repository in "owner/repo" format (e.g., port-labs/puddle-integrations)'
+            required: true
+            type: string
+          pr:
+            description: 'Pull request number'
+            required: true
+            type: string
+
+    jobs:
+      comment:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Set up Python
+            uses: actions/setup-python@v4
+            with:
+              python-version: '3.x'
+
+          - name: Install Python dependencies
+            run: |
+              pip install PyJWT requests cryptography
+
+          - name: Comment on PR using GitHub App
+            env:
+              PEM: ${{ secrets.PORT_GITHUB_APP_PEM }}
+              APP_ID: ${{ secrets.PORT_GITHUB_APP_ID }}
+              INSTALLATION_ID: ${{ secrets.PORT_GITHUB_APP_INSTALLATION_ID }}
+              COMMENT: ${{ github.event.inputs.comment }}
+              REPO: ${{ github.event.inputs.repo }}
+              PR_NUMBER: ${{ github.event.inputs.pr }}
+            run: |
+              python - <<'EOF'
+              import os, time, jwt, requests
+
+              # Load environment variables
+              pem = os.environ['PEM']
+              app_id = os.environ['APP_ID']
+              installation_id = os.environ['INSTALLATION_ID']
+              comment = os.environ['COMMENT']
+              repo = os.environ['REPO']
+              pr_number = os.environ['PR_NUMBER']
+
+              # Generate JWT (valid for 10 minutes)
+              now = int(time.time())
+              payload = {
+                  'iat': now - 60,
+                  'exp': now + (10 * 60),
+                  'iss': app_id
+              }
+              jwt_token = jwt.encode(payload, pem, algorithm='RS256')
+
+              # Obtain an installation access token
+              headers = {
+                  'Authorization': f'Bearer {jwt_token}',
+                  'Accept': 'application/vnd.github+json'
+              }
+              token_url = f"https://api.github.com/app/installations/{installation_id}/access_tokens"
+              resp = requests.post(token_url, headers=headers)
+              resp.raise_for_status()
+              token = resp.json()['token']
+
+              # Comment on the pull request (PRs are issues in GitHub API)
+              owner, repo_name = repo.split('/')
+              comment_url = f"https://api.github.com/repos/{owner}/{repo_name}/issues/{pr_number}/comments"
+              comment_payload = {"body": comment}
+              headers = {
+                  'Authorization': f'Bearer {token}',
+                  'Accept': 'application/vnd.github.v3+json',
+                  'Content-Type': 'application/json'
+              }
+              resp = requests.post(comment_url, headers=headers, json=comment_payload)
+              resp.raise_for_status()
+              print("Comment posted successfully!")
+              EOF
+    ```
+    </details>
 
       :::info Required GitHub Secrets
       For this workflow to function properly, you need to add the following secrets to your GitHub repository:
@@ -321,6 +389,14 @@ In your dedicated workflow repository, ensure you have a `.github/workflows` dir
       :::
 
 3. Commit and push the changes to your repository.
+
+</TabItem>
+</Tabs>
+
+:::tip Choosing the right approach
+- **Personal Access Token**: Simpler setup, comments appear from your personal account, suitable for smaller teams or personal projects.
+- **GitHub App**: More professional, comments appear from a dedicated app account, better for larger organizations and provides more granular permissions.
+:::
 
 ## Example response
 
