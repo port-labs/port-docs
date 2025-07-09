@@ -33,13 +33,13 @@ integration:
     token: "glpat-service-account-token"
 ```
 
-## Blueprint mapping changes
+### Blueprint mapping changes
 
 The blueprints used in GitLab-v2 have evolved to provide cleaner data structures and better relationships between entities. Understanding these changes is essential for a successful migration.
 
-### Kind mapping changes by resource type
+#### Kind mapping changes by resource type
 
-#### 1. **project** kind (Required update)
+##### 1. **project** kind (Required update)
 
 **GitLab configuration:**
 ```yaml
@@ -75,7 +75,7 @@ The blueprints used in GitLab-v2 have evolved to provide cleaner data structures
           # Remove labels property - no longer available
 ```
 
-#### 2. **merge-request** kind (Configuration update)
+##### 2. **merge-request** kind (Configuration update)
 
 **GitLab configuration:**
 ```yaml
@@ -106,7 +106,7 @@ The blueprints used in GitLab-v2 have evolved to provide cleaner data structures
           reviewers: .reviewers | map(.name)
 ```
 
-#### 3. **Member handling changes** (Architecture change)
+##### 3. **Member handling changes** (Architecture change)
 
 GitLab and GitLab-v2 handle members differently. GitLab embeds members as properties within projects/groups, while GitLab-v2 treats members as separate entities with relations.
 
@@ -181,7 +181,7 @@ GitLab and GitLab-v2 handle members differently. GitLab embeds members as proper
           gitlabMembers: .__members | map(.username)  # ✅ Relations, not properties
 ```
 
-#### 4. **file** kind (Search API and repository format changes)
+##### 4. **file** kind (Search API and repository format changes)
 
 For file resync, GitLab-v2 now uses GitLab's Advanced Search API with its specific syntax and limitations:
 
@@ -208,7 +208,7 @@ For file resync, GitLab-v2 now uses GitLab's Advanced Search API with its specif
       skipParsing: false  # ✅ New option to skip parsing and return raw content
 ```
 
-#### 5. **folder** kind (Repository selector changes)
+##### 5. **folder** kind (Repository selector changes)
 
 For folder resync, GitLab-v2 changes the repository specification format to support branch-specific folder mapping:
 
@@ -237,7 +237,7 @@ For folder resync, GitLab-v2 changes the repository specification format to supp
             branch: "develop"  # ✅ Different branches per repository
 ```
 
-#### 6. **New kinds available in GitLab-v2**
+##### 6. **New kinds available in GitLab-v2**
 
 GitLab-v2 introduces several new kinds not available in GitLab:
 
@@ -290,11 +290,11 @@ GitLab-v2 introduces several new kinds not available in GitLab:
           project: .references.full | gsub("#.+"; "")
 ```
 
-## Configuration selector changes
+### Configuration selector changes
 
 GitLab-v2 introduces new selector options while removing some GitLab-specific configurations that are no longer needed.
 
-### Removed selectors
+#### Removed selectors
 
 The following selectors from GitLab are no longer available in GitLab-v2:
 
@@ -302,7 +302,7 @@ The following selectors from GitLab are no longer available in GitLab-v2:
 - **includeInheritedMembers**: Member inheritance is now handled differently in GitLab-v2, making this selector obsolete
 - **includeVerboseMemberObject**: The member object structure has been standardized in GitLab-v2, eliminating the need for this verbose option
 
-### New selectors in GitLab-v2
+#### New selectors in GitLab-v2
 
 GitLab-v2 introduces several new selector options that provide better control over data resync:
 
@@ -310,7 +310,7 @@ GitLab-v2 introduces several new selector options that provide better control ov
 - **states**: Available for merge requests, allows you to specify which merge request states to resync (opened, closed, merged)
 - **updatedAfter**: For merge requests, helps limit resync to recently updated merge requests by specifying the number of days to look back
 
-## Summary of key changes
+### Summary of key changes
 
 The following table summarizes all the major differences between GitLab and GitLab-v2 to help you prepare for migration:
 
@@ -326,7 +326,7 @@ The following table summarizes all the major differences between GitLab and GitL
 | **job** kind | ❌ Not available | ✅ New kind | Add job mapping if needed |
 | **issue** kind | ❌ Limited support | ✅ Enhanced | Update to new issue mapping |
 
-## File and folder mapping updates
+### File and folder mapping updates
 
 The way you specify repositories for file and folder resync has changed significantly between versions.
 
@@ -337,9 +337,9 @@ The way you specify repositories for file and folder resync has changed signific
 
 The namespace path format follows GitLab's standard `group/project` or `group/subgroup/project` structure, ensuring accurate repository identification even when multiple projects share the same name across different groups.
 
-## Migration steps
+### Migration steps
 
-### Step 1: Create a GitLab service account
+#### Step 1: Create a GitLab service account
 
 Choose the appropriate setup method for your GitLab instance:
 
@@ -352,7 +352,7 @@ Choose the appropriate setup method for your GitLab instance:
 1. Create a new user account (e.g., `port-integration-bot`)
 2. Add this user to all relevant groups with **Developer** permissions or higher
 
-### Step 2: Generate the access token
+#### Step 2: Generate the access token
 
 1. Sign in to your service account
 2. Navigate to **User Settings > Access Tokens**
@@ -366,7 +366,7 @@ Choose the appropriate setup method for your GitLab instance:
 The service account needs access to all groups and projects you want to sync. For webhook functionality, it also needs permission to create webhooks.
 :::
 
-### Step 3: Update your integration configuration
+#### Step 3: Update your integration configuration
 
 Replace your current token mapping configuration with the new single token approach. This step eliminates the complexity of managing multiple tokens while ensuring the service account has appropriate access across your GitLab instance.
 
@@ -396,7 +396,7 @@ integration:
 
 </details>
 
-### Step 4: Update resource selectors and blueprints
+#### Step 4: Update resource selectors and blueprints
 
 Review your mapping configuration for deprecated selectors and blueprint references:
 
@@ -433,7 +433,7 @@ Review your mapping configuration for deprecated selectors and blueprint referen
    - Add `job` kind for individual job monitoring  
    - Add `issue` kind for issue tracking
 
-### Step 5: Update file and folder mappings
+#### Step 5: Update file and folder mappings
 
 Update any file or folder mappings to use GitLab's Advanced Search API syntax and repository formats required by GitLab-v2:
 
@@ -502,7 +502,7 @@ See GitLab's documentation for the complete list of supported search patterns an
 
 This change ensures accurate repository identification and prevents conflicts when multiple repositories share the same name across different GitLab groups.
 
-### Step 6: Deploy and verify
+#### Step 6: Deploy and verify
 
 1. **Deploy the GitLab-v2 integration** with your updated configuration
 2. **Trigger a manual resync** from Port's UI to initiate data resync
@@ -516,7 +516,7 @@ This change ensures accurate repository identification and prevents conflicts wh
 Consider running both GitLab and GitLab-v2 integrations temporarily to compare results before fully switching over.
 :::
 
-### Step 7: Clean up GitLab integration
+#### Step 7: Clean up GitLab integration
 
 Once GitLab-v2 is working correctly:
 
@@ -527,9 +527,9 @@ Once GitLab-v2 is working correctly:
 
 This cleanup ensures security by removing unused tokens and prevents confusion from having multiple configurations.
 
-## New features in GitLab-v2
+### New features in GitLab-v2
 
-### Pipeline jobs support
+#### Pipeline jobs support
 
 GitLab-v2 introduces comprehensive pipeline job tracking, allowing you to monitor CI/CD job status, stages, and duration. This feature provides detailed insight into your build and deployment processes.
 
@@ -549,7 +549,7 @@ GitLab-v2 introduces comprehensive pipeline job tracking, allowing you to monito
           duration: .duration
 ```
 
-### Enhanced group management
+#### Enhanced group management
 
 Groups in GitLab-v2 provide cleaner member resync and better hierarchy handling. The separation of member and group concerns allows for more flexible data modeling and improved relationship management between users, groups, and projects.
 
