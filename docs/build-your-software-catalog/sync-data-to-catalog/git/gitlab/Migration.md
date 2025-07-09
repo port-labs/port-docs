@@ -14,7 +14,7 @@ GitLab-v2 introduces significant authentication and performance improvements:
 - **Enhanced performance**: Faster resync with improved API efficiency.
 - **New capabilities**: Support for pipeline jobs and enhanced group handling.
 
-## What's changing
+## Changes
 
 ### Authentication model
 
