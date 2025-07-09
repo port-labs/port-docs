@@ -199,7 +199,7 @@ This table summarizes the available parameters for the installation.
 | `integration.eventListener.type`        | The event listener type.                                                                                                | ✅       |
 | `integration.config.githubOrganization` | The GitHub organization to sync data from.                                                                              | ✅       |
 | `integration.config.githubHost`         | The API endpoint for your GitHub instance. For GitHub Enterprise Cloud, this will be `https://<org_name.ghe.com>`. Defaults to `https://api.github.com` if not provided. | ❌  |
-| `integration.secrets.githubToken`       | A GitHub Personal Access Token (PAT) to authenticate with your GitHub Organization. Only required when you're not authenticating as a Github app             | ❌      |  
+| `integration.secrets.githubToken`       | A GitHub Personal Access Token (PAT) to authenticate with your GitHub Organization. Only required when you're not authenticating as a [Github app](./github-app.md)             | ✅      |  
 | `scheduledResyncInterval`               | The number of minutes between each resync.                                                                              | ❌       |
 | `initializePortResources`               | When `true`, the integration will create default blueprints and port-app-config.yml mapping.                            | ❌       |
 | `sendRawDataExamples`                   | When `true`, sends raw data examples from the third-party API to Port for testing and managing the integration mapping. | ❌       |
