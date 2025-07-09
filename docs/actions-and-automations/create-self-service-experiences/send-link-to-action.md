@@ -57,7 +57,7 @@ script.onload = function() {
 </details>
 
 :::tip Entity input key
-When pre-filling the entity to operate on in `DAY-2` or `DELETE` operations, use `$targetEntity` as the input key.
+When pre-filling the entity to operate on in `DAY-2` or `DELETE` operations, use `$targetEntity` as the input key, and the entity's `identifier` as the value.
 :::
 
 ## Example
