@@ -163,7 +163,7 @@ This approach is useful when you need to:
 </TabItem>
 </Tabs>
 
-<h3>Complete example</h3>
+### Complete example
 
 Here's a complete self-service action that allows users to deploy from different branches:
 
