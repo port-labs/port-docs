@@ -458,14 +458,6 @@ export const availableGuides = [
         link: "/guides/all/push-image-to-ecr",
     },
     {
-        title: "Create and Manage Statuspage Incidents",
-        description: "Create self-service actions that manage Statuspage incidents",
-        tags: ["Incident management", "GitHub", "StatusPage", "Actions"],
-        logos: ["GitHub", "StatusPage"],
-        // category: "Getting started",
-        link: "/guides/all/manage-statuspage-incident",
-    },
-    {
         title: "Deploy Azure Resource using Terraform",
         description: "Create a self-service action that deploys a storage account in Azure using Terraform",
         tags: ["IaC for devs", "Azure", "Terraform", "Actions"],
@@ -1207,13 +1199,6 @@ export const availableGuides = [
         logos: ["GitLab"],
         link: "/guides/all/visualize-and-manage-gitlab-deployments",
     },
-    // {
-    //     title: "Visualize and manage your Statuspage components",
-    //     description: "Create a dashboard that visualizes and manages your Statuspage components",
-    //     tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
-    //     logos: ["StatusPage"],
-    //     link: "/guides/all/visualize-and-manage-statuspage-components",
-    // },
     {
         title: "Visualize and manage your Statuspage incidents and components",
         description: "Create a dashboard that visualizes and manages your Statuspage incidents and components",
