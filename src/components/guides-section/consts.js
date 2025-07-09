@@ -1130,13 +1130,6 @@ export const availableGuides = [
         link: "/guides/all/automatically-set-relations-between-entities-with-automation",
     },
     {
-        title: "Delete a ServiceNow incident",
-        description: "Create a self-service action that deletes a ServiceNow incident",
-        tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
-        logos: ["ServiceNow"],
-        link: "/guides/all/delete-servicenow-incident",
-    },
-    {
         title: "Manage and visualize your AWS S3 buckets and RDS instances",
         description: "Create a dashboard that manages and visualizes your AWS S3 buckets and RDS instances",
         tags: ["Security", "AWS", "GitHub", "Dashboards"],
@@ -1144,9 +1137,9 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-aws-storage-configuration",
     },
     {
-        title: "Interact with ServiceNow records",
-        description: "Create a self-service action that interacts with ServiceNow records",
-        tags: ["Incident management", "ServiceNow", "Actions"],
+        title: "Interact with ServiceNow records and delete incidents",
+        description: "Create a self-service action that interacts with ServiceNow records and delete ServiceNow incidents",
+        tags: ["Incident management", "ServiceNow", "Actions","Webhook","Automations"],
         logos: ["ServiceNow"],
         link: "/guides/all/interact-with-servicenow",
     },
@@ -1325,5 +1318,12 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "Webhook"],
         logos: ["GitHub", "Webhook"],
         link: "/guides/all/send-leaked-secrets-from-github-to-port",
+    },
+    {
+        title: "Manage your Kubernetes deployments",
+        description: "Create a comprehensive Kubernetes deployment management system to restart deployments and delete pods",
+        tags: ["K8s for devs", "Kubernetes", "GitHub", "Actions"],
+        logos: ["Kubernetes", "GitHub"],
+        link: "/guides/all/manage-your-kubernetes-deployment",
     }
 ]
