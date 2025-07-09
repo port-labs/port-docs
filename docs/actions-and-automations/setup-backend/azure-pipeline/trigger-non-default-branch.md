@@ -293,5 +293,5 @@ stages:
       displayName: 'Run Deployment'
 ```
 
-## Troubleshoot
-You can find more information on how to troubleshoot Azure DevOps pipelines in our [troubleshooting guide](/actions-and-automations/setup-backend/azure-pipeline/troubleshooting).
+## Troubleshooting
+See the [troubleshooting guide](/actions-and-automations/setup-backend/azure-pipeline/troubleshooting) for common issues and their solutions.
