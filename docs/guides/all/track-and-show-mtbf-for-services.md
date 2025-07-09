@@ -22,10 +22,6 @@ Unlike MTTR which shows how fast you recover from incidents, MTBF shows how ofte
 <img src="/img/guides/mtbfDashboard.png" border="1px" width="100%" />
 
 
-:::info Other incident management tools
-While this guide focuses on PagerDuty, the same MTBF tracking principles and Port capabilities work with other incident management tools like **Opsgenie**, **StatusPage**, **Datadog**, and **custom incident tracking systems**.
-:::
-
 ## Common use cases
 
 - **Reliability monitoring**: Track how often your services fail and identify patterns over time.
@@ -166,18 +162,19 @@ Now we'll add calculation properties that use the aggregation properties to auto
     <summary><b>MTBF calculation properties (click to expand)</b></summary>
 
       ```json showLineNumbers
-      "mtbf30Days": {
+      "mtbf_30_days": {
         "title": "MTBF (30 days)",
         "icon": "ClockLoader",
         "description": "Mean Time Between Failures over the past 30 days (in hours)",
-        "calculation": "if .properties.incidents30Days > 0 then (30 * 24) / .properties.incidents30Days else null end",
+        "calculation": "if (.properties.incidents30Days // 0) > 0 then (30 * 24) / .properties.incidents30Days else null end",
         "type": "number"
+        
       },
-      "mtbf90Days": {
+      "mtbf_90_days": {
         "title": "MTBF (90 days)",
         "icon": "ClockLoader", 
         "description": "Mean Time Between Failures over the past 90 days (in hours)",
-        "calculation": "if .properties.incidents90Days > 0 then (90 * 24) / .properties.incidents90Days else null end",
+        "calculation": "if (.properties.incidents90Days // 0) > 0 then (90 * 24) / .properties.incidents90Days else null end",
         "type": "number"
       }
       ```
@@ -310,6 +307,39 @@ Create an action to set MTBF targets for services:
 
 ## Create MTBF monitoring automation
 
+<h3> Set up MTBF monitoring service </h3>
+
+Before creating the automation, we need to set up a dedicated PagerDuty service to receive MTBF threshold breach alerts. This ensures all MTBF-related incidents are centrally managed and don't get mixed with incidents from the monitored services themselves.
+
+Create a new PagerDuty service with the following details:
+- **Name**: `MTBF Threshold Monitor`
+- **Description**: `Monitors MTBF thresholds across all services and alerts when targets are breached`
+- **Integration Type**: Events API v2
+
+:::tip Create PagerDuty service
+If you need help creating a PagerDuty service, you can use Port's self-service action described in our [Create PagerDuty Service guide](/guides/all/create-pagerduty-service). This provides both webhook and GitHub workflow options for automated service creation.
+:::
+
+<h3> Add routing key to Port secrets </h3>
+
+Once you've created your MTBF monitoring service, add its routing key to Port secrets:
+
+1. In your PagerDuty service, go to the **Integrations** tab and copy the **Integration Key** (routing key).
+
+2. In Port, click on the `...` button in the top right corner of your Port application.
+
+3. Click on **Credentials**.
+
+4. Click on the `Secrets` tab.
+
+5. Click on `+ Secret` and add the following:
+   - **Key**: `MONITORING_SVC_PAGERDUTY_ROUTING_KEY`
+   - **Value**: Your MTBF monitoring service integration key (e.g., `a1b2c3d4e5f6789012345678901234567890abcd`)
+
+6. Click `Save`.
+
+<h3> Create the automation </h3>
+
 Set up an automation to monitor MTBF thresholds and trigger alerts:
 
 1. Head to the [automation](https://app.getport.io/settings/automations) page.
@@ -335,9 +365,9 @@ Set up an automation to monitor MTBF thresholds and trigger alerts:
         "condition": {
           "type": "JQ",
           "expressions": [
-            ".diff.after.properties.mtbf30Days",
+            ".diff.after.properties.mtbf_30_days",
             ".diff.after.properties.mtbfTarget",
-            "(.diff.after.properties.mtbf30Days / .diff.after.properties.mtbfTarget * 100) < .diff.after.properties.mtbfCriticalThreshold"
+            "(.diff.after.properties.mtbf_30_days / .diff.after.properties.mtbfTarget * 100) < .diff.after.properties.mtbfCriticalThreshold"
           ],
           "combinator": "and"
         }
@@ -350,7 +380,7 @@ Set up an automation to monitor MTBF thresholds and trigger alerts:
           "Content-Type": "application/json"
         },
         "body": {
-          "routing_key": "{{.secrets.PAGERDUTY_ROUTING_KEY}}",
+          "routing_key": "{{.secrets.MONITORING_SVC_PAGERDUTY_ROUTING_KEY}}",
           "event_action": "trigger",
           "payload": {
             "summary": "MTBF Critical Threshold Breached: {{.event.diff.after.title}}",
@@ -358,7 +388,7 @@ Set up an automation to monitor MTBF thresholds and trigger alerts:
             "severity": "critical",
             "custom_details": {
               "service": "{{.event.diff.after.title}}",
-              "current_mtbf": "{{.event.diff.after.properties.mtbf30Days}}",
+              "current_mtbf": "{{.event.diff.after.properties.mtbf_30_days}}",
               "target_mtbf": "{{.event.diff.after.properties.mtbfTarget}}",
               "threshold_breached": "Critical"
             }
@@ -374,7 +404,7 @@ Set up an automation to monitor MTBF thresholds and trigger alerts:
 
 ## Visualize MTBF metrics
 
-Create a comprehensive dashboard to monitor MTBF across all your services.
+With your MTBF data and monitoring actions in place, you can create a dedicated dashboard in Port to visualize service reliability, track MTBF trends, and quickly identify services that need attention.
 
 ### Create MTBF dashboard
 
@@ -403,30 +433,16 @@ Create the following widgets in your new dashboard:
 
 2. Title: `Average MTBF (30 days)` (add the `pagerduty` icon)
 
-3. Select `Aggregate Property (All Entities)` chart type and choose **PagerDuty Service** blueprint.
+3. Select `Aggregate by property` chart type and choose **PagerDuty Service** blueprint.
 
 4. Choose `MTBF (30 days)` property and `average` function.
 
-5. Set custom unit to `hours`.
+5. Select `Hour` for **Average of** and set custom unit to `hours`.
 
 6. Click `Save`.
 
 </details>
 
-<details>
-<summary><b>Services by MTBF trend widget (click to expand)</b></summary>
-
-1. Click **`+ Widget`** and select **Pie chart**.
-
-2. Title: `Services by MTBF Trend` (add the `TrendingUp` icon)
-
-3. Choose the **PagerDuty Service** blueprint.
-
-4. Under `Breakdown by property`, select **MTBF Trend**.
-
-5. Click `Save`.
-
-</details>
 
 <details>
 <summary><b>Low MTBF services widget (click to expand)</b></summary>
@@ -437,66 +453,64 @@ Create the following widgets in your new dashboard:
 
 3. Choose the **PagerDuty Service** blueprint.
 
-4. Add this filter to show services with declining MTBF:
+4. Add this filter to show services with low MTBF:
    ```json showLineNumbers
-   [
      {
        "combinator": "or",
        "rules": [
          {
-           "property": "mtbfTrend", 
-           "operator": "=",
-           "value": "degrading"
+           "property": "mtbf_30_days",
+           "operator": "<",
+           "value": 168
          },
          {
-           "property": "mtbf30Days",
-           "operator": "<",
-           "value": 72
+           "property": "incidents30Days",
+           "operator": ">",
+           "value": 5
          }
        ]
      }
-   ]
    ```
 
-5. Customize the table to show: Service Name, MTBF (30 days), MTBF (90 days), MTBF Trend.
+6. Click `Save`.
+
+</details>
+
+
+
+<details>
+<summary><b>High incident volume services widget (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Number Chart**.
+
+2. Title: `Total Incidents (30 days)` (add the `Alert` icon)
+
+3. Select `Count entities` chart type and choose **PagerDuty Service** blueprint.
+
+4. Choose `Incidents (30 days)` property and `count` function.
+
+5. Set Unit of measurement to `custom` and type **incidents**.
 
 6. Click `Save`.
 
 </details>
 
 <details>
-<summary><b>MTBF vs target compliance widget (click to expand)</b></summary>
+<summary><b>MTBF threshold compliance widget (click to expand)</b></summary>
 
-1. Click **`+ Widget`** and select **Bar Chart**.
+1. Click **`+ Widget`** and select **Table**.
 
-2. Title: `MTBF Target Compliance` (add the `Target` icon)
+2. Title: `MTBF Threshold Compliance` (add the `Target` icon)
 
-3. Select `Aggregate Property (All Entities)` and choose **PagerDuty Service** blueprint.
+3. Choose the **PagerDuty Service** blueprint.
 
-4. Set Y-axis to `MTBF (30 days)` property with `average` function.
+4. Click on `Save`.
 
-5. Set X-axis to group by service name.
+5. Click on the `...` button in the top right corner and choose `Customize table`.
 
-6. Click `Save`.
+6. Group table by `mtbfCriticalThreshold` property.
 
-</details>
-
-<details>
-<summary><b>Historical MTBF trends widget (click to expand)</b></summary>
-
-1. Click **`+ Widget`** and select **Line Chart**.
-
-2. Title: `MTBF Trends Over Time` (add the `LineChart` icon)
-
-3. Select `Aggregate Property (All Entities)` and choose **PagerDuty Service** blueprint.
-
-4. Y-axis: `MTBF (30 days)` property with `average` function.
-
-5. X-axis: Group by `updated_at` with `Month` interval.
-
-6. Set time range to `In the past 365 days`.
-
-7. Click `Save`.
+7. Click on the `Save` icon in the top right corner.
 
 </details>
 
