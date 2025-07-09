@@ -793,8 +793,4 @@ In the new dashboard, create the following widgets:
     - **Account**: The name of each related AWS account.
 8. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
-<<<<<<< HEAD
 </details>
-=======
-</details>
->>>>>>> a7b3ce911765b2b31132f0c8f17d06ad42a86169
