@@ -1318,5 +1318,12 @@ export const availableGuides = [
         tags: ["Security", "GitHub", "Webhook"],
         logos: ["GitHub", "Webhook"],
         link: "/guides/all/send-leaked-secrets-from-github-to-port",
+    },
+    {
+        title: "Manage your Kubernetes deployments",
+        description: "Create a comprehensive Kubernetes deployment management system to restart deployments and delete pods",
+        tags: ["K8s for devs", "Kubernetes", "GitHub", "Actions"],
+        logos: ["Kubernetes", "GitHub"],
+        link: "/guides/all/manage-your-kubernetes-deployment",
     }
 ]
