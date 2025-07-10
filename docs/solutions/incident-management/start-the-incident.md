@@ -38,7 +38,7 @@ Port connects to all your alert sources— APM, monitoring, cloud, and more. Wit
 - [Trigger an Incident.io incident](../../guides/all/create-incident-io-incident)
 - [Trigger a ServiceNow Incident](../../guides/all/trigger-servicenow-incident/)
 - [Trigger a Datadog Incident](../../guides/all/trigger-datadog-incident/)
-- [Trigger a StatusPage Incident](../../guides/all/manage-statuspage-incident/)
+- [Trigger a StatusPage Incident](../../guides/all/visualize-and-manage-statuspage-incidents#create-a-new-incident)
 
 ## Enable automated incident creation
 
