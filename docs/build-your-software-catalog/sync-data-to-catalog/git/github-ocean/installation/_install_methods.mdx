@@ -139,25 +139,7 @@ kubectl apply -f my-ocean-github-integration.yaml
 
 This table summarizes the available parameters for the installation.
 
-#AI! can you move this into a new jsx component created in the same directory, translate from a markdown table to a html table. Leave the texts exactly the same
-| Parameter                               | Description                                                                                                             | Required |
-| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                         | Your Port client ID.                                                                                                    | ✅       |
-| `port.clientSecret`                     | Your Port client secret.                                                                                                | ✅       |
-| `port.baseUrl`                          | Your Port API URL (`https://api.getport.io` for EU, `https://api.us.getport.io` for US).                                | ✅       |
-| `integration.identifier`                | A unique identifier for your integration.                                                                               | ✅       |
-| `integration.type`                      | The integration type.                                                                                                   | ✅       |
-| `integration.eventListener.type`        | The event listener type.                                                                                                | ✅       |
-| `integration.config.githubOrganization` | The GitHub organization to sync data from.                                                                              | ✅       |
-| `integration.config.githubHost`         | The API endpoint for your GitHub instance. For GitHub Enterprise Cloud, this will be `https://<org_name.ghe.com>`. Defaults to `https://api.github.com` if not provided. | ❌  |
-| `integration.secrets.githubToken`       | A GitHub Personal Access Token (PAT) to authenticate with your GitHub Organization. Only required when you're not authenticating as a [Github app](./github-app.md)             | ✅      |  
-| `scheduledResyncInterval`               | The number of minutes between each resync.                                                                              | ❌       |
-| `initializePortResources`               | When `true`, the integration will create default blueprints and port-app-config.yml mapping.                            | ❌       |
-| `sendRawDataExamples`                   | When `true`, sends raw data examples from the third-party API to Port for testing and managing the integration mapping. | ❌       |
-| `baseUrl`                               | Integration instance base url, real-time live events will be enabled if this is configured.                                          | ❌       |
-| `integration.config.webhookSecret`         | A secret to secure webhooks from GitHub. This is optional but highly recommended for security if you enable live-events.                       |   ❌      |
-| `integration.config.githubAppId`       | The ID of your GitHub App. Required if you are authenticating as a [GitHub App](./github-app.md) instead of using a PAT. | ❌  |
-| `integration.secrets.githubAppPrivateKey`       | The base64 encoded private key of your GitHub App. Required if you are authenticating as a GitHub App. | ❌ |
+<ParametersTable />
 
 <br/>
 
