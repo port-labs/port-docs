@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-# Send leaked secrets from GitHub to Port
+# Track leaked GitHub secrets in Port
 
 This guide demonstrates how to set up a webhook integration between [GitHub](https://github.com/) and Port to automatically detect and ingest leaked application secrets. You will learn how to use [Gitleaks](https://github.com/gitleaks/gitleaks) to scan your repositories for secrets and send the results to Port for centralized monitoring and management.
 
@@ -29,8 +29,11 @@ This guide demonstrates how to set up a webhook integration between [GitHub](htt
 First, create a custom blueprint in Port to store the leaked secret information.
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
+
 2. Click on `+ Blueprint`.
+
 3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
+
 4. Add this JSON schema:
 
     <details>
@@ -109,15 +112,21 @@ First, create a custom blueprint in Port to store the leaked secret information.
 ## Configure a webhook in Port
 
 1. Go to the [Data sources](https://app.getport.io/settings/data-sources) page of your portal.
+
 2. Click on the `+ Data source` button in the top right corner.
+
 3. Select the `Webhook` tab.
+
 4. Click on `Custom integration`.
+
 5. Give your webhook a title and description, and select an icon to represent it:
 
     <img src="/img/guides/leakedSecretWebhookConfig.png" border="1px" width="60%" />
 
 6. Click `Next`.
+
 7. In the `Mapping` tab, you can see your new webhook URL.
+
 8. Scroll down to box number 3 and add this JSON configuration to map the data received from Gitleaks to the blueprint:
 
     <details>
@@ -216,7 +225,8 @@ You can customize the workflow triggers based on your needs. For example, you mi
 
 ## Let's Test It
 
-To test your integration, you can create a test commit with a fake secret or use the sample data provided below. This section includes a sample webhook response from Gitleaks and the corresponding Port entity that would be created.
+To test your integration, you can create a test commit with a fake secret or use the sample data provided below. 
+This section includes a sample webhook response from Gitleaks and the corresponding Port entity that would be created.
 
 
 ### Payload

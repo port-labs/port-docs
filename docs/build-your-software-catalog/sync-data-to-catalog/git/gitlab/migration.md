@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Migration guide to the v2 integration
 
-This guide helps you migrate from Port's GitLab integration to the new GitLab-v2 integration.
+This guide walks through the process of migrating from Port's GitLab integration to the new GitLab-v2 integration.
 
 ## Overview
 
@@ -553,7 +553,7 @@ GitLab-v2 introduces comprehensive pipeline job tracking, allowing you to monito
 
 Groups in GitLab-v2 provide cleaner member resync and better hierarchy handling. The separation of member and group concerns allows for more flexible data modeling and improved relationship management between users, groups, and projects.
 
-## Troubleshooting common issues
+## Troubleshoot common issues
 
 | Issue | Cause | Solution |
 |-------|-------|----------|

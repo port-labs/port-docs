@@ -333,7 +333,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Statuspage
 
 - [Statuspage integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
-- [Self-service action to create and manage Statuspage Incidents](/guides/all/manage-statuspage-incident)
+- [Visualize and manage your Statuspage incidents and components](/guides/all/visualize-and-manage-statuspage-incidents)
 
 ## Swagger
 - [Ingest Swagger paths into your catalog](/guides/all/ingest-swagger-paths-into-your-catalog)
