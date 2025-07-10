@@ -4,6 +4,7 @@ sidebar_position: 1
 
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
+import InstallMethods from "./\_install_methods.mdx"
 
 # Github App
 
@@ -95,73 +96,4 @@ After you have the app registered in your organization, you can install it and s
 
 ![GitHub integration installation chooses repositories](../../../../../../static/img/integrations/github-ocean/SelfHostedInstallationRepoSelection.png)
 
-## Docker
-
-To use our GitHub integration as an app, you will need to deploy our official integration Docker image - providing an app id and an app private key.
-
-It can be deployed on any platform that allows deploying images as containers such as: K8S, ECS, AWS App Runner, etc.
-
-You can pull the Docker image by running:
-
-```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
-```
-
-Run the following command to start the app:
-
-
-```bash showLineNumbers
-docker run \
-  -e OCEAN__PORT__CLIENT_ID=<PORT_CLIENT_ID> \
-  -e OCEAN__PORT__CLIENT_SECRET=<PORT_CLIENT_SECRET> \
-  -e OCEAN__PORT__BASE_URL=https://api.getport.io \
-  -e OCEAN__BASE_URL=<https.example.com> \ #optional, only required if you want to enable live-events
-  -e OCEAN__EVENT_LISTENER__TYPE=POLLING \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GITHUB_HOST> \ # e.g https://api.github.com
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<GITHUB_ORGANIZATION> \
-  -e OCEAN__INTEGRATION__IDENTIFIER=github-ocean \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<GITHUB_APP_ID> \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=<BASE_64_ENCODED_PRIVATEKEY> \
-  -p 8000:8000 \
-  ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
-```
-
-
-:::tip Docker parameters
-
-The command above contains placeholder values in angle brackets (e.g., `<PORT_CLIENT_ID>`). Be sure to replace them with your actual values before running the command.
-
-:::
-
-:::tip base64 encoding
-On MacOS and Linux you can get base64 encoded private key by using:
-```sh
-base64 -i <path/to/downloaded/private_key.pem>
-```
-
-You can accomplish the same on Windows using Powershell:
-```powershell
-[Convert]::ToBase64String([IO.File]::ReadAllBytes("path\to\downloaded\private_key.pem"))
-
-```
-
-Online:
-https://www.base64encode.org/ 
-:::
-
-| Env variable                                         | Description                                                                                    | Required |
-| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------ |
-| `OCEAN__PORT__CLIENT_ID`                             | Port client id for interacting with the API                                                    | ✅  |
-| `OCEAN__PORT__CLIENT_SECRET`                         | Port client secret for interacting with the API                                                | ✅  |
-| `OCEAN__PORT__BASE_URL`                              | Port's API Base URL                                                                            | ✅  |
-| `OCEAN__BASE_URL`                                    | Integration instance base url, real-time live events will be enabled if this is configured.   |  ❌ | 
-| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET`         | A secret to secure webhooks from GitHub. This is optional but highly recommended for security if you enable live-events. |  ❌ |
-| `OCEAN__EVENT_LISTENER__TYPE`                        | Define the appropriate event listener type to handle incoming events and resync requests from Port. This listener will forward the events to the GitHub Ocean integration. For more details, see the [Port Event Listener documentation](https://ocean.getport.io/framework/features/event-listener)                                              | ✅  |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_HOST`         | The API endpoint for your GitHub instance. For GitHub Enterprise, this will be `https://<org_name.ghe.com>`. Defaults to `https://api.github.com` if not provided. | ❌   |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION`    | The GitHub organization the integration was installed in.                                      | ✅  |
-| `OCEAN__INTEGRATION__IDENTIFIER`                     | A unique identifier for the integration instance. Useful if you are running multiple self-hosted GitHub integrations. Defaults to `github-ocean`. | ✅  |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID`          | Application ID. You can find it in the edit GitHub app page.                                   | ✅  |
-| `OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY` | A base64 encoded Github app private key. | ✅  |
-
-
-<PortApiRegionTip/>
+<InstallMethods setupName="app" />
