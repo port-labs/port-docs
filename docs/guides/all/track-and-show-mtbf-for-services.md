@@ -9,7 +9,7 @@ import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_sec
 
 # Track and show MTBF for services
 
-This demonstrates how to implement **Mean Time Between Failures (MTBF)** tracking for your PagerDuty services using Port. MTBF measures the average time between service failures and helps identify reliability trends.
+This guide demonstrates how to implement **Mean Time Between Failures (MTBF)** tracking for your PagerDuty services using Port. MTBF measures the average time between service failures and helps identify reliability trends.
 
 **MTBF = Total Operational Time ÷ Number of Failures**
 
