@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ParametersTable() {
+export default function ParametersTable({ showingApp }) {
   return (
     <table>
       <thead>
@@ -51,11 +51,11 @@ export default function ParametersTable() {
           <td>The API endpoint for your GitHub instance. For GitHub Enterprise Cloud, this will be <code>https://&lt;org_name.ghe.com&gt;</code>. Defaults to <code>https://api.github.com</code> if not provided.</td>
           <td>❌</td>
         </tr>
-        <tr>
+        {!showingApp && <tr>
           <td><code>integration.secrets.githubToken</code></td>
           <td>A GitHub Personal Access Token (PAT) to authenticate with your GitHub Organization. Only required when you're not authenticating as a <a href="./github-app.md">Github app</a></td>
           <td>✅</td>
-        </tr>
+        </tr>}
         <tr>
           <td><code>scheduledResyncInterval</code></td>
           <td>The number of minutes between each resync.</td>
@@ -81,16 +81,18 @@ export default function ParametersTable() {
           <td>A secret to secure webhooks from GitHub. This is optional but highly recommended for security if you enable live-events.</td>
           <td>❌</td>
         </tr>
-        <tr>
-          <td><code>integration.config.githubAppId</code></td>
-          <td>The ID of your GitHub App. Required if you are authenticating as a <a href="./github-app.md">GitHub App</a> instead of using a PAT.</td>
-          <td>❌</td>
-        </tr>
-        <tr>
-          <td><code>integration.secrets.githubAppPrivateKey</code></td>
-          <td>The base64 encoded private key of your GitHub App. Required if you are authenticating as a GitHub App.</td>
-          <td>❌</td>
-        </tr>
+        {showingApp && <>
+          <tr>
+            <td><code>integration.config.githubAppId</code></td>
+            <td>The ID of your GitHub App. Required if you are authenticating as a <a href="./github-app.md">GitHub App</a> instead of using a PAT.</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td><code>integration.secrets.githubAppPrivateKey</code></td>
+            <td>The base64 encoded private key of your GitHub App. Required if you are authenticating as a GitHub App.</td>
+            <td>❌</td>
+          </tr>
+        </>}
       </tbody>
     </table>
   );

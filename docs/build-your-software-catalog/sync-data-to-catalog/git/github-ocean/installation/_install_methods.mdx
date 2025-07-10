@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import CodeBlock from '@theme/CodeBlock';
 import AdvancedConfig from '../../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
 import Prerequisites from "../../../templates/\_ocean_helm_prerequisites_block.mdx"
@@ -28,24 +29,43 @@ To install the integration using Helm:
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 ```
 
-# AI! I want to have integration.config.githubAppId and integration.secrets.githubAppPrivateKey variables here shown when prop.showingApp is true, otherwise integration.secrets.githubToken should be the shown env variable
 2. Install the Helm chart:
-```showLineNumbers
-helm upgrade --install github-ocean port-labs/port-ocean \
-	--set port.clientId="<PORT_CLIENT_ID>"  \
-	--set port.clientSecret="<PORT_CLIENT_SECRET>"  \
-	--set port.baseUrl="https://api.port.io"  \
-	--set integration.identifier="github-ocean"  \
-	--set integration.type="github-ocean"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.githubOrganization=<GITHUB_ORGANIZATION>  \
-	--set integration.config.githubHost=<GITHUB_HOST>  \
-	--set integration.secrets.githubToken="<GITHUB_PAT>"  \
-	--set integration.version="1.0.5-beta"  \
-	--set initializePortResources=true  \
-	--set sendRawDataExamples=true  \
-	--set scheduledResyncInterval=360  \
-```
+{props.setupName == "app" ? (
+<CodeBlock language="bash" showLineNumbers>
+{`helm upgrade --install github-ocean port-labs/port-ocean \\
+	--set port.clientId="<PORT_CLIENT_ID>"  \\
+	--set port.clientSecret="<PORT_CLIENT_SECRET>"  \\
+	--set port.baseUrl="https://api.port.io"  \\
+	--set integration.identifier="github-ocean"  \\
+	--set integration.type="github-ocean"  \\
+	--set integration.eventListener.type="POLLING"  \\
+	--set integration.config.githubOrganization=<GITHUB_ORGANIZATION>  \\
+	--set integration.config.githubHost=<GITHUB_HOST>  \\
+	--set integration.config.githubAppId=<GITHUB_APP_ID> \\
+	--set integration.secrets.githubAppPrivateKey=<BASE_64_ENCODED_PRIVATEKEY> \\
+	--set integration.version="1.0.5-beta"  \\
+	--set initializePortResources=true  \\
+	--set sendRawDataExamples=true  \\
+	--set scheduledResyncInterval=360`}
+</CodeBlock>
+) : (
+<CodeBlock language="bash" showLineNumbers>
+{`helm upgrade --install github-ocean port-labs/port-ocean \\
+	--set port.clientId="<PORT_CLIENT_ID>"  \\
+	--set port.clientSecret="<PORT_CLIENT_SECRET>"  \\
+	--set port.baseUrl="https://api.port.io"  \\
+	--set integration.identifier="github-ocean"  \\
+	--set integration.type="github-ocean"  \\
+	--set integration.eventListener.type="POLLING"  \\
+	--set integration.config.githubOrganization=<GITHUB_ORGANIZATION>  \\
+	--set integration.config.githubHost=<GITHUB_HOST>  \\
+	--set integration.secrets.githubToken="<GITHUB_PAT>"  \\
+	--set integration.version="1.0.5-beta"  \\
+	--set initializePortResources=true  \\
+	--set sendRawDataExamples=true  \\
+	--set scheduledResyncInterval=360`}
+</CodeBlock>
+)}
 
 <PortApiRegionTip/>
 
