@@ -91,7 +91,7 @@ Resilience depends on clear ownership. Make sure every service and component in 
 Weddings, sick days, births and more can disrupt the uncreatively assigned rotas from your paging tools.
 Making the on-call roster visible and easy to update, is a key first stp in preparing for an incident.
 
-- [View and Change on-call](../../guides/all/manage-pagerduty-on-call-schedules/)
+- [View and Change on-call](/guides/all/manage-pagerduty-on-call-schedules/)
 
 ### Learn: close the loop
 
