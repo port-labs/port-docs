@@ -1322,7 +1322,7 @@ export const availableGuides = [
     {
         title: "Track and show MTBF for services",
         description: "Track Mean Time Between Failures (MTBF) for your services to measure reliability and identify improvement opportunities",
-        tags: ["Incident management", "Engineering metrics", "Dashboards", "Scorecards"],
+        tags: ["Engineering metrics", "PagerDuty", "Dashboards", "Scorecards"],
         logos: ["PagerDuty"],
         link: "/guides/all/track-and-show-mtbf-for-services",
     },
