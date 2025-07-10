@@ -24,12 +24,12 @@ For details about the available parameters for the installation, see the table b
 <TabItem value="helm" label="Helm" default>
 To install the integration using Helm:
 
-1. Add Port's Helm chart repository:
+Add Port's Helm chart repository:
 ```showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 ```
 
-2. Install the Helm chart:
+Install the Helm chart:
   {props.setupName == "app" ? (
     <CodeBlock language="bash" showLineNumbers>
 {`helm upgrade --install github-ocean port-labs/port-ocean \\
@@ -133,10 +133,12 @@ spec:
           value: <YOUR_PORT_CLIENT_SECRET>
         - name: port.baseUrl
           value: https://api.getport.io
+      // highlight-end
+  // highlight-start
   - repoURL: <YOUR_GIT_REPO_URL>
-  // highlight-end
     targetRevision: main
     ref: values
+  // highlight-end
   syncPolicy:
     automated:
       prune: true
