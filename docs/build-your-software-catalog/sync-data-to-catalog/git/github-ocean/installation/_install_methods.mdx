@@ -30,8 +30,8 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 ```
 
 2. Install the Helm chart:
-  {props.setupName == "app" ? (
-    <CodeBlock language="bash" showLineNumbers>
+{props.setupName == "app" ? (
+<CodeBlock language="bash" showLineNumbers>
 {`helm upgrade --install github-ocean port-labs/port-ocean \\
 	--set port.clientId="<PORT_CLIENT_ID>"  \\
 	--set port.clientSecret="<PORT_CLIENT_SECRET>"  \\
@@ -174,7 +174,8 @@ This table summarizes the available parameters for the installation.
     <DockerInstallMethod showingApp={props.setupName == "app"} />
 </TabItem>
 
-{props.setupName != "app" && <TabItem value="one-time-ci" label="Scheduled (CI)">
+{props.setupName != "app" && 
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 <CiInstallMethod />
 </TabItem>}
 </Tabs>

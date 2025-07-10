@@ -84,7 +84,7 @@ export default function ParametersTable({ showingApp }) {
         {showingApp && <>
           <tr>
             <td><code>integration.config.githubAppId</code></td>
-            <td>The ID of your GitHub App. Required if you are authenticating as a <a href="../github-app.md">GitHub App</a> instead of using a PAT.</td>
+            <td>The ID of your GitHub App. Required if you are authenticating as a <a href="./github-app.mdx">GitHub App</a> instead of using a PAT.</td>
             <td>❌</td>
           </tr>
           <tr>
