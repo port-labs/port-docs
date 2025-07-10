@@ -1313,11 +1313,11 @@ export const availableGuides = [
         link: "/guides/all/manage-and-visualize-aws-autoscaling-groups",
     },
     {
-        title: "Send leaked secrets from GitHub to Port",
-        description: "Create a webhook integration that sends leaked secrets from GitHub to Port",
+        title: "Track leaked GitHub secrets in Port",
+        description: "Create a webhook integration that tracks leaked GitHub secrets in Port",
         tags: ["Security", "GitHub", "Webhook"],
         logos: ["GitHub", "Webhook"],
-        link: "/guides/all/send-leaked-secrets-from-github-to-port",
+        link: "/guides/all/track-leaked-github-secrets-in-port",
     },
     {
         title: "Manage your Kubernetes deployments",
