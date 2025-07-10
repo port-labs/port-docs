@@ -22,7 +22,7 @@ In high-pressure moments, clear and timely communication prevents confusion, bui
 ## Get started 
 
 - [Create Slack Channel for Incident](../../guides/all/create-slack-channel-for-reported-incident)
-- [Create and Update Statuspage Incidents](../../guides/all/manage-statuspage-incident)
+- [Create and Update Statuspage Incidents](../../guides/all/visualize-and-manage-statuspage-incidents#set-up-self-service-actions)
 - [Update ServiceNow Incident](../../guides/all/interact-with-servicenow/)
 - [Setup Incident Manager AI Agent](../../guides/all/setup-incident-manager-ai-agent)
 
