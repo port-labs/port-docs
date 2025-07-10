@@ -7,6 +7,7 @@ import Prerequisites from "../../../templates/\_ocean_helm_prerequisites_block.m
 import CiInstallMethod from "./\_ci_install.mdx"
 import DockerInstallMethod from "./_docker_install.mdx"
 import ParametersTable from "./_parameters_table.jsx"
+import Base64Tip from "./\_base_64_tip.mdx"
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -161,6 +162,8 @@ kubectl apply -f my-ocean-github-integration.yaml
 
 
 </Tabs>
+
+{props.setupName == "app" && <Base64Tip />}
 
 This table summarizes the available parameters for the installation.
 

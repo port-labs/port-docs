@@ -1,6 +1,7 @@
-import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
-import DockerParametersTable from "./_docker_parameters_table.jsx"
 import CodeBlock from '@theme/CodeBlock';
+import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
+import DockerParametersTable from "./\_docker_parameters_table.jsx"
+import Base64Tip from "./\_base_64_tip.mdx"
 
 Our integration can be directly run as a docker container, it can be deployed on any platform that allows deploying images as containers such as: K8S, ECS, AWS App Runner, etc.
 
@@ -52,21 +53,7 @@ The command above contains placeholder values in angle brackets (e.g., `<PORT_CL
 
 :::
 
-:::tip base64 encoding
-On MacOS and Linux you can get base64 encoded private key by using:
-```sh
-base64 -i <path/to/downloaded/private_key.pem>
-```
-
-You can accomplish the same on Windows using Powershell:
-```powershell
-[Convert]::ToBase64String([IO.File]::ReadAllBytes("path\to\downloaded\private_key.pem"))
-
-```
-
-Online:
-https://www.base64encode.org/ 
-:::
+{props.showingApp && <Base64Tip />}
 
 
 <DockerParametersTable showingApp={props.showingApp}/>
