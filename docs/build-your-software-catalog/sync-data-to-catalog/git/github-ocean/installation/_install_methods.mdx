@@ -30,8 +30,8 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 ```
 
 2. Install the Helm chart:
-{props.setupName == "app" ? (
-<CodeBlock language="bash" showLineNumbers>
+  {props.setupName == "app" ? (
+    <CodeBlock language="bash" showLineNumbers>
 {`helm upgrade --install github-ocean port-labs/port-ocean \\
 	--set port.clientId="<PORT_CLIENT_ID>"  \\
 	--set port.clientSecret="<PORT_CLIENT_SECRET>"  \\
@@ -47,9 +47,9 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 	--set initializePortResources=true  \\
 	--set sendRawDataExamples=true  \\
 	--set scheduledResyncInterval=360`}
-</CodeBlock>
-) : (
-<CodeBlock language="bash" showLineNumbers>
+    </CodeBlock>
+  ) : (
+    <CodeBlock language="bash" showLineNumbers>
 {`helm upgrade --install github-ocean port-labs/port-ocean \\
 	--set port.clientId="<PORT_CLIENT_ID>"  \\
 	--set port.clientSecret="<PORT_CLIENT_SECRET>"  \\
@@ -64,8 +64,8 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 	--set initializePortResources=true  \\
 	--set sendRawDataExamples=true  \\
 	--set scheduledResyncInterval=360`}
-</CodeBlock>
-)}
+    </CodeBlock>
+  )}
 
 <PortApiRegionTip/>
 
