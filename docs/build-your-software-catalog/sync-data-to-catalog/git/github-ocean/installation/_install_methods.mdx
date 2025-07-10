@@ -160,8 +160,7 @@ This table summarizes the available parameters for the installation.
 
 </TabItem>
 
-#AI! I want to render this mdx componenet only when 'props.setupName' is not "app"
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+{props.setupName !== "app" && <TabItem value="one-time-ci" label="Scheduled (CI)">
 
 This workflow/pipeline will run the GitHub integration once and then exit. This is useful for **scheduled** ingestion of data.
 
@@ -353,6 +352,6 @@ ingest_data:
 
 <AdvancedConfig/>
 
-</TabItem>
+</TabItem>}
 
 </Tabs>
