@@ -11,6 +11,7 @@ docker pull ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
 
 Run the following command to start the app:
 
+# AI! I want to have OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID and OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY variables here only shown when prop.showingApp is true, otherwise OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN should be the shown env variable
 
 ```bash showLineNumbers
 docker run \
@@ -52,6 +53,6 @@ https://www.base64encode.org/
 :::
 
 
-<DockerParametersTable />
+<DockerParametersTable showingApp={props.showingApp}/>
 
 <PortApiRegionTip/>
