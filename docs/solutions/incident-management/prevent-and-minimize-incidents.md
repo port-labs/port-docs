@@ -86,6 +86,13 @@ Whether it's finding out about incident resolution trends, or discovering more a
 Resilience depends on clear ownership. Make sure every service and component in your catalog has an owner—otherwise, incidents will fall through the cracks.
 :::
 
+#### Enable easy on-call schedule management
+
+Weddings, sick days, births and more can disrupt the uncreatively assigned rotas from your paging tools.
+Making the on-call roster visible and easy to update, is a key first stp in preparing for an incident.
+
+- [View and Change on-call](/guides/all/manage-pagerduty-on-call-schedules/)
+
 ### Learn: close the loop
 
 After every incident, use Port to capture what happened, analyze root causes, and update your processes. Continuous learning is the secret to long-term resilience.
