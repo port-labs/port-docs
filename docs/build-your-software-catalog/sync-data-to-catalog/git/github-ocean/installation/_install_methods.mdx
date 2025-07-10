@@ -154,9 +154,9 @@ This table summarizes the available parameters for the installation.
 | `initializePortResources`               | When `true`, the integration will create default blueprints and port-app-config.yml mapping.                            | ❌       |
 | `sendRawDataExamples`                   | When `true`, sends raw data examples from the third-party API to Port for testing and managing the integration mapping. | ❌       |
 | `baseUrl`                               | Integration instance base url, real-time live events will be enabled if this is configured.                                          | ❌       |
-| `integration.config.webhookSecret`         | A secret to secure webhooks from GitHub. This is optional but highly recommended for security if you enable live-events.                       |   ❌      |                                                                      
-| `integration.confg.githubAppId`       | You can start this integration as a (Github app)[./github-app.md], in that case you need to replace githubToken with Github app details, Github app id goes here #AI! improve this description | ❌  |  
-| `integration.secrets.githubAppPrivateKey`       | You can start this integration as a Github app, in that case you need to replace githubToken with Github app details, base64 encoded private key goes here #AI! also improve this description | ❌ |  
+| `integration.config.webhookSecret`         | A secret to secure webhooks from GitHub. This is optional but highly recommended for security if you enable live-events.                       |   ❌      |
+| `integration.config.githubAppId`       | The ID of your GitHub App. Required if you are authenticating as a [GitHub App](./github-app.md) instead of using a PAT. | ❌  |
+| `integration.secrets.githubAppPrivateKey`       | The base64 encoded private key of your GitHub App. Required if you are authenticating as a GitHub App. | ❌ |
 
 <br/>
 
