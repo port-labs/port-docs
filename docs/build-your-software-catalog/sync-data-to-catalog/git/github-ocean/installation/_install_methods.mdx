@@ -27,6 +27,8 @@ To install the integration using Helm:
 ```showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 ```
+
+# AI! I want to have integration.config.githubAppId and integration.secrets.githubAppPrivateKey variables here shown when prop.showingApp is true, otherwise integration.secrets.githubToken should be the shown env variable
 2. Install the Helm chart:
 ```showLineNumbers
 helm upgrade --install github-ocean port-labs/port-ocean \
@@ -140,7 +142,7 @@ kubectl apply -f my-ocean-github-integration.yaml
 
 This table summarizes the available parameters for the installation.
 
-<ParametersTable />
+<ParametersTable showingApp={props.setupName == "app"} />
 
 <br/>
 
@@ -149,7 +151,7 @@ This table summarizes the available parameters for the installation.
 </TabItem>
 
 <TabItem value="docker" label="Docker" default>
-    <DockerInstallMethod />
+    <DockerInstallMethod showingApp={props.setupName == "app"} />
 </TabItem>
 
 {props.setupName != "app" && <TabItem value="one-time-ci" label="Scheduled (CI)">
