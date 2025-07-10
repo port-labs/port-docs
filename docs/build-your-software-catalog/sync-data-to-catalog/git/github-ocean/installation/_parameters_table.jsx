@@ -53,7 +53,7 @@ export default function ParametersTable({ showingApp }) {
         </tr>
         {!showingApp && <tr>
           <td><code>integration.secrets.githubToken</code></td>
-          <td>A GitHub Personal Access Token (PAT) to authenticate with your GitHub Organization. Only required when you're not authenticating as a <a href="../github-app.md">Github app</a></td>
+          <td>A GitHub Personal Access Token (PAT) to authenticate with your GitHub Organization. Only required when you're not authenticating as a <a href="../github-app.mdx">Github app</a></td>
           <td>✅</td>
         </tr>}
         <tr>
@@ -84,7 +84,7 @@ export default function ParametersTable({ showingApp }) {
         {showingApp && <>
           <tr>
             <td><code>integration.config.githubAppId</code></td>
-            <td>The ID of your GitHub App. Required if you are authenticating as a <a href="./github-app.mdx">GitHub App</a> instead of using a PAT.</td>
+            <td>The ID of your GitHub App. Required if you are authenticating as a <a href="../github-app.mdx">GitHub App</a> instead of using a PAT.</td>
             <td>❌</td>
           </tr>
           <tr>
