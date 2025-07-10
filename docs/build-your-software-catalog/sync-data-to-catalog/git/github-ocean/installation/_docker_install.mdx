@@ -1,5 +1,6 @@
 import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
 import DockerParametersTable from "./_docker_parameters_table.jsx"
+import CodeBlock from '@theme/CodeBlock';
 
 Our integration can be directly run as a docker container, it can be deployed on any platform that allows deploying images as containers such as: K8S, ECS, AWS App Runner, etc.
 
@@ -11,23 +12,38 @@ docker pull ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
 
 Run the following command to start the app:
 
-# AI! I want to have OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID and OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY variables here only shown when prop.showingApp is true, otherwise OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN should be the shown env variable
-
-```bash showLineNumbers
-docker run \
-  -e OCEAN__PORT__CLIENT_ID=<PORT_CLIENT_ID> \
-  -e OCEAN__PORT__CLIENT_SECRET=<PORT_CLIENT_SECRET> \
-  -e OCEAN__PORT__BASE_URL=https://api.getport.io \
-  -e OCEAN__BASE_URL=<https.example.com> \ #optional, only required if you want to enable live-events
-  -e OCEAN__EVENT_LISTENER__TYPE=POLLING \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GITHUB_HOST> \ # e.g https://api.github.com
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<GITHUB_ORGANIZATION> \
-  -e OCEAN__INTEGRATION__IDENTIFIER=github-ocean \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<GITHUB_APP_ID> \
-  -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=<BASE_64_ENCODED_PRIVATEKEY> \
-  -p 8000:8000 \
-  ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
-```
+{props.showingApp ? (
+<CodeBlock language="bash" showLineNumbers>
+{`docker run \\
+  -e OCEAN__PORT__CLIENT_ID=<PORT_CLIENT_ID> \\
+  -e OCEAN__PORT__CLIENT_SECRET=<PORT_CLIENT_SECRET> \\
+  -e OCEAN__PORT__BASE_URL=https://api.getport.io \\
+  -e OCEAN__BASE_URL=<https.example.com> \\ #optional, only required if you want to enable live-events
+  -e OCEAN__EVENT_LISTENER__TYPE=POLLING \\
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GITHUB_HOST> \\ # e.g https://api.github.com
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<GITHUB_ORGANIZATION> \\
+  -e OCEAN__INTEGRATION__IDENTIFIER=github-ocean \\
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<GITHUB_APP_ID> \\
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=<BASE_64_ENCODED_PRIVATEKEY> \\
+  -p 8000:8000 \\
+  ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta`}
+</CodeBlock>
+) : (
+<CodeBlock language="bash" showLineNumbers>
+{`docker run \\
+  -e OCEAN__PORT__CLIENT_ID=<PORT_CLIENT_ID> \\
+  -e OCEAN__PORT__CLIENT_SECRET=<PORT_CLIENT_SECRET> \\
+  -e OCEAN__PORT__BASE_URL=https://api.getport.io \\
+  -e OCEAN__BASE_URL=<https.example.com> \\ #optional, only required if you want to enable live-events
+  -e OCEAN__EVENT_LISTENER__TYPE=POLLING \\
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=<GITHUB_HOST> \\ # e.g https://api.github.com
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<GITHUB_ORGANIZATION> \\
+  -e OCEAN__INTEGRATION__IDENTIFIER=github-ocean \\
+  -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=<GITHUB_TOKEN> \\
+  -p 8000:8000 \\
+  ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta`}
+</CodeBlock>
+)}
 
 
 :::tip Docker parameters
