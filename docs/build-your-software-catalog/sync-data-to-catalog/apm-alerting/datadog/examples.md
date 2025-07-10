@@ -761,3 +761,85 @@ resources:
 ```
 
 </details>
+
+## Team
+
+<details>
+<summary>Team blueprint</summary>
+
+```json showLineNumbers
+{
+    "identifier": "datadogServiceDependency",
+    "description": "This blueprint represents a dependency relationship between Datadog services, where one service calls another.",
+    "title": "Datadog Service Dependency",
+    "icon": "Datadog",
+    "schema": {
+      "properties": {
+        "sourceService": {
+          "type": "string",
+          "title": "Source Service",
+          "description": "The service that is making the call (depends on other services)"
+        },
+        "calledServices": {
+          "type": "array",
+          "title": "Called Services",
+          "description": "List of services that are called by the source service",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "string",
+          "title": "Description",
+          "description": "A description of the dependency relationship"
+        }
+      },
+      "required": ["sourceService"]
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "source": {
+        "target": "datadogService",
+        "title": "Source Service",
+        "description": "The service that is making the call",
+        "many": false,
+        "required": true
+      },
+      "targets": {
+        "target": "datadogService",
+        "title": "Called Services",
+        "description": "The services that are called by the source service",
+        "many": true,
+        "required": false
+      }
+    }
+  }
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+- kind: serviceDependency
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .sourceService
+          title: .sourceService
+          blueprint: '"datadogServiceDependency"'
+          properties:
+            sourceService: .sourceService
+            calledServices: .calledServices
+            description: .description
+          relations:
+            source: .sourceService
+            targets: .calledServices
+```
+
+</details>
