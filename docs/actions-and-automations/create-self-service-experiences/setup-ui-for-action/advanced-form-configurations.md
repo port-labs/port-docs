@@ -195,13 +195,14 @@ The available logged-in user object:
 
 Keys that are supported with jqQuery expressions:
 
-| Key      | Description                                       |
-| -------- | ------------------------------------------------- |
-| enum     | any enum of a property                            |
-| default  | the default value of any property                 |
-| required | the properties which will be required in the form |
-| value    | the value inside a "dataset" rule                 |
-| visible  | the condition to display any property in the form |
+| Key       | Description                                       |
+| --------- | ------------------------------------------------- |
+| enum      | any enum of a property                            |
+| default   | the default value of any property                 |
+| required  | the properties which will be required in the form |
+| value     | the value inside a "dataset" rule                 |
+| visible   | the condition to display any property in the form |
+| disabled  | the condition to disable any property in the form |
 
 ---
 
@@ -217,6 +218,7 @@ values={[
 { label: 'visible', value: 'visible', },
 { label: 'dependsOn', value: 'dependsOn', },
 { label: 'dataset', value: 'dataset', },
+{ label: 'disabled', value: 'disabled', },
 ]}>
 
 <TabItem value="visible">
@@ -478,6 +480,96 @@ action = Action(
 </Tabs>
 
 </TabItem>
+
+<TabItem value="disabled">
+
+The `disabled` property is used to dynamically disable/enable inputs in the form.
+The `disabled` value could be set to either a boolean (`true` value is always disabled, `false` value is always enabled), or to a `jqQuery` which evaluates to a boolean.
+
+In this example, the `runArguments` properties are configured with `disabled` so that they only become disabled in the form when the matching value is selected in the `language` input:
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'}
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["javascript", "python"]
+    },
+    "pythonRunArguments": {
+      "type": "string",
+      "disabled": {
+        "jqQuery": ".form.language == \"python\""
+      }
+    },
+    "nodeRunArguments": {
+      "type": "string",
+      "disabled": {
+        "jqQuery": ".form.language == \"javascript\""
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      string_props = {
+        language = {
+          enum = ["javascript", "python"]
+        }
+        pythonRunArguments = {
+          disabled_jq_query = ".form.language == \"python\""
+        }
+        nodeRunArguments = {
+          disabled_jq_query = ".form.language == \"javascript\""
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties={
+    "string_props": {
+      "language": {
+        "enums": ["python", "javascript"],
+      },
+      "pythonRunArguments": {"disabled_jq_query": '.form.language == "python"'},
+      "nodeRunArguments": {"disabled_jq_query": '.form.language == "javascript"'},
+    },
+  }
+)
+
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
 
 </Tabs>
 
@@ -1169,6 +1261,79 @@ action = Action(
 ![entity tags action](/img/software-catalog/blueprint/defaultEntityTags.png)
 
 :point_up: The namespace tags are already inserted into the form. :point_up:
+
+### Setting a disabled dynamic value with jqQuery
+
+This example contains an array input with a value that cannot be changed which is equal to the tags of the entity on which the action is performed:
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'},
+{label: 'Terraform', value: 'terraform'},
+{label: 'Pulumi', value: 'pulumi'},
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+{
+  "properties": {
+    "some_input": {
+      "type": "array",
+      "disabled": true,
+      "default": {
+        "jqQuery": ".entity.properties.tags"
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="terraform">
+
+```hcl showLineNumbers
+resource "port_action" myAction {
+  # ...action configuration
+  {
+    user_properties = {
+      array_props = {
+        some_input = {
+          disabled         = true
+          default_jq_query = ".entity.properties.tags"
+        }
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="pulumi">
+
+```python showLineNumbers title="pulumi.py"
+action = Action(
+  # ...action properties
+  user_properties={
+    "array_props": {
+      "some_input": {
+        "disabled": True,
+        "default_jq_query": ".entity.properties.tags"
+      }
+    },
+  },
+  trigger="DAY-2", # CREATE, DAY-2, DELETE
+)
+```
+
+</TabItem>
+</Tabs>
+
+![Dynamic Disabled Entity Tags](/img/software-catalog/blueprint/dynamicDisabledEntityTags.png)
+
+:point_up: The namespace tags inserted into the form based on the selected entity. :point_up:
 
 ### Setting required inputs with the jqQuery
 
