@@ -1,6 +1,4 @@
-import React from 'react';
-
-export default function DockerParametersTable() {
+export default function DockerParametersTable({ showingApp }) {
   return (
     <table>
       <thead>
@@ -56,16 +54,30 @@ export default function DockerParametersTable() {
           <td>A unique identifier for the integration instance. Useful if you are running multiple self-hosted GitHub integrations. Defaults to <code>github-ocean</code>.</td>
           <td>✅</td>
         </tr>
-        <tr>
-          <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID</code></td>
-          <td>Application ID. You can find it in the edit GitHub app page.</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY</code></td>
-          <td>A base64 encoded Github app private key.</td>
-          <td>✅</td>
-        </tr>
+        {
+          showingApp &&
+          <tr>
+            <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID</code></td>
+            <td>Application ID. You can find it in the edit GitHub app page.</td>
+            <td>✅</td>
+          </tr>
+        }
+        {
+          showingApp &&
+          <tr>
+            <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY</code></td>
+            <td>A base64 encoded Github app private key.</td>
+            <td>✅</td>
+          </tr>
+        }
+        {
+          !showingApp &&
+          <tr>
+            <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN</code></td>
+            <td>Github PAT.</td>
+            <td>✅</td>
+          </tr>
+        }
       </tbody>
     </table>
   );
