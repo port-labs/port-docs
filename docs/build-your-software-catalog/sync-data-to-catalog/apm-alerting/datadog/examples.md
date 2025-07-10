@@ -762,10 +762,10 @@ resources:
 
 </details>
 
-## Team
+## Service Dependency
 
 <details>
-<summary>Team blueprint</summary>
+<summary>Service Dependency blueprint</summary>
 
 ```json showLineNumbers
 {
