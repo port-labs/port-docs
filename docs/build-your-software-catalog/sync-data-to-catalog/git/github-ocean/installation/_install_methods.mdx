@@ -321,8 +321,50 @@ To enable live-events we only have to set the `base_url` argument, this allows o
 
       :::
 
-      # AI! write a short guide on setting up a nginx reverse proxy server config to proxy requests to a hypothetical github-ocean.example-domain.com to our running docker container. This step should include the example config, the step to restart the nginx server, as well as the step to run our docker container using the proxied hostname as our base_url
-      #### Setting up a with Nginx
-        
+      #### Setting up with Nginx
+
+      If you are deploying the integration on a server with Nginx, you can configure it as a reverse proxy to expose the integration to the internet.
+
+      ##### 1. Configure Nginx
+      Create a new Nginx configuration file at `/etc/nginx/sites-available/github-ocean.conf`. This will forward requests from `github-ocean.example-domain.com` to the integration container on port `8000`.
+
+      <CodeBlock language="nginx" title="/etc/nginx/sites-available/github-ocean.conf">
+{`server {
+    listen 80;
+    server_name github-ocean.example-domain.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}`}
+      </CodeBlock>
+
+      :::note
+      For a production setup, it is highly recommended to also configure SSL/TLS for your domain. You can use a service like [Let's Encrypt](https://letsencrypt.org/) to get free SSL certificates.
+      :::
+
+      ##### 2. Enable the Site and Restart Nginx
+      Enable the new site by creating a symbolic link, then test the configuration and restart Nginx.
+
+      <CodeBlock language="bash">
+{`sudo ln -s /etc/nginx/sites-available/github-ocean.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx`}
+      </CodeBlock>
+
+      ##### 3. Run the Docker Container
+      Finally, run the integration's Docker container. Set the `OCEAN__BASE_URL` to your public domain and bind the container's port `8000` to `127.0.0.1:8000` on the host. This ensures it's only accessible via the Nginx proxy.
+
+      <CodeBlock language="bash" showLineNumbers>
+{`docker run \\
+  -e OCEAN__BASE_URL="http://github-ocean.example-domain.com" \\
+  # ... other docker variables from the Docker deploy step
+  -p 127.0.0.1:8000:8000 \\
+  ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta`}
+      </CodeBlock>
     </TabItem>
 </Tabs>
