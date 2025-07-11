@@ -259,7 +259,12 @@ spec:
 
       Now that your integration is publicly accessible, you can use this URL to configure the webhook in GitHub. The `base_url` for the integration should be set to `http://<YOUR_DOMAIN>` or `https://<YOUR_DOMAIN>`.
 
-      When you set the `integration.eventListener.type` to `WEBHOOK` and provide the `base_url` during the Helm installation, Ocean will attempt to automatically create the webhook in GitHub for you. If you are setting this up after installation, you may need to configure it manually in your GitHub App settings or re-run the Helm installation with the updated values.
+      When you provide the `base_url` during the Helm installation, Ocean will attempt to automatically create the webhook in GitHub for you. If you are setting this up after installation, you can set this by running the install command again but with base_url set this time.
+      ```sh showLineNumbers
+        helm upgrade --install github-ocean port-labs/port-ocean \
+        # ... be sure to set the other variables
+        --set integration.version="1.0.5-beta"  
+    ```
 
     </TabItem>
     <TabItem value="nginx" label="Nginx"></TabItem>
