@@ -278,7 +278,9 @@ To enable live-events we only have to set the `base_url` argument, this allows o
 
       When you set the `integration.config.baseUrl`, Ocean will attempt to automatically create the webhook in GitHub for you.
     </TabItem>
+
     <TabItem value="docker" label="Docker">
+      # AI! can you improve the docs in this tab item? make it more comprehensible and more succint, I have added a `contributing.md` file which contains a style guide
       To enable live-events when the integration is directly run with Docker, we need to configure our deployment environment to proxy requests to the running container by configuring a reverse proxy.
 
       :::tip
@@ -363,7 +365,7 @@ sudo systemctl restart nginx`}
 {`docker run \\
   -e OCEAN__BASE_URL="http://github-ocean.example-domain.com" \\
   # ... other docker variables from the Docker deploy step
-  -p 127.0.0.1:8000:8000 \\
+  -p 8000:8000 \\
   ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta`}
       </CodeBlock>
     </TabItem>
