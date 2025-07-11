@@ -289,7 +289,7 @@ To enable live-events we only have to set the `base_url` argument, this allows o
 
         1.  Start a tunnel to port `8000`:
             <CodeBlock language="bash">
-        {`ngrok http 8000`}
+            {`ngrok http 8000`}
             </CodeBlock>
         2.  Ngrok will provide you with a public URL. It will look something like this:
             ```
@@ -297,11 +297,11 @@ To enable live-events we only have to set the `base_url` argument, this allows o
             ```
         3.  Copy the `https` URL and use it as the `OCEAN__BASE_URL` when running your Docker container:
             <CodeBlock language="bash" showLineNumbers>
-        {`docker run \\
-          -e OCEAN__BASE_URL="https://c696-2693-1a59.ngrok-free.app" \\ # Replace with your ngrok URL
-          # ... other docker variables from the Docker deploy step
-          -p 8000:8000 \\
-          ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta`}
+            {`docker run \\
+              -e OCEAN__BASE_URL="https://c696-2693-1a59.ngrok-free.app" \\ # Replace with your ngrok URL
+              # ... other docker variables from the Docker deploy step
+              -p 8000:8000 \\
+              ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta`}
             </CodeBlock>
       </details>
 
