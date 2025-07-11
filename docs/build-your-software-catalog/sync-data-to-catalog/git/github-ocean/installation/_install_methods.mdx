@@ -280,48 +280,30 @@ To enable live-events we only have to set the `base_url` argument, this allows o
     </TabItem>
 
     <TabItem value="docker" label="Docker">
-      # AI! can you improve the docs in this tab item? make it more comprehensible and more succint, I have added a `contributing.md` file which contains a style guide
-      To enable live-events when the integration is directly run with Docker, we need to configure our deployment environment to proxy requests to the running container by configuring a reverse proxy.
-
-      :::tip
+      When running the integration with Docker, you need a public URL to receive live events from GitHub. This can be achieved by using a reverse proxy to expose the container to the internet.
 
       <details>
-        <summary>Local Testing</summary>
+        <summary><b>Local Testing with Ngrok (Click to expand)</b></summary>
 
-        When running the docker image locally, you can get an integration endpoint by using [Ngrok](https://ngrok.com/), simply start a tunnel to port 8000 with:
-        ```sh showLineNumbers
-          ngrok http 8000
-        ```
-        This would produce an output like this:
+        For local testing, you can use [Ngrok](https://ngrok.com/) to create a secure tunnel to your machine. This will give you a temporary public URL that forwards traffic to your Docker container.
 
-        ```
-          ngrok                                (Ctl+C to quit)
-
-          ngrok does not support a dynamic, color terminal UI on solaris.
-          Access the web interface for connection and tunnel status.
-
-          Version                       3.11.0
-          Region                        Auto (lowest latency) (auto)
-          Web Interface                 http://127.0.0.1:4040
-      ```
-       Open the "Web interface" in your browser to see your base url, it is in the format:
-        
-      ```
-      https://c69626931a59.ngrok-free.app
-      ```
-      
-      Now we can run the docker container using this as our `OCEAN_BASE_URL`
-
-      ```sh showLineNumbers
-      docker run \
-      -e OCEAN__BASE_URL=https://c69626931a59.ngrok-free.app \ #replace with your ngrok url
-      # ..other docker variables from the Docker deploy step.
-      -p 8000:8000 \
-      ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
-      ```
+        1.  Start a tunnel to port `8000`:
+            <CodeBlock language="bash">
+        {`ngrok http 8000`}
+            </CodeBlock>
+        2.  Ngrok will provide you with a public URL. It will look something like this:
+            ```
+            Forwarding                    https://c696-2693-1a59.ngrok-free.app -> http://localhost:8000
+            ```
+        3.  Copy the `https` URL and use it as the `OCEAN__BASE_URL` when running your Docker container:
+            <CodeBlock language="bash" showLineNumbers>
+        {`docker run \\
+          -e OCEAN__BASE_URL="https://c696-2693-1a59.ngrok-free.app" \\ # Replace with your ngrok URL
+          # ... other docker variables from the Docker deploy step
+          -p 8000:8000 \\
+          ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta`}
+            </CodeBlock>
       </details>
-
-      :::
 
       #### Setting up with Nginx
 
@@ -330,7 +312,7 @@ To enable live-events we only have to set the `base_url` argument, this allows o
       ##### 1. Configure Nginx
       Create a new Nginx configuration file at `/etc/nginx/sites-available/github-ocean.conf`. This will forward requests from `github-ocean.example-domain.com` to the integration container on port `8000`.
 
-      <CodeBlock language="nginx" title="/etc/nginx/sites-available/github-ocean.conf">
+      <CodeBlock language="nginx" title="/etc/nginx/sites-available/github-ocean.conf" showLineNumbers>
 {`server {
     listen 80;
     server_name github-ocean.example-domain.com;
@@ -352,7 +334,7 @@ To enable live-events we only have to set the `base_url` argument, this allows o
       ##### 2. Enable the Site and Restart Nginx
       Enable the new site by creating a symbolic link, then test the configuration and restart Nginx.
 
-      <CodeBlock language="bash">
+      <CodeBlock language="bash" showLineNumbers>
 {`sudo ln -s /etc/nginx/sites-available/github-ocean.conf /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl restart nginx`}
