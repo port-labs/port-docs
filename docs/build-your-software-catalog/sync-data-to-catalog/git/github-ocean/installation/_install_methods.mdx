@@ -278,5 +278,51 @@ To enable live-events we only have to set the `base_url` argument, this allows o
 
       When you set the `integration.config.baseUrl`, Ocean will attempt to automatically create the webhook in GitHub for you.
     </TabItem>
-    <TabItem value="nginx" label="Nginx"></TabItem>
+    <TabItem value="docker" label="Docker">
+      To enable live-events when the integration is directly run with Docker, we need to configure our deployment environment to proxy requests to the running container by configuring a reverse proxy.
+
+      :::tip
+
+      <details>
+        <summary>Local Testing</summary>
+
+        When running the docker image locally, you can get an integration endpoint by using [Ngrok](https://ngrok.com/), simply start a tunnel to port 8000 with:
+        ```sh showLineNumbers
+          ngrok http 8000
+        ```
+        This would produce an output like this:
+
+        ```
+          ngrok                                (Ctl+C to quit)
+
+          ngrok does not support a dynamic, color terminal UI on solaris.
+          Access the web interface for connection and tunnel status.
+
+          Version                       3.11.0
+          Region                        Auto (lowest latency) (auto)
+          Web Interface                 http://127.0.0.1:4040
+      ```
+       Open the "Web interface" in your browser to see your base url, it is in the format:
+        
+      ```
+      https://c69626931a59.ngrok-free.app
+      ```
+      
+      Now we can run the docker container using this as our `OCEAN_BASE_URL`
+
+      ```sh showLineNumbers
+      docker run \
+      -e OCEAN__BASE_URL=https://c69626931a59.ngrok-free.app \ #replace with your ngrok url
+      # ..other docker variables from the Docker deploy step.
+      -p 8000:8000 \
+      ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
+      ```
+      </details>
+
+      :::
+
+      # AI! write a short guide on setting up a nginx reverse proxy server config to proxy requests to a hypothetical github-ocean.example-domain.com to our running docker container. This step should include the example config, the step to restart the nginx server, as well as the step to run our docker container using the proxied hostname as our base_url
+      #### Setting up a with Nginx
+        
+    </TabItem>
 </Tabs>
