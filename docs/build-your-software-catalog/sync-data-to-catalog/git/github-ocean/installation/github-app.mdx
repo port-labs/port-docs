@@ -44,10 +44,10 @@ In organizations that have a self-hosted GitHub installation there is no access 
 - Uncheck **Active** under Webhooks. The integration will automatically create the webhook if you configure the `OCEAN__BASE_URL` variable later during deployment.
 - **Repository Permissions:**
   - Actions: Read and Write (for executing self-service action using GitHub workflow).
-  - Checks: Read and Write (for validating `Port.yml`).
+  - Checks: Readonly (for syncing `Port.yml`).
   - Contents: Readonly (for reading port configuration files and repository files).
   - Metadata: Readonly.
-  - Pull Request: Read and Write.
+  - Pull Request: Readonly
 - **Organization Permissions:**
   - Webhooks: Read and Write (to allow the integration create webhook).
 

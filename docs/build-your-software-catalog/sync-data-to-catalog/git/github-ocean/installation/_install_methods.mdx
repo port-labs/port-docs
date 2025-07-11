@@ -298,10 +298,10 @@ To enable live-events we only have to set the `base_url` argument, this allows o
             ```
         3.  Copy the `https` URL and use it as the `OCEAN__BASE_URL` when running your Docker container:
             ```bash showLineNumbers
-            docker run \\
-              -e OCEAN__BASE_URL="https://c696-2693-1a59.ngrok-free.app" \\ # Replace with your ngrok URL
+            docker run \
+              -e OCEAN__BASE_URL="https://c696-2693-1a59.ngrok-free.app" \ # Replace with your ngrok URL
               # ... other docker variables from the Docker deploy step
-              -p 8000:8000 \\
+              -p 8000:8000 \
               ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
             ```
       </details>
@@ -336,20 +336,20 @@ server {
       Enable the new site by creating a symbolic link, then test the configuration and restart Nginx.
 
       ```bash showLineNumbers
-sudo ln -s /etc/nginx/sites-available/github-ocean.conf /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl restart nginx
-      ```
+        sudo ln -s /etc/nginx/sites-available/github-ocean.conf /etc/nginx/sites-enabled/
+        sudo nginx -t
+        sudo systemctl restart nginx
+        ```
 
       ##### 3. Run the Docker Container
       Finally, run the integration's Docker container. Set the `OCEAN__BASE_URL` to your public domain and bind the container's port `8000` to `127.0.0.1:8000` on the host. This ensures it's only accessible via the Nginx proxy.
 
       ```bash showLineNumbers
-docker run \\
-  -e OCEAN__BASE_URL="http://github-ocean.example-domain.com" \\
-  # ... other docker variables from the Docker deploy step
-  -p 8000:8000 \\
-  ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
+        docker run \
+        -e OCEAN__BASE_URL="http://github-ocean.example-domain.com" \
+        # ... other docker variables from the Docker deploy step
+        -p 8000:8000 \
+        ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
       ```
     </TabItem>
 </Tabs>
