@@ -192,13 +192,74 @@ To enable live-events we only have to set the `base_url` argument, this allows o
 <Tabs groupId="liveEvents" queryString="live-events">
     <TabItem value="kubernetes" label="Kubernetes">
 
+      When you install the integration using Helm, a Kubernetes Service is created. This service exposes the integration within the cluster. To receive webhooks from GitHub, you need to expose this service to the internet. A Kubernetes Ingress is the standard way to do this.
+
+      Here is a step-by-step guide to setting up an Ingress for your integration:
+
       #### Prerequisites
 
-      1. Kubernetes cluster ([Minikube](https://minikube.sigs.k8s.io/docs/start/) is enough for local testing)
-      2. Helm
+      1.  A running Kubernetes cluster.
+      2.  `kubectl` configured to interact with your cluster.
+      3.  An Ingress controller installed in your cluster. If you don't have one, you can install the popular [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/).
 
-      # Ai! improve this guide, write a step by step guide of creating a kubernetes ingress resource and applying it to a cluster, show an example ingress yaml file.
-      When you run the helm installation above, a [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/) is configured for the integration. To enable live-events, we only have to make this service accept outside traffic, to this we configure an ingress resource.
+      #### 1. Create an Ingress Manifest
+
+      First, you need to create a YAML file for the Ingress resource. This file will define rules for routing external HTTP(S) traffic to the integration's service.
+
+      Create a file named `ingress.yaml` with the following content. Make sure to replace `<YOUR_DOMAIN>` with the domain you want to use to expose your integration. The service name and port should match what is created by the Helm chart. By default, the service for `github-ocean` will be named `github-ocean` and it will be listening on port `80`.
+
+      <CodeBlock language="yaml" title="ingress.yaml">
+{`apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: github-ocean-ingress
+  # If you are using the NGINX ingress controller, you might want to add annotations
+  # For example, to use a specific ingress class:
+  # annotations:
+  #   kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: <YOUR_DOMAIN> # e.g., github-ocean.yourcompany.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: github-ocean # This should be the name of the service created by Helm
+            port:
+              number: 80 # This should be the port the service is exposed on`}
+      </CodeBlock>
+
+      :::note
+      The service name `github-ocean` is the default when installing the chart with `helm upgrade --install github-ocean ...`. If you used a different release name, the service name will be `<YOUR_RELEASE_NAME>`. You can find the service name by running `kubectl get svc`.
+      :::
+
+      #### 2. Apply the Ingress Manifest
+
+      Apply the manifest to your cluster using `kubectl`:
+
+      ```bash
+      kubectl apply -f ingress.yaml
+      ```
+
+      This will create the Ingress resource. The Ingress controller will then provision a load balancer or configure itself to route traffic to your integration's service.
+
+      #### 3. Get the External IP or Hostname
+
+      After a few moments, you can get the external IP address or hostname of the Ingress by running:
+
+      ```bash
+      kubectl get ingress github-ocean-ingress
+      ```
+
+      Look for the `ADDRESS` column in the output. This is the public URL for your integration.
+
+      #### 4. Update GitHub Webhook
+
+      Now that your integration is publicly accessible, you can use this URL to configure the webhook in GitHub. The `base_url` for the integration should be set to `http://<YOUR_DOMAIN>` or `https://<YOUR_DOMAIN>`.
+
+      When you set the `integration.eventListener.type` to `WEBHOOK` and provide the `base_url` during the Helm installation, Ocean will attempt to automatically create the webhook in GitHub for you. If you are setting this up after installation, you may need to configure it manually in your GitHub App settings or re-run the Helm installation with the updated values.
 
     </TabItem>
     <TabItem value="nginx" label="Nginx"></TabItem>
