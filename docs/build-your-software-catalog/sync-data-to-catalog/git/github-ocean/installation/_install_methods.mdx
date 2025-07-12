@@ -35,62 +35,73 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 Install the Helm chart:
 
   1. Create a `values.yaml` file with the following content:
+
   {props.setupName == "app" ? (
-    <details>
-      <summary>values.yaml</summary>
-      <CodeBlock language="yaml" showLineNumbers>
-{`port:
-  clientId: "<PORT_CLIENT_ID>"
-  clientSecret: "<PORT_CLIENT_SECRET>"
-  baseUrl: "https://api.port.io"
+<details>
+  <summary>values.yaml</summary>
 
-integration:
-  identifier: "github-ocean"
-  type: "github-ocean"
-  version: "1.0.5-beta"
-  eventListener:
-    type: "POLLING"
-  config:
-    githubOrganization: <GITHUB_ORGANIZATION>
-    githubHost: <GITHUB_HOST>
-    githubAppId: <GITHUB_APP_ID>
-  secrets:
-    githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
+  # AI! Replace this with a classic code block with 3 backticks
+  <CodeBlock language="yaml" showLineNumbers>
+      {`
+  port:
+    clientId: "<PORT_CLIENT_ID>"
+    clientSecret: "<PORT_CLIENT_SECRET>"
+    baseUrl: "https://api.port.io"
 
-initializePortResources: true
-sendRawDataExamples: true
-scheduledResyncInterval: 360`}
-      </CodeBlock>
-    </details>
+  integration:
+    identifier: "github-ocean"
+    type: "github-ocean"
+    version: "1.0.5-beta"
+    eventListener:
+      type: "POLLING"
+    config:
+      githubOrganization: <GITHUB_ORGANIZATION>
+      githubHost: <GITHUB_HOST>
+      githubAppId: <GITHUB_APP_ID>
+    secrets:
+      githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
+
+  initializePortResources: true
+  sendRawDataExamples: true
+  scheduledResyncInterval: 360
+`}
+</CodeBlock>
+</details>
   ) : (
-    <details>
-      <summary>values.yaml</summary>
-      <CodeBlock language="yaml" showLineNumbers>
-{`port:
-  clientId: "<PORT_CLIENT_ID>"
-  clientSecret: "<PORT_CLIENT_SECRET>"
-  baseUrl: "https://api.port.io"
+<details>
+  <summary>values.yaml</summary>
 
-integration:
-  identifier: "github-ocean"
-  type: "github-ocean"
-  version: "1.0.5-beta"
-  eventListener:
-    type: "POLLING"
-  config:
-    githubOrganization: <GITHUB_ORGANIZATION>
-    githubHost: <GITHUB_HOST>
-  secrets:
-    githubToken: <GITHUB_PAT>
+  # AI! Replace this with a classic code block with 3 backticks
+  <CodeBlock language="yaml" showLineNumbers>
+      {`
+  port:
+    clientId: "<PORT_CLIENT_ID>"
+    clientSecret: "<PORT_CLIENT_SECRET>"
+    baseUrl: "https://api.port.io"
 
-initializePortResources: true
-sendRawDataExamples: true
-scheduledResyncInterval: 360`}
-      </CodeBlock>
-    </details>
+  integration:
+    identifier: "github-ocean"
+    type: "github-ocean"
+    version: "1.0.5-beta"
+    eventListener:
+      type: "POLLING"
+    config:
+      githubOrganization: <GITHUB_ORGANIZATION>
+      githubHost: <GITHUB_HOST>
+    secrets:
+      githubToken: <GITHUB_PAT>
+
+  initializePortResources: true
+  sendRawDataExamples: true
+  scheduledResyncInterval: 360
+        `}
+  </CodeBlock>
+</details>
   )}
 
+
   2. Install the Helm chart using the `values.yaml` file:
+
   <CodeBlock language="bash" showLineNumbers>
 {`helm upgrade --install github-ocean port-labs/port-ocean -f values.yaml`}
   </CodeBlock>
@@ -242,71 +253,76 @@ This table summarizes the available parameters for the installation.
       A full example based on the installation command:
 
       1. Create or update your `values.yaml` file with the following content:
+
         {props.setupName == "app" ? (
           <details>
             <summary>values.yaml</summary>
             <CodeBlock language="yaml" showLineNumbers>
-{`port:
-  clientId: "<PORT_CLIENT_ID>"
-  clientSecret: "<PORT_CLIENT_SECRET>"
-  baseUrl: "https://api.port.io"
+{`
+  port:
+    clientId: "<PORT_CLIENT_ID>"
+    clientSecret: "<PORT_CLIENT_SECRET>"
+    baseUrl: "https://api.port.io"
 
-integration:
-  identifier: "github-ocean"
-  type: "github-ocean"
-  version: "1.0.5-beta"
-  eventListener:
-    type: "POLLING"
-  config:
-    githubOrganization: <GITHUB_ORGANIZATION>
-    githubHost: <GITHUB_HOST>
-    githubAppId: <GITHUB_APP_ID>
-  secrets:
-    githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
-  extraEnv:
-    - name: "OCEAN__BASE_URL"
-      value: "<your-domain>/github-ocean"
+  integration:
+    identifier: "github-ocean"
+    type: "github-ocean"
+    version: "1.0.5-beta"
+    eventListener:
+      type: "POLLING"
+    config:
+      githubOrganization: <GITHUB_ORGANIZATION>
+      githubHost: <GITHUB_HOST>
+      githubAppId: <GITHUB_APP_ID>
+    secrets:
+      githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
+    extraEnv:
+      - name: "OCEAN__BASE_URL"
+        value: "<your-domain>/github-ocean"
 
-initializePortResources: true
-sendRawDataExamples: true
-scheduledResyncInterval: 360
+  initializePortResources: true
+  sendRawDataExamples: true
+  scheduledResyncInterval: 360
 
-ingress:
-  enabled: true
-  path: "/github-ocean"`}
+  ingress:
+    enabled: true
+    path: "/github-ocean"
+`}
             </CodeBlock>
           </details>
         ) : (
           <details>
             <summary>values.yaml</summary>
             <CodeBlock language="yaml" showLineNumbers>
-{`port:
-  clientId: "<PORT_CLIENT_ID>"
-  clientSecret: "<PORT_CLIENT_SECRET>"
-  baseUrl: "https://api.port.io"
+{`
+  port:
+    clientId: "<PORT_CLIENT_ID>"
+    clientSecret: "<PORT_CLIENT_SECRET>"
+    baseUrl: "https://api.port.io"
 
-integration:
-  identifier: "github-ocean"
-  type: "github-ocean"
-  version: "1.0.5-beta"
-  eventListener:
-    type: "POLLING"
-  config:
-    githubOrganization: <GITHUB_ORGANIZATION>
-    githubHost: <GITHUB_HOST>
-  secrets:
-    githubToken: <GITHUB_PAT>
-  extraEnv:
-    - name: "OCEAN__BASE_URL"
-      value: "<your-domain>/github-ocean"
+  integration:
+    identifier: "github-ocean"
+    type: "github-ocean"
+    version: "1.0.5-beta"
+    eventListener:
+      type: "POLLING"
+    config:
+      githubOrganization: <GITHUB_ORGANIZATION>
+      githubHost: <GITHUB_HOST>
+    secrets:
+      githubToken: <GITHUB_PAT>
+    extraEnv:
+      - name: "OCEAN__BASE_URL"
+        value: "<your-domain>/github-ocean"
 
-initializePortResources: true
-sendRawDataExamples: true
-scheduledResyncInterval: 360
+  initializePortResources: true
+  sendRawDataExamples: true
+  scheduledResyncInterval: 360
 
-ingress:
-  enabled: true
-  path: "/github-ocean"`}
+  ingress:
+    enabled: true
+    path: "/github-ocean"
+`}
             </CodeBlock>
           </details>
         )}
