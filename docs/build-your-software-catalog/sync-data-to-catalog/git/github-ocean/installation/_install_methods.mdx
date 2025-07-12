@@ -35,6 +35,7 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 Install the Helm chart:
   {props.setupName == "app" ? (
     <CodeBlock language="bash" showLineNumbers>
+#Ai! generate a sample values.yml template from these helm variables, add it to a <details> element like is done in the argocd example, replace this helm command to reference the a values file rather having all variables set in the cmdline. There should be two details elements depending on if the example is being shown when "app" or not
 {`helm upgrade --install github-ocean port-labs/port-ocean \\
 	--set port.clientId="<PORT_CLIENT_ID>" \\
 	--set port.clientSecret="<PORT_CLIENT_SECRET>" \\
@@ -215,6 +216,7 @@ This table summarizes the available parameters for the installation.
       Here is an example of how to set these parameters in your `helm upgrade --install` command. Make sure to replace `<YOUR_DOMAIN>` with your actual public domain name.
 
       A full example based on the installation command:
+#Ai! generate a sample values.yml template from these helm variables, add it to a <details> element like is done in the argocd example, replace this helm command to reference the a values file rather having all variables set in the cmdline. There should be two details elements depending on if the example is being shown when "app" or not
         {props.setupName == "app" ? (
           <CodeBlock language="bash" showLineNumbers>
       {`helm upgrade --install github-ocean port-labs/port-ocean \\
