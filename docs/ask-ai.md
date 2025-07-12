@@ -27,9 +27,38 @@ To use the AI assistant, click on the `Ask AI` button in the top-right corner �
   - "Write an automation definition that sends a Slack message to a channel when a new user is created"
 
 ➙ **Debugging help**  
-  If you have an error in a JSON definition or jq expression, paste it in and ask for help:
+  If you have an error in a JSON/YAML definition, paste it in and ask for help:
   - "Why is this entity definition invalid?"
-  - "Fix the following jq expression for extracting the 'identifier' property"
+    ```json
+    {
+      "identifier": "provision",
+      "title": "Provision",
+      "icon": "Microservice",
+      "team": "myTeam",
+      "properties": {},
+      "relations": {
+        "repository": "provision"
+      }
+    }
+    ```
+  - "I'm trying to ingest a YAML file using the GitHub integration into a property called `spec`, but I'm getting an error saying that `spec` must be string.  
+  Here is the data source mapping:"
+    ```yaml
+    - kind: file
+      selector:
+        query: 'true'
+        files:
+          - path: '**/openapi.yaml'
+      port:
+        entity:
+          mappings:
+            identifier: .repo.full_name
+            blueprint: '"api_specs"'
+            properties:
+              spec: .file.content
+          relations:
+            repository: .repo.full_name
+    ```
 
 ➙ **Step-by-step guidance**  
   The assistant can walk you through processes:
@@ -48,7 +77,7 @@ To use the AI assistant, click on the `Ask AI` button in the top-right corner �
   If the first answer isn’t quite right, ask follow-up questions or clarify your request.
 
 ➙ **Use examples**  
-  When asking for definitions or debugging, include your current JSON/jq expression or the error message you’re seeing.
+  When asking for definitions or debugging, include your current JSON/YAML or the error message you’re seeing.
 
 ➙ **Look ahead**  
   The assistant can provide insights into new features, in-progress work, or upcoming changes.
