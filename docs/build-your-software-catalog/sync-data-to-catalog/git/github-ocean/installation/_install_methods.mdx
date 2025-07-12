@@ -235,6 +235,10 @@ This table summarizes the available parameters for the installation.
     <TabItem value="kubernetes" label="Kubernetes">
       When you install the integration using Helm, a Kubernetes Service is created. To receive webhooks from GitHub, you need to expose this service to the internet. The `port-ocean` Helm chart provides a simple way to do this by creating a Kubernetes Ingress resource.
 
+      :::tip
+        You can install setup a local Kubernetes cluster with [Minikube](https://minikube.sigs.k8s.io/docs/)
+      :::
+
       #### Prerequisites
 
       You must have an [Ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) installed in your cluster. If you don't have one, you can install the popular [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/).
@@ -274,17 +278,20 @@ This table summarizes the available parameters for the installation.
       githubAppId: <GITHUB_APP_ID>
     secrets:
       githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
-    extraEnv:
-      - name: "OCEAN__BASE_URL"
-        value: "<your-domain>/github-ocean"
+    
+  ingress:
+    enabled: true
+    className: "nginx"
+    host: "<your-domain>"
+    path: "/"
+
+  extraEnv:
+    - name: "OCEAN__BASE_URL"
+      value: "https://<your-domain>"
 
   initializePortResources: true
   sendRawDataExamples: true
   scheduledResyncInterval: 360
-
-  ingress:
-    enabled: true
-    path: "/github-ocean"
 `}
             </CodeBlock>
           </details>
@@ -309,17 +316,21 @@ This table summarizes the available parameters for the installation.
       githubHost: <GITHUB_HOST>
     secrets:
       githubToken: <GITHUB_PAT>
-    extraEnv:
-      - name: "OCEAN__BASE_URL"
-        value: "<your-domain>/github-ocean"
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    host: "<your-domain>"
+    path: "/"
+
+  extraEnv:
+    - name: "OCEAN__BASE_URL"
+      value: "https://<your-domain>"
 
   initializePortResources: true
   sendRawDataExamples: true
   scheduledResyncInterval: 360
 
-  ingress:
-    enabled: true
-    path: "/github-ocean"
 `}
             </CodeBlock>
           </details>
@@ -329,30 +340,13 @@ This table summarizes the available parameters for the installation.
 {`helm upgrade --install github-ocean port-labs/port-ocean -f values.yaml`}
       </CodeBlock>
 
-      #### Securing with TLS
-
-      For production environments, it is highly recommended to secure your Ingress with TLS. If you are using `cert-manager`, you can automate the provisioning of TLS certificates by adding annotations to the Ingress.
-
-      You can specify the `ingress.className` and `ingress.annotations` in your Helm command:
-
-      <CodeBlock language="bash" showLineNumbers>
-      {`helm upgrade --install github-ocean port-labs/port-ocean \\
-          # ... other parameters
-          --set ingress.enabled=true \\
-          --set ingress.host="<YOUR_DOMAIN>" \\
-          --set ingress.className="nginx" \\
-          --set-string ingress.annotations.'cert-manager\\.io/cluster-issuer'="letsencrypt-prod" \\`}
-      </CodeBlock>
-
       #### Verify Ingress
 
       After applying the changes, you can check the status of your Ingress. The Ingress resource will be named after your Helm release (e.g., `github-ocean`):
 
       <CodeBlock language="bash">
-      {`kubectl get ingress github-ocean`}
+      {`kubectl get ingress`}
       </CodeBlock>
-
-      The output should show the public IP address or hostname in the `ADDRESS` column. This is the URL you will use for GitHub webhooks.
 
       When you set the `OCEAN__BASE_URL`, Ocean will attempt to automatically create the webhook in GitHub for you.
     </TabItem>
