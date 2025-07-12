@@ -40,62 +40,56 @@ Install the Helm chart:
 <details>
   <summary>values.yaml</summary>
 
-  # AI! Replace this with a classic code block with 3 backticks
-  <CodeBlock language="yaml" showLineNumbers>
-      {`
-  port:
-    clientId: "<PORT_CLIENT_ID>"
-    clientSecret: "<PORT_CLIENT_SECRET>"
-    baseUrl: "https://api.port.io"
+```yaml showLineNumbers
+port:
+  clientId: "<PORT_CLIENT_ID>"
+  clientSecret: "<PORT_CLIENT_SECRET>"
+  baseUrl: "https://api.port.io"
 
-  integration:
-    identifier: "github-ocean"
-    type: "github-ocean"
-    version: "1.0.5-beta"
-    eventListener:
-      type: "POLLING"
-    config:
-      githubOrganization: <GITHUB_ORGANIZATION>
-      githubHost: <GITHUB_HOST>
-      githubAppId: <GITHUB_APP_ID>
-    secrets:
-      githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
+integration:
+  identifier: "github-ocean"
+  type: "github-ocean"
+  version: "1.0.5-beta"
+  eventListener:
+    type: "POLLING"
+  config:
+    githubOrganization: <GITHUB_ORGANIZATION>
+    githubHost: <GITHUB_HOST>
+    githubAppId: <GITHUB_APP_ID>
+  secrets:
+    githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
 
-  initializePortResources: true
-  sendRawDataExamples: true
-  scheduledResyncInterval: 360
-`}
-</CodeBlock>
+initializePortResources: true
+sendRawDataExamples: true
+scheduledResyncInterval: 360
+```
 </details>
   ) : (
 <details>
   <summary>values.yaml</summary>
 
-  # AI! Replace this with a classic code block with 3 backticks
-  <CodeBlock language="yaml" showLineNumbers>
-      {`
-  port:
-    clientId: "<PORT_CLIENT_ID>"
-    clientSecret: "<PORT_CLIENT_SECRET>"
-    baseUrl: "https://api.port.io"
+```yaml showLineNumbers
+port:
+  clientId: "<PORT_CLIENT_ID>"
+  clientSecret: "<PORT_CLIENT_SECRET>"
+  baseUrl: "https://api.port.io"
 
-  integration:
-    identifier: "github-ocean"
-    type: "github-ocean"
-    version: "1.0.5-beta"
-    eventListener:
-      type: "POLLING"
-    config:
-      githubOrganization: <GITHUB_ORGANIZATION>
-      githubHost: <GITHUB_HOST>
-    secrets:
-      githubToken: <GITHUB_PAT>
+integration:
+  identifier: "github-ocean"
+  type: "github-ocean"
+  version: "1.0.5-beta"
+  eventListener:
+    type: "POLLING"
+  config:
+    githubOrganization: <GITHUB_ORGANIZATION>
+    githubHost: <GITHUB_HOST>
+  secrets:
+    githubToken: <GITHUB_PAT>
 
-  initializePortResources: true
-  sendRawDataExamples: true
-  scheduledResyncInterval: 360
-        `}
-  </CodeBlock>
+initializePortResources: true
+sendRawDataExamples: true
+scheduledResyncInterval: 360
+```
 </details>
   )}
 
