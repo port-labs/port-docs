@@ -216,21 +216,22 @@ This table summarizes the available parameters for the installation.
 
       A full example based on the installation command:
         {props.setupName == "app" ? (
+        # AI! The command in the following CodeBlocks can't be copied and pasted due to zsh parsing issues
           <CodeBlock language="bash" showLineNumbers>
       {`helm upgrade --install github-ocean port-labs/port-ocean \\
-      	--set port.clientId="<PORT_CLIENT_ID>"  \\
-      	--set port.clientSecret="<PORT_CLIENT_SECRET>"  \\
-      	--set port.baseUrl="https://api.port.io"  \\
-      	--set integration.identifier="github-ocean"  \\
-      	--set integration.type="github-ocean"  \\
-	      --set integration.eventListener.type="POLLING"  \\
-      	--set integration.config.githubOrganization="<GITHUB_ORGANIZATION>"  \\
-      	--set integration.config.githubHost="<GITHUB_HOST>"  \\
+        --set port.clientId="<PORT_CLIENT_ID>" \\
+      	--set port.clientSecret="<PORT_CLIENT_SECRET>" \\
+      	--set port.baseUrl="https://api.port.io" \\
+      	--set integration.identifier="github-ocean" \\
+      	--set integration.type="github-ocean" \\
+        --set integration.eventListener.type="POLLING" \\
+      	--set integration.config.githubOrganization="<GITHUB_ORGANIZATION>" \\
+      	--set integration.config.githubHost="<GITHUB_HOST>" \\
       	--set integration.config.githubAppId="<GITHUB_APP_ID>" \\
       	--set integration.secrets.githubAppPrivateKey="<BASE_64_ENCODED_PRIVATEKEY>" \\
-      	--set integration.version="1.0.5-beta"  \\
-      	--set initializePortResources=true  \\
-      	--set sendRawDataExamples=true  \\
+      	--set integration.version="1.0.5-beta" \\
+      	--set initializePortResources=true \\
+      	--set sendRawDataExamples=true \\
       	--set scheduledResyncInterval=360 \\
       	--set ingress.enabled=true \\ # New
       	--set ingress.path="/github-ocean" \\ 
@@ -239,18 +240,18 @@ This table summarizes the available parameters for the installation.
         ) : (
           <CodeBlock language="bash" showLineNumbers>
       {`helm upgrade --install github-ocean port-labs/port-ocean \\
-      	--set port.clientId="<PORT_CLIENT_ID>"  \\
-      	--set port.clientSecret="<PORT_CLIENT_SECRET>"  \\
-      	--set port.baseUrl="https://api.port.io"  \\
-      	--set integration.identifier="github-ocean"  \\
-      	--set integration.type="github-ocean"  \\
-	      --set integration.eventListener.type="POLLING"  \\
-      	--set integration.config.githubOrganization="<GITHUB_ORGANIZATION>"  \\
-      	--set integration.config.githubHost="<GITHUB_HOST>"  \\
-      	--set integration.secrets.githubToken="<GITHUB_PAT>"  \\
+      	--set port.clientId="<PORT_CLIENT_ID>" \\
+      	--set port.clientSecret="<PORT_CLIENT_SECRET>" \\
+      	--set port.baseUrl="https://api.port.io" \\
+      	--set integration.identifier="github-ocean" \\
+      	--set integration.type="github-ocean" \\
+	      --set integration.eventListener.type="POLLING" \\
+      	--set integration.config.githubOrganization="<GITHUB_ORGANIZATION>" \\
+      	--set integration.config.githubHost="<GITHUB_HOST>" \\
+      	--set integration.secrets.githubToken="<GITHUB_PAT>" \\
       	--set integration.version="1.0.5-beta"  \\
-      	--set initializePortResources=true  \\
-      	--set sendRawDataExamples=true  \\
+      	--set initializePortResources=true \\
+      	--set sendRawDataExamples=true \\
       	--set scheduledResyncInterval=360 \\
       	--set ingress.enabled=true \\ # New
       	--set ingress.path="/github-ocean" \\ 
