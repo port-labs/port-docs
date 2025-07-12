@@ -33,43 +33,67 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 ```
 
 Install the Helm chart:
+
+  1. Create a `values.yaml` file with the following content:
   {props.setupName == "app" ? (
-    <CodeBlock language="bash" showLineNumbers>
-#Ai! generate a sample values.yml template from these helm variables, add it to a <details> element like is done in the argocd example, replace this helm command to reference the a values file rather having all variables set in the cmdline. There should be two details elements depending on if the example is being shown when "app" or not
-{`helm upgrade --install github-ocean port-labs/port-ocean \\
-	--set port.clientId="<PORT_CLIENT_ID>" \\
-	--set port.clientSecret="<PORT_CLIENT_SECRET>" \\
-	--set port.baseUrl="https://api.port.io" \\
-	--set integration.identifier="github-ocean" \\
-	--set integration.type="github-ocean" \\
-	--set integration.eventListener.type="POLLING" \\
-	--set integration.config.githubOrganization=<GITHUB_ORGANIZATION> \\
-	--set integration.config.githubHost=<GITHUB_HOST> \\
-	--set integration.config.githubAppId=<GITHUB_APP_ID> \\
-	--set integration.secrets.githubAppPrivateKey=<BASE_64_ENCODED_PRIVATEKEY> \\
-	--set integration.version="1.0.5-beta" \\
-	--set initializePortResources=true \\
-	--set sendRawDataExamples=true \\
-	--set scheduledResyncInterval=360`}
-    </CodeBlock>
+    <details>
+      <summary>values.yaml</summary>
+      <CodeBlock language="yaml" showLineNumbers>
+{`port:
+  clientId: "<PORT_CLIENT_ID>"
+  clientSecret: "<PORT_CLIENT_SECRET>"
+  baseUrl: "https://api.port.io"
+
+integration:
+  identifier: "github-ocean"
+  type: "github-ocean"
+  version: "1.0.5-beta"
+  eventListener:
+    type: "POLLING"
+  config:
+    githubOrganization: <GITHUB_ORGANIZATION>
+    githubHost: <GITHUB_HOST>
+    githubAppId: <GITHUB_APP_ID>
+  secrets:
+    githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
+
+initializePortResources: true
+sendRawDataExamples: true
+scheduledResyncInterval: 360`}
+      </CodeBlock>
+    </details>
   ) : (
-    <CodeBlock language="bash" showLineNumbers>
-{`helm upgrade --install github-ocean port-labs/port-ocean \\
-	--set port.clientId="<PORT_CLIENT_ID>" \\
-	--set port.clientSecret="<PORT_CLIENT_SECRET>" \\
-	--set port.baseUrl="https://api.port.io" \\
-	--set integration.identifier="github-ocean" \\
-	--set integration.type="github-ocean" \\
-	--set integration.eventListener.type="POLLING" \\
-	--set integration.config.githubOrganization=<GITHUB_ORGANIZATION> \\
-	--set integration.config.githubHost=<GITHUB_HOST> \\
-	--set integration.secrets.githubToken="<GITHUB_PAT>" \\
-	--set integration.version="1.0.5-beta" \\
-	--set initializePortResources=true \\
-	--set sendRawDataExamples=true \\
-	--set scheduledResyncInterval=360`}
-    </CodeBlock>
+    <details>
+      <summary>values.yaml</summary>
+      <CodeBlock language="yaml" showLineNumbers>
+{`port:
+  clientId: "<PORT_CLIENT_ID>"
+  clientSecret: "<PORT_CLIENT_SECRET>"
+  baseUrl: "https://api.port.io"
+
+integration:
+  identifier: "github-ocean"
+  type: "github-ocean"
+  version: "1.0.5-beta"
+  eventListener:
+    type: "POLLING"
+  config:
+    githubOrganization: <GITHUB_ORGANIZATION>
+    githubHost: <GITHUB_HOST>
+  secrets:
+    githubToken: <GITHUB_PAT>
+
+initializePortResources: true
+sendRawDataExamples: true
+scheduledResyncInterval: 360`}
+      </CodeBlock>
+    </details>
   )}
+
+  2. Install the Helm chart using the `values.yaml` file:
+  <CodeBlock language="bash" showLineNumbers>
+{`helm upgrade --install github-ocean port-labs/port-ocean -f values.yaml`}
+  </CodeBlock>
 
   [See all available helm options](https://github.com/port-labs/helm-charts/blob/main/charts/port-ocean/README.md)
 
@@ -216,51 +240,80 @@ This table summarizes the available parameters for the installation.
       Here is an example of how to set these parameters in your `helm upgrade --install` command. Make sure to replace `<YOUR_DOMAIN>` with your actual public domain name.
 
       A full example based on the installation command:
-#Ai! generate a sample values.yml template from these helm variables, add it to a <details> element like is done in the argocd example, replace this helm command to reference the a values file rather having all variables set in the cmdline. There should be two details elements depending on if the example is being shown when "app" or not
+
+      1. Create or update your `values.yaml` file with the following content:
         {props.setupName == "app" ? (
-          <CodeBlock language="bash" showLineNumbers>
-      {`helm upgrade --install github-ocean port-labs/port-ocean \\
-        --set port.clientId="<PORT_CLIENT_ID>" \\
-      	--set port.clientSecret="<PORT_CLIENT_SECRET>" \\
-      	--set port.baseUrl="https://api.port.io" \\
-      	--set integration.identifier="github-ocean" \\
-      	--set integration.type="github-ocean" \\
-        --set integration.eventListener.type="POLLING" \\
-      	--set integration.config.githubOrganization="<GITHUB_ORGANIZATION>" \\
-      	--set integration.config.githubHost="<GITHUB_HOST>" \\
-      	--set integration.config.githubAppId="<GITHUB_APP_ID>" \\
-      	--set integration.secrets.githubAppPrivateKey="<BASE_64_ENCODED_PRIVATEKEY>" \\
-      	--set integration.version="1.0.5-beta" \\
-      	--set initializePortResources=true \\
-      	--set sendRawDataExamples=true \\
-      	--set scheduledResyncInterval=360 \\
-      	--set ingress.enabled=true \\
-      	--set ingress.path="/github-ocean" \\
-      	--set integration.extraEnv[0].name="OCEAN__BASE_URL" \\
-      	--set integration.extraEnv[0].value="<your-domain>/github-ocean"`}
-          </CodeBlock>
+          <details>
+            <summary>values.yaml</summary>
+            <CodeBlock language="yaml" showLineNumbers>
+{`port:
+  clientId: "<PORT_CLIENT_ID>"
+  clientSecret: "<PORT_CLIENT_SECRET>"
+  baseUrl: "https://api.port.io"
+
+integration:
+  identifier: "github-ocean"
+  type: "github-ocean"
+  version: "1.0.5-beta"
+  eventListener:
+    type: "POLLING"
+  config:
+    githubOrganization: <GITHUB_ORGANIZATION>
+    githubHost: <GITHUB_HOST>
+    githubAppId: <GITHUB_APP_ID>
+  secrets:
+    githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
+  extraEnv:
+    - name: "OCEAN__BASE_URL"
+      value: "<your-domain>/github-ocean"
+
+initializePortResources: true
+sendRawDataExamples: true
+scheduledResyncInterval: 360
+
+ingress:
+  enabled: true
+  path: "/github-ocean"`}
+            </CodeBlock>
+          </details>
         ) : (
-          <CodeBlock language="bash" showLineNumbers>
-      {`helm upgrade --install github-ocean port-labs/port-ocean \\
-      	--set port.clientId="<PORT_CLIENT_ID>" \\
-      	--set port.clientSecret="<PORT_CLIENT_SECRET>" \\
-      	--set port.baseUrl="https://api.port.io" \\
-      	--set integration.identifier="github-ocean" \\
-      	--set integration.type="github-ocean" \\
-	      --set integration.eventListener.type="POLLING" \\
-      	--set integration.config.githubOrganization="<GITHUB_ORGANIZATION>" \\
-      	--set integration.config.githubHost="<GITHUB_HOST>" \\
-      	--set integration.secrets.githubToken="<GITHUB_PAT>" \\
-      	--set integration.version="1.0.5-beta" \\
-      	--set initializePortResources=true \\
-      	--set sendRawDataExamples=true \\
-      	--set scheduledResyncInterval=360 \\
-      	--set ingress.enabled=true \\
-      	--set ingress.path="/github-ocean" \\
-      	--set integration.extraEnv[0].name="OCEAN__BASE_URL" \\
-      	--set integration.extraEnv[0].value="<your-domain>/github-ocean"`}
-          </CodeBlock>
+          <details>
+            <summary>values.yaml</summary>
+            <CodeBlock language="yaml" showLineNumbers>
+{`port:
+  clientId: "<PORT_CLIENT_ID>"
+  clientSecret: "<PORT_CLIENT_SECRET>"
+  baseUrl: "https://api.port.io"
+
+integration:
+  identifier: "github-ocean"
+  type: "github-ocean"
+  version: "1.0.5-beta"
+  eventListener:
+    type: "POLLING"
+  config:
+    githubOrganization: <GITHUB_ORGANIZATION>
+    githubHost: <GITHUB_HOST>
+  secrets:
+    githubToken: <GITHUB_PAT>
+  extraEnv:
+    - name: "OCEAN__BASE_URL"
+      value: "<your-domain>/github-ocean"
+
+initializePortResources: true
+sendRawDataExamples: true
+scheduledResyncInterval: 360
+
+ingress:
+  enabled: true
+  path: "/github-ocean"`}
+            </CodeBlock>
+          </details>
         )}
+      2. Install or upgrade the Helm chart using the `values.yaml` file:
+      <CodeBlock language="bash" showLineNumbers>
+{`helm upgrade --install github-ocean port-labs/port-ocean -f values.yaml`}
+      </CodeBlock>
 
       #### Securing with TLS
 
