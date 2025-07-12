@@ -224,17 +224,17 @@ This table summarizes the available parameters for the installation.
       	--set integration.identifier="github-ocean"  \\
       	--set integration.type="github-ocean"  \\
 	      --set integration.eventListener.type="POLLING"  \\
-      	--set integration.config.baseUrl="https://<YOUR_DOMAIN>" \\
-      	--set integration.config.githubOrganization=<GITHUB_ORGANIZATION>  \\
-      	--set integration.config.githubHost=<GITHUB_HOST>  \\
-      	--set integration.config.githubAppId=<GITHUB_APP_ID> \\
-      	--set integration.secrets.githubAppPrivateKey=<BASE_64_ENCODED_PRIVATEKEY> \\
+      	--set integration.config.githubOrganization="<GITHUB_ORGANIZATION>"  \\
+      	--set integration.config.githubHost="<GITHUB_HOST>"  \\
+      	--set integration.config.githubAppId="<GITHUB_APP_ID>" \\
+      	--set integration.secrets.githubAppPrivateKey="<BASE_64_ENCODED_PRIVATEKEY>" \\
       	--set integration.version="1.0.5-beta"  \\
       	--set initializePortResources=true  \\
       	--set sendRawDataExamples=true  \\
       	--set scheduledResyncInterval=360 \\
       	--set ingress.enabled=true \\ # New
-      	--set ingress.host="<YOUR_DOMAIN>"`}
+      	--set ingress.path="/github-ocean" \\ 
+      	--set-json 'integration.extraEnv=[{"name":"OCEAN__BASE_URL", "value": "<your-domain>/github-ocean" }]'`}
           </CodeBlock>
         ) : (
           <CodeBlock language="bash" showLineNumbers>
@@ -245,16 +245,16 @@ This table summarizes the available parameters for the installation.
       	--set integration.identifier="github-ocean"  \\
       	--set integration.type="github-ocean"  \\
 	      --set integration.eventListener.type="POLLING"  \\
-      	--set integration.config.baseUrl="https://<YOUR_DOMAIN>" \\
-      	--set integration.config.githubOrganization=<GITHUB_ORGANIZATION>  \\
-      	--set integration.config.githubHost=<GITHUB_HOST>  \\
+      	--set integration.config.githubOrganization="<GITHUB_ORGANIZATION>"  \\
+      	--set integration.config.githubHost="<GITHUB_HOST>"  \\
       	--set integration.secrets.githubToken="<GITHUB_PAT>"  \\
       	--set integration.version="1.0.5-beta"  \\
       	--set initializePortResources=true  \\
       	--set sendRawDataExamples=true  \\
       	--set scheduledResyncInterval=360 \\
       	--set ingress.enabled=true \\ # New
-      	--set ingress.host="<YOUR_DOMAIN>"`}
+      	--set ingress.path="/github-ocean" \\ 
+      	--set-json 'integration.extraEnv=[{"name":"OCEAN__BASE_URL", "value": "<your-domain>/github-ocean" }]'`}
           </CodeBlock>
         )}
 
@@ -278,12 +278,12 @@ This table summarizes the available parameters for the installation.
       After applying the changes, you can check the status of your Ingress. The Ingress resource will be named after your Helm release (e.g., `github-ocean`):
 
       <CodeBlock language="bash">
-      {`kubectl get ingress port-ocean.github-ocean`}
+      {`kubectl get ingress github-ocean`}
       </CodeBlock>
 
       The output should show the public IP address or hostname in the `ADDRESS` column. This is the URL you will use for GitHub webhooks.
 
-      When you set the `integration.config.baseUrl`, Ocean will attempt to automatically create the webhook in GitHub for you.
+      When you set the `OCEAN__BASE_URL`, Ocean will attempt to automatically create the webhook in GitHub for you.
     </TabItem>
 
     <TabItem value="docker" label="Docker">

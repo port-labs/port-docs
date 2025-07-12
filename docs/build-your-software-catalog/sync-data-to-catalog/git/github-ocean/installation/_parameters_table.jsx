@@ -71,11 +71,11 @@ export default function ParametersTable({ showingApp }) {
           <td>When <code>true</code>, sends raw data examples from the third-party API to Port for testing and managing the integration mapping.</td>
           <td>❌</td>
         </tr>
-        <tr>
-          <td><code>baseUrl</code></td>
-          <td>Integration instance base url, real-time live events will be enabled if this is configured.</td>
-          <td>❌</td>
-        </tr>
+        {/* <tr> */}
+        {/*   <td><code>baseUrl</code></td> */}
+        {/*   <td>Integration instance base url, real-time live events will be enabled if this is configured.</td> */}
+        {/*   <td>❌</td> */}
+        {/* </tr> */}
         <tr>
           <td><code>integration.config.webhookSecret</code></td>
           <td>A secret to secure webhooks from GitHub. This is optional but highly recommended for security if you enable live-events.</td>
