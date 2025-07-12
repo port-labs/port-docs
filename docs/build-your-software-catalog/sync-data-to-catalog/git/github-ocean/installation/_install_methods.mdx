@@ -40,56 +40,60 @@ Install the Helm chart:
 <details>
   <summary>values.yaml</summary>
 
-```yaml showLineNumbers
-port:
-  clientId: "<PORT_CLIENT_ID>"
-  clientSecret: "<PORT_CLIENT_SECRET>"
-  baseUrl: "https://api.port.io"
+  <CodeBlock language="yaml" showLineNumbers>
+{`
+  port:
+    clientId: "<PORT_CLIENT_ID>"
+    clientSecret: "<PORT_CLIENT_SECRET>"
+    baseUrl: "https://api.port.io"
 
-integration:
-  identifier: "github-ocean"
-  type: "github-ocean"
-  version: "1.0.5-beta"
-  eventListener:
-    type: "POLLING"
-  config:
-    githubOrganization: <GITHUB_ORGANIZATION>
-    githubHost: <GITHUB_HOST>
-    githubAppId: <GITHUB_APP_ID>
-  secrets:
-    githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
+  integration:
+    identifier: "github-ocean"
+    type: "github-ocean"
+    version: "1.0.5-beta"
+    eventListener:
+      type: "POLLING"
+    config:
+      githubOrganization: <GITHUB_ORGANIZATION>
+      githubHost: <GITHUB_HOST>
+      githubAppId: <GITHUB_APP_ID>
+    secrets:
+      githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
 
-initializePortResources: true
-sendRawDataExamples: true
-scheduledResyncInterval: 360
-```
+  initializePortResources: true
+  sendRawDataExamples: true
+  scheduledResyncInterval: 360
+`}
+</CodeBlock>
 </details>
   ) : (
 <details>
   <summary>values.yaml</summary>
 
-```yaml showLineNumbers
-port:
-  clientId: "<PORT_CLIENT_ID>"
-  clientSecret: "<PORT_CLIENT_SECRET>"
-  baseUrl: "https://api.port.io"
+  <CodeBlock language="yaml" showLineNumbers>
+      {`
+  port:
+    clientId: "<PORT_CLIENT_ID>"
+    clientSecret: "<PORT_CLIENT_SECRET>"
+    baseUrl: "https://api.port.io"
 
-integration:
-  identifier: "github-ocean"
-  type: "github-ocean"
-  version: "1.0.5-beta"
-  eventListener:
-    type: "POLLING"
-  config:
-    githubOrganization: <GITHUB_ORGANIZATION>
-    githubHost: <GITHUB_HOST>
-  secrets:
-    githubToken: <GITHUB_PAT>
+  integration:
+    identifier: "github-ocean"
+    type: "github-ocean"
+    version: "1.0.5-beta"
+    eventListener:
+      type: "POLLING"
+    config:
+      githubOrganization: <GITHUB_ORGANIZATION>
+      githubHost: <GITHUB_HOST>
+    secrets:
+      githubToken: <GITHUB_PAT>
 
-initializePortResources: true
-sendRawDataExamples: true
-scheduledResyncInterval: 360
-```
+  initializePortResources: true
+  sendRawDataExamples: true
+  scheduledResyncInterval: 360
+        `}
+  </CodeBlock>
 </details>
   )}
 
