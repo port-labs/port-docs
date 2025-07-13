@@ -95,3 +95,6 @@ To use the AI assistant, click on the `Ask AI` button in the top-right corner â†
 
 âž™ The assistant does not have access to any private data or data from any Port instance.
  
+:::caution AI-generated content
+As with any AI assistant, answers may not always be accurate, so remember to use your own judgement.
+:::
