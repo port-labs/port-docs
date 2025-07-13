@@ -1,5 +1,5 @@
 ---
-title: "Self-Service Environments"
+title: "Self-service environments"
 sidebar_position: 4
 ---
 

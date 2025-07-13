@@ -1,5 +1,5 @@
 ---
-title: "Setup Approval Workflows"
+title: "Setup approval workflows"
 sidebar_position: 3
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "Create Golden Paths"
+title: "Create golden paths"
 sidebar_position: 1
 ---
 
@@ -44,7 +44,7 @@ With golden paths, you get:
 
 Golden paths transform your platform from a collection of tools into a cohesive developer experience that scales with your organization.
 
-## Our Opinions on Golden Paths
+## Opinions on Golden Paths
 
 ### Scaffold New Respositories and Services
 

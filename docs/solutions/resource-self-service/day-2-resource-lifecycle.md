@@ -1,5 +1,5 @@
 ---
-title: "Day 2 - Resource Lifecycle"
+title: "Day 2 - resource lifecycle"
 sidebar_position: 2
 ---
 
