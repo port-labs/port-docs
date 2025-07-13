@@ -22,5 +22,5 @@ Port enables developer Self-Service in 2 distinct ways:
 The power of Port's self-service actions is enabled by using one of the following: [Webhooks](./webhook/webhook.md), [Kafka topics](./kafka/kafka.md) and [GitHub Workflow](./github-workflow/github-workflow.md). Go to each self-service action type's respective page to learn more and see practical examples.
 
 :::note
-In order to make use of Port's Kafka topics for Self-Service Actions, please contact us at support@getport.io
+In order to make use of Port's Kafka topics for Self-Service Actions, please contact us at [support.port.io](http://support.port.io/)
 :::
