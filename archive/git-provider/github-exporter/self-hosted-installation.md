@@ -70,7 +70,7 @@ And save the downloaded file
 
 </center>
 
-- In order to make use of [Self-Service Actions using GitHub Workflow](../../../../self-service-actions/github-workflow/github-workflow.md), please contact us at [support.port.io](http://support.port.io/).
+- In order to make use of [Self-Service Actions using GitHub Workflow](/self-service-actions/github-workflow/github-workflow.md), please contact us at [support.port.io](http://support.port.io/).
 
 :::
 
