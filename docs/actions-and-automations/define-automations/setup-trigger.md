@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem"
 
 # Set up trigger
 
-After specifying your automation’s basic details, the next step in the [automation definition](/actions-and-automations/define-automations/#define-an-automation) process is to choose a **trigger** for the automation. Triggers are events in your software catalog that initiate an automation when they occur.  
+After specifying your automation’s [basic details](/actions-and-automations/define-automations/#define-an-automation), the next step in the automation definition process is to choose a **trigger** for the automation. Triggers are events in your software catalog that initiate an automation when they occur.  
 
 Port supports two types of **triggers**:
 - **Entity**: Triggered when an entity of a specified blueprint is modified.  
