@@ -61,10 +61,7 @@ There is no better opportunity to set up developers up for success, than a green
 ></iframe>
 
 - [Scaffold a New Service](/guides/all/scaffold-a-new-service): Learn how to quickly generate a new service with all the recommended defaults and best practices built in.
-- [Scaffold Repo with Cookiecutter](/guides/all/scaffold-repositories-using-cookiecutter/): Use Cookiecutter templates to standardize repository creation and ensure consistency across projects.
-- [Scaffold Bitbucket Repo with Cookiecutter](/guides/all/scaffold-bitbucket-using-cookiecutter/): Follow this guide to create Bitbucket repositories using Cookiecutter, streamlining setup and enforcing organizational standards.
 - [Deploy New Service and Infra](/guides/all/create-eks-cluster-and-deploy-app/): See how to deploy a new service and its infrastructure together, enabling fast, reliable onboarding for new projects.
-- [Create EKS Cluster and Deploy App](https://docs.port.io/guides/all/create-eks-cluster-and-deploy-app/): Follow this step-by-step guide to provision a new EKS cluster and deploy your application, ensuring a production-ready environment from day one.
 
 ### Cloud Resources
 
@@ -76,17 +73,22 @@ It's important to build self-service that conforms with your organizational stan
 
 We'll explore 2 types of self-service below - RESTful Self-Service and Gitops-based Self-Service.
 
+<img src="/img/solutions/resource-self-service/restful-vs-gitops.png" alt="RESTful vs GitOps flows" width="100%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
+
 ##### RESTful Self-Service
 
 RESTful self-service actions directly create resources in your cloud provider or other upstream systems through their APIs. This approach is straightforward and immediate—when a developer requests a resource through Port's self-service interface, the action makes API calls to create the resource directly in the target system (like AWS, Azure, or GCP). This pattern works well for organizations that prefer direct resource creation or when you need immediate provisioning without the overhead of Git-based workflows. The trade-off is that you lose the audit trail and version control benefits that come with GitOps, but you gain simplicity and speed for teams that don't need the full GitOps workflow.
 
-- [Create an S3 Bucket via Webhook](/guides/all/s3-using-webhook): Learn how to provision an S3 bucket instantly using a webhook integration.
-- [Deploy CloudFormation Template](/guides/all/deploy-cloudformation-template/): See how to deploy AWS resources by triggering CloudFormation templates through self-service actions.
-- [Create an EC2 Instance](/guides/all/create-an-ec2-instance/): Follow this guide to spin up new EC2 instances directly from Port's self-service interface.
-- [Create Azure Resource](/guides/all/create-azure-resource/): Discover how to provision Azure resources on demand using RESTful self-service.
-- [Add EC2 Volume](/guides/all/add-ec2-volume/): Learn how to attach additional storage to your EC2 instances with a simple self-service action.
-- [Deploy Azure Resource](/guides/all/deploy-azure-resource/): Deploy Azure resources quickly and consistently using Port's self-service workflows.
-- [Manage Kubernetes Namespaces](/guides/all/manage-kubernetes-namespaces/): Enable developers to create and manage Kubernetes namespaces without manual intervention.
+
+- [Create an S3 Bucket via a CI Job, with either Terraform or cloud SDKs](/guides/all/s3-using-webhook): Learn how to provision an S3 bucket instantly.
+- [Deploy EC2, RDS and S3 Resources with CloudFormation Templates](/guides/all/deploy-cloudformation-template/): Create EC2 and RDS instances or S3 buckets using Cloudformation templates in a Github Action.
+- [Create an EC2 Instance with Terraform](/guides/all/create-an-ec2-instance/): Create an EC2 instance with Terraform in a Github Action.
+- [Create Azure Storage Account with Terraform with Github Actions](/guides/all/create-azure-resource/): Create an Azure Storage Account using Terraform in a Github Action.
+- [Create and Attach an EBS Volume](/guides/all/add-ec2-volume/): Provision a new EBS instance and attach to an EC2 Instance using Terraform in a GitLab pipeline.
+- [Create Azure Storage Account with Terraform from Jenkins](/guides/all/deploy-azure-resource/): Create an Azure Storage Account using Terraform in a Jenkins Pipeline.
+- [Manage Kubernetes Namespaces](/guides/all/manage-kubernetes-namespaces/): Enable developers to create and manage Kubernetes namespaces without manual intervention. Implemented with GitLab pipelines and Slack notifications.
+
+<img src="/img/self-service-actions/setup-backend/gitlab-pipeline/testAddingDisk.png" alt="Autoscaling Dashboard Example" width="60%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
 
 ##### GitOps-based Self-Service
 
@@ -94,14 +96,19 @@ GitOps-based self-service actions create resources by leveraging your existing I
 
 - [Create Cloud Resource Using IaC](/guides/all/create-cloud-resource-using-iac): Provision cloud resources by updating Infrastructure as Code files and letting your GitOps pipeline handle deployment.
 - [Deploy S3 Bucket CrossPlane](/guides/all/deploy-s3-bucket-crossplane): Use CrossPlane to declaratively manage and deploy S3 buckets through GitOps workflows.
-- [Create Github Pull Request](/guides/all/create-github-pull-request/): Automate the creation of GitHub pull requests to trigger infrastructure changes and reviews.
+- [Create Github Pull Request](/guides/all/create-github-pull-request/): Automate the creation of Github pull requests to trigger infrastructure changes and reviews.
+
 ### Create Secrets
 
 Secret leakage remains a huge issue in the industry. The fact that developers have to manually handle secrets is like a process in a nuclear plant requiring the manual handling of uranium. It's an error prone workflow, that often leads to a security incident and in worse cases, supply chain security issues and data loss.
 
 The best protection against secret leakage is the design of a secure workflow, in which secrets are securely handled and developers are unlikely to make an error.
 
-- [How to securely create a GitHub Secret](/guides/all/create-github-secret/): Follow this guide to add secrets to your GitHub repositories safely and prevent accidental exposure.
+#### Add Secrets to Github from your Portal
+
+- [How to securely create a Github Secret](/guides/all/create-github-secret/): Follow this guide to add secrets to your Github repositories safely and prevent accidental exposure.
+
+#### Integrate Port with AKeyless
 
 <iframe
   width="560"

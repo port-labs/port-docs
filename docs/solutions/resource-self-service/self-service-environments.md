@@ -19,7 +19,13 @@ Automating the creation of development environments is crucial for engineering t
 
 ## Get started with self-service environments 
 
-Explore these step-by-step guides to automate environment creation and management:
+Explore these step-by-step guides to automate environment creation and management, which we've broken into the following categories
+
+### Scaffolding New Apps
+
+- [Scaffold a New App and Deploy to Kubernetes](/guides/all/create-eks-cluster-and-deploy-app/#scaffolding-a-nodejs-app)
+
+### Ephemeral Environments in the Cloud
 
 - [Manage a Developer Environment Lifecycle](/guides/all/create-dev-env/)
   Create a Terraform based Development Environment and show its details in Port
@@ -29,6 +35,8 @@ Explore these step-by-step guides to automate environment creation and managemen
 
 - [Manage a Kubernetes namespace](/guides/all/manage-kubernetes-namespaces)  
   Empower developers to create, update, or delete Kubernetes namespaces on demand—no tickets required.
+
+### Leverage 3rd Party Systems to Manage IaC
 
 - [Trigger Terraform Cloud via webhook](/actions-and-automations/setup-backend/webhook/terraform-cloud)  
   Automate infrastructure changes by kicking off Terraform Cloud runs directly from Port.
