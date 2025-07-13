@@ -92,6 +92,10 @@ By default, each entity has the following meta-properties: `identifier`, `title`
 | `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the blueprint definition**, and each value matches the `type` of the property.                                                                                                      |
 | `relations`  | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints) that is defined on the blueprint. |
 
+:::tip Entity identifier limit
+Entity identifiers are limited to a maximum of 1000 characters.
+:::
+
 ## Monitoring and sync status
 
 Every integration has a dedicated page that displays detailed monitoring metrics and sync status, helping you track the data ingestion process. This monitoring view is available for all Ocean integrations.
