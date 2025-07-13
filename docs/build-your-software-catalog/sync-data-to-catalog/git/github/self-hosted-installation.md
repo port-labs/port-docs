@@ -77,7 +77,7 @@ You will need your Port `ORG_ID`, `CLIENT_ID` and `CLIENT_SECRET`.
 
 :::
 
-In order to make use of [Self-Service Actions using GitHub Workflow](../../../../actions-and-automations/setup-backend/github-workflow/github-workflow.md), please contact us at support@getport.io.
+In order to make use of [Self-Service Actions using GitHub Workflow](../../../../actions-and-automations/setup-backend/github-workflow/github-workflow.md), please contact us at [support.port.io](http://support.port.io/).
 
 ## Docker
 

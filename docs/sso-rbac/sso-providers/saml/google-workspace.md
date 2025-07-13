@@ -99,7 +99,7 @@ Press `Continue`.
 - `Entity ID` - `urn:auth0:port-prod:{CONNECTION_NAME}`
 
 :::note
-We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support.port.io](http://support.port.io/)).
 :::
 
 Press `Continue`
