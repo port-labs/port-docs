@@ -36,6 +36,20 @@ To create a personal access token see Github's [managing your personal access to
 
 - The token must belong to a user with access to the relevant Github resources (e.g., repositories, teams).
 
+<details>
+  <summary>Required permissions</summary>
+
+  These are the necessary permissions if you're creating a fine-grained PAT.
+
+  **Repository permissions:**
+  - **Content**: Readonly
+  - **Metadata**: Readonly
+  - **Pull Requests**: Readonly
+  
+  **Organization permissions:**
+  - **Webhooks**: Read and Write (for managing webhook)
+</details>
+
 #### Github app installation
 
 Refer to our [Github app installation guide](./github-app.mdx)
