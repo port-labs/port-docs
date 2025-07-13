@@ -1,5 +1,5 @@
 ---
-sidebar_position: 12
+sidebar_position: 14
 title: Ask AI
 sidebar_label: Docs AI assistant
 sidebar_class_name: custom-sidebar-item sidebar-menu-ask-ai
