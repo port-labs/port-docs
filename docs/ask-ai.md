@@ -1,15 +1,16 @@
 ---
 sidebar_position: 12
 title: Ask AI
-sidebar_label: Ask AI
-sidebar_class_name: custom-sidebar-item sidebar-menu-ai-agents
+sidebar_label: Docs AI assistant
+sidebar_class_name: custom-sidebar-item sidebar-menu-ask-ai
 ---
 
-# Ask AI
+# Docs AI assistant
 
 Port's AI assistant is here to help you get the most out of your portal by answering your questions, creating resources, and assisting with troubleshooting. 
 
-To use the AI assistant, click on the `Ask AI` button in the top-right corner ↗️ and ask a question.
+To use the AI assistant, click on the `Ask AI` button in the top-right corner ↗️ and ask a question.  
+It is also available in your portal, via the `?` button in the bottom-right corner.
 
 ## Ways to use the assistant
 
