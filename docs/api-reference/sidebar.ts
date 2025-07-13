@@ -168,6 +168,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/delete-multiple-entities",
+          label: "Delete multiple entities",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
           id: "api-reference/search-entities",
           label: "Search entities",
           className: "api-method post",
@@ -516,12 +522,6 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/create-an-integration",
-          label: "Create an integration",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/get-an-integration",
           label: "Get an integration",
           className: "api-method get",
@@ -538,12 +538,24 @@ const sidebar: SidebarsConfig = {
           label: "Delete an integration",
           className: "api-method delete",
         },
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-metrics-and-sync-status",
+          label: "Get an integration's metrics and sync status",
+          className: "api-method get",
+        },
       ],
     },
     {
       type: "category",
       label: "Webhook",
       items: [
+        {
+          type: "doc",
+          id: "api-reference/create-a-webhook",
+          label: "Create a webhook",
+          className: "api-method post",
+        },
         {
           type: "doc",
           id: "api-reference/get-all-webhooks",
@@ -642,12 +654,6 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/create-credentials",
-          label: "Create credentials",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/rotate-secret",
           label: "Rotate secret",
           className: "api-method post",
@@ -663,18 +669,6 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/update-credentials",
           label: "Update credentials",
           className: "api-method put",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Metrics",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/get-an-integrations-metrics-and-sync-status",
-          label: "Get an integration's metrics and sync status",
-          className: "api-method get",
         },
       ],
     },

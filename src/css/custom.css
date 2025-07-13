@@ -396,6 +396,10 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/customization.svg');
 }
 
+.sidebar-menu-docs-ai-assistant .menu__link::before {
+  content: url('/static/img/sidebar-icons/main-menu/docs-ai-assistant.svg');
+}
+
 .sidebar-menu-ai-agents > div .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/ai-agents.svg');
 }
@@ -652,6 +656,12 @@ html[data-theme="dark"] .openapi-schema__list-item {
   display: block;
   margin-right: 0;
   margin-left: auto;
+  background-color: black !important;
+}
+
+html[data-theme="dark"] .openapi-explorer__request-btn {
+  background-color: white !important;
+  color: black !important;
 }
 
 .openapi-tabs__mime-item {

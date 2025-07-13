@@ -124,7 +124,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.8.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-dynatrace-integration/values.yaml
@@ -1669,7 +1669,7 @@ Here is an example of the payload structure from Dynatrace:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary>Entity entity in Port</summary>
+<summary>Entity in Port</summary>
 
 ```json showLineNumbers
 {

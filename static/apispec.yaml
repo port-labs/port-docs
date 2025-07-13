@@ -5652,6 +5652,7 @@ paths:
           in: query
           name: include
           required: false
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
@@ -5659,6 +5660,7 @@ paths:
               type: string
           in: query
           name: exclude
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
           required: false
         - schema:
@@ -6688,6 +6690,7 @@ paths:
           in: query
           name: include
           required: false
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
@@ -6696,6 +6699,7 @@ paths:
           in: query
           name: exclude
           required: false
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         # - schema:
         #     type: boolean
@@ -7040,6 +7044,151 @@ paths:
               <td>An internal error occurred</td>
             </tr>
             </table>
+  "/v1/blueprints/{blueprint_identifier}/bulk/entities":
+    delete:
+      summary: Delete multiple entities
+      tags:
+        - Entities
+      description: This route allows you to delete multiple entities (up to 100
+        entities per request) from a specific blueprint in your software
+        catalog. All entities must belong to the same blueprint.<br/><br/>If any
+        entity has dependent entities and `delete_dependents` is `false`, the entire
+        operation will fail and no entities will be deleted.<br/><br/>To learn
+        more about entities, check out the
+        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entities:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of entity identifiers to delete
+                  minItems: 1
+                  maxItems: 100
+              required:
+                - entities
+              additionalProperties: false
+        required: true
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: delete_dependents
+          required: true
+          description: If `true`, this call will also delete all entities with a relation
+            to the deleted entity.
+        - schema:
+            type: string
+          in: query
+          name: run_id
+          required: false
+          description: You can provide a `run_id` to associate the created entities with a
+            specific [action
+            run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).
+        - schema:
+            type: string
+            minLength: 1
+          in: path
+          name: blueprint_identifier
+          required: true
+          description: The identifier of the blueprint to operate on.
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Entities deleted successfully.
+          content:
+            application/json:
+              schema:
+                description: Entities deleted successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  deletedEntities:
+                    type: array
+                    items:
+                      type: string
+                    description: Array of deleted entity IDs
+                required:
+                  - deletedEntities
+                  - ok
+                additionalProperties: false
+        "401":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
+        "413":
+          description: Request body is too large (limit is 1MiB)
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+                description: Request body is too large (limit is 1MiB)
+        "422":
+          description: The json provided does not match the route's schema
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: The json provided does not match the route's schema
   /v1/entities/search:
     post:
       summary: Search entities
@@ -7251,6 +7400,7 @@ paths:
           in: query
           name: include
           required: false
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
@@ -7259,6 +7409,7 @@ paths:
           in: query
           name: exclude
           required: false
+          explode: true
           description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         # - schema:
         #     type: boolean
@@ -9830,7 +9981,9 @@ paths:
           description: Default Response
     delete:
       summary: Delete a blueprint
-      description: This route allows you to delete a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      description: | 
+        This route allows you to delete a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).<br/><br/>
+        **Note:** Before deleting a blueprint, make sure all associated entities have been deleted. Entity deletion may take a few seconds to complete, so plan accordingly when using the [**Delete an entity**](https://docs.port.io/api-reference/delete-an-entity) endpoint **before** this endpoint in scripts or automations.
       tags:
         - Blueprints
       parameters:
@@ -12734,6 +12887,7 @@ paths:
               type: string
           in: query
           name: action_identifier
+          explode: true
           description: The identifier/s of the action/s and/or automation/s you want to fetch.<br/>
           required: false
         - schema:
@@ -12742,6 +12896,7 @@ paths:
               type: string
           in: query
           name: blueprint_identifier
+          explode: true
           description: The identifier/s of the blueprint/s whose actions/automations you wish to fetch.<br/>
           required: false
         - schema:
@@ -12754,6 +12909,7 @@ paths:
                 - DAY-2
           in: query
           name: operation
+          explode: true
           description: The [operation type/s](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>
           required: false
         - schema:
@@ -17588,6 +17744,7 @@ paths:
                 - users.status
           in: query
           name: fields
+          explode: true
           description: The fields you want to fetch for each team. If used, only the specified fields will be included in the response.<br/>
           required: false
       security:
@@ -17746,6 +17903,7 @@ paths:
                 - users.status
           in: query
           name: fields
+          explode: true
           description: The fields you want to fetch for the team. If used, only the specified fields will be included in the response.<br/>
           required: false
         - schema:
@@ -18022,6 +18180,7 @@ paths:
                 - roles.updatedAt
           in: query
           name: fields
+          explode: true
           description: The fields you want to fetch for each user. If used, only the specified fields will be included in the response.<br/>
           required: false
       security:
@@ -18413,6 +18572,7 @@ paths:
               type: string
           in: query
           name: origin
+          explode: true
           description: Fetch all audit logs coming from the specified origin/s. This refers to the integration/s that triggered the log. For operations performed via Port's UI, the origin will be `UI`.<br/>
           required: false
         - schema:
@@ -18452,6 +18612,7 @@ paths:
             #       - action
           in: query
           name: resources
+          explode: true
           description: Fetch all audit logs related to the specified resource type/s.<br/>
           required: false
         - schema:
@@ -18469,6 +18630,7 @@ paths:
                 - message
           in: query
           name: includes
+          explode: true
           description: The fields you want to include in the response. If used, only the specified fields will be included in the response.<br/>
           required: false
         - schema:
@@ -20953,186 +21115,6 @@ paths:
       responses:
         '200':
           description: Default Response
-    post:
-      summary: Create an integration
-      description: This route allows you to create an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
-      tags:
-        - Integrations
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                installationId:
-                  type: string
-                  minLength: 1
-                  description: A unique identifier which will be used to identify the integration when using the Port API.<br/>
-                title:
-                  type: string
-                  description: The title of the integration. This will be displayed in the [data-sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
-                version:
-                  type: string
-                  description: The version of the integration.<br/>
-                installationAppType:
-                  type: string
-                  description: The name of the integrated tool/platform (e.g. `kubernetes`,`pagerduty`).<br/>
-                config:
-                  type: object
-                  # type:
-                  #   - object
-                  #   - 'null'
-                  description: Various configuration options for the integration.<br/>
-                  additionalProperties: true
-                  properties:
-                    deleteDependentEntities:
-                      type: boolean
-                      description: If `true`, deleting an entity will also delete its dependent entities.<br/>
-                    createMissingRelatedEntities:
-                      type: boolean
-                      description: If `true`, creating an entity with a relation to a non-existing entity will also create the related entity.<br/>
-                    resources:
-                      type: array
-                      description: The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
-                      items:
-                        type: object
-                        required:
-                          - kind
-                          - selector
-                          - port
-                        properties:
-                          kind:
-                            type: string
-                            description: The kind of resource to map, as defined in API of the integrated tool/platorm.<br/>
-                          selector:
-                            type: object
-                            properties:
-                              query:
-                                description: A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `"true"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>
-                                type: string
-                          port:
-                            type: object
-                            description: An object containing the mapping definitions of the `kind` resource into Port.<br/>
-                            required:
-                              - entity
-                            properties:
-                              entity:
-                                type: object
-                                required:
-                                  - mappings
-                                properties:
-                                  mappings:
-                                    description: The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
-                                    oneOf:
-                                      - type: array
-                                        title: array
-                                        items:
-                                          type: object
-                                          required:
-                                            - identifier
-                                            - blueprint
-                                          properties:
-                                            identifier:
-                                              type: string
-                                              description: A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity.<br/>
-                                            title:
-                                              type: string
-                                              description: A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity.<br/>
-                                            blueprint:
-                                              type: string
-                                              description: The identifier of the blueprint to map the data into.<br/>
-                                            properties:
-                                              type: object
-                                              description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
-                                              additionalProperties: true
-                                            relations:
-                                              type: object
-                                              description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
-                                              additionalProperties: true
-                                      - type: object
-                                        title: object
-                                        required:
-                                          - identifier
-                                          - blueprint
-                                        properties:
-                                          identifier:
-                                            type: string
-                                            description: A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity.<br/>
-                                          title:
-                                            type: string
-                                            description: A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity.<br/>
-                                          blueprint:
-                                            type: string
-                                            description: The identifier of the blueprint to map the data into.<br/>
-                                          properties:
-                                            type: object
-                                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
-                                            additionalProperties: true
-                                          relations:
-                                            type: object
-                                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
-                                            additionalProperties: true
-                changelogDestination:
-                  type: object
-                  description: The destination of the integration's changelog.<br/>
-                  properties:
-                    type:
-                      type: string
-                      enum:
-                        - WEBHOOK
-                        - KAFKA
-                  oneOf:
-                    # - type: object
-                    #   properties: {}
-                    #   additionalProperties: false
-                    - type: object
-                      title: Kafka
-                      description: The changelog will be sent to the Kafka topic connected to your Port account.<br/>
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - KAFKA
-                      required:
-                        - type
-                      additionalProperties: false
-                    - type: object
-                      title: Webhook
-                      description: The changelog will be sent to the specified webhook.<br/>
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - WEBHOOK
-                        agent:
-                          type: boolean
-                          description: If `true`, Port's execution agent will be used to send the changelog.<br/>
-                        url:
-                          type: string
-                          description: The URL of the webhook.<br/>
-                          format: uri
-                      required:
-                        - url
-                        - type
-                      additionalProperties: false
-              additionalProperties: false
-              required:
-                - installationId
-        required: true
-      parameters:
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: upsert
-          description: If `true`, the integration will be updated if it already exists.<br/>
-          required: false
-      security:
-        - bearer:
-            - 'create:integrations'
-      responses:
-        '200':
-          description: Default Response
   '/v1/integration/{identifier}':
     get:
       summary: Get an integration
@@ -21357,6 +21339,452 @@ paths:
         '200':
           description: Default Response
   /v1/webhooks:
+    post:
+      summary: Create a webhook
+      tags:
+        - Webhook
+      description: This route allows you to create a webhook in your Port
+        organization. You can also create it via the [data sources
+        page](https://app.getport.io/settings/data-sources) of your Port
+        account.<br/><br/>To learn more about webhooks, check out the
+        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  maxLength: 30
+                  description: The identifier of the webhook.
+                title:
+                  type: string
+                  maxLength: 30
+                  description: The title of the webhook, which will be displayed in the [data
+                    sources page](https://app.getport.io/settings/data-sources)
+                    of your Port account.
+                description:
+                  type: string
+                  maxLength: 200
+                  description: A description for the webhook.
+                icon:
+                  type: string
+                  description: The icon of the webhook.
+                mappings:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      operation:
+                        oneOf:
+                          - title: create
+                            description: >-
+                              If the operation is `create`, the [entity
+                              JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
+                              properties must be provided. For example:
+
+                              ```json
+
+                              {
+                                "operation": "create",
+                                "blueprint": "blueprint_identifier",
+                                "filter": "true",
+                                "itemsToParse": "true",
+                                "entity": {
+                                    "identifier": "new-webhook",
+                                    "title": "MyNewWebhook",
+                                    "icon": "webhook",
+                                    "team": [],
+                                    "properties": {
+                                      "content": "my content"
+                                    },
+                                    "relations": {}
+                                }
+                              }
+
+                              ```
+                            enum:
+                              - create
+                          - type: object
+                            title: create
+                            properties:
+                              type:
+                                enum:
+                                  - create
+                            required:
+                              - type
+                            additionalProperties: false
+                          - title: delete
+                            description: >-
+                              If the selected operation is `delete`, a blueprint
+                              identifier, and entity identifier must be
+                              provided, for example:
+
+                              ```json
+
+                              {
+                                "operation": "delete",
+                                "filter": "true",
+                                "itemsToParse": "true",
+                                "blueprint": "blueprint_identifier",
+                                "entity": {
+                                  "identifier": "entity_identifier"
+                                }
+                              }
+
+                              ```
+                            enum:
+                              - delete
+                          - type: object
+                            title: delete
+                            properties:
+                              type:
+                                enum:
+                                  - delete
+                              deleteDependents:
+                                type: boolean
+                            required:
+                              - type
+                            additionalProperties: false
+                        description: If the selected operation is `delete`, a blueprint identifier, and
+                          entity identifier must be provided. If the operation
+                          is `create`, the [entity
+                          JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
+                          properties must be provided.
+                    if:
+                      properties:
+                        operation:
+                          oneOf:
+                            - title: delete
+                              description: >-
+                                If the selected operation is `delete`, a
+                                blueprint identifier, and entity identifier must
+                                be provided, for example:
+
+                                ```json
+
+                                {
+                                  "operation": "delete",
+                                  "filter": "true",
+                                  "itemsToParse": "true",
+                                  "blueprint": "blueprint_identifier",
+                                  "entity": {
+                                    "identifier": "entity_identifier"
+                                  }
+                                }
+
+                                ```
+                              enum:
+                                - delete
+                            - type: object
+                              title: delete
+                              properties:
+                                type:
+                                  enum:
+                                    - delete
+                                deleteDependents:
+                                  type: boolean
+                              required:
+                                - type
+                              additionalProperties: false
+                      required:
+                        - operation
+                    then:
+                      properties:
+                        operation:
+                          oneOf:
+                            - title: delete
+                              description: >-
+                                If the selected operation is `delete`, a
+                                blueprint identifier, and entity identifier must
+                                be provided, for example:
+
+                                ```json
+
+                                {
+                                  "operation": "delete",
+                                  "filter": "true",
+                                  "itemsToParse": "true",
+                                  "blueprint": "blueprint_identifier",
+                                  "entity": {
+                                    "identifier": "entity_identifier"
+                                  }
+                                }
+
+                                ```
+                              enum:
+                                - delete
+                            - type: object
+                              title: delete
+                              properties:
+                                type:
+                                  enum:
+                                    - delete
+                                deleteDependents:
+                                  type: boolean
+                              required:
+                                - type
+                              additionalProperties: false
+                        blueprint:
+                          type: string
+                          description: The identifier of the blueprint to map the data into.
+                        filter:
+                          type: string
+                          description: A `jq` query used to filter exactly which payloads sent to the
+                            webhook are processed. If set to `"true"`, all
+                            payloads will be processed.
+                        itemsToParse:
+                          type: string
+                          description: A `jq` query that evaluates to an array of items, used to create
+                            multiple entities from a single webhook event.
+                        entity:
+                          type: object
+                          properties:
+                            identifier:
+                              type: string
+                          additionalProperties: false
+                          required:
+                            - identifier
+                      required:
+                        - blueprint
+                        - entity
+                      additionalProperties: true
+                    else:
+                      properties:
+                        operation:
+                          oneOf:
+                            - title: create
+                              description: >-
+                                If the operation is `create`, the [entity
+                                JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
+                                properties must be provided. For example:
+
+                                ```json
+
+                                {
+                                  "operation": "create",
+                                  "blueprint": "blueprint_identifier",
+                                  "filter": "true",
+                                  "itemsToParse": "true",
+                                  "entity": {
+                                      "identifier": "new-webhook",
+                                      "title": "MyNewWebhook",
+                                      "icon": "webhook",
+                                      "team": [],
+                                      "properties": {
+                                        "content": "my content"
+                                      },
+                                      "relations": {}
+                                  }
+                                }
+
+                                ```
+                              enum:
+                                - create
+                            - type: object
+                              title: create
+                              properties:
+                                type:
+                                  enum:
+                                    - create
+                              required:
+                                - type
+                              additionalProperties: false
+                        blueprint:
+                          type: string
+                          description: The identifier of the blueprint to map the data into.
+                        filter:
+                          type: string
+                          description: A `jq` query used to filter exactly which payloads sent to the
+                            webhook are processed. If set to `"true"`, all
+                            payloads will be processed.
+                        itemsToParse:
+                          type: string
+                          description: A `jq` query that evaluates to an array of items, used to create
+                            multiple entities from a single webhook event.
+                        entity:
+                          type: object
+                          description: An object defining how to map the data from the webhook payload
+                            into Port entities.
+                          properties:
+                            identifier:
+                              oneOf:
+                                - type: string
+                                  description: A `jq` expression used to get data from the webhook payload, to be
+                                    used as an identifier for the entity.
+                                - type: object
+                                  properties:
+                                    combinator:
+                                      type: string
+                                    rules:
+                                      type: array
+                                      items:
+                                        type: object
+                                        additionalProperties: true
+                                  additionalProperties: false
+                                  required:
+                                    - combinator
+                                    - rules
+                            title:
+                              type: string
+                              description: A `jq` expression used to get data from the webhook payload, to be
+                                used as the title of the entity.
+                            icon:
+                              type: string
+                              description: The icon of the entity.
+                            team:
+                              oneOf:
+                                - type: string
+                                - type: object
+                                  properties:
+                                    combinator:
+                                      type: string
+                                    rules:
+                                      type: array
+                                      items:
+                                        type: object
+                                        additionalProperties: true
+                                  additionalProperties: false
+                                  required:
+                                    - combinator
+                                    - rules
+                            properties:
+                              type: object
+                              description: An object containing the properties of the entity and their values.
+                                For more information and examples, check out the
+                                [documentation](${DOCS_URL}/build-your-software-catalog/custom-integration/webhook/).
+                              propertyNames:
+                                type: string
+                            relations:
+                              type: object
+                              description: An object containing the relations of the entity and their values.
+                                For more information and examples, check out the
+                                [documentation](${DOCS_URL}/build-your-software-catalog/custom-integration/webhook/).
+                              propertyNames:
+                                type: string
+                          additionalProperties: false
+                          required:
+                            - identifier
+                      required:
+                        - blueprint
+                        - entity
+                      additionalProperties: false
+                  description: The mapping definitions used to map the data from the webhook into
+                    Port entities. For more information and examples, check out
+                    the
+                    [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+                enabled:
+                  type: boolean
+                  default: true
+                  description: Determines whether the webhook is active or not. If `false`, any
+                    incoming events will be dropped.
+                security:
+                  type: object
+                  properties:
+                    secret:
+                      type: string
+                    signatureHeaderName:
+                      type: string
+                    signatureAlgorithm:
+                      type: string
+                      enum:
+                        - sha1
+                        - sha256
+                        - plain
+                    signaturePrefix:
+                      type: string
+                    requestIdentifierPath:
+                      type: string
+                  additionalProperties: false
+                  description: The security configuration of the webhook, used to tell Port how to
+                    verify the hashed signature sent with incoming
+                    requests.<br/>For more information and examples, check out
+                    the
+                    [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).
+                integrationType:
+                  type: string
+                  enum:
+                    - custom
+                    - template
+              additionalProperties: false
+              required:
+                - title
+                - enabled
+        required: true
+      security:
+        - bearer:
+            - create:integrations
+      responses:
+        "401":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
+        "413":
+          description: Request body is too large (limit is 1MiB)
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+                description: Request body is too large (limit is 1MiB)
+        "422":
+          description: The json provided does not match the route's schema
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: The json provided does not match the route's schema
     get:
       summary: Get all webhooks
       description: This route allows you to fetch all webhooks configured in your Port organization. You can also see them in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
@@ -22289,6 +22717,7 @@ paths:
                 - enabled
           in: query
           name: fields
+          explode: true
           description: The fields to include in the response. If not specified, all fields will be included.<br/>
           required: false
       security:
@@ -22328,59 +22757,6 @@ paths:
                   - ok
                 additionalProperties: false
                 description: Retrieved successfully.
-    post:
-      summary: Create credentials
-      description: This route allows you to create a set of credentials in your Port organization, containing a `client ID` and `client secret`.<br/>
-      tags:
-        - Apps
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The name of the credentials set.<br/>
-              additionalProperties: false
-              required:
-                - name
-        required: true
-      security:
-        - bearer:
-            - update:apps
-      responses:
-        "200":
-          description: Created successfully.
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    type: any
-                    enum:
-                      - true
-                  app:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      enabled:
-                        type: boolean
-                      id:
-                        type: string
-                      createdAt:
-                        type: string
-                        format: date-time
-                      updatedAt:
-                        type: string
-                        format: date-time
-                      secret:
-                        type: string
-                required:
-                  - ok
-                additionalProperties: false
-                description: Created successfully.
   "/v1/apps/{id}/rotate-secret":
     post:
       summary: Rotate secret
@@ -22544,7 +22920,7 @@ paths:
         summary: Get an integration's metrics and sync status
         description: This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
         tags:
-          - Metrics
+          - Integrations
         parameters:
           - schema:
               type: string
