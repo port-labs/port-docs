@@ -1,9 +1,9 @@
 ---
 title: "Self-service environments"
-sidebar_position: 4
+sidebar_position: 5
 ---
 
-# Self-Service Environments
+# Self-service environments
 
 Automating the creation of development environments is crucial for engineering teams. Manual setup is slow, error-prone, and often leads to inconsistencies that can delay development and cause integration headaches. By enabling self-service environment provisioning, teams can spin up the resources they need—on demand and with the right guardrails—freeing up developers to focus on building features instead of wrangling infrastructure.
 
@@ -21,11 +21,11 @@ Automating the creation of development environments is crucial for engineering t
 
 Explore these step-by-step guides to automate environment creation and management, which we've broken into the following categories
 
-### Scaffolding New Apps
+### Scaffolding new apps
 
 - [Scaffold a New App and Deploy to Kubernetes](/guides/all/create-eks-cluster-and-deploy-app/#scaffolding-a-nodejs-app)
 
-### Ephemeral Environments in the Cloud
+### Ephemeral environments in the cloud
 
 - [Manage a Developer Environment Lifecycle](/guides/all/create-dev-env/)
   Create a Terraform based Development Environment and show its details in Port
@@ -36,7 +36,7 @@ Explore these step-by-step guides to automate environment creation and managemen
 - [Manage a Kubernetes namespace](/guides/all/manage-kubernetes-namespaces)  
   Empower developers to create, update, or delete Kubernetes namespaces on demand—no tickets required.
 
-### Leverage 3rd Party Systems to Manage IaC
+### Leverage 3rd party systems to manage IaC
 
 - [Trigger Terraform Cloud via webhook](/actions-and-automations/setup-backend/webhook/terraform-cloud)  
   Automate infrastructure changes by kicking off Terraform Cloud runs directly from Port.

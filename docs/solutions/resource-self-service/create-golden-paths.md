@@ -1,13 +1,13 @@
 ---
 title: "Create golden paths"
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Create Golden Paths
+# Create golden paths
 
 Golden paths are a foundational element of effective platform engineering They're your organization's standardized, opinionated way of doing things that developers actually want to use. Think of them as the "happy path" that guides developers toward best practices while eliminating decision fatigue and reducing cognitive load.
 
-## Why Golden Paths Matter
+## Why golden paths matter
 
 As a platform engineer, you're constantly balancing standardization with developer productivity. Golden paths solve this by providing:
 
@@ -17,7 +17,7 @@ As a platform engineer, you're constantly balancing standardization with develop
 - **Faster onboarding**: New developers can be productive immediately without learning tribal knowledge
 - **Reduced support burden**: Fewer "how do I..." questions and fewer production issues from misconfigurations
 
-## The Golden Path Philosophy
+## The golden path philosophy
 
 Golden paths aren't designed to restrict choice, they're focused on making the right choice the easy choice. When you provide a clear, well-documented approach that follows your organization's standards, developers will naturally gravitate toward it because it's easier, faster and safer than figuring things out on their own.
 
@@ -27,7 +27,7 @@ The best golden paths are:
 - **Well-documented**: Clear examples and troubleshooting guides
 - **Continuously improved**: Feedback loops that make the path better over time
 
-## From Chaos to Clarity
+## From chaos to clarity
 
 Without golden paths, you get:
 - 47 different ways to create a service
@@ -44,9 +44,9 @@ With golden paths, you get:
 
 Golden paths transform your platform from a collection of tools into a cohesive developer experience that scales with your organization.
 
-## Opinions on Golden Paths
+## Opinions on golden paths
 
-### Scaffold New Respositories and Services
+### Scaffold new respositories and services
 
 There is no better opportunity to set up developers up for success, than a greenfield use case, where the developer is configuring a new repository or service. At this point, you as a platform engineer can give them all the best configuration out of the box, such that it's easier for them to ship their code with confidence from the outset.
 
@@ -63,9 +63,9 @@ There is no better opportunity to set up developers up for success, than a green
 - [Scaffold a New Service](/guides/all/scaffold-a-new-service): Learn how to quickly generate a new service with all the recommended defaults and best practices built in.
 - [Deploy New Service and Infra](/guides/all/create-eks-cluster-and-deploy-app/): See how to deploy a new service and its infrastructure together, enabling fast, reliable onboarding for new projects.
 
-### Cloud Resources
+### Cloud resources
 
-#### Architectural Patterns
+#### Architectural patterns
 
 Before diving into guides, it's important to pause and outline the two general patterns that exist for self-service actions (for Cloud Resources). With the adoption of Infrastructure as Code, many organizations maintain that the source-of-truth for their infrastructure configuration in their Git repositories, rather than in their cloud environments directly.
 
@@ -75,7 +75,7 @@ We'll explore 2 types of self-service below - RESTful Self-Service and Gitops-ba
 
 <img src="/img/solutions/resource-self-service/restful-vs-gitops.png" alt="RESTful vs GitOps flows" width="100%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
 
-##### RESTful Self-Service
+##### RESTful self-service
 
 RESTful self-service actions directly create resources in your cloud provider or other upstream systems through their APIs. This approach is straightforward and immediate—when a developer requests a resource through Port's self-service interface, the action makes API calls to create the resource directly in the target system (like AWS, Azure, or GCP). This pattern works well for organizations that prefer direct resource creation or when you need immediate provisioning without the overhead of Git-based workflows. The trade-off is that you lose the audit trail and version control benefits that come with GitOps, but you gain simplicity and speed for teams that don't need the full GitOps workflow.
 
@@ -90,7 +90,7 @@ RESTful self-service actions directly create resources in your cloud provider or
 
 <img src="/img/self-service-actions/setup-backend/gitlab-pipeline/testAddingDisk.png" alt="Autoscaling Dashboard Example" width="60%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
 
-##### GitOps-based Self-Service
+##### GitOps-based self-service
 
 GitOps-based self-service actions create resources by leveraging your existing Infrastructure as Code (IaC) files and modules. Here, an existing GitOps pipeline (like ArgoCD, Flux, or Terraform Cloud) picks up the changes and provisions the resources in the target cloud environment. This approach maintains the benefits of version control, audit trails, and the ability to review changes through pull requests, while still providing developers with a streamlined self-service experience. The trade-off is that resource creation takes longer due to the GitOps pipeline cycle, but you gain better governance, compliance, and the ability to enforce organizational standards through code review processes.
 
@@ -98,13 +98,13 @@ GitOps-based self-service actions create resources by leveraging your existing I
 - [Deploy S3 Bucket CrossPlane](/guides/all/deploy-s3-bucket-crossplane): Use CrossPlane to declaratively manage and deploy S3 buckets through GitOps workflows.
 - [Create Github Pull Request](/guides/all/create-github-pull-request/): Automate the creation of Github pull requests to trigger infrastructure changes and reviews.
 
-### Create Secrets
+### Create secrets
 
 Secret leakage remains a huge issue in the industry. The fact that developers have to manually handle secrets is like a process in a nuclear plant requiring the manual handling of uranium. It's an error prone workflow, that often leads to a security incident and in worse cases, supply chain security issues and data loss.
 
 The best protection against secret leakage is the design of a secure workflow, in which secrets are securely handled and developers are unlikely to make an error.
 
-#### Add Secrets to Github from your Portal
+#### Add secrets to Github from your portal
 
 - [How to securely create a Github Secret](/guides/all/create-github-secret/): Follow this guide to add secrets to your Github repositories safely and prevent accidental exposure.
 

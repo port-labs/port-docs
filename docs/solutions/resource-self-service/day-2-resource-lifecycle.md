@@ -1,13 +1,13 @@
 ---
 title: "Day 2 - resource lifecycle"
-sidebar_position: 2
+sidebar_position: 3
 ---
 
-# Day 2 - Manage the Full Resource Lifecycle
+# Day 2 - manage the full resource lifecycle
 
 Managing the lifecycle of cloud resources is a critical aspect of platform engineering, often referred to as "Day 2 operations." After resources are provisioned—whether they're databases, compute instances, storage buckets, or Kubernetes namespaces—they require ongoing management to ensure reliability, security, and cost-effectiveness.
 
-## Day 2 Tasks
+## Day 2 tasks
 
 Day 2 management includes tasks such as:
 - **Scaling resources** up or down based on demand
@@ -70,13 +70,13 @@ Day 2 management includes tasks such as:
 
 By automating these processes and providing self-service capabilities for Day 2 operations, platform teams empower developers to manage their own resources safely, while maintaining governance and compliance. Port enables you to define self-service actions for common Day 2 tasks, set up approval workflows, and enforce policies—ensuring that your cloud resources remain well-managed throughout their lifecycle.
 
-## Visualizing and Tracking Resources
+## Visualizing and tracking resources
 
 The guides above focus on managing the lifecycle of resources, but below, we cover how to visualize those same resources, to simplify their tracking.
 
 There are two main appraoches:
 
-### Track resources directly from Cloud vendors
+### Track resources directly from cloud vendors
 
     - [Track Azure Resources](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/)
     - [Track AWS Resources](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/)
