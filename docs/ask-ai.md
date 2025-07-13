@@ -2,7 +2,7 @@
 sidebar_position: 14
 title: Ask AI
 sidebar_label: Docs AI assistant
-sidebar_class_name: custom-sidebar-item sidebar-menu-ask-ai
+sidebar_class_name: custom-sidebar-item sidebar-menu-docs-ai-assistant
 ---
 
 # Docs AI assistant
