@@ -17,12 +17,17 @@ Email is a data type used to save Email addresses.
 
 The Email property type can be used to store any legal email address.
 
+## 🌐 International email
+
+You can also store international email addresses if you use `"format": "idn-email"` instead of `"format": "email"`.
+
 ## API definition
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
+{label: "Basic (International address)", value: "basic-international"},
 ]}>
 
 <TabItem value="basic">
@@ -79,6 +84,25 @@ The Email property type can be used to store any legal email address.
       "format": "email"
     }
     // highlight-end
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="basic-international">
+
+```json showLineNumbers
+{
+  "myInternationalEmailProp": {
+    "title": "My international email",
+    "icon": "My icon",
+    "description": "My international email property",
+    // highlight-start
+    "type": "string",
+    "format": "idn-email",
+    // highlight-end
+    "default": "a-mí@उदाहरण.com"
   }
 }
 ```
