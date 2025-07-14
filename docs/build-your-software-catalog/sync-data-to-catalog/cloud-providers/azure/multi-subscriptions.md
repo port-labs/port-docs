@@ -290,7 +290,7 @@ Resource groups typically have consistent, organization-wide tags, making them i
 - Reduces sync time and data volume by filtering at the query level
 :::
 
-#### Enhanced Configuration Format
+#### Enhanced configuration format
 
 :::tip Unified include/exclude filtering
 You can specify both `include` and `exclude` tag filters in a single configuration object:
