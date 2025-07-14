@@ -26,8 +26,8 @@ Port's action model is designed to be flexible and can be used to cover a wide r
 
 ## 💡 Common self-service actions
 
-- **Scaffold** a new service.
-- **Create** a cloud resource.
+- [**Scaffold** a new service](https://docs.port.io/guides/all/scaffold-a-new-service/).
+- [**Create** a cloud resource](https://docs.port.io/guides/all/create-cloud-resource-using-iac).
 - **Provision** a temporary developer environment.
 - **Redeploy** an image tag.
 - **Rollback** a running service.
@@ -53,29 +53,29 @@ Port gives you no-code components to create the experience you want for your use
 
 Self-service actions are created and managed in the [Self-service](https://app.getport.io/self-serve) page of your portal.  
 
-To begin, click on the `+ New Action` button in the top right corner, then follow the steps below.
+To begin, click on the `+ Action` button in the top right corner, then follow the steps below.
 
 :::tip Other supported methods
 Besides Port's UI, you can also create and manage self-service actions using [Port's API](/api-reference/create-an-action-automation), or [Terraform](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_action).
 :::
 
-### Step 1 - setup the action's frontend
+### Set up the action's frontend
 
 Choose the name of the action, its icon, and the inputs you would like the user to fill out when executing it.
 Port supports a wide variety of input types, including more advanced conditions to best fit the experience you want for your users.
 
-See [Setup frontend](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/) for instructions and examples.
+See [Set up frontend](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/) for instructions and examples.
 
-### Step 2 - setup backend
+### Set up backend
 
-Setup the logic responsible to handle the action after it is executed.  
+Set up the logic responsible to handle the action after it is executed.  
 In this step you can also define the payload that will be sent to your handler upon execution.
 
 The backend logic is yours, so it can do whatever you need it to do. Port supports many different backends for actions, offering a secure and compliant architecture.
 
 As part of your backend and its logic implementation, you can keep your software catalog up to date by sending API requests or ingesting new data that is tied to the performed action (for example, adding a new service entity in Port once the scaffold process has finished).
 
-See [Setup backend](/actions-and-automations/create-self-service-experiences/setup-the-backend/) for instructions and examples.
+See [Set up backend](/actions-and-automations/create-self-service-experiences/setup-the-backend/) for instructions and examples.
 
 <center>
 

@@ -1305,10 +1305,25 @@ export const availableGuides = [
         link: "/guides/all/track-leaked-github-secrets-in-port",
     },
     {
+        title: "Track and show MTBF for services",
+        description: "Track Mean Time Between Failures (MTBF) for your services to measure reliability and identify improvement opportunities",
+        tags: ["Engineering metrics", "PagerDuty", "Dashboards", "Scorecards"],
+        logos: ["PagerDuty"],
+        link: "/guides/all/track-and-show-mtbf-for-services",
+    },
+    {
         title: "Manage your Kubernetes deployments",
         description: "Create a comprehensive Kubernetes deployment management system to restart deployments and delete pods",
         tags: ["K8s for devs", "Kubernetes", "GitHub", "Actions"],
         logos: ["Kubernetes", "GitHub"],
         link: "/guides/all/manage-your-kubernetes-deployment",
-    }
+    },
+    {
+        title: "Pull GitHub metrics and build visualizations",
+        description: "Collect comprehensive GitHub metrics and build powerful visualizations to track engineering performance",
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/pull-github-metrics-and-build-visualizations",
+    },
+    
 ]
