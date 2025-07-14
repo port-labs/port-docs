@@ -343,7 +343,7 @@ export RESOURCE_GROUP_TAG_FILTERS='{"include": {"Environment": "Production", "Te
 - **Null/empty values**: Treated as non-matches
 - **Special characters**: Properly escaped in tag values
 
-#### How Filtering Works
+#### How filtering works
 
 1. **Query-level filtering**: Applied in Azure Resource Graph for optimal performance
 2. **Resource group join**: Resources are joined with their parent RGs to access tags
