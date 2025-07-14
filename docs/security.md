@@ -264,6 +264,10 @@ Information about any security vulnerabilities successfully exploited through pe
 
 You can find Port's privacy policy [here](https://www.getport.io/legal/privacy-policy).
 
+## Sub-processors
+
+You can find Port's list of sub-processors [here](https://www.port.io/legal/sub-processors)
+
 ## Data protection addendum
 
 You can find Port's DPA [here](https://www.getport.io/legal/dpa).
