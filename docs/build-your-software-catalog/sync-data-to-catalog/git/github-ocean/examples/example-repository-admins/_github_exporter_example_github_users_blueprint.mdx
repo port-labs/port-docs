@@ -1,0 +1,32 @@
+<details>
+<summary>Github Users blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "githubUser",
+  "title": "Github User",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "email": {
+         "title": "Email",
+         "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "user": {
+      "title": "User",
+      "target": "user",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
