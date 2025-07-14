@@ -23,10 +23,10 @@ As a platform engineer, you're constantly balancing standardization with develop
 Golden paths aren't designed to restrict choice, they're focused on making the right choice the easy choice. When you provide a clear, well-documented approach that follows your organization's standards, developers will naturally gravitate toward it because it's easier, faster and safer than figuring things out on their own.
 
 The best golden paths are:
-- **Opinionated but flexible**: Clear defaults with escape hatches for edge cases
-- **Self-service**: No tickets, no approvals, just instant gratification
-- **Well-documented**: Clear examples and troubleshooting guides
-- **Continuously improved**: Feedback loops that make the path better over time
+- **Opinionated but flexible**: Clear defaults with escape hatches for edge cases.
+- **Self-service**: No tickets, no approvals, just instant gratification.
+- **Well-documented**: Clear examples and troubleshooting guides.
+- **Continuously improved**: Feedback loops that make the path better over time.
 
 ## From chaos to clarity
 
