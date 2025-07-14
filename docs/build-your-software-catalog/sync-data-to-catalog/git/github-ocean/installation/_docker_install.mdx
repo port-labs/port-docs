@@ -8,7 +8,7 @@ Our integration can be directly run as a docker container, it can be deployed on
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
+docker pull ghcr.io/port-labs/port-ocean-github-ocean:1.0.6-beta
 ```
 
 Run the following command to start the app:
@@ -27,7 +27,7 @@ Run the following command to start the app:
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID=<GITHUB_APP_ID> \\
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_APP_PRIVATE_KEY=<BASE_64_ENCODED_PRIVATEKEY> \\
   -p 8000:8000 \\
-  ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta`}
+  ghcr.io/port-labs/port-ocean-github-ocean:1.0.6-beta`}
 </CodeBlock>
 ) : (
 <CodeBlock language="bash" showLineNumbers>
@@ -42,7 +42,7 @@ Run the following command to start the app:
   -e OCEAN__INTEGRATION__IDENTIFIER=github-ocean \\
   -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=<GITHUB_TOKEN> \\
   -p 8000:8000 \\
-  ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta`}
+  ghcr.io/port-labs/port-ocean-github-ocean:1.0.6-beta`}
 </CodeBlock>
 )}
 
