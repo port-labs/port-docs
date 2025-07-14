@@ -279,7 +279,7 @@ Add the following webhook mapping in the `Map the data from the external system 
 
 </details>
 
-### Resource Group Tag Filtering
+### Resource group tag filtering
 
 Filtering Azure resources by their parent resource group tags allows for precise, consistent, and efficient control over what gets synced to Port.
 
