@@ -266,7 +266,7 @@ You can find Port's privacy policy [here](https://www.getport.io/legal/privacy-p
 
 ## Sub-processors
 
-You can find Port's list of sub-processors [here](https://www.port.io/legal/sub-processors)
+You can find Port's list of sub-processors [here](https://www.port.io/legal/sub-processors).
 
 ## Data protection addendum
 
