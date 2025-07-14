@@ -12,6 +12,9 @@ import GithubUsersBlueprint from './example-repository-admins/\_github_exporter_
 import RepositoryAdminBlueprint from './example-repository-admins/\_github_export_example_repository_with_admins_relation_blueprint.mdx'
 import RepositoryAdminAppConfig from './example-repository-admins/\_github_exporter_example_admins_users_port_app_config.mdx'
 
+import IssueBlueprint from './example-issue/\_git_exporter_example_issue_blueprint.mdx'
+import PortIssueAppConfig from './example-issue/\_github_exporter_example_issue_port_app_config.mdx'
+
 import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
@@ -82,6 +85,27 @@ In other cases, the GitHub API will return a `null` value for the user's email.
 For the `user` kind, only the following fields are supported: `.login`, and `.email`.  
 Other fields from the [GitHub User API](https://docs.github.com/en/rest/users/users#get-a-user) are not available.
 :::
+
+## Map repositories and issues
+
+In the following example you will ingest your GitHub repositories and their issues to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<IssueBlueprint/>
+
+<PortIssueAppConfig/>
+
+:::tip learn more
+
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
+- Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
+- Click [Here](https://docs.github.com/en/rest/issues/issues#get-an-issue) for the GitHub issue object structure.
+
+:::
+
+After creating the blueprints and committing the `port-app-config.yml` file to your `.github-private` repository (for global configuration), or to any specific repositories (for per-repo configuration), you will see new entities in Port matching your repositories alongside their issues. (Remember that the `port-app-config.yml` file has to be in the **default branch** of the repository to take effect).
 
 ## Map files and file contents
 
