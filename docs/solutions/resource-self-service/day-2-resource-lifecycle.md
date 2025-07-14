@@ -3,7 +3,7 @@ title: "Day 2 - resource lifecycle"
 sidebar_position: 3
 ---
 
-# Day 2 - manage the full resource lifecycle
+# Day 2 - manage resource lifecycle
 
 Managing the lifecycle of cloud resources is a critical aspect of platform engineering, often referred to as "Day 2 operations." After resources are provisioned—whether they're databases, compute instances, storage buckets, or Kubernetes namespaces—they require ongoing management to ensure reliability, security, and cost-effectiveness.
 
