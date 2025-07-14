@@ -5,7 +5,8 @@ sidebar_position: 2
 
 # Create golden paths
 
-Golden paths are a foundational element of effective platform engineering They're your organization's standardized, opinionated way of doing things that developers actually want to use. Think of them as the "happy path" that guides developers toward best practices while eliminating decision fatigue and reducing cognitive load.
+Golden paths are a foundational element of effective platform engineering.  
+They are your organization's standardized, opinionated way of doing things that developers actually want to use. Think of them as the "happy path" that guides developers toward best practices while eliminating decision fatigue and reducing cognitive load.
 
 ## Why golden paths matter
 
