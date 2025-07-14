@@ -412,6 +412,10 @@ const config = {
       // "data-search-result-secondary-text-color": "#000000",
       // "data-search-result-primary-text-color": "#000000",
       async: true,
+    },
+    {
+      src: '/js/send-html-script.js',
+      async: true,
     }
   ],
 };

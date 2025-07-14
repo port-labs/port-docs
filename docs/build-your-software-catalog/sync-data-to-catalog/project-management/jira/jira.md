@@ -458,11 +458,14 @@ ingest_data:
 
 </Tabs>
 
+<section id="configurations-section">
 ## Configuration
 
-Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+Port integrations use a <a href="http://localhost:4000/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure" target="_blank" rel="noopener noreferrer">YAML mapping block</a> to ingest data from the third-party API into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+</section>
 
 ### Default mapping configuration
 
