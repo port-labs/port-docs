@@ -20,7 +20,7 @@ This guide will demonstrate how to ingest Slack channels and channel membership 
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
 
-- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via chat, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
+- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via chat, [Slack](https://www.getport.io/community), or the [support site](http://support.port.io/), and we will create and manage the bucket on your behalf.
 
 :::tip Important
 

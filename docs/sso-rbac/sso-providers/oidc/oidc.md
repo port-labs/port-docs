@@ -17,7 +17,7 @@ In order to integrate Port with an OIDC SSO application, you will need to do the
    - Login URI: 
      <SSOEndpoints/>
      :::note
-     We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+     We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support.port.io](http://support.port.io/)).
      :::
 3. Expose the application to your organization by either granting access to everyone or restricting it to specific roles.
 4. Share information about your SSO application:
