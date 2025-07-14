@@ -1,0 +1,27 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: folder
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      folders: # Specify the repositories and folders to include under this relative path.
+        - path: apps/* # Relative path to the folders within the repositories.
+          repos: # List of repositories to include folders from.
+            - name: backend-service
+              branch: main
+            - name: frontend-service # if you don't specify a branch, we'll use the repository's default branch
+    port:
+      entity:
+        mappings:
+          identifier: .folder.path | split("/")[-1]
+          title: .folder.path | split("/")[-1]
+          blueprint: '"githubRepository"'
+          properties:
+            url: .__repository.html_url + "/tree/" + .__repository.default_branch  + "/" + .folder.path
+            readme: file://README.md
+```
+
+</details>

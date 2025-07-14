@@ -10,6 +10,7 @@ import GitHubResources from '../\_github_exporter_supported_resources.mdx'
 import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
+import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
 
 # Resource mapping examples
 
@@ -61,6 +62,37 @@ The following example demonstrates ingestion of dependencies from a `package.jso
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/#ingest-files-from-your-repositories).
 
+## Map repositories and monorepos
+
+In the following example you will ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<PortMonoRepoAppConfig/>
+
+
+To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
+
+```yaml
+- kind: folder
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      folders: # Specify the repositories and folders to include under this relative path.
+        - path: "*" # Relative path to the folders within the repositories.
+          repos: # List of repositories to include folders from.
+            - name: backend-service
+            - name: frontend-service
+```
+
+
+:::tip learn more
+
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
+- Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
+- Click [Here](https://docs.github.com/en/rest/git/trees#get-a-tree) for the GitHub folder object structure.
+
+:::
 
 
 ## Map supported resources
