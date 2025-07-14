@@ -1317,5 +1317,13 @@ export const availableGuides = [
         tags: ["K8s for devs", "Kubernetes", "GitHub", "Actions"],
         logos: ["Kubernetes", "GitHub"],
         link: "/guides/all/manage-your-kubernetes-deployment",
-    }
+    },
+    {
+        title: "Pull GitHub metrics and build visualizations",
+        description: "Collect comprehensive GitHub metrics and build powerful visualizations to track engineering performance",
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/pull-github-metrics-and-build-visualizations",
+    },
+    
 ]
