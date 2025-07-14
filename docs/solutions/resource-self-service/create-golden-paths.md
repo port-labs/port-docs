@@ -12,11 +12,11 @@ They are your organization's standardized, opinionated way of doing things that 
 
 As a platform engineer, you're constantly balancing standardization with developer productivity. Golden paths solve this by providing:
 
-- **Consistency at scale**: Every team follows the same patterns, making your platform predictable and maintainable
-- **Reduced cognitive load**: Developers don't waste time deciding between 47 different ways to create a service
-- **Built-in compliance**: Security, observability, and operational requirements are baked into the path
-- **Faster onboarding**: New developers can be productive immediately without learning tribal knowledge
-- **Reduced support burden**: Fewer "how do I..." questions and fewer production issues from misconfigurations
+- **Consistency at scale**: Every team follows the same patterns, making your platform predictable and maintainable.
+- **Reduced cognitive load**: Developers don't waste time deciding between 47 different ways to create a service.
+- **Built-in compliance**: Security, observability, and operational requirements are baked into the path.
+- **Faster onboarding**: New developers can be productive immediately without learning tribal knowledge.
+- **Reduced support burden**: Fewer "how do I..." questions and fewer production issues from misconfigurations.
 
 ## The golden path philosophy
 
