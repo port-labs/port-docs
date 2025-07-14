@@ -1,32 +1,8 @@
----
-title: Set up backend
----
-
-import DocCardList from '@theme/DocCardList';
-import Tabs from "@theme/Tabs"
-import TabItem from "@theme/TabItem"
-import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
-import ExecuteActionLocations from '/docs/actions-and-automations/create-self-service-experiences/templates/_execute_action_locations.mdx'
 import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
-
-# Set up backend
-
-<center>
-
-<iframe width="568" height="320" src="https://www.youtube.com/embed/cU7W3xYbsEw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
-
-</center>
-<br/>
-
-A self-service action's backend is the logic that runs when the action is triggered. The implementation of the backend is done by you, using one of the various backend types that Port supports.
-
-:::tip Identical backends for self-service actions and automations
-Port uses the same backend types and configurations for both self-service actions and [automations](/actions-and-automations/define-automations/), so any backend option available for self-service actions can be used in automations as well.
-:::
 
 ## Define the backend
 
-The action's backend is defined under the `Backend` tab of the action creation form in Port's UI.  
+The action's/automation's backend is defined under the `Backend` tab of the action/automation creation form in Port's UI.  
 Let's break the definition down to two parts:
 
 ### Define your backend's type and metadata
@@ -36,13 +12,18 @@ In this section we provide information about the backend logic and its location,
 Port uses the same backend types for both self-service actions and [automations](/actions-and-automations/define-automations/).  
 For more information and examples for the available backend types, check out the [Backend types](/actions-and-automations/setup-backend/) page.
 
+Here is an example of a Github workflow backend configuration in the self-service creation form:
+
+<img src='/img/self-service-actions/setup-backend/action-form-setup-backend.png' width='55%' border='1px' />
+<br/><br/>
+
 Depending on the backend type you choose, you will need to provide different configuration parameters.  
 
 ### Define the payload
 
-When creating an automation, you can construct a JSON payload that will be sent to your backend upon every execution. You can use this to send data about the action that you want your backend to have. 
+When creating a self-service action or automation, you can construct a JSON payload that will be sent to your backend upon every execution. You can use this to send data about the action/automation that you want your backend to have. 
 
-Still in the `Backend` tab, scroll down to the `Configure the invocation payload` section. This is where we define the action's payload.
+Still in the `Backend` tab, scroll down to the `Configure the invocation payload` section. This is where we define the action's/automation's payload.
 
 The payload is defined using JSON, and accessing your data is done using `jq`, wrapping each expression with `{{ }}`.  
 
@@ -122,28 +103,10 @@ You can access any value in this structure and add it to the payload. For exampl
 }
 ```
 
-Use the `Test JQ` button in the bottom-left corner to test your expressions against your action and ensure you are sending the correct data.
+Use the `Test JQ` button in the bottom-left corner to test your expressions against your action/automation and ensure you are sending the correct data.
 
 :::tip Inspect the Full Object in `jq`
 You can use the `jq` expression `{{ . }}` when testing to see the entire available object, and then drill down to the specific data you need.
 :::
 
 <PayloadAdvancedFunctions />
-
-## JSON structure
-
-In some cases, you may prefer to define the backend configuration using a JSON object.  
-The backend is defined under the `invocationMethod` object in the action's JSON structure.
-
-<BackendTypesJson />
-
-___
-
-## Next step
-
-Once the backend is set up, the action is ready to be used.  
-Optionally, you can [configure permissions and/or manual approval](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) for your actions to control who is allowed to execute them.
-
-### Execute the action
-
-<ExecuteActionLocations />

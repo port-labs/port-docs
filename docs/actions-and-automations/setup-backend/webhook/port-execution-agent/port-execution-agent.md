@@ -13,7 +13,7 @@ Our Port agent is open source - see it [**here**](https://github.com/port-labs/p
 :::
 
 :::note Request Kafka Topic
-To use the execution agent, please contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io) to receive a dedicated Kafka topic.
+To use the execution agent, please contact us using chat/Slack/support site at [support.port.io](http://support.port.io/) to receive a dedicated Kafka topic.
 :::
 
 The data flow when using the Port execution agent is as follows:
