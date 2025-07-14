@@ -53,8 +53,7 @@ Install the Helm chart:
   1. Create a `values.yaml` file with the following content:
 
   {props.setupName == "app" ? (
-# AI! add the filename "values.yaml" to these code blocks
-  <CodeBlock language="yaml" showLineNumbers>
+  <CodeBlock language="yaml" showLineNumbers title="values.yaml">
 {`
   port:
     clientId: "<PORT_CLIENT_ID>"
@@ -86,7 +85,7 @@ Install the Helm chart:
 </CodeBlock>
   ) : (
 
-  <CodeBlock language="yaml" showLineNumbers>
+  <CodeBlock language="yaml" showLineNumbers title="values.yaml">
       {`
   port:
     clientId: "<PORT_CLIENT_ID>"
