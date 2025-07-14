@@ -335,7 +335,7 @@ export RESOURCE_GROUP_TAG_FILTERS='{"include": {"Environment": "Production", "Te
   - Empty `include` = include all (unless excluded)
   - Empty `exclude` = exclude none
 
-#### Tag Matching Rules
+#### Tag matching rules
 
 - **Case-insensitive**: Tag keys and values are matched case-insensitively
 - **Exact value match**: Tag values must match exactly (after case normalization)
