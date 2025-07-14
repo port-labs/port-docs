@@ -20,16 +20,16 @@ The Azure multi-subscription sync solution provides a way to periodically sync r
 ## Overview
 
 This solution:
-- Is written in Python using the Azure SDK for Python
-- Runs as a GitHub workflow at configurable periodic intervals
+- Is written in Python using the Azure SDK for Python.
+- Runs as a GitHub workflow at configurable periodic intervals.
 - Provides two sync modes:
-  - **Incremental**: Syncs recent changes (default: every 15 minutes)
-  - **Full**: Complete sync of all resources (recommended for initial setup)
-- Prioritizes Azure resources with detailed tracking
-- Supports flexible data mapping through Port webhooks
+  - **Incremental**: Syncs recent changes (default: every 15 minutes).
+  - **Full**: Complete sync of all resources (recommended for initial setup).
+- Prioritizes Azure resources with detailed tracking.
+- Supports flexible data mapping through Port webhooks.
 - Can be deployed via:
-  - GitHub Actions for automated periodic sync
-  - Local installation for development and testing
+  - GitHub Actions for automated periodic sync.
+  - Local installation for development and testing.
 
 
 :::tip Source code
@@ -285,14 +285,13 @@ Filtering Azure resources by their parent resource group tags allows for precise
 
 :::info Why use Resource Group Tag Filtering?
 Resource groups typically have consistent, organization-wide tags, making them ideal for filtering. This approach:
-- Avoids the need to tag every individual resource
-- Provides a consistent filtering mechanism
-- Reduces sync time and data volume by filtering at the query level
+- Avoids the need to tag every individual resource.
+- Provides a consistent filtering mechanism.
+- Reduces sync time and data volume by filtering at the query level.
 :::
 
 #### Enhanced configuration format
 
-:::tip Unified include/exclude filtering
 You can specify both `include` and `exclude` tag filters in a single configuration object:
 
 ```json
@@ -301,7 +300,6 @@ You can specify both `include` and `exclude` tag filters in a single configurati
   "exclude": {"Temporary": "true", "Stage": "deprecated"}
 }
 ```
-:::
 
 <details>
 <summary>Configuration Examples</summary>
@@ -326,35 +324,35 @@ export RESOURCE_GROUP_TAG_FILTERS='{"include": {"Environment": "Production", "Te
 
 #### Filter logic
 
-- **Include filters**: All conditions must match (AND logic)
-  - Example: `{ "Environment": "Production", "Team": "Platform" }` requires BOTH tags
-- **Exclude filters**: Any condition matching will exclude (OR logic)
-  - Example: `{ "Temporary": "true", "Stage": "deprecated" }` excludes if EITHER tag matches
-- **Combined**: Resources must match all include criteria AND NOT match any exclude criteria
+- **Include filters**: All conditions must match (AND logic).
+  - Example: `{ "Environment": "Production", "Team": "Platform" }` requires BOTH tags.
+- **Exclude filters**: Any condition matching will exclude (OR logic).
+  - Example: `{ "Temporary": "true", "Stage": "deprecated" }` excludes if EITHER tag matches.
+- **Combined**: Resources must match all include criteria AND NOT match any exclude criteria.
 - **Defaults**:
-  - Empty `include` = include all (unless excluded)
-  - Empty `exclude` = exclude none
+  - Empty `include` = include all (unless excluded).
+  - Empty `exclude` = exclude none.
 
 #### Tag matching rules
 
-- **Case-insensitive**: Tag keys and values are matched case-insensitively
-- **Exact value match**: Tag values must match exactly (after case normalization)
-- **Missing tags**: Resource groups missing required include tags are filtered out
-- **Null/empty values**: Treated as non-matches
-- **Special characters**: Properly escaped in tag values
+- **Case-insensitive**: Tag keys and values are matched case-insensitively.
+- **Exact value match**: Tag values must match exactly (after case normalization).
+- **Missing tags**: Resource groups missing required include tags are filtered out.
+- **Null/empty values**: Treated as non-matches.
+- **Special characters**: Properly escaped in tag values.
 
 #### How filtering works
 
-1. **Query-level filtering**: Applied in Azure Resource Graph for optimal performance
-2. **Resource group join**: Resources are joined with their parent RGs to access tags
-3. **Tag inheritance**: Resource data includes both resource and RG tags (`rgTags` field)
-4. **Dual application**: Filtering applies to both resources and containers
-5. **Mode support**: Works with both incremental and full sync
+1. **Query-level filtering**: Applied in Azure Resource Graph for optimal performance.
+2. **Resource group join**: Resources are joined with their parent RGs to access tags.
+3. **Tag inheritance**: Resource data includes both resource and RG tags (`rgTags` field).
+4. **Dual application**: Filtering applies to both resources and containers.
+5. **Mode support**: Works with both incremental and full sync.
 
 :::info Performance benefits
-- Filtering occurs in Azure, reducing data transfer
-- Fewer API calls and faster syncs
-- Only relevant resources are processed and sent to Port
+- Filtering occurs in Azure, reducing data transfer.
+- Fewer API calls and faster syncs.
+- Only relevant resources are processed and sent to Port.
 :::
 
 
