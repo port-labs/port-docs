@@ -71,11 +71,16 @@ export default function ParametersTable({ showingApp }) {
           <td>When <code>true</code>, sends raw data examples from the third-party API to Port for testing and managing the integration mapping.</td>
           <td>❌</td>
         </tr>
-        {/* <tr> */}
-        {/*   <td><code>baseUrl</code></td> */}
-        {/*   <td>Integration instance base url, real-time live events will be enabled if this is configured.</td> */}
-        {/*   <td>❌</td> */}
-        {/* </tr> */}
+        <tr>
+          <td><code>entraEnv[0].name</code></td>
+          <td><code>OCEAN__BASE_URL</code></td>
+          <td>❌</td>
+        </tr>
+        <tr>
+          <td><code>entraEnv[0].value</code></td>
+          <td>The domain where we want to get live events</td>
+          <td>❌</td>
+        </tr>
         <tr>
           <td><code>integration.config.webhookSecret</code></td>
           <td>A secret to secure webhooks from GitHub. This is optional but highly recommended for security if you enable live-events.</td>

@@ -10,6 +10,22 @@ import ParametersTable from "./_parameters_table.jsx"
 import Base64Tip from "./\_base_64_tip.mdx"
 import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
+## Enabling live-events
+:::tip
+The `OCEAN_BASE_URL` parameter is used specifically to enable the real-time functionality of the integration.
+
+If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
+:::
+
+<OceanSaasLiveEventsDescription id="GithubOcean" />
+<details>
+  <summary><b>Supported live event triggers</b></summary>
+    <OceanSaasLiveEventsTriggersManual id="GithubOcean" isOAuth={false} />
+</details>
+
+## Deploy the integration
+
+Choose the installation method that best suits your needs:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -60,6 +76,11 @@ Install the Helm chart:
     secrets:
       githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
 
+  # uncomment to enable live events
+  # extraEnv:
+  #  - name: "OCEAN__BASE_URL"
+  #    value: "https://<your-domain>"
+
   initializePortResources: true
   sendRawDataExamples: true
   scheduledResyncInterval: 360
@@ -88,6 +109,11 @@ Install the Helm chart:
       githubHost: <GITHUB_HOST>
     secrets:
       githubToken: <GITHUB_PAT>
+
+  # uncomment to enable live events
+  # extraEnv:
+  #  - name: "OCEAN__BASE_URL"
+  #    value: "https://<your-domain>"
 
   initializePortResources: true
   sendRawDataExamples: true
@@ -223,205 +249,4 @@ This table summarizes the available parameters for the installation.
 </TabItem>}
 </Tabs>
 
-## Enabling live-events
 
-<OceanSaasLiveEventsDescription id="GithubOcean" />
-<details>
-  <summary><b>Supported live event triggers</b></summary>
-    <OceanSaasLiveEventsTriggersManual id="GithubOcean" isOAuth={false} />
-</details>
-
-<Tabs groupId="liveEvents" queryString="live-events">
-    <TabItem value="kubernetes" label="Kubernetes">
-      When you install the integration using Helm, a Kubernetes Service is created. To receive webhooks from GitHub, you need to expose this service to the internet. The `port-ocean` Helm chart provides a simple way to do this by creating a Kubernetes Ingress resource.
-
-      :::tip
-        You can install setup a local Kubernetes cluster with [Minikube](https://minikube.sigs.k8s.io/docs/)
-      :::
-
-      #### Prerequisites
-
-      You must have an [Ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) installed in your cluster. If you don't have one, you can install the popular [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/).
-
-      #### Helm Configuration
-
-      To enable live events, you need to update your Helm release with the following configurations:
-
-      1.  **Ingress Configuration**: Enable the creation of an Ingress resource and specify the hostname that will be used to access the integration from the internet.
-      2.  **Base URL**: Provide the integration with its public URL. This is used to register the webhook in GitHub.
-
-      Here is an example of how to set these parameters in your `helm upgrade --install` command. Make sure to replace `<YOUR_DOMAIN>` with your actual public domain name.
-
-      A full example based on the installation command:
-
-      1. Create or update your `values.yaml` file with the following content:
-
-        {props.setupName == "app" ? (
-          <details>
-            <summary>values.yaml</summary>
-            <CodeBlock language="yaml" showLineNumbers>
-{`
-  port:
-    clientId: "<PORT_CLIENT_ID>"
-    clientSecret: "<PORT_CLIENT_SECRET>"
-    baseUrl: "https://api.port.io"
-
-  integration:
-    identifier: "github-ocean"
-    type: "github-ocean"
-    version: "1.0.5-beta"
-    eventListener:
-      type: "POLLING"
-    config:
-      githubOrganization: <GITHUB_ORGANIZATION>
-      githubHost: <GITHUB_HOST>
-      githubAppId: <GITHUB_APP_ID>
-    secrets:
-      githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
-    
-  ingress:
-    enabled: true
-    className: "nginx"
-    host: "<your-domain>" # e.g myoceangithub.com
-    path: "/"
-
-  extraEnv:
-    - name: "OCEAN__BASE_URL"
-      value: "https://<your-domain>"
-
-  initializePortResources: true
-  sendRawDataExamples: true
-  scheduledResyncInterval: 360
-`}
-            </CodeBlock>
-          </details>
-        ) : (
-          <details>
-            <summary>values.yaml</summary>
-            <CodeBlock language="yaml" showLineNumbers>
-{`
-  port:
-    clientId: "<PORT_CLIENT_ID>"
-    clientSecret: "<PORT_CLIENT_SECRET>"
-    baseUrl: "https://api.port.io"
-
-  integration:
-    identifier: "github-ocean"
-    type: "github-ocean"
-    version: "1.0.5-beta"
-    eventListener:
-      type: "POLLING"
-    config:
-      githubOrganization: <GITHUB_ORGANIZATION>
-      githubHost: <GITHUB_HOST>
-    secrets:
-      githubToken: <GITHUB_PAT>
-
-  ingress:
-    enabled: true
-    className: "nginx"
-    host: "<your-domain>" # e.g myoceangithub.com
-    path: "/"
-
-  extraEnv:
-    - name: "OCEAN__BASE_URL"
-      value: "https://<your-domain>"
-
-  initializePortResources: true
-  sendRawDataExamples: true
-  scheduledResyncInterval: 360
-
-`}
-            </CodeBlock>
-          </details>
-        )}
-      2. Install or upgrade the Helm chart using the `values.yaml` file:
-      <CodeBlock language="bash" showLineNumbers>
-{`helm upgrade --install github-ocean port-labs/port-ocean -f values.yaml`}
-      </CodeBlock>
-
-      #### Verify Ingress
-
-      After applying the changes, you can check the status of your Ingress. The Ingress resource will be named after your Helm release (e.g., `github-ocean`):
-
-      <CodeBlock language="bash">
-      {`kubectl get ingress`}
-      </CodeBlock>
-
-      When you set the `OCEAN__BASE_URL`, Ocean will attempt to automatically create the webhook in GitHub for you.
-    </TabItem>
-
-    <TabItem value="docker" label="Docker">
-      
-      When running the integration with Docker, you need a public URL to receive live events from GitHub. This can be achieved by using a reverse proxy to expose the container to the internet.
-
-      <details>
-        <summary><b>Local Testing with Ngrok (Click to expand)</b></summary>
-
-        For local testing, you can use [Ngrok](https://ngrok.com/) to create a secure tunnel to your machine. This will give you a temporary public URL that forwards traffic to your Docker container.
-
-        1.  Start a tunnel to port `8000`:
-            ```bash
-            ngrok http 8000
-            ```
-        2.  Ngrok will provide you with a public URL. It will look something like this:
-            ```
-            Forwarding                    https://c696-2693-1a59.ngrok-free.app -> http://localhost:8000
-            ```
-        3.  Copy the `https` URL and use it as the `OCEAN__BASE_URL` when running your Docker container:
-            ```bash showLineNumbers
-            docker run \
-              -e OCEAN__BASE_URL="https://c696-2693-1a59.ngrok-free.app" \ # Replace with your ngrok URL
-              # ... other docker variables from the Docker deploy step
-              -p 8000:8000 \
-              ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
-            ```
-      </details>
-
-      #### Setting up with Nginx
-
-      If you are deploying the integration on a server with Nginx, you can configure it as a reverse proxy to expose the integration to the internet.
-
-      ##### 1. Configure Nginx
-      Create a new Nginx configuration file at `/etc/nginx/sites-available/github-ocean.conf`. This will forward requests from `github-ocean.example-domain.com` to the integration container on port `8000`.
-
-      ```nginx title="/etc/nginx/sites-available/github-ocean.conf" showLineNumbers
-server {
-    listen 80;
-    server_name github-ocean.example-domain.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-      ```
-
-      :::note
-      For a production setup, it is highly recommended to also configure SSL/TLS for your domain. You can use a service like [Let's Encrypt](https://letsencrypt.org/) to get free SSL certificates.
-      :::
-
-      ##### 2. Enable the Site and Restart Nginx
-      Enable the new site by creating a symbolic link, then test the configuration and restart Nginx.
-
-      ```bash showLineNumbers
-        sudo ln -s /etc/nginx/sites-available/github-ocean.conf /etc/nginx/sites-enabled/
-        sudo nginx -t
-        sudo systemctl restart nginx
-        ```
-
-      ##### 3. Run the Docker Container
-      Finally, run the integration's Docker container. Set the `OCEAN__BASE_URL` to your public domain and bind the container's port `8000` to `127.0.0.1:8000` on the host. This ensures it's only accessible via the Nginx proxy.
-
-      ```bash showLineNumbers
-        docker run \
-        -e OCEAN__BASE_URL="http://github-ocean.example-domain.com" \
-        # ... other docker variables from the Docker deploy step
-        -p 8000:8000 \
-        ghcr.io/port-labs/port-ocean-github-ocean:1.0.5-beta
-      ```
-    </TabItem>
-</Tabs>

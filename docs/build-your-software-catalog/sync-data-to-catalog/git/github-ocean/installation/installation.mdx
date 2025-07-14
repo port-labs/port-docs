@@ -54,16 +54,4 @@ To create a personal access token see Github's [managing your personal access to
 
 Refer to our [Github app installation guide](./github-app.mdx)
 
-### Configure Realtime webhook events
-
-:::tip
-The `baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
-
-If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
-:::
-
-## Deploy the integration
-
-Choose the installation method that best suits your needs:
-
 <InstallMethods setupName="classic" />
