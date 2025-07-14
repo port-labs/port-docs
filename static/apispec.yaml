@@ -5340,14 +5340,14 @@ paths:
                   type: object
                   description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>You can also use a [search query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to define relations based on a property of the related entity.<br/> 
               additionalProperties: true
-            example:
-              identifier: new-microservice
-              title: MyNewMicroservice
-              icon: Microservice
-              team: []
-              properties:
-                content: my content
-              relations: {}
+              example:
+                identifier: new-microservice
+                title: MyNewMicroservice
+                icon: Microservice
+                team: []
+                properties:
+                  content: my content
+                relations: {}
       parameters:
         - schema:
             type: boolean
@@ -7384,6 +7384,20 @@ paths:
                 - combinator
                 - rules
               additionalProperties: false
+              example:
+                combinator: and
+                rules:
+                  - property: $blueprint
+                    operator: =
+                    value: service
+                  - combinator: or
+                    rules:
+                      - property: environment
+                        operator: =
+                        value: production
+                      - property: environment
+                        operator: =
+                        value: staging
         required: true
       parameters:
         - schema:
