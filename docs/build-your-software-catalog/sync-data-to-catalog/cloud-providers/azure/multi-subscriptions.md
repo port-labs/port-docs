@@ -324,7 +324,7 @@ export RESOURCE_GROUP_TAG_FILTERS='{"include": {"Environment": "Production", "Te
 ```
 </details>
 
-#### Filter Logic
+#### Filter logic
 
 - **Include filters**: All conditions must match (AND logic)
   - Example: `{ "Environment": "Production", "Team": "Platform" }` requires BOTH tags
