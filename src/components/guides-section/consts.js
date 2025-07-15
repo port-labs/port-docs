@@ -450,14 +450,6 @@ export const availableGuides = [
         link: "/guides/all/push-image-to-ecr",
     },
     {
-        title: "Create and Manage Statuspage Incidents",
-        description: "Create self-service actions that manage Statuspage incidents",
-        tags: ["Incident management", "GitHub", "StatusPage", "Actions"],
-        logos: ["GitHub", "StatusPage"],
-        // category: "Getting started",
-        link: "/guides/all/manage-statuspage-incident",
-    },
-    {
         title: "Deploy Azure Resource using Terraform",
         description: "Create a self-service action that deploys a storage account in Azure using Terraform",
         tags: ["IaC for devs", "Azure", "Terraform", "Actions"],
@@ -1130,13 +1122,6 @@ export const availableGuides = [
         link: "/guides/all/automatically-set-relations-between-entities-with-automation",
     },
     {
-        title: "Delete a ServiceNow incident",
-        description: "Create a self-service action that deletes a ServiceNow incident",
-        tags: ["Incident management", "ServiceNow", "Actions", "Automations"],
-        logos: ["ServiceNow"],
-        link: "/guides/all/delete-servicenow-incident",
-    },
-    {
         title: "Manage and visualize your AWS S3 buckets and RDS instances",
         description: "Create a dashboard that manages and visualizes your AWS S3 buckets and RDS instances",
         tags: ["Security", "AWS", "GitHub", "Dashboards"],
@@ -1144,9 +1129,9 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-aws-storage-configuration",
     },
     {
-        title: "Interact with ServiceNow records",
-        description: "Create a self-service action that interacts with ServiceNow records",
-        tags: ["Incident management", "ServiceNow", "Actions"],
+        title: "Interact with ServiceNow records and delete incidents",
+        description: "Create a self-service action that interacts with ServiceNow records and delete ServiceNow incidents",
+        tags: ["Incident management", "ServiceNow", "Actions","Webhook","Automations"],
         logos: ["ServiceNow"],
         link: "/guides/all/interact-with-servicenow",
     },
@@ -1214,15 +1199,8 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-gitlab-deployments",
     },
     {
-        title: "Visualize and manage your Statuspage components",
-        description: "Create a dashboard that visualizes and manages your Statuspage components",
-        tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
-        logos: ["StatusPage"],
-        link: "/guides/all/visualize-and-manage-statuspage-components",
-    },
-    {
-        title: "Visualize and manage your Statuspage incidents",
-        description: "Create a dashboard that visualizes and manages your Statuspage incidents",
+        title: "Visualize and manage your Statuspage incidents and components",
+        description: "Create a dashboard that visualizes and manages your Statuspage incidents and components",
         tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
         logos: ["StatusPage"],
         link: "/guides/all/visualize-and-manage-statuspage-incidents",
@@ -1320,10 +1298,32 @@ export const availableGuides = [
         link: "/guides/all/manage-and-visualize-aws-autoscaling-groups",
     },
     {
-        title: "Send leaked secrets from GitHub to Port",
-        description: "Create a webhook integration that sends leaked secrets from GitHub to Port",
+        title: "Track leaked GitHub secrets in Port",
+        description: "Create a webhook integration that tracks leaked GitHub secrets in Port",
         tags: ["Security", "GitHub", "Webhook"],
         logos: ["GitHub", "Webhook"],
-        link: "/guides/all/send-leaked-secrets-from-github-to-port",
-    }
+        link: "/guides/all/track-leaked-github-secrets-in-port",
+    },
+    {
+        title: "Track and show MTBF for services",
+        description: "Track Mean Time Between Failures (MTBF) for your services to measure reliability and identify improvement opportunities",
+        tags: ["Engineering metrics", "PagerDuty", "Dashboards", "Scorecards"],
+        logos: ["PagerDuty"],
+        link: "/guides/all/track-and-show-mtbf-for-services",
+    },
+    {
+        title: "Manage your Kubernetes deployments",
+        description: "Create a comprehensive Kubernetes deployment management system to restart deployments and delete pods",
+        tags: ["K8s for devs", "Kubernetes", "GitHub", "Actions"],
+        logos: ["Kubernetes", "GitHub"],
+        link: "/guides/all/manage-your-kubernetes-deployment",
+    },
+    {
+        title: "Pull GitHub metrics and build visualizations",
+        description: "Collect comprehensive GitHub metrics and build powerful visualizations to track engineering performance",
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/pull-github-metrics-and-build-visualizations",
+    },
+    
 ]
