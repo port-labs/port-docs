@@ -13,16 +13,22 @@ import TabItem from "@theme/TabItem"
 
 Email is a data type used to save Email addresses.
 
-## 💡 Common email usage
+## Common email usage
 
 The Email property type can be used to store any legal email address.
+
+:::tip International email
+
+You can also store international email addresses by using `"format": "idn-email"` instead of `"format": "email"` (see below).
+:::
 
 ## API definition
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Enum", value: "enum"},
-{label: "Array", value: "array"}
+{label: "Array", value: "array"},
+{label: "Basic (international address)", value: "basic-international"},
 ]}>
 
 <TabItem value="basic">
@@ -79,6 +85,25 @@ The Email property type can be used to store any legal email address.
       "format": "email"
     }
     // highlight-end
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="basic-international">
+
+```json showLineNumbers
+{
+  "myInternationalEmailProp": {
+    "title": "My international email",
+    "icon": "My icon",
+    "description": "My international email property",
+    // highlight-start
+    "type": "string",
+    "format": "idn-email",
+    // highlight-end
+    "default": "a-mí@उदाहरण.com"
   }
 }
 ```
