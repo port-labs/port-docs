@@ -40,7 +40,7 @@ DORA (DevOps Research and Assessment) metrics are a set of key performance indic
 
 By tracking these metrics, engineering teams gain a data-driven understanding of their delivery process, identify bottlenecks, and benchmark their performance against industry standards. DORA metrics are widely recognized as a standard for measuring DevOps and engineering effectiveness, helping organizations focus on both speed and stability.
 
-You'll learn more about [DORA metrics](/solutions/engineering-360/dora-metrics) later in this solution.
+You'll learn more about [DORA metrics](/solutions/engineering-360/measure-dora-metrics) later in this solution.
 
 ### Optimize delivery
 
