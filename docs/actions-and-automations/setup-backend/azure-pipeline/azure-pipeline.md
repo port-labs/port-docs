@@ -62,7 +62,6 @@ When using this backend, you need to provide the following:
 - **ADO organization name** - can be found in your URL: `https://dev.azure.com/{AZURE-DEVOPS-ORG}`.
 - **Webhook name** - the name you gave to the webhook resource in the Azure yaml pipeline file.
 
-## Advanced configuration
 
 ### Trigger pipelines in non-default branches
 
