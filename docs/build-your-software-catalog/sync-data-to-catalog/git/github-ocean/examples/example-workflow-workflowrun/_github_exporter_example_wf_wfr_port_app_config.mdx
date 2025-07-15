@@ -3,6 +3,7 @@
 <summary> Port port-app-config.yml </summary>
 
 ```yaml showLineNumbers
+repositoryType: 'all'
 resources:
   - kind: repository
     selector:
@@ -23,7 +24,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".repo + (.id|tostring)"
+          identifier: ".__repository + (.id|tostring)"
           title: ".name"
           blueprint: '"githubWorkflow"'
           properties:
@@ -33,7 +34,7 @@ resources:
             updatedAt: ".updated_at"
             link: ".html_url"
           relations:
-            repository: ".repo"
+            repository: ".__repository"
   - kind: workflow-run
     selector:
       query: ".status != 'completed'" # JQ boolean query. If evaluated to false - skip syncing the object.
