@@ -10,6 +10,10 @@ import GitHubResources from '../\_github_exporter_supported_resources.mdx'
 import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
+import DependabotAlertBlueprint from './example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
+import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
+import PortRepositoryDependabotAlertMappingAppConfig from './example-repository-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
+
 
 # Resource mapping examples
 
@@ -61,6 +65,18 @@ The following example demonstrates ingestion of dependencies from a `package.jso
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/#ingest-files-from-your-repositories).
 
+
+## Map repositories, Dependabot Alerts, and Code scan alerts
+
+The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<DependabotAlertBlueprint/>
+
+<CodeScanAlertBlueprint/>
+
+<PortRepositoryDependabotAlertMappingAppConfig/>
 
 
 ## Map supported resources
