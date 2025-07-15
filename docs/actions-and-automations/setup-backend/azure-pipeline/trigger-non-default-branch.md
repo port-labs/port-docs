@@ -6,7 +6,7 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Trigger Azure DevOps pipelines in non-default branch
+# Trigger pipelines in non-default branch
 
 By default, Azure DevOps pipelines triggered through Port self-service actions run from the repository's default branch (typically `main` or `master`).   
 We will demonstrate how to configure your action to trigger pipelines from a specific non-default branch.
