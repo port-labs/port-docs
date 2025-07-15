@@ -18,6 +18,7 @@ If it is not provided, the integration will continue to function correctly. In s
 :::
 
 <OceanSaasLiveEventsDescription id="GithubOcean" />
+OCEAN_BASE_URL configures how an external service can reach the integration, it could be the IP address of the host where the integration is deployed or a domain name configured to proxy requests to the host (e.g https://mygithubintegration.com). The URL needs to be accessible from the internet. #Ai! improve this, I'm targetting succint and comprehensible, easy to digest
 <details>
   <summary><b>Supported live event triggers</b></summary>
     <OceanSaasLiveEventsTriggersManual id="GithubOcean" isOAuth={false} />
@@ -152,6 +153,11 @@ integration:
     githubOrganization: <GITHUB_ORGANIZATION> # your github organization, e.g port-labs
   secrets:
     githubToken: <GITHUB_TOKEN>
+
+# uncomment to enable live events
+# extraEnv:
+#  - name: "OCEAN__BASE_URL"
+#    value: "https://<your-domain>"
 ```
 
 <br/>
