@@ -65,7 +65,7 @@ When using this backend, you need to provide the following:
 
 ### Trigger pipelines in non-default branches
 
-By default, Azure DevOps pipelines triggered through Port run from the repository's default branch. If you need to trigger pipelines from a specific branch or allow users to select which branch to run from, see our guide on [triggering pipelines in non-default branches](./trigger-non-default-branch).
+By default, Azure DevOps pipelines triggered through Port run from the repository's default branch. If you need to trigger pipelines from a specific branch or allow users to select which branch to run from, see the [triggering pipelines in non-default branches](./trigger-non-default-branch) page.
 
 ## Examples
 
