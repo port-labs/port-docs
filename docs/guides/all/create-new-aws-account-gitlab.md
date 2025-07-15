@@ -1,31 +1,206 @@
 ---
 displayed_sidebar: null
-description: Learn how to create a new AWS account for GitLab in Port, ensuring seamless integration and cloud management.
+description: Learn how to automate AWS account creation through Port using GitLab CI/CD, enabling streamlined cloud infrastructure provisioning with self-service actions.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Automate AWS Account Creation with GitLab
 
-This guide provides a step-by-step process to automate the creation of a new AWS account and associated resources using GitLab and Port.
+## Overview
+This guide demonstrates how to implement a self-service action in Port to automates the creation of new AWS accounts and associated resources using GitLab CI/CD and Terraform.
 
-:::info Prerequisites
+
+## Common use cases
+
+- **Multi-account strategy**: Enable teams to quickly spin up dedicated AWS accounts for different projects or environments.
+- **Development environments**: Provide developers with isolated AWS accounts for testing and development.
+- **Client onboarding**: Streamline the process of creating dedicated AWS accounts for new clients or business units.
+- **Compliance and security**: Maintain standardized account configurations with proper IAM roles and policies.
+- **Cost management**: Enable better cost tracking and resource isolation through dedicated accounts.
+
+## Prerequisites
+
 This guide assumes you have:
-- A Port account and that you have completed the [onboarding process](/getting-started/overview).
+- Complete the [onboarding process](/getting-started/overview).
 - A GitLab account with a repository set up for CI/CD.
-:::
+- AWS Organizations access with permissions to create new accounts.
+- AWS IAM permissions for Terraform operations.
+- Port's [AWS integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) is installed in your account.
+- Port Client ID and Client Secret ([learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)).
 
-<br/>
 
-## Step 1: Copy Configuration Files
+## Set up data model
 
-First, copy the following files into your GitLab repository:
+We'll create a blueprint to represent AWS accounts in your Port catalog.
 
-`.gitlab-ci.yml`
+### Create the AWS Account blueprint
+
+1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Click on `+ Blueprint`.
+
+3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
+
+4. Add this JSON schema:
+
+    <details>
+    <summary><b>AWS Account blueprint (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "awsAccountBlueprint",
+      "description": "This blueprint represents an AWS account in our software catalog.",
+      "title": "AWS account",
+      "icon": "AWS",
+      "schema": {
+        "properties": {
+          "role_name": {
+            "type": "string",
+            "title": "Role Name",
+            "description": "The name of the IAM role."
+          },
+          "account_name": {
+            "type": "string",
+            "title": "Account Name",
+            "description": "The name for the account."
+          },
+          "email": {
+            "type": "string",
+            "title": "Email",
+            "description": "The email for the account."
+          }
+        },
+        "required": [
+          "email",
+          "account_name"
+        ]
+      },
+      "relations": {}
+    }
+    ```
+
+    </details>
+
+5. Click `Save` to create the blueprint.
+
+## Implementation
+
+### Add GitLab secrets
+
+In your GitLab project, go to **Settings > CI/CD > Variables** and add the following variables:
+
+- `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+- `TF_USER_AWS_KEY` - AWS Access Key ID with Organizations permissions.
+- `TF_USER_AWS_SECRET` - AWS Secret Access Key.
+- `TF_USER_AWS_REGION` - AWS region for resource creation (e.g., `us-east-1`).
+
+### Set up Terraform configuration
+
+Create the following Terraform files in your GitLab repository to define the AWS account creation infrastructure.
+
+<h4> Main Terraform configuration</h4>
+
+Create `main.tf`:
+
 <details>
-<summary><b>Click to expand</b></summary>
+<summary><b>Terraform main configuration (Click to expand)</b></summary>
 
-```yaml
+```hcl showLineNumbers
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.region
+}
+
+resource "aws_organizations_account" "account" {
+  name      = var.name
+  email     = var.email
+  role_name = var.role_name
+  close_on_deletion = true
+  
+  lifecycle {
+    ignore_changes = [role_name]
+  }
+}
+```
+
+</details>
+
+<h4> Create Terraform variables</h4>
+
+Create `variables.tf`:
+
+<details>
+<summary><b>Terraform variables configuration (Click to expand)</b></summary>
+
+```hcl showLineNumbers
+variable "region" {
+  description = "AWS region where resources will be created"
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "name" {
+  description = "Name of the AWS account to be created"
+  type        = string
+  default     = "newAccount"
+}
+
+variable "email" {
+  description = "Email to attach to the AWS account"
+  type        = string
+  default     = "example@example.com"
+}
+
+variable "role_name" {
+  description = "Name of the IAM role to attach"
+  type        = string
+  default     = "IAMRole"
+}
+```
+
+</details>
+
+<h4>Create Terraform outputs</h4>
+
+Create `outputs.tf`:
+
+<details>
+<summary><b>Terraform outputs configuration (Click to expand)</b></summary>
+
+```hcl showLineNumbers
+output "account_name" {
+  value = aws_organizations_account.account.name
+}
+
+output "email" {
+  value = aws_organizations_account.account.email
+}
+
+output "role_name" {
+  value = aws_organizations_account.account.role_name
+}
+```
+
+</details>
+
+### Add GitLab pipeline
+
+Create `.gitlab-ci.yml` in your repository:
+
+<details>
+<summary><b>GitLab CI/CD pipeline (Click to expand)</b></summary>
+
+```yaml showLineNumbers
 stages:
   - prerequisites
   - terraform
@@ -63,7 +238,7 @@ fetch-port-access-token:
         -H 'Content-Type: application/json' \
         -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
         -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
-  
+    
       echo "ACCESS_TOKEN=$accessToken" >> data.env
       cat $TRIGGER_PAYLOAD 
       runId=$(cat $TRIGGER_PAYLOAD | jq -r '.RUN_ID')
@@ -126,222 +301,124 @@ send-data-to-port:
 ```
 
 </details>
-`main.tf`
-<details>
-<summary><b>Click to expand</b></summary>
 
-```hcl
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
-}
-provider "aws" {
-  region = var.region
-}
-resource "aws_organizations_account" "account" {
-  name  = var.name
-  email = var.email
-  role_name = var.role_name
-  close_on_deletion = true
-  lifecycle {
-    ignore_changes = [role_name]
-  }
-}
-```
+### Configure GitLab webhook
 
-</details>
-`variables.tf`
-<details>
-<summary><b>Click to expand</b></summary>
+1. In your GitLab project, go to **Settings > CI/CD > Pipeline trigger tokens**.
 
-```hcl
-variable "region" {
-  description = "AWS region where resources will be created"
-  type        = string
-  default     = "us-east-1"
-}
-variable "name" {
-  description = "Name of the AWS account to be created"
-  type        = string
-  default     = "newAccount"
-}
-variable "email" {
-  description = "Email to attach to the AWS account"
-  type        = string
-  default     = "example@example.com"
-}
-variable "role_name" {
-  description = "Name of the IAM role to attach"
-  type        = string
-  default     = "IAMRole"
-}
-```
+2. Click **Add trigger token** to create a new token.
 
-</details>
-`outputs.tf`
-<details>
-<summary><b>Click to expand</b></summary>
+3. Copy the webhook URL from the **Use webhook** section under **View trigger token usage examples**.
 
-```hcl
-output "account_name" {
-  value = aws_organizations_account.account.name
-}
-output "email" {
-  value = aws_organizations_account.account.email
-}
-output "role_name" {
-  value = aws_organizations_account.account.role_name
-}
-```
+4. Keep this URL for the next step - you'll need it for the Port self-service action.
 
-</details>
+### Set up self-service action
 
-These files contain the necessary Terraform and GitLab CI configurations to automate AWS account creation.
+Now we'll create a self-service action that triggers the AWS account creation workflow.
 
-## Step 2: Configure GitLab Secrets
+1. Head to the [self-service](https://app.getport.io/self-serve) page.
 
-In GitLab, navigate to your project's **Settings** > **CI / CD** > **Variables** and add the required secrets.
+2. Click on the `+ New Action` button.
 
-- PORT_CLIENT_ID
-- PORT_CLIENT_SECRET
-- TF_USER_AWS_KEY
-- TF_USER_AWS_REGION
-- TF_USER_AWS_SECRET 
+3. Click on the `{...} Edit JSON` button.
 
-These secrets are necessary for the Terraform scripts to execute correctly.
+4. Copy and paste the following JSON configuration into the editor.
 
-## Step 3: Configure GitLab Webhook
+    :::tip GitLab webhook configuration
+    Make sure to replace `WEBHOOK-URL-FROM-GITLAB` with the actual webhook URL you obtained from GitLab in the previous step.
+    :::
 
-In GitLab, navigate to your project's **Settings** > **CI / CD** > **Pipeline trigger tokens** and add new token. Then in **View trigger token usage examples** you can find the Webhook URL address ander **Use webhook** 
+    <details>
+    <summary><b>Create AWS Account action (Click to expand)</b></summary>
 
-This URL is necessary for triggering the Pipeline from the Self Service Action.
-
-## Step 4: Add AWS Account Blueprint in Port
-
-Next, create a new blueprint in Port using the `aws_account.json` file. This blueprint represents an AWS account in your software catalog.
-
-### Example Blueprint: `aws_account.json`
-
-<details>
-<summary><b>Click to expand</b></summary>
-
-```json
-{
-  "identifier": "awsAccountBlueprint",
-  "description": "This blueprint represents an AWS account in our software catalog.",
-  "title": "AWS account",
-  "icon": "AWS",
-  "schema": {
-    "properties": {
-      "role_name": {
-        "type": "string",
-        "title": "Role Name",
-        "description": "The name of the IAM role."
-      },
-      "account_name": {
-        "type": "string",
-        "title": "Account Name",
-        "description": "The name for the account."
-      },
-      "email": {
-        "type": "string",
-        "title": "Email",
-        "description": "The email for the account."
-      }
-    },
-    "required": [
-      "email",
-      "account_name"
-    ]
-  },
-  "relations": {}
-}
-```
-
-</details>
-
-## Step 5: Create Self-Service Action in Port
-
-Create a new self-service action using the `self-service-action.json` file. This action will trigger the AWS account creation process.
-
-### Example Self-Service Action: `self-service-action.json`
-
-<details>
-<summary><b>Click to expand</b></summary>
-:::info Prerequisites
-Make sure to change 'WEBHOOK-URL-FROM-GITLAB' into your webhook URL from gitlab.
-:::
-
-```json
-{
-  "identifier": "gitlabAwsAccountBlueprint_create_an_aws_account",
-  "title": "Create An AWS Account with GitLab",
-  "icon": "AWS",
-  "description": "Automate the creation of a new AWS account and associated resources.",
-  "trigger": {
-    "type": "self-service",
-    "operation": "CREATE",
-    "userInputs": {
-      "properties": {
-        "account_name": {
-          "icon": "AWS",
-          "title": "Account Name",
-          "description": "The desired name for the new AWS account",
-          "type": "string"
+    ```json showLineNumbers
+    {
+      "identifier": "gitlabAwsAccountBlueprint_create_an_aws_account",
+      "title": "Create An AWS Account with GitLab",
+      "icon": "AWS",
+      "description": "Automate the creation of a new AWS account and associated resources.",
+      "trigger": {
+        "type": "self-service",
+        "operation": "CREATE",
+        "userInputs": {
+          "properties": {
+            "account_name": {
+              "icon": "AWS",
+              "title": "Account Name",
+              "description": "The desired name for the new AWS account",
+              "type": "string"
+            },
+            "email": {
+              "icon": "DefaultProperty",
+              "title": "Email",
+              "description": "The email address associated with the new AWS account",
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+            },
+            "iam_role_name": {
+              "title": "IAM Role Name",
+              "description": "The name of the IAM role to be created for management purposes",
+              "type": "string"
+            }
+          },
+          "required": [
+            "account_name",
+            "email"
+          ],
+          "order": [
+            "account_name",
+            "email",
+            "iam_role_name"
+          ]
         },
-        "email": {
-          "icon": "DefaultProperty",
-          "title": "Email",
-          "description": "The email address associated with the new AWS account",
-          "type": "string",
-          "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        "blueprintIdentifier": "awsAccountBlueprint"
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "WEBHOOK-URL-FROM-GITLAB",
+        "method": "POST",
+        "headers": {
+          "RUN_ID": "{{ .run.id }}"
         },
-        "iam_role_name": {
-          "title": "IAM Role Name",
-          "description": "The name of the IAM role to be created for management purposes",
-          "type": "string"
+        "body": {
+          "RUN_ID": "{{ .run.id }}",
+          "account_name": "{{ .inputs.\"account_name\" }}",
+          "email": "{{ .inputs.\"email\" }}",
+          "iam_role_name": "{{ .inputs.\"iam_role_name\" }}"
         }
       },
-      "required": [
-        "account_name",
-        "email"
-      ],
-      "order": [
-        "account_name",
-        "email",
-        "iam_role_name"
-      ]
-    },
-    "blueprintIdentifier": "awsAccountBlueprint"
-  },
-  "invocationMethod": {
-    "type": "WEBHOOK",
-    "url": "WEBHOOK-URL-FROM-GITLAB",
-    "method": "POST",
-    "headers": {
-      "RUN_ID": "{{ .run.id }}"
-    },
-    "body": {
-      "RUN_ID": "{{ .run.id }}",
-      "account_name": "{{ .inputs."account_name" }}",
-      "email": "{{ .inputs."email" }}",
-      "iam_role_name": "{{ .inputs."iam_role_name" }}"
+      "requiredApproval": false
     }
-  },
-  "requiredApproval": false
-  
-}
-```
+    ```
 
-</details>
+    </details>
 
-## Include the Run ID
+5. Click `Save`.
 
-Ensure that you include the RUN_ID in the body of the webhook, as illustrated in the example above. This ID is crucial for tracking the execution of the self-service action.
+Now you should see the `Create An AWS Account with GitLab` action in the self-service page. 🎉
+
+## Let's test it!
+
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
+
+2. Click on the `Create An AWS Account with GitLab` action
+
+3. Fill in the account details:
+   - **Account Name**: Enter a descriptive name for your new AWS account.
+   - **Email**: Provide a unique email address (must be different from existing AWS accounts).
+   - **IAM Role Name**: Specify the name for the IAM role (optional).
+
+4. Click on `Execute`
+
+5. Monitor the process:
+   - Watch the GitLab pipeline execution through the provided link.
+   - Check the logs in Port for real-time updates.
+   - Verify Terraform operations in the GitLab CI/CD pipeline.
+
+6. Verify completion:
+   - Check that a new AWS account entity appears in your Port catalog.
+   - Verify the account was created in your AWS Organizations console.
+   - Confirm all properties are correctly populated in the Port entity.
 
 ## Conclusion
 

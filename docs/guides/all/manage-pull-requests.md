@@ -5,104 +5,227 @@ description: Learn how to effectively manage pull requests in Port, streamlining
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
+import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 
 # Manage GitHub Pull Requests
 
-In this guide, we are going to create a self-service action in Port that executes a GitHub workflow to manage GitHub Pull Requests. This action can be used to:
+This guide will demonstrate how to create a self-service action in Port that executes a GitHub workflow to manage GitHub Pull Requests directly from your Port catalog. You'll be able to streamline your code review process by performing common PR operations without leaving Port.
 
-- Close a Pull Request
-- Merge a Pull Request
-- Approve a Pull Request
+Once implemented, you'll be able to:
+- Close pull requests with a single click
+- Merge approved pull requests efficiently  
+- Approve pull requests as part of your review workflow
+- Track PR operations and their results within Port
 
 ## Prerequisites
+- Complete the [onboarding process](/getting-started/overview).
+- [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed in your GitHub organization.
 
-1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new). This will create the `Repository` and `Pull Request` blueprints then ingest your GitHub repositories and pull requests into Port.
-3. A repository to contain your action resources i.e. the github workflow file.
+## Set up data model
 
+If you haven't installed the GitHub integration, you'll need to create a blueprint for GitHub pull requests and repositories.
+However, we highly recommend you install the GitHub integration to have these automatically set up for you.
 
-## Guide
+<h3> Create the GitHub repository blueprint </h3>
 
-Follow these steps to get started:
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 
-1. Create the following GitHub Action secrets:
-   - Create the following Port credentials:
-     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
-     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
-   - `GH_TOKEN` - a [Classic Personal Access Token](https://github.com/settings/tokens) with the following scopes: `repo` and `delete_repo`
+2. Click on `+ Blueprint`.
 
-<br />
-2. Create a Port action against the `Pull Request` blueprint in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
 
-<details>
+4. Add this JSON schema:
 
-  <summary>Port Action: Manage GitHub Pull Requests</summary>
-   :::tip Replace the variables
-- `<GITHUB-ORG>` - your GitHub organization or user name.
-- `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
+    <details>
+    <summary><b>GitHub repository blueprint (click to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "service_manage_a_pr",
-  "title": "Manage a GitHub PR",
-  "icon": "Github",
-  "description": "Manage a GitHub pull request",
-  "trigger": {
-    "type": "self-service",
-    "operation": "DAY-2",
-    "userInputs": {
-      "properties": {
-        "action": {
-          "title": "Action",
-          "description": "What action to take",
-          "icon": "Git",
-          "type": "string",
-          "enum": [
-            "close",
-            "merge",
-            "approve"
-          ],
-          "enumColors": {
-            "close": "lightGray",
-            "merge": "lightGray"
+    ```json showLineNumbers
+    {
+      "identifier": "githubRepository",
+      "title": "Repository",
+      "icon": "Github",
+      "ownership": {
+        "type": "Direct"
+      },
+      "schema": {
+        "properties": {
+          "readme": {
+            "title": "README",
+            "type": "string",
+            "format": "markdown"
+          },
+          "url": {
+            "icon": "DefaultProperty",
+            "title": "Repository URL",
+            "type": "string",
+            "format": "url"
+          },
+          "defaultBranch": {
+            "title": "Default branch",
+            "type": "string"
+          },
+          "last_contributor": {
+            "title": "Last contributor",
+            "icon": "TwoUsers",
+            "type": "string",
+            "format": "user"
+          },
+          "last_push": {
+            "icon": "GitPullRequest",
+            "title": "Last push",
+            "description": "Last commit to the main branch",
+            "type": "string",
+            "format": "date-time"
+          },
+          "require_code_owner_review": {
+            "title": "Require code owner review",
+            "type": "boolean",
+            "icon": "DefaultProperty",
+            "description": "Requires review from code owners before a pull request can be merged"
+          },
+          "require_approval_count": {
+            "title": "Require approvals",
+            "type": "number",
+            "icon": "DefaultProperty",
+            "description": "The number of approvals required before merging a pull request"
           }
+        },
+        "required": []
+      },
+      "mirrorProperties": {
+        "snyk_target_id": {
+          "title": "snyk_target_id",
+          "path": "snyk_target.$identifier"
         }
       },
-      "required": [
-        "action"
-      ],
-      "order": []
-    },
-    "blueprintIdentifier": "githubPullRequest"
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
-    "workflow": "manage-pr.yml",
-    "workflowInputs": {
-      "action": "{{.inputs.\"action\"}}",
-      "port_context": {
-        "entity": "{{.entity}}",
-        "blueprint": "{{.action.blueprint}}",
-        "runId": "{{.run.id}}",
-        "trigger": "{{.trigger}}"
-      }
-    },
-    "reportWorkflowStatus": true
-  },
-  "requiredApproval": false
-}
-```
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
 
-</details>
-<br />
+    </details>
 
-3. Create a workflow file under `.github/workflows/manage-pr.yml` with the following content:
+5. Click on the `Save` button.
+
+
+<h3> Create the GitHub pull request blueprint </h3>
+
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+
+2. Click on `+ Blueprint`.
+
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+
+4. Add this JSON schema:
+
+    <details>
+    <summary><b>GitHub pull request blueprint (click to expand)</b></summary>
+
+    ```json showLineNumbers
+        {
+          "identifier": "githubPullRequest",
+          "title": "Pull Request",
+          "icon": "Github",
+          "schema": {
+            "properties": {
+              "creator": {
+                "title": "Creator",
+                "type": "string"
+              },
+              "assignees": {
+                "title": "Assignees",
+                "type": "array"
+              },
+              "reviewers": {
+                "title": "Reviewers",
+                "type": "array"
+              },
+              "status": {
+                "title": "Status",
+                "type": "string",
+                "enum": ["merged", "open", "closed"],
+                "enumColors": {
+                  "merged": "purple",
+                  "open": "green",
+                  "closed": "red"
+                }
+              },
+              "closedAt": {
+                "title": "Closed At",
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "title": "Updated At",
+                "type": "string",
+                "format": "date-time"
+              },
+              "mergedAt": {
+                "title": "Merged At",
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdAt": {
+                "title": "Created At",
+                "type": "string",
+                "format": "date-time"
+              },
+              "link": {
+                "format": "url",
+                "type": "string"
+              },
+              "leadTimeHours": {
+                "title": "Lead Time in hours",
+                "type": "number"
+              }
+            },
+            "required": []
+          },
+          "mirrorProperties": {},
+          "calculationProperties": {
+            "days_old": {
+              "title": "Days Old",
+              "icon": "DefaultProperty",
+              "calculation": "(now / 86400) - (.properties.createdAt | capture(\"(?<date>\\\\d{4}-\\\\d{2}-\\\\d{2})\") | .date | strptime(\"%Y-%m-%d\") | mktime / 86400) | floor",
+              "type": "number"
+            }
+          },
+          "relations": {
+            "repository": {
+              "title": "Repository",
+              "target": "githubRepository",
+              "required": false,
+              "many": false
+            }
+          }
+        }
+     ``` 
+
+    </details>
+
+5. Click on the `Save` button.
+
+
+
+
+## Implentation
+
+### Add GitHub secrets
+
+In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+- `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+- `GH_TOKEN` - a [Classic Personal Access Token](https://github.com/settings/tokens) with the following scopes: `repo` and `delete_repo`.
+
+### Create GitHub workflow
+
+Create a workflow file under `.github/workflows/manage-pr.yml` with the following content:
 
 <details>
 
-<summary>GitHub workflow script</summary>
+<summary><b>GitHub workflow (click to expand) </b></summary>
 
 ```yaml showLineNumbers title="manage-pr.yml"
 name: Manage Pull Request
@@ -213,20 +336,105 @@ jobs:
 ```
 
 </details>
-<br />
-4. Trigger the action from the [self-service](https://app.getport.io/self-serve) page or the context menu of a Pull Request entity.
 
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/prMenu.png' width='100%' border='1px' />
+:::tip Customize your workflow
+You can customize this workflow to include additional PR management operations or integrate with other tools in your development workflow. Refer to the [GitHub API documentation](https://docs.github.com/en/rest/pulls) for more available operations.
+:::
 
-<br />
-<br />
+### Set up the self-service action
 
-5. Choose an action to complete and execute the workflow.
+1. Go to the [Self-service](https://app.getport.io/self-serve) page of your portal.
+
+2. Click on the `+ New Action` button.
+
+3. Click on the `{...} Edit JSON` button.
+
+4. Copy and paste the following JSON configuration into the editor: 
+
+    <details>
+    <summary><b>Manage GitHub Pull Requests Action (click to expand)</b></summary>
+
+    <GithubActionModificationHint/>
+
+    :::tip Replace the variables
+    - `<GITHUB-ORG>` - your GitHub organization or user name
+    - `<GITHUB-REPO-NAME>` - your GitHub repository name
+    :::
+
+    ```json showLineNumbers
+    {
+      "identifier": "service_manage_a_pr",
+      "title": "Manage a GitHub PR",
+      "icon": "Github",
+      "description": "Manage a GitHub pull request",
+      "trigger": {
+        "type": "self-service",
+        "operation": "DAY-2",
+        "userInputs": {
+          "properties": {
+            "action": {
+              "title": "Action",
+              "description": "What action to take",
+              "icon": "Git",
+              "type": "string",
+              "enum": [
+                "close",
+                "merge",
+                "approve"
+              ],
+              "enumColors": {
+                "close": "lightGray",
+                "merge": "lightGray"
+              }
+            }
+          },
+          "required": [
+            "action"
+          ],
+          "order": []
+        },
+        "blueprintIdentifier": "githubPullRequest"
+      },
+      "invocationMethod": {
+        "type": "GITHUB",
+        "org": "<GITHUB-ORG>",
+        "repo": "<GITHUB-REPO-NAME>",
+        "workflow": "manage-pr.yml",
+        "workflowInputs": {
+          "action": "{{.inputs.\"action\"}}",
+          "port_context": {
+            "entity": "{{.entity}}",
+            "blueprint": "{{.action.blueprint}}",
+            "runId": "{{.run.id}}",
+            "trigger": "{{.trigger}}"
+          }
+        },
+        "reportWorkflowStatus": true
+      },
+      "requiredApproval": false
+    }
+    ```
+
+    </details>
+
+5. Click on the `Save` button.
+
+Now you should see the `Manage a GitHub PR` action in the self-service page.
+
+## Let's test it!
+
+1. Go to the [self-service hub](https://app.getport.io/self-serve) in Port.
+
+2. Click the **Manage a GitHub PR** action.
+
+3. Select a pull request from your catalog.
+
+4. Choose the action you want to perform (close, merge, or approve).
+
+5. Click Execute.
 
 
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/prForm.png' width='85%' border='1px' />
+Congrats 🎉 You can now manage GitHub Pull Requests directly from Port with `close`, `merge`, and `approve` actions! 🔥
 
-<br />
-<br />
 
-Done! 🎉 You can now manage a GitHub Pull Request with `close`, `merge` and `approve` actions.
+
