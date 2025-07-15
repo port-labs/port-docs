@@ -1,0 +1,111 @@
+<details>
+<summary>Branch blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "branch_protection",
+  "title": "Branch",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "require_approval_count": {
+        "title": "Require approvals",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "The number of approvals required before merging a pull request"
+      },
+      "is_protected": {
+        "title": "Is branch protected",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Indicates whether certain rules must be met before changes can be merged"
+
+      },
+      "require_code_owner_review": {
+        "title": "Require code owner review",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Requires review from code owners before a pull request can be merged"
+
+      },
+      "allow_deletions": {
+        "title": "Allow deletions",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Allows users with bypass permissions to delete matching references in the branch"
+
+      },
+      "allow_force_pushes": {
+        "title": "Allow force pushes",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Permits users with push access to force push changes to the branch"
+
+      },
+      "url": {
+        "title": "Branch url",
+        "type": "string",
+        "format": "url",
+        "description": "URL of the branch in the repository"
+      },
+      "require_signed_commits": {
+        "title": "Require signed commits",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Ensures that commits pushed to the branch are signed"
+      },
+      "require_linear_history": {
+        "title": "Require linear history",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Enforces a linear history in the branch by preventing merge commits"
+      },
+      "restrict_creations": {
+        "title": "Restrict creations",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Restricts the creation of matching references in the branch, allowing only users with bypass permissions"
+      },
+      "restrict_updates": {
+        "title": "Restrict updates",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Prevents updates to matching references in the branch, limiting changes to users with bypass permissions"
+      },
+      "require_conversation_resolution": {
+        "title": "Require conversation resolution",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Ensures that all comments and conversations are resolved before merging a pull request"
+      },
+      "lock_branch": {
+        "title": "Lock branch",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Locks the branch, preventing any changes from being made unless explicitly unlocked"
+
+      },
+      "block_force_pushes": {
+        "title": "Block force pushes",
+        "type": "boolean",
+        "icon": "DefaultProperty",
+        "description": "Prevent users with push access from force pushing to refs"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "Repository",
+      "target": "githubRepository",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
