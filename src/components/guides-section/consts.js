@@ -1325,5 +1325,12 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/pull-github-metrics-and-build-visualizations",
     },
+    {
+        title: "Visualize and manage your GitHub deployments",
+        description: "Create a dashboard that visualizes and manages your GitHub deployments",
+        tags: ["SDLC", "GitHub", "Actions", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-and-manage-github-deployments",
+    },
     
 ]
