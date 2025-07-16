@@ -333,7 +333,7 @@ To add a secret to your portal:
 
 ### Trigger a new workflow run
 
-1. Go to the [Self-service](https://app.getport.io/self-serve) page of your portal.
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
 2. Click on the `+ New Action` button.
 3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration into the editor.
