@@ -602,6 +602,7 @@ In the new dashboard, create the following widgets:
 3. Choose the **GitHub Workflow Run** blueprint.
 4. Under `Breakdown by property`, select the **Conclusion** property
 5. Add this JSON to the **Additional filters** editor to filter deployments:
+
     ```json showLineNumbers
     {
       "combinator": "or",
