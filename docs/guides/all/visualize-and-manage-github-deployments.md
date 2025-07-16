@@ -115,7 +115,7 @@ The `GitHub Workflow` and `GitHub Workflow Run` blueprints are not created autom
 3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
 4. Add this JSON schema:
     <details>
-    <summary><b>GitHub Workflow Run blueprint (Click to expand)</b></summary>
+    <summary><b>GitHub workflow run blueprint (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
