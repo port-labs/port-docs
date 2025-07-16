@@ -233,7 +233,7 @@ The `GitHub Workflow` and `GitHub Workflow Run` blueprints are not created autom
 
 ### Update the integration mapping
 
-1. Go to the [Data Sources](https://app.getport.io/settings/data-sources) page of your portal.
+1. Go to the [data Sources](https://app.getport.io/settings/data-sources) page of your portal.
 2. Select the GitHub integration.
 3. Add the following YAML block into the editor to ingest workflows and workflow runs from your GitHub account:
 
