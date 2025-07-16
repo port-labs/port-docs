@@ -407,7 +407,7 @@ To add a secret to your portal:
 
 5. Click `Save`.
 
-Now you should see the `Trigger Workflow Run` action in the self-service page. 🎉
+Now you should see the `Trigger workflow run` action in the self-service page. 🎉
 
 
 ### Re-run workflow runs
