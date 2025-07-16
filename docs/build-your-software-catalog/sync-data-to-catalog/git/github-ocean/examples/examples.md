@@ -43,7 +43,6 @@ The `repositoryType` parameter filters which repositories are ingested. It corre
 *   `private`: Private repositories.
 *   `forks`: Only forked repositories.
 *   `sources`: Only non-forked repositories.
-*   `member`: Repositories where the user is a member.
 </details>
 
 :::
