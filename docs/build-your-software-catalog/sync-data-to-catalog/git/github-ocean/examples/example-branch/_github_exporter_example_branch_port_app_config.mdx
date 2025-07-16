@@ -23,13 +23,13 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__repository + "_" + .branch.name
-          title: .__repository + " " + .branch.name
+          identifier: .__repository + "_" + .name
+          title: .__repository + " " + .name
           blueprint: '"githubBranch"'
           properties:
-            is_protected: .branch.protected
-            commit_sha: .branch.commit.sha
-            commit_url: .branch.commit.url
+            is_protected: .protected
+            commit_sha: .commit.sha
+            commit_url: .commit.url
           relations:
             repository: .__repository
 ```
