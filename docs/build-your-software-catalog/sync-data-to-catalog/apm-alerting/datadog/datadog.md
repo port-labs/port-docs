@@ -25,19 +25,6 @@ This integration allows you to:
 - Map and organize your desired Datadog resources and their metadata in Port (see supported resources below).
 - Watch for Datadog object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
-## BaseUrl & Webhook Configuration
-
-:::warning AppHost deprecation
-**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
-:::
-
-The `baseUrl` parameter enables real-time updates from Datadog to Port. If not provided:
-- The integration will still function normally
-- You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
-- Manual resyncs can be triggered via Port's UI
-
-The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
-
 ### Supported Resources
 
 - [`Monitor`](https://docs.datadoghq.com/api/latest/monitors/#get-all-monitor-details)
@@ -80,7 +67,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="datadog" />
+<OceanRealtimeInstallation integration="datadog" webhookSecret="integration.secrets.webhookSecret"/>
 
 <PortApiRegionTip/>
 
@@ -186,7 +173,7 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.datadogApplicationKey` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)                                                                                                                                                            |                                  | ✅        |
 | `integration.config.datadogBaseUrl`         | The base Datadog host. Defaults to https://api.datadoghq.com. If in EU, use https://api.datadoghq.eu                                                                                                                                                                                           |                                  | ✅        |
 | `integration.secrets.webhookSecret`   | Webhook secret for authenticating incoming events. [Learn more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                                                                                                                                                                                   |                                  | ❌        |
-| `baseUrl`                | The base url of the instance where the Datadog integration is hosted, used for real-time updates. (e.g.`https://mydatadogeoceanintegration.com`)                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
+| `liveEvents.baseUrl`               | The base url of the instance where the Datadog integration is hosted, used for real-time updates. (e.g.`https://mydatadogeoceanintegration.com`)                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
 | `integration.config.appHost`(deprecated)                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                                                                                                                                                                          | https://my-ocean-integration.com | ❌         |
 | `integration.eventListener.type`            | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
 | `integration.type`                          | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |

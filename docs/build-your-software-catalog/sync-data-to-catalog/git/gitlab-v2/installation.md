@@ -65,14 +65,6 @@ The following scopes are required based on your usage.
 - If you're **not using realtime updates**, the token needs `read_api` and `read_repository` scopes.
 :::
 
-### Configure Realtime webhook events
-
-:::tip
-The `baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
-
-If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
-:::
-
  
 ## Deploy the integration
 
@@ -204,7 +196,6 @@ This table summarizes the available parameters for the installation.
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
 | `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
-| `baseUrl`                        | The base url of the instance where the GitLab integration is hosted, used for real-time updates. (e.g.`https://mygitlaboceanintegration.com`)                 | ❌        |
 
 <br/>
 
