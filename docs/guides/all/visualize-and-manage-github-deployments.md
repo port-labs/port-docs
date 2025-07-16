@@ -472,7 +472,7 @@ Now you should see the `Trigger Workflow Run` action in the self-service page. �
 
 5. Click `Save`.
 
-Now you should see the `Re-run Workflow Run` action in the self-service page. 🎉
+Now you should see the `Re-run workflow run` action in the self-service page. 🎉
 
 
 ### Cancel a running workflow run
