@@ -5,7 +5,8 @@ description: Learn how to monitor and manage your GitHub deployments using dashb
 
 # Visualize and manage your GitHub deployments
 
-This guide demonstrates how to bring your GitHub deployment experience into Port. You will learn how to:
+This guide demonstrates how to bring your GitHub deployment experience into Port.  
+You will learn how to:
 
 - Ingest GitHub workflow run data into Port's software catalog using **Port's GitHub** integration.
 - Set up **self-service actions** to manage deployments (trigger, retry, and cancel).
