@@ -196,6 +196,7 @@ This table summarizes the available parameters for the installation.
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
 | `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
+| `liveEvents.baseUrl`              | The base url of the instance where the Gitlab integration is hosted, used for real-time updates. (e.g.`https://mygitlabintegration.com`)                    | ❌        |
 
 <br/>
 
