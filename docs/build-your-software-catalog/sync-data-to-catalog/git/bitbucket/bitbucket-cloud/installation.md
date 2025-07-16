@@ -46,17 +46,6 @@ The token or app password should have `read` permission scope for each of the su
 
 We recommend using workspace tokens when possible, as they provide better security and are easier to manage than app passwords.
 
-### BaseUrl & listening to hooks
-
-:::tip
-The `baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
-
-If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
-:::
-
-In order for the Bitbucket Cloud integration to update the data in Port on every change in the Bitbucket Cloud workspace, you need to specify the `baseUrl` parameter.
-The `baseUrl` parameter should be set to the `url` of your Bitbucket Cloud integration instance. The `webhookSecret` parameter should also be set to a string of your choice so that the integration can verify the webhook requests.
-
 ## Deploy the integration
 
 Choose one of the following installation methods:
@@ -85,7 +74,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="Bitbucket Cloud" />
+<OceanRealtimeInstallation integration="Bitbucket Cloud" webhookSecret="integration.config.webhookSecret" />
 
 <PortApiRegionTip/>
 
@@ -142,7 +131,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-bitbucket-cloud-integration/values.yaml
@@ -196,7 +185,7 @@ This table summarizes the available parameters for the installation.
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
 | `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
-| `baseUrl`                        | The base url of the instance where the Bitbucket Cloud integration is hosted, used for real-time updates. (e.g.`https://mybitbucketcloudoceanintegration.com`)              | ❌        |
+| `liveEvents.baseUrl`                       | The base url of the instance where the Bitbucket Cloud integration is hosted, used for real-time updates. (e.g.`https://mybitbucketcloudoceanintegration.com`)              | ❌        |
 
 <br/>
 

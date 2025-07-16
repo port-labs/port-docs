@@ -10,3 +10,53 @@ To install the integration using Helm:
 3. A `helm` command will be displayed, with default values already filled out (e.g. your Port client ID, client secret, etc).  
 Copy the command, replace the placeholders with your values, then run it in your terminal to install the integration.
 
+
+### BaseUrl & webhook configuration
+
+:::warning AppHost deprecation
+**`integration.config.appHost` is deprecated**: Please use `liveEvents.baseUrl` for webhook URL settings instead.
+:::
+
+In order for the {props.integration} integration to update the data in Port on real-time changes in {props.integration}, you need to specify the `liveEvents.baseUrl` parameter.
+The `liveEvents.baseUrl` parameter should be set to the `url` of your {props.integration} integration instance. Your integration instance needs to have the option to setup webhooks via http requests/recieve http requests , so please configure your network accordingly.
+
+:::tip Debugging local integrations
+To test webhooks or live event delivery to your local environment, expose your local pod or service to the internet using ngrok:
+
+```bash
+ngrok http http://localhost:8000
+```
+
+This will provide a public URL you can use for webhook configuration and external callbacks during development.
+:::
+
+If `liveEvents.baseUrl` is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
+
+{props.webhookSecrets && (
+  <>
+    <h3>Securing Your Webhooks</h3>
+    <p>
+      The <code>{props.webhookSecrets}</code> parameters secure your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
+    </p>
+  </>
+)}
+
+{props.webhookSecret && (
+  <>
+    <h3>Securing Your Webhooks</h3>
+    <p>
+      The <code>{props.webhookSecret}</code> parameter secure your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
+    </p>
+  </>
+)}
+
+### Scalable Mode for Large Integrations
+
+If you are deploying the integration at scale and want to decouple the resync process from the live events process (recommended for large or high-throughput environments), you can enable scalable mode by adding the following flags to your Helm install command:
+
+```bash
+  --set workload.kind="CronJob"  \
+  --set workload.cron.resyncTimeoutMinutes=60  \
+  --set scheduledResyncInterval="'*/60 * * * *'"  \
+  --set liveEvents.worker.enabled=true
+```
