@@ -18,6 +18,19 @@ resources:
             readme: file://README.md
             url: .html_url
             defaultBranch: .default_branch
+  - kind: tag
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubTag"'
+          properties:
+            commit_sha: .commit.sha
+          relations:
+            repository: .__repository
   - kind: release
     selector:
       query: 'true'
@@ -33,19 +46,6 @@ resources:
             release_creation_time: .created_at
           relations:
             tag: .tag_name
-            repository: .__repository
-  - kind: tag
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .name
-          title: .name
-          blueprint: '"githubTag"'
-          properties:
-            commit_sha: .commit.sha
-          relations:
             repository: .__repository
 ```
 
