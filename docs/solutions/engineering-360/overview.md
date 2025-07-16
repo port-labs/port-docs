@@ -42,14 +42,7 @@ By tracking these metrics, engineering teams gain a data-driven understanding of
 
 You'll learn more about [DORA metrics](/solutions/engineering-360/measure-dora-metrics) later in this solution.
 
-### Optimize delivery
-
-Optimizing delivery is about continuously refining your software development and deployment processes to achieve faster, more reliable releases. By identifying and addressing bottlenecks—whether in code review, testing, or deployment pipelines—you can reduce lead times and increase deployment frequency without sacrificing quality. Leveraging automation, clear ownership, and actionable metrics, teams can streamline workflows, minimize manual interventions, and respond more quickly to business needs.
-The ultimate goal is not to juice teams to make them work harder, but rather to empower engineering teams to deliver value to users more efficiently, less effort intensively and with greater confidence.
-
-You'll learn more about [optimizing delivery](/solutions/engineering-360/optimize-delivery) later in this solution.
-
-### Further engineering metrics and improvement inititatives
+### More engineering metrics and improvement inititatives
 
 :::tip Example: Advanced metric tracking
 A team using Port was able to correlate service complexity (measured by number of dependencies) with deployment frequency and incident rates. This revealed that services with more than 5 inter-service dependencies had 3x more incidents, leading to targeted architectural improvements.
@@ -59,4 +52,4 @@ Another customer was able to identify Tribes with a materially faster time to 10
 
 Port's flexible data model and managed relations create unique opportunities for measuring sophisticated engineering metrics. Unlike traditional tools that are limited to predefined metrics or siloed data sources, Port can normalize and connect data from across your entire engineering ecosystem. This enables tracking of custom metrics that matter specifically to your organization - whether that's measuring cross-team dependencies, tracking technical debt across multiple repositories, or analyzing the impact of architectural decisions on delivery speed. The managed relations between entities allow for multi-dimensional analysis, helping you understand not just what's happening, but where and why. For example, you could analyze deployment frequency not just by team, but by service type, technology stack, or business domain. This deeper insight helps engineering leaders make more informed decisions about where to focus improvement efforts.
 
-You'll learn more about [measuring arbitrary engineering metrics](/solutions/engineering-360/further-engineering-metrics) later in this solution.
+You'll learn more about [measuring arbitrary engineering metrics](/solutions/engineering-360/more-engineering-metrics) later in this solution.

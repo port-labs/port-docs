@@ -27,6 +27,18 @@ Alternatively, you can leverage third-party solutions for the survey front-end, 
 
 - [Send Typeform Survey Results to Port](/guides/all/send-typeform-survey-results-to-port)
 
+
+## Survey contextually
+
+Our most mature customers don't just poll developers periodically, they find the right moments to capture meaningful feedback from developers.
+
+- Ask a new developer for feedback on onboarding after they open their 10th PR
+- Ask the incident team for feedback after an incident is complete
+- Ask a team lead for feedback on an initiative after a service moves up a level in a scorecard
+
+Because Port observes and maintains a real-time audit history on your engineering data, you can leverage [automations to trigger survey participation](/actions-and-automations/define-automations/) in these moments.
+
+
 ## Promote the survey
 
 Don't allow surveys to become another "task" for your developers. Here are some techniques from customers who have made the sending of a survey into a more seminal moment:
@@ -38,6 +50,8 @@ Don't allow surveys to become another "task" for your developers. Here are some 
 1. Have senior engineering leaders share personal takes and insights from the survey, demonstrating engagement with the data and showing an appreciation for the time taken by their teams
 
 ## Drive completion
+
+TODO - add this
 
 ## Review results
 
@@ -52,4 +66,3 @@ If your survey reveals that developers struggle to find the right code owners fo
 :::
 
 By focusing on one pain point at a time and making progress visible, you build momentum for continuous improvement and show the team that their feedback leads to real change.
-
