@@ -328,7 +328,7 @@ To add a secret to your portal:
 3. Click on the `Secrets` tab.
 
 4. Click on `+ Secret` and add the following secrets:
-    - `_GITHUB_TOKEN`: A GitHub personal access token with **Fine-grained access tokens** for "Actions" repository permissions (write). This permission is required to execute all three actions (trigger, re-run, and cancel workflow runs). To obtain this token, [see the GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+`_GITHUB_TOKEN`: A GitHub personal access token with **fine-grained access tokens** for "Actions" repository permissions (write). This permission is required to execute all three actions (trigger, re-run, and cancel workflow runs). To obtain this token, [see the GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
 
 ### Trigger a new workflow run
