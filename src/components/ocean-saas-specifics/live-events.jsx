@@ -196,15 +196,33 @@ export const liveEvents = {
     \n - archived \
     \n - deleted \
     \n\n **pull_request:** \
-     \n - opened \
-     \n - edited \
-     \n - ready_for_review \
-     \n - reopened \
-     \n - synchronize \
-     \n - unassigned \
-     \n - review_request_removed \
-     \n - closed \
-    \n\n **push:** ",
+    \n - opened \
+    \n - edited \
+    \n - ready_for_review \
+    \n - reopened \
+    \n - synchronize \
+    \n - unassigned \
+    \n - review_request_removed \
+    \n - closed \
+    \n\n **push:** \
+    \n\n **workflow_run:** \
+    \n - in_progress \
+    \n - requested \
+    \n - completed \
+    \n\n **dependabot_alert** \
+    \n - created \
+    \n - reopened \
+    \n - auto_reopened \
+    \n - reintroduced \
+    \n - dismissed \
+    \n - auto_dismissed \
+    \n - fixed \
+    \n\n **code_scanning_alert** \
+    \n - appeared_in_branch \
+    \n - reopened \
+    \n - created \
+    \n - fixed \
+    \n - closed_by_user ",
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
