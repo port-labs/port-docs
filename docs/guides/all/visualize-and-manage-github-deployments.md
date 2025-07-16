@@ -524,7 +524,7 @@ Now you should see the `Re-run workflow run` action in the self-service page. �
 
 5. Click `Save`.
 
-Now you should see the `Cancel Workflow Run` action in the self-service page. 🎉
+Now you should see the `Cancel workflow run` action in the self-service page. 🎉
 
 
 ## Visualize metrics
