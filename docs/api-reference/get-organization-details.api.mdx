@@ -5,9 +5,9 @@ description: "This route allows you to fetch the details of your Port organizati
 sidebar_label: "Get organization details"
 hide_title: true
 hide_table_of_contents: true
-api: eJzFUk2P0zAQ/SvWO1ttl6NvK4FWiAMrWE5VDtNkWluktrHHhRL5vyOnLduict5LHHnejOd9TBg498lFccHD4MW6rFIoworGMfzM6hiKkqC2LL1VYlkNLOTGrMK21ZJ6DklUSDvy7je1MVrl0ltFWTnJytOetXKDVuQHZd0wsFebsXBMzkteQENol2HW+Hw1BJ1G5r4kJ0eY9YQNU+IEs+5qp5E4x+AzZ5gJ71ardtwyec9bKqOoL2ckatXYs9gwwGDHAo1IYmGwPDwsrwmgPZ0OnPL8ckkjDKxIzGa5pOgWMSRZuICq71VLfgVcsfjaW96fFr5wmSDHyDCg6D7xERpNLRg8FrEhva7jGiPLNHCaeTi/DXO7k7HhZw8enz9Co619UuBhsULViCHLnnyDn6c/8a1hF0uhbzWc0Acv7OXNgnFSR/iXLONIzjc+s+DT2bs1Dg/QCP8kx4YsrThNG8r8LY21tusfhVNLU6dxoORo08Rbd9fBePrwAg0qbfi1Pd9ne84/LRWXkm/3BxrLPd9m8PxtUbnbMk0n82v9iz+V/ttxzsEF3VTpaq1/AEd9TKc=
+api: eJzNVD2P2zAM/SuCZiMfQKZsB7Q4FB0atNcpyMBYdKyeI+kkKmlq+L+XtONLLk07dGkXW7ZI6vG9R7WaYJf0cq0/xR04+wPIeqc3hTaYymhD/7nUT7VNKvpMqKBp/DGpk8+KvKqQylpRjcoggW2S8pXsRbXykZS/qlqolDkWkrKUlIM9FsqaQoEzqrbGoFPbJmOI1lGa6EInLHO0dGJ4rd4iRIy83HSMLmIK3iVk6K1ezObyeov4HVaQG1Kfz5Fcr/SO0JHEQgiNLXtY029JElqdyhr3IKsQfcBIdijvn+XJyYlTK2gSdoXGGH2U/3QKyMclYtg7zTt7TAl2eGevE9wv2UY0wjjXHetwR2CMFTjQrK5OH47rJHUxW/za5YNiJpjtEtXR0iAEoz9Yg4bJ5W5tZTGqI7PuPKnKZ2f+ayouWX8m5dahf8dEN3C7R6o9I9E7JEYQgGr+mB7m02sD95aMB4ypd2SODQfVRCEtp1MIdhLY8hPrufV7uzldAjYXd38Rrgd6R4+/0sVpH/HE58q0SJOZccYLHCud1wiGs6QP6yrfp1tqJL6fwYfVBw4V2ANT88lMxAk+0R56uc/VH/HtwI4jrW+4bi/2+TcXw5kdwu80DQ0wC9xPT3h71m6tD3MO9DeXWu3FuGvdtltI+DU2XSe/XzJGuWV4eYBoYSvk8UVTjNyK3M8sBCtQlhjEIwdgSL1EN+Mj2r766fH9E8dCFkzXqj73qp4XUn3ccqer2rdyDxDkKQ67m9K2g2e4sTF+2PptxrnFMVrI3PBQ/ASw7h4U
 sidebar_class_name: "get api-method"
-info_path: api-reference/port-api
+info_path: api-reference-temp/port-api
 custom_edit_url: null
 ---
 
@@ -54,7 +54,7 @@ This route allows you to fetch the details of your Port organization, such as it
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Default Response"}}}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
 >
   
 </StatusCodes>
