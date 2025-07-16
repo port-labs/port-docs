@@ -18,6 +18,10 @@ import PortIssueAppConfig from './example-issue/\_github_exporter_example_issue_
 import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
+import TeamBlueprint from './example-team-members/\_github_exporter_team_blueprint.mdx'
+import TeamMemberBlueprint from './example-team-members/\_github_exporter_team_member_blueprint.mdx'
+import TeamMemberConfig from './example-team-members/\_github_team_member_port_app_config.mdx'
+
 import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
 
 # Resource mapping examples
@@ -148,6 +152,12 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 
 :::
 
+## Map team and team member
+The following show how you can map team and team members using the "members" selector.
+
+<TeamMemberBlueprint />
+<TeamBlueprint />
+<TeamMemberConfig />
 
 ## Map supported resources
 
