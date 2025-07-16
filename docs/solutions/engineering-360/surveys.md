@@ -49,10 +49,6 @@ Don't allow surveys to become another "task" for your developers. Here are some 
 1. Show back a dashboard with anonymised summaries of responses, sharing insights with the broader engineering team
 1. Have senior engineering leaders share personal takes and insights from the survey, demonstrating engagement with the data and showing an appreciation for the time taken by their teams
 
-## Drive completion
-
-TODO - add this
-
 ## Review results
 
 ### How to turn survey pain into action
