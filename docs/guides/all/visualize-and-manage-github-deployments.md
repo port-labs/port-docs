@@ -382,6 +382,7 @@ To add a secret to your portal:
       },
       "invocationMethod": {
         "type": "WEBHOOK",
+         //highlight-next-line
         "url": "https://api.github.com/repos/<YOUR_GITHUB_ORG>/{{ .entity.relations.repository }}/actions/workflows/{{ .entity.properties.path | split(\"/\")[-1] }}/dispatches",
         "agent": false,
         "synchronized": true,
