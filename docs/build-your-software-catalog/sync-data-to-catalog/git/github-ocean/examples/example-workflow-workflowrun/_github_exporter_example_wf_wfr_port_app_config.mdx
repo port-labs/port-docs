@@ -37,7 +37,7 @@ resources:
             repository: ".__repository"
   - kind: workflow-run
     selector:
-      query: ".status != 'completed'" # JQ boolean query. If evaluated to false - skip syncing the object.
+      query: .status != "completed" # JQ boolean query. If evaluated to false - skip syncing the object.
     port:
       entity:
         mappings:
