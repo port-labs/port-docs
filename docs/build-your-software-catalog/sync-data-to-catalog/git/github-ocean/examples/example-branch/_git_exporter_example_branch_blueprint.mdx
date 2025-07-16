@@ -3,9 +3,9 @@
 
 ```json showLineNumbers
 {
-  "identifier": "github_branch",
+  "identifier": "githubBranch",
   "title": "Branch",
-  "icon": "Microservice",
+  "icon": "Github",
   "schema": {
     "properties": {
       "is_protected": {
@@ -29,7 +29,14 @@
   "mirrorProperties": {},
   "calculationProperties": {},
   "aggregationProperties": {},
-  "relations": {}
+  "relations": {
+    "repository": {
+      "title": "Repository",
+      "target": "githubRepository",
+      "required": true,
+      "many": false
+    }
+  }
 }
 ```
 

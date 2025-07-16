@@ -14,13 +14,8 @@ import WorkflowBlueprint from './example-workflow-workflowrun/\_git_exporter_exa
 import WorkflowRunBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_run_blueprint.mdx'
 import PortWfWfrAppConfig from './example-workflow-workflowrun/\_github_exporter_example_wf_wfr_port_app_config.mdx'
 
-import BranchProtectionBlueprint from './example-branch/\_git_exporter_example_branch_protection_blueprint.mdx'
-import PortBranchProtectionAppConfig from './example-branch/\_github_exporter_example_branch_protection_port_app_config.mdx'
 import BranchBlueprint from './example-branch/\_git_exporter_example_branch_blueprint.mdx'
-import LastContributorBranchBlueprint from './example-branch/\_git_exporter_example_last_contributor_branch_blueprint.mdx'
 import PortBrAppConfig from './example-branch/\_github_exporter_example_branch_port_app_config.mdx'
-import LastContributorAppConfig from './example-branch/\_github_exporter_example_last_contributor_port_app_config.mdx'
-import LastContributorBlueprint from './example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
 
 import DependabotAlertBlueprint from './example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
 import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'

@@ -2,6 +2,7 @@
 <summary>Port port-app-config.yml</summary>
 
 ```yaml showLineNumbers
+repositoryType: 'all'
 resources:
   - kind: repository
     selector:
@@ -22,14 +23,14 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .repository.name + "_" + .branch.name
-          title: .repository.name + " " + .branch.name
-          blueprint: '"branch"'
+          identifier: .__repository + "_" + .branch.name
+          title: .__repository + " " + .branch.name
+          blueprint: '"githubBranch"'
           properties:
             is_protected: .branch.protected
             commit_sha: .branch.commit.sha
             commit_url: .branch.commit.url
           relations:
-            repository: .repository.name
+            repository: .__repository
 ```
 </details>

@@ -52,7 +52,7 @@ resources:
         mappings:
           identifier: .__repository + "-" + (.number | tostring)
           title: .rule.name
-          blueprint: '"codeScanAlerts"'
+          blueprint: '"githubCodeScanAlerts"'
           properties:
             state: .state
             severity: .rule.severity
