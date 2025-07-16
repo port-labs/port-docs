@@ -72,12 +72,7 @@ export default function ParametersTable({ showingApp }) {
           <td>❌</td>
         </tr>
         <tr>
-          <td><code>entraEnv[0].name</code></td>
-          <td><code>OCEAN__BASE_URL</code></td>
-          <td>❌</td>
-        </tr>
-        <tr>
-          <td><code>entraEnv[0].value</code></td>
+          <td><code>liveEvents.baseUrl</code></td>
           <td>The domain where we want to get live events</td>
           <td>❌</td>
         </tr>

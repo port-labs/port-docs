@@ -12,14 +12,14 @@ import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, live
 
 ## Enabling live-events
 :::tip
-The `OCEAN__BASE_URL` parameter is used specifically to enable the real-time functionality of the integration.
+The `liveEvents.baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
 For debugging, services like [Ngrok](https://ngrok.com/) can provide a temporary public URL. For production, a stable and publicly accessible host is required.
 
 If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
 :::
 
 <OceanSaasLiveEventsDescription id="GithubOcean" />
-The `OCEAN__BASE_URL` specifies the public-facing URL for your integration. This URL, which must be reachable from the internet, is used to receive real-time updates from Github. It can be a public IP address or a configured domain name (e.g., `https://mygithubintegration.com`).
+The `liveEvents.baseUrl` specifies the public-facing URL for your integration. This URL, which must be reachable from the internet, is used to receive real-time updates from Github. It can be a public IP address or a configured domain name (e.g., `https://mygithubintegration.com`).
 
 <details>
   <summary><b>Supported live event triggers</b></summary>
@@ -77,9 +77,8 @@ Install the Helm chart:
       githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
 
   # uncomment to enable live events
-  # extraEnv:
-  #  - name: "OCEAN__BASE_URL"
-  #    value: "https://<your-domain>"
+  # liveEvents:
+  #  baseUrl: "<your-domain>"
 
   initializePortResources: true
   sendRawDataExamples: true
@@ -108,9 +107,8 @@ Install the Helm chart:
       githubToken: <GITHUB_PAT>
 
   # uncomment to enable live events
-  # extraEnv:
-  #  - name: "OCEAN__BASE_URL"
-  #    value: "https://<your-domain>"
+  # liveEvents:
+  #  baseUrl: "<your-domain>"
 
   initializePortResources: true
   sendRawDataExamples: true
@@ -157,9 +155,8 @@ integration:
     githubToken: <GITHUB_TOKEN>
 
 # uncomment to enable live events
-# extraEnv:
-#  - name: "OCEAN__BASE_URL"
-#    value: "https://<your-domain>"
+# liveEvents:
+#  baseUrl: "<your-domain>"
 ```
 
 <br/>
@@ -187,7 +184,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-github-integration/values.yaml

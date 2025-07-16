@@ -204,7 +204,7 @@ export const liveEvents = {
      \n - unassigned \
      \n - review_request_removed \
      \n - closed \
-    \n\n **push:** ",
+    \n\n **push** ",
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
