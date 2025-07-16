@@ -569,6 +569,7 @@ In the new dashboard, create the following widgets:
 3. Select `Count entities` **Chart type** and choose **GitHub Workflow Run** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Additional filters** editor to filter deployments created in the last 3 months:
+
     ```json showLineNumbers
     [
         {
