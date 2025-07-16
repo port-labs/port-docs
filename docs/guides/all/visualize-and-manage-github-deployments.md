@@ -651,6 +651,7 @@ In the new dashboard, create the following widgets:
 2. Title the widget **All Deployments**.
 3. Choose the **GitHub Workflow Run** blueprint.
 4. Add this JSON to the **Additional filters** editor to filter deployments:
+
     ```json showLineNumbers
     {
       "combinator": "or",
