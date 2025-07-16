@@ -40,8 +40,9 @@ However, the last thing engineering leaders want to see are lengthy back and for
 For this, it is useful to measure PR standards, to ensure teams are aligned on the "right way" and can self-govern their own PRs, for a faster pickup from reviewers.
 
 - [Working agreements and measuring PR standards](/guides/all/working_agreements_and_measuring_pr_standards/)
+- [Track and enforce GitLab project maturity](/guides/all/track-gitlab-project-maturity-with-scorecards/)
 
-### Enrich pull-requests with catalog context to decrease review speed
+### Enrich pull-requests with catalog context to decrease review time
 
 To a developer looking at tens of Pull Requests that are awaiting their review, all may appear equal.
 However, many factors could influence what order they perform reviews, or how long they spend on each, for example:
@@ -68,3 +69,4 @@ Often, the software needs to be rebuilt, deployed, promoted (once, twice, someti
 It's worth tracking deployment times across pipelines and looking for outliers. Remember that slow deployments don't just affect lead time, but MTTR too, where fast deployments contribute to faster resolution to incidents that require code changes.
 
 - [Pull Request and build metrics](/guides/all/pull-github-metrics-and-build-visualizations)
+- [Track GitLab Deployments](/guides/all/visualize-and-manage-gitlab-deployments/)
