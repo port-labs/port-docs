@@ -11,11 +11,12 @@ MTTR is influenced by several factors including incident detection time, diagnos
 
 ![MTTR breakdown](/img/solutions/engineering-360/mttr.png)
 
-Remember, the best solution is to prevent and reduce the impact of incidents. Take a look at our [incident management](/solutions/incident-management/prevent-and-minimize-incidents) solution for more.
+Remember, the best solution is to prevent and reduce the impact of incidents. Take a look at our [incident management](/solutions/incident-management/prevent-and-minimize-incidents) solution for more information.
 
 ## Improve incident detection
 
-The faster an incident is detected, the sooner teams can begin working on resolution. Port can help streamline incident detection in several ways:
+The faster an incident is detected, the sooner teams can begin working on resolution.  
+Port can help streamline incident detection in several ways:
 
 - [Create JIRA issue from a NewRelic alert](/guides/all/create-jira-issue-from-newrelic/)
 - [Create a Pagerduty incident from a NewRelic alert](/guides/all/create-pagerduty-incident-from-newrelic-alert/)
