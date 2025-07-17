@@ -245,7 +245,7 @@ Since the Azure DevOps integration does not support pipeline runs, we will creat
 
 Since the Azure DevOps integration does not support pipeline runs, we will use Azure DevOps service hooks and Port's webhook feature to ingest pipeline run state change events to Port.
 
-1. Go to the [Data sources](https://app.getport.io/settings/data-sources) page of your portal.
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 
 2. Click on the `+ Data source` button in the top right corner.
 
@@ -553,7 +553,7 @@ With pipelines ingested and actions configured, the next step is building a dash
 
 ### Create a dashboard
 
-1. Navigate to the [Catalog](https://app.getport.io/organization/catalog) page of your portal.
+1. Navigate to the [catalog](https://app.getport.io/organization/catalog) page of your portal.
 2. Click on the **`+ New`** button in the left sidebar.
 3. Select **New dashboard**.
 4. Name the dashboard **Azure DevOps Deployment Manager**.
