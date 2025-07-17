@@ -26,7 +26,7 @@ To reduce it to bullet points:
 - CFR tells you how risky your changes are.
 - MTBF tells you how often you fail.
 
-This is a great example of how port makes it trivial to calculate arbitrary engineering metrics over the rich data in the catalog. Balancing metrics like these are key. After all, a service with a very low MTTR could even be the greatest contributor to the number of incidents and aggregate downtime.
+This is a great example of how Port makes it trivial to calculate arbitrary engineering metrics over the rich data in the catalog. Balancing metrics like these are key. After all, a service with a very low MTTR could even be the greatest contributor to the number of incidents and aggregate downtime.
 
 - [Track and show MTBF for services](/guides/all/track-and-show-mtbf-for-services/)
 
