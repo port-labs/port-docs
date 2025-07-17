@@ -77,6 +77,17 @@ You can choose one of these chart types:
 You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 ::: 
 
+The value shown in a **number chart** is calculated over **all available entities** of the selected blueprint. By default, it does not apply any time-based filtering.
+
+When a **number chart** is used alongside a [**line chart**](/customize-pages-dashboards-and-plugins/dashboards/#line-chart) in a dashboard, for example a number chart showing average monthly deployment frequency and a line chart showing deployment frequency over time, you might notice that the average values differ, even if both charts reference the same metric (e.g. deployment frequency).
+
+This difference happens because the two charts are likely working with different time ranges:
+
+- The **number chart** performs its calculation across **all available historical entities**, without limiting to a specific time range.
+- The **line chart**, in contrast, only includes entities within its **selected time range** (e.g. the last 30 days).
+
+To align both charts and ensure consistency in what they reflect, apply a time filter to the number chart that matches the line chart’s time range. This helps prevent confusion and ensures both charts are working with the same scope of data.
+
 #### Conditional formatting
 
 You can customize the appearance of a number chart based on specific conditions, helping viewers to quickly understand what the value indicates.
