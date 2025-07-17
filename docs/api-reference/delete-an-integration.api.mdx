@@ -5,9 +5,9 @@ description: "This route allows you to delete an integration in your Port organi
 sidebar_label: "Delete an integration"
 hide_title: true
 hide_table_of_contents: true
-api: eJzdVM1u2zAMfhWBpxZQ4nZHYxhQoD0U26HoulOQA2MzsVBHcikqXWb43QfaTuK22S677eI4Iiny+6FbKCkW7BpxwUMOT5WLhkMSMljX4TWafUhGgimpJj30xnmhDaMWGOc1zuYhsJjAG/TuVx+Zf15x9qV/PAVTE7I328BkcBWSTO+I1hQVFc9Gz6UisyhDkbbkpQ8vLyqRJuZZVoYizpvAMnchWyVXlzPtPYthLa/INCtQsA6bLO59MStRcCbheHg5BwuCmwj5Au4n7WFpoUHGLQmxRluIRUVbhLwF2TcEOURh5zfQWXBKUoNSgQWPWw26kry4tSMG+4FNMs5Hwboe+SpNWPcopywqxa/o5cTzQB9YYHpJjqmEXDhRt7QQqUjsZN9PuiJkYoU01OXuDTLNZ4pN8JGi4vl0daU/b6e8pTWmWszjmAldZ2FLUoUS8vFisAPqHLLddTbpkrUn/B3oeLw78Ji4hhwO+mHjDvJBZ89FUzwlTJB+VzmG+Q94j8pg477S/iTGTZIq8GhCGPWqCEviHpbz69CXO6k1vzfuzcM9WNCxB0Ku51eqdROibNFr+nj77bkleK96C0XwQl7+/3UaNBD6KVlTo/PKWi9rO7plAbvrXoUpW/lkY5YWqhBFM9t2hZF+cN11evySiNXkSws7ZIcr1WvRQumivpeQr7GO9BfyLx7H5bk0/76IZ7EeTOjVgTusk/4DC8+0f/th6JbTlbq9+3b3dAcWMClJUzM/92YeXxTu2RbvXT7006cu1tmSth1WpeuO+UPojxXj1hzReEXRdb8BLEQpAA==
+api: eJzdls1u2zAMgF9F0GUt0MTN1pMxDMjQHoptQNF1p6AHxWJiLbblSnSyzPC7j5Sd2G3SYesuxS6O/kiRHykytUS19DKeyesCYekUGlt4eX8mNfjEmZLnMpZ3qfHC2QpBqCyzGy+2thJohYYMeLEQpldAY9534sY6FNYtVWF+hp3x+7mLPoTPnRUZKFeI3DpSMCflQx3+TCQpJCvB65iCmGmbVDkUGLbvT1LE0sdRRMt+XNJFY2OjeWUyPeK7R94ucKMcjBKFKrPLyG+LZKRpMkK7XzwdyzNZKqdycsMxiVp6ujhXMq4lbksg7z06UyxlcyYNwygVpiRVkAzNjCabzMKAozUHD5VxoGWMroJDiiCqwjxUIHopYRfBPweezE4gkN2oAhmvLYFwgCBysqGoeEgqZ3Ab7JwTPrqVgtdGITaPYsjnSWlJE/DszcX5hH8e23QJC1VlKG67k+REYklPgXxWlWVmkqAx+u5ZYIindGwfmla9XfGXhD2JLlTmgYCBc9YdRZmD92oJR/aaIccZ693pIY+U1obNUdnN4Pb2uoZFL84vDr2c9ng3BtMAnKxfUxj0MBYb5UVhUSxsVehXjaKX+j2Upzn4MhId2sm7Q7S3ZB94FHOrt4KqBFp62MotQZxkJjfIa5Mv5uPpq8b5dxD/3OcO3Nu3h+C4GrDnPX5toYWeK0za0ISa+8aLDs1rRvjSjHwJh6blSkU7tWRHVwBDKafaHMtoPYkG1TCq+8xuJJdRt95V+8plJLDrJqo0u2ZCHI7tVr4/MKjIX9mwlvWuLu/Zkdgn2PYtY1qR2a5ribLrKikoTVJN6DILG8QNZnw+tNHpzTUdZbNbbJPxOUeqtB5zFWLfab881pLlE+p1n0j/eXPvYoDwA6MyU8SaqIWw1l22zOR6EqIwpBUP+jqFObX8cGayrufKwzeXNQ0vUxlw3IxpuFbOqDnHi5JKG89jfTzlh/BPbrvXdCr+7e/BM57uUrDg/FurrOIZDVeUkI/+vDT3dLpLQnahPTBNEihxIHpQdPgR7N/h5dXnq7srOq4qJjt8AavwAroBX3DUsqdPo7WCv/waj4rUdfu+mmZ/vt16VqLzcg+BnaB68gsplt+S
 sidebar_class_name: "delete api-method"
-info_path: api-reference/port-api
+info_path: api-reference-temp/port-api
 custom_edit_url: null
 ---
 
@@ -47,7 +47,7 @@ This route allows you to delete an integration in your Port organization.<br/><b
 </Heading>
 
 <ParamsDetails
-  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The installation id of the integration you want to delete.<br/>","required":true}]}
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","required":true,"description":"The unique identifier of the resource you want to operate on."}]}
 >
   
 </ParamsDetails>
@@ -62,7 +62,7 @@ This route allows you to delete an integration in your Port organization.<br/><b
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Default Response"}}}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
 >
   
 </StatusCodes>

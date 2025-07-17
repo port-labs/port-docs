@@ -35,7 +35,7 @@ jobs:
     - name: Check for differences
       id: diff_check
       run: |
-        if cmp -s newSpec.yaml static/rawApiSpec.yaml; then
+        if cmp -s newSpec.yaml static/apispec.yaml; then
           echo "diff_found=false" >> $GITHUB_OUTPUT
           echo "No changes detected."
         else
@@ -46,7 +46,7 @@ jobs:
     # Step 5: Update the YAML file in the repository if differences are found
     - name: Update YAML file
       if: steps.diff_check.outputs.diff_found == 'true'
-      run: mv newSpec.yaml static/rawApiSpec.yaml
+      run: mv newSpec.yaml static/apispec.yaml
 
     # Step 6: Create a pull request with the changes using the hash as the branch name
     - name: Create Pull Request

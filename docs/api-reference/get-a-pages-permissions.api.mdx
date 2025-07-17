@@ -1,0 +1,71 @@
+---
+id: get-a-pages-permissions
+title: "Get a page's permissions"
+description: "This route allows you to get a specific page's permissions.<br/><br/>To learn more about pages, check out the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/page-permissions)."
+sidebar_label: "Get a page's permissions"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVcFu2zAM/RVBl7VAEjdAT8YwIMCGYtgOQdedgmBQbCbWYluqKKXrDP/7SNluvCTdYadhF8W2+Cjy6T2mkV7tUKYruVQ7QLmeyBwwc9p6bWqZyodCo3AmeBCqLM0TimcThDdiB14ogRYyvdWZsAR/g8KCqzQiYXH2duOSd3F5MKIE5WpRGUd5NpQuAnAisgKyveAPvgCxyk0WKqi94uPXV4X3FtMkoc84s8b5mTZJFtCbSv+EacwxzRUWG6NcjlNV51Nbhp2uMeHNuExHRV3P5ERa5VQFHhw33kikGiol00b6ZwvUM3qn6x0FVrr+DPXOFzKdtxOpmRCr6HUia8oQ33bwTedUMbEAjjYcPAbtIJepdwFaIhQhC07753jYhniguHS15i0HaKkqIp5Ov72Z88/v/L+HrQqlF/d9JJ2QmdrTgRyrrC11FslKviMDxu1YZ6h1r7v0Zs8rgZGgW1UiUEvgnHHnrdNOBYjU3IW9dtzkivMOeagjleeay1HlcnR6d1zL0Nub2/MuF4KYMMFlIJ60L6IWqPoDMZuLI73iSaGojRdbE+r8n6biiPozKad++zsm2o5bEnVhqBJJ5ow6Z+XK5DCPPsCkOZFrm4ysIVmp7jC4IriSsIMBldWD/4iRS7sBjwEj0X/hK+hYH6T/wiLBPsHz0UyLQOU7/TNeouz9VoDKCdVG/21NhGtfcvySzhOL5UcK5bI7AuezG74za9BXKqqgz34XB9b5nJInV9AcVfVfTr+efA8/fGJLRSQTXfE+m14xK3mYR/nwP8JEpudDbkwfXXZh2Egr2TQbhfDVlW3Lnx8DOJ569HhQTqsN3xpJK9fIz/llC4z5v7rv3XUtXqt80FLNQjqoMvAbPe5JWefzuV0TpJcUl9JFLbIMrB/hz4YJS/rFXXcfHihWBeZqLOZ9FHP/wNkv1naq8q4EXtlYFyFN01mFaB3iu61XEX2LQzRTtaYR8QsB5cQ/
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a page's permissions"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/pages/{page_identifier}/permissions"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>**
+This route allows you to get a specific page's permissions.<br/><br/>To learn more about pages, check out the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/page-permissions).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"page_identifier","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

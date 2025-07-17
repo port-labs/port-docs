@@ -1,0 +1,70 @@
+---
+id: get-all-pages-in-your-portal
+title: "Get all pages in your portal"
+description: "This route allows you to get all pages in your portal.<br/><br/>To learn more about pages, checkout the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page)."
+sidebar_label: "Get all pages in your portal"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVLtu2zAU/RWCUwLYVgxkMooCBloERRcjTSfDA01dW6wpkuHDqSPo33svJSVK4mToVHShRN734TlseBT7wBdrvhJ7CHwz4SUE6ZWLyhq+4HeVCszbFIEJre1DYCebWLRsD5FOmKM4pgyde+asj0LPPm198Tkvd5ZpEN6w2npMscVMXciEyQrkgfaxArYurUw1mCio8OaiitGFRVHgcZhR1pmyhUwh2lo9wjSnmJYiVFsrfBmmwpRTp9NemVCQsZACG7H77Hk54xPuhBc1RPA0bsMDlq8FXzQ8nhzgpFtrsVPDCYGdSDryxU7oAO2EK0LiPoE/odVgFtxKWzshIx54uE/KQ8kX0SdoEcIAMnkVT7nQFscHj78bMnkIzpqAUGPl66s5fV4i/qWrzm57T6wgrYkIDfkK57SSGaTiV6CA8SjOWwc+qi69PdCKwWE0C3hv/WjsEL0ye46WGkJAsM7Y2vGQa8o75MGJRFkqakfo1ah6V66l0Our67dTLhkigYyRwB5UrDIHsPujKqFkuJiodgo8exCBGRvZziZT/tNQPEd9DMprhf0dEm2HLRK6stgJRzlmjscKN8VxnkUQOHHRHwfOJ6/ROkhLODUoC2c+Z03h2WFE6x8EcofrQO4nnDDsO4xkskzYoFeP+Zp4L6UKRIlRbZbWzuZwFTX5r7AeW66+oSu13UE0n13RrTgbYi3yPffZbz54hPgroJtn7vxHr1oPe4TfsXBaILwIVL7JpmfDmh/nmRr9+15Z0sCaN81WBPjpddvScfe8EUtKFcRWE7/P8XUM48VtL4VL9l4rByTD+LE8Cp3IKxPqKLyiUvlxnAy0oB66sKWU4MZRbyRPWZ40cPP1Dn1FoqnHhDxkQvY/lH0wmdMo92umdi3QSuI4G9I0Hd0RwcG/M70b0Y84eBNGGxTyHxnmnRU=
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get all pages in your portal"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/pages"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>**
+This route allows you to get all pages in your portal.<br/><br/>To learn more about pages, checkout the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean","default":false},"in":"query","name":"compact","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
