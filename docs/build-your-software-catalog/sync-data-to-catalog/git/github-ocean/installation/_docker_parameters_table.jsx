@@ -58,7 +58,7 @@ export default function DockerParametersTable({ showingApp }) {
           <>
             <tr>
               <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID</code></td>
-              <td>Application ID. You can find it in the edit GitHub app page.</td>
+              <td>App id or client id. You can find it in the edit GitHub app page.</td>
               <td>✅</td>
             </tr>
             <tr>
