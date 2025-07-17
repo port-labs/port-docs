@@ -63,32 +63,6 @@ The `repositoryType` parameter filters which repositories are ingested. It corre
 
 After creating the blueprints and committing the `port-app-config.yml` file to your `.github-private` repository (for global configuration), or to any specific repositories (for per-repo configuration), you will see new entities in Port matching your repositories alongside their README.md file contents and pull requests. (Remember that the `port-app-config.yml` file has to be in the **default branch** of the repository to take effect).
 
-## Map repositories, repository admins and users
-
-In the following example you will ingest your GitHub repositories, their admins and related users to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
-
-<RepositoryAdminBlueprint/>
-
-<GithubUsersBlueprint/>
-
-<UsersBlueprint/>
-
-<RepositoryAdminAppConfig/>
-
- <h3>Supported GitHub user types</h3>
-
-As Github has strict privacy policies, the GitHub API will only return emails in the following cases:  
-
-1. The user has a public email address
-2. Your organization is working with a GitHub Enterprise Cloud plan, and the user has an SAML SSO identity configured inside the GitHub organization.
-
-In other cases, the GitHub API will return a `null` value for the user's email.
-
-:::tip User supported fields 
-For the `user` kind, only the following fields are supported: `.login`, and `.email`.  
-Other fields from the [GitHub User API](https://docs.github.com/en/rest/users/users#get-a-user) are not available.
-:::
-
 ## Map repositories and issues
 
 In the following example you will ingest your GitHub repositories and their issues to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
