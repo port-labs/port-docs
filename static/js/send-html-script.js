@@ -1,5 +1,5 @@
 window.addEventListener('message', (event) => {
-    if (event.data?.source?.includes('react-devtools')) return;
+  if (event.data?.source?.includes('react-devtools')) return;
 
   console.log('Received message from parent:', event.data);
   if (event.data.type === 'get-body-ref') {
