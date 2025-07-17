@@ -71,8 +71,8 @@ Install the Helm chart:
       type: "POLLING"
     config:
       githubOrganization: <GITHUB_ORGANIZATION>
-      githubHost: <GITHUB_HOST>
-      githubAppId: <GITHUB_APP_ID>
+      githubHost: <GITHUB_HOST> # e.g https://api.github.com
+      githubAppId: <GITHUB_APP_ID> # app client id also works
     secrets:
       githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
 
@@ -102,7 +102,7 @@ Install the Helm chart:
       type: "POLLING"
     config:
       githubOrganization: <GITHUB_ORGANIZATION>
-      githubHost: <GITHUB_HOST>
+      githubHost: <GITHUB_HOST> # e.g https://api.github.com
     secrets:
       githubToken: <GITHUB_PAT>
 
