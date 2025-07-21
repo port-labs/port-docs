@@ -1326,8 +1326,8 @@ export const availableGuides = [
         link: "/guides/all/pull-github-metrics-and-build-visualizations",
     },
     {
-        title: "Map Slack users to Port user accounts",
-        description: "Set up a mapping between Slack users and Port user accounts for seamless integration",
+        title: "Ingest and map Slack users to Port user accounts",
+        description: "Ingest and map Slack users to Port user accounts for seamless integration",
         tags: ["Slack", "GitHub", "Actions", "Automations"],
         logos: ["Slack"],
         link: "/guides/all/map-slack-users-to-port-accounts",
