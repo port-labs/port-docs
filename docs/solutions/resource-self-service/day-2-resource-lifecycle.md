@@ -10,7 +10,7 @@ Managing the lifecycle of cloud resources is a critical aspect of platform engin
 ## Day 2 tasks
 
 Day 2 management includes tasks such as:
-- **Scaling resources** up or down based on demand
+- [**Scaling resources**](#scaling-resources-up-or-down-based-on-demand) up or down based on demand
     - [View ECS tasks and scale on-demand](/guides/all/manage-and-visualize-ecs-tasks)
     - [Scale Autoscaling Groups](/guides/all/manage-and-visualize-aws-autoscaling-groups)
     - [Start an EC2 Instance](/guides/all/visualize-and-manage-aws-ec2-instances#start-an-ec2-instance)
@@ -24,7 +24,7 @@ Day 2 management includes tasks such as:
 
 <img src="/img/guides/ecsTaskDashboard2.png" alt="ECS Task Example" width="100%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
 
-- **Patching and updating** software or configurations
+- [**Patching and updating**](#patching-and-updating-software-or-configurations) software or configurations
     - [Toggle a Feature Flag](/guides/all/manage-and-visualize-your-launchdarkly-feature-flags#toggle-a-feature-flag)
     - [Archive a Feature Flag](/guides/all/manage-and-visualize-your-launchdarkly-feature-flags#archive-a-feature-flag)
     - [Add Tags to an EKS Cluster](/guides/all/manage-your-eks-clusters#add-tags-to-an-eks-cluster)
@@ -32,7 +32,7 @@ Day 2 management includes tasks such as:
 
 <img src="/img/guides/launchDarklyDashboard2.png" alt="Launch Darkly Example" width="100%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
 
-- **Restarting or Resyncing** to resolve issues
+- [**Restarting or Resyncing**](#restarting-or-resyncing-to-resolve-issues) to resolve issues
     - [Manage Kubernetes deployments](/guides/all/manage-your-kubernetes-deployment/)
     - [Reboot an EC2 Instance](/guides/all/visualize-and-manage-aws-ec2-instances#reboot-an-ec2-instance)
     - [Reboot RDS instances](/guides/all/visualize-your-aws-storage-configuration#reboot-an-rds-instance)
@@ -43,7 +43,7 @@ Day 2 management includes tasks such as:
 
 <img src="/img/guides/ec2Dashboard2.png" alt="Reboot EC2 Instance Example" width="100%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
 
-- **Decommissioning or archiving** resources when they're no longer needed
+- [**Decommissioning or archiving**](#decommissioning-or-archiving-resources-when-theyre-no-longer-needed) resources when they're no longer needed
     - [Terminate an EC2 Instance](/guides/all/visualize-and-manage-aws-ec2-instances#terminate-an-ec2-instance)
     - [Delete an RDS instance](/guides/all/visualize-your-aws-storage-configuration#delete-an-rds-instance)
     - [Delete a Kubernetes namespace](/guides/all/manage-kubernetes-namespaces)
@@ -52,18 +52,18 @@ Day 2 management includes tasks such as:
 
 <img src="/img/guides/eksClusterDashboard.png" alt="Launch Darkly Example" width="100%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
 
-- **Monitoring usage and health** to detect issues early
+- [**Monitoring usage and health**](#monitoring-usage-and-health-to-detect-issues-early) to detect issues early
     - [Monitor and Purge SQS queues](/guides/all/manage-and-visualize-aws-sqs-queues#purge-an-sqs-queue)
     - [Redrive messages from a DLQ](/guides/all/manage-and-visualize-aws-sqs-queues#redrive-messages-from-dlq)
 
 <img src="/img/guides/sqsQueueDashboard2.png" alt="SQS Management Example" width="100%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
 
-- **Rotating secrets and credentials** to mitigate risks
+- [**Rotating secrets and credentials**](#rotating-secrets-and-credentials-to-mitigate-risks) to mitigate risks
     - [Renew an ACM Certificate](/guides/all/manage-and-visualize-acm-certificates#renew-an-acm-certificate)
 
 <img src="/img/guides/acmDashboard2.png" alt="ACM Example" width="100%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
 
-- **Identify Security Misconfigurations** in your cloud environments
+- [**Identify Security Misconfigurations**](#identify-security-misconfigurations-in-your-cloud-environments) in your cloud environments
     - [Find Issues in your AWS Storage Configuration](/guides/all/visualize-your-aws-storage-configuration/)
 
 <img src="/img/guides/awsStorageAndSecurityDashboard.png" alt="AWS Storage and Security Example" width="100%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />

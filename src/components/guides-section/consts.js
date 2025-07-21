@@ -1199,6 +1199,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-gitlab-deployments",
     },
     {
+        title: "Visualize and manage your Azure DevOps deployments",
+        description: "Create a dashboard that visualizes and manages your Azure DevOps deployments",
+        tags: ["SDLC", "AzureDevops", "Actions", "Dashboards"],
+        logos: ["AzureDevops"],
+        link: "/guides/all/visualize-and-manage-azure-devops-deployments",
+    },
+    {
         title: "Visualize and manage your Statuspage incidents and components",
         description: "Create a dashboard that visualizes and manages your Statuspage incidents and components",
         tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
@@ -1324,6 +1331,13 @@ export const availableGuides = [
         tags: ["Engineering metrics", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/pull-github-metrics-and-build-visualizations",
+    },
+    {
+        title: "Visualize and manage your GitHub deployments",
+        description: "Create a dashboard that visualizes and manages your GitHub deployments",
+        tags: ["SDLC", "GitHub", "Actions", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
         title: "Ingest and map Slack users to Port user accounts",
