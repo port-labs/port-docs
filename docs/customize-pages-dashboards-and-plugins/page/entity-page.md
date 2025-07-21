@@ -19,7 +19,14 @@ The overview tab is a dashboard, used to display [widgets](/customize-pages-dash
 
 By default, each entity will have a `Details` widget, which displays the entity's properties and their values, and other metadata.
 
+### Manage properties
+On the top right of the details widget, you can find the "Manage properties" button that opens the manage properties popover.
+Within the popover, you can:
+- Show/hide empty values - properties with empty fields will be hidden if the toggle is off.
+- Customize the displayed properties with [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
+
 Additional widgets can be added by clicking on the `+ Widget` button in the top right corner of the dashboard.
+
 
 ## Related entities
 
