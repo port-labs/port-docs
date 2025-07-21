@@ -27,9 +27,9 @@ import HumanitecSharedValues from "/docs/guides/templates/humanitec/_humanitec_s
 
 # Humanitec Integration
 
-In this guide, you are going to create a GitHub worklow integration to facilitate the ingestion of Humanitec applications, environments, workloads, resources, resource graphs, pipelines, deployment deltas, deployment sets, secret stores, shared values, value set versions, users, groups into your Port catalog on schedule.
+This guide demonstrates how to create a GitHub worklow integration to facilitate the ingestion of Humanitec applications, environments, workloads, resources, resource graphs, pipelines, deployment deltas, deployment sets, secret stores, shared values, value set versions, users, groups into your Port catalog on schedule.
 
-<img src="/img/guides/humanitecEnvironment.png" alt="Humanitec Integration" width="75%" border="1px" />
+<img src="/img/guides/humanitecEnvironments.png" alt="Humanitec Integration" width="75%" border="1px" />
 
 ## Common use cases
 
@@ -87,9 +87,8 @@ You may select the blueprints depending on what you want to track in your Humani
 
 ## Set up the integration
 
-:::tip
 Fork our [humanitec integration repository](https://github.com/port-labs/humanitec-integration-script.git) to get started.
-:::
+
 
 ### Add secrets to your GitHub repository
 
