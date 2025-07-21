@@ -60,7 +60,7 @@ In the Port app, go to the `Configuration` menu and follow these steps:
 <SSOEndpoints/>
 
 :::note
-We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support.port.io](http://support.port.io/)).
 :::
 
 2. Under `Redirect URI's` set: `https://auth.getport.io/login/callback`.

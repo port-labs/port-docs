@@ -5340,14 +5340,14 @@ paths:
                   type: object
                   description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>You can also use a [search query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to define relations based on a property of the related entity.<br/> 
               additionalProperties: true
-            example:
-              identifier: new-microservice
-              title: MyNewMicroservice
-              icon: Microservice
-              team: []
-              properties:
-                content: my content
-              relations: {}
+              example:
+                identifier: new-microservice
+                title: MyNewMicroservice
+                icon: Microservice
+                team: []
+                properties:
+                  content: my content
+                relations: {}
       parameters:
         - schema:
             type: boolean
@@ -7052,7 +7052,7 @@ paths:
       description: This route allows you to delete multiple entities (up to 100
         entities per request) from a specific blueprint in your software
         catalog. All entities must belong to the same blueprint.<br/><br/>If any
-        entity has dependent entities and delete_dependents is false, the entire
+        entity has dependent entities and `delete_dependents` is `false`, the entire
         operation will fail and no entities will be deleted.<br/><br/>To learn
         more about entities, check out the
         [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
@@ -7384,6 +7384,20 @@ paths:
                 - combinator
                 - rules
               additionalProperties: false
+              example:
+                combinator: and
+                rules:
+                  - property: $blueprint
+                    operator: =
+                    value: service
+                  - combinator: or
+                    rules:
+                      - property: environment
+                        operator: =
+                        value: production
+                      - property: environment
+                        operator: =
+                        value: staging
         required: true
       parameters:
         - schema:

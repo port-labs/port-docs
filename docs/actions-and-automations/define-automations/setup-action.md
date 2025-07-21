@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Setup backend
+title: Set up backend
 ---
 
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
@@ -8,78 +8,48 @@ import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_p
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Setup backend
+# Set up backend
 
 The automation's backend is the logic that you want to execute when a trigger event occurs. It will run on all entities tied to the blueprint specified in the automation's definition, whenever the trigger event occurs.
 
 Port uses the same backend types for automations and for [self-service actions](/actions-and-automations/create-self-service-experiences/).
 
-## Backend JSON structure
+## Define the backend
 
-The backend is defined under the `invocationMethod` key in the automation's JSON structure:
+The automation's backend is defined under the `Backend` tab of the automation creation form in Port's UI.  
+Let's break the definition down to two parts:
 
-```json showLineNumbers
-{
-  "identifier": "unique_id",
-  "title": "Title",
-  "icon": "icon_identifier",
-  "description": "automation description",
-  "trigger": {
-    "type": "automation",
-    "event": {
-      "type": "event_type",
-      "blueprintIdentifier": "blueprint_id"
-    },
-    "condition": {
-      "type": "JQ",
-      "expressions": ["expression1", "expression2"],
-      "combinator": "and"
-    }
-  },
-  # highlight-start
-  "invocationMethod": {
-    "type": "WEBHOOK",
-    "url": "https://example.com",
-    "headers": {
-      "RUN_ID": "{{ .run.id }}"
-    },
-    "body": {
-      "payload_key": "{{ some-jq-value }}"
-    }
-  },
-  # highlight-end
-  "publish": false
-}
-```
+### Define your backend's type and metadata
 
-## Supported backends
+In this section we provide information about the backend logic and its location, so that Port can access and run it.  
 
-<BackendTypesJson />
+Port uses the same backend types for both automations and [self-service actions](https://docs.port.io/actions-and-automations/create-self-service-experiences/).  
+For more information and examples for the available backend types, check out the [backend types](/actions-and-automations/setup-backend/) page.
 
-To read more about each backend type, see the [backend types](/actions-and-automations/setup-backend/) page.
+Depending on the backend type you choose, you will need to provide different configuration parameters.  
 
 ### Define the payload
 
-When creating a self-service action or automation, you can construct a JSON payload that will be sent to your backend upon every execution. You can use this to send data about the automation that you want your backend to have. 
+When creating an automation, you can construct a JSON payload that will be sent to your backend upon every execution. You can use this to send data about the automation that you want your backend to have. 
 
-The payload is defined under the `invocationMethod` object in the automation's JSON structure. The key under which the payload is defined depends on the backend you are using (see the table above).
+Still in the `Backend` tab, scroll down to the `Configure the invocation payload` section. This is where we define the automation's payload.
 
 The payload is defined using JSON, and accessing your data is done using `jq`, wrapping each expression with `{{ }}`.  
 
-For example, the following payload definition will send a timestamp of when the execution was triggered:
+Here is an example for an automation payload:
 
 ```json showLineNumbers
 {
-  "execution_time": "{{ .trigger.at }}",
   "port_context": {
-    "run_id": "{{ .run.id }}"
+    "runId": "{{ .run.id }}"
   }
 }
 ```
 
-You may have noticed that the example above also sends `{{ .run.id }}`. This is a unique identifier for each execution of the action, and can be used to [interact with the action run](/actions-and-automations/reflect-action-progress/) in Port from your backend.  
+You may have noticed that the example above also sends `{{ .run.id }}`. This is a unique identifier for each execution of the automation, and can be used to interact with the autmation run in Port from your backend.  
 
-The data that is available to you when constructing the payload is detailed in the `Trigger data` section below.  
+Now you might be thinking - *how do I know what data is available to me when constructing the payload?*  
+Enter `trigger data`.
 
 #### Trigger data
 
@@ -391,4 +361,66 @@ The other trigger events have the same structure, with the following differences
 </TabItem>
 </Tabs>
 
+You can access any value in this structure and add it to the payload. For example, to add the executing user's name to the payload, you can use the following expression:
+
+```json
+{
+  "executing_user_email": "{{.trigger.by.user.email}}"
+}
+```
+
+Use the `Test JQ` button in the bottom-left corner to test your expressions against your automation and ensure you are sending the correct data.
+
+:::tip Inspect the Full Object in `jq`
+You can use the `jq` expression `{{ . }}` when testing to see the entire available object, and then drill down to the specific data you need.
+:::
+
 <PayloadAdvancedFunctions />
+
+## Backend JSON structure
+
+In some cases, you may prefer to define the backend configuration using a JSON object.  
+The backend is defined under the `invocationMethod` object in the automation's JSON structure.
+
+```json showLineNumbers
+{
+  "identifier": "unique_id",
+  "title": "Title",
+  "icon": "icon_identifier",
+  "description": "automation description",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "event_type",
+      "blueprintIdentifier": "blueprint_id"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": ["expression1", "expression2"],
+      "combinator": "and"
+    }
+  },
+  # highlight-start
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://example.com",
+    "headers": {
+      "RUN_ID": "{{ .run.id }}"
+    },
+    "body": {
+      "payload_key": "{{ some-jq-value }}"
+    }
+  },
+  # highlight-end
+  "publish": false
+}
+```
+
+## Supported backends
+
+<BackendTypesJson />
+
+To read more about each backend type, see the [backend types](/actions-and-automations/setup-backend/) page.
+
+
+

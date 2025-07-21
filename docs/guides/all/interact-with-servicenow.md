@@ -1,6 +1,6 @@
 ---
 displayed_sidebar: null
-description: Learn how to interact with ServiceNow records using Port's self-service actions
+description: Learn how to interact with ServiceNow records and delete ServiceNow incidents using Port's self-service actions
 ---
 
 import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_secrets_callout.mdx'
@@ -9,8 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Interact with ServiceNow records
 
-This guide demonstrates how to implement a self-service action that interacts with any ServiceNow record directly from Port using **synced webhooks**.
-You will learn how to create, update and delete records in ServiceNow without leaving the Port UI.
+This guide demonstrates how to implement self-service actions that interact with any ServiceNow record and delete ServiceNow incidents directly from Port using **synced webhooks**.
 
 ## Use cases
 - Provide developers and managers with safe, self-serve CRUD operations on ServiceNow records.
@@ -23,13 +22,15 @@ You will learn how to create, update and delete records in ServiceNow without le
 - Access to your ServiceNow account with permissions to manage records in relevant tables.
 
 
+
 ## Implementation
 
-To enable interaction with ServiceNow from Port, we will configure three self-service actions:
+To enable interaction with ServiceNow from Port, we will configure four self-service actions:
 
 1. Create a ServiceNow record
 2. Update a ServiceNow record
 3. Delete a ServiceNow record
+4. Delete a ServiceNow incident
 
 These actions use Port’s **synced webhooks** to communicate with ServiceNow’s REST API and rely on Port's **secret manager**  to securely store authentication credentials.
 
@@ -261,3 +262,114 @@ Now you should see the `Update ServiceNow Record` action in the [self-service](h
 5. Click `Save`.
 
 Now you should see the `Delete ServiceNow Record` action in the [self-service](https://app.getport.io/self-serve) page. 🎉
+
+
+#### Delete a ServiceNow incident
+
+1. Head to the [self-service](https://app.getport.io/self-serve) page.
+
+2. Click on the `+ New Action` button.
+
+3. Click on the `{...} Edit JSON` button.
+
+4. Copy and paste the following JSON configuration into the editor.
+
+    <details>
+    <summary><b>Delete ServiceNow Incident (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+        "identifier": "delect_servicenow_incident",
+        "title": "Delect ServiceNow Incident",
+        "icon": "Servicenow",
+        "description": "Deletes an incident from the ServiceNow incident table using a unique system ID",
+        "trigger": {
+            "type": "self-service",
+            "operation": "DELETE",
+            "userInputs": {
+            "properties": {},
+            "required": [],
+            "order": []
+            },
+            "blueprintIdentifier": "servicenowIncident"
+        },
+        "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "{{.secrets.SERVICENOW_INSTANCE_URL}}/api/now/table/incident/{{.entity.identifier}}",
+            "agent": false,
+            "synchronized": true,
+            "method": "DELETE",
+            "headers": {
+            "RUN_ID": "{{ .run.id }}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Basic {{.secrets.SERVICENOW_API_TOKEN}}"
+            },
+            "body": {}
+        },
+        "requiredApproval": false
+    }
+    ```
+    </details>
+
+5. Click `Save`.
+
+Now you should see the `Delect ServiceNow Incident` action in the [self-service](https://app.getport.io/self-serve) page. 🎉
+
+<h4>Create an automation to remove entity from Port</h4>
+
+Once the incident is deleted from ServiceNow, we want to automatically remove the corresponding entity in Port. To achieve this behaviour:
+
+1. Head to the [automations](https://app.getport.io/settings/automations) page.
+
+2. Click on the `+ Automation` button.
+
+3. Copy and paste the following JSON configuration into the editor.
+
+    <details>
+    <summary><b>Delete ServiceNow incident in Port automation (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+        "identifier": "servicenow_incident_delete_sync_status",
+        "title": "Remove Deleted Incident from Port",
+        "description": "Removes the deleted entity in Port when after it is deleted from ServiceNow",
+        "trigger": {
+            "type": "automation",
+            "event": {
+            "type": "RUN_UPDATED",
+            "actionIdentifier": "delect_servicenow_incident"
+            },
+            "condition": {
+            "type": "JQ",
+            "expressions": [
+                ".diff.after.status == \"SUCCESS\""
+            ],
+            "combinator": "and"
+            }
+        },
+        "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://api.port.io/v1/blueprints/{{.event.diff.after.blueprint.identifier}}/entities/{{.event.diff.after.entity.identifier}}",
+            "agent": false,
+            "synchronized": true,
+            "method": "DELETE",
+            "headers": {
+            "RUN_ID": "{{.event.diff.after.id}}",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+            },
+            "body": {}
+        },
+        "publish": true
+    }
+    ```
+    </details>
+
+4. Click `Save`.
+
+Now, whenever a user runs the `Delete ServiceNow Incident` action:
+
+1. The incident is deleted directly from ServiceNow via webhook.
+2. The corresponding entity in Port is automatically removed, keeping your catalog clean and consistent.
+

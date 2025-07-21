@@ -396,6 +396,10 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/customization.svg');
 }
 
+.sidebar-menu-docs-ai-assistant .menu__link::before {
+  content: url('/static/img/sidebar-icons/main-menu/docs-ai-assistant.svg');
+}
+
 .sidebar-menu-ai-agents > div .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/ai-agents.svg');
 }

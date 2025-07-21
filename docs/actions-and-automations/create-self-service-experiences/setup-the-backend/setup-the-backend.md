@@ -1,15 +1,15 @@
 ---
-title: Setup backend
+title: Set up backend
 ---
 
 import DocCardList from '@theme/DocCardList';
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
 import ExecuteActionLocations from '/docs/actions-and-automations/create-self-service-experiences/templates/_execute_action_locations.mdx'
+import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
 
-# Setup backend
+# Set up backend
 
 <center>
 
@@ -36,16 +36,11 @@ In this section we provide information about the backend logic and its location,
 Port uses the same backend types for both self-service actions and [automations](/actions-and-automations/define-automations/).  
 For more information and examples for the available backend types, check out the [Backend types](/actions-and-automations/setup-backend/) page.
 
-Here is an example of a Github workflow backend configuration:
-
-<img src='/img/self-service-actions/setup-backend/action-form-setup-backend.png' width='55%' border='1px' />
-<br/><br/>
-
 Depending on the backend type you choose, you will need to provide different configuration parameters.  
 
-### Define the action's payload
+### Define the payload
 
-When creating a self-service action or automation, you can construct a JSON payload that will be sent to your backend upon every execution. You can use this to send data about the action that you want your backend to have. 
+When creating an automation, you can construct a JSON payload that will be sent to your backend upon every execution. You can use this to send data about the action that you want your backend to have. 
 
 Still in the `Backend` tab, scroll down to the `Configure the invocation payload` section. This is where we define the action's payload.
 
@@ -129,7 +124,7 @@ You can access any value in this structure and add it to the payload. For exampl
 
 Use the `Test JQ` button in the bottom-left corner to test your expressions against your action and ensure you are sending the correct data.
 
-:::tip Pro tip
+:::tip Inspect the Full Object in `jq`
 You can use the `jq` expression `{{ . }}` when testing to see the entire available object, and then drill down to the specific data you need.
 :::
 

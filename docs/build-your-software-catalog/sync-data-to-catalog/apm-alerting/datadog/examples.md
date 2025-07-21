@@ -684,54 +684,54 @@ resources:
 
 ```json showLineNumbers
 {
-    "identifier": "datadogTeam",
-    "description": "This blueprint represents a Datadog team",
-    "title": "Datadog Team",
-    "icon": "Datadog",
-    "schema": {
-      "properties": {
-        "description": {
-          "type": "string",
-          "title": "Description",
-          "description": "A description of the team's purpose and responsibilities"
-        },
-        "handle": {
-          "type": "string",
-          "title": "Handle",
-          "description": "The unique handle identifier for the team within Datadog"
-        },
-        "userCount": {
-          "type": "number",
-          "title": "User Count",
-          "description": "The total number of users that are members of this team"
-        },
-        "summary": {
-          "type": "string",
-          "title": "Summary",
-          "description": "A brief summary of the team's purpose or main responsibilities"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Created At",
-          "description": "The timestamp when the team was created"
-        }
+  "identifier": "datadogTeam",
+  "description": "This blueprint represents a Datadog team",
+  "title": "Datadog Team",
+  "icon": "Datadog",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "A description of the team's purpose and responsibilities"
       },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {
-      "members": {
-        "target": "datadogUser",
-        "title": "Members",
-        "description": "Users who are members of this team",
-        "many": true,
-        "required": false
+      "handle": {
+        "type": "string",
+        "title": "Handle",
+        "description": "The unique handle identifier for the team within Datadog"
+      },
+      "userCount": {
+        "type": "number",
+        "title": "User Count",
+        "description": "The total number of users that are members of this team"
+      },
+      "summary": {
+        "type": "string",
+        "title": "Summary",
+        "description": "A brief summary of the team's purpose or main responsibilities"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At",
+        "description": "The timestamp when the team was created"
       }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "members": {
+      "target": "datadogUser",
+      "title": "Members",
+      "description": "Users who are members of this team",
+      "many": true,
+      "required": false
     }
   }
+}
 ```
 
 </details>
@@ -740,6 +740,9 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+resources:
   - kind: team
     selector:
       query: 'true'
@@ -758,6 +761,91 @@ resources:
             createdAt: .attributes.created_at | todate
           relations:
             members: if .__members then [.__members[] | .id] else [] end
+```
+
+</details>
+
+## Service Dependency
+
+<details>
+<summary>Service Dependency blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "datadogServiceDependency",
+  "description": "This blueprint represents a dependency relationship between Datadog services, where one service calls another.",
+  "title": "Datadog Service Dependency",
+  "icon": "Datadog",
+  "schema": {
+    "properties": {
+      "sourceService": {
+        "type": "string",
+        "title": "Source Service",
+        "description": "The service that is making the call (depends on other services)"
+      },
+      "calledServices": {
+        "type": "array",
+        "title": "Called Services",
+        "description": "List of services that are called by the source service",
+        "items": {
+          "type": "string"
+        }
+      },
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "A description of the dependency relationship"
+      }
+    },
+    "required": ["sourceService"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "source": {
+      "target": "datadogService",
+      "title": "Source Service",
+      "description": "The service that is making the call",
+      "many": false,
+      "required": true
+    },
+    "targets": {
+      "target": "datadogService",
+      "title": "Called Services",
+      "description": "The services that are called by the source service",
+      "many": true,
+      "required": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+resources:
+  - kind: serviceDependency
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .sourceService
+          title: .sourceService
+          blueprint: '"datadogServiceDependency"'
+          properties:
+            sourceService: .sourceService
+            calledServices: .calledServices
+            description: .description
+          relations:
+            source: .sourceService
+            targets: .calledServices
 ```
 
 </details>
