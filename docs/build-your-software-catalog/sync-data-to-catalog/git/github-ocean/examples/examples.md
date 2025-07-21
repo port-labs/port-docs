@@ -9,6 +9,8 @@ import GitHubResources from '../\_github_exporter_supported_resources.mdx'
 
 import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
+import FileBlueprint from './example-file-kind/\_example_file_blueprint.mdx'
+import RepoFileAppConfig from './example-file-kind/\_file_repo_app_config.mdx'
 
 
 # Resource mapping examples
@@ -59,6 +61,14 @@ The following example demonstrates ingestion of dependencies from a `package.jso
 
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/#ingest-files-from-your-repositories).
+
+## Map Files and Repositories
+
+The following example demonstrates mapping files to repository.
+
+<RepositoryBlueprint />
+<FileBlueprint />
+<RepoFileAppConfig />
 
 
 
