@@ -16,9 +16,8 @@ import PortYmlIngestionPattern from '../../\_port_yml_ingestion_pattern_template
 
 Port's GitLab integration makes it possible to manage Port entities with a GitOps approach, making your code projects into the source of truth for the various infrastructure assets you want to manage.
 
-:::info baseUrl parameter
-When [installing the Gitlab integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/installation#deploy-the-integration), the `baseUrl` parameter must be provided in order to use GitOps.  
-Without it, the integration will not be able to receive webhook events about pushes to the `port.yml` file.
+:::info baseUrl parameter (self-hosted integration)
+When [installing the GitLab integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/installation#deploy-the-integration) for a self-hosted setup, the `baseUrl` parameter is required to use GitOps. This enables the integration to receive webhook events about pushes to the `port.yml` file.
 :::
 
 ## Common use cases
