@@ -3,6 +3,7 @@ sidebar_position: 2
 ---
 
 import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
+import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
 
 # Entity page
 
@@ -20,10 +21,11 @@ The overview tab is a dashboard, used to display [widgets](/customize-pages-dash
 By default, each entity will have a `Details` widget, which displays the entity's properties and their values, and other metadata.
 
 ### Manage properties
-On the top right of the details widget, you can find the "Manage properties" button that opens the manage properties popover.
-Within the popover, you can:
-- Show/hide empty values - properties with empty fields will be hidden if the toggle is off.
-- Customize the displayed properties with [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
+
+In the top right corner of the details widget, you can find the <LogoImage logo="ManageProperties" verticalAlign="middle" /> button that opens the "manage properties" modal, which allows you to:
+
+- Show/hide empty values - properties with empty values will be hidden if the toggle is off.
+- Show/hide specific properties in the widget.
 
 Additional widgets can be added by clicking on the `+ Widget` button in the top right corner of the dashboard.
 
