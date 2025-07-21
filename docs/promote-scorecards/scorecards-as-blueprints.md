@@ -14,7 +14,8 @@ This capability is currently in closed beta, and is not yet generally available.
 If you would like to join the beta, please reach out to us.
 :::
 
-Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip>. This feature enables you to create and manage scorecards that evaluate entities in your data model based on customizable rules and levels.
+Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip>.   
+This feature enables you to create and manage scorecards using dedicated blueprints, allowing for rich customization, visualization and automation of your scorecards.  
 
 ## Why manage scorecards as blueprints?
 
@@ -209,7 +210,6 @@ Microsoft Teams:
 <details>
 <summary><b>GitHub workflow (Click to expand)</b></summary>
 
-**📝 Important:**  
 This workflow includes steps to send a message via **Slack** and **Microsoft Teams**.  
 **Use only the step(s) that apply to your use case.**
 
