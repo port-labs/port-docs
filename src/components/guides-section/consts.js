@@ -1199,6 +1199,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-gitlab-deployments",
     },
     {
+        title: "Visualize and manage your Azure DevOps deployments",
+        description: "Create a dashboard that visualizes and manages your Azure DevOps deployments",
+        tags: ["SDLC", "AzureDevops", "Actions", "Dashboards"],
+        logos: ["AzureDevops"],
+        link: "/guides/all/visualize-and-manage-azure-devops-deployments",
+    },
+    {
         title: "Visualize and manage your Statuspage incidents and components",
         description: "Create a dashboard that visualizes and manages your Statuspage incidents and components",
         tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
