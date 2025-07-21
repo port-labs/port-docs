@@ -70,11 +70,11 @@ Install the Helm chart:
     eventListener:
       type: "POLLING"
     config:
-      githubOrganization: <GITHUB_ORGANIZATION>
-      githubHost: <GITHUB_HOST> # e.g https://api.github.com
-      githubAppId: <GITHUB_APP_ID> # app client id also works
+      githubOrganization: "<GITHUB_ORGANIZATION>"
+      githubHost: "<GITHUB_HOST>" # e.g https://api.github.com
+      githubAppId: "<GITHUB_APP_ID>" # app client id also works
     secrets:
-      githubAppPrivateKey: <BASE_64_ENCODED_PRIVATEKEY>
+      githubAppPrivateKey: "<BASE_64_ENCODED_PRIVATEKEY>"
 
   # uncomment to enable live events
   # liveEvents:
@@ -101,10 +101,10 @@ Install the Helm chart:
     eventListener:
       type: "POLLING"
     config:
-      githubOrganization: <GITHUB_ORGANIZATION>
-      githubHost: <GITHUB_HOST> # e.g https://api.github.com
+      githubOrganization: "<GITHUB_ORGANIZATION>"
+      githubHost: "<GITHUB_HOST>" # e.g https://api.github.com
     secrets:
-      githubToken: <GITHUB_PAT>
+      githubToken: "<GITHUB_PAT>"
 
   # uncomment to enable live events
   # liveEvents:
@@ -150,9 +150,9 @@ integration:
     type: POLLING
   config:
     githubHost: https://api.github.com # Or your self-hosted GitHub URL
-    githubOrganization: <GITHUB_ORGANIZATION> # your github organization, e.g port-labs
+    githubOrganization: "<GITHUB_ORGANIZATION>" # your github organization, e.g port-labs
   secrets:
-    githubToken: <GITHUB_TOKEN>
+    githubToken: "<GITHUB_TOKEN>"
 
 # uncomment to enable live events
 # liveEvents:
