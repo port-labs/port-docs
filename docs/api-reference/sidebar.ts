@@ -673,57 +673,9 @@ const sidebar: SidebarsConfig = {
       ],
     },
     {
-      type: "category",
+      type: "doc",
+      id: "api-reference/pages",
       label: "Pages",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/pages",
-          label: "Pages overview",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-a-pages-permissions",
-          label: "Get a page's permissions",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/update-a-pages-permissions",
-          label: "Update a page's permissions",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-all-pages-in-your-portal",
-          label: "Get all pages in your portal",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-a-page",
-          label: "Get a page",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/delete-a-page",
-          label: "Delete a page",
-          className: "api-method delete",
-        },
-        {
-          type: "doc",
-          id: "api-reference/patch-a-widget",
-          label: "Patch a widget",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/delete-a-widget",
-          label: "Delete a widget",
-          className: "api-method delete",
-        },
-      ],
     },
   ],
 };
