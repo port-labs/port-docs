@@ -11,6 +11,10 @@ DORA (DevOps Research and Assessment) metrics are four key measurements that ind
 
 ## Guides
 
+- [Create and track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal)
+- [Track deployments and incidents from JIRA](/guides/all/setup-dora-metrics-jira)
+- [Track deployments from GitLab merge requests or jobs](/guides/all/set-up-deployments-dora-gitlab)
+
 <iframe
   width="560"
   height="315"
@@ -20,7 +24,3 @@ DORA (DevOps Research and Assessment) metrics are four key measurements that ind
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
   allowfullscreen
 ></iframe>
-
-- [Create and track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal)
-- [Track deployments and incidents from JIRA](/guides/all/setup-dora-metrics-jira)
-- [Track deployments from GitLab merge requests or jobs](/guides/all/set-up-deployments-dora-gitlab)
