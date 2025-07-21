@@ -77,7 +77,7 @@ You can choose one of these chart types:
 You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 ::: 
 
-#### Time filtering behavior in Number chart vs. Line Chart
+#### Time filtering in number charts vs. line charts
 
 The value shown in a **number chart** is calculated over **all available entities** of the selected blueprint. By default, it does not apply any time-based filtering.
 
