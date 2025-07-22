@@ -20,6 +20,7 @@ resources:
   - kind: issue
     selector:
       query: ".pull_request == null" # JQ boolean query. If evaluated to false - skip syncing the object.
+      state: "closed"
     port:
       entity:
         mappings:
