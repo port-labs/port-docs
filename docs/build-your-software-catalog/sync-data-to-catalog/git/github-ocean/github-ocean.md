@@ -8,7 +8,7 @@ import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
 # GitHub Self-Hosted (Beta)
 
-Port's GitHub integration allows you to model GitHub resources in your software catalog and ingest data into them.
+Port's GitHub self-hosted integration allows you to model GitHub resources in your software catalog and ingest data into them.
 
 
 ## Overview
@@ -18,8 +18,6 @@ Here's what you can do with the GitHub integration:
 - Map and organize your desired GitHub resources and their metadata in Port (see supported resources below).
 - Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Manage Port entities using GitOps.
-- Trigger GitHub workflows directly from Port.
-
 
 ### Supported resources
 
