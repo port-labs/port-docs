@@ -1,3 +1,4 @@
+# AI! Improve this changelog file. Don't touch the codeblocks, just change the sorrounding texts to be more comprehensive and comprehensible for an average person
 # Github Migration
 
 This guide works you through the process of migrating from Port's Github Cloud App to the new Github Integration powered by [Ocean](https://ocean.port.io/).
