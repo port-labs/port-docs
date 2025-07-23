@@ -426,7 +426,7 @@ It will then process the ServiceNow users list and send the response to the webh
 
 Follow the steps below to create the automation:
 
-1. Go to the [Actions & Automations](https://app.getport.io/actions-automations) page of your portal.
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
 
 2. Click on `+ Automation`.
 
@@ -490,7 +490,7 @@ It will then process the ServiceNow user and send the response to the webhook fo
 
 Follow the steps below to create the automation:
 
-1. Go to the [Actions & Automations](https://app.getport.io/actions-automations) page of your portal.
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
 
 2. Click on `+ Automation`.
 
@@ -550,7 +550,7 @@ This automation will trigger the [Get ServiceNow user by email](#get-service-now
 
 Follow the steps below to create the automation:
 
-1. Go to the [Actions & Automations](https://app.getport.io/actions-automations) page of your portal.
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
 
 2. Click on `+ Automation`.
 
@@ -624,6 +624,10 @@ Follow the steps below to create the automation:
 ## Conclusion
 
 You've successfully ingested ServiceNow users into your Port catalog and automatically mapped them to existing Port user accounts based on email addresses.
+
+<img src="/img/guides/servicenowUserIngested.png" border="1px" />
+
+<img src="/img/guides/servicenowMappedIngestedUser.png" border="1px" />
 
 
 ## Related guides
