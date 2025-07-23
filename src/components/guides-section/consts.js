@@ -1339,5 +1339,12 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
+    {
+        title: "Ingest and map HiBob users to Port user accounts",
+        description: "Ingest and map HiBob users to Port user accounts for seamless integration",
+        tags: ["SDLC","Actions", "Automations", "Webhook"],
+        logos: ["Webhook"],
+        link: "/guides/all/map-hibob-users-to-port-accounts",
+    },
     
 ]
