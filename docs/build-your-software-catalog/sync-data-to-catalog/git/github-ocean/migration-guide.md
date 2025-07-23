@@ -335,3 +335,5 @@ resources:
       query: "true"
       state: open # ✅  new
 ```
+
+# AI! make a markdown table of summary of key changes on this file, look at the summary of key changes here for inspiration: https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/migration#summary-of-key-changes
