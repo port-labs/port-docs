@@ -29,7 +29,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
-To install Port's GitHub integration, see [our dedicated installation guides](./installation).
+To install the integration, see the [installation page](./installation).
 
 
 ## Configuration
@@ -38,13 +38,7 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-To ingest GitHub objects, use one of the following methods:
-
-<Tabs queryString="method">
-
-<TabItem label="Using Port's UI" value="port">
-
-To manage your GitHub integration configuration using Port:
+You can manage your GitHub integration configuration using Port:
 
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 2. Under `Exporters`, click on the installed integration.
@@ -56,9 +50,6 @@ Using this method applies the configuration to all repositories that the GitHub 
 
 When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
 
-</TabItem>
-
-</Tabs>
 
 ### Default mapping configuration
 
@@ -70,7 +61,6 @@ This is the default mapping configuration for this integration:
 ```yaml showLineNumbers
 deleteDependentEntities: true
 createMissingRelatedEntities: true
-repositoryType: 'all'
 resources:
   - kind: repository
     selector:
