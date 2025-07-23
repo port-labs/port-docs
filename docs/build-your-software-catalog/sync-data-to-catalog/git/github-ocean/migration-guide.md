@@ -1,29 +1,30 @@
-# AI! Improve this changelog file. Don't touch the codeblocks, just change the sorrounding texts to be more comprehensive and comprehensible for an average person
-# Github Migration
+# Github Migration Guide
 
-This guide works you through the process of migrating from Port's Github Cloud App to the new Github Integration powered by [Ocean](https://ocean.port.io/).
+This guide will walk you through the process of migrating from Port's existing GitHub Cloud App to our new and improved GitHub Integration, which is powered by [Ocean](https://ocean.port.io/).
 
 ## Improvements
-- **More authentication options** - You can now run the integration using a PAT that you control.
-- **Enhanced performance** - Faster resync with improved API efficiency.
-- **Better selectors** - More granular selector for `pull requests`, `issues`, `dependentbot alerts`, `codescanning alerts`, `files`, and `folders`.
+The new Ocean-powered GitHub integration comes with several key improvements:
 
-## Major changes
+- **More authentication options** - You can now connect the integration using a Personal Access Token (PAT) that you control, giving you more flexibility.
+- **Enhanced performance** - Experience faster resyncs thanks to improved API efficiency, making your data available sooner.
+- **Better selectors** - Enjoy more granular control over what you sync with improved selectors for `pull requests`, `issues`, `dependabot alerts`, `codescanning alerts`, `files`, and `folders`.
 
-### Authentication model
+## Major Changes
 
-#### PAT
+### Authentication Model
 
-You can now run our Github integration by authenticating using a Personal Access Token rather than by installing a Github App, for more details see our [installation page](./installation). Sample helm value:
+#### Personal Access Token (PAT)
+
+You can now authenticate with our GitHub integration using a Personal Access Token (PAT) instead of a GitHub App. This gives you more control over the integration's permissions. For more details, see our [installation page](./installation). Below is a sample Helm value for this configuration:
 ```yaml showLineNumbers
 integration:
   secrets:
     githubToken: "<GITHUB_PAT>"
 ```
 
-#### Github app
+#### GitHub App
 
-You can also authenticate with our Ocean-powered Github integration using Github App, in this situation you would have to create the app yourself - this is similar to our existing "self-hosted app installation" and is [documented here](./installation/github-app.mdx). Sample helm value:
+If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is [documented here](./installation/github-app.mdx). Below is a sample Helm value for this configuration:
 ```yaml showLineNumbers
 integration:
   config:
@@ -34,22 +35,19 @@ integration:
 
 ### Webhooks
 
-The integration is now responsible for configuring live-events on Github, to receive live-events you need to grant the permission to create organization webhooks to your PAT. You'll also need to configure a public address for the integration by setting `liveEvents.baseUrl` when deploying with Helm/ArgoCD, or  setting `OCEAN__BASE_URL` environmental variable when starting the integration as a docker image using `docker run`. 
-[learn More about enabling live-events](./installation/#deploy-the-integration)
+The integration now automatically configures webhooks on GitHub to receive live events. To enable this, you must grant your PAT permission to create organization webhooks. Additionally, you need to provide a public URL for the integration. You can do this by setting `liveEvents.baseUrl` when deploying with Helm or ArgoCD, or by setting the `OCEAN__BASE_URL` environment variable when running the integration as a Docker container. [Learn more about enabling live events](./installation/#deploy-the-integration).
 
 ### Deployment
 
-We've expanded our self-hosted installation examples to support deploying on a Kubernetes cluster using Helm or ArgoCD. [learn More](./installation/#deploy-the-integration)
-
-When starting the integration you're expected to provide 
+We've expanded our self-hosted installation examples to support deploying on a Kubernetes cluster using Helm or ArgoCD. For more details, please refer to our [deployment documentation](./installation/#deploy-the-integration).
 
 ### Workflow Runs
 
-We've expanded the number of Workflow Runs ingested for any workflow in a repository to 100 rather than 10 workflow runs per repository.
+We have increased the number of workflow runs ingested for any given workflow in a repository. The new integration now fetches up to 100 of the latest workflow runs, up from the previous limit of 10.
 
-### Repository type
+### Repository Type
 
-You can now control what type of repositories to ingest data from, all the entity kinds that depend on repository will only ingest data from repositories matching this config.
+You can now specify the type of repositories (`public`, `private`, or `all`) from which to ingest data. All other data kinds that are associated with repositories (like pull requests, issues, etc.) will only be fetched from repositories that match this configuration.
 
 ```yaml showLineNumbers
 repositoryType: 'all' # ✅ fetch pull requests from all repositories. can also be "private", "public", etc
@@ -62,9 +60,9 @@ resources:
 
 ## Mapping Changes
 
-The blueprints used in Github have evolved to provide cleaner data structures and better relationships between entities. Understanding these changes is essential for a successful migration.
+The data blueprints for GitHub have been updated to provide cleaner data structures and improved relationships between different software catalog entities. Understanding these changes is crucial for a smooth migration.
 
-For the most part, we've moved to making it obvious where we added custom attribute to the raw response by naming such custom attributes with two leading underscore e.g `__repository`.
+A key change is how we denote custom attributes. We now add a double underscore prefix (e.g., `__repository`) to attributes that Port adds to the raw API response from GitHub. This makes it clear which fields are part of the original data and which are enrichments from the integration.
 
 ### Files
 <details>
@@ -124,15 +122,15 @@ resources:
 ```
 </details>
 
+Here are the key changes for file mappings:
+1. The `repos` selector is now a list of objects, where each object can specify the repository `name` and an optional `branch`. This provides more granular control over which files are fetched.
+2. File attributes are no longer nested under a `file` key. They are now at the top level of the data structure. For example, instead of `.file.path`, you should now use `.path`.
+3. The `repo` key has been renamed to `__repository` when referencing the repository a file belongs to, for consistency with other data kinds.
 
-There are two major changes in the file mapping:
-1. The `repos` is a list of object, you can specify the repository name and the branch. The branch is optional.
-2. The file content is no longer contained inside a "file" key, instead it is in a top-level. So you should do `.name` rather than `.file.name`
-3. In the returned file object, `repo` key has been renamed to `repository`.
+### Pull Requests and Issues
 
-### Pull Request and Issues
+For `pull-request` and `issue` kinds, we've introduced a new `state` selector. This allows you to filter which objects are ingested based on their state (e.g., `open`, `closed`).
 
-Pull request and issue kinds has gotten a new `state` selector, so now you can specify what state of objects to ingest.
 <details>
 <summary>Existing Configuration</summary>
 
@@ -239,8 +237,7 @@ resources:
 
 ### Folders
 
-Folders no longer include `folder.name` in the response, you need to construct the folder name using JQ:
-
+For the `folder` kind, the `folder.name` attribute is no longer part of the response. Instead, you can easily derive the folder name from the `folder.path` using a JQ expression, as shown in the example below:
 
 <details>
   <summary>Existing Configuration</summary>
@@ -297,10 +294,10 @@ resources:
 
 ### Teams
 
-When ingesting teams with `members` selector, we now use Github's GraphqQL API to reduce network calls, this results in two changes:
+To improve performance when fetching team members, we now use GitHub's GraphQL API instead of the REST API. This change has two main consequences:
 
-1. The id returned by the Rest API and the GraphqQL API are different for the same team, depending on whether mapping selector has `member` or not.
-2. included members will be in a `nodes` subarray.
+1. The ID for a team may differ depending on whether you are fetching its members. This is due to differences between GitHub's REST and GraphQL APIs.
+2. Team members are now located in a `nodes` subarray within the team object.
 
 <details>
   <summary>Existing Configuration</summary>
@@ -310,11 +307,11 @@ When ingesting teams with `members` selector, we now use Github's GraphqQL API t
   <summary>New Configuration</summary>
 </details>
 
-## Other changes
+## Other Changes
 
-### Dependentbot alerts
+### `dependabot-alert`
 
-Dependentbot alert kind can now take a `states` selector, this is an array of the states we want to ingest:
+The `dependabot-alert` kind now supports a `states` selector. This allows you to specify an array of states (e.g., `open`, `fixed`) to control which alerts are ingested:
 
 ```yaml showLineNumbers
 resources:
@@ -326,9 +323,9 @@ resources:
         - "fixed"
 ```
 
-### Codescanning alerts
+### `code-scanning-alerts`
 
-Codescanning alert can now take a `state` selector, this is a string denoting the alert state we want to ingest
+The `code-scanning-alerts` kind now supports a `state` selector. This allows you to specify a single state (e.g., `open`) to control which alerts are ingested:
 
 ```yaml showLineNumbers
 resources:
