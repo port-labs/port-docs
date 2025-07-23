@@ -103,11 +103,11 @@ const config = {
             activeBaseRegex: "^((?!api-reference|guides|solutions).)*$",
           },
           {
-            to: "/api-reference/port-api",
-            label: "API Reference",
+            to: "/solutions/overview",
+            label: "Solutions",
             position: "left",
-            className: "header-api-link",
-            activeBasePath: "api-reference",
+            className: "header-solutions-link",
+            activeBasePath: "solutions",
           },
           {
             to: "/guides",
@@ -117,11 +117,11 @@ const config = {
             activeBasePath: "guides",
           },
           {
-            to: "/solutions/overview",
-            label: "Solutions",
+            to: "/api-reference/port-api",
+            label: "API Reference",
             position: "left",
-            className: "header-solutions-link",
-            activeBasePath: "solutions",
+            className: "header-api-link",
+            activeBasePath: "api-reference",
           },
           {
             to: "https://github.com/port-labs/port-docs",
