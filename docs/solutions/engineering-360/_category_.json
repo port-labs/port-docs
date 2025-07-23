@@ -1,0 +1,9 @@
+{
+    "label": "Engineering 360",
+    "collapsible": true,
+    "collapsed": true,
+    "position": 3,
+    "customProps": {
+      "description": "Engineering 360"
+    }
+  }
