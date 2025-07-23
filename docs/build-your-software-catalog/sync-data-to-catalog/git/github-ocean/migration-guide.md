@@ -49,6 +49,8 @@ resources:
 
 The blueprints used in Github have evolved to provide cleaner data structures and better relationships between entities. Understanding these changes is essential for a successful migration.
 
+For the most part, we've moved to making it obvious where we added custom attribute to the raw response by naming such custom attributes with two leading underscore e.g `__repository`.
+
 ### Files
 <details>
   <summary>Existing configuration</summary>
@@ -141,6 +143,25 @@ resources:
             createdAt: ".created_at"
           relations:
             repository: .head.repo.name
+
+  - kind: issue
+    selector:
+      query: ".pull_request == null" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".repo + (.id|tostring)"
+          title: ".title"
+          blueprint: '"githubIssue"'
+          properties:
+            creator: ".user.login"
+            assignees: "[.assignees[].login]"
+            labels: "[.labels[].name]"
+            status: ".state"
+            createdAt: ".created_at"
+            link: ".html_url"
+          relations:
+            repository: ".repo" # ❌  changed
 ```
 
 </details>
@@ -196,12 +217,13 @@ resources:
             issueNumber: ".number"
             link: ".html_url"
           relations:
-            repository: ".__repository" # ✅  new
+            repository: ".__repository" # ✅  new, uses leading underscore to indicate custom enrichment.
 ```
 
 </details>
 
-## Workflow and Workflow runs
+## Workflow
+
 
 
 ### Folders
