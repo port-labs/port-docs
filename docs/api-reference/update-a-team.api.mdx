@@ -1,13 +1,13 @@
 ---
-id: patch-a-team
-title: "Patch a team"
-description: "This route allows you to patch a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/)."
-sidebar_label: "Patch a team"
+id: update-a-team
+title: "Update a team"
+description: "This route allows you to update a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Update a team"
 hide_title: true
 hide_table_of_contents: true
-api: eJzlV8Fu4zYQ/RWClyaAY8XpnoyigHe3QIuirZF6T4YPtDS2uZFElRzacQ3/e2dIKVJtJevkFGB9kGSRHM68ecN5OkhUayfHczkDVTi5GMgMXGp1hdqUcixnG+2ENR5BqDw3Oyf2xgs0olKYboQSSOt+cCIDVDp3QxEWpKoUSxDeQcZzfZUpMoAbaKaXqoABj1s3EKrMRGfX4U9Lm/wcLjMjclC2FIWx5MCS/AgWaFG6gfRBhBdkdp6Z1BdQomILi6sNYuXGSUKv3bAyFofaJM6ZG7tUacKXG7MFu9WwS66HciAt/OPB4UeT7eX4IFNTIlnjR1VVuU6D3eSrY1AO0tHuheIn3FdAMJnlV0iR7FTWVGBRg+NRDrMzy6HV5VqeYwyihF0ARZjVE05DeRzIgFHHhrJW7cmERijcue3jqfG/SrJpI4BwU1CShMoyC86B482CfU4SveUb1s4EB2I2dzrPBcNldRazCI/aIW0XVouc/gzPdm48m7dhlz7P+ygWd+y8PUEh/AhbZQkhDHjMe5LQQqDZLjF0w5uGHMRbzLO2kMkxWg+9rpxkIRB+p0p8Yj15REE4SL3VuA++LImlYDnYyPUxxnLiiYR1ZUoXGXF3e8u3/2/7JazJhPNpSolZEUx7JuXFLLzM3MtcNQ98hdIXFAaDsyAgOYxv01xnvVnoZz8NpBbYwQn21cbK2ELRiOQgblCTDS6DGNNrlpCPWyKs/XaR9IxfWnbPIAJcaL2GV9o6/PM5ZHL1wmClU/S2f8zRyef7zoOmeFriz2NWB5xxoifVvWYYVD7thLBSuYO48sPt6Jxjn2GlfI7ivib3a9jaxzta7LDZdiDprDH9iSuI0WrdB8JJkGS3sXNZlB/Oo5wIKl7jbQp0COImnAk1rTJBlxL1StMJuFPU0gyKlfFl9q6haFe9DMrpyfg2JGpoRz+eQ3sfG65YUscVmjsQ9Xpl1yCucl1o5HejP/TH63cN5+tAvDzmGri7u3PguEdx5C38mYEIehE0GacmKDbSWTU07xnCtzLyLTjUZyGJiI3JokRIWSMEqTCWyXaUhMadHLh3HSV3ebttBIe3dKTLRlqqSjfKkkLvG/WundARDH+zLxHeRja0babSv8O+VS0TT55a/W/IlqyFzQYUtzWOhAG4b6XrL4+qqHJopWfbI+uG9qTGzmRYVz2tTPBJI9uSUwpCTKa/kRXGIk4fDW9DTzIOC1V2dpx2PgxOpW5HWH83XxZ1ZhEeMalyRRlkeWGDOoi8m8vtSEat5eg+DkBSfjaGq24uD4elcvDF5scjv6ZsW1ad9LhVVqslJ4nomWnHz1l/vXShv7qvS/FaXKp4n4mjoW3JnN2q3PM/enwgEtea+8g6sqYsuxmHPkVnbmZsoF16djZxZcUVExKzFb44d9Ep7elk9ulXmr2sv+gKk/Eiq3b8FUDX4KcJ6IRaDO8OpMDKtQ9nmIxGucyU5zx1q/QhVGn9wGH1InFavjESvnJcvUsOh3gGHI9P8+PQsytqbJvZnJgFef0fzax/3A==
+api: eJzlV0Fv6zYM/iuCLmuBJG66dwqGAXlvAzYM24ouPQU5KDaT6NW2PIlKmgX57yMlu/YSty/tqcBysBVJpMiPpPj5IFGtnZzM5QxU4eRiIDNwqdUValPKiZxttBPWeASh8tzsnNgbL9AIX2WKJwWS4HdOZIBK524kgkSqSrEE4R1knc24gWZ7qQoY8Lp1A6HKTHSOHf2wtMmP4TEzIgdlS1EYS4ctyZCggYTSDaSPIkyQ2nlmUl9AiYo1LK42iJWbJAlNu1FlLI60SZwzQ7tUacKPodmC3WrYJdcjOZAW/vbg8LPJ9nJykKkpkbTxUFVVrtOgN/nqGJWDdHR6oXiE+woIJ7P8CimSnsqaCixqcLzKbnZ2ObS6XMtzkEGUsAugCLN6xmkkjwMZMOroUNaqPanQCIU71308Vf5nSTptBBCGBQVJqCyz4Bw4Pizo5yDRLL+wNiYYEKO503kuGC6rsxhFeNIO6bggLXL6Mzo7ubFs3rpd+jzvy7F4Ymf2BIXwI2yVJYQw4DHvCUILgWa9lcINHxpiEF8xztpCJidoPfSachKFkPE7VWKbyWQSeeEg9VbjPhizpDQFy97GLROMBcUbCezKlC6mxO3NDb/+e+5DkMmE82lKkVkRTnvOyovT8DJ1ryereeQnlL4gNxidBSHJbnw7z3XWG4b+9KeF1AIbOMW+4lgZWyhakezEEDXp4DqIPr1FhGzcUsbab1dJz/qldfcCIsCV1qt4pa3DP15CJlevLFY6RW/71xxdfb7vQmiqp838eYzqgCNO6UmFrxkGld91XFip3EGU/HQzPs+xn2ClfI7ivk7ut2RrX96RsMPm2IGky8b0B66gjFbrPhBOnCS9jZ7LvPx07uVUUPEab1OgWxA34VKo0yoT9ChRrzRdgTtFPc2gWBlfZh8ailbqdVBOr8b3IVFDO/7+HNr72HHFklqu0NyCqNkruwZxletCI8+Nf9efrz80nG8D8XKfa+Bub8+B4ybFnrfwZwYi6HQJpjE0gbMR0aqh+cgQvjcj34NDfRcSi9iYLHKElElC4AoTmWzHSWjcyYF711Fyl7fbhnF4S1e6bLilqnRDLcn1vlXv2g0dwvAX2xLhbWhD22Yq/RvsW9oy9WSp1f+EaMma2WxAcVtjTxiA+5a7/vykiiqHlnu2PbJuaM907IyHdenTygSbNLIueUdOiOndr6SFsYjbx6Ob0JOMw0KVnRMfup8Gp2S3Q63/Px8XdWwRnjCpckUxZIJhAz+ImTeX27GMbMvRexKgpAhtDNfdXB4OS+XgwebHI09TvC3zThpuldVqyWGiBM2043HWXzFd7K/u62K8FheT3hccaTK35LTdqtzzPxo+Uh7XvPvIVLLOWrYzLn2J1gxnrKAVPbueuLiixJT4bIWv7l10qvtuOvvyC+1e1l91hclYyKodfwnQM9hpAjyhHMPcgUhYufbhGpNRKVea8hyobqE+hkKtB+xWLxKnFRw94Sf71StyOMRr4Hh83h+XXpSosW12c2AWZPW/M/WCGw==
 sidebar_class_name: "patch api-method"
-info_path: api-reference-temp/port-api
+info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
@@ -22,7 +22,7 @@ import Heading from "@theme/Heading";
 <Heading
   as={"h1"}
   className={"openapi__heading"}
-  children={"Patch a team"}
+  children={"Update a team"}
 >
 </Heading>
 
@@ -36,7 +36,7 @@ import Heading from "@theme/Heading";
 
 
 
-This route allows you to patch a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
+This route allows you to update a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
 
 <Heading
   id={"request"}
@@ -47,7 +47,7 @@ This route allows you to patch a team's details. This can be used to update the 
 </Heading>
 
 <ParamsDetails
-  parameters={[{"schema":{"type":"string"},"in":"path","name":"name","required":true,"description":"The name of the team you want to patch."}]}
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"name","required":true,"description":"The name of the team you want to update."}]}
 >
   
 </ParamsDetails>

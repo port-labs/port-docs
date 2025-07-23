@@ -5,9 +5,9 @@ description: "This route allows you to get a specific invocation result.<br/><br
 sidebar_label: "Get an invocation's result"
 hide_title: true
 hide_table_of_contents: true
-api: eJzVU0tr20AQ/ivLXJqAa9k9ilIwtATTS0jdkzFlLY2txfKusg+lrtj/3pmVHDtBCfTYi7SPmZ35HtNBia6wqvHKaMhhVSknrAkehaxr8+TEyQThjdijF1K4Bgu1U4VQujWF5CRh0YXaTz9vbfYlfVZG1CitFkdj6ZktvSYWSyH3qL2biKLC4iD40Fco1qUpwpFu0mObm8r7xuVZRsdu2hjrp8pkUn3sszPTom0VPt1OYQJe7h3ka1gsYTOBRlp5RI+WzzpwVOcoIe/AnxokaM5bpfcQJ6AYaSN9RW9oyqHdBc8vVVIlAomWrl+ysxBBq8eA4hIjdsYmIKnBK164QYuPQVksIfc2YKQmHRbBKn9KLW6JJapCCCzKMucnvUIHG44kWhujHW0JwqfZjH8vu/mKO0nMi4chEiJhIwYqQwWBBINJjzKHrJ1nqcGMGzxg1o0CjsAd2vbMYbA1JZ8lkY06K0Isjt0Gdwm4AvuDpeiBnCE/q0Jp3/F0EWIRqH+r/qTWYNCqInooKybtdialK19z/D3VE4v7JYVy2z0z8+mMdW6M80epOXx4/Y5drK9U+uAG/77WuoPCaE/E/HdD0fPq8bfPmloSf8REkqob3LCGdk6BKTkxzI6gRT4+BCRkRURyXtdtpcOfto6Rj2kSLDuZlq20Sm5ZEbJNqRyvyYU7WTt8h9mbh2FCbsW/ztYozrOpNDuqlXXgHS0PZLG3hjxursfm7tuKuQlM1LVJD8mkw4JBjpZ67d6+Ln95YEZTuq4fgRif4/urNzOGabigYggx/gVN2QHR
+api: eJzVVMFu2zAM/RVBl7VAFjdAT8YwIMCGotil6LpTEAyKzcRaHEulJGeZ4X8fKTu117oDttN2sWWLjyKf3mMjvdo5ma7k8lauZzIHl6G2XptKpvKh0E6gCR6EKktzdOJkgvBG7MALJZyFTG91JnRVm0wxSCC4UPr5uw0m7+PjwYgSFFbiYJDSbCibWN4KtYPKu5nICsj2gn/6AsQqN1k40E5Mtr4ovLcuTRL67ebWoJ9rkyj9tkMnpgasNRwv53ImrUJ1AA/I7TTSUeaDkmkj/ckCNeM86mon25nU3JtVviBURRj6Gjr4qnPKTW0B0jbCY9AIuUw9BnjOz1KESj8GEANGbA3GVmKJI2bmsiV+HWQBtT/FEjfEC51C5COoPOUUXoOTa44kIq2pHH1SC9dXC379evoH2CriWtz3kVRuZipPaThWWVvq7ujkm2PAmBOLxgLG0+jL7PlJYEfQrSodEEuAaHCSvwM4R+1N7LVjxlac95yHOlJ5rrkcVd6NTu+Oaxl6fXX9ssslS8oEzEActS8it1R9TZTnY96PyonKeOI/VPk/TcWA+j0pL9X2N0y0HbfkjMJQJZKsG81C6k9lUi+SKNSEhbqHpJk0QitZuVifvRWwJPDZnMrqszeJkqnd4IaAkQk+8x10tJ+t8EQjwT7BaTDoMlD9qH/E0mTv4YJsQ6g2enprIlz7kuPv6DyxvLulUC67Y3Axv+JLs8b5g4oy6LPf8DyrRm594/pJJp/dQjMI6/8ajz2vHr77xJaK+CMm4lU1vRpWsl5QYARHhlkRtEinhyNdZGHYJSvZNBvl4AuWbcu/aSIiTzha1gq12vCNkGxy7XidT+t7zOzFfW+dS/FnM/aVPs+iqlhRtSoDf9FyTxJ7bfi3awL2CuPqu9hlloH1oywvhgsr/MltNx8fmNLA/I61vY/a7hecfbLC56LvSuAn+2wS0jSdc9r2Kb7behXRtziQwZ237U/3wNMv
 sidebar_class_name: "get api-method"
-info_path: api-reference-temp/port-api
+info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
@@ -47,7 +47,7 @@ This route allows you to get a specific invocation result.<br/><br/>To learn mor
 </Heading>
 
 <ParamsDetails
-  parameters={[{"schema":{"type":"string"},"in":"path","name":"invocation_identifier","description":"A unique identifier for the agent invocation.","required":true}]}
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"invocation_identifier","required":true,"description":"A unique identifier for the agent invocation."}]}
 >
   
 </ParamsDetails>
@@ -62,7 +62,7 @@ This route allows you to get a specific invocation result.<br/><br/>To learn mor
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Default Response"}}}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
 >
   
 </StatusCodes>

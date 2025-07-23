@@ -1,0 +1,72 @@
+---
+id: get-a-page
+title: "Get a page"
+description: "**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>** This route allows you to get a specific page in your portal.<br/><br/>To learn more about pages, checkout the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page)."
+sidebar_label: "Get a page"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVk1vGzcQ/SsET7YhaW3AJ6EoYKBFEOQiJO5J1YHijiRWK5Lhh1Rlsf+9b7j62DhKD+mlQHuRd5czwzeP7w3dyqTWUU7ncqbWFOViJGuKOhifjLNyKh8eXjckyqJ4mb0XJgqdQyCbmqMwViwpqRE/mHRZESsXdvggGqW3+EohKUTsVWNqxXWjULYWPrhE+vqOBO1yUwvUqCmIo8tBeIfkRmSbo1o2JMxK5EgIttphMw0Yk5+Wofq5/IhZQyoSKqxQIDmRAH7eo3d7CntDh8VdpbwZlxCymirPy/foBLAJ1Y1dIw+NAoZ3xqbBBg8P4pWXgsuJhGoad4gMlPdaUxJKRE/arIwWXJaJGbQxKPTqBKAGK3a8qVqiXsmII6E3pLf8XsDXTucdSC3ELe42Kfk4rSp8jhOuOjGu0jkmtzNfaFxKjGsVN0unQh3HIHbsm7w2NpZGK60AxK1L5P3kdytH0qugdpQosBBaGQFgp+S0lenoCRqIKYAT2Y2kYUl4lTbIssjBm6kBDg1TwLdAn7MJVMtpCpneaomVlK35nMHLJUu4VWk0UARRmgqbBwUVgVLnKSgQ7exEdtBmJEjMpGPBuQR/2HU6X/AS8j2UBA0D+PPjE//5evtfaKVyk8THUyTwamcTgHCs8r4xurBc/RE5YcgEtAooyfTl3ZZ/kRyRulJNJHBDIbhwk7UdxQi2b6x1Q8rmXPdcBx2pujYMRzWzwe79dh2nPj8+f9vly5XJg0mbwi3Q78F4PaT9oKKwjr2abf2vpuKa9fekvJXbjzHR9dzCDxsHJBKuLhaB5qey2j/146JqrwU6ycIM+7N/cmgQejYqZs3ZpyDg1mqO14CBxj8x4z3JZ6VfSEPaBzpeTfiSgTaYL+XM5MmnG1IYo4VZY1eupJvUcPwM+/E4RyjD7vl6mjzyEXkX006VQz9Vf1cGG/ct33DcXmXz/03xH7gpTvJL9GeqfIOjYsEURbcni8zl/qn4hf+bGMnp4HqAtjeOx8Rctu0S5P8Wmq7jz7gRAs90PO5VMHx8xUm1KUdZ3zb4UHx3H0+z4178s1vmOz2efWfZdJBn5jc8buHCr+7AboHok/O4hT7gRWvyaZD6zYhl519mzrtfXxGrMhM69Py2eP70wNVvwno7DHoI/Mvz52ZK2/YTpesu8f3SdzNOLV4Y4A4wOP8Ciyecrg==
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a page"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/pages/{identifier}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>** This route allows you to get a specific page in your portal.<br/><br/>To learn more about pages, checkout the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page).
+
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","required":true,"description":"The unique identifier of the resource you want to operate on."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

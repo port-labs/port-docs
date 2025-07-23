@@ -813,6 +813,8 @@ components:
                     type: array
                     items:
                       type: string
+                  showEmptyValues:
+                    type: boolean
                   blueprint:
                     type: string
                 additionalProperties: false
@@ -851,6 +853,8 @@ components:
                     type: array
                     items:
                       type: string
+                  showEmptyValues:
+                    type: boolean
                   blueprint:
                     type: string
                 additionalProperties: false
@@ -2808,6 +2812,8 @@ components:
                           type: array
                           items:
                             type: string
+                        showEmptyValues:
+                          type: boolean
                         blueprint:
                           type: string
                       additionalProperties: false
@@ -2846,6 +2852,8 @@ components:
                           type: array
                           items:
                             type: string
+                        showEmptyValues:
+                          type: boolean
                         blueprint:
                           type: string
                       additionalProperties: false
@@ -5345,10 +5353,10 @@ paths:
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
     patch:
-      summary: Patch a blueprint's permissions
+      summary: Update a blueprint's permissions
       tags:
         - Blueprints
-      description: This route allows you to patch the permissions of a
+      description: This route allows you to update the permissions of a
         blueprint.<br/><br/>To learn more about permissions, check out the
         [documentation](https://docs.port.io/build-your-software-catalog/set-catalog-rbac/examples).
       requestBody:
@@ -6284,13 +6292,16 @@ paths:
                   description: The icon of the entity.
                 team:
                   oneOf:
-                    - type: string
+                    - title: Team (Single)
+                      type: string
                       description: The Port team/s to which the entity will belong.
-                    - type: array
+                    - title: Teams (Multiple)
+                      type: array
                       items:
                         type: string
                       description: The Port team/s to which the entity will belong.
-                    - $ref: "#/components/schemas/def-6"
+                    - title: Additional query
+                      $ref: "#/components/schemas/def-6"
                 properties:
                   type: object
                   default: {}
@@ -6414,13 +6425,16 @@ paths:
                         description: The icon of the entity.
                       team:
                         oneOf:
-                          - type: string
+                          - title: Team (Single)
+                            type: string
                             description: The Port team/s to which the entity will belong.
-                          - type: array
+                          - title: Teams (Multiple)
+                            type: array
                             items:
                               type: string
                             description: The Port team/s to which the entity will belong.
-                          - $ref: "#/components/schemas/def-6"
+                          - title: Additional query
+                            $ref: "#/components/schemas/def-6"
                       properties:
                         type: object
                         default: {}
@@ -6630,13 +6644,16 @@ paths:
                           description: The icon of the entity.
                         team:
                           oneOf:
-                            - type: string
+                            - title: Team (Single)
+                              type: string
                               description: The Port team/s to which the entity will belong.
-                            - type: array
+                            - title: Teams (Multiple)
+                              type: array
                               items:
                                 type: string
                               description: The Port team/s to which the entity will belong.
-                            - $ref: "#/components/schemas/def-6"
+                            - title: Additional query
+                              $ref: "#/components/schemas/def-6"
                         properties:
                           type: object
                           default: {}
@@ -6748,13 +6765,16 @@ paths:
                         description: The icon of the entity.
                       team:
                         oneOf:
-                          - type: string
+                          - title: Team (Single)
+                            type: string
                             description: The Port team/s to which the entity will belong.
-                          - type: array
+                          - title: Teams (Multiple)
+                            type: array
                             items:
                               type: string
                             description: The Port team/s to which the entity will belong.
-                          - $ref: "#/components/schemas/def-6"
+                          - title: Additional query
+                            $ref: "#/components/schemas/def-6"
                       properties:
                         type: object
                         default: {}
@@ -6787,7 +6807,7 @@ paths:
                     additionalProperties: true
                   description: Array of entities to create
                   minItems: 1
-                  maxItems: 20
+                  maxItems: 50
               required:
                 - entities
               additionalProperties: false
@@ -7030,7 +7050,7 @@ paths:
                 description: The json provided does not match the route's schema
   "/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}":
     patch:
-      summary: Patch an entity
+      summary: Update an entity
       tags:
         - Entities
       description: This route allows you to edit a specific entity in your software
@@ -7165,13 +7185,16 @@ paths:
                         description: The icon of the entity.
                       team:
                         oneOf:
-                          - type: string
+                          - title: Team (Single)
+                            type: string
                             description: The Port team/s to which the entity will belong.
-                          - type: array
+                          - title: Teams (Multiple)
+                            type: array
                             items:
                               type: string
                             description: The Port team/s to which the entity will belong.
-                          - $ref: "#/components/schemas/def-6"
+                          - title: Additional query
+                            $ref: "#/components/schemas/def-6"
                       properties:
                         type: object
                         default: {}
@@ -7303,11 +7326,16 @@ paths:
                   description: The icon of the entity.
                 team:
                   oneOf:
-                    - type: string
-                    - type: array
+                    - title: Team (Single)
+                      type: string
+                      description: The Port team/s to which the entity will belong.
+                    - title: Teams (Multiple)
+                      type: array
                       items:
                         type: string
-                    - $ref: "#/components/schemas/def-6"
+                      description: The Port team/s to which the entity will belong.
+                    - title: Additional query
+                      $ref: "#/components/schemas/def-6"
                   description: The Port team/s to which the entity will belong.
                 properties:
                   type: object
@@ -7401,13 +7429,16 @@ paths:
                         description: The icon of the entity.
                       team:
                         oneOf:
-                          - type: string
+                          - title: Team (Single)
+                            type: string
                             description: The Port team/s to which the entity will belong.
-                          - type: array
+                          - title: Teams (Multiple)
+                            type: array
                             items:
                               type: string
                             description: The Port team/s to which the entity will belong.
-                          - $ref: "#/components/schemas/def-6"
+                          - title: Additional query
+                            $ref: "#/components/schemas/def-6"
                       properties:
                         type: object
                         default: {}
@@ -7621,13 +7652,16 @@ paths:
                         description: The icon of the entity.
                       team:
                         oneOf:
-                          - type: string
+                          - title: Team (Single)
+                            type: string
                             description: The Port team/s to which the entity will belong.
-                          - type: array
+                          - title: Teams (Multiple)
+                            type: array
                             items:
                               type: string
                             description: The Port team/s to which the entity will belong.
-                          - $ref: "#/components/schemas/def-6"
+                          - title: Additional query
+                            $ref: "#/components/schemas/def-6"
                       properties:
                         type: object
                         default: {}
@@ -8611,13 +8645,16 @@ paths:
                           description: The icon of the entity.
                         team:
                           oneOf:
-                            - type: string
+                            - title: Team (Single)
+                              type: string
                               description: The Port team/s to which the entity will belong.
-                            - type: array
+                            - title: Teams (Multiple)
+                              type: array
                               items:
                                 type: string
                               description: The Port team/s to which the entity will belong.
-                            - $ref: "#/components/schemas/def-6"
+                            - title: Additional query
+                              $ref: "#/components/schemas/def-6"
                         properties:
                           type: object
                           default: {}
@@ -8831,13 +8868,16 @@ paths:
                           description: The icon of the entity.
                         team:
                           oneOf:
-                            - type: string
+                            - title: Team (Single)
+                              type: string
                               description: The Port team/s to which the entity will belong.
-                            - type: array
+                            - title: Teams (Multiple)
+                              type: array
                               items:
                                 type: string
                               description: The Port team/s to which the entity will belong.
-                            - $ref: "#/components/schemas/def-6"
+                            - title: Additional query
+                              $ref: "#/components/schemas/def-6"
                         properties:
                           type: object
                           default: {}
@@ -9032,8 +9072,11 @@ paths:
                     - property
                     - query
                 - type: object
+                  title: Count values
                   oneOf:
-                    - properties:
+                    - type: object
+                      title: Group by property
+                      properties:
                         func:
                           enum:
                             - countValues
@@ -9046,7 +9089,9 @@ paths:
                         - query
                         - property
                       additionalProperties: false
-                    - properties:
+                    - type: object
+                      title: Group by relation
+                      properties:
                         func:
                           enum:
                             - countValues
@@ -9059,7 +9104,9 @@ paths:
                         - query
                         - relation
                       additionalProperties: false
-                    - properties:
+                    - type: object
+                      title: Group by scorecard
+                      properties:
                         func:
                           enum:
                             - countValues
@@ -9072,7 +9119,9 @@ paths:
                         - query
                         - scorecard
                       additionalProperties: false
-                    - properties:
+                    - type: object
+                      title: Group by scorecard rule
+                      properties:
                         func:
                           enum:
                             - countValues
@@ -9134,13 +9183,16 @@ paths:
                           description: The icon of the entity.
                         team:
                           oneOf:
-                            - type: string
+                            - title: Team (Single)
+                              type: string
                               description: The Port team/s to which the entity will belong.
-                            - type: array
+                            - title: Teams (Multiple)
+                              type: array
                               items:
                                 type: string
                               description: The Port team/s to which the entity will belong.
-                            - $ref: "#/components/schemas/def-6"
+                            - title: Additional query
+                              $ref: "#/components/schemas/def-6"
                         properties:
                           type: object
                           default: {}
@@ -10098,7 +10150,7 @@ paths:
                       properties:
                         identifier:
                           type: string
-                          pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                          pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                           maxLength: 30
                           description: The identifier of the blueprint.
                         title:
@@ -10130,6 +10182,9 @@ paths:
                         ownership:
                           anyOf:
                             - type: object
+                              title: Inherited
+                              description: Ownership of the blueprint's entities will be defined by a hidden
+                                relation to the `Team` blueprint.
                               properties:
                                 type:
                                   type: string
@@ -10137,13 +10192,21 @@ paths:
                                     - Inherited
                                 path:
                                   type: string
+                                  description: The `path` key is a dot-separated path of relation identifiers that
+                                    lead to the desired blueprint.
                                 title:
                                   type: string
+                                  description: The title of the ownership property. The default value is `Owning
+                                    teams`.
                               additionalProperties: false
                               required:
                                 - type
                                 - path
                             - type: object
+                              title: Direct
+                              description: Ownership of the blueprint's entities will be inherited from a
+                                different related blueprint with Direct
+                                ownership.
                               properties:
                                 type:
                                   type: string
@@ -10151,6 +10214,8 @@ paths:
                                     - Direct
                                 title:
                                   type: string
+                                  description: The title of the ownership property. The default value is `Owning
+                                    teams`.
                               additionalProperties: false
                               required:
                                 - type
@@ -10651,7 +10716,6 @@ paths:
                                       type: string
                                   required:
                                     - path
-                                    - fromBlueprint
                                   additionalProperties: false
                             additionalProperties: false
                             required:
@@ -10793,7 +10857,7 @@ paths:
               properties:
                 identifier:
                   type: string
-                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                   maxLength: 30
                   description: The identifier of the blueprint.
                 title:
@@ -10825,6 +10889,9 @@ paths:
                 ownership:
                   anyOf:
                     - type: object
+                      title: Inherited
+                      description: Ownership of the blueprint's entities will be defined by a hidden
+                        relation to the `Team` blueprint.
                       properties:
                         type:
                           type: string
@@ -10832,13 +10899,20 @@ paths:
                             - Inherited
                         path:
                           type: string
+                          description: The `path` key is a dot-separated path of relation identifiers that
+                            lead to the desired blueprint.
                         title:
                           type: string
+                          description: The title of the ownership property. The default value is `Owning
+                            teams`.
                       additionalProperties: false
                       required:
                         - type
                         - path
                     - type: object
+                      title: Direct
+                      description: Ownership of the blueprint's entities will be inherited from a
+                        different related blueprint with Direct ownership.
                       properties:
                         type:
                           type: string
@@ -10846,6 +10920,8 @@ paths:
                             - Direct
                         title:
                           type: string
+                          description: The title of the ownership property. The default value is `Owning
+                            teams`.
                       additionalProperties: false
                       required:
                         - type
@@ -11345,7 +11421,6 @@ paths:
                               type: string
                           required:
                             - path
-                            - fromBlueprint
                           additionalProperties: false
                     additionalProperties: false
                     required:
@@ -11450,7 +11525,7 @@ paths:
                     properties:
                       identifier:
                         type: string
-                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                         maxLength: 30
                         description: The identifier of the blueprint.
                       title:
@@ -11482,6 +11557,9 @@ paths:
                       ownership:
                         anyOf:
                           - type: object
+                            title: Inherited
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              relation to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -11489,13 +11567,20 @@ paths:
                                   - Inherited
                               path:
                                 type: string
+                                description: The `path` key is a dot-separated path of relation identifiers that
+                                  lead to the desired blueprint.
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
                               - path
                           - type: object
+                            title: Direct
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with Direct ownership.
                             properties:
                               type:
                                 type: string
@@ -11503,6 +11588,8 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
@@ -12003,7 +12090,6 @@ paths:
                                     type: string
                                 required:
                                   - path
-                                  - fromBlueprint
                                 additionalProperties: false
                           additionalProperties: false
                           required:
@@ -12200,7 +12286,7 @@ paths:
                     properties:
                       identifier:
                         type: string
-                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                         maxLength: 30
                         description: The identifier of the blueprint.
                       title:
@@ -12232,6 +12318,9 @@ paths:
                       ownership:
                         anyOf:
                           - type: object
+                            title: Inherited
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              relation to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -12239,13 +12328,20 @@ paths:
                                   - Inherited
                               path:
                                 type: string
+                                description: The `path` key is a dot-separated path of relation identifiers that
+                                  lead to the desired blueprint.
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
                               - path
                           - type: object
+                            title: Direct
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with Direct ownership.
                             properties:
                               type:
                                 type: string
@@ -12253,6 +12349,8 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
@@ -12753,7 +12851,6 @@ paths:
                                     type: string
                                 required:
                                   - path
-                                  - fromBlueprint
                                 additionalProperties: false
                           additionalProperties: false
                           required:
@@ -12895,7 +12992,7 @@ paths:
               properties:
                 identifier:
                   type: string
-                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                   maxLength: 30
                   description: The identifier of the blueprint.
                 title:
@@ -12927,6 +13024,9 @@ paths:
                 ownership:
                   anyOf:
                     - type: object
+                      title: Inherited
+                      description: Ownership of the blueprint's entities will be defined by a hidden
+                        relation to the `Team` blueprint.
                       properties:
                         type:
                           type: string
@@ -12934,13 +13034,20 @@ paths:
                             - Inherited
                         path:
                           type: string
+                          description: The `path` key is a dot-separated path of relation identifiers that
+                            lead to the desired blueprint.
                         title:
                           type: string
+                          description: The title of the ownership property. The default value is `Owning
+                            teams`.
                       additionalProperties: false
                       required:
                         - type
                         - path
                     - type: object
+                      title: Direct
+                      description: Ownership of the blueprint's entities will be inherited from a
+                        different related blueprint with Direct ownership.
                       properties:
                         type:
                           type: string
@@ -12948,6 +13055,8 @@ paths:
                             - Direct
                         title:
                           type: string
+                          description: The title of the ownership property. The default value is `Owning
+                            teams`.
                       additionalProperties: false
                       required:
                         - type
@@ -13447,7 +13556,6 @@ paths:
                               type: string
                           required:
                             - path
-                            - fromBlueprint
                           additionalProperties: false
                     additionalProperties: false
                     required:
@@ -13549,7 +13657,7 @@ paths:
                     properties:
                       identifier:
                         type: string
-                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                         maxLength: 30
                         description: The identifier of the blueprint.
                       title:
@@ -13581,6 +13689,9 @@ paths:
                       ownership:
                         anyOf:
                           - type: object
+                            title: Inherited
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              relation to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -13588,13 +13699,20 @@ paths:
                                   - Inherited
                               path:
                                 type: string
+                                description: The `path` key is a dot-separated path of relation identifiers that
+                                  lead to the desired blueprint.
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
                               - path
                           - type: object
+                            title: Direct
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with Direct ownership.
                             properties:
                               type:
                                 type: string
@@ -13602,6 +13720,8 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
@@ -14102,7 +14222,6 @@ paths:
                                     type: string
                                 required:
                                   - path
-                                  - fromBlueprint
                                 additionalProperties: false
                           additionalProperties: false
                           required:
@@ -14265,10 +14384,10 @@ paths:
                 additionalProperties: false
                 description: The json provided does not match the route's schema
     patch:
-      summary: Patch a blueprint
+      summary: Update a blueprint
       tags:
         - Blueprints
-      description: This route allows you to patch a specific blueprint in your Port
+      description: This route allows you to update a specific blueprint in your Port
         account.<br/><br/>To learn more about blueprints, check out the
         [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
       requestBody:
@@ -14279,7 +14398,7 @@ paths:
               properties:
                 identifier:
                   type: string
-                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                   maxLength: 30
                   description: The identifier of the blueprint.
                 title:
@@ -14311,6 +14430,9 @@ paths:
                 ownership:
                   anyOf:
                     - type: object
+                      title: Inherited
+                      description: Ownership of the blueprint's entities will be defined by a hidden
+                        relation to the `Team` blueprint.
                       properties:
                         type:
                           type: string
@@ -14318,13 +14440,20 @@ paths:
                             - Inherited
                         path:
                           type: string
+                          description: The `path` key is a dot-separated path of relation identifiers that
+                            lead to the desired blueprint.
                         title:
                           type: string
+                          description: The title of the ownership property. The default value is `Owning
+                            teams`.
                       additionalProperties: false
                       required:
                         - type
                         - path
                     - type: object
+                      title: Direct
+                      description: Ownership of the blueprint's entities will be inherited from a
+                        different related blueprint with Direct ownership.
                       properties:
                         type:
                           type: string
@@ -14332,6 +14461,8 @@ paths:
                             - Direct
                         title:
                           type: string
+                          description: The title of the ownership property. The default value is `Owning
+                            teams`.
                       additionalProperties: false
                       required:
                         - type
@@ -14750,7 +14881,6 @@ paths:
                               type: string
                           required:
                             - path
-                            - fromBlueprint
                           additionalProperties: false
                     additionalProperties: false
                     required:
@@ -14848,7 +14978,7 @@ paths:
                     properties:
                       identifier:
                         type: string
-                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                         maxLength: 30
                         description: The identifier of the blueprint.
                       title:
@@ -14880,6 +15010,9 @@ paths:
                       ownership:
                         anyOf:
                           - type: object
+                            title: Inherited
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              relation to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -14887,13 +15020,20 @@ paths:
                                   - Inherited
                               path:
                                 type: string
+                                description: The `path` key is a dot-separated path of relation identifiers that
+                                  lead to the desired blueprint.
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
                               - path
                           - type: object
+                            title: Direct
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with Direct ownership.
                             properties:
                               type:
                                 type: string
@@ -14901,6 +15041,8 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
@@ -15401,7 +15543,6 @@ paths:
                                     type: string
                                 required:
                                   - path
-                                  - fromBlueprint
                                 additionalProperties: false
                           additionalProperties: false
                           required:
@@ -15726,7 +15867,7 @@ paths:
                     properties:
                       identifier:
                         type: string
-                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                         maxLength: 30
                         description: The identifier of the blueprint.
                       title:
@@ -15758,6 +15899,9 @@ paths:
                       ownership:
                         anyOf:
                           - type: object
+                            title: Inherited
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              relation to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -15765,13 +15909,20 @@ paths:
                                   - Inherited
                               path:
                                 type: string
+                                description: The `path` key is a dot-separated path of relation identifiers that
+                                  lead to the desired blueprint.
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
                               - path
                           - type: object
+                            title: Direct
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with Direct ownership.
                             properties:
                               type:
                                 type: string
@@ -15779,6 +15930,8 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
@@ -16279,7 +16432,6 @@ paths:
                                     type: string
                                 required:
                                   - path
-                                  - fromBlueprint
                                 additionalProperties: false
                           additionalProperties: false
                           required:
@@ -16493,7 +16645,7 @@ paths:
                     properties:
                       identifier:
                         type: string
-                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                         maxLength: 30
                         description: The identifier of the blueprint.
                       title:
@@ -16525,6 +16677,9 @@ paths:
                       ownership:
                         anyOf:
                           - type: object
+                            title: Inherited
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              relation to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -16532,13 +16687,20 @@ paths:
                                   - Inherited
                               path:
                                 type: string
+                                description: The `path` key is a dot-separated path of relation identifiers that
+                                  lead to the desired blueprint.
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
                               - path
                           - type: object
+                            title: Direct
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with Direct ownership.
                             properties:
                               type:
                                 type: string
@@ -16546,6 +16708,8 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
@@ -17046,7 +17210,6 @@ paths:
                                     type: string
                                 required:
                                   - path
-                                  - fromBlueprint
                                 additionalProperties: false
                           additionalProperties: false
                           required:
@@ -17262,7 +17425,7 @@ paths:
                     properties:
                       identifier:
                         type: string
-                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                        pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
                         maxLength: 30
                         description: The identifier of the blueprint.
                       title:
@@ -17294,6 +17457,9 @@ paths:
                       ownership:
                         anyOf:
                           - type: object
+                            title: Inherited
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              relation to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -17301,13 +17467,20 @@ paths:
                                   - Inherited
                               path:
                                 type: string
+                                description: The `path` key is a dot-separated path of relation identifiers that
+                                  lead to the desired blueprint.
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
                               - path
                           - type: object
+                            title: Direct
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with Direct ownership.
                             properties:
                               type:
                                 type: string
@@ -17315,6 +17488,8 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                description: The title of the ownership property. The default value is `Owning
+                                  teams`.
                             additionalProperties: false
                             required:
                               - type
@@ -17815,7 +17990,6 @@ paths:
                                     type: string
                                 required:
                                   - path
-                                  - fromBlueprint
                                 additionalProperties: false
                           additionalProperties: false
                           required:
@@ -19875,12 +20049,12 @@ paths:
                 description: A resource with the provided identifier was not found
   "/v1/actions/{action_identifier}":
     put:
-      summary: Update an action/automation
+      summary: Change an action/automation
       tags:
         - Actions
-      description: This route allows you to update an existing self-service action or
-        automation in your Port account.<br/><br/>To learn more about actions
-        and automations, check out the
+      description: This route allows you to change the details of an existing
+        self-service action or automation in your Port account.<br/><br/>To
+        learn more about actions and automations, check out the
         [documentation](https://docs.port.io/actions-and-automations/).
       requestBody:
         content:
@@ -21567,7 +21741,7 @@ paths:
           in: path
           name: action_identifier
           required: true
-          description: The identifier of the action you want to operate on.
+          description: The identifier of the action/automation you want to operate on.
       security:
         - bearer:
             - update:actions
@@ -21656,7 +21830,7 @@ paths:
           in: path
           name: action_identifier
           required: true
-          description: The identifier of the action you want to operate on.
+          description: The identifier of the action/automation you want to operate on.
       security:
         - bearer:
             - read:actions
@@ -21709,7 +21883,7 @@ paths:
           in: path
           name: action_identifier
           required: true
-          description: The identifier of the action you want to operate on.
+          description: The identifier of the action/automation you want to operate on.
       security:
         - bearer:
             - delete:actions
@@ -22251,7 +22425,7 @@ paths:
           in: path
           name: action_identifier
           required: true
-          description: The identifier of the action you want to operate on.
+          description: The identifier of the action/automation you want to operate on.
       security:
         - bearer: []
       responses:
@@ -22495,10 +22669,10 @@ paths:
                 description: The json provided does not match the route's schema
   "/v1/actions/runs/{run_id}":
     patch:
-      summary: Patch an action run
+      summary: Update an action run
       tags:
         - Action Runs
-      description: This route allows you to patch an action run's details. This can be
+      description: This route allows you to update an action run's details. This can be
         used to update the run's status & label, and add links to it (e.g.
         external logs of the job runner).<br/><br/>To learn more about action
         runs, check out the
@@ -24146,9 +24320,9 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  /v1/pages/{page_identifier}/widgets/{widget_id}":
+  "/v1/pages/{page_identifier}/widgets/{widget_id}":
     patch:
-      summary: Patch a widget
+      summary: Update a widget
       tags:
         - Pages
       description: >
@@ -24411,10 +24585,10 @@ paths:
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
     put:
-      summary: Update organization details
+      summary: Change organization details
       tags:
         - Organization
-      description: This route allows you to update the details of your Port
+      description: This route allows you to change the details of your Port
         organization, such as its name and hidden blueprints.
       requestBody:
         content:
@@ -24532,10 +24706,10 @@ paths:
                 additionalProperties: false
                 description: The json provided does not match the route's schema
     patch:
-      summary: Patch organization details
+      summary: Update organization details
       tags:
         - Organization
-      description: This route allows you to patch the details of your Port
+      description: This route allows you to update the details of your Port
         organization, such as its name and hidden blueprints.
       requestBody:
         content:
@@ -24864,10 +25038,10 @@ paths:
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
     patch:
-      summary: Patch an organization secret
+      summary: Update an organization secret
       tags:
         - Organization
-      description: This route allows you to patch an organization secret.<br/><br/>To
+      description: This route allows you to update an organization secret.<br/><br/>To
         learn more about secrets management, check out the
         [documentation](https://docs.port.io/sso-rbac/port-secrets).
       requestBody:
@@ -25164,7 +25338,7 @@ paths:
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
     patch:
-      summary: Patch an integration
+      summary: Update an integration
       tags:
         - Integrations
       description: This route allows you to modify an integration in your Port
@@ -25666,7 +25840,7 @@ paths:
                 description: A resource with the provided identifier was not found
   "/v1/integration/{identifier}/config":
     patch:
-      summary: Patch an integration's config
+      summary: Update an integration's config
       tags:
         - Integrations
       description: This route allows you to modify an integration's configuration in
@@ -25972,7 +26146,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: create
+                          - const: create
+                            title: Advanced create
                             description: >-
                               If the operation is `create`, the [entity
                               JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
@@ -26001,7 +26176,7 @@ paths:
                             enum:
                               - create
                           - type: object
-                            title: create
+                            title: Create
                             properties:
                               type:
                                 enum:
@@ -26009,7 +26184,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: delete
+                          - const: delete
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -26031,7 +26207,7 @@ paths:
                             enum:
                               - delete
                           - type: object
-                            title: delete
+                            title: Advanced delete
                             properties:
                               type:
                                 enum:
@@ -26428,7 +26604,7 @@ paths:
                 description: A resource with the provided identifier was not found
   "/v1/webhooks/{identifier}":
     patch:
-      summary: Patch a webhook
+      summary: Update a webhook
       tags:
         - Webhook
       description: This route allows you to modify a webhook in your Port
@@ -26466,7 +26642,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: create
+                          - const: create
+                            title: Advanced create
                             description: >-
                               If the operation is `create`, the [entity
                               JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
@@ -26495,7 +26672,7 @@ paths:
                             enum:
                               - create
                           - type: object
-                            title: create
+                            title: Create
                             properties:
                               type:
                                 enum:
@@ -26503,7 +26680,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: delete
+                          - const: delete
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -26525,7 +26703,7 @@ paths:
                             enum:
                               - delete
                           - type: object
-                            title: delete
+                            title: Advanced delete
                             properties:
                               type:
                                 enum:
@@ -26915,7 +27093,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: create
+                          - const: create
+                            title: Advanced create
                             description: >-
                               If the operation is `create`, the [entity
                               JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
@@ -26944,7 +27123,7 @@ paths:
                             enum:
                               - create
                           - type: object
-                            title: create
+                            title: Create
                             properties:
                               type:
                                 enum:
@@ -26952,7 +27131,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: delete
+                          - const: delete
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -26974,7 +27154,7 @@ paths:
                             enum:
                               - delete
                           - type: object
-                            title: delete
+                            title: Advanced delete
                             properties:
                               type:
                                 enum:
@@ -28040,10 +28220,10 @@ paths:
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
     patch:
-      summary: Patch a team
+      summary: Update a team
       tags:
         - Teams
-      description: This route allows you to patch a team's details. This can be used
+      description: This route allows you to update a team's details. This can be used
         to update the team's name, users, and description.<br/><br/>To learn
         more about teams, check out the
         [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
@@ -28073,7 +28253,7 @@ paths:
           in: path
           name: name
           required: true
-          description: The name of the team you want to patch.
+          description: The name of the team you want to update.
       security:
         - bearer:
             - update:teams
@@ -28887,10 +29067,10 @@ paths:
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
     patch:
-      summary: Patch a user
+      summary: Update a user
       tags:
         - Users
-      description: This route allows you to patch a user's details. This can be used
+      description: This route allows you to update a user's details. This can be used
         to update the user's role/s and team/s.<br/><br/>To learn more about
         users, roles, and teams, check out the
         [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
@@ -29605,10 +29785,10 @@ paths:
                 additionalProperties: false
                 description: The json provided does not match the route's schema
     put:
-      summary: Update credentials
+      summary: Change the name of a credentials set
       tags:
         - Apps
-      description: This route allows you to update the name of a set of credentials in
+      description: This route allows you to change the name of a set of credentials in
         your Port organization.
       requestBody:
         content:
@@ -32510,28 +32690,64 @@ paths:
   "/v1/agent/invoke/{invocation_identifier}":
     get:
       summary: Get an invocation's result
-      description: This route allows you to get a specific invocation result.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
       tags:
         - AI
+      description: This route allows you to get a specific invocation
+        result.<br/><br/>To learn more about AI agents, check out the
+        [documentation](https://docs.port.io/ai-agents/overview).
       parameters:
         - schema:
             type: string
           in: path
           name: invocation_identifier
-          description: A unique identifier for the agent invocation.
           required: true
+          description: A unique identifier for the agent invocation.
       security:
         - bearer:
             - read:entities
       responses:
-        "200":
+        "401":
           description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
   "/v1/agent/{agentIdentifier}/invoke":
     post:
       summary: Invoke a specific agent
-      description: This route allows you to create an agent's invocation.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
       tags:
         - AI
+      description: This route allows you to create an agent's invocation.<br/><br/>To
+        learn more about AI agents, check out the
+        [documentation](https://docs.port.io/ai-agents/overview).
       requestBody:
         content:
           application/json:
@@ -32553,33 +32769,103 @@ paths:
             default: false
           in: query
           name: stream
-          description: If `true`, the response will show as a stream of information instead of a JSON response.
           required: false
+          description: If `true`, the response will show as a stream of information
+            instead of a JSON response.
         - schema:
             type: string
           in: path
           name: agentIdentifier
-          description: The identifier of the agent you want to operate on.
           required: true
+          description: The identifier of the agent you want to operate on.
       security:
         - bearer:
             - read:entities
       responses:
-        "200":
+        "401":
           description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
+        "413":
+          description: Request body is too large (limit is 1MiB)
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+                description: Request body is too large (limit is 1MiB)
+        "422":
+          description: The json provided does not match the route's schema
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: The json provided does not match the route's schema
   /v1/agent/invoke:
     post:
       summary: Invoke an agent
-      description: This route allows you to create an invocation without choosing a specific agent.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
       tags:
         - AI
+      description: This route allows you to create an invocation without choosing a
+        specific agent.<br/><br/>To learn more about AI agents, check out the
+        [documentation](https://docs.port.io/ai-agents/overview).
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                context: 
+                context:
                   type: object
                   description: An object used to dynamically inject values into the prompt.
                 prompt:
@@ -32594,14 +32880,82 @@ paths:
             default: false
           in: query
           name: stream
-          description: If `true`, the response will show as a stream of information instead of a JSON response.
           required: false
+          description: If `true`, the response will show as a stream of information
+            instead of a JSON response.
       security:
         - bearer:
             - read:entities
       responses:
-        "200":
+        "401":
           description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
+        "413":
+          description: Request body is too large (limit is 1MiB)
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+                description: Request body is too large (limit is 1MiB)
+        "422":
+          description: The json provided does not match the route's schema
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: The json provided does not match the route's schema
   "/v1/actions/{action_identifier}/permissions":
     get:
       summary: Get an action's permissions
@@ -32617,7 +32971,7 @@ paths:
           in: path
           name: action_identifier
           required: true
-          description: The identifier of the action you want to operate on.
+          description: The identifier of the action/automation you want to operate on.
       security:
         - bearer: []
       responses:
@@ -32776,7 +33130,7 @@ paths:
           in: path
           name: action_identifier
           required: true
-          description: The identifier of the action you want to operate on.
+          description: The identifier of the action/automation you want to operate on.
       security:
         - bearer: []
       responses:
@@ -32849,3 +33203,405 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
+  "/v1/integration/{integrationInternalId}/syncMetrics":
+      get:
+        summary: Get an integration's metrics and sync status
+        description: This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+        tags:
+          - Integrations
+        parameters:
+          - schema:
+              type: string
+            in: query
+            name: resyncId
+            required: false
+            description: The ID of a specific resync. If this field is left empty, the latest resync data will be returned.
+          - schema:
+              type: string
+            in: path
+            name: integrationInternalId
+            required: true
+            description: The ID of the integration you want to operate on.
+          - schema:
+              type: string
+            in: header
+            name: Authorization
+            required: false
+            description: Your API token. To get it, go to your [Port account](https://app.port.io/), click the `...` button, then click the `Generate API token` button and copy the generated token. 
+        responses:
+          "200":
+            description: Default Response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    ok:
+                      type: boolean
+                    count:
+                      type: number
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          integrationType:
+                            type: string
+                          integrationIdentifier:
+                            type: string
+                          integrationVersion:
+                            type: string
+                          oceanVersion:
+                            type: string
+                          kindIdentifier:
+                            type: string
+                          kind:
+                            type: string
+                          kindIndex:
+                            type: number
+                          eventId:
+                            type: string
+                          syncState:
+                            type: string
+                          blueprint:
+                            type: string
+                          metrics:
+                            type: object
+                            properties:
+                              phase:
+                                type: object
+                                properties:
+                                  resync:
+                                    type: object
+                                    properties:
+                                      duration_seconds:
+                                        type: number
+                                      success:
+                                        type: number
+                                    additionalProperties: false
+                                  load:
+                                    type: object
+                                    properties:
+                                      object_count_type:
+                                        type: object
+                                        properties:
+                                          skipped:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          failed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          loaded:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          raw_extracted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          transformed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          filtered_out:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          deleted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                        additionalProperties: false
+                                    required:
+                                      - object_count_type
+                                    additionalProperties: false
+                                  extract:
+                                    type: object
+                                    properties:
+                                      object_count_type:
+                                        type: object
+                                        properties:
+                                          skipped:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          failed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          loaded:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          raw_extracted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          transformed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          filtered_out:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          deleted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                        additionalProperties: false
+                                    required:
+                                      - object_count_type
+                                    additionalProperties: false
+                                  transform:
+                                    type: object
+                                    properties:
+                                      object_count_type:
+                                        type: object
+                                        properties:
+                                          skipped:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          failed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          loaded:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          raw_extracted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          transformed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          filtered_out:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          deleted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                        additionalProperties: false
+                                    required:
+                                      - object_count_type
+                                    additionalProperties: false
+                                  delete:
+                                    type: object
+                                    properties:
+                                      object_count_type:
+                                        type: object
+                                        properties:
+                                          skipped:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          failed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          loaded:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          raw_extracted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          transformed:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          filtered_out:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                          deleted:
+                                            type: object
+                                            properties:
+                                              object_count:
+                                                type: number
+                                            required:
+                                              - object_count
+                                            additionalProperties: false
+                                        additionalProperties: false
+                                    required:
+                                      - object_count_type
+                                    additionalProperties: false
+                                additionalProperties: false
+                            required:
+                              - phase
+                            additionalProperties: false
+                          createdAt:
+                            type: string
+                            format: date-time
+                          updatedAt:
+                            type: string
+                            format: date-time
+                        required:
+                          - integrationType
+                          - integrationIdentifier
+                          - integrationVersion
+                          - oceanVersion
+                          - kindIdentifier
+                          - kind
+                          - eventId
+                          - syncState
+                          - metrics
+                          - createdAt
+                          - updatedAt
+                        additionalProperties: false
+                  required:
+                    - ok
+                    - count
+                    - data
+                  additionalProperties: false
+          "401":
+            description: Default Response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    ok:
+                      type: boolean
+                    error:
+                      type: string
+                    message:
+                      type: string
+                  required:
+                    - ok
+                    - error
+                  additionalProperties: false
+          "500":
+            description: Default Response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    ok:
+                      type: boolean
+                    error:
+                      type: string
+                    message:
+                      type: string
+                  required:
+                    - ok
+                    - error
+                  additionalProperties: false

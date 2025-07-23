@@ -1,13 +1,13 @@
 ---
-id: patch-a-user
-title: "Patch a user"
-description: "This route allows you to patch a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/)."
-sidebar_label: "Patch a user"
+id: update-a-user
+title: "Update a user"
+description: "This route allows you to update a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Update a user"
 hide_title: true
 hide_table_of_contents: true
-api: eJzlV01v4zYQ/SsEL02AxIrTPRlFAe+2QIN2iyBNToZRUBJtcyOR6pC01zX03ztDSpYSy1knewnQi0yL8/lmhnrccSeWlk9m/MFKsHx+wXNpM1CVU0bzCb9fKcvAeCeZKAqzsWxrPHOGVcJlKyaYR70fLMulE6qwIxYUMqFZKmkvJ1lf5QINuJVsxcEUMrFMaNyXokzs6KcUkp/D496wQgrQrDSAXlN0HtTsRVDDn1YNl9lKZo+MRMj6LDeZL6V2gsKfn62cq+wkSfC1HVUG3EiZxFpzCanIEnpcmrWEtZKb5HzELzjIf7y07qPJt3yy45nRDq3RUlRVobJgN/liCZsdt+i9FLRy20oiWib9IjOHdiowlQSnpKXdEHZPTACILUqVSt84WeLW+IKruNoLWQdKL3l9WBEZcQiV2AjtCGJhrVpqWrUoj0g1oDTg+TXOtCjRmVkEy8HgoOfGLb5Cz2hI5LkiK6K47YGxEIWVdU0ClQC07KjtJrMBMLuYFIWCDbfCyCka/Eeu/kZ5VTRVUyBzPnHg5VAOQZJhSCDtPpcQbj8VCpMa1WhMAUfBysyDctsQX4o9KYFGJbbzxMeJIUG0WhltY5Gvr67o52kQD0EnZ9ZnGYaw8EWxpYY7ucOedpR5pKfUvsSAKOk5whThGAJwocC6PwNyA7uFeGGzUpnzMLxncc78cBupfPB1fDHkBsxa5aEXTm5WVMtAEqxTd7iNWRsoBe5wgv7SKcwQVWL1XqViYHlKXEemfxCKut+1M5KZ12+YVzJz5HA5MTo9XPhn8QWpECFi8VmW6WmVOuITbdwM98cLHUVd+odZKn165Z4lEd3unTw12cAPpZ3ihFZO9gNMDYIsNKejZSF8gX40TnB9cF4eG/MnYTzSZ/abx+OHq/HhMfJLdM/umgPne08QVLaudYsnCICBQfTxE2DF8oROQbutndOy/HCY5ZThgWo8ZJJtlFuFw7o5IHKGD+3UQuHZvRGWaePYwnidv2soOq2XQXneT29DooF2/OMhtHeR4LAUGQ5DpuYMsi0BS8nOClUqR+/Gn9XH83cN5+tAPD3nBrjr60PgiEVQ5h38uZER9DJQYRd4GRJlpLcNNO8Zwrd25FtwqCOuSPZWJo9ULiMuFyjdhCfrcRLIVLLraF1NBzVS85YeekBqw1tCLyrV8nkEYGjX206gR+X+oogiyC2h675ilfpdbjuOOfUYL6h/Q814Q0NXUiBNCcgSDHfdheHXr6KsCtkj/LO2DvP9l717FXjtwgT/ypEev8WA2fT2Bn1R3hHw8egqECRjXSl098nmt70bGH9Wpt7V5f92hWuK6eRXl1SFwKIR6YNAjGPDzfh6jIKRv1/wSe8ugYVaGRq6Gd/tUmHlA+BXnl5jmYEuArhcC1AipYphX+bK0jofHpd+Hc7umkk8Z2+7khzJre1eTa27FoWnf7h8xF5+clGqqeea/qXQo8CnGODlPZnpDBwcVzRmUSMSpBdl571pv53ef/oNpdPmUl2anJRAbIgY4TNEawJi8bpM73bIzvTSh2ONR6PhVumpgv2RfQwj2yworUE8ns9yzISelNegym4XD4S63svHraMaDbatNJUHaWX9H6opCQQ=
+api: eJzlV0tv4zYQ/isEL02AxIrTPRlFAe+2QIN2iyBNToZRUBJtcyOR6pC01zX03ztDSpYSy1knewnQi0yT8/zmweGOO7G0fDLjD1aC5fMLnkubgaqcMppP+P1KWQbGO8lEUZiNZVvjmTPMV7mgTeaR8QfLcumEKuyIBY5MaJZKOst7xG4lW3IwhUwsExrPpSgTO/opheTn8Lk3rJACNCsNoIYUtQc2exHY8Kdlw2W2ktkjIxKSPstN5kupnSD752cr5yo7SRLctqPKgBspk1hrLiEVWUKfS7OWsFZyk5yP+AUH+Y+X1n00+ZZPdjwz2qE0WoqqKlQW5CZfLIGz4xa1l4JWbltJhMukX2TmUE4FppLglLR0GszukQkAsUWqUukbJ0s8Gl9wFVd7IutA6SWvD0MiIw4hFBuhHUEsrFVLTasW5RGxBpQGNL9GmRYlKjOLIDkIHNTcqMUt1IyCRJ4rkiKK2x4YC1FYWddEUAlAyY7ybjIbALOzSZEplXArtJyswX+k6m+kV0UTNQUy5xMHXg75ECgZmgTS7n0J5vZdITMpUY1GF7AWrMw8KLcN9qWYkxKoVmI6T3wsGSJEqZXRNgb5+uqKfp4a8RB4cmZ9lqEJC18UW0q4kzPsaUaZR/pK7Us0iJyeI0wRjiEAFwqs+zMgN3BaiBcOK5U5D8NnFuvMD6eRyge348aQGjBrlYdcODlZkS0DSbBO3eExem2gFHjCCfpLp9BDZInRexWLgeUpdh2p/kEo6n7WzohmXr+hXknMkeZyonV6OPDP7AtUwULE4rMs09MidUQnyrgZzo8XMoqy9A+zVPr0yD1zIqrdK3kqsoEfSjvFCq2c7BuYGgRZaE6tZSF8gXo0VnB90C+PlfkTMx7pnv1me/xwNT5sI79E9eyuaTjf20GQ2bpWLXYQAAOD6OMVYMXyhExBua2c07z8cOjllGFDNR4yyTbKrUKzbhpEzvCjnVoo7N0bYZk2ji2M1/m7hqLjehmU5/n0NiQaaMc/HkJ7FwccluKEw3BScwanLQFLyc4KVSpHe+PP6uP5u4bzdSCe7nMD3PX1IXA0RZDnHfy5kRF07DtZDE2YlHG8baB5zxC+NSPfgkMdccVhb2XyOMplNMuFkW7Ck/U4CcNUsuvGupoaNY7m7XjoAUcb3g70olLtPI8ADJ162xH0Rrm/yKIIcjvQdbdYpX6X227GnHq0F9S/IWa8GUNXUuCYEpAlGO66B8OvX0VZFbI38M/aOMz3N3u3FebahQn6lSM+fosGs+ntDeoivyPg49FVGJCMdaXQ3ZXd3DXNE4w/i1Pv7fK/e8Q14XTyq0uqQmDYaOyDMBrHlJvx9RgJ4wR/wSe91wSGamWo7GZ8t0uFlQ+A9zxtY6CBngK4XAtQIqWYYWbmytI6Hy6YfiDO7ppaPGdve5Qc8a3NX03JuxaFp3+4fMRsfvJUqinrmgwm0yPBp2jg5T2J6QQcNCwqtMgRR6QXaee9er+d3n/6DanT5lldmpyYQGxoNMJvsNYExOKDmfZ2OJ/ppQ+NjUeh4V3pKYL9on0MRdssyK1BPJ5Xc/SEvuTXIMtuF1tCXe/p49FRjgbblprCg4Nl/R9Qgwpd
 sidebar_class_name: "patch api-method"
-info_path: api-reference-temp/port-api
+info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
@@ -22,7 +22,7 @@ import Heading from "@theme/Heading";
 <Heading
   as={"h1"}
   className={"openapi__heading"}
-  children={"Patch a user"}
+  children={"Update a user"}
 >
 </Heading>
 
@@ -36,7 +36,7 @@ import Heading from "@theme/Heading";
 
 
 
-This route allows you to patch a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
+This route allows you to update a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
 
 <Heading
   id={"request"}
