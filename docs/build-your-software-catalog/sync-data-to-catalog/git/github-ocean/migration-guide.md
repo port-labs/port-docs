@@ -3,11 +3,12 @@
 This guide will walk you through the process of migrating from Port's existing GitHub Cloud App to our new and improved GitHub Integration, which is powered by [Ocean](https://ocean.port.io/).
 
 ## Improvements
+
 The new Ocean-powered GitHub integration comes with several key improvements:
 
 - **More authentication options** - You can now connect the integration using a Personal Access Token (PAT) that you control, giving you more flexibility.
-- **Enhanced performance** - Experience faster resyncs thanks to improved API efficiency, making your data available sooner.
-- **Better selectors** - Enjoy more granular control over what you sync with improved selectors for `pull requests`, `issues`, `dependabot alerts`, `codescanning alerts`, `files`, and `folders`.
+- **Enhanced performance** - Faster resyncs thanks to improved API efficiency, making your data available sooner.
+- **Better selectors** - More granular control over what you sync with improved selectors for `pull requests`, `issues`, `dependabot alerts`, `codescanning alerts`, `files`, and `folders`.
 
 ## Major Changes
 
@@ -43,7 +44,7 @@ We've expanded our self-hosted installation examples to support deploying on a K
 
 ### Workflow Runs
 
-We have increased the number of workflow runs ingested for any given workflow in a repository. The new integration now fetches up to 100 of the latest workflow runs, up from the previous limit of 10.
+We have increased the number of workflow runs ingested for any given workflow in a repository. The new integration now fetches up to 100 of the latest workflow runs, up from the previous limit of 10 per repository.
 
 ### Repository Type
 
@@ -125,7 +126,7 @@ resources:
 Here are the key changes for file mappings:
 1. The `repos` selector is now a list of objects, where each object can specify the repository `name` and an optional `branch`. This provides more granular control over which files are fetched.
 2. File attributes are no longer nested under a `file` key. They are now at the top level of the data structure. For example, instead of `.file.path`, you should now use `.path`.
-3. The `repo` key has been renamed to `__repository` when referencing the repository a file belongs to, for consistency with other data kinds.
+3. The `repo` key has been renamed to `repository` when referencing the repository a file belongs to.
 
 ### Pull Requests and Issues
 
