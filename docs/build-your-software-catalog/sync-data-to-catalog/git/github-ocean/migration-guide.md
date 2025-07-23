@@ -13,23 +13,38 @@ This guide works you through the process of migrating from Port's Github Cloud A
 
 #### PAT
 
-You can now run our Github integration by authenticating using a Personal Access Token rather than by installing a Github App. For more details see our installation guide
+You can now run our Github integration by authenticating using a Personal Access Token rather than by installing a Github App, for more details see our [installation page](./installation). Sample helm value:
+```yaml showLineNumbers
+integration:
+  secrets:
+    githubToken: "<GITHUB_PAT>"
+```
 
 #### Github app
 
-You can also authenticate with our Ocean-powered Github integration using Github App, in this situation you would have to create the app yourself - this is similar to our existing "self-hosted app installation" and is documented here.
+You can also authenticate with our Ocean-powered Github integration using Github App, in this situation you would have to create the app yourself - this is similar to our existing "self-hosted app installation" and is [documented here](./installation/github-app.mdx). Sample helm value:
+```yaml showLineNumbers
+integration:
+  config:
+    githubAppId: "<GITHUB_APP_ID>" # app client id also works
+  secrets:
+    githubAppPrivateKey: "<BASE_64_ENCODED_PRIVATEKEY>"
+```
 
 ### Webhooks
 
-The integration is now responsible for configuring live-events on Github, to receive live-events you need to grant the permission to create organization webhooks to your PAT. You'll also need to configure a public address for the integration.
+The integration is now responsible for configuring live-events on Github, to receive live-events you need to grant the permission to create organization webhooks to your PAT. You'll also need to configure a public address for the integration by setting `liveEvents.baseUrl` when deploying with Helm/ArgoCD, or  setting `OCEAN__BASE_URL` environmental variable when starting the integration as a docker image using `docker run`. 
+[learn More about enabling live-events](./installation/#deploy-the-integration)
 
 ### Deployment
 
-We've expanded our self-hosted installation examples to support deploying on a Kubernetes cluster using Helm or ArgoCD.
+We've expanded our self-hosted installation examples to support deploying on a Kubernetes cluster using Helm or ArgoCD. [learn More](./installation/#deploy-the-integration)
+
+When starting the integration you're expected to provide 
 
 ### Workflow Runs
 
-We've expanded the number of Workflow Runs ingested for any workflow to 100 from the original 10.
+We've expanded the number of Workflow Runs ingested for any workflow in a repository to 100 rather than 10 workflow runs per repository.
 
 ### Repository type
 
@@ -44,7 +59,6 @@ resources:
 
 ```
 
-
 ## Mapping Changes
 
 The blueprints used in Github have evolved to provide cleaner data structures and better relationships between entities. Understanding these changes is essential for a successful migration.
@@ -53,7 +67,7 @@ For the most part, we've moved to making it obvious where we added custom attrib
 
 ### Files
 <details>
-  <summary>Existing configuration</summary>
+  <summary>Existing Configuration</summary>
 
 ```yaml showLineNumbers
 resources:
@@ -222,13 +236,103 @@ resources:
 
 </details>
 
-## Workflow
-
-
-
 ### Folders
-- branch mapping selector
+
+Folders no longer include `folder.name` in the response, you need to construct the folder name using JQ:
+
+
+<details>
+  <summary>Existing Configuration</summary>
+
+  ```yaml showLineNumbers
+resources:
+  - kind: folder
+    selector:
+      query: "true"
+      folders: 
+        - path: apps/*
+          repos:
+            - backend-service # ❌  changed
+    port:
+      entity:
+        mappings:
+          identifier: ".folder.name" # ❌  changed
+          title: ".folder.name" # ❌  changed
+          blueprint: '"githubRepository"'
+          properties:
+            url: .repo.html_url + "/tree/" + .repo.default_branch  + "/" + .folder.path # ❌  changed
+            readme: file://README.md
+
+  ```
+</details>
+
+<details>
+  <summary>New Configuration</summary>
+
+
+  ```yaml showLineNumbers
+resources:
+  - kind: folder
+    selector:
+      query: "true"
+      folders: 
+        - path: apps/*
+          repos:
+            - name: backend-service # ✅  new, now has a 'name' key
+              branch: main # ✅  new, optional branch name
+    port:
+      entity:
+        mappings:
+          identifier: .folder.path | split('/') | last # ✅  new, derived using JQ
+          title: .folder.path | split('/') | last
+          blueprint: '"githubRepository"'
+          properties:
+            url: .__repository.html_url + "/tree/" + .__repository.default_branch  + "/" + .folder.path # ✅  new, repository is a custom enrichment
+            readme: file://README.md
+
+  ```
+</details>
+
+
 ### Teams
-- graphql id
 
+When ingesting teams with `members` selector, we now use Github's GraphqQL API to reduce network calls, this results in two changes:
 
+1. The id returned by the Rest API and the GraphqQL API are different for the same team, depending on whether mapping selector has `member` or not.
+2. included members will be in a `nodes` subarray.
+
+<details>
+  <summary>Existing Configuration</summary>
+</details>
+
+<details>
+  <summary>New Configuration</summary>
+</details>
+
+## Other changes
+
+### Dependentbot alerts
+
+Dependentbot alert kind can now take a `states` selector, this is an array of the states we want to ingest:
+
+```yaml showLineNumbers
+resources:
+  - kind: dependabot-alert
+    selector:
+      query: "true"
+      states: # ✅  new
+        - "open"
+        - "fixed"
+```
+
+### Codescanning alerts
+
+Codescanning alert can now take a `state` selector, this is a string denoting the alert state we want to ingest
+
+```yaml showLineNumbers
+resources:
+  - kind: code-scanning-alerts
+    selector:
+      query: "true"
+      state: open # ✅  new
+```
