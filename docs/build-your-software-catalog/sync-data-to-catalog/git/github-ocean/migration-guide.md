@@ -126,7 +126,7 @@ resources:
 Here are the key changes for file mappings:
 1. The `repos` selector is now a list of objects, where each object can specify the repository `name` and an optional `branch`. This provides more granular control over which files are fetched.
 2. File attributes are no longer nested under a `file` key. They are now at the top level of the data structure. For example, instead of `.file.path`, you should now use `.path`.
-3. The `repo` key has been renamed to `repository` when referencing the repository a file belongs to.
+3. The `repo` key has been renamed to `__repository` when referencing the repository a file belongs to, for consistency with other data kinds.
 
 ### Pull Requests and Issues
 
@@ -340,8 +340,12 @@ resources:
 
 This section provides a high-level summary of the key breaking changes for mappings.
 
-| Area | Old Path | New Path | Notes |
+| Area | Old Value | New Value | Notes |
 |---|---|---|---|
+| **Authentication** | GitHub App Installation | PAT or Self-Created GitHub App | The integration can be authenticated using a Personal Access Token (PAT) or a self-created GitHub App. |
+| **Webhooks** | Manual Setup | Automatic Setup by Integration | The integration now manages its own webhooks for live events. This requires `webhook` permissions and `liveEvents.baseUrl` to be set. |
+| **Workflow Runs** | 10 per repository | 100 per repository | The number of ingested workflow runs has been increased. |
+| **Repository Type** | N/A | `repositoryType` configuration | A new top-level configuration is available to filter repositories by type (`public`, `private`, or `all`). |
 | **File** properties | `.file.path` | `.path` | All file properties are now at the top level of the object, no longer nested under `.file`. |
 | **Repository** reference | `.repo` or `.head.repo.name` | `.__repository` | The integration now consistently provides repository information under the `__repository` field for all relevant kinds. |
 | **Folder** name | `.folder.name` | `.folder.path \| split('/') \| last` | The folder name is no longer directly available and should be derived from the folder path using a JQ expression. |
