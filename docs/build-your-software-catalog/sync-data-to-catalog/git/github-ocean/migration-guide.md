@@ -336,4 +336,12 @@ resources:
       state: open # ✅  new
 ```
 
-# AI! make a markdown table of summary of key changes on this file, look at the summary of key changes here for inspiration: https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab/migration#summary-of-key-changes
+## Summary of Key Changes
+
+This section provides a high-level summary of the key breaking changes for mappings.
+
+| Area | Old Path | New Path | Notes |
+|---|---|---|---|
+| **File** properties | `.file.path` | `.path` | All file properties are now at the top level of the object, no longer nested under `.file`. |
+| **Repository** reference | `.repo` or `.head.repo.name` | `.__repository` | The integration now consistently provides repository information under the `__repository` field for all relevant kinds. |
+| **Folder** name | `.folder.name` | `.folder.path \| split('/') \| last` | The folder name is no longer directly available and should be derived from the folder path using a JQ expression. |
