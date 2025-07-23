@@ -6,7 +6,7 @@ description: Integrate JumpCloud with Port using SAML
 
 import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
-# How to configure JumpCloud
+# JumpCloud
 
 Follow this step-by-step guide to configure the integration between Port and JumpCloud.
 

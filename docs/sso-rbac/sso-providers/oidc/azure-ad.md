@@ -8,7 +8,7 @@ import ScimFunctionality from "/docs/sso-rbac/sso-providers/\_scim_functionality
 import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/\_scim_oidc_limitation.mdx"
 import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
 
-# How to configure AzureAD
+# Entra ID (AzureAD)
 
 This guide demonstrates how to configure Single Sign-On (SSO) integration between Port and Microsoft Entra ID (AzureAD) using OIDC.
 
