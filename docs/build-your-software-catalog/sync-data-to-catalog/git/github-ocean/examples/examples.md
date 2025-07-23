@@ -24,21 +24,6 @@ In the following example you will ingest your GitHub repositories, their README.
 
 <PRBlueprint/>
 
-:::info repository type
-
-The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
-
-<details>
-<summary>Possible values:</summary>
-
-*   `all` (default): All repositories accessible to the provided token.
-*   `public`: Public repositories.
-*   `private`: Private repositories.
-*   `forks`: Only forked repositories.
-*   `sources`: Only non-forked repositories.
-</details>
-
-:::
 
 <PortAppConfig/>
 

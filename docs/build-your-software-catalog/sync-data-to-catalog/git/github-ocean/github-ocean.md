@@ -50,6 +50,19 @@ Using this method applies the configuration to all repositories that the GitHub 
 
 When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
 
+### Repository type
+
+The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
+
+<details>
+<summary>Possible values:</summary>
+
+*   `all` (default): All repositories accessible to the provided token.
+*   `public`: Public repositories.
+*   `private`: Private repositories.
+*   `forks`: Only forked repositories.
+*   `sources`: Only non-forked repositories.
+</details>
 
 ### Default mapping configuration
 
@@ -59,6 +72,7 @@ This is the default mapping configuration for this integration:
 <summary><b>Default mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
+repositoryType: 'all'
 deleteDependentEntities: true
 createMissingRelatedEntities: true
 resources:
