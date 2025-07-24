@@ -817,3 +817,77 @@ html[data-theme="dark"] .navbar-signup-button {
     display: inline-block;
   }
 }
+
+/* Embed mode styles - hide navigation elements when embed=true */
+body.embed-mode .navbar {
+  display: none !important;
+}
+
+body.embed-mode .theme-doc-sidebar-container {
+  display: none !important;
+}
+
+body.embed-mode .theme-doc-breadcrumbs {
+  display: none !important;
+}
+
+body.embed-mode .footer {
+  display: none !important;
+}
+
+body.embed-mode .announcement {
+  display: none !important;
+}
+
+body.embed-mode .docusaurus-mt-lg {
+  margin-top: 0 !important;
+}
+
+body.embed-mode .main-wrapper {
+  --doc-sidebar-width: 0px !important;
+}
+
+body.embed-mode .theme-doc-page-wrapper {
+  margin-left: 0 !important;
+}
+
+body.embed-mode .container {
+  max-width: 100% !important;
+  padding: 1rem !important;
+}
+
+body.embed-mode .table-of-contents {
+  display: none !important;
+}
+
+body.embed-mode .theme-doc-toc-desktop {
+  display: none !important;
+}
+
+body.embed-mode .theme-doc-toc-mobile {
+  display: none !important;
+}
+
+body.embed-mode .pagination-nav {
+  display: none !important;
+}
+
+body.embed-mode .theme-edit-this-page {
+  display: none !important;
+}
+
+body.embed-mode .theme-last-updated {
+  display: none !important;
+}
+
+body.embed-mode .col--3 {
+  display: none !important;
+}
+
+body.embed-mode .theme-doc-markdown {
+  max-width: 100% !important;
+}
+
+body.embed-mode .custom-announcement-bar {
+  display: none !important;
+}

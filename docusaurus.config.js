@@ -414,7 +414,7 @@ const config = {
       async: true,
     },
     {
-      src: '/js/send-html-script.js',
+      src: '/js/embed-mode.js',
       async: true,
     }
   ],
