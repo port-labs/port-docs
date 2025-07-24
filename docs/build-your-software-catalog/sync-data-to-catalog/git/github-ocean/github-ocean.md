@@ -130,7 +130,7 @@ resources:
 
 ## Capabilities
 
-### Ingesting Git objects
+### Ingest Git objects
 
 Using Port's GitHub integration, you can automatically ingest GitHub resources into Port based on real-time events.
 
