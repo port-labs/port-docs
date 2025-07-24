@@ -1,15 +1,18 @@
+<details>
+
+<summary>Port config YAML</summary>
+
 ```yaml showLineNumbers
-resources:
-  - kind: file
+ - kind: file
     selector:
       query: 'true'
       files:
-        path: package.json
-        repos:
-          # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
-          - group/my-project
+        - path: '**/package.json'
+          repos:
+            - name: vscode
+              branch: main
     port:
-      itemsToParse: .file.content.dependencies | to_entries
+      itemsToParse: .content.dependencies | to_entries
       entity:
         mappings:
           identifier: >-
@@ -21,3 +24,5 @@ resources:
             package: .item.key
             version: .item.value
 ```
+
+</details>
