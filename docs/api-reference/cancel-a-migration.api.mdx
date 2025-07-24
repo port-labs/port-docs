@@ -5,7 +5,7 @@ description: "This route allows you to cancel a running migration in your Port o
 sidebar_label: "Cancel a migration"
 hide_title: true
 hide_table_of_contents: true
-api: eJy1VE1vEzEQ/SvWnEAy2ZbjCiFB4YAQImrLKYrQZHeSdbux3bE3bVj5v6PZdT6aBi6IS+K1n+333rxxDzWFio2Pxlko4bYxQbHrIilsW/cY1NZ1KjpVoa2oVai4s9bYlVqbFaPsUsYKiNXUcVSOV2jNr2FlAhoirgKUM/i2gweYa2B66CjEj67eQtlD5WwkG2WI3remGpDFXRBOPYSqoTXKKG49QQlucUdVBA2enSeOhoKsMmHekXEhsrEr0C9Ekhqxauk4S2tFVGzoIGzybsHFe0hJA9a1kSlsp0c3LrENlJIAPDKuKRKL2DOMM5OkwQgDj7EBDRbXsri/8aepz5I1NdloloZYueVzkkN9HtHGQ5Ey79Flw1RDGbmjNNcQqOrYxO1AckHIxFDO5mkoSfDOhtHJtxcX8vecySdaYtdGdZ2RgzNrio2rRZILQ0VEWQnF5rLYcwxFfywxFSNPED682XnWcQslNDH6UBYFejPxjuPEOEj63GoXDoAjaTdi/ahiJ3BfBfTmK20Pxn/oYuM4pxVybRrCmngQJwG8PkT18xOufUvHUXtW2KUb7jJRMDC0w4fpF9AgGkcPLycXghWz1jhENVO52vXX3qnTJBy1yX9o09GgSE+x8C0aKywHz/tc0hlsLkEfshpAQ3mS3FzXuYZG0lDOoO8XGOgHtynJ9ENHLOGba9ggG1yIU7MeahNkXOee+ovyV9c51K/VP3TGWbm7kFhJyAbbTr5Awz1tT5s0zZPeBUX4j5CrkeWbWznocMSLJ03iuu+b6febW9CwyE/h2tWyh/FRGhgfRwrOj5ZL8mSuhxbtqsOVYMczh2eqk0odx/1+iHseCNOzIk/7YJQjv9J6Z7f0/dhMKe3x49Ifd2S7dmjxfJ5S+g2iyUAn
+api: eJzNlsFu2zAMQH9F0GUbkCVN11NubbfDMAwr2u5UBANjM4lW2/IoOVlm+N9HWnLiJmnRFTv0kkgWKZGPFKlae1g4PbnTX82CwBtbOD0d6BRdQqaUuZ7o26VximzlUUGW2bVTG1spb1UCRYKZAkVVUZhiofJuF2UKESJ1ZckrSwsozJ92ZagHmvBXhc5f2HSjJ7VObOGx8DKEssxM0gqOfjo5vdYuWWIOMvKbEtkeO/uJied9SrIlkjfoZJUQokaUc57YKH3oDqogq+aWohOZmO95ZevCUDfNQEOaGplBdtU7bA6Zw6YRgRIIcvRIgvGIsdEIljRyeAl+yRYVrMOz7WE/TBq5GMJUTzxVeMxukzIoMzdIys4f2tsGZQ2F30WGXeBgOkwqMn7T2jdDICQeTmWJ0JUc8sDv7GQsfw8P/YhzqDKvrqMkW/nscD0Mj72PsXa+AzjQSGTpKK0cnYMFHllr+qDuZN9un+kz4nV2cnbo5TknhON0TVCtjV+2YNn6FeNO+8zX4FRhPedNVaSvGsVO62ko+0n2MhIR7fjDIdrrcNfVjC+74jrirVUZ0ALV28zkxsu38Vdz8e5V4/w3iM/3OYI7PT0EJ9ddPN/hTy0G6Dn4JISmrcpvnIpoXjPCl2bkSzg0gSvX5aVNpepa1/YLKb4TPVqNR9uy6UZ1vwo3o1A6tdRNWnVlvaKMFZfel24yGkFphiU3tqGxTOPYauV2Ar0SfCPmBeJdId4SZLUvuNn1hvOKjafYNXVsH0uElLXEOWFyvWukn35DXmbYb4QPes/ctmcZLzK6bcvnV595X/ExkB4PT0RWYOXQpks05bLr81tS+02118T//3MhAvL424/KDBgEW9kyr2NI7/RqLAm2e8QM9GSvuca4cjSWkg2sU9czcPidsqaRz4ySpEnycAVkYCakOPapcTJOj+dn3/O31zH136mXNOtHPO3yo5DkWEFWyYyH95wte0+IZsryMUfE9CByGQx8fysb7bY4qA+SykHjPEmw9E/KTnvX6+rbzS0Lz+J7Lrep6BCs5U3Dv625tgyRkQSVb7XOoFhUbRnRYc/2wVVJQPu34r69FXEgXh0Fsn9dgiPyK24dVanrcOc4/J18WHpUI6LtpCU+U7b6L9ps72s=
 sidebar_class_name: "post api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -47,14 +47,14 @@ This route allows you to cancel a running migration in your Port organization.
 </Heading>
 
 <ParamsDetails
-  parameters={[{"schema":{"type":"string"},"in":"path","name":"migration_id","description":"The identifier of the migration you want to cancel.<br/>","required":true}]}
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"migration_id","required":true,"description":"The identifier of the migration you want to cancel."}]}
 >
   
 </ParamsDetails>
 
 <RequestSchema
   title={"Body"}
-  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"reason":{"type":"string","description":"The reason for cancelling the migration.<br/>"}},"additionalProperties":false}}}}}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"reason":{"type":"string","description":"The reason for cancelling the migration."}},"additionalProperties":false}}}}}
 >
   
 </RequestSchema>
@@ -62,7 +62,7 @@ This route allows you to cancel a running migration in your Port organization.
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Default Response"}}}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
 >
   
 </StatusCodes>

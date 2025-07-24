@@ -204,6 +204,16 @@ Keys that are supported with jqQuery expressions:
 | visible   | the condition to display any property in the form |
 | disabled  | the condition to disable any property in the form |
 
+:::tip Check if string is empty
+To check if a string input is empty, compare it to an empty string, like this:
+
+```json
+{
+  "jqQuery": ".form.version == \"\""
+}
+```
+:::
+
 ---
 
 #### Additional available properties
