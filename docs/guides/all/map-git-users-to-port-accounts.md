@@ -19,9 +19,9 @@ Once implemented, users will be able to:
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - You have the relevant Git integration installed and configured:
-  - [Port's GitHub App](/build-your-software-catalog/sync-data-to-catalog/git/github-exporter/).
-  - [Port's GitLab integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-exporter/).
-  - [Port's Azure DevOps integration](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops-exporter/).
+  - [Port's GitHub Integrtion](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/).
+  - [Port's GitLab integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/).
+  - [Port's Azure DevOps integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/).
 - You have permissions to create automations in Port.
 
 ## Set up data model
@@ -30,7 +30,7 @@ To establish relationships between Git users and Port user accounts, we need to 
 
 <h3> Update the Git user blueprints</h3>
 
-1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
+1. Go to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
 
 2. Find the relevant Git user blueprint (`GitHub User`, `GitLab User`, or `Azure DevOps User`) and click on it.
 
@@ -60,7 +60,7 @@ Now we'll update the integration mapping to include the relation and create auto
 
 To update the GitHub integration mapping, follow the steps below:
 
-1. Go to the [data sources](https://app.getport.io/settings/data-sources) page.
+1. Go to the [Data sources](https://app.getport.io/settings/data-sources) page.
 
 2. Find your GitHub integration and click on it.
 
@@ -100,7 +100,7 @@ To ensure new Port users get mapped to GitHub users automatically, we'll create 
 
 Follow the steps below to create the automation:
 
-1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal.
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
 
 2. Click on `+ Automation`.
 
@@ -207,7 +207,7 @@ To ensure new Port users get mapped to GitLab users automatically, we'll create 
 
 Follow the steps below to create the automation:
 
-1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal.
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
 
 2. Click on `+ Automation`.
 
@@ -312,7 +312,7 @@ To ensure new Port users get mapped to Azure DevOps users automatically, we'll c
 
 Follow the steps below to create the automation:
 
-1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal.
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
 
 2. Click on `+ Automation`.
 
@@ -376,7 +376,7 @@ These configurations automatically establish relationships between Git users and
 
 ## Let's test it!
 
-1. Go to your [software catalog](https://app.getport.io/catalog) page
+1. Go to your [Software catalog](https://app.getport.io/catalog) page
 
 2. Search for a Git user entity (e.g., `GitHub User`, `GitLab User`, or `Azure DevOps User`)
 
