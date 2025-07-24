@@ -6,7 +6,7 @@ import FindCredentials from "/docs/build-your-software-catalog/custom-integratio
 import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
 import InstallMethods from "./\_install_methods.mdx"
 
-# Github App
+# Custom Github App
 
 :::note Prerequisites
 
@@ -17,11 +17,11 @@ import InstallMethods from "./\_install_methods.mdx"
 
 In organizations that have a self-hosted GitHub installation there is no access to our official public app, therefore there are some extra steps you need to take to install the GitHub integration:
 
-1. [Register](#register-ports-github-integration) Port's GitHub integration in your GitHub organization;
-2. [Deploy](#deployment) Port's GitHub integration Docker image inside your VPC;
-3. [Install](#installing-ports-github-integration) Port's GitHub integration in your GitHub organization and on select repositories.
+1. [Create](#create-a-github-app) a new app in your GitHub organization;
+2. [Install](#installing-ports-github-integration) the GitHub app in your GitHub organization and select repositories.
+3. [Deploy](#deployment) Port's GitHub integration Docker image inside your VPC using the app details;
 
-## Register Port's GitHub integration
+## Create a GitHub app
 
 1. Navigate to your Github organization and click on Settings:
 
@@ -73,7 +73,7 @@ To use [Self-Service Actions with GitHub Workflows](https://docs.port.io/actions
 :::
 
 
-## Installing Port's GitHub integration
+## Installing GitHub App
 
 After you have the app registered in your organization, you can install it and select the repositories to integrate it with:
 

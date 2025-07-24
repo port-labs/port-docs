@@ -27,6 +27,27 @@ It is possible to reference any field that appears in the API responses linked b
  <GitHubResources/>
 
 
+## Prerequisites
+
+Port's GitHub integration requires the following permissions:
+
+- Repository permissions:
+
+  - **Actions:** Read and Write (for executing self-service action using GitHub workflow).
+  - **Checks:** Read and Write (for validating `port.yml`).
+  - **Contents:** Readonly.
+  - **Metadata:** Readonly.
+  - **Pull requests:** Read and write.
+
+:::info Default permissions
+You will be prompted to confirm the above listed permissions when creating a personal access token.
+
+Permissions can be given to selected repositories in your organization, or to all repositories.   
+You can reconfigure the permission at any time, giving it access to new repositories, or removing access.
+
+:::
+
+
 ## Setup
 
 To install the integration, see the [installation page](./installation).
@@ -751,25 +772,6 @@ resources:
 - Only JSON and YAML formats are automatically parsed.  
   Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
 
-## Permissions
-
-Port's GitHub integration requires the following permissions:
-
-- Repository permissions:
-
-  - **Actions:** Read and Write (for executing self-service action using GitHub workflow).
-  - **Checks:** Read and Write (for validating `port.yml`).
-  - **Contents:** Readonly.
-  - **Metadata:** Readonly.
-  - **Pull requests:** Read and write.
-
-:::info Default permissions
-You will be prompted to confirm the above listed permissions when creating a personal access token.
-
-Permissions can be given to selected repositories in your organization, or to all repositories.   
-You can reconfigure the permission at any time, giving it access to new repositories, or removing access.
-
-:::
 
 ## Examples
 
