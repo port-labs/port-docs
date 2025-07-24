@@ -1339,5 +1339,12 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
+    {
+        title: "Map Jira users to Port user accounts",
+        description: "Automatically map Jira users to their Port user accounts for seamless integration",
+        tags: ["Jira", "Automations"],
+        logos: ["Jira"],
+        link: "/guides/all/map-jira-users-to-port-accounts",
+    },
     
 ]
