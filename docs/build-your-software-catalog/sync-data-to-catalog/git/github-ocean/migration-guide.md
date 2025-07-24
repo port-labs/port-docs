@@ -107,8 +107,8 @@ resources:
         - path: '**/package.json'
             # The `repos` key can be used to filter the repositories and branch where files should be fetched
           repos:
-            - name: MyRepo # now key:value pairs rather than a string.
-              branch: main
+            - name: MyRepo # ✅  new key:value pairs rather than a string.
+              branch: main # ✅  new optional branch name for each specified repository
             - name: MyOtherRepo
     port:
       entity:
