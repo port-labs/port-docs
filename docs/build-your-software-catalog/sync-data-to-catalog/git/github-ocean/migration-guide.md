@@ -302,10 +302,50 @@ To improve performance when fetching team members, we now use GitHub's GraphQL A
 
 <details>
   <summary>Existing Configuration</summary>
+
+  ```yaml showLineNumbers
+
+  - kind: team
+    selector:
+      query: 'true'
+      members: true # ✅  unchanged
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"githubTeam"'
+          properties:
+            slug: .slug
+            description: .description
+            link: .url
+          relations:
+            team_member: '[.members[].login]' # ❌  changed
+  ```
 </details>
 
 <details>
   <summary>New Configuration</summary>
+
+  ```yaml showLineNumbers
+
+  - kind: team
+    selector:
+      query: 'true'
+      members: true # ✅  unchanged
+    port:
+      entity:
+        mappings:
+          identifier: .id # toString is not neccesary, graphql id is a string
+          title: .name
+          blueprint: '"githubTeam"'
+          properties:
+            slug: .slug
+            description: .description
+            link: .url
+          relations:
+            team_member: '[.members.nodes[].login]' # ✅  new, nodes subarray
+  ```
 </details>
 
 ## Other Changes
