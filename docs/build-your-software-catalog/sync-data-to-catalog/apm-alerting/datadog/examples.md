@@ -777,45 +777,19 @@ resources:
   "title": "Datadog Service Dependency",
   "icon": "Datadog",
   "schema": {
-    "properties": {
-      "sourceService": {
-        "type": "string",
-        "title": "Source Service",
-        "description": "The service that is making the call (depends on other services)"
-      },
-      "calledServices": {
-        "type": "array",
-        "title": "Called Services",
-        "description": "List of services that are called by the source service",
-        "items": {
-          "type": "string"
-        }
-      },
-      "description": {
-        "type": "string",
-        "title": "Description",
-        "description": "A description of the dependency relationship"
-      }
-    },
-    "required": ["sourceService"]
+    "properties": {},
+    "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
   "aggregationProperties": {},
   "relations": {
-    "source": {
+    "dependencies": {
+      "title": "Depends on",
+      "description": "The services called by the source service",
       "target": "datadogService",
-      "title": "Source Service",
-      "description": "The service that is making the call",
-      "many": false,
-      "required": true
-    },
-    "targets": {
-      "target": "datadogService",
-      "title": "Called Services",
-      "description": "The services that are called by the source service",
-      "many": true,
-      "required": false
+      "required": false,
+      "many": true
     }
   }
 }
@@ -832,20 +806,19 @@ createMissingRelatedEntities: true
 resources:
   - kind: serviceDependency
     selector:
-      query: "true"
+      query: 'true'
+      environment: 'dev'
+      startTime: 1
     port:
       entity:
         mappings:
-          identifier: .sourceService
-          title: .sourceService
+          identifier: .name | tostring
+          title: .name
           blueprint: '"datadogServiceDependency"'
           properties:
-            sourceService: .sourceService
-            calledServices: .calledServices
-            description: .description
+            sourceService: .name
           relations:
-            source: .sourceService
-            targets: .calledServices
+            dependencies: '[.calls[] | tostring]'
 ```
 
 </details>
