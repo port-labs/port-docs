@@ -1339,5 +1339,12 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
+    {
+        title: "Generate contextual incident summaries with AI",
+        description: "Generate contextual incident summaries with AI",
+        tags: ["Incident management", "AI", "Automations"],
+        logos: ["AI", "Slack", "PagerDuty"],
+        link: "/guides/all/generate-contextual-incident-summaries-with-ai",
+    }
     
 ]
