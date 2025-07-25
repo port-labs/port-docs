@@ -5,6 +5,19 @@
     return;
   }
 
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isEmbed = urlParams.get('embed') === 'true';
+    const themeParam = urlParams.get('theme');
+    
+    if (isEmbed && themeParam) {
+      const html = document.documentElement;
+      html.setAttribute('data-theme', themeParam);
+    }
+  } catch (e) {
+    console.log('[embed-mode] Early theme application failed:', e.message);
+  }
+
   // Function to check for embed parameter and remove unwanted elements
   function checkEmbedMode() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -13,43 +26,76 @@
     if (isEmbed) {
       document.body.classList.add('embed-mode');
       
-      // Remove unwanted elements from DOM
-      removeElements();
+      // Apply theme FIRST before anything else
+      inheritParentTheme();
       
-      // Adjust layout for embedded experience
-      adjustLayoutForEmbed();
-      
-      // Handle hash scrolling if present
-      if (window.location.hash) {
-        const targetId = window.location.hash.substring(1);
-        console.log(`[embed-mode] Detected hash in URL: #${targetId}`);
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          console.log(`[embed-mode] Scrolling to element with id: ${targetId}`);
-          setTimeout(() => {
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 100);
+      // Wait a bit for theme to apply, then proceed with layout changes
+      setTimeout(() => {
+        // Remove unwanted elements from DOM
+        removeElements();
+        
+        // Adjust layout for embedded experience
+        adjustLayoutForEmbed();
+        
+        // Handle hash scrolling if present
+        if (window.location.hash) {
+          const targetId = window.location.hash.substring(1);
+          console.log(`[embed-mode] Detected hash in URL: #${targetId}`);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            console.log(`[embed-mode] Scrolling to element with id: ${targetId}`);
+            setTimeout(() => {
+              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+          } else {
+            console.warn(`[embed-mode] No element found with id: ${targetId}`);
+          }
         } else {
-          console.warn(`[embed-mode] No element found with id: ${targetId}`);
+          console.log('[embed-mode] No hash found in URL, no scrolling performed.');
         }
-      } else {
-        console.log('[embed-mode] No hash found in URL, no scrolling performed.');
-      }
+      }, 100);
     } else {
       document.body.classList.remove('embed-mode');
     }
   }
 
+  // Function to inherit theme from URL parameter
+  function inheritParentTheme() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const themeParam = urlParams.get('theme');
+    
+    if (themeParam && (themeParam === 'dark' || themeParam === 'light')) {
+      console.log(`[embed-mode] Found theme parameter: ${themeParam}`);
+      applyTheme(themeParam);
+    } else {
+      console.log('[embed-mode] No theme parameter found, using default theme');
+    }
+  }
+
+  // Function to apply theme using Docusaurus's built-in theme system
+  function applyTheme(theme) {
+    const html = document.documentElement;
+    const body = document.body;
+    
+    html.setAttribute('data-theme', theme);
+    
+    // Force a style recalculation
+    body.style.display = 'none';
+    body.offsetHeight; // Trigger reflow
+    body.style.display = '';
+  }
+
   // Function to remove unwanted elements from DOM and replace navbar
   function removeElements() {
     // Replace navbar with custom embed navbar
-    replaceNavbar();
+    // replaceNavbar();
     
     const selectorsToRemove = [
       '.theme-doc-sidebar-container',
       '.theme-doc-breadcrumbs',
       '.footer',
       '.announcement',
+      '.navbar',
       '.custom-announcement-bar',
       '.table-of-contents',
       '.theme-doc-toc-desktop',
@@ -78,30 +124,43 @@
       currentUrl.searchParams.delete('embed');
       const docsUrl = currentUrl.toString();
       
+      // Get current theme
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentTheme = urlParams.get('theme') || 'light';
+      
       // Create custom embed navbar
       const embedNavbar = document.createElement('nav');
-      embedNavbar.className = 'navbar navbar--fixed-top embed-navbar';
-      embedNavbar.style.cssText = `
-        background: var(--ifm-navbar-background-color);
-        border-bottom: 1px solid var(--ifm-color-emphasis-200);
-        padding: 0.5rem 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        min-height: 60px;
-        box-shadow: var(--ifm-navbar-shadow);
-      `;
+      embedNavbar.className = 'navbar navbar--fixed-top navbar--dark embed-navbar';
+      
+      // Force a reflow to ensure CSS variables are available
+      setTimeout(() => {
+        embedNavbar.style.cssText = `
+          background-color: var(--ifm-navbar-background-color) !important;
+          border-bottom: 1px solid var(--ifm-color-emphasis-200) !important;
+          padding: 0.5rem 1rem !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          min-height: 60px !important;
+          box-shadow: var(--ifm-navbar-shadow) !important;
+          z-index: var(--ifm-z-index-fixed) !important;
+        `;
+      }, 50);
       
       // Create logo/title section
       const logoSection = document.createElement('div');
-      logoSection.style.cssText = `
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-weight: 600;
-        color: var(--ifm-navbar-link-color);
-        font-size: 1.1rem;
-      `;
+      logoSection.className = 'navbar__brand';
+      setTimeout(() => {
+        logoSection.style.cssText = `
+          display: flex !important;
+          align-items: center !important;
+          gap: 0.5rem !important;
+          font-weight: 600 !important;
+          color: var(--ifm-navbar-link-color) !important;
+          font-size: 1.1rem !important;
+          font-family: var(--ifm-font-family-base) !important;
+        `;
+      }, 50);
       logoSection.innerHTML = `
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
           <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
@@ -114,20 +173,24 @@
       docsButton.href = docsUrl;
       docsButton.target = '_blank';
       docsButton.rel = 'noopener noreferrer';
-      docsButton.textContent = 'View Full Docs';
-      docsButton.style.cssText = `
-        background: var(--ifm-color-primary);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.9rem;
-        transition: opacity 0.2s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-      `;
+      docsButton.className = 'button button--primary';
+      setTimeout(() => {
+        docsButton.style.cssText = `
+          background-color: var(--ifm-color-primary) !important;
+          color: var(--ifm-color-primary-contrast-foreground) !important;
+          padding: 0.5rem 1rem !important;
+          border-radius: 6px !important;
+          text-decoration: none !important;
+          font-weight: 500 !important;
+          font-size: 0.9rem !important;
+          font-family: var(--ifm-font-family-base) !important;
+          transition: all 0.2s ease !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 0.5rem !important;
+          border: 1px solid var(--ifm-color-primary) !important;
+        `;
+      }, 50);
       
       // Add external link icon
       docsButton.innerHTML = `
@@ -139,10 +202,12 @@
       
       // Add hover effect
       docsButton.addEventListener('mouseenter', () => {
-        docsButton.style.opacity = '0.9';
+        docsButton.style.opacity = '0.85';
+        docsButton.style.transform = 'translateY(-1px)';
       });
       docsButton.addEventListener('mouseleave', () => {
         docsButton.style.opacity = '1';
+        docsButton.style.transform = 'translateY(0)';
       });
       
       embedNavbar.appendChild(logoSection);
@@ -150,7 +215,7 @@
       
       // Replace the original navbar
       navbar.parentNode.replaceChild(embedNavbar, navbar);
-      console.log('[embed-mode] Replaced navbar with embed navbar');
+      console.log(`[embed-mode] Replaced navbar with embed navbar (theme: ${currentTheme})`);
     }
   }
 
@@ -194,7 +259,17 @@
 
   // Function to run embed mode with proper timing
   function runEmbedMode() {
-    // Add a small delay to ensure DOM is fully rendered
+    // Apply theme immediately if embed mode is detected
+    const urlParams = new URLSearchParams(window.location.search);
+    const isEmbed = urlParams.get('embed') === 'true';
+    const themeParam = urlParams.get('theme');
+    
+    if (isEmbed && themeParam) {
+      console.log(`[embed-mode] Applying theme immediately: ${themeParam}`);
+      applyTheme(themeParam);
+    }
+    
+    // Then proceed with full embed mode setup
     setTimeout(checkEmbedMode, 50);
   }
 
