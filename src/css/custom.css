@@ -817,30 +817,3 @@ html[data-theme="dark"] .navbar-signup-button {
     display: inline-block;
   }
 }
-
-/* Embed mode styles - elements are removed from DOM by JavaScript */
-body.embed-mode {
-  /* Fallback styles in case JavaScript removal doesn't work */
-  --doc-sidebar-width: 0px !important;
-}
-
-/* Hide elements as fallback (JS will remove them from DOM) */
-body.embed-mode .theme-doc-sidebar-container,
-body.embed-mode .theme-doc-breadcrumbs,
-body.embed-mode .footer,
-body.embed-mode .announcement,
-body.embed-mode .custom-announcement-bar,
-body.embed-mode .table-of-contents,
-body.embed-mode .theme-doc-toc-desktop,
-body.embed-mode .theme-doc-toc-mobile,
-body.embed-mode .pagination-nav,
-body.embed-mode .theme-edit-this-page,
-body.embed-mode .theme-last-updated,
-body.embed-mode .col--3 {
-  display: none !important;
-}
-
-/* Custom embed navbar styles */
-body.embed-mode .embed-navbar {
-  z-index: var(--ifm-z-index-fixed);
-}
