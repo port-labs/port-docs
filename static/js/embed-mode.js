@@ -87,9 +87,6 @@
 
   // Function to remove unwanted elements from DOM and replace navbar
   function removeElements() {
-    // Replace navbar with custom embed navbar
-    // replaceNavbar();
-    
     const selectorsToRemove = [
       '.theme-doc-sidebar-container',
       '.theme-doc-breadcrumbs',
@@ -113,110 +110,6 @@
         element.remove();
       });
     });
-  }
-
-  // Function to replace the navbar with a custom embed navbar
-  function replaceNavbar() {
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-      // Get the current page URL without the embed parameter
-      const currentUrl = new URL(window.location.href);
-      currentUrl.searchParams.delete('embed');
-      const docsUrl = currentUrl.toString();
-      
-      // Get current theme
-      const urlParams = new URLSearchParams(window.location.search);
-      const currentTheme = urlParams.get('theme') || 'light';
-      
-      // Create custom embed navbar
-      const embedNavbar = document.createElement('nav');
-      embedNavbar.className = 'navbar navbar--fixed-top navbar--dark embed-navbar';
-      
-      // Force a reflow to ensure CSS variables are available
-      setTimeout(() => {
-        embedNavbar.style.cssText = `
-          background-color: var(--ifm-navbar-background-color) !important;
-          border-bottom: 1px solid var(--ifm-color-emphasis-200) !important;
-          padding: 0.5rem 1rem !important;
-          display: flex !important;
-          align-items: center !important;
-          justify-content: space-between !important;
-          min-height: 60px !important;
-          box-shadow: var(--ifm-navbar-shadow) !important;
-          z-index: var(--ifm-z-index-fixed) !important;
-        `;
-      }, 50);
-      
-      // Create logo/title section
-      const logoSection = document.createElement('div');
-      logoSection.className = 'navbar__brand';
-      setTimeout(() => {
-        logoSection.style.cssText = `
-          display: flex !important;
-          align-items: center !important;
-          gap: 0.5rem !important;
-          font-weight: 600 !important;
-          color: var(--ifm-navbar-link-color) !important;
-          font-size: 1.1rem !important;
-          font-family: var(--ifm-font-family-base) !important;
-        `;
-      }, 50);
-      logoSection.innerHTML = `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-        </svg>
-        Port Documentation
-      `;
-      
-      // Create "View Full Docs" button
-      const docsButton = document.createElement('a');
-      docsButton.href = docsUrl;
-      docsButton.target = '_blank';
-      docsButton.rel = 'noopener noreferrer';
-      docsButton.className = 'button button--primary';
-      setTimeout(() => {
-        docsButton.style.cssText = `
-          background-color: var(--ifm-color-primary) !important;
-          color: var(--ifm-color-primary-contrast-foreground) !important;
-          padding: 0.5rem 1rem !important;
-          border-radius: 6px !important;
-          text-decoration: none !important;
-          font-weight: 500 !important;
-          font-size: 0.9rem !important;
-          font-family: var(--ifm-font-family-base) !important;
-          transition: all 0.2s ease !important;
-          display: inline-flex !important;
-          align-items: center !important;
-          gap: 0.5rem !important;
-          border: 1px solid var(--ifm-color-primary) !important;
-        `;
-      }, 50);
-      
-      // Add external link icon
-      docsButton.innerHTML = `
-        View Full Docs
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
-        </svg>
-      `;
-      
-      // Add hover effect
-      docsButton.addEventListener('mouseenter', () => {
-        docsButton.style.opacity = '0.85';
-        docsButton.style.transform = 'translateY(-1px)';
-      });
-      docsButton.addEventListener('mouseleave', () => {
-        docsButton.style.opacity = '1';
-        docsButton.style.transform = 'translateY(0)';
-      });
-      
-      embedNavbar.appendChild(logoSection);
-      embedNavbar.appendChild(docsButton);
-      
-      // Replace the original navbar
-      navbar.parentNode.replaceChild(embedNavbar, navbar);
-      console.log(`[embed-mode] Replaced navbar with embed navbar (theme: ${currentTheme})`);
-    }
   }
 
   // Function to adjust layout for embedded experience
