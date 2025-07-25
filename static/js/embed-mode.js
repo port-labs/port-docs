@@ -40,10 +40,12 @@
     }
   }
 
-  // Function to remove unwanted elements from DOM
+  // Function to remove unwanted elements from DOM and replace navbar
   function removeElements() {
+    // Replace navbar with custom embed navbar
+    replaceNavbar();
+    
     const selectorsToRemove = [
-      '.navbar',
       '.theme-doc-sidebar-container',
       '.theme-doc-breadcrumbs',
       '.footer',
@@ -65,6 +67,91 @@
         element.remove();
       });
     });
+  }
+
+  // Function to replace the navbar with a custom embed navbar
+  function replaceNavbar() {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+      // Get the current page URL without the embed parameter
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.delete('embed');
+      const docsUrl = currentUrl.toString();
+      
+      // Create custom embed navbar
+      const embedNavbar = document.createElement('nav');
+      embedNavbar.className = 'navbar navbar--fixed-top embed-navbar';
+      embedNavbar.style.cssText = `
+        background: var(--ifm-navbar-background-color);
+        border-bottom: 1px solid var(--ifm-color-emphasis-200);
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 60px;
+        box-shadow: var(--ifm-navbar-shadow);
+      `;
+      
+      // Create logo/title section
+      const logoSection = document.createElement('div');
+      logoSection.style.cssText = `
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        color: var(--ifm-navbar-link-color);
+        font-size: 1.1rem;
+      `;
+      logoSection.innerHTML = `
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </svg>
+        Port Documentation
+      `;
+      
+      // Create "View Full Docs" button
+      const docsButton = document.createElement('a');
+      docsButton.href = docsUrl;
+      docsButton.target = '_blank';
+      docsButton.rel = 'noopener noreferrer';
+      docsButton.textContent = 'View Full Docs';
+      docsButton.style.cssText = `
+        background: var(--ifm-color-primary);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: opacity 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      `;
+      
+      // Add external link icon
+      docsButton.innerHTML = `
+        View Full Docs
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+        </svg>
+      `;
+      
+      // Add hover effect
+      docsButton.addEventListener('mouseenter', () => {
+        docsButton.style.opacity = '0.9';
+      });
+      docsButton.addEventListener('mouseleave', () => {
+        docsButton.style.opacity = '1';
+      });
+      
+      embedNavbar.appendChild(logoSection);
+      embedNavbar.appendChild(docsButton);
+      
+      // Replace the original navbar
+      navbar.parentNode.replaceChild(embedNavbar, navbar);
+      console.log('[embed-mode] Replaced navbar with embed navbar');
+    }
   }
 
   // Function to adjust layout for embedded experience
@@ -137,7 +224,7 @@
           mutation.addedNodes.length > 0 &&
           Array.from(mutation.addedNodes).some(node => 
             node.nodeType === Node.ELEMENT_NODE && 
-            (node.classList?.contains('navbar') || 
+            (node.classList?.contains('navbar') && !node.classList?.contains('embed-navbar') || 
              node.classList?.contains('theme-doc-sidebar-container') ||
              node.classList?.contains('footer'))
           )

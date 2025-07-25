@@ -825,7 +825,6 @@ body.embed-mode {
 }
 
 /* Hide elements as fallback (JS will remove them from DOM) */
-body.embed-mode .navbar,
 body.embed-mode .theme-doc-sidebar-container,
 body.embed-mode .theme-doc-breadcrumbs,
 body.embed-mode .footer,
@@ -839,4 +838,9 @@ body.embed-mode .theme-edit-this-page,
 body.embed-mode .theme-last-updated,
 body.embed-mode .col--3 {
   display: none !important;
+}
+
+/* Custom embed navbar styles */
+body.embed-mode .embed-navbar {
+  z-index: var(--ifm-z-index-fixed);
 }
