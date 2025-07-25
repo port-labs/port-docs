@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Generate contextual incident summaries with AI
 
-This guide demonstrates how to enhance your incident management workflow using Port's AI capabilities. You will learn how to create an AI agent that generates contextual incident summaries and send slack notifications with relevant technical context.
+This guide demonstrates how to enhance your incident management workflow using Port's AI capabilities. You will learn how to create an AI agent that generates contextual incident summaries and sends slack notification with relevant technical context.
 
 <img src="/img/guides/incident-ai-summary-workflow.png" border="1px" width="100%" />
 
