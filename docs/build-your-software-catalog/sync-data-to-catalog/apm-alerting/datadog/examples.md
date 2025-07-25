@@ -4,7 +4,9 @@ sidebar_position: 2
 
 # Examples
 
-To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in
+your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the
+playground.
 
 ## Monitor
 
@@ -346,7 +348,8 @@ resources:
 ```
 
 :::tip Service Relation
-Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default mapping connects SLOs to services using tags that starts with the `service` keyword.
+Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default mapping connects SLOs to
+services using tags that starts with the `service` keyword.
 :::
 
 </details>
@@ -423,7 +426,7 @@ The SLO history selector supports two time-related configurations:
 
 - `timeframe`: How many days to look back for each SLO history data point. Must be greater than 0 (default: 7 days)
 - `periodOfTimeInMonths`: How far back in time to fetch SLO history. Must be between 1-12 months (default: 6 months)
-:::
+  :::
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -519,7 +522,8 @@ resources:
 <summary>Integration configuration</summary>
 
 :::tip Configuration Mapping for Flexible Metric Fetching
-The `datadogSelector` section within each `serviceMetric` resource demonstrates how to fetch multiple metrics (e.g., `system.mem.used`, `system.disk.used`) from Datadog with a variety of filters. You can control the:
+The `datadogSelector` section within each `serviceMetric` resource demonstrates how to fetch multiple metrics (e.g., `system.mem.used`,
+`system.disk.used`) from Datadog with a variety of filters. You can control the:
 
 - **Metric:** Specify the exact metric name (e.g., `avg:system.mem.used`)
 - **Environment:** Filter by specific environments (e.g., `prod`, or use `*` for all)
@@ -528,7 +532,8 @@ The `datadogSelector` section within each `serviceMetric` resource demonstrates 
 
 This configuration allows you to tailor your data fetching to specific needs and scenarios.
 
-**Note**: The `env` and `service` filters let you specify custom tag names in your Datadog account. For example, your service tag could be `servicename`, and your environment tag could be `envt` or `environment`.
+**Note**: The `env` and `service` filters let you specify custom tag names in your Datadog account. For example, your service tag could be
+`servicename`, and your environment tag could be `envt` or `environment`.
 :::
 
 ```yaml showLineNumbers
@@ -592,7 +597,8 @@ resources:
 ```
 
 :::tip Service Relation
-Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default JQ maps service metrics to services using tags that starts with the `service` keyword
+Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default JQ maps service metrics
+to services using tags that starts with the `service` keyword
 :::
 
 </details>
@@ -822,3 +828,45 @@ resources:
 ```
 
 </details>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include Environment" value="includeEnvironment">
+
+The `environment` selector is crucial for accurately mapping service dependencies from Datadog's Service Map.
+
+Datadog's Service Map visualizes how services interact within a specific environment (e.g., `prod`, `staging`, `dev`).
+By specifying an `environment` in the selector, you ensure that only the dependencies relevant to that
+particular environment are fetched and mapped, preventing the inclusion of irrelevant or duplicate dependency information
+from other environments. By default, this selector is set to `prod`.
+
+```yaml
+  - kind: serviceDependency
+    selector:
+      query: 'true'
+      # highlight-next-line
+      environment: 'dev'
+      startTime: 1
+```
+
+</TabItem>
+
+<TabItem label="Include Start Time" value="includeStartTime">
+
+The `startTime` selector is crucial for fetching service dependency data from a specific point in time.
+
+This value represents the number of hours to look back from the current time to fetch dependency data.
+By default, this selector is set to `1` hour.
+
+```yaml
+  - kind: serviceDependency
+    selector:
+      query: 'true'
+      environment: 'dev'
+      # highlight-next-line
+      startTime: 1
+```
+
+</TabItem>
+
+</Tabs>
