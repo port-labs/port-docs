@@ -2,6 +2,9 @@
 sidebar_position: 2
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Examples
 
 To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in
