@@ -5,61 +5,25 @@
     return;
   }
 
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const isEmbed = urlParams.get('embed') === 'true';
-    const themeParam = urlParams.get('theme');
-    
-    if (isEmbed && themeParam) {
-      const html = document.documentElement;
-      html.setAttribute('data-theme', themeParam);
-    }
-  } catch (e) {
-    console.log('[embed-mode] Early theme application failed:', e.message);
-  }
-
   // Function to check for embed parameter and remove unwanted elements
-  function checkEmbedMode() {
+  function prepareEmbeddedPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const isEmbed = urlParams.get('embed') === 'true';
     
     if (isEmbed) {
       document.body.classList.add('embed-mode');
       
-      // Apply theme FIRST before anything else
       inheritParentTheme();
+      removeElements();  
+      adjustLayout();
+      makeLinksOpenInNewTab();
+      scrollToHash();
       
-      // Wait a bit for theme to apply, then proceed with layout changes
-      setTimeout(() => {
-        // Remove unwanted elements from DOM
-        removeElements();
-        
-        // Adjust layout for embedded experience
-        adjustLayoutForEmbed();
-        
-        // Handle hash scrolling if present
-        if (window.location.hash) {
-          const targetId = window.location.hash.substring(1);
-          console.log(`[embed-mode] Detected hash in URL: #${targetId}`);
-          const targetElement = document.getElementById(targetId);
-          if (targetElement) {
-            console.log(`[embed-mode] Scrolling to element with id: ${targetId}`);
-            setTimeout(() => {
-              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
-          } else {
-            console.warn(`[embed-mode] No element found with id: ${targetId}`);
-          }
-        } else {
-          console.log('[embed-mode] No hash found in URL, no scrolling performed.');
-        }
-      }, 100);
     } else {
       document.body.classList.remove('embed-mode');
     }
   }
 
-  // Function to inherit theme from URL parameter
   function inheritParentTheme() {
     const urlParams = new URLSearchParams(window.location.search);
     const themeParam = urlParams.get('theme');
@@ -72,7 +36,24 @@
     }
   }
 
-  // Function to apply theme using Docusaurus's built-in theme system
+  function scrollToHash() {
+    if (window.location.hash) {
+      const targetId = window.location.hash.substring(1);
+      console.log(`[embed-mode] Detected hash in URL: #${targetId}`);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        console.log(`[embed-mode] Scrolling to element with id: ${targetId}`);
+        setTimeout(() => {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      } else {
+        console.warn(`[embed-mode] No element found with id: ${targetId}`);
+      }
+    } else {
+      console.log('[embed-mode] No hash found in URL, no scrolling performed.');
+    }
+  }
+
   function applyTheme(theme) {
     const html = document.documentElement;
     const body = document.body;
@@ -85,7 +66,15 @@
     body.style.display = '';
   }
 
-  // Function to remove unwanted elements from DOM and replace navbar
+  function makeLinksOpenInNewTab() {
+    // Select all anchor tags that do not already have target="_blank"
+    const links = document.querySelectorAll('a[href]:not([target="_blank"])');
+    links.forEach(link => {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    });
+  }
+
   function removeElements() {
     const selectorsToRemove = [
       '.theme-doc-sidebar-container',
@@ -112,9 +101,7 @@
     });
   }
 
-  // Function to adjust layout for embedded experience
-  function adjustLayoutForEmbed() {
-    // Set CSS custom properties for layout adjustments
+  function adjustLayout() {
     document.documentElement.style.setProperty('--doc-sidebar-width', '0px');
     
     // Adjust main wrapper and content
@@ -150,67 +137,16 @@
     console.log('[embed-mode] Layout adjusted for embedded experience');
   }
 
-  // Function to run embed mode with proper timing
-  function runEmbedMode() {
-    // Apply theme immediately if embed mode is detected
-    const urlParams = new URLSearchParams(window.location.search);
-    const isEmbed = urlParams.get('embed') === 'true';
-    const themeParam = urlParams.get('theme');
-    
-    if (isEmbed && themeParam) {
-      console.log(`[embed-mode] Applying theme immediately: ${themeParam}`);
-      applyTheme(themeParam);
-    }
-    
-    // Then proceed with full embed mode setup
-    setTimeout(checkEmbedMode, 50);
-  }
-
   // Run on initial load
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', runEmbedMode);
+    document.addEventListener('DOMContentLoaded', prepareEmbeddedPage);
   } else {
-    runEmbedMode();
+    prepareEmbeddedPage();
   }
 
   // Listen for URL changes (for single page app navigation)
-  window.addEventListener('popstate', runEmbedMode);
+  window.addEventListener('popstate', prepareEmbeddedPage);
   
   // Also check when the page loads in case of direct navigation
-  window.addEventListener('load', runEmbedMode);
-
-  // Watch for dynamic content changes (for SPAs)
-  if (typeof MutationObserver !== 'undefined') {
-    const observer = new MutationObserver(function(mutations) {
-      // Only run if we're in embed mode and significant DOM changes occurred
-      const urlParams = new URLSearchParams(window.location.search);
-      const isEmbed = urlParams.get('embed') === 'true';
-      
-      if (isEmbed) {
-        const significantChange = mutations.some(mutation => 
-          mutation.type === 'childList' && 
-          mutation.addedNodes.length > 0 &&
-          Array.from(mutation.addedNodes).some(node => 
-            node.nodeType === Node.ELEMENT_NODE && 
-            (node.classList?.contains('navbar') && !node.classList?.contains('embed-navbar') || 
-             node.classList?.contains('theme-doc-sidebar-container') ||
-             node.classList?.contains('footer'))
-          )
-        );
-        
-        if (significantChange) {
-          console.log('[embed-mode] Detected re-added navigation elements, removing again');
-          setTimeout(() => {
-            removeElements();
-            adjustLayoutForEmbed();
-          }, 100);
-        }
-      }
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-  }
+  window.addEventListener('load', prepareEmbeddedPage);
 })(); 
