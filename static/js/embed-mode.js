@@ -24,6 +24,20 @@
       document.body.classList.remove('embed-mode');
     }
   }
+  // Ensure the navbar bottom border is visible in both light and dark themes
+  function adjustNavbarBorder(theme) {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+    // Remove any previous custom border style
+    navbar.style.borderBottom = '';
+    // Set border color based on theme
+    if (theme === 'dark') {
+      navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.45)';
+    } else {
+      navbar.style.borderBottom = '1px solid rgba(0, 0, 0, 0.45)';
+    }
+  }
+
 
   function transformNavbar() {
     const navbar = document.querySelector('.navbar');
@@ -119,6 +133,8 @@
       theme === 'dark' ? '#1e1c26' : '#ffffff',
       'important'
     );
+
+    adjustNavbarBorder(theme);
   }
 
   function inheritParentTheme() {
