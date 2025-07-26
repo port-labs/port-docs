@@ -189,11 +189,16 @@
   }
 
   function makeLinksOpenInNewTab() {
-    // Select all anchor tags that do not already have target="_blank"
+    // Select all anchor tags that do not already have target="_blank" and are not anchor links (headings)
+    // Anchor links typically have hrefs that start with '#'
     const links = document.querySelectorAll('a[href]:not([target="_blank"])');
     links.forEach(link => {
-      link.setAttribute('target', '_blank');
-      link.setAttribute('rel', 'noopener noreferrer');
+      const href = link.getAttribute('href');
+      // Exclude anchor links (href starts with '#')
+      if (href && !href.startsWith('#')) {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+      }
     });
   }
 
