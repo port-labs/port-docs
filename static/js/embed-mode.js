@@ -102,6 +102,10 @@
   }
 
   function adjustLayout() {
+    // # TODO: Make bg transparent
+    document.documentElement.style.setProperty('background-color', '#1e1c26');
+    document.body.style.setProperty('background-color', '#1e1c26');
+
     document.documentElement.style.setProperty('--doc-sidebar-width', '0px');
     
     // Adjust main wrapper and content
