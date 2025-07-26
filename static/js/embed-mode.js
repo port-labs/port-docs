@@ -15,7 +15,7 @@
       
       inheritParentTheme();
       removeElements();  
-      adjustLayout();
+      adjustLayout(urlParams.get('theme') ?? 'light');
       makeLinksOpenInNewTab();
       scrollToHash();
       
@@ -64,6 +64,15 @@
     body.style.display = 'none';
     body.offsetHeight; // Trigger reflow
     body.style.display = '';
+
+    if (theme === 'dark') {
+      html.style.setProperty('background-color', '#1e1c26', 'important');
+      body.style.setProperty('background-color', '#1e1c26', 'important');
+    } else {
+      html.style.setProperty('background-color', '#ffffff', 'important');
+      body.style.setProperty('background-color', '#ffffff', 'important');
+    }
+    
   }
 
   function makeLinksOpenInNewTab() {
@@ -102,10 +111,6 @@
   }
 
   function adjustLayout() {
-    // # TODO: Make bg transparent
-    document.documentElement.style.setProperty('background-color', '#1e1c26');
-    document.body.style.setProperty('background-color', '#1e1c26');
-
     document.documentElement.style.setProperty('--doc-sidebar-width', '0px');
     
     // Adjust main wrapper and content
