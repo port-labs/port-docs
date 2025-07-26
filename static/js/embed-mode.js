@@ -5,24 +5,26 @@
     return;
   }
 
+  const Theme = {
+    LIGHT: 'light',
+    DARK: 'dark',
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const portThemeDarkBg = '#1e1c26';
+  const portThemeLightBg = '#ffffff';
+  const isEmbed = urlParams.get('embed') === 'true';
+
+  if (!isEmbed) return;
+
   // Function to check for embed parameter and remove unwanted elements
   function prepareEmbeddedPage() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const isEmbed = urlParams.get('embed') === 'true';
-    
-    if (isEmbed) {
-      document.body.classList.add('embed-mode');
-      
-      inheritParentTheme();
+      applyTheme(urlParams.get('theme') ?? Theme.LIGHT);
       removeElements(); 
       transformNavbar();
-      adjustLayout(urlParams.get('theme') ?? 'light');
+      adjustLayout();
       makeLinksOpenInNewTab();
       scrollToHash();
-      
-    } else {
-      document.body.classList.remove('embed-mode');
-    }
   }
   // Ensure the navbar bottom border is visible in both light and dark themes
   function adjustNavbarBorder(theme) {
@@ -30,15 +32,15 @@
     if (!navbar) return;
     // Remove any previous custom border style
     navbar.style.borderBottom = '';
-    // Set border color based on theme
-    if (theme === 'dark') {
+
+    if (theme === Theme.DARK) {
       navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.45)';
     } else {
       navbar.style.borderBottom = '1px solid rgba(0, 0, 0, 0.45)';
     }
   }
 
-
+  // # TODO: Refactor
   function transformNavbar() {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
@@ -127,26 +129,14 @@
     navbar.appendChild(container);
 
     // Set navbar background color based on theme
-    const theme = new URLSearchParams(window.location.search).get('theme');
+    const theme = urlParams.get('theme') ?? Theme.LIGHT;
     navbar.style.setProperty(
       'background-color',
-      theme === 'dark' ? '#1e1c26' : '#ffffff',
+      theme === Theme.DARK ? portThemeDarkBg : portThemeLightBg,
       'important'
     );
 
     adjustNavbarBorder(theme);
-  }
-
-  function inheritParentTheme() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const themeParam = urlParams.get('theme');
-    
-    if (themeParam && (themeParam === 'dark' || themeParam === 'light')) {
-      console.log(`[embed-mode] Found theme parameter: ${themeParam}`);
-      applyTheme(themeParam);
-    } else {
-      console.log('[embed-mode] No theme parameter found, using default theme');
-    }
   }
 
   function scrollToHash() {
@@ -171,6 +161,11 @@
     const html = document.documentElement;
     const body = document.body;
     
+    if (theme !== Theme.LIGHT && theme !== Theme.DARK) {
+      console.warn(`[embed-mode] Invalid theme: ${theme}, using default theme`);
+      theme = Theme.LIGHT;
+    }
+
     html.setAttribute('data-theme', theme);
     
     // Force a style recalculation
@@ -178,12 +173,12 @@
     body.offsetHeight; // Trigger reflow
     body.style.display = '';
 
-    if (theme === 'dark') {
-      html.style.setProperty('background-color', '#1e1c26', 'important');
-      body.style.setProperty('background-color', '#1e1c26', 'important');
+    if (theme === Theme.DARK) {
+      html.style.setProperty('background-color', portThemeDarkBg, 'important');
+      body.style.setProperty('background-color', portThemeDarkBg, 'important');
     } else {
-      html.style.setProperty('background-color', '#ffffff', 'important');
-      body.style.setProperty('background-color', '#ffffff', 'important');
+      html.style.setProperty('background-color', portThemeLightBg, 'important');
+      body.style.setProperty('background-color', portThemeLightBg, 'important');
     }
     
   }
@@ -208,7 +203,6 @@
       '.theme-doc-breadcrumbs',
       '.footer',
       '.announcement',
-      // '.navbar',
       '.custom-announcement-bar',
       '.table-of-contents',
       '.theme-doc-toc-desktop',
