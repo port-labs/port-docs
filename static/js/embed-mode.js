@@ -27,113 +27,98 @@
 
   function transformNavbar() {
     const navbar = document.querySelector('.navbar');
-    if (navbar) {
-      // Remove all children from the navbar
-      while (navbar.firstChild) {
-        navbar.removeChild(navbar.firstChild);
-      }
-      
-      
-      // Build a URL without 'embed' and 'theme' params
-      const url = new URL(window.location.href);
-      url.searchParams.delete('embed');
-      url.searchParams.delete('theme');
+    if (!navbar) return;
 
-      // Create a container for flex layout
-      const container = document.createElement('div');
-      container.style.display = 'flex';
-      container.style.justifyContent = 'space-between';
-      container.style.alignItems = 'center';
-      container.style.width = '100%';
+    // Remove all children from the navbar
+    navbar.innerHTML = '';
 
-      // Create the "Documentation" label
-      const label = document.createElement('span');
-      label.textContent = 'Documentation';
-      label.style.fontWeight = 'bold';
-      label.style.fontSize = '1rem';
+    // Build a URL without 'embed' and 'theme' params
+    const url = new URL(window.location.href);
+    url.searchParams.delete('embed');
+    url.searchParams.delete('theme');
 
-      // Create the button with the external link icon
-      const button = document.createElement('a');
-      button.href = url.toString();
-      button.target = '_blank';
-      button.rel = 'noopener noreferrer';
-      button.style.display = 'inline-flex';
-      button.style.alignItems = 'center';
-      button.style.padding = '6px 12px';
-      button.style.border = '1px solid #ccc';
-      button.style.borderRadius = '4px';
-      button.style.background = '#fff';
-      button.style.color = '#444';
-      button.style.textDecoration = 'none';
-      button.style.fontSize = '1rem';
-      button.style.gap = '6px';
+    // Create flex container
+    const container = document.createElement('div');
+    Object.assign(container.style, {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '100%',
+    });
 
-      // Add the icon (SVG) to the button
-      const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      icon.setAttribute('width', '20');
-      icon.setAttribute('height', '20');
-      icon.setAttribute('viewBox', '0 0 24 24');
-      icon.setAttribute('fill', 'none');
-      icon.setAttribute('stroke', 'currentColor');
-      icon.setAttribute('stroke-width', '2');
-      icon.setAttribute('stroke-linecap', 'round');
-      icon.setAttribute('stroke-linejoin', 'round');
-      icon.style.verticalAlign = 'middle';
+    // Create label
+    const label = document.createElement('span');
+    label.textContent = 'Documentation';
+    Object.assign(label.style, {
+      fontWeight: 'bold',
+      fontSize: '1rem',
+    });
 
-      // SVG path for external link icon
-      const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path1.setAttribute('d', 'M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6');
-      const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-      path2.setAttribute('points', '15 3 21 3 21 9');
-      const path3 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      path3.setAttribute('x1', '10');
-      path3.setAttribute('y1', '14');
-      path3.setAttribute('x2', '21');
-      path3.setAttribute('y2', '3');
+    // Create external link button
+    const button = document.createElement('a');
+    button.href = url.toString();
+    button.target = '_blank';
+    button.rel = 'noopener noreferrer';
+    Object.assign(button.style, {
+      display: 'flex',
+      alignItems: 'center',
+      backgroundColor: 'transparent',
+      border: 'none',
+      padding: '0',
+      margin: '0',
+      borderRadius: '4px',
+      color: '#444',
+      textDecoration: 'none',
+      fontSize: '1rem',
+      gap: '6px',
+      justifyContent: 'center',
+    });
 
-      icon.appendChild(path1);
-      icon.appendChild(path2);
-      icon.appendChild(path3);
+    // Create SVG icon for external link
+    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.setAttribute('width', '20');
+    icon.setAttribute('height', '20');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.setAttribute('fill', 'none');
+    icon.setAttribute('stroke', 'currentColor');
+    icon.setAttribute('stroke-width', '2');
+    icon.setAttribute('stroke-linecap', 'round');
+    icon.setAttribute('stroke-linejoin', 'round');
+    icon.style.verticalAlign = 'middle';
 
-      
-      // Set icon color based on current theme
-      function setIconColor() {
-        const theme = document.documentElement.getAttribute('data-theme');
-        if (theme === 'dark') {
-          icon.setAttribute('stroke', '#fff');
-        } else {
-          icon.setAttribute('stroke', '#000');
-        }
-      }
+    // SVG paths for external link icon
+    const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path1.setAttribute('d', 'M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6');
+    const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+    path2.setAttribute('points', '15 3 21 3 21 9');
+    const path3 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    path3.setAttribute('x1', '10');
+    path3.setAttribute('y1', '14');
+    path3.setAttribute('x2', '21');
+    path3.setAttribute('y2', '3');
+    icon.append(path1, path2, path3);
 
-      // Initial color set
-      setIconColor();
+    // Set icon color based on current theme
+    const setIconColor = () => {
+      const theme = document.documentElement.getAttribute('data-theme');
+      icon.setAttribute('stroke', theme === 'dark' ? '#fff' : '#000');
+    };
+    
+    setIconColor();
 
-      button.appendChild(icon);
-      button.style.setProperty('background-color', 'transparent', 'important');
-      button.style.setProperty('border', 'none', 'important');
-      button.style.setProperty('padding', '0', 'important');
-      button.style.setProperty('margin', '0', 'important');
-      button.style.setProperty('display', 'flex', 'important');
-      button.style.setProperty('align-items', 'center', 'important');
-      button.style.setProperty('justify-content', 'center', 'important');
-      // Add label and button to the container
-      container.appendChild(label);
-      container.appendChild(button);
+    button.appendChild(icon);
 
+    // Assemble navbar
+    container.append(label, button);
+    navbar.appendChild(container);
 
-
-      // Add the container to the navbar
-      navbar.appendChild(container);
-      
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('theme') === 'dark') {
-        navbar.style.setProperty('background-color', '#1e1c26', 'important');
-      } else {
-        navbar.style.setProperty('background-color', '#ffffff', 'important');
-      }
-
-    }
+    // Set navbar background color based on theme
+    const theme = new URLSearchParams(window.location.search).get('theme');
+    navbar.style.setProperty(
+      'background-color',
+      theme === 'dark' ? '#1e1c26' : '#ffffff',
+      'important'
+    );
   }
 
   function inheritParentTheme() {
