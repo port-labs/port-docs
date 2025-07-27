@@ -57,7 +57,7 @@ For more details about view customization, see the [customization documentation]
 Another way to personalize a catalog page view is to use [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters). These allow you to create advanced and dynamic filters, invisible to "regular" users.
 
 With initial filters you can create views such as:
-- Filter all entities owned by ``My Team`` (or more dynamic queries).
+- Filter all entities owned by `My Team` (or more dynamic queries).
 - Filter entities based on dates (e.g. PRs created in the last 90 days).
 
 Leveraging teams as blueprints, we can create advanced business logics, such as services belonging to a specific product: 
