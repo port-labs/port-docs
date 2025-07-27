@@ -70,7 +70,7 @@ To achieve this, you can use the `Owning Teams` value to `My Teams`, or use the 
 <img src='/img/software-catalog/role-based-access-control/overview/initial-filters.png' width='80%' border='1px' />
 <br/><br/>
 
-Initial filters offer an easy way to **lock a Catalog Page view dynamically for the logged in user's team**
+Initial filters offer an easy way to **lock a Catalog Page view dynamically for the logged in user's team**.
 
 #### Dynamic filters for dashboard widgets
 
