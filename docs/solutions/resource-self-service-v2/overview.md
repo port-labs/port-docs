@@ -26,28 +26,32 @@ Check out our [Resource Self Service Demo](https://demo.getport.io)
 ## Experience by persona
 
 ### 👨‍💻 Developer
-*[Screenshot: Developer self-service dashboard showing resource request forms and status tracking]*
 
 **Self-serve resources instantly**
 - Request cloud resources through intuitive forms
 - Track provisioning status in real-time
 - Access resources immediately upon approval
 
-### 👨‍💼 Manager
-*[Screenshot: Manager dashboard with team resource consumption and cost tracking]*
+![Developer Dashboard](/img/solutions/resource-self-service/developer-dashboard.png)
 
+
+### 👨‍💼 Manager
 **Monitor team resources and costs**
 - View team resource consumption
 - Track spending and usage trends
 - Approve high-impact resource requests
+  
+![Manager Dashboard](/img/solutions/resource-self-service/manager-dashboard.png)
 
 ### 🛠️ Platform engineer
-*[Screenshot: Platform engineer governance dashboard with policy management]*
 
 **Maintain governance at scale**
 - Define resource templates and policies
 - Monitor compliance across all environments
 - Automate approvals with custom workflows
+
+![Platform Engineer Dashboard](/img/solutions/resource-self-service/platform-engineer-dashboard.png)
+
 
 ## What you'll build
 

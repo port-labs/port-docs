@@ -22,12 +22,6 @@ Choose your container platform:
 - **[Kubernetes integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes)** - For namespace and workload management
 - **[ArgoCD integration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/argocd)** - For GitOps-based deployments
 
-### Infrastructure as Code
-Connect your IaC tools:
-
-- **[Terraform integration](/build-your-software-catalog/sync-data-to-catalog/iac/terraform)** - For Terraform-managed resources
-- **[Pulumi integration](/build-your-software-catalog/sync-data-to-catalog/iac/pulumi)** - For Pulumi stack management
-
 ## Setup ownership
 
 ### Team structure
@@ -37,21 +31,13 @@ Ensure clear ownership hierarchy:
 2. **Engineering managers** - Approve team resource requests
 3. **Developers** - Request and manage their resources
 
-### Port team configuration
 
-Configure teams in Port to enable proper approvals:
 
-1. Navigate to **Settings** → **Teams**
-2. Create teams matching your organizational structure:
-   - `platform-team` - Platform engineers and DevOps
-   - `engineering-managers` - Team leads and engineering managers  
-   - `developers` - All development teams
+### Setup ownership
 
-3. Assign users to appropriate teams based on their roles
+1. **[Setup catalog ownership in Port](/build-your-software-catalog/set-catalog-rbac/examples#teams-and-ownership)** - Configure team ownership for your software catalog entities
 
-:::info Team inheritance
-Teams will automatically inherit permissions and visibility based on the hierarchical structure you define.
-:::
+2. **[Setup cloud ownership](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/)** - Configure ownership tracking for your cloud resources
 
 ## Verification checklist
 
@@ -62,5 +48,6 @@ Before proceeding, verify:
 - [ ] IaC integration is connected (if using Terraform/Pulumi)
 - [ ] Port teams are created and users are assigned
 - [ ] Team ownership hierarchy is defined
+- [ ] Cloud ownership is configured for your resources
 
 Once these prerequisites are met, you can proceed to configure the solution for each persona. 
