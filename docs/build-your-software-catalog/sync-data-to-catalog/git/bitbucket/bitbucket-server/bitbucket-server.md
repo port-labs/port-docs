@@ -76,7 +76,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="Bitbucket Self-Hosted" />
+<OceanRealtimeInstallation integration="Bitbucket Self-Hosted" webhookSecret="integration.secrets.bitbucketWebhookSecret" />
 
 <PortApiRegionTip/>
 
@@ -139,7 +139,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-bitbucket-server-integration/values.yaml
@@ -195,7 +195,7 @@ This table summarizes the available parameters for the installation.
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
 | `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
-| `baseUrl`                        | The base url of the instance where the Bitbucket (Self-Hosted) integration is hosted, used for real-time updates. (e.g.`https://mybitbucket-self-hosted-ocean-integration.com`)                 | ❌        |
+| `liveEvents.baseUrl`                       | The base url of the instance where the Bitbucket (Self-Hosted) integration is hosted, used for real-time updates. (e.g.`https://mybitbucket-self-hosted-ocean-integration.com`)                 | ❌        |
 
 
 **Note:** You should set the `integration.config.bitbucketIsVersion8Point7OrOlder` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
@@ -234,7 +234,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `identifier`                | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌        |
 | `version`                   | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌        |`
 | `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      | true    |          | ❌       |
-| `baseUrl`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Bitbucket (Self-Hosted)                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
+| `liveEvents.baseUrl`               | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Bitbucket (Self-Hosted)                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
 <br/>
 
 :::tip Ocean Sail Github Action
