@@ -65,7 +65,7 @@ Leveraging teams as blueprints, we can create advanced business logics, such as 
 <img src='/img/software-catalog/role-based-access-control/overview/businesslogic.png' width='100%' border='1px' /> 
 <br/><br/>
 
-To achieve this, you can use the `Owning Teams` to My Team value or the `relatedTo` dynamic filters to user's Group, for example:
+To achieve this, you can use the `Owning Teams` value to `My Teams`, or use the `relatedTo` dynamic filters, for example:
 
 <img src='/img/software-catalog/role-based-access-control/overview/initial-filters.png' width='80%' border='1px' />
 <br/><br/>
