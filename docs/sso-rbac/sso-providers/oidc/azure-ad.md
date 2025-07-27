@@ -8,7 +8,7 @@ import ScimFunctionality from "/docs/sso-rbac/sso-providers/\_scim_functionality
 import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/\_scim_oidc_limitation.mdx"
 import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
 
-# How to configure AzureAD
+# Entra ID (AzureAD)
 
 This guide demonstrates how to configure Single Sign-On (SSO) integration between Port and Microsoft Entra ID (AzureAD) using OIDC.
 
@@ -89,7 +89,7 @@ To complete the process you will need to contact us to receive the information y
 
    <SSOEndpoints/>
 
-   We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+   We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support.port.io](http://support.port.io/)).
 
    2.2 **Publisher domain**: Select the domain matching your user emails (for example `getport.io`).
 

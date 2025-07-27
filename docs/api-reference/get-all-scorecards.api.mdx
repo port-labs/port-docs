@@ -5,7 +5,7 @@ description: "This route allows you to fetch all scorecards in your Port organiz
 sidebar_label: "Get all scorecards"
 hide_title: true
 hide_table_of_contents: true
-api: eJzVUsGO0zAQ/RVrTiCZpuUYIaSVQCvEZcWWU5WDm8w21iaeMB4XSuR/R5OmuykqH8DFSWaeX+bNeyM0GGv2g3gKUMK29dEwJUHjuo5+RnOiZITME0rdas3Emhhrx000PmibzQOxGOKDC/63U6bVhz0XH6djS6ZDx8H0xGjcnpIsKKypW6yfjValRbNrqE49BploqjetyBDLomiojquBWFaeioGpJ8F3rzTF2xVYEHeIUO7g8aUOlYWIdWIvJyh3I+zRMbKCGF1TxgUyVxYY40AhYoRyhPfrtT6uF/QJn1zqxHybkZCzhR6lpQZKOKCAhcFJCyUUx02x+IFOwkfkOA2SuIMSLvLc4C/qINtb3RRfAQtRj3WL/Xnci7QR5DQglOAG/xVPYCG4Xr/vkrTEs0NgwaueFl2DPKnw4Ymm6146xU+u3j18AQs69ln/ZrWGbGGgKL0LCp/Z71H+igfY692NUFMQDPLf5+y8X8FfUgyd80E3Mlk2zt7v4LhRw6+C2FIUbY3j3kX8zl3OWv6RkDWclYWjY+/2uvxdtYzV/ectWHBJqZf2Pk/2zi+aqksraP3ounTL9wk8nRq1m1fG8RyenF/w59Y/b8w5uqB1J1XO+Q8Ac4Np
+api: eJzVVE1vEzEQ/SuWTyCFbCP1FCGkSiCEuFS0nKIcHO8ka7Jru+NxSljtf2dmP5o0FA6c4OL1jufrvXl2q8nskl6u9J0NCNZgmfR6pktIFl0kF7xe6vvKJYUhEyhT1+ExqWPIioLaAtlKbCo9hSvn5RjVbUBSAXfGux9GMs3fbrB41y/3QdVg0KuGw5TZcO6zFDNlK7B7JVaqQK3KYHMDnvo061cVUUzLomBzmkcuM3ehiBiaQPDmlKZ4PdczncBmdHRkkK3ecFFAwYtgymU6A90xbIQUg0/AjLT6+mohn+dUvIetyTWpL6MnF7DBE/cmvibG2tm+y+JbkoBWJ8bSGNlxhxGQ3JA+7GXl4MShW1Mn6GYaEAOKnY4RuFwidH6n+aSBlMwOXjjrpO+H7BBKAcZ5pzyMyJSlk3ZMfXtWfSjXSej11fWvKG8UM8EztKAeHVX9ELj7gyuhVLx4clsHqB5NUj6Q2obsy3+ailPUn0m5lP7fMdEN3DZAVeBO9A6IO4iGKv4pDoviTHiiUDwApl6gGWt2mQRuopv0zcBfOs3p5LA+if1OmB7InST/RBaHfYYj1/Wmkf+bzF3ieEfZ7AR3xdeDowSF89vQhzuqxb+/1ze3n9hV2h54WsyvZDQxJGpMP+wx+0egiwdCX3DcnmTzf780I78E36mItWEemZF+ZO04+5U+LGTgz97aKojsV7ptNybBV6y7TswPGVAeLd4eDDqzEfJXa045zkbksudB8gSthSgKO5g6DyO+uHyijSc1fvxwz74mS0fnqtj3qhg3kn068sez3JdyGVqQVRT6YkjbDppjYJP/cPTbiBHi5C1UrvlK/QSdFVTW
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -54,7 +54,7 @@ This route allows you to fetch all scorecards in your Port organization.<br/><br
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Default Response"}}}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
 >
   
 </StatusCodes>

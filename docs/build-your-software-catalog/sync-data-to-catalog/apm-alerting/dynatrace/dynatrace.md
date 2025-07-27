@@ -1632,7 +1632,7 @@ Here is an example of the payload structure from Dynatrace:
       },
       {
         "integrationType": "EMAIL",
-        "email": "support@getport.io"
+        "email": "support@port.io"
       },
       {
         "integrationType": "SLACK",

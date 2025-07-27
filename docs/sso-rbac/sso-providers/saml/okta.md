@@ -7,7 +7,7 @@ description: Integrate Okta with Port using SAML
 import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
 import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
-# How to configure Okta
+# Okta
 
 Follow this step-by-step guide to configure the integration between Port and Okta using a SAML application.
 

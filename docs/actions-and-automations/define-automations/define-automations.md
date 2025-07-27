@@ -11,7 +11,7 @@ Automations in Port are triggered by events in your infrastructure, such as a ne
 
 Port uses the same backend types for both automations and [self-service actions](/actions-and-automations/create-self-service-experiences/).
 
-## Common automations
+## 💡 Common automations
 
 - Create a new incident in PagerDuty when CPU usage is greater than X%.
 - Destroy an ephemeral environment when its TTL expires.
@@ -28,13 +28,31 @@ Automations are comprised of two parts:
 <img src="/img/automations/architecture.jpg" width="80%" border='1px' />
 </center><br/>
 
-When an event occurs in your software catalog, Port will automatically trigger the associated backend, given that the automation is enabled.  
+When an event occurs in your software catalog, Port will automatically trigger the associated backend, given that the automation is enabled.
 
-By default, automations are disabled and can be used as drafts until ready to be activated. You can enable them by setting the `publish` field to `true` in their JSON definition.
+## Define an automation
+
+Automations are defined in the [Automations page](https://app.getport.io/settings/automations) of your portal.  
+Here you can create, edit, and delete automations, as well as enable or disable them.  
+
+Click on the `+ Automation` button in the top-right corner, then follow the steps below:
+
+  1. In the first tab (`Basic Details`) of the automation creation form in Port's UI:  
+      Specify your automation’s basic details: 
+
+      - `title` - The automation's title.
+      - `identifier` - The automation's unique identifier.
+      - `description`- A description that can be used to explain the automation.
+      - `icon` - The automation's icon.
+      - `active` - A toggle button indicating whether the automation is enabled or disabled. (`true` by default).
+
+  2. In the second tab (`Trigger`), set up the [trigger](/actions-and-automations/define-automations/setup-trigger). 
+
+  3. In the third tab (`Backend`), define the [backend](/actions-and-automations/define-automations/setup-action) that will be executed when the trigger event occurs, then click `Save`.
 
 ## Automation JSON structure
 
-Automations are defined in JSON format. The JSON structure looks like this:
+The basic structure of an automation looks like this:
 
 ```json showLineNumbers
 {
@@ -58,10 +76,12 @@ Automations are defined in JSON format. The JSON structure looks like this:
     "type": "WEBHOOK",
     "url": "https://example.com"
   },
-  "publish": false
+  "publish": true
 }
 ```
 <br/>
+Make sure the `publish` field is set to `true` if you want to enable the automation.
+
 The table below describes the fields in the JSON structure (fields in **bold** are required):
 | Field | Description |
 | --- | --- |
@@ -71,19 +91,7 @@ The table below describes the fields in the JSON structure (fields in **bold** a
 | `description` | A description that can be used to explain the automation. |
 | **`trigger`** | An object containing data about the automation's trigger. See [Setup trigger](/actions-and-automations/define-automations/setup-trigger) for more information. |
 | **`invocationMethod`** | An object containing data about the automation's invocation method. See [Setup action](/actions-and-automations/define-automations/setup-action) for more information. |
-| `publish` | A boolean value indicating whether the automation is enabled or disabled (`false` by default). |
-
-## Define an automation
-
-Automations are defined in the [Automations page](https://app.getport.io/settings/automations) of your portal. Here you can create, edit, and delete automations, as well as enable or disable them.
-
-1. Click on the `+ New automation` button in the top-right corner. This will open a JSON form where you can define the automation's configuration.
-
-2. Change the JSON configuration to match your desired automation:
-   * Setup the [trigger](/actions-and-automations/define-automations/setup-trigger).
-   * Define the [backend](/actions-and-automations/define-automations/setup-action) that will be executed when the trigger event occurs.
-
-3. Make sure to set the `publish` field to `true` if you want to enable the automation. When finished, click `Save`.
+| `publish` | A boolean value indicating whether the automation is enabled or disabled (`true` by default). |
 
 ## Examples
 

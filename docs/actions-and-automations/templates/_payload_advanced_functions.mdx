@@ -21,12 +21,12 @@ A common use case for this function is to add all of the user inputs to the payl
 }
 ```
 
-This will add all of the action's user inputs to the root of the payload, so that they can be accessed directly by your backend.
+This will add all of the action's/automation's user inputs to the root of the payload, so that they can be accessed directly by your backend.
 
 #### Using `jq` expressions in keys
 
 The keys in the payload can also be `jq` expressions.  
-For example, the following expression will add the `ref` key to the payload only if a `ref` input was provided when executing the action:
+For example, the following expression will add the `ref` key to the payload only if a `ref` input was provided when executing the action/automation:
 
 ```json
 {

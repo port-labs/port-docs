@@ -1,0 +1,72 @@
+---
+id: update-a-pages-permissions
+title: "Update a page's permissions"
+description: "**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>** This route allows you to update a specific page’s permissions.<br/><br/>To learn more about pages, check out the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/page-permissions)."
+sidebar_label: "Update a page's permissions"
+hide_title: true
+hide_table_of_contents: true
+api: eJztV8FuGzcQ/RWCl9iG5LVSn4SggJMWaNEWEFznpAoBtTuSGHOXLMmVowgC8hv9vX5J33BX1tqSE9sno+1ltUvODGfeDN+M1jKqeZDDsRypOQU56cmCQu61i9pWcihPTq4WJNKmuBj9LHQQee09VdGshK7ElKLq8YuOtztiZn2JBWFUfo1V8lFBYqmMLhTbDUJVhXDeRsp331DIbW0KARsFebGytRfOQtmIuqqDmhoSeibqQBCucovDcrhx+mbqs+/TQ4wMqUCwMIOBaMW48dwuyS813UyOMuV0P21TlVPmePsYUcBlgmVdzUVcIEi44KyuYsf4yYm44i1v60hCGWNvAjvJ59QOkWFRBEe5nulcsOW/v/wVhCNf6hA4zI6xKyvgqq9EyQerKWwmldAT+YLya8ELEdCPC5vXJVBNyE2OFjG6MMwyLIdTRudU2yyvQ7Sl/kz9ZKNfqLCYWuWL0AeyfWfqua5CijY9+h2njk//qGRPevqzphDf2mIlh2uZ2yriUH5Vzhmdp+Ozj4GrYi0DnCwVv8WVI9SJnX5EMmAHWYXxqFFM2PWkim9LIaM+dMSU92oFKR2p7K6H6JEgudnAXWvoiSqRVPkkFeiootAcuDKjjsczZQJht8n6vzW+b22zgFNelRRTeOMDZdGe1ZOlrn6lah4XcjiAnmZucQqfPVnBQvqa0wddoOhwf8i3Jak9oYCir2kDbgoEitFxlQ6b4v5Abjie8Jan4FDNDWjnZwP+uUtlP9BM1SaKy1YSJzy6yu/m0163VyTEXTGQ99YfgBmxUwgI7oFE3wY5ZrtbO5NHgH9+dr4f5QXIL4A5cxI3Oi4Sh8D7JZAFa97CK25UEJVlrq6r4kVDsdP6Oij3W9fzkGihHXy3D+1lQ5FiCo7kRhgtSFz5OYkjo0u0L6wNftNvj180nE8D8fExt8C9fr0PHI8QHPkO/sJSA3qpYt6kJrXVV0G00LxkCJ9bkc/BYdPgCpJd2KIhzZxZM5HnUGbLQTPEZOt7BLrJOk1eMnf65Zana2+gux0lMBJtJwkgcmi3DjuBDg3/zi42qG/JeNd9nP6FVjt6v6gRgNefUxJl2wEWGA+gxQEyLpe7GeTHT6p0hrozRNtFx9sETW67ZHep7YK7pTt9+rk2Usua2RSfjuyXHAEQHokRC+PaZHhwesZF5WyIpUpl2ob/fjsgcpZe3ZkK5b0y6Qxf/4/f/5Xxu701kT7FzBnki8soXcR1e9XHcjlI957/p/XkcH9e6tYUqnhhmQHHcr2eIinvvdlseBlXzPMAhdel8prTmjih0CnFxWHu6hbl0WVLi8fiIc+3JFAxA6Dyav7C6zUoYX/U2/AlbbmAXWmk3jUH9q/Y1s7KXi9gymo0LvKcXPyq7KRDpaOLq3c/QXra/ucpbcFKXt3w8IlnctkmBJp/M7y2lkZV8zr1DNkYTaNyzUnq0t91or/2hcM6CMp9Xmwi4SfHdVBlvW7IFfncyjdbD2q02G6lOUfgtM0/O+ecOA==
+sidebar_class_name: "patch api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update a page's permissions"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/pages/{page_identifier}/permissions"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>** This route allows you to update a specific page’s permissions.<br/><br/>To learn more about pages, check out the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/page-permissions).
+
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"page_identifier","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"read":{"type":"object","properties":{"users":{"type":"array","items":{"type":"string"}},"roles":{"type":"array","items":{"type":"string"}},"teams":{"type":"array","items":{"type":"string"}}},"additionalProperties":false},"update":{"type":"object","properties":{"users":{"type":"array","items":{"type":"string"}},"roles":{"type":"array","items":{"type":"string"}},"teams":{"type":"array","items":{"type":"string"}}},"additionalProperties":false}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

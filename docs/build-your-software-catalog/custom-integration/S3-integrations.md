@@ -241,4 +241,4 @@ If any entities were created but failed to ingest, you will see an indicative er
 
 <h3>Data is not propagating from S3 to Port</h3>
 If you're sure the Airbyte integration is working properly, there are no records in the Audit Log, and the "Load latest event" button does not produce an event in the corresponding box, there might be an issue with the pipeline set up by Port.  
-In this case, contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io) and our support team will assist in diagnosing and solving the issue.
+In this case, contact us using chat/Slack/support site to [support.port.io](http://support.port.io/) and our support team will assist in diagnosing and solving the issue.
