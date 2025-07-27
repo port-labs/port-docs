@@ -52,7 +52,7 @@ By using the `My Teams filter` you will only see entities that belong to one of 
 You may "Save this view" to permanently keep the filters.  
 For more details about view customization, see the [customization documentation](/customize-pages-dashboards-and-plugins/page/catalog-page/#my-teams-filter).
 
-#### Filter a catalog page dynamically to the user's team with Initial Filters
+#### Filter a catalog page to the user's team
 
 Another way to personalize a catalog page view is to use [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters). These allow you to create advanced and dynamic filters, invisible to "regular" users.
 
