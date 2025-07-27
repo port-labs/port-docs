@@ -14,10 +14,10 @@
   const portThemeDarkBg = '#1e1c26';
   const portThemeLightBg = '#ffffff';
   const isEmbed = urlParams.get('embed') === 'true';
+  const origins = ['https://app.getport.io', 'https://app.port.io', 'http://localhost:3001'];
 
   if (!isEmbed) return;
 
-  // Function to check for embed parameter and remove unwanted elements
   function prepareEmbeddedPage() {
       applyTheme(urlParams.get('theme') ?? Theme.LIGHT);
       removeElements(); 
@@ -25,9 +25,9 @@
       adjustLayout();
       makeLinksOpenInNewTab();
       scrollToHash();
+      sendFinishedLoadingEvent();
   }
 
-  // # TODO: Refactor
   function transformNavbar() {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
@@ -257,6 +257,16 @@
     }
 
     console.log('[embed-mode] Layout adjusted for embedded experience');
+  }
+
+  function sendFinishedLoadingEvent() {
+    setTimeout(() => {
+      origins.forEach(origin => {
+        window.parent.postMessage({
+          type: 'finished_load_ack'
+        }, origin);
+      });
+    }, 1000);
   }
 
   // Run on initial load
