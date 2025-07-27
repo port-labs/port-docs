@@ -11,7 +11,7 @@ To install the integration using Helm:
 Copy the command, replace the placeholders with your values, then run it in your terminal to install the integration.
 
 
-### BaseUrl & webhook configuration
+<h3> BaseUrl & webhook configuration </h3>
 
 :::warning AppHost deprecation
 **`integration.config.appHost` is deprecated**: Please use `liveEvents.baseUrl` for webhook URL settings instead.
@@ -50,7 +50,7 @@ If `liveEvents.baseUrl` is not provided, the integration will continue to functi
   </>
 )}
 
-### Scalable Mode for Large Integrations
+<h3> Scalable Mode for Large Integrations </h3>
 
 If you are deploying the integration at scale and want to decouple the resync process from the live events process (recommended for large or high-throughput environments), you can enable scalable mode by adding the following flags to your Helm install command:
 
