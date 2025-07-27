@@ -132,7 +132,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-pagerduty-integration/values.yaml
@@ -1368,7 +1368,7 @@ For relevant guides and examples, see the [guides section](https://docs.port.io/
 
 ## Support
 
-For any questions or issues, contact us at [support@getport.io](mailto:support@getport.io) or via our [Community Slack channel](https://port.io/community).
+For any questions or issues, contact us at [support.port.io](http://support.port.io/) or via our [Community Slack channel](https://port.io/community).
 
 ## Alternative installation via webhook
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from PagerDuty. If so, use the following instructions:

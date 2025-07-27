@@ -18,7 +18,7 @@ import loginUsingApp from "/static/img/sso/google-workspace/loginUsingApp.png"
 import acsURLandEntityID from "/static/img/sso/google-workspace/acsURLandEntityID.png"
 import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
-# How to configure Google Workspace
+# Google Workspace
 
 Follow this step-by-step guide to configure the integration between Port and Google Workspace.
 
@@ -99,7 +99,7 @@ Press `Continue`.
 - `Entity ID` - `urn:auth0:port-prod:{CONNECTION_NAME}`
 
 :::note
-We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support.port.io](http://support.port.io/)).
 :::
 
 Press `Continue`

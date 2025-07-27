@@ -1,13 +1,13 @@
 ---
 title: "Microsoft Entra ID (AzureAD)"
 sidebar_position: 1
-description: Integrate Azure AD with Port using SAML
+description: Integrate Entra ID (AzureAD) with Port using SAML
 ---
 
 import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
 import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
-# How to configure Azure AD
+# Entra ID (AzureAD)
 
 Follow this step-by-step guide to configure the integration between Port and Azure AD using a SAML application
 

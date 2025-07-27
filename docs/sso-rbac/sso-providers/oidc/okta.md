@@ -9,7 +9,7 @@ import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/_scim_oidc_limitat
 import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
 import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
-# How to configure Okta
+# Okta
 
 Follow this step-by-step guide to configure the integration between Port and Okta.
 
@@ -72,7 +72,7 @@ Get your `Okta Domain` by clicking on your user mail at the top-right corner of 
 
 Under `General` tab:
 
-1. Copy the `Client ID` and send it to Port along with the `Okta Domain` from the previous step (using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+1. Copy the `Client ID` and send it to Port along with the `Okta Domain` from the previous step (using chat/Slack/mail to [support.port.io](http://support.port.io/)).
 
    ![Okta app settings](/img/sso/okta/OktaAppSettingsPage.png)
 
@@ -93,7 +93,7 @@ Under `General` tab:
    <SSOEndpoints/>
 
    :::note
-   We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+   We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support.port.io](http://support.port.io/)).
    :::
 
    ![Okta app settings login flow](/img/sso/okta/OktaAppLoginflowSettings.png)

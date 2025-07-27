@@ -52,80 +52,78 @@ To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-kafka-integration` in your git repository with the content:
 
-:::note
-Remember to replace the placeholders for `KAFKA_CLUSTER_CONFIG_MAPPING`.
-:::
-```yaml showLineNumbers
-initializePortResources: true
-scheduledResyncInterval: 120
-integration:
-  identifier: my-ocean-kafka-integration
-  type: kafka
-  eventListener:
-    type: POLLING
-  secrets:
-  // highlight-next-line
-    clusterConfMapping: KAFKA_CLUSTER_CONFIG_MAPPING
-```
-<br/>
+    ```yaml showLineNumbers
+    initializePortResources: true
+    scheduledResyncInterval: 120
+    integration:
+      identifier: my-ocean-kafka-integration
+      type: kafka
+      eventListener:
+        type: POLLING
+      secrets:
+      // highlight-next-line
+        clusterConfMapping: KAFKA_CLUSTER_CONFIG_MAPPING
+    ```
+    <br/>
 
 2. Install the `my-ocean-kafka-integration` ArgoCD Application by creating the following `my-ocean-kafka-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
-:::
 
-<details>
-  <summary>ArgoCD Application</summary>
+    <details>
+      <summary>ArgoCD Application</summary>
 
-```yaml showLineNumbers
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: my-ocean-kafka-integration
-  namespace: argocd
-spec:
-  destination:
-    namespace: my-ocean-kafka-integration
-    server: https://kubernetes.default.svc
-  project: default
-  sources:
-  - repoURL: 'https://port-labs.github.io/helm-charts/'
-    chart: port-ocean
-    targetRevision: 0.8.5
-    helm:
-      valueFiles:
-      - $values/argocd/my-ocean-kafka-integration/values.yaml
-      // highlight-start
-      parameters:
-        - name: port.clientId
-          value: YOUR_PORT_CLIENT_ID
-        - name: port.clientSecret
-          value: YOUR_PORT_CLIENT_SECRET
-        - name: port.baseUrl
-          value: https://api.getport.io
-  - repoURL: YOUR_GIT_REPO_URL
-  // highlight-end
-    targetRevision: main
-    ref: values
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
-```
+      :::info Replace placeholders
+        - Replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL` with your actual values.
+      :::
 
-<PortApiRegionTip/>
+    ```yaml showLineNumbers
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: my-ocean-kafka-integration
+      namespace: argocd
+    spec:
+      destination:
+        namespace: my-ocean-kafka-integration
+        server: https://kubernetes.default.svc
+      project: default
+      sources:
+      - repoURL: 'https://port-labs.github.io/helm-charts/'
+        chart: port-ocean
+        targetRevision: 0.9.5
+        helm:
+          valueFiles:
+          - $values/argocd/my-ocean-kafka-integration/values.yaml
+          // highlight-start
+          parameters:
+            - name: port.clientId
+              value: YOUR_PORT_CLIENT_ID
+            - name: port.clientSecret
+              value: YOUR_PORT_CLIENT_SECRET
+            - name: port.baseUrl
+              value: https://api.getport.io
+      - repoURL: YOUR_GIT_REPO_URL
+      // highlight-end
+        targetRevision: main
+        ref: values
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+    ```
 
-</details>
-<br/>
+    <PortApiRegionTip/>
 
-1. Apply your application manifest with `kubectl`:
-```bash
-kubectl apply -f my-ocean-kafka-integration.yaml
-```
+    </details>
+
+
+3. Apply your application manifest with `kubectl`:
+
+    ```bash
+    kubectl apply -f my-ocean-kafka-integration.yaml
+    ```
 </TabItem>
 </Tabs>
 
@@ -136,7 +134,7 @@ This table summarizes the available parameters for the installation.
 | `port.clientId`                          | Your port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |         | ✅        |
 | `port.clientSecret`                      | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |         | ✅        |
 | `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |         | ✅        |
-| `integration.secrets.clusterConfMapping` | The Mapping of Kafka cluster names to Kafka client config                                                                                                                                                                                                                                      |         | ✅        |
+| `integration.secrets.clusterConfMapping` | JSON object mapping Kafka cluster names to their client configurations. Each cluster config should include `bootstrap.servers`, `security.protocol`, and authentication details. See [Cluster configuration examples](#cluster-config-mapping-examples) for detailed examples. |         | ✅        |
 | `integration.eventListener.type`         | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |         | ✅        |
 | `integration.type`                       | The integration to be installed                                                                                                                                                                                                                                                                |         | ✅        |
 | `scheduledResyncInterval`                | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |         | ❌        |
@@ -242,8 +240,10 @@ pipeline {
 }
 ```
 
-  </TabItem>
-  <TabItem value="azure" label="Azure Devops">
+</TabItem>
+
+<TabItem value="azure" label="Azure Devops">
+
 <AzurePremise  />
 
 <DockerParameters />
@@ -286,8 +286,8 @@ steps:
 
 ```
 
-  </TabItem>
-  <TabItem value="gitlab" label="GitLab">
+</TabItem>
+<TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -344,6 +344,273 @@ ingest_data:
 
 <AdvancedConfig/>
 
+### Cluster config mapping examples
+
+The `clusterConfMapping` parameter is crucial for connecting to your Kafka clusters. 
+The cluster configuration mapping should be a JSON object with cluster names as keys and Kafka client configurations as values. Each client configuration follows the standard Kafka client properties format.
+
+Below are some examples of how to configure the `clusterConfMapping` parameter for different Kafka cluster configurations.
+
+<h4> Basic SASL_SSL authentication </h4>
+
+For clusters with SASL authentication over SSL:
+
+<details>
+<summary><b>Basic SASL_SSL authentication (click to expand)</b></summary>
+
+<Tabs groupId="config-format" queryString="config-format">
+<TabItem value="helm-argocd" label="Helm/ArgoCD" default>
+
+```yaml showLineNumbers
+integration:
+  secrets:
+    clusterConfMapping: |
+      {
+        "production-cluster": {
+          "bootstrap.servers": "broker1:9092,broker2:9092,broker3:9092",
+          "security.protocol": "SASL_SSL",
+          "sasl.mechanism": "SCRAM-SHA-256",
+          "sasl.username": "your-username",
+          "sasl.password": "your-password"
+        },
+        "staging-cluster": {
+          "bootstrap.servers": "staging-broker1:9092,staging-broker2:9092",
+          "security.protocol": "SASL_SSL",
+          "sasl.mechanism": "SCRAM-SHA-256",
+          "sasl.username": "staging-username",
+          "sasl.password": "staging-password"
+        }
+      }
+```
+
+</TabItem>
+<TabItem value="ci-cd" label="CI/CD Environment Variable">
+
+```bash showLineNumbers
+export OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING='{
+  "production-cluster": {
+    "bootstrap.servers": "broker1:9092,broker2:9092,broker3:9092",
+    "security.protocol": "SASL_SSL",
+    "sasl.mechanism": "SCRAM-SHA-256",
+    "sasl.username": "your-username",
+    "sasl.password": "your-password"
+  },
+  "staging-cluster": {
+    "bootstrap.servers": "staging-broker1:9092,staging-broker2:9092",
+    "security.protocol": "SASL_SSL",
+    "sasl.mechanism": "SCRAM-SHA-256",
+    "sasl.username": "staging-username",
+    "sasl.password": "staging-password"
+  }
+}'
+```
+
+</TabItem>
+</Tabs>
+
+</details>
+
+<h4> Plain text authentication </h4>
+
+For clusters without SSL encryption:
+
+<details>
+<summary><b>Plain text authentication (click to expand)</b></summary>
+
+<Tabs groupId="config-format" queryString="config-format">
+<TabItem value="helm-argocd" label="Helm/ArgoCD" default>
+
+```yaml showLineNumbers
+integration:
+  secrets:
+    clusterConfMapping: |
+      {
+        "internal-cluster": {
+          "bootstrap.servers": "internal-broker1:9092,internal-broker2:9092",
+          "security.protocol": "SASL_PLAINTEXT",
+          "sasl.mechanism": "PLAIN",
+          "sasl.username": "internal-username",
+          "sasl.password": "internal-password"
+        }
+      }
+```
+
+</TabItem>
+<TabItem value="ci-cd" label="CI/CD Environment Variable">
+
+```bash showLineNumbers
+export OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING='{
+  "internal-cluster": {
+    "bootstrap.servers": "internal-broker1:9092,internal-broker2:9092",
+    "security.protocol": "SASL_PLAINTEXT",
+    "sasl.mechanism": "PLAIN",
+    "sasl.username": "internal-username",
+    "sasl.password": "internal-password"
+  }
+}'
+```
+
+</TabItem>
+</Tabs>
+
+</details>
+
+<h4> mTLS authentication </h4>
+
+For clusters with mutual TLS authentication:
+
+<details>
+<summary><b>mTLS authentication (click to expand)</b></summary>
+
+<Tabs groupId="config-format" queryString="config-format">
+<TabItem value="helm-argocd" label="Helm/ArgoCD" default>
+
+```yaml showLineNumbers
+integration:
+  secrets:
+    clusterConfMapping: |
+      {
+        "secure-cluster": {
+          "bootstrap.servers": "secure-broker1:9092,secure-broker2:9092",
+          "security.protocol": "SSL",
+          "ssl.ca.location": "/path/to/ca-cert.pem",
+          "ssl.certificate.location": "/path/to/client-cert.pem",
+          "ssl.key.location": "/path/to/client-key.pem",
+          "ssl.key.password": "key-password"
+        }
+      }
+```
+
+</TabItem>
+<TabItem value="ci-cd" label="CI/CD Environment Variable">
+
+```bash showLineNumbers
+export OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING='{
+  "secure-cluster": {
+    "bootstrap.servers": "secure-broker1:9092,secure-broker2:9092",
+    "security.protocol": "SSL",
+    "ssl.ca.location": "/path/to/ca-cert.pem",
+    "ssl.certificate.location": "/path/to/client-cert.pem",
+    "ssl.key.location": "/path/to/client-key.pem",
+    "ssl.key.password": "key-password"
+  }
+}'
+```
+
+</TabItem>
+</Tabs>
+
+</details>
+
+<h4> Confluent cloud configuration </h4>
+
+For Confluent Cloud clusters:
+
+<details>
+<summary><b>Confluent cloud configuration (click to expand)</b></summary>
+
+<Tabs groupId="config-format" queryString="config-format">
+<TabItem value="helm-argocd" label="Helm/ArgoCD" default>
+
+```yaml showLineNumbers
+integration:
+  secrets:
+    clusterConfMapping: |
+      {
+        "confluent-cloud-cluster": {
+          "bootstrap.servers": "pkc-abcd85.us-west-2.aws.confluent.cloud:9092",
+          "security.protocol": "SASL_SSL",
+          "sasl.mechanism": "PLAIN",
+          "sasl.username": "your-api-key",
+          "sasl.password": "your-api-secret"
+        }
+      }
+```
+
+</TabItem>
+<TabItem value="ci-cd" label="CI/CD Environment Variable">
+
+```bash showLineNumbers
+export OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING='{
+  "confluent-cloud-cluster": {
+    "bootstrap.servers": "pkc-abcd85.us-west-2.aws.confluent.cloud:9092",
+    "security.protocol": "SASL_SSL",
+    "sasl.mechanism": "PLAIN",
+    "sasl.username": "your-api-key",
+    "sasl.password": "your-api-secret"
+  }
+}'
+```
+
+</TabItem>
+</Tabs>
+
+</details>
+
+<h4> Advanced configuration with custom properties </h4>
+
+For clusters requiring additional custom properties:
+
+<details>
+<summary><b>Advanced configuration with custom properties (click to expand)</b></summary>
+
+<Tabs groupId="config-format" queryString="config-format">
+<TabItem value="helm-argocd" label="Helm/ArgoCD" default>
+
+```yaml showLineNumbers
+integration:
+  secrets:
+    clusterConfMapping: |
+      {
+        "advanced-cluster": {
+          "bootstrap.servers": "broker1:9092,broker2:9092,broker3:9092",
+          "security.protocol": "SASL_SSL",
+          "sasl.mechanism": "SCRAM-SHA-512",
+          "sasl.username": "advanced-username",
+          "sasl.password": "advanced-password",
+          "ssl.ca.location": "/path/to/ca-cert.pem",
+          "ssl.endpoint.identification.algorithm": "https",
+          "request.timeout.ms": 30000,
+          "session.timeout.ms": 10000,
+          "enable.auto.commit": false
+        }
+      }
+```
+
+</TabItem>
+<TabItem value="ci-cd" label="CI/CD Environment Variable">
+
+```bash showLineNumbers
+export OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING='{
+  "advanced-cluster": {
+    "bootstrap.servers": "broker1:9092,broker2:9092,broker3:9092",
+    "security.protocol": "SASL_SSL",
+    "sasl.mechanism": "SCRAM-SHA-512",
+    "sasl.username": "advanced-username",
+    "sasl.password": "advanced-password",
+    "ssl.ca.location": "/path/to/ca-cert.pem",
+    "ssl.endpoint.identification.algorithm": "https",
+    "request.timeout.ms": 30000,
+    "session.timeout.ms": 10000,
+    "enable.auto.commit": false
+  }
+}'
+```
+
+</TabItem>
+</Tabs>
+
+</details>
+
+
+You can configure multiple clusters in the same mapping by adding additional cluster configurations as shown in the examples above. Each cluster will be processed independently by the integration.
+
+
+:::caution Security considerations
+- Store sensitive information like passwords and API keys securely using your platform's secret management system.
+- For Kubernetes deployments, use Kubernetes secrets to store the `clusterConfMapping` value.
+- For CI/CD pipelines, use environment variable encryption features provided by your CI/CD platform.
+:::
 
 ## Configuration
 

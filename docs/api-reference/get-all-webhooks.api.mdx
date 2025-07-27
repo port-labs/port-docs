@@ -5,7 +5,7 @@ description: "This route allows you to fetch all webhooks configured in your Por
 sidebar_label: "Get all webhooks"
 hide_title: true
 hide_table_of_contents: true
-api: eJztU02L3DAM/StGpy54kpkeQykstCyll6XdUsqQg+JoErOJldrybKch/704yezMwvbYWy/5kJ7k96ynEWoKxttBLDso4KG1QXmOQgq7jp+COnFUwupAYtoUU09UtcyPQRl2B9tET7WyLuG8umcvin2Dzv7G1DJTPzgqg05hF1gFIiUt9alAWlL7GgVV4OgNBTVgQ+WbVmQIRZ7jMGQNycBeMst5IBHrmpCnks1acqP4cHUyGsPRSfau8vn7+fHAqiP0TvXsSWHFUZ4FaGVaMo8qxRYybGJPTmbmFyI1m5CdaVTRdvUmHbkJfJAn9LQxKNhxk5sYhPuNdUKNn5vk61n5TQYaBJsAxR6+L0EoNQQy0Vs5QbEfoSL05BPCE9bFVZ8A5VRq8BQGdoECFCO83W7T6+X8PtABYyfqy4qEadLQk7RcQwENCWgYUFooID/uzvQCJCb+SD7MRKLvoIDLIOxZPkz6tWwMF8CVqK+mpX4he5Y2gpwGggJwsJ/pBBoc9un/NkrLfnUNaLBJTUtYk581WHfgudxKl/DzvG/vP4GGRHtRv8u2MGkYOEiPLsHX7nckL7wL+uW9jWDYCTn5vwL/eAWW6Qv9knzo0Lo0r9lQ4+rLPRx3oOF5UqWGloOkxDhWGOib76YphX9G8mlxSg1H9BarZIx9eW34u48PoAFjanxtvcfZeutHcvw55VL8iF18zZMzeH6mNXi1ZBwXY0/TM35J/bVi9fgZnW6knKbpD9yR9xo=
+api: eJztVE2L2zAQ/StCpy4k8Qb2FEphYctSelnaLaWEHBR5bKuxLe9olDQ1+e+d8UeSTbc9FAo99OIPad7ozbw3ajWZPOjFUn+GdeH9Rq8mOoVg0TXkfK0X+rFwQaGPBMqUpd8FtfdRkVcZkC1kTe16bFDW15nLI0KqXC1xqB48kvKYm9p9N5Jypr4w3pqaocGrAKCogEoA/FbL1JBRgaEWgmpMDqtXBVETFklimmaWAzWccuZ8EoDI1XlIBDIdIFfKZ2cnG2t9rGn2eo3Jm+7x6FUJBmtVeeSS1lzZsYCJsgXYjZK1noy3sYKaOuYnIrwcZiONdXRlOpUjmUNGO4Mwtcyo9HliYyBfTV1NkGOXJBnOSq5meqID2IiO9qxAq9dMC1DEQDDp4gwU9OrAwiCEhn+ABWv1zfVcXs/FuoPMxJLUhyGSj2BNiCuQWO5f6WxP42sQQKsDV1wZ+WrQN4Dk+vRsBX4yODA0Y6ngMNGA6FHWad8AHxcIWQDNOxWEwFq9sHcQ3k/RsSmkNM475uGKTJo6oWPKh7PT++MOAr25vvm5ylvFnejkVjtHRScVs9+6VIyXcrUuc4BqZ4KqPamMLZD+0604oX7flMvh/LNOHPreVkCFZyaaZ4oZNIYK/km289GjoXMobgFDZ9CIJQecptGNM8Blv7QbwylgdTL7R+lz39rR8sdWMew97Pnc2lTyfxuZIw5XBy87qbrg8WCU1ODqzHdwR6XEd0N/+/COQ4V236X57FqEaXygynRSD9nvgZ5dYPqiv+3JMv/vwb95Dw7qE3yjpCkNq8x6dYZqB18u9XbOgUel2E+Fl4Fc6rZdmwCfsDwcZPkpAsqFyp9bg86sxRjLFSccfCNW3rDJ2F3WQiPe35oy9va7uBbEt8c5uX/7yLEmCp9zx246xw4fkn3cqvdnuS+t3FOQp0zPi5C27eeBCxvj+61fIoYSx2hp5IqH/Qe0NMiH
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -54,7 +54,7 @@ This route allows you to fetch all webhooks configured in your Port organization
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Default Response"}}}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
 >
   
 </StatusCodes>

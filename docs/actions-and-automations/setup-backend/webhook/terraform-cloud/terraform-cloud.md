@@ -21,7 +21,7 @@ You can implement this action in two ways:
 
 - If you choose to implement using the Execution Agent, you will need to:
   - Install [Helm](https://helm.sh) on your infrastructure
-  - Contact Port [support](mailto:support@getport.io) to set up a Kafka topic for your organization.
+  - Contact Port [support](http://support.port.io/) to set up a Kafka topic for your organization.
 
 ## Set up data model
 

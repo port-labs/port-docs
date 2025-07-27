@@ -124,7 +124,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-dynatrace-integration/values.yaml
@@ -1632,7 +1632,7 @@ Here is an example of the payload structure from Dynatrace:
       },
       {
         "integrationType": "EMAIL",
-        "email": "support@getport.io"
+        "email": "support@port.io"
       },
       {
         "integrationType": "SLACK",
