@@ -31,7 +31,7 @@ To configure who can see which pages, refer to the [Page Permissions](/customize
 
 Port allows you to assign ownership of specific entities to teams in your organization, enabling personalized views such as "**show me my team’s services**" or "**my pull requests**".
 
-User and Teams are blueprints, enabling to create creations and inherit ownership. 
+`User` and `Team` are blueprints, enabling to create relations and inherit ownership. 
 <img src='/img/software-catalog/role-based-access-control/overview/user-and-teams.png' width='80%' border='1px' />
 
 Ownership concept consists in creating and inherating ownership to the ``Team`` blueprint, either through a direct relation or through ``Owning Team`` transitive relation 
