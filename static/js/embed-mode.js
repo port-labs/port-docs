@@ -14,7 +14,7 @@
   const portThemeDarkBg = '#1e1c26';
   const portThemeLightBg = '#ffffff';
   const isEmbed = urlParams.get('embed') === 'true';
-  const origins = ['https://app.getport.io', 'https://app.port.io', 'http://localhost:3001'];
+  const origins = ['https://app.getport.io', 'https://app.port.io'];
 
   if (!isEmbed) return;
 
