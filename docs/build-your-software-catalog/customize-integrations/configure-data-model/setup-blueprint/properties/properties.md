@@ -34,6 +34,14 @@ You can create, delete, or edit properties via the builder page or directly from
 
 4. Fill in the form with the desired property details, including the [property type](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties), then click `Create`.
 
+:::info Limit field restriction
+Properties that include a `limit` field must be defined as either accepting a single value or a list.
+This setting becomes permanent after the property is created and cannot be changed later.
+
+For example, if you create a URL property and limit it to a single link, you won't be able to switch it later to support multiple URLs.
+To support multiple URLs, you'll need to define a new property with `limit` set to list.
+:::
+
 ### From the software catalog
 
 Each catalog page in your software catalog contains a table with all entities created from a certain blueprint. You can modify the properties of the blueprint directly from this table:
