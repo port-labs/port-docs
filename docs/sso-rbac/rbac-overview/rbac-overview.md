@@ -81,7 +81,7 @@ You can create widgets with data dynamically based on the logged in user’s ide
 
 It is possible to assign more granular permissions on **entities** to prevent users from reading or editing certain properties or relations. 
 
-This is an advanced feature and is only recommended in large Enterprise with complex RBAC use cases. In most cases dynamic filtering would be a simpler and effective way to achieve the same outcome. 
+This is an advanced feature and is only recommended in large enterprises with complex RBAC use cases. In most cases dynamic filtering would be a simpler and more effective way to achieve the same outcome. 
 
 
 [Granular Entity RBAC](//build-your-software-catalog/set-catalog-rbac/#set-granular-access-controls-to-catalog-data)
