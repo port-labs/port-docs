@@ -25,7 +25,25 @@
       adjustLayout();
       makeLinksOpenInNewTab();
       scrollToHash();
-      sendFinishedLoadingEvent();
+
+      if (is404()) {
+        send404Event();
+      } else {
+        sendFinishedLoadingEvent();
+      }
+  }
+  
+  function send404Event() {
+    origins.forEach(origin => {
+      window.parent.postMessage({
+        type: 'page_not_found'
+      }, origin);
+    });
+  }
+
+  function is404() {
+    const h1 = document.querySelector('h1');
+    return h1 && h1.textContent === 'Page Not Found';
   }
 
   function transformNavbar() {
