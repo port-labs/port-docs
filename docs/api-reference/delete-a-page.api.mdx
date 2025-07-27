@@ -1,0 +1,72 @@
+---
+id: delete-a-page
+title: "Delete a page"
+description: "**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>** This route allows you to delete a specific page in your portal.<br/><br/>To learn more about pages, checkout the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page)."
+sidebar_label: "Delete a page"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVk1vGzcQ/SsEL7UNWWu5OQlFARf2oWgLCK57UnSguJTFmEtu+CFVWex/7xvuStrYSpC4FwPtRVqSM8M3j48zbHgUj4FP53wmHlXgixEvVZBe11E7y6f84uJhrVheZDezX5kOTCbvlY1mx7RlSxXFiD50PKywlfMVJpgR8gmzykcBi40wuhQUNzBhS1Z7F5U8juEgXTIlQ4xSebZzybPawdmwZFMQS6OYXrEUFIytdNhMAsb4p6Uvfs4/bGaUCAoRVggQHYsAP+/Qu43yG622i7NC1PoymygrVVHT8jkyAWyF6No+wg+JAkbttI2DDS4u2AMteZeiYsIYtw0ElPYqlVE0yUKtpF5pySgycTPIZBDrwTGg9ZZVtK9YImT2CCMm10o+0TjjL51MFXjN3C3O1jHWYVoUmA5jijrWrpApRFfpT+oyh7gsRVgvnfBluAS3l7VJj9qGnGshBYC4x2x5Pn5v+YjXwosK6D1poeEBACrBpw2Pu1pBBiF60MLbEdekilrENbwsfDDSJcAhYeUx59XHpL0q+TT6pJ7LicSUrP6YwMvBi7lVTtSrAKKkyoRuBYQEVl2tvACtzo55C3kGBZXpuMs4l+APu0K+HfnTulMxGSJaDWlhiDSur67o73Mwt9mnZCFJqUJYJWN2yEA6GwGN7EVdGy0z78WHQE5Dbr4pWk+gW36AWIlpTxlF3eFyT/SrbKqQBBG2aMGxKEtNUYWZDaxXwgQ1JHhO7nAgl3dXk1OQViKZyO57Kr4nuVM44RxiDwR7Ku+dPymSCgTgJE6stS8S2MdZfDXvfZbvXmZ5cxTOVsd1lhLQbyCwcqiyrQjMOqpOyZZvmoqj19dJeX67XsdET+3kx5fU3gOfCpEtXbmj0h8dapbwqGpnRlco2Jib/KF/OX/TdH4fid+ec0/c9fVL4qjOUeZH+kunOtIrEWV3NLmJ/BBYT81bpvC1inwND23HK9rR2gFHX9pzk0LXmfJiM+l6dtEcNd1yag1+s+9gyRuY7lslGv6+U4KBU6spHA0GXeZPgtSxvO81B9bg9pvaHdvgTQJgrz/lQ+N9p1wrgbdMplbblcvuOhqyn2E/elPBlGB3hE3GV3RGtQuxEvnU++i3+9cFpc6f8dwcpfP/i+2/8WLrRRjV37GoDU6LZJN13fQXZc43k3xr6Ek04tPBMw0KXzuqFnPeNEvw/5c3bUvTqH2e3lb43Aiv6QTzfSp1Ps3y9D0f6u/svi8h5+zfvfa+kOP+9lm6elBoohE+n3AXP3uLtgtY9/ePUugMbvA6q+PA9UWlpft/KD63d7/fPdzBXCTidHj5n/Ll7z9og5PInleFDgX9UiE66dI0XWlp24N9t/RFjz7LAwmUBIroP7SK3aY=
+sidebar_class_name: "delete api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete a page"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/pages/{identifier}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>** This route allows you to delete a specific page in your portal.<br/><br/>To learn more about pages, checkout the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page).
+
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","required":true,"description":"The unique identifier of the resource you want to operate on."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Deleted successfully","content":{"application/json":{"schema":{"description":"Deleted successfully","type":"object","properties":{"ok":{"enum":[true]}},"additionalProperties":false,"required":["ok"]}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

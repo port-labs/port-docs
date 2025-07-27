@@ -7,7 +7,7 @@ description: Integrate Onelogin with Port
 import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
 import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
-# How to configure Onelogin
+# Onelogin
 
 Follow this step-by-step guide to configure the integration between Port and Onelogin.
 
