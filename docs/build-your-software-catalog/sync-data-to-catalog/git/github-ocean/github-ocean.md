@@ -27,27 +27,6 @@ It is possible to reference any field that appears in the API responses linked b
  <GitHubResources/>
 
 
-## Prerequisites
-
-Port's GitHub integration requires the following permissions:
-
-- Repository permissions:
-
-  - **Actions:** Read and Write (for executing self-service action using GitHub workflow).
-  - **Checks:** Read and Write (for validating `port.yml`).
-  - **Contents:** Readonly.
-  - **Metadata:** Readonly.
-  - **Pull requests:** Read and write.
-
-:::info Default permissions
-You will be prompted to confirm the above listed permissions when creating a personal access token.
-
-Permissions can be given to selected repositories in your organization, or to all repositories.   
-You can reconfigure the permission at any time, giving it access to new repositories, or removing access.
-
-:::
-
-
 ## Setup
 
 To install the integration, see the [installation page](./installation).
@@ -85,6 +64,8 @@ The `repositoryType` parameter filters which repositories are ingested. It corre
 *   `sources`: Only non-forked repositories.
 </details>
 
+See the default mapping below for a usage example.
+          
 ### Default mapping configuration
 
 This is the default mapping configuration for this integration:

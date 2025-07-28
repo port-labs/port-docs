@@ -14,8 +14,7 @@ This page details how to install Port's GitHub integration (powered by the Ocean
 
 This page outlines the following steps:
 
-- How to [create](#create-an-access-token) an access token to give the integration permissions to query your Github organization.
-- How to [configure](#configure-the-integration) and customize the integration before deploying it.
+- How to [create](#create-access-token) an access token to give the integration permissions to query your Github organization.
 - How to [deploy](#deploy-the-integration) the integration in the configuration that fits your use case.
 
 ## Prerequisites
@@ -25,7 +24,7 @@ This page outlines the following steps:
 
 ## Setup
 
-### Configure access token
+### Create access token
 
 To allow Port to fetch data from your GitHub Organization, you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and GitHub app installation tokens.
 
@@ -48,6 +47,15 @@ To create a personal access token see Github's [managing your personal access to
   
   **Organization permissions:**
   - **Webhooks**: Read and Write (for managing webhook)
+
+
+:::info Default permissions
+You will be prompted to confirm the above listed permissions when creating a personal access token.
+
+Permissions can be given to selected repositories in your organization, or to all repositories.   
+You can reconfigure the permission at any time, giving it access to new repositories, or removing access.
+
+:::
 </details>
 
 #### Github app installation
