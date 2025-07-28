@@ -8,10 +8,13 @@ import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/_limit_field_restriction.mdx"
 
 # User
 
 User is a data type used to reference users that exist in Port.
+
+<LimitFieldRestriction property_name='User' />
 
 ## 💡 Common user usage
 

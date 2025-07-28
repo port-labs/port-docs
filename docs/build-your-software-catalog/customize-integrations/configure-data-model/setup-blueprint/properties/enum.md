@@ -1,7 +1,7 @@
 ---
-sidebar_position: 18
-description: URL is a data type used to save links to websites
-sidebar_class_name: "custom-sidebar-item sidebar-property-url"
+sidebar_position: 19
+description: Enum is a data type used to define a named set of constant values.
+sidebar_class_name: "custom-sidebar-item sidebar-property-enum"
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
@@ -10,25 +10,24 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/_limit_field_restriction.mdx"
 
-# URL
+# Enum
 
-URL is a data type used to save links to websites.
+Enum is a data type  used to define a named set of constant values.
 
 <LimitFieldRestriction property_name='URL' />
 
-## 💡 Common url usage
+## 💡 Common enum usage
 
-The URL property type can be used to store a link to any web resource, for example:
+The enum property type can be used to define a set of constant values, for example:
 
-- Link to Datadog dashboard
-- Link to Sentry tracing
-- Link to pull request
+- Deployment status: pending, in progress, success, failed.
+- Environments: production, staging, development.
+- Service health status: healthy, degraded, unhealthy, unkown, maintenance, etc.
 
 ## API definition
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -36,35 +35,16 @@ The URL property type can be used to store a link to any web resource, for examp
 
 ```json showLineNumbers
 {
-  "myUrlProp": {
-    "title": "My url",
+  "myStringEnum": {
+    "title": "My enum",
     "icon": "My icon",
-    "description": "My url property",
-    // highlight-start
+    #highlight-start
     "type": "string",
-    "format": "url",
-    // highlight-end
-    "default": "https://example.com"
-  }
-}
-```
-
-</TabItem>
-<TabItem value="enum">
-
-```json showLineNumbers
-{
-  "myUrlEnum": {
-    "title": "My url enum",
-    "icon": "My icon",
-    "description": "My url enum",
-    "type": "string",
-    "format": "url",
-    // highlight-next-line
-    "enum": ["https://example.com", "https://getport.io"],
+    "enum": ["my-option-1", "my-option-2"],
+    #highlight-end
     "enumColors": {
-      "https://example.com": "red",
-      "https://getport.io": "green"
+      "my-option-1": "red",
+      "my-option-2": "green"
     }
   }
 }
@@ -75,15 +55,19 @@ The URL property type can be used to store a link to any web resource, for examp
 
 ```json showLineNumbers
 {
-  "myUrlArray": {
-    "title": "My url array",
+  "myStringArray": {
+    "title": "My enum array",
     "icon": "My icon",
-    "description": "My url array",
+    "description": "My enum array",
     // highlight-start
     "type": "array",
     "items": {
       "type": "string",
-      "format": "url"
+      "enum": ["my-option-1", "my-option-2"],
+      "enumColors": {
+        "my-option-1": "red",
+        "my-option-2": "green"
+      }
     }
     // highlight-end
   }
@@ -99,7 +83,6 @@ The URL property type can be used to store a link to any web resource, for examp
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
 {label: "Array", value: "array"}
 ]}>
 
@@ -111,35 +94,13 @@ resource "port_blueprint" "myBlueprint" {
   # highlight-start
   properties = {
     string_props = {
-      "myUrlProp" = {
-        title    = "My url"
-        required = false
-        format   = "url"
-      }
-    }
-  }
-  # highlight-end
-}
-```
-
-</TabItem>
-
-<TabItem value="enum">
-
-```hcl showLineNumbers
-resource "port_blueprint" "myBlueprint" {
-  # ...blueprint properties
-  # highlight-start
-  properties = {
-    string_props = {
-      "myUrlEnum" = {
-        title    = "My url enum"
-        required = false
-        format   = "url"
-        enum     = ["https://example.com", "https://getport.io"]
+      "myEnumProp" = {
+        title       = "My Enum"
+        required    = false
+        enum        = ["my-option-1", "my-option-2"]   
         enum_colors = {
-          "https://example.com" = "red",
-          "https://getport.io"  = "green"
+            "Option one" = "green"
+            "Option two" = "blue"
         }
       }
     }
@@ -154,20 +115,24 @@ resource "port_blueprint" "myBlueprint" {
 
 ```hcl showLineNumbers
 resource "port_blueprint" "myBlueprint" {
-  # ...blueprint properties
-  # highlight-start
-  properties = {
-    string_props = {
-      "myUrlArray" = {
-        title    = "My url array"
-        required = false
-        string_items = {
-          format = "url"
-        }
-      }
-    }
-  }
-  # highlight-end
+# ...blueprint properties
+# highlight-start
+properties = {
+    array_props = {
+    my_enum_array_prop = {
+    title = "myEnumArrayProp"
+    items = {
+        type = "string"
+        enum = [ "my-option-1", "my-option-2", "my-option-3"]
+        enum_colors = {
+            "my-option-1" = "gold"
+            "my-option-2" = "bronze"
+            "my-option-3" = "lightGray"
+             }
+          }
+       }
+   }
+# highlight-end
 }
 ```
 
@@ -178,8 +143,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Array- coming soon", value: "array"}
 ]}>
 
 <TabItem value="basic">
@@ -197,7 +161,7 @@ resource "port_blueprint" "myBlueprint" {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint,BlueprintPropertiesArgs,BlueprintPropertiesStringPropsArgs
+from port_pulumi import Blueprint,BlueprintPropertiesArgs
 
 blueprint = Blueprint(
     "myBlueprint",
@@ -206,9 +170,15 @@ blueprint = Blueprint(
     # highlight-start
     properties=BlueprintPropertiesArgs(
         string_props={
-            "myUrlProp": BlueprintPropertiesStringPropsArgs(
-                title="My url", required=False, format="url"
-            ),
+            "myEnumProp": {
+                "title": "My Enum",
+                "required": True,
+                "enum": ["my-option-1", "my-option-2"],
+                "enum_colors": {
+                    "my-option-1": "red",
+                    "my-option-2": "green"
+                }
+            }
         }
     ),
     # highlight-end
@@ -230,10 +200,14 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-      myUrlProp: {
-        title: "My url",
+      myEnumProp: {
+        title: "My Enum",
         required: true,
-        format: "url",
+        enums: ["my-option-1", "my-option-2"],
+        enumColors: {
+          "my-option-1": "red",
+          "my-option-2": "green",
+        },
       },
     },
   },
@@ -256,10 +230,14 @@ const entity = new port.Blueprint("myBlueprint", {
   // highlight-start
   properties: {
     stringProps: {
-      myUrlProp: {
-        title: "My url",
+      myEnumProp: {
+        title: "My Enum",
         required: true,
-        format: "url",
+        enums: ["my-option-1", "my-option-2"],
+        enumColors: {
+          "my-option-1": "red",
+          "my-option-2": "green",
+        },
       },
     },
   },
@@ -289,10 +267,18 @@ func main() {
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
 				StringProps: port.BlueprintPropertiesStringPropsMap{
-                    "myUrlProp": &port.BlueprintPropertyArgs{
-                        Title:      pulumi.String("My url"),
-                        Required:   pulumi.Bool(true),
-                        Format:     pulumi.String("url"),
+					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
+                        Title:      pulumi.String("My String"),
+                        Required:   pulumi.Bool(false),
+                        Type:       pulumi.String("string"),
+                        Enums: pulumi.StringArray{
+                            pulumi.String("my-option-1"),
+                            pulumi.String("my-option-2"),
+                        },
+                        EnumColors: pulumi.StringMap{
+                            "my-option-1": pulumi.String("red"),
+                            "my-option-2": pulumi.String("green"),
+                        },
                     },
                 },
 			},
@@ -305,6 +291,7 @@ func main() {
 		return nil
 	})
 }
+
 ```
 
 </TabItem>

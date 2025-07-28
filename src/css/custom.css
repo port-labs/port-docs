@@ -477,6 +477,10 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/Url.svg');
 }
 
+.sidebar-property-enum > a::before {
+  content: url('/static/img/sidebar-icons/Enum.svg');
+}
+
 .sidebar-property-user > a::before {
   content: url('/static/img/sidebar-icons/User.svg');
 }
