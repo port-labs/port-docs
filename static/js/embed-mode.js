@@ -14,7 +14,6 @@
   const portThemeDarkBg = '#1e1c26';
   const portThemeLightBg = '#ffffff';
   const isEmbed = urlParams.get('embed_mode') === 'true';
-  const origins = ['https://app.getport.io', 'https://app.port.io'];
 
   if (!isEmbed) return;
 
@@ -31,13 +30,24 @@
         sendFinishedLoadingEvent();
       }
   }
+
+  function assumeParentOrigin() {
+    const originHostname = urlParams.get('origin_hostname') ?? 'localhost';
+    const protocol = originHostname === 'localhost' ? 'http' : 'https';
+    const port = protocol === 'http' ? '3001' : '';
+
+    let origin = `${protocol}://${originHostname}`;
+    if (port) {
+      origin += `:${port}`;
+    }
+
+    return origin;
+  }
   
   function send404Event() {
-    origins.forEach(origin => {
-      window.parent.postMessage({
-        type: 'page_not_found'
-      }, origin);
-    });
+    window.parent.postMessage({
+      type: 'page_not_found'
+    }, assumeParentOrigin());
   }
 
   function is404() {
@@ -242,13 +252,9 @@
   }
 
   function sendFinishedLoadingEvent() {
-    setTimeout(() => {
-      origins.forEach(origin => {
-        window.parent.postMessage({
-          type: 'finished_load_ack'
-        }, origin);
-      });
-    }, 1000);
+    window.parent.postMessage({
+      type: 'finished_load_ack'
+    }, assumeParentOrigin());
   }
 
   // Run on initial load
