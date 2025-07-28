@@ -14,7 +14,7 @@
   const portThemeDarkBg = '#1e1c26';
   const portThemeLightBg = '#ffffff';
   const isEmbed = urlParams.get('embed') === 'true';
-  const origins = ['https://app.getport.io', 'https://app.port.io'];
+  const origins = ['https://app.getport.io', 'https://app.port.io', 'http://localhost:3001'];
 
   if (!isEmbed) return;
 
@@ -22,7 +22,6 @@
       applyTheme(urlParams.get('theme') ?? Theme.LIGHT);
       removeElements(); 
       transformNavbar();
-      adjustLayout();
       makeLinksOpenInNewTab();
       scrollToHash();
 
@@ -203,13 +202,14 @@
   }
 
   function makeLinksOpenInNewTab() {
-    // Select all anchor tags that do not already have target="_blank" and are not anchor links (headings)
-    // Anchor links typically have hrefs that start with '#'
-    const links = document.querySelectorAll('a[href]:not([target="_blank"])');
+    const links = document.documentElement.querySelectorAll('a[href]');
     links.forEach(link => {
       const href = link.getAttribute('href');
-      // Exclude anchor links (href starts with '#')
-      if (href && !href.startsWith('#')) {
+      if (
+        href &&
+        !href.startsWith('#') &&
+        link.getAttribute('target') !== '_blank'
+      ) {
         link.setAttribute('target', '_blank');
         link.setAttribute('rel', 'noopener noreferrer');
       }
@@ -239,42 +239,6 @@
         element.remove();
       });
     });
-  }
-
-  function adjustLayout() {
-    document.documentElement.style.setProperty('--doc-sidebar-width', '0px');
-    
-    // Adjust main wrapper and content
-    const mainWrapper = document.querySelector('.main-wrapper');
-    if (mainWrapper) {
-      mainWrapper.style.marginLeft = '0';
-    }
-
-    const docPageWrapper = document.querySelector('.theme-doc-page-wrapper');
-    if (docPageWrapper) {
-      docPageWrapper.style.marginLeft = '0';
-    }
-
-    // Adjust container padding
-    const containers = document.querySelectorAll('.container');
-    containers.forEach(container => {
-      container.style.maxWidth = '100%';
-      container.style.padding = '1rem';
-    });
-
-    // Expand markdown content to full width
-    const markdownContent = document.querySelector('.theme-doc-markdown');
-    if (markdownContent) {
-      markdownContent.style.maxWidth = '100%';
-    }
-
-    // Remove top margin
-    const docusaurusMtLg = document.querySelector('.docusaurus-mt-lg');
-    if (docusaurusMtLg) {
-      docusaurusMtLg.style.marginTop = '0';
-    }
-
-    console.log('[embed-mode] Layout adjusted for embedded experience');
   }
 
   function sendFinishedLoadingEvent() {
