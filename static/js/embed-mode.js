@@ -13,7 +13,7 @@
   const urlParams = new URLSearchParams(window.location.search);
   const portThemeDarkBg = '#1e1c26';
   const portThemeLightBg = '#ffffff';
-  const isEmbed = urlParams.get('embed') === 'true';
+  const isEmbed = urlParams.get('embed_mode') === 'true';
   const origins = ['https://app.getport.io', 'https://app.port.io'];
 
   if (!isEmbed) return;
@@ -52,9 +52,8 @@
     // Remove all children from the navbar
     navbar.innerHTML = '';
 
-    // Build a URL without 'embed' and 'theme' params
     const url = new URL(window.location.href);
-    url.searchParams.delete('embed');
+    url.searchParams.delete('embed_mode');
     url.searchParams.delete('theme');
 
     // Create flex container
