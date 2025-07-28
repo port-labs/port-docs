@@ -128,7 +128,7 @@ When using a `Webhook` as the action backend, a [`Request type` option](/actions
 
 #### Run details
 
-By sending a [`PATCH` request](/api-reference/patch-an-action-run) to Port's API, you can do the following:
+By sending a [`PATCH` request](/api-reference/update-an-action-run) to Port's API, you can do the following:
 
 1. Update the run's status, by using the `status` key with one of these values: `SUCCESS`, `FAILURE`.  
    This will mark the run as completed and show a visual indicator, for example:
@@ -190,7 +190,7 @@ A log message with the `terminationStatus` key can only be sent once for an acti
 
 ## Tying Entities to an action run
 
-You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an entity (i.e. [`POST`](/api-reference/create-an-entity), [`PUT`](/api-reference/change-an-entity), [`PATCH`](/api-reference/patch-an-entity) and [`DELETE`](/api-reference/delete-an-entity) entity requests).  
+You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an entity (i.e. [`POST`](/api-reference/create-an-entity), [`PUT`](/api-reference/change-an-entity), [`PATCH`](/api-reference/update-an-entity) and [`DELETE`](/api-reference/delete-an-entity) entity requests).  
 
 By adding the `run_id` parameter, you reflect the change made to the Entity as part of the set of steps the action run performed during its runtime.
 

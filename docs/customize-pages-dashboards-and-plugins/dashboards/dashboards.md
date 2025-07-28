@@ -376,7 +376,6 @@ The widget also supports a wide variety of HTML tags, allowing you to create ric
 'wbr',
 'img',
 'video',
-'svg',
 'caption',
 'col',
 'colgroup',
