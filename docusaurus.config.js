@@ -422,7 +422,7 @@ const config = {
     },
     {
       src: '/js/embed-mode.js',
-      async: true,
+      async: false,
     }
   ],
 };
