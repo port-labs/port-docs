@@ -420,6 +420,10 @@ const config = {
       // "data-search-result-primary-text-color": "#000000",
       async: true,
     },
+    {
+      src: '/js/embed-mode.js',
+      async: false,
+    }
   ],
 };
 
