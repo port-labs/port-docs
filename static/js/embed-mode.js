@@ -194,18 +194,10 @@
     }
 
     html.setAttribute('data-theme', theme);
-    
-    // Force a style recalculation
-    body.style.display = 'none';
-    body.offsetHeight; // Trigger reflow
-    body.style.display = '';
 
     if (theme === Theme.DARK) {
       html.style.setProperty('background-color', portThemeDarkBg, 'important');
       body.style.setProperty('background-color', portThemeDarkBg, 'important');
-    } else {
-      html.style.setProperty('background-color', portThemeLightBg, 'important');
-      body.style.setProperty('background-color', portThemeLightBg, 'important');
     }
     
   }
