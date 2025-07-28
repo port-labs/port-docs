@@ -201,18 +201,55 @@
     
   }
 
-  function makeLinksOpenInNewTab() {
-    const links = document.documentElement.querySelectorAll('a[href]');
+  function makeLinksOpenInNewTab() {  
+    const links = document.querySelectorAll('a[href]');
     links.forEach(link => {
-      const href = link.getAttribute('href');
-      if (
-        href &&
-        !href.startsWith('#') &&
-        link.getAttribute('target') !== '_blank'
-      ) {
-        link.setAttribute('target', '_blank');
-        link.setAttribute('rel', 'noopener noreferrer');
+      if (link.getAttribute('href').startsWith('#')) {
+        return;
       }
+      
+      // Adding target=_blank does not work due to interception by Docusaurus
+      // Therefore we need to use a click event listener to force opening in new tab
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.open(this.href, '_blank', 'noopener,noreferrer');
+      });
+    });
+    
+    // Also handle dynamically added links using MutationObserver
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeType === 1) { // Element node
+            const newLinks = node.querySelectorAll ? node.querySelectorAll('a[href]') : [];
+            newLinks.forEach(link => {
+              // Skip internal anchors
+              if (link.getAttribute('href').startsWith('#')) {
+                return;
+              }
+              
+              // Set attributes
+              link.setAttribute('target', '_blank');
+              link.setAttribute('rel', 'noopener noreferrer');
+              
+              // Add click event listener
+              link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                  return;
+                }
+                e.preventDefault();
+                window.open(this.href, '_blank', 'noopener,noreferrer');
+              });
+            });
+          }
+        });
+      });
+    });
+    
+    // Start observing
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
     });
   }
 
