@@ -257,16 +257,7 @@
     }, assumeParentOrigin());
   }
 
-  // Run on initial load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', prepareEmbeddedPage);
-  } else {
-    prepareEmbeddedPage();
-  }
-
   // Listen for URL changes (for single page app navigation)
   window.addEventListener('popstate', prepareEmbeddedPage);
-  
-  // Also check when the page loads in case of direct navigation
   window.addEventListener('load', prepareEmbeddedPage);
 })(); 
