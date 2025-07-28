@@ -34,14 +34,8 @@
   function assumeParentOrigin() {
     const originHostname = urlParams.get('origin_hostname') ?? 'localhost';
     const protocol = originHostname === 'localhost' ? 'http' : 'https';
-    const port = protocol === 'http' ? '3001' : '';
 
-    let origin = `${protocol}://${originHostname}`;
-    if (port) {
-      origin += `:${port}`;
-    }
-
-    return origin;
+    return `${protocol}://${originHostname}`;
   }
   
   function send404Event() {
