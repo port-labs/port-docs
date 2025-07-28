@@ -169,10 +169,8 @@
   function scrollToHash() {
     if (window.location.hash) {
       const targetId = window.location.hash.substring(1);
-      console.log(`[embed-mode] Detected hash in URL: #${targetId}`);
       const targetElement = document.getElementById(targetId);
       if (targetElement) {
-        console.log(`[embed-mode] Scrolling to element with id: ${targetId}`);
         setTimeout(() => {
           targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
@@ -180,7 +178,7 @@
         console.warn(`[embed-mode] No element found with id: ${targetId}`);
       }
     } else {
-      console.log('[embed-mode] No hash found in URL, no scrolling performed.');
+      console.debug('[embed-mode] No hash found in URL, no scrolling performed.');
     }
   }
 
@@ -237,7 +235,7 @@
     selectorsToRemove.forEach(selector => {
       const elements = document.querySelectorAll(selector);
       elements.forEach(element => {
-        console.log(`[embed-mode] Removing element: ${selector}`);
+        console.debug(`[embed-mode] Removing element: ${selector}`);
         element.remove();
       });
     });
