@@ -33,7 +33,7 @@
 
   function assumeParentOrigin() {
     const originHostname = urlParams.get('origin_hostname') ?? 'localhost';
-    const protocol = originHostname === 'localhost' ? 'http' : 'https';
+    const protocol = originHostname.split(':')?.[0] === 'localhost' ? 'http' : 'https';
 
     return `${protocol}://${originHostname}`;
   }
