@@ -37,7 +37,7 @@ The resources that can be ingested from Snyk into Port are listed below. It is p
 2. A port organization with admin role
 
 :::note Snyk Enterprise
-Personal tokens from Snyk Free and Snyk Team plans can not be used with Snyk API. [Learn More](https://docs.snyk.io/snyk-api/authentication-for-api) #Ai! improve this
+The Snyk API is available for Enterprise customers only. Authentication using personal tokens from Snyk Free or Team plans is not supported. [Learn More](https://docs.snyk.io/snyk-api/authentication-for-api)
 :::
 
 Choose one of the following installation methods:
