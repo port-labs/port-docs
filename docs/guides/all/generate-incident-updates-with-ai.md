@@ -1,6 +1,6 @@
 ---
 displayed_sidebar: null
-description: Learn how to leverage Port's AI capabilities to enhance incident management with contextual summaries and automated Slack notifications.
+description: Learn how to leverage Port's AI capabilities to enhance incident management with contextual incident updates and automated Slack notifications.
 ---
 
 import Tabs from '@theme/Tabs';
@@ -10,12 +10,12 @@ import TabItem from '@theme/TabItem';
 
 This guide demonstrates how to enhance your incident management workflow using Port's AI capabilities. You will learn how to create an AI agent that generates incident updates and sends slack notification with relevant technical context.
 
-<img src="/img/guides/incident-ai-summary-workflow.png" border="1px" width="100%" />
+<img src="/img/guides/incident-update-with-ai-workflow.png" border="1px" width="100%" />
 
 
 ## Common use cases
 
-- Automatically generate contextual summaries when incidents are updated
+- Automatically generate contextual incident updates when incidents are updated
 - Send notifications to Slack with relevant technical context
 - Provide on-call engineers with enriched incident information
 
@@ -40,7 +40,7 @@ We will create and configure blueprints to support our AI-enhanced incident mana
 
 ### Update the incident and service blueprints
 
-To enable AI-generated summaries and Slack notifications, update your blueprints as follows:
+To enable AI-generated incident updates and Slack notifications, update your blueprints as follows:
 
 1. **Add an `ai_update` property to the incident blueprint**
    - Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
@@ -90,7 +90,7 @@ To enable AI-generated summaries and Slack notifications, update your blueprints
 
 ### Update repository blueprint with additional context
 
-When installing the GitHub app, the `Repository` blueprint is created by default. However, we need to add additional properties to enrich incident summaries with repository metadata.
+When installing the GitHub app, the `Repository` blueprint is created by default. However, we need to add additional properties to enrich incident updates with repository metadata.
 
 1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Find and select your existing repository blueprint (e.g., `githubRepository`).
@@ -127,7 +127,7 @@ When installing the GitHub app, the `Repository` blueprint is created by default
 
 ### Add repository relation and mirror properties
 
-We will now enhance the incident blueprint with mirror properties from the repository blueprint to provide better context for AI summaries.
+We will now enhance the incident blueprint with mirror properties from the repository blueprint to provide better context for AI-generated incident updates.
 
 1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Find the `pagerdutyIncident` blueprint and click on it.
@@ -232,7 +232,7 @@ We will create a self-service action that the AI agent can run automatically to 
 
 ## Create AI agent
 
-Next, we will create an AI agent that generates helpful incident summaries with contextual information.
+Next, we will create an AI agent that generates helpful incident updates with contextual information.
 
 
 ### Configure the incident summary AI agent
@@ -252,7 +252,7 @@ Next, we will create an AI agent that generates helpful incident summaries with 
       "icon": "Alert",
       "team": [],
       "properties": {
-        "description": "AI agent that generates helpful incident updates and sends them to Slack with on-call tagging",
+        "description": "AI agent that generates contextual incident updates and sends them to Slack with on-call tagging",
         "status": "active",
         "allowed_blueprints": [
           "pagerdutyIncident",
@@ -262,7 +262,7 @@ Next, we will create an AI agent that generates helpful incident summaries with 
         "allowed_actions": [
           "update_incident_with_ai_update"
         ],
-        "prompt": "You are an expert incident management AI agent generating clear, contextual summaries for Slack notifications.\nYour task is to produce Slack-compatible summaries for incident updates shared with engineering and on-call teams. Focus on clarity, relevance, and next steps.\n\nYour Slack summary MUST follow this structure and tone:\n\n- 🚨 *Problem:* Brief summary of what changed and why it triggered this update.\n- 📊 *Impact:* Which services or what is affected? Any delivery, uptime, or user-facing issues?\n- 🧠 *Insights / Diagnostics:* Add key technical context from repository metadata: last commit, contributor, vulnerabilities, etc or draw from your technical knowledge on what would have caused this.\n- 🔧 *Action Required:* List next steps for the on-call team. Be specific about what they need to check or resolve.\n\n🔧 **Slack Output Rules**\n* NEVER USE `**bold**` or `[text](url)` — instead use:\n    * `*bold*` for emphasis\n     * `<https://url.com|Label>` for links\n* Use emoji to indicate sections: `🚨`, `📋`, `👥`, `🔄`\n* Use bullet points (`-`) for clarity\n* Separate sections with one line space (not headers)\n* Never include raw markdown headers like `###` or `---`\n* Your final output **must** look clean when copy-pasted into a Slack message.\n\n*After generating your update, you MUST ALWAYS run the 'update_incident_with_ai_update' action to save the update to the incident record.*\n\n## Sample Response Format\n🚨 *Incident Update: API Latency Spike on analytics-service*\n\n*Problem:*\n`analytics-service` has breached its latency SLO for the past 15 minutes. Response time spiked from 800ms to 4.5s\n\n*Impact:*\nThis service powers real-time analytics for customer dashboards. Users may experience slow or failing dashboard loads, particularly in high-traffic regions.\n\n*Insights/Diagnostics:*\n- The latest deployment (2025-07-21 13:03 UTC) introduced new filtering logic\n- Recent commits by Maria include changes to Redis query batching and fallback caching\n- Maria is not currently on-call. Assigned engineers: Omri and Tal.\n- 2 known vulnerability exists—could be a contributing factor.\n\n🔧 *Action Required:*\n- On-call engineers Marvin and Tal should roll back to the previous deploy version while isolating the Redis call regressions.\n- Re-run load tests locally with Maria's changes to confirm memory/caching issues.\n",
+        "prompt": "You are an expert incident management AI agent generating clear, contextual incident updates for Slack notifications.\nYour task is to produce Slack-compatible incident updates for incident changes shared with engineering and on-call teams. Focus on clarity, relevance, and next steps.\n\nYour Slack incident update MUST follow this structure and tone:\n\n- 🚨 *Problem:* Brief description of what changed and why it triggered this update.\n- 📊 *Impact:* Which services or what is affected? Any delivery, uptime, or user-facing issues?\n- 🧠 *Insights / Diagnostics:* Add key technical context from repository metadata: last commit, contributor, vulnerabilities, etc or draw from your technical knowledge on what would have caused this.\n- 🔧 *Action Required:* List next steps for the on-call team. Be specific about what they need to check or resolve.\n\n🔧 **Slack Output Rules**\n* NEVER USE `**bold**` or `[text](url)` — instead use:\n    * `*bold*` for emphasis\n     * `<https://url.com|Label>` for links\n* Use emoji to indicate sections: `🚨`, `📋`, `👥`, `🔄`\n* Use bullet points (`-`) for clarity\n* Separate sections with one line space (not headers)\n* Never include raw markdown headers like `###` or `---`\n* Your final output **must** look clean when copy-pasted into a Slack message.\n\n*After generating your incident update, you MUST ALWAYS run the 'update_incident_with_ai_update' action to save the update to the incident record.*\n\n## Sample Response Format\n🚨 *Incident Update: API Latency Spike on analytics-service*\n\n*Problem:*\n`analytics-service` has breached its latency SLO for the past 15 minutes. Response time spiked from 800ms to 4.5s\n\n*Impact:*\nThis service powers real-time analytics for customer dashboards. Users may experience slow or failing dashboard loads, particularly in high-traffic regions.\n\n*Insights/Diagnostics:*\n- The latest deployment (2025-07-21 13:03 UTC) introduced new filtering logic\n- Recent commits by Maria include changes to Redis query batching and fallback caching\n- Maria is not currently on-call. Assigned engineers: Omri and Tal.\n- 2 known vulnerability exists—could be a contributing factor.\n\n🔧 *Action Required:*\n- On-call engineers Marvin and Tal should roll back to the previous deploy version while isolating the Redis call regressions.\n- Re-run load tests locally with Maria's changes to confirm memory/caching issues.\n",
         "execution_mode": "Automatic",
         "conversation_starters": [
           "What is the latest update on INC-123?",
@@ -299,9 +299,9 @@ We will create two automations to orchestrate the AI-enhanced incident managemen
 
     ```json showLineNumbers
     {
-      "identifier": "auto_generate_incident_summary_on_update",
-      "title": "Auto-Generate Incident Summary on Update",
-      "description": "Automatically generate incident summary on update",
+      "identifier": "auto_generate_incident_update_on_update",
+      "title": "Auto-Generate Incident Update on Update",
+      "description": "Automatically generate incident update on update",
       "trigger": {
         "type": "automation",
         "event": {
@@ -327,12 +327,12 @@ We will create two automations to orchestrate the AI-enhanced incident managemen
           "Content-Type": "application/json"
         },
         "body": {
-          "prompt": "Generate a Slack summary for incident with target identifier {{ .event.context.entityIdentifier }}. The incident was updated with the following changes:\n\nPrevious Status: {{ .event.diff.before.properties.status }}\nNew Status: {{ .event.diff.after.properties.status }}\nPrevious Urgency: {{ .event.diff.before.properties.urgency }}\nNew Urgency: {{ .event.diff.after.properties.urgency }}\nPrevious Priority: {{ .event.diff.before.properties.priority }}\nNew Priority: {{ .event.diff.after.properties.priority }}\n\nIncident Details:\nTitle: {{ .event.diff.after.title }}\nDescription: {{ .event.diff.after.properties.description }}\nAffected Services: {{ .event.diff.after.relations.service }}\nOn-Call Engineer: {{ .event.diff.after.properties.assignees }}\nAssigned Team: {{ .event.diff.after.relations.assignedTeam }}\n\nRepository Metadata:\n- README Overview: {{ .event.diff.after.properties.readme }}\n- Last Push Date: {{ .event.diff.after.properties.repository_last_push }}\n- Last Contributor: {{ .event.diff.after.properties.repository_last_contributor }}\n- Known Vulnerabilities: {{ .event.diff.after.properties.repository_vulnerabilities }}\n\nIMPORTANT: This will be sent directly to Slack. You MUST format the response using Slack-compatible syntax:\n- Use *bold* for emphasis\n- Use emojis inline (🚨, 📋, 👥, etc.)\n- Use dashes - for bullet points\n- Use <https://url|label> for links\n- DO NOT use headers (###), raw markdown, or [label](url)\n- Add single line breaks between sections for readability\n\nYour summary must adhere to the problem/impact/insight/action format",
-          "labels": {
-            "source": "Incident Update Summary",
-            "entityIdentifier": "{{ .event.context.entityIdentifier }}",
-            "blueprintIdentifier": "{{ .event.context.blueprintIdentifier }}"
-          }
+          "prompt": "Generate a Slack incident update for incident with target identifier {{ .event.context.entityIdentifier }}. The incident was updated with the following changes:\n\nPrevious Status: {{ .event.diff.before.properties.status }}\nNew Status: {{ .event.diff.after.properties.status }}\nPrevious Urgency: {{ .event.diff.before.properties.urgency }}\nNew Urgency: {{ .event.diff.after.properties.urgency }}\nPrevious Priority: {{ .event.diff.before.properties.priority }}\nNew Priority: {{ .event.diff.after.properties.priority }}\n\nIncident Details:\nTitle: {{ .event.diff.after.title }}\nDescription: {{ .event.diff.after.properties.description }}\nAffected Services: {{ .event.diff.after.relations.service }}\nOn-Call Engineer: {{ .event.diff.after.properties.assignees }}\nAssigned Team: {{ .event.diff.after.relations.assignedTeam }}\n\nRepository Metadata:\n- README Overview: {{ .event.diff.after.properties.readme }}\n- Last Push Date: {{ .event.diff.after.properties.repository_last_push }}\n- Last Contributor: {{ .event.diff.after.properties.repository_last_contributor }}\n- Known Vulnerabilities: {{ .event.diff.after.properties.repository_vulnerabilities }}\n\nIMPORTANT: This will be sent directly to Slack. You MUST format the response using Slack-compatible syntax:\n- Use *bold* for emphasis\n- Use emojis inline (🚨, 📋, 👥, etc.)\n- Use dashes - for bullet points\n- Use <https://url|label> for links\n- DO NOT use headers (###), raw markdown, or [label](url)\n- Add single line breaks between sections for readability\n\nYour incident update must adhere to the problem/impact/insight/action format",
+                      "labels": {
+              "source": "Incident Update",
+              "entityIdentifier": "{{ .event.context.entityIdentifier }}",
+              "blueprintIdentifier": "{{ .event.context.blueprintIdentifier }}"
+            }
         }
       },
       "publish": true
@@ -350,13 +350,13 @@ We will create two automations to orchestrate the AI-enhanced incident managemen
 3. Copy and paste the following JSON schema:
 
     <details>
-    <summary><b>Send AI summary to Slack automation (Click to expand)</b></summary>
+    <summary><b>Send AI incident update to Slack automation (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
-      "identifier": "send_ai_summary_to_slack",
-      "title": "Send AI Summary to Slack",
-      "description": "Automation to post the response of the AI incident summary to Slack",
+      "identifier": "send_ai_update_to_slack",
+      "title": "Send AI Incident Update to Slack",
+      "description": "Automation to post the response of the AI incident update to Slack",
       "icon": "Slack",
       "trigger": {
         "type": "automation",
@@ -411,25 +411,31 @@ Now let us test the complete workflow to ensure everything works correctly.
 2. Find an existing PagerDuty incident or create a test incident.
 3. Update the incident's status, urgency, or priority to trigger the automation.
 
-<h4> Verify the AI summary generation </h4>
+<h4> Verify the AI incident update generation </h4>
 
 1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
 2. Click on the `Incident Update AI` agent.
-3. Check the `AI Invocations` tab to see the generated summary.
+3. Check the `AI Invocations` tab to see the generated incident update.
 
 <h4> Check Slack notification </h4>
 
-The AI-generated summary should appear in your configured Slack channel with proper formatting and context.
+The AI-generated incident update should appear in your configured Slack channel with proper formatting and context.
+
+<img src="/img/guides/incident-ai-summary-workflow.png" border="1px" width="100%" />
 
 
 ## Best practices
 
 To get the most out of your AI-enhanced incident management workflow:
 
-1. **Monitor AI responses**: Regularly review the quality and accuracy of AI-generated summaries.
+1. **Monitor AI responses**: Regularly review the quality and accuracy of AI-generated incident updates.
 
 2. **Refine the prompt**: Adjust the AI agent prompt based on your team's specific needs and communication style.
 
 3. **Customize Slack channels**: Configure different Slack channels for different teams or incident severities.
 
 4. **Add more context**: Consider enriching incidents with additional metadata from other integrations.
+
+
+## Related guide
+[Communicate incident response to stakeholders](https://docs.port.io/solutions/incident-management/communicate-internally-and-externally/)
