@@ -3,9 +3,6 @@ displayed_sidebar: null
 description: Learn how to leverage Port's AI capabilities to enhance incident management with contextual incident updates and automated Slack notifications.
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Generate incident updates with AI
 
 This guide demonstrates how to enhance your incident management workflow using Port's AI capabilities. You will learn how to create an AI agent that generates incident updates and sends slack notification with relevant technical context.
