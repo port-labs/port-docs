@@ -1047,6 +1047,35 @@ This enrichment significantly enhances the usability of the Datadog response by 
 
 </details>
 
+<details>
+<summary> Service Dependency response data</summary>
+
+```json showLineNumbers
+{
+  "service_a": {
+    "calls": [
+      "service_b",
+      "service_c"
+    ]
+  },
+  "service_b": {
+    "calls": [
+      "service_o"
+    ]
+  },
+  "service_c": {
+    "calls": [
+      "service_o"
+    ]
+  },
+  "service_o": {
+    "calls": []
+  }
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1259,6 +1288,25 @@ The combination of the sample payload and the Ocean configuration generates the 
     ]
   },
   "icon": "Datadog"
+}
+```
+
+</details>
+
+<details>
+<summary>Service dependency entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "service_a",
+  "title": "Dummy",
+  "icon": "Datadog",
+  "relations": {
+    "dependencies": [
+      "service_b",
+      "service_c"
+    ]
+  }
 }
 ```
 
