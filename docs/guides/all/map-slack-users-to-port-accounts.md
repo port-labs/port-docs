@@ -5,7 +5,7 @@ description: Ingest and map Slack users to their Port user accounts for seamless
 
 # Ingest and map Slack users to Port user accounts
 
-This guide demonstrates how to ingest Slack users into your Port software catalog and automatically map them to existing Port user accounts based on email addresses.
+This guide demonstrates how to ingest Slack users into your Port software catalog and automatically map them to existing Port user accounts.
 
 We will leverage on Port's custom webhook integration, self-service actions and automations to ingest data from Slack and map them to Port user accounts.
 
@@ -94,14 +94,7 @@ To represent Slack users in your portal, we need to create a Slack User blueprin
       "mirrorProperties": {},
       "calculationProperties": {},
       "aggregationProperties": {},
-      "relations": {
-        "user": {
-          "title": "Port User",
-          "target": "_user",
-          "required": false,
-          "many": false
-        }
-      }
+      "relations": {}
     }
     ```
 
@@ -109,14 +102,70 @@ To represent Slack users in your portal, we need to create a Slack User blueprin
 
 5. Click on `Save` to create the blueprint.
 
+<h3> Enhance the Port User blueprint</h3>
+
+Now we need to enhance the Port User blueprint to add a relation to the Slack User blueprint and mirror properties to display Slack information.
+
+1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Find the `User` blueprint and click on it.
+
+3. Click on the `Edit JSON` button in the top right corner.
+
+4. Add the following relation to the `relations` object:
+
+    <details>
+    <summary><b>Port User blueprint relation (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    "relations": {
+      "slack_user": {
+        "title": "Slack User",
+        "target": "slack_user",
+        "required": false,
+        "many": false
+      }
+    }
+    ```
+
+    </details>
+
+5. Add the following mirror property to the `mirrorProperties` object to display the Slack real name:
+
+    <details>
+    <summary><b>Port User blueprint mirror property (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    "mirrorProperties": {
+      "slack_real_name": {
+        "title": "Slack real name",
+        "path": "slack_user.real_name"
+      }
+    }
+    ```
+
+    </details>
+
+6. Click on `Save` to update the blueprint.
+
+:::info Additional mirror properties
+You can add more mirror properties to display other Slack user attributes like timezone (`slack_user.tz`), admin status (`slack_user.is_admin`), or any other property from the Slack User blueprint that would be useful for your organization.
+:::
+
+
+
 <h3> Add Port secrets</h3>
 
 Now let's add your Slack bot token to Port's secrets:
 
 1. Click on the `...` button in the top right corner of your Port application.
+
 2. Click on **Credentials**.
+
 3. Click on the `Secrets` tab.
+
 4. Click on `+ Secret` and add the following secret:
+
    - `SLACK_BOT_TOKEN` - Your Slack bot token with `users:read` and `users:read.email` scopes. [How to get the token](https://api.slack.com/authentication/token-types#bot)
 
 
@@ -163,18 +212,7 @@ Follow the steps below to create the webhook integration:
                 "is_bot": ".item.is_bot",
                 "email": ".item.profile.email"
             },
-            "relations": {
-                "user": {
-                "combinator": "'and'",
-                "rules": [
-                    {
-                    "property": "'$identifier'",
-                    "operator": "'='",
-                    "value": ".item.profile.email"
-                    }
-                ]
-                }
-            }
+            "relations": {}
             }
         },
         {
@@ -196,18 +234,7 @@ Follow the steps below to create the webhook integration:
                 "is_bot": ".body.response.user.is_bot",
                 "email": ".body.response.user.profile.email"
             },
-            "relations": {
-                "user": {
-                "combinator": "'and'",
-                "rules": [
-                    {
-                    "property": "'$identifier'",
-                    "operator": "'='",
-                    "value": ".body.response.user.profile.email"
-                    }
-                ]
-                }
-            }
+            "relations": {}
             }
         }
     ]
@@ -219,7 +246,8 @@ Follow the steps below to create the webhook integration:
 
 ## Set up self-service actions
 
-We'll create two self-service actions in this section, one for fetching Slack users and another for fetching a Slack user via email for the automation and webhook to ingest data.
+We'll create three self-service actions in this section, one for fetching Slack users and another for fetching a Slack user via email for the automation and webhook to ingest data and the last one is used to set up automatic discovery to properly link the Port user entities to their corresponding Slack user entities using the **identifier** of the Slack user entity.
+
 
 <h3> Sync Slack Users self-service action</h3>
 
@@ -328,6 +356,72 @@ Follow the steps below to create the action:
           "Authorization": "Bearer {{ .secrets.SLACK_BOT_TOKEN}}"
         },
         "body": {}
+      },
+      "requiredApproval": false
+    }
+    ```
+
+    </details>
+
+5. Click `Save` to create the action.
+
+<h3> Port User-Slack User discovery self-service action</h3>
+
+This action set's up automatic discovery to properly link the Port user entities to their corresponding Slack user entities using the **identifier** of the Slack user entity.
+
+Follow the steps below to create the action:
+
+1. Go to the [Self-service](https://app.getport.io/self-serve) page.
+
+2. Click on `+ Action`.
+
+3. Click on the `Edit JSON` button in the top right corner.
+
+4. Copy and paste the following action configuration:
+
+    <details>
+    <summary><b>User-Slack discovery action (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "update_user_slack_relation_identifier",
+      "title": "Link Port User to Slack User",
+      "icon": "Slack",
+      "trigger": {
+        "type": "self-service",
+        "operation": "DAY-2",
+        "userInputs": {
+          "properties": {
+            "slack_user_id": {
+              "icon": "DefaultProperty",
+              "type": "string",
+              "title": "slack_user_id"
+            },
+            "email": {
+              "icon": "DefaultProperty",
+              "type": "string",
+              "title": "email"
+            }
+          },
+          "required": [],
+          "order": [
+            "slack_user_id",
+            "email"
+          ]
+        },
+        "actionCardButtonText": "Sync",
+        "executeActionButtonText": "Sync",
+        "blueprintIdentifier": "_user"
+      },
+      "invocationMethod": {
+        "type": "UPSERT_ENTITY",
+        "blueprintIdentifier": "_user",
+        "mapping": {
+          "identifier": "{{.inputs.email}}",
+          "relations": {
+            "slack_user": "{{.inputs.slack_user_id}}"
+          }
+        }
       },
       "requiredApproval": false
     }
@@ -466,6 +560,71 @@ Follow the steps below to create the automation:
 
 5. Click `Save` to create the automation.
 
+
+<h3> Create automation for automatic user-Slack discovery</h3>
+
+This automation will trigger when a new Slack user is created and automatically link them to the corresponding Port user based on email address.
+
+Follow the steps below to create the automation:
+
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
+
+2. Click on `+ Automation`.
+
+3. Click on the `Edit JSON` button in the top right corner.
+
+4. Copy and paste the following automation configuration:
+
+    <details>
+    <summary><b>Automatic user-Slack discovery automation (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "sync_with_the_port_users_for_slack",
+      "title": "Auto-link Port Users with Slack Users",
+      "description": "Automatically creates relationships between Port users and Slack users when a new Slack user is created",
+      "icon": "Slack",
+      "trigger": {
+        "type": "automation",
+        "event": {
+          "type": "ENTITY_CREATED",
+          "blueprintIdentifier": "slack_user"
+        },
+        "condition": {
+          "type": "JQ",
+          "expressions": [
+            ".diff.after.properties.email != null"
+          ],
+          "combinator": "and"
+        }
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://api.getport.io/v1/actions/update_user_slack_relation_identifier/runs",
+        "agent": false,
+        "synchronized": true,
+        "method": "POST",
+        "headers": {
+          "RUN_ID": "{{ .run.id }}",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "entity": ".event.diff.after.properties.email",
+          "properties": {
+            "slack_user_id": "{{ .event.diff.after.identifier }}",
+            "email": "{{ .event.diff.after.properties.email }}"
+          }
+        }
+      },
+      "publish": true
+    }
+    ```
+
+    </details>
+
+5. Click `Save` to create the automation.
+
+
 <h3> Create automation to sync Slack users when a new Port user is added</h3>
 
 To ensure new Port users get mapped to Slack users automatically, we'll create an automation that triggers when a new Port user is created.
@@ -527,6 +686,8 @@ Follow the steps below to create the automation:
 5. Click `Save` to create the automation.
 
 
+
+
 ## Let's test it
 
 1. Go to the [Self-service](https://app.getport.io/self-serve) page.
@@ -544,10 +705,6 @@ Follow the steps below to create the automation:
 ## Conclusion
 
 You've successfully ingested Slack users into your Port catalog and automatically mapped them to existing Port user accounts based on email addresses.
-
-<img src="/img/guides/slackUserIngested.png" border="1px" />
-
-<img src="/img/guides/slackMappedIngestedUser.png" border="1px" />
 
 
 ## Related guides
