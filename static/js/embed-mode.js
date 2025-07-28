@@ -215,42 +215,6 @@
         window.open(this.href, '_blank', 'noopener,noreferrer');
       });
     });
-    
-    // Also handle dynamically added links using MutationObserver
-    const observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        mutation.addedNodes.forEach(function(node) {
-          if (node.nodeType === 1) { // Element node
-            const newLinks = node.querySelectorAll ? node.querySelectorAll('a[href]') : [];
-            newLinks.forEach(link => {
-              // Skip internal anchors
-              if (link.getAttribute('href').startsWith('#')) {
-                return;
-              }
-              
-              // Set attributes
-              link.setAttribute('target', '_blank');
-              link.setAttribute('rel', 'noopener noreferrer');
-              
-              // Add click event listener
-              link.addEventListener('click', function(e) {
-                if (this.getAttribute('href').startsWith('#')) {
-                  return;
-                }
-                e.preventDefault();
-                window.open(this.href, '_blank', 'noopener,noreferrer');
-              });
-            });
-          }
-        });
-      });
-    });
-    
-    // Start observing
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
   }
 
   function removeElements() {
