@@ -127,8 +127,7 @@ resource "port_blueprint" "myBlueprint" {
 ## Pulumi definition
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Array - coming soon", value: "array"}
+{label: "Basic", value: "basic"}
 ]}>
 
 <TabItem value="basic">
@@ -272,8 +271,7 @@ Object validations follow the JSON schema model, refer to the [JSON schema docs]
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Array", value: "array"},
-{label: "Terraform - coming soon", value: "tf"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">

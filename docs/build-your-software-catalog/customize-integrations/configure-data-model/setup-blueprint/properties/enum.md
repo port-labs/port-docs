@@ -14,7 +14,7 @@ import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-i
 
 Enum is a data type  used to define a named set of constant values.
 
-<LimitFieldRestriction property_name='URL' />
+<LimitFieldRestriction property_name='enum' />
 
 ## 💡 Common enum usage
 
@@ -99,8 +99,8 @@ resource "port_blueprint" "myBlueprint" {
         required    = false
         enum        = ["my-option-1", "my-option-2"]   
         enum_colors = {
-            "Option one" = "green"
-            "Option two" = "blue"
+            "my-option-1" = "green"
+            "my-option-2" = "blue"
         }
       }
     }
@@ -120,16 +120,16 @@ resource "port_blueprint" "myBlueprint" {
 properties = {
     array_props = {
     my_enum_array_prop = {
-    title = "myEnumArrayProp"
-    items = {
-        type = "string"
-        enum = [ "my-option-1", "my-option-2", "my-option-3"]
-        enum_colors = {
-            "my-option-1" = "gold"
-            "my-option-2" = "bronze"
-            "my-option-3" = "lightGray"
-             }
-          }
+        title = "myEnumArrayProp"
+        string_items = {
+            type = "string"
+            enum = [ "my-option-1", "my-option-2", "my-option-3"]
+            enum_colors = {
+                "my-option-1" = "gold"
+                "my-option-2" = "bronze"
+                "my-option-3" = "lightGray"
+                }
+            }
        }
    }
 # highlight-end
@@ -143,12 +143,12 @@ properties = {
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Array- coming soon", value: "array"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
 
-<Tabs groupId="pulumi-definition-url-basic" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-enum-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
@@ -161,26 +161,26 @@ properties = {
 """A Python Pulumi program"""
 
 import pulumi
-from port_pulumi import Blueprint,BlueprintPropertiesArgs
+from port_pulumi import Blueprint
 
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
     title="My Blueprint",
     # highlight-start
-    properties=BlueprintPropertiesArgs(
-        string_props={
+    properties={
+        "string_props": {
             "myEnumProp": {
                 "title": "My Enum",
                 "required": True,
-                "enum": ["my-option-1", "my-option-2"],
                 "enum_colors": {
                     "my-option-1": "red",
-                    "my-option-2": "green"
-                }
+                    "my-option-2": "green",
+                },
+                "enums": ["my-option-1", "my-option-2"]
             }
         }
-    ),
+    },
     # highlight-end
     relations={}
 )
@@ -197,7 +197,7 @@ import * as port from "@port-labs/port";
 export const blueprint = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   title: "My Blueprint",
-  // highlight-start
+  
   properties: {
     stringProps: {
       myEnumProp: {
@@ -267,10 +267,9 @@ func main() {
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
 				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
-                        Title:      pulumi.String("My String"),
+					"myEnumProp": port.BlueprintPropertiesStringPropsArgs{
+                        Title:      pulumi.String("My Enum"),
                         Required:   pulumi.Bool(false),
-                        Type:       pulumi.String("string"),
                         Enums: pulumi.StringArray{
                             pulumi.String("my-option-1"),
                             pulumi.String("my-option-2"),
@@ -300,13 +299,12 @@ func main() {
 
 </TabItem>
 
-<TabItem value="enum">
+<TabItem value="array">
 
-<Tabs groupId="pulumi-definition-url-enum" queryString defaultValue="python" values={[
+<Tabs groupId="pulumi-definition-enum" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
-{label: "GO", value: "go"}
 ]}>
 
 <TabItem value="python">
@@ -320,24 +318,23 @@ from port_pulumi import Blueprint
 blueprint = Blueprint(
     "myBlueprint",
     identifier="myBlueprint",
-    title="My Blueprint",
-    # highlight-start
-    properties=BlueprintPropertiesArgs(
-        string_props={
-            "myUrlProp":BlueprintPropertiesStringPropsArgs(
-                title="My url",
-                required=True,
-                format="url",
-                enum=["https://example.com", "https://getport.io"],
-                enum_colors={
-                    "https://example.com": "red",
-                    "https://getport.io": "green"
+    title="myBlueprint",
+    properties={
+        "array_props": {
+            "myEnumProp": {
+                "title":"My Enum Array",
+                "required":True,
+                "string_items": {
+                    "enums" : ["my-option-1", "my-option-2"],
+                    "enum_colors" : {
+                        "my-option-1": "red",
+                        "my-option-2": "green",
+                    }
                 }
-            )
-        },
-    )
-    # highlight-end
-    relations=[]
+            } 
+        }
+    },
+    relations={}
 )
 ```
 
@@ -354,18 +351,19 @@ export const blueprint = new port.Blueprint("myBlueprint", {
   title: "My Blueprint",
   // highlight-start
   properties: {
-    stringProps: {
-      myUrlProp: {
-        title: "My url",
-        required: true,
-        format: "url",
-        enums: ["https://example.com", "https://getport.io"],
-        enumColors: {
-          "https://example.com": "red",
-          "https://getport.io": "green",
-        },
-      },
-    },
+    arrayProps: {
+        myEnum: {
+            title: "My enum",
+            required: true,
+            stringItems: {
+                enumColors: {
+                "my-option-1": "red",
+                "my-option-2": "green",
+                },
+                enums: ["my-option-1", "my-option-2"],
+            },
+        }
+    }
   },
   // highlight-end
 });
@@ -385,17 +383,18 @@ const entity = new port.Blueprint("myBlueprint", {
   identifier: "myBlueprint",
   // highlight-start
   properties: {
-    stringProps: {
-      myUrlProp: {
-        title: "My url",
-        required: true,
-        format: "url",
-        enums: ["https://example.com", "https://getport.io"],
-        enumColors: {
-          "https://example.com": "red",
-          "https://getport.io": "green",
+    arrayProps: { 
+        myEnumProp: {
+            title: "My Enum",
+            required: true,
+            stringItems: {
+            enums: ["my-option-1", "my-option-2"],
+            enumColors: {
+            "my-option-1": "red",
+            "my-option-2": "green",
+                },
+            },
         },
-      },
     },
   },
   // highlight-end
@@ -423,21 +422,23 @@ func main() {
 			Title:      pulumi.String("My Blueprint"),
       // highlight-start
 			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myUrlProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:      pulumi.String("My url"),
-						Required:   pulumi.Bool(false),
-						Format:     pulumi.String("url"),
-						Enums: pulumi.StringArray{
-							pulumi.String("https://example.com"),
-							pulumi.String("https://getport.io"),
-						},
-						EnumColors: pulumi.StringMap{
-							"https://example.com": pulumi.String("red"),
-							"https://getport.io":  pulumi.String("green"),
-						},
-					},
-				},
+                ArrayProps: port.BlueprintPropertiesArrayPropsMap{
+                    "myEnumProp": port.BlueprintPropertiesStringPropsArgs{
+                        StringItems: port.BlueprintPropertiesArrayPropsStringItemsArgs{
+                                Title:      pulumi.String("My Enum"),
+                                Required:   pulumi.Bool(false),
+                                Format:     pulumi.String("Enum"),
+                                Enums: pulumi.StringArray{
+                                    pulumi.String("my-option-1"),
+                                    pulumi.String("my-option-2"),
+                                },
+                                EnumColors: pulumi.StringMap{
+                                    "my-option-1": pulumi.String("red"),
+                                    "my-option-2":  pulumi.String("green"),
+                                },
+                        },
+                    },
+                }
 			},
       // highlight-end
 		})
@@ -457,3 +458,21 @@ func main() {
 
 </TabItem>
 </Tabs>
+
+## Available enum colors
+
+Properties defined using [enum](#api-definition) can also include specific colors for the different values available in the property definition, the available enum colors are:
+
+```text showLineNumbers
+blue
+turquoise
+orange
+purple
+pink
+yellow
+green
+red
+darkGray
+lightGray
+bronze
+```
