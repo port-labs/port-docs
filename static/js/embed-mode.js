@@ -27,9 +27,22 @@
 
       if (is404()) {
         send404Event();
-      } else {
-        sendFinishedLoadingEvent();
+        return;
       }
+
+      if (isPageCrashed()) {
+        console.warn('[embed-mode] Page crashed, reloading...');
+        if (!sessionStorage.getItem('embed_mode_page_crashed_reloaded')) {
+          sessionStorage.setItem('embed_mode_page_crashed_reloaded', 'true');
+          window.location.reload();
+        } else {
+          console.error('[embed-mode] Page crashed and already reloaded once. Not reloading again.');
+          sendPageCrashedEvent();
+        }
+        return;
+      }
+
+      sendFinishedLoadingEvent();
     } catch (error) {
       console.error('[embed-mode] Error preparing embedded page:', error);
       sendInternalErrorEvent();
@@ -234,6 +247,11 @@
     return h1 && h1.textContent === 'Page Not Found';
   }
 
+  function isPageCrashed() {
+    const h1s = document.querySelectorAll('h1');
+    return h1s.some(h1 => h1.textContent.includes('page crashed'));
+  }
+
   function send404Event() {
     window.parent.postMessage({
       type: 'page_not_found'
@@ -249,6 +267,12 @@
   function sendInternalErrorEvent() {
     window.parent.postMessage({
       type: 'internal_error'
+    }, assumeParentOrigin());
+  }
+
+  function sendPageCrashedEvent() {
+    window.parent.postMessage({
+      type: 'page_crashed'
     }, assumeParentOrigin());
   }
 
