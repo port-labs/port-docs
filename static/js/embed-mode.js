@@ -36,24 +36,6 @@
     }
   }
 
-  function assumeParentOrigin() {
-    const originHostname = urlParams.get('origin_hostname') ?? 'localhost';
-    const protocol = originHostname.split(':')?.[0] === 'localhost' ? 'http' : 'https';
-
-    return `${protocol}://${originHostname}`;
-  }
-  
-  function send404Event() {
-    window.parent.postMessage({
-      type: 'page_not_found'
-    }, assumeParentOrigin());
-  }
-
-  function is404() {
-    const h1 = document.querySelector('h1');
-    return h1 && h1.textContent === 'Page Not Found';
-  }
-
   function transformNavbar() {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
@@ -238,6 +220,24 @@
         element.remove();
       });
     });
+  }
+
+  function assumeParentOrigin() {
+    const originHostname = urlParams.get('origin_hostname') ?? 'localhost';
+    const protocol = originHostname.split(':')?.[0] === 'localhost' ? 'http' : 'https';
+
+    return `${protocol}://${originHostname}`;
+  }
+
+  function is404() {
+    const h1 = document.querySelector('h1');
+    return h1 && h1.textContent === 'Page Not Found';
+  }
+
+  function send404Event() {
+    window.parent.postMessage({
+      type: 'page_not_found'
+    }, assumeParentOrigin());
   }
 
   function sendFinishedLoadingEvent() {
