@@ -14,7 +14,6 @@
   const portThemeDarkBg = '#1e1c26';
   const portThemeLightBg = '#ffffff';
   const isEmbed = urlParams.get('embed_mode') === 'true';
-  const origins = ['https://app.getport.io', 'https://app.port.io'];
 
   if (!isEmbed) return;
 
@@ -31,13 +30,18 @@
         sendFinishedLoadingEvent();
       }
   }
+
+  function assumeParentOrigin() {
+    const originHostname = urlParams.get('origin_hostname') ?? 'localhost';
+    const protocol = originHostname.split(':')?.[0] === 'localhost' ? 'http' : 'https';
+
+    return `${protocol}://${originHostname}`;
+  }
   
   function send404Event() {
-    origins.forEach(origin => {
-      window.parent.postMessage({
-        type: 'page_not_found'
-      }, origin);
-    });
+    window.parent.postMessage({
+      type: 'page_not_found'
+    }, assumeParentOrigin());
   }
 
   function is404() {
@@ -159,10 +163,8 @@
   function scrollToHash() {
     if (window.location.hash) {
       const targetId = window.location.hash.substring(1);
-      console.log(`[embed-mode] Detected hash in URL: #${targetId}`);
       const targetElement = document.getElementById(targetId);
       if (targetElement) {
-        console.log(`[embed-mode] Scrolling to element with id: ${targetId}`);
         setTimeout(() => {
           targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
@@ -170,7 +172,7 @@
         console.warn(`[embed-mode] No element found with id: ${targetId}`);
       }
     } else {
-      console.log('[embed-mode] No hash found in URL, no scrolling performed.');
+      console.debug('[embed-mode] No hash found in URL, no scrolling performed.');
     }
   }
 
@@ -184,18 +186,10 @@
     }
 
     html.setAttribute('data-theme', theme);
-    
-    // Force a style recalculation
-    body.style.display = 'none';
-    body.offsetHeight; // Trigger reflow
-    body.style.display = '';
 
     if (theme === Theme.DARK) {
       html.style.setProperty('background-color', portThemeDarkBg, 'important');
       body.style.setProperty('background-color', portThemeDarkBg, 'important');
-    } else {
-      html.style.setProperty('background-color', portThemeLightBg, 'important');
-      body.style.setProperty('background-color', portThemeLightBg, 'important');
     }
     
   }
@@ -235,32 +229,19 @@
     selectorsToRemove.forEach(selector => {
       const elements = document.querySelectorAll(selector);
       elements.forEach(element => {
-        console.log(`[embed-mode] Removing element: ${selector}`);
+        console.debug(`[embed-mode] Removing element: ${selector}`);
         element.remove();
       });
     });
   }
 
   function sendFinishedLoadingEvent() {
-    setTimeout(() => {
-      origins.forEach(origin => {
-        window.parent.postMessage({
-          type: 'finished_load_ack'
-        }, origin);
-      });
-    }, 1000);
-  }
-
-  // Run on initial load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', prepareEmbeddedPage);
-  } else {
-    prepareEmbeddedPage();
+    window.parent.postMessage({
+      type: 'finished_load_ack'
+    }, assumeParentOrigin());
   }
 
   // Listen for URL changes (for single page app navigation)
   window.addEventListener('popstate', prepareEmbeddedPage);
-  
-  // Also check when the page loads in case of direct navigation
   window.addEventListener('load', prepareEmbeddedPage);
 })(); 
