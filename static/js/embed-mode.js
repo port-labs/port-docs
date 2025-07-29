@@ -248,8 +248,8 @@
   }
 
   function isPageCrashed() {
-    const h1s = document.querySelectorAll('h1');
-    return h1s.some(h1 => h1.textContent.includes('page crashed'));
+    const h1 = document.querySelector('h1');
+    return h1 && h1.textContent.includes('page crashed');
   }
 
   function send404Event() {
