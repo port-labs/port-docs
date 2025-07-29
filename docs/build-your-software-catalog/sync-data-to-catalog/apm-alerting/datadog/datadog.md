@@ -34,7 +34,7 @@ This integration allows you to:
 - [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)*
 - [`User`](https://docs.datadoghq.com/api/latest/users/#list-all-users)
 - [`Team`](https://docs.datadoghq.com/api/latest/teams/#get-all-teams)
-- [`Service Dependency`]( https://api.us5.datadoghq.com/api/v1/service_dependencies)
+- [`Service Dependency`](https://docs.datadoghq.com/api/latest/service-dependencies/#get-all-service-dependencies)
 <br />
 
   *_SLO History, Service Metric and Service Dependency resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
