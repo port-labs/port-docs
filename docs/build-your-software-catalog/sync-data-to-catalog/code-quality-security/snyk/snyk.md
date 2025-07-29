@@ -33,11 +33,11 @@ The resources that can be ingested from Snyk into Port are listed below. It is p
 
 ### Prerequisites
 
-1. A Snyk enterprise account
-2. A port organization with admin role
+1. A Snyk enterprise account.
+2. A port organization with admin permissions.
 
-:::note Snyk Enterprise
-The Snyk API is available for Enterprise customers only. Authentication using personal tokens from Snyk Free or Team plans is not supported. [Learn More](https://docs.snyk.io/snyk-api/authentication-for-api)
+:::info Snyk Enterprise
+The Snyk API is available for Enterprise customers only. Authentication using personal tokens from Snyk Free or Team plans is not supported. [Learn More](https://docs.snyk.io/snyk-api/authentication-for-api).
 :::
 
 Choose one of the following installation methods:
