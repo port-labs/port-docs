@@ -1,7 +1,7 @@
 // Embed mode detection script
 (function() {
-  // Check if we're in a browser environment
-  if (typeof window === 'undefined') {
+  // Check if we're in a browser environment and not during SSR
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
     return;
   }
 
@@ -18,6 +18,7 @@
   if (!isEmbed) return;
 
   function prepareEmbeddedPage() {
+    try {
       applyTheme(urlParams.get('theme') ?? Theme.LIGHT);
       removeElements(); 
       transformNavbar();
@@ -29,6 +30,10 @@
       } else {
         sendFinishedLoadingEvent();
       }
+    } catch (error) {
+      console.error('[embed-mode] Error preparing embedded page:', error);
+      sendInternalErrorEvent();
+    }
   }
 
   function assumeParentOrigin() {
@@ -238,6 +243,12 @@
   function sendFinishedLoadingEvent() {
     window.parent.postMessage({
       type: 'finished_load_ack'
+    }, assumeParentOrigin());
+  }
+
+  function sendInternalErrorEvent() {
+    window.parent.postMessage({
+      type: 'internal_error'
     }, assumeParentOrigin());
   }
 
