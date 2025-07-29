@@ -33,52 +33,52 @@ This guide demonstrates how to create a GitHub worklow integration to facilitate
 
 ## Common use cases
 
-- Empower platform teams to gain visibility and advanced insights into your Humanitec entities including application, environments, users, and groups from Port among other entities
-- Track the status of changes to your Humanitec entities from Port
+- Empower platform teams to gain visibility and advanced insights into your Humanitec entities including application, environments, users, and groups from Port among other entities.
+- Track the status of changes to your Humanitec entities from Port.
 - Prepare your Port environment to build useful experiences for Platform Engineering teams with Self Service Actions.
 
 ## Prerequisites
 
 This guide assumes the following:
-- You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview)
-- You have a Humanitec account and a [Service User created](https://developer.humanitec.com/platform-orchestrator/docs/platform-orchestrator/security/service-users/) (You need an Administrator or Manager privilege to create a Service User)
-- You have a GitHub account and a repository
+- You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
+- You have a Humanitec account and a [Service User created](https://developer.humanitec.com/platform-orchestrator/docs/platform-orchestrator/security/service-users/) (You need an Administrator or Manager privilege to create a Service User).
+- You have a GitHub account and a repository.
 
 
 ## Set up data model
 
 As a first step, you need to create blueprint definitions in Port for the Humanitec entities you want to ingest. To do this follow the steps below:
 
-1. Go to the [Builder](https://app.getport.io/settings/data-model/data-model) page in your Port organization
-2. Click on the **+ Blueprint** button at the top of the page
-3. Click on `{...} Edit JSON` button at the top right corner
+1. Go to the [Builder](https://app.getport.io/settings/data-model/data-model) page in your Port organization.
+2. Click on the **+ Blueprint** button at the top of the page.
+3. Click on `{...} Edit JSON` button at the top right corner.
 4. Copy and paste the following blueprint JSON into the editor, repeating the process for each blueprint:
 
-<HumanitecApplicationBlueprint/>
+  <HumanitecApplicationBlueprint/>
 
-<HumanitecEnvironmentBlueprint/>
+  <HumanitecEnvironmentBlueprint/>
 
-<HumanitecWorkloadBlueprint/>
+  <HumanitecWorkloadBlueprint/>
 
-<HumanitecResourceGraphBlueprint/>
+  <HumanitecResourceGraphBlueprint/>
 
-<HumanitecResourceBlueprint/>
+  <HumanitecResourceBlueprint/>
 
-<HumanitecSecretStores/>
+  <HumanitecSecretStores/>
 
-<HumanitecSharedValues/>
+  <HumanitecSharedValues/>
 
-<HumanitecValueSetVersions/>
+  <HumanitecValueSetVersions/>
 
-<HumanitecDeploymentSets/>
+  <HumanitecDeploymentSets/>
 
-<HumanitecPipelines/>
+  <HumanitecPipelines/>
 
-<HumanitecDeploymentDeltas/>
+  <HumanitecDeploymentDeltas/>
 
-<HumanitecUsers/>
+  <HumanitecUsers/>
 
-<HumanitecGroups/>
+  <HumanitecGroups/>
 
 
 :::tip Blueprint Properties
@@ -107,20 +107,20 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 
 
 
-<details>
-<summary><b>Main Executable Script (Click to expand)</b></summary>
+  <details>
+  <summary><b>Main Executable Script (Click to expand)</b></summary>
 
-<HumanitecExporterMainScript/>
+  <HumanitecExporterMainScript/>
 
-</details>
+  </details>
 
 
-<details>
-<summary><b>Requirements (Click to expand)</b></summary>
+  <details>
+  <summary><b>Requirements (Click to expand)</b></summary>
 
-<HumanitecExporterRequirements/>
+  <HumanitecExporterRequirements/>
 
-</details>
+  </details>
 
 
 2. Create the following Python files in a folder named `clients` at the base directory of the `integration` folder:
