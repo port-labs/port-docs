@@ -1346,5 +1346,4 @@ export const availableGuides = [
         logos: ["AI", "Slack", "PagerDuty"],
         link: "/guides/all/generate-incident-updates-with-ai",
     }
-    
 ]
