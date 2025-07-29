@@ -184,7 +184,7 @@ In addition to the aforementioned JQ playground, Port provides a general [JQ pla
 
 Once you have configured an integration's mapping to your liking, click the `Resync` button in the bottom-right to save your changes.
 
-To edit an integration's mapping using Port's API, you can use the [Patch integration](/api-reference/patch-an-integration/) route.  
+To edit an integration's mapping using Port's API, you can use the [Patch integration](/api-reference/update-an-integration/) route.  
 
 :::tip Resync via the API
 To perform a simple resync of an integration via the API without changing its mapping, use the same `Patch integration` route with the integration identifier and an empty body.
