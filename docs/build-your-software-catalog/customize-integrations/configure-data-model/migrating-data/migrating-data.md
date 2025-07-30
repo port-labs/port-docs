@@ -36,7 +36,7 @@ Click the three dots menu of the blueprint you want to migrate, and select **Mig
 Below are some example screenshots to help you understand the migration process in Port UI.
 #### Selecting the source blueprint
 
-![Selecting the source blueprint](./assets/three-dots-on-blueprint-in-builder.png)
+![Selecting the source blueprint](/img/build-your-software-catalog/custom-integrations/configue-data-model/migrating-data/three-dots-on-blueprint-in-builder.png)
 
 *In this step, you choose the blueprint you want to migrate data from. This is done from the the Builder Page, where you can access the migration option from the actions menu.*
 
@@ -47,19 +47,19 @@ We recommend locking updates to the blueprint during migration to ensure data in
 
 #### Mapping properties and relations
 
-![Mapping properties and relations](./assets/migration-mapping-screen.png)
+![Mapping properties and relations](/img/build-your-software-catalog/custom-integrations/configue-data-model/migrating-data/migration-mapping-screen.png)
 
 *Here, you are presented with a mapping interface. You can match properties and relations from the source blueprint to those in the target blueprint. This ensures that your data is correctly transformed during the migration.*
 
 #### Reviewing the migration plan
 
-![Reviewing the migration plan](./assets/test-jq-mapping.png)
+![Reviewing the migration plan](/img/build-your-software-catalog/custom-integrations/configue-data-model/migrating-data/test-jq-mapping.png)
 
 *Before executing the migration, you can review a summary of the planned changes. This includes a preview of how entities will look after migration, allowing you to verify that all mappings are correct and JQ checks out.*
 
 #### Migration progress and completion
 
-![Migration progress and completion](./assets/migrated-successfully.png)
+![Migration progress and completion](/img/build-your-software-catalog/custom-integrations/configue-data-model/migrating-data/migrated-successfully.png)
 
 *During the migration, you can monitor progress in real time. Once the migration is complete, you will see a confirmation message and can review the results directly in the Port UI.*
 
