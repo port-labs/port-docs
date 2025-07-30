@@ -18,7 +18,13 @@
     // 2. Handle external link button click (CSS can't do this)
     setupExternalLinkButton();
     
-    // 3. Send postMessage events (CSS can't do this)
+    // 3. Handle 404
+    if (is404()) {
+      sendNotFoundEvent();
+      return;
+    }
+
+    // 4. Send finished ack
     sendFinishedLoadingEvent();
   }
 
@@ -55,6 +61,11 @@
     const originHostname = urlParams.get('origin-hostname') ?? 'localhost';
     const protocol = originHostname.split(':')?.[0] === 'localhost' ? 'http' : 'https';
     return `${protocol}://${originHostname}`;
+  }
+
+  function is404() {
+    const h1 = document.querySelector('h1');
+    return h1 && h1.textContent === 'Page Not Found';
   }
 
   function sendFinishedLoadingEvent() {
