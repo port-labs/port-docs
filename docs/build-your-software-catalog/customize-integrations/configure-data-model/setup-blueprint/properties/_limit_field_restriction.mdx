@@ -1,7 +1,7 @@
 :::info Limit field restriction
-The `limit` field must be defined as either accepting a single value or a list of values.
-This setting becomes permanent after the property is created and cannot be changed later.
+The `limit` field must be defined as either accepting a single value or a list of values.  
+This setting is permanent and cannot be changed after the property is created.
 
-If you create the {props.property_name} property and limit it to a single value, you won't be able to switch it later to support multiple values.
-To support multiple values, you'll need to define a new property with `limit` set to list.
+If you create a {props.property_name} property with a single-value `limit`, you won't be able to later change it to support multiple values.  
+To support multiple values, you can either define a new property with `limit` set to a list, or use the [migrate blueprint data](/build-your-software-catalog/customize-integrations/configure-data-model/migrate-data/) feature.
 :::

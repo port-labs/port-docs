@@ -12,9 +12,9 @@ import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-i
 
 # Enum
 
-Enum is a data type  used to define a named set of constant values.
+Enum is a data type used to define a named set of constant values.
 
-<LimitFieldRestriction property_name='enum' />
+<LimitFieldRestriction property_name='Enum' />
 
 ## 💡 Common enum usage
 
