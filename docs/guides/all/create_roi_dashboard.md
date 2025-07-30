@@ -9,7 +9,7 @@ description: Create a dashboard that highlights the ROI of automations in Port
 ## Overview
 
 In the following guide, you are going to create a dashboard that highlights the ROI (Return On Invesment) of automations in Port.
-To achieve that we will create three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md, a couple of [self-service](https://app.getport.io/self-serve) actions and a [dashboard]((/customize-pages-dashboards-and-plugins/dashboards) that will reflect the advantages of using actions in Port.
+To achieve that we will create three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md, a couple of [Self-service](https://app.getport.io/self-serve) actions and a [dashboard]((/customize-pages-dashboards-and-plugins/dashboards) that will reflect the advantages of using actions in Port.
 
 ## Prerequisites
 Before you begin, you will need:
@@ -25,7 +25,8 @@ Before you begin, you will need:
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
 3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
-4. Add this JSON schema:
+4. Copy and paste the following JSON configuration into the editor.
+5. Click `Create`
 
     <details>
     <summary><b>Action blueprint (click to expand)</b></summary>
@@ -450,7 +451,8 @@ Before you begin, you will need:
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
 3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
-4. Add this JSON schema:
+4. Copy and paste the following JSON configuration into the editor.
+5. Click `Create`.
 
     <details>
     <summary><b>Action blueprint(click to expand)</b></summary>
@@ -604,7 +606,8 @@ Before you begin, you will need:
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
 3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
-4. Add this JSON schema:
+4. Copy and paste the following JSON configuration into the editor.
+5. Click `Create`
 
     <details>
     <summary><b>Action blueprint(click to expand)</b></summary>
@@ -623,6 +626,98 @@ Before you begin, you will need:
     "calculationProperties": {},
     "aggregationProperties": {},
     "relations": {}
+    }
+    ```
+
+    </details>
+
+## Create the Setup new action experience Self-service action
+
+To create the Self-service action, go to the [Self-service](https://app.getport.io/self-serve) page:
+
+1. Click on the `+ Action` button.
+2. Click on the `{...} Edit JSON` button.
+3. Copy and paste the following JSON configuration into the editor.
+4. Click `Save`.
+
+    <details>
+    <summary><b>Action blueprint(click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+    "identifier": "setup_new_action",
+    "title": "Setup new action experience",
+    "description": "Setup a backend that will create scaffolding of action, automation and action kpis",
+    "trigger": {
+        "type": "self-service",
+        "operation": "CREATE",
+        "userInputs": {
+        "properties": {
+            "category": {
+            "type": "string",
+            "title": "Category",
+            "blueprint": "actions_categories",
+            "format": "entity"
+            },
+            "lead_time_before": {
+            "type": "number",
+            "description": "Number of hours spent waiting from ticket creation",
+            "title": "Lead time before"
+            },
+            "cycle_time": {
+            "icon": "DefaultProperty",
+            "type": "number",
+            "title": "Cycle time before",
+            "description": "Time spent in hour executing the request"
+            },
+            "actionTitle": {
+            "icon": "DefaultProperty",
+            "type": "string",
+            "title": "Action title"
+            }
+        },
+        "required": [
+            "category",
+            "actionTitle"
+        ],
+        "order": [
+            "4af618d8-6b42-45c1-81f8-34ead11eb3f5",
+            "actionTitle",
+            "category",
+            "41281872-3eaa-4e6e-b66e-1f3e9bc7d99b",
+            "lead_time_before",
+            "cycle_time"
+        ],
+        "titles": {
+            "4af618d8-6b42-45c1-81f8-34ead11eb3f5": {
+            "title": "Set up a new action",
+            "description": "This will create a new action and the associated action runs as blueprints"
+            },
+            "41281872-3eaa-4e6e-b66e-1f3e9bc7d99b": {
+            "title": "ROI",
+            "description": "Leave blank is no data or n/a"
+            }
+        }
+        },
+        "actionCardButtonText": "Create",
+        "executeActionButtonText": "Create",
+        "blueprintIdentifier": "action"
+    },
+    "invocationMethod": {
+        "type": "GITHUB",
+        "org": "PortActionsRepo",
+        "repo": "configuration-scripts",
+        "workflow": "create-port-automation.yml",
+        "workflowInputs": {
+        "{{ spreadValue() }}": "{{ .inputs }}",
+        "port_context": {
+            "runId": "{{ .run.id }}",
+            "blueprint": "{{ .action.blueprint }}"
+        }
+        },
+        "reportWorkflowStatus": true
+    },
+    "requiredApproval": false
     }
     ```
 
