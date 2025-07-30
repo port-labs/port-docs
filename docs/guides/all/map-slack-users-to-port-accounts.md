@@ -304,8 +304,7 @@ Follow the steps below to create the action:
           "properties": {},
           "required": [],
           "order": []
-        },
-        "blueprintIdentifier": "slack_user"
+        }
       },
       "invocationMethod": {
         "type": "WEBHOOK",
@@ -370,8 +369,7 @@ Follow the steps below to create the action:
           "order": [
             "email"
           ]
-        },
-        "blueprintIdentifier": "slack_user"
+        }
       },
       "invocationMethod": {
         "type": "WEBHOOK",
