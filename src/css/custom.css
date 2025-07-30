@@ -825,3 +825,116 @@ html[data-theme="dark"] .navbar-signup-button {
     display: inline-block;
   }
 }
+
+/* ===== EMBED MODE STYLES ===== */
+/* These styles are activated when ?docusaurus-data-embed-mode=true is in the URL */
+
+/* Hide elements when embed mode is active */
+html[data-embed-mode='iframe'] .theme-doc-sidebar-container,
+html[data-embed-mode='iframe'] .theme-doc-breadcrumbs,
+html[data-embed-mode='iframe'] .footer,
+html[data-embed-mode='iframe'] .announcement,
+html[data-embed-mode='iframe'] .custom-announcement-bar,
+html[data-embed-mode='iframe'] .table-of-contents,
+html[data-embed-mode='iframe'] .theme-doc-toc-desktop,
+html[data-embed-mode='iframe'] .theme-doc-toc-mobile,
+html[data-embed-mode='iframe'] .pagination-nav,
+html[data-embed-mode='iframe'] .theme-edit-this-page,
+html[data-embed-mode='iframe'] .theme-last-updated,
+html[data-embed-mode='iframe'] .col--3 {
+  display: none !important;
+}
+
+/* Transform navbar for embed mode */
+html[data-embed-mode='iframe'] .navbar {
+  background-color: var(--embed-navbar-bg, #ffffff) !important;
+  border-bottom: 1px solid var(--embed-navbar-border, rgba(0, 0, 0, 0.45)) !important;
+}
+
+html[data-embed-mode='iframe'] .navbar > * {
+  display: none !important;
+}
+
+/* Create embed navbar content using CSS */
+html[data-embed-mode='iframe'] .navbar::before {
+  content: "Documentation";
+  font-weight: bold;
+  font-size: 1rem;
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+html[data-embed-mode='iframe'] .navbar::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+/* Dark theme support */
+html[data-embed-mode='iframe'][data-theme='dark'] .navbar {
+  background-color: var(--embed-navbar-bg-dark, #1e1c26) !important;
+  border-bottom-color: var(--embed-navbar-border-dark, rgba(255, 255, 255, 0.45)) !important;
+}
+
+html[data-embed-mode='iframe'][data-theme='dark'] .navbar::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
+}
+
+/* Apply theme colors */
+html[data-embed-mode='iframe'][data-theme='dark'] {
+  background-color: #1e1c26 !important;
+}
+
+html[data-embed-mode='iframe'][data-theme='dark'] body {
+  background-color: #1e1c26 !important;
+}
+
+/* Make links open in new tab (visual indicator) */
+html[data-embed-mode='iframe'] a[href]:not([href^='#']) {
+  position: relative;
+}
+
+html[data-embed-mode='iframe'] a[href]:not([href^='#'])::after {
+  content: "↗";
+  font-size: 0.8em;
+  margin-left: 0.2em;
+  opacity: 0.7;
+}
+
+/* Responsive adjustments for embed mode */
+html[data-embed-mode='iframe'] .theme-doc-layout {
+  grid-template-columns: 1fr !important;
+}
+
+html[data-embed-mode='iframe'] .theme-doc-main {
+  max-width: none !important;
+  padding: 0 1rem !important;
+}
+
+/* Hide search bar in embed mode */
+html[data-embed-mode='iframe'] .navbar__search {
+  display: none !important;
+}
+
+/* Adjust main content area */
+html[data-embed-mode='iframe'] main {
+  padding-top: 0 !important;
+}
+
+/* Custom CSS variables for theming */
+:root {
+  --embed-navbar-bg: #ffffff;
+  --embed-navbar-border: rgba(0, 0, 0, 0.45);
+  --embed-navbar-bg-dark: #1e1c26;
+  --embed-navbar-border-dark: rgba(255, 255, 255, 0.45);
+}
