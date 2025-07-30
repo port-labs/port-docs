@@ -7,6 +7,8 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_realtime_installation.mdx"
 import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 import InstallMethods from "./\_install_methods.mdx"
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Installation
 
@@ -28,8 +30,8 @@ This page outlines the following steps:
 
 To allow Port to fetch data from your GitHub Organization, you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and GitHub app installation tokens.
 
-#AI! It's still not quite clear that these are 2 options. Let's just put them in tabs 
-#### Personal access token (PAT)
+<Tabs>
+<TabItem value="pat" label="Personal Access Token (PAT)">
 
 A Personal Access Token (PAT) is suitable if you're the only one managing the integration and don't need frequent credential rotation.  
 To create a personal access token see Github's [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
@@ -59,8 +61,12 @@ You can reconfigure the permission at any time, giving it access to new reposito
 :::
 </details>
 
-#### GitHub App Installation
+</TabItem>
+<TabItem value="github-app" label="GitHub App">
 
 A GitHub App provides automatic access token rotation and is a good alternative to PATs. Refer to our [GitHub App installation guide](./github-app.mdx) to set it up.
+
+</TabItem>
+</Tabs>
 
 <InstallMethods setupName="classic" />
