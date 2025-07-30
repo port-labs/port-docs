@@ -187,6 +187,13 @@ export const liveEvents = {
     \n- repo:refs_changed \
     \n\n**Project:** \
     \n- project:modified',
+  Aikido: 
+    '**Issues:** \
+    \n- issue.open.created \
+    \n- issue.snoozed \
+    \n- issue.ignored.manual \
+    \n- issue.closed',
+
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
