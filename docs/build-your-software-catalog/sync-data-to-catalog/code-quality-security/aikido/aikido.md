@@ -450,7 +450,7 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
 
-## Webhook Configuration
+### Webhook Configuration
 
 To enable real-time data synchronization from Aikido to Port, you must configure webhooks in Aikido following [this guide](https://apidocs.aikido.dev/reference/webhooks). This setup allows Port to receive immediate notifications whenever relevant changes occur in Aikido.
 
