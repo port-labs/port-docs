@@ -421,7 +421,7 @@ const config = {
       async: true,
     },
     {
-      src: '/js/embed-mode.js',
+      src: '/js/embed-mode-minimal.js',
       async: false,
     }
   ],
