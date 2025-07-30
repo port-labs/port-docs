@@ -19,7 +19,7 @@ Once implemented users will be able to:
 
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
-- You have a Slack workspace with admin permissions to create apps and generate bot tokens.
+- You have a Slack workspace permissions to create apps and generate bot tokens. [Learn how to create a Slack apps](https://api.slack.com/quickstart).
 - You have permissions to create blueprints, self-service actions, and automations in Port.
 
 ## Set up data model
@@ -198,21 +198,32 @@ Follow the steps below to create the webhook integration:
             "filter": "(.body.response | has(\"members\")) and (.body.response.members | type == \"array\")",
             "itemsToParse": ".body.response.members | map(select(.deleted == false))",
             "entity": {
-            "identifier": ".item.id | tostring",
-            "title": ".item.name | tostring",
-            "properties": {
-                "tz": ".item.tz",
-                "is_restricted": ".item.is_restricted",
-                "is_primary_owner": ".item.is_primary_owner",
-                "real_name": ".item.real_name",
-                "team_id": ".item.team_id",
-                "is_admin": ".item.is_admin",
-                "is_app_user": ".item.is_app_user",
-                "deleted": ".item.deleted",
-                "is_bot": ".item.is_bot",
-                "email": ".item.profile.email"
-            },
-            "relations": {}
+              "identifier": ".item.id | tostring",
+              "title": ".item.name | tostring",
+              "properties": {
+                  "tz": ".item.tz",
+                  "is_restricted": ".item.is_restricted",
+                  "is_primary_owner": ".item.is_primary_owner",
+                  "real_name": ".item.real_name",
+                  "team_id": ".item.team_id",
+                  "is_admin": ".item.is_admin",
+                  "is_app_user": ".item.is_app_user",
+                  "deleted": ".item.deleted",
+                  "is_bot": ".item.is_bot",
+                  "email": ".item.profile.email"
+              }
+            }
+        },
+        {
+            "blueprint": "_user",
+            "operation": "create",
+            "filter": "(.body.response | has(\"members\")) and (.body.response.members | type == \"array\")",
+            "itemsToParse": ".body.response.members | map(select(.deleted == false and .profile.email != null))",
+            "entity": {
+              "identifier": ".item.profile.email",
+              "relations": {
+                  "slack_user": ".item.id | tostring"
+              }
             }
         },
         {
@@ -233,8 +244,18 @@ Follow the steps below to create the webhook integration:
                 "deleted": ".body.response.user.deleted",
                 "is_bot": ".body.response.user.is_bot",
                 "email": ".body.response.user.profile.email"
-            },
-            "relations": {}
+            }
+          }
+        },
+        {
+            "blueprint": "_user",
+            "operation": "create",
+            "filter": ".body.response.user != null and .body.response.user.profile.email != null",
+            "entity": {
+              "identifier": ".body.response.user.profile.email",
+              "relations": {
+                  "slack_user": ".body.response.user.id | tostring"
+              }
             }
         }
     ]
@@ -243,16 +264,19 @@ Follow the steps below to create the webhook integration:
 
 7. Click on `Save`.
 
+:::info Port User creation
+When the webhook processes Slack users, it will automatically create Port User entities for any Slack users that don't already exist in your Port organization. These newly created Port users will have a `Disabled` status by default, meaning they won't receive email invitations and won't be able to access Port until an admin manually activates their accounts.
+:::
+
 
 ## Set up self-service actions
 
-We'll create three self-service actions in this section, one for fetching Slack users and another for fetching a Slack user via email for the automation and webhook to ingest data and the last one is used to set up automatic discovery to properly link the Port user entities to their corresponding Slack user entities using the **identifier** of the Slack user entity.
+We'll create two self-service actions in this section, one for fetching Slack users and another for fetching a Slack user via email for the automation and webhook to ingest data.
 
 
 <h3> Sync Slack Users self-service action</h3>
 
-This action fetches all Slack users and send them to the [process Slack users automation](#create-automation-to-bulk-ingest-slack-users) for processing.
-The automation will then send the response to the webhook for ingestion.
+This action fetches all Slack users and sends the response to the [process Slack users automation](#create-automation-to-bulk-ingest-slack-users) for processing. 
 
 Follow the steps below to create the action:
 
@@ -280,7 +304,8 @@ Follow the steps below to create the action:
           "properties": {},
           "required": [],
           "order": []
-        }
+        },
+        "blueprintIdentifier": "slack_user"
       },
       "invocationMethod": {
         "type": "WEBHOOK",
@@ -305,8 +330,10 @@ Follow the steps below to create the action:
 
 <h3> Get Slack user by email self-service action</h3>
 
-This action fetches a single **Slack** user by email and send the response to a [process single slack user automation](#create-automation-to-process-single-slack-user) for processing.
-The automation will then send the response to the webhook for ingestion.
+This action fetches a single **Slack** user by email and send the response to a [process single slack user automation](#create-automation-to-process-single-slack-user) for processing.  
+
+This is required if you want to automate the process of making newly created Port users sync with their corresponding Slack user accounts by fetching the slack user by email and sending them to the automation for data ingestion.
+
 
 Follow the steps below to create the action:
 
@@ -343,7 +370,8 @@ Follow the steps below to create the action:
           "order": [
             "email"
           ]
-        }
+        },
+        "blueprintIdentifier": "slack_user"
       },
       "invocationMethod": {
         "type": "WEBHOOK",
@@ -356,72 +384,6 @@ Follow the steps below to create the action:
           "Authorization": "Bearer {{ .secrets.SLACK_BOT_TOKEN}}"
         },
         "body": {}
-      },
-      "requiredApproval": false
-    }
-    ```
-
-    </details>
-
-5. Click `Save` to create the action.
-
-<h3> Port User-Slack User discovery self-service action</h3>
-
-This action set's up automatic discovery to properly link the Port user entities to their corresponding Slack user entities using the **identifier** of the Slack user entity.
-
-Follow the steps below to create the action:
-
-1. Go to the [Self-service](https://app.getport.io/self-serve) page.
-
-2. Click on `+ Action`.
-
-3. Click on the `Edit JSON` button in the top right corner.
-
-4. Copy and paste the following action configuration:
-
-    <details>
-    <summary><b>User-Slack discovery action (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-      "identifier": "update_user_slack_relation_identifier",
-      "title": "Link Port User to Slack User",
-      "icon": "Slack",
-      "trigger": {
-        "type": "self-service",
-        "operation": "DAY-2",
-        "userInputs": {
-          "properties": {
-            "slack_user_id": {
-              "icon": "DefaultProperty",
-              "type": "string",
-              "title": "slack_user_id"
-            },
-            "email": {
-              "icon": "DefaultProperty",
-              "type": "string",
-              "title": "email"
-            }
-          },
-          "required": [],
-          "order": [
-            "slack_user_id",
-            "email"
-          ]
-        },
-        "actionCardButtonText": "Sync",
-        "executeActionButtonText": "Sync",
-        "blueprintIdentifier": "_user"
-      },
-      "invocationMethod": {
-        "type": "UPSERT_ENTITY",
-        "blueprintIdentifier": "_user",
-        "mapping": {
-          "identifier": "{{.inputs.email}}",
-          "relations": {
-            "slack_user": "{{.inputs.slack_user_id}}"
-          }
-        }
       },
       "requiredApproval": false
     }
@@ -561,70 +523,6 @@ Follow the steps below to create the automation:
 5. Click `Save` to create the automation.
 
 
-<h3> Create automation for automatic user-Slack discovery</h3>
-
-This automation will trigger when a new Slack user is created and automatically link them to the corresponding Port user based on email address.
-
-Follow the steps below to create the automation:
-
-1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
-
-2. Click on `+ Automation`.
-
-3. Click on the `Edit JSON` button in the top right corner.
-
-4. Copy and paste the following automation configuration:
-
-    <details>
-    <summary><b>Automatic user-Slack discovery automation (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-      "identifier": "sync_with_the_port_users_for_slack",
-      "title": "Auto-link Port Users with Slack Users",
-      "description": "Automatically creates relationships between Port users and Slack users when a new Slack user is created",
-      "icon": "Slack",
-      "trigger": {
-        "type": "automation",
-        "event": {
-          "type": "ENTITY_CREATED",
-          "blueprintIdentifier": "slack_user"
-        },
-        "condition": {
-          "type": "JQ",
-          "expressions": [
-            ".diff.after.properties.email != null"
-          ],
-          "combinator": "and"
-        }
-      },
-      "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://api.getport.io/v1/actions/update_user_slack_relation_identifier/runs",
-        "agent": false,
-        "synchronized": true,
-        "method": "POST",
-        "headers": {
-          "RUN_ID": "{{ .run.id }}",
-          "Content-Type": "application/json"
-        },
-        "body": {
-          "entity": ".event.diff.after.properties.email",
-          "properties": {
-            "slack_user_id": "{{ .event.diff.after.identifier }}",
-            "email": "{{ .event.diff.after.properties.email }}"
-          }
-        }
-      },
-      "publish": true
-    }
-    ```
-
-    </details>
-
-5. Click `Save` to create the automation.
-
-
 <h3> Create automation to sync Slack users when a new Port user is added</h3>
 
 To ensure new Port users get mapped to Slack users automatically, we'll create an automation that triggers when a new Port user is created.
@@ -706,8 +604,3 @@ Follow the steps below to create the automation:
 
 You've successfully ingested Slack users into your Port catalog and automatically mapped them to existing Port user accounts based on email addresses.
 
-
-## Related guides
-
-- [Slack application](https://docs.port.io/ai-agents/slack-app)
-- [Send Slack message](https://docs.port.io/actions-and-automations/setup-backend/send-slack-message)
