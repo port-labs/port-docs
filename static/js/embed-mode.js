@@ -68,6 +68,12 @@
     return h1 && h1.textContent === 'Page Not Found';
   }
 
+  function sendNotFoundEvent() {
+    window.parent.postMessage({
+      type: 'page_not_found'
+    }, assumeParentOrigin());
+  }
+
   function sendFinishedLoadingEvent() {
     window.parent.postMessage({
       type: 'finished_load_ack'
