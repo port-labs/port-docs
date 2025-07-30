@@ -35,7 +35,7 @@ Port allows you to assign ownership of specific entities to teams in your organi
 <img src='/img/software-catalog/role-based-access-control/overview/user-and-teams.png' width='80%' border='1px' />
 
 
-For more details about **ownership** in Port, see the [relevant documentation](/sso-rbac/rbac/as-blueprints#overview).
+For more details about **ownership** in Port, see the [relevant documentation](/sso-rbac/rbac/#ownership).
 
 ### Dynamic team filtering
 
