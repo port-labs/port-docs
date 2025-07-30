@@ -26,7 +26,7 @@ export default function DockerParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>OCEAN__BASE_URL</code></td>
-          <td>Integration instance base url, real-time live events will be enabled if this is configured.</td>
+          <td>The base url of the instance where the GitHub integration is hosted, used for real-time updates (e.g. <code>https://mygithuboceanintegration.com</code>).</td>
           <td>❌</td>
         </tr>
         <tr>

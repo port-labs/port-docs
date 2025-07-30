@@ -73,7 +73,7 @@ export default function ParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>liveEvents.baseUrl</code></td>
-          <td>The domain where we want to get live events</td>
+          <td>The base url of the instance where the GitHub integration is hosted, used for real-time updates (e.g. <code>https://mygithuboceanintegration.com</code>).</td>
           <td>❌</td>
         </tr>
         <tr>
