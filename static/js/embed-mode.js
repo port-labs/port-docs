@@ -37,6 +37,7 @@
           window.location.reload();
         } else {
           console.error('[embed-mode] Page crashed and already reloaded once. Not reloading again.');
+          sessionStorage.setItem('embed_mode_page_crashed_reloaded', 'false');
           sendPageCrashedEvent();
         }
         return;
