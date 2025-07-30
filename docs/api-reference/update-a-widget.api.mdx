@@ -1,0 +1,72 @@
+---
+id: update-a-widget
+title: "Update a widget"
+description: "**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>** This route allows you to update a specific widget in your portal. <br/><br/>To learn more about pages, checkout the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page)."
+sidebar_label: "Update a widget"
+hide_title: true
+hide_table_of_contents: true
+api: eJztV9tu20YQ/ZXFvtQ2JNFy8yQUBZz2oUVbQHDtJ1UoVsuRtDHJZfciVxH47zmzpC4xlSBxgcJA+yKTnNmZOWfn5p0MauXlZCanakVezgcyJ6+dqYOxlZzIq6v7NYkkFLfTn4XxQkfnqArFVphKLCioAT+YcJCIpXUlPohC6Ud8JRcUNDaqMLliu16oKhe1s4H08R0HtI1FLmAjJye2NjpRWxwuRKyiV4uChFmK6AnKlbZwphHG6LuFy75PP2JakPIEC0sYCFYEBD9ro7cbchtDT/OLTNVmmFSo0pTVLL4EEoRNsG6qFc4BKMKoranCiYOrK3HPImdjIKGKwj55DpR9xRro8FH4mrRZGi2eTL6iwOycYBmJo7l7KxCwq0TJrtUCVkUKZyD0mvQjvycIudWxBLWJvvnFOoTaT7IMn/2IzY6MzXT0wZbmPQ2TiWGu/Hphlcv9EPQO6yKuTOUT3EwrRGJXSfNy9EclB7JWTpUUyHE67KRHAKWSk50M25qQCT44MAPF0lS/UrUKazkZNwNpOE1qhdeBrGAhva3oT5MjXtBADgJHf0XjKJeT4CI1g39mv+UVHvqWkcCekIcmbBOMBehFBJPZnEWOfI10Q6LD7831Nf/5ON8f0iXmwketyftlLIotvGhbBcBhfVXXhdHpIrJ3ng+dAWMX75CbzKqzNfLftC7tI/9SFUtExPHOGeCRqB4bDeQqzw17U8X0xNhSFZ5O4c/Y+kfWesV8FlzTsJM31+M+GT/SUsUiiLuOtq8h4hxwHPahCx0+yTl7DjNSANEhh87z0YPc2pl/lqk9yjd9lLdoFx71qQkFG9ap4BD9BkyizxzoFE/Ki8pyd4tV/qqpOJ76PCnP8+NlTHTUjr/tU3uH+MgHsbD5lkdHsGh4yq1IXBSmRMPHt/Fv5u3lq6bz60j8cswdcTc3feJ46DLyI/25pZb0UgXdXk0aQt940VHzmil8aUa+hIem5RWzbG3zdnbodRpwPFJkthm3Iz/bPZtTTdYOFkgOE6aRPFDcZj8WoytgYz9/sUjsx6/kodaXRn9UOJlNv3OoLfv7CXVgE8d+oe1x2t1GAHHmfbpM2Q3ENSnsSIlyUy1tOm5CwfpT+ONdDaocdkvkeHTNd1dbH0qVsqGz/rDfWlrI8tkN7I5J9f8u+J/ZBbtMDPR3yOoCF8a5k5J715XRTG7Gqab4v4aBnPRXvq6WWHjc11ACa8ttZiZ3uwWu58EVTcOf0TQdr2x43Chn+IJTweUmXXZ+vkGcpufFXdd7LsWnIOwrrOLyQg5GfsPjI+qtv7ZyRf+L7o8sNbwWdhXOHLTyWyxtdTg52evx3GEObW96e//DT9BWke/rtLs8pu7SPbD9s3E9bzttEPzLvJw9stu1vatpDvqt6JMnOpB7baZpju79Acd2GqY=
+sidebar_class_name: "patch api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update a widget"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/pages/{page_identifier}/widgets/{widget_id}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>** This route allows you to update a specific widget in your portal. <br/><br/>To learn more about pages, checkout the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page).
+
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"page_identifier","required":true},{"schema":{"type":"string","minLength":1},"in":"path","name":"widget_id","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Updated successfully","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"enum":[true]},"identifier":{"type":"string"}},"additionalProperties":false,"required":["ok","identifier"],"description":"Updated successfully"}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
