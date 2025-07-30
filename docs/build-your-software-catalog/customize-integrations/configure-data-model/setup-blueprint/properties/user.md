@@ -14,8 +14,6 @@ import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-i
 
 User is a data type used to reference users that exist in Port.
 
-<LimitFieldRestriction property_name='User' />
-
 ## 💡 Common user usage
 
 The user property type can be used to reference any user that exists in Port, for example:
@@ -44,6 +42,8 @@ In addition, `user` format distinguishes between users by their status:
 :::
 
 ## API definition
+
+<LimitFieldRestriction property_name='User' />
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},

@@ -14,8 +14,6 @@ import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-i
 
 Enum is a data type used to define a named set of constant values.
 
-<LimitFieldRestriction property_name='Enum' />
-
 ## 💡 Common enum usage
 
 The enum property type can be used to define a set of constant values, for example:
@@ -25,6 +23,8 @@ The enum property type can be used to define a set of constant values, for examp
 - Service health status: healthy, degraded, unhealthy, unkown, maintenance, etc.
 
 ## API definition
+
+<LimitFieldRestriction property_name='Enum' />
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},

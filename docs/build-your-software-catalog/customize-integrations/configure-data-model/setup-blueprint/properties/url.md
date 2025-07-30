@@ -14,7 +14,6 @@ import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-i
 
 URL is a data type used to save links to websites.
 
-<LimitFieldRestriction property_name='URL' />
 
 ## 💡 Common url usage
 
@@ -25,6 +24,8 @@ The URL property type can be used to store a link to any web resource, for examp
 - Link to pull request
 
 ## API definition
+
+<LimitFieldRestriction property_name='URL' />
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
