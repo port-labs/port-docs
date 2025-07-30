@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
-title: Migrating data
-sidebar_label: Migrating data
+title: Migrate data
+sidebar_label: Migrate data
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
@@ -9,7 +9,7 @@ import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Migrating Blueprint Data
+# Migrate Blueprint Data
 
 When evolving your software catalog, you may need to migrate existing [entities](/build-your-software-catalog/sync-data-to-catalog/#entities) to reflect changes in your [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) structure. Port provides a simple approach to migrate all entities of a blueprint efficiently and safely.
 
@@ -27,13 +27,13 @@ After migrating data, if you want to revert the changes, you will need to create
 ## How to migrate data
 
 ### Using the UI
-To migrate data using Port UI, go to the **Builder Page** and select your desired **Blueprint**.  
-Click the three dots menu of the blueprint you want to migrate, and select **Migrate data** from the dropdown menu.
+To migrate data using Port UI, go to the [Builder page](https://app.getport.io/settings/data-model) of your portal and select your desired **blueprint**.  
+Click on the `...` button of the blueprint you want to migrate, and select `Migrate data` from the dropdown menu.
 
 
 ### Visual walkthrough: Migrating data in Port
 
-Below are some example screenshots to help you understand the migration process in Port UI.
+Below are some example screenshots to help you understand the migration process.
 #### Selecting the source blueprint
 
 ![Selecting the source blueprint](/img/build-your-software-catalog/custom-integrations/configue-data-model/migrating-data/three-dots-on-blueprint-in-builder.png)
@@ -61,7 +61,7 @@ We recommend locking updates to the blueprint during migration to ensure data in
 
 ![Migration progress and completion](/img/build-your-software-catalog/custom-integrations/configue-data-model/migrating-data/migrated-successfully.png)
 
-*During the migration, you can monitor progress in real time. Once the migration is complete, you will see a confirmation message and can review the results directly in the Port UI.*
+*During the migration, you can monitor progress in real time. Once the migration is complete, you will see a confirmation message and can review the results directly in the UI.*
 
 
 ### Using the API
@@ -220,7 +220,7 @@ result = create_migration('oldService', 'newService', property_mapping, 'YOUR_TO
 
 <ApiRef />
 
-## Troubleshooting migration issues
+## Troubleshoot migration issues
 
 :::warning Failed/Partially failed migrations and how to spot them
 If all entities fail to migrate, the migration status will display **"Migration failed"** in red.  
