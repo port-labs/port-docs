@@ -255,7 +255,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -305,6 +305,7 @@ func main() {
 {label: "Python", value: "python"},
 {label: "TypeScript", value: "typescript"},
 {label: "JavaScript", value: "javascript"},
+{label: "GO", value: "go"}
 ]}>
 
 <TabItem value="python">
@@ -411,7 +412,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -419,28 +420,27 @@ func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
 			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
-      // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-                ArrayProps: port.BlueprintPropertiesArrayPropsMap{
-                    "myEnumProp": port.BlueprintPropertiesStringPropsArgs{
-                        StringItems: port.BlueprintPropertiesArrayPropsStringItemsArgs{
-                                Title:      pulumi.String("My Enum"),
-                                Required:   pulumi.Bool(false),
-                                Format:     pulumi.String("Enum"),
-                                Enums: pulumi.StringArray{
-                                    pulumi.String("my-option-1"),
-                                    pulumi.String("my-option-2"),
-                                },
-                                EnumColors: pulumi.StringMap{
-                                    "my-option-1": pulumi.String("red"),
-                                    "my-option-2":  pulumi.String("green"),
-                                },
-                        },
-                    },
-                }
+			Title:      pulumi.String("myBlueprint"),
+			// highlight-start
+			Properties: &port.BlueprintPropertiesArgs{
+				ArrayProps: port.BlueprintPropertiesArrayPropsMap{
+					"myEnumProp": &port.BlueprintPropertiesArrayPropsArgs{
+						Title:    pulumi.String("My Enum"),
+						Required: pulumi.Bool(false),
+						StringItems: &port.BlueprintPropertiesArrayPropsStringItemsArgs{
+							Enums: pulumi.StringArray{
+								pulumi.String("my-option-1"),
+								pulumi.String("my-option-2"),
+							},
+							EnumColors: pulumi.StringMap{
+								"my-option-1": pulumi.String("red"),
+								"my-option-2": pulumi.String("green"),
+							},
+						},
+					},
+				},
 			},
-      // highlight-end
+			// highlight-end
 		})
 		ctx.Export("blueprint", blueprint.Title)
 		if err != nil {
