@@ -1,0 +1,38 @@
+<details>
+  <summary>File Blueprint </summary>
+
+  ```yaml showLineNumbers
+{
+  "identifier": "files",
+  "title": "Files",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name"
+      },
+      "path": {
+        "type": "string",
+        "title": "Path"
+      }
+    },
+    "required": [
+      "name",
+      "path"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "repository",
+      "target": "githubRepository",
+      "required": false,
+      "many": false
+    }
+  }
+}
+  ```
+</details>

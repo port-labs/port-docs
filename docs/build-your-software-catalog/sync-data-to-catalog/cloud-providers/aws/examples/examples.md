@@ -17,7 +17,8 @@ The simplification is achieved by using the generic `cloudResource` blueprint, w
 
 ## Mapping AWS Accounts
 
-In the following example you will ingest your AWS Accounts to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your AWS Accounts to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <AccountBlueprint/>
 
@@ -29,7 +30,8 @@ Here are the API references we used to create those blueprints and app config:
 
 ## Mapping Cloud Resources
 
-In the following example you will ingest your AWS Resources to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your AWS Resources to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 :::note Relate resources and Accounts
 
