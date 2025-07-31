@@ -453,6 +453,9 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 ### Webhook Configuration
 
 To enable real-time data synchronization from Aikido to Port, you must configure webhooks in Aikido following [this guide](https://apidocs.aikido.dev/reference/webhooks). This setup allows Port to receive immediate notifications whenever relevant changes occur in Aikido.
+When setting up the webhook, the URL should follow the format:
+
+`<base_url>/integration/webhook`
 
 :::important IMPORTANT
 For security and event authenticity, we strongly recommend setting an HMAC secret in the Aikido dashboard. Once configured, make sure to set the corresponding value in your Port environment using the variable `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET` . This ensures Port can securely verify incoming webhook events from Aikido.
