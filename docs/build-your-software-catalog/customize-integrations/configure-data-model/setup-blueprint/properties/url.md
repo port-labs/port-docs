@@ -8,10 +8,12 @@ import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/_limit_field_restriction.mdx"
 
 # URL
 
 URL is a data type used to save links to websites.
+
 
 ## 💡 Common url usage
 
@@ -22,6 +24,8 @@ The URL property type can be used to store a link to any web resource, for examp
 - Link to pull request
 
 ## API definition
+
+<LimitFieldRestriction property_name='URL' />
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -175,8 +179,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Enum", value: "enum"}
 ]}>
 
 <TabItem value="basic">

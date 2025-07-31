@@ -8,6 +8,7 @@ import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/_limit_field_restriction.mdx"
 
 # User
 
@@ -41,6 +42,8 @@ In addition, `user` format distinguishes between users by their status:
 :::
 
 ## API definition
+
+<LimitFieldRestriction property_name='User' />
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -144,8 +147,7 @@ resource "port_blueprint" "myBlueprint" {
 ## Pulumi definition
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"}
+{label: "Basic", value: "basic"}
 ]}>
 
 <TabItem value="basic">

@@ -1,0 +1,18 @@
+### Limit field
+
+When creating a blueprint property of type {props.property_name} in the UI, use the **limit** field to define how many values users can select for that property.  
+
+In the property creation form, the limit field dropdown provides two options:
+
+- **1 value**: Only one value can be selected.
+- **List of values**: Multiple values can be selected.
+
+Selecting the **list of values** option will set the property's `type` to `array` in the JSON definition.
+
+:::info Limit field restriction
+The limit field setting, whether it's **1 value** or a **list of values**, is permanent and cannot be changed after the property is created. If you create a property with a single value limit, you won’t be able to change it later to allow multiple values.  
+
+To change the limit configuration after creation, you have two options:
+- Create a new property with the **limit** field set to a **list of values**.
+- Use the [migrate blueprint data](/build-your-software-catalog/customize-integrations/configure-data-model/migrate-data/) feature.
+:::
