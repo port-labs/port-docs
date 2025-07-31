@@ -4,23 +4,25 @@ displayed_sidebar: null
 description: Create a dashboard that highlights the ROI of automations in Port
 ---
 
-# Create ROI dashboards
+# Create an ROI dashboard
 
 ## Overview
 
 In the following guide, you are going to create a dashboard that highlights the ROI (Return On Invesment) of automations in Port.
-To achieve that we will create three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md, a couple of [Self-service](https://app.getport.io/self-serve) actions and a [dashboard]((/customize-pages-dashboards-and-plugins/dashboards) that will reflect the advantages of using actions in Port.
+To achieve that we will create three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint), a [Self-service](https://app.getport.io/self-serve) action and a [dashboard](/customize-pages-dashboards-and-plugins/dashboards) that will reflect the advantages of using actions in Port.
 
 ## Prerequisites
 Before you begin, you will need:
 
-1. To create a Port Account (if you don't have one already):
+1. A Port account (if you don't have one already):
    - Visit [Port.io](https://app.port.io/).
    - Sign up for an account.
 
 2. A [GitHub](https://github.com/) account.
 
-## Create the Action blueprint
+## Set up data model
+
+### Create the Action blueprint
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
@@ -446,7 +448,7 @@ Before you begin, you will need:
 
     </details>
 
-## Create the Action Runs blueprint
+### Create the Action Runs blueprint
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
@@ -601,7 +603,7 @@ Before you begin, you will need:
 
     </details>
 
-## Create the Action Categories blueprint
+### Create the Action Categories blueprint
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
@@ -631,94 +633,207 @@ Before you begin, you will need:
 
     </details>
 
-## Create the Setup new action experience Self-service action
+## Create the "Setup new action experience" Self-service action
 
-To create the Self-service action, go to the [Self-service](https://app.getport.io/self-serve) page:
+### Set up the action's frontend
 
-1. Click on the `+ Action` button.
-2. Click on the `{...} Edit JSON` button.
-3. Copy and paste the following JSON configuration into the editor.
-4. Click `Save`.
+1. Head to the [Self-service](https://app.getport.io/self-serve) page.
+2. Click on the `+ Action` button.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration into the editor.
+5. Click `Save`.
 
     <details>
     <summary><b>Action blueprint(click to expand)</b></summary>
 
-    ```json showLineNumbers
-    {
-    "identifier": "setup_new_action",
-    "title": "Setup new action experience",
-    "description": "Setup a backend that will create scaffolding of action, automation and action kpis",
-    "trigger": {
-        "type": "self-service",
-        "operation": "CREATE",
-        "userInputs": {
-        "properties": {
-            "category": {
-            "type": "string",
-            "title": "Category",
-            "blueprint": "actions_categories",
-            "format": "entity"
+        ```json showLineNumbers
+        {
+        "identifier": "setup_new_action",
+        "title": "Setup new action experience",
+        "description": "Setup a backend that will create scaffolding of action, automation and action kpis",
+        "trigger": {
+            "type": "self-service",
+            "operation": "CREATE",
+            "userInputs": {
+            "properties": {
+                "category": {
+                "type": "string",
+                "title": "Category",
+                "blueprint": "actions_categories",
+                "format": "entity"
+                },
+                "lead_time_before": {
+                "type": "number",
+                "description": "Number of hours spent waiting from ticket creation",
+                "title": "Lead time before"
+                },
+                "cycle_time": {
+                "icon": "DefaultProperty",
+                "type": "number",
+                "title": "Cycle time before",
+                "description": "Time spent in hour executing the request"
+                },
+                "actionTitle": {
+                "icon": "DefaultProperty",
+                "type": "string",
+                "title": "Action title"
+                }
             },
-            "lead_time_before": {
-            "type": "number",
-            "description": "Number of hours spent waiting from ticket creation",
-            "title": "Lead time before"
-            },
-            "cycle_time": {
-            "icon": "DefaultProperty",
-            "type": "number",
-            "title": "Cycle time before",
-            "description": "Time spent in hour executing the request"
-            },
-            "actionTitle": {
-            "icon": "DefaultProperty",
-            "type": "string",
-            "title": "Action title"
+            "required": [
+                "category",
+                "actionTitle"
+            ],
+            "order": [
+                "4af618d8-6b42-45c1-81f8-34ead11eb3f5",
+                "actionTitle",
+                "category",
+                "41281872-3eaa-4e6e-b66e-1f3e9bc7d99b",
+                "lead_time_before",
+                "cycle_time"
+            ],
+            "titles": {
+                "4af618d8-6b42-45c1-81f8-34ead11eb3f5": {
+                "title": "Set up a new action",
+                "description": "This will create a new action and the associated action runs as blueprints"
+                },
+                "41281872-3eaa-4e6e-b66e-1f3e9bc7d99b": {
+                "title": "ROI",
+                "description": "Leave blank is no data or n/a"
+                }
             }
-        },
-        "required": [
-            "category",
-            "actionTitle"
-        ],
-        "order": [
-            "4af618d8-6b42-45c1-81f8-34ead11eb3f5",
-            "actionTitle",
-            "category",
-            "41281872-3eaa-4e6e-b66e-1f3e9bc7d99b",
-            "lead_time_before",
-            "cycle_time"
-        ],
-        "titles": {
-            "4af618d8-6b42-45c1-81f8-34ead11eb3f5": {
-            "title": "Set up a new action",
-            "description": "This will create a new action and the associated action runs as blueprints"
             },
-            "41281872-3eaa-4e6e-b66e-1f3e9bc7d99b": {
-            "title": "ROI",
-            "description": "Leave blank is no data or n/a"
+            "actionCardButtonText": "Create",
+            "executeActionButtonText": "Create",
+            "blueprintIdentifier": "action"
+        },
+        "invocationMethod": {
+            "type": "GITHUB",
+            "org": "PortActionsRepo",
+            "repo": "configuration-scripts",
+            "workflow": "create-port-automation.yml",
+            "workflowInputs": {
+            "{{ spreadValue() }}": "{{ .inputs }}",
+            "port_context": {
+                "runId": "{{ .run.id }}",
+                "blueprint": "{{ .action.blueprint }}"
             }
-        }
+            },
+            "reportWorkflowStatus": true
         },
-        "actionCardButtonText": "Create",
-        "executeActionButtonText": "Create",
-        "blueprintIdentifier": "action"
-    },
-    "invocationMethod": {
-        "type": "GITHUB",
-        "org": "PortActionsRepo",
-        "repo": "configuration-scripts",
-        "workflow": "create-port-automation.yml",
-        "workflowInputs": {
-        "{{ spreadValue() }}": "{{ .inputs }}",
-        "port_context": {
-            "runId": "{{ .run.id }}",
-            "blueprint": "{{ .action.blueprint }}"
+        "requiredApproval": false
         }
-        },
-        "reportWorkflowStatus": true
-    },
-    "requiredApproval": false
-    }
-    ```
-
+        ```
     </details>
+
+### Set up the action's backend
+
+Define the logic that our action will trigger.
+In your GitHub repository, add the following file or use your own API.
+
+<details>
+<summary><b>Create port automation workflow (click to expand)</b></summary>
+
+    To the .github/workflows directory, add the following file:
+
+    ```yaml showLineNumbers title="create-port-automation.yml"
+
+    name: Create Port Automation
+
+    on:
+    workflow_dispatch:
+        inputs:
+        actionTitle:
+            description: "Action Title (e.g. Create S3 Bucket)"
+            required: true
+
+        category:
+            description: "Category object (passed as raw JSON string)"
+            required: true
+
+        lead_time_before:
+            description: "Optional: lead time before (number)"
+            required: false
+
+        cycle_time:
+            description: "Optional: cycle time (number)"
+            required: false
+
+        port_context:
+            description: "Includes blueprint, run ID, and entity identifier from Port"
+            required: true
+
+    jobs:
+    create-automation:
+        runs-on: ubuntu-latest
+
+        outputs:
+        action_identifier: ${{ steps.generate.outputs.action_identifier }}
+
+        steps:
+        - name: Checkout code
+            uses: actions/checkout@v3
+
+        - name: Install jq
+            run: sudo apt-get install -y jq
+
+        - name: Derive actionIdentifier from actionTitle
+            id: generate
+            run: |
+            RAW_TITLE="${{ github.event.inputs.actionTitle }}"
+            ACTION_IDENTIFIER=$(echo "$RAW_TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g')
+            echo "🔤 Derived identifier: $ACTION_IDENTIFIER"
+            echo "action_identifier=$ACTION_IDENTIFIER" >> "$GITHUB_OUTPUT"
+
+        - name: Extract Port run ID
+            id: context
+            run: |
+            echo "run_id=${{ fromJson(github.event.inputs.port_context).runId }}" >> "$GITHUB_OUTPUT"
+
+        - name: Create Port action if it doesn't exist
+            env:
+            PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+            PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+            run: |
+            bash ./scripts/create_port_action_if_missing.sh \
+                "${{ steps.generate.outputs.action_identifier }}" \
+                "${{ github.event.inputs.actionTitle }}" \
+                "${{ steps.context.outputs.run_id }}"
+
+        - name: Create automation in Port
+            env:
+            PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+            PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+            run: |
+            bash ./scripts/create_port_automation.sh \
+                "${{ steps.generate.outputs.action_identifier }}" \
+                "${{ steps.context.outputs.run_id }}"
+
+        - name: Create entity in blueprint 'action'
+            env:
+            PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+            PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+            run: |
+            bash ./scripts/create_action_entity.sh \
+                "${{ steps.generate.outputs.action_identifier }}" \
+                "${{ fromJson(github.event.inputs.category).identifier }}" \
+                "${{ github.event.inputs.lead_time_before || '0' }}" \
+                "${{ github.event.inputs.cycle_time || '0'  }}" \
+                "${{ steps.context.outputs.run_id }}" \
+                "${{ github.event.inputs.actionTitle }}"
+
+    ```
+</details>
+
+
+## Visualize action entities with dashboards
+
+Dashboards let you observe, track, and communicate insights from your action setup. You can create dashboards that pull data from the action, action category, and action run entities.
+
+### Create an ROI dashboard
+
+1. Navigate to the [Catalog](https://app.getport.io/organization/catalog) page of your portal.
+2. Click on the **`+ New`** button in the left sidebar.
+3. Select **New dashboard**.
+4. 
+
+
