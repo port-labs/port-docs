@@ -8,6 +8,7 @@ import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import LimitFieldRestriction from "/docs/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/_limit_field_restriction.mdx"
 
 # Team
 
@@ -25,6 +26,8 @@ The team property type can be used to reference any team that exists in Port, fo
 In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Team` team property. 🎬
 
 ## API definition
+
+<LimitFieldRestriction property_name='Team' />
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},

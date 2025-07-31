@@ -203,8 +203,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Enum", value: "enum"}
 ]}>
 
 <TabItem value="basic">
@@ -361,7 +360,7 @@ blueprint = Blueprint(
             "myStringProp": {
                 "title": "My String",
                 "required": True,
-                "enum": ["my-option-1", "my-option-2"],
+                "enums": ["my-option-1", "my-option-2"],
                 "enum_colors": {
                     "my-option-1": "red",
                     "my-option-2": "green"
@@ -595,18 +594,4 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 
 ## Available enum colors
 
-Properties defined using [enum](#api-definition) can also include specific colors for the different values available in the property definition, the available enum colors are:
-
-```text showLineNumbers
-blue
-turquoise
-orange
-purple
-pink
-yellow
-green
-red
-darkGray
-lightGray
-bronze
-```
+Properties defined using [enum](#api-definition) can also include specific colors for the different values available in the property definition, to see the available enum colors refer to the [enum page](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/enum#available-enum-colors).

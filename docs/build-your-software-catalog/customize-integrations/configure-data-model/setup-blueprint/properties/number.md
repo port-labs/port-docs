@@ -194,9 +194,7 @@ resource "port_blueprint" "myBlueprint" {
 ## Pulumi definition
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Basic", value: "basic"}
 ]}>
 
 <TabItem value="basic">
@@ -346,8 +344,7 @@ If _x_ is the value being validated, the following must hold true:
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
-{label: "Terraform", value: "tf"},
-{label: "Pulumi - comfing soon", value: "pulumi"}
+{label: "Terraform", value: "tf"}
 ]}>
 
 <TabItem value="basic">
