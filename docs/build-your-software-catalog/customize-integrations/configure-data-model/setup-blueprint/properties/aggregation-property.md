@@ -15,7 +15,7 @@ Using the aggregation property enables you to see relevant metrics on related en
 
 Aggregations can be performed on any blueprint that is related in any way to the current blueprint (directly, indirectly, upstream or downstream).
 
-## 💡 Common aggregation usage
+## Common aggregation usage
 
 For example, if you have a microservice blueprint, you can define aggregation properties on it to calculate metrics based on related entities such as:
 
