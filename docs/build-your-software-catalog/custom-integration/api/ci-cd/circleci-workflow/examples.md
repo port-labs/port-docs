@@ -106,7 +106,7 @@ print(f"Run link is: {entity['properties']['runLink']}")
 
 ## Relation example
 
-In the following example you will update the `example-image` entity that was automatically created when creating the `ciJob` entity shown in the previous example.
+The following example demonstrates how to update the `example-image` entity that was automatically created when creating the `ciJob` entity shown in the previous example.
 
 Add the following snippet to your Python code:
 
