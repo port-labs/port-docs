@@ -123,8 +123,7 @@ resource "port_blueprint" "myBlueprint" {
 ## Pulumi definition
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"}
+{label: "Basic", value: "basic"}
 ]}>
 
 <TabItem value="basic">
