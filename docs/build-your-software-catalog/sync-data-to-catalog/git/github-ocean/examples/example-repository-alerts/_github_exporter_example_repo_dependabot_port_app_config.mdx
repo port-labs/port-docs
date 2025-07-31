@@ -3,7 +3,6 @@
 <summary> Port port-app-config.yml </summary>
 
 ```yaml showLineNumbers
-repositoryType: 'all'
 resources:
   - kind: repository
     selector:
@@ -21,7 +20,7 @@ resources:
   - kind: dependabot-alert
     selector:
       query: "true"
-      state: "open" # default, other options: auto_fixed, dismissed, fixed
+      states: ["open", "fixed"] # other options: auto_fixed, dismissed
     port:
       entity:
         mappings:
@@ -46,7 +45,7 @@ resources:
   - kind: code-scanning-alerts
     selector:
       query: "true"
-      state: "open" # default, other options: closed, dismissed, fixed
+      state: "dismissed" # other options: open, closed, fixed
     port:
       entity:
         mappings:
