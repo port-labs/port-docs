@@ -1339,5 +1339,12 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
+    {
+        title: "Map Git users to Port user accounts",
+        description: "Automatically map Git users to their Port user accounts for seamless integration",
+        tags: ["SDLC","Git", "GitHub", "GitLab", "AzureDevops", "Automations"],
+        logos: ["Git"],
+        link: "/guides/all/map-git-users-to-port-accounts",
+    },
     
 ]
