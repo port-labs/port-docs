@@ -19,7 +19,7 @@ Once implemented users will be able to:
 
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
-- You have a ServiceNow instance with admin permissions to access the user table and generate API credentials.
+- You have a ServiceNow instance with admin permissions to access the user table. [Learn about ServiceNow REST API](https://docs.servicenow.com/bundle/utah-api-reference/page/integrate/inbound-rest/concept/c_RESTAPI.html).
 - You have permissions to create blueprints, self-service actions, and automations in Port.
 
 ## Set up data model
@@ -173,20 +173,63 @@ To represent ServiceNow users in your portal, we need to create a ServiceNow Use
             "mirrorProperties": {},
             "calculationProperties": {},
             "aggregationProperties": {},
-            "relations": {
-                "user": {
-                "title": "Port User",
-                "target": "_user",
-                "required": false,
-                "many": false
-                }
-            }
+            "relations": {}
         }
         ```
 
     </details>
 
 5. Click on `Save` to create the blueprint.
+
+<h3> Enhance the Port User blueprint</h3>
+
+Now we need to enhance the Port User blueprint to add a relation to the ServiceNow User blueprint and mirror properties to display ServiceNow information.
+
+1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Find the `User` blueprint and click on it.
+
+3. Click on the `Edit JSON` button in the top right corner.
+
+4. Add the following relation to the `relations` object:
+
+    <details>
+    <summary><b>Port User blueprint relation (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    "relations": {
+      "servicenow_user": {
+        "title": "ServiceNow User",
+        "target": "servicenow_user",
+        "required": false,
+        "many": false
+      }
+    }
+    ```
+
+    </details>
+
+5. Add the following mirror property to the `mirrorProperties` object to display the ServiceNow full name:
+
+    <details>
+    <summary><b>Port User blueprint mirror property (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    "mirrorProperties": {
+      "servicenow_full_name": {
+        "title": "ServiceNow full name",
+        "path": "servicenow_user.name"
+      }
+    }
+    ```
+
+    </details>
+
+6. Click on `Save` to update the blueprint.
+
+:::info Additional mirror properties
+You can add more mirror properties to display other ServiceNow user attributes like department (`servicenow_user.department`), job title (`servicenow_user.title`), or any other property from the ServiceNow User blueprint that would be useful for your organization.
+:::
 
 <h3> Add Port secrets</h3>
 
@@ -258,18 +301,18 @@ Follow the steps below to create the webhook integration:
                 "sys_created_on": ".item.sys_created_on",
                 "sys_updated_on": ".item.sys_updated_on",
                 "sys_updated_by": ".item.sys_updated_by"
-            },
+            }
+        }
+      },
+      {
+        "blueprint": "_user",
+        "operation": "create",
+        "filter": "(.body.response | has(\"result\")) and (.body.response.result | type == \"array\")",
+        "itemsToParse": ".body.response.result | map(select(.active == \"true\" and .email != null))",
+        "entity": {
+            "identifier": ".item.email",
             "relations": {
-                "user": {
-                    "combinator": "'and'",
-                    "rules": [
-                        {
-                            "property": "'$identifier'",
-                            "operator": "'='",
-                            "value": ".item.email"
-                        }
-                    ]
-                }
+                "servicenow_user": ".item.sys_id | tostring"
             }
         }
       }
@@ -279,6 +322,10 @@ Follow the steps below to create the webhook integration:
     </details>
 
 7. Click on `Save`.
+
+:::info Port User creation
+When the webhook processes ServiceNow users, it will automatically create Port User entities for any ServiceNow users that don't already exist in your Port organization. These newly created Port users will have a `Disabled` status by default, meaning they won't receive email invitations and won't be able to access Port until an admin manually activates their accounts.
+:::
 
 
 ## Set up self-service actions
@@ -617,22 +664,8 @@ Follow the steps below to create the automation:
 
 4. Monitor the action execution in the [Audit logs](https://app.getport.io/settings/AuditLog?activeTab=5) page.
 
-4. Verify that ServiceNow users are created in your catalog with proper relationships.
-
-5. Verify that the ServiceNow user is created in your catalog with proper relationships.
+5. Verify that ServiceNow users are created in your catalog with proper relationships.
 
 ## Conclusion
 
 You've successfully ingested ServiceNow users into your Port catalog and automatically mapped them to existing Port user accounts based on email addresses.
-
-<img src="/img/guides/servicenowUserIngested.png" border="1px" />
-
-<img src="/img/guides/servicenowMappedIngestedUser.png" border="1px" />
-
-
-## Related guides
-
-- [ServiceNow integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
-- [Trigger ServiceNow Incident](https://docs.port.io/guides/all/trigger-servicenow-incident)
-- [Visualize and manage your ServiceNow incidents](https://docs.port.io/guides/all/visualize-and-manage-servicenow-incidents)
-- [Interact with ServiceNow records](https://docs.port.io/guides/all/interact-with-servicenow)
