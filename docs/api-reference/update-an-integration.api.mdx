@@ -1,0 +1,71 @@
+---
+id: update-an-integration
+title: "Update an integration"
+description: "This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).<br/><br/>**Note:** To trigger a resync of an integration without changing its mapping, simply provide its identifier and leave the body empty."
+sidebar_label: "Update an integration"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWt2P2zYS/1cI3UOzgT+yvTwZhwOcJkWDvV6CbXJ92C5gWhrbjCVSJan1uob/95shaYm25LW7bYq9w+6DV+LHcD5/MyS1SSyfm2R0k7yXFuaaW6GkSW57SQYm1aKk92SUfFoIw7SqLDCe52pl2FpVzCpWqEzM1oxLJhoC+Ez9mn1U2jKl51yK31zP4B9TPfyn+/mkWA5cSyShkeoUicc0TI+lC0iXjNrtAthNptKqAGld9+2LhbWlGQ2H2GwGJS40EGo4rUSe9WntvlEzu+Ia+im3PFfzoVnLtJ/hS9+quvEi4ujly38rC6OXLxnyZrWYz0EzzjTQTKZmh1KuhF0Qd+mCy7mQcyasYQUvS3zuMSOKMl+zUqs7kYHrw//SipkgsjIj8e/AyTZV2ZpBUdr1IOklGn6twNg32JiMNkmqcE1p6RFp5yJ1qw+/GLLMJjGopoLTk12XgLZS0y+QWqSDS5egrQDjeoXNIRpmUEI5x2GyynM+pT6rK2hbHlmkqaQA4jXSwIA5v1iJPGdTYJkwZc7XkJH9vclI2watkYJhJZ9DYzYUZTAHuzOcAWuRHTOMp1zQmo0j8TRVlbSDZNtLhDRowNyxMS7LT06mtmxtWSQvWqIgx1apfIjc25nSBXsBg/mATZbVFLQEC2bSmxD7OqvsenLhOLgDbYQ3welVw+AuHRItU0LaZUGeZYIG8fxjZEsyE05Cv5iJeTPtpplHJqUgPj7/kMn/cC1UZZgnWgUPV67bMFRKm+9DB8sgR1W9hRIk+fk7dPXa97xcU1QycNnS0PsZmxBTkx5zRCiWMNYoWOzauxfPjfKdPpSy3TJ+FK7jFJlqQHP+KIxBGteQk20fx4ijdMiIXTg88G5H8MeZVLIP98K4sS2OPT9Od9pzE8Y4bhFZvKNHrHGt+brThwKyoOgzIYUN7lTTYDOtiofdGjuUC6UB+x4t6oBXSOryAhEowT1H3II/H37TylhViN+gH6P8cOdw0A/yXZBnCQuF6YoIwkahISN3XwqZYZNBr0it0uSQyAf5/b5junFnhSmNjJXqMhwve4wbr3aPbeOP7x+CENSnj+odYyexGfFer0+zOGaTL79OmBvNKuPWZIQdlIJXC5EuInfArhlYbDrpFwOGfo8ATFMmvyQUAL8kGAKIrxG9ILBfTiCNCWlrUqM/MoxJC7Kn7Ft/W6hVP1Ngdg39ldJLwvPtNnjPCZ/z0dsukMYYjG48IajlGKAYqbYzamtVBgXWztaEZ8tBwrInmAtrmXYI1D0Op08ji6ndC/sCfAUu0fZ5ZhpmGwB+yobfy2t9jK8qtdjvwEZJ+DBD/bUwOJRM9ftZqNQUedgxzSsoMZY7UCkah28tHmoI2DHxk2tge+Q74QHuSzSWKzd2RsRCi1FhdRQLvjEEaj0ai6HspiHkUb3blKy7IqBJYG1F1MxiZY/Q45HqQZZNPNKqALPRQt/s1c1TTryRW7GgzvUunAJfrpS/Bp55V7xZgIav6Vn4vz9d93fcXLSDN1XFVEi+nwmCfakKqPLOCuCotz1QFRKMdXfPsB6BfU+N+Npxcbu93faObxW+sr/Zw71GVCs1kXRWJo9cJtCqCcSo5pgkKHNrHGyYzlb72cmgWWBfQgeS+Co0u+PI5/8qlrqaNg+HCF9HhTX9/1MNUgg/J5jnBPOcYJ4TzHOCeU4wf36CaUA0qA1Dsv7rJe40G3C1t0CHWtzuH3LWqm6HRNZM6DjoxIisSbchzB45wAVZFQQlP79788OHD1fYcjX+/mqMOLLt2Lh1H688DFkPZZkrPlvyTllrUerzDwM+8klsNw9fSpGSe0mk6nGr4zD792oikj/GWjf86JHvSUl/hulCqeUjZG0OhFaexuONS6mBz2EPgs84qiV9onfBPaSVj0GiUTNbH5SBj+DYDXHBSuddvPmIxpZKi06tfL7+187La8EPjUK0e2eZ5vZ4Yg15l9IH17wAC9o4p2/d/DQpXxCXJbcLugzAOfi2VyQ1TB6786mkwJKpI83VB0F0A7ji3hGIWzrodvcZt3T0maLe6MQK+ZxiBUZFKOqjxHwII7F310jjkWiJL95dXr+6bJ9TvYUZr3LLrsPIpHf+xdi+N6KX+1s1Y+vASEDrI9VTgaUHOlRH34GxXfR4OieM7Yz5+tXrtpTjRr3utiHkdLpBzGJbrLCYkcpiyVy5M/Cnq4pm1sNKadd+j9FEUO3l39uqvfa3qv6uVdD5uGI513NgL3JRCEttlz+KNxdPWp2/T4nnyxwU9+233SfEJHmjfjpBd0pHhEy9ady3AQjCQTVPWYWP9cjH6CHUVAjaC5V5SE4Jkx00j5Lh3eUwAsPhpnHsrbvZ0nc7sHdpKmluz8WuYHTb5HZvZZoBESD/RHx5Ve9gudkXluIK1k3GGFfItQ5fbiQhqSxw44uzSCpSxnXzrcI7X/VG3xo02bTzur7pru/Sm6ZwJR7dcyef5VKqlWQ0exSq95676j5atW5dLpypmClXfuHmcG/dy8Ert0FTxhbceWhQwmeXsg4+/TgsCKKPNJ4/lfkrP5UJnmvh3tJ1JnpoU9H5GLtJ7i6dA8bGG0XFEAbHQhHa3CSbDZ3+fNb5dkvN4Vb2Bh/vuBb+GxkMxUwYes66cSL2hRfXAYIu2B+rqY5IugtcSVHrtqX4ho9LDOO9is+duoTQJRH8gO88o30Xjg2BFl4TwvgZ4zSF0j449jaCu4/jT9/9QKeU4VMmDAGapPmKalD8ddyGr0xogGvbJDl6SeVwPfFEXXVckT1jtFo6tAoP8f3dnj4OYcxLQr/Rhmh/ymbjsXC7rcf7rqMzgm5r1Uu/q/4varAS5g==
+sidebar_class_name: "patch api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update an integration"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/integration/{identifier}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).<br/><br/>**Note:** To trigger a resync of an integration without changing its mapping, simply provide its identifier and leave the body empty.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","required":true,"description":"The unique identifier of the resource you want to operate on."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"title":{"type":"string","nullable":true,"description":"The title of the integration. This will be displayed in the [data-sources page](https://app.getport.io/settings/data-sources) of your Port account."},"installationAppType":{"type":"string","description":"The name of the integrated tool/platform (e.g. `kubernetes`,`pagerduty`)."},"version":{"type":"string","description":"The version of the integration."},"spec":{"type":"object","additionalProperties":true},"config":{"type":["object","null"],"additionalProperties":true,"description":"Various configuration options for the integration.","properties":{"deleteDependentEntities":{"type":"boolean","description":"If `true`, deleting an entity will also delete its dependent entities."},"createMissingRelatedEntities":{"type":"boolean","description":"If `true`, creating an entity with a relation to a non-existing entity will also create the related entity."},"resources":{"type":"array","description":"The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping).","items":{"type":"object","required":["kind","selector","port"],"properties":{"kind":{"type":"string","description":"The kind of resource to map, as defined in API of the integrated tool/platorm."},"selector":{"type":"object","properties":{"query":{"type":"string","description":"A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `\"true\"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work)."}}},"port":{"type":"object","required":["entity"],"description":"An object containing the mapping definitions of the `kind` resource into Port.","properties":{"entity":{"type":"object","required":["mappings"],"properties":{"mappings":{"description":"The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).","oneOf":[{"type":"array","title":"array","items":{"type":"object","required":["identifier","blueprint"],"properties":{"identifier":{"oneOf":[{"type":"string","title":"String identifier","description":"A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity."},{"type":"object","title":"Search query identifier","description":"A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).","properties":{"combinator":{"type":"string"},"rules":{"type":"array","items":{"type":"object","additionalProperties":true}}},"additionalProperties":false,"required":["combinator","rules"]}]},"title":{"type":"string","description":"A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity."},"blueprint":{"type":"string","description":"The identifier of the blueprint to map the data into."},"properties":{"type":"object","additionalProperties":true,"description":"An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure)."},"relations":{"type":"object","additionalProperties":true,"description":"An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure)."}}}},{"type":"object","required":["identifier","blueprint"],"properties":{"identifier":{"oneOf":[{"type":"string","title":"String identifier","description":"A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity."},{"type":"object","title":"Search query identifier","description":"A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).","properties":{"combinator":{"type":"string"},"rules":{"type":"array","items":{"type":"object","additionalProperties":true}}},"additionalProperties":false,"required":["combinator","rules"]}]},"title":{"type":"string","description":"A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity."},"blueprint":{"type":"string","description":"The identifier of the blueprint to map the data into."},"properties":{"type":"object","additionalProperties":true,"description":"An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure)."},"relations":{"type":"object","additionalProperties":true,"description":"An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure)."}},"title":"object"}]}}}}}}}}}},"changelogDestination":{"type":"object","description":"The destination of the integration's changelog.","properties":{"type":{"type":"string","enum":["WEBHOOK","KAFKA"]}},"oneOf":[{"type":"object","properties":{},"additionalProperties":false},{"type":"object","title":"Kafka","description":"The changelog will be sent to the Kafka topic connected to your Port account.","properties":{"type":{"type":"string","enum":["KAFKA"]}},"required":["type"],"additionalProperties":false},{"type":"object","title":"Webhook","description":"The changelog will be sent to the specified webhook.","properties":{"type":{"type":"string","enum":["WEBHOOK"]},"agent":{"type":"boolean","description":"If `true`, Port's execution agent will be used to send the changelog."},"url":{"type":"string","format":"uri","description":"The URL of the webhook."}},"required":["url","type"],"additionalProperties":false}]}},"additionalProperties":true}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

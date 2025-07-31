@@ -41,7 +41,8 @@ import TeamsBlueprint from './example-users-and-teams/\_azuredevops_exporter_exa
 
 ## Mapping projects
 
-In the following example you will ingest your Azure Devops projects and their default team (Optional) to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Devops projects and their default team (Optional) to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
@@ -54,9 +55,10 @@ In the following example you will ingest your Azure Devops projects and their de
 
 :::
 
-## Mapping repositories, file contents, repository policies and pull requests
+## Mapping repositories, repository policies and pull requests
 
-In the following example you will ingest your Azure Devops repositories, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Devops repositories, their README.md file contents and pull requests to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
@@ -80,7 +82,8 @@ After creating the blueprints and saving the integration configuration, you will
 
 ## Mapping pipelines
 
-In the following example you will ingest your Azure Devops pipelines to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Devops pipelines to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
@@ -130,7 +133,8 @@ After creating the blueprints and saving the integration configuration, you will
 This section is deprecated and will be removed in a future version. Please refer to the [Mapping users and teams](#mapping-users-and-teams) section for the current implementation.
 :::
 
-In the following example you will ingest your Azure Devops teams and their members to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Devops teams and their members to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
@@ -154,7 +158,8 @@ After creating the blueprints and saving the integration configuration, you will
 
 ## Mapping Work Items
 
-In the following example you will ingest your Azure Devops work items to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Devops work items to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <WorkItemBlueprint/>
 

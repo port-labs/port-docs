@@ -1,0 +1,71 @@
+---
+id: change-organization-details
+title: "Change organization details"
+description: "This route allows you to change the details of your Port organization, such as its name and hidden blueprints."
+sidebar_label: "Change organization details"
+hide_title: true
+hide_table_of_contents: true
+api: eJzNVk1v4zYQ/SsEL90Crj+ye/LNaXtYdIsGaXIydKClscUNRarkyIkr+L93hpRj2fKmTbAokoMiizPD994MOdNKVJsg50v5h98oq/9WqJ2V2UgWEHKv6/hzLu9KHYR3DYJQxrjHIHauEehEXiq7AYEliAJQaROEW/OiFzfOo3C9sCMRmrwUKgiNQVhVUTBbiFIXBVixMg3UXlsMYzmSHv5qIOC1K3Zy3srcWQSL/Krq2ug8Bpx8DYyulSEvoVL8hrsaCK9bfYUcKU7tXQ0eNQRe5T17VgFpv40ckoWEjpgwsT6HsdyPZABEcgz/vmHidv1MreehvFc7ctAIVRiC2p+jWlgRXRjVs1ZCU3jUaw0+EFaFIpSuMYVYQadrBLyGArxCKL64DSWxt9vKOQPKslFN+VLmc54kHaBJy3cazUUJK/X0BewGSzn/ON3T30iqotAMXpmbnihrZQKkBGsPBddeTEsWfY6f0TcQtc4br5GqYNnKFSgPnl2auiA+c3dStfuMA4Ta2ZDkv5pO+d+pkPfRteBizCGEdWPMjkvuO9WYe+An2KYinEwie5UW5D44fZcRJ5E/TWdDir/AWjUGxW0nxmvYXWJDzgE7uLQneO/8xSKpCJ7aXCiQ09xGmoc42YvqHFh+GrJcCEo23TQ5iEeNZTyrhH5LZ6LoHQzxSDeOdSjWrrHFu5bi6PWyKIO74U1KdNLOPg6lvU3Xr1jR/Svo6kfnhFGebvoPRlca+dvsd33947uW83Ui/nfOnXBXV0PhuHcw86P8hYMkeqUwT6mJjfSHIDpp3rOEb63It+iwT7pWgKUjHLJu4u2quKfIyXY2ObntuTX4LfW92Bkab8ioRKzDfDJRtR5zvxprR8QvrTbhaJAdu8yfjCSJe+g1x4Zd69+AO3aaIuSiIZz+CEcz7xIUtdqoKNO/PY4xvz6pqk69swvw3Dv788RwYlgeDLMLjZwbzGnrPoY96dj9XGu7dpFYtxQntcXNZ/JhQVMGZ+NpavsBK2V7sH9OI18/GYfZ73yU6g1u//8I2aUN4QkntVE6DjmxEtquqJZyOyNDdzb6lo7P01K27UoFuPdmv+fPlEnPYwi9bpXXasXaLTMK2iWd6/CBKoQkSqx/umMIbE7AYgWdnW2uzeSxoM5e44u2We9o3Nzfke2qm44rV7CLV488OdNzLplWTEIsqvitlYaEbuINIFPIOJk0LEW/yh9ilXcvTOqwZHc9gOfln3jwk1lddGnbdIZIz4N9WvqmR6fswZpzyHPiP09VdPQ=
+sidebar_class_name: "put api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Change organization details"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/v1/organization"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to change the details of your Port organization, such as its name and hidden blueprints.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","description":"The name of the organization."},"settings":{"type":"object","properties":{"hiddenBlueprints":{"type":"array","items":{"type":"string"},"description":"An array of blueprint identifiers that should be hidden."},"federatedLogout":{"type":"boolean"},"portalIcon":{"type":"string"},"portalTitle":{"type":"string","maxLength":30}}}},"additionalProperties":false,"required":["name"]}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Updated successfully.","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"enum":[true]}},"additionalProperties":false,"required":["ok"],"description":"Updated successfully."}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

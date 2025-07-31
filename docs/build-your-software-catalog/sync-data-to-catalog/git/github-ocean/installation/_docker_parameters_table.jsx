@@ -26,7 +26,7 @@ export default function DockerParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>OCEAN__BASE_URL</code></td>
-          <td>Integration instance base url, real-time live events will be enabled if this is configured.</td>
+          <td>The base url of the instance where the GitHub integration is hosted, used for real-time updates (e.g. <code>https://mygithuboceanintegration.com</code>).</td>
           <td>❌</td>
         </tr>
         <tr>
@@ -41,7 +41,7 @@ export default function DockerParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_HOST</code></td>
-          <td>The API endpoint for your GitHub instance. For GitHub Enterprise, this will be <code>https://&lt;org_name.ghe.com&gt;</code>. Defaults to <code>https://api.github.com</code> if not provided.</td>
+          <td>The API endpoint for your GitHub instance. For GitHub Enterprise, this will be <code>https://api.&lt;SUBDOMAIN&gt;.ghe.com</code>. Defaults to <code>https://api.github.com</code> if not provided.</td>
           <td>❌</td>
         </tr>
         <tr>
@@ -58,7 +58,7 @@ export default function DockerParametersTable({ showingApp }) {
           <>
             <tr>
               <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_APP_ID</code></td>
-              <td>Application ID. You can find it in the edit GitHub app page.</td>
+              <td>App id or client id. You can find it in the edit GitHub app page.</td>
               <td>✅</td>
             </tr>
             <tr>
