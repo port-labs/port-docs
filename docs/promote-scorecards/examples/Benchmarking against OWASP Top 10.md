@@ -1,149 +1,6 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
-
-# Examples
-
-### Ownership scorecard
-
-The following example demonstrates an ownership scorecard.
-
-It has one filter defined:
-
-- Only evaluate entities that are related to production (indicated by checking that the `is_production` property is set to `true`).
-
-It has two rules:
-
-- Check that a defined on-call exists and that the number of `open_incidents` is lower than 5;
-- Check if a team exists.
-
-```json showLineNumbers
-[
-  {
-    "title": "Ownership",
-    "identifier": "ownership",
-    "filter": {
-      "combinator": "and",
-      "conditions": [
-        {
-          "property": "is_production",
-          "operator": "=",
-          "value": true
-        }
-      ]
-    },
-    "rules": [
-      {
-        "title": "Has on call?",
-        "identifier": "has_on_call",
-        "level": "Gold",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "operator": "isNotEmpty",
-              "property": "on_call"
-            },
-            {
-              "operator": "<",
-              "property": "open_incidents",
-              "value": 5
-            }
-          ]
-        }
-      },
-      {
-        "title": "Has a team?",
-        "identifier": "has_team",
-        "level": "Silver",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "operator": "isNotEmpty",
-              "property": "$team"
-            }
-          ]
-        }
-      }
-    ]
-  }
-]
-```
-
-### Ensure relation existence
-
-Say we have a `service` blueprint that has a relation to another blueprint named `domain`.  
-We can define a scorecard that checks that all of our services have a related domain. Services with empty `domain` relations will fail this check:
-
-```json showLineNumbers
-{
-  "title": "Domain definition",
-  "identifier": "domain_definition",
-  "rules": [
-    {
-      "identifier": "hasDomain",
-      "title": "Has domain",
-      "level": "Bronze",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": "isNotEmpty",
-            "relation": "domain"
-          }
-        ]
-      }
-    }
-  ]
-}
-```
-
-### DORA metrics based on number of deployments
-
-To assess the deployment frequency of a `service`, simply checking the `deployment` relation is not enough — we need to know the exact number of deployments. To achieve this, we can:
-
-- Add an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property.md) to the `service` blueprtint that counts the number of related `deployment` entities.
-- Add a scorecard with a rule based on the new aggregation property:
-
-```json showLineNumbers
-{ 
-  "title": "DORA Metrics",
-  "identifier": "dora_metrics",
-  "rules": [
-    {
-      "identifier": "deployFreqBronze",
-      "title": "Deployment frequency > 2",
-      "level": "Bronze",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": ">",
-            "property": "deployment_frequency",
-            "value": 3
-          }
-        ]
-      }
-    },
-    {
-      "identifier": "deployFreqSilver",
-      "title": "Deployment frequency > 4",
-      "level": "Silver",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": ">",
-            "property": "deployment_frequency",
-            "value": 4
-          }
-        ]
-      }
-    }
-  ]
-}
-```
 
 ### Benchmarking OWASP Top 10 for code
 
@@ -181,6 +38,8 @@ cwe: .attributes.classes[0].id
 - Accordingly, the Snyk Target blueprint can be updated to support classification of vulnerabilities under the OWASP Top 10(http://owasp.org/Top10), as demonstrated in L300–L774.
 - The objective is to create 10 dedicated properties within Snyk Target, each corresponding to one of the OWASP Top 10 categories for code.
 
+<details>
+<summary><b>Snyk Target Blueprint reference</b></summary>
 ```json showLineNumbers
 {
   "identifier": "snykTarget",
@@ -823,6 +682,7 @@ cwe: .attributes.classes[0].id
   }
 }
 ```
+</details>
 
 
 #### Repository
@@ -839,7 +699,8 @@ Add these mirrored properties in the Mirrored Property section, between L850–L
 <img src="/img/guides/owasp/repo.png" width="100%" border="1px" />
 One can also observe quickly that all repositories now have pass/fail percentages for each property as above.
 
-
+<details>
+<summary><b>GitHub Repository Blueprint reference</b></summary>
 ```json showLineNumbers
 {
   "identifier": "githubRepository",
@@ -965,6 +826,7 @@ One can also observe quickly that all repositories now have pass/fail percentage
   }
 }
 ```
+</details>
 
 
 #### Scorecard
@@ -974,7 +836,8 @@ One can also observe quickly that all repositories now have pass/fail percentage
 Finally, We have all the mirrored properties at the repository level. Therefore, we can now build a scorecard for each repository. Below is the JSON required to build OWASP Top 10 Score card at the repository level.
 
 
-
+<details>
+<summary><b>Owasp Top 10 Scorecard</b></summary>
 ```json showLineNumbers
 {
   "identifier": "OwaspScoreCard",
@@ -1151,6 +1014,7 @@ Finally, We have all the mirrored properties at the repository level. Therefore,
   ]
 }
 ```
+</details>
 
 #### Next steps
 
