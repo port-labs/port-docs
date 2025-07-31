@@ -18,7 +18,8 @@ import RepoFileAppConfig from './example-file-kind/\_file_repo_app_config.mdx'
 
 ## Map repositories and pull requests
 
-In the following example you will ingest your GitHub repositories, their README.md file contents and open pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, their README.md file contents and open pull requests to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
