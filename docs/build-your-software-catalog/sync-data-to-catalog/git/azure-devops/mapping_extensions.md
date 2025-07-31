@@ -22,7 +22,7 @@ Possible Use Cases:
 
 ## Mapping file content into Port
 
-In the following example you will define and export your Azure Devops projects and their **README.md** file contents to Port:
+The following example demonstrates how to define and export your Azure Devops projects and their **README.md** file contents to Port:
 
 <RepositoryBlueprint/>
 

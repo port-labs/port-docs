@@ -71,7 +71,8 @@ Refer to specific sections below where these limitations might apply.
 
 ## Map repositories and pull requests
 
-In the following example you will ingest your GitHub repositories, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, their README.md file contents and pull requests to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -102,7 +103,8 @@ For more information about ingesting files and file contents, click [here](/buil
 
 ## Map repositories, workflows and workflow runs
 
-In the following example you will ingest your GitHub repositories, their workflows and workflow runs to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, their workflows and workflow runs to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -126,7 +128,8 @@ After creating the blueprints and committing the `port-app-config.yml` file to y
 
 ## Map repositories and issues
 
-In the following example you will ingest your GitHub repositories and their issues to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories and their issues to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -147,7 +150,7 @@ After creating the blueprints and committing the `port-app-config.yml` file to y
 
 ## Map repositories and monorepos
 
-In the following example you will ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -179,7 +182,8 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 
 ## Map repositories, repository folders and pull requests
 
-In the following example you will ingest your GitHub repositories, the repository's root folders and the repository pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, the repository's root folders and the repository pull requests to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -191,7 +195,8 @@ In the following example you will ingest your GitHub repositories, the repositor
 
 ## Map repositories and teams
 
-In the following example you will ingest your GitHub repositories and their teams to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories and their teams to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 :::note team mapping requirement
 Teams are GitHub organization level resources, therefore you will need to specify the mapping of the teams in a [global integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) (Through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
@@ -217,7 +222,8 @@ To retrieve the teams of your repositories, you will need to add the `teams` pro
 
 ## Map repositories, deployments and environments
 
-In the following example you will ingest your GitHub repositories, their deployments and environments to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, their deployments and environments to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -257,7 +263,8 @@ Alternatively, you can create a GitHub workflow that gathers the required data a
 
 ## Map repositories and branches
 
-In the following example you will ingest your GitHub repositories and their branches to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories and their branches to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -267,7 +274,8 @@ In the following example you will ingest your GitHub repositories and their bran
 
 ## Map repositories and last contributor
 
-In the following example you will ingest your GitHub repositories and their last contributor to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories and their last contributor to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <LastContributorBranchBlueprint/>
 <LastContributorBlueprint/>
@@ -279,7 +287,8 @@ The last contributor is the author of the last commit in the default branch of t
 
 ## Map repositories and branch protection rules
 
-In the following example you will ingest your GitHub repositories and their main branch protection rules to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories and their main branch protection rules to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -293,13 +302,12 @@ Currently only default branch protection rules are supported
 
 ## Map repositories, repository admins and users
 
-In the following example you will ingest your GitHub repositories, their admins and related users to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, their admins and related users to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryAdminBlueprint/>
 
 <GithubUsersBlueprint/>
-
-<UsersBlueprint/>
 
 <RepositoryAdminAppConfig/>
 
@@ -320,7 +328,8 @@ Other fields from the [GitHub User API](https://docs.github.com/en/rest/users/us
 
 ## Map repositories, repository releases and tags
 
-In the following example you will ingest your GitHub repositories, their releases and tags to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, their releases and tags to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
