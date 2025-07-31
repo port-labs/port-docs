@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem"
 
 Team is a data type used to reference teams that exist in Port.
 
-## 💡 Common team usage
+## Common team usage
 
 The team property type can be used to reference any team that exists in Port, for example:
 
