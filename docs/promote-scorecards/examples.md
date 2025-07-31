@@ -299,11 +299,10 @@ cwe: .attributes.classes[0].id
         "calculationBy": "entities"
       }
     },
-    "a1_access_control_flows": {
+    "a1_access_control_flaws": {
       "title": "A1 Access Control Flaws",
-      "icon": "Shield",
+      "icon": "Bug",
       "type": "number",
-      "description": "Check if repo is free of OWASP Top 10 A1 - Access Control Flaws",
       "target": "snykVulnerability",
       "query": {
         "combinator": "and",
@@ -319,7 +318,7 @@ cwe: .attributes.classes[0].id
             "value": "open"
           },
           {
-            "property": "cwe",
+            "property": "category",
             "operator": "notIn",
             "value": [
               "CWE-22",
@@ -333,8 +332,29 @@ cwe: .attributes.classes[0].id
               "CWE-275",
               "CWE-276",
               "CWE-284",
+              "CWE-285",
               "CWE-352",
-              "CWE-359"
+              "CWE-359",
+              "CWE-377",
+              "CWE-402",
+              "CWE-425",
+              "CWE-441",
+              "CWE-497",
+              "CWE-538",
+              "CWE-540",
+              "CWE-548",
+              "CWE-552",
+              "CWE-566",
+              "CWE-601",
+              "CWE-639",
+              "CWE-651",
+              "CWE-668",
+              "CWE-706",
+              "CWE-862",
+              "CWE-863",
+              "CWE-913",
+              "CWE-922",
+              "CWE-1275"
             ]
           }
         ]
@@ -344,11 +364,10 @@ cwe: .attributes.classes[0].id
         "calculationBy": "entities"
       }
     },
-    "a3_injection": {
-      "title": "A3 Injection",
-      "icon": "Shield",
+    "a10_ssrf": {
+      "title": "A10 SSRF",
+      "icon": "Bug",
       "type": "number",
-      "description": "Check if repo is free of OWASP Top 10 A3 - Injection flaws",
       "target": "snykVulnerability",
       "query": {
         "combinator": "and",
@@ -364,20 +383,10 @@ cwe: .attributes.classes[0].id
             "value": "open"
           },
           {
-            "property": "cwe",
+            "property": "category",
             "operator": "notIn",
             "value": [
-              "CWE-20",
-              "CWE-74",
-              "CWE-75",
-              "CWE-77",
-              "CWE-79",
-              "CWE-80",
-              "CWE-83",
-              "CWE-87",
-              "CWE-88",
-              "CWE-89",
-              "CWE-90"
+              "CWE-918"
             ]
           }
         ]
@@ -389,9 +398,8 @@ cwe: .attributes.classes[0].id
     },
     "a2_cryptographic_failures": {
       "title": "A2 Cryptographic Failures",
-      "icon": "Shield",
+      "icon": "Bug",
       "type": "number",
-      "description": "Owasp Top 10 A2 Cryptographic Failures",
       "target": "snykVulnerability",
       "query": {
         "combinator": "and",
@@ -407,7 +415,7 @@ cwe: .attributes.classes[0].id
             "value": "open"
           },
           {
-            "property": "cwe",
+            "property": "category",
             "operator": "notIn",
             "value": [
               "CWE-259",
@@ -449,11 +457,10 @@ cwe: .attributes.classes[0].id
         "calculationBy": "entities"
       }
     },
-    "a4_insecure_design": {
-      "title": "A4 Insecure Design",
-      "icon": "Shield",
+    "a3_injection": {
+      "title": "A3 Injection",
+      "icon": "Bug",
       "type": "number",
-      "description": "Owasp top 10 A4 - Insecure design security weakness",
       "target": "snykVulnerability",
       "query": {
         "combinator": "and",
@@ -469,7 +476,71 @@ cwe: .attributes.classes[0].id
             "value": "open"
           },
           {
-            "property": "cwe",
+            "property": "category",
+            "operator": "notIn",
+            "value": [
+              "CWE-20",
+              "CWE-74",
+              "CWE-75",
+              "CWE-77",
+              "CWE-78",
+              "CWE-79",
+              "CWE-80",
+              "CWE-83",
+              "CWE-87",
+              "CWE-88",
+              "CWE-89",
+              "CWE-90",
+              "CWE-91",
+              "CWE-93",
+              "CWE-94",
+              "CWE-95",
+              "CWE-96",
+              "CWE-97",
+              "CWE-98",
+              "CWE-99",
+              "CWE-100",
+              "CWE-113",
+              "CWE-116",
+              "CWE-138",
+              "CWE-184",
+              "CWE-470",
+              "CWE-471",
+              "CWE-564",
+              "CWE-610",
+              "CWE-643",
+              "CWE-644",
+              "CWE-652",
+              "CWE-917"
+            ]
+          }
+        ]
+      },
+      "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+      }
+    },
+    "a4_insecure_design": {
+      "title": "A4 Insecure Design",
+      "icon": "Bug",
+      "type": "number",
+      "target": "snykVulnerability",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "open"
+          },
+          {
+            "property": "type",
+            "operator": "=",
+            "value": "code"
+          },
+          {
+            "property": "category",
             "operator": "notIn",
             "value": [
               "CWE-73",
@@ -523,25 +594,24 @@ cwe: .attributes.classes[0].id
     },
     "a5_security_misconfigurations": {
       "title": "A5 Security Misconfigurations",
-      "icon": "Shield",
+      "icon": "Bug",
       "type": "number",
-      "description": "Owasp Top 10 - A5 Security misconfigurations",
       "target": "snykVulnerability",
       "query": {
         "combinator": "and",
         "rules": [
-          {
-            "property": "type",
-            "operator": "=",
-            "value": "code"
-          },
           {
             "property": "status",
             "operator": "=",
             "value": "open"
           },
           {
-            "property": "cwe",
+            "property": "type",
+            "operator": "=",
+            "value": "code"
+          },
+          {
+            "property": "category",
             "operator": "notIn",
             "value": [
               "CWE-2",
@@ -575,9 +645,8 @@ cwe: .attributes.classes[0].id
     },
     "a6_vulnerable_components": {
       "title": "A6 Vulnerable components",
-      "icon": "Shield",
+      "icon": "Bug",
       "type": "number",
-      "description": "OWASP A6 - Vulnerable and outdated components in use.",
       "target": "snykVulnerability",
       "query": {
         "combinator": "and",
@@ -593,7 +662,7 @@ cwe: .attributes.classes[0].id
             "value": "open"
           },
           {
-            "property": "cwe",
+            "property": "category",
             "operator": "notIn",
             "value": [
               "CWE-937",
@@ -610,25 +679,24 @@ cwe: .attributes.classes[0].id
     },
     "a7_authentication_failures": {
       "title": "A7 Authentication Failures",
-      "icon": "Shield",
+      "icon": "Bug",
       "type": "number",
-      "description": "Owasp Top 10 - Identification & Authentication Failures",
       "target": "snykVulnerability",
       "query": {
         "combinator": "and",
         "rules": [
-          {
-            "property": "type",
-            "operator": "=",
-            "value": "code"
-          },
           {
             "property": "status",
             "operator": "=",
             "value": "open"
           },
           {
-            "property": "cwe",
+            "property": "type",
+            "operator": "=",
+            "value": "code"
+          },
+          {
+            "property": "category",
             "operator": "notIn",
             "value": [
               "CWE-255",
@@ -664,9 +732,8 @@ cwe: .attributes.classes[0].id
     },
     "a8_integrity_failures": {
       "title": "A8 Integrity Failures",
-      "icon": "Shield",
+      "icon": "Bug",
       "type": "number",
-      "description": "Owasp Top 10 - A8 - Software & Integrity failures",
       "target": "snykVulnerability",
       "query": {
         "combinator": "and",
@@ -682,7 +749,7 @@ cwe: .attributes.classes[0].id
             "value": "open"
           },
           {
-            "property": "cwe",
+            "property": "category",
             "operator": "notIn",
             "value": [
               "CWE-345",
@@ -706,25 +773,24 @@ cwe: .attributes.classes[0].id
     },
     "a9_logging": {
       "title": "A9 Logging",
-      "icon": "Shield",
+      "icon": "Bug",
       "type": "number",
-      "description": "Owasp Top 10 - A9 Security logging & Monitoring",
       "target": "snykVulnerability",
       "query": {
         "combinator": "and",
         "rules": [
-          {
-            "property": "type",
-            "operator": "=",
-            "value": "code"
-          },
           {
             "property": "status",
             "operator": "=",
             "value": "open"
           },
           {
-            "property": "cwe",
+            "property": "type",
+            "operator": "=",
+            "value": "code"
+          },
+          {
+            "property": "category",
             "operator": "notIn",
             "value": [
               "CWE-117",
@@ -739,46 +805,13 @@ cwe: .attributes.classes[0].id
         "func": "count",
         "calculationBy": "entities"
       }
-    },
-    "a10_ssrf": {
-      "title": "A10 SSRF",
-      "icon": "Shield",
-      "type": "number",
-      "description": "Owasp Top 10 - A10 Server side request forgery",
-      "target": "snykVulnerability",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "type",
-            "operator": "=",
-            "value": "code"
-          },
-          {
-            "property": "status",
-            "operator": "=",
-            "value": "open"
-          },
-          {
-            "property": "cwe",
-            "operator": "notIn",
-            "value": [
-              "CWE-918"
-            ]
-          }
-        ]
-      },
-      "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-      }
     }
   },
   "relations": {
     "repository": {
       "title": "Repository",
       "target": "githubRepository",
-      "required": false,
+      "required": true,
       "many": false
     },
     "snyk_organization": {
