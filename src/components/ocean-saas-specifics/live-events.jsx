@@ -183,7 +183,7 @@ export const liveEvents = {
     \n- repo:modified \
     \n- repo:refs_changed \
     \n\n**Project:** \
-    \n- project:modified',
+    \n- project:modified",
   Aikido: 
     '**Issues:** \
     \n- issue.open.created \
