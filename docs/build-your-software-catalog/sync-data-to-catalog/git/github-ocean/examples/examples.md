@@ -31,33 +31,19 @@ import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_
 
 ## Map repositories and pull requests
 
-In the following example you will ingest your GitHub repositories, their README.md file contents and open pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, their README.md file contents and open pull requests to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
 <PRBlueprint/>
 
-:::info repository type
-
-The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
-
-<details>
-<summary>Possible values:</summary>
-
-*   `all` (default): All repositories accessible to the provided token.
-*   `public`: Public repositories.
-*   `private`: Private repositories.
-*   `forks`: Only forked repositories.
-*   `sources`: Only non-forked repositories.
-</details>
-
-:::
 
 <PortAppConfig/>
 
 :::tip learn more
 
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
+- Port leverages the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
 - Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
 - Click [Here](https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request) for the GitHub pull request object structure.
 

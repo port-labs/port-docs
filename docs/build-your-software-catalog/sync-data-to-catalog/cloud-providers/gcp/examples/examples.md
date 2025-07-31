@@ -16,7 +16,8 @@ The simplification is achieved by using the generic `cloudResource` blueprint, w
 
 ## Mapping GCP Projects
 
-In the following example you will ingest your GCP Projects to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your GCP Projects to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
@@ -28,7 +29,8 @@ Here are the API references we used to create those blueprints and app config:
 
 ## Mapping Cloud Resources
 
-In the following example you will ingest your GCP Resources to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your GCP Resources to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 :::note Relate resources and Projects
 

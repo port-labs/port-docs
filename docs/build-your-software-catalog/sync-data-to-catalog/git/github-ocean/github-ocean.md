@@ -29,7 +29,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
-To install Port's GitHub integration, see [our dedicated installation guides](./installation).
+To install the integration, see the [installation page](./installation).
 
 
 ## Configuration
@@ -38,13 +38,7 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-To ingest GitHub objects, use one of the following methods:
-
-<Tabs queryString="method">
-
-<TabItem label="Using Port's UI" value="port">
-
-To manage your GitHub integration configuration using Port:
+You can manage your GitHub integration configuration using Port:
 
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 2. Under `Exporters`, click on the installed integration.
@@ -56,10 +50,22 @@ Using this method applies the configuration to all repositories that the GitHub 
 
 When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
 
-</TabItem>
+### Repository type
 
-</Tabs>
+The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
 
+<details>
+<summary>Possible values:</summary>
+
+*   `all` (default): All repositories accessible to the provided token.
+*   `public`: Public repositories.
+*   `private`: Private repositories.
+*   `forks`: Only forked repositories.
+*   `sources`: Only non-forked repositories.
+</details>
+
+See the default mapping below for a usage example.
+          
 ### Default mapping configuration
 
 This is the default mapping configuration for this integration:
@@ -68,9 +74,9 @@ This is the default mapping configuration for this integration:
 <summary><b>Default mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
+repositoryType: 'all'
 deleteDependentEntities: true
 createMissingRelatedEntities: true
-repositoryType: 'all'
 resources:
   - kind: repository
     selector:
@@ -126,7 +132,7 @@ resources:
 
 ## Capabilities
 
-### Ingesting Git objects
+### Ingest Git objects
 
 Using Port's GitHub integration, you can automatically ingest GitHub resources into Port based on real-time events.
 
@@ -747,25 +753,6 @@ resources:
 - Only JSON and YAML formats are automatically parsed.  
   Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
 
-## Permissions
-
-Port's GitHub integration requires the following permissions:
-
-- Repository permissions:
-
-  - **Actions:** Read and Write (for executing self-service action using GitHub workflow).
-  - **Checks:** Read and Write (for validating `port.yml`).
-  - **Contents:** Readonly.
-  - **Metadata:** Readonly.
-  - **Pull requests:** Read and write.
-
-:::info Default permissions
-You will be prompted to confirm the above listed permissions when creating a personal access token.
-
-Permissions can be given to selected repositories in your organization, or to all repositories.   
-You can reconfigure the permission at any time, giving it access to new repositories, or removing access.
-
-:::
 
 ## Examples
 

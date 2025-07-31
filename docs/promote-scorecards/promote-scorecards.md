@@ -265,10 +265,10 @@ Conditions are small boolean checks that help when determining the final status 
 |---------------------|--------------------------------------------------|-----------------------------------------------------------------------|
 | `=`                 | `String`, `Number`, `Boolean`                    | checks if the rule value is equal to the entity value                 |
 | `!=`                | `String`, `Number`, `Boolean`                    | checks if the rule value is not equal to the entity value             |
-| `<=`                | `String`, `Number`                               | checks if the rule value is less than or equal to the entity value    |
-| `>=`                | `String`, `Number`                               | checks if the rule value is greater than or equal to the entity value |
-| `<`                 | `String`, `Number`                               | checks if the rule value is less than the entity value                |
-| `>`                 | `String`, `Number`                               | checks if the rule value is greater than the entity value             |
+| `<=`                | `Number`                                         | checks if the rule value is less than or equal to the entity value    |
+| `>=`                | `Number`                                         | checks if the rule value is greater than or equal to the entity value |
+| `<`                 | `Number`                                         | checks if the rule value is less than the entity value                |
+| `>`                 | `Number`                                         | checks if the rule value is greater than the entity value             |
 | `contains`          | `String`, `Number`                               | checks if the rule value is contained within the entity value         |
 | `containsAny`       | `Array`                                          | checks if any of the specified strings exist in the target array      |
 | `doesNotContains`   | `String`, `Number`                               | checks if the rule value is not contained within the entity value     |

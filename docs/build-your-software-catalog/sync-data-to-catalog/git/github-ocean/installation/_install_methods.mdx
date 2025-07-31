@@ -1,6 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import CodeBlock from '@theme/CodeBlock';
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx"
 import AdvancedConfig from '../../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
 import Prerequisites from "../../../templates/\_ocean_helm_prerequisites_block.mdx"
@@ -10,23 +11,15 @@ import ParametersTable from "./_parameters_table.jsx"
 import Base64Tip from "./\_base_64_tip.mdx"
 import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
-## Enabling live-events
-:::tip
-The `liveEvents.baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
-For debugging, services like [Ngrok](https://ngrok.com/) can provide a temporary public URL. For production, a stable and publicly accessible host is required.
-
-If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
-:::
-
-<OceanSaasLiveEventsDescription id="GithubOcean" />
-The `liveEvents.baseUrl` specifies the public-facing URL for your integration. This URL, which must be reachable from the internet, is used to receive real-time updates from Github. It can be a public IP address or a configured domain name (e.g., `https://mygithubintegration.com`).
-
-<details>
-  <summary><b>Supported live event triggers</b></summary>
-    <OceanSaasLiveEventsTriggersManual id="GithubOcean" isOAuth={false} />
-</details>
 
 ## Deploy the integration
+
+
+To deploy the integration, you will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
+
+<FindCredentials/>
+
+___
 
 Choose the installation method that best suits your needs:
 
@@ -66,7 +59,7 @@ Install the Helm chart:
   integration:
     identifier: "github-ocean"
     type: "github-ocean"
-    version: "1.0.6-beta"
+    version: "1.2.0-beta"
     eventListener:
       type: "POLLING"
     config:
@@ -97,7 +90,7 @@ Install the Helm chart:
   integration:
     identifier: "github-ocean"
     type: "github-ocean"
-    version: "1.0.6-beta"
+    version: "1.2.0-beta"
     eventListener:
       type: "POLLING"
     config:
@@ -145,7 +138,7 @@ scheduledResyncInterval: 120
 integration:
   identifier: my-ocean-github-integration
   type: github-ocean
-  version: 1.0.6-beta
+  version: 1.2.0-beta
   eventListener:
     type: POLLING
   config:
@@ -214,11 +207,12 @@ spec:
 </details>
 <br/>
 
-1. Apply your application manifest with `kubectl`:
+3. Apply your application manifest with `kubectl`:
 
 ```bash
 kubectl apply -f my-ocean-github-integration.yaml
 ```
+
 
 </TabItem>
 
@@ -226,6 +220,24 @@ kubectl apply -f my-ocean-github-integration.yaml
 </Tabs>
 
 {props.setupName == "app" && <Base64Tip />}
+
+
+### Enabling live-events
+:::tip Live events
+The `liveEvents.baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
+For debugging, services like [Ngrok](https://ngrok.com/) can provide a temporary public URL. For production, a stable and publicly accessible host is required.
+
+If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
+:::
+
+<OceanSaasLiveEventsDescription id="GithubOcean" />
+The `liveEvents.baseUrl` specifies the public-facing URL for your integration. This URL, which must be reachable from the internet, is used to receive real-time updates from Github. It can be a public IP address or a configured domain name (e.g., `https://mygithubintegration.com`).
+
+<details>
+  <summary><b>Supported live event triggers</b></summary>
+    <OceanSaasLiveEventsTriggersManual id="GithubOcean" isOAuth={false} />
+</details>
+
 
 This table summarizes the available parameters for the installation.
 
