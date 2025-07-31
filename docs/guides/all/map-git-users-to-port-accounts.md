@@ -26,28 +26,77 @@ This guide assumes the following:
 
 ## Set up data model
 
-To establish relationships between Git users and Port user accounts, we need to add a relation to the existing Git user blueprints.
+To establish relationships between Git users and Port user accounts, we need to enhance the Port User blueprint to add relations to the Git user blueprints.
 
-<h3> Update the Git user blueprints</h3>
+<h3> Enhance the Port User blueprint</h3>
 
-1. Go to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
+Now we need to enhance the Port User blueprint to add relations to the Git user blueprints and mirror properties to display Git information.
 
-2. Find the relevant Git user blueprint (`GitHub User`, `GitLab User`, or `Azure DevOps User`) and click on it.
+1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Find the `User` blueprint and click on it.
 
 3. Click on the `Edit JSON` button in the top right corner.
 
-4. Add the following relation to the `relations` section:
+4. Add the following relations to the `relations` object (add only the ones relevant to your Git integrations):
+
+    <details>
+    <summary><b>Port User blueprint relations (Click to expand)</b></summary>
 
     ```json showLineNumbers
-    "user": {
-        "title": "Port User",
-        "target": "_user",
+    "relations": {
+      "githubUser": {
+        "title": "GitHub User",
+        "target": "githubUser",
         "required": false,
         "many": false
+      },
+      "gitlabUser": {
+        "title": "GitLab User", 
+        "target": "gitlabMember",
+        "required": false,
+        "many": false
+      },
+      "azureDevopsUser": {
+        "title": "Azure DevOps User",
+        "target": "azureDevopsMember", 
+        "required": false,
+        "many": false
+      }
     }
     ```
 
-5. Click on `Save` to update the blueprint.
+    </details>
+
+5. Add mirror properties to display Git user information:
+
+    <details>
+    <summary><b>Port User blueprint mirror properties (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    "mirrorProperties": {
+      "github_login": {
+        "title": "GitHub login",
+        "path": "githubUser.login"
+      },
+      "gitlab_username": {
+        "title": "GitLab username", 
+        "path": "gitlabUser.username"
+      },
+      "azuredevops_display_name": {
+        "title": "Azure DevOps display name",
+        "path": "azureDevopsUser.displayName"
+      }
+    }
+    ```
+
+    </details>
+
+6. Click on `Save` to update the blueprint.
+
+:::info Additional mirror properties
+You can add more mirror properties to display other Git user attributes or customize which properties are most relevant for your organization. Only add the mirror properties for the Git platforms you're using.
+:::
 
 ## Implementation
 
@@ -56,109 +105,53 @@ Now we'll update the integration mapping to include the relation and create auto
 <Tabs>
 <TabItem value="github" label="GitHub" default>
 
-<h4> Update the GitHub integration mapping</h4>
-
 To update the GitHub integration mapping, follow the steps below:
 
 1. Go to the [Data sources](https://app.getport.io/settings/data-sources) page.
 
 2. Find your GitHub integration and click on it.
 
-3. In the mapping configuration, update the user mapping to include the relation:
+3. In the mapping configuration, add a new mapping for Port User entities to establish the relation with GitHub users:
 
     <details>
-    <summary><b>GitHub integration mapping (Click to expand)</b></summary>
+    <summary><b>Updated GitHub integration mapping (Click to expand)</b></summary>
 
     ```yaml showLineNumbers  
+    # Keep existing githubUser mapping 
     - kind: user
-        selector:
+      selector:
         query: 'true'
-        port:
+      port:
         entity:
-            mappings:
+          mappings:
             identifier: .login
             title: .login
             blueprint: '"githubUser"'
             properties:
-                email: .email
+              email: .email
+
+    # Add new mapping for Port Users with relation to GitHub users
+    // highlight-start
+    - kind: user
+      selector:
+        query: '.email != null'
+      port:
+        entity:
+          mappings:
+            identifier: .email
+            blueprint: '"_user"'
             relations:
-                user:
-                combinator: '"and"'
-                rules:
-                    - property: '"$identifier"'
-                    operator: '"="'
-                    value: .email
+              githubUser: .login
+    // highlight-end
     ```
 
     </details>
 
 4. Click on `Save & Resync` to apply the changes
 
-<h4> Create automation to sync GitHub users when a new Port user is added</h4>
-
-To ensure new Port users get mapped to GitHub users automatically, we'll create an automation that triggers when a new Port user is created.
-
-Follow the steps below to create the automation:
-
-1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
-
-2. Click on `+ Automation`.
-
-3. Click on the `Edit JSON` button in the top right corner.
-
-4. Copy and paste the following automation configuration:
-
-    <details>
-    <summary><b>Automation to sync GitHub users when a new Port user is added (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-    "identifier": "sync_github_user_for_new_port_user",
-    "title": "Sync GitHub User for New Port User",
-    "description": "Automatically maps GitHub users to newly created Port user accounts",
-    "icon": "GitHub",
-    "trigger": {
-        "type": "automation",
-        "event": {
-        "type": "ENTITY_CREATED",
-        "blueprintIdentifier": "_user"
-        },
-        "condition": {
-        "type": "JQ",
-        "expressions": [],
-        "combinator": "and"
-        }
-    },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://api.getport.io/v1/entities/gitHubUser/{{ .event.diff.after.identifier }}/relations",
-        "agent": false,
-        "synchronized": true,
-        "method": "POST",
-        "headers": {
-        "Content-Type": "application/json"
-        },
-        "body": {
-        "relations": {
-            "user": {
-            "identifier": "{{ .event.diff.after.identifier }}"
-            }
-        }
-        }
-    },
-    "publish": true
-    }
-    ```
-
-    </details>
-
-5. Click `Save` to create the automation
-
 </TabItem>
 
 <TabItem value="gitlab" label="GitLab">
-
-<h4> Update the GitLab integration mapping</h4>
 
 To update the GitLab integration mapping, follow the steps below:
 
@@ -166,106 +159,50 @@ To update the GitLab integration mapping, follow the steps below:
 
 2. Find your GitLab integration and click on it.
 
-3. In the mapping configuration, update the user mapping to include the relation:
+3. In the mapping configuration, add a new mapping for Port User entities to establish the relation with GitLab users:
 
     <details>
-    <summary><b>GitLab integration mapping (Click to expand)</b></summary>
+    <summary><b>Updated GitLab integration mapping (Click to expand)</b></summary>
 
     ```yaml showLineNumbers
+    # Keep existing gitlabMember mapping 
     - kind: member
-    selector:
+      selector:
         query: 'true'
-    port:
+      port:
         entity:
-        mappings:
+          mappings:
             identifier: .username
             title: .name
             blueprint: '"gitlabMember"'
             properties:
-            url: .web_url
-            state: .state
-            email: .email
-            locked: .locked
-            // highlight-start
+              url: .web_url
+              state: .state
+              email: .email
+              locked: .locked
+
+    # Add new mapping for Port Users with relation to GitLab users
+    // highlight-start
+    - kind: member
+      selector:
+        query: '.email != null'
+      port:
+        entity:
+          mappings:
+            identifier: .email
+            blueprint: '"_user"'
             relations:
-            user:
-                combinator: '"and"'
-                rules:
-                - property: "$identifier"
-                    operator: '"="'
-                    value: .email
-            // highlight-end
+              gitlabUser: .username
+    // highlight-end
     ```
 
     </details>
 
 4. Click on `Save & Resync` to apply the changes
 
-<h4> Create automation to sync GitLab users when a new Port user is added</h4>
-
-To ensure new Port users get mapped to GitLab users automatically, we'll create an automation that triggers when a new Port user is created.
-
-Follow the steps below to create the automation:
-
-1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
-
-2. Click on `+ Automation`.
-
-3. Click on the `Edit JSON` button in the top right corner.
-
-4. Copy and paste the following automation configuration:
-
-    <details>
-    <summary><b>Automation to sync GitLab users when a new Port user is added (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-    "identifier": "sync_gitlab_user_for_new_port_user",
-    "title": "Sync GitLab User for New Port User",
-    "description": "Automatically maps GitLab users to newly created Port user accounts",
-    "icon": "GitLab",
-    "trigger": {
-        "type": "automation",
-        "event": {
-        "type": "ENTITY_CREATED",
-        "blueprintIdentifier": "_user"
-        },
-        "condition": {
-        "type": "JQ",
-        "expressions": [],
-        "combinator": "and"
-        }
-    },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://api.getport.io/v1/entities/gitLabUser/{{ .event.diff.after.identifier }}/relations",
-        "agent": false,
-        "synchronized": true,
-        "method": "POST",
-        "headers": {
-        "Content-Type": "application/json"
-        },
-        "body": {
-        "relations": {
-            "user": {
-            "identifier": "{{ .event.diff.after.identifier }}"
-            }
-        }
-        }
-    },
-    "publish": true
-    }
-    ```
-
-    </details>
-
-5. Click `Save` to create the automation
-
 </TabItem>
 
 <TabItem value="azuredevops" label="Azure DevOps">
-
-<h4> Update the Azure DevOps integration mapping</h4>
 
 To update the Azure DevOps integration mapping, follow the steps below:
 
@@ -273,42 +210,52 @@ To update the Azure DevOps integration mapping, follow the steps below:
 
 2. Find your Azure DevOps integration and click on it.
 
-3. In the mapping configuration, update the user mapping to include the relation:
+3. In the mapping configuration, add a new mapping for Port User entities to establish the relation with Azure DevOps users:
 
     <details>
-    <summary><b>Azure DevOps integration mapping (Click to expand)</b></summary>
+    <summary><b>Updated Azure DevOps integration mapping (Click to expand)</b></summary>
 
     ```yaml showLineNumbers
+    # Keep existing azureDevopsMember mapping
     - kind: user
-    selector:
+      selector:
         query: 'true'
-    port:
+      port:
         entity:
-        mappings:
+          mappings:
             identifier: .id
             title: .user.displayName
             blueprint: '"azureDevopsMember"'
             properties:
-            url: .user.url
-            email: .user.mailAddress
-            // highlight-start
+              url: .user.url
+              email: .user.mailAddress
+
+    # Add new mapping for Port Users with relation to Azure DevOps users
+    // highlight-start
+    - kind: user
+      selector:
+        query: '.user.mailAddress != null'
+      port:
+        entity:
+          mappings:
+            identifier: .user.mailAddress
+            blueprint: '"_user"'
             relations:
-                user:
-                combinator: '"and"'
-                rules:
-                    - property: "$identifier"
-                    operator: '"="'
-                    value: .user.mailAddress
-                // highlight-end
+              azureDevopsUser: .id
+    // highlight-end
     ```
 
     </details>
 
 4. Click on `Save & Resync` to apply the changes.
 
-<h4> Create automation to sync Azure DevOps users when a new Port user is added</h4>
+</TabItem>
 
-To ensure new Port users get mapped to Azure DevOps users automatically, we'll create an automation that triggers when a new Port user is created.
+</Tabs>
+
+## Set up automation
+
+To ensure new Port users are automatically mapped to their corresponding Git user accounts when a new Port user is created, we'll create an automation that triggers when a new Port user is created.
 
 Follow the steps below to create the automation:
 
@@ -321,58 +268,82 @@ Follow the steps below to create the automation:
 4. Copy and paste the following automation configuration:
 
     <details>
-    <summary><b>Automation to sync Azure DevOps users when a new Port user is added (Click to expand)</b></summary>
+    <summary><b>Automation to sync Port users to Git user accounts (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
-    "identifier": "sync_azuredevops_user_for_new_port_user",
-    "title": "Sync Azure DevOps User for New Port User",
-    "description": "Automatically maps Azure DevOps users to newly created Port user accounts",
-    "icon": "AzureDevops",
-    "trigger": {
+      "identifier": "sync_port_user_for_git_users",
+      "title": "Sync Port User for Git Users",
+      "description": "Automatically maps Port users to their corresponding Git user accounts across all platforms",
+      "icon": "Git",
+      "trigger": {
         "type": "automation",
         "event": {
-        "type": "ENTITY_CREATED",
-        "blueprintIdentifier": "_user"
+          "type": "ENTITY_CREATED",
+          "blueprintIdentifier": "_user"
         },
         "condition": {
-        "type": "JQ",
-        "expressions": [],
-        "combinator": "and"
+          "type": "JQ",
+          "expressions": [],
+          "combinator": "and"
         }
-    },
-    "invocationMethod": {
+      },
+      "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "https://api.getport.io/v1/entities/azureDevopsUser/{{ .event.diff.after.identifier }}/relations",
+        "url": "https://api.getport.io/v1/entities/_user/{{ .event.diff.after.identifier }}/relations",
         "agent": false,
         "synchronized": true,
         "method": "POST",
         "headers": {
-        "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         "body": {
-        "relations": {
-            "user": {
-            "identifier": "{{ .event.diff.after.identifier }}"
+          "relations": {
+            "githubUser": {
+              "combinator": "and",
+              "rules": [
+                {
+                  "property": "$identifier",
+                  "operator": "=",
+                  "value": "{{ .event.diff.after.identifier }}"
+                }
+              ]
+            },
+            "gitlabUser": {
+              "combinator": "and",
+              "rules": [
+                {
+                  "property": "$identifier",
+                  "operator": "=",
+                  "value": "{{ .event.diff.after.identifier }}"
+                }
+              ]
+            },
+            "azureDevopsUser": {
+              "combinator": "and",
+              "rules": [
+                {
+                  "property": "$identifier",
+                  "operator": "=",
+                  "value": "{{ .event.diff.after.identifier }}"
+                }
+              ]
             }
+          }
         }
-        }
-    },
-    "publish": true
+      },
+      "publish": true
     }
     ```
+
+    :::tip Select the relevant Git integration
+    In this automation example, we show how to map Port users to all supported Git platforms (GitHub, GitLab, and Azure DevOps) at once. In practice, you should only configure the relation for the Git platform your organization actually uses. For example, if your users are only in GitHub, include the `githubUser` relation and remove the others. Adjust the configuration to match your organization's setup.
+    :::
 
     </details>
 
 5. Click `Save` to create the automation.
 
-</TabItem>
-
-</Tabs>
-
-:::tip Mapping explanation
-These configurations automatically establish relationships between Git users and Port user accounts by matching the Git user's email address with the Port user's identifier (which is typically the email address).
-:::
 
 ## Let's test it!
 
