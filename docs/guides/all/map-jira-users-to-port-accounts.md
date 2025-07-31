@@ -22,30 +22,57 @@ This guide assumes the following:
 
 ## Set up data model
 
-To establish relationships between Jira users and Port user accounts, we need to add a relation to the existing `jiraUser` blueprint.
+To establish relationships between Jira users and Port user accounts, we need to enhance the Port User blueprint to add a relation to the Jira User blueprint.
 
-<h3> Update the Jira user blueprint</h3>
+<h3> Enhance the Port User blueprint</h3>
+
+Now we need to enhance the Port User blueprint to add a relation to the Jira User blueprint and mirror properties to display Jira information.
 
 1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
 
-2. Find the `Jira User` blueprint and click on it.
+2. Find the `User` blueprint and click on it.
 
-3. Click on the `...` button in the top right corner.
+3. Click on the `Edit JSON` button in the top right corner.
 
-4. Click on `Edit JSON`.
+4. Add the following relation to the `relations` object:
 
-5. Add the following relation to the `relations` section.
+    <details>
+    <summary><b>Port User blueprint relation (Click to expand)</b></summary>
 
     ```json showLineNumbers
-    "user": {
-      "title": "Port User",
-       "target": "_user",
-       "required": false,
-       "many": false
+    "relations": {
+      "jiraUser": {
+        "title": "Jira User",
+        "target": "jiraUser",
+        "required": false,
+        "many": false
+      }
     }
     ```
 
+    </details>
+
+5. Add the following mirror property to the `mirrorProperties` object to display the Jira display name:
+
+    <details>
+    <summary><b>Port User blueprint mirror property (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    "mirrorProperties": {
+      "jira_display_name": {
+        "title": "Jira display name",
+        "path": "jiraUser.displayName"
+      }
+    }
+    ```
+
+    </details>
+
 6. Click on `Save` to update the blueprint.
+
+:::info Additional mirror properties
+You can add more mirror properties to display other Jira user attributes like timezone (`jiraUser.timeZone`), account type (`jiraUser.accountType`), or any other property from the Jira User blueprint that would be useful for your organization.
+:::
 
 
 ## Update Jira integration mapping
@@ -54,49 +81,53 @@ To establish relationships between Jira users and Port user accounts, we need to
 
 2. Find your Jira integration and click on it.
 
-3. In the mapping configuration, update the user mapping to include the relation.
+3. In the mapping configuration, add a new mapping for Port User entities to establish the relation with Jira users.
 
     <details>
-    <summary><b>Jira integration mapping (Click to expand)</b></summary>
+    <summary><b>Updated Jira integration mapping (Click to expand)</b></summary>
 
     ```yaml showLineNumbers
+    # Keep existing jiraUser mapping 
     - kind: user
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .accountId
-          title: .displayName
-          blueprint: '"jiraUser"'
-          properties:
-            emailAddress: .emailAddress
-            active: .active
-            accountType: .accountType
-            timeZone: .timeZone
-            locale: .locale
-            avatarUrl: .avatarUrls["48x48"]
-            // highlight-start
-          relations:
-            user:
-              combinator: '"and"'
-              rules:
-                - property: '"$identifier"'
-                  operator: '"="'
-                  value: .emailAddress
-            // highlight-end
+      selector:
+        query: 'true'
+      port:
+        entity:
+          mappings:
+            identifier: .accountId
+            title: .displayName
+            blueprint: '"jiraUser"'
+            properties:
+              emailAddress: .emailAddress
+              active: .active
+              accountType: .accountType
+              timeZone: .timeZone
+              locale: .locale
+              avatarUrl: .avatarUrls["48x48"]
+
+    # Add new mapping for Port Users with relation to Jira users
+    // highlight-start
+    - kind: user
+      selector:
+        query: '.emailAddress != null'
+      port:
+        entity:
+          mappings:
+            identifier: .emailAddress
+            blueprint: '"_user"'
+            relations:
+              jiraUser: .accountId
+    // highlight-end
     ```
     </details>
 
 4. Click on `Save & Resync` to apply the changes.
 
-:::tip Mapping explanation
-This configuration automatically establishes a relationship between Jira users and Port user accounts by matching the Jira user's email address with the Port user's identifier (which is typically the email address).
-:::
+
 
 ## Set up automations
 
-To ensure new Jira users are automatically mapped to their corresponding Port user accounts when a new Port user is added, we'll create an automation that triggers when a new Port user is created.
+To ensure new Port users are automatically mapped to their corresponding Jira user accounts when a new Port user is created, we'll create an automation that triggers when a new Port user is created.
 
 Follow the steps below to create the automation:
 
@@ -109,13 +140,13 @@ Follow the steps below to create the automation:
 4. Copy and paste the following automation configuration:
 
     <details>
-    <summary><b>Automation to sync Jira users to new Port user account (Click to expand)</b></summary>
+    <summary><b>Automation to sync Port users to Jira user account (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
-      "identifier": "sync_jira_user_for_new_port_user",
-      "title": "Sync Jira User for New Port User",
-      "description": "Automatically maps Jira users to newly created Port user accounts",
+      "identifier": "sync_port_user_for_jira_user",
+      "title": "Sync Port User for Jira User",
+      "description": "Automatically maps Port users to their corresponding Jira user accounts",
       "icon": "Jira",
       "trigger": {
         "type": "automation",
@@ -131,7 +162,7 @@ Follow the steps below to create the automation:
       },
       "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "https://api.getport.io/v1/entities/jiraUser/{{ .event.diff.after.identifier }}/relations",
+        "url": "https://api.getport.io/v1/entities/_user/{{ .event.diff.after.identifier }}/relations",
         "agent": false,
         "synchronized": true,
         "method": "POST",
@@ -140,8 +171,15 @@ Follow the steps below to create the automation:
         },
         "body": {
           "relations": {
-            "user": {
-              "identifier": "{{ .event.diff.after.identifier }}"
+            "jiraUser": {
+              "combinator": "and",
+              "rules": [
+                {
+                  "property": "$identifier",
+                  "operator": "=",
+                  "value": "{{ .event.diff.after.identifier }}"
+                }
+              ]
             }
           }
         }
