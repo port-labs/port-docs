@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem"
 
 Proto is a data type used to save .proto definitions in Port
 
-## 💡 Common proto usage
+## Common proto usage
 
 The proto property type can be used to store types defined in .proto files, for example:
 
@@ -123,8 +123,7 @@ resource "port_blueprint" "myBlueprint" {
 ## Pulumi definition
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"}
+{label: "Basic", value: "basic"}
 ]}>
 
 <TabItem value="basic">

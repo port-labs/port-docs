@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem"
 
 Datetime is a data type used to reference a date and time.
 
-## 💡 Common datetime usage
+## Common datetime usage
 
 The datetime property type can be used to store any date and time, for example:
 
@@ -134,8 +134,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Enum", value: "enum"}
 ]}>
 
 <TabItem value="basic">
