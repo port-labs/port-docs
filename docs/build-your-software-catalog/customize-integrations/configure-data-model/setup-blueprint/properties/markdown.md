@@ -17,7 +17,7 @@ The blueprint has a `Markdown` property that takes the Readme file from the serv
 
 With Port, you can import and display [Markdown](https://en.wikipedia.org/wiki/Markdown) files as tabs.
 
-## 💡 Common embedded URL usage
+## Common embedded URL usage
 
 - Display a service's Readme file
 - Display relevant documentation for a service/package
