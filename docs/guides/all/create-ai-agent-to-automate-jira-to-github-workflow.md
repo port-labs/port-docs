@@ -620,7 +620,7 @@ jobs:
 :::caution Required secrets
 You will need to add the following secrets to your GitHub repository:
 - `PORT_CLIENT_ID`: Your Port client ID
-- `PORT_AI_DEMO_CLIENT_SECRET`: Your Port client secret  
+- `PORT_CLIENT_SECRET`: Your Port client secret  
 - `PORT_AI_DEMO_GITHUB_TOKEN`: A GitHub PAT with repository access
 :::
 
