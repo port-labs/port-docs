@@ -128,29 +128,27 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
     - `humanitec_client.py` – Handles API interactions with Humanitec, including retrieving data with caching mechanisms to optimize performance.
     - `cache.py` - Provides an in-memory caching mechanism with thread-safe operations for setting, retrieving, and deleting cache entries asynchronously.
 
+  <details>
+  <summary><b>Port Client (Click to expand)</b></summary>
+
+  <HumanitecExporterPortClient/>
+
+  </details>
+
+  <details>
+  <summary><b>Humanitec Client (Click to expand)</b></summary>
+
+  <HumanitecExporterHumanitecClient/>
+
+  </details>
 
 
-<details>
-<summary><b>Port Client (Click to expand)</b></summary>
+  <details>
+  <summary><b>Cache (Click to expand)</b></summary>
 
-<HumanitecExporterPortClient/>
+  <HumanitecExporterCacheScript/>
 
-</details>
-
-<details>
-<summary><b>Humanitec Client (Click to expand)</b></summary>
-
-<HumanitecExporterHumanitecClient/>
-
-</details>
-
-
-<details>
-<summary><b>Cache (Click to expand)</b></summary>
-
-<HumanitecExporterCacheScript/>
-
-</details>
+  </details>
 
 ### Create the GitHub workflow
 
