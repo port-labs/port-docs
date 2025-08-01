@@ -33,7 +33,7 @@ While this guide uses GitHub and Jira, you can adapt it for other Git providers 
 
 ## Set up data model
 
-We will create and configure blueprints to support our AI-enhanced release management workflow. This includes setting up the GitHub issue blueprint and updating the Jira issue blueprint with necessary relations.
+We will create and configure blueprints to support our AI-enhanced coding workflow. This includes setting up the GitHub issue blueprint and updating the Jira issue blueprint with necessary relations.
 
 ### Create GitHub issue blueprint
 
