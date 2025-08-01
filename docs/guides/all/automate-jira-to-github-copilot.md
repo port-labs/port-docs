@@ -3,7 +3,9 @@ displayed_sidebar: null
 description: Learn how to create an AI agent that automatically generates GitHub issues from Jira tickets, assigns them to Copilot and link pull requests back to Jira.
 ---
 
-* Automate Jira to GitHub Copilot
+import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
+
+# Automate Jira to GitHub Copilot
 
 Coding agents can significantly speed up development, but crucial engineering context often gets lost in the process. In this guide, you will learn how to create an AI agent that not only automates the generation of GitHub issues from Jira tickets but also ensures that important context is preserved by assigning them to GitHub Copilot and linking pull requests back to Jira. This setup will help you establish a seamless ticket-to-deployment workflow, bridging the gap between Jira and GitHub.
 
@@ -37,7 +39,7 @@ We will create and configure blueprints to support our AI-enhanced coding workfl
 
 ### Create GitHub issue blueprint
 
-When installing the Port's GitHub app, the pull request and repository blueprints are created by default. However, the GitHub issue blueprint needs to be created manually.
+When installing Port's GitHub app, the pull request and repository blueprints are created by default. However, the GitHub issue blueprint needs to be created manually.
 
 1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -128,7 +130,7 @@ When installing the Port's GitHub app, the pull request and repository blueprint
 
 ### Update Jira issue blueprint
 
-When you install the Port's Jira integration, the Jira project and issue blueprints are created by default. However, we need to update the Jira issue blueprint to add the pull request relation and create a mirror property for the PR link.
+When you install Port's Jira integration, the Jira project and issue blueprints are created by default. However, we need to update the Jira issue blueprint to add the pull request relation and create a mirror property for the PR link.
 
 1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Find and select your existing Jira issue blueprint (e.g., `jiraIssue`).
@@ -161,6 +163,7 @@ When you install the Port's Jira integration, the Jira project and issue bluepri
     </details>
 
 6. Click `Save` to update the blueprint.
+
 
 ### Update integration configuration
 
@@ -356,6 +359,8 @@ To add these secrets to your portal:
     <details>
     <summary><b>Assign to Copilot action (Click to expand)</b></summary>
 
+    <GithubActionModificationHint/>
+
     ```json showLineNumbers
     {
       "identifier": "assign_to_copilot",
@@ -374,8 +379,8 @@ To add these secrets to your portal:
       },
       "invocationMethod": {
         "type": "GITHUB",
-        "org": "your-org",
-        "repo": "your-repo",
+        "org": "<GITHUB-ORG>",
+        "repo": "<GITHUB-REPO>",
         "workflow": "assign_to_copilot.yml",
         "workflowInputs": {
           "issue_number": "{{ .entity.properties.issueNumber }}",
@@ -392,13 +397,14 @@ To add these secrets to your portal:
 
 5. Click `Save` to create the action.
 
-:::tip GitHub workflow backend
-You will need to create a GitHub workflow file named `assign_to_copilot.yml` in your repository. This workflow handles the assignment of issues to Copilot and includes progress reporting back to Port.
+<h4> Add GitHub workflow </h4>
+
+Create the file `.github/workflows/assign_to_copilot.yml` in the `.github/workflows` folder of your repository. 
+
+This workflow will check if Copilot is enabled for the repository and return its unique ID. It also handles the assignment of issues to Copilot and includes progress reporting back to Port.
 
 <details>
 <summary><b>GitHub workflow for Copilot assignment (Click to expand)</b></summary>
-
-Create a file named `.github/workflows/assign_to_copilot.yml` in your repository. This workflow will check if Copilot is enabled for the repository and return its unique ID. Use the following content for the file:
 
 ```yaml showLineNumbers
 name: Assign Issue to Copilot
@@ -891,7 +897,7 @@ This automation ensures that any new pull request related to a Jira ticket is pr
         "method": "POST",
         "headers": {
           "RUN_ID": "{{ .run.id }}",
-          "Authorization": "Basic {{ .secrets.JIRA_AUTH_TOKEN }}",
+          "Authorization": "Basic {{ .secrets._JIRA_ATLASSIAN_USER_EMAIL + \":\" + .secrets._JIRA_ATLASSIAN_USER_TOKEN | @base64 }}",
           "Content-Type": "application/json"
         },
         "body": {
