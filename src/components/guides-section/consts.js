@@ -1340,7 +1340,7 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
-        title: "Create AI agent to automate Jira to GitHub workflow",
+        title: "Automate Jira to GitHub Copilot",
         description: "Learn how to create an AI agent that automatically generates GitHub issues from Jira tickets and assigns them to Copilot",
         tags: ["SDLC", "Jira", "GitHub", "AI"],
         logos: ["Jira", "GitHub", "AI"],
