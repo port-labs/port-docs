@@ -19,7 +19,8 @@ Once implemented users will be able to:
 
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
-- You have a HiBob instance with admin permissions to access the user data and generate API credentials.
+- You have a HiBob instance with admin permissions to create service users and configure permissions. [Learn about HiBob API Service Users](https://apidocs.hibob.com/docs/api-service-users).
+- You have created a HiBob service user with appropriate permissions to access employee data via the People search API.
 - You have permissions to create blueprints, self-service actions, and automations in Port.
 
 ## Set up data model
@@ -123,20 +124,63 @@ To represent HiBob users in your portal, we need to create a HiBob User blueprin
       "mirrorProperties": {},
       "calculationProperties": {},
       "aggregationProperties": {},
-      "relations": {
-        "user": {
-          "title": "Port User",
-          "target": "_user",
-          "required": false,
-          "many": false
-        }
-      }
+      "relations": {}
     }
     ```
 
     </details>
 
 5. Click on `Save` to create the blueprint.
+
+<h3> Enhance the Port User blueprint</h3>
+
+Now we need to enhance the Port User blueprint to add a relation to the HiBob User blueprint and mirror properties to display HiBob information.
+
+1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Find the `User` blueprint and click on it.
+
+3. Click on the `Edit JSON` button in the top right corner.
+
+4. Add the following relation to the `relations` object:
+
+    <details>
+    <summary><b>Port User blueprint relation (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    "relations": {
+      "hibob_user": {
+        "title": "HiBob User",
+        "target": "hibob_user",
+        "required": false,
+        "many": false
+      }
+    }
+    ```
+
+    </details>
+
+5. Add the following mirror property to the `mirrorProperties` object to display the HiBob display name:
+
+    <details>
+    <summary><b>Port User blueprint mirror property (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    "mirrorProperties": {
+      "hibob_display_name": {
+        "title": "HiBob display name",
+        "path": "hibob_user.displayName"
+      }
+    }
+    ```
+
+    </details>
+
+6. Click on `Save` to update the blueprint.
+
+:::info Additional mirror properties
+You can add more mirror properties to display other HiBob user attributes like full name (`hibob_user.fullName`), manager status (`hibob_user.isManager`), or any other property from the HiBob User blueprint that would be useful for your organization.
+:::
 
 <h3> Add Port secrets</h3>
 
@@ -147,7 +191,12 @@ Now let's add your HiBob credentials to Port's secrets:
 3. Click on the `Secrets` tab.
 4. Click on `+ Secret` and add the following secrets:
    - `HIBOB_API_URL` - Your HiBob API base URL (e.g., https://api.hibob.com/v1)
-   - `HIBOB_API_TOKEN` - Your HiBob API token with appropriate permissions
+   - `HIBOB_SERVICE_USER_ID` - Your HiBob service user ID
+   - `HIBOB_SERVICE_USER_TOKEN` - Your HiBob service user token
+
+:::info HiBob Authentication
+HiBob uses service user authentication with both an ID and token. You'll need to create a service user in HiBob with appropriate permissions to access employee data. Learn more about [creating HiBob service users](https://apidocs.hibob.com/docs/api-service-users).
+:::
 
 
 ## Set up webhook integration
@@ -179,36 +228,36 @@ Follow the steps below to create the webhook integration:
             "filter": "(.body.response | has(\"employees\")) and (.body.response.employees | type == \"array\")",
             "itemsToParse": ".body.response.employees | map(select(.state != \"inactive\"))",
             "entity": {
-            "identifier": ".item.id | tostring",
-            "title": ".item.displayName | tostring",
-            "properties": {
-                "id": ".item.id",
-                "displayName": ".item.displayName",
-                "firstName": ".item.firstName",
-                "surname": ".item.surname",
-                "email": ".item.email",
-                "companyId": ".item.companyId",
-                "state": ".item.state",
-                "avatarUrl": ".item.avatarUrl",
-                "coverImageUrl": ".item.coverImageUrl",
-                "fullName": ".item.fullName",
-                "creationDate": ".item.creationDate",
-                "creationDatetime": ".item.creationDatetime",
-                "isManager": ".item.work.isManager",
-                "durationOfEmployment": ".item.work.durationOfEmployment.humanize"
-            },
-            "relations": {
-                "user": {
-                "combinator": "'and'",
-                "rules": [
-                    {
-                    "property": "'$identifier'",
-                    "operator": "'='",
-                    "value": ".item.email"
-                    }
-                ]
+                "identifier": ".item.id | tostring",
+                "title": ".item.displayName | tostring",
+                "properties": {
+                    "id": ".item.id",
+                    "displayName": ".item.displayName",
+                    "firstName": ".item.firstName",
+                    "surname": ".item.surname",
+                    "email": ".item.email",
+                    "companyId": ".item.companyId",
+                    "state": ".item.state",
+                    "avatarUrl": ".item.avatarUrl",
+                    "coverImageUrl": ".item.coverImageUrl",
+                    "fullName": ".item.fullName",
+                    "creationDate": ".item.creationDate",
+                    "creationDatetime": ".item.creationDatetime",
+                    "isManager": ".item.work.isManager",
+                    "durationOfEmployment": ".item.work.durationOfEmployment.humanize"
                 }
             }
+        },
+        {
+            "blueprint": "_user",
+            "operation": "create",
+            "filter": "(.body.response | has(\"employees\")) and (.body.response.employees | type == \"array\")",
+            "itemsToParse": ".body.response.employees | map(select(.state != \"inactive\" and .email != null))",
+            "entity": {
+                "identifier": ".item.email",
+                "relations": {
+                    "hibob_user": ".item.id | tostring"
+                }
             }
         },
         {
@@ -216,36 +265,35 @@ Follow the steps below to create the webhook integration:
             "operation": "create",
             "filter": ".body.response.employee != null",
             "entity": {
-            "identifier": ".body.response.employee.id | tostring",
-            "title": ".body.response.employee.displayName | tostring",
-            "properties": {
-                "id": ".body.response.employee.id",
-                "displayName": ".body.response.employee.displayName",
-                "firstName": ".body.response.employee.firstName",
-                "surname": ".body.response.employee.surname",
-                "email": ".body.response.employee.email",
-                "companyId": ".body.response.employee.companyId",
-                "state": ".body.response.employee.state",
-                "avatarUrl": ".body.response.employee.avatarUrl",
-                "coverImageUrl": ".body.response.employee.coverImageUrl",
-                "fullName": ".body.response.employee.fullName",
-                "creationDate": ".body.response.employee.creationDate",
-                "creationDatetime": ".body.response.employee.creationDatetime",
-                "isManager": ".body.response.employee.work.isManager",
-                "durationOfEmployment": ".body.response.employee.work.durationOfEmployment.humanize"
-            },
-            "relations": {
-                "user": {
-                "combinator": "'and'",
-                "rules": [
-                    {
-                    "property": "'$identifier'",
-                    "operator": "'='",
-                    "value": ".body.response.employee.email"
-                    }
-                ]
+                "identifier": ".body.response.employee.id | tostring",
+                "title": ".body.response.employee.displayName | tostring",
+                "properties": {
+                    "id": ".body.response.employee.id",
+                    "displayName": ".body.response.employee.displayName",
+                    "firstName": ".body.response.employee.firstName",
+                    "surname": ".body.response.employee.surname",
+                    "email": ".body.response.employee.email",
+                    "companyId": ".body.response.employee.companyId",
+                    "state": ".body.response.employee.state",
+                    "avatarUrl": ".body.response.employee.avatarUrl",
+                    "coverImageUrl": ".body.response.employee.coverImageUrl",
+                    "fullName": ".body.response.employee.fullName",
+                    "creationDate": ".body.response.employee.creationDate",
+                    "creationDatetime": ".body.response.employee.creationDatetime",
+                    "isManager": ".body.response.employee.work.isManager",
+                    "durationOfEmployment": ".body.response.employee.work.durationOfEmployment.humanize"
                 }
             }
+        },
+        {
+            "blueprint": "_user",
+            "operation": "create",
+            "filter": ".body.response.employee != null and .body.response.employee.email != null",
+            "entity": {
+                "identifier": ".body.response.employee.email",
+                "relations": {
+                    "hibob_user": ".body.response.employee.id | tostring"
+                }
             }
         }
     ]
@@ -254,6 +302,10 @@ Follow the steps below to create the webhook integration:
     </details>
 
 7. Click on `Save`.
+
+:::info Port User creation
+When the webhook processes HiBob users, it will automatically create Port User entities for any HiBob users that don't already exist in your Port organization. These newly created Port users will have a `Disabled` status by default, meaning they won't receive email invitations and won't be able to access Port until an admin manually activates their accounts.
+:::
 
 
 ## Set up self-service actions
@@ -302,7 +354,7 @@ Follow the steps below to create the action:
         "headers": {
           "RUN_ID": "{{ .run.id }}",
           "Content-Type": "application/json",
-          "Authorization": "Bearer {{ .secrets.HIBOB_API_TOKEN }}"
+          "Authorization": "Basic {{ .secrets.HIBOB_SERVICE_USER_ID }}:{{ .secrets.HIBOB_SERVICE_USER_TOKEN }}"
         },
         "body": {}
       },
@@ -364,7 +416,7 @@ Follow the steps below to create the action:
         "headers": {
           "RUN_ID": "{{ .run.id }}",
           "Content-Type": "application/json",
-          "Authorization": "Bearer {{ .secrets.HIBOB_API_TOKEN }}"
+          "Authorization": "Basic {{ .secrets.HIBOB_SERVICE_USER_ID }}:{{ .secrets.HIBOB_SERVICE_USER_TOKEN }}"
         },
         "body": {}
       },
@@ -582,9 +634,3 @@ Follow the steps below to create the automation:
 
 You've successfully ingested HiBob users into your Port catalog and automatically mapped them to existing Port user accounts based on email addresses.
 
-
-## Related guides
-
-- [HiBob integration via Airbyte, S3 and webhook](https://docs.port.io/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook)
-- [HiBob API documentation](https://apidocs.hibob.com/)
-- [Create HiBob notifications](https://docs.port.io/guides/all/create-hibob-notifications) 
