@@ -5,17 +5,17 @@ description: Learn how to create an AI agent that automatically generates GitHub
 
 # Create AI agent to automate Jira to GitHub workflow
 
-This guide demonstrates how to create an AI agent that streamlines your development workflow by automatically generating GitHub issues from Jira tickets, assigning them to GitHub Copilot and linking pull requests back to Jira. You will learn how to set up a complete automation that bridges Jira and GitHub, enabling seamless ticket-to-deployment workflow.
+Coding agents can significantly speed up development, but crucial engineering context often gets lost in the process. In this guide, you will learn how to create an AI agent that not only automates the generation of GitHub issues from Jira tickets but also ensures that important context is preserved by assigning them to GitHub Copilot and linking pull requests back to Jira. This setup will help you establish a seamless ticket-to-deployment workflow, bridging the gap between Jira and GitHub.
 
 <img src="/img/guides/jira-to-github-pr-workflow.jpg" border="1px" width="100%" />
 
 
 ## Common use cases
 
-- Automatically create GitHub issues from Jira tickets when they move to "In Progress"
-- Assign GitHub issues to Copilot for automated code generation
-- Link pull requests back to Jira tickets with automated comments
-- Streamline the development workflow from ticket to deployment
+- **Auto-create PRs for bug fixes** to minimize manual work.
+- **Integrate with Copilot** for teams not relying on GitHub Issues.
+- **Link Jira tickets to PRs** to improve cross-platform collaboration.
+- **Generate GitHub issues from Jira** for faster prototyping.
 
 
 ## Prerequisites
@@ -34,85 +34,6 @@ While this guide uses GitHub and Jira, you can adapt it for other Git providers 
 ## Set up data model
 
 We will create and configure blueprints to support our AI-enhanced release management workflow. This includes setting up the GitHub issue blueprint and updating the Jira issue blueprint with necessary relations.
-
-### Create Task blueprint
-
-We need to create a Task blueprint to store the AI agent's response before creating the GitHub issue.
-
-1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
-2. Click on `+ Blueprint`.
-3. Click on the `{...} Edit JSON` button.
-4. Copy and paste the following JSON configuration:
-
-    <details>
-    <summary><b>Task blueprint (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-      "identifier": "task",
-      "title": "Task",
-      "icon": "Task",
-      "schema": {
-        "properties": {
-          "title": {
-            "title": "Title",
-            "type": "string"
-          },
-          "description": {
-            "title": "Description",
-            "type": "string",
-            "format": "markdown"
-          },
-          "labels": {
-            "title": "Labels",
-            "type": "array"
-          },
-          "status": {
-            "title": "Status",
-            "type": "string",
-            "enum": [
-              "pending",
-              "completed",
-              "failed"
-            ],
-            "enumColors": {
-              "pending": "yellow",
-              "completed": "green",
-              "failed": "red"
-            }
-          },
-          "source": {
-            "title": "Source",
-            "type": "string"
-          },
-          "createdAt": {
-            "title": "Created At",
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": []
-      },
-      "mirrorProperties": {},
-      "calculationProperties": {},
-      "aggregationProperties": {},
-      "relations": {
-        "repository": {
-          "target": "githubRepository",
-          "required": true,
-          "many": false
-        },
-        "jiraIssue": {
-          "target": "jiraIssue",
-          "required": false,
-          "many": false
-        }
-      }
-    }
-    ```
-    </details>
-
-5. Click `Create` to save the blueprint.
 
 ### Create GitHub issue blueprint
 
@@ -259,8 +180,7 @@ Now we need to update the Jira integration configuration mapping to establish th
         selector:
           query: 'true'
           jql: >-
-            ((statusCategory != Done) OR (created >= -1w) OR (updated >= -1w)) and
-            project=AI
+            ((statusCategory != Done) OR (created >= -1w) OR (updated >= -1w))
         port:
           entity:
             mappings:
@@ -341,11 +261,8 @@ To add these secrets to your portal:
 3. Click on the `Secrets` tab.
 
 4. Click on `+ Secret` and add the following secret:
-    - `JIRA_AUTH_TOKEN` - Base64 encoded string of your Jira credentials. Generate this by running:
-        ```bash
-        echo -n "your-email@domain.com:your-api-token" | base64
-        ```
-    - `GITHUB_TOKEN` - A GitHub personal access token with permissions to create issues in your repositories.
+
+    - `GITHUB_TOKEN` - A [GitHub fine-grained access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) is required. This token must have read and write permissions for the "Issues" section of your repositories to enable the creation of issues.
 
 
 ### Create GitHub issue action
@@ -481,7 +398,7 @@ You will need to create a GitHub workflow file named `assign_to_copilot.yml` in 
 <details>
 <summary><b>GitHub workflow for Copilot assignment (Click to expand)</b></summary>
 
-Create a file named `.github/workflows/assign_to_copilot.yml` in your repository with the following content:
+Create a file named `.github/workflows/assign_to_copilot.yml` in your repository. This workflow will check if Copilot is enabled for the repository and return its unique ID. Use the following content for the file:
 
 ```yaml showLineNumbers
 name: Assign Issue to Copilot
@@ -521,8 +438,8 @@ jobs:
         if: ${{ inputs.port_run_id != '' }}
         uses: port-labs/port-github-action@v1
         with:
-          clientId: ${{ secrets.PORT_AI_DEMO_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_AI_DEMO_CLIENT_SECRET }}
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.us.getport.io
           operation: PATCH_RUN
           runId: ${{ inputs.port_run_id }}
@@ -562,14 +479,14 @@ jobs:
           echo "Found Copilot bot with ID: $copilot_id"
         env:
           # Use PAT instead of GITHUB_TOKEN for cross-org access
-          GH_TOKEN: ${{ secrets.PORT_AI_DEMO_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PORT_GITHUB_TOKEN }}
 
       - name: Report progress to Port - Found Copilot Bot
         if: ${{ inputs.port_run_id != '' }}
         uses: port-labs/port-github-action@v1
         with:
-          clientId: ${{ secrets.PORT_AI_DEMO_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_AI_DEMO_CLIENT_SECRET }}
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.us.getport.io
           operation: PATCH_RUN
           runId: ${{ inputs.port_run_id }}
@@ -607,14 +524,14 @@ jobs:
           echo "issue_title=$issue_title" >> $GITHUB_OUTPUT
           echo "Found issue: $issue_title (ID: $issue_id)"
         env:
-          GH_TOKEN: ${{ secrets.PORT_AI_DEMO_CLIENT_SECRET }}
+          GH_TOKEN: ${{ secrets.PORT_CLIENT_SECRET }}
 
       - name: Report progress to Port - Found Issue
         if: ${{ inputs.port_run_id != '' }}
         uses: port-labs/port-github-action@v1
         with:
-          clientId: ${{ secrets.PORT_AI_DEMO_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_AI_DEMO_CLIENT_SECRET }}
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.us.getport.io
           operation: PATCH_RUN
           runId: ${{ inputs.port_run_id }}
@@ -628,15 +545,15 @@ jobs:
             --repo "${{ inputs.repository_owner }}/${{ inputs.repository_name }}" \
             --body "$ISSUE_CONTEXT"
         env:
-          GH_TOKEN: ${{ secrets.PORT_AI_DEMO_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PORT_GITHUB_TOKEN }}
           ISSUE_CONTEXT: ${{ inputs.issue_context_to_comment }}
 
       - name: Report progress to Port - Commented on issue
         if: ${{ inputs.port_run_id != '' }}
         uses: port-labs/port-github-action@v1
         with:
-          clientId: ${{ secrets.PORT_AI_DEMO_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_AI_DEMO_CLIENT_SECRET }}
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.us.getport.io
           operation: PATCH_RUN
           runId: ${{ inputs.port_run_id }}
@@ -676,14 +593,14 @@ jobs:
             exit 1
           fi
         env:
-          GH_TOKEN: ${{ secrets.PORT_AI_DEMO_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PORT_GITHUB_TOKEN }}
 
       - name: Report back to Port (if triggered from Port)
         if: ${{ inputs.port_run_id != '' }}
         uses: port-labs/port-github-action@v1
         with:
-          clientId: ${{ secrets.PORT_AI_DEMO_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_AI_DEMO_CLIENT_SECRET }}
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.us.getport.io
           operation: PATCH_RUN
           runId: ${{ inputs.port_run_id }}
@@ -698,9 +615,9 @@ jobs:
 
 :::caution Required secrets
 You will need to add the following secrets to your GitHub repository:
-- `PORT_AI_DEMO_CLIENT_ID`: Your Port client ID
-- `PORT_AI_DEMO_CLIENT_SECRET`: Your Port client secret  
-- `PORT_AI_DEMO_GITHUB_TOKEN`: A GitHub PAT with repository access
+- `PORT_CLIENT_ID`: Your Port client ID
+- `PORT_CLIENT_SECRET`: Your Port client secret  
+- `PORT_GITHUB_TOKEN`: A GitHub PAT with repository access
 :::
 
 
@@ -748,6 +665,10 @@ Next, we will create an AI agent that generates GitHub issues from Jira tickets 
 
 5. Click `Create` to save the agent.
 
+:::tip Enhance Context with Integrations
+The more integrations and data you add to the agent, the richer the context it will provide to the Copilot agent. Consider integrating additional data sources like deployment history, related incidents, and more to enhance the AI agent's effectiveness.
+:::
+
 
 ## Set up automations
 
@@ -759,6 +680,10 @@ We will create several automations to orchestrate the AI-enhanced release manage
 4. Update Jira tickets with pull request links
 
 ### Automation to trigger AI agent
+
+:::tip Multiple Approaches
+This automation can be configured to trigger based on various criteria. Currently, it triggers based on a label, but you can also set it to trigger based on different properties or ownership.
+:::
 
 1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
@@ -791,7 +716,7 @@ We will create several automations to orchestrate the AI-enhanced release manage
       },
       "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "https://api.us.getport.io/v1/agent/github_issue_creation/invoke",
+        "url": "https://api.getport.io/v1/agent/github_issue_creation/invoke",
         "agent": false,
         "synchronized": true,
         "method": "POST",
@@ -814,7 +739,10 @@ We will create several automations to orchestrate the AI-enhanced release manage
 
 4. Click `Create` to save the automation.
 
+
 ### Automation to assign to Copilot
+
+This automation ensures that when a Jira issue is marked as "In Progress" and labeled for Copilot, it is automatically assigned to the Copilot agent in GitHub. This streamlines the workflow by reducing manual intervention and ensuring that tasks are promptly assigned to the appropriate coding agent.
 
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
@@ -846,7 +774,7 @@ We will create several automations to orchestrate the AI-enhanced release manage
       },
       "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "https://api.us.getport.io/v1/actions/assign_to_copilot/runs",
+        "url": "https://api.getport.io/v1/actions/assign_to_copilot/runs",
         "agent": false,
         "synchronized": true,
         "method": "POST",
@@ -867,6 +795,8 @@ We will create several automations to orchestrate the AI-enhanced release manage
 4. Click `Create` to save the automation.
 
 ### Automation to add labels to GitHub issues
+
+When creating a GitHub issue via the API, you can't set its labels. This automation does it right after creating the GitHub issue.
 
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
@@ -920,12 +850,18 @@ We will create several automations to orchestrate the AI-enhanced release manage
 
 ### Automation to add PR link to Jira ticket
 
+This automation ensures that any new pull request related to a Jira ticket is promptly linked back to the ticket, providing clear traceability and context for development progress.
+
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
 3. Copy and paste the following JSON schema:
 
     <details>
     <summary><b>Add PR link to Jira issue automation (Click to expand)</b></summary>
+
+    :::tip Atlassian domain replacement
+    Remember to replace `<YOUR_ATLASSIAN_DOMAIN>` with your actual Atlassian domain.
+    :::
 
     ```json showLineNumbers
     {
@@ -949,7 +885,7 @@ We will create several automations to orchestrate the AI-enhanced release manage
       },
       "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "https://your-domain.atlassian.net/rest/api/3/issue/{{  .event.diff.before.identifier }}/comment",
+        "url": "https://<YOUR_ATLASSIAN_DOMAIN>.atlassian.net/rest/api/3/issue/{{  .event.diff.before.identifier }}/comment",
         "agent": false,
         "synchronized": true,
         "method": "POST",
@@ -968,7 +904,7 @@ We will create several automations to orchestrate the AI-enhanced release manage
                 "content": [
                   {
                     "type": "text",
-                    "text": "We've discovered a PR for this issue. Find the link below:"
+                    "text": "Port opened a PR for this issue. Find the link below:"
                   }
                 ]
               },
@@ -1037,19 +973,6 @@ Now let us test the complete workflow to ensure everything works correctly.
 2. Check the Jira ticket to see if a comment was added with the PR link.
 
 <img src="/img/guides/jira-to-github-ai-test.png" border="1px" width="100%" />
-
-
-## Best practices
-
-To get the most out of your AI-enhanced release management workflow:
-
-1. **Monitor AI responses**: Regularly review the quality and accuracy of AI-generated GitHub issues.
-
-2. **Refine the prompt**: Adjust the AI agent prompt based on your team's specific needs and communication style.
-
-3. **Customize labels**: Configure different labels for different types of tasks or teams.
-
-4. **Add more context**: Consider enriching Jira tickets with additional metadata from other integrations.
 
 
 ## Related guides
