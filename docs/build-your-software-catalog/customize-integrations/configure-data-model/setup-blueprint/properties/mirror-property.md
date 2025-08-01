@@ -24,7 +24,7 @@ Mirror properties allow you to map property values from related entities, to `ke
 
 Mirror properties support both [user-defined](./properties.md#available-properties) properties, and [meta-properties](./meta-properties.md) by using similar syntax.
 
-## 💡 Common mirror usage
+## Common mirror usage
 
 Mirror properties make it possible to enrich the data visible on an entity by mapping additional data and properties from other related entities in the catalog, for example:
 
@@ -183,7 +183,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

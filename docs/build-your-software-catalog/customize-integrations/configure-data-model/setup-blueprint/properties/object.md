@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem"
 
 Object is a data type used to save object definitions in JSON.
 
-## 💡 Common object usage
+## Common object usage
 
 The object property type can be used to store any key/value based data, for example:
 
@@ -127,8 +127,7 @@ resource "port_blueprint" "myBlueprint" {
 ## Pulumi definition
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Array - coming soon", value: "array"}
+{label: "Basic", value: "basic"}
 ]}>
 
 <TabItem value="basic">
@@ -222,7 +221,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -272,8 +271,7 @@ Object validations follow the JSON schema model, refer to the [JSON schema docs]
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Array", value: "array"},
-{label: "Terraform - coming soon", value: "tf"}
+{label: "Array", value: "array"}
 ]}>
 
 <TabItem value="basic">
