@@ -197,8 +197,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Enum", value: "enum"}
 ]}>
 
 <TabItem value="basic">
@@ -297,7 +296,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -443,7 +442,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
