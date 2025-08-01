@@ -3,7 +3,7 @@ displayed_sidebar: null
 description: Learn how to create an AI agent that automatically generates GitHub issues from Jira tickets, assigns them to Copilot and link pull requests back to Jira.
 ---
 
-# Create AI agent to automate Jira to GitHub workflow
+* Automate Jira to GitHub Copilot
 
 This guide demonstrates how to create an AI agent that streamlines your development workflow by automatically generating GitHub issues from Jira tickets, assigning them to GitHub Copilot and linking pull requests back to Jira. You will learn how to set up a complete automation that bridges Jira and GitHub, enabling seamless ticket-to-deployment workflow.
 
