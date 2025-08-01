@@ -35,6 +35,85 @@ While this guide uses GitHub and Jira, you can adapt it for other Git providers 
 
 We will create and configure blueprints to support our AI-enhanced release management workflow. This includes setting up the GitHub issue blueprint and updating the Jira issue blueprint with necessary relations.
 
+### Create Task blueprint
+
+We need to create a Task blueprint to store the AI agent's response before creating the GitHub issue.
+
+1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
+2. Click on `+ Blueprint`.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration:
+
+    <details>
+    <summary><b>Task blueprint (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "task",
+      "title": "Task",
+      "icon": "Task",
+      "schema": {
+        "properties": {
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string",
+            "format": "markdown"
+          },
+          "labels": {
+            "title": "Labels",
+            "type": "array"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string",
+            "enum": [
+              "pending",
+              "completed",
+              "failed"
+            ],
+            "enumColors": {
+              "pending": "yellow",
+              "completed": "green",
+              "failed": "red"
+            }
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "createdAt": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {
+        "repository": {
+          "target": "githubRepository",
+          "required": true,
+          "many": false
+        },
+        "jiraIssue": {
+          "target": "jiraIssue",
+          "required": false,
+          "many": false
+        }
+      }
+    }
+    ```
+    </details>
+
+5. Click `Create` to save the blueprint.
+
 ### Create GitHub issue blueprint
 
 When installing the Port's GitHub app, the pull request and repository blueprints are created by default. However, the GitHub issue blueprint needs to be created manually.
