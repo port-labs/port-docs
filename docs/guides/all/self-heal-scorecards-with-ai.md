@@ -7,6 +7,8 @@ description: Learn how to use Port's AI capabilities to automatically detect sco
 
 Scorecards in Port help you evaluate the maturity, production readiness, and engineering quality of entities in your software catalog. However, when scorecard statistics degrade, manual intervention is often required to identify and fix the issues. This guide shows you how to create an AI-powered system that automatically detects scorecard degradation, creates GitHub issues for remediation, and assigns them to GitHub Copilot for automated code fixes.
 
+<img src="/img/guides/self-healing-scorecard-workflow.jpg" border="1px" width="100%" />
+
 
 ## Common use cases
 
