@@ -1,0 +1,262 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import CodeBlock from '@theme/CodeBlock';
+import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx"
+import AdvancedConfig from '../../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
+import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
+import Prerequisites from "../../../templates/\_ocean_helm_prerequisites_block.mdx"
+import CiInstallMethod from "./\_ci_install.mdx"
+import DockerInstallMethod from "./_docker_install.mdx"
+import ParametersTable from "./_parameters_table.jsx"
+import Base64Tip from "./\_base_64_tip.mdx"
+import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
+
+
+## Deploy the integration
+
+
+To deploy the integration, you will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
+
+<FindCredentials/>
+
+___
+
+Choose the installation method that best suits your needs:
+
+<Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="real-time-self-hosted" label="Kubernetes">
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+<h2>Prerequisites</h2>
+
+<Prerequisites />
+
+For details about the available parameters for the installation, see the table below.
+
+<Tabs groupId="deploy" queryString="deploy">
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm:
+
+Add Port's Helm chart repository:
+```showLineNumbers
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+```
+
+Install the Helm chart:
+
+  1. Create a `values.yaml` file with the following content:
+
+  {props.setupName == "app" ? (
+  <CodeBlock language="yaml" showLineNumbers title="values.yaml">
+{`
+  port:
+    clientId: "<PORT_CLIENT_ID>"
+    clientSecret: "<PORT_CLIENT_SECRET>"
+    baseUrl: "https://api.port.io"
+
+  integration:
+    identifier: "github-ocean"
+    type: "github-ocean"
+    version: "1.2.0-beta"
+    eventListener:
+      type: "POLLING"
+    config:
+      githubOrganization: "<GITHUB_ORGANIZATION>"
+      githubHost: "<GITHUB_HOST>" # e.g https://api.github.com
+      githubAppId: "<GITHUB_APP_ID>" # app client id also works
+    secrets:
+      githubAppPrivateKey: "<BASE_64_ENCODED_PRIVATEKEY>"
+
+  # uncomment to enable live events
+  # liveEvents:
+  #  baseUrl: "<your-domain>"
+
+  initializePortResources: true
+  sendRawDataExamples: true
+  scheduledResyncInterval: 360
+`}
+</CodeBlock>
+  ) : (
+
+  <CodeBlock language="yaml" showLineNumbers title="values.yaml">
+      {`
+  port:
+    clientId: "<PORT_CLIENT_ID>"
+    clientSecret: "<PORT_CLIENT_SECRET>"
+    baseUrl: "https://api.port.io"
+
+  integration:
+    identifier: "github-ocean"
+    type: "github-ocean"
+    version: "1.2.0-beta"
+    eventListener:
+      type: "POLLING"
+    config:
+      githubOrganization: "<GITHUB_ORGANIZATION>"
+      githubHost: "<GITHUB_HOST>" # e.g https://api.github.com
+    secrets:
+      githubToken: "<GITHUB_PAT>"
+
+  # uncomment to enable live events
+  # liveEvents:
+  #  baseUrl: "<your-domain>"
+
+  initializePortResources: true
+  sendRawDataExamples: true
+  scheduledResyncInterval: 360
+        `}
+  </CodeBlock>
+  )}
+
+
+  2. Install the Helm chart using the `values.yaml` file:
+
+  <CodeBlock language="bash" showLineNumbers>
+{`helm upgrade --install github-ocean port-labs/port-ocean -f values.yaml`}
+  </CodeBlock>
+
+  [See all available helm options](https://github.com/port-labs/helm-charts/blob/main/charts/port-ocean/README.md)
+
+<PortApiRegionTip/>
+
+</TabItem>
+
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-github-integration` in your git repository with the content:
+
+:::note
+Be sure to replace the `<GITHUB_TOKEN>` and `<GITHUB_ORGANIZATION>` placeholders with your actual values. If you are using a self-hosted GitHub instance, update the `githubHost` value to point to your instance.
+:::
+
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-github-integration
+  type: github-ocean
+  version: 1.2.0-beta
+  eventListener:
+    type: POLLING
+  config:
+    githubHost: https://api.github.com # Or your self-hosted GitHub URL
+    githubOrganization: "<GITHUB_ORGANIZATION>" # your github organization, e.g port-labs
+  secrets:
+    githubToken: "<GITHUB_TOKEN>"
+
+# uncomment to enable live events
+# liveEvents:
+#  baseUrl: "<your-domain>"
+```
+
+<br/>
+2. Install the `my-ocean-github-integration` ArgoCD Application by creating the following `my-ocean-github-integration.yaml` manifest:
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-github-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-github-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.9.5
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-github-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: <YOUR_PORT_CLIENT_ID>
+        - name: port.clientSecret
+          value: <YOUR_PORT_CLIENT_SECRET>
+        - name: port.baseUrl
+          value: https://api.getport.io
+      // highlight-end
+  // highlight-start
+  - repoURL: <YOUR_GIT_REPO_URL>
+    targetRevision: main
+    ref: values
+  // highlight-end
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+<PortApiRegionTip/>
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+
+```bash
+kubectl apply -f my-ocean-github-integration.yaml
+```
+
+
+</TabItem>
+
+
+</Tabs>
+
+{props.setupName == "app" && <Base64Tip />}
+
+
+### Enabling live-events
+:::tip Live events
+The `liveEvents.baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
+For debugging, services like [Ngrok](https://ngrok.com/) can provide a temporary public URL. For production, a stable and publicly accessible host is required.
+
+If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
+:::
+
+<OceanSaasLiveEventsDescription id="GithubOcean" />
+The `liveEvents.baseUrl` specifies the public-facing URL for your integration. This URL, which must be reachable from the internet, is used to receive real-time updates from Github. It can be a public IP address or a configured domain name (e.g., `https://mygithubintegration.com`).
+
+<details>
+  <summary><b>Supported live event triggers</b></summary>
+    <OceanSaasLiveEventsTriggersManual id="GithubOcean" isOAuth={false} />
+</details>
+
+
+This table summarizes the available parameters for the installation.
+
+<ParametersTable showingApp={props.setupName == "app"} />
+
+<br/>
+
+<AdvancedConfig/>
+
+</TabItem>
+
+<TabItem value="docker" label="Docker" default>
+    <DockerInstallMethod showingApp={props.setupName == "app"} />
+</TabItem>
+
+{props.setupName != "app" && 
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+<CiInstallMethod />
+</TabItem>}
+</Tabs>
+
+
