@@ -17,6 +17,8 @@ export const tagsCategoryMap = {
         "Slack",
         "PagerDuty",
         "Terraform",
+        "Pulumi",
+        "Crossplane",
         "SonarQube",
         // "GCP",
         // "Kubecost",
