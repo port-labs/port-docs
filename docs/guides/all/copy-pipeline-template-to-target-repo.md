@@ -53,8 +53,8 @@ First, let's set up the necessary Azure DevOps components to handle the pipeline
     
     ```json showLineNumbers
     {
-      "identifier": "azureDevopsRepository",
-      "title": "Repository",
+      "identifier": "service",
+      "title": "Service",
       "icon": "AzureDevops",
       "schema": {
         "properties": {
@@ -103,11 +103,12 @@ First, let's set up the necessary Azure DevOps components to handle the pipeline
         port:
           entity:
             mappings:
-              identifier: .project.name + "/" + .name | gsub(" "; "")
+              identifier: >-
+                "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
               title: .name
-              blueprint: '"azureDevopsRepository"'
+              blueprint: '"service"'
               properties:
-                url: .url
+                url: .remoteUrl
                 readme: file://README.md
                 defaultBranch: .defaultBranch # Add this line
               relations:

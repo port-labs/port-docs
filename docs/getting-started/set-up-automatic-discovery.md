@@ -230,11 +230,17 @@ Once you have done this, you can add the following block to the mapping configur
   port:
     entity:
       mappings:
-        identifier: .project.name + "/" + .name | gsub(" "; "")
+        identifier: >-
+          "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
         title: .name
         blueprint: '"service"'
+        properties:
+          url: .remoteUrl
+          readme: file://README.md
+          defaultBranch: .defaultBranch
         relations:
-          azureDevopsRepository: .project.name + "/" + .name | gsub(" "; "")
+          service: >-
+            "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
 ```
 </details>
 

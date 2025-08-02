@@ -53,7 +53,7 @@ resources:
     entity:
       mappings:
         identifier: .id | gsub(" "; "")
-        blueprint: '"azureDevopsProject"'
+        blueprint: '"project"'
         title: .name
         properties:
           state: .state
@@ -67,11 +67,12 @@ resources:
   port:
     entity:
       mappings:
-        identifier: .project.name + "/" + .name | gsub(" "; "")
+        identifier: >-
+          "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
         title: .name
-        blueprint: '"azureDevopsRepository"'
+        blueprint: '"service"'
         properties:
-          url: .url
+          url: .remoteUrl
           readme: file://README.md
           id: .id
           last_activity: .project.lastUpdateTime
@@ -83,8 +84,9 @@ resources:
   port:
     entity:
       mappings:
-        identifier: .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
-        blueprint: '"azureDevopsRepository"'
+        identifier: >-
+          "\(.__repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
+        blueprint: '"service"'
         properties:
           minimumApproverCount: .settings.minimumApproverCount
 - kind: repository-policy
@@ -93,8 +95,9 @@ resources:
   port:
     entity:
       mappings:
-        identifier: .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
-        blueprint: '"azureDevopsRepository"'
+        identifier: >-
+          "\(.__repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
+        blueprint: '"service"'
         properties:
           workItemLinking: .isEnabled and .isBlocking
 - kind: user
@@ -131,7 +134,8 @@ resources:
   port:
     entity:
       mappings:
-        identifier: .repository.project.name + "/" + .repository.name + (.pullRequestId | tostring) | gsub(" "; "")
+        identifier: >-
+          "\(.repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.repository.name | ascii_downcase | gsub("[ ();]"; ""))/\(.pullRequestId | tostring)"
         blueprint: '"azureDevopsPullRequest"'
         properties:
           status: .status
@@ -159,11 +163,6 @@ resources:
               value: '[.reviewers[].uniqueName]'
           azure_devops_reviewers: '[.reviewers[].id]'
           azure_devops_creator: .createdBy.id
-
-
-
-
-
 ```
 
 </details>
@@ -469,9 +468,9 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ```json showLineNumbers
 {
-  "identifier": "PortIntegration/final_project_to_project_test",
+  "identifier": "portintegration/final_project_to_project_test",
   "title": "final_project_to_project_test",
-  "blueprint": "azureDevopsRepository",
+  "blueprint": "service",
   "properties": {
     "url": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_apis/git/repositories/43c319c8-5adc-41f8-8486-745fe2130cd6",
     "readme": "<README.md Content>",

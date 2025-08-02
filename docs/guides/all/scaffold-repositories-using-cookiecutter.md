@@ -93,8 +93,8 @@ However, we highly recommend you install the Azure DevOps integration to have th
 
     ```json showLineNumbers
     {
-      "identifier": "azureDevopsRepository",
-      "title": "Azure DevOps Repository",
+      "identifier": "service",
+      "title": "Service",
       "icon": "Azure",
       "schema": {
         "properties": {
@@ -119,6 +119,7 @@ However, we highly recommend you install the Azure DevOps integration to have th
       },
       "mirrorProperties": {},
       "calculationProperties": {},
+      "aggregationProperties": {},
       "relations": {}
     }
     ```
@@ -203,7 +204,7 @@ However, we highly recommend you install the Azure DevOps integration to have th
           
           ]
         },
-        "blueprintIdentifier": "azureDevopsRepository"
+        "blueprintIdentifier": "service"
       },
       "invocationMethod": {
         "type": "AZURE_DEVOPS",
