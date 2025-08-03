@@ -1,6 +1,10 @@
 ---
 sidebar_position: 2
 ---
+import JiraServerProjectBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/examples/_jira_server_project_blueprint.mdx"
+import JiraServerUserBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/examples/_jira_server_user_blueprint.mdx"
+import JiraServerIssueBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/examples/_jira_server_issue_blueprint.mdx"
+import JiraServerMappingConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/examples/_jira_server_mapping_configuration.mdx"
 
 # Examples
 
@@ -15,211 +19,22 @@ The integration creates the following default blueprints:
 <details>
 <summary><b>Jira Server Project blueprint (Click to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "jiraServerProject",
-  "title": "Jira Server Project",
-  "icon": "Jira",
-  "description": "A Jira project",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Project URL",
-        "type": "string",
-        "format": "url",
-        "description": "URL to the project in Jira"
-      }
-    }
-  },
-  "calculationProperties": {}
-}
-```
+<JiraServerProjectBlueprint/>
 
 </details>
 
 <details>
 <summary><b>Jira Server User blueprint (Click to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "jiraServerUser",
-  "title": "Jira Server User",
-  "icon": "User",
-  "description": "A Jira user account",
-  "schema": {
-    "properties": {
-      "emailAddress": {
-        "title": "Email",
-        "type": "string",
-        "format": "email",
-        "description": "User's email address"
-      },
-      "active": {
-        "title": "Active Status",
-        "type": "boolean",
-        "description": "Whether the user account is active"
-      },
-      "timeZone": {
-        "title": "Time Zone",
-        "type": "string",
-        "description": "User's configured time zone"
-      },
-      "locale": {
-        "title": "Locale",
-        "type": "string",
-        "description": "User's configured locale"
-      },
-      "avatarUrl": {
-        "title": "Avatar URL",
-        "type": "string",
-        "format": "url",
-        "description": "URL for user's 48x48 avatar image"
-      }
-    }
-  },
-  "relations": {},
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {}
-}
-```
+<JiraServerUserBlueprint/>
 
 </details>
 
 <details>
 <summary><b>Jira Server Issue blueprint (Click to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "jiraServerIssue",
-  "title": "Jira Server Issue",
-  "icon": "Jira",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Issue URL",
-        "type": "string",
-        "format": "url",
-        "description": "URL to the issue in Jira"
-      },
-      "status": {
-        "title": "Status",
-        "type": "string",
-        "description": "The status of the issue",
-        "enum": ["To Do", "In Progress", "Blocked", "Review", "Done"],
-        "enumColors": {
-          "To Do": "blue",
-          "In Progress": "yellow",
-          "Blocked": "red",
-          "Review": "purple",
-          "Done": "green"
-        }
-      },
-      "issueType": {
-        "title": "Type",
-        "type": "string",
-        "description": "The type of the issue",
-        "enum": ["Bug", "Task", "Story", "Epic", "Sub-task"],
-        "enumColors": {
-          "Bug": "red",
-          "Task": "blue",
-          "Story": "green",
-          "Epic": "purple",
-          "Sub-task": "yellow"
-        }
-      },
-      "components": {
-        "title": "Components",
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "description": "The components related to this issue"
-      },
-      "creator": {
-        "title": "Creator",
-        "type": "string",
-        "description": "The user that created to the issue",
-        "format": "user"
-      },
-      "priority": {
-        "title": "Priority",
-        "type": "string",
-        "description": "The priority of the issue"
-      },
-      "labels": {
-        "items": {
-          "type": "string"
-        },
-        "title": "Labels",
-        "type": "array"
-      },
-      "created": {
-        "title": "Created At",
-        "type": "string",
-        "description": "The created datetime of the issue",
-        "format": "date-time"
-      },
-      "updated": {
-        "title": "Updated At",
-        "type": "string",
-        "description": "The updated datetime of the issue",
-        "format": "date-time"
-      },
-      "resolutionDate": {
-        "title": "Resolved At",
-        "type": "string",
-        "description": "The datetime the issue changed to a resolved state",
-        "format": "date-time"
-      }
-    }
-  },
-  "calculationProperties": {
-    "handlingDuration": {
-      "title": "Handling Duration (Days)",
-      "icon": "Clock",
-      "description": "The amount of time in days from issue creation to issue resolution",
-      "calculation": "if (.properties.resolutionDate != null and .properties.created != null) then ((.properties.resolutionDate[0:19] + \"Z\" | fromdateiso8601) - (.properties.created[0:19] + \"Z\" | fromdateiso8601)) / 86400 else null end",
-      "type": "number"
-    }
-  },
-  "mirrorProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "project": {
-      "target": "jiraServerProject",
-      "title": "Project",
-      "description": "The Jira project that contains this issue",
-      "required": false,
-      "many": false
-    },
-    "parentIssue": {
-      "target": "jiraServerIssue",
-      "title": "Parent Issue",
-      "required": false,
-      "many": false
-    },
-    "subtasks": {
-      "target": "jiraServerIssue",
-      "title": "Subtasks",
-      "required": false,
-      "many": true
-    },
-    "assignee": {
-      "target": "jiraServerUser",
-      "title": "Assignee",
-      "required": false,
-      "many": false
-    },
-    "reporter": {
-      "target": "jiraServerUser",
-      "title": "Reporter",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
+
+<JiraServerIssueBlueprint/>
 
 </details>
 
@@ -230,67 +45,7 @@ This is the default mapping configuration for this integration:
 <details>
 <summary><b>Default mapping configuration (Click to expand)</b></summary>
 
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"jiraServerProject"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
-
-  - kind: user
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .displayName
-          blueprint: '"jiraServerUser"'
-          properties:
-            emailAddress: .emailAddress
-            active: .active
-            timeZone: .timeZone
-            locale: .locale
-            avatarUrl: .avatarUrls["48x48"]
-
-  - kind: issue
-    selector:
-      query: "true"
-      jql: "(statusCategory != Done) OR (created >= -1w) OR (updated >= -1w)"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .fields.summary
-          blueprint: '"jiraServerIssue"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
-            status: .fields.status.name
-            issueType: .fields.issuetype.name
-            components: .fields.components | map(.name)
-            creator: .fields.creator.name
-            priority: .fields.priority.name
-            labels: .fields.labels
-            created: .fields.created
-            updated: .fields.updated
-            resolutionDate: .fields.resolutiondate
-          relations:
-            project: .fields.project.key
-            parentIssue: .fields.parent.key
-            subtasks: .fields.subtasks | map(.key)
-            assignee: .fields.assignee.name
-            reporter: .fields.reporter.name
-```
+<JiraServerMappingConfiguration/>
 
 </details>
 
