@@ -67,7 +67,7 @@ function GuidePage() {
             <div 
               className={`guide-new-filter-button ${showOnlyNew ? 'active' : ''}`} 
               onClick={toggleNewFilter}
-              data-tooltip="Only show new guides (added in the last month)"
+              data-tooltip="Only show guides added in the last 60 days"
             >
               <Typography className="guide-new-filter-text">💫 New</Typography>
             </div>
