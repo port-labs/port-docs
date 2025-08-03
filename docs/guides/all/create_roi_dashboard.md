@@ -11,6 +11,29 @@ description: Create a dashboard that highlights the ROI of automations in Port
 In the following guide, you are going to create a dashboard that highlights the ROI (Return On Invesment) of automations in Port.
 To achieve that we will create three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint), a [Self-service](https://app.getport.io/self-serve) action and a [dashboard](/customize-pages-dashboards-and-plugins/dashboards) that will reflect the advantages of using actions in Port.
 
+Let's define two terms that we will use in this guide;
+
+### Lead Time Saving
+
+Lead Time Saving measures the amount of time saved by automating and streamlining self-service actions through Port, compared to traditional manual request processes like those in ServiceNow.
+This metric captures the reduction in total time from when a user initiates a request to when it is fulfilled, including delays from approvals, queueing, handoffs, and clarifications.  
+Lead Time Saving is calculated across all self-service actions—from access provisioning to infrastructure changes—by benchmarking against manual equivalents to quantify the time saved.
+
+**Why it matters:**
+
+- Highlights the ROI of automation
+- Demonstrates reduced friction in fulfillment workflows
+- Supports operational efficiency tracking
+- Informs prioritization of future self-service expansions
+
+### Cycle Time Saving
+
+**Cycle Time Saving** measures the reduction in time it takes to implement or fulfill a request after it has been approved or initiated. This includes technical execution steps such as provisioning, deployment, configuration, or setup.
+
+Unlike Lead Time—which captures the total end-to-end process—Cycle Time focuses specifically on the execution phase. For example, creating a new sandbox environment or opening firewall access, which previously required manual scripts, coordination, or ticket handling.
+
+This metric is calculated across all automated self-service actions in Port, highlighting how much faster delivery happens once requests are ready to be acted on
+
 ## Prerequisites
 Before you begin, you will need:
 
@@ -26,7 +49,7 @@ Before you begin, you will need:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
-3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+3. Click on the `{...} Edit JSON` button in the top right corner.
 4. Copy and paste the following JSON configuration into the editor.
 5. Click `Create`
 
@@ -452,7 +475,7 @@ Before you begin, you will need:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
-3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+3. Click on the `{...} Edit JSON` button in the top right corner.
 4. Copy and paste the following JSON configuration into the editor.
 5. Click `Create`.
 
@@ -607,7 +630,7 @@ Before you begin, you will need:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
-3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+3. Click on the `{...} Edit JSON` button in the top right corner.
 4. Copy and paste the following JSON configuration into the editor.
 5. Click `Create`
 
@@ -833,7 +856,51 @@ Dashboards let you observe, track, and communicate insights from your action set
 
 1. Navigate to the [Catalog](https://app.getport.io/organization/catalog) page of your portal.
 2. Click on the **`+ New`** button in the left sidebar.
-3. Select **New dashboard**.
-4. 
+3. Select **New dashboard** and name it **ROI**.
+4. Click `Create`.
+
+We now have a blank dashboard where we can start adding widgets to visualize insights from our ROI components.
+
+### Add widgets
+
+In the new dashboard, create the following widgets:
+
+<details>
+<summary><b>Total hours saved (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Number chart**.
+2. Title: `Total hours saved`.
+3. Description: `Lead time`.
+4. Select `Aggregated by property` **Chart type** and choose **Action** as the **Blueprint**.
+5. Select the `Total lead time saving (h)` **Property** and choose `sum` for the **Function**.
+6. Select `custom` as the **Unit** and input `hours` as the **Custom unit**
+7. Click `Save`.
+
+</details>
+
+<details>
+<summary><b>Total processing time saved (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Number chart**.
+2. Title: `Total processing time saved`.
+3. Description: `Cycle time`.
+4. Select `Aggregated by property` **Chart type** and choose **Action** as the **Blueprint**.
+5. Select the `Total cycle time savings (h)` **Property** and choose `sum` for the **Function**.
+6. Select `custom` as the **Unit** and input `hours` as the **Custom unit**
+7. Click `Save`.
+
+</details>
+
+<details>
+<summary><b>Total time waiting for approval (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Number chart**.
+2. Title: `Total time waiting for approval`.
+3. Select `Aggregated by property` **Chart type** and choose **Action** as the **Blueprint**.
+4. Select the `Total waiting time (h)` **Property** and choose `sum` for the **Function**.
+5. Select `custom` as the **Unit** and input `hours` as the **Custom unit**
+6. Click `Save`.
+
+</details>
 
 
