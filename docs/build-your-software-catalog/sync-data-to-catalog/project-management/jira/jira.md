@@ -23,7 +23,7 @@ import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to
 Port's Jira Cloud integration allows you to model Jira Cloud resources in your software catalog and ingest data into them.
 
 :::info Jira Cloud integration
-This integration is designed for `Jira Cloud`. For `Jira Server` (self-hosted), use [Port's Jira Server Ocean integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/jira-server.md).
+This integration is designed for `Jira Cloud`. For `Jira Server` (self-hosted), use [Port's Jira Server Ocean integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/jira-server).
 :::
 
 ## Overview
