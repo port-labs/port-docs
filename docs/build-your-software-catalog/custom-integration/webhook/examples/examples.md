@@ -14,7 +14,7 @@ Check out the following examples for using Port's webhook integration to ingest 
   },
   {
     type: 'link',
-    href: '/build-your-software-catalog/custom-integration/webhook/examples/jira-server',
+    href: '/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/jira-server.md#alternative-option---using-the-webhook-integration',
     label: 'Jira (Self-Hosted)',
     description: 'Ingest Jira Server projects and issues',
   },
