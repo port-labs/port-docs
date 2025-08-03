@@ -24,7 +24,7 @@ const { availableGuides } = require(tempPath);
 // Clean up temp file
 fs.unlinkSync(tempPath);
 
-const DAYS_TO_CONSIDER_NEW = 30; // Consider guides new if created within 30 days
+const DAYS_TO_CONSIDER_NEW = 60; // Consider guides new if created within 60 days
 
 function getFileCreationDate(guidePath) {
   try {
