@@ -203,10 +203,11 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Jira
 
 - [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/jira.md)
+- [Jira Server integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/jira-server.md)
 - [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook)
+- [Jira Server webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/jira-server.md#alternative-option---using-the-webhook-integration)
 - [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
-- [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
 <!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
 
 ## Kafka
