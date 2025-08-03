@@ -5,7 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start --port 4000",
-    "build": "docusaurus build",
+    "build": "npm run generate-guide-metadata && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -13,7 +13,8 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "generate-guide-metadata": "node scripts/generate-guide-metadata.js"
   },
   "dependencies": {
     "@docusaurus/core": "^3.8.1",
