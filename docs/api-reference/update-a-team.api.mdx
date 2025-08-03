@@ -1,0 +1,71 @@
+---
+id: update-a-team
+title: "Update a team"
+description: "This route allows you to update a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Update a team"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlV0Fv6zYM/iuCLmuBJG66dwqGAXlvAzYM24ouPQU5KDaT6NW2PIlKmgX57yMlu/YSty/tqcBysBVJpMiPpPj5IFGtnZzM5QxU4eRiIDNwqdUValPKiZxttBPWeASh8tzsnNgbL9AIX2WKJwWS4HdOZIBK524kgkSqSrEE4R1knc24gWZ7qQoY8Lp1A6HKTHSOHf2wtMmP4TEzIgdlS1EYS4ctyZCggYTSDaSPIkyQ2nlmUl9AiYo1LK42iJWbJAlNu1FlLI60SZwzQ7tUacKPodmC3WrYJdcjOZAW/vbg8LPJ9nJykKkpkbTxUFVVrtOgN/nqGJWDdHR6oXiE+woIJ7P8CimSnsqaCixqcLzKbnZ2ObS6XMtzkEGUsAugCLN6xmkkjwMZMOroUNaqPanQCIU71308Vf5nSTptBBCGBQVJqCyz4Bw4Pizo5yDRLL+wNiYYEKO503kuGC6rsxhFeNIO6bggLXL6Mzo7ubFs3rpd+jzvy7F4Ymf2BIXwI2yVJYQw4DHvCUILgWa9lcINHxpiEF8xztpCJidoPfSachKFkPE7VWKbyWQSeeEg9VbjPhizpDQFy97GLROMBcUbCezKlC6mxO3NDb/+e+5DkMmE82lKkVkRTnvOyovT8DJ1ryereeQnlL4gNxidBSHJbnw7z3XWG4b+9KeF1AIbOMW+4lgZWyhakezEEDXp4DqIPr1FhGzcUsbab1dJz/qldfcCIsCV1qt4pa3DP15CJlevLFY6RW/71xxdfb7vQmiqp838eYzqgCNO6UmFrxkGld91XFip3EGU/HQzPs+xn2ClfI7ivk7ut2RrX96RsMPm2IGky8b0B66gjFbrPhBOnCS9jZ7LvPx07uVUUPEab1OgWxA34VKo0yoT9ChRrzRdgTtFPc2gWBlfZh8ailbqdVBOr8b3IVFDO/7+HNr72HHFklqu0NyCqNkruwZxletCI8+Nf9efrz80nG8D8XKfa+Bub8+B4ybFnrfwZwYi6HQJpjE0gbMR0aqh+cgQvjcj34NDfRcSi9iYLHKElElC4AoTmWzHSWjcyYF711Fyl7fbhnF4S1e6bLilqnRDLcn1vlXv2g0dwvAX2xLhbWhD22Yq/RvsW9oy9WSp1f+EaMma2WxAcVtjTxiA+5a7/vykiiqHlnu2PbJuaM907IyHdenTygSbNLIueUdOiOndr6SFsYjbx6Ob0JOMw0KVnRMfup8Gp2S3Q63/Px8XdWwRnjCpckUxZIJhAz+ImTeX27GMbMvRexKgpAhtDNfdXB4OS+XgwebHI09TvC3zThpuldVqyWGiBM2043HWXzFd7K/u62K8FheT3hccaTK35LTdqtzzPxo+Uh7XvPvIVLLOWrYzLn2J1gxnrKAVPbueuLiixJT4bIWv7l10qvtuOvvyC+1e1l91hclYyKodfwnQM9hpAjyhHMPcgUhYufbhGpNRKVea8hyobqE+hkKtB+xWLxKnFRw94Sf71StyOMRr4Hh83h+XXpSosW12c2AWZPW/M/WCGw==
+sidebar_class_name: "patch api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update a team"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/teams/{name}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to update a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"name","required":true,"description":"The name of the team you want to update."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","description":"The new name of the team."},"users":{"type":"array","items":{"type":"string"},"description":"One or more e-mail addresses of users to add to the new team. This will override the existing user list."},"description":{"type":["string","null"],"description":"The new description of the team."}}}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Updated successfully.","content":{"application/json":{"schema":{"description":"Updated successfully.","type":"object","properties":{"ok":{"enum":[true]},"team":{"type":"object","properties":{"id":{"type":"string"},"name":{"type":"string"},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"},"provider":{"type":"string"},"description":{"type":"string"},"users":{"type":"array","items":{"type":"object","properties":{"email":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"picture":{"type":"string"},"status":{"type":"string"}}}}}}},"required":["team","ok"],"additionalProperties":false}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -24,7 +24,7 @@
     "@docusaurus/plugin-ideal-image": "^3.8.1",
     "@docusaurus/preset-classic": "^3.8.1",
     "@docusaurus/theme-live-codeblock": "^3.8.1",
-    "@easyops-cn/docusaurus-search-local": "^0.52.0",
+    "@easyops-cn/docusaurus-search-local": "^0.52.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mdx-js/react": "^3.1.0",
@@ -37,8 +37,8 @@
     "docusaurus-theme-openapi-docs": "^4.5.1",
     "prettier": "^3.6.2",
     "prism-react-renderer": "^2.4.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "react-tooltip": "^5.29.1"
   },
   "devDependencies": {
@@ -47,7 +47,7 @@
     "@docusaurus/types": "^3.8.1",
     "husky": "^9.1.7",
     "pretty-quick": "^4.2.2",
-    "typescript": "~5.8.3"
+    "typescript": "~5.9.2"
   },
   "resolutions": {
     "js-yaml": "4.0.0^"
