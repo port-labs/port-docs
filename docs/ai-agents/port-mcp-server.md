@@ -71,7 +71,95 @@ Receive assistance with common development and operational tasks, directly withi
 
 ## Get started
 
-Setting up the Port MCP Server involves a few key steps.
+Setting up Port's MCP is simple. Follow the instructions for your preferred tool, or learn about the archived local MCP server.
+
+<Tabs>
+<TabItem value="cursor" label="Cursor">
+To connect Cursor to Port's remote MCP, you need to add a configuration to your `mcp.json` file. This file is usually located in your `.cursor` directory. Add the following object to your `mcpServers` configuration:
+
+<Tabs>
+<TabItem value="eu" label="EU">
+```json
+{
+  "mcpServers": {
+    "port-eu": {
+      "url": "https://mcp.port.io/v1"
+    }
+  }
+}
+```
+</TabItem>
+<TabItem value="us" label="US">
+```json
+{
+  "mcpServers": {
+    "port-us": {
+      "url": "https://mcp.us.port.io/v1"
+    }
+  }
+}
+```
+</TabItem>
+</Tabs>
+</TabItem>
+<TabItem value="vscode" label="VSCode">
+To connect VSCode to Port's remote MCP, you need to add a configuration to your MCP JSON file, which is usually located in your VSCode configuration directory. Add the following object to your `mcpServers` configuration:
+
+<Tabs>
+<TabItem value="eu" label="EU">
+```json
+{
+  "mcpServers": {
+    "port-vscode-eu": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.port.io/v1"
+      ]
+    }
+  }
+}
+```
+</TabItem>
+<TabItem value="us" label="US">
+```json
+{
+  "mcpServers": {
+    "port-vscode-us": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.us.port.io/v1"
+      ]
+    }
+  }
+}
+```
+</TabItem>
+</Tabs>
+</TabItem>
+<TabItem value="claude" label="Claude">
+To connect Claude to Port's remote MCP, you need to create a custom connector. This process does not require a client ID. For detailed instructions, refer to the [official Anthropic documentation on custom connectors](https://support.anthropic.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp).
+
+When prompted for the remote MCP server URL, use the appropriate URL for your region:
+
+<Tabs>
+<TabItem value="eu" label="EU">
+```
+https://mcp.port.io/v1
+```
+</TabItem>
+<TabItem value="us" label="US">
+```
+https://mcp.us.port.io/v1
+```
+</TabItem>
+</Tabs>
+</TabItem>
+<TabItem value="local-mcp" label="Local MCP - Archive">
+The local MCP server is an open-source project that you can run on your own infrastructure. It offers a similar set of capabilities, but requires manual setup and maintenance.
 
 ### Prerequisites
 
@@ -86,3 +174,41 @@ The Port MCP Server can be installed using Docker or `uvx` (a package manager fo
 For comprehensive, step-by-step installation instructions for various platforms and methods (Docker, UVX), please refer to the **[Port MCP Server GitHub README](https://github.com/port-labs/port-mcp-server)**.
 The README provides the latest configuration details and examples for different setups.
 :::
+</TabItem>
+</Tabs>
+
+## Available Tools
+
+The Port MCP Server exposes a rich set of tools to interact with your developer portal. Here are the available tools:
+
+### Blueprint Tools
+
+*   **`get_blueprints`**: Retrieve a list of all blueprints from Port.
+*   **`get_blueprint`**: Retrieve information about a specific blueprint by its identifier.
+*   **`create_blueprint`**: Create a new blueprint in Port.
+*   **`update_blueprint`**: Update an existing blueprint.
+*   **`delete_blueprint`**: Delete a blueprint from Port.
+
+### Entity Tools
+
+*   **`get_entities`**: Retrieve all entities for a given blueprint.
+*   **`get_entity`**: Retrieve information about a specific entity.
+*   **`create_entity`**: Create a new entity for a specific blueprint.
+*   **`update_entity`**: Update an existing entity.
+*   **`delete_entity`**: Delete an entity.
+
+### Scorecard Tools
+
+*   **`get_scorecards`**: Retrieve all scorecards from Port.
+*   **`get_scorecard`**: Retrieve information about a specific scorecard by its identifier.
+*   **`create_scorecard`**: Create a new scorecard for a specific blueprint.
+*   **`update_scorecard`**: Update an existing scorecard.
+*   **`delete_scorecard`**: Delete a scorecard from Port.
+
+### Action Tools
+
+*   **`run_<action_identifier>`**: This is a dynamic tool that allows you to execute any action you have in Port. The `action_identifier` corresponds to the identifier of the action you want to run. This tool is only available for actions that you have permission to execute (excluding actions with dynamic policies). For example, if you have an action with the identifier `scaffold_microservice`, you can run it using `run_scaffold_microservice`.
+
+### AI Agent Tools
+
+*   **`invoke_ai_agent`**: Invoke a Port AI agent with a specific prompt.
