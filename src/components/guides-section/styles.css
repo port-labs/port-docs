@@ -111,6 +111,12 @@ html[data-theme="dark"] .guide-card:hover {
     flex: 1 0 0;
 }
 
+.guide-card-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .guide-card-header-img-box {
     display: flex;
     padding: 8px;
@@ -165,6 +171,31 @@ html[data-theme="dark"] .guide-card-header-category {
 
 html[data-theme="dark"] .guide-card-category-text {
     color: var(--Colorful-High-Turquoise, #8BE0E7) !important;
+}
+
+.guide-card-new-badge {
+    display: flex;
+    height: 24px;
+    padding: 0px 8px;
+    align-items: center;
+    gap: 4px;
+    border-radius: 8px;
+    background: var(--ifm-color-success-light, #00D084);
+}
+
+html[data-theme="dark"] .guide-card-new-badge {
+    background: var(--ifm-color-success-dark, #00C078);
+}
+
+.guide-card-new-text {
+    color: white !important;
+    font-feature-settings: 'liga' off, 'clig' off !important;
+    font-family: "DM Sans" !important;
+    font-size: 12px !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    line-height: normal !important;
+    text-transform: uppercase !important;
 }
 
 .guide-card-body {

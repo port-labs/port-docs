@@ -4,7 +4,7 @@ import "/src/components/guides-section/styles.css";
 import Tags from "/src/components/guides-section/Tag/Tags.jsx";
 import SearchBar from "/src/components/guides-section/SearchBar/SearchBar.jsx";
 import GuideCards from "/src/components/guides-section/GuideCard/GuideCards.jsx";
-import { availableGuides } from "../consts.js";
+import { enhancedAvailableGuides } from "../consts.js";
 import ResetIcon from "/static/img/guides/icons/Reset.svg";
 import FilterIcon from "/static/img/guides/icons/Filter.svg";
 import { useHistory, useLocation } from "react-router-dom";
@@ -32,7 +32,7 @@ function GuidePage() {
     });
   }, [history. location.search]);
 
-  const filteredGuides = useMemo(() => availableGuides.filter((guide) => {
+  const filteredGuides = useMemo(() => enhancedAvailableGuides.filter((guide) => {
     const matchesTag = selectedTags.length === 0 || selectedTags.every((tag) => guide.tags.includes(tag) || guide.logos.includes(tag) || guide.additionalTags && guide.additionalTags.includes(tag));
     const matchesSearch = guide.title.toLowerCase().includes(searchText.toLowerCase()) || guide.description.toLowerCase().includes(searchText.toLowerCase()) ;
     return matchesTag && matchesSearch;
