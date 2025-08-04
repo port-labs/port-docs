@@ -1,4 +1,4 @@
-name: Claude PR Assistant
+name: Claude Docs PR Reviewer
 on:
   pull_request:
     types:
@@ -23,7 +23,8 @@ jobs:
       - name: Check for changed files
         uses: tj-actions/changed-files@v46
         with:
-          files: docs/**
+          files: |
+            - docs/**
 
   claude-renovate-bump-chart-pr:
     runs-on: ubuntu-latest
@@ -44,5 +45,5 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           allowed_tools: "Bash(git:*),Bash(gh:*),Bash(jq:*),Bash(yq:*),View,GlobTool,GrepTool,BatchTool"
           direct_prompt: |
-           Please review the following PR and provide a detailed review of the changes according the ./CONTRIBUTING.md
+           Please review the following PR and provide a detailed review of the changes according the ./CONTRIBUTING.md provide results in markdown format.
           timeout_minutes: "15"
