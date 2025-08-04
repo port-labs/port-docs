@@ -410,7 +410,7 @@ const config = {
       "data-font-family": "DM Sans",
       "data-modal-example-questions-title": "Example Questions",
       "data-modal-example-questions-col-span": "12",
-      "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nWe would appreciate your feedback (👍🏽/👎🏽) on answers you receive in order to improve the results 🙏🏽",
+      "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nFor tips on how to use the assistant effectively, click [here](https://docs.port.io/docs-ai-assistant).\n\nWe would appreciate your feedback (👍🏽/👎🏽) in order to improve the results 🙏🏽",
       "data-modal-disclaimer-font-size": "0.85rem",
       "data-example-question-button-font-size": "0.85rem",
       // "data-search-mode-enabled": "true",
@@ -420,6 +420,10 @@ const config = {
       // "data-search-result-primary-text-color": "#000000",
       async: true,
     },
+    {
+      src: '/js/embed-mode.js',
+      async: false,
+    }
   ],
 };
 
