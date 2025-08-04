@@ -82,7 +82,9 @@ Receive assistance with common development and operational tasks, directly withi
 
 ![Getting instructions for new service setup](/img/ai-agents/MCPClaudeServiceSetup.png)
 
-## Get started
+## Using Port MCP
+
+### Setup
 
 Setting up Port's MCP is simple. Follow the instructions for your preferred tool, or learn about the archived local MCP server.
 
@@ -116,7 +118,13 @@ To connect Cursor to Port's remote MCP, you need to add a configuration to your 
 </Tabs>
 </TabItem>
 <TabItem value="vscode" label="VSCode">
-To connect VSCode to Port's remote MCP, you need to add a configuration to your MCP JSON file, which is usually located in your VSCode configuration directory. Add the following object to your `mcpServers` configuration:
+To connect VSCode to Port's remote MCP, you need to add a configuration to your MCP JSON file, which is usually located in your VSCode configuration directory. 
+
+:::info VSCode MCP limitations
+Unlike Cursor, VSCode does not currently support direct URL connections to remote MCP servers. We are tracking this limitation and working with the VSCode team to improve support. As a workaround, this configuration uses the open-source `mcp-remote` package, which requires Node.js to be installed on your system.
+:::
+
+Add the following object to your `mcpServers` configuration:
 
 <Tabs>
 <TabItem value="eu" label="EU">
@@ -171,8 +179,10 @@ https://mcp.us.port.io/v1
 </TabItem>
 </Tabs>
 </TabItem>
-<TabItem value="local-mcp" label="Local MCP - Archive">
+<TabItem value="local-mcp" label="Local MCP - Deprecated">
 The local MCP server is an open-source project that you can run on your own infrastructure. It offers a similar set of capabilities, but requires manual setup and maintenance.
+	
+While you can use it, we are no longer supporting it and are not tracking the project issues and activities.
 
 <h2>Prerequisites</h2>
 
@@ -190,38 +200,86 @@ The README provides the latest configuration details and examples for different 
 </TabItem>
 </Tabs>
 
-## Available tools
+### Available tools
 
-The Port MCP Server exposes a rich set of tools to interact with your developer portal. Here are the available tools:
+The Port MCP Server exposes different sets of tools based on your role and use case. The tools you see will depend on your permissions in Port.
 
-### Blueprint tools
+<Tabs groupId="user-role" queryString>
+<TabItem value="developer" label="Developer">
 
--   **`get_blueprints`**: Retrieve a list of all blueprints from Port.
--   **`get_blueprint`**: Retrieve information about a specific blueprint by its identifier.
--   **`create_blueprint`**: Create a new blueprint in Port.
--   **`update_blueprint`**: Update an existing blueprint.
--   **`delete_blueprint`**: Delete a blueprint from Port.
+**Developers** are typically users who consume and interact with the developer portal - querying services, running actions, and analyzing data. These tools help you get information and execute approved workflows.
 
-### Entity tools
+### Query and analysis tools
+-   **[`get_blueprints`](/api-reference/get-all-blueprints)**: Retrieve a list of all blueprints from Port.
+-   **[`get_blueprint`](/api-reference/get-a-blueprint)**: Retrieve information about a specific blueprint by its identifier.
+-   **[`get_entities`](/api-reference/get-all-entities-of-a-blueprint)**: Retrieve all entities for a given blueprint.
+-   **[`get_entity`](/api-reference/get-an-entity)**: Retrieve information about a specific entity.
+-   **[`get_scorecards`](/api-reference/get-all-scorecards)**: Retrieve all scorecards from Port.
+-   **[`get_scorecard`](/api-reference/get-a-scorecard)**: Retrieve information about a specific scorecard by its identifier.
+-   **[`describe_organization`](/api-reference/get-organization-details)**: Get information about your Port organization and its configuration.
+-   **`search_docs_sources`**: Search through Port documentation and knowledge sources for relevant information.
+-   **`ask_docs_question`**: Ask questions about Port documentation and get contextual answers.
 
--   **`get_entities`**: Retrieve all entities for a given blueprint.
--   **`get_entity`**: Retrieve information about a specific entity.
--   **`create_entity`**: Create a new entity for a specific blueprint.
--   **`update_entity`**: Update an existing entity.
--   **`delete_entity`**: Delete an entity.
-
-### Scorecard tools
-
--   **`get_scorecards`**: Retrieve all scorecards from Port.
--   **`get_scorecard`**: Retrieve information about a specific scorecard by its identifier.
--   **`create_scorecard`**: Create a new scorecard for a specific blueprint.
--   **`update_scorecard`**: Update an existing scorecard.
--   **`delete_scorecard`**: Delete a scorecard from Port.
-
-### Action tools
-
--   **`run_<action_identifier>`**: This is a dynamic tool that allows you to execute any action you have in Port. The `action_identifier` corresponds to the identifier of the action you want to run. This tool is only available for actions that you have permission to execute (excluding actions with dynamic policies). For example, if you have an action with the identifier `scaffold_microservice`, you can run it using `run_scaffold_microservice`.
+### Action execution tools
+-   **[`run_<action_identifier>`](/api-reference/execute-a-self-service-action)**: Execute any action you have permission to run in Port. The `action_identifier` corresponds to the identifier of the action you want to run. For example, if you have an action with the identifier `scaffold_microservice`, you can run it using `run_scaffold_microservice`.
 
 ### AI agent tools
+-   **[`invoke_ai_agent`](/api-reference/invoke-an-agent)**: Invoke a Port AI agent with a specific prompt.
 
--   **`invoke_ai_agent`**: Invoke a Port AI agent with a specific prompt.
+</TabItem>
+<TabItem value="builder" label="Builder">
+
+**Builders** are typically platform engineers or admins who design and configure the developer portal - creating blueprints, setting up scorecards, and managing the overall structure. These tools help you build and maintain the portal.
+
+### All Developer tools
+Builders have access to all the tools available to Developers (listed in the Developer tab), plus the additional management tools below.
+
+### Blueprint management tools
+-   **[`create_blueprint`](/api-reference/create-a-blueprint)**: Create a new blueprint in Port.
+-   **[`update_blueprint`](/api-reference/update-a-blueprint)**: Update an existing blueprint.
+-   **[`delete_blueprint`](/api-reference/delete-a-blueprint)**: Delete a blueprint from Port.
+
+### Entity management tools
+-   **[`create_entity`](/api-reference/create-an-entity)**: Create a new entity for a specific blueprint.
+-   **[`update_entity`](/api-reference/update-an-entity)**: Update an existing entity.
+-   **[`delete_entity`](/api-reference/delete-an-entity)**: Delete an entity.
+
+### Scorecard management tools
+-   **[`create_scorecard`](/api-reference/create-a-scorecard)**: Create a new scorecard for a specific blueprint.
+-   **[`update_scorecard`](/api-reference/change-scorecards)**: Update an existing scorecard.
+-   **[`delete_scorecard`](/api-reference/delete-a-scorecard)**: Delete a scorecard from Port.
+
+</TabItem>
+</Tabs>
+
+### Select which tools to use
+
+By default, when you open a chat with Port MCP, all available tools (based on your permissions) are loaded and ready to use. However, you can customize which tools are available if you want to focus on specific workflows.
+
+For example, if you only want to query data from Port without building or modifying anything, you can limit the tools to just the read-only ones. This can help reduce complexity and ensure you don't accidentally make changes.
+
+<Tabs groupId="tool-selection" queryString>
+<TabItem value="cursor" label="Cursor">
+
+In Cursor, you can customize which tools are available through the UI after connecting to Port MCP. Once connected, you can select specific tools through Cursor's interface as shown below.
+
+![Enabling specific tools in Cursor](/img/ai-agents/MCPCursorEnableTools.png)
+
+</TabItem>
+<TabItem value="vscode" label="VSCode">
+
+In VSCode, you can customize which tools are available through the UI after connecting to Port MCP. Once connected, you can select specific tools through VSCode's interface as shown below.
+
+![Enabling specific tools in VSCode](/img/ai-agents/MCPVSCodeEnableTools.png)
+
+</TabItem>
+<TabItem value="claude" label="Claude">
+
+In Claude, you can specify which tools to enable during the custom connector setup process. You'll have the option to select specific tools through Claude's interface rather than enabling all available tools.
+
+![Enabling specific tools in Claude](/img/ai-agents/MCPClaudeEnableTools.png)
+
+Refer to the [Claude custom connector documentation](https://support.anthropic.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp) for detailed instructions on tool selection during setup.
+
+</TabItem>
+</Tabs>
