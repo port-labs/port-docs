@@ -1,5 +1,4 @@
 ---
-sidebar_position: 
 displayed_sidebar: null
 description: Create a dashboard that highlights the ROI of automations in Port
 ---
@@ -15,7 +14,7 @@ Let's define two terms that we will use in this guide;
 
 ### Lead Time Saving
 
-Lead Time Saving measures the amount of time saved by automating and streamlining self-service actions through Port, compared to traditional manual request processes like those in ServiceNow.
+**Lead Time Saving** measures the amount of time saved by automating and streamlining self-service actions through Port, compared to traditional manual request processes like those in ServiceNow.
 This metric captures the reduction in total time from when a user initiates a request to when it is fulfilled, including delays from approvals, queueing, handoffs, and clarifications.  
 Lead Time Saving is calculated across all self-service actions—from access provisioning to infrastructure changes—by benchmarking against manual equivalents to quantify the time saved.
 
@@ -44,6 +43,169 @@ Before you begin, you will need:
 2. A [GitHub](https://github.com/) account.
 
 ## Set up data model
+
+### Create the Action categories blueprint
+
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+2. Click on `+ Blueprint`.
+3. Click on the `{...} Edit JSON` button in the top right corner.
+4. Copy and paste the following JSON configuration into the editor.
+5. Click `Create`
+
+    <details>
+    <summary><b>Action catagories blueprint(click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+    "identifier": "actions_categories",
+    "description": "Categories for actions",
+    "title": "Actions categories",
+    "icon": "Microservice",
+    "schema": {
+        "properties": {},
+        "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {}
+    }
+    ```
+
+    </details>
+
+### Create the Action Runs blueprint
+
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+2. Click on `+ Blueprint`.
+3. Click on the `{...} Edit JSON` button in the top right corner.
+4. Copy and paste the following JSON configuration into the editor.
+5. Click `Create`.
+
+    <details>
+    <summary><b>Action blueprint(click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+    "identifier": "action_run",
+    "title": "Action run",
+    "icon": "Microservice",
+    "schema": {
+        "properties": {
+        "status": {
+            "icon": "DefaultProperty",
+            "title": "Status",
+            "type": "string",
+            "enum": [
+            "SUCCESS",
+            "FAILURE",
+            "IN_PROGRESS",
+            "WAITING_FOR_APPROVAL",
+            "DECLINED"
+            ],
+            "enumColors": {
+            "SUCCESS": "green",
+            "FAILURE": "red",
+            "IN_PROGRESS": "lightGray",
+            "WAITING_FOR_APPROVAL": "yellow",
+            "DECLINED": "red"
+            }
+        },
+        "created_at": {
+            "type": "string",
+            "title": "Created At",
+            "format": "date-time"
+        },
+        "run_id": {
+            "type": "string",
+            "title": "Run ID"
+        },
+        "run_url": {
+            "type": "string",
+            "title": "Run URL",
+            "format": "url"
+        },
+        "updated_at": {
+            "type": "string",
+            "title": "Updated At",
+            "format": "date-time"
+        },
+        "duration": {
+            "type": "number",
+            "title": "Duration",
+            "description": "In seconds"
+        },
+        "waiting_for_approval_duration": {
+            "type": "number",
+            "title": "Waiting for approval duration",
+            "description": "In seconds"
+        },
+        "cycle_time": {
+            "icon": "DefaultProperty",
+            "title": "Cycle Time",
+            "description": "Total time from in progress to completion in seconds",
+            "type": "number"
+        }
+        },
+        "required": []
+    },
+    "mirrorProperties": {
+        "ran_by": {
+        "title": "Ran by",
+        "path": "ran_by_actual_user.$identifier"
+        },
+        "team_2": {
+        "title": "User teams",
+        "path": "ran_by_actual_user.teams.$identifier"
+        },
+        "user_group": {
+        "title": "User group",
+        "path": "ran_by_actual_user.teams.group.$title"
+        }
+    },
+    "calculationProperties": {
+        "savings_lead_time_h": {
+        "title": "Savings lead time (h)",
+        "icon": "DefaultProperty",
+        "description": "Time saved on waiting time In hours",
+        "calculation": "if .properties.status == \"SUCCESS\" then (.properties.lead_time_before * 3600 - .properties.duration) / 3600 else null end",
+        "type": "number"
+        },
+        "savings_cycle_time_h": {
+        "title": "Savings cycle time (h)",
+        "icon": "DefaultProperty",
+        "description": "Time saved on cycle time In hours",
+        "calculation": "if .properties.status == \"SUCCESS\" then (.properties.cycle_time_before*3600 - .properties.cycle_time) / 3600 else null end",
+        "type": "number"
+        },
+        "primary_user_group": {
+        "title": "Primary User Group",
+        "icon": "GroupBy",
+        "description": "First user group from the user_group array",
+        "calculation": "if (.properties.user_group | type) == \"array\" and (.properties.user_group | length > 0) then .properties.user_group[0] else (.properties.user_group // \"No Group\") end",
+        "type": "string"
+        },
+        "primary_team": {
+        "title": "Primary Team",
+        "icon": "Team",
+        "description": "First team from the team_2 array",
+        "calculation": "if (.properties.team_2 | type) == \"array\" and (.properties.team_2 | length > 0) then .properties.team_2[0] else (.properties.team_2 // \"No Team\") end",
+        "type": "string"
+        }
+    },
+    "aggregationProperties": {},
+    "relations": {
+        "ran_by_actual_user": {
+        "title": "Ran by actual user",
+        "target": "_user",
+        "required": false,
+        "many": false
+        }
+    }
+    }
+    ```
+
+    </details>
 
 ### Create the Action blueprint
 
@@ -471,190 +633,43 @@ Before you begin, you will need:
 
     </details>
 
-### Create the Action Runs blueprint
+### Finish setting up Action Runs blueprint
 
-1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
-2. Click on `+ Blueprint`.
-3. Click on the `{...} Edit JSON` button in the top right corner.
-4. Copy and paste the following JSON configuration into the editor.
-5. Click `Create`.
+After setting up both Action Runs and Action blueprint, add the following relation and mirror properties to the `Action blueprint`.
 
-    <details>
-    <summary><b>Action blueprint(click to expand)</b></summary>
+<details>
+<summary><b>Action runs blueprint (click to expand)</b></summary>
 
-    ```json showLineNumbers
-    {
-    "identifier": "action_run",
-    "title": "Action run",
-    "icon": "Microservice",
-    "schema": {
-        "properties": {
-        "status": {
-            "icon": "DefaultProperty",
-            "title": "Status",
-            "type": "string",
-            "enum": [
-            "SUCCESS",
-            "FAILURE",
-            "IN_PROGRESS",
-            "WAITING_FOR_APPROVAL",
-            "DECLINED"
-            ],
-            "enumColors": {
-            "SUCCESS": "green",
-            "FAILURE": "red",
-            "IN_PROGRESS": "lightGray",
-            "WAITING_FOR_APPROVAL": "yellow",
-            "DECLINED": "red"
+    ``` json showLineNumbers
+        "mirrorProperties": {
+            "category": {
+            "title": "Category",
+            "path": "parent_action.category.$title"
+            },
+            "lead_time_before": {
+            "title": "Lead time before",
+            "path": "parent_action.lead_time_before"
+            },
+            "cycle_time_before": {
+            "title": "Cycle time before",
+            "path": "parent_action.cycle_time"
+            },
+            "action": {
+            "title": "Action",
+            "path": "parent_action.$title"
             }
         },
-        "created_at": {
-            "type": "string",
-            "title": "Created At",
-            "format": "date-time"
-        },
-        "run_id": {
-            "type": "string",
-            "title": "Run ID"
-        },
-        "run_url": {
-            "type": "string",
-            "title": "Run URL",
-            "format": "url"
-        },
-        "updated_at": {
-            "type": "string",
-            "title": "Updated At",
-            "format": "date-time"
-        },
-        "duration": {
-            "type": "number",
-            "title": "Duration",
-            "description": "In seconds"
-        },
-        "waiting_for_approval_duration": {
-            "type": "number",
-            "title": "Waiting for approval duration",
-            "description": "In seconds"
-        },
-        "cycle_time": {
-            "icon": "DefaultProperty",
-            "title": "Cycle Time",
-            "description": "Total time from in progress to completion in seconds",
-            "type": "number"
+        "relations": {
+            "parent_action": {
+            "title": "Parent action",
+            "target": "action",
+            "required": false,
+            "many": false
+            }
         }
-        },
-        "required": []
-    },
-    "mirrorProperties": {
-        "category": {
-        "title": "Category",
-        "path": "parent_action.category.$title"
-        },
-        "lead_time_before": {
-        "title": "Lead time before",
-        "path": "parent_action.lead_time_before"
-        },
-        "cycle_time_before": {
-        "title": "Cycle time before",
-        "path": "parent_action.cycle_time"
-        },
-        "ran_by": {
-        "title": "Ran by",
-        "path": "ran_by_actual_user.$identifier"
-        },
-        "team_2": {
-        "title": "User teams",
-        "path": "ran_by_actual_user.teams.$identifier"
-        },
-        "user_group": {
-        "title": "User group",
-        "path": "ran_by_actual_user.teams.group.$title"
-        },
-        "action": {
-        "title": "Action",
-        "path": "parent_action.$title"
-        }
-    },
-    "calculationProperties": {
-        "savings_lead_time_h": {
-        "title": "Savings lead time (h)",
-        "icon": "DefaultProperty",
-        "description": "Time saved on waiting time In hours",
-        "calculation": "if .properties.status == \"SUCCESS\" then (.properties.lead_time_before * 3600 - .properties.duration) / 3600 else null end",
-        "type": "number"
-        },
-        "savings_cycle_time_h": {
-        "title": "Savings cycle time (h)",
-        "icon": "DefaultProperty",
-        "description": "Time saved on cycle time In hours",
-        "calculation": "if .properties.status == \"SUCCESS\" then (.properties.cycle_time_before*3600 - .properties.cycle_time) / 3600 else null end",
-        "type": "number"
-        },
-        "primary_user_group": {
-        "title": "Primary User Group",
-        "icon": "GroupBy",
-        "description": "First user group from the user_group array",
-        "calculation": "if (.properties.user_group | type) == \"array\" and (.properties.user_group | length > 0) then .properties.user_group[0] else (.properties.user_group // \"No Group\") end",
-        "type": "string"
-        },
-        "primary_team": {
-        "title": "Primary Team",
-        "icon": "Team",
-        "description": "First team from the team_2 array",
-        "calculation": "if (.properties.team_2 | type) == \"array\" and (.properties.team_2 | length > 0) then .properties.team_2[0] else (.properties.team_2 // \"No Team\") end",
-        "type": "string"
-        }
-    },
-    "aggregationProperties": {},
-    "relations": {
-        "parent_action": {
-        "title": "Parent action",
-        "target": "action",
-        "required": false,
-        "many": false
-        },
-        "ran_by_actual_user": {
-        "title": "Ran by actual user",
-        "target": "_user",
-        "required": false,
-        "many": false
-        }
-    }
-    }
     ```
 
-    </details>
-
-### Create the Action Categories blueprint
-
-1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
-2. Click on `+ Blueprint`.
-3. Click on the `{...} Edit JSON` button in the top right corner.
-4. Copy and paste the following JSON configuration into the editor.
-5. Click `Create`
-
-    <details>
-    <summary><b>Action blueprint(click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-    "identifier": "actions_categories",
-    "description": "Categories for actions",
-    "title": "Actions categories",
-    "icon": "Microservice",
-    "schema": {
-        "properties": {},
-        "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {}
-    }
-    ```
-
-    </details>
+ </details>
 
 ## Create the "Setup new action experience" Self-service action
 
@@ -668,6 +683,8 @@ Before you begin, you will need:
 
     <details>
     <summary><b>Action blueprint(click to expand)</b></summary>
+
+        **Remember to change the organization and repository name if you use your own.**
 
         ```json showLineNumbers
         {
@@ -731,8 +748,10 @@ Before you begin, you will need:
         },
         "invocationMethod": {
             "type": "GITHUB",
+            //highlight-start
             "org": "PortActionsRepo",
             "repo": "configuration-scripts",
+            //highlight-end
             "workflow": "create-port-automation.yml",
             "workflowInputs": {
             "{{ spreadValue() }}": "{{ .inputs }}",
@@ -751,7 +770,7 @@ Before you begin, you will need:
 ### Set up the action's backend
 
 Define the logic that our action will trigger.
-In your GitHub repository, add the following file or use your own API.
+In your GitHub repository, add the following files or use your own API.
 
 <details>
 <summary><b>Create port automation workflow (click to expand)</b></summary>
@@ -843,10 +862,460 @@ In your GitHub repository, add the following file or use your own API.
                 "${{ github.event.inputs.cycle_time || '0'  }}" \
                 "${{ steps.context.outputs.run_id }}" \
                 "${{ github.event.inputs.actionTitle }}"
-
     ```
 </details>
 
+<details>
+<summary><b>Create action entity (click to expand)</b></summary>
+
+    ```sh showLineNumbers title:"create_action_entity.sh"
+
+    #!/bin/bash
+    set -euo pipefail
+
+    # ===[ Configuration ]===
+    # Uncomment the correct region:
+    # PORT_API_BASE_URL="https://api.us.port.io"
+    PORT_API_BASE_URL="https://api.getport.io"
+
+    CACHE_FILE=".cache/port_token"
+    CACHE_TTL_SECONDS=3300
+
+    # ===[ Accept Parameters ]===
+    ACTION_IDENTIFIER="$1"
+    CATEGORY_IDENTIFIER="$2"
+    LEAD_TIME_BEFORE="${3:-}"
+    CYCLE_TIME="${4:-}"
+    PORT_RUN_ID="$5"
+    ACTION_TITLE="$6"
+
+    if [[ -z "$ACTION_IDENTIFIER" || -z "$CATEGORY_IDENTIFIER" || -z "$PORT_RUN_ID" || -z "$ACTION_TITLE" ]]; then
+    echo "❌ Usage: $0 <actionIdentifier> <categoryIdentifier> [leadTimeBefore] [cycleTime] <runId> <actionTitle>"
+    exit 1
+    fi
+
+    # ===[ Logging Function ]===
+    post_log() {
+    local MSG="$1"
+    echo "$MSG"
+    if [[ -n "${TOKEN:-}" && -n "$PORT_RUN_ID" ]]; then
+        RESPONSE=$(curl -s -w "%{http_code}" -o .port_log_response \
+        -X POST "$PORT_API_BASE_URL/v1/actions/runs/$PORT_RUN_ID/logs" \
+        -H "Authorization: Bearer $TOKEN" \
+        -H "Content-Type: application/json" \
+        -d "{\"message\": \"$MSG\"}")
+        STATUS="$RESPONSE"
+        if [[ "$STATUS" != "201" ]]; then
+        echo "⚠️ Failed to post log to Port (HTTP $STATUS)"
+        echo "::group::Log API Response"
+        cat .port_log_response
+        echo "::endgroup::"
+        fi
+        rm -f .port_log_response
+    fi
+    }
+
+    # ===[ Error Trap ]===
+    handle_error() {
+    local EXIT_CODE=$?
+    local LINE=$1
+    local MESSAGE="❌ Script failed at line $LINE with exit code $EXIT_CODE"
+    echo "$MESSAGE"
+    post_log "$MESSAGE"
+    exit $EXIT_CODE
+    }
+
+    trap 'handle_error $LINENO' ERR
+
+    # ===[ Token Handling ]===
+    refresh_token() {
+    echo "🔐 Requesting new token..."
+    AUTH_RESPONSE=$(curl -s -X POST "$PORT_API_BASE_URL/v1/auth/access_token" \
+        -H "Content-Type: application/json" \
+        -d "{\"clientId\": \"$PORT_CLIENT_ID\", \"clientSecret\": \"$PORT_CLIENT_SECRET\"}")
+    TOKEN=$(echo "$AUTH_RESPONSE" | jq -r '.accessToken')
+    if [[ -z "$TOKEN" || "$TOKEN" == "null" ]]; then
+        echo "❌ Failed to retrieve token"
+        post_log "❌ Failed to retrieve token"
+        exit 1
+    fi
+    mkdir -p .cache
+    echo "{\"token\":\"$TOKEN\", \"timestamp\":$(date +%s)}" > "$CACHE_FILE"
+    }
+
+    get_cached_token() {
+    if [[ ! -f "$CACHE_FILE" ]]; then
+        refresh_token
+    else
+        TIMESTAMP=$(jq -r '.timestamp' "$CACHE_FILE")
+        TOKEN=$(jq -r '.token' "$CACHE_FILE")
+        NOW=$(date +%s)
+        AGE=$((NOW - TIMESTAMP))
+        if [[ $AGE -ge $CACHE_TTL_SECONDS ]]; then
+        refresh_token
+        fi
+    fi
+    }
+
+    get_cached_token
+
+    # ===[ Build properties dynamically ]===
+    PROPERTIES="{}"
+    if [[ -n "$LEAD_TIME_BEFORE" || -n "$CYCLE_TIME" ]]; then
+    PROPERTIES="{"
+    [[ -n "$LEAD_TIME_BEFORE" ]] && PROPERTIES+="\"lead_time_before\": $LEAD_TIME_BEFORE"
+    [[ -n "$LEAD_TIME_BEFORE" && -n "$CYCLE_TIME" ]] && PROPERTIES+=", "
+    [[ -n "$CYCLE_TIME" ]] && PROPERTIES+="\"cycle_time\": $CYCLE_TIME"
+    PROPERTIES+="}"
+    fi
+
+    ENTITY_PAYLOAD=$(cat <<EOF
+    {
+    "identifier": "$ACTION_IDENTIFIER",
+    "title": "$ACTION_TITLE",
+    "properties": $PROPERTIES,
+    "relations": {
+        "category": "$CATEGORY_IDENTIFIER"
+    }
+    }
+    EOF
+    )
+
+    post_log "📦 Creating or updating entity in blueprint 'action'..."
+
+    HTTP_STATUS=$(curl -s -w "%{http_code}" -o .entity_response.json \
+    -X POST "$PORT_API_BASE_URL/v1/blueprints/action/entities?upsert=true&run_id=$PORT_RUN_ID" \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d "$ENTITY_PAYLOAD")
+
+    if [[ "$HTTP_STATUS" == "200" || "$HTTP_STATUS" == "201" ]]; then
+    post_log "✅ Entity '$ACTION_IDENTIFIER' successfully created/updated"
+    else
+    post_log "❌ Failed to create/update entity. HTTP $HTTP_STATUS"
+    {
+        echo "❌ Failed to create/update entity. HTTP $HTTP_STATUS"
+        if [[ -s .entity_response.json ]]; then
+        echo "::group::API Error Response"
+        cat .entity_response.json
+        echo "::endgroup::"
+        jq -r '.message // .error // empty' .entity_response.json || true
+        else
+        echo "⚠️ No response body received or file is empty."
+        fi
+    } || true
+    rm -f .entity_response.json
+    exit 1
+    fi
+
+    rm -f .entity_response.json
+    ```
+</details>
+
+<details>
+<summary><b>Create Port action if missing (click to expand)</b></summary>
+
+    ```sh showLineNumbers title:"create_port_action_if_missing.sh"
+
+    #!/bin/bash
+    set -e
+
+    # ===[ Configuration ]===
+    PORT_API_BASE_URL="https://api.getport.io"
+    CACHE_FILE=".cache/port_token"
+    CACHE_TTL_SECONDS=3300
+
+    # ===[ Accept Parameters ]===
+    ACTION_IDENTIFIER="$1"
+    ACTION_TITLE="$2"
+    PORT_RUN_ID="$3"
+
+    if [[ -z "$ACTION_IDENTIFIER" || -z "$ACTION_TITLE" || -z "$PORT_RUN_ID" ]]; then
+    echo "❌ Usage: $0 <actionIdentifier> <actionTitle> <runId>"
+    exit 1
+    fi
+
+    # ===[ Logging Function ]===
+    post_log() {
+    local MSG="$1"
+    echo "$MSG"
+    if [[ -n "$TOKEN" && -n "$PORT_RUN_ID" ]]; then
+        curl -s -X POST "$PORT_API_BASE_URL/v1/actions/runs/$PORT_RUN_ID/logs" \
+        -H "Authorization: Bearer $TOKEN" \
+        -H "Content-Type: application/json" \
+        -d "{\"message\": \"$MSG\"}" > /dev/null
+    fi
+    }
+
+    # ===[ Error Trap ]===
+    handle_error() {
+    local EXIT_CODE=$?
+    local LINE=$1
+    local MESSAGE="❌ Script failed at line $LINE with exit code $EXIT_CODE"
+    echo "$MESSAGE"
+    post_log "$MESSAGE"
+    exit $EXIT_CODE
+    }
+
+    trap 'handle_error $LINENO' ERR
+
+    # ===[ Token Management ]===
+    refresh_token() {
+    AUTH_RESPONSE=$(curl -s -X POST "$PORT_API_BASE_URL/v1/auth/access_token" \
+        -H "Content-Type: application/json" \
+        -d "{\"clientId\": \"$PORT_CLIENT_ID\", \"clientSecret\": \"$PORT_CLIENT_SECRET\"}")
+
+    TOKEN=$(echo "$AUTH_RESPONSE" | jq -r '.accessToken')
+
+    if [[ -z "$TOKEN" || "$TOKEN" == "null" ]]; then
+        post_log "❌ Failed to retrieve token from Port"
+        exit 1
+    fi
+
+    mkdir -p .cache
+    echo "{\"token\":\"$TOKEN\", \"timestamp\":$(date +%s)}" > "$CACHE_FILE"
+    }
+
+    get_cached_token() {
+    if [[ ! -f "$CACHE_FILE" ]]; then
+        refresh_token
+    else
+        TIMESTAMP=$(jq -r '.timestamp' "$CACHE_FILE")
+        TOKEN=$(jq -r '.token' "$CACHE_FILE")
+        NOW=$(date +%s)
+        AGE=$((NOW - TIMESTAMP))
+        if [[ $AGE -ge $CACHE_TTL_SECONDS ]]; then
+        refresh_token
+        fi
+    fi
+    }
+
+    get_cached_token
+
+    # ===[ Check for Existing Action ]===
+    post_log "🔍 Checking if action '$ACTION_IDENTIFIER' exists..."
+    STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+    -H "Authorization: Bearer $TOKEN" \
+    "$PORT_API_BASE_URL/v1/actions/$ACTION_IDENTIFIER")
+
+    if [[ "$STATUS_CODE" == "200" ]]; then
+    post_log "✅ Action '$ACTION_IDENTIFIER' already exists. Skipping creation."
+    elif [[ "$STATUS_CODE" == "404" ]]; then
+    post_log "➕ Action not found. Creating '$ACTION_IDENTIFIER'..."
+
+    HTTP_STATUS=$(curl -s -w "%{http_code}" -o .port_action_response.json -X POST "$PORT_API_BASE_URL/v1/actions" \
+        -H "Authorization: Bearer $TOKEN" \
+        -H "Content-Type: application/json" \
+        -d @- <<EOF
+    {
+    "identifier": "$ACTION_IDENTIFIER",
+    "title": "$ACTION_TITLE",
+    "description": "Auto-created placeholder action",
+    "trigger": {
+        "type": "self-service",
+        "operation": "CREATE",
+        "userInputs": {
+        "properties": {
+            "user": {
+            "type": "string",
+            "format": "user",
+            "title": "User",
+            "default": {
+                "jqQuery": ".user.email"
+            },
+            "visible": false
+            }
+        },
+        "required": [],
+        "order": []
+        }
+    },
+    "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://example.com",
+        "method": "POST",
+        "headers": {
+        "RUN_ID": "{{ .run.id }}",
+        "Content-Type": "application/json"
+        },
+        "body": {
+        "{{ spreadValue() }}": "{{ .inputs }}",
+        "port_context": {
+            "runId": "{{ .run.id }}"
+        }
+        },
+        "agent": false,
+        "synchronized": true
+    }
+    }
+    EOF
+    )
+
+    if [[ "$HTTP_STATUS" == "200" || "$HTTP_STATUS" == "201" ]]; then
+        ID=$(jq -r '.action.identifier' .port_action_response.json)
+        post_log "📦 Successfully created action: $ID"
+    else
+        post_log "❌ Failed to create action. HTTP status: $HTTP_STATUS"
+        cat .port_action_response.json
+        exit 1
+    fi
+
+    rm .port_action_response.json
+    else
+    post_log "❌ Unexpected error while checking for action '$ACTION_IDENTIFIER'. HTTP status: $STATUS_CODE"
+    exit 1
+    fi 
+    ```
+</details>
+
+<details>
+<summary><b>Create Port automation (click to expand)</b></summary>
+
+    ```sh showLineNumbers title:"create_port_automation.sh"
+
+    #!/bin/bash
+    set -euo pipefail
+
+    # ===[ Configuration ]===
+    # Uncomment the correct region:
+    # PORT_API_BASE_URL="https://api.us.port.io"
+    PORT_API_BASE_URL="https://api.getport.io"
+    CACHE_FILE=".cache/port_token"
+    CACHE_TTL_SECONDS=3300
+
+    # ===[ Accept Parameters ]===
+    ACTION_IDENTIFIER="$1"
+    PORT_RUN_ID="$2"
+
+    if [[ -z "$ACTION_IDENTIFIER" || -z "$PORT_RUN_ID" ]]; then
+    echo "❌ Usage: $0 <actionIdentifier> <runId>"
+    exit 1
+    fi
+
+    TITLE="Automation for runs of $ACTION_IDENTIFIER"
+    AUTOMATION_IDENTIFIER=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
+
+    # ===[ Logging Function ]===
+    post_log() {
+    local MSG="$1"
+    echo "$MSG"
+    if [[ -n "${TOKEN:-}" && -n "$PORT_RUN_ID" ]]; then
+        curl -s -X POST "$PORT_API_BASE_URL/v1/actions/runs/$PORT_RUN_ID/logs" \
+        -H "Authorization: Bearer $TOKEN" \
+        -H "Content-Type: application/json" \
+        -d "{\"message\": \"$MSG\"}" > /dev/null
+    fi
+    }
+
+    # ===[ Error Trap ]===
+    handle_error() {
+    local EXIT_CODE=$?
+    local LINE=$1
+    local MESSAGE="❌ Script failed at line $LINE with exit code $EXIT_CODE"
+    echo "$MESSAGE"
+    post_log "$MESSAGE"
+    exit $EXIT_CODE
+    }
+
+    trap 'handle_error $LINENO' ERR
+
+    # ===[ Token Management ]===
+    refresh_token() {
+    AUTH_RESPONSE=$(curl -s -X POST "$PORT_API_BASE_URL/v1/auth/access_token" \
+        -H "Content-Type: application/json" \
+        -d "{\"clientId\": \"$PORT_CLIENT_ID\", \"clientSecret\": \"$PORT_CLIENT_SECRET\"}")
+    TOKEN=$(echo "$AUTH_RESPONSE" | jq -r '.accessToken')
+    if [[ -z "$TOKEN" || "$TOKEN" == "null" ]]; then
+        post_log "❌ Failed to retrieve token"
+        exit 1
+    fi
+    mkdir -p .cache
+    echo "{\"token\":\"$TOKEN\", \"timestamp\":$(date +%s)}" > "$CACHE_FILE"
+    }
+
+    get_cached_token() {
+    if [[ ! -f "$CACHE_FILE" ]]; then
+        refresh_token
+    else
+        TIMESTAMP=$(jq -r '.timestamp' "$CACHE_FILE")
+        TOKEN=$(jq -r '.token' "$CACHE_FILE")
+        NOW=$(date +%s)
+        AGE=$((NOW - TIMESTAMP))
+        if [[ $AGE -ge $CACHE_TTL_SECONDS ]]; then
+        refresh_token
+        fi
+    fi
+    }
+
+    get_cached_token
+
+    # ===[ Check if automation already exists ]===
+    post_log "🔍 Checking if automation '$AUTOMATION_IDENTIFIER' exists..."
+    STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+    -H "Authorization: Bearer $TOKEN" \
+    "$PORT_API_BASE_URL/v1/actions/$AUTOMATION_IDENTIFIER")
+
+    if [[ "$STATUS_CODE" == "200" ]]; then
+    post_log "✅ Automation '$AUTOMATION_IDENTIFIER' already exists. Skipping creation."
+    exit 0
+    elif [[ "$STATUS_CODE" != "404" ]]; then
+    post_log "❌ Unexpected HTTP status $STATUS_CODE while checking automation."
+    exit 1
+    fi
+
+    # ===[ Define properties block with double-escaping for jq expressions ]===
+    PROPERTIES_JSON=$(cat <<'EOF'
+    {
+    "run_id": "{{.event.diff.after.id}}",
+    "run_url": "https://app.port.io/organization/run?runId={{.event.diff.after.id}}",
+    "status": "{{.event.diff.after.status}}",
+    "created_at": "{{.event.diff.after.createdAt}}",
+    "updated_at": "{{.event.diff.after.updatedAt}}",
+    "{{if (.event.diff.after.status == \"SUCCESS\") then \"duration\" else null end}}": "{{ (.event.diff.after.createdAt | gsub(\"\\\\.[0-9]+Z$\"; \"Z\") | fromdateiso8601) as $created | (.event.diff.after.updatedAt | gsub(\"\\\\.[0-9]+Z$\"; \"Z\") | fromdateiso8601) as $updated | $updated - $created }}",
+    "{{if (.event.diff.after.status == \"SUCCESS\" and .event.diff.before.requiredApproval == true) then \"waiting_for_approval_duration\" else null end}}": "{{ (.event.diff.before.createdAt | gsub(\"\\\\.[0-9]+Z$\"; \"Z\") | fromdateiso8601) as $created | (.event.diff.before.updatedAt | gsub(\"\\\\.[0-9]+Z$\"; \"Z\") | fromdateiso8601) as $updated | $updated - $created }}",
+    "{{if (.event.diff.after.status == \"SUCCESS\") then \"cycle_time\" else null end}}": "{{ (.event.diff.before.updatedAt | gsub(\"\\\\.[0-9]+Z$\"; \"Z\") | fromdateiso8601) as $created | (.event.diff.after.updatedAt | gsub(\"\\\\.[0-9]+Z$\"; \"Z\") | fromdateiso8601) as $updated | $updated - $created }}"
+    }
+    EOF
+    )
+
+    # ===[ Create Automation ]===
+    post_log "🚀 Creating automation '$AUTOMATION_IDENTIFIER'..."
+
+    curl -s -X POST "$PORT_API_BASE_URL/v1/actions" \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d @- <<EOF
+    {
+    "identifier": "$AUTOMATION_IDENTIFIER",
+    "title": "$TITLE",
+    "description": "Update action run data in Port after creation",
+    "trigger": {
+        "type": "automation",
+        "event": {
+        "type": "ANY_RUN_CHANGE",
+        "actionIdentifier": "$ACTION_IDENTIFIER"
+        }
+    },
+    "invocationMethod": {
+        "type": "UPSERT_ENTITY",
+        "blueprintIdentifier": "action_run",
+        "mapping": {
+        "identifier": "{{.event.diff.after.id}}",
+        "title": "{{.event.diff.after.id}}",
+        "properties": $PROPERTIES_JSON,
+        "relations": {
+            "parent_action": "{{.event.diff.after.action.identifier}}",
+            "ran_by_actual_user": "{{.event.diff.after.properties.user}}"
+        }
+        }
+    },
+    "publish": true
+    }
+    EOF
+
+    post_log "✅ Automation '$AUTOMATION_IDENTIFIER' successfully created."
+    ```
+</details>
 
 ## Visualize action entities with dashboards
 
