@@ -11,8 +11,10 @@ import TabItem from "@theme/TabItem"
 
 The Port Model Context Protocol (MCP) Server acts as a bridge, enabling Large Language Models (LLMs)—like those powering Claude, Cursor, or GitHub Copilot—to interact directly with your Port.io developer portal. This allows you to leverage natural language to query your software catalog, analyze service health, manage resources, and even streamline development workflows, all from your preferred interfaces.
 
-:::info Standalone Value
-The Port MCP Server provides significant value on its own, even if you are not using the [Port AI Agents feature](/ai-agents/overview). You can configure it directly with your LLM-powered tools (e.g., in your IDE via Cursor or VS Code, or with Claude Desktop) to unlock powerful interactions with your Port instance. Access to the Port AI Agents feature is not required to use the MCP Server.
+:::info AI Agents vs. MCP Server
+The Port MCP Server is currently in open beta and provides significant standalone value, independent of our [AI Agents feature](/ai-agents/overview). Port AI Agents are currently in closed beta with limited access, while the MCP Server gives you immediate access to streamline building in Port, query your catalog, analyze service health, and streamline development workflows using natural language.
+
+While the MCP Server can interact with Port AI Agents when available, the core MCP functionality can be used freely without requiring access to the closed beta AI Agents feature.
 :::
 
 ## Why integrate LLMs with your developer portal?
