@@ -24,6 +24,9 @@ import TeamBlueprint from './example-team-members/\_github_exporter_team_bluepri
 import TeamMemberBlueprint from './example-team-members/\_github_exporter_team_member_blueprint.mdx'
 import TeamMemberConfig from './example-team-members/\_github_team_member_port_app_config.mdx'
 
+import RepositoryTeamBlueprint from './example-repository-teams/\_github_export_example_repository_with_teams_relation_blueprint.mdx'
+import PortRepositoryTeamMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_port_app_config.mdx'
+
 import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
 
 # Resource mapping examples
@@ -121,12 +124,50 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 
 :::
 
-## Map team and team member
+## Map repositories and teams
+
+The following example demonstrates how to ingest your GitHub repositories and their teams to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<TeamBlueprint/>
+
+<RepositoryTeamBlueprint/>
+
+<PortRepositoryTeamMappingAppConfig/>
+
+
+## Map team and team members
 The following show how you can map team and team members using the "members" selector.
 
 <TeamMemberBlueprint />
 <TeamBlueprint />
 <TeamMemberConfig />
+
+
+## Map repositories, repository admins and users
+
+The following example demonstrates how to ingest your GitHub repositories, their admins and related users to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryAdminBlueprint/>
+
+<GithubUsersBlueprint/>
+
+<RepositoryAdminAppConfig/>
+
+ <h3>Supported GitHub user types</h3>
+
+As Github has strict privacy policies, the GitHub API will only return emails in the following cases:  
+
+1. The user has a public email address
+2. Your organization is working with a GitHub Enterprise Cloud plan, and the user has an SAML SSO identity configured inside the GitHub organization.
+
+In other cases, the GitHub API will return a `null` value for the user's email.
+
+:::tip User supported fields 
+For the `user` kind, only the following fields are supported: `.name`, `.login`, and `.email`.  
+Other fields from the [GitHub User API](https://docs.github.com/en/rest/users/users#get-a-user) are not available.
+:::
 
 ## Map supported resources
 
