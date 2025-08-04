@@ -2,11 +2,12 @@ name: Claude PR Assistant
 
 on:
   pull_request:
-    types: [opened,reopened, ready_for_review, synchronize]
+    types: [opened,reopened, synchronize]
 
     
 jobs:
   check-if-to-trigger:
+    if: github.event_name == 'ready_for_review'
     outputs:
       changed_files: ${{ steps.changed-files.outputs.any_changed }}
     runs-on: ubuntu-latest
