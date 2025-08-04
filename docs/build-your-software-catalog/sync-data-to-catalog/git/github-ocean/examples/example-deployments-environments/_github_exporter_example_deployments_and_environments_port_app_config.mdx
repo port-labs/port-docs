@@ -4,7 +4,6 @@
 
 ```yaml
 createMissingRelatedEntities: true
-repositoryType: 'all'
 resources:
   - kind: repository
     selector:
@@ -25,13 +24,13 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__repository + '-' + .name
+          identifier: .__repository + "-" + .name
           title: .name
           blueprint: '"githubRepoEnvironment"'
           properties:
             url: .html_url
-            customBranchesPolicies: .custom_branches_policies
-            protectedBranches: .protected_branches
+            customBranchesPolicies: .deployment_branch_policy.custom_branches_policies
+            protectedBranches: .deployment_branch_policy.protected_branches
             createdAt: .created_at
             updatedAt: .updated_at
           relations:
@@ -42,8 +41,8 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__repository + '-' + (.id|tostring)
-          title: .task + '-' + .environment
+          identifier: .__repository + "-" + (.id|tostring)
+          title: .task + "-" + .environment
           blueprint: '"githubDeployment"'
           properties:
             description: .description
@@ -54,7 +53,7 @@ resources:
             createdAt: .created_at
             url: .url
           relations:
-            environment: .__repository + '-' + .environment
+            environment: .__repository + "-" + .environment
 ```
 
 </details>
