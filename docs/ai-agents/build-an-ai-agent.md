@@ -20,13 +20,13 @@ Let's walk through the process of creating an agent that can assist your develop
 
 To create a new agent, head to the AI Agents catalog page (this page will be created for you when you [activate the feature](/ai-agents/overview#access-to-the-feature)).
 
-Click on the "New AI Agent" button and fill the form with the agent details.
+Click on the "New AI Agent - That claude may review" button and fill the form with the agent details.
 <img src='/img/ai-agents/AIAgentsList.png' width='80%' border='1px' />
 <img src='/img/ai-agents/AIAgentsAddAgentModal.png' width='80%' border='1px' />
 
 We recommend following the steps below.
 
-### Step 1: Define your agent's purpose
+### Step 1: Define your agent's purposeZ
 
 The first step in building an AI agent is deciding on its purpose.  
 Here we will determine whether the agent will:
