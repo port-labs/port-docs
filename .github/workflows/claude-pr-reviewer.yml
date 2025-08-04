@@ -11,6 +11,7 @@ on:
     
 jobs:
   check-if-to-trigger:
+    
     outputs:
       changed_files: ${{ steps.changed-files.outputs.any_changed }}
     runs-on: ubuntu-latest
@@ -26,7 +27,9 @@ jobs:
           files: |
             - docs/**
 
-  claude-renovate-bump-chart-pr:
+  claude-docs-pr-reviewer:
+    needs: check-if-to-trigger
+    if: needs.check-if-to-trigger.outputs.changed_files == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
