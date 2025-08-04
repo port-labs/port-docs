@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-### 1. Benchmarking against OWASP Top 10
+### Benchmarking against OWASP Top 10
 
 Benchmarking repositories against the **OWASP Top 10** helps evaluate application code quality and security posture by scanning for patterns, vulnerabilities, and anti-patterns that map to the most critical web application security risks. This involves:
 
@@ -15,7 +15,7 @@ For more information, visit the [detailed example page](/promote-scorecards/exam
 
 
 
-### 2. Dora Metrics based on number of deployments
+### Dora Metrics based on number of deployments
 
 **DORA metrics** measure software delivery performance through key indicators such as:
 
@@ -29,7 +29,7 @@ When calculated based on the **number of deployments**, the emphasis is on **dep
 For more information, visit the [detailed example page](/promote-scorecards/examples/Dora%20metrics%20based%20on%20number%20of%20deployments)
 
 
-### 3. Ensure relation existence
+### Ensure relation existence
 
 **Ensuring relation existence** verifies that key relationships between entities in your system are properly established and maintained. This includes checking that:
 
@@ -42,7 +42,7 @@ This helps maintain system integrity, avoid configuration drift, and ensure smoo
 
 
 
-### 4. Ownership scorecard
+### Ownership scorecard
 
 An **ownership scorecard** evaluates how clearly and effectively ownership is defined and maintained for repositories. It measures indicators such as:
 
