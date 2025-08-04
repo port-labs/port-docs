@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem"
 
 String is a primitive data type used to save text data.
 
-## 💡 Common string usage
+## Common string usage
 
 The string property type can be used to store any text based data, for example:
 
@@ -203,8 +203,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
-{label: "Enum", value: "enum"},
-{label: "Array - coming soon", value: "array"}
+{label: "Enum", value: "enum"}
 ]}>
 
 <TabItem value="basic">
@@ -299,7 +298,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -361,7 +360,7 @@ blueprint = Blueprint(
             "myStringProp": {
                 "title": "My String",
                 "required": True,
-                "enum": ["my-option-1", "my-option-2"],
+                "enums": ["my-option-1", "my-option-2"],
                 "enum_colors": {
                     "my-option-1": "red",
                     "my-option-2": "green"
@@ -443,7 +442,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -595,18 +594,4 @@ export const blueprint = new port.Blueprint("myBlueprint", {
 
 ## Available enum colors
 
-Properties defined using [enum](#api-definition) can also include specific colors for the different values available in the property definition, the available enum colors are:
-
-```text showLineNumbers
-blue
-turquoise
-orange
-purple
-pink
-yellow
-green
-red
-darkGray
-lightGray
-bronze
-```
+Properties defined using [enum](#api-definition) can also include specific colors for the different values available in the property definition, to see the available enum colors refer to the [enum page](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/enum#available-enum-colors).

@@ -5,7 +5,7 @@ description: "This route allows you to fetch a specific webhook in your Port org
 sidebar_label: "Get a webhook"
 hide_title: true
 hide_table_of_contents: true
-api: eJztVEtr20AQ/ivLnhKwpaRHUQqBlFB6CWlKKcGH1WokLZZ3ld1Zu67Qf++MHrZj3B4KvfUi72Nm9nvMuJMFBO1Ni8ZZmcnn2gThXUQQqmncLoi9iwKdKAF1LZQILWhTGi12kNfOrYWxHOLFo/MonK+UNT8VV0vEd0rVylKl4EQAEAY5HGsQL4VCKkaJGoJoVQWrqxqxDVmaqrZNKsCWCibGpQEQja1CyinLKeVauPLkXaW1ixaT97lPPwyfZycaUN6KjfPEJSdKM+SwELoGvRZ8NoJxOm7A4oD7CISOQzLDyKNpiiU/SRhK3CkPS02IGlelOgZ0m6WxCJUfiqTTW+l1IhcSVRVk9iK/jYdytZCt8moDCJ4vOhkI0UbJrJO4b4GMCOiJtOwX0rAvrcKaClnKoZ0pCCy5AJ7Ozg0kmQ/XrBIznM1iM3fK4sHRUTGq4uE1Gg+FzNBH6AlhAB29wf2ALyct6TXi4EEV2QnTIFcc7SG0tIHAHN7d3PDPW2T3UKrYoHiaImVP5EiC2tGjkgyXi5FmJtPt7SxgSLsjnV4yLL+dVYu+oehj35jZLdLt0m0Mx4AThl9Y/BH5zPPgA6V9hv1R+rtIgP3U4nJypyZNKKsf3CrdkG6w4fihPe8eP1Eowx6luE1u2NnWBdwoy+FT9QegXp7dOve2k9qR7hb/z+m/mtPRc4QfmLaNIm/JpaGNuqk1X+T2lgJnhLTMToaReqomTzms63IV4Ktv+p6PXyN4niRabpU3KufmoA4uTOA1TUBJ6sMfHL96mib0WvztjF+kN/e55SbfqibyjpZr6vo3/zT96nReHz4+U5CKLMrpsKyHYZkWzPBi/fMpGh/jLw/uxZSuG0ex7w/x49VvM6apPFCxTKHvfwFl1W2B
+api: eJztVU1v00AQ/SurPVGpjVuppwghVQIhxKUqRQhFPWzWk3ip43V3ZxOK5f/OG38kpg0cQEgcuDj+mJl98+a9SaPZrKOeL/QnWhbe3+u7U51TtMHV7Hyl5/q2cFEFn5iUKUu/i+rRJ8VerYhtoYyKNVm3clbt+hLKVRIS1LUPrHxYm8p9M1Jtpj4j1ZoKlaJXkUg5lnAuSC1ywyiGREtR1WZNdy8K5jrOs8zU9WxNXKPgzPksErOr1jGTlLMh5UT51eRcY61PFc9eLkP2qrvcelWSCZXa+IBelmhphBxPlS3I3it514PxNm2o4g73AQhex9kIY5lcmZ/JkcCw4p0JdGaBqPTrzKbIfnPmKqZ16Ipkw1nZyUyf6toEsyGmIOQ3OuL4jdHzRvNjTWA9ckCHuj3VToZQGy6QVSEHTy4HMlBOAe8CPSQXKNdzDomeT49UqtxDAtX7LGFKugzUc9dNdGcqlrH6mgCYFMalW6ghkk3B8WOHcwkCcSr0Esjk80l7Ud9JNErWeKAovVyeX8jPj4he08qkktXNEIkWrEediiUWky6d7Qn7EiVhSk4dBB27vjzUiiuSI1JXkBSBLgrBh6NEbihGqOrIt3bK4kLqjnXQkclzJ3BMeT05vT+uldTL88vnXV4dyN05Ljq6gX6LIeTTSexMVJVntYJY83+aikPWr0l5qsDfY6LtuYVFCg8kGu7vXAMbzHW2vRjdFLPmUKPVItewHV2VQonowxJxo3XBwbGvKR4CJsr/IKT3PI/63/OGtPf0eLDmVQLgMOw7Pbi3gFeQ1XZuXvku3XEp8d2uurp+h1CB3VN2MTuXKdU+8sZ0cx+qvyUstnFp6SdMNwfx/F/af2VpDzNn+spZXRrMFlPqZNQM0lzo7QUCR4S4nU+WNTRVeHHoQjfN0kT6GMq2ldfYz0E2LG63JjizFHFAwbmLcp8f99Z04i9uBtueqD/b+T9pc9R7JWLfmjLJE27vof4f/pHaO0QPipcW+oAra6nmSeqz7SaO29v97ZtbxJoknE69dt95bbiR6kdhPTVhD0Gu4vujKU3TO7lt9/H9p59mDC3uGZAOsLO+A21yRho=
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -47,7 +47,7 @@ This route allows you to fetch a specific webhook in your Port organization. You
 </Heading>
 
 <ParamsDetails
-  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the webhook you want to fetch.<br/>","required":true}]}
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","required":true,"description":"The unique identifier of the resource you want to operate on."}]}
 >
   
 </ParamsDetails>
@@ -62,7 +62,7 @@ This route allows you to fetch a specific webhook in your Port organization. You
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Default Response"}}}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
 >
   
 </StatusCodes>

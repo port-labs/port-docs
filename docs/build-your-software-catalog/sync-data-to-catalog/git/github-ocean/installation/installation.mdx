@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import HelmParameters from "../../../templates/\_ocean-advanced-parameters-helm.mdx"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_realtime_installation.mdx"
@@ -14,9 +16,8 @@ This page details how to install Port's GitHub integration (powered by the Ocean
 
 This page outlines the following steps:
 
-- How to [create](#create-an-access-token) an access token to give the integration permissions to query your Github organization.
-- How to [configure](#configure-the-integration) and customize the integration before deploying it.
-- How to [deploy](#deploy-the-integration) the integration in the configuration that fits your use case.
+1. How to [create](#create-access-token) an access token to give the integration permissions to query your Github organization.
+2. How to [deploy](#deploy-the-integration) the integration in the configuration that fits your use case.
 
 ## Prerequisites
 
@@ -25,11 +26,12 @@ This page outlines the following steps:
 
 ## Setup
 
-### Configure access token
+### Create access token
 
 To allow Port to fetch data from your GitHub Organization, you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and GitHub app installation tokens.
 
-#### Personal access token (PAT)
+<Tabs>
+<TabItem value="pat" label="Personal Access Token (PAT)">
 
 A Personal Access Token (PAT) is suitable if you're the only one managing the integration and don't need frequent credential rotation.  
 To create a personal access token see Github's [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
@@ -50,10 +52,24 @@ To create a personal access token see Github's [managing your personal access to
   
   **Organization permissions:**
   - **Webhooks**: Read and Write (for managing webhook)
+
+
+:::note Default permissions
+You will be prompted to confirm the above listed permissions when creating a personal access token.
+
+Permissions can be given to selected repositories in your organization, or to all repositories.   
+You can reconfigure the permission at any time, giving it access to new repositories, or removing access.
+
+:::
 </details>
 
-#### Github app installation
+</TabItem>
+<TabItem value="github-app" label="GitHub App">
 
-Refer to our [Github app installation guide](./github-app.mdx)
+A GitHub App provides automatic access token rotation and is a good alternative to PATs.  
+To set it up, see the [GitHub App installation guide](./github-app.mdx).
+
+</TabItem>
+</Tabs>
 
 <InstallMethods setupName="classic" />

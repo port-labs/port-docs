@@ -17,6 +17,8 @@ import RepositoryTagReleaseAppConfig from './example-repository-release-tag/\_gi
 
 import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
+import FileBlueprint from './example-file-kind/\_example_file_blueprint.mdx'
+import RepoFileAppConfig from './example-file-kind/\_file_repo_app_config.mdx'
 
 
 # Resource mapping examples
@@ -24,33 +26,19 @@ import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
 ## Map repositories and pull requests
 
-In the following example you will ingest your GitHub repositories, their README.md file contents and open pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, their README.md file contents and open pull requests to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
 <PRBlueprint/>
 
-:::info repository type
-
-The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
-
-<details>
-<summary>Possible values:</summary>
-
-*   `all` (default): All repositories accessible to the provided token.
-*   `public`: Public repositories.
-*   `private`: Private repositories.
-*   `forks`: Only forked repositories.
-*   `sources`: Only non-forked repositories.
-</details>
-
-:::
 
 <PortAppConfig/>
 
 :::tip learn more
 
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
+- Port leverages the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
 - Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
 - Click [Here](https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request) for the GitHub pull request object structure.
 
@@ -67,6 +55,16 @@ The following example demonstrates ingestion of dependencies from a `package.jso
 
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/#ingest-files-from-your-repositories).
+
+
+## Map Files and Repositories
+
+The following example demonstrates mapping files to repository.
+
+<RepositoryBlueprint />
+<FileBlueprint />
+<RepoFileAppConfig />
+
 
 ## Map repositories, deployments and environments
 

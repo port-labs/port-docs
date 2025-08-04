@@ -204,10 +204,10 @@ export const liveEvents = {
      \n - unassigned \
      \n - review_request_removed \
      \n - closed \
-    \n\n **push:** \
+    \n\n **push** \
     \n\n **deployment** \
     \n\n **deployment_status** \
-    \n\n **release** \
+    \n\n **release:** \
     \n - created \
     \n - edited",
 };

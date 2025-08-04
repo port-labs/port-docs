@@ -15,7 +15,7 @@ import FileAppConfig from './\_bitbucket_integration_example_file_port_app_confi
 
 ## Mapping repositories, file contents and pull requests
 
-In the following example you will ingest your Bitbucket projects, repositories, pull requests and files to Port. You will also see how to ingest folders from monorepo repositories and files from specific repositories:
+The following example demonstrates how to ingest your Bitbucket projects, repositories, pull requests and files to Port. You will also see how to ingest folders from monorepo repositories and files from specific repositories:
 
 <ProjectBlueprint/>
 
@@ -38,7 +38,7 @@ After creating the blueprints and updating the mapping, you will see new entitie
 
 ## Mapping repositories and monorepos
 
-In the following example you will ingest your Bitbucket repositories and their folders to Port. By following this example you can map your different repositories, packages and libraries from your monorepo into separate entities in Port:
+The following example demonstrates how to ingest your Bitbucket repositories and their folders to Port. By following this example you can map your different repositories, packages and libraries from your monorepo into separate entities in Port:
 
 <MicroserviceBlueprint/>
 
@@ -52,7 +52,7 @@ In the following example you will ingest your Bitbucket repositories and their f
 
 ## Mapping files
 
-In the following example you will ingest files from a specific repository. You will be able to map files and file contents from specific repositories as entities in Port:
+The following example demonstrates how to ingest files from a specific repository. You will be able to map files and file contents from specific repositories as entities in Port:
 
 <FileBlueprint/>
 

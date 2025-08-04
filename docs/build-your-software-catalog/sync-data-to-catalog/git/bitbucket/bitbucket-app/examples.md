@@ -12,7 +12,8 @@ import PortMonoRepoAppConfig from './\_bitbucket_exporter_example_monorepo_port_
 
 ## Mapping repositories, file contents and pull requests
 
-In the following example you will ingest your Bitbucket repositories, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your Bitbucket repositories, their README.md file contents and pull requests to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <MicroserviceBlueprint/>
 
@@ -33,7 +34,7 @@ After creating the blueprints and committing the `port-app-config.yml` file to y
 
 ## Mapping repositories and monorepos
 
-In the following example you will ingest your Bitbucket repositories and their folders to Port. By following this example you can map your different repositories, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your Bitbucket repositories and their folders to Port. By following this example you can map your different repositories, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <MicroserviceBlueprint/>
 

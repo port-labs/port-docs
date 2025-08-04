@@ -48,7 +48,7 @@ export default function ParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>integration.config.githubHost</code></td>
-          <td>The API endpoint for your GitHub instance. For GitHub Enterprise Cloud, this will be <code>https://&lt;org_name.ghe.com&gt;</code>. Defaults to <code>https://api.github.com</code> if not provided.</td>
+          <td>The API endpoint for your GitHub instance. For GitHub Enterprise Cloud, this will be <code>https://api.&lt;SUBDOMAIN&gt;.ghe.com</code>. Defaults to <code>https://api.github.com</code> if not provided.</td>
           <td>❌</td>
         </tr>
         {!showingApp && <tr>
@@ -72,13 +72,8 @@ export default function ParametersTable({ showingApp }) {
           <td>❌</td>
         </tr>
         <tr>
-          <td><code>entraEnv[0].name</code></td>
-          <td><code>OCEAN__BASE_URL</code></td>
-          <td>❌</td>
-        </tr>
-        <tr>
-          <td><code>entraEnv[0].value</code></td>
-          <td>The domain where we want to get live events</td>
+          <td><code>liveEvents.baseUrl</code></td>
+          <td>The base url of the instance where the GitHub integration is hosted, used for real-time updates (e.g. <code>https://mygithuboceanintegration.com</code>).</td>
           <td>❌</td>
         </tr>
         <tr>
@@ -89,7 +84,7 @@ export default function ParametersTable({ showingApp }) {
         {showingApp && <>
           <tr>
             <td><code>integration.config.githubAppId</code></td>
-            <td>The ID of your GitHub App. Required if you are authenticating as a <a href="../github-app.mdx">GitHub App</a> instead of using a PAT.</td>
+            <td>The app id or client id of your GitHub App. Required if you are authenticating as a <a href="../github-app.mdx">GitHub App</a> instead of using a PAT.</td>
             <td>❌</td>
           </tr>
           <tr>
