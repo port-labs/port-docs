@@ -7,23 +7,25 @@ description: Create a dashboard that highlights the ROI of automations in Port
 
 ## Overview
 
-In the following guide, you are going to create a dashboard that highlights the ROI (Return On Invesment) of automations in Port.
-To achieve that we will create three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint), a [Self-service](https://app.getport.io/self-serve) action and a [dashboard](/customize-pages-dashboards-and-plugins/dashboards) that will reflect the advantages of using actions in Port.
+In the following guide, we will create a dashboard that highlights the ROI (Return On Invesment) of automations in Port.
+To achieve that we will create three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint), a [Self-service](https://app.getport.io/self-serve) action and a [dashboard](/customize-pages-dashboards-and-plugins/dashboards) that will reflect the advantages of using actions in Port. 
 
 Let's define two terms that we will use in this guide;
 
-### Lead Time Saving
+### Lead time saving
 
-**Lead Time Saving** measures the amount of time saved by automating and streamlining self-service actions through Port, compared to traditional manual request processes like those in ServiceNow.
+**Lead time saving** measures the amount of time saved by automating and streamlining **Self-service** actions through Port, compared to traditional manual request processes.  
 This metric captures the reduction in total time from when a user initiates a request to when it is fulfilled, including delays from approvals, queueing, handoffs, and clarifications.  
-Lead Time Saving is calculated across all self-service actions—from access provisioning to infrastructure changes—by benchmarking against manual equivalents to quantify the time saved.
+Lead time saving is calculated across all **self-service** actions, from access provisioning to infrastructure changes—by benchmarking against manual equivalents to quantify the time saved.
 
 **Why it matters:**
 
-- Highlights the ROI of automation
-- Demonstrates reduced friction in fulfillment workflows
-- Supports operational efficiency tracking
-- Informs prioritization of future self-service expansions
+- Highlights the ROI of automations.
+- Demonstrates reduced friction in fulfillment workflows.
+- Supports operational efficiency tracking.
+- Informs prioritization of future self-service expansions.
+
+**Lead time before**- This value represents how long requests typically took from submission to completion before using actions. We will use this value in the Self-service action.
 
 ### Cycle Time Saving
 
@@ -33,14 +35,14 @@ Unlike Lead Time—which captures the total end-to-end process—Cycle Time focu
 
 This metric is calculated across all automated self-service actions in Port, highlighting how much faster delivery happens once requests are ready to be acted on
 
-## Prerequisites
-Before you begin, you will need:
+**Cycle time before**- This value represents how long the actual execution typically took before using actions. We will use this value in the Self-service action.
 
-1. A Port account (if you don't have one already):
+## Prerequisites
+
+-  A Port account (if you don't have one already):
    - Visit [Port.io](https://app.port.io/).
    - Sign up for an account.
-
-2. A [GitHub](https://github.com/) account.
+-  A [GitHub](https://github.com/) account with your Port `CLIENT_ID` and `CLIENT_SECRETS` saved as secrets.
 
 ## Set up data model
 
@@ -738,7 +740,7 @@ After setting up both Action Runs and Action blueprint, add the following relati
                 },
                 "41281872-3eaa-4e6e-b66e-1f3e9bc7d99b": {
                 "title": "ROI",
-                "description": "Leave blank is no data or n/a"
+                "description": "Leave blank if no data or n/a"
                 }
             }
             },
@@ -771,6 +773,8 @@ After setting up both Action Runs and Action blueprint, add the following relati
 
 Define the logic that our action will trigger.
 In your GitHub repository, add the following files or use your own API.
+Add the workflow to the .git/workflows/ folder, and the other scripts to a ./scripts folder.
+You can also use this [repository](https://github.com/port-experimental/actions-experience) if you wish.
 
 <details>
 <summary><b>Create port automation workflow (click to expand)</b></summary>
@@ -1316,6 +1320,10 @@ In your GitHub repository, add the following files or use your own API.
     post_log "✅ Automation '$AUTOMATION_IDENTIFIER' successfully created."
     ```
 </details>
+
+### Set up the newly created action's backend
+
+When you trigger the "setup new action experience" Self-service action, a new Self-service action is created as well as an automation to track metrics on the newly created Self-service action. To complete it's 
 
 ## Visualize action entities with dashboards
 
