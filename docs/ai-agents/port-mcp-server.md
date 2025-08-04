@@ -47,6 +47,17 @@ Effortlessly query your software catalog and get immediate answers. This elimina
 
 ![Querying the service catalog from an IDE](/img/ai-agents/MCPCopilotAskServices.png)
 
+### Vibe-build in Port
+
+Leverage Claude's capabilities to manage and build your entire Port software catalog. You can create and configure blueprints, set up self-service actions, design scorecards, and more.
+
+*   Ask: "Please help me apply this guide into my Port instance - [[guide URL]]"
+*   Ask: "I want to start managing my k8s deployments, how can we build it in Port?"
+*   Ask: "I want a new production readiness scorecard to track the code quality and service alerts"
+*   Ask: "Create a new self-service action in Port to scaffold a new service"
+
+![Claude building a self-service action](/img/ai-agents/MCPClaudeBuildSSA.png)
+
 ### Analyze scorecards and quality
 
 Gain insights into service health, compliance, and quality by leveraging Port's scorecard data. Identify areas for improvement and track progress against your standards.
