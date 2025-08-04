@@ -12,7 +12,9 @@ Selecting the **list of values** option will set the property's `type` to `array
 :::info Limit field restriction
 The limit field setting, whether it's **1 value** or a **list of values**, is permanent and cannot be changed after the property is created. If you create a property with a single value limit, you won’t be able to change it later to allow multiple values.  
 
-To change the limit configuration after creation, you have two options:
-- Create a new property with the **limit** field set to a **list of values**.
-- Use the [migrate blueprint data](/build-your-software-catalog/customize-integrations/configure-data-model/migrate-data/) feature.
+To change the limit configuration after creation:
+1. Create a new property with the **limit** field set to a **list of values**.
+2. Use the [migrate blueprint data](/build-your-software-catalog/customize-integrations/configure-data-model/migrate-data/) feature to insert the data to the new property.
+3. Delete the old property.
+4. Rename the new property to the old property name (optional).
 :::
