@@ -26,8 +26,6 @@ jobs:
           files: docs/**
 
   claude-renovate-bump-chart-pr:
-    needs: check-if-to-trigger
-    if: needs.check-if-to-trigger.outputs.changed_files == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
