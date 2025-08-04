@@ -39,8 +39,7 @@
     "prism-react-renderer": "^2.4.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-tooltip": "^5.29.1",
-    "sharp": "^0.34.3"
+    "react-tooltip": "^5.29.1"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.8.1",
@@ -53,7 +52,6 @@
   "resolutions": {
     "js-yaml": "4.0.0^"
   },
-  "packageManager": "npm@10.8.2",
   "browserslist": {
     "production": [
       ">0.5%",
