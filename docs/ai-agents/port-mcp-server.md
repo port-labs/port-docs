@@ -164,6 +164,10 @@ Add the following object to your `mcpServers` configuration:
 <TabItem value="claude" label="Claude">
 To connect Claude to Port's remote MCP, you need to create a custom connector. This process does not require a client ID. For detailed instructions, refer to the [official Anthropic documentation on custom connectors](https://support.anthropic.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp).
 
+:::info Connection Stability
+While Port MCP is in open beta, you may occasionally experience connection issues. We're actively working to improve reliability and stability. If you encounter problems, try reconnecting or restarting your MCP client.
+:::
+
 When prompted for the remote MCP server URL, use the appropriate URL for your region:
 
 <Tabs>
@@ -209,7 +213,7 @@ The Port MCP Server exposes different sets of tools based on your role and use c
 
 **Developers** are typically users who consume and interact with the developer portal - querying services, running actions, and analyzing data. These tools help you get information and execute approved workflows.
 
-### Query and analysis tools
+**Query and analysis tools**
 -   **[`get_blueprints`](/api-reference/get-all-blueprints)**: Retrieve a list of all blueprints from Port.
 -   **[`get_blueprint`](/api-reference/get-a-blueprint)**: Retrieve information about a specific blueprint by its identifier.
 -   **[`get_entities`](/api-reference/get-all-entities-of-a-blueprint)**: Retrieve all entities for a given blueprint.
@@ -220,10 +224,10 @@ The Port MCP Server exposes different sets of tools based on your role and use c
 -   **`search_docs_sources`**: Search through Port documentation and knowledge sources for relevant information.
 -   **`ask_docs_question`**: Ask questions about Port documentation and get contextual answers.
 
-### Action execution tools
+**Action execution tools**
 -   **[`run_<action_identifier>`](/api-reference/execute-a-self-service-action)**: Execute any action you have permission to run in Port. The `action_identifier` corresponds to the identifier of the action you want to run. For example, if you have an action with the identifier `scaffold_microservice`, you can run it using `run_scaffold_microservice`.
 
-### AI agent tools
+**AI agent tools**
 -   **[`invoke_ai_agent`](/api-reference/invoke-an-agent)**: Invoke a Port AI agent with a specific prompt.
 
 </TabItem>
@@ -231,20 +235,20 @@ The Port MCP Server exposes different sets of tools based on your role and use c
 
 **Builders** are typically platform engineers or admins who design and configure the developer portal - creating blueprints, setting up scorecards, and managing the overall structure. These tools help you build and maintain the portal.
 
-### All Developer tools
+**All Developer tools**
 Builders have access to all the tools available to Developers (listed in the Developer tab), plus the additional management tools below.
 
-### Blueprint management tools
+**Blueprint management tools**
 -   **[`create_blueprint`](/api-reference/create-a-blueprint)**: Create a new blueprint in Port.
 -   **[`update_blueprint`](/api-reference/update-a-blueprint)**: Update an existing blueprint.
 -   **[`delete_blueprint`](/api-reference/delete-a-blueprint)**: Delete a blueprint from Port.
 
-### Entity management tools
+**Entity management tools**
 -   **[`create_entity`](/api-reference/create-an-entity)**: Create a new entity for a specific blueprint.
 -   **[`update_entity`](/api-reference/update-an-entity)**: Update an existing entity.
 -   **[`delete_entity`](/api-reference/delete-an-entity)**: Delete an entity.
 
-### Scorecard management tools
+**Scorecard management tools**
 -   **[`create_scorecard`](/api-reference/create-a-scorecard)**: Create a new scorecard for a specific blueprint.
 -   **[`update_scorecard`](/api-reference/change-scorecards)**: Update an existing scorecard.
 -   **[`delete_scorecard`](/api-reference/delete-a-scorecard)**: Delete a scorecard from Port.
