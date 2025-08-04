@@ -1,13 +1,16 @@
 name: Claude PR Assistant
-
 on:
   pull_request:
-    types: [opened,reopened, synchronize]
+    types:
+      - synchronize
+      - reopened
+      - opened
+    branches:
+      - main
 
     
 jobs:
   check-if-to-trigger:
-    if: github.event_name == 'ready_for_review'
     outputs:
       changed_files: ${{ steps.changed-files.outputs.any_changed }}
     runs-on: ubuntu-latest
@@ -20,8 +23,7 @@ jobs:
       - name: Check for changed files
         uses: tj-actions/changed-files@v46
         with:
-          files: |
-            docs/**
+          files: docs/**
 
   claude-renovate-bump-chart-pr:
     needs: check-if-to-trigger
