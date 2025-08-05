@@ -232,7 +232,7 @@ We will create a self-service action that the AI agent can run automatically to 
 Next, we will create an AI agent that generates helpful incident updates with contextual information.
 
 
-### Configure the incident summary AI agent
+### Configure the incident update AI agent
 
 1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
 2. Click on `+ AI Agent`.
