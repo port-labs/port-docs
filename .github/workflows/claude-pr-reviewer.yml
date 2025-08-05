@@ -7,11 +7,11 @@ on:
       - opened
     branches:
       - main
+  workflow_dispatch:
 
-    
 jobs:
   check-if-to-trigger:
-    
+    name: Check if to trigger
     outputs:
       changed_files: ${{ steps.changed-files.outputs.any_changed }}
     runs-on: ubuntu-latest
@@ -29,8 +29,9 @@ jobs:
             docs/**
 
   claude-docs-pr-reviewer:
+    name: Claude Docs PR Reviewer
     needs: check-if-to-trigger
-    if: needs.check-if-to-trigger.outputs.changed_files == 'true'
+    if: needs.check-if-to-trigger.outputs.changed_files == 'true' && github.event.pull_request.head.repo.full_name == 'port-labs/port-docs'
     runs-on: ubuntu-latest
     permissions:
       contents: read
