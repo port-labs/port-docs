@@ -1341,6 +1341,13 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
+    {
+        title: "Trigger GitHub Copilot from Port",
+        description: "Learn how to set up GitHub Copilot triggers from Port to enable AI-powered coding assistance",
+        tags: ["SDLC", "GitHub", "AI", "Actions"],
+        logos: ["GitHub", "AI"],
+        link: "/guides/all/trigger-github-copilot-from-port",
+    }
     
 ]
 
