@@ -6807,7 +6807,7 @@ paths:
                     additionalProperties: true
                   description: Array of entities to create
                   minItems: 1
-                  maxItems: 50
+                  maxItems: 20
               required:
                 - entities
               additionalProperties: false
@@ -8819,6 +8819,25 @@ paths:
                   description: A string hash of the `next` value that was returned in the previous
                     response. This is used to paginate through the results.
               additionalProperties: false
+              example:
+                query:
+                  combinator: and
+                  rules:
+                    - property: $blueprint
+                      operator: =
+                      value: service
+                    - combinator: or
+                      rules:
+                        - property: environment
+                          operator: =
+                          value: production
+                        - property: environment
+                          operator: =
+                          value: staging
+                include:
+                  - $identifier
+                  - $title
+                  - $createdAt
       parameters:
         - schema:
             type: string
@@ -10183,8 +10202,9 @@ paths:
                           anyOf:
                             - type: object
                               title: Inherited
-                              description: Ownership of the blueprint's entities will be defined by a hidden
-                                relation to the `Team` blueprint.
+                              description: Ownership of the blueprint's entities will be inherited from a
+                                different related blueprint with `Direct`
+                                ownership.
                               properties:
                                 type:
                                   type: string
@@ -10204,9 +10224,8 @@ paths:
                                 - path
                             - type: object
                               title: Direct
-                              description: Ownership of the blueprint's entities will be inherited from a
-                                different related blueprint with Direct
-                                ownership.
+                              description: Ownership of the blueprint's entities will be defined by a hidden
+                                **relation** to the `Team` blueprint.
                               properties:
                                 type:
                                   type: string
@@ -10704,6 +10723,7 @@ paths:
                                 $ref: "#/components/schemas/def-1"
                               pathFilter:
                                 type: array
+                                maxItems: 1
                                 items:
                                   type: object
                                   properties:
@@ -10890,8 +10910,8 @@ paths:
                   anyOf:
                     - type: object
                       title: Inherited
-                      description: Ownership of the blueprint's entities will be defined by a hidden
-                        relation to the `Team` blueprint.
+                      description: Ownership of the blueprint's entities will be inherited from a
+                        different related blueprint with `Direct` ownership.
                       properties:
                         type:
                           type: string
@@ -10911,8 +10931,8 @@ paths:
                         - path
                     - type: object
                       title: Direct
-                      description: Ownership of the blueprint's entities will be inherited from a
-                        different related blueprint with Direct ownership.
+                      description: Ownership of the blueprint's entities will be defined by a hidden
+                        **relation** to the `Team` blueprint.
                       properties:
                         type:
                           type: string
@@ -11409,6 +11429,7 @@ paths:
                         $ref: "#/components/schemas/def-1"
                       pathFilter:
                         type: array
+                        maxItems: 1
                         items:
                           type: object
                           properties:
@@ -11558,8 +11579,9 @@ paths:
                         anyOf:
                           - type: object
                             title: Inherited
-                            description: Ownership of the blueprint's entities will be defined by a hidden
-                              relation to the `Team` blueprint.
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with `Direct`
+                              ownership.
                             properties:
                               type:
                                 type: string
@@ -11579,8 +11601,8 @@ paths:
                               - path
                           - type: object
                             title: Direct
-                            description: Ownership of the blueprint's entities will be inherited from a
-                              different related blueprint with Direct ownership.
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              **relation** to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -12078,6 +12100,7 @@ paths:
                               $ref: "#/components/schemas/def-1"
                             pathFilter:
                               type: array
+                              maxItems: 1
                               items:
                                 type: object
                                 properties:
@@ -12319,8 +12342,9 @@ paths:
                         anyOf:
                           - type: object
                             title: Inherited
-                            description: Ownership of the blueprint's entities will be defined by a hidden
-                              relation to the `Team` blueprint.
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with `Direct`
+                              ownership.
                             properties:
                               type:
                                 type: string
@@ -12340,8 +12364,8 @@ paths:
                               - path
                           - type: object
                             title: Direct
-                            description: Ownership of the blueprint's entities will be inherited from a
-                              different related blueprint with Direct ownership.
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              **relation** to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -12839,6 +12863,7 @@ paths:
                               $ref: "#/components/schemas/def-1"
                             pathFilter:
                               type: array
+                              maxItems: 1
                               items:
                                 type: object
                                 properties:
@@ -13025,8 +13050,8 @@ paths:
                   anyOf:
                     - type: object
                       title: Inherited
-                      description: Ownership of the blueprint's entities will be defined by a hidden
-                        relation to the `Team` blueprint.
+                      description: Ownership of the blueprint's entities will be inherited from a
+                        different related blueprint with `Direct` ownership.
                       properties:
                         type:
                           type: string
@@ -13046,8 +13071,8 @@ paths:
                         - path
                     - type: object
                       title: Direct
-                      description: Ownership of the blueprint's entities will be inherited from a
-                        different related blueprint with Direct ownership.
+                      description: Ownership of the blueprint's entities will be defined by a hidden
+                        **relation** to the `Team` blueprint.
                       properties:
                         type:
                           type: string
@@ -13544,6 +13569,7 @@ paths:
                         $ref: "#/components/schemas/def-1"
                       pathFilter:
                         type: array
+                        maxItems: 1
                         items:
                           type: object
                           properties:
@@ -13690,8 +13716,9 @@ paths:
                         anyOf:
                           - type: object
                             title: Inherited
-                            description: Ownership of the blueprint's entities will be defined by a hidden
-                              relation to the `Team` blueprint.
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with `Direct`
+                              ownership.
                             properties:
                               type:
                                 type: string
@@ -13711,8 +13738,8 @@ paths:
                               - path
                           - type: object
                             title: Direct
-                            description: Ownership of the blueprint's entities will be inherited from a
-                              different related blueprint with Direct ownership.
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              **relation** to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -14210,6 +14237,7 @@ paths:
                               $ref: "#/components/schemas/def-1"
                             pathFilter:
                               type: array
+                              maxItems: 1
                               items:
                                 type: object
                                 properties:
@@ -14431,8 +14459,8 @@ paths:
                   anyOf:
                     - type: object
                       title: Inherited
-                      description: Ownership of the blueprint's entities will be defined by a hidden
-                        relation to the `Team` blueprint.
+                      description: Ownership of the blueprint's entities will be inherited from a
+                        different related blueprint with `Direct` ownership.
                       properties:
                         type:
                           type: string
@@ -14452,8 +14480,8 @@ paths:
                         - path
                     - type: object
                       title: Direct
-                      description: Ownership of the blueprint's entities will be inherited from a
-                        different related blueprint with Direct ownership.
+                      description: Ownership of the blueprint's entities will be defined by a hidden
+                        **relation** to the `Team` blueprint.
                       properties:
                         type:
                           type: string
@@ -14869,6 +14897,7 @@ paths:
                         $ref: "#/components/schemas/def-1"
                       pathFilter:
                         type: array
+                        maxItems: 1
                         items:
                           type: object
                           properties:
@@ -15011,8 +15040,9 @@ paths:
                         anyOf:
                           - type: object
                             title: Inherited
-                            description: Ownership of the blueprint's entities will be defined by a hidden
-                              relation to the `Team` blueprint.
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with `Direct`
+                              ownership.
                             properties:
                               type:
                                 type: string
@@ -15032,8 +15062,8 @@ paths:
                               - path
                           - type: object
                             title: Direct
-                            description: Ownership of the blueprint's entities will be inherited from a
-                              different related blueprint with Direct ownership.
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              **relation** to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -15531,6 +15561,7 @@ paths:
                               $ref: "#/components/schemas/def-1"
                             pathFilter:
                               type: array
+                              maxItems: 1
                               items:
                                 type: object
                                 properties:
@@ -15900,8 +15931,9 @@ paths:
                         anyOf:
                           - type: object
                             title: Inherited
-                            description: Ownership of the blueprint's entities will be defined by a hidden
-                              relation to the `Team` blueprint.
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with `Direct`
+                              ownership.
                             properties:
                               type:
                                 type: string
@@ -15921,8 +15953,8 @@ paths:
                               - path
                           - type: object
                             title: Direct
-                            description: Ownership of the blueprint's entities will be inherited from a
-                              different related blueprint with Direct ownership.
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              **relation** to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -16420,6 +16452,7 @@ paths:
                               $ref: "#/components/schemas/def-1"
                             pathFilter:
                               type: array
+                              maxItems: 1
                               items:
                                 type: object
                                 properties:
@@ -16678,8 +16711,9 @@ paths:
                         anyOf:
                           - type: object
                             title: Inherited
-                            description: Ownership of the blueprint's entities will be defined by a hidden
-                              relation to the `Team` blueprint.
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with `Direct`
+                              ownership.
                             properties:
                               type:
                                 type: string
@@ -16699,8 +16733,8 @@ paths:
                               - path
                           - type: object
                             title: Direct
-                            description: Ownership of the blueprint's entities will be inherited from a
-                              different related blueprint with Direct ownership.
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              **relation** to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -17198,6 +17232,7 @@ paths:
                               $ref: "#/components/schemas/def-1"
                             pathFilter:
                               type: array
+                              maxItems: 1
                               items:
                                 type: object
                                 properties:
@@ -17458,8 +17493,9 @@ paths:
                         anyOf:
                           - type: object
                             title: Inherited
-                            description: Ownership of the blueprint's entities will be defined by a hidden
-                              relation to the `Team` blueprint.
+                            description: Ownership of the blueprint's entities will be inherited from a
+                              different related blueprint with `Direct`
+                              ownership.
                             properties:
                               type:
                                 type: string
@@ -17479,8 +17515,8 @@ paths:
                               - path
                           - type: object
                             title: Direct
-                            description: Ownership of the blueprint's entities will be inherited from a
-                              different related blueprint with Direct ownership.
+                            description: Ownership of the blueprint's entities will be defined by a hidden
+                              **relation** to the `Team` blueprint.
                             properties:
                               type:
                                 type: string
@@ -17978,6 +18014,7 @@ paths:
                               $ref: "#/components/schemas/def-1"
                             pathFilter:
                               type: array
+                              maxItems: 1
                               items:
                                 type: object
                                 properties:
@@ -22672,8 +22709,8 @@ paths:
       summary: Update an action run
       tags:
         - Action Runs
-      description: This route allows you to update an action run's details. This can be
-        used to update the run's status & label, and add links to it (e.g.
+      description: This route allows you to update an action run's details. This can
+        be used to update the run's status & label, and add links to it (e.g.
         external logs of the job runner).<br/><br/>To learn more about action
         runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
@@ -26146,8 +26183,7 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - const: create
-                            title: Advanced create
+                          - title: Advanced create
                             description: >-
                               If the operation is `create`, the [entity
                               JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
@@ -26184,8 +26220,7 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - const: delete
-                            title: Delete
+                          - title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -26226,7 +26261,7 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - title: delete
+                            - title: Delete
                               description: >-
                                 If the selected operation is `delete`, a
                                 blueprint identifier, and entity identifier must
@@ -26248,7 +26283,7 @@ paths:
                               enum:
                                 - delete
                             - type: object
-                              title: delete
+                              title: Advanced delete
                               properties:
                                 type:
                                   enum:
@@ -26264,7 +26299,7 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - title: delete
+                            - title: Delete
                               description: >-
                                 If the selected operation is `delete`, a
                                 blueprint identifier, and entity identifier must
@@ -26286,7 +26321,7 @@ paths:
                               enum:
                                 - delete
                             - type: object
-                              title: delete
+                              title: Advanced delete
                               properties:
                                 type:
                                   enum:
@@ -26324,7 +26359,7 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - title: create
+                            - title: Advanced create
                               description: >-
                                 If the operation is `create`, the [entity
                                 JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
@@ -26353,7 +26388,7 @@ paths:
                               enum:
                                 - create
                             - type: object
-                              title: create
+                              title: Create
                               properties:
                                 type:
                                   enum:
@@ -26642,8 +26677,7 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - const: create
-                            title: Advanced create
+                          - title: Advanced create
                             description: >-
                               If the operation is `create`, the [entity
                               JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
@@ -26680,8 +26714,7 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - const: delete
-                            title: Delete
+                          - title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -26722,7 +26755,7 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - title: delete
+                            - title: Delete
                               description: >-
                                 If the selected operation is `delete`, a
                                 blueprint identifier, and entity identifier must
@@ -26744,7 +26777,7 @@ paths:
                               enum:
                                 - delete
                             - type: object
-                              title: delete
+                              title: Advanced delete
                               properties:
                                 type:
                                   enum:
@@ -26760,7 +26793,7 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - title: delete
+                            - title: Delete
                               description: >-
                                 If the selected operation is `delete`, a
                                 blueprint identifier, and entity identifier must
@@ -26782,7 +26815,7 @@ paths:
                               enum:
                                 - delete
                             - type: object
-                              title: delete
+                              title: Advanced delete
                               properties:
                                 type:
                                   enum:
@@ -26820,7 +26853,7 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - title: create
+                            - title: Advanced create
                               description: >-
                                 If the operation is `create`, the [entity
                                 JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
@@ -26849,7 +26882,7 @@ paths:
                               enum:
                                 - create
                             - type: object
-                              title: create
+                              title: Create
                               properties:
                                 type:
                                   enum:
@@ -27093,8 +27126,7 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - const: create
-                            title: Advanced create
+                          - title: Advanced create
                             description: >-
                               If the operation is `create`, the [entity
                               JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
@@ -27131,8 +27163,7 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - const: delete
-                            title: Delete
+                          - title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -27173,7 +27204,7 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - title: delete
+                            - title: Delete
                               description: >-
                                 If the selected operation is `delete`, a
                                 blueprint identifier, and entity identifier must
@@ -27195,7 +27226,7 @@ paths:
                               enum:
                                 - delete
                             - type: object
-                              title: delete
+                              title: Advanced delete
                               properties:
                                 type:
                                   enum:
@@ -27211,7 +27242,7 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - title: delete
+                            - title: Delete
                               description: >-
                                 If the selected operation is `delete`, a
                                 blueprint identifier, and entity identifier must
@@ -27233,7 +27264,7 @@ paths:
                               enum:
                                 - delete
                             - type: object
-                              title: delete
+                              title: Advanced delete
                               properties:
                                 type:
                                   enum:
@@ -27271,7 +27302,7 @@ paths:
                       properties:
                         operation:
                           oneOf:
-                            - title: create
+                            - title: Advanced create
                               description: >-
                                 If the operation is `create`, the [entity
                                 JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
@@ -27300,7 +27331,7 @@ paths:
                               enum:
                                 - create
                             - type: object
-                              title: create
+                              title: Create
                               properties:
                                 type:
                                   enum:
@@ -29445,128 +29476,6 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-    post:
-      summary: Create credentials
-      tags:
-        - Apps
-      description: This route allows you to create a set of credentials in your Port
-        organization, containing a `client ID` and `client secret`.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The name of the credentials set.
-              additionalProperties: false
-              required:
-                - name
-        required: true
-      security:
-        - bearer:
-            - update:apps
-      responses:
-        "200":
-          description: Created successfully.
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    enum:
-                      - true
-                  app:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      enabled:
-                        type: boolean
-                      id:
-                        type: string
-                      createdAt:
-                        type: string
-                        format: date-time
-                      updatedAt:
-                        type: string
-                        format: date-time
-                      secret:
-                        type: string
-                required:
-                  - ok
-                additionalProperties: false
-                description: Created successfully.
-        "401":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-        "404":
-          description: A resource with the provided identifier was not found
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: A resource with the provided identifier was not found
-        "413":
-          description: Request body is too large (limit is 1MiB)
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-                description: Request body is too large (limit is 1MiB)
-        "422":
-          description: The json provided does not match the route's schema
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: The json provided does not match the route's schema
   "/v1/apps/{id}/rotate-secret":
     post:
       summary: Rotate secret
