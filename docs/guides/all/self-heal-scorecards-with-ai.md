@@ -5,7 +5,7 @@ description: Learn how to use Port's AI capabilities to automatically detect sco
 
 # Self-Heal Scorecards with AI
 
-Scorecards in Port help you evaluate the maturity, production readiness, and engineering quality of entities in your software catalog. However, when scorecard statistics degrade, manual intervention is often required to identify and fix the issues. This guide shows you how to create an AI-powered system that automatically detects scorecard degradation, creates GitHub issues for remediation, and assigns them to GitHub Copilot for automated code fixes.
+Scorecards in Port help you evaluate the maturity, production readiness, and engineering quality of entities in your software catalog. However, when scorecard statistics degrade, manual intervention is often required to identify and fix the issues. This guide shows you how to create an AI-powered system that automatically detects scorecard degradation and trigger Github Copilot for automated code fixes.
 
 <img src="/img/guides/self-healing-scorecard-workflow.jpg" border="1px" width="100%" />
 
@@ -13,7 +13,7 @@ Scorecards in Port help you evaluate the maturity, production readiness, and eng
 ## Common use cases
 
 - **Maintain engineering standards** by detecting missing license files, code owners, or deployment configurations
-- **Track code quality metrics** and generate issues for missing linters, tests, or security scanning
+- **Track code quality metrics** for missing linters, tests, or security scanning
 - **Ensure compliance** by monitoring regulatory requirements, security protocols, and data protection measures
 
 
@@ -24,6 +24,10 @@ This guide assumes the following:
 - [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account
 - [Port's AI capabilities](https://docs.port.io/ai-agents/overview#getting-started-with-ai-agents) are enabled in your account
 - You have access to GitHub Copilot in your repositories
+
+:::tip Flexibility with Coding Agents
+While this guide describes GitHub Copilot, you can replace it with any other coding agent you have that can be triggered via an API.
+:::
 
 
 ## Set up data model
@@ -1044,7 +1048,7 @@ This automation ensures that GitHub issues created for scorecard remediation are
       },
       "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "https://api.us.getport.io/v1/actions/assign_to_copilot_no_comment/runs",
+        "url": "https://api.getport.io/v1/actions/assign_to_copilot_no_comment/runs",
         "agent": false,
         "synchronized": true,
         "method": "POST",
@@ -1308,9 +1312,9 @@ Now let us test the complete workflow to ensure everything works correctly.
 
 ### Verify the AI agent task creation
 
-1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
-2. Click on the `Self Healing Scorecard` agent.
-3. Check the `AI Invocations` tab to see the generated task.
+1. Go to the [Catalog](https://app.getport.io/catalog) page of your portal.
+2. Navigate to the `AI Agent Task` entities.
+3. Check the list to see the generated task.
 
 
 ### Check the GitHub issue creation
@@ -1324,6 +1328,7 @@ Now let us test the complete workflow to ensure everything works correctly.
 
 1. Check the GitHub issue to see if it was assigned to Copilot.
 2. Verify that the GitHub workflow was triggered successfully.
+3. See Copilot created a new PR.
 
 
 ### Monitor the remediation process

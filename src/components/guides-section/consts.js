@@ -1340,8 +1340,8 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
-        title: "Self-heal scorecards with AI",
-        description: "Learn how to use Port's AI capabilities to automatically detect scorecard degradation and create GitHub issues for Copilot to fix them",
+        title: "Auto-fix services when scorecards degrade",
+        description: "Learn how to use Port's AI capabilities to detect scorecard degradation and automatically use a coding agent like GitHub Copilot to fix it",
         tags: ["SDLC", "AI", "GitHub", "Scorecards"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/self-heal-scorecards-with-ai",
