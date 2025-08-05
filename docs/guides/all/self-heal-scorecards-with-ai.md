@@ -1,6 +1,6 @@
 ---
 displayed_sidebar: null
-description: Learn how to use Port's AI capabilities to automatically detect scorecard degradation and create GitHub issues for Copilot to fix them.
+description: Learn how to use Port's AI capabilities to detect scorecard degradation and automatically use a coding agent like GitHub Copilot to fix it.
 ---
 
 # Self-Heal Scorecards with AI
