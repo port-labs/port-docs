@@ -8,10 +8,15 @@ on:
     branches:
       - main
 
-    
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+  id-token: write
+
 jobs:
   check-if-to-trigger:
-    
+    name: Check if to trigger
     outputs:
       changed_files: ${{ steps.changed-files.outputs.any_changed }}
     runs-on: ubuntu-latest
@@ -29,14 +34,10 @@ jobs:
             docs/**
 
   claude-docs-pr-reviewer:
+    name: Claude Docs PR Reviewer
     needs: check-if-to-trigger
     if: needs.check-if-to-trigger.outputs.changed_files == 'true'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
-      issues: read
-      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
