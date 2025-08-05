@@ -19,7 +19,7 @@ Once implemented, users will be able to:
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - You have the relevant Git integration installed and configured:
-  - [Port's GitHub Integrtion](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/).
+  - [Port's GitHub integrtion](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/).
   - [Port's GitLab integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/).
   - [Port's Azure DevOps integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/).
 - You have permissions to create automations in Port.
