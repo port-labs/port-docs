@@ -107,12 +107,12 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 
 
 
-  <details>
-  <summary><b>Main Executable Script (Click to expand)</b></summary>
+    <details>
+    <summary><b>Main Executable Script (Click to expand)</b></summary>
 
-  <HumanitecExporterMainScript/>
+    <HumanitecExporterMainScript/>
 
-  </details>
+    </details>
 
 
   <details>
