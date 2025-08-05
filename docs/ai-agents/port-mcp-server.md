@@ -144,6 +144,23 @@ To connect VSCode to Port's remote MCP, you need to add a configuration to your 
 Unlike Cursor, VSCode does not currently support direct URL connections to remote MCP servers. We are tracking this limitation and working with the VSCode team to improve support. As a workaround, this configuration uses the open-source `mcp-remote` package, which requires Node.js to be installed on your system.
 :::
 
+**Prerequisites**
+
+Before adding the configuration, ensure Node.js is installed and the `mcp-remote` package works correctly. Run this command in your terminal:
+
+```bash
+npx -y mcp-remote --help
+```
+
+This command should display the help information for `mcp-remote`. If you encounter errors:
+- **Missing Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
+- **Network issues**: Check your internet connection and proxy settings
+- **Permission issues**: You may need to run with appropriate permissions
+
+If the command runs successfully, you can proceed with the configuration.
+
+**Configuration**
+
 Add the following object to your `mcpServers` configuration:
 
 <Tabs>
@@ -307,3 +324,38 @@ Refer to the [Claude custom connector documentation](https://support.anthropic.c
 
 </TabItem>
 </Tabs>
+
+## Troubleshooting
+
+If you encounter issues while setting up or using the Port MCP Server, expand the relevant section below:
+
+<details>
+<summary>How can I connect to the MCP? (Click to expand)</summary>
+
+Refer back to the [setup instructions](/ai-agents/port-mcp-server#setup) for your specific application (Cursor, VSCode, or Claude). Make sure you're using the correct regional URL for your Port organization.
+
+</details>
+
+<details>
+<summary>I completed the connection but nothing happens (Click to expand)</summary>
+
+Check that you've followed all the [setup steps](/ai-agents/port-mcp-server#setup) correctly for your application. Ensure you're authenticated with Port and have the necessary permissions. If you've followed all the steps and still have issues, please reach out to our support team.
+
+</details>
+
+<details>
+<summary>How can I use the MCP server? (Click to expand)</summary>
+
+Once connected, you can interact with Port through natural language in your application's chat interface. Ask questions about your software catalog, request help with building Port resources, or analyze your data. The [available tools](/ai-agents/port-mcp-server#available-tools) depend on your permissions (Developer vs Builder role).
+
+</details>
+
+:::tip Getting Help
+If you continue to experience issues, please reach out to Port support with:
+- Your IDE/application version
+- The specific error messages you're seeing
+- Your Port region (EU/US)
+- Steps you've already tried
+
+This information will help us provide more targeted assistance.
+:::
