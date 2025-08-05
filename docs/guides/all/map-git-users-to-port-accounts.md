@@ -10,9 +10,9 @@ import TabItem from '@theme/TabItem';
 This guide demonstrates how to automatically map Git users to existing Port user accounts based on email addresses. 
 
 Once implemented, users will be able to:
-- Maintain a complete inventory of all Git users in your organization within Port
-- Automatically link Git users to their corresponding Port user accounts for seamless integration
-- Provide visibility into which Git users have Port accounts and which don't
+- Maintain a complete inventory of all Git users in your organization within Port.
+- Automatically link Git users to their corresponding Port user accounts for seamless integration.
+- Provide visibility into which Git users have Port accounts and which ones do not.
 
 ## Prerequisites
 
@@ -26,11 +26,10 @@ This guide assumes the following:
 
 ## Set up data model
 
-To establish relationships between Git users and Port user accounts, we need to enhance the Port User blueprint to add relations to the Git user blueprints.
+The relations between Git users and Port users are created automatically when we install the relevant Git integrations.   
+If you haven't installed them yet, please do so first.
 
-<h3> Enhance the Port User blueprint</h3>
-
-Now we need to enhance the Port User blueprint to add relations to the Git user blueprints and mirror properties to display Git information.
+<h3>Add mirror properties to the Port User blueprint</h3>
 
 1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
 
@@ -38,37 +37,7 @@ Now we need to enhance the Port User blueprint to add relations to the Git user 
 
 3. Click on the `Edit JSON` button in the top right corner.
 
-4. Add the following relations to the `relations` object (add only the ones relevant to your Git integrations):
-
-    <details>
-    <summary><b>Port User blueprint relations (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    "relations": {
-      "githubUser": {
-        "title": "GitHub User",
-        "target": "githubUser",
-        "required": false,
-        "many": false
-      },
-      "gitlabUser": {
-        "title": "GitLab User", 
-        "target": "gitlabMember",
-        "required": false,
-        "many": false
-      },
-      "azureDevopsUser": {
-        "title": "Azure DevOps User",
-        "target": "azureDevopsMember", 
-        "required": false,
-        "many": false
-      }
-    }
-    ```
-
-    </details>
-
-5. Add mirror properties to display Git user information:
+4. Add the following mirror properties to the `mirrorProperties` object to display Git user information:
 
     <details>
     <summary><b>Port User blueprint mirror properties (Click to expand)</b></summary>
@@ -92,7 +61,7 @@ Now we need to enhance the Port User blueprint to add relations to the Git user 
 
     </details>
 
-6. Click on `Save` to update the blueprint.
+5. Click on `Save` to update the blueprint.
 
 :::info Additional mirror properties
 You can add more mirror properties to display other Git user attributes or customize which properties are most relevant for your organization. Only add the mirror properties for the Git platforms you're using.
@@ -257,8 +226,6 @@ To update the Azure DevOps integration mapping, follow the steps below:
 
 To ensure new Port users are automatically mapped to their corresponding Git user accounts when a new Port user is created, we'll create an automation that triggers when a new Port user is created.
 
-Follow the steps below to create the automation:
-
 1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
 
 2. Click on `+ Automation`.
@@ -344,7 +311,6 @@ Follow the steps below to create the automation:
 
 5. Click `Save` to create the automation.
 
-
 ## Let's test it!
 
 1. Go to your [Software catalog](https://app.getport.io/catalog) page
@@ -354,9 +320,4 @@ Follow the steps below to create the automation:
 3. Verify that the user has a relationship with the corresponding Port user account.
 
 4. Check that the relationship is established automatically for new Git users.
-
-
-## Conclusion
-
-You've successfully set up automatic mapping between Git users and Port user accounts.
 
