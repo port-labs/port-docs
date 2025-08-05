@@ -1,0 +1,59 @@
+name: Claude Docs PR Reviewer
+on:
+  pull_request:
+    types:
+      - synchronize
+      - reopened
+      - opened
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  check-if-to-trigger:
+    name: Check if to trigger
+    outputs:
+      changed_files: ${{ steps.changed-files.outputs.any_changed }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Check for changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v46
+        with:
+          files: |
+            docs/**
+
+  claude-docs-pr-reviewer:
+    name: Claude Docs PR Reviewer
+    needs: check-if-to-trigger
+    if: needs.check-if-to-trigger.outputs.changed_files == 'true' && github.event.pull_request.head.repo.full_name == 'port-labs/port-docs'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Configure Git 
+        run: |
+          git config --global user.name "Port Claude AI"
+          git config --global user.email "port-claude-ai@port.io"
+
+      - name: Run Claude PR Action
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          allowed_tools: "Bash(git:*),Bash(gh:*),Bash(jq:*),Bash(yq:*),View,GlobTool,GrepTool,BatchTool"
+          direct_prompt: |
+           Please review the following PR and provide a detailed review of the changes according the ./CONTRIBUTING.md provide results in markdown format.
+          timeout_minutes: "15"
