@@ -115,12 +115,12 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
     </details>
 
 
-  <details>
-  <summary><b>Requirements (Click to expand)</b></summary>
+    <details>
+    <summary><b>Requirements (Click to expand)</b></summary>
 
-  <HumanitecExporterRequirements/>
+    <HumanitecExporterRequirements/>
 
-  </details>
+    </details>
 
 
 2. Create the following Python files in a folder named `clients` at the base directory of the `integration` folder:
