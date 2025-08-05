@@ -246,7 +246,7 @@ https://mcp.us.port.io/v1
 </TabItem>
 </Tabs>
 </TabItem>
-<TabItem value="local-mcp" label="Local MCP - Deprecated">
+<TabItem value="local-mcp" label="Local MCP">
 The local MCP server is an open-source project that you can run on your own infrastructure. It offers a similar set of capabilities, but requires manual setup and maintenance.
 	
 While you can use it, we are no longer supporting it and are not tracking the project issues and activities.
