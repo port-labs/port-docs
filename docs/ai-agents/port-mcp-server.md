@@ -90,7 +90,15 @@ Setting up Port's MCP is simple. Follow the instructions for your preferred tool
 
 <Tabs groupId="mcp-setup" queryString>
 <TabItem value="cursor" label="Cursor">
-To connect Cursor to Port's remote MCP, you need to add a configuration to your `mcp.json` file. This file is usually located in your `.cursor` directory. Add the following object to your `mcpServers` configuration:
+To connect Cursor to Port's remote MCP, follow these steps:
+
+1. **Go to Cursor settings, click on Tools & Integrations, and add a new MCP server**
+
+![Go to Cursor Settings](/img/ai-agents/MCPInstallCursorStep1.png)
+
+2. **Add the above configuration**
+
+Use the appropriate configuration for your region:
 
 <Tabs>
 <TabItem value="eu" label="EU">
@@ -116,6 +124,18 @@ To connect Cursor to Port's remote MCP, you need to add a configuration to your 
 ```
 </TabItem>
 </Tabs>
+
+![Add configuration](/img/ai-agents/MCPInstallCursorStep2.png)
+
+3. **Login to Port**
+Click on "Needs login", and complete the authentication flow in the window that opens up.
+![Login to Port](/img/ai-agents/MCPInstallCursorStep3.png)
+
+4. **See the MCP tools**
+After successfully connecting to Port, you'll see the list of available tools from the MCP.
+![See tools](/img/ai-agents/MCPInstallCursorStep4.png)
+
+
 </TabItem>
 <TabItem value="vscode" label="VSCode">
 To connect VSCode to Port's remote MCP, you need to add a configuration to your MCP JSON file, which is usually located in your VSCode configuration directory. 
