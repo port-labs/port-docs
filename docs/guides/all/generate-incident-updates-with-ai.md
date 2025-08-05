@@ -5,7 +5,7 @@ description: Learn how to leverage Port's AI capabilities to enhance incident ma
 
 # Generate incident updates with AI
 
-This guide demonstrates how to enhance your incident management workflow using Port's AI capabilities. You will learn how to create an AI agent that generates incident updates and sends slack notification with relevant technical context.
+When you’re busy fixing an incident, you don’t have time to write updates. Yes, others still need to know what’s going on. In this guide, you will learn to build an AI agent that generates incident updates and sends Slack notifications with relevant technical context.
 
 <img src="/img/guides/incident-update-with-ai-workflow.png" border="1px" width="100%" />
 
@@ -232,7 +232,7 @@ We will create a self-service action that the AI agent can run automatically to 
 Next, we will create an AI agent that generates helpful incident updates with contextual information.
 
 
-### Configure the incident summary AI agent
+### Configure the incident update AI agent
 
 1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
 2. Click on `+ AI Agent`.

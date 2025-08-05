@@ -11,7 +11,7 @@ import AuditLogPage from "/static/img/integrations/k8s-exporter/AuditLog.png"
 
 ## Basic Pod and ReplicaSet solution
 
-In the following example you will export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port blueprint definitions, and exporter configuration:
+The following example demonstrates how to export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port blueprint definitions, and exporter configuration:
 
 - **Deployment config** - will represent replica sets from the K8s cluster;
 - **Deployed service pod** - will represent pods from the K8s cluster.
