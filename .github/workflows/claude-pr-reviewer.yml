@@ -7,12 +7,7 @@ on:
       - opened
     branches:
       - main
-
-permissions:
-  contents: read
-  pull-requests: read
-  issues: read
-  id-token: write
+  workflow_dispatch:
 
 jobs:
   check-if-to-trigger:
@@ -36,8 +31,13 @@ jobs:
   claude-docs-pr-reviewer:
     name: Claude Docs PR Reviewer
     needs: check-if-to-trigger
-    if: needs.check-if-to-trigger.outputs.changed_files == 'true'
+    if: needs.check-if-to-trigger.outputs.changed_files == 'true' && github.event.pull_request.head.repo.full_name == 'port-labs/port-docs'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
