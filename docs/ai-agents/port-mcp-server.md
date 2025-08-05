@@ -138,30 +138,31 @@ After successfully connecting to Port, you'll see the list of available tools fr
 
 </TabItem>
 <TabItem value="vscode" label="VSCode">
-To connect VSCode to Port's remote MCP, you need to add a configuration to your MCP JSON file, which is usually located in your VSCode configuration directory. 
+To connect VSCode to Port's remote MCP server, follow these detailed steps. For complete instructions, refer to the [official VS Code MCP documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers).
 
-:::info VSCode MCP limitations
-Unlike Cursor, VSCode does not currently support direct URL connections to remote MCP servers. We are tracking this limitation and working with the VSCode team to improve support. As a workaround, this configuration uses the open-source `mcp-remote` package, which requires Node.js to be installed on your system.
+:::info VSCode MCP requirements
+Before proceeding, ensure your VS Code is updated to the latest version and that MCP is enabled for your GitHub organization. You may need to enable "Editor preview features" under Settings > Code, planning, and automation > Copilot via admin access from your organization.
 :::
 
-**Prerequisites**
-
-Before adding the configuration, ensure Node.js is installed and the `mcp-remote` package works correctly. Run this command in your terminal:
+:::tip Prerequisites
+This configuration uses the open-source `mcp-remote` package, which requires Node.js to be installed on your system. Before using the configuration, ensure Node.js is available by running:
 
 ```bash
 npx -y mcp-remote --help
 ```
 
-This command should display the help information for `mcp-remote`. If you encounter errors:
+If you encounter errors:
 - **Missing Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
 - **Network issues**: Check your internet connection and proxy settings
 - **Permission issues**: You may need to run with appropriate permissions
+:::
 
-If the command runs successfully, you can proceed with the configuration.
 
-**Configuration**
+**Step 1: Configure MCP Server Settings**
 
-Add the following object to your `mcpServers` configuration:
+1. Open VS Code settings
+2. Search for "MCP: Open user configuration" (or follow the instructions on a workspace installation)
+3. Add the server configuration using the appropriate configuration for your region:
 
 <Tabs>
 <TabItem value="eu" label="EU">
@@ -197,6 +198,31 @@ Add the following object to your `mcpServers` configuration:
 ```
 </TabItem>
 </Tabs>
+
+**Step 2: Start the MCP Server**
+
+1. After adding the configuration, click on "Start" to initialize the MCP server
+2. If you don't see the "Start" button, ensure:
+   - Your VS Code version is updated to the latest version
+   - MCP is enabled for your GitHub organization
+   - "Editor preview features" is enabled under Settings > Code, planning, and automation > Copilot
+
+**Step 3: Verify Connection**
+
+1. Once started, you should see the number of available tools displayed
+2. If you don't see the tools count:
+   - Click on "More" to expand additional options
+   - Select "Show output" to view detailed logs
+   - Check the output panel for any error messages or connection issues
+
+**Step 4: Access Port Tools**
+
+1. Start a new chat session in VS Code
+2. Click on the tools icon in the chat interface
+3. You should now see Port tools available for use
+
+![VS Code MCP Setup](/img/ai-agents/MCPVSCodeSetup.gif)
+
 </TabItem>
 <TabItem value="claude" label="Claude">
 To connect Claude to Port's remote MCP, you need to create a custom connector. This process does not require a client ID. For detailed instructions, refer to the [official Anthropic documentation on custom connectors](https://support.anthropic.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp).
