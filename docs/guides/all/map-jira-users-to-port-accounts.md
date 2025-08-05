@@ -10,7 +10,7 @@ This guide demonstrates how to automatically map Jira users to existing Port use
 Once implemented, users will be able to:
 - Maintain a complete inventory of all Jira users in your organization within Port.
 - Automatically link Jira users to their corresponding Port user accounts for seamless integration.
-- Provide visibility into which Jira users have Port accounts and which one do not.
+- Provide visibility into which Jira users have Port accounts and which ones do not.
 
 ## Prerequisites
 
@@ -22,11 +22,9 @@ This guide assumes the following:
 
 ## Set up data model
 
-To establish relationships between Jira users and Port user accounts, we need to enhance the Port User blueprint to add a relation to the Jira User blueprint.
+The relation between Jira users and Port users is created automatically when we install the [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/). If you haven't installed it yet, please do so first.
 
-<h3> Enhance the Port User blueprint</h3>
-
-Now we need to enhance the Port User blueprint to add a relation to the Jira User blueprint and mirror properties to display Jira information.
+<h3>Add mirror properties to the Port User blueprint</h3>
 
 1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
 
@@ -34,25 +32,7 @@ Now we need to enhance the Port User blueprint to add a relation to the Jira Use
 
 3. Click on the `Edit JSON` button in the top right corner.
 
-4. Add the following relation to the `relations` object:
-
-    <details>
-    <summary><b>Port User blueprint relation (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    "relations": {
-      "jiraUser": {
-        "title": "Jira User",
-        "target": "jiraUser",
-        "required": false,
-        "many": false
-      }
-    }
-    ```
-
-    </details>
-
-5. Add the following mirror property to the `mirrorProperties` object to display the Jira display name:
+4. Add the following mirror property to the `mirrorProperties` object to display the Jira display name:
 
     <details>
     <summary><b>Port User blueprint mirror property (Click to expand)</b></summary>
@@ -68,7 +48,7 @@ Now we need to enhance the Port User blueprint to add a relation to the Jira Use
 
     </details>
 
-6. Click on `Save` to update the blueprint.
+5. Click on `Save` to update the blueprint.
 
 :::info Additional mirror properties
 You can add more mirror properties to display other Jira user attributes like timezone (`jiraUser.timeZone`), account type (`jiraUser.accountType`), or any other property from the Jira User blueprint that would be useful for your organization.
