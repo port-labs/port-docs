@@ -77,7 +77,7 @@ Gain insights into service health, compliance, and quality by leveraging Port's 
 Receive assistance with common development and operational tasks, directly within your workflow.
 
 *   Ask: "What do I need to do to set up a new 'ReportingService'?"
-*   Ask: "Guide me through creating a new service blueprint with 'name', 'description', and 'owner' properties."
+*   Ask: "Guide me through creating a new component blueprint with 'name', 'description', and 'owner' properties."
 *   Ask: "Help me add a rule to the 'Tier1Services' scorecard that requires an on-call schedule to be defined."
 
 ![Getting instructions for new service setup](/img/ai-agents/MCPClaudeServiceSetup.png)
