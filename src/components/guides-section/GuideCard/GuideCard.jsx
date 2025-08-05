@@ -4,7 +4,7 @@ import "/src/components/guides-section/styles.css";
 import { Typography } from '@mui/material';
 import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
 
-function GuideCard({ title, description, tags, logos, category, link }) {
+function GuideCard({ title, description, tags, logos, category, link, isNew }) {
     return <a className="guide-card" href={link}>
         <div className='guide-card-header'>
             <div className='guide-card-header-left'>
@@ -14,11 +14,18 @@ function GuideCard({ title, description, tags, logos, category, link }) {
                     </div>
                 ))}
             </div>
-            {category && 
-                <div className='guide-card-header-category'>
-                    <Typography className='guide-card-category-text'>{category}</Typography>
-                </div>
-            }
+            <div className='guide-card-header-right'>
+                {isNew && 
+                    <div className='guide-card-new-badge'>
+                        <Typography className='guide-card-new-text'>NEW</Typography>
+                    </div>
+                }
+                {category && 
+                    <div className='guide-card-header-category'>
+                        <Typography className='guide-card-category-text'>{category}</Typography>
+                    </div>
+                }
+            </div>
         </div>
         <div className='guide-card-body'>
             <Typography className='guide-card-title'>{title || "Create Slack channel for incident management"}</Typography>

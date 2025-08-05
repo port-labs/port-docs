@@ -8819,6 +8819,25 @@ paths:
                   description: A string hash of the `next` value that was returned in the previous
                     response. This is used to paginate through the results.
               additionalProperties: false
+              example:
+                query:
+                  combinator: and
+                  rules:
+                    - property: $blueprint
+                      operator: =
+                      value: service
+                    - combinator: or
+                      rules:
+                        - property: environment
+                          operator: =
+                          value: production
+                        - property: environment
+                          operator: =
+                          value: staging
+                include:
+                  - $identifier
+                  - $title
+                  - $createdAt
       parameters:
         - schema:
             type: string

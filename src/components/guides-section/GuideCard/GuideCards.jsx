@@ -26,12 +26,14 @@ function GuideCards({ guides }) {
     <div className="guide-cards-container">
       {guides.map((guide) => (
         <GuideCard
+          key={guide.link}
           tags={guide.tags}
           logos={guide.logos}
           category={guide.category}
           title={guide.title}
           description={guide.description}
           link={guide.link}
+          isNew={guide.isNew}
         />
       ))}
     </div>

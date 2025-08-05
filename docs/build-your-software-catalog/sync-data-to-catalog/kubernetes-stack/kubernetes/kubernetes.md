@@ -38,7 +38,7 @@ This integration allows you to:
 
 ### Supported Resources
 
-The resources that can be mapped from Kubernetes cluster into Port include:
+The default resources ingested by the integration are:
 - [`Namespaces`](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
 - [`Pods`](https://kubernetes.io/docs/concepts/workloads/pods/)
 - [`ReplicaSets`](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/)
