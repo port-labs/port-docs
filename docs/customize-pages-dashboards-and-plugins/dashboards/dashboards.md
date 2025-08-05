@@ -484,7 +484,7 @@ This widget allows you to display a list of links, both internal and external, f
   These links will open in the same tab when clicked.  
   For example: "https://app.getport.io/serviceEntity?identifier=frontend".
 
-- **Dynamic links** - links to external websites or internal pages while using the identifier of an entity.
+- **Dynamic links** (available in specific entity page only) - links to external websites or internal pages while using the identifier of an entity.
   These links will open according to the methods mentioned above.  
   For example: Let's take the following specific entity page `/Services?identifier=myService`.<br/>
   - An external link: `https://slack.com/myOrganization/channel={{url.identifier}}` ->
