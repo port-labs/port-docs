@@ -78,7 +78,7 @@ Alternatively, you can set the execution type to **synchronous**, which will cau
 ### HTTP method
 
 By default, a `POST` request will be sent to the specified endpoint URL.  
-You can change the request to any of the supported types: `POST`, `PUT`, `DELETE`, or `PATCH`.
+You can change the request to any of the supported types: `POST`, `GET`, `PUT`, `DELETE`, or `PATCH`.
 
 ## Trigger Port API
 
