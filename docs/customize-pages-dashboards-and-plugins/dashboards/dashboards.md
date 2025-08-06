@@ -487,9 +487,9 @@ This widget allows you to display a list of links, both internal and external, f
 - **Dynamic links** (available in specific entity page only) - links to external websites or internal pages while using the identifier of an entity.  
 These links will open according to the methods mentioned above.  
 For example: Let's take the following specific entity page `/Services?identifier=myService`.<br/>
-- An external link: `https://slack.com/myOrganization/channel={{url.identifier}}` -> translated into `https://slack.com/myOrganization/channel=myService`.<br/>
+  - An external link: `https://slack.com/myOrganization/channel={{url.identifier}}` -> translated into `https://slack.com/myOrganization/channel=myService`.<br/>
   
-- An internal link: `https://app.getport.io/PagerDutyService?identifier={{url.identifier}}` -> translated into `https://app.getport.io/PagerDutyService?identifier=myService`.
+  - An internal link: `https://app.getport.io/PagerDutyService?identifier={{url.identifier}}` -> translated into `https://app.getport.io/PagerDutyService?identifier=myService`.
 
 During creation/editing of the widget, you can sort the links by dragging and dropping them.
 
