@@ -232,10 +232,6 @@ If you encounter errors:
 <TabItem value="claude" label="Claude">
 To connect Claude to Port's remote MCP, you need to create a custom connector. This process does not require a client ID. For detailed instructions, refer to the [official Anthropic documentation on custom connectors](https://support.anthropic.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp).
 
-:::info Connection Stability
-While Port MCP is in open beta, you may occasionally experience connection issues. We're actively working to improve reliability and stability. If you encounter problems, try reconnecting or restarting your MCP client.
-:::
-
 When prompted for the remote MCP server URL, use the appropriate URL for your region:
 
 <Tabs>
@@ -288,9 +284,9 @@ The Port MCP Server exposes different sets of tools based on your role and use c
 -   **[`get_entity`](/api-reference/get-an-entity)**: Retrieve information about a specific entity.
 -   **[`get_scorecards`](/api-reference/get-all-scorecards)**: Retrieve all scorecards from Port.
 -   **[`get_scorecard`](/api-reference/get-a-scorecard)**: Retrieve information about a specific scorecard by its identifier.
--   **[`describe_organization`](/api-reference/get-organization-details)**: Get information about your Port organization and its configuration.
--   **`search_docs_sources`**: Search through Port documentation and knowledge sources for relevant information.
--   **`ask_docs_question`**: Ask questions about Port documentation and get contextual answers.
+-   **[`describe_user_details`](/api-reference/get-organization-details)**: Get information about your Port account, organization, and user profile details.
+-   **`search_port_docs_sources`**: Search through Port documentation sources for relevant information.
+-   **`ask_port_docs`**: Ask questions about Port documentation and get contextual answers.
 
 **Action execution tools**
 -   **[`run_<action_identifier>`](/api-reference/execute-a-self-service-action)**: Execute any action you have permission to run in Port. The `action_identifier` corresponds to the identifier of the action you want to run. For example, if you have an action with the identifier `scaffold_microservice`, you can run it using `run_scaffold_microservice`.
