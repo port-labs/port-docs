@@ -135,6 +135,11 @@ Click on "Needs login", and complete the authentication flow in the window that 
 After successfully connecting to Port, you'll see the list of available tools from the MCP.
 ![See tools](/img/ai-agents/MCPInstallCursorStep4.png)
 
+:::warning Authentication window behavior
+In some cases, after clicking "Accept" in the authentication popup, the window won't get closed but the connection is established successfully. You can safely close the window.
+
+If you still don't see the tool, try it a couple of times. We are aware of this behavior and working to improve it.
+:::
 
 </TabItem>
 <TabItem value="vscode" label="VSCode">
