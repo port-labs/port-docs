@@ -220,7 +220,7 @@ The example below shows how to ingest specific files from your Azure DevOps repo
 
 Before implementing file mapping, please note the following:
 
-- **Explicit Paths Only**: The integration supports explicit file paths relative to the repository root. Wildcard/glob patterns (e.g., `*.yaml` or `**/*.json`) are not yet supported.
+- **Explicit paths and glob patterns supported**: You can use both explicit file paths relative to the repository root and wildcard/glob patterns (e.g., `*.yaml` or `**/*.json`) to specify which files to ingest.
 - **File Types**: Any plain-text or structured file (e.g., `.yaml`, `.json`, `.md`, `.py`) can be ingested.
 - **Path Structure**: Only relative paths from the repository root are currently supported. For example:
   - ✅ Correct paths:
