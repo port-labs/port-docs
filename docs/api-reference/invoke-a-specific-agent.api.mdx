@@ -1,0 +1,71 @@
+---
+id: invoke-a-specific-agent
+title: "Invoke a specific agent"
+description: "This route allows you to create an agent's invocation.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview)."
+sidebar_label: "Invoke a specific agent"
+hide_title: true
+hide_table_of_contents: true
+api: eJzVV0tv4zYQ/isEL02AxIq3ORlFAe+2B7doEyTuKTCwlERHXFOiSlL2qoL/e2eGlC0/so8ABdIcFIac5zfPdNyLZ8cnT3w644srnkuXWVV7ZSo+4fNCOWZN4yUTWpuNY61pmDcss1LgZcXEs6z8D46pam0ygXyjn1Kb/EyfuWFaClux0ligTkESm84Cj7tiWSGzFcNLX0j2lJusKeGFpCwuCu9rN0kSuHaj2lg/UiYR6jpwJ2Yt7VrJzeWIX3Er/26k8+9N3vJJxzNTeSDCo6hrrYJhySeHXnXcgeJS4Mm3tQQ/TfpJZh7k1NbU0nol3U7MZ3+O8BCnacXCC2uczBGgvK1ECXq1bgEaeloLDTbCX/CM/oKusvYjviW1cBzocd6q6vlEzxzYQIMFvEvpHCDBjGXgum1RaUpCM3gBI9KWtPRwkx4tUqnd1/25o4PQoMWL61x4EYOHEgeR5lv6AQeEFUArLabSGYBTYyARKlK0FI0GX5dCOwmsChWSC/AKoEX3pShjXJWVeSQ/tnO2ZB+9beTHK7LMSlebykm2UVozV5gNE44JFsQxswTbl8aWZDycnZcix2vBfnu8+3PHj1idcSIGpbe5Fr7Ym0wgz3L4qKWS9sB2NPFcKNWOHI1AD0gKFdlGwAFiivmIpUZoQ4E6mTVW+ZZwTqG4QBdULziYT1Aa5e4CKXtvKN63N2P8dWjDLyEW7CFSgtHfXDmHlWJWsV7cILLSWmPP4heT98zbdojbE8rt5YBHIs9VSMz7gfagjtLw9ub21MspxtU0NsO88EVfe2tAPx+GYAO5UhnPlqap8jcNxZ7ry6CctKlXIRGhHf94Cu1DaLsshb7LYFR4Aw1fWGhLF1qVyuPd+A/1/vJNw/l9IH67zxG4d+9OgcPqR8/38OdGBtChO2UhNDR4odVHaN4yhK/NyNfgEEcOjJvC5NiHjaPRje14wpP1OKEumnRHLXmb4ORaYZeDEbruZ1VjNbD1y4aoVb9r0BA4fW3cnmDQjx/RuIB335V3+AHb73Iw3qYNmG7VPxQ+HsdJAR0cuNA1RORhv9H8+lmUtZaHG8lga9hvC7v5vqUhtTRkhPLIzO/Baja9nwEdOh8CMB7d0AICGJaCsijaOCOscHjWMgP8sjCbjleFwa71/9kWY1gQyaTWAuAHCCjSXUyjJ74eA2Hv8uR0usdcggwoMP+Ao+tS4eRfVm+3eB1WGsywXDmR6peWmCGC/9k+84LPK8jKwbZFGypcUGKvhVVo9ne6cPEQO8Qle82K84KhfSFV7dDM3oHj6GwXwBLrCa0PVB+CjddzlLWXctJJsewDxzTLZO2/SLsYNKL7u8c5EKfxn5DS5MhjxQaXQfiSxYYwoz5Bdx0UbfXcUMPlQSYWr2gwDYcdZEUdJB7Qq7OYHLeW4Ah+0a2zLF0X+hOkbU8fnl7kiND21BiiBVj9L+74+xg=
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Invoke a specific agent"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/agent/{agentIdentifier}/invoke"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create an agent's invocation.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean","default":false},"in":"query","name":"stream","required":false,"description":"If `true`, the response will show as a stream of information instead of a JSON response."},{"schema":{"type":"string"},"in":"path","name":"agentIdentifier","required":true,"description":"The identifier of the agent you want to operate on."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"context":{"type":"object","description":"An object used to dynamically inject values into the prompt."},"prompt":{"type":"string","description":"The user's message or query to be processed by the AI agent."},"labels":{"type":"object","description":"Optional meta-data about the invocation."}}}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -8,6 +8,7 @@ import DynatraceProblemConfiguration from "/docs/build-your-software-catalog/syn
 import DynatraceMicroserviceBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/apm-alerting/resources/dynatrace/\_example_dynatrace_microservice_blueprint.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_helm_prerequisites_block.mdx"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Dynatrace
 
@@ -123,7 +124,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-dynatrace-integration/values.yaml
@@ -419,6 +420,86 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: entity
+  selector:
+    query: 'true'
+    entityFields: firstSeenTms,lastSeenTms,tags
+    entityTypes:
+    - APPLICATION
+    - SERVICE
+  port:
+    entity:
+      mappings:
+        identifier: .entityId
+        title: .displayName
+        blueprint: '"dynatraceEntity"'
+        properties:
+          firstSeen: (.firstSeenTms // 0) / 1000 | todate
+          lastSeen: (.lastSeenTms // 0) / 1000 | todate
+          type: .type
+          tags: .tags // [] | .[].stringRepresentation
+- kind: problem
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .problemId
+        title: .title
+        blueprint: '"dynatraceProblem"'
+        properties:
+          entityTags: .entityTags[].stringRepresentation
+          evidenceDetails: .evidenceDetails.details // [] | .[].displayName
+          managementZones: .managementZones[].name
+          problemFilters: .problemFilters[].name
+          severityLevel: .severityLevel
+          status: .status
+          startTime: .startTime / 1000 | todate
+          endTime: .endTime | if . == -1 then null else (./1000 | todate) end
+        relations:
+          impactedEntities: .impactedEntities[].entityId.id
+          linkedProblemInfo: .linkedProblemInfo.problemId
+          rootCauseEntity: .rootCauseEntity.entityId.id
+- kind: slo
+  selector:
+    query: 'true'
+    attachRelatedEntities: true
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"dynatraceSlo"'
+        properties:
+          status: .status
+          target: .target
+          enabled: .enabled
+          warning: .warning
+          error: .error
+          errorBudget: .errorBudget
+          evaluatedPercentage: .evaluatedPercentage
+          evaluationType: .evaluationType
+          filter: .filter
+        relations:
+          entities: if .__entities != null then .__entities | map(.entityId) else [] end
+```
+
+</details>
+
 
 ### Ingest additional resource types
 By default, the `entity` kind ingests only entities of type `APPLICATION` and `SERVICE` due to the large number of available resources. However, you can configure the `entity` kind mapping to ingest entities of other types.
@@ -854,6 +935,7 @@ your webhook `URL` should be `https://myservice.domain.com/integration/webhook/p
     7. Leave the rest of the fields as is.
 6. Click **Save changes**.
 
+<MetricsAndSyncStatus/>
 
 ## Examples
 
@@ -1550,7 +1632,7 @@ Here is an example of the payload structure from Dynatrace:
       },
       {
         "integrationType": "EMAIL",
-        "email": "support@getport.io"
+        "email": "support@port.io"
       },
       {
         "integrationType": "SLACK",
@@ -1587,7 +1669,7 @@ Here is an example of the payload structure from Dynatrace:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary>Entity entity in Port</summary>
+<summary>Entity in Port</summary>
 
 ```json showLineNumbers
 {

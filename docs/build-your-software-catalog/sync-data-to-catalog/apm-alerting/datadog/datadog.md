@@ -11,6 +11,7 @@ import DatadogBlueprint from "../resources/datadog/\_example_datadog_alert_bluep
 import DatadogConfiguration from "../resources/datadog/\_example_datadog_webhook_configuration.mdx"
 import DatadogMicroserviceBlueprint from "../resources/datadog/\_example_datadog_microservice.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 
 # Datadog
@@ -24,19 +25,6 @@ This integration allows you to:
 - Map and organize your desired Datadog resources and their metadata in Port (see supported resources below).
 - Watch for Datadog object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
-## BaseUrl & Webhook Configuration
-
-:::warning AppHost deprecation
-**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
-:::
-
-The `baseUrl` parameter enables real-time updates from Datadog to Port. If not provided:
-- The integration will still function normally
-- You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
-- Manual resyncs can be triggered via Port's UI
-
-The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
-
 ### Supported Resources
 
 - [`Monitor`](https://docs.datadoghq.com/api/latest/monitors/#get-all-monitor-details)
@@ -46,9 +34,10 @@ The `integration.secrets.webhookSecret` parameter secures your webhooks. If not 
 - [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)*
 - [`User`](https://docs.datadoghq.com/api/latest/users/#list-all-users)
 - [`Team`](https://docs.datadoghq.com/api/latest/teams/#get-all-teams)
+- [`Service Dependency`](https://docs.datadoghq.com/api/latest/service-dependencies/#get-all-service-dependencies)
 <br />
 
-  *_SLO History and Service Metric resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
+  *_SLO History, Service Metric and Service Dependency resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
 
 <br />
 
@@ -79,7 +68,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="datadog" />
+<OceanRealtimeInstallation integration="datadog" webhookSecret="integration.secrets.webhookSecret"/>
 
 <PortApiRegionTip/>
 
@@ -136,7 +125,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-datadog-integration/values.yaml
@@ -185,7 +174,7 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.datadogApplicationKey` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)                                                                                                                                                            |                                  | ✅        |
 | `integration.config.datadogBaseUrl`         | The base Datadog host. Defaults to https://api.datadoghq.com. If in EU, use https://api.datadoghq.eu                                                                                                                                                                                           |                                  | ✅        |
 | `integration.secrets.webhookSecret`   | Webhook secret for authenticating incoming events. [Learn more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                                                                                                                                                                                   |                                  | ❌        |
-| `baseUrl`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
+| `liveEvents.baseUrl`               | The base url of the instance where the Datadog integration is hosted, used for real-time updates. (e.g.`https://mydatadogeoceanintegration.com`)                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
 | `integration.config.appHost`(deprecated)                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                                                                                                                                                                          | https://my-ocean-integration.com | ❌         |
 | `integration.eventListener.type`            | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
 | `integration.type`                          | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |
@@ -425,6 +414,183 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: monitor
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name
+        blueprint: '"datadogMonitor"'
+        properties:
+          tags: .tags
+          monitorType: .type
+          overallState: .overall_state
+          thresholds: .thresholds
+          priority: .priority
+          createdBy: .creator.email
+          createdAt: .created
+          updatedAt: .modified
+          link: ("https://app.datadoghq.com/monitors/" + (.id | tostring))
+        relations:
+          owner_team_datadog: .tags | map(select(startswith("team:"))) | unique | map(split(":")[1])
+          service_datadog: .tags | map(select(startswith("service:"))) | unique | map(split(":")[1])
+          service:
+            combinator: '"and"'
+            rules:
+            - property: '"datadog_service_id"'
+              operator: '"in"'
+              value: .tags | map(select(startswith("service:"))) | unique | map(split(":")[1])
+- kind: service
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .attributes.schema."dd-service"
+        title: .attributes.schema."dd-service"
+        blueprint: '"datadogService"'
+        properties:
+          application: .attributes.schema.application
+          languages: .attributes.schema.languages
+          description: .attributes.schema.description
+          tags: .attributes.schema.tags
+          type: .attributes.schema.type
+          links: ("https://app.datadoghq.com/services?selectedService=" + (.attributes.schema."dd-service"))
+          owners: '[.attributes.schema.contacts[]? | select(.type == "email") | .contact]'
+        relations:
+          owner_team_datadog: .team_it_doesnt_work_yet
+- kind: slo
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name
+        blueprint: '"datadogSlo"'
+        properties:
+          tags: .tags
+          sloType: .type
+          description: .description
+          warningThreshold: .warning_threshold
+          targetThreshold: .target_threshold
+          createdBy: .creator.email
+          createdAt: .created_at | todate
+          updatedAt: .modified_at | todate
+          link: ("https://app.datadoghq.com/slo/manage?sp=" + ("%5B%7B%22p%22%3A%7B%22id%22%3A%22" + (.id | tostring) + "%22%7D%2C%22i%22%3A%22slo-panel%22%7D%5D"))
+        relations:
+          monitors: .monitor_ids | map(tostring)
+          owner_team_datadog: .monitor_tags + .tags | map(select(startswith("team:"))) | unique | map(split(":")[1])
+          service_datadog: .monitor_tags + .tags | map(select(startswith("service:"))) | unique | map(split(":")[1])
+          service:
+            combinator: '"and"'
+            rules:
+            - property: '"datadog_service_id"'
+              operator: '"in"'
+              value: .monitor_tags + .tags | map(select(startswith("service:"))) | unique | map(split(":")[1])
+- kind: host
+  selector:
+    query: '[.sources[] | . as $source | ["azure", "gcp", "gce", "aws"] | contains([$source])] | any(.)'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .aws_name // .host_name
+        blueprint: '"datadogCloudResource"'
+        properties:
+          up: .up
+          host_name: .host_name
+          platform: .meta.platform
+          is_muted: .is_muted
+          machine: .meta.machine
+          description: .description
+          sources: .sources
+          cpu_cores: .meta.cpuCores
+          agent_version: .meta.agent_version
+          tags: .tags_by_source
+- kind: host
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .aws_name // .host_name
+        blueprint: '"datadogHost"'
+        properties:
+          up: .up
+          host_name: .host_name
+          platform: .meta.platform
+          is_muted: .is_muted
+          machine: .meta.machine
+          description: .description
+          sources: .sources
+          cpu_cores: .meta.cpuCores
+          agent_version: .meta.agent_version
+          tags: .tags_by_source
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .attributes.name
+        blueprint: '"datadogUser"'
+        properties:
+          email: .attributes.email
+          handle: .attributes.handle
+          status: .attributes.status
+          disabled: .attributes.disabled
+          verified: .attributes.verified
+          createdAt: .attributes.created_at | todate
+- kind: team
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .id
+        blueprint: '"datadogTeam"'
+- kind: team
+  selector:
+    query: 'true'
+    includeMembers: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .attributes.name
+        blueprint: '"datadogTeam"'
+        properties:
+          description: .attributes.description
+          handle: .attributes.handle
+          userCount: .attributes.user_count
+          summary: .attributes.summary
+          createdAt: .attributes.created_at | todate
+        relations:
+          members: if .__members then .__members[].id else [] end
+```
+
+</details>
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 
@@ -881,6 +1047,35 @@ This enrichment significantly enhances the usability of the Datadog response by 
 
 </details>
 
+<details>
+<summary> Service Dependency response data</summary>
+
+```json showLineNumbers
+{
+  "service_a": {
+    "calls": [
+      "service_b",
+      "service_c"
+    ]
+  },
+  "service_b": {
+    "calls": [
+      "service_o"
+    ]
+  },
+  "service_c": {
+    "calls": [
+      "service_o"
+    ]
+  },
+  "service_o": {
+    "calls": []
+  }
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1093,6 +1288,25 @@ The combination of the sample payload and the Ocean configuration generates the 
     ]
   },
   "icon": "Datadog"
+}
+```
+
+</details>
+
+<details>
+<summary>Service dependency entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "service_a",
+  "title": "Dummy",
+  "icon": "Datadog",
+  "relations": {
+    "dependencies": [
+      "service_b",
+      "service_c"
+    ]
+  }
 }
 ```
 

@@ -16,6 +16,12 @@ const config = {
   organizationName: "port-labs", // Usually your GitHub org/user name.
   projectName: "port", // Usually your repo name.
   staticDirectories: ["static"],
+  future: {
+    experimental_faster: true, // turns Docusaurus Faster on globally
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true, // required
+    },
+  },
 
   presets: [
     [
@@ -94,14 +100,14 @@ const config = {
             label: "Home",
             position: "left",
             className: "header-home-link",
-            activeBaseRegex: "^((?!api-reference|guides).)*$",
+            activeBaseRegex: "^((?!api-reference|guides|solutions).)*$",
           },
           {
-            to: "/api-reference/port-api",
-            label: "API Reference",
+            to: "/solutions/overview",
+            label: "Solutions",
             position: "left",
-            className: "header-api-link",
-            activeBasePath: "api-reference",
+            className: "header-solutions-link",
+            activeBasePath: "solutions",
           },
           {
             to: "/guides",
@@ -109,6 +115,13 @@ const config = {
             position: "left",
             className: "header-guides-link",
             activeBasePath: "guides",
+          },
+          {
+            to: "/api-reference/port-api",
+            label: "API Reference",
+            position: "left",
+            className: "header-api-link",
+            activeBasePath: "api-reference",
           },
           {
             to: "https://github.com/port-labs/port-docs",
@@ -395,9 +408,9 @@ const config = {
       "data-submit-query-button-bg-color": "#000000",
       "data-modal-example-questions": "How can I create a table that shows all services belonging to my team?, Write me a scorecard definition that ensures each repository has a readme file, Which SSO providers are supported?, How can I install Port's Datadog integration without using k8s?",
       "data-font-family": "DM Sans",
-      "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nWe would appreciate your feedback (👍🏽/👎🏽) on answers you receive in order to improve the results 🙏🏽",
       "data-modal-example-questions-title": "Example Questions",
       "data-modal-example-questions-col-span": "12",
+      "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nFor tips on how to use the assistant effectively, click [here](https://docs.port.io/docs-ai-assistant).\n\nWe would appreciate your feedback (👍🏽/👎🏽) in order to improve the results 🙏🏽",
       "data-modal-disclaimer-font-size": "0.85rem",
       "data-example-question-button-font-size": "0.85rem",
       // "data-search-mode-enabled": "true",
@@ -406,6 +419,10 @@ const config = {
       // "data-search-result-secondary-text-color": "#000000",
       // "data-search-result-primary-text-color": "#000000",
       async: true,
+    },
+    {
+      src: '/js/embed-mode.js',
+      async: false,
     }
   ],
 };

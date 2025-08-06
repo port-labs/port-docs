@@ -1,0 +1,71 @@
+---
+id: get-an-invocations-result
+title: "Get an invocation's result"
+description: "This route allows you to get a specific invocation result.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview)."
+sidebar_label: "Get an invocation's result"
+hide_title: true
+hide_table_of_contents: true
+api: eJzVVMFu2zAM/RVBl7VAFjdAT8YwIMCGotil6LpTEAyKzcRaHEulJGeZ4X8fKTu117oDttN2sWWLjyKf3mMjvdo5ma7k8lauZzIHl6G2XptKpvKh0E6gCR6EKktzdOJkgvBG7MALJZyFTG91JnRVm0wxSCC4UPr5uw0m7+PjwYgSFFbiYJDSbCibWN4KtYPKu5nICsj2gn/6AsQqN1k40E5Mtr4ovLcuTRL67ebWoJ9rkyj9tkMnpgasNRwv53ImrUJ1AA/I7TTSUeaDkmkj/ckCNeM86mon25nU3JtVviBURRj6Gjr4qnPKTW0B0jbCY9AIuUw9BnjOz1KESj8GEANGbA3GVmKJI2bmsiV+HWQBtT/FEjfEC51C5COoPOUUXoOTa44kIq2pHH1SC9dXC379evoH2CriWtz3kVRuZipPaThWWVvq7ujkm2PAmBOLxgLG0+jL7PlJYEfQrSodEEuAaHCSvwM4R+1N7LVjxlac95yHOlJ5rrkcVd6NTu+Oaxl6fXX9ssslS8oEzEActS8it1R9TZTnY96PyonKeOI/VPk/TcWA+j0pL9X2N0y0HbfkjMJQJZKsG81C6k9lUi+SKNSEhbqHpJk0QitZuVifvRWwJPDZnMrqszeJkqnd4IaAkQk+8x10tJ+t8EQjwT7BaTDoMlD9qH/E0mTv4YJsQ6g2enprIlz7kuPv6DyxvLulUC67Y3Axv+JLs8b5g4oy6LPf8DyrRm594/pJJp/dQjMI6/8ajz2vHr77xJaK+CMm4lU1vRpWsl5QYARHhlkRtEinhyNdZGHYJSvZNBvl4AuWbcu/aSIiTzha1gq12vCNkGxy7XidT+t7zOzFfW+dS/FnM/aVPs+iqlhRtSoDf9FyTxJ7bfi3awL2CuPqu9hlloH1oywvhgsr/MltNx8fmNLA/I61vY/a7hecfbLC56LvSuAn+2wS0jSdc9r2Kb7behXRtziQwZ237U/3wNMv
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an invocation's result"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/agent/invoke/{invocation_identifier}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to get a specific invocation result.<br/><br/>To learn more about AI agents, check out the [documentation](https://docs.port.io/ai-agents/overview).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"invocation_identifier","required":true,"description":"A unique identifier for the agent invocation."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

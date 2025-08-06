@@ -59,6 +59,7 @@ Pie charts illustrate data from entities in your software catalog divided by cat
 | `Title`                 | `String` | Pie chart title                                                                                                              | `null`  | `true`   |
 | `Icon`                  | `String` | Pie chart Icon                                                                                                               | `null`  | `false`  |
 | `Description`           | `String` | Pie chart description                                                                                                        | `null`  | `false`  |
+| `Empty state text`      | `String` | Pie chart empty state text                                                  | `No data for this widget`  | `false`  |
 | `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
@@ -75,6 +76,19 @@ You can choose one of these chart types:
 :::info Filtering entities
 You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 ::: 
+
+#### Time filtering in number charts vs. line charts
+
+The value shown in a **number chart** is calculated over **all available entities** of the selected blueprint. By default, it does not apply any time-based filtering.
+
+When a **number chart** is used alongside a [**line chart**](/customize-pages-dashboards-and-plugins/dashboards/#line-chart) in a dashboard, for example a number chart showing average monthly deployment frequency and a line chart showing deployment frequency over time, you might notice that the average values differ, even if both charts reference the same metric (e.g. deployment frequency).
+
+This difference happens because the two charts are likely working with different time ranges:
+
+- The **number chart** performs its calculation across **all available historical entities**, without limiting to a specific time range.
+- The **line chart**, in contrast, only includes entities within its **selected time range** (e.g. the last 30 days).
+
+To align both charts and ensure consistency in what they reflect, apply a time filter to the number chart that matches the line chart’s time range. This helps prevent confusion and ensures both charts are working with the same scope of data.
 
 #### Conditional formatting
 
@@ -107,6 +121,7 @@ However, since 5 is closer to 6 than to 8, the widget will be colored yellow - t
 | `Title`           | `String` | Number Chart title                                                                                                                                                                                                                          | `null`     | `true`   |
 | `Icon`            | `String` | Number Chart Icon                                                                                                                                                                                                                           | `null`     | `false`  |
 | `Description`     | `String` | Number Chart description                                                                                                                                                                                                                    | `null`     | `false`  |
+| `Empty state text`      | `String` | Number chart empty state text         | `No data for this widget`  | `false`  |
 | `Chart type`    | `String` | Defines the operation type for the chart. Possible values: `Display single property`, `Count entities`, `Aggregate by property`                                                                                                                      | `null` | `true`   |
 | `Blueprint`       | `String` | The chosen blueprint from which related entities data is visualized from                                                                                                                                                                    | `null`     | `true`   |
 | `Condition`       | `Object` | Defines the condition under which the number chart widget will update its color, display a status label, and have a tooltip message                                                                                                                                                                    | `null`     | `false`   |
@@ -155,11 +170,12 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 
 ### Line chart
 
-Line charts display trends of `number` properties over time.  
+Line charts visualize trends over time, either by tracking `number` properties of entities or by tracking the entities themselves.
 
-Port offers two types of line charts:
+Port offers three types of line charts:
 1. [Property history (single entity)](#1-property-history-single-entity) - displays the values of one or more properties of a single entity.
 2. [Aggregate property (all entities)](#2-aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
+3. [Count entities (all entities)](#3-count-entities-all-entities) - displays either the total count of entities or the average number of entities from a specific blueprint over time.
 
 #### 1. Property history (single entity)
 
@@ -257,6 +273,56 @@ For example, here is a line chart displaying the maximum cost of all services ov
 | `Time interval` | `String` | The time interval to display in the x-axis of the chart.<br/>Possible values: `hour`, `day`, `week`, `month` | `null` | `true` |
 | `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` | -->
 
+#### 3. Count entities (all entities)
+
+This chart type displays either the total count of entities or the average number of entities from a specific blueprint over time.  
+If you choose to break down the chart by a property, each line will represent a distinct value of that property.
+
+When creating this type of line chart:
+
+1. Choose the **blueprint** you want to visualize.
+
+2. Under the `Y axis` section:
+   - Give the axis a title.
+
+   - Choose one of the following functions:
+     - `count`: Counts the number of entities in each time interval.
+     - `average`: Calculates the average number of entities in each time interval.
+
+   - Optionally, break down the chart by a specific blueprint `breakdown property`, generating a separate line for each distinct value of that property.
+   
+   - Optionally, define [additional filters](#chart-filters) in order to include/exclude specific entities from the chart.  
+     For example, filter the entities by a specific property value, or by a specific time range.
+
+3. Under the `X axis` section:
+   - Give the axis a title.
+   
+   - Choose one of the blueprint's `datetime` properties by which to **measure the time** of the chart data.  
+     This can be the entity's creation time, last update time, or any other `datetime` property.  
+
+   - Choose a **time interval**, which is the amount of time between each data point in the chart.  
+   The selected interval also determines how the function is calculated:  
+
+        For example, if the time interval is a week, each data point will be calculated in the following manner:
+        - The `count` function will count the total entities that week.
+        - The `average` function will count the total entities that week and divide it by 7.  
+          
+      The same logic applies to all time intervals: `Hour`, `Day`, `Week`, and `Month` -  
+      when using the `average` function, the total entity count will be divided by: 60, 24, 7, and 30 respectively.
+
+   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
+     Note that the available time ranges differ according to the selected time interval.
+
+For example, here is a line chart displaying the average deployment rate over the span of a month, in weekly intervals, broken down by the `status` property (Success and Fail).
+<img src='/img/software-catalog/widgets/countEntitiesLineChartExample.png' width='70%' border='1px' />
+<br/><br/>
+
+**Limitations**
+
+- This chart type does not support [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/).
+- Line chart data is limited to the last 365 days.
+- The chart can display up to 10 separate lines when choosing to break down by property. 
+
 ### Markdown
 
 This widget allows you to display any markdown content you wish in formatted form:
@@ -310,7 +376,6 @@ The widget also supports a wide variety of HTML tags, allowing you to create ric
 'wbr',
 'img',
 'video',
-'svg',
 'caption',
 'col',
 'colgroup',
@@ -323,6 +388,8 @@ The widget also supports a wide variety of HTML tags, allowing you to create ric
 'tr'
 ```
 </details>
+
+**Note:** For external video URLs from providers such as YouTube, use the [iframe visualization widget](/customize-pages-dashboards-and-plugins/dashboards/#iframe-visualization).
 
 :::tip Practical example
 A practical example of using HTML in a markdown widget can be found in Port's [live demo](https://demo.getport.io/organization/home), in the `Catalog quick access` widget. 
@@ -403,7 +470,32 @@ Simply choose a blueprint and a specific entity, and the widget will display inf
 
 <img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' border='1px' />
 
+### Links
+
+This widget allows you to display a list of links, both internal and external, for quick access to useful pages.
+
+<img src='/img/software-catalog/widgets/linksExample.png' width='50%' border='1px' />
+
+- **External links** - links to external websites, such as documentation, 3rd party tools, etc.  
+  These links will open in a new tab when clicked.  
+  For example: "https://www.google.com".
+
+- **Internal links** - links to internal pages in your portal, such as an entity page, a catalog page, an entity's audit log page, etc.  
+  These links will open in the same tab when clicked.  
+  For example: "https://app.getport.io/serviceEntity?identifier=frontend".
+
+- **Dynamic links** (available in specific entity page only) - links to external websites or internal pages while using the identifier of an entity.  
+These links will open according to the methods mentioned above.  
+For example: Let's take the following specific entity page `/Services?identifier=myService`.<br/>
+  - An external link: `https://slack.com/myOrganization/channel={{url.identifier}}` -> translated into `https://slack.com/myOrganization/channel=myService`.<br/>
+  
+  - An internal link: `https://app.getport.io/PagerDutyService?identifier={{url.identifier}}` -> translated into `https://app.getport.io/PagerDutyService?identifier=myService`.
+
+During creation/editing of the widget, you can sort the links by dragging and dropping them.
+
 ## Chart filters
+
+Chart filters allow you to limit which entities are included in your dashboard visualizations, making your charts more relevant and performant.
 
 <ChartFilters />
 
@@ -492,6 +584,21 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
 ### Dynamic filters
 
 You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when filtering a widget.
+
+## Custom empty state
+
+The custom empty state field gives you the ability to define a custom message that appears when a widget has no data. This message can provide useful context to users such as setup instructions, relevant explanations, or helpful links.
+
+The custom message supports Markdown formatting, so you can include links and other rich text elements. These will be rendered directly in the widget, making your guidance more actionable.
+
+If you leave this field blank, the widget will display a default message: **"No data for this widget"**.
+
+The following widget types support the custom empty state message:
+
+- [Pie chart](/customize-pages-dashboards-and-plugins/dashboards/#pie-chart)
+- [Number chart](/customize-pages-dashboards-and-plugins/dashboards/#number-chart)
+- [Line chart](/customize-pages-dashboards-and-plugins/dashboards/#line-chart)
+- [Tables](/customize-pages-dashboards-and-plugins/dashboards/#table)
 
 ## Widget type identifiers (Terraform)
 

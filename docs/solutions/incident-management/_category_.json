@@ -1,0 +1,9 @@
+{
+    "label": "Incident management",
+    "collapsible": true,
+    "collapsed": true,
+    "position": 2,
+    "customProps": {
+      "description": "Incident Management"
+    }
+  }

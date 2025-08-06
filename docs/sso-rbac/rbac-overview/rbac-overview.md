@@ -31,7 +31,11 @@ To configure who can see which pages, refer to the [Page Permissions](/customize
 
 Port allows you to assign ownership of specific entities to teams in your organization, enabling personalized views such as "**show me my team’s services**" or "**my pull requests**".
 
-For more details about **ownership** in Port, see the [relevant documentation](/sso-rbac/rbac/#ownership--user-management).
+`User` and `Team` are blueprints, enabling to create relations and inherit ownership. 
+<img src='/img/software-catalog/role-based-access-control/overview/user-and-teams.png' width='80%' border='1px' />
+
+
+For more details about **ownership** in Port, see the [relevant documentation](/sso-rbac/rbac/#ownership).
 
 ### Dynamic team filtering
 
@@ -47,12 +51,12 @@ By using the `My Teams filter` you will only see entities that belong to one of 
 You may "Save this view" to permanently keep the filters.  
 For more details about view customization, see the [customization documentation](/customize-pages-dashboards-and-plugins/page/catalog-page/#my-teams-filter).
 
-#### Initial filters to filter out teams or advanced queries
+#### Filter a catalog page to the user's team
 
-Another way to personalize a view is to use [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters). These allow you to create advanced and dynamic filters, invisible to "regular" users.
+Another way to personalize a catalog page view is to use [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters). These allow you to create advanced and dynamic filters, invisible to "regular" users.
 
 With initial filters you can create views such as:
-- Filter all entities owned by My Team or my Business Unit or Department.
+- Filter all entities owned by `My Team` (or more dynamic queries).
 - Filter entities based on dates (e.g. PRs created in the last 90 days).
 
 Leveraging teams as blueprints, we can create advanced business logics, such as services belonging to a specific product: 
@@ -60,26 +64,29 @@ Leveraging teams as blueprints, we can create advanced business logics, such as 
 <img src='/img/software-catalog/role-based-access-control/overview/businesslogic.png' width='100%' border='1px' /> 
 <br/><br/>
 
-To achieve this, you can use the `relatedTo` dynamic filters, for example:
+To achieve this, you can use the `Owning Teams` value to `My Teams`, or use the `relatedTo` dynamic filters, for example:
 
-```json showLineNumbers
-{
-  "operator": "relatedTo",
-  "blueprint": "githubTeam",
-  "value": ["{{getUserTeams()}}"]
-}
-```
+<img src='/img/software-catalog/role-based-access-control/overview/initial-filters.png' width='80%' border='1px' />
+<br/><br/>
 
-Port also offers additional dynamic properties and advanced queries: 
-
-- [Dynamic properties](/search-and-query/#dynamic-properties)
-- [Advanced search queries](/search-and-query/)
+Initial filters offer an easy way to **lock a Catalog Page view dynamically for the logged in user's team**.
 
 #### Dynamic filters for dashboard widgets
 
-Advanced filters and dynamic filters are also available for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/) in your catalog or homepage, using the same logic as described in the Initial Filters section above.
+Advanced filters and dynamic filters are also available for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/) in your catalog or homepage, using the same logic as described in the **Filters** or **Initial Filters** section above.
 
-You can create widgets with data based on the logged in user’s properties (email, team, etc.).
+You can create widgets with data dynamically based on the logged in user’s identity or team's ownserhip.
+
+### Granular entity permission control
+
+It is possible to assign more granular permissions on **entities** to prevent users from reading or editing certain properties or relations. 
+
+This is an advanced feature and is only recommended in large enterprises with complex RBAC use cases. In most cases dynamic filtering would be a simpler and more effective way to achieve the same outcome. 
+
+
+[Granular Entity RBAC](/build-your-software-catalog/set-catalog-rbac/#set-granular-access-controls-to-catalog-data)
+
+
 
 ## RBAC for Self Service Actions
 

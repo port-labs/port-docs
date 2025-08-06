@@ -111,7 +111,7 @@ Every part of the Port service uses properly-provisioned, redundant servers (e.g
 
 Port has a formal business continuity plan for extended service outages caused by unforeseen or unavoidable disasters in an effort to restore services to the widest extent possible in a reasonable time frame. Port has documented a set of disaster recovery policies and procedures to enable the recovery or continuation of vital technology infrastructure and systems following a disaster.
 
-Port keeps hourly encrypted backups of data in multiple regions on AWS. While never expected, in the case of production data loss (i.e., primary data stores lost), we will restore organizational data from these backups.
+Port maintains encrypted backups of data in multiple regions on AWS in accordance with Port's recovery point objectives. While never expected, in the case of production data loss (i.e., primary data stores lost), we will restore organizational data from these backups.
 
 Port's BCP policy is available upon request.
 
@@ -149,7 +149,7 @@ No matter what backend you choose to trigger self-service actions or automations
 
 Port provides native applications for GitHub and Bitbucket which seamlessly integrate with the Git providers to ingest information and keep an up-to-date catalog available in Port. These integrations use OAuth 2.0 for authentication and permissions to your Git provider.
 
-As part of the installation of Port's Git provider apps, the apps gain a limited set of permissions ([GitHub](/docs/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#permissions), [Bitbucket](/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket.md#permissions)). In addition, it is possible to selectively authorize access to a limited set of repositories.
+As part of the installation of Port's Git provider apps, the apps gain a limited set of permissions ([GitHub](/docs/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#permissions), [Bitbucket](/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-app/bitbucket-app.md#permissions)). In addition, it is possible to selectively authorize access to a limited set of repositories.
 
 By default the Git integrations will not ingest any source code, and will only search for `README.md` files specifically. It is possible to configure the apps to not ingest any source code files at all, or to ingest additional files that are relevant to your use case.
 
@@ -222,7 +222,7 @@ Any and all secrets shared with Port are encrypted both at rest and in transit. 
 
 ### Malware protection
 
-At Port, we believe that good security practices start with our own team, so we go out of our way to protect against internal threats and local vulnerabilities. All company-provided workstations are enrolled in Endpoint Detection and Response (EDR) solutions provided by [SentinelOne](https://www.sentinelone.com/) to enforce security settings including full-disk encryption, and OS updates.
+At Port, we believe that good security practices start with our own team, so we go out of our way to protect against internal threats and local vulnerabilities. All company-provided workstations are enrolled in Endpoint Detection and Response (EDR) solutions to enforce security settings including full-disk encryption, and OS updates.
 
 ### Security policies
 
@@ -263,6 +263,10 @@ Information about any security vulnerabilities successfully exploited through pe
 ## Privacy policy
 
 You can find Port's privacy policy [here](https://www.getport.io/legal/privacy-policy).
+
+## Sub-processors
+
+You can find Port's list of sub-processors [here](https://www.port.io/legal/sub-processors).
 
 ## Data protection addendum
 

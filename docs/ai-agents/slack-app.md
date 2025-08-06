@@ -1,7 +1,6 @@
-
 # Slack application
 
-Port's Slack app brings your developer portal experience into your team’s daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates.
+Port's Slack app brings your developer portal experience into your team's daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates.
 
 ## Use-cases
 
@@ -42,9 +41,9 @@ To install the Slack app, follow these steps:
 
 - Click on the "Add to Slack" button.
 
-- Select the workspace where you’d like to install the app, then click “Allow”.
+- Select the workspace where you'd like to install the app, then click "Allow".
 
-- Once installed, you will receive a Slack message from Port’s bot with a summary of the app’s capabilities:
+- Once installed, you will receive a Slack message from Port's bot with a summary of the app's capabilities:
 
     <img src='/img/ai-agents/SlackAppInstallMessage.png' width='80%'/>
 
@@ -61,7 +60,7 @@ To view your system secrets, click on the `...` button in the top right corner o
 
 ### Usage example
 
-The following snippet defines an automation that sends a Slack message to a specific channel when a new PagerDuty incident is created in Port, using the Slack app’s bot token:
+The following snippet defines an automation that sends a Slack message to a specific channel when a new PagerDuty incident is created in Port, using the Slack app's bot token:
 
 ```json
 {
@@ -103,7 +102,7 @@ The following snippet defines an automation that sends a Slack message to a spec
 
 You can customize messages with blocks following the [Slack formatting guidelines](https://slack.com/help/articles/202288908-Format-your-messages). 
 
-You can also insert the Slack channel dynamically:
+<!-- You can also insert the Slack channel dynamically:
 
 - Save the Slack channel ID for services/teams.
 - Mirror it into the _user blueprint.
@@ -111,7 +110,7 @@ You can also insert the Slack channel dynamically:
 
 [[need to add example and see it works]]
 
-You can also set under which name & icon the message will be sent (add example)
+You can also set under which name & icon the message will be sent (add example) -->
 
 ## Interact with Port from Slack
 
@@ -124,21 +123,56 @@ When a new team member first tries to use the Slack app, a private message with 
 
 Once the user is authenticated, they can:
 
-- Mention `@Port` in any channel it's invited to.
-- Start interacting with Port directly from Slack.
+- Mention `@Port` in any channel it's invited to.
+- Start interacting with Port directly from Slack.
 
 ### Slash commands
 
-The Slack app responds to the `/port` slash command with these options:
+The Slack app responds to the `/port` slash command with these options:
 
-- `/port` (or `/port help`)- Shows general help and available actions.
-- `/port agents` - Lists all Port AI agents in your organization.
+- `/port` (or `/port help`) - Shows general help and available actions.
+- `/port agents` - Lists all Port AI agents in your organization.
 
 To ask the app a question, simply mention `@Port` and ask away, for example:
 
 ```text
 @Port is there an active incident for the service 'x'?
 ```
+
+### Use the Slack AI assistant interface
+
+On paid Slack workspaces, you can also interact with Port through Slack's AI assistant interface, which provides enhanced features:
+
+1. Chat history for previous interactions with Port is available when using direct messages with the app.
+   <img src='/img/ai-agents/SlackAppAgentChat.png' alt='Slack app chat history with Port' width='80%'/>
+
+2. You can start a new conversation easily using the "New Chat" button in the top-right corner.
+
+3. For quicker access, add Port to your Slack top bar by clicking the three dots menu and selecting "Add assistant to top bar".
+   <img src='/img/ai-agents/SlackAppAddTopBar.png' alt='Adding Port to Slack top bar' width='80%'/>
+
+4. Once added, you can access Port from anywhere in Slack through a side panel, without leaving your current conversation.
+   <img src='/img/ai-agents/SlackAppAgentInteraction.png' alt='Interacting with Port through Slack side panel' width='60%'/>
+
+This provides a more seamless way to interact with your Port AI agents while working in Slack.
+
+## Advanced configuration
+
+### Renaming the Slack Bot
+
+You can rename the Port Slack bot in your workspace. This can be useful if you want the bot to have a name that is more recognizable to your organization, instead of the default "Port".
+
+Follow these steps to rename the bot:
+
+1.  In your Slack workspace, find the Port app. Right-click on it and select "View app details".
+    <img src='/img/ai-agents/SlackAppViewAppDetails.png' alt='View Port App Details in Slack' width='60%'/>
+
+2.  In the app details view, click on the "Configuration" tab. This will open a new page in your web browser. Scroll down to the "Bot User" section.
+    <img src='/img/ai-agents/SlackAppEditBot.png' alt='Slack App Configuration Page - Bot User Section' width='80%'/>
+
+3.  Click on the "Edit" button next to the bot user. In the modal that appears, enter the new desired name for your bot and click "Save Changes". The change will apply immediately.
+    <img src='/img/ai-agents/SlackAppEditBotModal.png' alt='Edit Bot Name Modal in Slack' width='60%'/>
+
 
 ## Limitations
 

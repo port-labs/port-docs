@@ -211,7 +211,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 
 <TabItem value="terraform" label="Terraform ( Real Time Events )">  
 
-The GCP integration is deployed using Terraform on Google Cloud Cloud Run.  
+The GCP integration is deployed using Terraform on Google Cloud Run.  
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
 <h2> Prerequisites </h2>

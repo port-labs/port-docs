@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Search & query
 
-Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used across the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list. 
+Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used across the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list.
 
 ## Common queries usage
 
@@ -19,7 +19,7 @@ High quality search is essential to effectively track assets in your software ca
 - Find all running services that are not healthy.
 - List all libraries that have known vulnerabilities.
 - Filter all services running in a specific cluster (in a query or self service form).
-- Catalog initial filters based on the logged in user's properties. 
+- Catalog initial filters based on the logged in user's properties.
 
 ## Search request
 
@@ -149,7 +149,16 @@ ___
 
 ### Relation operators
 
-#### Structure
+<Tabs groupId="relation" defaultValue="relatedTo" values={[
+{label: "RelatedTo", value: "relatedTo"},
+{label: "MatchAny", value: "matchAny"}
+]}>
+
+<TabItem value="relatedTo">
+
+The `relatedTo` operator will return all entities that have a relationship with the specified entity:
+
+<h4> Structure </h4>
 
 | Field       | Description                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------- |
@@ -157,15 +166,6 @@ ___
 | `blueprint` | Blueprint of the entity identifier specified in the `value` field                         |
 | `value`     | Value to filter by                                                                        |
 
-#### Operators
-
-<Tabs groupId="relation" defaultValue="relatedTo" values={[
-{label: "RelatedTo", value: "relatedTo"},
-]}>
-
-<TabItem value="relatedTo">
-
-The `relatedTo` operator will return all entities that have a relationship with the specified entity:
 
 ```json showLineNumbers
 {
@@ -391,6 +391,122 @@ And the result shall be:
 </details>
 
 </TabItem>
+
+<TabItem value="matchAny">
+
+<h4> Related to by specific path </h4>
+
+You can search for entities that are related through a specific path of relations. This is useful when you want to find entities that are connected through a specific chain of relationships.
+
+
+<h4> Structure </h4>
+
+| Field                     | Description                                                                                                          |
+|---------------------------|----------------------------------------------------------------------------------------------------------------------|
+| `property.path`           | An array containing the full path of relation identifiers to traverse.                                               |
+| `property.fromBlueprint`  | *(Optional)* The blueprint to start the path traversal from. If omitted, traversal starts from the target blueprint. |
+| `operator`                | The search operator to use. For this feature, use `"matchAny"`.                                                      |
+| `value`                   | The value or list of values to match against the target entity identifiers at the end of the path.                   |
+
+
+<h4> For upstream paths: </h4>
+
+```json showLineNumbers
+{
+  "property": {
+    "path": ["relation1", "relation2", "relation3"]
+  },
+  "operator": "matchAny",
+  "value": "targetEntity"
+}
+```
+
+<h4> For downstream paths: </h4>
+
+```json showLineNumbers
+{
+  "property": {
+    "path": ["relation1", "relation2", "relation3"],
+    "fromBlueprint": "sourceBlueprint"
+  },
+  "operator": "matchAny",
+  "value": "targetEntity"
+}
+```
+
+When using downstream paths, the `fromBlueprint` parameter specifies the source blueprint from which to start the path traversal. 
+
+Instead of thinking about the path as downstream from the target, we treat it as upstream from the specified blueprint to the target blueprint. This means that the path will be traversed starting from entities of the specified `fromBlueprint`.
+
+<h4> Examples </h4>
+
+Suppose you have the following data model:
+
+![Dependency graph upstream downstream diagram](/img/software-catalog/search-in-port/specific-path-diagram-example.png)
+
+<h4> Example 1: Find all services related to a cluster (upstream) </h4>
+
+To find all services that are related to a specific cluster (e.g., "production-cluster"):
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "$blueprint",
+      "operator": "=",
+      "value": "service"
+    },
+    {
+      "property": {
+        "path": ["deployedOn"]
+      },
+      "operator": "matchAny",
+      "value": "production-cluster"
+    }
+  ]
+}
+```
+
+This will return all **services** that have a deployment in the "production-cluster".
+
+---
+
+<h4> Example 2: Find all deployments related to a specific service (downstream) </h4>
+
+To find all deployments related to a specific service (e.g., "production-service"):
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "$blueprint",
+      "operator": "=",
+      "value": "deployment"
+    },
+    {
+      "property": {
+        "path": ["deployedOn", "deployments"],
+        "fromBlueprint": "service"
+      },
+      "operator": "matchAny",
+      "value": "production-service"
+    }
+  ]
+}
+```
+
+This will return all **deployments** that are related to the "production-service".
+
+---
+
+The `matchAny` operator will match entities based on your input:
+- If you specify a single value, it will find all entities with the same identifier.
+- If you provide a list of values, it will match any entity whose identifier is in the list.
+
+</TabItem>
+
 </Tabs>
 
 ### Dynamic properties
@@ -444,6 +560,92 @@ Since we don't have context of the logged-in user when using the API, these func
     "property": "$blueprint",
     "operator": "=",
     "value": "{{blueprint}}"
+  }
+]
+```
+
+### Contextual query rules
+
+:::info Closed beta feature
+This capability is currently in closed beta, and is not yet generally available.  
+If you would like to join the beta, please reach out to us.
+:::
+To implement specific and/or complex queries, you can add the context of the triggering user to a query rule, allowing you to access that user's entity and/or owning teams.  
+You can mix contextual query rules freely with other rules as part of your queries.
+This can be used in either the `property` or `value` key in a query rule:
+
+<Tabs groupId="context" defaultValue="property" values={[
+{label: "Property", value: "property"},
+{label: "Value", value: "value"},
+]}>
+<TabItem value="property">
+```json showLineNumbers
+{
+   ...other rule keys
+   "property": {
+      "context": "user" | "userTeams",
+      "property": "prop"
+  }
+}
+```
+</TabItem>
+<TabItem value="value">
+```json showLineNumbers
+{
+  ...other rule keys
+   "value": {
+      "context": "user" | "userTeams",
+      "property": "prop"
+  }
+}
+```
+</TabItem>
+</Tabs>
+
+#### Available contexts
+| Context       | Description                                                                               |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| `user`  | The entity of the user triggering the query |
+| `userTeams` | The entities of the owning teams of the user triggering the query                                                                     |
+
+#### Usage examples
+
+```json showLineNumbers
+[ 
+  ...other rules
+  { // filter entities with the same department as the user
+    "property": "department",
+    "operator": "containsAny",
+    "value": {
+      "context": "user",
+      "property": "department"
+    }
+  }
+]
+```
+```json showLineNumbers
+[ 
+  ...other rules
+  { // only users with `manager` role will get the entities
+    "property": {
+      "context": "user",
+      "property": "role"
+    },
+    "operator": "=",
+    "value": "manager"
+  }
+]
+```
+```json showLineNumbers
+[
+  ...other rules
+  { // only users in these team will get the entities
+    "property": {
+      "context": "userTeams",
+      "property": "$identifier"
+    },
+    "operator": "containsAny",
+    "value": ["Spider Team", "Builder Team"]
   }
 ]
 ```

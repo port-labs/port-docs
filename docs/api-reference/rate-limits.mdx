@@ -16,20 +16,24 @@ import Export from "@theme/ApiExplorer/Export";
 
 # Rate limits
 
-:::warning Updated API rate limits
-Rate limits will be updated on **June 6, 2025**.
-Rate limits will change from the **IP level** to the **Organization level**.
+Rate limits restrict the number of requests or actions allowed within a certain timeframe to prevent overuse or abuse.
+Port enforces multiple rate limits to control extensive usage of Port's API.
 
-<details>
-<summary>**Updated rate limits (Click to expand)**</summary>
+Port's rate limits vary based on the API being accessed and may be more lenient for some APIs.  
+Rate limits are enforced at the **Organization level**.
 
-Updated limits:
+
+## Rate limits table
+
 | Description | Rate limit   |
 |-------------|--------------|
 | Unauthenticated requests | 100 requests per 5 minutes |
-| Entities API requests    | 30,000 requests per 5 minutes |
+| Entities API requests    | 35,000 requests per 5 minutes |
 | All other API requests   | 15,000 requests per 5 minutes |
-## Check the rate limit status
+
+## How to avoid getting rate limited
+
+### Monitor rate limit headers
 Each API response includes headers that provide information about your current rate limit status:
 | Header name | Description  |
 |-------------|--------------|
@@ -37,37 +41,7 @@ Each API response includes headers that provide information about your current r
 | `x-ratelimit-limit`          | The maximum number of requests that you can make in during the rate limit window |
 | `x-ratelimit-remaining`      | The number of requests remaining in the current rate limit window |
 | `x-ratelimit-reset`          | The time at which the current rate limit window resets, in UTC epoch seconds |
-</details>
-For the current rate limits, read on below.
-:::
-
-Rate limits restrict the number of requests or actions allowed within a certain timeframe to prevent overuse or abuse.
-Port enforces multiple rate limits to control extensive usage of Port's API.
-
-Port's rate limits vary based on the API being accessed and may be more lenient for some APIs.  
-Rate limits are enforced at the **IP level**.
-
-
-## Rate limits table
-
-| Description | Rate limit |
-|------------|-------------|
-| Unauthenticated requests | 100 requests per 5 minutes |
-| Ocean integrations | 20,000 requests per 5 minutes |
-| External exporters | 15,000 requests per 5 minutes |
-| IaC integrations and CI/CD actions | 5,000 requests per 5 minutes |
-| Entity API requests | 5,000 requests per 5 minutes | 
-| All other API requests | 2,500 requests per 5 minutes |
-
-
-## How to prevent getting rate limited
-
-{/* 
-TODO: uncomment when rate limit changes go into effect
-
-### Monitor rate limit headers
-
-To prevent hitting rate limits, you should monitor the rate limit headers in your API responses.
+To avoid hitting rate limits, you should monitor the rate limit headers in your API responses.
 
 The `x-ratelimit-remaining` header shows how many requests you have left in the current window.
 When this number gets low, you should reduce your request frequency or implement a backoff strategy.

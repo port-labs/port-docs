@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem"
 
 Boolean is a primitive data type that has one of two possible values - `true` and `false`.
 
-## 💡 Common boolean usage
+## Common boolean usage
 
 The boolean property type can be used to store any true/false gate, for example:
 
@@ -152,7 +152,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

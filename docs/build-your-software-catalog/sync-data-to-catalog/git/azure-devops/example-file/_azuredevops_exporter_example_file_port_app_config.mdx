@@ -28,8 +28,10 @@ resources:
           properties:
             path: .file.path
             size: .file.size
-            content: .file.content
+            content: .file.content.raw
             link: .repo.remoteUrl + "?path=" + (.file.path)
+            isFolder: .file.isFolder
+            extension: .file.extension
           relations:
             repository: >-
               "\(.repo.project.name | ascii_downcase | gsub("[ ();]";
@@ -53,8 +55,10 @@ resources:
           properties:
             path: .file.path
             size: .file.size
-            content: .file.content
+            content: .file.content.raw
             link: .repo.remoteUrl + "?path=" + (.file.path)
+            isFolder: .file.isFolder
+            extension: .file.extension
           relations:
             repository: >-
               "\(.repo.project.name | ascii_downcase | gsub("[ ();]";

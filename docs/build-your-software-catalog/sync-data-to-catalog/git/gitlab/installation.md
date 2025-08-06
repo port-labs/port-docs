@@ -291,7 +291,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-gitlab-integration/values.yaml

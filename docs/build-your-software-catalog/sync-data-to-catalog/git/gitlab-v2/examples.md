@@ -32,7 +32,8 @@ import TabItem from "@theme/TabItem"
 
 ## Mapping groups
 
-In the following example you will ingest your GitLab groups, subgroups and projects to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your GitLab groups, subgroups and projects to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <details>
 <summary>Group blueprint</summary>
@@ -46,7 +47,7 @@ In the following example you will ingest your GitLab groups, subgroups and proje
 
 :::tip Learn more
 
-- Refer to the [setup](GitLab-v2.md#setup) section to learn more about the integration configuration setup process.
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/api/groups/#list-all-groups) for the GitLab group object structure.
 
@@ -56,7 +57,8 @@ In the following example you will ingest your GitLab groups, subgroups and proje
 
 ## Mapping projects, README.md and merge requests
 
-In the following example you will ingest your GitLab projects, their README.md file contents and merge requests to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your GitLab projects, their README.md file contents and merge requests to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <details>
 <summary>Project blueprint</summary>
@@ -73,8 +75,57 @@ In the following example you will ingest your GitLab projects, their README.md f
 <MergeRequestConfig />
 </details>
 
+### Merge request configuration options
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="States" value="states">
+
+The `states` selector allows you to filter merge requests based on their state. You can specify one or more states to include in the sync.
+
+Allowed values:
+- `opened`: Merge requests that are currently open.
+- `closed`: Merge requests that have been closed without merging.
+- `merged`: Merge requests that have been merged.
+
+By default, if not specified, only `opened` merge requests will be synced.
+
+```yaml
+  - kind: merge-request
+    selector:
+      query: 'true'
+      # highlight-next-line
+      states:
+        - merged
+        - opened
+```
+</TabItem>
+
+<TabItem label="Updated After" value="updatedAfter">
+
+The `updatedAfter` selector allows you to filter merge requests based on when they were last updated. This helps you focus on recent changes and reduce the amount of historical data being synced.
+
+The value represents the number of days to look back for merge requests. For example, setting it to `90` will only sync merge requests that have been updated in the last 90 days.
+
+:::info Important
+The `updatedAfter` parameter only affects merge requests that are not in the "opened" state. Open merge requests will always be synced regardless of their last update time.
+:::
+
+By default, if not specified, it is set to `90` days.
+
+```yaml
+  - kind: merge-request
+    selector:
+      query: 'true'
+      # highlight-next-line
+      updatedAfter: 90
+```
+</TabItem>
+
+</Tabs>
+
 :::tip Learn more
-- Refer to the [setup](GitLab-v2.md#setup) section to learn more about the integration configuration setup process.
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/merge_requests.html#list-project-merge-requests) for the GitLab merge request object structure.
@@ -84,7 +135,8 @@ In the following example you will ingest your GitLab projects, their README.md f
 
 ## Mapping projects and issues
 
-In the following example you will ingest your GitLab projects and their issues to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your GitLab projects and their issues to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <details>
 <summary>Project blueprint</summary>
@@ -104,7 +156,7 @@ In the following example you will ingest your GitLab projects and their issues t
 
 :::tip Learn more
 
-- Refer to the [setup](GitLab-v2.md#setup) section to learn more about the integration configuration setup process.
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/issues.html) for the GitLab issue object structure.
@@ -134,7 +186,8 @@ For more information about ingesting files and file contents, click [here](/buil
 
 ## Mapping projects and monorepos
 
-In the following example you will ingest your GitLab projects and their monorepo folders to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your GitLab projects and their monorepo folders to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <details>
 <summary>Project blueprint</summary>
@@ -175,7 +228,7 @@ You can also specify a different path for each monorepo repository, for example:
 
 :::tip Learn more
 
-- Refer to the [setup](GitLab-v2.md#setup) section to learn more about the integration configuration setup process.
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree) for the GitLab repository tree object structure.
@@ -186,7 +239,8 @@ You can also specify a different path for each monorepo repository, for example:
 
 ## Mapping projects and folders
 
-In the following example you will ingest your GitLab projects and their folders to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your GitLab projects and their folders to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <details>
 <summary>Project blueprint</summary>
@@ -234,7 +288,8 @@ Primary email addresses are not available for GitLab "Free plan" users.
 
 ### Mapping members
 
-In the following example you will ingest your GitLab members to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your GitLab members to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <details>
 <summary>Member blueprint</summary>
@@ -250,7 +305,8 @@ In the following example you will ingest your GitLab members to Port, you may us
 
 ### Mapping groups with members
 
-In the following example you will ingest your GitLab groups and their members to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your GitLab groups and their members to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <details>
 <summary>Group with members blueprint</summary>
@@ -291,7 +347,7 @@ By default, this selector is set to `false`, which means the integration will on
 
 :::tip Learn more
 
-- Refer to the [setup](GitLab-v2.md#setup) section to learn more about the integration configuration setup process.
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/ee/api/members.html#list-all-members-of-a-group-or-project) for the GitLab project or group member object structure.
 
@@ -300,7 +356,8 @@ By default, this selector is set to `false`, which means the integration will on
 
 ## Mapping projects, pipelines and jobs
 
-In the following example you will ingest your GitLab projects, their pipelines and jobs runs to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your GitLab projects, their pipelines and jobs runs to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <details>
 <summary>Pipeline blueprint</summary>
@@ -319,7 +376,7 @@ In the following example you will ingest your GitLab projects, their pipelines a
 
 :::tip Learn more
 
-- Refer to the [setup](GitLab-v2.md#setup) section to learn more about the integration configuration setup process.
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
 - Click [Here](https://docs.gitlab.com/api/projects/#list-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines) for the GitLab pipeline object structure.

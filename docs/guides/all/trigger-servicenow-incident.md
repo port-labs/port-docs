@@ -122,9 +122,11 @@ However, we highly recommend you install the ServiceNow integration to have thes
 
     4. Click on `+ Secret` and add the following secrets:
        - `SERVICENOW_INSTANCE_URL` - Your ServiceNow instance URL.
-       - `SERVICENOW_USERNAME` - Your ServiceNow instance username.
-       - `SERVICENOW_PASSWORD` - Your ServiceNow instance password.
+       - `SERVICENOW_API_TOKEN`: A base64 encoded string of your servicenow instance credentials generated as:
 
+            ```bash showLineNumbers
+            echo -n "your-instance-username:your-instance-password" | base64
+            ```
 
     <h3>Set up self-service action</h3>
 
@@ -216,11 +218,10 @@ However, we highly recommend you install the ServiceNow integration to have thes
             "agent": false,
             "synchronized": true,
             "method": "POST",
-            "username": "{{.secrets.SERVICENOW_USERNAME}}",
-            "password": "{{.secrets.SERVICENOW_PASSWORD}}",
             "headers": {
               "Content-Type": "application/json",
-              "Accept": "application/json"
+              "Accept": "application/json",
+              "Authorization": "Basic {{.secrets.SERVICENOW_API_TOKEN}}"
             },
             "body": {
               "short_description": "{{.inputs.short_description}}",

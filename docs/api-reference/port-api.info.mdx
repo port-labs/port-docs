@@ -72,3 +72,11 @@ Port's API is available in two regions:
 When using the API from the browser, you can switch between regions using the dropdown in the `Try it out` panel, by hovering over the `Base URL` field and clicking on `Edit`:
 
 <img src="/img/openapi/switchRegion.png" width="60%" border="1px" />
+
+## Troubleshooting
+
+Every response returned from the API contains a special debugging header named `X-Trace-Id` which contains an internal trace ID that can be used by Port's support team to troubleshoot issues with any API request.
+
+For example: `X-Trace-Id: 1e148db358300d10f344b6d54edd4807`
+
+In case you encounter an issue with an API request, either performed directly or captured as part of a browsing session in Port's UI, you can send the `X-Trace-Id` header value along with your support request.

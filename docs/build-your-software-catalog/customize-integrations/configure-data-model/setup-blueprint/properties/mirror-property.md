@@ -24,16 +24,15 @@ Mirror properties allow you to map property values from related entities, to `ke
 
 Mirror properties support both [user-defined](./properties.md#available-properties) properties, and [meta-properties](./meta-properties.md) by using similar syntax.
 
-## 💡 Common mirror usage
+## Common mirror usage
 
 Mirror properties make it possible to enrich the data visible on an entity by mapping additional data and properties from other related entities in the catalog, for example:
 
-- Show the chart version of a running service;
-- Show the environment type of a running service;
-- Show the cloud provider of a K8s cluster;
-- etc.
+- Show the chart version of a running service.
+- Show the environment type of a running service.
+- Show the cloud provider of a K8s cluster.
 
-In this [live demo](https://demo.getport.io/k8s-clusters) example, we can see the `Cloud Provider` Property which is a mirror property of the related `Cloud Account` blueprint 🎬
+In this [live demo](https://demo.getport.io/serviceEntity?identifier=admin) example, we can see the `Average Monthly Incidents` property which is a mirror property of the related `PagerDuty Service` blueprint. 🎬
 
 ## API definition
 
@@ -184,7 +183,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

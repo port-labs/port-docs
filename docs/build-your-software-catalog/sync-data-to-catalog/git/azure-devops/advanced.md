@@ -15,7 +15,7 @@ To use the advanced configuration and additional flags, add them as a root key t
 
 ```yaml showLineNumbers
 # highlight-next-line
-createMissingRelatedEntities: true
+createMissingRelatedEntities: false
 resources:
   - kind: pull-request
     selector:
@@ -36,8 +36,8 @@ The following advanced configuration parameters are available and can be added t
 
 The `specPath` parameter specifies a list of `string` or a single value `string` that Port's Azure Devops app will search for `port.yml` files in.
 
-- Default value: `port.yml`
-- Use case:
+- **Default value**: `port.yml`
+- **Use case**:
   - If you want the app to scan a different file than `port.yml` (for example, change configure the app to scan files named `my-port-config.yml` using the value `my-port-config.yml`);
   - If you want the app to ignore `port.yml` files in certain paths.
 
@@ -47,8 +47,8 @@ The `specPath` parameter specifies a list of `string` or a single value `string`
 
 <DeleteDependents/>
 
-- Default: `false` (disabled)
-- Use case: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
+- **Default value**: `false` (disabled)
+- **Use case**: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
 
 </TabItem>
 
@@ -56,8 +56,8 @@ The `specPath` parameter specifies a list of `string` or a single value `string`
 
 The `enableMergeEntity` parameter specifies whether to use the [create/update](/build-your-software-catalog/custom-integration/api?operation=create-update#usage) or [create/override](/build-your-software-catalog/custom-integration/api?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
 
-- Default value: `false` (use create/override)
-- Use case: use `false` if you want Azure Devops to be the source-of-truth for catalog entities. Use `true` if you want to use Azure Devops as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
+- **Default value**: `false` (use create/override)
+- **Use case**: use `false` if you want Azure Devops to be the source-of-truth for catalog entities. Use `true` if you want to use Azure Devops as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
 
 </TabItem>
 
@@ -65,8 +65,8 @@ The `enableMergeEntity` parameter specifies whether to use the [create/update](/
 
 The `createMissingRelatedEntities` parameter is used to enable the creation of missing related Port entities automatically in cases where the target related entity does not exist in the software catalog yet.
 
-- Default value: `false` (do not create missing related entities)
-- Use case: use `true` if you want Azure Devops app to create barebones related entities, in case those related entities do not exist in the software catalog.
+- **Default value**: `true` to allow the Azure Devops app to create barebones related entities, in case those related entities do not exist in the software catalog.
+- **Use case**: use `false` if you do not want this default behavior (do not create missing related entities).
 
 </TabItem>
 
@@ -74,8 +74,8 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 
 The Azure Devops integration listens to real-time events from the branch specified in the `branch` field which is set to `main` by default. This is configurable and you can set the `branch` parameter to the branch you want to listen to events from.
 
-- Default value: `main` (default to the branch specified in the `branch` field.)
-- Use case: `develop` if you want to listen to events from the `develop` branch of the repository.
+- **Default value**: `main` (default to the branch specified in the `branch` field.)
+- **Use case**: `develop` if you want to listen to events from the `develop` branch of the repository.
 
 :::note Use Default Branch
 
@@ -89,8 +89,8 @@ If you want to listen to events from the default branch of the repository, you c
 
 The Azure Devops integration by default listens to events from the `main` branch. If you want to listen to events from the default branch of the repository, you can set the `useDefaultBranch` parameter to `true`.
 
-- Default value: `null` or `false` (default to the branch specified in the `branch` field.)
-- Use case: `true` if you want to listen to events from the default branch of the repository.
+- **Default value**: `null` or `false` (default to the branch specified in the `branch` field.)
+- **Use case**: `true` if you want to listen to events from the default branch of the repository.
 
 </TabItem>
 </Tabs>

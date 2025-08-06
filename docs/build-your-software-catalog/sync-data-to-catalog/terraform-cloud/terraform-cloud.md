@@ -124,7 +124,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-terraform-cloud-integration/values.yaml
@@ -348,6 +348,117 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: organization
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.name
+        blueprint: '"terraformCloudOrganization"'
+        properties:
+          externalId: .attributes."external-id"
+          ownerEmail: .attributes.email
+          collaboratorAuthPolicy: .attributes."collaborator-auth-policy"
+          planExpired: .attributes."plan-expired"
+          planExpiresAt: .attributes."plan-expires-at"
+          permissions: .attributes.permissions
+          samlEnabled: .attributes."saml-enabled"
+          defaultExecutionMode: .attributes."default-execution-mode"
+- kind: project
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.name
+        blueprint: '"terraformCloudProject"'
+        properties:
+          name: .attributes.name
+          permissions: .attributes.permissions
+        relations:
+          organization: .relationships.organization.data.id
+- kind: workspace
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.name
+        blueprint: '"terraformCloudWorkspace"'
+        properties:
+          organization: .relationships.organization.data.id
+          createdAt: .attributes."created-at"
+          updatedAt: .attributes."updated-at"
+          terraformVersion: .attributes."terraform-version"
+          locked: .attributes.locked
+          executionMode: .attributes."execution-mode"
+          resourceCount: .attributes."resource-count"
+          latestChangeAt: .attributes."latest-change-at"
+          tags: .__tags
+        relations:
+          currentStateVersion: .relationships."current-state-version".data.id
+          project: .relationships.project.data.id
+- kind: state-version
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .id
+        blueprint: '"terraformCloudStateVersion"'
+        properties:
+          createdAt: .attributes."created-at"
+          serial: .attributes.serial
+          status: .attributes.status
+          size: .attributes.size
+          isResourcesProcessed: .attributes."resources-processed"
+          hostedStateDownloadUrl: .attributes."hosted-state-download-url"
+          hostedJsonDownloadUrl: .attributes."hosted-json-state-download-url"
+          vcsCommitUrl: .attributes."vcs-commit-url"
+          outputData: .__output
+- kind: run
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .attributes.message
+        blueprint: '"terraformCloudRun"'
+        properties:
+          createdAt: .attributes."created-at"
+          status: .attributes.status
+          hasChanges: .attributes."has-changes"
+          isDestroy: .attributes."is-destroy"
+          message: .attributes.message
+          terraformVersion: .attributes."terraform-version"
+          appliedAt: .attributes."status-timestamps"."applied-at"
+          plannedAt: .attributes."status-timestamps"."planned-at"
+          source: .attributes.source
+        relations:
+          terraformCloudWorkspace: .relationships.workspace.data.id
+```
+
+</details>
+
 
 
 ## Examples

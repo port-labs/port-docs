@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 ---
-
+import PortMonoRepoAppConfig from './\_azuredevops_exporter_example_monorepo_port_app_config.mdx'
 import RepositoryBlueprint from './\_azuredevops_exporter_example_repository_blueprint.mdx'
 import PRBlueprint from './\_azuredevops_exporter_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_azuredevops_exporter_example_port_app_config.mdx'
@@ -41,7 +41,8 @@ import TeamsBlueprint from './example-users-and-teams/\_azuredevops_exporter_exa
 
 ## Mapping projects
 
-In the following example you will ingest your Azure Devops projects and their default team (Optional) to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Devops projects and their default team (Optional) to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
@@ -54,9 +55,10 @@ In the following example you will ingest your Azure Devops projects and their de
 
 :::
 
-## Mapping repositories, file contents, repository policies and pull requests
+## Mapping repositories, repository policies and pull requests
 
-In the following example you will ingest your Azure Devops repositories, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Devops repositories, their README.md file contents and pull requests to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
@@ -80,7 +82,8 @@ After creating the blueprints and saving the integration configuration, you will
 
 ## Mapping pipelines
 
-In the following example you will ingest your Azure Devops pipelines to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Devops pipelines to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
@@ -99,6 +102,10 @@ In the following example you will ingest your Azure Devops pipelines to Port, yo
 After creating the blueprints and saving the integration configuration, you will see new entities in Port.
 
 ## Mapping users and teams
+
+:::caution Azure DevOps Server limitation
+The `user` kind is only available for Azure DevOps Services. This integration relies on the User Entitlements API, which is not available in Azure DevOps Server.
+:::
 
 The following example blueprints and integration configurations demonstrate how to ingest Azure Devops users and teams into Port:
 
@@ -126,7 +133,8 @@ After creating the blueprints and saving the integration configuration, you will
 This section is deprecated and will be removed in a future version. Please refer to the [Mapping users and teams](#mapping-users-and-teams) section for the current implementation.
 :::
 
-In the following example you will ingest your Azure Devops teams and their members to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Devops teams and their members to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <ProjectBlueprint/>
 
@@ -150,7 +158,8 @@ After creating the blueprints and saving the integration configuration, you will
 
 ## Mapping Work Items
 
-In the following example you will ingest your Azure Devops work items to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Devops work items to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <WorkItemBlueprint/>
 
@@ -238,6 +247,8 @@ Before implementing file mapping, please note the following:
 - **Performance**: For optimal performance, we recommend limiting the number of tracked files per repository.
 - **File Tracking**: Each file specified in the configuration will be tracked as a separate entity in Port
 - **Change Detection**: Changes to tracked files will be reflected in Port during the next sync
+- **File Content**: The `.file.content` field in the response body is an object containing two keys: `raw` and `parsed`. The `raw` key returns a string representation of the actual file whereas the `parsed` key returns a JSON object.
+
 
 ### Configuration
 
@@ -328,6 +339,16 @@ Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/g
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your specified files.
 
+## Mapping repositories and monorepos
+
+The following example shows how to ingest your Azure Devops repositories and their folders into Port. By following this example you can map your different repositories, packages and libraries from your monorepo into separate entities in Port.
+
+**Note** that mapping is configured per project, so you need to create a separate mapping block for each project you want to ingest.
+
+<RepositoryBlueprint/>
+
+<PortMonoRepoAppConfig/>
+
 ## Mapping supported resources
 
 The above examples shows a specific use cases, but Port's Azure Devops integration supports the ingestion of many other Azure Devops objects, to adapt the examples above, use the Azure Devops API reference to learn about the available fields for the different supported objects:
@@ -335,3 +356,5 @@ The above examples shows a specific use cases, but Port's Azure Devops integrati
 <AzureDevopsResources/>
 
 When adding the ingestion of other resources, remember to add an entry to the `resources` array and change the value provided to the `kind` key accordingly.
+
+

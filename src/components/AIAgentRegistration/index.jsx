@@ -42,7 +42,7 @@ export default function AIAgentRegistration() {
         setResponse({
           success: true,
           alreadyEnabled: false,
-          message: 'AI agents are not enabled on your organization'
+          message: 'AI agents have been successfully enabled for your organization.'
         });
       }
     } catch (err) {

@@ -11,6 +11,7 @@ import LinearIssueConfiguration from "/docs/build-your-software-catalog/custom-i
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Linear
 
@@ -114,7 +115,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-linear-integration/values.yaml
@@ -162,8 +163,8 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.linearApiKey` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                               |                                  | ✅        |
 | `integration.eventListener.type`   | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
 | `integration.type`                 | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |
-| `integration.config.appHost` (deprecated)       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear. This field is deprecated. Please use the `baseUrl` field instead                                                                                                                                                                           | https://my-ocean-integration.com | ❌        |
-| `baseUrl`                 | The base url of the Linear integration instance, used for real-time updates.                                                                                                                                                                                                                                                               | https://my-ocean-integration.com | ❌      |
+| `integration.config.appHost` (deprecated)       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear. This field is deprecated. Please use the `liveEvents.baseUrl`field instead                                                                                                                                                                           | https://my-ocean-integration.com | ❌        |
+| `liveEvents.baseUrl`                | The base url of the instance where the Linear integration is hosted, used for real-time updates.                                                                                                                                                                                                                                                               | https://my-ocean-integration.com | ❌      |
 | `scheduledResyncInterval`          | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |                                  | ❌        |
 | `initializePortResources`          | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |                                  | ❌        |
 | `sendRawDataExamples`              | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |                                  | ❌        |
@@ -197,7 +198,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `identifier`                | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌        |
 | `version`                   | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌        |`
 | `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      | true    |          | ❌       |
-| `baseUrl`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
+| `liveEvents.baseUrl`               | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
 <br/>
 
 :::tip Ocean Sail Github Action
@@ -396,7 +397,74 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
 
+This is the default mapping configuration you get after installing the Linear integration.
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+
+```yaml showLineNumbers
+
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: team
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .name
+        blueprint: '"linearTeam"'
+        properties:
+          description: .description
+          workspaceName: .organization.name
+          url: '"https://linear.app/" + .organization.urlKey + "/team/" + .key'
+- kind: label
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"linearLabel"'
+        properties:
+          isGroup: .isGroup
+        relations:
+          parentLabel: .parent.id
+          childLabels: '[.children.edges[].node.id]'
+- kind: issue
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .identifier
+        title: .title
+        blueprint: '"linearIssue"'
+        properties:
+          url: .url
+          status: .state.name
+          assignee: .assignee.email
+          creator: .creator.email
+          priority: .priorityLabel
+          created: .createdAt
+          updated: .updatedAt
+        relations:
+          team: .team.key
+          labels: .labelIds
+          parentIssue: .parent.identifier
+          childIssues: .children.edges[].node.identifier
+```
+
+</details>
+
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

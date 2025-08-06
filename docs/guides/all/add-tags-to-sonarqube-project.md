@@ -23,7 +23,7 @@ You can implement this action in two ways:
 
 - Complete the [onboarding process](/getting-started/overview).
 - Access to your SonarQube instance with permissions to manage projects.
-- SonarQube API token with 'Administer' rights on the specified project. Check [SonarQube's documentation](https://docs.sonarsource.com/sonarqube/latest/user-guide/user-account/generating-and-using-tokens/) on how to retrieve your API Token.
+- SonarQube API token with 'Administer' rights on the specified project. Check [SonarQube's documentation](https://docs.sonarsource.com/sonarqube-server/10.0/user-guide/user-account/generating-and-using-tokens/) on how to retrieve your API Token.
 - Optional - Install Port's SonarQube integration [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
 
 	:::tip SonarQube Integration
@@ -412,7 +412,3 @@ However, we highly recommend you install the SonarQube integration to have these
 
 6. Done! Wait for the tags to be added to the SonarQube project
 
-## More relevant guides and examples
-- [Connect SonarQube project to a service](https://docs.port.io/guides/all/connect-sonar-project-to-service)
-- [Create a SonarQube project](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/SonarQube/create-sonarqube-project)
-- [Delete a SonarQube project](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/SonarQube/delete-sonarqube-project)

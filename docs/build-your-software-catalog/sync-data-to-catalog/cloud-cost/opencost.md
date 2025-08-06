@@ -6,7 +6,7 @@ import DockerParameters from "./\_opencost-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # OpenCost
 
@@ -104,7 +104,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-opencost-integration/values.yaml
@@ -368,6 +368,70 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: cost
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        blueprint: '"openCostResourceAllocation"'
+        identifier: .name
+        title: .name
+        properties:
+          cluster: .properties.cluster
+          namespace: .properties.namespace
+          startDate: .start
+          endDate: .end
+          cpuCoreHours: .cpuCoreHours
+          cpuCost: .cpuCost
+          cpuEfficiency: .cpuEfficiency
+          gpuHours: .gpuHours
+          gpuCost: .gpuCost
+          networkCost: .networkCost
+          loadBalancerCost: .loadBalancerCost
+          pvCost: .pvCost
+          ramBytes: .ramBytes
+          ramCost: .ramCost
+          ramEfficiency: .ramEfficiency
+          sharedCost: .sharedCost
+          externalCost: .externalCost
+          totalCost: .totalCost
+          totalEfficiency: .totalEfficiency
+- kind: cloudcost
+  selector:
+    query: 'true'
+    cloudcostAggregate: provider
+  port:
+    entity:
+      mappings:
+        blueprint: '"openCostCloudcost"'
+        identifier: .properties.provider + "-" + .window.start + "-" + .window.end
+        title: .properties.provider + "-" + .window.start + "-" + .window.end
+        properties:
+          startDate: .window.start
+          endDate: .window.end
+          listCost: .listCost.cost
+          netCost: .netCost.cost
+          amortizedNetCost: .amortizedNetCost.cost
+          invoicedCost: .invoicedCost.cost
+          amortizedCost: .amortizedCost.cost
+```
+
+</details>
+
+<MetricsAndSyncStatus/>
 
 
 ## Examples

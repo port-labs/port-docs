@@ -30,8 +30,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/patch-a-blueprints-permissions",
-          label: "Patch a blueprint's permissions",
+          id: "api-reference/update-a-blueprints-permissions",
+          label: "Update a blueprint's permissions",
           className: "api-method patch",
         },
         {
@@ -60,8 +60,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/patch-a-blueprint",
-          label: "Patch a blueprint",
+          id: "api-reference/update-a-blueprint",
+          label: "Update a blueprint",
           className: "api-method patch",
         },
         {
@@ -100,6 +100,12 @@ const sidebar: SidebarsConfig = {
           label: "Create an access token",
           className: "api-method post",
         },
+        {
+          type: "doc",
+          id: "api-reference/rotate-a-users-credentials",
+          label: "Rotate a user's credentials",
+          className: "api-method post",
+        },
       ],
     },
     {
@@ -120,8 +126,14 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/patch-an-entity",
-          label: "Patch an entity",
+          id: "api-reference/create-multiple-entities",
+          label: "Create multiple entities",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-an-entity",
+          label: "Update an entity",
           className: "api-method patch",
         },
         {
@@ -156,6 +168,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/delete-multiple-entities",
+          label: "Delete multiple entities",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
           id: "api-reference/search-entities",
           label: "Search entities",
           className: "api-method post",
@@ -170,6 +188,12 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api-reference/aggregate-entities-over-time",
           label: "Aggregate entities over time",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/fetch-the-history-of-an-entitys-properties",
+          label: "Fetch the history of an entity’s properties",
           className: "api-method post",
         },
         {
@@ -198,8 +222,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/update-an-action-automation",
-          label: "Update an action/automation",
+          id: "api-reference/change-an-action-automation",
+          label: "Change an action/automation",
           className: "api-method put",
         },
         {
@@ -240,8 +264,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/patch-an-action-run",
-          label: "Patch an action run",
+          id: "api-reference/update-an-action-run",
+          label: "Update an action run",
           className: "api-method patch",
         },
         {
@@ -306,8 +330,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/patch-a-team",
-          label: "Patch a team",
+          id: "api-reference/update-a-team",
+          label: "Update a team",
           className: "api-method patch",
         },
         {
@@ -348,8 +372,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/patch-a-user",
-          label: "Patch a user",
+          id: "api-reference/update-a-user",
+          label: "Update a user",
           className: "api-method patch",
         },
         {
@@ -438,8 +462,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/patch-organization-details",
-          label: "Patch organization details",
+          id: "api-reference/update-organization-details",
+          label: "Update organization details",
           className: "api-method patch",
         },
         {
@@ -462,8 +486,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/patch-an-organization-secret",
-          label: "Patch an organization secret",
+          id: "api-reference/update-an-organization-secret",
+          label: "Update an organization secret",
           className: "api-method patch",
         },
         {
@@ -486,8 +510,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/patch-an-integrations-config",
-          label: "Patch an integration's config",
+          id: "api-reference/update-an-integrations-config",
+          label: "Update an integration's config",
           className: "api-method patch",
         },
         {
@@ -498,20 +522,14 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/create-an-integration",
-          label: "Create an integration",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
           id: "api-reference/get-an-integration",
           label: "Get an integration",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api-reference/patch-an-integration",
-          label: "Patch an integration",
+          id: "api-reference/update-an-integration",
+          label: "Update an integration",
           className: "api-method patch",
         },
         {
@@ -519,6 +537,12 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/delete-an-integration",
           label: "Delete an integration",
           className: "api-method delete",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-metrics-and-sync-status",
+          label: "Get an integration's metrics and sync status",
+          className: "api-method get",
         },
       ],
     },
@@ -540,8 +564,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/patch-a-webhook",
-          label: "Patch a webhook",
+          id: "api-reference/update-a-webhook",
+          label: "Update a webhook",
           className: "api-method patch",
         },
         {
@@ -596,6 +620,30 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "AI",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-an-invocations-result",
+          label: "Get an invocation's result",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/invoke-a-specific-agent",
+          label: "Invoke a specific agent",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/invoke-an-agent",
+          label: "Invoke an agent",
+          className: "api-method post",
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Apps",
       items: [
         {
@@ -603,12 +651,6 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/get-all-credentials",
           label: "Get all credentials",
           className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/create-credentials",
-          label: "Create credentials",
-          className: "api-method post",
         },
         {
           type: "doc",
@@ -624,8 +666,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/update-credentials",
-          label: "Update credentials",
+          id: "api-reference/change-the-name-of-a-credentials-set",
+          label: "Change the name of a credentials set",
           className: "api-method put",
         },
       ],

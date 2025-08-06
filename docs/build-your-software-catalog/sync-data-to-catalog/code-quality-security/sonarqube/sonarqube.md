@@ -12,7 +12,7 @@ import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/c
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # SonarQube
 
@@ -25,20 +25,6 @@ This integration allows you to:
 
 - Map and organize your desired SonarQube resources and their metadata in Port (see supported resources below).
 - Watch for SonarQube object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-
-## BaseUrl & Webhook Configuration
-
-:::warning AppHost deprecation
-**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
-:::
-
-
-The `baseUrl` parameter enables real-time updates from Datadog to Port. If not provided:
-- The integration will still function normally
-- You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
-- Manual resyncs can be triggered via Port's UI
-
-The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events
 
 ### Supported Resources
 
@@ -69,7 +55,7 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Rea-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -81,7 +67,7 @@ Using this installation option means that the integration will be able to update
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="Sonarqube" />
+<OceanRealtimeInstallation integration="Sonarqube" webhookSecret="integration.secrets.webhookSecret" />
 
 <PortApiRegionTip/>
 
@@ -137,7 +123,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-sonarqube-integration/values.yaml
@@ -183,7 +169,7 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                |                                  | ✅        |
 | `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                   | ✅        |
 | `integration.config.sonarIsOnPremise`    | A boolean value indicating whether the SonarQube instance is on-premise. The default value is `false`                                                                                        | false                            | ✅        |
-| `baseUrl`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com | ❌         |
+| `liveEvents.baseUrl`            | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com | ❌         |
 | `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-instance.com    | ❌        |
 | `integration.secrets.webhookSecret`    | A secret token used to secure webhooks between SonarQube and the integration.                                                                  |         | ❌ |
 
@@ -420,6 +406,85 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: projects_ga
+  selector:
+    query: 'true'
+    apiFilters:
+      qualifier:
+      - TRK
+    metrics:
+    - code_smells
+    - coverage
+    - bugs
+    - vulnerabilities
+    - duplicated_files
+    - security_hotspots
+    - new_violations
+    - new_coverage
+    - new_duplicated_lines_density
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .name
+        blueprint: '"sonarQubeProject"'
+        properties:
+          organization: .organization
+          link: .__link
+          qualityGateStatus: .__branch.status.qualityGateStatus
+          lastAnalysisDate: .analysisDate
+          numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
+          numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
+          numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
+          numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
+          numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
+          coverage: .__measures[]? | select(.metric == "coverage") | .value
+          mainBranch: .__branch.name
+          revision: .revision
+          managed: .managed
+        relations:
+          group: '"all_teams"'
+- kind: issues
+  selector:
+    query: 'true'
+    apiFilters:
+      resolved: 'false'
+    projectApiFilters: {}
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .message
+        blueprint: '"sonarQubeIssue"'
+        properties:
+          type: .type
+          severity: .severity
+          link: .__link
+          status: .status
+          assignees: .assignee
+          tags: .tags
+          createdAt: .creationDate
+        relations:
+          sonarQubeProject: .project
+```
+
+</details>
+
+
+<MetricsAndSyncStatus/>
 
 
 ## Examples

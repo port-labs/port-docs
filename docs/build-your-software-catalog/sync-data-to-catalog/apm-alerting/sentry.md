@@ -11,6 +11,7 @@ import SentryIssuesConfiguration from "/docs/build-your-software-catalog/custom-
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 
 # Sentry
@@ -120,7 +121,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-sentry-integration/values.yaml
@@ -398,6 +399,105 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .email
+        title: .user.name
+        blueprint: '"sentryUser"'
+        properties:
+          username: .user.username
+          isActive: .user.isActive
+          dateJoined: .user.dateJoined
+          lastLogin: .user.lastLogin
+          orgRole: .orgRole
+          inviteStatus: .inviteStatus
+- kind: user
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .email
+        blueprint: '"_user"'
+        relations:
+          sentry_user: .email
+- kind: project-tag
+  selector:
+    query: 'true'
+    tag: environment
+  port:
+    entity:
+      mappings:
+        identifier: .slug + "-" + .__tags.name
+        title: .name + "-" + .__tags.name
+        blueprint: '"sentryProjectEnvironment"'
+        properties:
+          dateCreated: .dateCreated
+          platform: .platform
+          status: .status
+          link: .organization.links.organizationUrl + "/projects/" + .name
+- kind: issue-tag
+  selector:
+    query: 'true'
+    tag: environment
+  port:
+    itemsToParse: .__tags
+    entity:
+      mappings:
+        identifier: .id + "-" + .item.name
+        title: .title + " -" + " " + .item.name
+        blueprint: '"sentryIssue"'
+        properties:
+          link: .permalink + "?environment=" + .item.name
+          status: .status
+          isUnhandled: .isUnhandled
+        relations:
+          projectEnvironment: (.project.slug as $slug | .item | "\($slug)-\(.name)")
+          assignee:
+            combinator: '"and"'
+            rules:
+            - operator: '"="'
+              property: '"$identifier"'
+              value: .assignedTo.email
+- kind: team
+  selector:
+    query: 'true'
+    includeMembers: true
+  port:
+    entity:
+      mappings:
+        identifier: .slug
+        title: .name
+        blueprint: '"sentryTeam"'
+        properties:
+          dateCreated: .dateCreated
+          memberCount: .memberCount
+          roles: .teamRole
+          projects: .projects | map (.slug)
+        relations:
+          members: if .__members != null then .__members | map(.user.email) | map(select(. != null)) else [] end
+```
+
+</details>
+
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 

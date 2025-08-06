@@ -71,6 +71,10 @@ html[data-theme="dark"] .guides-search-bar::placeholder {
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+
+    /* Override anchor tag defaults */
+    text-decoration: none;
+    color: inherit;
 }
 
 html[data-theme="dark"] .guide-card {
@@ -87,6 +91,11 @@ html[data-theme="dark"] .guide-card:hover {
     border: 1px solid var(--Border-Medium, #444);
 }
 
+.guide-card:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
 
 .guide-card-header { 
     display: flex;
@@ -100,6 +109,12 @@ html[data-theme="dark"] .guide-card:hover {
     align-items: center;
     gap: 8px;
     flex: 1 0 0;
+}
+
+.guide-card-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .guide-card-header-img-box {
@@ -156,6 +171,31 @@ html[data-theme="dark"] .guide-card-header-category {
 
 html[data-theme="dark"] .guide-card-category-text {
     color: var(--Colorful-High-Turquoise, #8BE0E7) !important;
+}
+
+.guide-card-new-badge {
+    display: flex;
+    height: 24px;
+    padding: 0px 8px;
+    align-items: center;
+    gap: 4px;
+    border-radius: 8px;
+    background: var(--ifm-color-success-light, #00D084);
+}
+
+html[data-theme="dark"] .guide-card-new-badge {
+    background: var(--ifm-color-success-dark, #00C078);
+}
+
+.guide-card-new-text {
+    color: white !important;
+    font-feature-settings: 'liga' off, 'clig' off !important;
+    font-family: "DM Sans" !important;
+    font-size: 12px !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    line-height: normal !important;
+    text-transform: uppercase !important;
 }
 
 .guide-card-body {
@@ -311,6 +351,131 @@ html[data-theme="dark"] .guide-tags-reset-button:hover {
     font-style: normal !important;
     font-weight: 500 !important;
     line-height: normal !important;
+}
+
+.guide-filters-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.guide-new-filter-button {
+    display: flex;
+    height: var(--Button-H-36, 36px);
+    padding: 0px var(--Padding-12, 12px);
+    justify-content: center;
+    align-items: center;
+    gap: var(--Gap-4, 4px);
+    border-radius: var(--Corner-radius-8, 8px);
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid var(--Border-Low, #E3E3E3);
+    background: var(--Colorful-Low-Grey, rgba(199, 199, 199, 0.15));
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.guide-new-filter-button:hover {
+    border-color: rgba(125, 125, 125, 1);
+}
+
+.guide-new-filter-button.active {
+    border: 1px solid var(--Colorful-High-Green, #046B15);
+    background: var(--Colorful-Low-Green, rgba(79, 205, 68, 0.15));
+}
+
+.guide-new-filter-button.active:hover {
+    border-color: var(--Colorful-High-Green, #046B15);
+}
+
+html[data-theme="dark"] .guide-new-filter-button {
+    border: 1px solid var(--Border-Low, #333);
+    background: var(--Colorful-Low-Grey, rgba(199, 199, 199, 0.15));
+}
+
+html[data-theme="dark"] .guide-new-filter-button.active {
+    border: 1px solid var(--Colorful-High-Green, #D0FFB4);
+    background: var(--Colorful-Low-Green, rgba(79, 205, 68, 0.15));
+}
+
+.guide-new-filter-text {
+    color: var(--Colorful-High-Grey, #5D5D5D) !important;
+    font-feature-settings: 'liga' off, 'clig' off !important;
+    font-family: "DM Sans" !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
+}
+
+.guide-new-filter-button.active .guide-new-filter-text {
+    color: var(--Colorful-High-Green, #046B15) !important;
+}
+
+html[data-theme="dark"] .guide-new-filter-text {
+    color: var(--Colorful-High-Grey, #E9E9E9) !important;
+}
+
+html[data-theme="dark"] .guide-new-filter-button.active .guide-new-filter-text {
+    color: var(--Colorful-High-Green, #D0FFB4) !important;
+}
+
+/* Custom tooltip for the new filter button */
+
+.guide-new-filter-button::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background: var(--ifm-color-gray-900);
+    color: var(--ifm-color-white);
+    border-radius: 6px;
+    font-family: var(--ifm-font-family-base);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.guide-new-filter-button::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 2px;
+    border: 5px solid transparent;
+    border-top-color: var(--ifm-color-gray-900);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.guide-new-filter-button:hover::after,
+.guide-new-filter-button:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+html[data-theme="dark"] .guide-new-filter-button::after {
+    background: var(--ifm-color-gray-100);
+    color: var(--ifm-color-gray-900);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .guide-new-filter-button::before {
+    border-top-color: var(--ifm-color-gray-100);
 }
 
 /* Guide label button */

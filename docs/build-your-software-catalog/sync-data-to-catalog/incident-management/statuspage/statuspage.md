@@ -12,7 +12,7 @@ import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configu
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
 # Statuspage
 
@@ -113,7 +113,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.1.14
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-statuspage-integration/values.yaml
@@ -375,6 +375,143 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
+### Default mapping configuration
+
+This is the default mapping configuration for this integration:
+
+<details>
+<summary><b>Default mapping configuration (Click to expand)</b></summary>
+
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+- kind: statuspage
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"statuspage"'
+        properties:
+          page_description: .page_description
+          headline: .headline
+          branding: .branding
+          status_indicator: .status_indicator
+          status_description: .status_description
+          subdomain: .subdomain
+          domain: .domain
+          url: .url
+          allow_page_subscribers: .allow_page_subscribers
+          allow_incident_subscribers: .allow_incident_subscribers
+          allow_email_subscribers: .allow_email_subscribers
+          allow_sms_subscribers: .allow_sms_subscribers
+          allow_rss_atom_feeds: .allow_rss_atom_feeds
+          allow_webhook_subscribers: .allow_webhook_subscribers
+          time_zone: .time_zone
+          createdAt: .created_at
+          updatedAt: .updated_at
+- kind: component_group
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"statuspageComponentGroup"'
+        properties:
+          description: .description
+          position: .position
+          createdAt: .created_at
+          updatedAt: .updated_at
+        relations:
+          statuspage: .page_id
+- kind: component
+  selector:
+    query: .group == false
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"statuspageComponent"'
+        properties:
+          description: .description
+          position: .position
+          status: .status
+          showcase: .showcase
+          only_show_if_degraded: .only_show_if_degraded
+          startDate: .start_date | if . == null then null else (strptime("%Y-%m-%d") | todateiso8601) end
+          createdAt: .created_at
+          updatedAt: .updated_at
+        relations:
+          componentGroup: .group_id
+          statuspage: .page_id
+- kind: incident
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"statuspageIncident"'
+        properties:
+          status: .status
+          impact: .impact
+          createdAt: .created_at
+          updatedAt: .updated_at
+          startedAt: .started_at
+          resolvedAt: .resolved_at
+          shortlink: .shortlink
+          scheduled_for: .scheduled_for
+          scheduled_until: .scheduled_until
+          scheduled_remind_prior: .scheduled_remind_prior
+          scheduled_reminded_at: .scheduled_reminded_at
+          impact_override: .impact_override
+          scheduled_auto_in_progress: .scheduled_auto_in_progress
+          scheduled_auto_completed: .scheduled_auto_completed
+          metadata: .metadata
+          reminder_intervals: .reminder_intervals
+          postmortem_body: .postmortem_body
+          postmortem_body_last_updated_at: .postmortem_body_last_updated_at
+          postmortem_ignored: .postmortem_ignored
+          postmortem_published_at: .postmortem_published_at
+          postmortem_notified_subscribers: .postmortem_notified_subscribers
+          postmortem_notified_twitter: .postmortem_notified_twitter
+        relations:
+          components: '[.components[].id]'
+          statuspage: .page_id
+- kind: incident_update
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .body
+        blueprint: '"statuspageIncidentUpdate"'
+        properties:
+          status: .status
+          body: .body
+          createdAt: .created_at
+          displayAt: .display_at
+          deliverNotifications: .deliver_notifications
+          wantsTwitterUpdate: .wants_twitter_update
+          tweet_id: .tweet_id
+          custom_tweet: .custom_tweet
+        relations:
+          incident: .incident_id
+          affectedComponents: '[.affected_components[].code]'
+```
+
+</details>
+
+<MetricsAndSyncStatus/>
 
 ## Examples
 
