@@ -11,7 +11,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SlackBotTokenCallout from '../templates/secrets/__replace_slack_bot_token_callout.mdx';
 
-# Send Slack message to user
+# Send Slack message
 
 This guide will walk you through setting up automations to send Slack messages to users using Port's Slack app.
 In this guide, we will use the user email in Port to fetch the slack user id and send a message to the user.
