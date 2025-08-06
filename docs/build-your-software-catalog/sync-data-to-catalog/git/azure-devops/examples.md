@@ -228,11 +228,13 @@ Before implementing file mapping, please note the following:
     - `docs/getting-started.md`
     - `src/config/default.json`
     - `deployment/k8s/production.yaml`
+    - `*.json` (glob pattern)
+    - `**/*.yaml` (glob pattern)
+    - `src/*.json` (glob pattern)
   - ❌ Incorrect paths:
     - `/README.md` (leading slash)
     - `C:/repo/config.json` (absolute path)
     - `../other-repo/file.txt` (parent directory reference)
-    - `*.yaml` (glob pattern)
 - **Performance**: For optimal performance, we recommend limiting the number of tracked files per repository.
 - **File Tracking**: Each file specified in the configuration will be tracked as a separate entity in Port
 - **Change Detection**: Changes to tracked files will be reflected in Port during the next sync
@@ -251,6 +253,74 @@ Common scenarios for file mapping include:
 - Tracking configuration files (e.g., `deployment.yaml`, `config.json`)
 - Monitoring documentation files (e.g., `README.md`, `CONTRIBUTING.md`)
 - Tracking infrastructure definitions (e.g., `terraform.tf`, `docker-compose.yml`)
+
+
+### Create multiple entities from a single file
+
+In some cases, we want to parse a single JSON or YAML file and create multiple entities from it.  
+To do this, we can use the `itemsToParse` key in our mapping configuration.
+
+For example, let's say we want to track or manage a project's dependencies in Port.  
+We’ll need to create a `package` blueprint, with each entity representing a dependency from a `package.json` file.
+
+The following configuration fetches a `package.json` file from a specific repository and creates an entity for each dependency in the file, based on the `package` blueprint:
+
+The following configuration fetches a `package.json` file from a specific repository and creates an entity for each dependency in the file, based on the `package` blueprint:
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        path: '**/package.json'
+        repos:
+          - group/my-project
+    port:
+      itemsToParse: .file.content.dependencies | to_entries
+      entity:
+        mappings:
+          # Since identifier cannot contain special characters, we are using jq to remove them
+          identifier: >-
+            .item.key + "_" + if (.item.value | startswith("^")) then
+            .item.value[1:] else .item.value end
+          title: .item.key + "@" + .item.value
+          blueprint: '"package"'
+          properties:
+            package: .item.key
+            version: .item.value
+          relations: {}
+```
+
+The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file.  
+In this case, we are parsing the `dependencies` object from the `package.json` file.
+
+Once the object is parsed, we can use the `item` key to refer to each key-value pair within it — where the key is the dependency name, and the value is the version.
+
+This allows us to create an entity for each dependency dynamically.
+
+
+### Multi-document YAML files
+
+For multi-document YAML files (a single file containing multiple YAML documents separated by `---`), `.file.content` will not resolve to an object, but to an array of objects.
+
+You can use one of these methods to ingest multi-document YAML files:
+
+1. Use the `itemsToParse` key to create multiple entities from such a file (see example above).
+2. Map the result to an `array` property.
+
+:::tip Mixed YAML types
+If you have both single-document and multi-document YAML files in your repositories, you can use the `itemsToParse` key like this to handle both cases:
+
+```yaml
+itemsToParse: .file.content | if type== "object" then [.] else . end
+```
+:::
+
+### Limitations
+
+- Only JSON and YAML formats are automatically parsed.  
+  Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
 
 :::tip Learn more
 Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1&tabs=HTTP#download) for the Azure DevOps file object structure.
