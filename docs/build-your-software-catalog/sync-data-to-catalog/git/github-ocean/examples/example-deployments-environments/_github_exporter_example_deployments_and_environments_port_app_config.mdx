@@ -1,6 +1,6 @@
 <details>
 
-<summary><b> Port port-app-config.yml (click to expand)</b></summary>
+<summary><b>Port port-app-config.yml (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -29,7 +29,7 @@ resources:
           blueprint: '"githubRepoEnvironment"'
           properties:
             url: .html_url
-            customBranchesPolicies: .deployment_branch_policy.custom_branches_policies
+            customBranchPolicies: .deployment_branch_policy.custom_branches_policies
             protectedBranches: .deployment_branch_policy.protected_branches
             createdAt: .created_at
             updatedAt: .updated_at
@@ -53,7 +53,7 @@ resources:
             createdAt: .created_at
             url: .url
           relations:
-            environment: .__repository + "-" + .environment
+            deployment_environment: .__repository + "-" + .environment
 ```
 
 </details>
