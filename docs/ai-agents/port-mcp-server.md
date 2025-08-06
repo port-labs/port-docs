@@ -376,6 +376,21 @@ Once connected, you can interact with Port through natural language in your appl
 
 </details>
 
+<details>
+<summary>Why do I see an error about too many tools? (Click to expand)</summary>
+
+Each self-service action in your Port instance becomes an individual tool (as `run_<action_identifier>`). If your organization has many actions, this can result in a large number of tools being available.
+
+While most AI models handle this well, some have restrictions and may limit you to around 40 tools total. If you encounter errors about tool limits:
+
+1. **Reduce the number of tools** by customizing which tools are enabled (see [Select which tools to use](#select-which-tools-to-use) section above)
+2. **Focus on essential tools** by only enabling the read-only tools you need plus a few key actions
+3. **Contact your Port Admin** to review which actions are essential for your workflow
+
+This is completely normal behavior and doesn't indicate a problem with Port MCP - it's just a limitation of some AI models.
+
+</details>
+
 :::tip Getting Help
 If you continue to experience issues, please reach out to Port support with:
 - Your IDE/application version
