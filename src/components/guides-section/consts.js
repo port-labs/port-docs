@@ -1341,6 +1341,13 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
+    {
+        title: "Ingest and map Slack users to Port user accounts",
+        description: "Ingest and map Slack users to Port user accounts for seamless integration",
+        tags: ["SDLC", "Slack",  "Actions", "Automations","Webhook"],
+        logos: ["Slack", "Webhook"],
+        link: "/guides/all/map-slack-users-to-port-accounts",
+    },
     
 ]
 
