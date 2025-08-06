@@ -4,7 +4,7 @@ import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalo
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
 
-# Jira Server (Self-Hosted)
+# Jira Server (self-hosted)
 
 Port's Jira Server integration allows you to model Jira Server resources in your software catalog and ingest data into them.
 
