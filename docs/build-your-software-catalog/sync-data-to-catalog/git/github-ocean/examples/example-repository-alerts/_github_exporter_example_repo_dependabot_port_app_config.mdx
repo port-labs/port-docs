@@ -1,0 +1,65 @@
+<details>
+
+<summary><b>Port port-app-config.yml (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+  - kind: dependabot-alert
+    selector:
+      query: "true"
+      states: ["open", "fixed"] # other options: auto_fixed, dismissed
+    port:
+      entity:
+        mappings:
+          identifier: .__repository + "-" + (.number | tostring)
+          title: .number | tostring
+          blueprint: '"githubDependabotAlert"'
+          properties:
+            state: .state
+            severity: .security_advisory.severity
+            packageName: .dependency.package.name
+            packageEcosystem: .dependency.package.ecosystem
+            manifestPath: .dependency.manifest_path
+            scope: .dependency.scope
+            ghsaID: .security_advisory.ghsa_id
+            cveID: .security_advisory.cve_id
+            url: .html_url
+            references: "[.security_advisory.references[].url]"
+            alertCreatedAt: .created_at
+            alertUpdatedAt: .updated_at
+          relations:
+            repository: .__repository
+  - kind: code-scanning-alerts
+    selector:
+      query: "true"
+      state: "dismissed" # other options: open, closed, fixed
+    port:
+      entity:
+        mappings:
+          identifier: .__repository + "-" + (.number | tostring)
+          title: .rule.name
+          blueprint: '"githubCodeScanAlerts"'
+          properties:
+            state: .state
+            severity: .rule.severity
+            tags: .rule.tags
+            description: .rule.description
+            url: .html_url
+          relations:
+            repository: .__repository
+```
+
+</details>
