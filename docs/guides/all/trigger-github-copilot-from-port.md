@@ -410,7 +410,7 @@ jobs:
           echo "issue_title=$issue_title" >> $GITHUB_OUTPUT
           echo "Found issue: $issue_title (ID: $issue_id)"
         env:
-          GH_TOKEN: ${{ secrets.PORT_CLIENT_SECRET }}
+          GH_TOKEN: ${{ secrets.PORT_GITHUB_TOKEN }}
 
       - name: Report progress to Port - Found Issue
         if: ${{ inputs.port_run_id != '' }}
