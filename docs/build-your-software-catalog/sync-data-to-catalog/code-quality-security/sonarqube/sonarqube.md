@@ -26,20 +26,6 @@ This integration allows you to:
 - Map and organize your desired SonarQube resources and their metadata in Port (see supported resources below).
 - Watch for SonarQube object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-## BaseUrl & Webhook Configuration
-
-:::warning AppHost deprecation
-**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
-:::
-
-
-The `baseUrl` parameter enables real-time updates from SonarQube to Port. If not provided:
-- The integration will still function normally
-- You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
-- Manual resyncs can be triggered via Port's UI
-
-The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events
-
 ### Supported Resources
 
 The resources that can be ingested from SonarQube into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
@@ -81,7 +67,7 @@ Using this installation option means that the integration will be able to update
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="Sonarqube" />
+<OceanRealtimeInstallation integration="Sonarqube" webhookSecret="integration.secrets.webhookSecret" />
 
 <PortApiRegionTip/>
 
@@ -137,7 +123,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-sonarqube-integration/values.yaml
@@ -183,7 +169,7 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                |                                  | ✅        |
 | `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                   | ✅        |
 | `integration.config.sonarIsOnPremise`    | A boolean value indicating whether the SonarQube instance is on-premise. The default value is `false`                                                                                        | false                            | ✅        |
-| `baseUrl`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com | ❌         |
+| `liveEvents.baseUrl`            | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com | ❌         |
 | `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-instance.com    | ❌        |
 | `integration.secrets.webhookSecret`    | A secret token used to secure webhooks between SonarQube and the integration.                                                                  |         | ❌ |
 

@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem"
 
 Yaml is a data type used to save object definitions in YAML.
 
-## 💡 Common yaml usage
+## Common yaml usage
 
 The yaml property type can be used to store any key/value based data, for example:
 
@@ -129,8 +129,7 @@ resource "port_blueprint" "myBlueprint" {
 ## Pulumi definition
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
-{label: "Basic", value: "basic"},
-{label: "Enum - coming soon", value: "enum"}
+{label: "Basic", value: "basic"}
 ]}>
 
 <TabItem value="basic">
@@ -230,7 +229,7 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
+	"github.com/port-labs/pulumi-port/sdk/v2/go/port"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
