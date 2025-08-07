@@ -9,12 +9,11 @@ description: Learn how to send Slack messages to users using Port's Slack app an
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import SlackBotTokenCallout from '../templates/secrets/__replace_slack_bot_token_callout.mdx';
 
 # Send Slack message
 
 This guide will walk you through setting up automations to send Slack messages to users using Port's Slack app.
-In this guide, we will use the user email in Port to fetch the slack user id and send a message to the user.
+In this guide, we will leverage the email addresses from Port integrations (such as GitHub, GitLab, Jira, etc.) to look up the corresponding Slack user IDs and send targeted messages to those users.
 
 ## Common use cases
 
@@ -65,9 +64,12 @@ This automation uses Slack's `users.lookupByEmail` API to find a user's Slack ID
       "trigger": {
         "type": "automation",
         "event": {
-          "type": "<TRIGGER_TYPE>",
-          "blueprintIdentifier": "<BLUEPRINT_IDENTIFIER>" // or actionIdentifier
-        }
+          "type": "event_type",
+          // Only one of "blueprintIdentifier" or "actionIdentifier" should be present depending on the trigger type
+          "blueprintIdentifier": "blueprint_id",
+          // OR
+          "actionIdentifier": "action_id"
+        },
       },
       "invocationMethod": {
         "type": "WEBHOOK",
@@ -77,7 +79,7 @@ This automation uses Slack's `users.lookupByEmail` API to find a user's Slack ID
         "method": "GET",
         "headers": {
           "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer {{ .secrets.\"__SLACK_APP_BOT_TOKEN_T123\" }}"
+          "Authorization": "Bearer {{ .secrets.__SLACK_APP_BOT_TOKEN_T123 }}"
         },
         "body":{}
       },
@@ -111,9 +113,12 @@ This automation sends a simple message to a user's Slack DM using their user ID.
       "trigger": {
         "type": "automation",
         "event": {
-          "type": "<TRIGGER_TYPE>",
-          "actionIdentifier": "get_slack_user_id"
-        }
+          "type": "event_type",
+          // Only one of "blueprintIdentifier" or "actionIdentifier" should be present depending on the trigger type
+          "blueprintIdentifier": "blueprint_id",
+          // OR
+          "actionIdentifier": "action_id"
+        },
       },
       "invocationMethod": {
         "type": "WEBHOOK",
@@ -122,7 +127,7 @@ This automation sends a simple message to a user's Slack DM using their user ID.
         "method": "POST",
         "headers": {
           "Content-Type": "application/json; charset=utf-8",
-          "Authorization": "Bearer {{ .secrets.\"__SLACK_APP_BOT_TOKEN_T123\" }}"
+          "Authorization": "Bearer {{ .secrets.__SLACK_APP_BOT_TOKEN_T123 }}"
         },
         "body": {
           "channel": "{{ .event.diff.after.response.user.id }}",
@@ -137,7 +142,11 @@ This automation sends a simple message to a user's Slack DM using their user ID.
 
 5. Click "Save" to create the automation.
 
-<SlackBotTokenCallout />
+:::info Replace your Slack bot token
+1. Click on the `...` button in the top right corner of your Port application
+2. Select `Credentials` and then click on the `Secrets` tab
+3. Look for a secret named `__SLACK_APP_BOT_TOKEN_T<team_id>` where `<team_id>` is your Slack workspace ID
+:::
 
 
 ## Use case examples
@@ -147,7 +156,7 @@ Below are specific examples of how to use these automations for different integr
 
 ### GitHub pull request notifications
 
-We can implement a use case where a creator of a pull request is notified when the pull request is merged.  
+We can implement a use case where the creator of a pull request is notified when the pull request is merged.  
 Add the two automations below to your portal to set up the notifications.
 
 1. **Look up the Slack user ID by email**
@@ -234,11 +243,11 @@ Add the two automations below to your portal to set up the notifications.
               "fields": [
                 {
                   "type": "mrkdwn",
-                  "text": "*Repository:*\n{{ .event.context.entity.properties.repository }}"
+                  "text": "*Repository:*\n{{ .event.diff.after.properties.relations.repository }}"
                 },
                 {
                   "type": "mrkdwn",
-                  "text": "*Merged At:*\n{{ .event.context.entity.mergedAt }}"
+                  "text": "*Merged At:*\n{{ .event.diff.after.properties.mergedAt }}"
                 }
               ]
             },
@@ -251,7 +260,7 @@ Add the two automations below to your portal to set up the notifications.
                     "type": "plain_text",
                     "text": "View PR"
                   },
-                  "url": "{{ .event.context.entity.properties.link }}"
+                  "url": "{{ .event.diff.after.properties.link }}"
                 }
               ]
             }
@@ -353,19 +362,19 @@ We can implement a use case where a user is notified when a Jira issue is assign
               "fields": [
                 {
                   "type": "mrkdwn",
-                  "text": "*Issue:*\n{{ .event.context.entity.title }}"
+                  "text": "*Issue:*\n{{ .event.diff.after.properties.title }}"
                 },
                 {
                   "type": "mrkdwn",
-                  "text": "*Status:*\n{{ .event.context.entity.properties.status }}"
+                  "text": "*Status:*\n{{ .event.diff.after.properties.status }}"
                 },
                 {
                   "type": "mrkdwn",
-                  "text": "*Priority:*\n{{ .event.context.entity.properties.priority }}"
+                  "text": "*Priority:*\n{{ .event.diff.after.properties.priority }}"
                 },
                 {
                   "type": "mrkdwn",
-                  "text": "*Assigned At:*\n{{ .event.context.entity.updatedAt }}"
+                  "text": "*Assigned At:*\n{{ .event.diff.after.properties.updatedAt }}"
                 }
               ]
             },
@@ -378,7 +387,7 @@ We can implement a use case where a user is notified when a Jira issue is assign
                     "type": "plain_text",
                     "text": "View Issue"
                   },
-                  "url": "{{ .event.context.entity.properties.url }}"
+                  "url": "{{ .event.diff.after.properties.url }}"
                 }
               ]
             }
@@ -466,7 +475,7 @@ Add the two automations below to your portal to set up the notifications.
               "type": "section",
               "text": {
                 "type": "mrkdwn",
-                "text": "Hi <@{{ .event.diff.after.response.user.real_name }}>,\n\nYou have been assigned to a new PagerDuty incident:\n*Incident:* {{ .event.context.entity.title }}\n*Priority:* {{ .event.context.entity.properties.priority }}\n*Service:* {{ .event.context.entity.properties.service }}"
+                "text": "Hi <@{{ .event.diff.after.response.user.real_name }}>,\n\nYou have been assigned to a new PagerDuty incident:\n*Incident:* {{ .event.diff.after.properties.title }}\n*Priority:* {{ .event.diff.after.properties.priority }}\n*Service:* {{ .event.diff.after.properties.service }}"
               }
             },
             {
@@ -478,7 +487,7 @@ Add the two automations below to your portal to set up the notifications.
                     "type": "plain_text",
                     "text": "View Incident"
                   },
-                  "url": "https://app.getport.io/pagerdutyIncident/{{ .event.context.entity.identifier }}"
+                  "url": "https://app.getport.io/pagerdutyIncident/{{ .event.diff.after.identifier }}"
                 }
               ]
             }
@@ -574,19 +583,19 @@ We can implement a use case where an approver is notified when a platform reques
               "fields": [
                 {
                   "type": "mrkdwn",
-                  "text": "*Request:*\n{{ .event.context.entity.title }}"
+                  "text": "*Request:*\n{{ .event.diff.after.properties.title }}"
                 },
                 {
                   "type": "mrkdwn",
-                  "text": "*Type:*\n{{ .event.context.entity.properties.requestType }}"
+                  "text": "*Type:*\n{{ .event.diff.after.properties.requestType }}"
                 },
                 {
                   "type": "mrkdwn",
-                  "text": "*Requester:*\n{{ .event.context.entity.properties.requester }}"
+                  "text": "*Requester:*\n{{ .event.diff.after.properties.requester }}"
                 },
                 {
                   "type": "mrkdwn",
-                  "text": "*Created:*\n{{ .event.context.entity.createdAt }}"
+                  "text": "*Created:*\n{{ .event.diff.after.properties.createdAt }}"
                 }
               ]
             },
@@ -599,7 +608,7 @@ We can implement a use case where an approver is notified when a platform reques
                     "type": "plain_text",
                     "text": "Review Request"
                   },
-                  "url": "https://app.getport.io/platformRequest/{{ .event.context.entity.identifier }}"
+                  "url": "https://app.getport.io/platformRequest/{{ .event.diff.after.identifier }}"
                 }
               ]
             }
@@ -694,7 +703,7 @@ We can implement a use case where a user is notified when a deployment fails. Ad
               "type": "section",
               "text": {
                 "type": "mrkdwn",
-                "text": "Hi <@{{ .event.diff.after.response.user.real_name }}>,\n\nYour deployment of service *{{ .event.context.entity.identifier }}* (image: {{ .event.context.entity.properties.image }}) to environment *{{ .event.context.entity.properties.environment }}* has failed.\n\n[View run details](https://app.getport.io/organization/run?runId={{ .event.context.entity.id }})"
+                "text": "Hi <@{{ .event.diff.after.response.user.real_name }}>,\n\nYour deployment of service *{{ .event.diff.after.properties.identifier }}* (image: {{ .event.diff.after.properties.image }}) to environment *{{ .event.diff.after.properties.environment }}* has failed.\n\n[View run details](https://app.getport.io/organization/run?runId={{ .event.diff.after.id }})"
               }
             }
           ]
