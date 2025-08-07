@@ -3,15 +3,13 @@
 import httpx
 from typing import Any, Dict
 from loguru import logger
-from typing import List, Dict, Optional, Union
-from .cache import InMemoryCache
+from typing import Dict
 
 
 class PortClient:
     def __init__(self, client_id, client_secret, **kwargs) -> None:
         self.httpx_async_client = kwargs.get("httpx_async_client", httpx.AsyncClient())
         self.client_id = client_id
-        self.cache = InMemoryCache()
         self.client_secret = client_secret
         self.base_url = kwargs.get("base_url", "https://api.getport.io/v1")
         self.port_headers = None
@@ -51,7 +49,7 @@ class PortClient:
 
     async def upsert_entity(
         self, blueprint_id: str, entity_object: Dict[str, Any]
-    ) -> None:
+    ) -> Dict[str, Any]:
         endpoint = f"/blueprints/{blueprint_id}/entities?upsert=true&merge=true"
         port_headers = (
             self.port_headers if self.port_headers else await self.get_port_headers()
