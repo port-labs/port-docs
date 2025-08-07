@@ -153,8 +153,33 @@ Shows the monitoring metrics and sync status for each `kind`.
   **Note**: The same data is also available through the [Get an integration's metrics and sync status](https://docs.port.io/api-reference/get-an-integrations-metrics-and-sync-status) API endpoint.
 
 :::tip Prometheus Metrics Endpoint
-  If you are using the **self hosted integration method**, you can get raw Prometheus metrics by accessing the following endpoint: `{your_integration's_base_url}/metrics/`.
+If you are using the **self-hosted integration method**, you can get raw Prometheus metrics by accessing the following endpoint: `{your_integration's_base_url}/metrics/`.
+
+<h3> Understanding the metrics </h3>
+
+**Types of Metrics Available**
+- **duration_seconds**: Measures how long it takes for a phase to complete.  
+  _Labels_: `kind`, `phase`
+- **object_count**: Counts the number of objects handled in each phase.  
+  _Labels_: `kind`, `phase`, `object_count_type`
+- **success** : Indicates whether the phase completed successfully.   
+  _Labels_: `kind`, `phase`
+
+**Types of Labels Available**
+- **kind**: The specific type of resource handled by the integration (varies per integration).
+- **phase**: The step in the ETL process:  
+    - `extract`: Fetch data from the source.
+    - `transform`: Map or modify data before loading.
+    - `load`: Ingest the data into Port.
+    - `resync`: Full ETL process for a specific kind.
+    - `delete`: Part of the reconciliation phase.
+- **object_count_type**: Subtype of object count, which varies by phase:
+    - For `transform`: `transformed`, `filtered_out`, `failed`.
+    - For `load`: `loaded`, `failed`, `skipped`.
+    - For `extract`: `raw_extracted`, `failed`.
+    - For `deletion`: `deleted`.
 :::
+
 
 ### FAQ
 
