@@ -1,0 +1,54 @@
+<details>
+<summary><b>Humanitec Users (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "identifier": "humanitecUser",
+    "title": "Humanitec User",
+    "icon": "User",
+    "schema": {
+      "properties": {
+        "email": {
+          "title": "Email",
+          "description": "The email address of the user",
+          "type": "string",
+          "icon": "User",
+          "format": "user"
+        },
+        "role": {
+          "title": "Role",
+          "description": "The role of the user in the organization",
+          "type": "string",
+          "icon": "Role"
+        },
+        "invite": {
+          "title": "Invite Status",
+          "description": "The status of the user's invitation",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "createdAt": {
+          "title": "Created At",
+          "description": "The date and time when the user was created",
+          "type": "string",
+          "format": "date-time",
+          "icon": "DefaultProperty"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "humanitecGroup": {
+        "title": "Groups",
+        "target": "humanitecGroup",
+        "required": false,
+        "many": true
+      }
+    }
+}
+```
+
+</details>
