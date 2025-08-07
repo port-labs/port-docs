@@ -40,9 +40,9 @@ To create a personal access token see Github's [managing your personal access to
 
 <details>
   <summary>Required permissions</summary>
-
+  
   These are the necessary permissions if you're creating a fine-grained PAT.
-
+  
   **Repository permissions:**
   - **Content**: Readonly
   - **Metadata**: Readonly
@@ -73,24 +73,31 @@ Configure multiple workers to handle GitHub webhook events in parallel groups, p
 
 Since Ocean 27.0, a new parameter was added to config, which adjusts the number of async workers spawned for webhook events.
 
-When event_workers_count > 1, related GitHub events get grouped together:
+Set `event_workers_count: 4` in your config (default: 1) to enable parallel group processing.
 
-All PR events (opened, review, status) for PR #123 → same processing group
-All issue events for issue #456 → same processing group
-Push events grouped by commit SHA
-<details> <summary>Event grouping behavior</summary>
-Supported event types:
+When `event_workers_count > 1`, related GitHub events get grouped together:
+- All PR events (opened, review, status) for PR #123 → same processing group.
+- All issue events for issue #456 → same processing group.
+- Push events grouped by commit SHA.
 
-Pull Requests: Grouped by PR number (pull_request, pull_request_review, pull_request_review_comment)
-Issues: Grouped by issue number (issues, issue_comment)
-Pushes: Grouped by commit SHA (push)
-Releases: Grouped by release ID (release)
-Workflow Runs: Grouped by run ID (workflow_run)
-Status Checks: Grouped by commit SHA (status)
-Fallback: If event type isn't recognized, scans payload for first number, id, or sha field.
+<details>
+  <summary>Event grouping behavior</summary>
+  
+  **Supported event types:**
+  - **Pull Requests**: Grouped by PR number (`pull_request`, `pull_request_review`, `pull_request_review_comment`)
+  - **Issues**: Grouped by issue number (`issues`, `issue_comment`)
+  - **Pushes**: Grouped by commit SHA (`push`)
+  - **Releases**: Grouped by release ID (`release`)
+  - **Workflow Runs**: Grouped by run ID (`workflow_run`)
+  - **Status Checks**: Grouped by commit SHA (`status`)
+  
+  **Fallback**: If event type isn't recognized, scans payload for first `number`, `id`, or `sha` field.
 
-:::note Processing guarantees Events within the same group are processed sequentially to maintain order and prevent conflicts. Different groups can be processed in parallel across workers. With event_workers_count: 1, all events are processed sequentially using a simple queue. :::
-
+:::note Processing guarantees
+Events within the same group are processed sequentially to maintain order and prevent conflicts.
+Different groups can be processed in parallel across workers.
+With `event_workers_count: 1`, all events are processed sequentially using a simple queue.
+:::
 </details>
 </TabItem> 
 </Tabs>
