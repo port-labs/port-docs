@@ -27,7 +27,7 @@ This guide assumes the following:
 
 To represent HiBob users in your portal, we need to create a HiBob User blueprint that can store HiBob user data and optionally link to Port user accounts.
 
-<h3> Create the HiBob User blueprint</h3>
+<h3>Create the HiBob User blueprint</h3>
 
 1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
 
@@ -132,7 +132,7 @@ To represent HiBob users in your portal, we need to create a HiBob User blueprin
 
 5. Click on `Save` to create the blueprint.
 
-<h3> Enhance the Port User blueprint</h3>
+<h3>Enhance the Port User blueprint</h3>
 
 Now we need to enhance the Port User blueprint to add a relation to the HiBob User blueprint and mirror properties to display HiBob information.
 
@@ -191,11 +191,14 @@ Now let's add your HiBob credentials to Port's secrets:
 3. Click on the `Secrets` tab.
 4. Click on `+ Secret` and add the following secrets:
    - `HIBOB_API_URL` - Your HiBob API base URL (e.g., https://api.hibob.com/v1)
-   - `HIBOB_SERVICE_USER_ID` - Your HiBob service user ID
-   - `HIBOB_SERVICE_USER_TOKEN` - Your HiBob service user token
+   - `HIBOB_BASIC_AUTH` - Your base64 encoded credentials (base64(HIBOB_SERVICE_USER_ID:HIBOB_SERVICE_USER_TOKEN))
+
+   ```bash
+   echo -n "HIBOB_SERVICE_USER_ID:HIBOB_SERVICE_USER_TOKEN" | base64
+   ```
 
 :::info HiBob Authentication
-HiBob uses service user authentication with both an ID and token. You'll need to create a service user in HiBob with appropriate permissions to access employee data. Learn more about [creating HiBob service users](https://apidocs.hibob.com/docs/api-service-users).
+HiBob uses Basic Authentication with base64 encoding. You'll need to create a service user in HiBob with appropriate permissions to access employee data, then encode the credentials as base64(service_user_id:service_user_token). Learn more about [creating HiBob service users](https://apidocs.hibob.com/docs/api-service-users).
 :::
 
 
