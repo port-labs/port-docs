@@ -155,7 +155,8 @@ Shows the monitoring metrics and sync status for each `kind`.
 :::tip Prometheus Metrics Endpoint
 If you are using the **self-hosted integration method**, you can get raw Prometheus metrics by accessing the following endpoint: `{your_integration's_base_url}/metrics/`.
 
-<h3> Understanding the metrics </h3>
+<details>
+<summary><b>Understanding the metrics (click to expand)</b></summary>
 
 **Types of Metrics Available**
 - **duration_seconds**: Measures how long it takes for a phase to complete.  
@@ -178,6 +179,8 @@ If you are using the **self-hosted integration method**, you can get raw Prometh
     - For `load`: `loaded`, `failed`, `skipped`.
     - For `extract`: `raw_extracted`, `failed`.
     - For `deletion`: `deleted`.
+    
+</details>
 :::
 
 
