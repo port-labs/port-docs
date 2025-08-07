@@ -252,3 +252,8 @@ The table below describes the fields in the JSON structure under the `trigger` k
 | `condition.type` | The type of condition. Should be set to `JQ`. |
 | `condition.expressions` | An array of expressions used to filter the entities for which the automation will be triggered. |
 | `condition.combinator` | The combinator used to combine the expressions. Should be set to `and` or `or`. |
+
+
+:::info Automation action identifiers
+When setting up the `actionIdentifier` value in the event, you can use an identifier that belongs to an automation as well. This means that automations can be triggered by other automations and are not limited to self-service actions.
+:::
