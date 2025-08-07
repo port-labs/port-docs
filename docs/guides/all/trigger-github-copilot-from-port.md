@@ -565,21 +565,14 @@ This automation ensures that when a GitHub issue has the "auto_assign" label, it
 Now let us test the complete workflow to ensure everything works correctly.
 
 
-### Test the Copilot assignment
+### Run the self-service action
 
-1. Go to your GitHub repository and create a new issue.
-2. Add the "auto_assign" label to the issue.
-3. Go to Port and check if the automation was triggered.
-4. Verify that the issue was assigned to Copilot in GitHub.
+1. Run the self-service action to create a new GitHub issue.
+2. Make sure to add the "auto_assign" label to the issue.
+3. Go to the issue in GitHub and verify that Copilot is assigned.
+4. Check that a pull request (PR) is opened for the issue.
 
-
-### Verify the GitHub workflow
-
-1. Go to your GitHub repository.
-2. Check the "Actions" tab to see if the `assign_to_copilot.yml` workflow was triggered.
-3. Verify that the workflow completed successfully and the issue was assigned to Copilot.
-
-<img src="/img/guides/jira-to-github-ai-test.png" border="1px" width="100%" />
+<img src="/img/guides/jira-to-github-copilot-test.png" border="1px" width="100%" />
 
 
 ## Related guides
