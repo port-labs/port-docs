@@ -7,10 +7,12 @@ description: Create a dashboard that highlights the ROI of automations in Port
 
 ## Overview
 
-In the following guide, we will create a dashboard that highlights the ROI (Return On Invesment) of automations in Port.
-To achieve that we will create three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint), a [Self-service](https://app.getport.io/self-serve) action and a [dashboard](/customize-pages-dashboards-and-plugins/dashboards) that will reflect the advantages of using actions in Port. 
+In this guide, you will learn how to showcase the true business impact of automation in Port by building an ROI dashboard.  
+We will set up the necessary data model (using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint)), defining a [Self-service](https://app.getport.io/self-serve) action, and designing a dashboard that visualizes the time savings and benefits delivered by your automations.
 
-Let's define two terms that we will use in this guide;
+After executing this guide, you will have a dashboard in Port that demonstrates the value of your automations, and also provide insights into how Port drives efficiency and ROI across your organization.
+
+We will be using the following terms in this guide:
 
 ### Lead time saving
 
@@ -25,7 +27,7 @@ Lead time saving is calculated across all **self-service** actions, from access 
 - Supports operational efficiency tracking.
 - Informs prioritization of future self-service expansions.
 
-**Lead time before**- This value represents how long requests typically took from submission to completion before using actions. We will use this value in the Self-service action.
+**Lead time before**- This value represents how long requests typically took from submission to completion before using actions. This value is used in the Self-service action.
 
 ### Cycle Time Saving
 
@@ -39,12 +41,18 @@ This metric is calculated across all automated self-service actions in Port, hig
 
 ## Prerequisites
 
--  A Port account (if you don't have one already):
-   - Visit [Port.io](https://app.port.io/).
-   - Sign up for an account.
--  A [GitHub](https://github.com/) account with your Port `CLIENT_ID` and `CLIENT_SECRETS` saved as secrets.
+- Port account
+    - A Port account with appropriate permissions to create blueprints, actions, and automations.
+    - Access to the [Builder](https://app.getport.io/settings/data-model) page to create blueprints.
+    - Access to the [Self-service](https://app.getport.io/self-serve) page to create actions.
+- GitHub account
+    - GitHub account and repository with the following secrets configured:
+        - `PORT_CLIENT_ID`: Your Port client ID ([find it here](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)).
+        - `PORT_CLIENT_SECRET`: Your Port client secret.
 
 ## Set up data model
+
+The following blueprints represent a Self-service action (Action), its category (Action categories) as well as an action's run (Action runs).
 
 ### Create the Action categories blueprint
 
@@ -55,7 +63,7 @@ This metric is calculated across all automated self-service actions in Port, hig
 5. Click `Create`
 
     <details>
-    <summary><b>Action catagories blueprint(click to expand)</b></summary>
+    <summary><b>Action categories blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -85,7 +93,7 @@ This metric is calculated across all automated self-service actions in Port, hig
 5. Click `Create`.
 
     <details>
-    <summary><b>Action blueprint(click to expand)</b></summary>
+    <summary><b>Action blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -637,7 +645,7 @@ This metric is calculated across all automated self-service actions in Port, hig
 
 ### Finish setting up Action Runs blueprint
 
-After setting up both Action Runs and Action blueprint, add the following relation and mirror properties to the `Action blueprint`.
+After setting up both `Action Runs` and `Action` blueprint, add the following relation and mirror properties to the `Action blueprint`.
 
 <details>
 <summary><b>Action runs blueprint (click to expand)</b></summary>
@@ -673,7 +681,16 @@ After setting up both Action Runs and Action blueprint, add the following relati
 
  </details>
 
-## Create the "Setup new action experience" Self-service action
+## Create the Self-service action
+
+This Self-service action creates on execution:
+-  A Self-service action with the inputs the user provides.
+-  An automation that gets triggered when an action run is changed.  
+   On trigger, if the run is sucessfull, the automation updates the following `Action run` properties:
+    - Duration: How long did the action run take.
+    - Waiting for approval duration: How long did the request take to get approved.
+    - Cycle time: How long the did execution take.
+   which are used as aggregation properties in the `Action` blueprint.
 
 ### Set up the action's frontend
 
@@ -686,7 +703,7 @@ After setting up both Action Runs and Action blueprint, add the following relati
     <details>
     <summary><b>Action blueprint(click to expand)</b></summary>
 
-        **Remember to change the organization and repository name if you use your own.**
+        **Remember to change the `<YOUR-ORG-NAME>` and `<YOUR-REPO-NAME>` to your GitHub organization and repository names.**
 
         ```json showLineNumbers
         {
@@ -751,8 +768,8 @@ After setting up both Action Runs and Action blueprint, add the following relati
         "invocationMethod": {
             "type": "GITHUB",
             //highlight-start
-            "org": "PortActionsRepo",
-            "repo": "configuration-scripts",
+            "org": "<YOUR-ORG-NAME>",
+            "repo": "<YOUR-REPO-NAME>",
             //highlight-end
             "workflow": "create-port-automation.yml",
             "workflowInputs": {
@@ -773,7 +790,7 @@ After setting up both Action Runs and Action blueprint, add the following relati
 
 Define the logic that our action will trigger.
 In your GitHub repository, add the following files or use your own API.
-Add the workflow to the .git/workflows/ folder, and the other scripts to a ./scripts folder.
+Add the workflow to the `.git/workflows/` folder, and the other scripts to a `./scripts` folder.
 You can also use this [repository](https://github.com/port-experimental/actions-experience) if you wish.
 
 <details>
@@ -1323,11 +1340,13 @@ You can also use this [repository](https://github.com/port-experimental/actions-
 
 ### Set up the newly created action's backend
 
-When you trigger the "setup new action experience" Self-service action, a new Self-service action is created as well as an automation to track metrics on the newly created Self-service action. To complete it's 
+When you trigger the "setup new action experience" Self-service action, a new Self-service action is created as well as an automation to track its metrics.
+To learn more about setting up a Self-service action's backend, refer to the [documentation](/actions-and-automations/create-self-service-experiences/setup-the-backend/). 
 
-## Visualize action entities with dashboards
+## Visualize Action Entities with Dashboards
 
-Dashboards let you observe, track, and communicate insights from your action setup. You can create dashboards that pull data from the action, action category, and action run entities.
+Dashboards let you observe, track, and communicate insights from your action setup.  
+You can create dashboards that pull data from the action, action category, and action run entities.
 
 ### Create an ROI dashboard
 
@@ -1341,6 +1360,18 @@ We now have a blank dashboard where we can start adding widgets to visualize ins
 ### Add widgets
 
 In the new dashboard, create the following widgets:
+
+TODO: add an agent widget.
+
+<details>
+<summary><b>AI Agent (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **AI Agent**.
+2. Title: `Actions AI assistant`.
+3. Select your `Agent`.
+4. Click `Save`.
+
+</details>
 
 <details>
 <summary><b>Total hours saved (click to expand)</b></summary>
@@ -1379,5 +1410,7 @@ In the new dashboard, create the following widgets:
 6. Click `Save`.
 
 </details>
+
+Congratulations! You have successfully created an ROI dashboard that demonstrates the business value of your automations in Port.
 
 
