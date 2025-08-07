@@ -68,8 +68,13 @@ A GitHub App provides automatic access token rotation and is a good alternative 
 To set it up, see the [GitHub App installation guide](./github-app.mdx).
 
 </TabItem>
-<TabItem value="parallel-groups" label="Parallel Event Processing">
+</Tabs>
+
+### Configure Parallel Processing
+
 Configure multiple workers to handle GitHub webhook events in parallel groups, preventing race conditions while maintaining event ordering for related resources.
+<Tabs>
+<TabItem value="parallel-groups" label="Parallel Event Processing">
 
 Since Ocean 27.0, a new parameter was added to config, which adjusts the number of async workers spawned for webhook events.
 
