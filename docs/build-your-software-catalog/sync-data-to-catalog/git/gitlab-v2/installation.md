@@ -115,7 +115,7 @@ integration:
     type: POLLING
   config:
   // highlight-next-line
-    gitlabUrl: https://gitlab.com # Or your self-hosted GitLab URL
+    gitlabHost: https://gitlab.com # Or your self-hosted GitLab URL
   secrets:
   // highlight-next-line
     gitlabToken: GITLAB_TOKEN
@@ -191,7 +191,7 @@ This table summarizes the available parameters for the installation.
 | `integration.identifier`         | Change the identifier to describe your integration                                                                                  | ✅        |
 | `integration.type`               | The integration type                                                                                                                | ✅        |
 | `integration.eventListener.type` | The event listener type                                                                                                             | ✅        |
-| `integration.config.gitlabUrl`   | The GitLab instance URL                                                                                                     | ✅        |
+| `integration.config.gitlabHost`   | The GitLab instance URL                                                                                                     | ✅        |
 | `integration.secrets.gitlabToken`| The GitLab access token                                                                                                     | ✅        |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
@@ -240,7 +240,7 @@ jobs:
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           port_base_url: https://api.getport.io
           config: |
-            gitlabUrl: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITLAB_URL }}
+            gitlabHost: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITLAB_URL }}
             gitlabToken: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN }}
 ```
 
