@@ -8,6 +8,20 @@ import TabItem from "@theme/TabItem"
 
 # Port MCP server
 
+<center>
+<div className="video-container">
+  <iframe 
+    style={{borderRadius:'4px'}}
+    width="568"
+    height="320"
+    src="https://www.youtube.com/embed/hxUTTPSApQs" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+</center>
 
 The Port Model Context Protocol (MCP) Server acts as a bridge, enabling Large Language Models (LLMs)—like those powering Claude, Cursor, or GitHub Copilot—to interact directly with your Port.io developer portal. This allows you to leverage natural language to query your software catalog, analyze service health, manage resources, and even streamline development workflows, all from your preferred interfaces.
 
