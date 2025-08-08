@@ -138,7 +138,7 @@ resources:
     selector:
       query: 'true'
       files:
-        path: '**/package.json'
+        path: 'package.json'
         repos:
           # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
           - group/my-project
@@ -412,7 +412,7 @@ resources:
     selector:
       query: 'true'
       files:
-        path: '**/package.json'
+        path: 'package.json'
         # Note that in this case we are fetching from a specific repository
         repos:
           - group/my-project
