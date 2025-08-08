@@ -174,7 +174,7 @@ To track pull requests opened by Copilot that are meant to fix Jira issues, we n
     <details>
     <summary><b>Pull request mapping (Click to expand)</b></summary>
 
-    ```yaml
+    ```yaml showLineNumbers
     - kind: pull-request
       selector:
         query: ((.title // "") | test("[A-Z]+-[0-9]+")) and (.user.login == "Copilot")
