@@ -1341,7 +1341,13 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
-    
+    {
+        title: "Auto-fix services when scorecards degrade",
+        description: "Learn how to use Port's AI capabilities to detect scorecard degradation and automatically use a coding agent like GitHub Copilot to fix it",
+        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/self-heal-scorecards-with-ai",
+    }
 ]
 
 // Enhance guides with metadata (isNew property)
