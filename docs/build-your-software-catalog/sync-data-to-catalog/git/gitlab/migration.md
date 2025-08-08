@@ -208,6 +208,14 @@ For file resync, GitLab-v2 now uses GitLab's Advanced Search API with its specif
       skipParsing: false  # ✅ New option to skip parsing and return raw content
 ```
 
+:::caution Path search limitations
+GitLab-v2's `path` parameter uses GitLab Advanced Search syntax, which differs from v1's glob patterns. The search supports simple `*` wildcards for filename patterns like `*.tf`, `package.json`, and `test_*`, as well as exact file paths like `src/app/main.py` and `infra/terraform/main.tf`.
+
+The search doesn't support path wildcards like `infra/terraform/*.tf` ❌, recursive patterns like `**/filename` ❌, or complex patterns like `*.{js,ts}`, `[abc]*`, and `!exclude` ❌.
+
+When migrating complex v1 patterns, you can split them into multiple file kinds or specify exact paths for targeted files. See the [Migration Pattern Comparison](#migration-pattern-comparison) table below for specific examples.
+:::
+
 ##### 5. **folder** kind (Repository selector changes)
 
 For folder resync, GitLab-v2 changes the repository specification format to support branch-specific folder mapping:
@@ -490,6 +498,17 @@ Update any file or folder mappings to use GitLab's Advanced Search API syntax an
           - name: "my-org/frontend-app"     # ✅ Different branches per repo
             branch: "develop"
 ```
+
+#### Migration Pattern Comparison
+
+| V1 Pattern | V2 Pattern | What it matches | Migration Notes |
+|------------|------------|-----------------|-----------------|
+| `**/infra/**/terraform/*.{tf,tfvars}` | `*.tf` + `*.tfvars` | Terraform files anywhere | Split into multiple file kinds |
+| `**/infra/**/terraform/*.{tf,tfvars}` | `infra/prod/terraform/main.tf` + `infra/staging/terraform/main.tf` | Terraform files in specific paths | Split into multiple file kinds with exact paths |
+| `**/package.json` | `package.json` | Files named "package.json" anywhere | Searches entire repository |
+| `**/Dockerfile` | `Dockerfile` | All Dockerfiles anywhere | Searches entire repository |
+| `**/docker-compose.yml` | `docker-compose.yml` | Docker Compose files anywhere | Searches entire repository |
+
 
 :::tip GitLab Advanced Search capabilities
 GitLab-v2 follows [GitLab's Advanced Search syntax](https://docs.gitlab.com/user/search/advanced_search/#use-advanced-search) which supports:
