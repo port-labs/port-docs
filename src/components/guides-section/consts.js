@@ -1341,6 +1341,13 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
+    {
+        title: "Automate Jira to GitHub Copilot",
+        description: "Learn how to create an AI agent that automatically generates GitHub issues from Jira tickets and assigns them to Copilot",
+        tags: ["SDLC", "Jira", "GitHub", "AI"],
+        logos: ["Jira", "GitHub", "AI"],
+        link: "/guides/all/automate-jira-to-github-copilot",
+    }
     
 ]
 
