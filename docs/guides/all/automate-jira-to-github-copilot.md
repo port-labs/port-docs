@@ -7,7 +7,7 @@ import GithubActionModificationHint from '/docs/guides/templates/github/_github_
 
 # Automate Jira to GitHub Copilot
 
-Coding agents can significantly speed up development, but crucial engineering context often gets lost in the process. In this guide, you will learn how to create an AI agent that not only automates the generation of GitHub issues from Jira tickets but also ensures that important context is preserved by assigning them to GitHub Copilot and linking pull requests back to Jira. This setup will help you establish a seamless ticket-to-deployment workflow, bridging the gap between Jira and GitHub.
+Coding agents can significantly speed up development, but crucial engineering context often gets lost in the process. In this guide, we will learn how to create an AI agent that not only automates the generation of GitHub issues from Jira tickets but also ensures that important context is preserved by assigning them to GitHub Copilot and linking pull requests back to Jira. This setup will help us establish a seamless ticket-to-deployment workflow, bridging the gap between Jira and GitHub.
 
 <img src="/img/guides/jira-to-github-pr-workflow.jpg" border="1px" width="100%" />
 
@@ -31,6 +31,10 @@ This guide assumes the following:
 
 :::tip Alternative integrations
 While this guide uses GitHub and Jira, you can adapt it for other Git providers like GitLab or Azure DevOps, and other project management tools like Linear.
+:::
+
+:::info Alternative coding agents
+This guide demonstrates using GitHub Copilot, but you can also use other coding agents like Claude Code, Devin, etc., to achieve similar automation and integration.
 :::
 
 
@@ -76,7 +80,7 @@ When you install Port's Jira integration, the Jira project and issue blueprints 
 6. Click `Save` to update the blueprint.
 
 
-### Update integration configuration
+### Update Jira integration configuration
 
 Now we need to update the Jira integration configuration mapping to establish the relationship between Jira issues and pull requests. The mapping will check if the pull request title contains the Jira issue key.
 
@@ -158,10 +162,34 @@ Now we need to update the Jira integration configuration mapping to establish th
 
 5. Click `Save` to update the integration configuration.
 
+### Update GitHub Integration Mapping
 
-## Set up self-service actions
+To track pull requests opened by Copilot that are meant to fix Jira issues, we need to update the GitHub integration mapping. This will allow us to establish a connection between the pull request and the corresponding Jira issue using the Jira issue key included in the PR title.
 
-We will create self-service actions that the AI agent can use to create GitHub issues. First, we will need to create secrets in Port, as the actions and automations will need them to function well.
+1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
+2. Find and select your existing GitHub integration configuration.
+3. Click on `{...} Edit JSON`.
+4. Add the following mapping to the `mappings` section:
+
+    <details>
+    <summary><b>Pull request mapping (Click to expand)</b></summary>
+
+    ```yaml
+    - kind: pull-request
+      selector:
+        query: ((.title // "") | test("[A-Z]+-[0-9]+")) and (.user.login == "Copilot")
+      port:
+        entity:
+          mappings:
+            identifier: (.title // "") | match("[A-Z]+-[0-9]+").string
+            blueprint: '"jiraIssue"'
+            properties: {}
+            relations:
+              pull_request: .id|tostring
+    ```
+    </details>
+
+5. Click `Save` to update the integration configuration.
 
 
 ## Create AI agent
@@ -197,7 +225,7 @@ Next, we will create an AI agent that generates GitHub issues from Jira tickets 
         "allowed_actions": [
           "create_github_issue"
         ],
-        "prompt": "Create a GitHub issue that builds on the context of a linked Jira ticket.\n\nThe GitHub issue should:\n\t1.\tSummarize and clearly explain the task, using the Jira description as a base.\n\t2.\tAugment the description with relevant insights from the repository — such as the README, setup or contribution instructions, existing issues, or implementation notes — to make the issue fully self-contained.\n\t4.\tAdd GitHub labels, including one with the Jira ticket key (e.g., JIRA-1234), and any additional relevant labels (e.g., bug, enhancement, infra).\n    5. Also include a label named \"auto_assign\" in all creations.\n\nIf no direct match can be confidently made (e.g., across multiple repos), make a best guess, and clearly state any assumptions in the issue body.",
+        "prompt": "Create a GitHub issue that builds on the context of a linked Jira ticket.\n\nThe GitHub issue should:\n1.\tSummarize and clearly explain the task, using the Jira description as a base.\n2.\tAugment the description with relevant insights from the repository — such as the README, setup or contribution instructions, existing issues, or implementation notes — to make the issue fully self-contained.\n3.\tThe **issue title MUST start with the Jira ticket key**, using the format: `<Jira-Ticket-ID> - <what needs to be done>` (e.g., `JIRA-1234 - Add missing lint configuration`). This ensures PRs created by Copilot are linkable back to Jira.\n4.\tAdd GitHub labels, including one with the Jira ticket key (e.g., `JIRA-1234`), and any additional relevant labels (e.g., bug, enhancement, infra).\n5.\tAlso include a label named `auto_assign` in all creations.\n6. The GitHub issue body should end with the following directive:\n🚨 **IMPORTANT NOTE FOR COPILOT**: When creating the pull request to resolve this issue:\n    1. You **must ALWAY include the Jira ticket ID** (e.g., `JIRA-1234`) in the **PR title**.\n    2. Do **not** rename the PR title or remove the Jira ticket reference.\n    3. Add GitHub labels with the Jira ticket key (e.g., `JIRA-1234`) to the PR.\n\nIf no direct match can be confidently made (e.g., across multiple repos), make a best guess, and clearly state any assumptions in the issue body.",
         "execution_mode": "Automatic",
         "conversation_starters": []
       },
@@ -219,6 +247,7 @@ We will create two automations to orchestrate the AI-enhanced release management
 
 1. Trigger the AI agent when Jira tickets move to "In Progress" with "copilot" label
 2. Update Jira tickets with pull request links
+
 
 ### Automation to trigger AI agent
 
@@ -266,7 +295,7 @@ This automation can be configured to trigger based on various criteria. Currentl
           "Content-Type": "application/json"
         },
         "body": {
-          "prompt": "Task title: \"{{.event.diff.after.title}}\"\n. Task identifier: \"{{.event.diff.after.identifier}}\"\n Task description: \"{{.event.diff.after.properties.description}}\"\nRepository:{{.event.diff.after.relations.repository}}.",
+          "prompt": "Jira Task title: \"{{.event.diff.after.title}}\"\n. Jira Task identifier: \"{{.event.diff.after.identifier}}\"\n Jira Task description: \"{{.event.diff.after.properties.description}}\"\nRepository:{{.event.diff.after.relations.repository}}.",
           "labels": {
             "source": "create_github_issue_automation",
             "jira_issue_id": "{{ .event.diff.after.identifier }}"
@@ -284,6 +313,31 @@ This automation can be configured to trigger based on various criteria. Currentl
 ### Automation to add PR link to Jira ticket
 
 This automation ensures that any new pull request related to a Jira ticket is promptly linked back to the ticket, providing clear traceability and context for development progress.
+
+Follow the steps below to configure the automation:
+
+<h3>Add Port secrets</h3>
+
+To add these secrets to your portal:
+
+1. Click on the `...` button in the top right corner of your Port application.
+
+2. Click on **Credentials**.
+
+3. Click on the `Secrets` tab.
+
+4. Click on `+ Secret` and add the following secret:
+    - `JIRA_AUTH_TOKEN` - Base64 encoded string of your Jira credentials. Generate this by running:
+        ```bash
+        echo -n "your-email@domain.com:your-api-token" | base64
+        ```
+        Replace `your-email@domain.com` with your Jira email and `your-api-token` with your Jira API token.
+
+        :::info One time generation
+        The base64 encoded string only needs to be generated once and will work for all webhook calls until you change your API token.
+        :::
+
+<h3>Automation backend</h3>
 
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
@@ -324,7 +378,7 @@ This automation ensures that any new pull request related to a Jira ticket is pr
         "method": "POST",
         "headers": {
           "RUN_ID": "{{ .run.id }}",
-          "Authorization": "Basic {{ .secrets._JIRA_ATLASSIAN_USER_EMAIL + \":\" + .secrets._JIRA_ATLASSIAN_USER_TOKEN | @base64 }}",
+          "Authorization": "Basic {{ .secrets.JIRA_AUTH_TOKEN }}",
           "Content-Type": "application/json"
         },
         "body": {

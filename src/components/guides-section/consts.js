@@ -1342,11 +1342,11 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
-        title: "Trigger GitHub Copilot from Port",
-        description: "Learn how to set up GitHub Copilot triggers from Port to enable AI-powered coding assistance",
-        tags: ["SDLC", "GitHub", "AI", "Actions"],
-        logos: ["GitHub", "AI"],
-        link: "/guides/all/trigger-github-copilot-from-port",
+        title: "Automate Jira to GitHub Copilot",
+        description: "Learn how to create an AI agent that automatically generates GitHub issues from Jira tickets and assigns them to Copilot",
+        tags: ["SDLC", "Jira", "GitHub", "AI"],
+        logos: ["Jira", "GitHub", "AI"],
+        link: "/guides/all/automate-jira-to-github-copilot",
     }
     
 ]
