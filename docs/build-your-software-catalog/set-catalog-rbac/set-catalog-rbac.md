@@ -63,7 +63,7 @@ To give `read` permissions to another role, add it to the `roles` array:
     ... other permissions
     "read": {
       // highlight-next-line
-      "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
+      "roles": ["myBlueprint-moderator", "Admin", "Member"], // added Member
       "users": [],
       "teams": [],
       "ownedByTeam": false
@@ -83,7 +83,7 @@ To give `read` permissions to another user, add it to the `users` array:
   "entities": {
     ... other permissions
     "read": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       // highlight-next-line
       "users": ["my-user@example.com"], // added my-user@example.com
       "teams": [],
@@ -104,7 +104,7 @@ To give `read` permissions to another team, add it to the `teams` array:
   "entities": {
     ... other permissions
     "read": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       "users": [],
       // highlight-next-line
       "teams": ["my-team"], // added my-team
@@ -127,7 +127,7 @@ To give `read` permissions to members of the owning team of an entity, change th
   "entities": {
     ... other permissions
     "read": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       "users": [],
       "teams": [],
       // highlight-next-line
@@ -157,7 +157,7 @@ In the following example, `on-call` users are granted `read` access only to enti
   "entities": {
     ... other permissions
     "read": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       "users": [],
       "teams": [],
       "ownedByTeam": false,
@@ -222,7 +222,7 @@ To give `create` permissions to another role, add it to the `roles` array:
     ... other permissions
     "register": {
       // highlight-next-line
-      "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
+      "roles": ["myBlueprint-moderator", "Admin", "Member"], // added Member
       "users": [],
       "teams": [],
       "ownedByTeam": false
@@ -242,7 +242,7 @@ To give `create` permissions to another user, add it to the `users` array:
   "entities": {
     ... other permissions
     "register": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       // highlight-next-line
       "users": ["my-user@example.com"], // added my-user@example.com
       "teams": [],
@@ -263,7 +263,7 @@ To give `create` permissions to another team, add it to the `teams` array:
   "entities": {
     ... other permissions
     "register": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       "users": [],
       // highlight-next-line
       "teams": ["my-team"], // added my-team
@@ -286,7 +286,7 @@ To give `create` permissions to members of the owning team of an entity, change 
   "entities": {
     ... other permissions
     "register": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       "users": [],
       "teams": [],
       // highlight-next-line
@@ -322,7 +322,7 @@ To give `update` permissions to another role, add it to the `roles` array:
     ... other permissions
     "update": {
       // highlight-next-line
-      "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
+      "roles": ["myBlueprint-moderator", "Admin", "Member"], // added Member
       "users": [],
       "teams": [],
       "ownedByTeam": false
@@ -342,7 +342,7 @@ To give `update` permissions to another user, add it to the `users` array:
   "entities": {
     ... other permissions
     "update": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       // highlight-next-line
       "users": ["my-user@example.com"], // added my-user@example.com
       "teams": [],
@@ -363,7 +363,7 @@ To give `update` permissions to another team, add it to the `teams` array:
   "entities": {
     ... other permissions
     "update": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       "users": [],
       // highlight-next-line
       "teams": ["my-team"], // added my-team
@@ -386,7 +386,7 @@ To give `update` permissions to members of the owning team of an entity, change 
   "entities": {
     ... other permissions
     "update": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       "users": [],
       "teams": [],
       // highlight-next-line
@@ -418,7 +418,7 @@ To give `delete` permissions to another role, add it to the `roles` array:
     ... other permissions
     "unregister": {
       // highlight-next-line
-      "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
+      "roles": ["myBlueprint-moderator", "Admin", "Member"], // added Member
       "users": [],
       "teams": [],
       "ownedByTeam": false
@@ -438,7 +438,7 @@ To give `delete` permissions to another user, add it to the `users` array:
   "entities": {
     ... other permissions
     "unregister": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       // highlight-next-line
       "users": ["my-user@example.com"], // added my-user@example.com
       "teams": [],
@@ -459,7 +459,7 @@ To give `delete` permissions to another team, add it to the `teams` array:
   "entities": {
     ... other permissions
     "unregister": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       "users": [],
       // highlight-next-line
       "teams": ["my-team"], // added my-team
@@ -482,7 +482,7 @@ To give `delete` permissions to members of the owning team of an entity, change 
   "entities": {
     ... other permissions
     "unregister": {
-      "roles": ["my-blueprint-moderator", "Admin"],
+      "roles": ["myBlueprint-moderator", "Admin"],
       "users": [],
       "teams": [],
       // highlight-next-line
@@ -523,7 +523,7 @@ To give property `update` permissions to another role, add it to the `roles` arr
     "updateProperties": {
       "myProperty": {
         // highlight-next-line
-        "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
+        "roles": ["myBlueprint-moderator", "Admin", "Member"], // added Member
         "users": [],
         "teams": [],
         "ownedByTeam": false
@@ -545,7 +545,7 @@ To give property `update` permissions to another user, add it to the `users` arr
     ... other permissions
     "updateProperties": {
       "myProperty": {
-        "roles": ["my-blueprint-moderator", "Admin"],
+        "roles": ["myBlueprint-moderator", "Admin"],
         // highlight-next-line
         "users": ["my-user@example.com"], // added my-user@example.com
         "teams": [],
@@ -568,7 +568,7 @@ To give property `update` permissions to another team, add it to the `teams` arr
     ... other permissions
     "updateProperties": {
       "myProperty": {
-        "roles": ["my-blueprint-moderator", "Admin"],
+        "roles": ["myBlueprint-moderator", "Admin"],
         "users": [],
         // highlight-next-line
         "teams": ["my-team"], // added my-team
@@ -593,7 +593,7 @@ To give property `update` permissions to members of the owning team of an entity
     ... other permissions
     "updateProperties": {
       "myProperty": {
-        "roles": ["my-blueprint-moderator", "Admin"],
+        "roles": ["myBlueprint-moderator", "Admin"],
         "users": [],
         "teams": [],
         // highlight-next-line
@@ -627,7 +627,7 @@ To give relation `update` permissions to another role, add it to the `roles` arr
     "updateRelations": {
       "myRelation": {
         // highlight-next-line
-        "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
+        "roles": ["myBlueprint-moderator", "Admin", "Member"], // added Member
         "users": [],
         "teams": [],
         "ownedByTeam": false
@@ -649,7 +649,7 @@ To give relation `update` permissions to another user, add it to the `users` arr
     ... other permissions
     "updateRelations": {
       "myRelation": {
-        "roles": ["my-blueprint-moderator", "Admin"],
+        "roles": ["myBlueprint-moderator", "Admin"],
         // highlight-next-line
         "users": ["my-user@example.com"], // added my-user@example.com
         "teams": [],
@@ -672,7 +672,7 @@ To give relation `update` permissions to another team, add it to the `teams` arr
     ... other permissions
     "updateRelations": {
       "myRelation": {
-        "roles": ["my-blueprint-moderator", "Admin"],
+        "roles": ["myBlueprint-moderator", "Admin"],
         "users": [],
         // highlight-next-line
         "teams": ["my-team"], // added my-team
@@ -697,7 +697,7 @@ To give relation `update` permissions to members of the owning team of an entity
     ... other permissions
     "updateRelations": {
       "myRelation": {
-        "roles": ["my-blueprint-moderator", "Admin"],
+        "roles": ["myBlueprint-moderator", "Admin"],
         "users": [],
         "teams": [],
         // highlight-next-line
