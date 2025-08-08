@@ -1341,6 +1341,13 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
+    {
+        title: "Send Slack message to user",
+        description: "Learn how to send Slack messages to users using Port's Slack app and automations",
+        tags: ["Automations", "Slack"],
+        logos: ["Slack"],
+        link: "/guides/all/send-slack-message-to-user",
+    },
     
 ]
 
