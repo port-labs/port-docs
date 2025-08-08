@@ -37,11 +37,12 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
     port:
       entity:
         mappings:
-          identifier: .project.name + "/" + .name
+          identifier: >-
+            "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
           title: .name
-          blueprint: '"azureDevopsRepository"'
+          blueprint: '"service"'
           properties:
-            url: .url
+            url: .remoteUrl
             // highlight-next-line
             readme: file://README.md
 ```
