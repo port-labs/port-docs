@@ -1,0 +1,51 @@
+<details>
+<summary><b>Deployment Environment blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "githubRepoEnvironment",
+  "title": "Deployment Environments",
+  "icon": "Environment",
+  "schema": {
+    "properties": {
+      "url": {
+        "icon": "DefaultProperty",
+        "title": "URL",
+        "type": "string",
+        "format": "url"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "updatedAt": {
+        "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "protectedBranches": {
+        "title": "Protected Branches",
+        "type": "boolean"
+      },
+      "customBranchPolicies": {
+        "title": "Custom Branch Policies",
+        "type": "boolean"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "repository": {
+      "target": "githubRepository",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

@@ -1,0 +1,59 @@
+<details>
+
+<summary><b>Port port-app-config.yml (click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+resources:
+  - kind: repository
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".name" # The Entity identifier will be the repository name.
+          title: ".name"
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+  - kind: environment
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .__repository + "-" + .name
+          title: .name
+          blueprint: '"githubRepoEnvironment"'
+          properties:
+            url: .html_url
+            customBranchPolicies: .deployment_branch_policy.custom_branches_policies
+            protectedBranches: .deployment_branch_policy.protected_branches
+            createdAt: .created_at
+            updatedAt: .updated_at
+          relations:
+            repository: .__repository
+  - kind: deployment
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .__repository + "-" + (.id|tostring)
+          title: .task + "-" + .environment
+          blueprint: '"githubDeployment"'
+          properties:
+            description: .description
+            ref: .ref
+            sha: .sha
+            productionEnvironment: .production_environment
+            transientEnvironment: .transient_environment
+            createdAt: .created_at
+            url: .url
+          relations:
+            deployment_environment: .__repository + "-" + .environment
+```
+
+</details>

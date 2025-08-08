@@ -1,0 +1,33 @@
+<details>
+<summary><b>Tag blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "githubTag",
+  "title": "Tag",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "commit_sha": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "title": "Commit sha"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "Repository",
+      "target": "githubRepository",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
