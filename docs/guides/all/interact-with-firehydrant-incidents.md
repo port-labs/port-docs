@@ -139,8 +139,11 @@ If you haven't installed the FireHydrant integration, you will need to manually 
 <h3>Create the FireHydrant service blueprint</h3>
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+
 2. Click on `+ Blueprint`.
+
 3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+
 4. Add this JSON schema:
 
     <details>
@@ -185,8 +188,11 @@ If you haven't installed the FireHydrant integration, you will need to manually 
 Add a relation to your service blueprint to link it with FireHydrant services:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+
 2. Find your service blueprint and click on it.
+
 3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+
 4. Add the following relation to the `relations` object:
 
     ```json showLineNumbers
@@ -242,251 +248,286 @@ Use your own IDs in the configurations below.
     To add these secrets to your portal:
 
     1. Click on the `...` button in the top right corner of your Port application.
+
     2. Click on **Credentials**.
+
     3. Click on the `Secrets` tab.
+
     4. Click on `+ Secret` and add the following secrets:
-       - `FIREHYDRANT_API_KEY`: Your FireHydrant API key
+
+       - `FIREHYDRANT_API_KEY`: Your [FireHydrant API key](https://docs.firehydrant.com/docs/api-keys).
+
 
     <h3>Set up self-service actions</h3>
 
     <h4>Create a FireHydrant incident</h4>
 
     1. Head to the [self-service](https://app.getport.io/self-serve) page.
+
     2. Click on the `+ New Action` button.
+
     3. Click on the `{...} Edit JSON` button.
+
     4. Copy and paste the following JSON configuration into the editor.
 
-    <details>
-    <summary><b>Create FireHydrant Incident (Webhook) (Click to expand)</b></summary>
+        <details>
+        <summary><b>Create FireHydrant Incident (Webhook) (Click to expand)</b></summary>
 
-    ```json showLineNumbers
-    {
-      "identifier": "create_firehydrant_incident_webhook",
-      "title": "Create FireHydrant Incident (Webhook)",
-      "icon": "FireHydrant",
-      "description": "Create a new FireHydrant incident",
-      "trigger": {
-        "type": "self-service",
-        "operation": "CREATE",
-        "userInputs": {
-          "properties": {
-            "name": {
-              "type": "string",
-              "title": "Name",
-              "description": "The name or title of the incident"
-            },
-            "priority": {
-              "icon": "DefaultProperty",
-              "title": "Priority",
-              "type": "string",
-              "enum": ["P1", "P2", "P3", "P4"],
-              "enumColors": {
-                "P1": "red",
-                "P2": "orange",
-                "P3": "blue",
-                "P4": "darkGray"
-              }
-            },
-            "description": {
-              "type": "string",
-              "title": "Description",
-              "description": "Detailed description about the incident"
+        ```json showLineNumbers
+        {
+          "identifier": "create_firehydrant_incident_webhook",
+          "title": "Create FireHydrant Incident (Webhook)",
+          "icon": "FireHydrant",
+          "description": "Create a new FireHydrant incident",
+          "trigger": {
+            "type": "self-service",
+            "operation": "CREATE",
+            "userInputs": {
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "title": "Name",
+                  "description": "The name or title of the incident"
+                },
+                "priority": {
+                  "icon": "DefaultProperty",
+                  "title": "Priority",
+                  "type": "string",
+                  "enum": ["P1", "P2", "P3", "P4"],
+                  "enumColors": {
+                    "P1": "red",
+                    "P2": "orange",
+                    "P3": "blue",
+                    "P4": "darkGray"
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "title": "Description",
+                  "description": "Detailed description about the incident"
+                }
+              },
+              "required": [],
+              "order": ["name", "description", "priority"]
             }
           },
-          "required": [],
-          "order": ["name", "description", "priority"]
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://api.firehydrant.io/v1/incidents",
+            "agent": false,
+            "synchronized": true,
+            "method": "POST",
+            "headers": {
+              "Authorization": "{{.secrets.FIREHYDRANT_API_KEY}}",
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "name": "{{.inputs.name}}",
+              "priority": "{{.inputs.priority}}",
+              "description": "{{.inputs.description}}"
+            }
+          },
+          "requiredApproval": false
         }
-      },
-      "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://api.firehydrant.io/v1/incidents",
-        "agent": false,
-        "synchronized": true,
-        "method": "POST",
-        "headers": {
-          "Authorization": "{{.secrets.FIREHYDRANT_API_KEY}}",
-          "Content-Type": "application/json"
-        },
-        "body": {
-          "name": "{{.inputs.name}}",
-          "priority": "{{.inputs.priority}}",
-          "description": "{{.inputs.description}}"
-        }
-      },
-      "requiredApproval": false
-    }
-    ```
-    </details>
+        ```
+        </details>
 
     5. Click `Save`.
 
-    Now you should see the `Create FireHydrant Incident (Webhook)` action in the self-service page. 🎉
 
     <h4>Trigger a FireHydrant incident</h4>
 
     1. Head to the [self-service](https://app.getport.io/self-serve) page.
+
     2. Click on the `+ New Action` button.
+
     3. Click on the `{...} Edit JSON` button.
+
     4. Copy and paste the following JSON configuration into the editor.
 
-    <details>
-    <summary><b>Trigger FireHydrant Incident (Webhook) (Click to expand)</b></summary>
+        <details>
+        <summary><b>Trigger FireHydrant Incident (Webhook) (Click to expand)</b></summary>
 
-    ```json showLineNumbers
-    {
-      "identifier": "trigger_an_incident",
-      "title": "Trigger an incident",
-      "icon": "FireHydrant",
-      "description": "Trigger an incident to a FireHydrant service",
-      "trigger": {
-        "type": "self-service",
-        "operation": "DAY-2",
-        "userInputs": {
-          "properties": {
-            "name": {
-              "icon": "DefaultProperty",
-              "type": "string",
-              "title": "Incident name"
+        ```json showLineNumbers
+        {
+          "identifier": "trigger_an_incident",
+          "title": "Trigger an incident",
+          "icon": "FireHydrant",
+          "description": "Trigger an incident to a FireHydrant service",
+          "trigger": {
+            "type": "self-service",
+            "operation": "DAY-2",
+            "userInputs": {
+              "properties": {
+                "name": {
+                  "icon": "DefaultProperty",
+                  "type": "string",
+                  "title": "Incident name"
+                },
+                "condition": {
+                  "icon": "DefaultProperty",
+                  "title": "Service status",
+                  "type": "string",
+                  "enum": ["Unavailable", "Degraded", "Bug", "Operational"],
+                  "enumColors": {
+                    "Unavailable": "lightGray",
+                    "Degraded": "lightGray",
+                    "Bug": "lightGray",
+                    "Operational": "lightGray"
+                  }
+                },
+                "incident_description": {
+                  "type": "string",
+                  "title": "Incident description"
+                }
+              },
+              "required": ["name", "condition"],
+              "order": ["name", "condition", "incident_description"]
             },
-            "condition": {
-              "icon": "DefaultProperty",
-              "title": "Service status",
-              "type": "string",
-              "enum": ["Unavailable", "Degraded", "Bug", "Operational"],
-              "enumColors": {
-                "Unavailable": "lightGray",
-                "Degraded": "lightGray",
-                "Bug": "lightGray",
-                "Operational": "lightGray"
-              }
+            "blueprintIdentifier": "service"
+          },
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://api.firehydrant.io/v1/incidents",
+            "agent": false,
+            "synchronized": true,
+            "method": "POST",
+            "headers": {
+              "RUN_ID": "{{ .run.id }}",
+              "Authorization": "{{ .secrets.FIREHYDRANT_API_KEY }}",
+              "content-type": "application/json",
+              "accept": "application/json"
             },
-            "incident_description": {
-              "type": "string",
-              "title": "Incident description"
+            "body": {
+              "impacts": [
+                {
+                  "type": "service",
+                  "id": "{{ .entity.relations.fh_service }}",
+                  "condition_id": "{{ if .inputs.condition == \"Unavailable\" then \"b1fc9184-b3f3-4af1-a111-68abcad9bf34\" elif .inputs.condition == \"Degraded\" then \"465a5b4c-6f95-4707-a777-ab4bb8def27d\" elif .inputs.condition == \"Bug\" then \"c2bc11e8-7fcc-428d-9007-26f00700834a\" elif .inputs.condition == \"Operational\" then \"9a2a8dbb-6b4e-4189-aca1-e2bb73b9c50b\" else null end }}"
+                }
+              ],
+              "name": "{{ .inputs.name }}",
+              "description": "{{ .inputs.incident_description }}"
             }
           },
-          "required": ["name", "condition"],
-          "order": ["name", "condition", "incident_description"]
-        },
-        "blueprintIdentifier": "service"
-      },
-      "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://api.firehydrant.io/v1/incidents",
-        "agent": false,
-        "synchronized": true,
-        "method": "POST",
-        "headers": {
-          "RUN_ID": "{{ .run.id }}",
-          "Authorization": "{{ .secrets.FIREHYDRANT_API_KEY }}",
-          "content-type": "application/json",
-          "accept": "application/json"
-        },
-        "body": {
-          "impacts": [
-            {
-              "type": "service",
-              "id": "{{ .entity.relations.fh_service }}",
-              "condition_id": "{{ if .inputs.condition == \"Unavailable\" then \"b1fc9184-b3f3-4af1-a111-68abcad9bf34\" elif .inputs.condition == \"Degraded\" then \"465a5b4c-6f95-4707-a777-ab4bb8def27d\" elif .inputs.condition == \"Bug\" then \"c2bc11e8-7fcc-428d-9007-26f00700834a\" elif .inputs.condition == \"Operational\" then \"9a2a8dbb-6b4e-4189-aca1-e2bb73b9c50b\" else null end }}"
-            }
-          ],
-          "name": "{{ .inputs.name }}",
-          "description": "{{ .inputs.incident_description }}"
+          "requiredApproval": false
         }
-      },
-      "requiredApproval": false
-    }
-    ```
+        ```
 
-    </details>
+        </details>
 
     5. Click `Save`.
 
-    Now you should see the `Trigger an incident` action in the self-service page. 🎉
 
-    <h3>Create automations</h3>
+    <h3>Set up automations</h3>
 
-    <details>
-    <summary><b>Sync FireHydrant incident after creation (Click to expand)</b></summary>
+    <h4>Sync FireHydrant incident after creation</h4>
 
-    ```json showLineNumbers
-    {
-      "identifier": "firehydrant_incident_sync_status",
-      "title": "Sync FireHydrant Incident Status",
-      "description": "Update FireHydrant incident data in Port after creation",
-      "trigger": {
-        "type": "automation",
-        "event": { "type": "RUN_UPDATED", "actionIdentifier": "create_firehydrant_incident_webhook" },
-        "condition": {
-          "type": "JQ",
-          "expressions": [
-            ".diff.after.status == \"SUCCESS\""
-          ],
-          "combinator": "and"
-        }
-      },
-      "invocationMethod": {
-        "type": "UPSERT_ENTITY",
-        "blueprintIdentifier": "firehydrantIncident",
-        "mapping": {
-          "identifier": "{{.event.diff.after.response.id}}",
-          "title": "{{.event.diff.after.response.name}}",
-          "properties": {
-            "url": "{{.event.diff.after.response.incident_url}}",
-            "priority": "{{.event.diff.after.response.priority}}",
-            "severity": "{{.event.diff.after.response.severity}}",
-            "tags": "{{.event.diff.after.response.tag_list}}",
-            "currentMilestone": "{{.event.diff.after.response.current_milestone}}",
-            "description": "{{.event.diff.after.response.description}}",
-            "customerImpact": "{{.event.diff.after.response.customers_impacted}}",
-            "createdBy": "{{.event.diff.after.response.created_by.name}}",
-            "createdAt": "{{.event.diff.after.response.created_at}}"
+    1. Head to the [Automations](https://app.getport.io/automations) page.
+
+    2. Click on the `+ New Automation` button.
+
+    3. Click on the `{...} Edit JSON` button.
+
+    4. Copy and paste the following JSON configuration into the editor.
+
+        <details>
+        <summary><b>Sync FireHydrant incident after creation (Click to expand)</b></summary>
+
+        ```json showLineNumbers
+        {
+          "identifier": "firehydrant_incident_sync_status",
+          "title": "Sync FireHydrant Incident Status",
+          "description": "Update FireHydrant incident data in Port after creation",
+          "trigger": {
+            "type": "automation",
+            "event": { "type": "RUN_UPDATED", "actionIdentifier": "create_firehydrant_incident_webhook" },
+            "condition": {
+              "type": "JQ",
+              "expressions": [
+                ".diff.after.status == \"SUCCESS\""
+              ],
+              "combinator": "and"
+            }
           },
-          "relations": {}
+          "invocationMethod": {
+            "type": "UPSERT_ENTITY",
+            "blueprintIdentifier": "firehydrantIncident",
+            "mapping": {
+              "identifier": "{{.event.diff.after.response.id}}",
+              "title": "{{.event.diff.after.response.name}}",
+              "properties": {
+                "url": "{{.event.diff.after.response.incident_url}}",
+                "priority": "{{.event.diff.after.response.priority}}",
+                "severity": "{{.event.diff.after.response.severity}}",
+                "tags": "{{.event.diff.after.response.tag_list}}",
+                "currentMilestone": "{{.event.diff.after.response.current_milestone}}",
+                "description": "{{.event.diff.after.response.description}}",
+                "customerImpact": "{{.event.diff.after.response.customers_impacted}}",
+                "createdBy": "{{.event.diff.after.response.created_by.name}}",
+                "createdAt": "{{.event.diff.after.response.created_at}}"
+              },
+              "relations": {}
+            }
+          },
+          "publish": true
         }
-      },
-      "publish": true
-    }
-    ```
-    </details>
+        ```
+        </details>
 
-    <details>
-    <summary><b>Sync FireHydrant service after trigger (Click to expand)</b></summary>
+    5. Click `Save`.
 
-    ```json showLineNumbers
-    {
-      "identifier": "firehydrantIncident_sync_after_trigger",
-      "title": "Sync FireHydrant Incident After Trigger",
-      "description": "Update FireHydrant service data in Port after triggering an incident",
-      "trigger": {
-        "type": "automation",
-        "event": { "type": "RUN_UPDATED", "actionIdentifier": "trigger_an_incident" },
-        "condition": {
-          "type": "JQ",
-          "expressions": [
-            ".diff.after.status == \"SUCCESS\""
-          ],
-          "combinator": "and"
+
+    <h4>Sync FireHydrant service after trigger</h4>
+
+    1. Head to the [Automations](https://app.getport.io/automations) page.
+
+    2. Click on the `+ New Automation` button.
+
+    3. Click on the `{...} Edit JSON` button.
+
+    4. Copy and paste the following JSON configuration into the editor.
+
+        <details>
+        <summary><b>Sync FireHydrant service after trigger (Click to expand)</b></summary>
+
+        ```json showLineNumbers
+        {
+          "identifier": "firehydrantIncident_sync_after_trigger",
+          "title": "Sync FireHydrant Incident After Trigger",
+          "description": "Update FireHydrant service data in Port after triggering an incident",
+          "trigger": {
+            "type": "automation",
+            "event": { "type": "RUN_UPDATED", "actionIdentifier": "trigger_an_incident" },
+            "condition": {
+              "type": "JQ",
+              "expressions": [
+                ".diff.after.status == \"SUCCESS\""
+              ],
+              "combinator": "and"
+            }
+          },
+          "invocationMethod": {
+            "type": "UPSERT_ENTITY",
+            "blueprintIdentifier": "firehydrantService",
+            "mapping": {
+              "identifier": "{{.event.diff.after.response.id}}",
+              "title": "{{.event.diff.after.response.name}}",
+              "properties": {
+                "name": "{{.event.diff.after.response.name}}",
+                "description": "{{.event.diff.after.response.description}}",
+                "status": "{{.event.diff.after.response.status}}"
+              }
+            }
+          },
+          "publish": true
         }
-      },
-      "invocationMethod": {
-        "type": "UPSERT_ENTITY",
-        "blueprintIdentifier": "firehydrantService",
-        "mapping": {
-          "identifier": "{{.event.diff.after.response.id}}",
-          "title": "{{.event.diff.after.response.name}}",
-          "properties": {
-            "name": "{{.event.diff.after.response.name}}",
-            "description": "{{.event.diff.after.response.description}}",
-            "status": "{{.event.diff.after.response.status}}"
-          }
-        }
-      },
-      "publish": true
-    }
-    ```
+        ```
 
-    </details>
+        </details>
+
+    5. Click `Save`.
+
 
   </TabItem>
 
@@ -497,7 +538,7 @@ Use your own IDs in the configurations below.
     <h3>Add GitHub secrets</h3>
 
     In your GitHub repository, go to Settings → Secrets and add:
-    - `FIREHYDRANT_API_KEY` – Your FireHydrant API key. See FireHydrant docs for generating an API key.
+    - `FIREHYDRANT_API_KEY` – Your FireHydrant API key. See [FireHydrant docs](https://docs.firehydrant.com/docs/api-keys) for generating an API key.
     - `PORT_CLIENT_ID` – Your Port client id.
     - `PORT_CLIENT_SECRET` – Your Port client secret.
 

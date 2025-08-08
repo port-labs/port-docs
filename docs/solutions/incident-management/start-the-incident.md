@@ -33,7 +33,7 @@ Port connects to all your alert sources— APM, monitoring, cloud, and more. Wit
 ## Enable manual incident creation
 
 - [Trigger a PagerDuty Incident](../../guides/all/create-pagerduty-incident)
-- [Create or trigger a FireHydrant Incident](../../guides/all/interact-with-firehydrant-incidents)
+- [Trigger a FireHydrant Incident](../../guides/all/interact-with-firehydrant-incidents)
 - [Trigger an OpsGenie Incident](../../guides/all/create-an-opsgenie-incident)
 - [Trigger an Incident.io incident](../../guides/all/create-incident-io-incident)
 - [Trigger a ServiceNow Incident](../../guides/all/trigger-servicenow-incident/)

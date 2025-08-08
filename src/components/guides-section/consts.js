@@ -912,13 +912,7 @@ export const availableGuides = [
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
     },
-    {
-        title: "Create a FireHydrant Incident",
-        description: "Create a self-service action that creates a FireHydrant incident",
-        tags: ["Incident management", "FireHydrant", "GitHub", "Actions","Webhook", "Automations"],
-        logos: ["FireHydrant", "GitHub"],
-        link: "/guides/all/create-firehydrant-incident",
-    },
+
     {
         title: "Create a Linear issue",
         description: "Create a self-service action that creates a Linear issue",
@@ -934,12 +928,12 @@ export const availableGuides = [
         link: "/guides/all/create-incident-io-incident",
     },
     {
-        title: "Trigger a FireHydrant incident",
-        description: "Create a self-service action that triggers a FireHydrant incident",
+        title: "Interact with FireHydrant incidents",
+        description: "Create a self-service action that interacts with FireHydrant incidents",
         tags: ["Incident management", "FireHydrant", "Actions", "Webhook"],
         logos: ["FireHydrant", "GitHub"],
         // category: "Getting started",
-        link: "/guides/all/trigger-firehydrant-incident",
+        link: "/guides/all/interact-with-firehydrant-incidents",
     },
     {
         title: "Enrich security vulnerabilities using AI",
