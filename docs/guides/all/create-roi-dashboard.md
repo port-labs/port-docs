@@ -12,22 +12,24 @@ We will set up the necessary data model (using three new [blueprints](/build-you
 
 After executing this guide, you will have a dashboard in Port that demonstrates the value of your automations, and also provide insights into how Port drives efficiency and ROI across your organization.
 
+<img src="/img/guides/ROIdashboard.png" border="1px" width="100%" />
+
 We will be using the following terms in this guide:
 
 ### Lead time saving
 
 **Lead time saving** measures the amount of time saved by automating and streamlining **Self-service** actions through Port, compared to traditional manual request processes.  
 This metric captures the reduction in total time from when a user initiates a request to when it is fulfilled, including delays from approvals, queueing, handoffs, and clarifications.  
-Lead time saving is calculated across all **self-service** actions, from access provisioning to infrastructure changes—by benchmarking against manual equivalents to quantify the time saved.
+Lead time saving is calculated across all **Self-service** actions, from access provisioning to infrastructure changes—by benchmarking against manual equivalents to quantify the time saved.
 
 **Why it matters:**
 
 - Highlights the ROI of automations.
 - Demonstrates reduced friction in fulfillment workflows.
 - Supports operational efficiency tracking.
-- Informs prioritization of future self-service expansions.
+- Informs prioritization of future Self-service expansions.
 
-**Lead time before**- This value represents how long requests typically took from submission to completion before using actions. This value is used in the Self-service action.
+**Lead time before**- This value represents how long requests typically took from submission to completion before using actions.
 
 ### Cycle Time Saving
 
@@ -37,7 +39,7 @@ Unlike Lead Time—which captures the total end-to-end process—Cycle Time focu
 
 This metric is calculated across all automated self-service actions in Port, highlighting how much faster delivery happens once requests are ready to be acted on
 
-**Cycle time before**- This value represents how long the actual execution typically took before using actions. We will use this value in the Self-service action.
+**Cycle time before**- This value represents how long the actual execution typically took before using actions.
 
 ## Prerequisites
 
@@ -46,8 +48,8 @@ This metric is calculated across all automated self-service actions in Port, hig
     - Access to the [Builder](https://app.getport.io/settings/data-model) page to create blueprints.
     - Access to the [Self-service](https://app.getport.io/self-serve) page to create actions.
 - GitHub account
-    - GitHub account and repository with the following secrets configured:
-        - `PORT_CLIENT_ID`: Your Port client ID ([find it here](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)).
+    - GitHub account and repository with the following secrets configured: ([find them here](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))
+        - `PORT_CLIENT_ID`: Your Port client ID.
         - `PORT_CLIENT_SECRET`: Your Port client secret.
 
 ## Set up data model
@@ -93,7 +95,7 @@ The following blueprints represent a Self-service action (Action), its category 
 5. Click `Create`.
 
     <details>
-    <summary><b>Action blueprint (click to expand)</b></summary>
+    <summary><b>Action Runs blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -687,10 +689,11 @@ This Self-service action creates on execution:
 -  A Self-service action with the inputs the user provides.
 -  An automation that gets triggered when an action run is changed.  
    On trigger, if the run is sucessfull, the automation updates the following `Action run` properties:
-    - Duration: How long did the action run take.
-    - Waiting for approval duration: How long did the request take to get approved.
-    - Cycle time: How long the did execution take.
-   which are used as aggregation properties in the `Action` blueprint.
+    - **Duration**: How long did the action run take.
+    - **Waiting for approval duration**: How long did the request take to get approved.
+    - **Cycle time**: How long the did execution take.  
+
+    All of which are used as aggregation properties in the `Action` blueprint.
 
 ### Set up the action's frontend
 
@@ -1338,12 +1341,17 @@ You can also use this [repository](https://github.com/port-experimental/actions-
     ```
 </details>
 
-### Set up the newly created action's backend
+#### Set up the newly created action's backend
 
-When you trigger the "setup new action experience" Self-service action, a new Self-service action is created as well as an automation to track its metrics.
-To learn more about setting up a Self-service action's backend, refer to the [documentation](/actions-and-automations/create-self-service-experiences/setup-the-backend/). 
+When you execute the "Setup new action experience" Self-service action, it automatically creates:
+- A new Self-service action with a placeholder backend.
+- An automation that tracks ROI metrics for action runs.
 
-## Visualize Action Entities with Dashboards
+:::info Next step required
+The created Self-service action uses a default webhook backend (`https://example.com`) as a placeholder. You should replace this with your actual backend implementation to make the action functional. For detailed backend setup instructions, refer to our [backend configuration documentation](/actions-and-automations/create-self-service-experiences/setup-the-backend/). 
+:::
+
+## Visualize Action Entities with dashboards
 
 Dashboards let you observe, track, and communicate insights from your action setup.  
 You can create dashboards that pull data from the action, action category, and action run entities.
@@ -1361,10 +1369,10 @@ We now have a blank dashboard where we can start adding widgets to visualize ins
 
 In the new dashboard, create the following widgets:
 
-TODO: add an agent widget.
-
 <details>
 <summary><b>AI Agent (click to expand)</b></summary>
+
+To learn about AI Agents, refer to the [documentation](https://docs.port.io/ai-agents/build-an-ai-agent).
 
 1. Click `+ Widget` and select **AI Agent**.
 2. Title: `Actions AI assistant`.
