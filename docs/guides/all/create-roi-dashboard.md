@@ -8,7 +8,7 @@ description: Create a dashboard that highlights the ROI of automations in Port
 ## Overview
 
 In this guide, you will learn how to showcase the true business impact of automation in Port by building an ROI dashboard.  
-We will set up the necessary data model (using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint)), defining a [Self-service](https://app.getport.io/self-serve) action, and designing a dashboard that visualizes the time savings and benefits delivered by your automations.
+We will set up the necessary data model (using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), defining a [Self-service](https://app.getport.io/self-serve) action, and designing a dashboard that visualizes the time savings and benefits delivered by your automations.
 
 After executing this guide, you will have a dashboard in Port that demonstrates the value of your automations, and also provide insights into how Port drives efficiency and ROI across your organization.
 
