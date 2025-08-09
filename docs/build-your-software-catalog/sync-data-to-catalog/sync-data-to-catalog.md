@@ -39,6 +39,15 @@ After the installation, you can customize the blueprints and/or mapping to inges
 <br/>
 <OceanContribution />
 
+## Installation methods
+
+| Installation type         | Security    | Ease of Installation | Syncing mechanism |
+|---------------------------|-------------|----------------------|-------------------|
+| Hosted by Port (OAuth)    | Row 1 Col 2 | 🟩🟩🟩🟩🟩          |                   |
+| Hosted by Port (Not OAuth)|             | 🟩🟩⬜⬜⬜          |  Row 2 Col 3      |
+| Self-hosted (Real-time)   |             | 🟩⬜⬜⬜⬜          |  Row 2 Col 3      |
+| Scheduled (CI)            |             | 🟩🟩⬜⬜⬜          |  Row 2 Col 3      |
+
 ## Customize your integrations
 
 Now that you've installed an integration, let's see how you can customize it:
