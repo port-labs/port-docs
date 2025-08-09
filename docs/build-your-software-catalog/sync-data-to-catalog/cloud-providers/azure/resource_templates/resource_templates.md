@@ -19,7 +19,8 @@ The simplification is achieved by using the generic `cloudResource` blueprint, w
 
 ## Mapping Azure Subscriptions
 
-In the following example you will ingest your Azure Subscriptions to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Subscriptions to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <SubscriptionBlueprint/>
 
@@ -37,7 +38,8 @@ The Resource Group has a relation to the Subscription, so the creation of the [S
 
 :::
 
-In the following example you will ingest your Azure Resource Groups to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Resource Groups to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <ResourceGroupBlueprint/>
 
@@ -50,7 +52,8 @@ Here are the API references we used to create those blueprints and app config:
 
 ## Mapping Cloud Resources
 
-In the following example you will ingest your Azure Resources to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Resources to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 :::note Relate resources and resource groups
 

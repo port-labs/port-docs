@@ -35,7 +35,7 @@ Port allows you to assign ownership of specific entities to teams in your organi
 <img src='/img/software-catalog/role-based-access-control/overview/user-and-teams.png' width='80%' border='1px' />
 
 
-For more details about **ownership** in Port, see the [relevant documentation](/sso-rbac/rbac/as-blueprints#overview).
+For more details about **ownership** in Port, see the [relevant documentation](/sso-rbac/rbac/#ownership).
 
 ### Dynamic team filtering
 
@@ -84,7 +84,7 @@ It is possible to assign more granular permissions on **entities** to prevent us
 This is an advanced feature and is only recommended in large enterprises with complex RBAC use cases. In most cases dynamic filtering would be a simpler and more effective way to achieve the same outcome. 
 
 
-[Granular Entity RBAC](//build-your-software-catalog/set-catalog-rbac/#set-granular-access-controls-to-catalog-data)
+[Granular Entity RBAC](/build-your-software-catalog/set-catalog-rbac/#set-granular-access-controls-to-catalog-data)
 
 
 

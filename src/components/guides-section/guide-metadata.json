@@ -1,0 +1,666 @@
+{
+  "/guides/all/scaffold-a-new-service": {
+    "creationDate": "2023-10-10T17:49:58.000Z",
+    "isNew": false
+  },
+  "/guides/all/ensure-production-readiness": {
+    "creationDate": "2023-10-18T08:30:07.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-cloud-resource-using-iac": {
+    "creationDate": "2023-10-29T12:08:30.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-service-k8s-runtime": {
+    "creationDate": "2023-11-12T15:48:34.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-service-argocd-runtime": {
+    "creationDate": "2024-04-08T14:10:09.000Z",
+    "isNew": false
+  },
+  "/guides/all/let-developers-enrich-services-using-gitops": {
+    "creationDate": "2023-11-27T08:10:27.000Z",
+    "isNew": false
+  },
+  "/guides/all/setup-slack-reminders": {
+    "creationDate": "2023-12-25T12:20:07.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-and-use-surveys-in-your-portal": {
+    "creationDate": "2025-04-14T21:03:54.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-and-track-dora-metrics-in-your-portal": {
+    "creationDate": "2025-04-15T12:24:42.000Z",
+    "isNew": false
+  },
+  "/guides/all/set-up-deployments-dora-gitlab": {
+    "creationDate": "2025-05-20T13:48:08.000Z",
+    "isNew": false
+  },
+  "/guides/all/setup-dora-metrics-jira": {
+    "creationDate": "2025-05-26T15:13:14.000Z",
+    "isNew": false
+  },
+  "/guides/all/iam-permissions-guide": {
+    "creationDate": "2024-02-18T15:23:10.000Z",
+    "isNew": false
+  },
+  "/guides/all/automate-slack-alert-for-overdue-prs": {
+    "creationDate": "2024-09-03T07:05:41.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-resources-using-k8s-crds": {
+    "creationDate": "2024-05-09T12:28:15.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-slack-channel-for-reported-incident": {
+    "creationDate": "2024-02-22T10:00:11.000Z",
+    "isNew": false
+  },
+  "/guides/all/resolve-pagerduty-incident": {
+    "creationDate": "2024-06-19T08:34:43.000Z",
+    "isNew": false
+  },
+  "/guides/all/connect-github-pr-with-jira-issue": {
+    "creationDate": "2024-03-20T09:00:05.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-cloud-resources-using-dynatrace": {
+    "creationDate": "2024-08-25T07:04:07.000Z",
+    "isNew": false
+  },
+  "/guides/all/connect-github-pr-with-sonar-analysis": {
+    "creationDate": "2024-03-17T14:22:25.000Z",
+    "isNew": false
+  },
+  "/guides/all/humanitec-integration": {
+    "creationDate": "2024-07-09T07:26:35.000Z",
+    "isNew": false
+  },
+  "/guides/all/pull-request-metrics": {
+    "creationDate": "2024-04-01T07:26:08.000Z",
+    "isNew": false
+  },
+  "/guides/all/connect-github-codeowners-with-service-team-and-user": {
+    "creationDate": "2024-04-30T09:05:43.000Z",
+    "isNew": false
+  },
+  "/guides/all/s3-bucket": {
+    "creationDate": "2023-02-24T17:18:06.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-dev-env": {
+    "creationDate": "2023-02-24T17:18:06.000Z",
+    "isNew": false
+  },
+  "/guides/all/import-and-manage-integration": {
+    "creationDate": "2024-06-30T13:26:19.000Z",
+    "isNew": false
+  },
+  "/guides/all/execution-basic-runner-using-aws-lambda": {
+    "creationDate": "2022-08-02T13:14:43.000Z",
+    "isNew": false
+  },
+  "/guides/all/s3-using-webhook": {
+    "creationDate": "2022-09-19T18:10:13.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-github-secret": {
+    "creationDate": "2023-10-31T16:54:19.000Z",
+    "isNew": false
+  },
+  "/guides/all/delete-repository": {
+    "creationDate": "2024-02-08T10:29:44.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-pull-requests": {
+    "creationDate": "2024-04-02T13:23:59.000Z",
+    "isNew": false
+  },
+  "/guides/all/nudge-pr-reviewers": {
+    "creationDate": "2024-03-17T12:26:01.000Z",
+    "isNew": false
+  },
+  "/guides/all/promote-to-production": {
+    "creationDate": "2024-03-04T14:12:33.000Z",
+    "isNew": false
+  },
+  "/guides/all/broadcast-api-consumers-message": {
+    "creationDate": "2024-03-17T13:17:35.000Z",
+    "isNew": false
+  },
+  "/guides/all/lock-and-unlock-services-in-port": {
+    "creationDate": "2024-03-10T08:35:08.000Z",
+    "isNew": false
+  },
+  "/guides/all/open-slack-channel": {
+    "creationDate": "2024-03-27T14:20:29.000Z",
+    "isNew": false
+  },
+  "/guides/all/rollback-argocd-deployment": {
+    "creationDate": "2024-03-04T14:12:33.000Z",
+    "isNew": false
+  },
+  "/guides/all/sync-argocd-app": {
+    "creationDate": "2024-03-17T12:21:21.000Z",
+    "isNew": false
+  },
+  "/guides/all/restart-argocd-app": {
+    "creationDate": "2024-05-14T11:47:40.000Z",
+    "isNew": false
+  },
+  "/guides/all/change-replica-count": {
+    "creationDate": "2024-03-04T14:12:33.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-clusters": {
+    "creationDate": "2024-03-12T09:20:40.000Z",
+    "isNew": false
+  },
+  "/guides/all/deploy-cloudformation-template": {
+    "creationDate": "2023-11-06T08:16:35.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-an-ec2-instance": {
+    "creationDate": "2024-03-12T22:56:38.000Z",
+    "isNew": false
+  },
+  "/guides/all/deploy-s3-bucket-crossplane": {
+    "creationDate": "2024-04-30T13:49:11.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-ec2-instances": {
+    "creationDate": "2024-04-01T07:38:01.000Z",
+    "isNew": false
+  },
+  "/guides/all/terraform-plan-and-apply-aws-resource": {
+    "creationDate": "2024-03-24T07:36:51.000Z",
+    "isNew": false
+  },
+  "/guides/all/add-tags-to-ecr-repository": {
+    "creationDate": "2024-03-21T09:36:57.000Z",
+    "isNew": false
+  },
+  "/guides/all/add-tags-to-s3-bucket": {
+    "creationDate": "2024-04-02T16:00:48.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-eks-cluster-and-deploy-app": {
+    "creationDate": "2024-03-28T09:17:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/push-image-to-ecr": {
+    "creationDate": "2024-03-21T13:10:34.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-azure-resource": {
+    "creationDate": "2024-01-14T09:30:02.000Z",
+    "isNew": false
+  },
+  "/guides/all/tag-azure-resource": {
+    "creationDate": "2024-02-13T11:32:54.000Z",
+    "isNew": false
+  },
+  "/guides/all/trigger-datadog-incident": {
+    "creationDate": "2024-03-13T22:03:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/change-status-and-assignee-of-jira-ticket": {
+    "creationDate": "2024-04-25T07:23:21.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-jira-issue-from-dependabot": {
+    "creationDate": "2024-08-08T08:45:16.000Z",
+    "isNew": false
+  },
+  "/guides/all/open-jira-issue-with-automatic-label": {
+    "creationDate": "2024-03-27T14:17:19.000Z",
+    "isNew": false
+  },
+  "/guides/all/report-a-bug": {
+    "creationDate": "2024-03-13T22:03:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-an-opsgenie-incident": {
+    "creationDate": "2024-05-06T18:48:20.000Z",
+    "isNew": false
+  },
+  "/guides/all/acknowledge-incident": {
+    "creationDate": "2024-03-18T08:54:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/change-on-call-user": {
+    "creationDate": "2024-03-18T08:54:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/change-pagerduty-incident-owner": {
+    "creationDate": "2024-03-13T22:03:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-pagerduty-incident": {
+    "creationDate": "2024-03-13T22:03:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-pagerduty-service": {
+    "creationDate": "2024-03-13T22:03:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/escalate-an-incident": {
+    "creationDate": "2024-03-18T08:54:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/resolve-incident": {
+    "creationDate": "2024-03-18T08:54:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/trigger-pagerduty-incident": {
+    "creationDate": "2024-03-13T22:03:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/trigger-servicenow-incident": {
+    "creationDate": "2024-03-13T22:03:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/add-tags-to-sonarqube-project": {
+    "creationDate": "2024-03-27T14:17:19.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-humanitec-application": {
+    "creationDate": "2024-07-09T07:26:35.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-workload-profile": {
+    "creationDate": "2024-07-09T07:26:35.000Z",
+    "isNew": false
+  },
+  "/guides/all/delete-humanitec-application": {
+    "creationDate": "2024-07-09T07:26:35.000Z",
+    "isNew": false
+  },
+  "/guides/all/deploy-humanitec-application": {
+    "creationDate": "2024-07-09T07:26:35.000Z",
+    "isNew": false
+  },
+  "/guides/all/eks-as-a-service-action": {
+    "creationDate": "2024-06-29T09:39:25.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-an-ec2-instance-gitlab": {
+    "creationDate": "2024-04-17T03:01:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/add-ec2-volume": {
+    "creationDate": "2024-04-28T07:35:38.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-k8s-namespace": {
+    "creationDate": "2024-04-30T13:33:07.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-new-aws-account-gitlab": {
+    "creationDate": "2024-06-13T11:51:19.000Z",
+    "isNew": false
+  },
+  "/guides/all/report-a-bug-gitlab": {
+    "creationDate": "2024-04-28T07:32:52.000Z",
+    "isNew": false
+  },
+  "/guides/all/scaffold-bitbucket-using-cookiecutter": {
+    "creationDate": "2023-10-30T17:06:46.000Z",
+    "isNew": false
+  },
+  "/guides/all/scaffold-github-using-cookiecutter": {
+    "creationDate": "2023-10-30T17:06:46.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-github-pull-request": {
+    "creationDate": "2023-12-28T17:51:15.000Z",
+    "isNew": false
+  },
+  "/guides/all/deploy-azure-resource": {
+    "creationDate": "2023-12-25T12:15:05.000Z",
+    "isNew": false
+  },
+  "/guides/all/scaffold-repositories-using-cookiecutter": {
+    "creationDate": "2023-11-13T12:55:18.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-azure-resource-ado": {
+    "creationDate": "2024-01-14T09:30:02.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-dependencies-from-package-json-to-service": {
+    "creationDate": "2024-09-02T05:04:58.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-kubernetes-namespaces": {
+    "creationDate": "2024-09-19T06:51:20.000Z",
+    "isNew": false
+  },
+  "/guides/all/sync-service-entities-to-incident-io": {
+    "creationDate": "2024-09-26T19:27:21.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-cloud-resources-using-datadog": {
+    "creationDate": "2024-09-29T08:28:26.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-swagger-paths-into-your-catalog": {
+    "creationDate": "2023-10-22T09:42:23.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-checkmarx-kics-scan-into-your-catalog": {
+    "creationDate": "2023-07-23T08:38:11.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-javascript-packages-into-your-catalog": {
+    "creationDate": "2023-06-23T18:58:39.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog": {
+    "creationDate": "2023-07-16T16:23:25.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-trivy-vulnerabilities-into-your-catalog": {
+    "creationDate": "2023-07-25T12:45:44.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-cloud-resources-using-newrelic": {
+    "creationDate": "2024-10-07T11:52:10.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-vulnerability-alerts-from-orca-security-using-a-custom-webhook-integration": {
+    "creationDate": "2024-10-01T04:11:39.000Z",
+    "isNew": false
+  },
+  "/guides/all/working_agreements_and_measuring_pr_standards": {
+    "creationDate": "2024-11-07T14:40:00.000Z",
+    "isNew": false
+  },
+  "/guides/all/automatically-approve-action-using-automation": {
+    "creationDate": "2024-10-16T10:48:42.000Z",
+    "isNew": false
+  },
+  "/guides/all/copy-pipeline-template-to-target-repo": {
+    "creationDate": "2025-02-28T13:41:53.000Z",
+    "isNew": false
+  },
+  "/guides/all/track-slos-and-slis-for-services": {
+    "creationDate": "2024-11-11T14:13:13.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-security-issues-from-sarif-files-to-services": {
+    "creationDate": "2024-11-03T07:50:42.000Z",
+    "isNew": false
+  },
+  "/guides/all/setup-portal-announcements": {
+    "creationDate": "2024-11-15T13:19:45.000Z",
+    "isNew": false
+  },
+  "/guides/all/approval-workflow-for-gitlab-deployment": {
+    "creationDate": "2024-11-22T12:40:02.000Z",
+    "isNew": false
+  },
+  "/guides/all/connect-dynatrace-team-with-entities": {
+    "creationDate": "2025-01-30T16:26:52.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook": {
+    "creationDate": "2025-02-26T13:46:09.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook": {
+    "creationDate": "2025-02-26T13:46:09.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook": {
+    "creationDate": "2025-02-26T13:46:09.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-firehydrant-incident": {
+    "creationDate": "2025-03-17T18:34:12.000Z",
+    "isNew": false
+  },
+  "/guides/all/open-linear-issue": {
+    "creationDate": "2025-03-20T13:51:30.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-incident-io-incident": {
+    "creationDate": "2025-03-19T11:55:08.000Z",
+    "isNew": false
+  },
+  "/guides/all/trigger-firehydrant-incident": {
+    "creationDate": "2025-03-24T01:23:10.000Z",
+    "isNew": false
+  },
+  "/guides/all/enrich-security-vulnerability-using-ai": {
+    "creationDate": "2025-03-27T01:07:45.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-integrations": {
+    "creationDate": "2025-03-27T10:43:07.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-jira-issue-from-newrelic": {
+    "creationDate": "2024-03-13T22:03:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-pagerduty-incident-from-newrelic-alert": {
+    "creationDate": "2024-03-13T22:03:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/setup-task-manager-ai-agent": {
+    "creationDate": "2025-04-08T03:00:34.000Z",
+    "isNew": false
+  },
+  "/guides/all/setup-incident-manager-ai-agent": {
+    "creationDate": "2025-04-22T15:10:29.000Z",
+    "isNew": false
+  },
+  "/guides/all/enrich-tasks-with-ai": {
+    "creationDate": "2025-04-25T13:54:25.000Z",
+    "isNew": false
+  },
+  "/guides/all/setup-pr-enricher-ai-agent": {
+    "creationDate": "2025-04-23T09:47:31.000Z",
+    "isNew": false
+  },
+  "/guides/all/setup-platform-request-triage-ai-agent": {
+    "creationDate": "2025-06-23T17:18:56.000Z",
+    "isNew": false
+  },
+  "/guides/all/setup-service-explorer-ai-agent": {
+    "creationDate": "2025-06-23T13:14:21.000Z",
+    "isNew": false
+  },
+  "/guides/all/open-github-issue": {
+    "creationDate": "2025-04-10T18:42:33.000Z",
+    "isNew": false
+  },
+  "/guides/all/verify-service": {
+    "creationDate": "2025-04-15T21:38:18.000Z",
+    "isNew": false
+  },
+  "/guides/all/setup-branch-protection-rules": {
+    "creationDate": "2025-04-17T17:47:40.000Z",
+    "isNew": false
+  },
+  "/guides/all/ignore-snyk-vulnerability": {
+    "creationDate": "2025-04-10T13:58:07.000Z",
+    "isNew": false
+  },
+  "/guides/all/track-gitlab-project-maturity-with-scorecards": {
+    "creationDate": "2025-04-22T21:33:25.000Z",
+    "isNew": false
+  },
+  "/guides/all/trigger-spacelift-stack": {
+    "creationDate": "2025-04-25T17:36:37.000Z",
+    "isNew": false
+  },
+  "/guides/all/track-health-of-jira-projects": {
+    "creationDate": "2025-04-23T20:11:21.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-jira-issue-from-datadog-alert": {
+    "creationDate": "2025-04-30T18:32:02.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-jira-issue-from-snyk-vulnerability": {
+    "creationDate": "2025-04-30T18:02:35.000Z",
+    "isNew": false
+  },
+  "/guides/all/notify-users-upon-approval-of-action": {
+    "creationDate": "2025-05-05T21:25:28.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-your-github-repository-activity": {
+    "creationDate": "2025-05-06T21:11:28.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-your-wiz-vulnerabilities": {
+    "creationDate": "2025-05-09T13:24:33.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-your-github-dependabot-alerts": {
+    "creationDate": "2025-05-08T16:20:44.000Z",
+    "isNew": false
+  },
+  "/guides/all/ingest-slack-data-via-fivetran-s3-and-webhook": {
+    "creationDate": "2025-02-26T13:46:09.000Z",
+    "isNew": false
+  },
+  "/guides/all/automate-user-role-update": {
+    "creationDate": "2025-05-14T05:10:21.000Z",
+    "isNew": false
+  },
+  "/guides/all/automatically-set-relations-between-entities-with-automation": {
+    "creationDate": "2025-06-18T10:45:17.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-your-aws-storage-configuration": {
+    "creationDate": "2025-05-15T09:47:52.000Z",
+    "isNew": false
+  },
+  "/guides/all/interact-with-servicenow": {
+    "creationDate": "2025-05-13T19:47:53.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-your-github-identity-and-access-management": {
+    "creationDate": "2025-05-16T16:14:24.000Z",
+    "isNew": false
+  },
+  "/guides/all/apply-labels-to-github-pr-based-on-sonar-scans": {
+    "creationDate": "2025-05-20T19:50:04.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-azure-devops-work-item": {
+    "creationDate": "2025-05-22T16:59:21.000Z",
+    "isNew": false
+  },
+  "/guides/all/deploy-service-using-aws-codedeploy": {
+    "creationDate": "2025-05-25T18:47:37.000Z",
+    "isNew": false
+  },
+  "/guides/all/auto-approve-and-merge-dependabot-prs": {
+    "creationDate": "2025-05-28T12:49:45.000Z",
+    "isNew": false
+  },
+  "/guides/all/send-typeform-survey-results-to-port": {
+    "creationDate": "2025-05-29T19:27:48.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-and-manage-aws-ec2-instances": {
+    "creationDate": "2025-06-03T07:27:49.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-and-manage-servicenow-incidents": {
+    "creationDate": "2025-06-04T08:41:30.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-and-manage-gitlab-deployments": {
+    "creationDate": "2025-06-09T14:05:18.000Z",
+    "isNew": false
+  },
+  "/guides/all/visualize-and-manage-azure-devops-deployments": {
+    "creationDate": "2025-07-17T07:45:59.000Z",
+    "isNew": true
+  },
+  "/guides/all/visualize-and-manage-statuspage-incidents": {
+    "creationDate": "2025-06-12T12:40:41.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-pagerduty-on-call-schedules": {
+    "creationDate": "2025-06-13T23:07:36.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-and-visualize-your-launchdarkly-feature-flags": {
+    "creationDate": "2025-06-12T14:00:21.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-and-visualize-pagerduty-incidents": {
+    "creationDate": "2025-06-12T14:38:28.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-and-visualize-ecs-tasks": {
+    "creationDate": "2025-06-17T02:22:22.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-and-visualize-aws-sqs-queues": {
+    "creationDate": "2025-06-03T07:27:49.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-and-visualize-jira-issues": {
+    "creationDate": "2025-06-18T10:33:09.000Z",
+    "isNew": false
+  },
+  "/guides/all/add-rca-context-to-ai-agents": {
+    "creationDate": "2025-06-23T09:51:50.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-your-eks-clusters": {
+    "creationDate": "2025-06-24T21:11:07.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-and-visualize-acm-certificates": {
+    "creationDate": "2025-06-23T16:26:58.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-and-visualize-gcp-compute-engine-instances": {
+    "creationDate": "2025-06-25T19:36:38.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-and-visualize-azure-web-apps": {
+    "creationDate": "2025-06-30T16:44:30.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-and-visualize-azure-virtual-machines": {
+    "creationDate": "2025-06-30T16:44:30.000Z",
+    "isNew": false
+  },
+  "/guides/all/manage-and-visualize-aws-autoscaling-groups": {
+    "creationDate": "2025-07-03T16:38:52.000Z",
+    "isNew": false
+  },
+  "/guides/all/track-leaked-github-secrets-in-port": {
+    "creationDate": "2025-07-03T21:28:25.000Z",
+    "isNew": false
+  },
+  "/guides/all/track-and-show-mtbf-for-services": {
+    "creationDate": "2025-07-09T10:26:40.000Z",
+    "isNew": true
+  },
+  "/guides/all/manage-your-kubernetes-deployment": {
+    "creationDate": "2025-07-08T20:46:21.000Z",
+    "isNew": true
+  },
+  "/guides/all/pull-github-metrics-and-build-visualizations": {
+    "creationDate": "2025-07-10T16:18:26.000Z",
+    "isNew": true
+  },
+  "/guides/all/visualize-and-manage-github-deployments": {
+    "creationDate": "2025-07-15T10:26:09.000Z",
+    "isNew": true
+  }
+}
