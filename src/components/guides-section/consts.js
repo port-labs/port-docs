@@ -1342,13 +1342,19 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
+        title: "Generate incident updates with AI",
+        description: "Generate incident updates with AI and send them to Slack",
+        tags: ["Incident management", "AI", "Automations"],
+        logos: ["AI", "Slack", "PagerDuty"],
+        link: "/guides/all/generate-incident-updates-with-ai",
+    },
+    {
         title: "Trigger GitHub Copilot from Port",
         description: "Learn how to set up GitHub Copilot triggers from Port to enable AI-powered coding assistance",
         tags: ["SDLC", "GitHub", "AI", "Actions"],
         logos: ["GitHub", "AI"],
         link: "/guides/all/trigger-github-copilot-from-port",
     }
-    
 ]
 
 // Enhance guides with metadata (isNew property)
