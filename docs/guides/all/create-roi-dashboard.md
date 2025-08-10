@@ -8,7 +8,7 @@ description: Create a dashboard that highlights the ROI of automations in Port
 ## Overview
 
 In this guide, you will learn how to showcase the true business impact of automation in Port by building an ROI dashboard.  
-We will set up the necessary data model (using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), defining a [Self-service](https://app.getport.io/self-serve) action, and designing a dashboard that visualizes the time savings and benefits delivered by your automations.
+We will set up the necessary data model using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), defining a [Self-service](https://app.port.io/self-serve) action, and designing a dashboard that visualizes the time savings and benefits delivered by your automations.
 
 After executing this guide, you will have a dashboard in Port that demonstrates the value of your automations, and also provide insights into how Port drives efficiency and ROI across your organization.
 
@@ -45,8 +45,8 @@ This metric is calculated across all automated self-service actions in Port, hig
 
 - Port account
     - A Port account with appropriate permissions to create blueprints, actions, and automations.
-    - Access to the [Builder](https://app.getport.io/settings/data-model) page to create blueprints.
-    - Access to the [Self-service](https://app.getport.io/self-serve) page to create actions.
+    - Access to the [Builder](https://app.port.io/settings/data-model) page to create blueprints.
+    - Access to the [Self-service](https://app.port.io/self-serve) page to create actions.
 - GitHub account
     - GitHub account and repository with the following secrets configured: ([find them here](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))
         - `PORT_CLIENT_ID`: Your Port client ID.
@@ -58,7 +58,7 @@ The following blueprints represent a Self-service action (Action), its category 
 
 ### Create the Action categories blueprint
 
-1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+1. Go to your [Builder](https://app.port.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
 3. Click on the `{...} Edit JSON` button in the top right corner.
 4. Copy and paste the following JSON configuration into the editor.
@@ -88,7 +88,7 @@ The following blueprints represent a Self-service action (Action), its category 
 
 ### Create the Action Runs blueprint
 
-1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+1. Go to your [Builder](https://app.port.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
 3. Click on the `{...} Edit JSON` button in the top right corner.
 4. Copy and paste the following JSON configuration into the editor.
@@ -221,7 +221,7 @@ The following blueprints represent a Self-service action (Action), its category 
 
 ### Create the Action blueprint
 
-1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+1. Go to your [Builder](https://app.port.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
 3. Click on the `{...} Edit JSON` button in the top right corner.
 4. Copy and paste the following JSON configuration into the editor.
@@ -697,7 +697,7 @@ This Self-service action creates on execution:
 
 ### Set up the action's frontend
 
-1. Head to the [Self-service](https://app.getport.io/self-serve) page.
+1. Head to the [Self-service](https://app.port.io/self-serve) page.
 2. Click on the `+ Action` button.
 3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration into the editor.
@@ -1358,7 +1358,7 @@ You can create dashboards that pull data from the action, action category, and a
 
 ### Create an ROI dashboard
 
-1. Navigate to the [Catalog](https://app.getport.io/organization/catalog) page of your portal.
+1. Navigate to the [Catalog](https://app.port.io/organization/catalog) page of your portal.
 2. Click on the **`+ New`** button in the left sidebar.
 3. Select **New dashboard** and name it **ROI**.
 4. Click `Create`.
