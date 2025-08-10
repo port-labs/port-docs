@@ -8,7 +8,7 @@ description: Create a dashboard that highlights the ROI of automations in Port
 ## Overview
 
 This guide demonstrates how to showcase the true business impact of automation in Port by building an ROI dashboard.  
-We will set up the necessary data model using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), defining a [Self-service](https://app.port.io/self-serve) action, and designing a dashboard that visualizes the time savings and benefits delivered by your automations.
+We will set up the necessary data model using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), defining a [self-service](https://app.port.io/self-serve) action, and designing a dashboard that visualizes the time savings and benefits delivered by your automations.
 
 After executing this guide, you will have a dashboard in Port that demonstrates the value of your automations, and also provide insights into how Port drives efficiency and ROI across your organization.
 
@@ -18,16 +18,16 @@ We will be using the following terms in this guide:
 
 ### Lead time saving
 
-**Lead time saving** measures the amount of time saved by automating and streamlining **Self-service** actions through Port, compared to traditional manual request processes.  
+**Lead time saving** measures the amount of time saved by automating and streamlining **self-service** actions through Port, compared to traditional manual request processes.  
 This metric captures the reduction in total time from when a user initiates a request to when it is fulfilled, including delays from approvals, queueing, handoffs, and clarifications.  
-Lead time saving is calculated across all **Self-service** actions, from access provisioning to infrastructure changes—by benchmarking against manual equivalents to quantify the time saved.
+Lead time saving is calculated across all **self-service** actions, from access provisioning to infrastructure changes—by benchmarking against manual equivalents to quantify the time saved.
 
 **Why it matters:**
 
 - Highlights the ROI of automations.
 - Demonstrates reduced friction in fulfillment workflows.
 - Supports operational efficiency tracking.
-- Informs prioritization of future Self-service expansions.
+- Informs prioritization of future self-service expansions.
 
 **Lead time before**: This value represents how long requests typically took from submission to completion before using actions. This term is used as a user input in the self-service action form, in the `Action` and `Action runs` blueprint schemas, and in calculation properties that measure time savings.
 
@@ -40,6 +40,12 @@ Unlike Lead Time—which captures the total end-to-end process—Cycle Time focu
 This metric is calculated across all automated self-service actions in Port, highlighting how much faster delivery happens once requests are ready to be acted on
 
 **Cycle time before**: This value represents how long the actual execution typically took before using actions. This term is used as a user input in the self-service action form, in the `Action` and `Action runs` blueprint schemas, and in calculation properties that measure execution time savings.
+
+## Common Use Cases
+
+- Demonstrate the business value of automation investments to leadership for continued funding and expansion.
+- Track cycle time and lead time improvements to identify high-impact automation opportunities.
+- Use success metrics to justify expanding automation to more teams and use cases.
 
 ## Prerequisites
 
@@ -54,7 +60,7 @@ This metric is calculated across all automated self-service actions in Port, hig
 
 ## Set up data model
 
-The following blueprints represent a Self-service action (Action), its category (Action categories) as well as an action's run (Action runs).
+The following blueprints represent a self-service action (Action), its category (Action categories) as well as an action's run (Action runs).
 
 ### Create the Action categories blueprint
 
@@ -683,10 +689,10 @@ After setting up both `Action Runs` and `Action` blueprint, add the following re
 
  </details>
 
-## Create the Self-service action
+## Create the self-service action
 
-This Self-service action creates on execution:
--  A Self-service action with the inputs the user provides.
+This self-service action creates on execution:
+-  A self-service action with the inputs the user provides.
 -  An automation that gets triggered when an action run is changed.  
    On trigger, if the run is sucessfull, the automation updates the following `Action run` properties:
     - **Duration**: How long did the action run take.
@@ -1343,12 +1349,12 @@ You can also use this [repository](https://github.com/port-experimental/actions-
 
 #### Set up the newly created action's backend
 
-When you execute the "Setup new action experience" Self-service action, it automatically creates:
-- A new Self-service action with a placeholder backend.
+When you execute the "Setup new action experience" self-service action, it automatically creates:
+- A new self-service action with a placeholder backend.
 - An automation that tracks ROI metrics for action runs.
 
 :::info Next step required
-The created Self-service action uses a default webhook backend (`https://example.com`) as a placeholder. You should replace this with your actual backend implementation to make the action functional. For detailed backend setup instructions, refer to our [backend configuration documentation](/actions-and-automations/create-self-service-experiences/setup-the-backend/). 
+The created self-service action uses a default webhook backend (`https://example.com`) as a placeholder. You should replace this with your actual backend implementation to make the action functional. For detailed backend setup instructions, refer to the [backend configuration documentation](/actions-and-automations/create-self-service-experiences/setup-the-backend/). 
 :::
 
 ## Visualize Action Entities with dashboards
