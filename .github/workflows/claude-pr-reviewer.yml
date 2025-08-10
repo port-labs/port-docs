@@ -49,25 +49,21 @@ jobs:
           git config --global user.name "Port Claude AI"
           git config --global user.email "port-claude-ai@port.io"
 
-      - name: Delete Previous Claude Comments
+      - name: Find Last Claude Comment
+        uses: peter-evans/find-comment@v3
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'claude'
+          direction: last
+
+      - name: Delete Last Claude Comment
+        if: steps.find-comment.outputs.comment-id != ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Get all comments on this PR made by claude bot
-          echo "Looking for previous Claude review comments to delete..."
-          comment_ids=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-            --jq '.[] | select(.user.login == "claude") | .id')
-          
-          if [ ! -z "$comment_ids" ]; then
-            echo "$comment_ids" | while read comment_id; do
-              if [ ! -z "$comment_id" ]; then
-                echo "Deleting previous Claude comment ID: $comment_id"
-                gh api repos/${{ github.repository }}/issues/comments/$comment_id -X DELETE || echo "Failed to delete comment $comment_id"
-              fi
-            done
-          else
-            echo "No previous Claude comments found to delete"
-          fi
+          gh api repos/${{ github.repository }}/issues/comments/${{ steps.find-comment.outputs.comment-id }} -X DELETE
+          echo "Deleted last Claude comment ID: ${{ steps.find-comment.outputs.comment-id }}"
 
       - name: Run Claude PR Action
         uses: anthropics/claude-code-action@beta
