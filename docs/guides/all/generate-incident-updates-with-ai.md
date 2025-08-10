@@ -79,9 +79,9 @@ To enable AI-generated incident updates and Slack notifications, update your blu
 
       :::tip Slack channel configuration
       This step is optional. You can choose to:
-      - Send notifications to a static channel (hardcoded in the automation)
-      - Store the Slack channel in other hierarchies (e.g., on the incident itself)
-      - Use different channels based on incident severity or team
+      - Send notifications to a static channel (hardcoded in the automation).
+      - Store the Slack channel in other hierarchies (e.g., on the incident itself).
+      - Use different channels based on incident severity or team.
       :::
 
 
