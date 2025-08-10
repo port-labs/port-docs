@@ -29,7 +29,7 @@ Lead time saving is calculated across all **self-service** actions, from access 
 - Supports operational efficiency tracking.
 - Informs prioritization of future self-service expansions.
 
-**Lead time before**: This value represents how long requests typically took from submission to completion before using actions. This term is used as a user input in the self-service action form, in the `Action` and `Action runs` blueprint schemas, and in calculation properties that measure time savings.
+**Lead time before**: This value represents how long requests typically took from submission to completion before using actions. This term is used as a user input in the self-service action form, in the `Action` and `Action runs` blueprint schemas, and in calculation properties that measure time savings. 
 
 ### Cycle Time Saving
 
