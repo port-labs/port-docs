@@ -7,7 +7,7 @@ description: Create a dashboard that highlights the ROI of automations in Port
 
 ## Overview
 
-In this guide, you will learn how to showcase the true business impact of automation in Port by building an ROI dashboard.  
+This guide demonstrates how to showcase the true business impact of automation in Port by building an ROI dashboard.  
 We will set up the necessary data model using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), defining a [Self-service](https://app.port.io/self-serve) action, and designing a dashboard that visualizes the time savings and benefits delivered by your automations.
 
 After executing this guide, you will have a dashboard in Port that demonstrates the value of your automations, and also provide insights into how Port drives efficiency and ROI across your organization.
@@ -29,7 +29,7 @@ Lead time saving is calculated across all **Self-service** actions, from access 
 - Supports operational efficiency tracking.
 - Informs prioritization of future Self-service expansions.
 
-**Lead time before**- This value represents how long requests typically took from submission to completion before using actions.
+**Lead time before**: This value represents how long requests typically took from submission to completion before using actions. This term is used as a user input in the self-service action form, in the `Action` and `Action runs` blueprint schemas, and in calculation properties that measure time savings.
 
 ### Cycle Time Saving
 
@@ -39,7 +39,7 @@ Unlike Lead Time—which captures the total end-to-end process—Cycle Time focu
 
 This metric is calculated across all automated self-service actions in Port, highlighting how much faster delivery happens once requests are ready to be acted on
 
-**Cycle time before**- This value represents how long the actual execution typically took before using actions.
+**Cycle time before**: This value represents how long the actual execution typically took before using actions. This term is used as a user input in the self-service action form, in the `Action` and `Action runs` blueprint schemas, and in calculation properties that measure execution time savings.
 
 ## Prerequisites
 
@@ -254,7 +254,7 @@ The following blueprints represent a Self-service action (Action), its category 
         },
         "description": {
             "type": "string",
-            "title": "Description "
+            "title": "Description"
         },
         "criticality": {
             "icon": "DefaultProperty",
@@ -599,7 +599,7 @@ The following blueprints represent a Self-service action (Action), its category 
         }
         },
         "max_waiting_time_seconds": {
-        "title": "Max approving time Time (s)",
+        "title": "Max approving Time (s)",
         "icon": "HourGlassExpired",
         "type": "number",
         "description": "Maximum waiting for approval in seconds",
@@ -793,7 +793,7 @@ This Self-service action creates on execution:
 
 Define the logic that our action will trigger.
 In your GitHub repository, add the following files or use your own API.
-Add the workflow to the `.git/workflows/` folder, and the other scripts to a `./scripts` folder.
+Add the workflow to the `.github/workflows/` folder, and the other scripts to a `./scripts` folder.
 You can also use this [repository](https://github.com/port-experimental/actions-experience) if you wish.
 
 <details>
