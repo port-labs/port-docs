@@ -46,7 +46,7 @@ To enable AI-generated incident updates and Slack notifications, update your blu
    - Add the following property to the `properties` section:
     
       <details>
-      <summary><b>AI update property (Click to expand)</b></summary>
+      <summary><b>AI update property (click to expand)</b></summary>
 
       ```json showLineNumbers
       "ai_update": {
