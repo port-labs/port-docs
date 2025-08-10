@@ -96,7 +96,7 @@ When `event_workers_count > 1`, related GitHub events get grouped together:
   - **Workflow Runs**: Grouped by run ID (`workflow_run`)
   - **Status Checks**: Grouped by commit SHA (`status`)
   
-  **Fallback**: If event type isn't recognized, scans payload for first `number`, `id`, or `sha` field.
+  **Fallback**: If the event type isn't recognized, the payload will be scanned for the first `number`, `id`, or `sha` field.
 
 :::note Processing guarantees
 Events within the same group are processed sequentially to maintain order and prevent conflicts.
