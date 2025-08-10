@@ -12,9 +12,9 @@ When you are busy fixing an incident, you do not have time to write updates. Yes
 
 ## Common use cases
 
-- Automatically generate contextual incident updates when incidents are updated
-- Send notifications to Slack with relevant technical context
-- Provide on-call engineers with enriched incident information
+- Automatically generate contextual incident updates when incidents are updated.
+- Send notifications to Slack with relevant technical context.
+- Provide on-call engineers with enriched incident information.
 
 
 ## Prerequisites
