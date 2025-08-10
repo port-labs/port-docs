@@ -247,13 +247,13 @@ The table below describes the fields in the JSON structure under the `trigger` k
 | **`type`** | The automation's trigger type. Should be set to `automation`. |
 | **`event`** | An object containing data about the event that triggers the automation. |
 | **`event.type`** | The [trigger event type](/actions-and-automations/define-automations/setup-trigger#available-triggers). |
-| **`event.blueprintIdentifier`**<br/>or<br/>**`event.actionIdentifier`** | If using an *entity trigger* - the identifier of the blueprint whose entities will trigger the automation.<br/>If using an *action run trigger* - the identifier of the action whose runs will trigger the automation. |
+| **`event.blueprintIdentifier`**<br/>or<br/>**`event.actionIdentifier`** | If using an *entity trigger* - the identifier of the blueprint whose entities will trigger the automation.<br/>If using an *action run trigger* - the identifier of the action/automation whose runs will trigger the automation. |
 | `condition` | An optional object containing `jq` expressions used to determine which entities the automation will be triggered for. |
 | `condition.type` | The type of condition. Should be set to `JQ`. |
 | `condition.expressions` | An array of expressions used to filter the entities for which the automation will be triggered. |
 | `condition.combinator` | The combinator used to combine the expressions. Should be set to `and` or `or`. |
 
 :::tip Automation action identifiers
-When setting up the `actionIdentifier` value in the event, you can use an identifier that belongs to an automation as well.   
+When using the `actionIdentifier` key, you can use an identifier that belongs to an automation as well.  
 This means that automations can be triggered by other automations and are not limited to self-service actions.
 :::
