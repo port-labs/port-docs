@@ -95,7 +95,7 @@ When installing the GitHub app, the `Repository` blueprint is created by default
 4. Add the following properties to the `properties` section:
 
     <details>
-    <summary><b>Additional repository properties (Click to expand)</b></summary>
+    <summary><b>Additional repository properties (click to expand)</b></summary>
 
     ```json showLineNumbers
     "last_contributor": {
