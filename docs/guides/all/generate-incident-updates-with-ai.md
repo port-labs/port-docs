@@ -114,7 +114,7 @@ When installing the GitHub app, the `Repository` blueprint is created by default
     "vulnerabilities": {
       "type": "number",
       "title": "Known Vulnerabilities",
-      "description": "Number of critical security vulnerabilities",
+      "description": "Number of critical security vulnerabilities"
     }
     ```
     </details>
