@@ -1341,7 +1341,13 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
-    
+    {
+        title: "Generate incident updates with AI",
+        description: "Generate incident updates with AI and send them to Slack",
+        tags: ["Incident management", "AI", "Automations"],
+        logos: ["AI", "Slack", "PagerDuty"],
+        link: "/guides/all/generate-incident-updates-with-ai",
+    }
 ]
 
 // Enhance guides with metadata (isNew property)
