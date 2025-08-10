@@ -41,12 +41,15 @@ After the installation, you can customize the blueprints and/or mapping to inges
 
 ## Installation methods
 
+Below is a breakdown of the supported installation methods for Port integrations.  
+
+
 | Installation type         | Security    | Ease of Installation | Syncing mechanism |
-|---------------------------|-------------|----------------------|-------------------|
-| Hosted by Port (OAuth)    | Row 1 Col 2 | 🟩🟩🟩🟩🟩          |                   |
-| Hosted by Port (Not OAuth)|             | 🟩🟩⬜⬜⬜          |  Row 2 Col 3      |
-| Self-hosted (Real-time)   |             | 🟩⬜⬜⬜⬜          |  Row 2 Col 3      |
-| Scheduled (CI)            |             | 🟩🟩⬜⬜⬜          |  Row 2 Col 3      |
+|---------------------------|-------------------------------------------|----------------------|-------------------|
+| Hosted by Port (OAuth)    | Port manages OAuth tokens or stores API credentials as secrets            | 🟩🟩🟩🟩🟩          |                    |
+| Hosted by Port (Not OAuth)| Port manages OAuth tokens or stores API credentials as secrets            | 🟩🟩⬜⬜⬜          |                    |
+| Self-hosted (Real-time)   |	Deployed and fully managed within your infrastructure                     | 🟩⬜⬜⬜⬜          |                    |
+| Scheduled (CI)            | Managed within CI pipelines or infrastructure as code in your environment | 🟩🟩⬜⬜⬜          |                    |
 
 ## Customize your integrations
 
