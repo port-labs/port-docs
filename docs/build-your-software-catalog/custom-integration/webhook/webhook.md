@@ -344,6 +344,10 @@ Now let's explore the structure of a single mapping object:
 - `item` will be added to the JQ context as a key containing a reference to items in the array specified in `itemsToParse`. Keys from the object in the array can be accessed using the `.item.KEY_NAME` syntax, see the example JSON for more information.
 
 :::
+
+:::caution Maximum items limit
+The `itemsToParse` field has a maximum limit of **500 items per request**. If your webhook payload contains more than 500 items, only the first 500 will be processed.
+:::
 <br/>
 - The `entity` key is used to map information from the webhook payload to Port entity properties using JQ:
 
