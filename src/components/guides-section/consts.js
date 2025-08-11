@@ -1347,6 +1347,13 @@ export const availableGuides = [
         tags: ["Incident management", "AI", "Automations"],
         logos: ["AI", "Slack", "PagerDuty"],
         link: "/guides/all/generate-incident-updates-with-ai",
+    },
+    {
+        title: "Map PR's to services in a monorepo",
+        description: "Automatically map GitHub pull requests to services in a monorepo using file path analysis",
+        tags: ["SDLC", "GitHub", "Automations"],
+        logos: ["GitHub"],
+        link: "/guides/all/map-prs-to-services-in-monorepo",
     }
 ]
 
