@@ -184,7 +184,7 @@ export const liveEvents = {
     \n- repo:refs_changed \
     \n\n**Project:** \
     \n- project:modified",
-  Aikido: 
+  Aikido:
     '**Issues:** \
     \n- issue.open.created \
     \n- issue.snoozed \
@@ -228,7 +228,12 @@ export const liveEvents = {
     \n - reopened \
     \n - created \
     \n - fixed \
-    \n - closed_by_user ",
+    \n - closed_by_user \
+    \n\n **deployment** \
+    \n\n **deployment_status** \
+    \n\n **release:** \
+    \n - created \
+    \n - edited",
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

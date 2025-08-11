@@ -7,6 +7,14 @@ import PRBlueprint from './\_github_exporter_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_github_exporter_example_port_app_config.mdx'
 import GitHubResources from '../\_github_exporter_supported_resources.mdx'
 
+import RepoEnvironmentBlueprint from './example-deployments-environments/\_github_exporter_example_environment_blueprint.mdx'
+import DeploymentBlueprint from './example-deployments-environments/\_github_exporter_example_deployment_blueprint.mdx'
+import PortRepoDeploymentAndEnvironmentAppConfig from './example-deployments-environments/\_github_exporter_example_deployments_and_environments_port_app_config.mdx'
+
+import TagBlueprint from './example-repository-release-tag/\_github_exporter_example_tag_blueprint.mdx'
+import ReleaseBlueprint from './example-repository-release-tag/\_github_exporter_example_release_blueprint.mdx'
+import RepositoryTagReleaseAppConfig from './example-repository-release-tag/\_github_exporter_example_release_tag_port_app_config.mdx'
+
 import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 import FileBlueprint from './example-file-kind/\_example_file_blueprint.mdx'
@@ -69,6 +77,7 @@ The following example demonstrates ingestion of dependencies from a `package.jso
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/#ingest-files-from-your-repositories).
 
+
 ## Map Files and Repositories
 
 The following example demonstrates mapping files to repository.
@@ -112,6 +121,29 @@ The following example shows how to ingest your GitHub repositories and their ale
 
 <PortRepositoryDependabotAlertMappingAppConfig/>
 
+## Map repositories, deployments and environments
+
+The following example demonstrates how to ingest your GitHub repositories, their deployments and environments to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<RepoEnvironmentBlueprint/>
+
+<DeploymentBlueprint/>
+
+<PortRepoDeploymentAndEnvironmentAppConfig/>
+
+## Map repositories, repository releases and tags
+
+The following example demonstrates how to ingest your GitHub repositories, their releases and tags to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<TagBlueprint/>
+
+<ReleaseBlueprint/>
+
+<RepositoryTagReleaseAppConfig/>
 
 ## Map supported resources
 
