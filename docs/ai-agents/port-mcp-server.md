@@ -369,7 +369,7 @@ Refer to the [Claude custom connector documentation](https://support.anthropic.c
 
 ### Prompts
 
-In Port, you can centrally manage reusable prompts and expose them to your users via the MCP Server. Once defined in Port, these prompts become available in supported MCP clients (for example, Cursor or Claude) where developers can discover and run them with the required inputs.
+In Port, you can centrally manage reusable prompts and expose them to your users via the MCP Server. Once defined in Port, these prompts become available in supported MCP clients (for example, Cursor or Claude) where developers and AI agents can discover and run them with the required inputs.
 
 #### Common use cases
 
@@ -379,7 +379,13 @@ In Port, you can centrally manage reusable prompts and expose them to your users
 
 #### Setup data model
 
-Add the following blueprint in Port to model prompts:
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
+
+2. Click on "+ Blueprint".
+
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+
+4. Paste the following JSON schema into the editor:
 
 
 
