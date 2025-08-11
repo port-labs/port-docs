@@ -458,7 +458,7 @@ Once this blueprint exists and you create entities for it, prompts will show up 
 
 Create entities of the `prompt` blueprint for each prompt you want to expose. At minimum, provide `description` and `template`. Optionally add `arguments` to parameterize the prompt.
 
-1. Go to the Prompts page in Port
+1. Go to the [Prompts page](https://app.getport.io/prompts) in Port
 2. Click "Create prompt"
 3. Fill the form:
    - Provide a title and description
