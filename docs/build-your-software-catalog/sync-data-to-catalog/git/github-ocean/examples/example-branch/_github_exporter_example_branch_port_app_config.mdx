@@ -1,0 +1,35 @@
+<details>
+<summary><b>Port port-app-config.yml (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+  - kind: branch
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .__repository + "_" + .name
+          title: .__repository + " " + .name
+          blueprint: '"githubBranch"'
+          properties:
+            is_protected: .protected
+            commit_sha: .commit.sha
+            commit_url: .commit.url
+          relations:
+            repository: .__repository
+```
+</details>
