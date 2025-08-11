@@ -80,7 +80,7 @@ The following example demonstrates how to ingest your GitHub repositories, their
 
 ## Map repositories, repository releases and tags
 
-In the following example you will ingest your GitHub repositories, their releases and tags to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, their releases and tags to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
