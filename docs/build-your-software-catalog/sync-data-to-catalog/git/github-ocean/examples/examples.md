@@ -51,7 +51,7 @@ After creating the blueprints and committing the `port-app-config.yml` file to y
 
 ## Map repositories and branches
 
-In the following example you will ingest your GitHub repositories and their branches to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories and their branches to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
