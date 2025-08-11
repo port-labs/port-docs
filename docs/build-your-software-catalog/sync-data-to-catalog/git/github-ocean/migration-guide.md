@@ -16,7 +16,8 @@ The new Ocean-powered GitHub integration comes with several key improvements:
 
 #### Personal Access Token (PAT)
 
-You can now authenticate with our GitHub integration using a Personal Access Token (PAT) instead of a GitHub App. This gives you more control over the integration's permissions. For more details, see our [installation page](./installation). Below is a sample Helm value for this configuration:
+You can now authenticate with our GitHub integration using a Personal Access Token (PAT) instead of a GitHub App. This gives you more control over the integration's permissions. For more details, see our [installation page](./installation).  
+Below is a sample Helm value for this configuration:
 ```yaml showLineNumbers
 integration:
   secrets:
