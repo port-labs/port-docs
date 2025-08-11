@@ -10,7 +10,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 Port's [GitHub action](https://github.com/marketplace/actions/port-github-action) allows you to create/update and query entities in Port directly from your GitHub workflows.
 
-<img src="/img/build-your-software-catalog/sync-data-to-catalog/github/github-action-illustration.jpg" alt="Github Illustration" width="90%" />
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/github/github-action-illustration.png" alt="Github Illustration" width="90%" />
 
 :::tip public repository
 The GitHub action is open source - see the repository [**here**](https://github.com/port-labs/port-github-action).
