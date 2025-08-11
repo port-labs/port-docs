@@ -79,7 +79,7 @@ The following example demonstrates mapping files to repository.
 
 ## Map repositories, workflows and workflow runs
 
-In the following example you will ingest your GitHub repositories, their workflows and workflow runs to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories, their workflows and workflow runs to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
