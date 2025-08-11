@@ -471,6 +471,62 @@ Create entities of the `prompt` blueprint for each prompt you want to expose. At
 The `template` supports markdown and variable placeholders. Each argument defined in `arguments` is exposed by its `name` and can be referenced as `{{name}}` inside the template. When you run the prompt, the MCP Server collects values for required arguments and substitutes them into the matching `{{}}` placeholders before execution.
 :::
 
+#### Examples
+
+<Tabs groupId="prompt-examples" queryString>
+<TabItem value="incident-triage" label="Incident triage">
+
+Use placeholders to inject context such as the service, environment, incident, and timeframe.
+
+```markdown showLineNumbers
+You are assisting with an incident in the {{service_name}} service ({{environment}}).
+Incident ID: {{incident_id}}
+
+For the last {{timeframe}}:
+- Summarize critical alerts and recent deploys
+- Suggest next steps and owners
+- Link relevant dashboards/runbooks
+```
+
+Arguments to define: `service_name` (required), `environment` (optional), `incident_id` (required), `timeframe` (optional).
+
+</TabItem>
+<TabItem value="scorecard-remediation" label="Scorecard remediation">
+
+Generate tailored remediation steps for failing scorecard rules.
+
+```markdown showLineNumbers
+For {{service_name}}, generate remediation steps for failing rules in the "{{scorecard_name}}" scorecard.
+
+For each failing rule:
+- What is failing
+- Why it matters
+- Step-by-step remediation
+- Owners and suggested timeline
+```
+
+Arguments to define: `service_name` (required), `scorecard_name` (required).
+
+</TabItem>
+<TabItem value="on-call-handoff" label="On-call handoff summary">
+
+Summarize on-call context for a team over a time window.
+
+```markdown showLineNumbers
+Create an on-call handoff for {{team}} for the last {{timeframe}}.
+
+Include:
+- Active incidents and current status
+- Top risks and mitigations
+- Pending actions and owners
+- Upcoming maintenance windows
+```
+
+Arguments to define: `team` (required), `timeframe` (required).
+
+</TabItem>
+</Tabs>
+
 After creating entities, reconnect or refresh your MCP client; your prompts will be available to run and will prompt for any defined arguments.
 
 #### See prompts in your client
