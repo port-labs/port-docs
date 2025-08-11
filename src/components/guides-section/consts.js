@@ -928,12 +928,12 @@ export const availableGuides = [
         link: "/guides/all/create-incident-io-incident",
     },
     {
-        title: "Interact with FireHydrant incidents",
-        description: "Create a self-service action that interacts with FireHydrant incidents",
+        title: "Manage FireHydrant incidents",
+        description: "Create a self-service action that manages FireHydrant incidents",
         tags: ["Incident management", "FireHydrant", "Actions", "Webhook"],
         logos: ["FireHydrant", "GitHub"],
         // category: "Getting started",
-        link: "/guides/all/interact-with-firehydrant-incidents",
+        link: "/guides/all/manage-firehydrant-incidents",
     },
     {
         title: "Enrich security vulnerabilities using AI",

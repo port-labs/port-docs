@@ -427,7 +427,7 @@
     "creationDate": "2025-03-19T11:55:08.000Z",
     "isNew": false
   },
-  "/guides/all/interact-with-firehydrant-incidents": {
+  "/guides/all/manage-firehydrant-incidents": {
     "creationDate": null,
     "isNew": false
   },
@@ -657,6 +657,10 @@
   },
   "/guides/all/visualize-and-manage-github-deployments": {
     "creationDate": "2025-07-15T10:26:09.000Z",
+    "isNew": true
+  },
+  "/guides/all/generate-incident-updates-with-ai": {
+    "creationDate": "2025-07-25T14:04:47.000Z",
     "isNew": true
   }
 }

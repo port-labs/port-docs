@@ -9,7 +9,7 @@ import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_sec
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Interact with FireHydrant incidents
+# Manage FireHydrant incidents
 
 This guide demonstrates how to implement self-service actions that create new FireHydrant incidents or trigger incidents on services directly from Port using synced webhooks or GitHub workflows.
 
