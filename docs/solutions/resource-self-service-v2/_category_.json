@@ -1,0 +1,9 @@
+{
+    "label": "Resource self-service v2",
+    "collapsible": true,
+    "collapsed": true,
+    "position": 2,
+    "customProps": {
+      "description": "Next-generation resource self-service solution"
+    }
+  } 
