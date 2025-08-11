@@ -419,6 +419,10 @@
     "creationDate": "2025-02-26T13:46:09.000Z",
     "isNew": false
   },
+  "/guides/all/create-firehydrant-incident": {
+    "creationDate": "2025-03-17T18:34:12.000Z",
+    "isNew": false
+  },
   "/guides/all/open-linear-issue": {
     "creationDate": "2025-03-20T13:51:30.000Z",
     "isNew": false
@@ -427,8 +431,8 @@
     "creationDate": "2025-03-19T11:55:08.000Z",
     "isNew": false
   },
-  "/guides/all/interact-with-firehydrant-incidents": {
-    "creationDate": null,
+  "/guides/all/trigger-firehydrant-incident": {
+    "creationDate": "2025-03-24T01:23:10.000Z",
     "isNew": false
   },
   "/guides/all/enrich-security-vulnerability-using-ai": {
@@ -465,11 +469,11 @@
   },
   "/guides/all/setup-platform-request-triage-ai-agent": {
     "creationDate": "2025-06-23T17:18:56.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/setup-service-explorer-ai-agent": {
     "creationDate": "2025-06-23T13:14:21.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/open-github-issue": {
     "creationDate": "2025-04-10T18:42:33.000Z",
@@ -533,7 +537,7 @@
   },
   "/guides/all/automatically-set-relations-between-entities-with-automation": {
     "creationDate": "2025-06-18T10:45:17.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/visualize-your-aws-storage-configuration": {
     "creationDate": "2025-05-15T09:47:52.000Z",
@@ -585,23 +589,23 @@
   },
   "/guides/all/visualize-and-manage-statuspage-incidents": {
     "creationDate": "2025-06-12T12:40:41.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-pagerduty-on-call-schedules": {
     "creationDate": "2025-06-13T23:07:36.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-and-visualize-your-launchdarkly-feature-flags": {
     "creationDate": "2025-06-12T14:00:21.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-and-visualize-pagerduty-incidents": {
     "creationDate": "2025-06-12T14:38:28.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-and-visualize-ecs-tasks": {
     "creationDate": "2025-06-17T02:22:22.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-and-visualize-aws-sqs-queues": {
     "creationDate": "2025-06-03T07:27:49.000Z",
@@ -609,39 +613,39 @@
   },
   "/guides/all/manage-and-visualize-jira-issues": {
     "creationDate": "2025-06-18T10:33:09.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/add-rca-context-to-ai-agents": {
     "creationDate": "2025-06-23T09:51:50.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-your-eks-clusters": {
     "creationDate": "2025-06-24T21:11:07.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-and-visualize-acm-certificates": {
     "creationDate": "2025-06-23T16:26:58.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-and-visualize-gcp-compute-engine-instances": {
     "creationDate": "2025-06-25T19:36:38.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-and-visualize-azure-web-apps": {
     "creationDate": "2025-06-30T16:44:30.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-and-visualize-azure-virtual-machines": {
     "creationDate": "2025-06-30T16:44:30.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-and-visualize-aws-autoscaling-groups": {
     "creationDate": "2025-07-03T16:38:52.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/track-leaked-github-secrets-in-port": {
     "creationDate": "2025-07-03T21:28:25.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/track-and-show-mtbf-for-services": {
     "creationDate": "2025-07-09T10:26:40.000Z",
