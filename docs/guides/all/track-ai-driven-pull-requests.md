@@ -136,7 +136,7 @@ The automation flow works as follows:
 3. **Run second automation** that extracts and looks for names of coding agents
 
 :::tip Avoid Recursive Updates
-To avoid running into recursive updates and overwriting of entities due to two automations triggered on each pull request update, stack the comment automation to the commit automation. This ensures that the automations are executed in sequence rather than simultaneously, preventing potential conflicts.
+To prevent recursive updates and entity overwrites caused by two automations being triggered for each pull request update, ensure that the comment automation is executed only after the commit automation has completed. This sequential execution avoids simultaneous runs and potential conflicts.
 :::
 
 ### Add Port secrets
@@ -415,7 +415,7 @@ Built with Port to bring clarity to your AI-driven SDLC.
 3. Choose the **Pull Request** blueprint.
 4. Add a filter with the following configuration:
 
-```json
+```json showLineNumbers
 {
   "combinator": "or",
   "rules": [
