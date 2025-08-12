@@ -455,5 +455,5 @@ Now let us test the complete workflow to ensure everything works correctly.
 
 ## Related guides
 
-- [Trigger GitHub Copilot from Port guide](https://docs.port.io/guides/all/trigger-github-copilot-from-port)
+- [Trigger GitHub Copilot from Port](https://docs.port.io/guides/all/trigger-github-copilot-from-port)
 - [Set up the Task Manager AI agent](https://docs.port.io/guides/all/setup-task-manager-ai-agent)
