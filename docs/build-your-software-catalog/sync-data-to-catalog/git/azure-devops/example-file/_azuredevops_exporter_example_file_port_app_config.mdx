@@ -5,7 +5,7 @@
 :::tip Configuration Mapping for Azure DevOps File Ingestion
 The `selector` section within a `file` resource demonstrates how to configure file ingestion from Azure DevOps repositories. You can control:
 
-- **path:** Specify explicit file paths to ingest specific files (e.g., `src/config.yaml`, `deployment/helm/values.yaml`).
+- **path:** Supports both explicit paths (e.g., `src/config.yaml`) and glob patterns (e.g., `**/*.yaml`) to ingest matching files.
 - **repos:** Target specific repositories or leave blank to scan all repositories.
 
 :::
@@ -16,7 +16,8 @@ resources:
     selector:
       query: 'true'
       files:
-        path: "src/config.yaml" # Pass a single explicit file path
+        # You can use a single explicit path or glob pattern
+        path: "src/config.yaml"  # or "src/**/*.yaml"
         repos: ["my-repo", "another-repo"]  # Optional: specific repositories to scan
     port:
       entity:
@@ -39,11 +40,12 @@ resources:
     selector:
       query: 'true'
       files:
+        # You can use explicit paths or glob patterns in an array
         path: # Pass an array of explicit file paths
           - "deployment/helm/values.yaml"
           - "config/settings.json"
-          - "docs/README.md"
-          - "package.json"
+          - "docs/**/*.md" # Example: matches all .md files under docs/, including subdirectories
+          - "**/package.json" # Example: match all package.json files across folders
     port:
       entity:
         mappings:

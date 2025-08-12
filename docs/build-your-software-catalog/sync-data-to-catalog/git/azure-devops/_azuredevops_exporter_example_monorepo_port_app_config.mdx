@@ -18,8 +18,8 @@ resources:
         mappings:
           identifier: .objectId
           title: .path
-          url: .__repository.url
-          blueprint: '"azureDevopsRepository"'
+          url: .__repository.remoteUrl
+          blueprint: '"service"'
           properties:
             defaultBranch: .__repository.defaultBranch
           relations:

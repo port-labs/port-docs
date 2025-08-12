@@ -34,9 +34,10 @@ This integration allows you to:
 - [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)*
 - [`User`](https://docs.datadoghq.com/api/latest/users/#list-all-users)
 - [`Team`](https://docs.datadoghq.com/api/latest/teams/#get-all-teams)
+- [`Service Dependency`](https://docs.datadoghq.com/api/latest/service-dependencies/#get-all-service-dependencies)
 <br />
 
-  *_SLO History and Service Metric resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
+  *_SLO History, Service Metric and Service Dependency resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
 
 <br />
 
@@ -1046,6 +1047,35 @@ This enrichment significantly enhances the usability of the Datadog response by 
 
 </details>
 
+<details>
+<summary> Service Dependency response data</summary>
+
+```json showLineNumbers
+{
+  "service_a": {
+    "calls": [
+      "service_b",
+      "service_c"
+    ]
+  },
+  "service_b": {
+    "calls": [
+      "service_o"
+    ]
+  },
+  "service_c": {
+    "calls": [
+      "service_o"
+    ]
+  },
+  "service_o": {
+    "calls": []
+  }
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1258,6 +1288,25 @@ The combination of the sample payload and the Ocean configuration generates the 
     ]
   },
   "icon": "Datadog"
+}
+```
+
+</details>
+
+<details>
+<summary>Service dependency entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "service_a",
+  "title": "Dummy",
+  "icon": "Datadog",
+  "relations": {
+    "dependencies": [
+      "service_b",
+      "service_c"
+    ]
+  }
 }
 ```
 
