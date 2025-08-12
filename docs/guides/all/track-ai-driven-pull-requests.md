@@ -7,7 +7,7 @@ description: Learn how to track and monitor AI-driven pull requests in your deve
 
 The software engineering world has experienced a major breakthrough with AI coding agents such as GitHub Copilot, Claude, Devin, and others. Engineering teams are increasingly integrating these AI agents into their development workflows. This guide will help you create a comprehensive dashboard to bring visibility into what these AI agents are doing in your repositories.
 
-<img src="/img/guides/ai-driven-pr-dashboard-1.png" border="1px" width="100%" />
+<img src="/img/guides/ai-driven-pr-dashboard.png" border="1px" width="100%" />
 
 
 ## Common use cases
@@ -79,36 +79,30 @@ When installing Port's GitHub app, the `Service` and `Pull request` blueprints a
       "type": "boolean",
       "title": "Draft",
       "description": "Whether the PR is in draft mode. Draft PR usually requires more attention."
-    }
-    ```
-    </details>
-
-5. Add the following calculation property to the `calculationProperties` section:
-
-    <details>
-    <summary><b>Work status calculation property (Click to expand)</b></summary>
-
-    ```json showLineNumbers
+    },
     "workStatus": {
+      "type": "string",
       "title": "Coding agent status",
-      "icon": "DefaultProperty",
       "description": "The most important status definition for a PR. \"Approved\" means needs to nudge reviewers/address comments, when \"Awaiting review\" requires urgent attention.",
-      "calculation": "if .title | test(\"WIP\"; \"i\") then \"In Progress\" elif .properties.draft == true and (.relations.reviewers // [] | length) > 0 then \"Awaiting review\" elif .properties.draft == true and (.title | test(\"WIP\"; \"i\") | not) and (.relations.reviewers // [] | length) == 0 then \"Requested changes\" elif .properties.draft != true then \"Approved\" else \"Unknown\" end",
-      "type": "string"
+      "enum": [
+        "In Progress",
+        "Awaiting review",
+        "Requested changes",
+        "Approved",
+        "Unknown"
+      ],
+      "enumColors": {
+        "In Progress": "yellow",
+        "Awaiting review": "orange",
+        "Requested changes": "turquoise",
+        "Approved": "green",
+        "Unknown": "lightGray"
+      }
     }
     ```
     </details>
 
-    :::tip Calculation explanation
-    This calculation property automatically determines the work status of a PR based on:
-    - **In Progress**: PR title contains "WIP" (work in progress)
-    - **Awaiting review**: Draft PR with assigned reviewers
-    - **Requested changes**: Draft PR without reviewers (likely needs changes)
-    - **Approved**: Non-draft PR (ready for final review)
-    - **Unknown**: Any other state
-    :::
-
-6. Add the following relation to the `relations` section:
+5. Add the following relation to the `relations` section:
 
     <details>
     <summary><b>AI coding agent relation (Click to expand)</b></summary>
@@ -123,7 +117,77 @@ When installing Port's GitHub app, the `Service` and `Pull request` blueprints a
     ```
     </details>
 
-7. Click `Save` to update the blueprint.
+6. Click `Save` to update the blueprint.
+
+
+### Update GitHub integration configuration
+
+Now we will update the GitHub integration configuration to ensure that the new properties added to the pull requests are correctly mapped.
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Find your GitHub integration and click on it.
+3. Go to the `Mapping` tab.
+4. Add the following YAML block into the editor to map the pull request properties:
+
+    <details>
+    <summary><b>Updated GitHub integration configuration (Click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+    - kind: pull-request
+      selector:
+        query: "true"
+      port:
+        entity:
+          mappings:
+            identifier: .id|tostring
+            title: .title
+            blueprint: '"githubPullRequest"'
+            properties:
+              status: .status
+              closedAt: .closed_at
+              creata: .user.login
+              updatedAt: .updated_at
+              mergedAt: .merged_at
+              createdAt: .created_at
+              prNumber: .number
+              link: .html_url
+              labels: '[.labels[].name]'
+              branch: .head.ref
+              draft: .draft
+              workStatus: >-
+                if (.title | test("WIP"; "i")) then
+                  "In Progress"
+                elif (.draft == true and ((.requested_reviewers // []) | length) >
+                0) then
+                  "Awaiting review"
+                elif (.draft == true and (.title | test("WIP"; "i") | not) and
+                ((.requested_reviewers // []) | length) == 0) then
+                  "Requested changes"
+                elif (.draft != true) then
+                  "Approved"
+                else
+                  "Unknown"
+                end
+              leadTimeHours: >-
+                (.created_at as $createdAt | .merged_at as $mergedAt | ($createdAt
+                | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime)
+                as $createdTimestamp | ($mergedAt | if . == null then null else
+                sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end)
+                as $mergedTimestamp | if $mergedTimestamp == null then null else
+                (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) /
+                100) end)
+            relations:
+              repository: .head.repo.name
+    ```
+    :::tip Work Status JQ explanation
+    This JQ determines the work status of a PR based on:
+    - **In Progress**: PR title contains "WIP" (work in progress)
+    - **Awaiting review**: Draft PR with assigned reviewers
+    - **Requested changes**: Draft PR without reviewers (likely needs changes)
+    - **Approved**: Non-draft PR (ready for final review)
+    - **Unknown**: Any other state
+    :::
+    </details>
 
 
 ## Set up automations
