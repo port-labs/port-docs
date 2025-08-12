@@ -389,63 +389,65 @@ In Port, you can centrally manage reusable prompts and expose them to your users
 
 
 
-  <details>
-  <summary>Prompt blueprint JSON (click to expand)</summary>
-  
-  ```json showLineNumbers
-  {
-    "identifier": "prompt",
-    "title": "Prompt",
-    "icon": "Microservice",
-    "schema": {
-      "properties": {
-        "description": {
-          "type": "string",
-          "title": "Description"
-        },
-        "arguments": {
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "The name of the argument parameter"
-              },
-              "description": {
-                "type": "string",
-                "description": "A description of what this argument is for"
-              },
-              "required": {
-                "type": "boolean",
-                "description": "Whether this argument is required or optional",
-                "default": false
-              }
-            },
-            "required": [
-              "name",
-              "description"
-            ]
+    <details>
+    <summary>Prompt blueprint JSON (click to expand)</summary>
+    
+    ```json showLineNumbers
+    {
+      "identifier": "prompt",
+      "title": "Prompt",
+      "icon": "Microservice",
+      "schema": {
+        "properties": {
+          "description": {
+            "type": "string",
+            "title": "Description"
           },
-          "type": "array",
-          "title": "Arguments"
+          "arguments": {
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The name of the argument parameter"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "A description of what this argument is for"
+                },
+                "required": {
+                  "type": "boolean",
+                  "description": "Whether this argument is required or optional",
+                  "default": false
+                }
+              },
+              "required": [
+                "name",
+                "description"
+              ]
+            },
+            "type": "array",
+            "title": "Arguments"
+          },
+          "template": {
+            "icon": "DefaultProperty",
+            "type": "string",
+            "title": "Prompt Template",
+            "format": "markdown"
+          }
         },
-        "template": {
-          "icon": "DefaultProperty",
-          "type": "string",
-          "title": "Prompt Template",
-          "format": "markdown"
-        }
+        "required": [
+          "description",
+          "template"
+        ]
       },
-      "required": [
-        "description",
-        "template"
-      ]
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {}
-  }
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
+    </details>
 
 :::info Where prompts appear
 Once this blueprint exists and you create entities for it, prompts will show up in supported MCP clients connected to your Port organization. In clients that surface MCP prompts, you’ll see them listed and ready to run with arguments.
