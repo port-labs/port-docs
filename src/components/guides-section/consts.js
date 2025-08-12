@@ -1343,11 +1343,11 @@ export const availableGuides = [
         link: "/guides/all/generate-incident-updates-with-ai",
     },
     {
-        title: "Automate Jira to GitHub Copilot",
-        description: "Learn how to create an AI agent that automatically generates GitHub issues from Jira tickets and assigns them to Copilot",
+        title: "Automatically resolve tickets with coding agents",
+        description: "Learn how to create an AI agent that automatically resolves tickets with coding agents",
         tags: ["SDLC", "Jira", "GitHub", "AI"],
         logos: ["Jira", "GitHub", "AI"],
-        link: "/guides/all/automate-jira-to-github-copilot",
+        link: "/guides/all/automatically-resolve-tickets-with-coding-agents",
     }
 ]
 

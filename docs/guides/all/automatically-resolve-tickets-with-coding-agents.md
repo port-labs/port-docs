@@ -5,11 +5,11 @@ description: Learn how to create an AI agent that automatically generates GitHub
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 
-# Automate Jira to GitHub Copilot
+# Automatically resolve tickets with coding agents
 
 Coding agents can significantly speed up development, but crucial engineering context often gets lost in the process. In this guide, we will learn how to create an AI agent that not only automates the generation of GitHub issues from Jira tickets but also ensures that important context is preserved by assigning them to GitHub Copilot and linking pull requests back to Jira. This setup will help us establish a seamless ticket-to-deployment workflow, bridging the gap between Jira and GitHub.
 
-<img src="/img/guides/jira-to-github-pr-workflow.jpg" border="1px" width="100%" />
+<img src="/img/guides/automatic-ticket-resolution-architecture.png" border="1px" width="100%" />
 
 
 ## Common use cases
@@ -314,31 +314,6 @@ This automation can be configured to trigger based on various criteria. Currentl
 
 This automation ensures that any new pull request related to a Jira ticket is promptly linked back to the ticket, providing clear traceability and context for development progress.
 
-Follow the steps below to configure the automation:
-
-<h3>Add Port secrets</h3>
-
-To add these secrets to your portal:
-
-1. Click on the `...` button in the top right corner of your Port application.
-
-2. Click on **Credentials**.
-
-3. Click on the `Secrets` tab.
-
-4. Click on `+ Secret` and add the following secret:
-    - `JIRA_AUTH_TOKEN` - Base64 encoded string of your Jira credentials. Generate this by running:
-        ```bash
-        echo -n "your-email@domain.com:your-api-token" | base64
-        ```
-        Replace `your-email@domain.com` with your Jira email and `your-api-token` with your Jira API token.
-
-        :::info One time generation
-        The base64 encoded string only needs to be generated once and will work for all webhook calls until you change your API token.
-        :::
-
-<h3>Automation backend</h3>
-
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
 3. Copy and paste the following JSON schema:
@@ -378,7 +353,7 @@ To add these secrets to your portal:
         "method": "POST",
         "headers": {
           "RUN_ID": "{{ .run.id }}",
-          "Authorization": "Basic {{ .secrets.JIRA_AUTH_TOKEN }}",
+          "Authorization": "Basic {{ .secrets._JIRA_ATLASSIAN_USER_EMAIL + \":\" + .secrets._JIRA_ATLASSIAN_USER_TOKEN | @base64 }}",
           "Content-Type": "application/json"
         },
         "body": {
