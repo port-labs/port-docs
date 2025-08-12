@@ -32,148 +32,7 @@ While this guide describes GitHub Copilot, you can replace it with any other cod
 
 ## Set up data model
 
-We will create and configure blueprints to support our AI-powered self-healing scorecard workflow. This includes updating the GitHub repository blueprint with scorecard-relevant properties and creating new blueprints for tracking AI agent tasks.
-
-### Update GitHub repository blueprint
-
-First, let us enhance the GitHub repository blueprint with properties that can be used to measure scorecard metrics and that GitHub Copilot can actually fix:
-
-1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
-2. Find and select your existing GitHub repository blueprint.
-3. Click on `{...} Edit JSON`.
-4. Update the properties section to include scorecard-relevant properties:
-
-    <details>
-    <summary><b>Updated GitHub repository blueprint properties (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-      "identifier": "githubRepository",
-      "title": "Repository",
-      "icon": "Github",
-      "ownership": {
-        "type": "Direct"
-      },
-      "schema": {
-        "properties": {
-          "readme": {
-            "title": "README",
-            "type": "string",
-            "format": "markdown"
-          },
-          "url": {
-            "icon": "DefaultProperty",
-            "title": "Repository URL",
-            "type": "string",
-            "format": "url"
-          },
-          "defaultBranch": {
-            "title": "Default branch",
-            "type": "string"
-          },
-          "last_contributor": {
-            "title": "Last contributor",
-            "icon": "TwoUsers",
-            "type": "string",
-            "format": "user"
-          },
-          "last_push": {
-            "icon": "GitPullRequest",
-            "title": "Last push",
-            "description": "Last commit to the main branch",
-            "type": "string",
-            "format": "date-time"
-          },
-          "require_code_owner_review": {
-            "title": "Require code owner review",
-            "type": "boolean",
-            "icon": "Shield",
-            "description": "Requires review from code owners before a pull request can be merged"
-          },
-          "require_approval_count": {
-            "title": "Require approvals",
-            "type": "number",
-            "icon": "Users",
-            "description": "The number of approvals required before merging a pull request"
-          },
-          "has_security_scanning": {
-            "title": "Security Scanning Enabled",
-            "description": "Whether security scanning is enabled for this repository",
-            "icon": "Shield",
-            "type": "boolean"
-          },
-          "has_dependabot_enabled": {
-            "title": "Dependabot Enabled",
-            "description": "Whether Dependabot is enabled for dependency updates",
-            "icon": "Shield",
-            "type": "boolean"
-          },
-          "has_ci_cd": {
-            "title": "CI/CD Pipeline",
-            "description": "Whether the repository has CI/CD pipelines configured",
-            "icon": "GitVersion",
-            "type": "boolean"
-          },
-          "deployment_frequency": {
-            "title": "Deployment Frequency",
-            "description": "How often code is deployed (daily/weekly/monthly)",
-            "icon": "Deployment",
-            "type": "string"
-          },
-          "has_monitoring": {
-            "title": "Monitoring Enabled",
-            "description": "Whether production monitoring is configured",
-            "icon": "Grafana",
-            "type": "boolean"
-          },
-          "has_runbook": {
-            "title": "Has Runbook",
-            "description": "Whether operational runbooks are documented",
-            "icon": "Book",
-            "type": "boolean"
-          },
-          "test_coverage": {
-            "title": "Test Coverage %",
-            "description": "Percentage of code covered by tests",
-            "icon": "Checklist",
-            "type": "number"
-          },
-          "has_code_owners": {
-            "title": "Has Code Owners",
-            "description": "Whether CODEOWNERS file is configured",
-            "icon": "Users",
-            "type": "boolean"
-          },
-          "license": {
-            "type": "string",
-            "title": "License",
-            "format": "markdown"
-          },
-          "contributing_guide": {
-            "type": "string",
-            "title": "Contributing Guide",
-            "format": "markdown"
-          },
-          "has_linter": {
-            "type": "boolean",
-            "title": "Has Linter"
-          },
-          "manifest": {
-            "type": "string",
-            "title": "Package JSON"
-          }
-        },
-        "required": []
-      },
-      "mirrorProperties": {},
-      "calculationProperties": {},
-      "aggregationProperties": {},
-      "relations": {}
-    }
-    ```
-    </details>
-
-5. Click `Save` to update the blueprint.
+We will create and configure blueprints to support our AI-powered self-healing scorecard workflow. This includes creating new blueprints for tracking AI agent tasks and updating the GitHub integration mapping.
 
 
 ### Create AI agent tasks blueprint
@@ -299,9 +158,11 @@ When configuring your scorecards, consider selecting rules that GitHub Copilot c
 - Missing test setups
 :::
 
+
 ## Set up self-service actions
 
 We will create self-service actions that the AI agent can use for scorecard remediation.
+
 
 ### Add Port secrets
 
@@ -450,6 +311,7 @@ We will create several automations to orchestrate the AI-powered scorecard self-
 
 1. Monitor scorecard statistics and trigger the AI agent when degradation is detected
 2. Create GitHub issues from AI agent tasks
+
 
 ### Automation to monitor scorecard degradation
 
