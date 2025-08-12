@@ -35,8 +35,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: read
-      issues: read
+      pull-requests: write
+      issues: write
       id-token: write
     steps:
       - name: Checkout repository
@@ -48,6 +48,23 @@ jobs:
         run: |
           git config --global user.name "Port Claude AI"
           git config --global user.email "port-claude-ai@port.io"
+
+      - name: Find and Delete Last Claude Comment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Looking for the last Claude comment to delete..."
+          
+          # Get the last Claude comment ID (trying common patterns)
+          last_claude_comment=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            --jq '.[] | select(.user.login | test("claude"; "i")) | .id' | tail -1)
+          
+          if [ ! -z "$last_claude_comment" ]; then
+            echo "Deleting last Claude comment ID: $last_claude_comment"
+            gh api repos/${{ github.repository }}/issues/comments/$last_claude_comment -X DELETE
+          else
+            echo "No Claude comments found to delete"
+          fi
 
       - name: Run Claude PR Action
         uses: anthropics/claude-code-action@beta

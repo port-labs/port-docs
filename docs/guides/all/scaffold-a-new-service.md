@@ -1108,7 +1108,7 @@ stages:
                       "project":"${{ variables.PROJECT_ID }}"
                     }
                   }' \
-                "https://api.getport.io/v1/blueprints/azureDevopsRepository/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
+                "https://api.getport.io/v1/blueprints/service/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
               
   - stage: upsert_service
     dependsOn:
@@ -1134,7 +1134,7 @@ stages:
                       "description":"${{ variables.DESCRIPTION }}"
                     },
                     "relations": {
-                      "azureDevopsRepository": "${{ variables.SERVICE_NAME }}"
+                      "service": "${{ variables.SERVICE_NAME }}"
                     }
                   }' \
                 "https://api.getport.io/v1/blueprints/service/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"    
