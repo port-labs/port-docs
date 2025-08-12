@@ -53,70 +53,40 @@ To represent HiBob users in your portal, we need to create a HiBob User blueprin
             "title": "ID",
             "description": "The user's unique identifier"
           },
-          "displayName": {
-            "type": "string",
-            "title": "Display Name",
-            "description": "The user's display name"
-          },
           "firstName": {
             "type": "string",
             "title": "First Name",
             "description": "The user's first name"
-          },
-          "surname": {
-            "type": "string",
-            "title": "Last Name",
-            "description": "The user's last name"
           },
           "email": {
             "type": "string",
             "title": "Email",
             "description": "The user's email address"
           },
-          "companyId": {
+          "department": {
             "type": "string",
-            "title": "Company ID",
-            "description": "The user's company identifier"
+            "title": "Department",
+            "description": "The user's department"
           },
-          "state": {
+          "isManager": {
             "type": "string",
-            "title": "State",
-            "description": "The user's employment state"
+            "title": "Is Manager",
+            "description": "Indicates if the user is a manager"
           },
-          "avatarUrl": {
+          "work_title": {
             "type": "string",
-            "title": "Avatar URL",
-            "description": "URL to the user's avatar image"
-          },
-          "coverImageUrl": {
-            "type": "string",
-            "title": "Cover Image URL",
-            "description": "URL to the user's cover image"
+            "title": "Job Title",
+            "description": "The user's job title"
           },
           "fullName": {
             "type": "string",
             "title": "Full Name",
             "description": "The user's full name"
           },
-          "creationDate": {
+          "displayName": {
             "type": "string",
-            "title": "Creation Date",
-            "description": "When the user was created"
-          },
-          "creationDatetime": {
-            "type": "string",
-            "title": "Creation DateTime",
-            "description": "When the user was created (with time)"
-          },
-          "isManager": {
-            "type": "boolean",
-            "title": "Is Manager",
-            "description": "Indicates if the user is a manager"
-          },
-          "durationOfEmployment": {
-            "type": "string",
-            "title": "Duration of Employment",
-            "description": "How long the user has been employed"
+            "title": "Display Name",
+            "description": "The user's display name"
           }
         },
         "required": []
@@ -179,7 +149,7 @@ Now we need to enhance the Port User blueprint to add a relation to the HiBob Us
 6. Click on `Save` to update the blueprint.
 
 :::info Additional mirror properties
-You can add more mirror properties to display other HiBob user attributes like full name (`hibob_user.fullName`), manager status (`hibob_user.isManager`), or any other property from the HiBob User blueprint that would be useful for your organization.
+You can add more mirror properties to display other HiBob user attributes like job title (`hibob_user.work_title`), department (`hibob_user.department`), manager status (`hibob_user.isManager`), or any other property from the HiBob User blueprint that would be useful for your organization.
 :::
 
 <h3> Add Port secrets</h3>
@@ -198,7 +168,7 @@ Now let's add your HiBob credentials to Port's secrets:
    ```
 
 :::info HiBob Authentication
-HiBob uses Basic Authentication with base64 encoding. You'll need to create a service user in HiBob with appropriate permissions to access employee data, then encode the credentials as base64(service_user_id:service_user_token). Learn more about [creating HiBob service users](https://apidocs.hibob.com/docs/api-service-users).
+HiBob uses Basic Authentication with base64 encoding. You'll need to create a service user in HiBob with appropriate permissions to access employee data, then encode the credentials as base64(service_user_id:service_user_token).     Learn more about [creating HiBob service users](https://apidocs.hibob.com/docs/api-service-users).
 :::
 
 
@@ -229,25 +199,19 @@ Follow the steps below to create the webhook integration:
             "blueprint": "hibob_user",
             "operation": "create",
             "filter": "(.body.response | has(\"employees\")) and (.body.response.employees | type == \"array\")",
-            "itemsToParse": ".body.response.employees | map(select(.state != \"inactive\"))",
+            "itemsToParse": ".body.response.employees | map(select(.email != null))",
             "entity": {
                 "identifier": ".item.id | tostring",
                 "title": ".item.displayName | tostring",
                 "properties": {
                     "id": ".item.id",
-                    "displayName": ".item.displayName",
                     "firstName": ".item.firstName",
-                    "surname": ".item.surname",
                     "email": ".item.email",
-                    "companyId": ".item.companyId",
-                    "state": ".item.state",
-                    "avatarUrl": ".item.avatarUrl",
-                    "coverImageUrl": ".item.coverImageUrl",
-                    "fullName": ".item.fullName",
-                    "creationDate": ".item.creationDate",
-                    "creationDatetime": ".item.creationDatetime",
+                    "department": ".item.work.department",
                     "isManager": ".item.work.isManager",
-                    "durationOfEmployment": ".item.work.durationOfEmployment.humanize"
+                    "work_title": ".item.work.title",
+                    "fullName": ".item.fullName",
+                    "displayName": ".item.displayName"
                 }
             }
         },
@@ -255,49 +219,14 @@ Follow the steps below to create the webhook integration:
             "blueprint": "_user",
             "operation": "create",
             "filter": "(.body.response | has(\"employees\")) and (.body.response.employees | type == \"array\")",
-            "itemsToParse": ".body.response.employees | map(select(.state != \"inactive\" and .email != null))",
+            "itemsToParse": ".body.response.employees | map(select(.email != null))",
             "entity": {
                 "identifier": ".item.email",
                 "relations": {
                     "hibob_user": ".item.id | tostring"
                 }
             }
-        },
-        {
-            "blueprint": "hibob_user",
-            "operation": "create",
-            "filter": ".body.response.employee != null",
-            "entity": {
-                "identifier": ".body.response.employee.id | tostring",
-                "title": ".body.response.employee.displayName | tostring",
-                "properties": {
-                    "id": ".body.response.employee.id",
-                    "displayName": ".body.response.employee.displayName",
-                    "firstName": ".body.response.employee.firstName",
-                    "surname": ".body.response.employee.surname",
-                    "email": ".body.response.employee.email",
-                    "companyId": ".body.response.employee.companyId",
-                    "state": ".body.response.employee.state",
-                    "avatarUrl": ".body.response.employee.avatarUrl",
-                    "coverImageUrl": ".body.response.employee.coverImageUrl",
-                    "fullName": ".body.response.employee.fullName",
-                    "creationDate": ".body.response.employee.creationDate",
-                    "creationDatetime": ".body.response.employee.creationDatetime",
-                    "isManager": ".body.response.employee.work.isManager",
-                    "durationOfEmployment": ".body.response.employee.work.durationOfEmployment.humanize"
-                }
-            }
-        },
-        {
-            "blueprint": "_user",
-            "operation": "create",
-            "filter": ".body.response.employee != null and .body.response.employee.email != null",
-            "entity": {
-                "identifier": ".body.response.employee.email",
-                "relations": {
-                    "hibob_user": ".body.response.employee.id | tostring"
-                }
-            }
+     
         }
     ]
     ```
@@ -350,16 +279,29 @@ Follow the steps below to create the action:
       },
       "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "{{ .secrets.HIBOB_API_URL }}/people",
+        "url": "{{ .secrets.HIBOB_API_URL }}/people/search",
         "agent": false,
         "synchronized": true,
-        "method": "GET",
+        "method": "POST",
         "headers": {
           "RUN_ID": "{{ .run.id }}",
           "Content-Type": "application/json",
-          "Authorization": "Basic {{ .secrets.HIBOB_SERVICE_USER_ID }}:{{ .secrets.HIBOB_SERVICE_USER_TOKEN }}"
+          "Authorization": "Basic {{ .secrets.HIBOB_BASIC_AUTH }}"
         },
-        "body": {}
+        "body": {
+          "showInactive": false,
+          "fields": [
+            "root.id",
+            "root.firstName",
+            "root.email",
+            "work.department",
+            "work.isManager",
+            "work.title",
+            "root.fullName",
+            "root.displayName"
+          ],
+          "humanReadable": "REPLACE"
+        }
       },
       "requiredApproval": false
     }
@@ -413,15 +355,36 @@ Follow the steps below to create the action:
       },
       "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "{{ .secrets.HIBOB_API_URL }}/people?email={{ .inputs.email }}",
+        "url": "{{ .secrets.HIBOB_API_URL }}/people/search",
         "synchronized": true,
-        "method": "GET",
+        "method": "POST",
         "headers": {
           "RUN_ID": "{{ .run.id }}",
           "Content-Type": "application/json",
-          "Authorization": "Basic {{ .secrets.HIBOB_SERVICE_USER_ID }}:{{ .secrets.HIBOB_SERVICE_USER_TOKEN }}"
+          "Authorization": "Basic {{ .secrets.HIBOB_BASIC_AUTH }}"
         },
-        "body": {}
+        "body": {
+          "showInactive": false,
+          "fields": [
+            "root.id",
+            "root.firstName",
+            "root.email",
+            "work.department",
+            "work.isManager",
+            "work.title",
+            "root.fullName",
+            "root.displayName"
+          ],
+          "filters": [
+            {
+              "fieldPath": "root.email",
+              "operator": "equals",
+              "values": [
+                "{{ .inputs.email }}"
+              ]
+            }
+          ]
+        }
       },
       "requiredApproval": false
     }
@@ -561,7 +524,7 @@ Follow the steps below to create the automation:
 <h3> Create automation to sync HiBob users when a new Port user is added</h3>
 
 To ensure new Port users get mapped to HiBob users automatically, we'll create an automation that triggers when a new Port user is created.
-This automation will trigger the [Get HiBob user by email](#get-hibob-user-by-email-self-service-action) action to fetch details of the HiBob user by email and trigger the [process single hibob user automation](#create-automation-to-process-single-hibob-user) for processing.
+This automation will trigger the [Get HiBob user by email](#get-hibob-user-by-email-self-service-action) action to fetch details of the HiBob user by email, which will then be processed by the webhook integration.
 
 Follow the steps below to create the automation:
 
@@ -580,7 +543,7 @@ Follow the steps below to create the automation:
     {
       "identifier": "ingest_hibob_user",
       "title": "Trigger hibob_user ingestion automation",
-      "description": "This will call the webhook endpoint to ingest a single hibob user",
+      "description": "This will trigger the Get HiBob user by email action to fetch and ingest a single HiBob user",
       "icon": "User",
       "trigger": {
         "type": "automation",
@@ -631,7 +594,7 @@ Follow the steps below to create the automation:
 
 5. Verify that HiBob users are created in your catalog with proper relationships.
 
-6. Verify that the HiBob user is created in your catalog with proper relationships.
+
 
 ## Conclusion
 
