@@ -42,10 +42,15 @@ This page outlines the following steps:
 - **Setup URL:** Leave this empty.
 - Uncheck **Active** under Webhooks. The [integration will automatically create the webhook if you configure the `OCEAN__BASE_URL`](#enabling-live-events) variable later during deployment.
 - **Repository Permissions:**
+  - Actions: Readonly (for syncing Workflows).
   - Checks: Readonly (for syncing `Port.yml`).
   - Contents: Readonly (for reading port configuration files and repository files).
   - Metadata: Readonly.
   - Pull Request: Readonly
+  - Code scanning alerts: Readonly
+  - Dependabot alerts: Readonly
+  - Deployments: Readonly
+  - Environments: Readonly
 - **Organization Permissions:**
   - Webhooks: Read and Write (to allow the integration create webhook).
 

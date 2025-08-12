@@ -14,6 +14,13 @@ import RepositoryAdminAppConfig from './example-repository-admins/\_github_expor
 
 import IssueBlueprint from './example-issue/\_git_exporter_example_issue_blueprint.mdx'
 import PortIssueAppConfig from './example-issue/\_github_exporter_example_issue_port_app_config.mdx'
+import RepoEnvironmentBlueprint from './example-deployments-environments/\_github_exporter_example_environment_blueprint.mdx'
+import DeploymentBlueprint from './example-deployments-environments/\_github_exporter_example_deployment_blueprint.mdx'
+import PortRepoDeploymentAndEnvironmentAppConfig from './example-deployments-environments/\_github_exporter_example_deployments_and_environments_port_app_config.mdx'
+
+import TagBlueprint from './example-repository-release-tag/\_github_exporter_example_tag_blueprint.mdx'
+import ReleaseBlueprint from './example-repository-release-tag/\_github_exporter_example_release_blueprint.mdx'
+import RepositoryTagReleaseAppConfig from './example-repository-release-tag/\_github_exporter_example_release_tag_port_app_config.mdx'
 
 import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
 import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
@@ -28,6 +35,17 @@ import RepositoryTeamBlueprint from './example-repository-teams/\_github_export_
 import PortRepositoryTeamMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_port_app_config.mdx'
 
 import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
+import WorkflowBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_blueprint.mdx'
+import WorkflowRunBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_run_blueprint.mdx'
+import PortWfWfrAppConfig from './example-workflow-workflowrun/\_github_exporter_example_wf_wfr_port_app_config.mdx'
+
+import BranchBlueprint from './example-branch/\_git_exporter_example_branch_blueprint.mdx'
+import PortBrAppConfig from './example-branch/\_github_exporter_example_branch_port_app_config.mdx'
+
+import DependabotAlertBlueprint from './example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
+import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
+import PortRepositoryDependabotAlertMappingAppConfig from './example-repository-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
+
 
 # Resource mapping examples
 
@@ -73,6 +91,16 @@ In the following example you will ingest your GitHub repositories and their issu
 
 :::
 
+## Map repositories and branches
+
+The following example demonstrates how to ingest your GitHub repositories and their branches to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<BranchBlueprint/>
+
+<PortBrAppConfig/>
+
 ## Map files and file contents
 
 The following example demonstrates ingestion of dependencies from a `package.json` file in your repository into Port: 
@@ -83,6 +111,7 @@ The following example demonstrates ingestion of dependencies from a `package.jso
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/#ingest-files-from-your-repositories).
 
+
 ## Map Files and Repositories
 
 The following example demonstrates mapping files to repository.
@@ -90,7 +119,6 @@ The following example demonstrates mapping files to repository.
 <RepositoryBlueprint />
 <FileBlueprint />
 <RepoFileAppConfig />
-
 
 ## Map repositories and monorepos
 
@@ -114,13 +142,31 @@ To retrieve the root folders of your monorepo, you can use this following syntax
             - name: frontend-service
 ```
 
-
 :::tip learn more
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
 - Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
 - Click [Here](https://docs.github.com/en/rest/git/trees#get-a-tree) for the GitHub folder object structure.
+
+:::
+
+
+## Map repositories, workflows and workflow runs
+
+The following example demonstrates how to ingest your GitHub repositories, their workflows and workflow runs to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<WorkflowBlueprint/>
+
+<WorkflowRunBlueprint/>
+
+<PortWfWfrAppConfig/>
+
+::: tip learn more
+- Click [Here](https://docs.github.com/en/rest/actions/workflows#get-a-workflow) for the GitHub workflow object structure.
+- Click [Here](https://docs.github.com/en/rest/actions/workflow-runs#get-a-workflow-run) for the GitHub workflow run object structure.
 
 :::
 
@@ -168,6 +214,43 @@ In other cases, the GitHub API will return a `null` value for the user's email.
 For the `user` kind, only the following fields are supported: `.name`, `.login`, and `.email`.  
 Other fields from the [GitHub User API](https://docs.github.com/en/rest/users/users#get-a-user) are not available.
 :::
+
+
+## Map repositories, Dependabot Alerts, and Code scan alerts
+
+The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<DependabotAlertBlueprint/>
+
+<CodeScanAlertBlueprint/>
+
+<PortRepositoryDependabotAlertMappingAppConfig/>
+
+## Map repositories, deployments and environments
+
+The following example demonstrates how to ingest your GitHub repositories, their deployments and environments to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<RepoEnvironmentBlueprint/>
+
+<DeploymentBlueprint/>
+
+<PortRepoDeploymentAndEnvironmentAppConfig/>
+
+## Map repositories, repository releases and tags
+
+The following example demonstrates how to ingest your GitHub repositories, their releases and tags to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<TagBlueprint/>
+
+<ReleaseBlueprint/>
+
+<RepositoryTagReleaseAppConfig/>
 
 ## Map supported resources
 
