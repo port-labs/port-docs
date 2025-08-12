@@ -25,6 +25,9 @@ This guide assumes the following:
 - [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account
 - You have access to [create and configure AI agents](https://docs.port.io/ai-agents/overview#getting-started-with-ai-agents) in Port.
 - You have completed the setup in the [Trigger GitHub Copilot from Port guide](https://docs.port.io/guides/all/trigger-github-copilot-from-port), ensuring that Copilot will be automatically assigned to any GitHub issues created through this guide.
+- You have completed the setup in the [Track AI-driven Pull Requests guide](/guides/all/track-ai-driven-pull-requests) to monitor AI-driven pull requests.
+
+
 
 :::tip Flexibility with Coding Agents
 While this guide describes GitHub Copilot, you can replace it with any other coding agent you have that can be triggered via an API.
@@ -83,6 +86,10 @@ This blueprint will track tasks created by the AI agent for scorecard remediatio
         "pr_link": {
           "title": "PR Link",
           "path": "pull_request.link"
+        },
+        "coding_agent_status": {
+          "title": "Coding agent status",
+          "path": "pull_request.workStatus"
         }
       },
       "calculationProperties": {},
