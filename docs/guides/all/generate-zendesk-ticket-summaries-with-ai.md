@@ -1,11 +1,11 @@
 ---
 displayed_sidebar: null
-description: Generate on-demand summaries of Zendesk tickets in Port using MCP and self-service actions. No AI agents or automations required.
+description: Generate on-demand summaries of Zendesk tickets in Port using a reusable MCP Prompt (backed by self-service actions). No AI agents or automations required.
 ---
 
 # Generate Zendesk ticket summaries with AI (via MCP)
 
-When working on support, you often need quick, structured summaries of a ticket for internal handoffs or customer updates. This guide shows how to use three simple self-service actions with Port’s MCP Server so that any AI tool (Cursor, Claude, etc.) can fetch ticket context from Zendesk and produce a clear summary on demand — without defining AI agents or automations.
+When working on support, you often need quick, structured summaries of a ticket for internal handoffs or customer updates. This guide sets up a reusable MCP Prompt in Port that any AI tool (Cursor, Claude, etc.) can run to fetch context from Zendesk and produce a clear summary on demand. The prompt uses three self-service actions under the hood; no AI agents or automations are required.
 
 ## Common use cases
 
@@ -150,60 +150,57 @@ Create the following actions to retrieve the ticket comments and side conversati
 Replace `<your_subdomain>` with your Zendesk subdomain, for example: `https://acme.zendesk.com/...`.
 :::
 
-## Use with Port MCP in Cursor or Claude
+## Run the reusable Prompt via Port MCP (Cursor/Claude)
 
-You can now ask your AI to fetch the context and generate a summary on demand. There are two simple flows:
-
-### A. Fully assisted (AI invokes actions via MCP)
-
-- Ask your AI to run `get_ticket_comments` and `get_ticket_side_conversation` on the `zendesk_ticket` entity with the relevant identifier (the Zendesk ticket ID).
-- From the side conversations response, pick the relevant `side_conversation_url` values.
-- Ask the AI to run `get_side_conversation_messages` for each URL to collect the messages.
-- Provide the prompt below and request the final summary.
-
-### B. Manual retrieval, then summarize
-
-- Manually invoke the three actions above from Port’s self-service UI for the target ticket.
-- Copy the responses (comments and side conversations/messages) into your AI chat.
-- Provide the prompt below and request the final summary.
-
-## Summary prompt
-
-<details>
-<summary><b>Copy-ready prompt (Click to expand)</b></summary>
-
-```
-You are an ai assistant tasked with summarizing zendesk support tickets in port. Use the comments and the side conversations on the ticket to summarize it in the following format:
-
-##request
-What the customer wanted in a short sentence
-##resolutiom
-What was the resolution
-##root cause
-In case of a problem/bug, what was the root cause
-
-##recommendations
-
-Eg update docs,
-
-To get the comments and the side conversations, send empty properties and use the entity identifier.
-
-To use the side conversations you first need to get their urls and then get the messages sent in them, no need to send an entity identifier only the side conversation url in the properties.
-```
-
-</details>
+Run the `zendesk_ticket_summary` prompt with `ticket_id` set to the Zendesk ticket ID (same as the `zendesk_ticket` entity identifier). The prompt will automatically use the actions in this guide to fetch comments and side conversations and return the structured summary.
 
 :::caution Privacy and scope
 Side conversations may contain internal discussion. Review generated summaries before sharing externally. This guide focuses on displaying summaries only; it does not post back to Zendesk.
 :::
 
+## Expose as a reusable Prompt via Port MCP Server
+
+Port MCP Server can expose prompts you create and manage in Port to your IDE assistants (Cursor, Claude, etc.). Create a Prompt entity in Port and invoke it with an argument for the ticket ID.
+
+<details>
+<summary><b>Prompt entity: Zendesk Ticket Summary (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "zendesk_ticket_summary",
+  "title": "Zendesk Ticket Summary",
+  "icon": "AI",
+  "properties": {
+    "description": "Summarize a Zendesk support ticket using comments and side conversations",
+    "arguments": [
+      {
+        "name": "ticket_id",
+        "required": true,
+        "description": "The Zendesk ticket ID to summarize"
+      }
+    ],
+    "template": "You are an AI assistant tasked with summarizing Zendesk support tickets in Port. Use the comments and the side conversations on the ticket to summarize it in the following format:\n\n## Request\nWhat the customer wanted in a short sentence\n\n## Resolution  \nWhat was the resolution\n\n## Root Cause\nIn case of a problem/bug, what was the root cause\n\n## Recommendations\nE.g., update docs, improve error messages, etc.\n\nInstructions for data gathering:\n- To get the comments and side conversations, send empty properties and use the entity identifier: {{ticket_id}}\n- To use the side conversations, you first need to get their URLs and then get the messages sent in them\n- No need to send an entity identifier for side conversation messages, only the side conversation URL in the properties\n\nTicket ID to analyze: {{ticket_id}}"
+  },
+  "relations": {}
+}
+```
+
+</details>
+
+### How to use the Prompt from your IDE via MCP
+
+1. In your IDE assistant, select Port MCP as a tool/provider.
+2. Run the `zendesk_ticket_summary` prompt with the argument `ticket_id` set to your Zendesk ticket ID (same as the `zendesk_ticket` entity identifier).
+3. If needed, the assistant will use the actions in this guide to fetch comments and side conversations, then return the structured summary.
+
+:::info Using Port MCP prompts
+For setup and capabilities, see the Port MCP Server prompts documentation: [Port MCP Server - Prompts](/ai-agents/port-mcp-server#prompts)
+:::
+
 ## Test the workflow
 
 1. In Port, ensure a `zendesk_ticket` entity exists whose `identifier` equals a real Zendesk ticket ID.
-2. Run `get_ticket_comments` on that entity.
-3. Run `get_ticket_side_conversation` on that entity and copy one `side_conversation_url`.
-4. Run `get_side_conversation_messages` with the copied URL.
-5. In Cursor/Claude, provide the prompt and let the AI generate the summary.
+2. In Cursor/Claude, run the `zendesk_ticket_summary` prompt with `ticket_id` set to the ticket ID to generate the summary.
 
 ## Best practices
 
