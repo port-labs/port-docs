@@ -1,4 +1,4 @@
-### Ownership scorecard
+# Ownership Scorecard
 
 The following example demonstrates an ownership scorecard.
 

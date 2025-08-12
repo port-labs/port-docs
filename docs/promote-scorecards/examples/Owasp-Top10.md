@@ -1,8 +1,4 @@
----
-sidebar_position: 3
----
-
-### Benchmarking OWASP Top 10 for code
+# Owasp Top 10 Scorecard
 
 <img src="/img/guides/owasp/chart.png" width="100%" border="1px" />
 

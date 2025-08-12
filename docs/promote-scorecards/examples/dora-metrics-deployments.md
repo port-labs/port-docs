@@ -1,4 +1,4 @@
-### DORA metrics based on number of deployments
+# Dora Metrics based on number of deployments
 
 To assess the deployment frequency of a `service`, simply checking the `deployment` relation is not enough — we need to know the exact number of deployments. To achieve this, we can:
 

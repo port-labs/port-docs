@@ -1,4 +1,4 @@
-### Ensure relation existence
+# Ensure relation exists
 
 Say we have a `service` blueprint that has a relation to another blueprint named `domain`.  
 We can define a scorecard that checks that all of our services have a related domain. Services with empty `domain` relations will fail this check:
