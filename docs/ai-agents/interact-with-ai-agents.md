@@ -63,13 +63,15 @@ The widget provides a chat interface where you can ask questions and receive res
 
 ### MCP server backend mode in widgets
 
-When using the widget interface, you can choose the backend mode for each interaction:
+When adding an AI agent widget to your dashboard, you can configure whether to use the MCP server backend mode. During widget configuration, you'll see a "Use MCP" toggle option:
 
-- **Use agent's default**: Follow the agent's configured backend mode
-- **Force MCP server**: Override to use MCP server backend mode for enhanced capabilities
-- **Force standard**: Override to use standard backend mode for controlled access
+<img src='/img/ai-agents/AIAgentsMCPWidgetConfig.png' width='70%' border='1px' />
 
-The widget interface provides visual indicators showing which tools and capabilities are being used when MCP server backend mode is active, giving you transparency into the enhanced processing.
+When MCP server backend mode is enabled, the widget interface provides enhanced capabilities and visual indicators showing which tools are being used:
+
+<img src='/img/ai-agents/AIAgentsMCPWidgetUI.png' width='80%' border='1px' />
+
+This gives you transparency into the enhanced processing and shows you exactly which MCP server tools the agent is leveraging to answer your questions.
 
 </TabItem>
 <TabItem value="slack-integration" label="Slack Integration">
@@ -143,17 +145,17 @@ curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true' \\
 
 **Using MCP Server Backend Mode via API:**
 
-You can override the agent's default backend mode by adding the `useMCP` parameter:
+You can override the agent's default backend mode by adding the `use_mcp` parameter:
 
 ```bash
 # Force MCP server backend mode
-curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true&useMCP=true' \\
+curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true&use_mcp=true' \\
   -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
   -H 'Content-Type: application/json' \\
   --data-raw '{"prompt":"What is my next task?"}'
 
 # Force standard backend mode  
-curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true&useMCP=false' \\
+curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true&use_mcp=false' \\
   -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
   -H 'Content-Type: application/json' \\
   --data-raw '{"prompt":"What is my next task?"}'
