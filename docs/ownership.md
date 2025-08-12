@@ -65,28 +65,68 @@ Tools for which Port does not have a built-in integration can be synced manually
 
 ## Sync Teams
 
-Teams can also be created or updated in Port manually or automatically.
+Teams can also be synced into Port either manually or automatically, depending on your integrations and conventions.
 
 ### Manually
-- **Register a new team from the catalog page (“Register team”)**  
-  Useful for creating a team and linking it to external teams.  
+
+- **Register a new team**  
+  This can be done from the [Teams catalog page](https://app.getport.io/_teams):  
+  Click on the `+ Team` button.
+  
+  This is useful for creating a new team and defining its relations to 3rd party teams in a single step. 
+
 - **Edit an existing team entity**  
-  Update an existing team with new data — for example, connecting a Port team to a Slack team.
+  This can also be done from the [Teams catalog page](https://app.getport.io/_teams):  
+  Click on the `...` button, then click on `Edit`.
+
+  Ideal when updating a team with new data — for example, connecting it to a Sentry team.
 
 ### Automatically
 - **Built-in integrations**:  
-  - If a Port team exists and its ID matches the integration team’s ID → update the mapping.  
-  - If a Port team does not exist → create one for every GitHub, GitLab, or ADO team using the mapping.  
-- **Custom integrations**: Automatic mapping is usually not reliable because team names and IDs may not match. In most cases, automation will require consistent identifiers across systems, which is uncommon.
+  
+  Using the integration mapping, we can define how to create/update teams in Port.
+  
+  For example, the following mapping can be used to create/update teams in Port using GitHub:
+    ```yaml
+    - kind: team
+    selector:
+        query: 'true'
+    port:
+        entity:
+        mappings:
+            identifier: .id | tostring
+            title: .name
+            blueprint: '"_team"'
+            relations:
+                git_hub_team: .id | tostring
+    ```
+
+  In this example, if the team already exists in Port, it will be connected to the GitHub team with the same identifier.  
+  If it does not exist, it will be created and connected to the GitHub team with the same identifier.
+  
+  
+ 
+<!-- - **Custom integrations**:
+-  Automatic mapping is usually not reliable because team names and identifiers may not match. In most cases, automation will require consistent identifiers across systems, which is uncommon.
+  - For example, if a team in GitHub is called `frontend`, but in Sentry it is called `Frontend`, we need to create a mapping between the two. -->
 
 ---
 
 ## Assign Users to Teams
 
+In many cases, ownership is assigned to a team and not a specific user. By default, Port allows you to assign one or more owning teams to each entity in your catalog.
+
+As a user, it's important to see all of the resources owned by you or your team/s. Therefore, the next step is to ensure that all Port users are assigned to the relevant team/s.
+
+
+
 ### Manually
-- **SSA – Add team members**  
-- Edit a user entity to update their team(s).  
-- When creating a new user, assign their team(s).
+- **Self-Service Action (SSA) – [Add team members](https://app.getport.io/self-serve?action=_onboard_existing_team)**  
+  An out-of-the-box self service action used to add users to an existing team.
+- **Edit a user entity**  
+  This can be done from the [Users catalog page](https://app.getport.io/_users):  
+  Click on the `...` button, then click on `Edit`.
+  - When creating a new user, assign their team(s).
 
 ### Automatically
 - **Using SSO**: Users and teams are created and connected automatically.  
