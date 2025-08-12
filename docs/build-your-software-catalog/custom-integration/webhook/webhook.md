@@ -232,18 +232,18 @@ Please refer to the [AWS API Gateway known issues](https://docs.aws.amazon.com/a
 
 - The root key of the mapping configuration is the `mappings` key:
 
-```json showLineNumbers
-{
-  ...
-  // highlight-next-line
-  "mappings": [
-    {
-      # mapping
-    }
-  ]
-  ...
-}
-```
+  ```json showLineNumbers
+  {
+    ...
+    // highlight-next-line
+    "mappings": [
+      {
+        # mapping
+      }
+    ]
+    ...
+  }
+  ```
 
 The mappings key stores an **array** of mappings, making it possible to create/update multiple entities in multiple blueprints from the same payload.
 
@@ -251,125 +251,128 @@ Now let's explore the structure of a single mapping object:
 
 - The `blueprint` key is used to specify the identifier of the blueprint to create/update/delete an entity of based on the webhook payload:
 
-```json showLineNumbers
-{
-  ...
-  "mappings": [
-    {
-      // highlight-next-line
-      "blueprint": "pullRequest",
-      "filter": ".headers.\"x-github-event\" == \"pull_request\"",
-      ...
-    }
-  ]
-  ...
-}
-```
-<br/>
-- The `operation` key is used to specify the action to perform on an entity. Its available values are:
-  - `create` - creates a new entity, or updates it if it already exists.
-  - `delete` - deletes an existing entity. When using this operation, the only required key under `entity` is `identifier`.
-  
-  
+  ```json showLineNumbers
+  {
+    ...
+    "mappings": [
+      {
+        // highlight-next-line
+        "blueprint": "pullRequest",
+        "filter": ".headers.\"x-github-event\" == \"pull_request\"",
+        ...
+      }
+    ]
+    ...
+  }
+  ```
+
+- The `operation` key is used to specify the action to perform on an entity.  
+Its available values are:  
+  `create` - creates a new entity, or updates it if it already exists.  
+  `delete` - deletes an existing entity. When using this operation, the only required key under `entity` is `identifier`.
+
+  ```json showLineNumbers
+  {
+    ...
+    "mappings": [
+      {
+        "blueprint": "pullRequest",
+        // highlight-next-line
+        "operation": "create",
+        ...
+      }
+    ]
+    ...
+  }
+  ```
+
   :::info Delete dependent entities
   When deleting an entity using the `delete` operation, all dependent entities will also be deleted. To prevent this, you can set the value of `operation` to be an object, and set `deleteDependents` to `false`, like this:
   ```json
   "operation": {"type":"delete", "deleteDependents": false},
   ```
   :::
-
-```json showLineNumbers
-{
-  ...
-  "mappings": [
-    {
-      "blueprint": "pullRequest",
-      // highlight-next-line
-      "operation": "create",
-      ...
-    }
-  ]
-  ...
-}
-```
 <br/>
+
 - The `filter` key lets you filter exactly which payloads sent to the webhook are processed:
 
-```json showLineNumbers
-{
-  ...
-  "mappings": [
-    {
-      "blueprint": "pullRequest",
-      // highlight-next-line
-      "filter": ".headers.\"x-github-event\" == \"pull_request\"" # JQ boolean query. If evaluated to false - skip the payload.
-      ...
-    }
-  ]
-  ...
-}
-```
+  ```json showLineNumbers
+  {
+    ...
+    "mappings": [
+      {
+        "blueprint": "pullRequest",
+        // highlight-next-line
+        "filter": ".headers.\"x-github-event\" == \"pull_request\"" # JQ boolean query. If evaluated to false - skip the payload.
+        ...
+      }
+    ]
+    ...
+  }
+  ```
 <br/>
-- The `itemsToParse` key makes it possible to create multiple entities from a single webhook event:
+- The `itemsToParse` key makes it possible to create multiple entities from a single webhook event.  
 
-```json showLineNumbers
-{
-  ...
-  "mappings": [
-    {
-      "blueprint": "commits",
-      // highlight-start
-      "itemsToParse": ".body.pull_request.commits",
-      // highlight-end
-      // Checks if any of the modified files are in the frontend/src folder.
-      "filter": ".item.modified | any(test(\"/frontend/src\"))",
-      "entity": {
-        "identifier": ".item.id | tostring",
-        "title": ".item.message",
-        "properties": {
-          "author": ".item.author.email",
-          "url": ".item.url",
-          "repository": ".body.pusher.email"
+   Any JQ expression can be used here, as long as it evaluates to an array of items.
+
+  `item` will be added to the JQ context as a key containing a reference to items in the array specified in `itemsToParse`.  
+  Keys from the object in the array can be accessed using the `.item.KEY_NAME` syntax, see the example JSON for more information.
+
+  ```json showLineNumbers
+  {
+    ...
+    "mappings": [
+      {
+        "blueprint": "commits",
+        // highlight-start
+        "itemsToParse": ".body.pull_request.commits",
+        // highlight-end
+        // Checks if any of the modified files are in the frontend/src folder.
+        "filter": ".item.modified | any(test(\"/frontend/src\"))",
+        "entity": {
+          "identifier": ".item.id | tostring",
+          "title": ".item.message",
+          "properties": {
+            "author": ".item.author.email",
+            "url": ".item.url",
+            "repository": ".body.pusher.email"
+          }
         }
       }
-    }
-  ]
-  ...
-}
-```
+    ]
+    ...
+  }
+  ```
+  :::caution Maximum items limit
+  The `itemsToParse` field has a maximum limit of **500 items per request**. If your webhook payload contains more than 500 items, only the first 500 will be processed.
+  :::
 
-:::note
-
-- Any JQ expression can be used here, as long as it evaluates to an array of items.
-- `item` will be added to the JQ context as a key containing a reference to items in the array specified in `itemsToParse`. Keys from the object in the array can be accessed using the `.item.KEY_NAME` syntax, see the example JSON for more information.
-
-:::
 <br/>
 - The `entity` key is used to map information from the webhook payload to Port entity properties using JQ:
 
-```json showLineNumbers
-{
-  ...
-  "mappings": [
-    {
-      ...
-      "filter": ".headers.\"x-github-event\" == \"pull_request\"",
-      // highlight-start
-      "entity": {
-        "identifier": ".body.pull_request.id | tostring",
-        "title": ".body.pull_request.title",
-        "properties": {
-          "author": ".body.pull_request.user.login",
-          "url": ".body.pull_request.html_url"
-        },
-        "relations": {}
+  ```json showLineNumbers
+  {
+    ...
+    "mappings": [
+      {
+        ...
+        "filter": ".headers.\"x-github-event\" == \"pull_request\"",
+        // highlight-start
+        "entity": {
+          "identifier": ".body.pull_request.id | tostring",
+          "title": ".body.pull_request.title",
+          "properties": {
+            "author": ".body.pull_request.user.login",
+            "url": ".body.pull_request.html_url"
+          },
+          "relations": {}
+        }
+        // highlight-end
       }
-      // highlight-end
-    }
-  ]
-  ...
-}
-```
+    ]
+    ...
+  }
+  ```
 
 #### Search relation
 
@@ -479,7 +482,7 @@ resource "port_webhook" "myWebhook" {
 
 </Tabs>
 
-:::tip
+:::tip Optional security configuration
 The security configuration is not mandatory, but it does provide an additional layer of security, making sure that Port only processes payloads that were actually sent from one of your 3rd party webhooks.
 
 If you do not want to supply a security configuration with your webhook configuration, simply pass an empty object: `"security": {}` with your webhook configuration.
@@ -489,111 +492,112 @@ If you do not want to supply a security configuration with your webhook configur
 
 - The root of the security configuration is the `security` key:
 
-```json showLineNumbers
-{
-  ...
-  // highlight-next-line
-  "security": {
-    "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "x-hub-signature-256",
-    "signatureAlgorithm": "sha256",
-    "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"x-github-delivery\""
-  }
-  ...
-}
-```
-
-- The `secret` key is used to specify the secret value used to validate the hashed signature of the received payload:
-  - Depending on the service, the secret value might be autogenerated by the 3rd party or manually provided to the 3rd party by you.
-
-```json showLineNumbers
-  ...
-  "security": {
+  ```json showLineNumbers
+  {
+    ...
     // highlight-next-line
-    "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "x-hub-signature-256",
-    "signatureAlgorithm": "sha256",
-    "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"x-github-delivery\""
+    "security": {
+      "secret": "WEBHOOK_SECRET",
+      "signatureHeaderName": "x-hub-signature-256",
+      "signatureAlgorithm": "sha256",
+      "signaturePrefix": "sha256=",
+      "requestIdentifierPath": ".headers.\"x-github-delivery\""
+    }
+    ...
   }
-  ...
-}
-```
+  ```
+
+- The `secret` key is used to specify the secret value used to validate the hashed signature of the received payload.  
+  
+    ```json showLineNumbers
+      ...
+      "security": {
+        // highlight-next-line
+        "secret": "WEBHOOK_SECRET",
+        "signatureHeaderName": "x-hub-signature-256",
+        "signatureAlgorithm": "sha256",
+        "signaturePrefix": "sha256=",
+        "requestIdentifierPath": ".headers.\"x-github-delivery\""
+      }
+      ...
+    }
+    ```
+    Depending on the service, the secret value might be autogenerated by the 3rd party or manually provided to the 3rd party by you.
 
 - The `signatureHeaderName` key is used to specify the name of the header that stores the hashed signature of the payload:
-  - When a webhook endpoint receives a new payload, it will compare the value of this header with the hashed signature it will calculate from the received payload.
 
-```json showLineNumbers
-  ...
-  "security": {
-    "secret": "WEBHOOK_SECRET",
-    // highlight-next-line
-    "signatureHeaderName": "x-hub-signature-256",
-    "signatureAlgorithm": "sha256",
-    "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"x-github-delivery\""
+  ```json showLineNumbers
+    ...
+    "security": {
+      "secret": "WEBHOOK_SECRET",
+      // highlight-next-line
+      "signatureHeaderName": "x-hub-signature-256",
+      "signatureAlgorithm": "sha256",
+      "signaturePrefix": "sha256=",
+      "requestIdentifierPath": ".headers.\"x-github-delivery\""
+    }
+    ...
   }
-  ...
-}
-```
+  ```
+  When a webhook endpoint receives a new payload, it will compare the value of this header with the hashed signature it will calculate from the received payload.
 
-- The `signatureAlgorithm` key is used to specify the hashing algorithm used to create the payloads' hashed signature:
-  - **Available values:** `sha1`, `sha256`, `plain`;
-  - When a webhook endpoint receives a new payload, it will use the specified algorithm to calculate the hashed signature of the received payload.
+- The `signatureAlgorithm` key is used to specify the hashing algorithm used to create the payloads' hashed signature:  
+  When a webhook endpoint receives a new payload, it will use the specified algorithm to calculate the hashed signature of the received payload.
+  **Available values:** `sha1`, `sha256`, `plain`.  
 
-```json showLineNumbers
-  ...
-  "security": {
-    "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "x-hub-signature-256",
-    // highlight-next-line
-    "signatureAlgorithm": "sha256",
-    "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"x-github-delivery\""
+  ```json showLineNumbers
+    ...
+    "security": {
+      "secret": "WEBHOOK_SECRET",
+      "signatureHeaderName": "x-hub-signature-256",
+      // highlight-next-line
+      "signatureAlgorithm": "sha256",
+      "signaturePrefix": "sha256=",
+      "requestIdentifierPath": ".headers.\"x-github-delivery\""
+    }
+    ...
   }
-  ...
-}
-```
+  ```
+  :::info plain algorithm (no hashing)
+  When using the `plain` algorithm, no hashing will be performed and the value of the secret saved in the Port webhook configuration will be compared to the value in the specified header without any modification.
+  :::
 
-:::info
-When using the `plain` algorithm, no hashing will be performed and the value of the secret saved in the Port webhook configuration will be compared to the value in the specified header without any modification.
-:::
+- The `signaturePrefix` key is used to specify a static prefix string that appears before the hashedSignature in the `signatureHeaderName` key:  
 
-- The `signaturePrefix` key is used to specify a static prefix string that appears before the hashedSignature in the `signatureHeaderName` key:
-  - For example, in GitHub webhooks, the header containing the hashed signature always starts with `sha256=`, so the webhook should be configured with: `"signaturePrefix": "sha256="`;
+  For example, in GitHub webhooks, the header containing the hashed signature always starts with `sha256=`, so the webhook should be configured with: `"signaturePrefix": "sha256="`.
 
-```json showLineNumbers
-  ...
-  "security": {
-    "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "x-hub-signature-256",
-    "signatureAlgorithm": "sha256",
-    // highlight-next-line
-    "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"x-github-delivery\""
+  ```json showLineNumbers
+    ...
+    "security": {
+      "secret": "WEBHOOK_SECRET",
+      "signatureHeaderName": "x-hub-signature-256",
+      "signatureAlgorithm": "sha256",
+      // highlight-next-line
+      "signaturePrefix": "sha256=",
+      "requestIdentifierPath": ".headers.\"x-github-delivery\""
+    }
+    ...
   }
-  ...
-}
-```
+  ```
 
-- The `requestIdentifierPath` key is used to specify a JQ pattern resulting in a unique identifier of the webhook payload:
-  - This key is used to prevent Port from processing an event more than once;
-  - For example, in GitHub webhooks, the `x-github-delivery` header contains a GUID used to identify the delivery. So the webhook should be configured with: `"requestIdentifierPath": ".headers.\"x-github-delivery\""`;
+- The `requestIdentifierPath` key is used to specify a JQ pattern resulting in a unique identifier of the webhook payload:  
+  This key is used to prevent Port from processing an event more than once.  
+  
+  For example, in GitHub webhooks, the `x-github-delivery` header contains a GUID used to identify the delivery. So the webhook should be configured with: `"requestIdentifierPath": ".headers.\"x-github-delivery\""`.
 
-```json showLineNumbers
-  ...
-  "security": {
-    "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "x-hub-signature-256",
-    "signatureAlgorithm": "sha256",
-    "signaturePrefix": "sha256=",
-    // highlight-next-line
-    "requestIdentifierPath": ".headers.\"x-github-delivery\""
+  ```json showLineNumbers
+    ...
+    "security": {
+      "secret": "WEBHOOK_SECRET",
+      "signatureHeaderName": "x-hub-signature-256",
+      "signatureAlgorithm": "sha256",
+      "signaturePrefix": "sha256=",
+      // highlight-next-line
+      "requestIdentifierPath": ".headers.\"x-github-delivery\""
+    }
+    ...
   }
-  ...
-}
-```
+  ```
 
 ## Configuring webhook endpoints
 
@@ -606,9 +610,9 @@ To create a new webhook, make an HTTP POST request to `https://api.getport.io/v1
 
 The API response will include the complete configuration of the webhook, including the following important fields:
 
-- `webhookKey` - this is the unique identifier used for the new generic webhook route you created;
-- `url` - this is the complete URL you need to pass to your 3rd party webhook configuration. Event payloads matching the webhook configuration you created should be sent to this URL;
-  - The `url` will be of the format: `https://ingest.getport.io/{webhookKey}`;
+- `webhookKey` - this is the unique identifier used for the new generic webhook route you created.
+- `url` - this is the complete URL you need to pass to your 3rd party webhook configuration. Event payloads matching the webhook configuration you created should be sent to this URL.
+  - The `url` will be of the format: `https://ingest.getport.io/{webhookKey}`.
   - **Note:** The `https://ingest.getport.io` is constant, only the `webhookKey` will change between webhooks configurations.
 
 </TabItem>
@@ -678,9 +682,9 @@ After creating and configuring your custom webhook, go to your 3rd party provide
 
 - Go to the new webhook setup menu in your 3rd party provider
   - For example in GitHub: go to your desired organization/repository -> Settings -> Webhooks -> Add webhook.
-- Paste the webhook URL you received from Port (`https://ingest.getport.io/{webhookKey}`) in the field specifying the webhook target URL;
+- Paste the webhook URL you received from Port (`https://ingest.getport.io/{webhookKey}`) in the field specifying the webhook target URL.
   - For example in GitHub: paste the webhook URL in the `Payload URL` field.
-- For content type, select `application/json` (if applicable);
+- For content type, select `application/json` (if applicable).
 - In case the `secret` value is generated by your 3rd party, be sure to go back and [update](?operation=update#configuring-webhook-endpoints) your [security configuration](#security-configuration) with the secret value.
 
 :::warning Payload size limitation
