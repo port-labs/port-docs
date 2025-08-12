@@ -15,6 +15,17 @@ import TabItem from "@theme/TabItem"
 
 Once you've built your AI agents, it's time to interact with them. Port provides several ways to communicate with your AI agents.
 
+## Backend mode selection
+
+When interacting with AI agents, you can choose between two backend modes that determine the agent's capabilities:
+
+- **Standard backend**: Uses the agent's configured blueprint access and OpenAI GPT models
+- **MCP server backend**: Provides enhanced capabilities with intelligent catalog access and Claude models
+
+:::tip Backend mode is interaction-level
+The backend mode is controlled when you interact with agents (through widgets, API calls, etc.), not in the agent configuration itself. This means any agent can benefit from MCP server backend capabilities when you choose to use them.
+:::
+
 ## Interaction options
 
 You have two main approaches when interacting with AI agents in Port:
@@ -50,6 +61,16 @@ Follow these steps to add an AI agent widget:
 
 The widget provides a chat interface where you can ask questions and receive responses from the **specific agent you configured** without leaving your dashboard.
 
+### MCP server backend mode in widgets
+
+When using the widget interface, you can choose the backend mode for each interaction:
+
+- **Use agent's default**: Follow the agent's configured backend mode
+- **Force MCP server**: Override to use MCP server backend mode for enhanced capabilities
+- **Force standard**: Override to use standard backend mode for controlled access
+
+The widget interface provides visual indicators showing which tools and capabilities are being used when MCP server backend mode is active, giving you transparency into the enhanced processing.
+
 </TabItem>
 <TabItem value="slack-integration" label="Slack Integration">
 
@@ -74,6 +95,10 @@ When you send a message, the app will:
 - Keep conversations focused on the same topic for best results.
 - Limit threads to five consecutive messages for optimal performance.
 - For best results, start new threads for new topics or questions.
+
+:::info MCP server backend mode in Slack
+Currently, Slack interactions use the agent's default backend mode configuration. The ability to choose or override the backend mode per interaction is not yet available in Slack, but will be added in future updates.
+:::
 
 </TabItem>
 <TabItem value="actions-automations" label="Actions and automations">
@@ -111,6 +136,24 @@ The following example shows how to invoke a specific agent, but the router agent
 
 ```bash
 curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true' \\
+  -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
+  -H 'Content-Type: application/json' \\
+  --data-raw '{"prompt":"What is my next task?"}'
+```
+
+**Using MCP Server Backend Mode via API:**
+
+You can override the agent's default backend mode by adding the `useMCP` parameter:
+
+```bash
+# Force MCP server backend mode
+curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true&useMCP=true' \\
+  -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
+  -H 'Content-Type: application/json' \\
+  --data-raw '{"prompt":"What is my next task?"}'
+
+# Force standard backend mode  
+curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true&useMCP=false' \\
   -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
   -H 'Content-Type: application/json' \\
   --data-raw '{"prompt":"What is my next task?"}'
@@ -259,7 +302,18 @@ The plan shows how the agent decided to tackle your request and the steps it int
 
 ### Tools used
 
-This section displays the actual steps the agent took and the APIs it used to complete your request. It can be particularly helpful for debugging when answers don't meet expectations, such as when an agent:
+This section displays the actual steps the agent took and the APIs it used to complete your request. The tools shown depend on the backend mode used:
+
+**Standard Backend Mode:**
+- Shows traditional agent tools based on configured blueprint access
+- Limited to predefined search and query capabilities
+
+**MCP Server Backend Mode:**
+- Shows enhanced MCP server tools for comprehensive data access
+- Includes all read-only tools available in the MCP server
+- Provides more detailed tool execution information
+
+This information can be particularly helpful for debugging when answers don't meet expectations, such as when an agent:
 
 - Used an incorrect field name.
 - Chose an inappropriate property.
@@ -308,7 +362,15 @@ Here are some common errors you might encounter when working with AI agents and 
 This error occurs when an AI agent tries to execute a self-service action that requires selecting entities from specific blueprints, but the agent doesn't have access to those blueprints.
 
 **How to fix:**  
-Add the missing blueprints listed in the error message to the agent's configuration.
+
+For **Standard Backend Mode:**
+- Add the missing blueprints listed in the error message to the agent's configuration.
+
+For **MCP Server Backend Mode:**
+- This error is less common since MCP mode has broader data access
+- If you encounter this error, it likely relates to action execution requirements
+- Ensure the action's entity selection fields are properly configured
+- Consider switching to MCP server backend mode for enhanced blueprint access
 </details>
 
 ## Security considerations
