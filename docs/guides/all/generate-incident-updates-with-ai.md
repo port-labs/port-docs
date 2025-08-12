@@ -397,7 +397,7 @@ We will create two automations to orchestrate the AI-enhanced incident managemen
 You will need to add your Slack bot token as a secret in Port. Head to our [guide on how to install the Slack app](https://docs.port.io/ai-agents/slack-app#installation).
 :::
 
-See below is an example notification sent to Slack:
+Below is an example notification sent to Slack:
 
 <img src='/img/guides/incidentUpdateWithAISlackExample.png' border="1px" width="100%" />
 
