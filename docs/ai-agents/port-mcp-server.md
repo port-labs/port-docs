@@ -367,6 +367,194 @@ Refer to the [Claude custom connector documentation](https://support.anthropic.c
 </TabItem>
 </Tabs>
 
+### Prompts
+
+In Port, you can centrally manage reusable prompts and expose them to your users via the MCP Server. Once defined in Port, these prompts become available in supported MCP clients (for example, Cursor or Claude) where developers and AI agents can discover and run them with the required inputs.
+
+#### Common use cases
+
+- Automate on-call runbooks and incident triage guidance
+- Standardize code review or deployment checklists
+- Generate structured updates and communications (e.g., incident status, release notes)
+
+#### Setup data model
+
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
+
+2. Click on "+ Blueprint".
+
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+
+4. Paste the following JSON schema into the editor:
+
+
+
+    <details>
+    <summary>Prompt blueprint JSON (click to expand)</summary>
+    
+    ```json showLineNumbers
+    {
+      "identifier": "prompt",
+      "title": "Prompt",
+      "icon": "Microservice",
+      "schema": {
+        "properties": {
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "arguments": {
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The name of the argument parameter"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "A description of what this argument is for"
+                },
+                "required": {
+                  "type": "boolean",
+                  "description": "Whether this argument is required or optional",
+                  "default": false
+                }
+              },
+              "required": [
+                "name",
+                "description"
+              ]
+            },
+            "type": "array",
+            "title": "Arguments"
+          },
+          "template": {
+            "icon": "DefaultProperty",
+            "type": "string",
+            "title": "Prompt Template",
+            "format": "markdown"
+          }
+        },
+        "required": [
+          "description",
+          "template"
+        ]
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
+    </details>
+
+:::info Where prompts appear
+Once this blueprint exists and you create entities for it, prompts will show up in supported MCP clients connected to your Port organization. In clients that surface MCP prompts, you’ll see them listed and ready to run with arguments.
+:::
+
+#### Create prompts
+
+Create entities of the `prompt` blueprint for each prompt you want to expose. At minimum, provide `description` and `template`. Optionally add `arguments` to parameterize the prompt.
+
+1. Go to the [Prompts page](https://app.getport.io/prompts) in your portal.
+2. Click `Create prompt`.
+3. Fill out the form:
+   - Provide a title and description.
+   - Write the prompt template (supports markdown).
+   - Define any `arguments` (optional) with `name`, `description`, and whether they are `required`.
+
+![Create prompt form in Port](/img/ai-agents/PortPromptForm.png)
+
+:::info Template and placeholders
+The `template` supports markdown and variable placeholders. Each argument defined in `arguments` is exposed by its `name` and can be referenced as `{{name}}` inside the template. When you run the prompt, the MCP Server collects values for required arguments and substitutes them into the matching `{{}}` placeholders before execution.
+:::
+
+#### Examples
+
+<Tabs groupId="prompt-examples" queryString>
+<TabItem value="incident-triage" label="Incident triage">
+
+Use placeholders to inject context such as the service, environment, incident, and timeframe.
+
+```markdown showLineNumbers
+You are assisting with an incident in the {{service_name}} service ({{environment}}).
+Incident ID: {{incident_id}}
+
+For the last {{timeframe}}:
+- Summarize critical alerts and recent deploys
+- Suggest next steps and owners
+- Link relevant dashboards/runbooks
+```
+
+Arguments to define: `service_name` (required), `environment` (optional), `incident_id` (required), `timeframe` (optional).
+
+</TabItem>
+<TabItem value="scorecard-remediation" label="Scorecard remediation">
+
+Generate tailored remediation steps for failing scorecard rules.
+
+```markdown showLineNumbers
+For {{service_name}}, generate remediation steps for failing rules in the "{{scorecard_name}}" scorecard.
+
+For each failing rule:
+- What is failing
+- Why it matters
+- Step-by-step remediation
+- Owners and suggested timeline
+```
+
+Arguments to define: `service_name` (required), `scorecard_name` (required).
+
+</TabItem>
+<TabItem value="on-call-handoff" label="On-call handoff summary">
+
+Summarize on-call context for a team over a time window.
+
+```markdown showLineNumbers
+Create an on-call handoff for {{team}} for the last {{timeframe}}.
+
+Include:
+- Active incidents and current status
+- Top risks and mitigations
+- Pending actions and owners
+- Upcoming maintenance windows
+```
+
+Arguments to define: `team` (required), `timeframe` (required).
+
+</TabItem>
+</Tabs>
+
+After creating entities, reconnect or refresh your MCP client; your prompts will be available to run and will prompt for any defined arguments.
+
+#### See prompts in your client
+
+<Tabs groupId="prompt-ui" queryString>
+<TabItem value="cursor" label="Cursor">
+
+In Cursor, type "/" to open the prompts list. You'll see all `prompt` entities; selecting one opens an input form for its arguments.
+
+![Prompt list in Cursor](/img/ai-agents/MCPCursorPromptList.png)
+
+When you select a prompt, Cursor renders fields for the defined `arguments`. Required ones are marked and must be provided. The MCP Server substitutes provided values into the matching `{{}}` placeholders in the template at runtime.
+
+![Prompt argument input in Cursor](/img/ai-agents/MCPCursorPromptInput.png)
+
+</TabItem>
+<TabItem value="claude" label="Claude">
+
+In Claude, click the "+" button and choose the prompts option to view the list from your Port organization. Selecting a prompt opens a parameter collection flow.
+
+![Prompt list in Claude](/img/ai-agents/MCPClaudePromptList.png)
+
+Claude will ask for any required arguments before running the prompt, and the MCP Server will replace the corresponding `{{}}` placeholders in the template with the provided values.
+
+![Prompt argument input in Claude](/img/ai-agents/MCPClaudePromptInput.png)
+
+</TabItem>
+</Tabs>
+
 ## Troubleshooting
 
 If you encounter issues while setting up or using the Port MCP Server, expand the relevant section below:
