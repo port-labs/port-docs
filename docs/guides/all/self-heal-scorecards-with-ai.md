@@ -7,14 +7,14 @@ description: Learn how to use Port's AI capabilities to detect scorecard degrada
 
 Scorecards in Port help you evaluate the maturity, production readiness, and engineering quality of entities in your software catalog. However, when scorecard statistics degrade, manual intervention is often required to identify and fix the issues. This guide shows you how to create an AI-powered system that automatically detects scorecard degradation and trigger Github Copilot for automated code fixes.
 
-<img src="/img/guides/self-healing-scorecard-workflow.jpg" border="1px" width="100%" />
+<img src="/img/guides/self-healing-scorecard-architecture.png" border="1px" width="100%" />
 
 
 ## Common use cases
 
-- **Maintain engineering standards** by detecting missing license files, code owners, or deployment configurations
-- **Track code quality metrics** for missing linters, tests, or security scanning
-- **Ensure compliance** by monitoring regulatory requirements, security protocols, and data protection measures
+- **Automatically maintain engineering standards** by detecting and fixing missing license files, code owners, or deployment configurations
+- **Automatically improve code quality** by fixing missing linters, tests, or security scanning
+- **Constantly enhance compliance** by automatically reacting to degraded security scores and monitoring regulatory requirements, security protocols, and data protection measures
 
 
 ## Prerequisites
@@ -164,17 +164,6 @@ When configuring your scorecards, consider selecting rules that GitHub Copilot c
 We will create self-service actions that the AI agent can use for scorecard remediation.
 
 
-### Add Port secrets
-
-To add these secrets to your portal:
-
-1. Click on the `...` button in the top right corner of your Port application.
-2. Click on **Credentials**.
-3. Click on the `Secrets` tab.
-4. Click on `+ Secret` and add the following secret:
-   - `GITHUB_TOKEN` - A [GitHub fine-grained access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with read and write permissions for the "Issues" section of your repositories.
-
-
 ### Create AI agent task action
 
 1. Go back to the [self-service](https://app.getport.io/self-serve) page of your portal.
@@ -187,8 +176,8 @@ To add these secrets to your portal:
 
     ```json showLineNumbers
     {
-      "identifier": "create_ai_task_from_scorcard",
-      "title": "Create Task from Scorecard",
+      "identifier": "create_ai_agent_task",
+      "title": "Create an AI agent task",
       "icon": "Alert",
       "description": "Create a new task for scorecard remediation",
       "trigger": {
@@ -292,9 +281,9 @@ Next, we will create an AI agent that analyzes scorecard degradation and creates
           "githubPullRequest"
         ],
         "allowed_actions": [
-          "create_ai_task_from_scorcard"
+          "create_ai_agent_task"
         ],
-        "prompt": "You are a **Self-Healing Scorecards AI Agent**. Your role is to **analyze scorecard degradation** and create **comprehensive remediation workflows**.\n\n## Context\n\nWhen a scorecard's statistics decrease (indicating degraded performance), you need to:\n\n1. Analyze which specific rule(s) failed and caused the degradation\n2. Create a task that will be used to generate a GitHub issue for remediation\n\n⚠️ IMPORTANT:\nYou must only address rules that have changed from SUCCESS to FAILURE in the current diff.\nDo not include or attempt to fix any unrelated or previously failing rules. This avoids unnecessary scope expansion and ensures Copilot-generated PRs remain focused and minimal.\n\n## 🔍 Analysis Process\n\n### ✅ Step 1: Identify Failed Rules\n\n* Examine the scorecard rule results to identify which rule(s) transitioned from **SUCCESS → FAILURE**\n* Compare the current state with the previous state to determine the diff and understand what changed\n* Only include rules that newly failed in this diff\n\n### 🧠 Step 2: Root Cause Analysis\n\nFor each newly failed rule:\n\n* Determine what specific condition is not being met\n* Identify what entity properties or relationships are missing or incorrect\n* Specify what actions would resolve the issue\n\n### 📝 Step 3: Create Task for Remediation\n\nGenerate a task entity by calling the \"create_ai_task_from_scorcard\" self service action with:\n\n* **Title**:\n  `\"Fix Scorecard Degradation: [What Specific Rule Changed]\"`\n\n* **Description** (include):\n  * Identify the failed rule with specific failure reasons\n  * Impact assessment\n  * Specific code or configuration changes needed\n  * Files that need to be modified\n  * Examples of correct implementations\n  * Links to relevant entities and scorecards\n\n* **Labels**:\nAdd  relevant labels (e.g., bug, enhancement, infra, docs) including a MANDATORY \"auto_assign\" label in all creations. This will be used to track issues created by Port's AI agent.\n\n## 📏 Guidelines\n\n* Be **specific** about what needs to be fixed\n* Provide **actionable**, implementable steps\n* Include **relevant links and context**\n* Prioritize issues based on **impact**\n* Ensure each task contain **sufficient detail** for human or AI resolution\n* Use **markdown formatting** for better readability\n* Only generate tasks for rules that degraded in this specific diff",
+        "prompt": "You are a **Self-Healing Scorecards AI Agent**. Your role is to **analyze scorecard degradation** and create **comprehensive remediation workflows**.\n\n## Context\n\nWhen a scorecard's statistics decrease (indicating degraded performance), you need to:\n\n1. Analyze which specific rule(s) failed and caused the degradation\n2. Create a task that will be used to generate a GitHub issue for remediation\n\n⚠️ IMPORTANT:\nYou must only address rules that have changed from SUCCESS to FAILURE in the current diff.\nDo not include or attempt to fix any unrelated or previously failing rules. This avoids unnecessary scope expansion and ensures Copilot-generated PRs remain focused and minimal.\n\n## 🔍 Analysis Process\n\n### ✅ Step 1: Identify Failed Rules\n\n* Examine the scorecard rule results to identify which rule(s) transitioned from **SUCCESS → FAILURE**\n* Compare the current state with the previous state to determine the diff and understand what changed\n* Only include rules that newly failed in this diff\n\n### 🧠 Step 2: Root Cause Analysis\n\nFor each newly failed rule:\n\n* Determine what specific condition is not being met\n* Identify what entity properties or relationships are missing or incorrect\n* Specify what actions would resolve the issue\n\n### 📝 Step 3: Create Task for Remediation\n\nGenerate a task entity by calling the \"create_ai_agent_task\" self service action with:\n\n* **Title**:\n  `\"Fix Scorecard Degradation: [What Specific Rule Changed]\"`\n\n* **Description** (include):\n  * Identify the failed rule with specific failure reasons\n  * Impact assessment\n  * Specific code or configuration changes needed\n  * Files that need to be modified\n  * Examples of correct implementations\n  * Links to relevant entities and scorecards\n\n* **Labels**:\nAdd  relevant labels (e.g., bug, enhancement, infra, docs) including a MANDATORY \"auto_assign\" label in all creations. This will be used to track issues created by Port's AI agent.\n\n## 📏 Guidelines\n\n* Be **specific** about what needs to be fixed\n* Provide **actionable**, implementable steps\n* Include **relevant links and context**\n* Prioritize issues based on **impact**\n* Ensure each task contain **sufficient detail** for human or AI resolution\n* Use **markdown formatting** for better readability\n* Only generate tasks for rules that degraded in this specific diff",
         "execution_mode": "Automatic"
       },
       "relations": {}
@@ -355,7 +344,7 @@ This automation continuously monitors scorecard statistics and triggers the AI a
           "Content-Type": "application/json"
         },
         "body": {
-          "prompt": "Scorecard degradation detected for entity: {{ .event.diff.after.title }}\nEntity identifier: {{ .event.diff.after.identifier }}\nPrevious scorecard statistics: {{ .diff.before.scorecardsStats }}\nCurrent scorecard statistics: {{ .diff.after.scorecardsStats }}\nPrevious Entity properties: {{ .event.diff.before.properties }}\nCurrent Entity properties: {{ .event.diff.after.properties }}\nPrevious Entity relations: {{ .event.diff.before.relations }}\nCurrent Entity relations: {{ .event.diff.after.relations }}\nPrevious Scorecard Details: {{ .event.diff.before.scorecards }}\nCurrent Scorecard Details: {{ .event.diff.after.scorecards }}\n\nAnalyze the scorecard degradation and create a task for remediation. NEVER FORGET TO CALL the *create_ai_task_from_scorcard* self service action",
+          "prompt": "Scorecard degradation detected for entity: {{ .event.diff.after.title }}\nEntity identifier: {{ .event.diff.after.identifier }}\nPrevious scorecard statistics: {{ .diff.before.scorecardsStats }}\nCurrent scorecard statistics: {{ .diff.after.scorecardsStats }}\nPrevious Entity properties: {{ .event.diff.before.properties }}\nCurrent Entity properties: {{ .event.diff.after.properties }}\nPrevious Entity relations: {{ .event.diff.before.relations }}\nCurrent Entity relations: {{ .event.diff.after.relations }}\nPrevious Scorecard Details: {{ .event.diff.before.scorecards }}\nCurrent Scorecard Details: {{ .event.diff.after.scorecards }}\n\nAnalyze the scorecard degradation and create a task for remediation. NEVER FORGET TO CALL the *create_ai_agent_task* self service action",
           "labels": {
             "source": "scorecard_degradation_automation",
             "entity_id": "{{ .event.diff.after.identifier }}",
@@ -392,7 +381,7 @@ This automation bridges the gap between Port's AI agent analysis and GitHub's de
         "type": "automation",
         "event": {
           "type": "RUN_UPDATED",
-          "actionIdentifier": "create_ai_task_from_scorcard"
+          "actionIdentifier": "create_ai_agent_task"
         },
         "condition": {
           "type": "JQ",
@@ -466,6 +455,9 @@ Now let us test the complete workflow to ensure everything works correctly.
 1. Watch as GitHub Copilot generates code to fix the scorecard issues.
 2. Check that pull requests are created and linked back to the AI agent tasks.
 3. Verify that the scorecard statistics improve after the fixes are merged.
+
+<img src="/img/guides/self-healing-scorecard-dashboard-1.png" border="1px" width="100%" />
+<img src="/img/guides/self-healing-scorecard-dashboard-2.png" border="1px" width="100%" />
 
 
 ## Related guides
