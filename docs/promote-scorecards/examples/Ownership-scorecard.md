@@ -1,3 +1,8 @@
+---
+title: "Ownership scorecard"
+sidebar_position: 1
+---
+
 # Ownership Scorecard
 
 The following example demonstrates an ownership scorecard.

@@ -1,6 +1,11 @@
+---
+title: "Owasp Top 10 scorecard"
+sidebar_position: 1
+---
+
 # Owasp Top 10 Scorecard
 
-<img src="/img/guides/owasp/chart.png" width="100%" border="1px" />
+<img src="/img/guides/owasp/chart.png" width="80%" border="1px" alt="OWASP Top 10 Chart showing Gold, Silver and Basic tier distribution" />
 
 The following outlines the OWASP Top 10 Benchmarking Scorecard for each repository using Snyk, leveraging the following blueprints:
 

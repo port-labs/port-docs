@@ -1,3 +1,7 @@
+---
+title: "Ensure relation exists"
+sidebar_position: 1
+---
 # Ensure relation exists
 
 Say we have a `service` blueprint that has a relation to another blueprint named `domain`.  
