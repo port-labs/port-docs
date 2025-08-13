@@ -4781,6 +4781,7 @@ components:
                       - type: array
                         items:
                           type: string
+                      - type: "null"
                 additionalProperties: false
                 required:
                   - property
@@ -4858,6 +4859,7 @@ components:
                       - type: array
                         items:
                           type: string
+                      - type: "null"
                 additionalProperties: false
                 required:
                   - property
