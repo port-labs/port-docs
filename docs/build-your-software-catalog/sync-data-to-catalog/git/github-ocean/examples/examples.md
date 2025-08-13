@@ -57,6 +57,17 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 After creating the blueprints and committing the `port-app-config.yml` file to your `.github-private` repository (for global configuration), or to any specific repositories (for per-repo configuration), you will see new entities in Port matching your repositories alongside their README.md file contents and pull requests. (Remember that the `port-app-config.yml` file has to be in the **default branch** of the repository to take effect).
 
+Additionally, you can configure your selector to limit the number of closed pull requests to ingest. By Default, we only fetch 100 Pull Requests.
+```yaml
+- kind: pullRequest
+  selector:
+    query: 'true'
+    states: ['closed']
+    maxResults: 100
+```
+
+
+
 ## Map repositories and branches
 
 The following example demonstrates how to ingest your GitHub repositories and their branches to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
