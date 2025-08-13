@@ -96,7 +96,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## FireHydrant
 
 - [FireHydrant integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant.md)
-- [Self-service action to trigger a FireHydrant incident](https://docs.port.io/guides/all/create-firehydrant-incident)
+- [Self-service actions to create or trigger a FireHydrant incident](/guides/all/manage-firehydrant-incidents)
 
 ## Git
 
@@ -203,10 +203,11 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Jira
 
 - [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/jira.md)
+- [Jira Server integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/)
 - [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook)
+- [Jira Server webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/#alternative-option---using-the-webhook-integration)
 - [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
-- [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
 <!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
 
 ## Kafka

@@ -12,7 +12,7 @@ Our [Codefresh workflow template](https://github.com/port-labs/port-codefresh-wo
 <br></br>
 <br></br>
 
-![CircleCI Illustration](/img/build-your-software-catalog/sync-data-to-catalog/codefresh/codefresh-iilustration.jpg)
+![CircleCI Illustration](/img/build-your-software-catalog/sync-data-to-catalog/codefresh/codefresh-iilustration.png)
 
 ## 💡 Codefresh integration usage
 

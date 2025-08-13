@@ -18,7 +18,7 @@ Using Jenkins build, you can easily create/update and query entities in Port.
 <br></br>
 <br></br>
 
-![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/jenkins/jenkins-pipeline-illustration.jpg)
+![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/jenkins/jenkins-pipeline-illustration.png)
 
 ## 💡 Common Jenkins build usage
 
