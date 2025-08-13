@@ -121,9 +121,28 @@ When installing Port's GitHub app, the pull request and repository blueprints ar
 5. Click `Create` to save the blueprint.
 
 
+### Auto-assign issues to request creator
+
+To ensure that issues created through Port are assigned to the user who initiated the request, follow these steps:
+
+1. **Ingest GitHub Users**: Ensure GitHub users are imported into Port via the default integration.
+
+2. **Create Relations Between Users and GitHub Users**: Use the `Onboard user` self-service action to link each Port user to their GitHub username.
+
+This linkage keeps users connected to the issues they create and improves accountability.
+
+
 ## Set up self-service actions
 
 We will create self-service actions that can create and assign GitHub issues to Copilot. First, we need to add the necessary secrets to Port.
+
+
+### Add GitHub secrets
+
+In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+- `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+- `PORT_GITHUB_TOKEN`: A [GitHub fine-grained personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) is required. This token must have read and write permissions for the "Issues", "Metadata" and "Pull request" section of your repositories.
 
 
 ### Add Port secrets
@@ -135,15 +154,11 @@ To add these secrets to your portal:
 3. Click on the `Secrets` tab.
 4. Click on `+ Secret` and add the following secret:
 
-    - `GITHUB_TOKEN` - A [GitHub fine-grained access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) is required. This token must have read and write permissions for the "Issues" section of your repositories.
+    - `GITHUB_TOKEN` - A [GitHub fine-grained personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) is required. This token must have read and write permissions for the "Issues", "Metadata" and "Pull request" section of your repositories.
 
-
-### Add GitHub secrets
-
-In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
-- `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-- `PORT_GITHUB_TOKEN`: A [GitHub personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) with `repository` access.
+    :::info Note
+    The `GITHUB_TOKEN` mentioned here is the same token that was created and added as a secret in GitHub in the previous steps.
+    :::
 
 
 ### Create GitHub issue action
@@ -250,9 +265,17 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
         "type": "self-service",
         "operation": "DAY-2",
         "userInputs": {
-          "properties": {},
+          "properties": {
+            "triggered_by": {
+              "title": "Triggered By",
+              "icon": "DefaultProperty",
+              "type": "string"
+            }
+          },
           "required": [],
-          "order": []
+          "order": [
+            "triggered_by"
+          ]
         },
         "blueprintIdentifier": "githubIssue"
       },
@@ -265,7 +288,8 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
           "issue_number": "{{ .entity.properties.issueNumber }}",
           "port_run_id": "{{ .run.id }}",
           "repository_owner": "{{ .entity.relations.repository | split(\"/\") | .[0] }}",
-          "repository_name": "{{ .entity.relations.repository | split(\"/\") | .[1] }}"
+          "repository_name": "{{ .entity.relations.repository | split(\"/\") | .[1] }}",
+          "trigger_user_email": "{{ .inputs.triggered_by }}"
         },
         "reportWorkflowStatus": true
       },
@@ -281,7 +305,7 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 
 Create the file `.github/workflows/assign_to_copilot.yml` in the `.github/workflows` folder of your repository. 
 
-This workflow will check if Copilot is enabled for the repository and return its unique ID. It also handles the assignment of issues to Copilot and includes progress reporting back to Port.
+This workflow will check if Copilot is enabled for the repository and return its unique ID. It also handles the assignment of issues to Copilot and the triggering author, and includes progress reporting back to Port.
 
 <details>
 <summary><b>GitHub workflow for Copilot assignment (Click to expand)</b></summary>
@@ -310,6 +334,10 @@ on:
         description: 'Context to add to the issue comment'
         required: false
         type: string
+      trigger_user_email:
+        description: 'Email of the triggering user'
+        required: true
+        type: string
 
 jobs:
   assign_to_copilot:
@@ -326,7 +354,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.us.getport.io
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ inputs.port_run_id }}
           logMessage: "Workflow started for issue #${{ inputs.issue_number }} in ${{ inputs.repository_owner }}/${{ inputs.repository_name }}"
@@ -373,7 +401,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.us.getport.io
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ inputs.port_run_id }}
           logMessage: "Found Copilot bot with ID: ${{ steps.get_copilot_id.outputs.copilot_id }}"
@@ -418,7 +446,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.us.getport.io
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ inputs.port_run_id }}
           logMessage: "Found issue '${{ steps.get_issue_id.outputs.issue_title }}' (ID: ${{ steps.get_issue_id.outputs.issue_id }})"
@@ -440,19 +468,50 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.us.getport.io
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ inputs.port_run_id }}
           logMessage: "Added initial comment to issue #${{ inputs.issue_number }}."
+          
+      - name: Get Trigger User from Port
+        id: port_user_lookup
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: GET
+          identifier: ${{ inputs.trigger_user_email }}
+          blueprint: _user
+
+      - name: Extract GitHub Username
+        id: extract_username
+        run: |
+          username=$(echo '${{ steps.port_user_lookup.outputs.entity }}' | jq -r '.entity.properties.git_hub_username // .properties.git_hub_username')
+          if [ "$username" = "null" ] || [ -z "$username" ]; then
+            echo "No GitHub username found for ${{ inputs.trigger_user_email }}"
+            echo "github_username=" >> $GITHUB_OUTPUT
+          else
+            echo "Found GitHub username: $username"
+            echo "github_username=$username" >> $GITHUB_OUTPUT
+          fi
 
       - name: Assign issue to Copilot
         id: assign_issue
         run: |
-          response=$(gh api graphql -f query='
+          actor_ids="[\"${{ steps.get_copilot_id.outputs.copilot_id }}\"]"
+      
+          if [ -n "${{ steps.extract_username.outputs.github_username }}" ]; then
+            user_id=$(gh api graphql -f query="query { user(login: \"${{ steps.extract_username.outputs.github_username }}\") { id }}" | jq -r '.data.user.id')
+            if [ -n "$user_id" ] && [ "$user_id" != "null" ]; then
+              actor_ids="[\"${{ steps.get_copilot_id.outputs.copilot_id }}\", \"$user_id\"]"
+            fi
+          fi
+          response=$(gh api graphql -f query="
             mutation {
               replaceActorsForAssignable(input: {
-                assignableId: "${{ steps.get_issue_id.outputs.issue_id }}", 
-                actorIds: ["${{ steps.get_copilot_id.outputs.copilot_id }}"]
+                assignableId: \"${{ steps.get_issue_id.outputs.issue_id }}\", 
+                actorIds: $actor_ids
               }) {
                 assignable {
                   ... on Issue {
@@ -467,11 +526,10 @@ jobs:
                 }
               }
             }
-          ')
-          
-          # Check if assignment was successful
+          ")
+      
           assignees=$(echo "$response" | jq -r '.data.replaceActorsForAssignable.assignable.assignees.nodes[].login' 2>/dev/null)
-          
+      
           if echo "$assignees" | grep -q "Copilot"; then
             echo "✅ Successfully assigned issue to Copilot"
           else
@@ -487,7 +545,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.us.getport.io
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ inputs.port_run_id }}
           status: "SUCCESS"
@@ -549,7 +607,9 @@ This automation ensures that when a GitHub issue has the "auto_assign" label, it
         },
         "body": {
           "entity": "{{ .event.diff.after.identifier }}",
-          "properties": {}
+          "properties": {
+             "triggered_by": "{{ .trigger.by.user.email }}"
+          }
         }
       },
       "publish": true
