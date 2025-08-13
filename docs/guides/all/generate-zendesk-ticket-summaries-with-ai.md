@@ -1,11 +1,51 @@
 ---
 displayed_sidebar: null
-description: Generate on-demand summaries of Zendesk tickets in Port using a reusable MCP Prompt (backed by self-service actions). No AI agents or automations required.
+description: Summarize Zendesk tickets with AI using a reusable Port MCP Prompt (backed by self-service actions). Requires Port remote MCP installed and connected in your IDE. No AI agents or automations required.
 ---
 
-# Generate Zendesk ticket summaries with AI (via MCP)
+# Summarize Zendesk tickets with AI
 
-When working on support, you often need quick, structured summaries of a ticket for internal handoffs or customer updates. This guide sets up a reusable MCP Prompt in Port that any AI tool (Cursor, Claude, etc.) can run to fetch context from Zendesk and produce a clear summary on demand. The prompt uses three self-service actions under the hood; no AI agents or automations are required.
+When working on support, you often need quick, structured summaries of a ticket for internal handoffs or customer updates. In this guide, we will set up a Prompt in Port so that any AI tool can help you summarize Zendesk tickets with all the relevant context.
+
+## Scenario
+
+You’re the on-call support engineer. A customer reports intermittent login failures via Slack SSO on ticket `148273`. Before handoff to engineering, you need a concise internal summary and a customer-facing version.
+
+Example context snippets the prompt will fetch:
+
+```text
+Ticket subject: Users intermittently fail to login via Slack SSO
+
+Recent comments
+- 2025-08-10 09:12: Customer: “Users see 401 after Slack authorize.”
+- 2025-08-10 09:25: Agent: “Impacts EU tenants only; spike started ~08:50 UTC.”
+
+Side conversation (to SRE)
+- 2025-08-10 09:40: SRE: “Ingress rule update at 08:43. Slack callback path missing in EU cluster.”
+```
+
+Example output from the prompt:
+
+```markdown
+## Request
+Customer cannot complete Slack SSO; users receive 401 after authorize.
+
+## Resolution
+Reverted ingress rules and re-applied configuration with Slack callback path in EU cluster. Confirmed successful logins.
+
+## Root Cause
+Ingress change at 08:43 UTC omitted the Slack callback route for EU tenants, causing 401 responses on `/sso/callback`.
+
+## Recommendations
+- Add CI check for required SSO callback paths before deploy
+- Document EU-specific ingress overrides
+- Add synthetic SSO login check to detect regressions
+```
+
+## Flow overview
+
+- Developer runs the reusable `zendesk_ticket_summary` prompt with `ticket_id`
+- Prompt uses actions to fetch comments and side conversations → returns a structured summary
 
 ## Common use cases
 
@@ -15,10 +55,10 @@ When working on support, you often need quick, structured summaries of a ticket 
 
 ## Prerequisites
 
+- Port remote MCP installed and connected in your IDE (Cursor, Claude, etc.). Follow the setup guide: [Port MCP Server - Setup](/ai-agents/port-mcp-server#setup)
 - A Port account and basic familiarity with self-service actions.
 - A `zendesk_ticket` blueprint where the entity `identifier` is the Zendesk ticket ID.
 - Secret `ZENDESK_TOKEN` configured in Port containing the Base64-encoded Basic credential for Zendesk API.
-- Port’s MCP Server available to your AI tool (e.g., Cursor or Claude).
 
 :::info Zendesk authentication
 Use a Base64-encoded Basic credential in `ZENDESK_TOKEN`, typically built from `email/token:apitoken`. This guide assumes your token is already Base64-encoded and is used as `Authorization: Basic {{ .secrets.ZENDESK_TOKEN }}`.
@@ -26,14 +66,19 @@ Use a Base64-encoded Basic credential in `ZENDESK_TOKEN`, typically built from `
 
 ## Set up self-service actions
 
-Create the following actions to retrieve the ticket comments and side conversations from Zendesk. These actions have no inputs (except the side-conversation messages action) and can be invoked directly from your AI tool via MCP.
+We will create the following actions to retrieve ticket comments and side conversations from Zendesk. These actions have no inputs (except the side-conversation messages action) and can be invoked directly from your AI tool via MCP.
 
-1. Go to the self-service page in Port.
-2. Click on `+ New Action` and then `{...} Edit JSON`.
-3. Paste each action JSON below and click `Save`.
+#### Get Ticket Comments
+
+This action fetches all comments for the Zendesk ticket identified by the entity identifier.
+
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
+2. Click on `+ New Action`.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration:
 
     <details>
-    <summary><b>Action: get ticket comments (Click to expand)</b></summary>
+    <summary><b>Action: Get Ticket Comments (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -66,9 +111,20 @@ Create the following actions to retrieve the ticket comments and side conversati
     ```
 
     </details>
+    
+5. Click `Save`.
+
+#### Get Ticket Side Conversations
+
+This action lists all side conversations for the Zendesk ticket.
+
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
+2. Click on `+ New Action`.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration:
 
     <details>
-    <summary><b>Action: get ticket side conversations (Click to expand)</b></summary>
+    <summary><b>Action: Get Ticket Side Conversations (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -101,9 +157,20 @@ Create the following actions to retrieve the ticket comments and side conversati
     ```
 
     </details>
+    
+5. Click `Save`.
+
+#### Get Side Conversation Messages
+
+This action retrieves the messages for a specific side conversation using its URL.
+
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
+2. Click on `+ New Action`.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration:
 
     <details>
-    <summary><b>Action: get side conversation messages (Click to expand)</b></summary>
+    <summary><b>Action: Get Side Conversation Messages (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -145,47 +212,50 @@ Create the following actions to retrieve the ticket comments and side conversati
     ```
 
     </details>
+    
+5. Click `Save`.
 
 :::tip Subdomain flexibility
 Replace `<your_subdomain>` with your Zendesk subdomain, for example: `https://acme.zendesk.com/...`.
 :::
 
-## Run the reusable Prompt via Port MCP (Cursor/Claude)
+## Create a reusable Prompt
 
-Run the `zendesk_ticket_summary` prompt with `ticket_id` set to the Zendesk ticket ID (same as the `zendesk_ticket` entity identifier). The prompt will automatically use the actions in this guide to fetch comments and side conversations and return the structured summary.
+We will now define a Prompt entity that your IDE can invoke via Port MCP. Once created, you can run it with the ticket ID, and it will gather context and produce a structured summary.
 
-:::caution Privacy and scope
-Side conversations may contain internal discussion. Review generated summaries before sharing externally. This guide focuses on displaying summaries only; it does not post back to Zendesk.
-:::
+1. Go to the [Prompts page](https://app.getport.io/prompts) in Port.
+2. Click `Create prompt`.
+3. Toggle JSON mode.
+4. Paste the following JSON and adjust if needed.
 
-## Expose as a reusable Prompt via Port MCP Server
+    <details>
+    <summary><b>Prompt entity: Zendesk Ticket Summary (Click to expand)</b></summary>
 
-Port MCP Server can expose prompts you create and manage in Port to your IDE assistants (Cursor, Claude, etc.). Create a Prompt entity in Port and invoke it with an argument for the ticket ID.
+    ```json showLineNumbers
+    {
+        "identifier": "zendesk_ticket_summary",
+        "title": "Zendesk Ticket Summary",
+        "icon": "AI",
+        "properties": {
+            "description": "Summarize a Zendesk support ticket using comments and side conversations",
+            "arguments": [
+                {
+                    "name": "ticket_id",
+                    "required": true,
+                    "description": "The Zendesk ticket ID to summarize"
+                }
+            ],
+            "template": "You are an AI assistant tasked with summarizing Zendesk support tickets in Port. Use the comments and the side conversations on the ticket to summarize it in the following format:\n\n## Request\nWhat the customer wanted in a short sentence\n\n## Resolution  \nWhat was the resolution\n\n## Root Cause\nIn case of a problem/bug, what was the root cause\n\n## Recommendations\nE.g., update docs, improve error messages, etc.\n\nInstructions for data gathering:\n- To get the comments and side conversations, send empty properties and use the entity identifier: {{ticket_id}}\n- To use the side conversations, you first need to get their URLs and then get the messages sent in them\n- No need to send an entity identifier for side conversation messages, only the side conversation URL in the properties\n\nTicket ID to analyze: {{ticket_id}}"
+        },
+        "relations": {}
+    }
+    ```
 
-<details>
-<summary><b>Prompt entity: Zendesk Ticket Summary (Click to expand)</b></summary>
+    </details>
 
-```json showLineNumbers
-{
-  "identifier": "zendesk_ticket_summary",
-  "title": "Zendesk Ticket Summary",
-  "icon": "AI",
-  "properties": {
-    "description": "Summarize a Zendesk support ticket using comments and side conversations",
-    "arguments": [
-      {
-        "name": "ticket_id",
-        "required": true,
-        "description": "The Zendesk ticket ID to summarize"
-      }
-    ],
-    "template": "You are an AI assistant tasked with summarizing Zendesk support tickets in Port. Use the comments and the side conversations on the ticket to summarize it in the following format:\n\n## Request\nWhat the customer wanted in a short sentence\n\n## Resolution  \nWhat was the resolution\n\n## Root Cause\nIn case of a problem/bug, what was the root cause\n\n## Recommendations\nE.g., update docs, improve error messages, etc.\n\nInstructions for data gathering:\n- To get the comments and side conversations, send empty properties and use the entity identifier: {{ticket_id}}\n- To use the side conversations, you first need to get their URLs and then get the messages sent in them\n- No need to send an entity identifier for side conversation messages, only the side conversation URL in the properties\n\nTicket ID to analyze: {{ticket_id}}"
-  },
-  "relations": {}
-}
-```
+5. Click `Create`.
 
-</details>
+
 
 ### How to use the Prompt from your IDE via MCP
 
@@ -197,6 +267,21 @@ Port MCP Server can expose prompts you create and manage in Port to your IDE ass
 For setup and capabilities, see the Port MCP Server prompts documentation: [Port MCP Server - Prompts](/ai-agents/port-mcp-server#prompts)
 :::
 
+## Run the Prompt
+
+Run the `zendesk_ticket_summary` Prompt with `ticket_id` set to the Zendesk ticket ID (same as the `zendesk_ticket` entity identifier). The Prompt will automatically use the actions in this guide to fetch comments and side conversations and return a structured summary.
+
+```text
+Example run
+Prompt: zendesk_ticket_summary
+Arguments:
+- ticket_id: 148273
+```
+
+:::caution Privacy and scope
+Side conversations may contain internal discussion. Review generated summaries before sharing externally. This guide focuses on displaying summaries only; it does not post back to Zendesk.
+:::
+
 ## Test the workflow
 
 1. In Port, ensure a `zendesk_ticket` entity exists whose `identifier` equals a real Zendesk ticket ID.
@@ -206,7 +291,9 @@ For setup and capabilities, see the Port MCP Server prompts documentation: [Port
 
 - Keep summaries brief and action-oriented for faster handoffs.
 - Use consistent formatting so summaries are scannable across tickets.
-- If needed, create variants of the prompt for internal vs customer-facing language.
+- Consider variants: internal vs customer-facing tone; enforce English or match ticket locale.
+- Ask the prompt to ignore non-informative system/autoresponder comments.
+- For richer context, optionally add mirrors like product area, account tier, or severity.
 
 ## Related guides
 
