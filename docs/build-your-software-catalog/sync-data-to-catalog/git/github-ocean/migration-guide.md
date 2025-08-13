@@ -1,4 +1,4 @@
-# Github Migration Guide
+# Github migration guide
 
 This guide will walk you through the process of migrating from Port's existing GitHub Cloud App to our new and improved GitHub Integration, which is powered by [Ocean](https://ocean.port.io/).
 
@@ -10,13 +10,14 @@ The new Ocean-powered GitHub integration comes with several key improvements:
 - **Enhanced performance** - Faster resyncs thanks to improved API efficiency, making your data available sooner.
 - **Better selectors** - More granular control over what you sync with improved selectors for `pull requests`, `issues`, `dependabot alerts`, `codescanning alerts`, `files`, and `folders`.
 
-## Major Changes
+## Major changes
 
-### Authentication Model
+### Authentication model
 
-#### Personal Access Token (PAT)
+#### Personal access token (PAT)
 
-You can now authenticate with our GitHub integration using a Personal Access Token (PAT) instead of a GitHub App. This gives you more control over the integration's permissions. For more details, see our [installation page](./installation).  
+You can now authenticate with our GitHub integration using a Personal Access Token (PAT) instead of a GitHub App. This gives you more control over the integration's permissions. For more details, see the [installation page](./installation).  
+
 Below is a sample Helm value for this configuration:
 ```yaml showLineNumbers
 integration:
@@ -26,7 +27,9 @@ integration:
 
 #### GitHub App
 
-If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is [documented here](./installation/github-app.mdx). Below is a sample Helm value for this configuration:
+If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is [documented here](./installation/github-app.mdx). 
+
+Below is a sample Helm value for this configuration:
 ```yaml showLineNumbers
 integration:
   config:
@@ -41,13 +44,13 @@ The integration now automatically configures webhooks on GitHub to receive live 
 
 ### Deployment
 
-We've expanded our self-hosted installation examples to support deploying on a Kubernetes cluster using Helm or ArgoCD. For more details, please refer to our [deployment documentation](./installation/#deploy-the-integration).
+We've expanded our self-hosted installation examples to support deploying on a Kubernetes cluster using Helm or ArgoCD. For more details, please refer to the [deployment documentation](./installation/#deploy-the-integration).
 
-### Workflow Runs
+### Workflow runs
 
 We have increased the number of workflow runs ingested for any given workflow in a repository. The new integration now fetches up to 100 of the latest workflow runs, up from the previous limit of 10 per repository.
 
-### Repository Type
+### Repository type
 
 You can now specify the type of repositories (`public`, `private`, or `all`) from which to ingest data. All other data kinds that are associated with repositories (like pull requests, issues, etc.) will only be fetched from repositories that match this configuration.
 
@@ -60,13 +63,13 @@ resources:
 
 ```
 
-## Mapping Changes
+## Kind mapping changes
 
 The data blueprints for GitHub have been updated to provide cleaner data structures and improved relationships between different software catalog entities. Understanding these changes is crucial for a smooth migration.
 
 A key change is how we denote custom attributes. We now add a double underscore prefix (e.g., `__repository`) to attributes that Port adds to the raw API response from GitHub. This makes it clear which fields are part of the original data and which are enrichments from the integration.
 
-### Files
+### Files & gitops
 <details>
   <summary>Existing Configuration</summary>
 
@@ -296,7 +299,9 @@ resources:
 
 ### Teams
 
-To improve performance when fetching team members, we now use GitHub's GraphQL API instead of the REST API. This change has two main consequences:
+To improve performance when fetching team members, we now use GitHub's GraphQL API instead of the REST API. 
+
+This change has two main consequences:
 
 1. The ID for a team may differ depending on whether you are fetching its members. This is due to differences between GitHub's REST and GraphQL APIs.
 2. Team members are now located in a `nodes` subarray within the team object.
