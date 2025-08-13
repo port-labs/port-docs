@@ -59,10 +59,7 @@ After creating the blueprints and committing the `port-app-config.yml` file to y
 
 Additionally, you can configure your selector to limit the number of closed pull requests to ingest. By Default, we only fetch 100 Pull Requests.
 ```yaml
-- kind: pullRequest
   selector:
-    query: 'true'
-    states: ['closed']
     maxResults: 100
 ```
 
