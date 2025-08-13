@@ -1,4 +1,4 @@
-# Github migration guide
+# GitHub migration guide
 
 This guide will walk you through the process of migrating from Port's existing GitHub Cloud App to our new and improved GitHub Integration, which is powered by [Ocean](https://ocean.port.io/).
 
@@ -16,7 +16,7 @@ The new Ocean-powered GitHub integration comes with several key improvements:
 
 #### Personal access token (PAT)
 
-You can now authenticate with our GitHub integration using a Personal Access Token (PAT) instead of a GitHub App. This gives you more control over the integration's permissions. For more details, see the [installation page](./installation).  
+You can now authenticate with our GitHub integration using a Personal Access Token (PAT) instead of a GitHub App. This gives you more control over the integration's permissions. For more details, see the [installation page](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).  
 
 Below is a sample Helm value for this configuration:
 ```yaml showLineNumbers
@@ -27,7 +27,7 @@ integration:
 
 #### GitHub App
 
-If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is [documented here](./installation/github-app.mdx). 
+If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is [documented here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation/github-app). 
 
 Below is a sample Helm value for this configuration:
 ```yaml showLineNumbers
@@ -40,11 +40,11 @@ integration:
 
 ### Webhooks
 
-The integration now automatically configures webhooks on GitHub to receive live events. To enable this, you must grant your PAT permission to create organization webhooks. Additionally, you need to provide a public URL for the integration. You can do this by setting `liveEvents.baseUrl` when deploying with Helm or ArgoCD, or by setting the `OCEAN__BASE_URL` environment variable when running the integration as a Docker container. [Learn more about enabling live events](./installation/#deploy-the-integration).
+The integration now automatically configures webhooks on GitHub to receive live events. To enable this, you must grant your PAT permission to create organization webhooks. Additionally, you need to provide a public URL for the integration. You can do this by setting `liveEvents.baseUrl` when deploying with Helm or ArgoCD, or by setting the `OCEAN__BASE_URL` environment variable when running the integration as a Docker container. [Learn more about enabling live events](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation#deploy-the-integration).
 
 ### Deployment
 
-We've expanded our self-hosted installation examples to support deploying on a Kubernetes cluster using Helm or ArgoCD. For more details, please refer to the [deployment documentation](./installation/#deploy-the-integration).
+We've expanded our self-hosted installation examples to support deploying on a Kubernetes cluster using Helm or ArgoCD. For more details, please refer to the [deployment documentation](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation#deploy-the-integration).
 
 ### Workflow runs
 
@@ -69,9 +69,9 @@ The data blueprints for GitHub have been updated to provide cleaner data structu
 
 A key change is how we denote custom attributes. We now add a double underscore prefix (e.g., `__repository`) to attributes that Port adds to the raw API response from GitHub. This makes it clear which fields are part of the original data and which are enrichments from the integration.
 
-### Files & gitops
+### Files & GitOps
 <details>
-  <summary>Existing Configuration</summary>
+  <summary><b>Existing Configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -99,7 +99,7 @@ resources:
 </details>
 
 <details>
-  <summary>New Configuration</summary>
+  <summary><b>New Configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -132,12 +132,12 @@ Here are the key changes for file mappings:
 2. File attributes are no longer nested under a `file` key. They are now at the top level of the data structure. For example, instead of `.file.path`, you should now use `.path`.
 3. The `repo` key has been renamed to `repository` when referencing the repository a file belongs to, for consistency with other data kinds.
 
-### Pull Requests and Issues
+### Pull requests and issues
 
 For `pull-request` and `issue` kinds, we've introduced a new `state` selector. This allows you to filter which objects are ingested based on their state (e.g., `open`, `closed`).
 
 <details>
-<summary>Existing Configuration</summary>
+<summary><b>Existing Configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -186,7 +186,7 @@ resources:
 
 <details>
 
-<summary>New Configuration</summary>
+<summary><b>New Configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -245,7 +245,7 @@ resources:
 For the `folder` kind, the `folder.name` attribute is no longer part of the response. Instead, you can easily derive the folder name from the `folder.path` using a JQ expression, as shown in the example below:
 
 <details>
-  <summary>Existing Configuration</summary>
+  <summary><b>Existing Configuration (Click to expand)</b></summary>
 
   ```yaml showLineNumbers
 resources:
@@ -270,7 +270,7 @@ resources:
 </details>
 
 <details>
-  <summary>New Configuration</summary>
+  <summary><b>New Configuration (Click to expand)</b></summary>
 
 
   ```yaml showLineNumbers
@@ -307,7 +307,7 @@ This change has two main consequences:
 2. Team members are now located in a `nodes` subarray within the team object.
 
 <details>
-  <summary>Existing Configuration</summary>
+  <summary><b>Existing Configuration (Click to expand)</b></summary>
 
   ```yaml showLineNumbers
 
@@ -331,7 +331,7 @@ This change has two main consequences:
 </details>
 
 <details>
-  <summary>New Configuration</summary>
+  <summary><b>New Configuration (Click to expand)</b></summary>
 
   ```yaml showLineNumbers
 
@@ -354,7 +354,7 @@ This change has two main consequences:
   ```
 </details>
 
-## Other Changes
+## Other changes
 
 ### `dependabot-alert`
 
@@ -382,7 +382,7 @@ resources:
       state: open # ✅  new
 ```
 
-## Summary of Key Changes
+## Summary of key changes
 
 This section provides a high-level summary of the key breaking changes for mappings.
 
