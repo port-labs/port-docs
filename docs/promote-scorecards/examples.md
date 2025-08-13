@@ -161,10 +161,12 @@ The scorecard resides on the `Repository` blueprint and evaluates data sourced f
 2. `Snyk Target` – Evaluated against 10 rules, each corresponding to an OWASP Top 10 category.
 3. `Repository` – The primary entity where the scorecard resides.
 
-<h3>Prerequisites</h3>
-- Install the [Git Integration](/build-your-software-catalog/sync-data-to-catalog/git/) that is relevant for you.
-- Install the [Port's Snyk integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/).
+<h2>Prerequisites</h2>
+- This example assumes you have a Port account and that you have finished the [onboarding process](https://docs.port.io/getting-started/overview).
+- Install Port's [GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup).
+- Install Port's [Snyk integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/).
 
+<h2> Set up data model </h2>
 <h3>Snyk Vulnerability</h3>
 
 To accurately benchmark against the OWASP Top 10 for code, most static analysis tools support generating `Common Weakness Enumeration` (CWE) IDs.  
@@ -801,7 +803,7 @@ The next step is to add the OWASP identifiers as mirrored properties to the `Git
     ```
     </details>
 
-<h3>Set up the scorecard</h3>
+<h2>Set up the scorecard</h2>
 
 The final step is to create a scorecard that reflects the security maturity of a `Respository` against the OWASP Top 10 categories.
 
