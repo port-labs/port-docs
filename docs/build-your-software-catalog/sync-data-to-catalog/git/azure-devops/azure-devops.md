@@ -589,6 +589,40 @@ Common scenarios for file mapping include:
 Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1&tabs=HTTP#download) for the Azure DevOps file object structure.
 :::
 
+### Linking Pipelines to Repositories via Selector
+You can configure your selector to include repository information in the pipeline entity mapping.
+This allows you to create a direct relationship between a pipeline and its source repository.
+
+```yaml showLineNumbers
+- kind: pipeline
+  selector:
+    query: 'true'
+    includeRepo: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name
+        blueprint: '"azureDevOpsPipeline"'
+        properties:
+          url: .url
+          revision: .revision
+          folder: .folder
+        relations:
+          project: .__projectId | gsub(" "; "")
+          repository: >-
+            if .__repository
+            then .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
+            else null
+            end
+```
+:::tip Recommendation
+Use this only when necessary, as including repository data requires an extra API call per pipeline, which increases the number of requests made and can impact your Azure DevOps API rate limits.
+
+If you don’t require repo-level linkage, it’s more efficient to relate pipelines → projects instead.
+:::
+
+
 ## Examples
 
 Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
