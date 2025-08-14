@@ -89,6 +89,28 @@ The data model of AI agents includes two main blueprints:
 
 2. **AI invocations** - Each interaction made with an AI agent is recorded as an invocation. This acts as a log of everything going through your AI agents so you can monitor and improve them over time. Learn more in our [Interact with AI agents](/ai-agents/interact-with-ai-agents) guide.
 
+## Relevant Guides
+
+Explore these guides to see AI agents in action and learn how to implement them in your organization:
+
+- **[Generate incident updates with AI](/guides/all/generate-incident-updates-with-ai)** - Learn how to build an AI agent that generates incident updates and sends Slack notifications with relevant technical context.
+
+- **[Enrich tasks with AI-powered context](/guides/all/enrich-tasks-with-ai)** - Set up a "Task Assistant" AI agent that provides developers with automated, contextual insights when they start working on tasks.
+
+- **[Setup PR enricher AI agent](/guides/all/setup-pr-enricher-ai-agent)** - Create an AI agent that enriches pull requests with relevant context and information.
+
+- **[Setup service explorer AI agent](/guides/all/setup-service-explorer-ai-agent)** - Build an AI agent that helps developers explore and understand services in your catalog.
+
+- **[Setup platform request triage AI agent](/guides/all/setup-platform-request-triage-ai-agent)** - Implement an AI agent to automatically triage and route platform requests.
+
+- **[Setup task manager AI agent](/guides/all/setup-task-manager-ai-agent)** - Set up a Task Manager AI agent to help developers track and manage tasks efficiently.
+
+- **[Setup incident manager AI agent](/guides/all/setup-incident-manager-ai-agent)** - Set up an AI agent that helps developers track and manage incidents efficiently.
+
+- **[Add RCA context to AI agents](/guides/all/add-rca-context-to-ai-agents)** - Enhance your AI agents with root cause analysis context for better incident management.
+
+- **[Enrich security vulnerability using AI](/guides/all/enrich-security-vulnerability-using-ai)** - Use AI to automatically enrich security vulnerabilities with relevant context and remediation steps.
+
 ## Frequently asked questions
 
 <details>
