@@ -26,6 +26,10 @@ Click on the "New AI Agent" button and fill the form with the agent details.
 
 We recommend following the steps below.
 
+:::info MCP Server Backend Mode
+AI agents can be enhanced with MCP server backend mode for expanded capabilities including intelligent catalog access and Claude model processing. This is controlled when [interacting with the agents](/ai-agents/interact-with-ai-agents) through widgets and API calls, not in the agent configuration itself.
+:::
+
 ### Step 1: Define your agent's purpose
 
 The first step in building an AI agent is deciding on its purpose.  
@@ -50,6 +54,10 @@ For example:
 - For "What are all the incidents affecting service X?", the agent needs access to `teams`, `incidents`, and `services`.
 
 Pay attention to relationships between entities to ensure your agent can provide comprehensive answers.
+
+:::tip Enhanced access with MCP server backend
+When using [MCP server backend mode](/ai-agents/interact-with-ai-agents) during interactions, the agent can intelligently access your entire catalog regardless of configured blueprints, providing more comprehensive answers.
+:::
 
 ### Step 3: Configure actions (optional)
 
@@ -234,6 +242,10 @@ AI agents in Port can search, group, and index entities in your Port instance. H
 - **Permission model**:
   - Interaction with the AI agent is based on your user permissions.
   - Sequential automations run as Admin.
+
+:::info Enhanced capabilities with MCP server backend
+When using [MCP server backend mode](/ai-agents/interact-with-ai-agents) during interactions, many of these limitations are reduced as the agent gains access to enhanced tools and broader data access capabilities.
+:::
 </details>
 
 <details>
