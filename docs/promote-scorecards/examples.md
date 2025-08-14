@@ -169,8 +169,8 @@ The scorecard resides on the `Repository` blueprint and evaluates data sourced f
 <h2> Set up data model </h2>
 <h3>Snyk Vulnerability</h3>
 
-To accurately benchmark against the OWASP Top 10 for code, most static analysis tools support generating `Common Weakness Enumeration` (CWE) IDs.  
-If `CWE`s are not yet included in your `Snyk Vulnerability` blueprint, follow these steps:
+To accurately benchmark against the OWASP Top 10 for code, most static analysis tools support generating `Common Weakness Enumeration` (CWE) IDs. We will store the `CWE` value in a property called `category`.  
+If the property is not yet included in your `Snyk Vulnerability` blueprint, follow these steps:
 
 **Update the `Snyk Vulnerability` blueprint:**
 1. Navigate to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
@@ -186,9 +186,9 @@ If `CWE`s are not yet included in your `Snyk Vulnerability` blueprint, follow th
           ```json 
           {
             "properties": {
-              "cwe": {
-                "type": "number",
-                "title": "Common Weakness Enumeration"
+              "category": {
+                "type": "string",
+                "title": "Category"
               }
           }
           ```
@@ -741,8 +741,9 @@ To update the `Snyk Target` blueprint:
 The `Snyk Target` blueprint should have a defined relation with the `GitHub Repository` blueprint.
 If your current model does not include a relation from the  `Repository` blueprint to the `Snyk Target` blueprint, add it.
 
-The next step is to add the OWASP identifiers as mirrored properties to the `GitHub Repository` blueprint.
-**To update the `GitHub Repository` blueprint:**
+The next step is to add the OWASP identifiers as mirrored properties to the `GitHub Repository` blueprint, and update the mapping configuration so that each `GitHub Repository` is automatically linked to its corresponding `Snyk Target`. This link is what allows the mirrored OWASP properties to pull their values from the related Snyk data. 
+
+**Update the `GitHub Repository` blueprint:**
 
 1. Navigate to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
 
@@ -802,6 +803,33 @@ The next step is to add the OWASP identifiers as mirrored properties to the `Git
     }
     ```
     </details>
+
+**Update the mapping configuration:**
+
+1. Head over to your [Data sources](https://app.port.io/settings/data-sources) page.
+
+2. Under `Exporters`, click on your desired GitHub organization.
+
+3. In the **Mapping** tab, edit the YAML in the bottom-left panel and add the following entry under the `repository` kind:  
+
+    <details>
+    <summary><b>Mapping configuration (click to expand)</b></summary>
+          ```yaml 
+          - kind: repository
+            port:
+              entity:
+                mappings:
+                  relations:
+                    snyk_target:
+                      combinator: '"and"'
+                      rules:
+                        - property: '"$title"'
+                          operator: '"="'
+                          value: .full_name
+          ```
+    </details>
+      
+4. Click on the `Save & Resync` button to save the changes and resync the integration.
 
 <h2>Set up the scorecard</h2>
 
