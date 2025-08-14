@@ -47,7 +47,7 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
             readme: file://README.md
 ```
 
-## Linking Pipelines to Repositories via Selector
+## Link pipelines to repositories via selector
 You can configure your selector to include repository information in the pipeline entity mapping.
 This allows you to create a direct relationship between a pipeline and its source repository.
 
