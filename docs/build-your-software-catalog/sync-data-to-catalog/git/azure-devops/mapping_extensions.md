@@ -55,6 +55,7 @@ This allows you to create a direct relationship between a pipeline and its sourc
 - kind: pipeline
   selector:
     query: 'true'
+    # highlight-next-line
     includeRepo: 'true'
   port:
     entity:
