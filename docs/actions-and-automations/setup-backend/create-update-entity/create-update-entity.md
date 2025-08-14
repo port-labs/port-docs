@@ -132,7 +132,7 @@ This pattern automatically:
 </Tabs>
 
 
-## Common use cases
+### Common use cases
 
 Here are some typical scenarios for mapping array relations:
 
