@@ -43,13 +43,12 @@ After the installation, you can customize the blueprints and/or mapping to inges
 
 Below is a breakdown of the supported installation methods for Port integrations.  
 
-| Installation type                    | Security                                | Ease of Installation | Syncing mechanism                                                    | Infrastructure & Maintenance Responsibility                                        | Use Case Fit                                                                                     |
-| ------------------------------------ | --------------------------------------- | -------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| **Hosted by Port (OAuth)**           | Port manages OAuth tokens securely      | 🟩🟩🟩🟩             | Automatic updates using the sync method supported by the integration | No infrastructure to deploy or maintain. Port handles scaling, uptime, and updates | Ideal for quick setup with minimal operational effort when Port can connect to the source system |
-| **Hosted by Port** | Port stores API credentials securely. You must generate and update these credentials manually   | 🟩🟩🟩⬜ | Automatic updates using the sync method supported by the integration | No infrastructure to deploy or maintain. Port handles scaling, uptime, and updates, but you manage credential renewal| Best for quick setup when you prefer not to grant OAuth permissions and are comfortable maintaining API tokens |
-| **Self-hosted (Real-time)**          | Managed entirely in your infrastructure | 🟩⬜⬜⬜                | Real-time updates via webhooks                                       | You provision, monitor, and maintain the integration                       | Best for high-security environments or custom networking requirements                            |
-| **Scheduled (CI)**                   | Managed in your CI/CD environment       | 🟩🟩⬜⬜               | Batch or periodic sync triggered by pipeline runs                    | Minimal infrastructure requirements. You manage the CI/CD environment and triggers | Suitable when real-time updates are unnecessary and you want full control over the sync schedule |
-
+| Installation type  | Security | Ease of Installation | Resync | Live events | Infrastructure & Maintenance Responsibility | Use Case Fit |
+| ------------------ | ---------|:--------------------:|:-------:|:-------------:| ------------------------------------------- | ------------ |
+| **Hosted by Port (OAuth)** | Port stores OAuth tokens securely. | 🟩🟩🟩🟩 | **Periodic** | ✅ <br/>(Integration-dependent) | Port handles scaling, uptime, and updates. | Ideal for quick setup with minimal operational effort. |
+| **Hosted by Port (Custom settings)** | Port stores API credentials securely. Requires more setup details (e.g., token, host). | 🟩🟩🟩⬜ | **Periodic** (user-selectable interval) | ✅ <br/>(Integration-dependent)| Port handles scaling, uptime, and updates| Best for quick setup without granting OAuth permissions. |
+| **Self-hosted (Real-time)** | Managed entirely in your infrastructure. | 🟩⬜⬜⬜  | **Periodic** (custom interval) | ✅ <br/>(Depends on source system) | You provision, monitor, and maintain the integration. | Best for high-security or custom networking needs.|
+| **Scheduled (CI)**| Managed in your CI/CD environment. | 🟩🟩⬜⬜ | **Periodic** (custom interval) | ❌| Minimal infrastructure. You manage the CI/CD environment and triggers. | Best when real-time isn’t needed and you want full sync control. |
 
 ## Customize your integrations
 
