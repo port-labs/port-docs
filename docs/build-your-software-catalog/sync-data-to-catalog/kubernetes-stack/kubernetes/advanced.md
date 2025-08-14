@@ -27,7 +27,8 @@ The following advanced configuration parameters are available:
 <Tabs groupId="advanced" queryString="current-config-param" defaultValue="resyncInterval" values={[
 {label: "Resync Interval", value: "resyncInterval"},
 {label: "State Key", value: "stateKey"},
-{label: "Verbosity (Log Level)", value: "verbosity"},
+{label: "Logging Level", value: "logging"},
+{label: "Bulk Sync", value: "bulkSync"},
 {label: "Event listener type", value: "eventListenerType"},
 {label: "CRDs to discover", value: "crdsToDiscover"},
 ]} >
@@ -83,12 +84,28 @@ If a new resync trigger consistently aborts a running resync, it means that your
 
 </TabItem>
 
-<TabItem value="verbosity">
+<TabItem value="logging">
 
-The `verbosity` parameter is used to control the verbosity level of info logs in K8s exporter's pod.
+The `loggingLevel` parameter is used to control the logging level of logs in K8s exporter's pod.
 
-- **Default value**: `0` (show all info and error logs, including info logs of successful updates)
-- **Use case**: Set the value to `-1`, if you want to clear out info logs of successful entity updates. Error logs and some info logs (initialization and teardown logs), will be reported.
+- **Default value**: `info` (show all info and error logs, including info logs of successful updates)
+- **Use case**: Set the value to `error`, if you want to clear out info logs. Error logs will be reported.
+
+</TabItem>
+
+<TabItem value="bulkSync">
+
+The `bulkSyncMaxPayloadBytes` parameter is used to control the size (in bytes) of the upsert bulks to port.
+
+- **Default value**: `1048576`
+
+The `bulkSyncMaxEntitiesPerBatch` parameter is used to control the number of entities to be sent as part of an upsert bulk to port.
+
+- **Default value**: `20`
+
+The `bulkSyncBatchTimeoutSeconds` parameter is used to control the time (in seconds) to wait until flushing an upsert bulk to port when the max entities number or size not reached.
+
+- **Default value**: `5`
 
 </TabItem>
 
