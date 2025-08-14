@@ -36,7 +36,7 @@ To use this backend type, you will need to define the following fields:
     | `team` | The team/s this entity will belong to. |
     | `icon` | The icon of the entity. |
     | `properties` | The properties of the entity, in `"key":"value"` pairs where the key is the property's identifier, and the value is its value. |
-    | `relations` | The relations of the entity, in `"key":"value"` pairs where the key is the relation's identifier, and the value is the related entity's identifier (for single relations) or an array of identifiers (for many relations). |
+    | `relations` | The relations of the entity, in `"key":"value"` pairs where the key is the relation's identifier, and the value is the related entity's identifier (for single relations) or an array of identifiers (for "many" relations). |
 
 ### Use jq to map the entity
 
