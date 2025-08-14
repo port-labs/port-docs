@@ -336,8 +336,9 @@ on:
         type: string
       trigger_user_email:
         description: 'Email of the triggering user'
-        required: true
+        required: false
         type: string
+        default: ''
 
 jobs:
   assign_to_copilot:
@@ -475,6 +476,7 @@ jobs:
           
       - name: Get Trigger User from Port
         id: port_user_lookup
+        if: ${{ inputs.trigger_user_email != '' && inputs.trigger_user_email != 'null' }}
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -486,6 +488,7 @@ jobs:
 
       - name: Extract GitHub Username
         id: extract_username
+        if: ${{ inputs.trigger_user_email != '' && inputs.trigger_user_email != 'null' }}
         run: |
           username=$(echo '${{ steps.port_user_lookup.outputs.entity }}' | jq -r '.entity.properties.git_hub_username // .properties.git_hub_username')
           if [ "$username" = "null" ] || [ -z "$username" ]; then
@@ -501,11 +504,17 @@ jobs:
         run: |
           actor_ids="[\"${{ steps.get_copilot_id.outputs.copilot_id }}\"]"
       
-          if [ -n "${{ steps.extract_username.outputs.github_username }}" ]; then
+          # Only try to add the initiator if the extract_username step actually ran
+          if [ "${{ inputs.trigger_user_email }}" != "null" ] && [ -n "${{ steps.extract_username.outputs.github_username }}" ]; then
             user_id=$(gh api graphql -f query="query { user(login: \"${{ steps.extract_username.outputs.github_username }}\") { id }}" | jq -r '.data.user.id')
             if [ -n "$user_id" ] && [ "$user_id" != "null" ]; then
+              echo "Found user ID for initiator: $user_id"
               actor_ids="[\"${{ steps.get_copilot_id.outputs.copilot_id }}\", \"$user_id\"]"
+            else
+              echo "No valid GitHub user ID found for initiator"
             fi
+          else
+            echo "Skipping initiator assignment (no trigger_user_email or username)"
           fi
           response=$(gh api graphql -f query="
             mutation {
