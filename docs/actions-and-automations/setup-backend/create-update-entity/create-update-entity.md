@@ -44,7 +44,7 @@ All fields in the `mapping` object can be mapped using `jq` expressions, by wrap
 
 For example, say we want to assign the initiator of the action to a new entity when it is created, we can take his email from the action run object and assign it to a property named `assignee`:
 
-```json
+```json showLineNumbers
 {
   "identifier": "someTaskEntity",
   "title": "Some Task",
@@ -74,7 +74,7 @@ When creating or updating entities, you often need to establish relations with o
 
 For a single entity relation, map the entity identifier directly:
 
-```json
+```json showLineNumbers
 {
   "identifier": "myServiceEntity",
   "title": "My Service",
@@ -91,7 +91,7 @@ For a single entity relation, map the entity identifier directly:
 
 When your action accepts [array entity inputs](/docs/actions-and-automations/create-self-service-experiences/setup-ui-for-action/user-inputs/entity.md#array), you need to extract the identifiers from the array using the `map(.identifier)` pattern:
 
-```json
+```json showLineNumbers
 {
   "identifier": "myUserEntity", 
   "title": "My User",
@@ -112,7 +112,7 @@ When users select multiple entities from an [entity array input](/docs/actions-a
 
 For maximum flexibility, you can create a conditional mapping that handles both single entity and array entity inputs:
 
-```json
+```json showLineNumbers
 {
   "identifier": "myProjectEntity",
   "title": "My Project", 
@@ -137,21 +137,21 @@ This pattern automatically:
 Here are some typical scenarios for mapping array relations:
 
 **Mapping skills to a user:**
-```json
+```json showLineNumbers
 "relations": {
   "skills": "{{ .inputs.selectedSkills | map(.identifier) }}"
 }
 ```
 
 **Mapping team members to a project:**
-```json  
+```json showLineNumbers
 "relations": {
   "members": "{{ .inputs.teamMembers | map(.identifier) }}"
 }
 ```
 
 **Mapping dependencies between services:**
-```json
+```json showLineNumbers
 "relations": {
   "dependsOn": "{{ .inputs.dependencies | map(.identifier) }}"
 }
