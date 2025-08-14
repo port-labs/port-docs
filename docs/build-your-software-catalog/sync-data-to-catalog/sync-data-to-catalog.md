@@ -46,7 +46,7 @@ Below is a breakdown of the supported installation methods for Port integrations
 | Installation type                    | Security                                | Ease of Installation | Syncing mechanism                                                    | Infrastructure & Maintenance Responsibility                                        | Use Case Fit                                                                                     |
 | ------------------------------------ | --------------------------------------- | -------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | **Hosted by Port (OAuth)**           | Port manages OAuth tokens securely      | 🟩🟩🟩🟩             | Automatic updates using the sync method supported by the integration | No infrastructure to deploy or maintain. Port handles scaling, uptime, and updates | Ideal for quick setup with minimal operational effort when Port can connect to the source system |
-| **Hosted by Port (Custom settings)** | Port stores API credentials securely    | 🟩🟩🟩⬜              | Automatic updates using the sync method supported by the integration | No infrastructure to deploy or maintain. Port handles scaling, uptime, and updates | Ideal for quick setup with minimal operational effort when Port can connect to the source system |
+| **Hosted by Port (Custom settings)** | Port stores API credentials securely. You must generate and update these credentials manually   | 🟩🟩🟩⬜ | Automatic updates using the sync method supported by the integration | No infrastructure to deploy or maintain. Port handles scaling, uptime, and updates, but you manage credential renewal| Best for quick setup when you prefer not to grant OAuth permissions and are comfortable maintaining API tokens |
 | **Self-hosted (Real-time)**          | Managed entirely in your infrastructure | 🟩⬜⬜⬜                | Real-time updates via webhooks                                       | You provision, monitor, and maintain the integration service                       | Best for high-security environments or custom networking requirements                            |
 | **Scheduled (CI)**                   | Managed in your CI/CD environment       | 🟩🟩⬜⬜               | Batch or periodic sync triggered by pipeline runs                    | Minimal infrastructure requirements. You manage the CI/CD environment and triggers | Suitable when real-time updates are unnecessary and you want full control over the sync schedule |
 
@@ -60,7 +60,7 @@ Now that you've installed an integration, let's see how you can customize it:
 2. [**Configure your data mapping**](/build-your-software-catalog/customize-integrations/configure-mapping) - Update the integration's data mapping in Port to match the data model and fetch your desired data from the tool.
 
 ## Entities
-
+כא
 An entity is an instance of a [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), it represents the data defined by a blueprint's properties.
 
 After installing an integration, a page will be created in your catalog, populated with entities representing the ingested data.
