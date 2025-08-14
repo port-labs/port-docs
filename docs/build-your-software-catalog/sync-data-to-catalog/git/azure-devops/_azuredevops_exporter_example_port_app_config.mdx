@@ -26,11 +26,12 @@ resources:
     port:
       entity:
         mappings:
-          identifier: "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
+          identifier: >-
+            "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
           title: .name
-          blueprint: '"azureDevopsRepository"'
+          blueprint: '"service"'
           properties:
-            url: .url
+            url: .remoteUrl
             readme: file://README.md
           relations:
             project: .project.id | gsub(" "; "")
@@ -40,8 +41,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
-          blueprint: '"azureDevopsRepository"'
+          identifier: >-
+            "\(.__repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
+          blueprint: '"service"'
           properties:
             minimumApproverCount: .settings.minimumApproverCount
   - kind: repository-policy
@@ -50,8 +52,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
-          blueprint: '"azureDevopsRepository"'
+          identifier: >-
+            "\(.__repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
+          blueprint: '"service"'
           properties:
             workItemLinking: .isEnabled and .isBlocking
   - kind: pull-request
@@ -61,13 +64,10 @@ resources:
       entity:
         mappings:
           identifier: >-
-            .repository.project.name + "/" + .repository.name + (.pullRequestId
-            | tostring) | gsub(" "; "")
+            "\(.repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.repository.name | ascii_downcase | gsub("[ ();]"; ""))/\(.pullRequestId | tostring)"
           blueprint: '"azureDevopsPullRequest"'
           properties:
-            creator: .createdBy.uniqueName
             status: .status
-            reviewers: '[.reviewers[].uniqueName]'
             createdAt: .creationDate
             leadTimeHours: >-
               (.creationDate as $createdAt | .status as $status | .closedDate as $closedAt |
@@ -78,7 +78,10 @@ resources:
               (((($closedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100)
               else null end)
           relations:
-            repository: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
+            service: >-
+              "\(.repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.repository.name | ascii_downcase | gsub("[ ();]"; ""))"
+            creator: .createdBy.uniqueName
+            reviewers: '[.reviewers[].uniqueName]'
 ```
 
 </details>

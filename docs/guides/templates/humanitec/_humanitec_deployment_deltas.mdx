@@ -1,0 +1,59 @@
+<details>
+<summary><b>Humanitec Deployment Deltas (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "identifier": "humanitecDeploymentDelta",
+    "title": "Humanitec Deployment Delta",
+    "icon": "Deployment",
+    "schema": {
+      "properties": {
+        "status": {
+          "title": "Status",
+          "description": "The status of the deployment delta",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "createdAt": {
+          "title": "Created At",
+          "description": "The date and time when the deployment delta was created",
+          "type": "string",
+          "format": "date-time",
+          "icon": "DefaultProperty"
+        },
+        "createdBy": {
+          "title": "Created By",
+          "description": "The user who created the deployment delta",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "comment": {
+          "title": "Comment",
+          "description": "Comment for the deployment delta",
+          "type": "string",
+          "icon": "DefaultProperty"
+        },
+        "environment": {
+          "title": "Environment",
+          "description": "The environment for the deployment delta",
+          "type": "string",
+          "icon": "DefaultProperty"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "humanitecApplication": {
+        "title": "Application",
+        "target": "humanitecApplication",
+        "required": false,
+        "many": false
+      }
+    }
+}
+```
+
+</details>

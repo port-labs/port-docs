@@ -1,3 +1,5 @@
+import guideMetadata from './guide-metadata.json';
+
 export const tagsCategoryMap = {
     "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog", "Approval workflow"],
     "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "RBAC"],
@@ -39,7 +41,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/scaffold-a-new-service",
     },
     {
@@ -48,7 +50,7 @@ export const availableGuides = [
         tags: ["SDLC", "Scorecards", "PagerDuty"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["PagerDuty", "Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/ensure-production-readiness",
     },
     {
@@ -57,7 +59,7 @@ export const availableGuides = [
         tags: ["IaC for devs", "AWS", "Actions", "Cloud access management"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["AWS", "Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/create-cloud-resource-using-iac",
     },
     {
@@ -65,7 +67,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime",
         tags: ["K8s for devs", "Actions", "Dashboards", "Scorecards"],
         logos: ["Kubernetes" ],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/visualize-service-k8s-runtime",
     },
     {
@@ -73,7 +75,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime using ArgoCD",
         tags: ["K8s for devs", "ArgoCD", "Actions", "Dashboards", "Scorecards"],
         logos: ["ArgoCD", "Kubernetes"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/visualize-service-argocd-runtime",
     },
     {
@@ -82,7 +84,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/let-developers-enrich-services-using-gitops",
     },
     {
@@ -90,7 +92,7 @@ export const availableGuides = [
         description: "Send a Slack reminder for uncompleted scorecard rules using a self-service action",
         tags: ["Engineering metrics", "Actions", "Scorecards"],
         logos: ["Slack"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/setup-slack-reminders",
     },
     {
@@ -98,7 +100,7 @@ export const availableGuides = [
         description: "Create & use surveys in your portal to collect feedback from your users",
         tags: ["Engineering metrics", "Actions"],
         logos: ["Actions"],
-        category: "Experiences",
+        // category: "Experiences",
         link: "/guides/all/create-and-use-surveys-in-your-portal",
     },
     {
@@ -106,7 +108,7 @@ export const availableGuides = [
         description: "Create & track DORA metrics in your portal to measure engineering performance",
         tags: ["Engineering metrics", "Actions"],
         logos: ["Actions"],
-        category: "Experiences",
+        // category: "Experiences",
         link: "/guides/all/create-and-track-dora-metrics-in-your-portal",
     },
     {
@@ -114,7 +116,7 @@ export const availableGuides = [
         description: "Set up deployments using GitLab merge requests or jobs",
         tags: ["Engineering metrics"],
         logos: ["GitLab"],
-        category: "Experiences",
+        // category: "Experiences",
         link: "/guides/all/set-up-deployments-dora-gitlab",
     },
     {
@@ -122,7 +124,7 @@ export const availableGuides = [
         description: "Configure DORA metrics tracking using Jira for both deployments and incidents",
         tags: ["Engineering metrics", "Jira"],
         logos: ["Jira"],
-        category: "Experiences",
+        // category: "Experiences",
         link: "/guides/all/setup-dora-metrics-jira",
     },
     {
@@ -910,13 +912,7 @@ export const availableGuides = [
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
     },
-    {
-        title: "Create a FireHydrant Incident",
-        description: "Create a self-service action that creates a FireHydrant incident",
-        tags: ["Incident management", "FireHydrant", "GitHub", "Actions","Webhook", "Automations"],
-        logos: ["FireHydrant", "GitHub"],
-        link: "/guides/all/create-firehydrant-incident",
-    },
+
     {
         title: "Create a Linear issue",
         description: "Create a self-service action that creates a Linear issue",
@@ -932,12 +928,12 @@ export const availableGuides = [
         link: "/guides/all/create-incident-io-incident",
     },
     {
-        title: "Trigger a FireHydrant incident",
-        description: "Create a self-service action that triggers a FireHydrant incident",
+        title: "Manage FireHydrant incidents",
+        description: "Create a self-service action that manages FireHydrant incidents",
         tags: ["Incident management", "FireHydrant", "Actions", "Webhook"],
         logos: ["FireHydrant", "GitHub"],
         // category: "Getting started",
-        link: "/guides/all/trigger-firehydrant-incident",
+        link: "/guides/all/manage-firehydrant-incidents",
     },
     {
         title: "Enrich security vulnerabilities using AI",
@@ -1339,5 +1335,17 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
-    
+    {
+        title: "Generate incident updates with AI",
+        description: "Generate incident updates with AI and send them to Slack",
+        tags: ["Incident management", "AI", "Automations"],
+        logos: ["AI", "Slack", "PagerDuty"],
+        link: "/guides/all/generate-incident-updates-with-ai",
+    }
 ]
+
+// Enhance guides with metadata (isNew property)
+export const enhancedAvailableGuides = availableGuides.map(guide => ({
+    ...guide,
+    isNew: guideMetadata[guide.link]?.isNew || false
+}));
