@@ -166,6 +166,12 @@ If you've already installed the GitHub integration you have to [update the pull 
           "target": "githubRepository",
           "required": false,
           "many": false
+        },
+        "services": {
+          "title": "Services",
+          "target": "service",
+          "required": false,
+          "many": true
         }
       }
     }
@@ -191,7 +197,19 @@ If you've already installed the GitHub integration you have to [update the pull 
         "format": "url"
       }
    ```
-5. Click "Save" to update the blueprint.
+
+5. Add the following snippet to the `relations` section:
+
+   ```json showLineNumbers
+    "services": {
+      "title": "Services",
+      "target": "service",
+      "required": false,
+      "many": true
+    }
+   ```
+
+6. Click "Save" to update the blueprint.
 
 ## Update the data source
 
