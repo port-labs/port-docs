@@ -370,3 +370,51 @@ ___
 
 ## Update Action Run Table
 
+Below is an example for an Automation that triggers upon the execution of an action. This way, once the action runs, the Automation will automatically update the catalog with the execution details.
+ 
+To set this up, you can define an Automation as shown below. Let's assume you have a blueprint named action_run with two properties: action_run_status and action_run_title, which will store the execution details.
+
+<details>
+<summary><b>Example automation (click to expand)</b></summary>
+
+</details>
+
+<details>
+<summary><b>Automation definition (click to expand)</b></summary>
+
+``` json 
+{
+  "identifier": "update_action_run_table",
+  "title": "Update Action Run Table",
+  "description": "",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "RUN_CREATED",
+      "actionIdentifier": "<THE_ACTION_IDENTIFIER>"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "UPSERT_ENTITY",
+    "blueprintIdentifier": "action_run",
+    "mapping": {
+      "identifier": "{{ .event.diff.after.id }}",
+      "title": "{{ .event.diff.after.id }}",
+      "team": [],
+      "icon": "DefaultBlueprint",
+      "properties": {
+        "action_run_status": "{{ .event.diff.after.status }}",
+        "action_run_title": "{{ .event.context.action.title }}"
+      },
+      "relations": {}
+    }
+  },
+  "publish": true
+}
+```
+</details>
