@@ -20,6 +20,17 @@ import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 import FileBlueprint from './example-file-kind/\_example_file_blueprint.mdx'
 import RepoFileAppConfig from './example-file-kind/\_file_repo_app_config.mdx'
 
+import WorkflowBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_blueprint.mdx'
+import WorkflowRunBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_run_blueprint.mdx'
+import PortWfWfrAppConfig from './example-workflow-workflowrun/\_github_exporter_example_wf_wfr_port_app_config.mdx'
+
+import BranchBlueprint from './example-branch/\_git_exporter_example_branch_blueprint.mdx'
+import PortBrAppConfig from './example-branch/\_github_exporter_example_branch_port_app_config.mdx'
+
+import DependabotAlertBlueprint from './example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
+import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
+import PortRepositoryDependabotAlertMappingAppConfig from './example-repository-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
+
 
 # Resource mapping examples
 
@@ -46,6 +57,16 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 After creating the blueprints and committing the `port-app-config.yml` file to your `.github-private` repository (for global configuration), or to any specific repositories (for per-repo configuration), you will see new entities in Port matching your repositories alongside their README.md file contents and pull requests. (Remember that the `port-app-config.yml` file has to be in the **default branch** of the repository to take effect).
 
+## Map repositories and branches
+
+The following example demonstrates how to ingest your GitHub repositories and their branches to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<BranchBlueprint/>
+
+<PortBrAppConfig/>
+
 ## Map files and file contents
 
 The following example demonstrates ingestion of dependencies from a `package.json` file in your repository into Port: 
@@ -65,6 +86,40 @@ The following example demonstrates mapping files to repository.
 <FileBlueprint />
 <RepoFileAppConfig />
 
+## Map repositories, workflows and workflow runs
+
+The following example demonstrates how to ingest your GitHub repositories, their workflows and workflow runs to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<WorkflowBlueprint/>
+
+<WorkflowRunBlueprint/>
+
+<PortWfWfrAppConfig/>
+
+:::tip learn more
+
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
+- Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
+- Click [Here](https://docs.github.com/en/rest/actions/workflows#get-a-workflow) for the GitHub workflow object structure.
+- Click [Here](https://docs.github.com/en/rest/actions/workflow-runs#get-a-workflow-run) for the GitHub workflow run object structure.
+
+:::
+
+
+## Map repositories, Dependabot Alerts, and Code scan alerts
+
+The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<DependabotAlertBlueprint/>
+
+<CodeScanAlertBlueprint/>
+
+<PortRepositoryDependabotAlertMappingAppConfig/>
 
 ## Map repositories, deployments and environments
 
