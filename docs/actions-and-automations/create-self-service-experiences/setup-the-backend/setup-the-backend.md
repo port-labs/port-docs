@@ -56,6 +56,9 @@ For example, say we have an action with one user input that is the user's name. 
   }
 }
 ```
+:::info `.run` available values
+At invocation time, the `.run` object contains only a single value, run `id`.
+:::
 
 You may have noticed that the example above also sends `{{ .run.id }}`. This is a unique identifier for each execution of the action, and can be used to interact with the action run in Port from your backend.  
 

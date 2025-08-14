@@ -365,3 +365,8 @@ For example, the following automation will automatically approve a deployment if
 - The `condition` block checks if the `type` input is set to `Testing`, and will only trigger the automation if this is the case.
 - The backend of the automation directly makes an API call to approve the relevant run.
 - Note that if the `condition` is not met, the automation will not be triggered.
+
+___
+
+## Update Action Run Table
+
