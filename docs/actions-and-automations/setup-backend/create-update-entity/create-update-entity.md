@@ -59,7 +59,7 @@ For example, say we want to assign the initiator of the action to a new entity w
 You can use the `Test JQ` button in the bottom-left corner to test your mapping against the action's schema.
 :::
 
-## Mapping entity relations
+## Map entity relations
 
 When creating or updating entities, you often need to establish relations with other entities. The mapping approach depends on whether you're dealing with single or multiple entity inputs.
 
