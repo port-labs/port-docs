@@ -1341,6 +1341,13 @@ export const availableGuides = [
         tags: ["Incident management", "AI", "Automations"],
         logos: ["AI", "Slack", "PagerDuty"],
         link: "/guides/all/generate-incident-updates-with-ai",
+    },
+    {
+        title: "Generate Zendesk ticket summaries with AI",
+        description: "Use MCP and self-service actions to fetch ticket context (comments, side conversations) and generate summaries on demand",
+        tags: ["AI", "Actions", "Webhook"],
+        logos: ["AI", "Webhook"],
+        link: "/guides/all/generate-zendesk-ticket-summaries-with-ai",
     }
 ]
 
