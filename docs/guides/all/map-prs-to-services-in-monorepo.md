@@ -410,6 +410,6 @@ This automation is chained to the first one, meaning it will only execute after 
 
 2. Check the PR in Port.
 
-3. You should see the services that were affected by the PR.
+3. Check the services that were affected by the PR.
 
-4. You can also see the services that were affected by the PR in the PR details page.
+4. Check the [Audit log](https://app.getport.io/settings/AuditLog) to see the chain of actions
