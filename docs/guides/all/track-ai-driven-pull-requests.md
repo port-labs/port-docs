@@ -5,14 +5,16 @@ description: Learn how to track and monitor AI-driven pull requests in your deve
 
 # Track AI-driven pull requests
 
-The software engineering world has experienced a major breakthrough with AI coding agents such as GitHub Copilot, Claude, Devin, and others. Engineering teams are increasingly integrating these AI agents into their development workflows. This guide will help you create a comprehensive dashboard to bring visibility into what these AI agents are doing in your repositories.
+As engineering teams integrate AI coding agents like GitHub Copilot, Claude, and Devin into their workflows, they face the challenge of managing an increased volume of pull requests. Tracking and reviewing these AI-generated contributions can be overwhelming without a centralized system. Port's AI control center addresses this issue by identifying pull requests originating from coding agents and displaying them in real-time, allowing you to efficiently monitor and act upon them.
 
 <img src="/img/guides/ai-driven-pr-dashboard.png" border="1px" width="100%" />
+<img src="/img/guides/ai-driven-pr-dashboard-total-prs.png" border="1px" width="100%"/>
+
 
 
 ## Common use cases
 
-- **Track AI agent contributions**: Monitor which AI coding agents are actively contributing to your codebase through pull requests.
+- **Act fast on AI agent contributions**: Quickly respond to pull requests from AI coding agents using your AI control center.
 - **Quality assurance**: Ensure AI-generated code meets your team's standards and review processes.
 
 
@@ -21,6 +23,10 @@ The software engineering world has experienced a major breakthrough with AI codi
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - [Port's GitHub integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
+
+:::info Alternative setup
+This guide assumes you're using GitHub to manage your code. However, the principles and steps outlined here can be adapted to other Git platforms such as GitLab, BitBucket etc.
+:::
 
 
 ## Data model setup
@@ -52,7 +58,53 @@ This blueprint will represent all known coding agents in your system.
       },
       "mirrorProperties": {},
       "calculationProperties": {},
-      "aggregationProperties": {},
+      "aggregationProperties": {
+        "total_p_rs_handled": {
+          "title": "Total PRs handled",
+          "type": "number",
+          "target": "githubPullRequest",
+          "calculationSpec": {
+            "func": "count",
+            "calculationBy": "entities"
+          },
+          "pathFilter": [
+            {
+              "fromBlueprint": "githubPullRequest",
+              "path": [
+                "ai_coding_agent"
+              ]
+            }
+          ]
+        },
+        "total_open_p_rs": {
+          "title": "Total open PRs",
+          "icon": "DefaultProperty",
+          "type": "number",
+          "target": "githubPullRequest",
+          "query": {
+            "combinator": "and",
+            "rules": [
+              {
+                "property": "status",
+                "operator": "=",
+                "value": "open"
+              }
+            ]
+          },
+          "calculationSpec": {
+            "func": "count",
+            "calculationBy": "entities"
+          },
+          "pathFilter": [
+            {
+              "fromBlueprint": "githubPullRequest",
+              "path": [
+                "ai_coding_agent"
+              ]
+            }
+          ]
+        }
+      },
       "relations": {}
     }
     ```
@@ -469,6 +521,8 @@ Built with Port to bring clarity to your AI-driven SDLC.
 
 3. Click `Save`.
 
+<img src="/img/guides/ai-driven-pr-dashboard-info-markdown.png" border="1px" width="100%" />
+
 </details>
 
 <details>
@@ -510,8 +564,39 @@ Built with Port to bring clarity to your AI-driven SDLC.
 8. Click on the **Group by** option and select **Work Status** to group PRs by their current status.
 9. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
+<img src="/img/guides/ai-driven-pr-dashboard.png" border="1px" width="100%" />
+
 </details>
 
+<details>
+<summary><b>Open PRs assigned to agents (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `Open PRs assigned to agents` (add the `AI` icon).
+3. Select `Aggregate by property` **Chart type** and choose **AI Coding Agent** as the **Blueprint**.
+4. Select `Total open PRs` as the **Property** and choose `sum` for the **Function**.
+5. Select `custom` as the **Unit** and input `prs` as the **Custom unit**
+6. Click `Save`.
+
+<img src="/img/guides/ai-driven-pr-dashboard-open-pr.png" border="1px" width="70%"/>
+
+</details>
+
+<details>
+<summary><b>Total PRs assigned to agents (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Line Chart**.
+2. Title: `PRs assigned to agents`, (add the `LineChart` icon).
+3. Select `Count Entities (All Entities)` **Chart type** and choose **Pull Request** as the **Blueprint**.
+4. Input `Total PRs` as the **Y axis** **Title** and choose `AI Coding Agent` as the breakdown **Property**.
+5. Set `count` as the **Function**.
+6. Input `Date` as the **X axis** **Title** and choose `Created At` as the **Measure time by**.
+7. Set **Time Interval** to `Week` and **Time Range** to `In the past 90 days`.
+8. Click `Save`.
+
+<img src="/img/guides/ai-driven-pr-dashboard-total-prs.png" border="1px" width="100%"/>
+
+</details>
 
 ## Test the workflow
 
@@ -519,11 +604,13 @@ Now let us test the complete workflow to ensure everything works correctly.
 
 <h4>Trigger a test PR update</h4>
 
-1. Go to the [software catalog](https://app.getport.io/organization/catalog) page of your portal.
-2. Find an existing GitHub pull request created by or commented on by an AI, or create a test PR with AI involvement.
-3. Update the PR to trigger the automation chain.
+1. In a repository integrated into Port, trigger a new coding agent to open a pull request.
+2. Once the PR is opened, verify that it appears in Port and check its AI work status.
+3. After a new commit is made, ensure the selected coding agent is correctly identified.
 
 <h4>Check the dashboard</h4>
 
 The AI-driven pull requests should now appear in your AI Control Center dashboard, properly categorized and grouped by work status.
 
+## Related guides
+- [Trigger GitHub Copilot from Port](https://docs.port.io/guides/all/trigger-github-copilot-from-port)
