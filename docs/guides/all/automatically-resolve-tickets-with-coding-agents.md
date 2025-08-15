@@ -30,6 +30,8 @@ This guide assumes the following:
 - [Port's Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) is installed in your account.
 - You have access to [create and configure AI agents](https://docs.port.io/ai-agents/overview#getting-started-with-ai-agents) in Port.
 - You have completed the setup in the [Trigger GitHub Copilot from Port guide](https://docs.port.io/guides/all/trigger-github-copilot-from-port), ensuring that Copilot will be automatically assigned to any GitHub issues created through this guide.
+- You have completed the setup in the [Track AI-driven pull requests guide](https://docs.port.io/guides/all/track-ai-driven-pull-requests), which allows you to monitor and visualize AI-driven pull requests in a dashboard.
+
 
 :::tip Alternative integrations
 While this guide uses GitHub and Jira, you can adapt it for other Git providers like GitLab or Azure DevOps, and other project management tools like Linear.
@@ -254,7 +256,11 @@ We will create two automations to orchestrate the AI-enhanced release management
 ### Automation to trigger AI agent
 
 :::tip Multiple Approaches
-This automation can be configured to trigger based on various criteria. Currently, it triggers based on a label, but you can also set it to trigger based on different properties or ownership.
+This automation can be configured to trigger based on various criteria. Currently, it triggers based on a label, but you can also set it to trigger based on different properties or ownership including:
+- Automatically fix small bugs
+- Fix security issues with critical SLA
+- Only tasks in repositories that are already onboarded to the AI agents and are considered low-risk
+
 :::
 
 1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal.
@@ -427,10 +433,9 @@ Now let us test the complete workflow to ensure everything works correctly.
 2. Confirm that a pull request is automatically created with a title containing the Jira ticket key.
 3. Check the Jira ticket to see if a comment was added with the PR link.
 
-<img src="/img/guides/jira-to-github-ai-test.png" border="1px" width="100%" />
+<img src="/img/guides/auto-resolve-jira-ticket-test-workflow.png" border="1px" width="100%" />
 
 
 ## Related guides
 
-- [Trigger GitHub Copilot from Port](https://docs.port.io/guides/all/trigger-github-copilot-from-port)
 - [Set up the Task Manager AI agent](https://docs.port.io/guides/all/setup-task-manager-ai-agent)
