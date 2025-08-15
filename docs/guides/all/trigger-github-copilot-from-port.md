@@ -574,7 +574,7 @@ We will create an automation that automatically assigns GitHub issues to Copilot
 
 ### Automation to assign to Copilot
 
-This automation ensures that when a GitHub issue has the "auto_assign" label, it is automatically assigned to the Copilot agent. This streamlines the workflow by reducing manual intervention and ensuring that tasks are promptly assigned to the appropriate coding agent.
+This automation ensures that when a GitHub issue has the `auto_assign` label, it is automatically assigned to the Copilot agent. This streamlines the workflow by reducing manual intervention and ensuring that tasks are promptly assigned to the appropriate coding agent.
 
 1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
