@@ -502,6 +502,7 @@ However, we highly recommend you install the PagerDuty integration to have these
           port_context:
             required: true
             description: includes blueprint, run ID, and entity identifier from Port.
+            
     jobs: 
       trigger:
         runs-on: ubuntu-latest
@@ -558,6 +559,7 @@ However, we highly recommend you install the PagerDuty integration to have these
           port_context:
             required: true
             description: includes blueprint, run ID, and entity identifier from Port.
+
       jobs: 
         trigger:
           runs-on: ubuntu-latest
