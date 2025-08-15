@@ -8,6 +8,8 @@ import GithubActionModificationHint from '/docs/guides/templates/github/_github_
 
 This guide shows you how to set up GitHub Copilot triggers from Port, enabling AI-powered coding assistance in your development workflow. By leveraging AI coding agents like Copilot, you can significantly reduce manual coding tasks and enhance productivity, allowing developers to focus on more complex problem-solving. You will learn how to create self-service actions that can assign issues to GitHub Copilot and configure the necessary GitHub workflows to handle the assignment process.
 
+<img src="/img/guides/trigger-copilot-from-port-flow.jpg" border="1px" width="100%" />
+
 
 ## Common use cases
 
@@ -637,7 +639,7 @@ Now let us test the complete workflow to ensure everything works correctly.
 ### Run the self-service action
 
 1. Run the self-service action to create a new GitHub issue.
-2. Make sure to add the "auto_assign" label to the issue.
+2. Make sure to add the `auto_assign` label to the issue.
 3. Go to the issue in GitHub and verify that Copilot is assigned.
 4. Check that a pull request (PR) is opened for the issue.
 
