@@ -1341,6 +1341,13 @@ export const availableGuides = [
         tags: ["Incident management", "AI", "Automations"],
         logos: ["AI", "Slack", "PagerDuty"],
         link: "/guides/all/generate-incident-updates-with-ai",
+    },
+    {
+        title: "Trigger GitHub Copilot from Port",
+        description: "Learn how to set up GitHub Copilot triggers from Port to enable AI-powered coding assistance",
+        tags: ["SDLC", "GitHub", "AI", "Actions"],
+        logos: ["GitHub", "AI"],
+        link: "/guides/all/trigger-github-copilot-from-port",
     }
 ]
 
