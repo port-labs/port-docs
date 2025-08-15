@@ -1341,7 +1341,14 @@ export const availableGuides = [
         tags: ["Incident management", "AI", "Automations"],
         logos: ["AI", "Slack", "PagerDuty"],
         link: "/guides/all/generate-incident-updates-with-ai",
-    }
+    },
+    {
+        title: "Track AI-driven pull requests",
+        description: "Track AI-driven pull requests and visualize them in a dashboard",
+        tags: ["Engineering metrics", "GitHub", "Dashboards", "AI"],
+        logos: ["GitHub"],
+        link: "/guides/all/track-ai-driven-pull-requests",
+    },
 ]
 
 // Enhance guides with metadata (isNew property)
