@@ -418,7 +418,7 @@ Now let us test the complete workflow to ensure everything works correctly.
 
 1. Go to your GitHub repository.
 2. Verify that a new issue was created with the appropriate title, description, and labels.
-3. Check that the issue has the "auto_assign" label.
+3. Check that the issue has the `auto_assign` label.
 
 
 <h4> Test pull request linking </h4>
