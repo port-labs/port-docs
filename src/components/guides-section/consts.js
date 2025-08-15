@@ -1341,6 +1341,13 @@ export const availableGuides = [
         tags: ["Incident management", "AI", "Automations"],
         logos: ["AI", "Slack", "PagerDuty"],
         link: "/guides/all/generate-incident-updates-with-ai",
+    },
+    {
+        title: "Automatically resolve tickets with coding agents",
+        description: "Learn how to create an AI agent that automatically resolves tickets with coding agents",
+        tags: ["SDLC", "Jira", "GitHub", "AI"],
+        logos: ["Jira", "GitHub", "AI"],
+        link: "/guides/all/automatically-resolve-tickets-with-coding-agents",
     }
 ]
 
