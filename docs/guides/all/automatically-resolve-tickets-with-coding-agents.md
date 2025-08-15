@@ -9,7 +9,7 @@ import GithubActionModificationHint from '/docs/guides/templates/github/_github_
 
 Coding agents can significantly speed up development, but crucial engineering context often gets lost in the process. 
 In this guide, we will learn how to create an AI agent that not only automates the generation of GitHub issues from Jira tickets but also ensures that important context is preserved by assigning them to GitHub Copilot and linking pull requests back to Jira. 
-This setup will help us establish a seamless ticket-to-deployment workflow, bridging the gap between Jira and GitHub.
+This setup will help us establish a seamless ticket-to-PR workflow, bridging the gap between Jira and GitHub.
 
 <img src="/img/guides/automatic-ticket-resolution-architecture.png" border="1px" width="100%" />
 
