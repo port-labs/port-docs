@@ -28,6 +28,7 @@ The following advanced configuration parameters are available:
 {label: "Resync Interval", value: "resyncInterval"},
 {label: "State Key", value: "stateKey"},
 {label: "Logging Level", value: "logging"},
+{label: "Metrics", value: "metrics"},
 {label: "Bulk Sync", value: "bulkSync"},
 {label: "Event listener type", value: "eventListenerType"},
 {label: "CRDs to discover", value: "crdsToDiscover"},
@@ -90,6 +91,19 @@ The `loggingLevel` parameter is used to control the logging level of logs in K8s
 
 - **Default value**: `info` (show all info and error logs, including info logs of successful updates)
 - **Use case**: Set the value to `error`, if you want to clear out info logs. Error logs will be reported.
+
+</TabItem>
+
+<TabItem value="metrics">
+
+The `metricsEnabled` parameter is used to control if the k8s exporter would expose a `/metrics` endpoint compatible with OTLP.
+
+- **Default value**: `true`
+
+The `metricsPort` parameter is used to control the port number of the metrics server.
+
+- **Default value**: `9090`
+- **Use case**: Set the value to other port if from some reason you cannot expose the metrics server on `9090`.
 
 </TabItem>
 
