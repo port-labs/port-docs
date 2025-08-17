@@ -53,8 +53,8 @@ Click the `+` button above the table to add a custom tab.
 
 3. Pick a `Relation path`:
 
-   - **All paths** – includes all available paths from the current blueprint to the target blueprint
-   - **Specific path** – choose one precise relation chain (multi‑hop is supported)
+   - **All paths** – includes all available paths from the current blueprint to the target blueprint.
+   - **Specific path** – choose one specific relation chain (multi‑hop is supported).
 
 4. (Optional) Add `Additional filters` to restrict the result set.
 
