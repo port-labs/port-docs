@@ -259,7 +259,7 @@ To add it, follow these steps:
 4. Copy and paste the following JSON configuration into the editor, then click `Save`.
 
     <details>
-    <summary><b>Update `Action run` utomation definition (click to expand)</b></summary>
+    <summary><b>Update `Action run` automation definition (click to expand)</b></summary>
 
     ``` json 
     {
