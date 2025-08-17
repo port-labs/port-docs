@@ -1,11 +1,11 @@
 ---
 displayed_sidebar: null
-description: Summarize Zendesk tickets with AI using a reusable Port MCP Prompt (backed by self-service actions). Requires Port remote MCP installed and connected in your IDE. No AI agents or automations required.
+description: Summarize Zendesk tickets with AI using a reusable Port MCP prompt (backed by self-service actions). Requires Port remote MCP installed and connected in your IDE. No AI agents or automations required.
 ---
 
 # Summarize Zendesk tickets with AI
 
-When working on support, you often need quick, structured summaries of a ticket for internal handoffs or customer updates. In this guide, we will set up a Prompt in Port so that any AI tool that supports the prompt feature of the MCP protocol can help you summarize Zendesk tickets with all the relevant context.
+When working on support, you often need quick, structured summaries of a ticket for internal handoffs or customer updates. In this guide, we will set up a prompt in Port so that any AI tool that supports the prompt feature of the MCP protocol can help you summarize Zendesk tickets with all the relevant context.
 
 ## Scenario
 
@@ -69,7 +69,7 @@ Zendesk tickets consist of two main sources:
 <img src='/img/guides/zendeskTicketExample.png' border="1px" width="100%" />
 
 
-The self-service actions you’ll create below retrieve both comments and side-conversation messages, ensuring the Prompt has the complete context before generating a summary.
+The self-service actions you’ll create below retrieve both comments and side-conversation messages, ensuring the prompt has the complete context before generating a summary.
 
 #### Get Ticket Comments
 
@@ -222,9 +222,9 @@ This action retrieves the messages for a specific side conversation using its UR
 Replace `<your_subdomain>` with your Zendesk subdomain, for example: `https://acme.zendesk.com/...`.
 :::
 
-## Create a reusable Prompt
+## Create a reusable prompt
 
-We will now define a Prompt entity that your IDE can invoke via [Port MCP](/ai-agents/port-mcp-server#prompts). Once created, you can run it with the ticket ID, and it will gather context and produce a structured summary.
+We will now define a prompt entity that your IDE can invoke via [Port MCP](/ai-agents/port-mcp-server#prompts). Once created, you can run it with the ticket ID, and it will gather context and produce a structured summary.
 
 1. Go to the [Prompts page](https://app.getport.io/prompts) in Port.
 2. Click `Create prompt`.
