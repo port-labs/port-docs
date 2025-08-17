@@ -9,40 +9,25 @@ When working on support, you often need quick, structured summaries of a ticket 
 
 ## Scenario
 
-You’re the on-call support engineer. A customer reports intermittent login failures via Slack SSO on ticket `148273`. Before handoff to engineering, you need a concise internal summary and a customer-facing version.
+You’re the on-call support engineer. A customer requests the ability to set labels for tickets on Zendesk ticket `4095`. Before hand-off, you need a concise internal summary and a customer-facing version.
 
 Example context snippets the prompt will fetch:
 
 ```text
-Ticket subject: Users intermittently fail to login via Slack SSO
+Ticket subject: Add the ability to set labels for tickets
 
 Recent comments
-- 2025-08-10 09:12: Customer: “Users see 401 after Slack authorize.”
-- 2025-08-10 09:25: Agent: “Impacts EU tenants only; spike started ~08:50 UTC.”
-
-Side conversation (to SRE)
-- 2025-08-10 09:40: SRE: “Ingress rule update at 08:43. Slack callback path missing in EU cluster.”
+- 2025-08-13 13:12: Customer: "I want the ability to set labels for tickets"
+- 2025-08-13 13:16: Agent: "Thanks for reaching out! Can you share a bit more about how you’d like to use these labels?"
 ```
 
 Example output from the prompt:
 
-```markdown
-## Request
-Customer cannot complete Slack SSO; users receive 401 after authorize.
-
-## Resolution
-Reverted ingress rules and re-applied configuration with Slack callback path in EU cluster. Confirmed successful logins.
-
-## Root Cause
-Ingress change at 08:43 UTC omitted the Slack callback route for EU tenants, causing 401 responses on `/sso/callback`.
-
-## Recommendations
-- Add CI check for required SSO callback paths before deploy
-- Document EU-specific ingress overrides
-- Add synthetic SSO login check to detect regressions
-```
+<img src='/img/guides/analyzeZendeskTicketExample.png' border="1px" width="70%" />
 
 ## Flow overview
+
+<img src='/img/guides/analyzeZendeskTicketsFlow.jpg' border="1px" width="70%"/>
 
 - Developer runs the reusable `zendesk_ticket_summary` prompt with `ticket_id`
 - Prompt uses actions to fetch comments and side conversations → returns a structured summary
@@ -275,7 +260,7 @@ Run the `zendesk_ticket_summary` Prompt with `ticket_id` set to the Zendesk tick
 Example run
 Prompt: zendesk_ticket_summary
 Arguments:
-- ticket_id: 148273
+- ticket_id: 4095
 ```
 
 :::caution Privacy and scope
