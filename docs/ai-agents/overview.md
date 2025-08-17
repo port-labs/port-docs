@@ -105,6 +105,20 @@ The data model of AI agents includes two main blueprints:
 
 2. **AI invocations** - Each interaction made with an AI agent is recorded as an invocation. This acts as a log of everything going through your AI agents so you can monitor and improve them over time. Learn more in our [Interact with AI agents](/ai-agents/interact-with-ai-agents) guide.
 
+## Relevant guides
+
+Explore these guides to see AI agents in action and learn how to implement them in your organization:
+
+- [Generate incident updates with AI](/guides/all/generate-incident-updates-with-ai)
+- [Enrich tasks with AI-powered context](/guides/all/enrich-tasks-with-ai)
+- [Setup PR enricher AI agent](/guides/all/setup-pr-enricher-ai-agent)
+- [Setup service explorer AI agent](/guides/all/setup-service-explorer-ai-agent)
+- [Setup platform request triage AI agent](/guides/all/setup-platform-request-triage-ai-agent)
+- [Setup task manager AI agent](/guides/all/setup-task-manager-ai-agent)
+- [Setup incident manager AI agent](/guides/all/setup-incident-manager-ai-agent)
+- [Add RCA context to AI agents](/guides/all/add-rca-context-to-ai-agents)
+- [Enrich security vulnerability using AI](/guides/all/enrich-security-vulnerability-using-ai)
+
 ## Frequently asked questions
 
 <details>
