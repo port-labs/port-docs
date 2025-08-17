@@ -41,17 +41,13 @@ Example output from the prompt:
 ## Prerequisites
 
 - Port remote MCP installed and connected in your IDE (Cursor, Claude, etc.). Follow the setup guide: [Port MCP Server - Setup](/ai-agents/port-mcp-server#setup)
-- A Port account and basic familiarity with self-service actions.
-- A `zendesk_ticket` blueprint where the entity `identifier` is the Zendesk ticket ID.
-- Secret `ZENDESK_TOKEN` configured in Port containing the Base64-encoded Basic credential for Zendesk API.
+- A Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
+- Custom integration to ingest Zendesk tickets using [Port webhooks](/build-your-software-catalog/custom-integration/webhook).
 
-:::info Zendesk authentication
-Use a Base64-encoded Basic credential in `ZENDESK_TOKEN`, typically built from `email/token:apitoken`. This guide assumes your token is already Base64-encoded and is used as `Authorization: Basic {{ .secrets.ZENDESK_TOKEN }}`.
-:::
 
 ## Set up self-service actions
 
-We will create the following actions to retrieve ticket comments and side conversations from Zendesk. These actions have no inputs (except the side-conversation messages action) and can be invoked directly from your AI tool via MCP.
+We will create the following actions to retrieve ticket comments and side conversations from Zendesk.
 
 #### Get Ticket Comments
 
