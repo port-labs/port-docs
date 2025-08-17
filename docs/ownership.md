@@ -59,9 +59,10 @@ Tools for which Port does not have a built-in integration can be synced manually
 
 ### Automatically
 - **Built-in integrations**: Update the integration mapping to connect the Port user to the integration user.  **ADD TABS WITH MAPPINGS FOR EACH INTEGRATION**
+
 - **Custom integrations**: When a new Port user is created, an automation links them to the matching integration user. **ADD LINKS TO THE RELEVANT ANCHOR IN EACH GUIDE**
 
----
+
 
 ## Sync Teams
 
@@ -87,7 +88,7 @@ Teams can also be synced into Port either manually or automatically, depending o
   Using the integration mapping, we can define how to create/update teams in Port.
   
   For example, the following mapping can be used to create/update teams in Port using GitHub:
-    ```yaml
+    ```yaml showLineNumbers
     - kind: team
     selector:
         query: 'true'
@@ -110,7 +111,7 @@ Teams can also be synced into Port either manually or automatically, depending o
 -  Automatic mapping is usually not reliable because team names and identifiers may not match. In most cases, automation will require consistent identifiers across systems, which is uncommon.
   - For example, if a team in GitHub is called `frontend`, but in Sentry it is called `Frontend`, we need to create a mapping between the two. -->
 
----
+
 
 ## Assign Users to Teams
 
@@ -123,48 +124,105 @@ As a user, it's important to see all of the resources owned by you or your team/
 ### Manually
 - **Self-Service Action (SSA) – [Add team members](https://app.getport.io/self-serve?action=_onboard_existing_team)**  
   An out-of-the-box self service action used to add users to an existing team.
+
 - **Edit a user entity**  
   This can be done from the [Users catalog page](https://app.getport.io/_users):  
   Click on the `...` button, then click on `Edit`.
-  - When creating a new user, assign their team(s).
+
+- When creating/inviting a new user from the UI, you can assign them to teams as part of the creation process.
 
 ### Automatically
-- **Using SSO**: Users and teams are created and connected automatically.  
-- **Using Entra ID**: Use the Entra ID integration tool.  
-- **GitLab / ADO**: Use auto-discovery to map:
+- When using SSO, users and teams are created and connected automatically.  
+
+- When using Entra ID, you can use this [integration tool](https://github.com/port-experimental/entra-id-provisioner) to sync users and teams into Port.  
+
+- TODO: test solution to connect team to user when fetching teams, something like this:
+  
+
+    ```yaml showLineNumbers
+    - kind: team
+        selector:
+        query: 'true'
+        itemsToParse: [].][][]members
+        port:
+        entity:
+            mappings:
+            identifier: .item.id
+            blueprint: '"_user"'
+            relations:
+                teams: .id
+    ```
 
 
----
+
+
+
 
 ## Assign Teams to Catalog Entities
 
 ### Manually
-- **SSA – Own services**  
-- Edit an entity to update its owning team(s).  
-- When creating a new entity, assign its owning team(s).
+
+- **Self-Service Action (SSA) – [Own services](https://app.getport.io/self-serve?action=set_ownership)**  
+  An out-of-the-box self service action used to assign ownership of one or more services to a specific team.
+
+- **Edit an entity**  
+  This can be done from the entity's relevant catalog page:  
+  Click on the `...` button, then click on `Edit`, and change the `Owning teams` field.
+
+- When creating a new entity, assign its owning team(s) as part of the creation process.
 
 ### Automatically
-- **GitHub example**:  
-- Use the `team-mapper` script.  
-- If an entity has an integration-team property (e.g., GitHub repository → `github-teams`), update the mapping so that if `github-teams` has a value, it is also set in `owning teams`.  
-- This assumes Port team IDs match GitHub team IDs.
 
----
+- If using GitHub, you can use the [team-mapper](https://github.com/port-experimental/repo-team-mapper) script to map repositories to teams based on commit history.
+  
+- If an entity has an property or relation that contains the integration team identifier (e.g., GitHub repository → `github-teams`), update the mapping so that the `github-teams` value will automatically be set in `owning teams`.  
+
+    ```yaml showLineNumbers
+    - kind: repository
+        selector:
+        query: 'true'
+        teams: true
+        port:
+        entity:
+        mappings:
+            identifier: .full_name
+            title: .name
+            blueprint: '"githubRepository"'
+            properties:
+                readme: file://README.md
+                url: .html_url
+                defaultBranch: .default_branch
+                $team: '[.teams[].id | tostring]'
+            relations:
+                githubTeams: '[.teams[].id | tostring]'
+    ```
+
+  Note that this assumes Port team identifiers match GitHub team identifiers.
+
+
 
 ## Assign Users to Catalog Entities
 
+In some cases, ownership needs to be assigned to a specific user and not a team. For example, a PagerDuty incident may be owned by the current on-call user, or a GitHub Pull Request may be owned by the creator.
+
 ### Manually
-- Edit an entity to set its relevant user(s).  
-- Assign relevant user(s) during entity creation.
+
+- **Edit an entity**  
+  If a blueprint has a relation to the Port user blueprint, you can edit the entity from its catalog page and change the value of this relation:  
+  Click on the `...` button, then click on `Edit`, and change the relation value.
 
 ### Automatically
-- Example mappings:  
+
+In many Port integrations, blueprints can have out-of-the-box relations to the 3rd party user blueprint, with a default mapping configuration that automatically sets the value of this relation.
+
+In such cases, using the integration's mapping configuration, you can automatically create relations to the relevant Port users as well.
+
+Here are some common examples:  ADD TABS FOR EACH MAPPING CONFIG
 - GitHub Pull Request → creator, reviewer  
 - Jira Issue → creator, assignee  
 - PagerDuty Incident → on-call user  
-- These mappings are included in Port’s new onboarding process.
 
----
+
 
 ## Visualize User & Team Data
 
