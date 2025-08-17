@@ -347,4 +347,4 @@ To add it, follow these steps:
     ```
     </details>
 
-Using the blueprint and automations will give you a tracking system that captures all execution details of a self-service action, providing visibility into usage patterns. For a more comprehensive example of how to use this tracking system in practice, including advanced reporting and ROI calculations, refer to the [Create ROI dashboard](/guides/all/create-roi-dashboard) guide.
+Using the blueprint and automations will give you a tracking system that captures all execution details of a self-service action, providing visibility into usage patterns. For a more comprehensive example of how to use this tracking system in practice, including advanced reporting and ROI calculations, refer to the create ROI dashboard guide.
