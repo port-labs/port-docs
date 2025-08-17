@@ -166,3 +166,185 @@ The basic structure of a self-service action looks like this (see key descriptio
 ## Examples
 
 For complete examples of self-service actions using GitHub as the backend, check out the [guides section](/guides?tags=GitHub&tags=Actions).
+
+## Tracking self-service actions
+
+To gain visibility into how your self-service actions are being used and their performance, you can set up tracking for action runs. This allows you to monitor execution patterns, track success rates, and maintain audit trails of who executed what actions and when.  
+
+The following tracking system works by creating a dedicated blueprint for action runs and setting up an automation that captures execution details whenever a specific self-service action is triggered as well as an automation that updates the action run's status. This approach can give you a centralized view of all action executions in your software catalog.
+
+<h3>Set up data model</h3>
+
+Create a blueprint for `Action run`:
+
+1. Go to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Click on `+ Blueprint`.
+
+3. Click on the `{...} Edit JSON` button in the top right corner.
+
+4. Copy and paste the following JSON schema, then click `Save`.
+
+    <details>
+    <summary><b>Action run blueprint (click to expand)</b></summary>
+
+    ``` json
+    {
+      "identifier": "action_run",
+      "title": "Action run",
+      "icon": "Microservice",
+      "schema": {
+        "properties": {
+          "status": {
+            "icon": "DefaultProperty",
+            "title": "Status",
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "FAILURE",
+              "IN_PROGRESS",
+              "WAITING_FOR_APPROVAL",
+              "DECLINED"
+            ],
+            "enumColors": {
+              "SUCCESS": "green",
+              "FAILURE": "red",
+              "IN_PROGRESS": "lightGray",
+              "WAITING_FOR_APPROVAL": "yellow",
+              "DECLINED": "red"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At",
+            "format": "date-time"
+          },
+          "run_id": {
+            "type": "string",
+            "title": "Run ID"
+          },
+          "run_url": {
+            "type": "string",
+            "title": "Run URL",
+            "format": "url"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At",
+            "format": "date-time"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": { }
+    }
+    ```
+    </details>
+
+
+<h3>Define the automations</h3>
+
+The following automation updates the `Action run` entity with initial information regarding this run.  
+To add it, follow these steps:
+
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
+
+2. Click on the `+ Automation` button.
+
+3. Click on the `{...} Edit JSON` button in the top right corner.
+
+4. Copy and paste the following JSON configuration into the editor, then click `Save`.
+
+    <details>
+    <summary><b>Update `Action run` utomation definition (click to expand)</b></summary>
+
+    ``` json 
+    {
+      "identifier": "update_action_run",
+      "title": "Update Action Run",
+      "description": "",
+      "trigger": {
+        "type": "automation",
+        "event": {
+          "type": "RUN_CREATED",
+          "actionIdentifier": "<THE_ACTION_IDENTIFIER>"
+        },
+        "condition": {
+          "type": "JQ",
+          "expressions": [],
+          "combinator": "and"
+        }
+      },
+      "invocationMethod": {
+        "type": "UPSERT_ENTITY",
+        "blueprintIdentifier": "action_run",
+        "mapping": {
+            "identifier": "{{.event.diff.after.id}}",
+            "title": "{{.event.diff.after.id}}",
+            "properties": {
+              "run_id": "{{.event.diff.after.id}}",
+              "run_url": "https://app.port.io/organization/run?runId={{.event.diff.after.id}}",
+              "status": "{{.event.diff.after.status}}",
+              "created_at": "{{.event.diff.after.createdAt}}",
+              "updated_at": "{{.event.diff.after.updatedAt}}"
+            },
+            "relations": {}
+        }
+      },
+      "publish": true
+    }
+    ```
+    </details>
+
+The next automation progresses the status of the `Action run` to keep the entity up to date.  
+To add it, follow these steps:
+
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
+
+2. Click on the `+ Automation` button.
+
+3. Click on the `{...} Edit JSON` button in the top right corner.
+
+4. Copy and paste the following JSON configuration into the editor, then click `Save`.
+
+    <details>
+    <summary><b>Progress `Action run` automation definition (click to expand)</b></summary>
+
+    ``` json 
+    {
+      "identifier": "progress_the_action_runs_status",
+      "title": "Progress the action run's entity status",
+      "description": "Move an action run's status when it progresses",
+      "trigger": {
+        "type": "automation",
+        "event": {
+          "type": "RUN_UPDATED",
+          "actionIdentifier": "<THE_ACTION_IDENTIFIER>"
+        },
+        "condition": {
+          "type": "JQ",
+          "expressions": [
+            ".diff.before.status != .diff.after.status"
+          ],
+          "combinator": "and"
+        }
+      },
+      "invocationMethod": {
+        "type": "UPSERT_ENTITY",
+        "blueprintIdentifier": "action_run",
+        "mapping": {
+          "identifier": "{{.event.diff.after.id}}",
+          "properties": {
+            "status": "{{.event.diff.after.status}}"
+          }
+        }
+      },
+      "publish": true
+    }
+    ```
+    </details>
+
+Using the blueprint and automations will give you a tracking system that captures all execution details of a self-service action, providing visibility into usage patterns. For a more comprehensive example of how to use this tracking system in practice, including advanced reporting and ROI calculations, refer to the [Create ROI dashboard](/guides/all/create-roi-dashboard) guide.
