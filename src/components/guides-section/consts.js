@@ -1344,7 +1344,7 @@ export const availableGuides = [
     },
     {
         title: "Generate Zendesk ticket summaries with AI",
-        description: "Use MCP and self-service actions to fetch ticket context (comments, side conversations) and generate summaries on demand",
+        description: "Use Port remote MCP to fetch ticket context and generate AI summaries on demand",
         tags: ["AI", "Actions", "Webhook"],
         logos: ["AI", "Webhook"],
         link: "/guides/all/generate-zendesk-ticket-summaries-with-ai",
