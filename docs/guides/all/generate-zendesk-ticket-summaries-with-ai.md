@@ -5,7 +5,7 @@ description: Summarize Zendesk tickets with AI using a reusable Port MCP Prompt 
 
 # Summarize Zendesk tickets with AI
 
-When working on support, you often need quick, structured summaries of a ticket for internal handoffs or customer updates. In this guide, we will set up a Prompt in Port so that any AI tool can help you summarize Zendesk tickets with all the relevant context.
+When working on support, you often need quick, structured summaries of a ticket for internal handoffs or customer updates. In this guide, we will set up a Prompt in Port so that any AI tool that supports the prompt feature of the MCP protocol can help you summarize Zendesk tickets with all the relevant context.
 
 ## Scenario
 
