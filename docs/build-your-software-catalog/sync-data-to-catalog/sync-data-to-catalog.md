@@ -59,7 +59,6 @@ Now that you've installed an integration, let's see how you can customize it:
 2. [**Configure your data mapping**](/build-your-software-catalog/customize-integrations/configure-mapping) - Update the integration's data mapping in Port to match the data model and fetch your desired data from the tool.
 
 ## Entities
-כא
 An entity is an instance of a [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), it represents the data defined by a blueprint's properties.
 
 After installing an integration, a page will be created in your catalog, populated with entities representing the ingested data.
