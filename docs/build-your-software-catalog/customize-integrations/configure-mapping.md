@@ -348,7 +348,7 @@ In some cases, an application's API returns an array of objects that you want to
 To achieve this, Port provides you with the `itemsToParse` key, its value should be a JQ query that returns an array.  
 In order to reference an array item attribute, use `.item` in your JQ expression.  
 
-In some cases, the response from an application's API contains an object with `item` key on the top level. In such case, in order to prevent ambigous access and unexpected results, Port provides you with the `itemsToParseName` key, its value should be a string which be referenced on your later mapping properties instead of the default `.item`
+In some cases, the response from an application's API contains an object with `item` key on the top level. In such cases, to prevent ambiguous access and unexpected results, Port provides the `itemsToParseName` key. Its value should be a string that can be referenced in your mapping properties instead of the default `.item`.
 
 :::warning Limit Availability
 
