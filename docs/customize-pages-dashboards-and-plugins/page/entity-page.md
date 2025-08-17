@@ -68,7 +68,7 @@ Use "all paths" for a broad overview. Choose a specific path when multiple paths
 Selecting `Filters` opens a dialog where you can build conditions using form controls (property, operator, value).   
 You can switch to a JSON editor using the `Edit JSON` button to define the dataset directly.
 
-The dataset structure follows this shape:
+The dataset follows this structure:
 
 ```json showLineNumbers
 {
