@@ -13,7 +13,7 @@ Using Azure Pipelines, you can easily create/update and query entities in Port.
 <br></br>
 <br></br>
 
-![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/azure-pipelines/azure-pipelines-illustration.jpg)
+![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/azure-pipelines/azure-pipelines-illustration.png)
 
 ## 💡 Common Azure Pipelines usage
 
