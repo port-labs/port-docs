@@ -6,7 +6,8 @@ import GithubActionModificationHint from '/docs/guides/templates/github/_github_
 
 # Trigger GitHub Copilot from Port
 
-This guide shows you how to set up GitHub Copilot triggers from Port, enabling AI-powered coding assistance in your development workflow. By leveraging AI coding agents like Copilot, you can significantly reduce manual coding tasks and enhance productivity, allowing developers to focus on more complex problem-solving. You will learn how to create self-service actions that can assign issues to GitHub Copilot and configure the necessary GitHub workflows to handle the assignment process.
+This guide demonstrates how to set up GitHub Copilot triggers from Port, enabling AI-powered coding assistance in your development workflow.  
+By leveraging AI coding agents like Copilot, you can significantly reduce manual coding tasks and enhance productivity, allowing developers to focus on more complex problem-solving. You will learn how to create self-service actions that can assign issues to GitHub Copilot and configure the necessary GitHub workflows to handle the assignment process.
 
 <img src="/img/guides/trigger-copilot-from-port-flow.jpg" border="1px" width="100%" />
 
