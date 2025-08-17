@@ -61,7 +61,15 @@ To add the secret to your portal:
 
 ## Set up self-service actions
 
-We will create the following actions to retrieve ticket comments and side conversations from Zendesk.
+Zendesk tickets consist of two main sources:
+
+1. **Comments** – the primary conversation between the requester and agents (public or internal).
+2. **Side conversations** – separate threaded discussions (email, Slack, etc.) opened from the ticket for additional stakeholders.
+
+<img src='/img/guides/zendeskTicketExample.png' border="1px" width="100%" />
+
+
+The self-service actions you’ll create below retrieve both comments and side-conversation messages, ensuring the Prompt has the complete context before generating a summary.
 
 #### Get Ticket Comments
 
