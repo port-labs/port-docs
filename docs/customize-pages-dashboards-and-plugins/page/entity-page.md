@@ -59,7 +59,7 @@ Click the `+` button above the table to add a custom tab.
 4. (Optional) Add `Additional filters` to restrict the result set.
 
 :::tip Relation path options
-Use All paths for a broad overview. Choose a Specific path when multiple paths exist to the same blueprint and you want the tab to reflect exactly one path.
+Use "all paths" for a broad overview. Choose a specific path when multiple paths exist to the same blueprint and you want the tab to reflect exactly one path.
 :::
 
 
