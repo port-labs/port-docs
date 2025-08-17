@@ -44,6 +44,20 @@ Example output from the prompt:
 - A Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - Custom integration to ingest Zendesk tickets using [Port webhooks](/build-your-software-catalog/custom-integration/webhook).
 
+## Add Secrets
+
+The actions in this guide authenticate to Zendesk using a secret that stores your API token, enabling them to retrieve ticket comments and side-conversation data. You can generate an API token by following Zendesk’s instructions [here](https://developer.zendesk.com/api-reference/introduction/security-and-auth/#api-token).
+
+To add the secret to your portal:
+
+    1. Click on the `...` button in the top right corner of your Port application.
+
+    2. Click on **Credentials**.
+
+    3. Click on the `Secrets` tab.
+
+    4. Click on `+ Secret` and add the following secrets:
+        - `ZENDESK_TOKEN` - Your Zendesk API token generated according to the guide.
 
 ## Set up self-service actions
 
