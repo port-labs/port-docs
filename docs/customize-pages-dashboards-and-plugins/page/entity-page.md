@@ -88,7 +88,7 @@ Use the JSON editor when you need to copy/paste filter sets, keep them in source
 
 <h4>Define the tab in JSON mode</h4>
 
-You can also toggle `Json Mode` in the Add tab dialog to author the entire tab as JSON. An example:
+You can also toggle `Json Mode` in the "Add tab" dialog to author the entire tab as JSON. An example:
 
 ```json showLineNumbers
 {
