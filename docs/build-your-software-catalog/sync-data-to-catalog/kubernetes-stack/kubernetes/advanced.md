@@ -109,11 +109,11 @@ The `metricsPort` parameter is used to control the port number of the metrics se
 
 <TabItem value="bulkSync">
 
-The `bulkSyncMaxPayloadBytes` parameter is used to control the size (in bytes) of the upsert bulks to port.
+The `bulkSyncMaxPayloadBytes` parameter is used to control the size (in bytes) of the bulk upserts to Port.
 
 - **Default value**: `1048576`
 
-The `bulkSyncMaxEntitiesPerBatch` parameter is used to control the number of entities to be sent as part of an upsert bulk to port.
+The `bulkSyncMaxEntitiesPerBatch` parameter is used to control the number of entities to be sent as part of a bulk upsert to Port.
 
 - **Default value**: `20`
 
