@@ -87,7 +87,7 @@ If a new resync trigger consistently aborts a running resync, it means that your
 
 <TabItem value="logging">
 
-The `loggingLevel` parameter is used to control the logging level of logs in K8s exporter's pod.
+The `loggingLevel` parameter is used to control the level of logs in the K8s exporter's pod.
 
 - **Default value**: `info` (show all info and error logs, including info logs of successful updates)
 - **Use case**: Set the value to `error`, if you want to clear out info logs. Error logs will be reported.
