@@ -233,7 +233,7 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/backstage',
   },
   {
-    name: 'GitHub Copilot',
+    name: 'Github Copilot',
     category: 'ai-agents',
     icon: '/img/guides/icons/GithubCopilot.svg',
     darkIcon: '/img/guides/icons/dark/GithubCopilot.svg',
