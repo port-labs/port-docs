@@ -350,9 +350,9 @@ In order to reference an array item attribute, use `.item` in your JQ expression
 
 In some cases, the response from an application's API contains an object with `item` key on the top level. In such cases, to prevent ambiguous access and unexpected results, Port provides the `itemsToParseName` key. Its value should be a string that can be referenced in your mapping properties instead of the default `.item`.
 
-:::warning Limit Availability
-
-`itemsToParseName` key is not supported on Github, K8s and Webhook integrations. In addition, you are not able to check your mapping on the test mapping when the key is enabled.
+:::warning Limitations
+- The `itemsToParseName` key is not supported on Github, Kubernetes and Webhook integrations.
+- When the key is enabled, you cannot use the "test mapping" option in Port's UI.
 :::
 
 
