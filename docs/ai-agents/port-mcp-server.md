@@ -575,6 +575,115 @@ Claude will ask for any required arguments before running the prompt, and the MC
 </TabItem>
 </Tabs>
 
+## Connect to Port's MCP Server to Claude Code in Github Workflow
+
+### Automate Claude Code with GitHub Actions
+Running Claude Code inside CI/CD differs from local usage because an interactive OAuth flow is not possible. Instead, the workflow must:
+
+1. **Generate a short-lived Port access token** using the Client-Credentials grant (Client ID + Client Secret).
+2. **Connect to the remote MCP server** and pass the token to it so Claude Code can call the allowed tools.
+
+<details>
+<summary> Example Github workflow (Click to expand) </summary>
+
+```yaml title=".github/workflows/claude-code-mcp.yml" showLineNumbers
+name: Port MCP Server Demo with Claude Code
+
+on:
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: "Debug mode"
+        required: false
+        default: "false"
+
+env:
+  # Remote MCP endpoint for your region (eu/us)
+  PORT_MCP_URL: ${{ vars.PORT_MCP_URL }}
+  # Base URL for the OAuth token endpoint for your region (eu/us) – e.g. https://api.port.io
+  PORT_AUTH_BASE_URL: ${{ vars.PORT_AUTH_BASE_URL }}
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate with Port and get access token
+        id: port-auth
+        run: |
+          # Exchange client credentials for an access token
+          response=$(curl -s -X POST \
+            "${{ env.PORT_AUTH_BASE_URL }}/auth/access_token" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "clientId": "${{ secrets.PORT_CLIENT_ID }}",
+              "clientSecret": "${{ secrets.PORT_CLIENT_SECRET }}"
+            }')
+
+          access_token=$(echo "$response" | jq -r '.accessToken')
+          if [ -z "$access_token" ] || [ "$access_token" = "null" ]; then
+            echo "Failed to obtain access token"
+            echo "Response: $response"
+            exit 1
+          fi
+
+          # Mask the token in job logs
+          echo "::add-mask::$access_token"
+          echo "access_token=$access_token" >> "$GITHUB_OUTPUT"
+
+      - name: Run Claude Code against Port MCP
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          mode: agent
+          # Define the MCP server and pass the token in the Authorization header
+          mcp_config: |
+            {
+              "mcpServers": {
+                "port-prod": {
+                  "command": "npx",
+                  "args": [
+                    "mcp-remote",
+                    "${{ env.PORT_MCP_URL }}",
+                    "--allow-http",
+                    "--header",
+                    "Authorization: Bearer ${{ steps.port-auth.outputs.access_token }}"
+                  ]
+                }
+              }
+            }
+          # Restrict the tools the model can use (add or remove as needed)
+          allowed_tools: "mcp__port-prod__list_blueprints,mcp__port-prod__get_blueprint,mcp__port-prod__get_entities"
+          # Replace with whatever you need the agent to do
+          direct_prompt: |
+            You are connected to the Port MCP server.
+            List all blueprints and then show me the entities of the "zendesk_ticket" blueprint.
+```
+</details>
+
+
+
+#### How this workflow works
+
+1. **Get a token** – The `port-auth` step exchanges your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` for a short-lived OAuth access token (no interactive login needed in CI).
+2. **Start Claude with MCP** – `anthropics/claude-code-action` launches Claude Code and spins up a `mcp-remote` client that points to your Port MCP URL, forwarding the token via an `Authorization` header.
+3. **Run the prompt** – Claude can call only the MCP tools you list in `allowed_tools`, using them to accomplish whatever task you set in `direct_prompt`.
+
+:::caution Keep your secrets safe
+Store `PORT_CLIENT_ID`, `PORT_CLIENT_SECRET`, and `ANTHROPIC_API_KEY` as **encrypted GitHub Actions secrets**. Never commit them to the repository or print them to logs.
+:::
+
+:::tip Customise the tool list
+For read-only workflows you can shorten `allowed_tools` to just the query operations you need. This reduces payload size and risk of accidental changes.
+:::
+
 ## Troubleshooting
 
 If you encounter issues while setting up or using the Port MCP Server, expand the relevant section below:
