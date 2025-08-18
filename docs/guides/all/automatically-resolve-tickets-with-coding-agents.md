@@ -167,7 +167,7 @@ The more integrations and data you add to the agent, the richer the context it w
 We will create two automations to orchestrate the AI-enhanced release management workflow:
 
 1. Trigger the AI agent when Jira tickets move to "In Progress" with "copilot" label
-2. Update Jira tickets with pull request links
+2. Comment on a Jira ticket with the related pull request link
 
 
 ### Automation to trigger AI agent
@@ -235,9 +235,9 @@ This automation can be configured to trigger based on various criteria. Currentl
 4. Click `Create` to save the automation.
 
 
-### Automation to add PR link to Jira ticket
+### Automation to Comment on the Jira ticket with the PR link
 
-This automation ensures that any new pull request related to a Jira ticket is promptly linked back to the ticket, providing clear traceability and context for development progress.
+This automation ensures that any new pull request related to a Jira ticket is promptly linked back to the ticket in a comment, providing clear traceability and context for development progress.
 
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
