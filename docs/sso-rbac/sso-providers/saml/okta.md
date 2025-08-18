@@ -69,7 +69,7 @@ To secure the SAML integration, you need to generate a certificate and send it t
 
 To expose your Okta groups to Port via the application, follow these steps:
 
-1. In the `Sign On` tab of your Okta application, click `Edit`.
+1. In the `General` tab of your Okta application, click `Edit`.
 
 2. Scroll down to the `Group Attribute Statements` section.
 
