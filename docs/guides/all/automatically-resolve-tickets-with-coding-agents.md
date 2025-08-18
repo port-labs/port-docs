@@ -30,7 +30,6 @@ This guide assumes the following:
 - [Port's Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) is installed in your account.
 - You have access to [create and configure AI agents](https://docs.port.io/ai-agents/overview#getting-started-with-ai-agents) in Port.
 - You have completed the setup in the [Trigger GitHub Copilot from Port guide](https://docs.port.io/guides/all/trigger-github-copilot-from-port), ensuring that Copilot will be automatically assigned to any GitHub issues created through this guide.
-- You have completed the setup in the [Track AI-driven pull requests guide](https://docs.port.io/guides/all/track-ai-driven-pull-requests), which allows you to monitor and visualize AI-driven pull requests in a dashboard.
 
 
 :::tip Alternative integrations
@@ -83,88 +82,6 @@ When you install Port's Jira integration, the Jira project and issue blueprints 
 
 6. Click `Save` to update the blueprint.
 
-
-### Update Jira integration configuration
-
-Now we need to update the Jira integration configuration mapping to establish the relationship between Jira issues and pull requests. The mapping will check if the pull request title contains the Jira issue key.
-
-1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
-2. Find your Jira integration and click on it.
-3. Go to the `Mapping` tab.
-4. Add the following YAML block into the editor to map the pull request relation:
-
-    <details>
-    <summary><b>Updated Jira integration configuration (Click to expand)</b></summary>
-
-    ```yaml showLineNumbers
-    resources:
-      - kind: issue
-        selector:
-          query: 'true'
-          jql: >-
-            ((statusCategory != Done) OR (created >= -1w) OR (updated >= -1w))
-        port:
-          entity:
-            mappings:
-              identifier: .key
-              title: .fields.summary
-              blueprint: '"jiraIssue"'
-              properties:
-                url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
-                status: .fields.status.name
-                issueType: .fields.issuetype.name
-                components: .fields.components
-                description: >-
-                  [.fields.description.content[]?.content[]?.text // empty] |
-                  join("\n")
-                creator: .fields.creator.emailAddress
-                priority: .fields.priority.name
-                labels: .fields.labels
-                created: .fields.created
-                updated: .fields.updated
-                resolutionDate: .fields.resolutiondate
-              relations:
-                project: .fields.project.key
-                parentIssue: .fields.parent.key
-                subtasks: .fields.subtasks | map(.key)
-                jira_user_assignee: .fields.assignee.accountId
-                jira_user_reporter: .fields.reporter.accountId
-                assignee:
-                  combinator: '"or"'
-                  rules:
-                    - property: '"jira_user_id"'
-                      operator: '"="'
-                      value: .fields.assignee.accountId // ""
-                    - property: '"$identifier"'
-                      operator: '"="'
-                      value: .fields.assignee.email // ""
-                reporter:
-                  combinator: '"or"'
-                  rules:
-                    - property: '"jira_user_id"'
-                      operator: '"="'
-                      value: .fields.reporter.accountId // ""
-                    - property: '"$identifier"'
-                      operator: '"="'
-                      value: .fields.reporter.email // ""
-                repository:
-                  combinator: '"and"'
-                  rules:
-                    - property: '"$identifier"'
-                      operator: '"="'
-                      value: .fields.customfield_10039.value
-                // highlight-start
-                pull_request:
-                  combinator: '"and"'
-                  rules:
-                    - property: '"$title"'
-                      operator: '"contains"'
-                      value: .key
-                // highlight-end
-    ```
-    </details>
-
-5. Click `Save` to update the integration configuration.
 
 ### Update GitHub Integration Mapping
 
@@ -374,7 +291,7 @@ This automation ensures that any new pull request related to a Jira ticket is pr
                 "content": [
                   {
                     "type": "text",
-                    "text": "Port opened a PR for this issue. Find the link below:"
+                    "text": "A new pull request identified for this ticket. Find the link below:"
                   }
                 ]
               },
