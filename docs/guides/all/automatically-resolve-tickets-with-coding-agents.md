@@ -250,7 +250,7 @@ The more integrations and data you add to the agent, the richer the context it w
 We will create two automations to orchestrate the AI-enhanced release management workflow:
 
 1. Trigger the AI agent when Jira tickets move to "In Progress" with "copilot" label
-2. Update Jira tickets with pull request links
+2. Comment on a Jira ticket with the related pull request link
 
 
 ### Automation to trigger AI agent
