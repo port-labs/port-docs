@@ -1031,7 +1031,7 @@ The final step is to create a scorecard that reflects the security maturity of a
 
 <h3>Troubleshooting</h3>
 
-Some common reason for failure with Snyk integration and OWASP Top 10 scorecard realisation maybe as following:
+Some common issues you may encounter during the implementation:
 
 1. **Invalid token:** The `SNYK_TOKEN` does not have privileges or otherwise has been revoked. Ensure that the token is valid and has required permissions so that issues and targets across the Snyk Group can be queried for.
 2. **OWASP Top 10 2021:** `CWE` field is key to accurately measuring and benchmarking against OWASP Top 10. The current measurement rules are based on the latest OWASP Top 10 i.e. OWASP Top 10 2021 as of this write-up. Discrepancy may arise if following this example without consideration for reviewing against latest OWASP Top 10 issues and the associated CWEs.
