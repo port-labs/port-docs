@@ -161,6 +161,99 @@ This approach allows you to display indirectly related entities while maintainin
 If **Service A** has multiple relations with **Service C** (e.g., `relation_1_with_svc_c` and `relation_2_with_svc_c`), you can choose which specific relation path to use for more refined and filtered results.
 :::
 
+#### Self relation
+
+A self relation allows a blueprint to establish a relationship with itself. This is useful when you want entities of the same blueprint to be related to other entities within that same blueprint.
+
+For example, consider an **Organization** blueprint where:
+- Organizations contain teams
+- Teams can belong to other organizational entities (like groups)
+- All entities share the same blueprint but have hierarchical relationships
+
+When defining a self relation, you can specify how many "hops" to traverse in the relationship chain.   
+Hops represent the number of jumps you want to make upstream or downstream through the self-relation.
+
+<h4>Setting up self relations</h4>
+
+Follow these steps to set up a self relation in related entities:
+
+1. Click the `+` button above the Related Entities table.
+
+2. Choose your blueprint as the `Related blueprint`.
+
+3. Select the `Self Relation` from the available relation paths.
+
+4. The system will automatically handle the relationship traversal.
+
+5. You can also toggle to `Json Mode` in the "Add tab" dialog to define the relationship path with precise control over hops.
+
+      In JSON mode, you can use the `maxHops` feature to control the number of relationship traversals. A single path element can be an object instead of a string:
+
+      ```json showLineNumbers
+      {
+        "relation": "<RELATION_IDENTIFIER>",
+        "maxHops": <number between 1 and 15>
+      }
+      ```
+
+6. Click on `Save` to save the tab.
+
+The system will run the query `maxHops + 1` times (once for each number between 0 and the maxHops value).
+
+
+<h4>Examples</h4>
+
+**Basic self relation with multiple self relations:**
+
+```json showLineNumbers
+{
+  "dataset": {
+    "combinator": "and",
+    "rules": []
+  },
+  "title": "Test Relation",
+  "targetBlueprint": "my_organization",
+  "relationPath": {
+    "path": [
+      "self_relation",
+      "self_relation",
+      ... // up to 15 self relations
+    ],
+    "fromBlueprint": "my_organization"
+  }
+}
+```
+
+**Self relation with maxHops:**
+
+```json showLineNumbers
+{
+  "dataset": {
+    "combinator": "and",
+    "rules": []
+  },
+  "title": "Test Relation",
+  "targetBlueprint": "my_organization",
+  "relationPath": {
+    "path": [
+      "self_relation",
+      {
+        "relation": "relation_identifier_goes_here",
+        "maxHops": 4
+      }
+    ],
+    "fromBlueprint": "my_organization"
+  }
+}
+```
+
+:::info Hops limitation
+You can add up to 15 `self_relation` entries in a path, or use the `maxHops` feature to specify the exact number of traversals needed for your use case.
+
+The `maxHops` feature is now supported in both the legacy search APIs and the new paginated API.
+:::
+
+
 ## Runs
 
 If the entity's blueprint has any [actions](/actions-and-automations/create-self-service-experiences/) configured, the `Runs` tab will display their history log, results, log streams, and more.
