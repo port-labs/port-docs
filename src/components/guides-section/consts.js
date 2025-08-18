@@ -1349,6 +1349,13 @@ export const availableGuides = [
         tags: ["SDLC", "Github Copilot", "AI", "Actions"],
         logos: ["GitHub", "AI"],
         link: "/guides/all/trigger-github-copilot-from-port",
+    },
+    {
+        title: "Summarize Zendesk tickets with AI",
+        description: "Use Port's remote MCP to fetch ticket context and generate AI summaries on demand",
+        tags: ["AI", "Actions", "Webhook"],
+        logos: ["AI", "Webhook"],
+        link: "/guides/all/generate-zendesk-ticket-summaries-with-ai",
     }
 ]
 
