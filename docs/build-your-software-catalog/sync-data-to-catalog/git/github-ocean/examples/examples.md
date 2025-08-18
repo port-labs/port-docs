@@ -126,7 +126,7 @@ The following example demonstrates mapping files to repository.
 
 ## Map repositories and monorepos
 
-In the following example you will ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. You may use the following Port blueprint definitions and `port-app-config.yml`:
+In the following example we will ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. You may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -188,7 +188,7 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 ## Map teams and team members
 
-The following shows how you can map teams and team members using the "members" selector.
+The following shows how we can map teams and team members using the "members" selector.
 
 <TeamMemberBlueprint />
 <TeamWithMembersBlueprint />
