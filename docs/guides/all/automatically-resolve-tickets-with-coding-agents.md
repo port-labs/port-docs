@@ -320,7 +320,7 @@ This automation can be configured to trigger based on various criteria. Currentl
 
 ### Automation to add PR link to Jira ticket
 
-This automation ensures that any new pull request related to a Jira ticket is promptly linked back to the ticket, providing clear traceability and context for development progress.
+This automation ensures that any new pull request related to a Jira ticket is promptly linked back to the ticket in a comment, providing clear traceability and context for development progress.
 
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
