@@ -318,7 +318,7 @@ This automation can be configured to trigger based on various criteria. Currentl
 4. Click `Create` to save the automation.
 
 
-### Automation to add PR link to Jira ticket
+### Automation to Comment on the Jira ticket with the PR link
 
 This automation ensures that any new pull request related to a Jira ticket is promptly linked back to the ticket in a comment, providing clear traceability and context for development progress.
 
