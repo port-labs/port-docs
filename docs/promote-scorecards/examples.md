@@ -1039,13 +1039,13 @@ Some common issues you may encounter during the implementation:
 
 <h3>Next steps</h3>
 
-The following steps are recommended as next steps.
+Consider the following as next steps:
 
 1. **Quality standards:**
-  - Eliminate chaos and promote `minimum viable security product` with tiering.
-  - Establish a customised standard that best meets your organisation's culture by classifying the OWASP Top 10.
+   - Eliminate chaos and promote `minimum viable security product` with tiering.
+   - Establish a customized standard that best meets your organization's culture by classifying the OWASP Top 10.
 2. **Self-service actions:**
-  - Automatically assign Owners and create a self-service action that triggers an alert to repository owners when tier standards are unmet.
+   - Automatically assign Owners and create a self-service action that triggers an alert to repository owners when tier standards are unmet.
 3. **Portal Initiative:**
-  - Self-service action: Create a self-service action to improve OWASP Tiers for specific repositories.
-  - Create an initiative within Port to reduce a specific security weaknesss or promote a specific tier as a standard operating procedure.
+   - Self-service action: Create a self-service action to improve OWASP Tiers for specific repositories.
+   - Create an initiative within Port to reduce a specific security weakness or promote a specific tier as a standard operating procedure.
