@@ -39,6 +39,17 @@ After the installation, you can customize the blueprints and/or mapping to inges
 <br/>
 <OceanContribution />
 
+## Installation methods
+
+Below is a breakdown of the supported installation methods for Port integrations.  
+
+| Installation type  | Security | Ease of Installation | Resync | Live events | Infrastructure & Maintenance Responsibility | Use Case Fit |
+| ------------------ | ---------|:--------------------:|:-------:|:-------------:| ------------------------------------------- | ------------ |
+| **Hosted by Port (OAuth)** | Port stores OAuth tokens securely. | 🟩🟩🟩🟩 | **Periodic** | ✅ <br/>(Integration-dependent) | Port handles scaling, uptime, and updates. | Ideal for quick setup with minimal operational effort. |
+| **Hosted by Port (Custom settings)** | Port stores API credentials securely. Setup requires more details (e.g., token, host) and allows access control flexibility. | 🟩🟩🟩⬜ | **Periodic** (user-selectable interval) | ✅ <br/>(Integration-dependent)| Port handles scaling, uptime, and updates.| Best for quick setup without granting OAuth permissions. |
+| **Self-hosted (Real-time)** | Managed entirely in your infrastructure. | 🟩⬜⬜⬜  | **Periodic** (custom interval) | ✅ <br/>(Depends on source system) | You provision, monitor, and maintain the integration. | Best for high-security or custom networking needs.|
+| **Scheduled (CI)**| Managed in your CI/CD environment. | 🟩🟩⬜⬜ | **Periodic** (custom interval) | ❌| Minimal infrastructure. You manage the CI/CD environment and triggers. | Best when real-time isn’t needed and you want full sync control. |
+
 ## Customize your integrations
 
 Now that you've installed an integration, let's see how you can customize it:
