@@ -1360,7 +1360,7 @@ export const availableGuides = [
     {
         title: "Automatically resolve tickets with coding agents",
         description: "Learn how to create an AI agent that automatically resolves tickets with coding agents",
-        tags: ["SDLC", "Jira", "GitHub", "AI"],
+        tags: ["SDLC", "Jira", "Github Copilot", "AI"],
         logos: ["Jira", "GitHub", "AI"],
         link: "/guides/all/automatically-resolve-tickets-with-coding-agents",
     }
