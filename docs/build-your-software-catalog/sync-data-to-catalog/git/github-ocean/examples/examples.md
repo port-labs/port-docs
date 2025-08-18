@@ -112,7 +112,7 @@ The example will parse the `package.json` file in your repository and extract th
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/#ingest-files-from-your-repositories).
 
 
-## Map Files and Repositories
+## Map files and repositories
 
 The following example demonstrates mapping files to repository.
 
@@ -182,7 +182,8 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 <PortRepositoryTeamMappingAppConfig/>
 
 
-## Map team and team members
+## Map teams and team members
+
 The following show how you can map team and team members using the "members" selector.
 
 <TeamMemberBlueprint />
@@ -205,7 +206,7 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 As Github has strict privacy policies, the GitHub API will only return emails in the following cases:  
 
-1. The user has a public email address
+1. The user has a public email address.
 2. Your organization is working with a GitHub Enterprise Cloud plan, and the user has an SAML SSO identity configured inside the GitHub organization.
 
 In other cases, the GitHub API will return a `null` value for the user's email.
@@ -216,7 +217,7 @@ Other fields from the [GitHub User API](https://docs.github.com/en/rest/users/us
 :::
 
 
-## Map repositories, Dependabot Alerts, and Code scan alerts
+## Map repositories, dependabot alerts, and code scan alerts
 
 The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
 
