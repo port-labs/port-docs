@@ -66,7 +66,7 @@ Alternatively, if you are syncing your groups from an on-prem AD into Entra, con
 
 <img src="/img/sso/azure-saml/azureSamlGroups.png" width="60%" border="1px" />
 
-## SCIM Configuration (beta)
+<!-- ## SCIM Configuration (beta)
 
 AzureAD SAML applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
 
@@ -83,4 +83,4 @@ You will be provided with:
 
  The `endpoint` and `token` will be used to set up the SCIM integration in your identity provider.
 
-After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-azure-ad-saml-connections#configure-scim-in-azure-ad-for-saml-apps) to enable SCIM.
+After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-azure-ad-saml-connections#configure-scim-in-azure-ad-for-saml-apps) to enable SCIM. -->
