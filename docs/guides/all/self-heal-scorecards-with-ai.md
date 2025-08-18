@@ -27,8 +27,6 @@ This guide assumes the following:
 - [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account
 - You have access to [create and configure AI agents](https://docs.port.io/ai-agents/overview#getting-started-with-ai-agents) in Port.
 - You have completed the setup in the [Trigger GitHub Copilot from Port guide](https://docs.port.io/guides/all/trigger-github-copilot-from-port), ensuring that Copilot will be automatically assigned to any GitHub issues created through this guide.
-- You have completed the setup in the [Track AI-driven Pull Requests guide](/guides/all/track-ai-driven-pull-requests) to monitor AI-driven pull requests.
-
 
 
 :::tip Flexibility with Coding Agents
@@ -433,34 +431,34 @@ This automation bridges the gap between Port's AI agent analysis and GitHub's de
 Now let us test the complete workflow to ensure everything works correctly.
 
 
-### Trigger a test scorecard degradation
+<h3> Trigger a test scorecard degradation </h3>
 
 1. Go to your GitHub repository and manually modify a property that affects a scorecard rule (e.g., remove a README.md file or disable CI/CD).
 2. Wait for the scorecard statistics to update in Port.
 
 
-### Verify the AI agent task creation
+<h3> Verify the AI agent task creation </h3>
 
 1. Go to the [Catalog](https://app.getport.io/catalog) page of your portal.
 2. Navigate to the `AI Agent Task` entities.
 3. Check the list to see the generated task.
 
 
-### Check the GitHub issue creation
+<h3> Check the GitHub issue creation </h3>
 
 1. Go to your GitHub repository.
 2. Verify that a new issue was created with the appropriate title, description, and labels.
 3. Check that the issue has the "auto_assign" label.
 
 
-### Verify Copilot assignment
+<h3> Verify Copilot assignment </h3>
 
 1. Check the GitHub issue to see if it was assigned to Copilot.
 2. Verify that the GitHub workflow was triggered successfully.
 3. See Copilot created a new PR.
 
 
-### Monitor the remediation process
+<h3> Monitor the remediation process </h3>
 
 1. Watch as GitHub Copilot generates code to fix the scorecard issues.
 2. Check that pull requests are created and linked back to the AI agent tasks.
