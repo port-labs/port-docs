@@ -103,7 +103,7 @@ The `metricsEnabled` parameter is used to control if the k8s exporter would expo
 The `metricsPort` parameter is used to control the port number of the metrics server.
 
 - **Default value**: `9090`
-- **Use case**: Set the value to other port if from some reason you cannot expose the metrics server on `9090`.
+- **Use case**: Set the value to a different port if you do not wish to expose the metrics server on `9090`.
 
 </TabItem>
 
