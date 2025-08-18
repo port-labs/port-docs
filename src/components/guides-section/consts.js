@@ -5,6 +5,7 @@ export const tagsCategoryMap = {
     "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
+        "Github Copilot",
         "GitLab",
         "BitBucket",
         "AzureDevops",
@@ -912,13 +913,7 @@ export const availableGuides = [
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
     },
-    {
-        title: "Create a FireHydrant Incident",
-        description: "Create a self-service action that creates a FireHydrant incident",
-        tags: ["Incident management", "FireHydrant", "GitHub", "Actions","Webhook", "Automations"],
-        logos: ["FireHydrant", "GitHub"],
-        link: "/guides/all/create-firehydrant-incident",
-    },
+
     {
         title: "Create a Linear issue",
         description: "Create a self-service action that creates a Linear issue",
@@ -934,12 +929,12 @@ export const availableGuides = [
         link: "/guides/all/create-incident-io-incident",
     },
     {
-        title: "Trigger a FireHydrant incident",
-        description: "Create a self-service action that triggers a FireHydrant incident",
+        title: "Manage FireHydrant incidents",
+        description: "Create a self-service action that manages FireHydrant incidents",
         tags: ["Incident management", "FireHydrant", "Actions", "Webhook"],
         logos: ["FireHydrant", "GitHub"],
         // category: "Getting started",
-        link: "/guides/all/trigger-firehydrant-incident",
+        link: "/guides/all/manage-firehydrant-incidents",
     },
     {
         title: "Enrich security vulnerabilities using AI",
@@ -1348,6 +1343,20 @@ export const availableGuides = [
         logos: ["Actions"],
         link: "/guides/all/create-roi-dashboard",
     },
+    {
+        title: "Generate incident updates with AI",
+        description: "Generate incident updates with AI and send them to Slack",
+        tags: ["Incident management", "AI", "Automations"],
+        logos: ["AI", "Slack", "PagerDuty"],
+        link: "/guides/all/generate-incident-updates-with-ai",
+    },
+    {
+        title: "Trigger GitHub Copilot from Port",
+        description: "Learn how to set up GitHub Copilot triggers from Port to enable AI-powered coding assistance",
+        tags: ["SDLC", "Github Copilot", "AI", "Actions"],
+        logos: ["GitHub", "AI"],
+        link: "/guides/all/trigger-github-copilot-from-port",
+    }
 ]
 
 // Enhance guides with metadata (isNew property)
