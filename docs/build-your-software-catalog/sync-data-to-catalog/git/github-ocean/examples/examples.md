@@ -27,12 +27,16 @@ import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 import FileBlueprint from './example-file-kind/\_example_file_blueprint.mdx'
 import RepoFileAppConfig from './example-file-kind/\_file_repo_app_config.mdx'
 
-import TeamBlueprint from './example-team-members/\_github_exporter_team_blueprint.mdx'
+import TeamWithMembersBlueprint from './example-team-members/\_github_exporter_team_blueprint.mdx'
 import TeamMemberBlueprint from './example-team-members/\_github_exporter_team_member_blueprint.mdx'
 import TeamMemberConfig from './example-team-members/\_github_team_member_port_app_config.mdx'
 
+import TeamBlueprint from './example-repository-teams/\_github_export_example_team_blueprint.mdx'
 import RepositoryTeamBlueprint from './example-repository-teams/\_github_export_example_repository_with_teams_relation_blueprint.mdx'
 import PortRepositoryTeamMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_port_app_config.mdx'
+
+import CollaboratorBlueprint from './example-repository-collaborators/\_github_exporter_example_collaborator_blueprint.mdx'
+import PortRepositoryCollaboratorAppConfig from './example-repository-collaborators/\_github_exporter_example_repository_collaborator_port_app_config.mdx'
 
 import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
 import WorkflowBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_blueprint.mdx'
@@ -122,7 +126,7 @@ The following example demonstrates mapping files to repository.
 
 ## Map repositories and monorepos
 
-In the following example you will ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
+In the following example you will ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. You may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -184,10 +188,10 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 ## Map teams and team members
 
-The following show how you can map team and team members using the "members" selector.
+The following shows how you can map teams and team members using the "members" selector.
 
 <TeamMemberBlueprint />
-<TeamBlueprint />
+<TeamWithMembersBlueprint />
 <TeamMemberConfig />
 
 
@@ -216,6 +220,14 @@ For the `user` kind, only the following fields are supported: `.name`, `.login`,
 Other fields from the [GitHub User API](https://docs.github.com/en/rest/users/users#get-a-user) are not available.
 :::
 
+## Map repositories and collaborators
+
+The following example demonstrates how to ingest your GitHub repositories and their collaborators to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+<CollaboratorBlueprint />
+<PortRepositoryCollaboratorAppConfig />
 
 ## Map repositories, dependabot alerts, and code scan alerts
 
