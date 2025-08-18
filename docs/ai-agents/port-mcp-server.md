@@ -14,7 +14,7 @@ import TabItem from "@theme/TabItem"
     style={{borderRadius:'4px'}}
     width="568"
     height="320"
-    src="https://www.youtube.com/embed/hxUTTPSApQs" 
+    src="https://www.youtube.com/embed/WrVgQ-whBiE" 
     title="YouTube video player" 
     frameborder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -48,6 +48,21 @@ As one user put it:
 The Port MCP Server directly enables these kinds of valuable, in-context interactions.
 
 ## Key capabilities and use-cases
+
+<center>
+<div className="video-container">
+  <iframe 
+    style={{borderRadius:'4px'}}
+    width="568"
+    height="320"
+    src="https://www.youtube.com/embed/hxUTTPSApQs" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+</center>
 
 The Port MCP Server enables you to interact with your Port data and capabilities directly through natural language within your chosen LLM-powered tools. Here's what you can achieve:
 
@@ -96,6 +111,11 @@ Receive assistance with common development and operational tasks, directly withi
 *   Ask: "Help me add a rule to the 'Tier1Services' scorecard that requires an on-call schedule to be defined."
 
 ![Getting instructions for new service setup](/img/ai-agents/MCPClaudeServiceSetup.png)
+
+### Find your own use cases
+
+You can use Port's MCP to find the use cases that will be valuable to you. Try using this prompt: "think of creative prompts I can use to showcase the power of Port's MCP, based on the data available in Port"
+
 
 ## Using Port MCP
 
