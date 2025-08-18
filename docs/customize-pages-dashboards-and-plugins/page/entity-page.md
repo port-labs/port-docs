@@ -121,6 +121,46 @@ Other properties will be hidden by default.
 
 You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
 
+#### Special case
+
+In some scenarios, you may want to display entities that are not directly related but connected through a common blueprint. This is useful when you have multiple services that share relationships with a common entity.
+
+For example, consider this relationship structure:
+
+<img src='/img/software-catalog/pages/relatedEntitiesIndirectRelations.png' border='1px' width='95%' />
+
+<br /><br />
+
+From the diagram, we can see that:
+
+- **Service A** has relations with **Service C**
+- **Service B** has relations with **Service C**  
+- **Service A** and **Service B** are not directly related, but connected through **Service C**
+
+When you're on the entity page of **Service A**, you can create a custom tab to show **Service B** entities by leveraging the indirect relationship through **Service C**.
+
+<img src='/img/software-catalog/pages/relatedEntitiesIndirectRelations2.png' border='1px' width='100%' />
+
+<h4>Set up a special case</h4>
+
+To set up a special case:
+
+1. Click the `+` button above the Related Entities table
+
+2. Set the tab name (e.g., "A special case") and description
+
+3. Choose **Service B** as the `Related blueprint`
+
+4. For the `Relation or property`, select the specific relation from **Service A** to **Service C** that you want to traverse
+
+5. The system will automatically follow the path: **Service A** → **Service C** → **Service B**
+
+This approach allows you to display indirectly related entities while maintaining control over the specific relationship path used for the connection.
+
+:::info Multiple relations scenario
+If **Service A** has multiple relations with **Service C** (e.g., `relation_1_with_svc_c` and `relation_2_with_svc_c`), you can choose which specific relation path to use for more refined and filtered results.
+:::
+
 ## Runs
 
 If the entity's blueprint has any [actions](/actions-and-automations/create-self-service-experiences/) configured, the `Runs` tab will display their history log, results, log streams, and more.
