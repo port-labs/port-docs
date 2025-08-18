@@ -117,7 +117,7 @@ The `bulkSyncMaxEntitiesPerBatch` parameter is used to control the number of ent
 
 - **Default value**: `20`
 
-The `bulkSyncBatchTimeoutSeconds` parameter is used to control the time (in seconds) to wait until flushing an upsert bulk to port when the max entities number or size not reached.
+The `bulkSyncBatchTimeoutSeconds` parameter is used to control the time (in seconds) to wait until flushing a bulk upsert to Port (even if the maximum number/size of entities has not been reached).
 
 - **Default value**: `5`
 
