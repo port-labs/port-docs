@@ -224,8 +224,13 @@ export const liveEvents = {
     \n - created \
     \n - edited \
     \n - deleted \
+    \n - added_to_repository \
   \n\n **membership:** \
     \n - added \
+    \n - removed \
+  \n\n **member:** \
+    \n - added \
+    \n - edited \
     \n - removed \
   \n\n **organization:** \
     \n - member_added \
