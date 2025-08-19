@@ -143,7 +143,6 @@ When you're on the entity page of **Service A**, you can create a custom tab to 
 
 <h4>Add a tab for an indirectly related blueprint</h4>
 
-To set up a special case:
 
 1. Click the `+` button above the Related Entities table
 
