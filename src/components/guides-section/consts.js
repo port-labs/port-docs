@@ -5,6 +5,7 @@ export const tagsCategoryMap = {
     "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
+        "Github Copilot",
         "GitLab",
         "BitBucket",
         "AzureDevops",
@@ -1343,12 +1344,26 @@ export const availableGuides = [
         link: "/guides/all/generate-incident-updates-with-ai",
     },
     {
+        title: "Trigger GitHub Copilot from Port",
+        description: "Learn how to set up GitHub Copilot triggers from Port to enable AI-powered coding assistance",
+        tags: ["SDLC", "Github Copilot", "AI", "Actions"],
+        logos: ["GitHub", "AI"],
+        link: "/guides/all/trigger-github-copilot-from-port",
+    },
+    {
+        title: "Summarize Zendesk tickets with AI",
+        description: "Use Port's remote MCP to fetch ticket context and generate AI summaries on demand",
+        tags: ["AI", "Actions", "Webhook"],
+        logos: ["AI", "Webhook"],
+        link: "/guides/all/generate-zendesk-ticket-summaries-with-ai",
+    },
+    {
         title: "Track AI-driven pull requests",
         description: "Track AI-driven pull requests and visualize them in a dashboard",
-        tags: ["Engineering metrics", "GitHub", "Dashboards", "AI"],
+        tags: ["Engineering metrics", "Github Copilot", "Dashboards", "AI"],
         logos: ["GitHub"],
         link: "/guides/all/track-ai-driven-pull-requests",
-    },
+    }
 ]
 
 // Enhance guides with metadata (isNew property)

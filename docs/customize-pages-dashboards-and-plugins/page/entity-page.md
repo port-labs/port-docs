@@ -43,9 +43,75 @@ Since we changed direction midway, this relation is **indirect**:
 
 When looking at the entity page of a certain `Workflow Run`, the related entities `Deployment Workflow` and `Service` automatically appear, but `Deployment` does not, since its relation is in the other direction.
 
-You can add additional entities to the `Related entities` table by clicking on the `+` button above the table.  
+### Add a Related entities tab
 
-In the form that appears, the `Related blueprint` dropdown will display all entities that are related in any way to the current entity. In our `Workflow Run` example above, we can use this button to add a `Deployment` tab to our widget.
+Click the `+` button above the table to add a custom tab.   
+
+1. Set the tab's `Name` and optional `Description`.
+
+2. Choose the `Related blueprint` you want to display.
+
+3. Pick a `Relation path`:
+
+   - **All paths** – includes all available paths from the current blueprint to the target blueprint.
+   - **Specific path** – choose one specific relation chain (multi‑hop is supported).
+
+4. (Optional) Add `Additional filters` to restrict the result set.
+
+:::tip Relation path options
+Use "all paths" for a broad overview. Choose a specific path when multiple paths exist to the same blueprint and you want the tab to reflect exactly one path.
+:::
+
+
+#### Filters and Edit JSON
+
+Selecting `Filters` opens a dialog where you can build conditions using form controls (property, operator, value).   
+You can switch to a JSON editor using the `Edit JSON` button to define the dataset directly.
+
+The dataset follows this structure:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "$title",
+      "operator": "contains",
+      "value": "awesome-package"
+    }
+  ]
+}
+```
+
+
+Use the JSON editor when you need to copy/paste filter sets, keep them in source control, or express conditions that are faster to author as JSON. You can toggle back to the form at any time.
+
+<h4>Define the tab in JSON mode</h4>
+
+You can also toggle `Json Mode` in the "Add tab" dialog to author the entire tab as JSON. An example:
+
+```json showLineNumbers
+{
+  "dataset": {
+    "combinator": "and",
+    "rules": [
+      {
+        "property": "$title",
+        "operator": "contains",
+        "value": "awesome-package"
+      }
+    ]
+  },
+  "title": "custom path package",
+  "targetBlueprint": "Package",
+  "relationPath": {
+    "path": ["service_in_env", "package"],
+    "fromBlueprint": "service_in_env_deployments"
+  }
+}
+```
+
+This JSON corresponds to a tab named `custom path package` that targets the `Package` blueprint, follows a specific path from `service_in_env_deployments` via `service_in_env` to `package`, and filters results to titles containing the letter `awesome-package`.
 
 #### Show/hide columns
 
