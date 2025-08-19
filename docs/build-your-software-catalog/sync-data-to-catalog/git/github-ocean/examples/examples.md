@@ -57,13 +57,15 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 After creating the blueprints and committing the `port-app-config.yml` file to your `.github-private` repository (for global configuration), or to any specific repositories (for per-repo configuration), you will see new entities in Port matching your repositories alongside their README.md file contents and pull requests. (Remember that the `port-app-config.yml` file has to be in the **default branch** of the repository to take effect).
 
-Additionally, you can configure your selector to limit the number of closed pull requests to ingest using maxResults. By Default, we only fetch 100 pull requests.
+Additionally, you can configure your selector to limit the number of closed pull requests to ingest using a combination of `maxResults` and `since` selectors. By Default, we only fetch 100 cloosed pull requests within 60 days.
+
 ```yaml
 - kind: pull-request
   selector:
     query: "true"
     states: ["closed"]  # Specifically for closed PRs
-    maxResults: 50      # Limit closed PRs to 50
+    maxResults: 50  # Limit closed PRs to 50 capped at 300
+    since: 60  # Fetch closed PRs within 60 days capped at 90 days
 ```
 
 
