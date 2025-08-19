@@ -262,112 +262,117 @@ Claude will ask for any required arguments before running the prompt and will su
 </Tabs>
 
 
-### Allow users to create prompts with self service action
+### Self-service action to create prompts
 You can create a Self Service Action in Port to allow you users to create prompts themselves.
 
-<details>
-<summary>Self Service Action JSON (Click to expand)</summary>
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
+2. Click on `+ New Action`.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration:
 
-```json showLineNumbers
-{
-  "identifier": "create_new_prompt",
-  "title": "Create New Prompt",
-  "icon": "Microservice",
-  "description": "Create prompt templates that appear in MCP clients (Claude, Cursor, VS Code, etc.) connected to your Port organization. Users can select prompts, provide required arguments, and get contextual AI assistance with dynamic data from Port.",
-  "trigger": {
-    "type": "self-service",
-    "operation": "CREATE",
-    "userInputs": {
-      "properties": {
-        "arguments": {
-          "type": "array",
-          "title": "Template Arguments",
-          "description": "Define arguments that users will provide when running this prompt. Each argument becomes available as {{argument_name}} placeholder in the template. Required arguments must be provided before prompt execution.",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "title": "Argument Name",
-                "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$",
-                "description": "The parameter name that will be substituted in the template using {{name}} syntax (e.g., 'service_name', 'environment', 'incident_id')"
-              },
-              "description": {
-                "type": "string",
-                "title": "Argument Description",
-                "description": "Clear description explaining what this argument represents and how it's used in the prompt context"
-              },
-              "is_required": {
-                "type": "boolean",
-                "title": "Is Required",
-                "default": false,
-                "description": "When true, the MCP client (Claude, Cursor, VS Code) will require this argument before executing the prompt"
-              }
+    <details>
+    <summary>Create New Prompt action JSON (Click to expand)</summary>
+
+    ```json showLineNumbers
+    {
+    "identifier": "create_new_prompt",
+    "title": "Create New Prompt",
+    "icon": "Microservice",
+    "description": "Create prompt templates that appear in MCP clients (Claude, Cursor, VS Code, etc.) connected to your Port organization. Users can select prompts, provide required arguments, and get contextual AI assistance with dynamic data from Port.",
+    "trigger": {
+        "type": "self-service",
+        "operation": "CREATE",
+        "userInputs": {
+        "properties": {
+            "arguments": {
+            "type": "array",
+            "title": "Template Arguments",
+            "description": "Define arguments that users will provide when running this prompt. Each argument becomes available as {{argument_name}} placeholder in the template. Required arguments must be provided before prompt execution.",
+            "items": {
+                "type": "object",
+                "properties": {
+                "name": {
+                    "type": "string",
+                    "title": "Argument Name",
+                    "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$",
+                    "description": "The parameter name that will be substituted in the template using {{name}} syntax (e.g., 'service_name', 'environment', 'incident_id')"
+                },
+                "description": {
+                    "type": "string",
+                    "title": "Argument Description",
+                    "description": "Clear description explaining what this argument represents and how it's used in the prompt context"
+                },
+                "is_required": {
+                    "type": "boolean",
+                    "title": "Is Required",
+                    "default": false,
+                    "description": "When true, the MCP client (Claude, Cursor, VS Code) will require this argument before executing the prompt"
+                }
+                }
             }
-          }
+            },
+            "owning_team": {
+            "type": "string",
+            "title": "Owning Team (Optional)",
+            "description": "The team that will own and maintain this prompt template",
+            "format": "entity",
+            "blueprint": "_team"
+            },
+            "prompt_title": {
+            "type": "string",
+            "title": "Prompt Title",
+            "description": "Human-readable name for this prompt (displayed in MCP clients like Claude, Cursor, and VS Code)",
+            "minLength": 3,
+            "maxLength": 50
+            },
+            "prompt_template": {
+            "type": "string",
+            "title": "Prompt Template",
+            "description": "The prompt content with placeholders for dynamic values. Use {{argument_name}} to reference arguments (e.g., 'Analyze service {{service_name}} in {{environment}}'). Supports markdown formatting. The MCP Server substitutes values into {{}} placeholders when the prompt runs.",
+            "minLength": 20,
+            "format": "multi-line"
+            },
+            "prompt_description": {
+            "type": "string",
+            "title": "Description",
+            "description": "Explain what this prompt does and when to use it. This description helps users select the right prompt from the MCP client interface.",
+            "minLength": 10,
+            "maxLength": 500,
+            "format": "multi-line"
+            }
         },
-        "owning_team": {
-          "type": "string",
-          "title": "Owning Team (Optional)",
-          "description": "The team that will own and maintain this prompt template",
-          "format": "entity",
-          "blueprint": "_team"
+        "required": [
+            "prompt_title",
+            "prompt_description",
+            "prompt_template"
+        ],
+        "order": [
+            "prompt_title",
+            "prompt_description",
+            "prompt_template",
+            "arguments",
+            "owning_team"
+        ],
+        "titles": {}
         },
-        "prompt_title": {
-          "type": "string",
-          "title": "Prompt Title",
-          "description": "Human-readable name for this prompt (displayed in MCP clients like Claude, Cursor, and VS Code)",
-          "minLength": 3,
-          "maxLength": 50
-        },
-        "prompt_template": {
-          "type": "string",
-          "title": "Prompt Template",
-          "description": "The prompt content with placeholders for dynamic values. Use {{argument_name}} to reference arguments (e.g., 'Analyze service {{service_name}} in {{environment}}'). Supports markdown formatting. The MCP Server substitutes values into {{}} placeholders when the prompt runs.",
-          "minLength": 20,
-          "format": "multi-line"
-        },
-        "prompt_description": {
-          "type": "string",
-          "title": "Description",
-          "description": "Explain what this prompt does and when to use it. This description helps users select the right prompt from the MCP client interface.",
-          "minLength": 10,
-          "maxLength": 500,
-          "format": "multi-line"
-        }
-      },
-      "required": [
-        "prompt_title",
-        "prompt_description",
-        "prompt_template"
-      ],
-      "order": [
-        "prompt_title",
-        "prompt_description",
-        "prompt_template",
-        "arguments",
-        "owning_team"
-      ],
-      "titles": {}
+        "blueprintIdentifier": "prompt"
     },
-    "blueprintIdentifier": "prompt"
-  },
-  "invocationMethod": {
-    "type": "UPSERT_ENTITY",
-    "blueprintIdentifier": "prompt",
-    "mapping": {
-      "identifier": "{{ .inputs.prompt_title | ascii_downcase | gsub(\" \"; \"_\") | gsub(\"[^a-z0-9_]\"; \"\") }}",
-      "title": "{{ .inputs.prompt_title }}",
-      "team": "{{ if (.inputs.owning_team | type) == \"object\" then [.inputs.owning_team.identifier] else [] end }}",
-      "properties": {
-        "template": "{{ .inputs.prompt_template }}",
-        "arguments": "{{ (.inputs.arguments // []) | map({name: .name, description: .description, required: .is_required}) }}",
-        "description": "{{ .inputs.prompt_description }}"
-      }
+    "invocationMethod": {
+        "type": "UPSERT_ENTITY",
+        "blueprintIdentifier": "prompt",
+        "mapping": {
+        "identifier": "{{ .inputs.prompt_title | ascii_downcase | gsub(\" \"; \"_\") | gsub(\"[^a-z0-9_]\"; \"\") }}",
+        "title": "{{ .inputs.prompt_title }}",
+        "team": "{{ if (.inputs.owning_team | type) == \"object\" then [.inputs.owning_team.identifier] else [] end }}",
+        "properties": {
+            "template": "{{ .inputs.prompt_template }}",
+            "arguments": "{{ (.inputs.arguments // []) | map({name: .name, description: .description, required: .is_required}) }}",
+            "description": "{{ .inputs.prompt_description }}"
+        }
+        }
+    },
+    "requiredApproval": false
     }
-  },
-  "requiredApproval": false
-}
-```
+    ```
 
-</details>
+    </details>
