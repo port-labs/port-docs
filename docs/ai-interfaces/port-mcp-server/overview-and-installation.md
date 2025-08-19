@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: Overview & Installation
-slug: /ai-agents/port-mcp-server
+slug: /ai-interfaces/ai-agents/port-mcp-server
 ---
 
 import Tabs from "@theme/Tabs"
@@ -28,7 +28,7 @@ import TabItem from "@theme/TabItem"
 The Port Model Context Protocol (MCP) Server acts as a bridge, enabling Large Language Models (LLMs)—like those powering Claude, Cursor, or GitHub Copilot—to interact directly with your Port.io developer portal. This allows you to leverage natural language to query your software catalog, analyze service health, manage resources, and even streamline development workflows, all from your preferred interfaces.
 
 :::info AI Agents vs. MCP Server
-The Port MCP Server is currently in open beta and provides significant standalone value, independent of our [AI Agents feature](/ai-agents/overview). Port AI Agents are currently in closed beta with limited access, while the MCP Server gives you immediate access to streamline building in Port, query your catalog, analyze service health, and streamline development workflows using natural language.
+The Port MCP Server is currently in open beta and provides significant standalone value, independent of our [AI Agents feature](/ai-interfaces/ai-agents/overview). Port AI Agents are currently in closed beta with limited access, while the MCP Server gives you immediate access to streamline building in Port, query your catalog, analyze service health, and streamline development workflows using natural language.
 
 While the MCP Server can interact with Port AI Agents when available, the core MCP functionality can be used freely without requiring access to the closed beta AI Agents feature.
 :::
@@ -301,3 +301,19 @@ The README provides the latest configuration details and examples for different 
 :::
 </TabItem>
 </Tabs>
+
+## Token-based authentication
+
+You can also connect using token-based authentication for automated environments like CI/CD pipelines where interactive authentication isn't possible:
+
+```bash
+curl -X POST "https://api.getport.io/v1/auth/access_token" \
+  -H "Content-Type: application/json" \
+  -d '{"clientId":"YOUR_CLIENT_ID","clientSecret":"YOUR_CLIENT_SECRET"}'
+```
+
+For complete examples and detailed setup instructions, see our [token-based authentication guide](./token-based-authentication).
+
+## Connecting to AI Agents
+
+To connect the Port MCP server to AI agents in CI/CD environments or other automated contexts where interactive authentication isn't possible, see our [token-based authentication](./token-based-authentication).
