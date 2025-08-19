@@ -146,7 +146,7 @@ When you're on the entity page of **Service A**, you can create a custom tab to 
 
 1. Click the `+` button above the Related Entities table
 
-2. Set the tab name (e.g., "A special case") and description
+2. Set the tab name and description
 
 3. Choose **Service B** as the `Related blueprint`
 
