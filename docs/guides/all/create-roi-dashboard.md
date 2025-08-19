@@ -1,16 +1,15 @@
 ---
 displayed_sidebar: null
-description: Create a dashboard that highlights the ROI of automations in Port
+description: Create a dashboard that highlights the ROI of actions and automations in Port
 ---
 
-# Create an ROI dashboard
+# Create an actions ROI dashboard
 
-## Overview
+When you are trying to justify automation investments to leadership, you need concrete data showing time savings and efficiency gains. In this guide, we will build a comprehensive dashboard that tracks the ROI of your self-service actions and automations, providing the metrics you need to demonstrate business value.
 
-This guide demonstrates how to showcase the true business impact of automation in Port by building an ROI dashboard.  
-We will set up the necessary data model using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), defining a [self-service](https://app.port.io/self-serve) action, and designing a dashboard that visualizes the time savings and benefits delivered by your automations.
+We will set up the necessary data model using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), define a [self-service](https://app.port.io/self-serve) action, and design a dashboard that visualizes the benefits delivered by your automations.
 
-After executing this guide, you will have a dashboard in Port that demonstrates the value of your automations, and also provide insights into how Port drives efficiency and ROI across your organization.
+After executing this guide, you will have a dashboard in Port that provides insights into how Port drives efficiency and ROI across your organization.
 
 <img src="/img/guides/ROIdashboard.png" border="1px" width="100%" />
 
@@ -53,8 +52,7 @@ This metric is calculated across all automated self-service actions in Port, hig
     - A Port account with appropriate permissions to create blueprints, actions, and automations.
     - Access to the [Builder](https://app.port.io/settings/data-model) page to create blueprints.
     - Access to the [Self-service](https://app.port.io/self-serve) page to create actions.
-- GitHub account
-    - GitHub account and repository with the following secrets configured: ([find them here](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))
+- GitHub account and repository with the following secrets configured: ([find them here](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))
         - `PORT_CLIENT_ID`: Your Port client ID.
         - `PORT_CLIENT_SECRET`: Your Port client secret.
 
@@ -651,7 +649,7 @@ The following blueprints represent a self-service action (Action), its category 
 
     </details>
 
-### Finish setting up Action Runs blueprint
+### Connect the blueprints
 
 After setting up both `Action Runs` and `Action` blueprint, add the following relation and mirror properties to the `Action blueprint`.
 

@@ -1337,10 +1337,10 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
-        title: "Create ROI dashboard",
-        description: "Create a dashboard that highlights the ROI of automations in Port",
-        tags: [ "Actions", "Dashboards"],
-        logos: ["Actions"],
+        title: " Create an actions ROI dashboard",
+        description: "Create a dashboard that highlights the ROI of actions in Port",
+        tags: [ "Actions", "Dashboards", "Automations"],
+        logos: ["Actions", "Automations"],
         link: "/guides/all/create-roi-dashboard",
     },
     {
