@@ -106,7 +106,7 @@ ___
 
 To assess the deployment frequency of a `service`, simply checking the `deployment` relation is not enough — we need to know the exact number of deployments. To achieve this, we can:
 
-- Add an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property.md) to the `service` blueprtint that counts the number of related `deployment` entities.
+- Add an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property.md) to the `service` blueprint that counts the number of related `deployment` entities.
 - Add a scorecard with a rule based on the new aggregation property:
 
 ```json showLineNumbers
