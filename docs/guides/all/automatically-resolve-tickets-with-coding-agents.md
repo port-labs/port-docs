@@ -32,12 +32,8 @@ This guide assumes the following:
 - You have completed the setup in the [Trigger GitHub Copilot from Port guide](https://docs.port.io/guides/all/trigger-github-copilot-from-port), ensuring that Copilot will be automatically assigned to any GitHub issues created through this guide.
 
 
-:::tip Alternative integrations
-While this guide uses GitHub and Jira, you can adapt it for other Git providers like GitLab or Azure DevOps, and other project management tools like Linear.
-:::
-
-:::info Alternative coding agents
-This guide demonstrates using GitHub Copilot, but you can also use other coding agents like Claude Code, Devin, etc., to achieve similar automation and integration.
+:::tip Alternative integrations and/or coding agents
+While this guide uses GitHub and Jira, you can adapt it for other Git providers like GitLab or Azure DevOps, and other project management tools like Linear. Additionally, although this guide demonstrates using GitHub Copilot, you can also use other coding agents like Claude Code, Devin, etc., to achieve similar automation and integration.
 :::
 
 
