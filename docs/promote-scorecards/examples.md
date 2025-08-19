@@ -154,7 +154,7 @@ ___
 
 <img src="/img/guides/owasp/chart.png" width="80%" border="1px" alt="OWASP Top 10 Chart showing Gold, Silver and Basic tier distribution" />
 
-In this section, you will learn how to build an [OWASP Top 10](http://owasp.org/Top10) security scorecard in Port using vulnerability data from Snyk.  
+This section explains how to build an [OWASP Top 10](http://owasp.org/Top10) security scorecard in Port using vulnerability data from Snyk.  
 The scorecard resides on the `Repository` blueprint and evaluates data sourced from the `Snyk Target` and `Snyk Vulnerability` blueprints to measure each repository’s security posture against the latest OWASP Top 10 categories.
 
 1. `Snyk Vulnerability` – Represents individual vulnerabilities of various types.
@@ -1031,7 +1031,7 @@ The final step is to create a scorecard that reflects the security maturity of a
 
 <h3>Troubleshooting</h3>
 
-Some common reason for failure with Snyk integration and OWASP Top 10 scorecard realisation maybe as following:
+Some common issues you may encounter during the implementation:
 
 1. **Invalid token:** The `SNYK_TOKEN` does not have privileges or otherwise has been revoked. Ensure that the token is valid and has required permissions so that issues and targets across the Snyk Group can be queried for.
 2. **OWASP Top 10 2021:** `CWE` field is key to accurately measuring and benchmarking against OWASP Top 10. The current measurement rules are based on the latest OWASP Top 10 i.e. OWASP Top 10 2021 as of this write-up. Discrepancy may arise if following this example without consideration for reviewing against latest OWASP Top 10 issues and the associated CWEs.
@@ -1039,13 +1039,13 @@ Some common reason for failure with Snyk integration and OWASP Top 10 scorecard 
 
 <h3>Next steps</h3>
 
-The following steps are recommended as next steps.
+Consider the following as next steps:
 
 1. **Quality standards:**
-  - Eliminate chaos and promote `minimum viable security product` with tiering.
-  - Establish a customised standard that best meets your organisation's culture by classifying the OWASP Top 10.
+   - Eliminate chaos and promote `minimum viable security product` with tiering.
+   - Establish a customized standard that best meets your organization's culture by classifying the OWASP Top 10.
 2. **Self-service actions:**
-  - Automatically assign Owners and create a self-service action that triggers an alert to repository owners when tier standards are unmet.
+   - Automatically assign Owners and create a self-service action that triggers an alert to repository owners when tier standards are unmet.
 3. **Portal Initiative:**
-  - Self-service action: Create a self-service action to improve OWASP Tiers for specific repositories.
-  - Create an initiative within Port to reduce a specific security weaknesss or promote a specific tier as a standard operating procedure.
+   - Self-service action: Create a self-service action to improve OWASP Tiers for specific repositories.
+   - Create an initiative within Port to reduce a specific security weakness or promote a specific tier as a standard operating procedure.
