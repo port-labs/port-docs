@@ -111,6 +111,9 @@ After this blueprint exists and you create entities for it, prompts will show up
 
 Create entities of the `prompt` blueprint for each prompt you want to expose. At minimum, provide `description` and `template`. Optionally add `arguments` to parameterize the prompt.
 
+<Tabs groupId="create-prompts" queryString>
+<TabItem value="prompts-page" label="Using Prompts page">
+
 1. Go to the [Prompts page](https://app.getport.io/prompts) in your portal.
 2. Click **Create prompt**.
 3. Fill out the form:
@@ -124,162 +127,10 @@ Create entities of the `prompt` blueprint for each prompt you want to expose. At
 The `template` supports markdown and variable placeholders. Each argument defined in `arguments` is exposed by its `name` and can be referenced as `{{name}}` inside the template. When you run the prompt, the MCP Server collects values for required arguments and substitutes them into the matching placeholders before execution.
 :::
 
-#### Examples
-
-<Tabs groupId="prompt-examples" queryString>
-<TabItem value="incident-triage" label="Incident triage">
-
-A prompt to assists on-call engineers by summarizing recent alerts and deploys related to an incident, then suggesting next steps and linking relevant runbooks.
-
-<details>
-<summary>Incident triage prompt entity JSON (Click to expand)</summary>
-
-```json showLineNumbers
-{
-  "identifier": "incident_response_assistant",
-  "title": "Incident Response Assistant",
-  "team": [],
-  "properties": {
-    "description": "Assists with incident response by summarizing critical alerts, recent deploys, and suggesting next steps with relevant dashboards and runbooks",
-    "arguments": [
-      {
-        "name": "service_name",
-        "required": true,
-        "description": "The name of the service experiencing the incident"
-      },
-      {
-        "name": "environment",
-        "required": false,
-        "description": "The environment where the incident is occurring (e.g., production, staging)"
-      },
-      {
-        "name": "incident_id",
-        "required": true,
-        "description": "The unique identifier for the incident"
-      },
-      {
-        "name": "timeframe",
-        "required": false,
-        "description": "The time period to analyze (e.g., '24 hours', '1 week')"
-      }
-    ],
-    "template": "You are assisting with an incident in the {{service_name}} service ({{environment}}).\nIncident ID: {{incident_id}}\n\nFor the last {{timeframe}}:\n- Summarize critical alerts and recent deploys\n- Suggest next steps and owners\n- Link relevant dashboards/runbooks"
-  },
-  "relations": {},
-  "icon": "Microservice"
-}
-```
-</details>
-
-
 </TabItem>
-<TabItem value="scorecard-remediation" label="Scorecard remediation">
+<TabItem value="self-service-action" label="Using Self-Service Action">
 
-A prompt that guides engineers to remediate failing scorecard rules by explaining each failure, its impact, and providing step-by-step fixes along with ownership suggestions.
-
-<details>
-<summary>Scorecard remediation prompt entity JSON (Click to expand)</summary>
-
-```json showLineNumbers
-{
-  "identifier": "scorecard_remediation_guide",
-  "title": "Scorecard Remediation Guide",
-  "team": [],
-  "properties": {
-    "description": "Generate detailed remediation steps for failing scorecard rules, including what's failing, why it matters, step-by-step fixes, and ownership assignments",
-    "arguments": [
-      {
-        "name": "service_name",
-        "required": true,
-        "description": "The name of the service that needs scorecard remediation"
-      },
-      {
-        "name": "scorecard_name",
-        "required": true,
-        "description": "The name of the scorecard with failing rules"
-      }
-    ],
-    "template": "For {{service_name}}, generate remediation steps for failing rules in the \"{{scorecard_name}}\" scorecard.\n\nFor each failing rule:\n- What is failing\n- Why it matters\n- Step-by-step remediation\n- Owners and suggested timeline"
-  },
-  "relations": {},
-  "icon": "Microservice"
-}
-```
-</details>
-
-
-</TabItem>
-<TabItem value="on-call-handoff" label="On-call handoff summary">
-
-A prompt to generates a thorough on-call handoff report, highlighting active incidents, key risks, pending actions, and upcoming maintenance for the specified team.
-
-<details>
-<summary>On-Call handoff report prompt entity JSON (Click to expand)</summary>
-
-```json showLineNumbers
-{
-  "identifier": "oncall_handoff_report",
-  "title": "On-Call Handoff Report",
-  "team": [],
-  "properties": {
-    "description": "Generate comprehensive on-call handoff documentation including active incidents, risks, pending actions, and upcoming maintenance windows",
-    "arguments": [
-      {
-        "name": "team",
-        "required": true,
-        "description": "The team name for which to create the on-call handoff"
-      },
-      {
-        "name": "timeframe",
-        "required": true,
-        "description": "The time period to cover in the handoff (e.g., 'last 24 hours', 'past week')"
-      }
-    ],
-    "template": "Create an on-call handoff for {{team}} for the last {{timeframe}}.\n\nInclude:\n- Active incidents and current status\n- Top risks and mitigations\n- Pending actions and owners\n- Upcoming maintenance windows"
-  },
-  "relations": {},
-  "icon": "Microservice"
-}
-```
-</details>
-
-
-
-</TabItem>
-</Tabs>
-
-After creating entities, reconnect or refresh your MCP client; your prompts will be available and will prompt for any defined arguments.
-
-#### See prompts in your client
-
-<Tabs groupId="prompt-ui" queryString>
-<TabItem value="cursor" label="Cursor">
-
-In Cursor, type **/** to open the prompts list. Selecting a prompt opens an input form for its arguments.
-
-![Prompt list in Cursor](/img/ai-agents/MCPCursorPromptList.png)
-
-When you select a prompt, Cursor renders fields for the defined `arguments`. Required ones are marked and must be provided.
-
-![Prompt argument input in Cursor](/img/ai-agents/MCPCursorPromptInput.png)
-
-</TabItem>
-<TabItem value="claude" label="Claude">
-
-In Claude, click the **+** button and choose the prompts option to view the list from your Port organization. Selecting a prompt opens a parameter collection flow.
-
-![Prompt list in Claude](/img/ai-agents/MCPClaudePromptList.png)
-
-Claude will ask for any required arguments before running the prompt and will substitute them into the template.
-
-![Prompt argument input in Claude](/img/ai-agents/MCPClaudePromptInput.png)
-
-</TabItem>
-</Tabs>
-
-
-### Self-service action to create prompts
-You can create a Self Service Action in Port to allow you users to create prompts themselves.
+You can create a Self-Service Action in Port to allow your users to create prompts themselves.
 
 1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
 2. Click on `+ New Action`.
@@ -392,3 +243,198 @@ You can create a Self Service Action in Port to allow you users to create prompt
     ```
 
     </details>
+
+:::tip Developer self-service
+This Self-Service Action allows developers to create their own prompts without needing direct access to Port's data model. The action validates input and automatically creates properly formatted prompt entities.
+:::
+
+</TabItem>
+</Tabs>
+
+#### Examples
+
+<Tabs groupId="prompt-examples" queryString>
+<TabItem value="incident-triage" label="Incident triage">
+
+A prompt to assists on-call engineers by summarizing recent alerts and deploys related to an incident, then suggesting next steps and linking relevant runbooks.
+
+**Example prompt execution:**
+```markdown
+You are assisting with an incident in the payment-service service (production).
+Incident ID: INC-2024-001
+
+For the last 24 hours:
+- Summarize critical alerts and recent deploys
+- Suggest next steps and owners
+- Link relevant dashboards/runbooks
+```
+
+<details>
+<summary>Incident triage prompt entity JSON (Click to expand)</summary>
+
+```json showLineNumbers
+{
+  "identifier": "incident_response_assistant",
+  "title": "Incident Response Assistant",
+  "team": [],
+  "properties": {
+    "description": "Assists with incident response by summarizing critical alerts, recent deploys, and suggesting next steps with relevant dashboards and runbooks",
+    "arguments": [
+      {
+        "name": "service_name",
+        "required": true,
+        "description": "The name of the service experiencing the incident"
+      },
+      {
+        "name": "environment",
+        "required": false,
+        "description": "The environment where the incident is occurring (e.g., production, staging)"
+      },
+      {
+        "name": "incident_id",
+        "required": true,
+        "description": "The unique identifier for the incident"
+      },
+      {
+        "name": "timeframe",
+        "required": false,
+        "description": "The time period to analyze (e.g., '24 hours', '1 week')"
+      }
+    ],
+    "template": "You are assisting with an incident in the {{service_name}} service ({{environment}}).\nIncident ID: {{incident_id}}\n\nFor the last {{timeframe}}:\n- Summarize critical alerts and recent deploys\n- Suggest next steps and owners\n- Link relevant dashboards/runbooks"
+  },
+  "relations": {},
+  "icon": "Microservice"
+}
+```
+</details>
+
+
+</TabItem>
+<TabItem value="scorecard-remediation" label="Scorecard remediation">
+
+A prompt that guides engineers to remediate failing scorecard rules by explaining each failure, its impact, and providing step-by-step fixes along with ownership suggestions.
+
+**Example prompt execution:**
+```markdown
+For user-management-service, generate remediation steps for failing rules in the "Production Readiness" scorecard.
+
+For each failing rule:
+- What is failing
+- Why it matters
+- Step-by-step remediation
+- Owners and suggested timeline
+```
+
+<details>
+<summary>Scorecard remediation prompt entity JSON (Click to expand)</summary>
+
+```json showLineNumbers
+{
+  "identifier": "scorecard_remediation_guide",
+  "title": "Scorecard Remediation Guide",
+  "team": [],
+  "properties": {
+    "description": "Generate detailed remediation steps for failing scorecard rules, including what's failing, why it matters, step-by-step fixes, and ownership assignments",
+    "arguments": [
+      {
+        "name": "service_name",
+        "required": true,
+        "description": "The name of the service that needs scorecard remediation"
+      },
+      {
+        "name": "scorecard_name",
+        "required": true,
+        "description": "The name of the scorecard with failing rules"
+      }
+    ],
+    "template": "For {{service_name}}, generate remediation steps for failing rules in the \"{{scorecard_name}}\" scorecard.\n\nFor each failing rule:\n- What is failing\n- Why it matters\n- Step-by-step remediation\n- Owners and suggested timeline"
+  },
+  "relations": {},
+  "icon": "Microservice"
+}
+```
+</details>
+
+
+</TabItem>
+<TabItem value="on-call-handoff" label="On-call handoff summary">
+
+A prompt to generates a thorough on-call handoff report, highlighting active incidents, key risks, pending actions, and upcoming maintenance for the specified team.
+
+**Example prompt execution:**
+```markdown
+Create an on-call handoff for Platform Engineering for the last past week.
+
+Include:
+- Active incidents and current status
+- Top risks and mitigations
+- Pending actions and owners
+- Upcoming maintenance windows
+```
+
+<details>
+<summary>On-Call handoff report prompt entity JSON (Click to expand)</summary>
+
+```json showLineNumbers
+{
+  "identifier": "oncall_handoff_report",
+  "title": "On-Call Handoff Report",
+  "team": [],
+  "properties": {
+    "description": "Generate comprehensive on-call handoff documentation including active incidents, risks, pending actions, and upcoming maintenance windows",
+    "arguments": [
+      {
+        "name": "team",
+        "required": true,
+        "description": "The team name for which to create the on-call handoff"
+      },
+      {
+        "name": "timeframe",
+        "required": true,
+        "description": "The time period to cover in the handoff (e.g., 'last 24 hours', 'past week')"
+      }
+    ],
+    "template": "Create an on-call handoff for {{team}} for the last {{timeframe}}.\n\nInclude:\n- Active incidents and current status\n- Top risks and mitigations\n- Pending actions and owners\n- Upcoming maintenance windows"
+  },
+  "relations": {},
+  "icon": "Microservice"
+}
+```
+</details>
+
+
+
+</TabItem>
+</Tabs>
+
+After creating entities, reconnect or refresh your MCP client; your prompts will be available and will prompt for any defined arguments.
+
+#### See prompts in your client
+
+<Tabs groupId="prompt-ui" queryString>
+<TabItem value="cursor" label="Cursor">
+
+In Cursor, type **/** to open the prompts list. Selecting a prompt opens an input form for its arguments.
+
+![Prompt list in Cursor](/img/ai-agents/MCPCursorPromptList.png)
+
+When you select a prompt, Cursor renders fields for the defined `arguments`. Required ones are marked and must be provided.
+
+![Prompt argument input in Cursor](/img/ai-agents/MCPCursorPromptInput.png)
+
+</TabItem>
+<TabItem value="claude" label="Claude">
+
+In Claude, click the **+** button and choose the prompts option to view the list from your Port organization. Selecting a prompt opens a parameter collection flow.
+
+![Prompt list in Claude](/img/ai-agents/MCPClaudePromptList.png)
+
+Claude will ask for any required arguments before running the prompt and will substitute them into the template.
+
+![Prompt argument input in Claude](/img/ai-agents/MCPClaudePromptInput.png)
+
+</TabItem>
+</Tabs>
+
+
