@@ -32,7 +32,8 @@ Additional widgets can be added by clicking on the `+ Widget` button in the top 
 
 ## Related entities
 
-By default, all related entities in the same direction will automatically appear in this table. This is true for both forward-related and backward-related entities. Indirectly-related entities will not appear.
+By default, all related entities in the same direction will automatically appear in this table. This is true for both forward-related and backward-related entities. Indirectly-related entities will not appear but can be added manually,
+check out the [indirect relations](#indirect-relation) section on how to add indirectly related entities.
 
 For example:
 
@@ -45,30 +46,45 @@ When looking at the entity page of a certain `Workflow Run`, the related entitie
 
 ### Add a Related entities tab
 
-Click the `+` button above the table to add a custom tab.   
+1. Click the `+` button above the table to add a custom tab.
 
-1. Set the tab's `Name` and optional `Description`.
+    <img src='/img/software-catalog/pages/relatedEntitieNewTab.png' border='1px' width='50%' />
+    <br />
 
-2. Choose the `Related blueprint` you want to display.
+2. Fill in the form:
 
-3. Pick a `Relation path`:
+    <img src='/img/software-catalog/pages/relatedEntitiesDetails.png' border='1px' width='50%' />
 
-   - **All paths** – includes all available paths from the current blueprint to the target blueprint.
-   - **Specific path** – choose one specific relation chain (multi‑hop is supported).
+      - Set the tab's `Name` and optional `Description`.
 
-4. (Optional) Add `Additional filters` to restrict the result set.
+      - Choose the `Related blueprint` you want to display.
+
+      - Pick a `Relation path`:
+        - **All paths** – includes all available paths from the current blueprint to the target blueprint.
+        - **Specific path** – choose the specific relation chain.
+
+      - (Optional) Add `Additional filters` to restrict the result set.
+
+
+
 
 :::tip Relation path options
-Use "all paths" for a broad overview. Choose a specific path when multiple paths exist to the same blueprint and you want the tab to reflect exactly one path.
+The relation path dropdown displays straightforward, acyclic paths. For complex scenarios involving circular relationships, advanced path configurations, multiple self relations, or maxHops, use [JSON mode](#filters-and-edit-json).
+
+Using "All paths" is less performant than selecting a specific path, as it requires the system to evaluate multiple relationship paths.
 :::
 
-
 #### Filters and Edit JSON
+
+<img src='/img/software-catalog/pages/jsonTogglerAddTab.png' border='1px' width='50%' />
+<br /><br />
 
 Selecting `Filters` opens a dialog where you can build conditions using form controls (property, operator, value).   
 You can switch to a JSON editor using the `Edit JSON` button to define the dataset directly.
 
-The dataset follows this structure:
+The filters visual editor doesn't support nested queries so in the case of nested queries, the JSON editor will be automatically displayed.
+
+The dataset follows this structure based on the [search and query syntax](https://docs.port.io/search-and-query):
 
 ```json showLineNumbers
 {
@@ -133,31 +149,31 @@ For example, consider this relationship structure:
 
 From the diagram, we can see that:
 
-- **Service A** has relations with **Service C**
-- **Service B** has relations with **Service C**  
-- **Service A** and **Service B** are not directly related, but connected through **Service C**
+- **Deployment Workflow** has a relation to **Microservice**
+- **Deployment** has relations to **Microservice** (including `relation_1` and `relation_2`)
+- **Deployment Workflow** and **Deployment** are not directly related, but connected through **Microservice**
 
-When you're on the entity page of **Service A**, you can create a custom tab to show **Service B** entities by leveraging the indirect relationship through **Service C**.
+When you're on the entity page of a **Deployment Workflow**, the related entity **Microservice** automatically appears, but **Deployment** does not, since its relation is in the other direction. However, you can create a custom tab to show **Deployment** entities by leveraging the indirect relationship through **Microservice**.
 
 <img src='/img/software-catalog/pages/relatedEntitiesIndirectRelations2.png' border='1px' width='100%' />
 
 <h4>Add a tab for an indirectly related blueprint</h4>
 
 
-1. Click the `+` button above the Related Entities table
+1. Click the `+` button above the Related Entities table.
 
-2. Set the tab name and description
+2. Set the tab name and description.
 
-3. Choose **Service B** as the `Related blueprint`
+3. Choose **Deployment** as the `Related blueprint`.
 
-4. For the `Relation or property`, select the specific relation from **Service A** to **Service C** that you want to traverse
-
-5. The system will automatically follow the path: **Service A** → **Service C** → **Service B**
+4. For the `Relation or property`, select the specific relation from **Deployment Workflow** to **Microservice** that you want to traverse.
 
 This approach allows you to display indirectly related entities while maintaining control over the specific relationship path used for the connection.
 
 :::info Multiple relations scenario
-If **Service A** has multiple relations with **Service C** (e.g., `relation_1_with_svc_c` and `relation_2_with_svc_c`), you can choose which specific relation path to use for more refined and filtered results.
+If **Deployment Workflow** has multiple relations with **Microservice** (e.g., `deployment_target` and `monitoring_target`), you can choose which specific relation path to use for more refined and filtered results.
+
+Additionally, when you have an existing relation between blueprints, Port automatically creates a mirror property relation that allows you to traverse the relationship in both directions. This mirror relation will appear as an option in the relation dropdown, enabling you to explore connections from either side of the relationship.
 :::
 
 #### Self relation
