@@ -169,7 +169,7 @@ When you're on the entity page of a **Deployment Workflow**, the related entity 
 This approach allows you to display indirectly related entities while maintaining control over the specific relationship path used for the connection.
 
 :::info Multiple relations scenario
-If **Deployment Workflow** has multiple relations with **Microservice** (e.g., `deployment_target` and `monitoring_target`), you can choose which specific relation path to use for more refined and filtered results.
+If **Deployment Workflow** has multiple relations to **Microservice** (e.g., `deployment_target` and `monitoring_target`), you can choose which specific relation path to use for more refined and filtered results.
 
 Additionally, when you have an existing relation between blueprints, Port automatically creates a mirror property relation that allows you to traverse the relationship in both directions. This mirror relation will appear as an option in the relation dropdown, enabling you to explore connections from either side of the relationship.
 :::
