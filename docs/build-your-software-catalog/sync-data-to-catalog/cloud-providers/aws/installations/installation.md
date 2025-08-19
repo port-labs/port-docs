@@ -21,7 +21,9 @@ To do the following:
 Make sure you set up properly using our [Multiple Accounts guide](./multi_account.md)
 :::
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? See the installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods) documentation for guidance.
+
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm (Scheduled)">
 The AWS integration is deployed using Helm on you cluster.
