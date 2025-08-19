@@ -141,7 +141,7 @@ When you're on the entity page of **Service A**, you can create a custom tab to 
 
 <img src='/img/software-catalog/pages/relatedEntitiesIndirectRelations2.png' border='1px' width='100%' />
 
-<h4>Set up a special case</h4>
+<h4>Add a tab for an indirectly related blueprint</h4>
 
 To set up a special case:
 
