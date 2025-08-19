@@ -913,7 +913,7 @@ When a `pathFilter` is defined, Port will include only entities that can be reac
 | Field                     | Description                                                                                                          |
 |---------------------------|----------------------------------------------------------------------------------------------------------------------|
 | `pathFilter.path`           | An array containing the full path of relation identifiers to traverse.                                               |
-| `pathFilter.fromBlueprint`  | *(Optional)* The blueprint to start the path traversal from. If omitted, traversal starts from the source blueprint. |
+| `pathFilter.fromBlueprint`  | *(Optional)* The blueprint to start the path traversal from. Can be the target blueprint or omitted. If omitted, traversal starts from the source blueprint. |
 
 
 <h4> For upstream paths </h4>
@@ -944,6 +944,10 @@ When a `pathFilter` is defined, Port will include only entities that can be reac
 
 <h4> Examples </h4>
 
+Suppose you have the following data model:
+
+![Blueprints graph diagram](/img/software-catalog/blueprint/pathFilterDiagramExample.png)
+
 <Tabs groupId="path-filter-examples" defaultValue="api" values={[
 {label: "API", value: "api"},
 {label: "Terraform", value: "tf"}
@@ -951,49 +955,21 @@ When a `pathFilter` is defined, Port will include only entities that can be reac
 
 <TabItem value="api">
 
-<h4>Example 1: Direct Relationship Path</h4>
+<h4>Example 1: Standard Path Filter</h4>
 
-Count Jira issues directly related to a Microservice:
-
-```json
-{
-  "identifier": "microservice",
-  "title": "Microservice",
-  "aggregationProperties": {
-    "directJiraIssuesCount": {
-      "title": "Direct Jira Issues Count",
-      "target": "jiraIssue",
-      "pathFilter": [
-        {
-          "path": ["jira_issue_rel"]
-        }
-      ],
-      "calculationSpec": {
-        "calculationBy": "entities",
-        "func": "count"
-      }
-    }
-  }
-}
-```
-
-The `"path": ["jira_issue_rel"]` ensures that only Jira issues directly related to the microservice through the `jira_issue_rel` relation are counted.
-
-<h4> Example 2: Multi-hop Relationship Path</h4>
-
-Count deployments through Service → Microservice → Deployment
+Count how many deployments are directly related to a cluster:
 
 ```json
 {
-  "identifier": "service",
-  "title": "Service",
+  "identifier": "cluster",
+  "title": "Cluster",
   "aggregationProperties": {
     "deploymentCount": {
       "title": "Deployment Count",
       "target": "deployment",
       "pathFilter": [
         {
-          "path": ["microservice_rel", "deployment_rel"]
+          "path": ["deployment_rel"]
         }
       ],
       "calculationSpec": {
@@ -1005,23 +981,23 @@ Count deployments through Service → Microservice → Deployment
 }
 ```
 
-The `pathFilter` with `"path": ["microservice_rel", "deployment_rel"]` counts deployments that are connected through the `microservice_rel` relation first, then to the `deployment_rel` relation.
+The `pathFilter` with `"path": ["deployment_rel"]` counts deployments that are directly related to the cluster through the `deployment_rel` relation.
 
-<h4>Example 3: Starting Path from Specific Blueprint</h4>
+<h4>Example 2: Using fromBlueprint</h4>
 
-Count deployments by starting path traversal from the target blueprint:
+Count how many clusters are related to a deployment:
 
 ```json
 {
-  "identifier": "service",
-  "title": "Service",
+  "identifier": "deployment",
+  "title": "Deployment",
   "aggregationProperties": {
-    "deploymentCountFromService": {
-      "title": "Deployment Count from Service",
-      "target": "deployment",
+    "clusterCount": {
+      "title": "Cluster Count",
+      "target": "cluster",
       "pathFilter": [
         {
-          "path": ["microservice_rel", "deployment_rel"],
+          "path": ["deployment_rel"],
           "fromBlueprint": "deployment"
         }
       ],
@@ -1034,58 +1010,20 @@ Count deployments by starting path traversal from the target blueprint:
 }
 ```
 
-The `fromBlueprint: "deployment"` specifies that the path traversal should start from the deployment blueprint (the target), then follow the path backwards through `microservice_rel` to service.
+The `fromBlueprint: "deployment"` specifies that the path traversal should start from the deployment blueprint (the target), then follow the path backwards through `deployment_rel` to cluster.
 
 </TabItem>
 
 <TabItem value="tf">
 
-<h4> Example 1: Direct Relationship Path</h4>
+<h4>Example 1: Standard Path Filter</h4>
 
-Count Jira issues directly related to a Microservice:
-
-```hcl
-resource "port_blueprint" "microservice_blueprint" {
-  identifier = "microservice"
-  title      = "Microservice"
-}
-
-resource "port_aggregation_properties" "microservice_aggregation_properties" {
-  blueprint_identifier = port_blueprint.microservice_blueprint.identifier
-  properties           = {
-    direct_jira_issues_count = {
-      target_blueprint_identifier = port_blueprint.jira_issue_blueprint.identifier
-      title                       = "Direct Jira Issues Count"
-      icon                        = "Terraform"
-      description                 = "Direct Jira Issues Count"
-      path_filter                 = [
-        {
-          path = ["jira_issue_rel"]
-        }
-      ]
-      method                      = {
-        count_entities = true
-      }
-    }
-  }
-}
-```
-
-The `path = ["jira_issue_rel"]` ensures that only Jira issues directly related to the microservice through the `jira_issue_rel` relation are counted.
-
-<h4>Example 2: Multi-hop Relationship Path</h4>
-
-Count deployments through Service → Microservice → Deployment:
+Count how many deployments are directly related to a cluster:
 
 ```hcl
-resource "port_blueprint" "service_blueprint" {
-  identifier = "service"
-  title      = "Service"
-}
-
-resource "port_blueprint" "microservice_blueprint" {
-  identifier = "microservice"
-  title      = "Microservice"
+resource "port_blueprint" "cluster_blueprint" {
+  identifier = "cluster"
+  title      = "Cluster"
 }
 
 resource "port_blueprint" "deployment_blueprint" {
@@ -1093,8 +1031,8 @@ resource "port_blueprint" "deployment_blueprint" {
   title      = "Deployment"
 }
 
-resource "port_aggregation_properties" "service_aggregation_properties" {
-  blueprint_identifier = port_blueprint.service_blueprint.identifier
+resource "port_aggregation_properties" "cluster_aggregation_properties" {
+  blueprint_identifier = port_blueprint.cluster_blueprint.identifier
   properties           = {
     deployment_count = {
       target_blueprint_identifier = port_blueprint.deployment_blueprint.identifier
@@ -1103,7 +1041,7 @@ resource "port_aggregation_properties" "service_aggregation_properties" {
       description                 = "Deployment Count"
       path_filter                 = [
         {
-          path = ["microservice_rel", "deployment_rel"]
+          path = ["deployment_rel"]
         }
       ]
       method                      = {
@@ -1114,39 +1052,34 @@ resource "port_aggregation_properties" "service_aggregation_properties" {
 }
 ```
 
-The `path = ["microservice_rel", "deployment_rel"]` counts deployments that are connected through the `microservice_rel` relation first, then to the `deployment_rel` relation.
+The `path = ["deployment_rel"]` counts deployments that are directly related to the cluster through the `deployment_rel` relation.
 
-<h4>Example 3: Starting Path from Specific Blueprint</h4>
+<h4>Example 2: Using fromBlueprint</h4>
 
-Count deployments by starting path traversal from the target blueprint:
+Count how many clusters are related to a deployment:
 
 ```hcl
-resource "port_blueprint" "service_blueprint" {
-  identifier = "service"
-  title      = "Service"
-}
-
-resource "port_blueprint" "microservice_blueprint" {
-  identifier = "microservice"
-  title      = "Microservice"
-}
-
 resource "port_blueprint" "deployment_blueprint" {
   identifier = "deployment"
   title      = "Deployment"
 }
 
-resource "port_aggregation_properties" "service_aggregation_properties" {
-  blueprint_identifier = port_blueprint.service_blueprint.identifier
+resource "port_blueprint" "cluster_blueprint" {
+  identifier = "cluster"
+  title      = "Cluster"
+}
+
+resource "port_aggregation_properties" "deployment_aggregation_properties" {
+  blueprint_identifier = port_blueprint.deployment_blueprint.identifier
   properties           = {
-    deployment_count_from_service = {
-      target_blueprint_identifier = port_blueprint.deployment_blueprint.identifier
-      title                       = "Deployment Count from Service"
+    cluster_count = {
+      target_blueprint_identifier = port_blueprint.cluster_blueprint.identifier
+      title                       = "Cluster Count"
       icon                        = "Terraform"
-      description                 = "Deployment Count from Service"
+      description                 = "Cluster Count"
       path_filter                 = [
         {
-          path = ["microservice_rel", "deployment_rel"]
+          path = ["deployment_rel"]
           from_blueprint = "deployment"
         }
       ]
@@ -1158,7 +1091,7 @@ resource "port_aggregation_properties" "service_aggregation_properties" {
 }
 ```
 
-The `from_blueprint = "deployment"` specifies that the path traversal should start from the deployment blueprint (the target), then follow the path backwards through `microservice_rel` to service.
+The `from_blueprint = "deployment"` specifies that the path traversal should start from the deployment blueprint (the target), then follow the path backwards through `deployment_rel` to cluster.
 
 </TabItem>
 
