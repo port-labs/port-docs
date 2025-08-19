@@ -32,7 +32,8 @@ Additional widgets can be added by clicking on the `+ Widget` button in the top 
 
 ## Related entities
 
-By default, all related entities in the same direction will automatically appear in this table. This is true for both forward-related and backward-related entities. Indirectly-related entities will not appear.
+By default, all related entities in the same direction will automatically appear in this table. This is true for both forward-related and backward-related entities. Indirectly-related entities will not appear but can be added manually,
+check out the [indirect relations](#indirect-relation) section on how to add indirectly related entities.
 
 For example:
 
@@ -45,30 +46,43 @@ When looking at the entity page of a certain `Workflow Run`, the related entitie
 
 ### Add a Related entities tab
 
-Click the `+` button above the table to add a custom tab.   
+1. Click the `+` button above the table to add a custom tab.
 
-1. Set the tab's `Name` and optional `Description`.
+    <img src='/img/software-catalog/pages/relatedEntitieNewTab.png' border='1px' width='50%' />
+    <br />
 
-2. Choose the `Related blueprint` you want to display.
+2. Fill in the form:
 
-3. Pick a `Relation path`:
+    <img src='/img/software-catalog/pages/relatedEntitiesDetails.png' border='1px' width='50%' />
 
-   - **All paths** – includes all available paths from the current blueprint to the target blueprint.
-   - **Specific path** – choose one specific relation chain (multi‑hop is supported).
+      - Set the tab's `Name` and optional `Description`.
 
-4. (Optional) Add `Additional filters` to restrict the result set.
+      - Choose the `Related blueprint` you want to display.
+
+      - Pick a `Relation path`:
+        - **All paths** – includes all available paths from the current blueprint to the target blueprint.
+        - **Specific path** – choose the specific relation chain.
+
+      - (Optional) Add `Additional filters` to restrict the result set.
+
 
 :::tip Relation path options
-Use "all paths" for a broad overview. Choose a specific path when multiple paths exist to the same blueprint and you want the tab to reflect exactly one path.
+The relation path dropdown displays straightforward, acyclic paths. For complex scenarios involving circular relationships, advanced path configurations, multiple self relations, or maxHops, use [JSON mode](#filters-and-edit-json).
+
+Using "All paths" is less performant than selecting a specific path, as it requires the system to evaluate multiple relationship paths.
 :::
 
+#### Additional filters
 
-#### Filters and Edit JSON
+<img src='/img/software-catalog/pages/jsonTogglerAddTab.png' border='1px' width='50%' />
+<br /><br />
 
 Selecting `Filters` opens a dialog where you can build conditions using form controls (property, operator, value).   
 You can switch to a JSON editor using the `Edit JSON` button to define the dataset directly.
 
-The dataset follows this structure:
+The filters visual editor doesn't support nested queries so in the case of nested queries, use the JSON editor to define the dataset.
+
+The dataset follows this structure based on the [search and query syntax](https://docs.port.io/search-and-query):
 
 ```json showLineNumbers
 {
@@ -82,7 +96,6 @@ The dataset follows this structure:
   ]
 }
 ```
-
 
 Use the JSON editor when you need to copy/paste filter sets, keep them in source control, or express conditions that are faster to author as JSON. You can toggle back to the form at any time.
 
@@ -120,6 +133,218 @@ By default, the related entities table will display the following columns for ea
 Other properties will be hidden by default.  
 
 You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
+
+#### Indirect relations
+
+In some scenarios, you may want to display entities that are not directly related but connected through a common blueprint. This is useful when you have multiple services that share relationships with a common entity.
+
+For example, consider this relationship structure:
+
+<img src='/img/software-catalog/pages/relatedEntitiesIndirectRelations.png' border='1px' width='95%' />
+
+<br /><br />
+
+From the diagram, we can see that:
+
+- **Deployment Workflow** has a relation to **Microservice**
+- **Deployment** has relations to **Microservice** (including `relation_1` and `relation_2`)
+- **Deployment Workflow** and **Deployment** are not directly related, but connected through **Microservice**
+
+When you're on the entity page of a **Deployment Workflow**, the related entity **Microservice** automatically appears, but **Deployment** does not, since its relation is in the other direction. However, you can create a custom tab to show **Deployment** entities by leveraging the indirect relationship through **Microservice**.
+
+
+<h4>Add a tab for an indirectly related blueprint</h4>
+
+
+1. Click the `+` button above the Related Entities table.
+
+2. Set the tab name and description.
+
+3. Choose **Deployment** as the `Related blueprint`.
+
+4. For the `Relation or property`, select the specific relation from **Deployment Workflow** to **Microservice** that you want to traverse.
+
+<img src='/img/software-catalog/pages/relatedEntitiesIndirectRelations2.png' border='1px' width='100%' />
+
+This approach allows you to display indirectly related entities while maintaining control over the specific relationship path used for the connection.
+
+:::info Multiple relations scenario
+If **Deployment Workflow** has multiple relations to **Microservice** (e.g., `deployment_target` and `monitoring_target`), you can choose which specific relation path to use for more refined and filtered results.
+
+Additionally, when you have an existing relation between blueprints, Port automatically creates a mirror property relation that allows you to traverse the relationship in both directions. This mirror relation will appear as an option in the relation dropdown, enabling you to explore connections from either side of the relationship.
+:::
+
+#### Self relation
+
+A self relation allows a blueprint to establish a relationship with itself. This is useful when you want entities of the same blueprint to be related to other entities within that same blueprint.
+
+For example, consider an **Organization** blueprint where:
+- Organizations contain teams
+- Teams can belong to other organizational entities (like groups)
+- All entities share the same blueprint but have hierarchical relationships
+
+When defining a self relation, you can specify how many "hops" to traverse in the relationship chain.   
+Hops represent the number of jumps you want to make upstream or downstream through the self-relation.
+
+<h4>Set up self relations</h4>
+
+Follow these steps to set up a self relation in related entities:
+
+1. Click the `+` button above the Related Entities table.
+
+2. Choose your blueprint as the `Related blueprint`.
+
+3. Select the self relation path from the available paths.
+
+   :::tip How self relation hops work
+     If you want more than one **hop** then you would have to toggle `Json mode` on to specify more than one self relation blueprint identifier for the number of **hops** you want to make.
+   :::
+
+4. You can also toggle to `Json mode` in the "Add tab" dialog to define the relationship path with precise control over hops.
+
+   For example if we want to make 2 hops then we would have to specify 2 self relation blueprint identifiers in the path array.
+
+     ```json showLineNumbers
+    "relationPath": {
+      "path": [
+        "self_relation",
+        "self_relation"
+      ]
+     }
+     ```
+
+      In JSON mode, you can use the `maxHops` feature to control the number of relationship traversals. Path elements can be objects instead of strings, and `maxHops` can only be specified once in the path.
+
+      ```json showLineNumbers
+      "relationPath": {
+        {
+          "relation": "<RELATION_IDENTIFIER>",
+          "maxHops": <number between 1 and 15>
+        }
+      }
+      ```
+
+      You can also have a mix of fixed and variable hops.
+
+      ```json showLineNumbers
+      "relationPath": {
+        "path": [
+          "self_relation",
+          {
+            "relation": "<RELATION_IDENTIFIER>",
+            "maxHops": <number between 1 and 15>
+          }
+        ]
+      }
+      ```
+
+      :::info maxHops limitation
+      You can only use `maxHops` once in a path and it it accepts a number between 1 and 15.
+      :::
+
+6. Click on `Save` to save the tab.
+
+:::info Self relation identifier
+Note that `self_relation` in these examples represents the identifier of the self relation you created in your blueprint. Replace it with your actual self relation identifier.
+:::
+
+
+<h4>Examples</h4>
+Let's take a look at some examples using the concept of Teams.
+
+<img src='/img/software-catalog/pages/relatedEntitiesTeamExample.png' border='1px' width='100%' />
+
+<br /><br />
+
+**Basic self relation with multiple self relations:**
+
+If you want exactly 2 hops, specify the relation twice:
+
+```json showLineNumbers
+{
+  "dataset": {
+    "combinator": "and",
+    "rules": []
+  },
+  "title": "Team Hierarchy",
+  "targetBlueprint": "Team",
+  "relationPath": {
+    "path": [
+      "self_relation",
+      "self_relation"
+    ],
+    "fromBlueprint": "Team"
+  }
+}
+```
+
+**Self relation with maxHops for variable hops:**
+
+If you want a variable number of hops (between 1 and 15), use maxHops:
+
+```json showLineNumbers
+{
+  "dataset": {
+    "combinator": "and",
+    "rules": []
+  },
+  "title": "Team Hierarchy",
+  "targetBlueprint": "Team",
+  "relationPath": {
+    "path": [
+      {
+        "relation": "team_self_relation",
+        "maxHops": 4
+      }
+    ],
+    "fromBlueprint": "Team"
+  }
+}
+```
+
+**Mixed approach example:**
+
+You can also mix fixed hops with variable hops. For example, if you specify `self_relation` twice followed by a `maxHops` object, the system will start traversing from the 2 hops already made and continue with the additional hops specified in `maxHops`.
+
+```json showLineNumbers
+"relationPath": {
+  "path": [
+    "self_relation",           // 1st hop: Unit -> Basic Team
+    "self_relation",           // 2nd hop: Basic Team -> Group  
+    {
+      "relation": "team_self_relation",
+      "maxHops": 3            // Continues from Group, adding up to 3 more hops (Group -> Office -> etc.)
+    }
+  ]
+}
+```
+
+In this example, the system will traverse 2 fixed hops (Unit → Basic Team → Group) and then continue with up to 3 additional hops using the `team_self_relation`, starting from where the fixed hops left off. This could represent a complete organizational hierarchy from Unit all the way up to higher-level organizational structures.
+
+**Simple relation path example:**
+
+You can also use regular relations (not self-relations) in your paths:
+
+```json showLineNumbers
+{
+  "dataset": {
+    "combinator": "and",
+    "rules": []
+  },
+  "title": "Developer",
+  "targetBlueprint": "developer",
+  "relationPath": {
+    "path": [
+      "member_of"
+    ]
+  }
+}
+```
+
+:::info The fromBlueprint property
+The `fromBlueprint` property is only needed when the path starts from the current page's blueprint and ends with the entities listed in the tab. For more information about relation paths  see the [Relation operators](https://docs.port.io/search-and-query/#relation-operators) documentation.
+:::
+
 
 ## Runs
 
