@@ -186,7 +186,7 @@ For example, consider an **Organization** blueprint where:
 When defining a self relation, you can specify how many "hops" to traverse in the relationship chain.   
 Hops represent the number of jumps you want to make upstream or downstream through the self-relation.
 
-<h4>Setting up self relations</h4>
+<h4>Set up self relations</h4>
 
 Follow these steps to set up a self relation in related entities:
 
