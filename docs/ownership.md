@@ -136,21 +136,24 @@ As a user, it's important to see all of the resources owned by you or your team/
 
 - When using Entra ID, you can use this [integration tool](https://github.com/port-experimental/entra-id-provisioner) to sync users and teams into Port.  
 
-- TODO: test solution to connect team to user when fetching teams, something like this:
-  
+- When using Gitlab or ADO integrations, you can connect Port team to Port user when fetching the integration's teams.
+
+  For example, the following mapping connects a team in Port to a user in Port based on the GitLab association (assuming the GitLab group is already mapped to the Port team):
 
     ```yaml showLineNumbers
-    - kind: team
-        selector:
-        query: 'true'
-        itemsToParse: [].][][]members
-        port:
-        entity:
-            mappings:
-            identifier: .item.id
-            blueprint: '"_user"'
-            relations:
-                teams: .id
+    - kind: group-with-members
+          selector:
+            query: 'true'
+            includeBotMembers: 'true'
+            includeInheritedMembers: 'true'
+          port:
+            itemsToParse: .__members
+            entity:
+              mappings:
+                identifier: .item.email
+                title: .item.name
+                team: .full_path
+                blueprint: '"_user"'
     ```
 
 
