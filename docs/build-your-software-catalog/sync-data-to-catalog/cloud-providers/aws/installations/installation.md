@@ -22,7 +22,7 @@ Make sure you set up properly using our [Multiple Accounts guide](./multi_accoun
 :::
 
 Choose one of the following installation methods:  
-Not sure which method is right for your use case? See the installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods) documentation for guidance.
+Not sure which method is right for your use case? See the [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods) documentation for guidance.
 
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm (Scheduled)">

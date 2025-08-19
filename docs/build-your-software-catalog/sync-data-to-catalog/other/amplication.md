@@ -47,7 +47,7 @@ Your Amplication host URL should be `https://server.amplication.com/graphql`.
 ## Setup
 
 Choose one of the following installation methods:  
-Not sure which method is right for your use case? See the installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods) documentation for guidance.
+Not sure which method is right for your use case? See the [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods) documentation for guidance.
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
