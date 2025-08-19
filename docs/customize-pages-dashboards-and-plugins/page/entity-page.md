@@ -218,7 +218,7 @@ Follow these steps to set up a self relation in related entities:
       ```json showLineNumbers
       "relationPath": {
         {
-          "relation": "<RELATION_IDENTIFIER>",
+          "relation": "<SELF_RELATION_IDENTIFIER>",
           "maxHops": <number between 1 and 15>
         }
       }
@@ -231,7 +231,7 @@ Follow these steps to set up a self relation in related entities:
         "path": [
           "self_relation",
           {
-            "relation": "<RELATION_IDENTIFIER>",
+            "relation": "<SELF_RELATION_IDENTIFIER>",
             "maxHops": <number between 1 and 15>
           }
         ]
