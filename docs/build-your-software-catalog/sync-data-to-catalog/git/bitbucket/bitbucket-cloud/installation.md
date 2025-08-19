@@ -180,7 +180,7 @@ This table summarizes the available parameters for the installation.
 | `integration.config.bitbucketUsername`      | The username of the Bitbucket Cloud account                                                  | ✅        |
 | `integration.config.bitbucketWorkspace`     | The workspace of the Bitbucket Cloud account             | ✅        |
 | `integration.config.bitbucketAppPassword`   | The app password of the Bitbucket Cloud account             | ✅        |
-| `integration.config.bitbucketWorkspaceToken`| The workspace token (or comma seperated string of multiple tokens) of the Bitbucket Cloud account             | ✅        |
+| `integration.config.bitbucketWorkspaceToken`| The workspace token (or comma separated string of multiple tokens) of the Bitbucket Cloud account             | ✅        |
 | `integration.config.webhookSecret`          | The secret used to verify the webhook requests             | ❌        |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
