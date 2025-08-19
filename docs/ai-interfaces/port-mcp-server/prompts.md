@@ -8,6 +8,22 @@ import TabItem from "@theme/TabItem"
 
 # Prompts
 
+<center>
+<div className="video-container">
+  <iframe 
+    style={{borderRadius:'4px'}}
+    width="568"
+    height="320"
+    src="https://www.youtube.com/embed/ZfOJcl0P31s" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+</center>
+<br/>
+
 Port allows you to centrally manage reusable prompts and expose them to your users via the MCP Server. Once defined, prompts become available in supported MCP clients (for example, Cursor or Claude) where developers and AI agents can discover and run them with the required inputs.
 
 #### Common use cases
