@@ -72,7 +72,7 @@ The relation path dropdown displays straightforward, acyclic paths. For complex 
 Using "All paths" is less performant than selecting a specific path, as it requires the system to evaluate multiple relationship paths.
 :::
 
-#### Filters and Edit JSON
+#### Additional filters
 
 <img src='/img/software-catalog/pages/jsonTogglerAddTab.png' border='1px' width='50%' />
 <br /><br />
