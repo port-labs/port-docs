@@ -3,6 +3,9 @@ displayed_sidebar: null
 description: Learn how to track and monitor AI-driven pull requests in your development workflow using Port's software catalog and automation capabilities.
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Track AI-driven pull requests
 
 As engineering teams integrate AI coding agents like GitHub Copilot, Claude, and Devin into their workflows, they face the challenge of managing an increased volume of pull requests. Tracking and reviewing these AI-generated contributions can be overwhelming without a centralized system. Port's AI control center addresses this issue by identifying pull requests originating from coding agents and displaying them in real-time, allowing you to efficiently monitor and act upon them.
@@ -27,6 +30,57 @@ This guide assumes the following:
 :::info Alternative setup
 This guide assumes you're using GitHub to manage your code. However, the principles and steps outlined here can be adapted to other Git platforms such as GitLab, BitBucket etc.
 :::
+
+
+## Identifying AI-driven pull requests
+
+Before tracking statuses, we need to identify whether a PR was created or influenced by an AI coding agent.  
+This logic differs depending on the agent:
+
+<Tabs>
+<TabItem value="copilot" label="GitHub Copilot" default>
+
+**How we detect it**
+- Copilot PRs are usually authored by the GitHub Copilot bot (`github-copilot[bot]`).  
+- They often start as **draft PRs** or use `"WIP"` in the title.  
+- Commits are signed with the Copilot signature.
+
+**Example**
+- PR title: `"WIP: Initial refactor"`.
+- Author: `github-copilot[bot]`.
+- Draft: `true`.
+
+</TabItem>
+
+
+<TabItem value="claude" label="Claude Code">
+
+**How we detect it**
+- PRs can be authored by either the **human user** or Claude itself. When authored by a human, Claude’s comments reveal its involvement.  
+- Claude typically adds **long, structured review comments**, often in a blockquote style or with headers like **“Here’s what I changed”**.  
+- No `draft` or `"WIP"` markers are added automatically when authored by Claude.
+
+**Example**
+- Author: `janedoe` (human) or `claude-bot`.
+- Comment by Claude Code: `“Here are the changes I made for better error handling…”`.
+
+</TabItem>
+
+
+<TabItem value="devin" label="Devin">
+
+**How we detect it**
+- Devin usually opens a regular PR (not draft, no WIP).  
+- Commits are authored by a **dedicated GitHub user** configured for Devin.  
+- Commit messages often follow a **concise, imperative style** (e.g., `Fix API error handling`).  
+
+**Example**
+- PR: opened by `devin-bot` (or the GitHub user assigned to Devin).
+- Commits: `author: Devin <bot@devin.ai>`.
+- No draft/WIP markers.
+
+</TabItem>
+</Tabs>
 
 
 ## Data model setup
@@ -112,6 +166,10 @@ This blueprint will represent all known coding agents in your system.
 
 5. Click `Create` to save the blueprint.
 
+:::note Populate Coding Agents
+Ensure that this blueprint is populated with the names of coding agents such as Copilot, Claude, Devin, etc. This will help in accurately tracking and managing AI-driven pull requests.
+:::
+
 
 ### Update pull request blueprint
 
@@ -123,7 +181,7 @@ When installing Port's GitHub app, the `Service` and `Pull request` blueprints a
 4. Add the following property to the `properties` section:
 
     <details>
-    <summary><b>Draft property (Click to expand)</b></summary>
+    <summary><b>Draft and coding agent status property (Click to expand)</b></summary>
 
     ```json showLineNumbers
     "draft": {
@@ -197,7 +255,6 @@ Now we will update the GitHub integration configuration to ensure that the new p
             properties:
               status: .status
               closedAt: .closed_at
-              creata: .user.login
               updatedAt: .updated_at
               mergedAt: .merged_at
               createdAt: .created_at
@@ -241,25 +298,37 @@ Now we will update the GitHub integration configuration to ensure that the new p
     :::
     </details>
 
+:::tip Alternative mapping for Claude/Devin PRs
+The default `workStatus` mapping is optimized for **GitHub Copilot**, which usually opens **draft PRs** or adds **"WIP"** to titles.  
+
+For **Claude or Devin**, PRs are typically created as *regular, non-draft PRs* with no WIP indicators.  
+In that case, you can use this simplified mapping that relies only on **reviewers** and **merge status**:
+
+<details> 
+<summary><b>Alternative mapping for Claude/Devin PRs (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+workStatus: >-
+  if ((.requested_reviewers // []) | length) > 0 then
+    "Awaiting review"
+  elif ((.requested_reviewers // []) | length) == 0 then
+    "In Progress"
+  else
+    "Unknown"
+  end
+```
+</details>
+:::
 
 ## Set up automations
 
-We will create several automations to help track the status of coding agents. To figure out if a coding agent participated in a PR creation, we need to look into its comments and commits.
-
-The automation flow works as follows:
-1. **Ingest PRs** via Port's GitHub app
-2. **Run automation** that gets commits or comments for each PR update
-3. **Run second automation** that extracts and looks for names of coding agents
-
-:::tip Avoid Recursive Updates
-To prevent recursive updates and entity overwrites caused by two automations being triggered for each pull request update, ensure that the comment automation is executed only after the commit automation has completed. This sequential execution avoids simultaneous runs and potential conflicts.
-:::
+To effectively track the status of coding agents, we will create several automations. You have the flexibility to determine if a coding agent participated in a PR creation by examining its comments, commits, or both, depending on your specific needs. This allows you to tailor the tracking process to best fit your requirements.
 
 ### Add Port secrets
 
-To securely integrate GitHub REST API with your portal, you need to add secrets that will allow access to necessary data.
+Before setting up the automations, ensure you have added the necessary secrets to securely interact with the GitHub REST API within your portal. This is essential for accessing the required data.
 
-To add this secret to your portal:
+To add the secret to your portal:
 
 1. Click on the `...` button in the top right corner of your Port application.
 2. Click on **Credentials**.
@@ -268,10 +337,22 @@ To add this secret to your portal:
 
     - `GITHUB_TOKEN` - Your [GitHub fine-grained access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with access to read repository commits and comments.
 
+Once the secret is added, you can proceed with setting up the automations based on your chosen method of tracking AI participation:
 
-### Automation 1: Get commits on PR updated
+<Tabs groupId="ai-participation">
+<TabItem value="commits" label="Commits (AI wrote code)">
 
-This automation only runs when the `ai_coding_agent` relation is null (before and after) to ensure that it only processes pull requests that have not yet been associated with an AI coding agent, preventing redundant operations.
+### Commits Automation Flow
+
+This flow identifies AI involvement in code writing by analyzing commit data.
+
+1. **Run automation** to fetch commits for each PR update.
+2. **Run second automation** to extract and identify coding agent names from commits.
+
+
+<h4> Automation 1: Get commits on PR updated </h4>
+
+This automation only runs when the `ai_coding_agent` relation is null (before and after) to ensure that it only processes pull requests that have not yet been associated with an AI coding agent.
 
 1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
@@ -325,7 +406,7 @@ This automation only runs when the `ai_coding_agent` relation is null (before an
 4. Click `Create` to save the automation.
 
 
-### Automation 2: Update PR with AI coding agent (commit-based)
+<h4> Automation 2: Update PR with AI coding agent (commit-based) </h4>
 
 This automation only runs if the commits response contains a match for AI agents, ensuring that only relevant pull requests are updated with AI coding agent information.
 
@@ -374,12 +455,19 @@ This automation only runs if the commits response contains a match for AI agents
 
 4. Click `Create` to save the automation.
 
+</TabItem>
+<TabItem value="comments" label="Comments (AI reviewed code)">
 
-### Automation 3: Get comments on PR updated
+### Comments Automation Flow
 
-This automation runs only after the commits automation and only if commits returned no AI agent, ensuring that the system checks for AI involvement through comments when it is not detected in commits.
+This flow identifies AI involvement in code review by analyzing comment data.
 
-1. Go back to the [Automations](https://app.getport.io/settings/automations) page of your portal.
+1. **Run automation** to fetch comments for each PR update.
+2. **Run second automation** to extract and identify coding agent names from comments.
+
+<h4> Automation 1: Get comments on PR updated </h4>
+
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
 2. Click on `+ Automation`.
 3. Copy and paste the following JSON schema:
 
@@ -389,8 +477,8 @@ This automation runs only after the commits automation and only if commits retur
     ```json showLineNumbers
     {
       "identifier": "get_comments_on_pr_updated",
-      "title": "Get Comments on PR Updated (after commits check)",
-      "description": "Fetch PR comments only if commit scan returned no AI agent",
+      "title": "Get Comments on PR Updated",
+      "description": "Fetch PR comments upon PR updates",
       "icon": "GitPullRequest",
       "trigger": {
         "type": "automation",
@@ -401,15 +489,15 @@ This automation runs only after the commits automation and only if commits retur
         "condition": {
           "type": "JQ",
           "expressions": [
-            ".diff.after.status == \"SUCCESS\"",
-            ".diff.before.response | [ .[] | (.commit.author.name // \"\") | select(test(\"(?i)copilot|claude|devin\")) ] | length == 0"
+            ".diff.before.relations.ai_coding_agent == null",
+            ".diff.after.relations.ai_coding_agent == null"
           ],
           "combinator": "and"
         }
       },
       "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "{{ .event.diff.before.payload.headers.Pr-Link | sub(\"https://github.com/\"; \"https://api.github.com/repos/\") | sub(\"/pull/\"; \"/issues/\") + \"/comments\" }}",
+        "url": "{{ .event.diff.after.properties.link | sub(\"https://github.com/\"; \"https://api.github.com/repos/\") | sub(\"/pull/\"; \"/issues/\") + \"/comments\" }}",
         "agent": false,
         "synchronized": true,
         "method": "GET",
@@ -418,7 +506,7 @@ This automation runs only after the commits automation and only if commits retur
           "Authorization": "Bearer {{ .secrets.GITHUB_TOKEN }}",
           "X-GitHub-Api-Version": "2022-11-28",
           "Content-Type": "application/json",
-          "Identifier": "{{ .event.diff.before.payload.headers.Identifier | tostring }}"
+          "Identifier": "{{ .event.context.entityIdentifier | tostring  }}"
         },
         "body": {}
       },
@@ -429,8 +517,7 @@ This automation runs only after the commits automation and only if commits retur
 
 4. Click `Create` to save the automation.
 
-
-### Automation 4: Update PR with AI coding agent (comment-based)
+<h4> Automation 2: Update PR with AI coding agent (comment-based) </h4>
 
 This automation only runs if the comments response contains a match for AI agents, ensuring that the PR is updated only when relevant AI activity is detected.
 
@@ -478,6 +565,9 @@ This automation only runs if the comments response contains a match for AI agent
     </details>
 
 4. Click `Create` to save the automation.
+
+</TabItem>
+</Tabs>
 
 
 ## Create dashboard
