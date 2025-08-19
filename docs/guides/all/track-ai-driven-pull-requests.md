@@ -222,7 +222,7 @@ When installing Port's GitHub app, the `Service` and `Pull request` blueprints a
       "title": "AI Coding Agent",
       "target": "ai_coding_agent",
       "required": false,
-      "many": false
+      "many": true
     }
     ```
     </details>
@@ -376,8 +376,8 @@ This automation only runs when the `ai_coding_agent` relation is null (before an
         "condition": {
           "type": "JQ",
           "expressions": [
-            ".diff.before.relations.ai_coding_agent == null",
-            ".diff.after.relations.ai_coding_agent == null"
+            ".diff.before.relations.ai_coding_agent == []",
+            ".diff.after.relations.ai_coding_agent == []"
           ],
           "combinator": "and"
         }
@@ -444,7 +444,7 @@ This automation only runs if the commits response contains a match for AI agents
         "mapping": {
           "identifier": "{{ .event.diff.before.payload.headers.Identifier | tostring }}",
           "relations": {
-            "ai_coding_agent": "{{ .event.diff.before.response | [.[] | .commit.author.name // \"\"  | if test(\"(?i)copilot\") then \"Copilot\" elif test(\"(?i)claude\") then \"Claude\" elif test(\"(?i)devin\") then \"Devin\" else empty end] | unique | first }}"
+            "ai_coding_agent": "{{ .event.diff.before.response | [.[] | .commit.author.name // \"\"  | if test(\"(?i)copilot\") then \"Copilot\" elif test(\"(?i)claude\") then \"Claude\" elif test(\"(?i)devin\") then \"Devin\" else empty end] | unique }}"
           }
         }
       },
@@ -489,8 +489,8 @@ This flow identifies AI involvement in code review by analyzing comment data.
         "condition": {
           "type": "JQ",
           "expressions": [
-            ".diff.before.relations.ai_coding_agent == null",
-            ".diff.after.relations.ai_coding_agent == null"
+            ".diff.before.relations.ai_coding_agent == []",
+            ".diff.after.relations.ai_coding_agent == []"
           ],
           "combinator": "and"
         }
@@ -555,7 +555,7 @@ This automation only runs if the comments response contains a match for AI agent
         "mapping": {
           "identifier": "{{ .event.diff.before.payload.headers.Identifier | tostring }}",
           "relations": {
-            "ai_coding_agent": "{{ .event.diff.before.response | [.[] | (.user.login // \"\") + \" \" + (.body // \"\") | if test(\"(?i)copilot\") then \"Copilot\" elif test(\"(?i)claude\") then \"Claude\" elif test(\"(?i)devin\") then \"Devin\" else empty end] | unique | first }}"
+            "ai_coding_agent": "{{ .event.diff.before.response | [.[] | (.user.login // \"\") + \" \" + (.body // \"\") | if test(\"(?i)copilot\") then \"Copilot\" elif test(\"(?i)claude\") then \"Claude\" elif test(\"(?i)devin\") then \"Devin\" else empty end] | unique }}"
           }
         }
       },
