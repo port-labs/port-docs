@@ -72,7 +72,7 @@ The relation path dropdown displays straightforward, acyclic paths. For complex 
 Using "All paths" is less performant than selecting a specific path, as it requires the system to evaluate multiple relationship paths.
 :::
 
-#### Filters and Edit JSON
+#### Additional filters
 
 <img src='/img/software-catalog/pages/jsonTogglerAddTab.png' border='1px' width='50%' />
 <br /><br />
@@ -134,7 +134,7 @@ Other properties will be hidden by default.
 
 You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
 
-#### Indirect relation
+#### Indirect relations
 
 In some scenarios, you may want to display entities that are not directly related but connected through a common blueprint. This is useful when you have multiple services that share relationships with a common entity.
 
@@ -169,7 +169,7 @@ When you're on the entity page of a **Deployment Workflow**, the related entity 
 This approach allows you to display indirectly related entities while maintaining control over the specific relationship path used for the connection.
 
 :::info Multiple relations scenario
-If **Deployment Workflow** has multiple relations with **Microservice** (e.g., `deployment_target` and `monitoring_target`), you can choose which specific relation path to use for more refined and filtered results.
+If **Deployment Workflow** has multiple relations to **Microservice** (e.g., `deployment_target` and `monitoring_target`), you can choose which specific relation path to use for more refined and filtered results.
 
 Additionally, when you have an existing relation between blueprints, Port automatically creates a mirror property relation that allows you to traverse the relationship in both directions. This mirror relation will appear as an option in the relation dropdown, enabling you to explore connections from either side of the relationship.
 :::
@@ -186,7 +186,7 @@ For example, consider an **Organization** blueprint where:
 When defining a self relation, you can specify how many "hops" to traverse in the relationship chain.   
 Hops represent the number of jumps you want to make upstream or downstream through the self-relation.
 
-<h4>Setting up self relations</h4>
+<h4>Set up self relations</h4>
 
 Follow these steps to set up a self relation in related entities:
 
