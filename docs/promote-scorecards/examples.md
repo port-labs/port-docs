@@ -179,7 +179,7 @@ If the property is not yet included in your `Snyk Vulnerability` blueprint, foll
 
 2. Click on the `Snyk Vulnerability` blueprint.
 
-3. Click on the `...` button in the top right corner, choose `Edit blueprint`, then click on the `{...} Edit JSON` button. 
+3. Click on the `...` button in the top right corner, then click on the `{...} Edit JSON` button. 
 
 4. Update the existing JSON by incorporating the following data in it, then click `Save`.
 
@@ -219,7 +219,8 @@ If the property is not yet included in your `Snyk Vulnerability` blueprint, foll
 
 <h3>Snyk Target</h3>
 
-With the addition of the `CWE` property to the `Snyk Vulnerability` blueprint, you can now classify vulnerabilities by CWE and align them with the [OWASP Top 10](http://owasp.org/Top10) categories.  
+With the addition of the `CWE` property to the `Snyk Vulnerability` blueprint, you can now classify vulnerabilities by CWE and align them with the [OWASP Top 10](http://owasp.org/Top10) categories.
+
 Update the `Snyk Target` blueprint to include 10 dedicated properties, one for each OWASP Top 10 code category, so issues can be grouped and reported by category.
 
 To update the `Snyk Target` blueprint:
@@ -228,9 +229,9 @@ To update the `Snyk Target` blueprint:
 
 2. Click on the `Snyk Target` blueprint.
 
-3. Click on the `...` button in the top right corner, choose `Edit blueprint`, then click on the `{...} Edit JSON` button. 
+3. Click on the `...` button in the top right corner, then click on the `{...} Edit JSON` button. 
 
-4. Update the existing JSON by incorporating the following data in it, then click `Save`.
+4. Update the aggregation properties to include the snippet JSON snippet below:
 
     <details>
     <summary><b>Snyk Target blueprint (click to expand)</b></summary>
@@ -738,12 +739,15 @@ To update the `Snyk Target` blueprint:
     ```
     </details>
 
+5. Click on `Save` to update the blueprint.
+
 <h3>Repository</h3>
 
 The `Snyk Target` blueprint should have a defined relation with the `GitHub Repository` blueprint.
-If your current model does not include a relation from the  `Repository` blueprint to the `Snyk Target` blueprint, add it.
+If your current model does not include a relation from the `Repository` blueprint to the `Snyk Target` blueprint, add it.
 
-The next step is to add the OWASP identifiers as mirrored properties to the `GitHub Repository` blueprint, and update the mapping configuration so that each `GitHub Repository` is automatically linked to its corresponding `Snyk Target`. This link is what allows the mirrored OWASP properties to pull their values from the related Snyk data. 
+The next step is to add the OWASP identifiers as mirrored properties to the `GitHub Repository` blueprint, and update the mapping configuration so that each `GitHub Repository` is automatically linked to its corresponding `Snyk Target`.  
+This link is what allows the mirrored OWASP properties to pull their values from the related Snyk data. 
 
 **Update the `GitHub Repository` blueprint:**
 
@@ -751,9 +755,9 @@ The next step is to add the OWASP identifiers as mirrored properties to the `Git
 
 2. Click on the `GitHub Repository` blueprint.
 
-3. Click on the `...` button in the top right corner, choose `Edit blueprint`, then click on the `{...} Edit JSON` button. 
+3. Click on the `...` button in the top right corner, then click on the `{...} Edit JSON` button. 
 
-4. Update the existing JSON by incorporating the following data in it, then click `Save`.
+4. Update the mirrorProperties to include the snippet below:
 
     <details>
     <summary><b>GitHub Repository Blueprint (click to expand)</b></summary>
@@ -805,6 +809,8 @@ The next step is to add the OWASP identifiers as mirrored properties to the `Git
     }
     ```
     </details>
+
+5.  Click on `Save` to update the blueprint.
 
 **Update the mapping configuration:**
 
