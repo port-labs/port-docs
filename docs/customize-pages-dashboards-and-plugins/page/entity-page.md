@@ -80,7 +80,7 @@ Using "All paths" is less performant than selecting a specific path, as it requi
 Selecting `Filters` opens a dialog where you can build conditions using form controls (property, operator, value).   
 You can switch to a JSON editor using the `Edit JSON` button to define the dataset directly.
 
-The filters visual editor doesn't support nested queries so in the case of nested queries, the JSON editor will be automatically displayed.
+The filters visual editor doesn't support nested queries so in the case of nested queries, use the JSON editor to define the dataset.
 
 The dataset follows this structure based on the [search and query syntax](https://docs.port.io/search-and-query):
 
@@ -250,6 +250,11 @@ Note that `self_relation` in these examples represents the identifier of the sel
 
 
 <h4>Examples</h4>
+Let's take a look at some examples using the concept of Teams.
+
+<img src='/img/software-catalog/pages/relatedEntitiesTeamExample.png' border='1px' width='100%' />
+
+<br /><br />
 
 **Basic self relation with multiple self relations:**
 
@@ -261,14 +266,14 @@ If you want exactly 2 hops, specify the relation twice:
     "combinator": "and",
     "rules": []
   },
-  "title": "Test Relation",
-  "targetBlueprint": "my_organization",
+  "title": "Team Hierarchy",
+  "targetBlueprint": "Team",
   "relationPath": {
     "path": [
       "self_relation",
       "self_relation"
     ],
-    "fromBlueprint": "my_organization"
+    "fromBlueprint": "Team"
   }
 }
 ```
@@ -283,16 +288,16 @@ If you want a variable number of hops (between 1 and 15), use maxHops:
     "combinator": "and",
     "rules": []
   },
-  "title": "Test Relation",
-  "targetBlueprint": "my_organization",
+  "title": "Team Hierarchy",
+  "targetBlueprint": "Team",
   "relationPath": {
     "path": [
       {
-        "relation": "relation_identifier_goes_here",
+        "relation": "team_self_relation",
         "maxHops": 4
       }
     ],
-    "fromBlueprint": "my_organization"
+    "fromBlueprint": "Team"
   }
 }
 ```
@@ -304,17 +309,17 @@ You can also mix fixed hops with variable hops. For example, if you specify `sel
 ```json showLineNumbers
 "relationPath": {
   "path": [
-    "self_relation",           // 1st hop
-    "self_relation",           // 2nd hop  
+    "self_relation",           // 1st hop: Unit -> Basic Team
+    "self_relation",           // 2nd hop: Basic Team -> Group  
     {
-      "relation": "team_relation",
-      "maxHops": 3            // Continues from hop 2, adding up to 3 more hops
+      "relation": "team_self_relation",
+      "maxHops": 3            // Continues from Group, adding up to 3 more hops (Group -> Office -> etc.)
     }
   ]
 }
 ```
 
-In this example, the system will traverse 2 fixed hops (`self_relation` twice) and then continue with up to 3 additional hops using the `team_relation`, starting from where the fixed hops left off.
+In this example, the system will traverse 2 fixed hops (Unit → Basic Team → Group) and then continue with up to 3 additional hops using the `team_self_relation`, starting from where the fixed hops left off. This could represent a complete organizational hierarchy from Unit all the way up to higher-level organizational structures.
 
 
 ## Runs
