@@ -1356,6 +1356,20 @@ export const availableGuides = [
         tags: ["AI", "Actions", "Webhook"],
         logos: ["AI", "Webhook"],
         link: "/guides/all/generate-zendesk-ticket-summaries-with-ai",
+    },
+    {
+        title: "Automatically resolve tickets with coding agents",
+        description: "Learn how to create an AI agent that automatically resolves tickets with coding agents",
+        tags: ["SDLC", "Jira", "Github Copilot", "AI"],
+        logos: ["Jira", "GitHub", "AI"],
+        link: "/guides/all/automatically-resolve-tickets-with-coding-agents",
+    },
+    {
+        title: "Auto-fix services when scorecards degrade",
+        description: "Learn how to use Port's AI capabilities to detect scorecard degradation and automatically use a coding agent like GitHub Copilot to fix it",
+        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/self-heal-scorecards-with-ai",
     }
 ]
 
