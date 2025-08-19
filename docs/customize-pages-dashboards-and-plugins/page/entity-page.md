@@ -66,8 +66,6 @@ When looking at the entity page of a certain `Workflow Run`, the related entitie
       - (Optional) Add `Additional filters` to restrict the result set.
 
 
-
-
 :::tip Relation path options
 The relation path dropdown displays straightforward, acyclic paths. For complex scenarios involving circular relationships, advanced path configurations, multiple self relations, or maxHops, use [JSON mode](#filters-and-edit-json).
 
@@ -98,7 +96,6 @@ The dataset follows this structure based on the [search and query syntax](https:
   ]
 }
 ```
-
 
 Use the JSON editor when you need to copy/paste filter sets, keep them in source control, or express conditions that are faster to author as JSON. You can toggle back to the form at any time.
 
@@ -155,7 +152,6 @@ From the diagram, we can see that:
 
 When you're on the entity page of a **Deployment Workflow**, the related entity **Microservice** automatically appears, but **Deployment** does not, since its relation is in the other direction. However, you can create a custom tab to show **Deployment** entities by leveraging the indirect relationship through **Microservice**.
 
-<img src='/img/software-catalog/pages/relatedEntitiesIndirectRelations2.png' border='1px' width='100%' />
 
 <h4>Add a tab for an indirectly related blueprint</h4>
 
@@ -167,6 +163,8 @@ When you're on the entity page of a **Deployment Workflow**, the related entity 
 3. Choose **Deployment** as the `Related blueprint`.
 
 4. For the `Relation or property`, select the specific relation from **Deployment Workflow** to **Microservice** that you want to traverse.
+
+<img src='/img/software-catalog/pages/relatedEntitiesIndirectRelations2.png' border='1px' width='100%' />
 
 This approach allows you to display indirectly related entities while maintaining control over the specific relationship path used for the connection.
 
@@ -196,30 +194,67 @@ Follow these steps to set up a self relation in related entities:
 
 2. Choose your blueprint as the `Related blueprint`.
 
-3. Select the `Self Relation` from the available relation paths.
+3. Select the self relation path from the available paths.
 
-4. The system will automatically handle the relationship traversal.
+   :::tip How self relation hops work
+     If you want more than one **hop** then you would have to toggle `Json mode` on to specify more than one self relation blueprint identifier for the number of **hops** you want to make.
+   :::
 
-5. You can also toggle to `Json Mode` in the "Add tab" dialog to define the relationship path with precise control over hops.
+4. You can also toggle to `Json mode` in the "Add tab" dialog to define the relationship path with precise control over hops.
 
-      In JSON mode, you can use the `maxHops` feature to control the number of relationship traversals. A single path element can be an object instead of a string:
+   For example if we want to make 2 hops then we would have to specify 2 self relation blueprint identifiers in the path array.
+
+     ```json showLineNumbers
+    "relationPath": {
+      "path": [
+        "self_relation",
+        "self_relation"
+      ]
+     }
+     ```
+
+      In JSON mode, you can use the `maxHops` feature to control the number of relationship traversals. Path elements can be objects instead of strings, and `maxHops` can only be specified once in the path.
 
       ```json showLineNumbers
-      {
-        "relation": "<RELATION_IDENTIFIER>",
-        "maxHops": <number between 1 and 15>
+      "relationPath": {
+        {
+          "relation": "<RELATION_IDENTIFIER>",
+          "maxHops": <number between 1 and 15>
+        }
       }
       ```
 
+      You can also have a mix of fixed and variable hops.
+
+      ```json showLineNumbers
+      "relationPath": {
+        "path": [
+          "self_relation",
+          {
+            "relation": "<RELATION_IDENTIFIER>",
+            "maxHops": <number between 1 and 15>
+          }
+        ]
+      }
+      ```
+
+      :::info maxHops limitation
+      You can only use `maxHops` once in a path and it it accepts a number between 1 and 15.
+      :::
+
 6. Click on `Save` to save the tab.
 
-The system will run the query `maxHops + 1` times (once for each number between 0 and the maxHops value).
+:::info Self relation identifier
+Note that `self_relation` in these examples represents the identifier of the self relation you created in your blueprint. Replace it with your actual self relation identifier.
+:::
 
 
 <h4>Examples</h4>
 
 **Basic self relation with multiple self relations:**
 
+If you want exactly 2 hops, specify the relation twice:
+
 ```json showLineNumbers
 {
   "dataset": {
@@ -231,15 +266,16 @@ The system will run the query `maxHops + 1` times (once for each number between 
   "relationPath": {
     "path": [
       "self_relation",
-      "self_relation",
-      ... // up to 15 self relations
+      "self_relation"
     ],
     "fromBlueprint": "my_organization"
   }
 }
 ```
 
-**Self relation with maxHops:**
+**Self relation with maxHops for variable hops:**
+
+If you want a variable number of hops (between 1 and 15), use maxHops:
 
 ```json showLineNumbers
 {
@@ -251,7 +287,6 @@ The system will run the query `maxHops + 1` times (once for each number between 
   "targetBlueprint": "my_organization",
   "relationPath": {
     "path": [
-      "self_relation",
       {
         "relation": "relation_identifier_goes_here",
         "maxHops": 4
@@ -262,11 +297,24 @@ The system will run the query `maxHops + 1` times (once for each number between 
 }
 ```
 
-:::info Hops limitation
-You can add up to 15 `self_relation` entries in a path, or use the `maxHops` feature to specify the exact number of traversals needed for your use case.
+**Mixed approach example:**
 
-The `maxHops` feature is now supported in both the legacy search APIs and the new paginated API.
-:::
+You can also mix fixed hops with variable hops. For example, if you specify `self_relation` twice followed by a `maxHops` object, the system will start traversing from the 2 hops already made and continue with the additional hops specified in `maxHops`.
+
+```json showLineNumbers
+"relationPath": {
+  "path": [
+    "self_relation",           // 1st hop
+    "self_relation",           // 2nd hop  
+    {
+      "relation": "team_relation",
+      "maxHops": 3            // Continues from hop 2, adding up to 3 more hops
+    }
+  ]
+}
+```
+
+In this example, the system will traverse 2 fixed hops (`self_relation` twice) and then continue with up to 3 additional hops using the `team_relation`, starting from where the fixed hops left off.
 
 
 ## Runs
