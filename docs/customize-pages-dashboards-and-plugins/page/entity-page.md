@@ -321,6 +321,30 @@ You can also mix fixed hops with variable hops. For example, if you specify `sel
 
 In this example, the system will traverse 2 fixed hops (Unit → Basic Team → Group) and then continue with up to 3 additional hops using the `team_self_relation`, starting from where the fixed hops left off. This could represent a complete organizational hierarchy from Unit all the way up to higher-level organizational structures.
 
+**Simple relation path example:**
+
+You can also use regular relations (not self-relations) in your paths:
+
+```json showLineNumbers
+{
+  "dataset": {
+    "combinator": "and",
+    "rules": []
+  },
+  "title": "Developer",
+  "targetBlueprint": "developer",
+  "relationPath": {
+    "path": [
+      "member_of"
+    ]
+  }
+}
+```
+
+:::info The fromBlueprint property
+The `fromBlueprint` property is only needed when the path starts from the current page's blueprint and ends with the entities listed in the tab. For more information about relation paths  see the [Relation operators](https://docs.port.io/search-and-query/#relation-operators) documentation.
+:::
+
 
 ## Runs
 
