@@ -1,12 +1,12 @@
 name: Claude Docs PR Reviewer
 on:
-  pull_request:
-    types:
-      - synchronize
-      - reopened
-      - opened
-    branches:
-      - main
+  # pull_request:
+  #   types:
+  #     - synchronize
+  #     - reopened
+  #     - opened
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 jobs:
