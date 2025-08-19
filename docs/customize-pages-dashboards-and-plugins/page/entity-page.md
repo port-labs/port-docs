@@ -134,7 +134,7 @@ Other properties will be hidden by default.
 
 You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
 
-#### Indirect relation
+#### Indirect relations
 
 In some scenarios, you may want to display entities that are not directly related but connected through a common blueprint. This is useful when you have multiple services that share relationships with a common entity.
 
