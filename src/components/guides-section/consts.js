@@ -1337,7 +1337,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
-
+        title: "Ingest and map HiBob users to Port user accounts",
+        description: "Ingest and map HiBob users to Port user accounts for seamless integration",
+        tags: ["SDLC","Actions", "Automations", "Webhook"],
+        logos: ["Webhook"],
+        link: "/guides/all/map-hibob-users-to-port-accounts",
+    },
+    {
         title: "Map Jira users to Port user accounts",
         description: "Automatically map Jira users to their Port user accounts for seamless integration",
         tags: ["Jira", "Automations"],
@@ -1360,7 +1366,6 @@ export const availableGuides = [
         tags: ["SDLC", "ServiceNow", "Actions", "Automations", "Webhook"],
         logos: ["ServiceNow", "Webhook"],
         link: "/guides/all/map-servicenow-users-to-port-accounts",
-
     },
     {
         title: "Generate incident updates with AI",
