@@ -1344,7 +1344,7 @@ export const availableGuides = [
         link: "/guides/all/generate-incident-updates-with-ai",
     },
     {
-        title: "Map PR's to services in a monorepo",
+        title: "Map PRs to services in a monorepo",
         description: "Automatically map GitHub pull requests to services in a monorepo using file path analysis",
         tags: ["SDLC", "GitHub", "Automations"],
         logos: ["GitHub"],

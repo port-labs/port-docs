@@ -3,19 +3,25 @@ displayed_sidebar: null
 description: Automatically map pull requests to services in a monorepo using file path analysis
 ---
 
-# Map PR's to services in a monorepo
+# Map PRs to services in a monorepo
 
 ## Overview
-This guide will help you implement an automation in Port that automatically maps GitHub pull requests to services in your monorepo based on the files that were changed.
-This functionality streamlines monorepo management by enabling teams to quickly understand which services are affected by each change without manual analysis.
+This guide demonstrates how to implement an automation in Port to map GitHub pull requests to sub-components in your monorepo based on the files that were changed.
+
+This functionality streamlines monorepo management by enabling teams to quickly understand which sub-components are affected by each change without manual analysis. In this guide will refer to those sub-components as 'services'.
 
 ## Prerequisites
 
 - Complete the [onboarding process](/getting-started/overview).
-- A GitHub repository with a monorepo structure containing multiple services.
-- Services organized in directories with a `service.yml` file (or similar configuration file).
+- A GitHub repository with a monorepo structure containing multiple sub-components.
 - Port's [GitHub App](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md) installed.
 - Access to GitHub API tokens for automation.
+
+:::info Monorepo structure assumptions
+This guide assumes that the sub-components are organized in directories with a `service.yml` file (or similar configuration file). You can modify the path pattern to match your actual service configuration file (e.g., `**/package.json`, `**/docker-compose.yml`, etc.).
+:::
+
+
 
 ## Set up data model
 
@@ -182,6 +188,8 @@ If you've already installed the GitHub integration you have to [update the pull 
 
 ### Update the pull request blueprint
 
+Skip this step if you just manually [created the pull request blueprint](#create-the-pull-request-blueprint).
+
 1. Go to the [blueprints](https://app.getport.io/settings/blueprints) page of your portal.
 
 2. Find the `githubPullRequest` blueprint and click on it.
@@ -233,7 +241,7 @@ Follow the steps below to update the data source:
      selector:
        query: 'true'
        files:
-         - path: '**/service.yml'
+         - path: '**/service.yml' # or your actual service configuration file
        repos:
          - platform
      port:
@@ -246,12 +254,12 @@ Follow the steps below to update the data source:
 
    </details>
 
-   **Note**: Adjust the `path` pattern and `repos` list according to your monorepo structure. The `identifier` mapping extracts the directory path above the `service.yml` file, which becomes the service identifier.
+   **Note**: Adjust the `path` pattern and `repos` list according to your monorepo structure. The `identifier` mapping extracts the directory path above the service configuration file (e.g., `service.yml`), which becomes the service identifier.
 
-6. Click "Save" to create the data source.
+6. Click "Save & Resync" to update the data source.
 
 :::tip Service file structure
-This configuration assumes each service has a `service.yml` file in its root directory. You can modify the path pattern to match your actual service configuration file (e.g., `**/package.json`, `**/docker-compose.yml`, etc.).
+This configuration assumes each service (sub-component) has a `service.yml` file in its root directory. You can modify the path pattern to match your actual service configuration file (e.g., `**/package.json`, `**/docker-compose.yml`, etc.).
 :::
 
 <h3>Update the pull request kind to include the file change URL</h3>
@@ -283,7 +291,7 @@ This configuration assumes each service has a `service.yml` file in its root dir
     ```
    </details>
 
-3. Click "Save" to update the data source.
+3. Click "Save & Resync" to update the data source.
 
 ## Set up automations
 
@@ -314,7 +322,7 @@ This automation triggers when a new pull request is created and fetches the list
         "trigger": {
         "type": "automation",
         "event": {
-            "type": "ENTITY_UPDATED",
+            "type": "ENTITY_CREATED",
             "blueprintIdentifier": "githubPullRequest"
         },
         "condition": {
