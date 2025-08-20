@@ -358,8 +358,6 @@ jobs:
             - Output tokens: ${{ steps.parse_results.outputs.output_tokens }}
             - Total cost: ${{ steps.parse_results.outputs.total_cost }}
             - Session ID: ${{ steps.parse_results.outputs.session_id }}
-            **Claude Response:**
-            ${{ steps.parse_results.outputs.claude_response }}
       
       - name: Update Port Action Run Status to Failed
         if: ${{ inputs.run_id != '' && steps.parse_results.outputs.conclusion != 'success' }}
