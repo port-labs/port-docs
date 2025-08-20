@@ -24,7 +24,11 @@ This guide assumes the following:
 
 The relation between Jira users and Port users is created automatically when we install the [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/). If you haven't installed it yet, please do so first.
 
-<h3>Add mirror properties to the Port User blueprint</h3>
+<h3>Optional: Add mirror properties to the Port User blueprint</h3>
+
+If you want to display some Jira user attributes e.g. display name, account type, time zone, etc. in the Port User blueprint, you can add a mirror property to the Port User blueprint.
+
+Follow the steps below to add a mirror property to the Port User blueprint:
 
 1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
 
