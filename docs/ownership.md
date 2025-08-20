@@ -1,4 +1,7 @@
-# Managing Ownership in Port
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Manage ownership in Port
 
 Ownership in Port defines who is responsible for specific entities in your internal developer portal — such as services, repositories, or incidents.  
 
@@ -222,12 +225,29 @@ Here are some common examples:  ADD TABS FOR EACH MAPPING CONFIG
 - Jira Issue → creator, assignee  
 - PagerDuty Incident → on-call user  
 
+<Tabs>
+  <TabItem value="GitHub Pull Request">
+    ```yaml showLineNumbers
+    - kind: repository
+    ```
+  </TabItem>
+  <TabItem value="Jira Issue">
+    ```yaml showLineNumbers
+    - kind: repository
+    ```
+  </TabItem>
+  <TabItem value="PagerDuty Incident">
+    ```yaml showLineNumbers
+    - kind: repository
+    ```
+  </TabItem>
+</Tabs>
 
 
-## Visualize User & Team Data
+## Visualize user & team data
 
 - **User entity pages**: View all related integration users and the Port teams they belong to.  
-- **Team entity pages**: View all related integration teams and their members.  
+- **Team entity pages**: View all related integration teams and the Port users they belong to.  
 - **Catalog pages & dashboards**: Use the *My Teams* or *My* filters to show only relevant data.  
 - **User management dashboard**:  
 - View which users are assigned to one or more teams.  
