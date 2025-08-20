@@ -138,7 +138,7 @@ To allow automatic Okta group support in Port, please follow these steps:
    3.3 Click `Save`.
 
 
-## SCIM Configuration (beta)
+<!-- ## SCIM Configuration (beta)
 
 <ScimLimitation/>
 
@@ -189,4 +189,4 @@ The `endpoint` and `token` will be used to complete the setup of the new SWA app
    - Update User Attributes
    - Deactivate Users
    <br/>
-   <img src="/img/sso/okta/OktaSCIMapp.png" width="80%" />
+   <img src="/img/sso/okta/OktaSCIMapp.png" width="80%" /> -->
