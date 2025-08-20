@@ -403,7 +403,9 @@ Now let us test the complete workflow to ensure everything works correctly.
 1. Open the [Software Catalog](https://app.getport.io/catalog).  
 2. Check the **Claude Code Execution** entity for the new record.  
 
-<img src="/img/guides/claude-code-execution-entity.png" border="1px" width="100%" />
+<img src="/img/guides/claude-code-execution-entity.png" border="1px" width="70%" />
+<img src="/img/guides/claude-tf-pr.png" border="1px" width="70%" />
+
 
 
 ## Related guides
