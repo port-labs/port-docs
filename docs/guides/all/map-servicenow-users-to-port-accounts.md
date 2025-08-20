@@ -36,147 +36,146 @@ To represent ServiceNow users in your portal, we need to create a ServiceNow Use
 
 4. Copy and paste the following JSON schema:
 
-    <details>
+        <details>
     <summary><b>ServiceNow user blueprint (Click to expand)</b></summary>
 
     ```json showLineNumbers
-        {
-            "identifier": "servicenow_user",
-            "description": "ServiceNow User",
-            "title": "ServiceNow User",
-            "icon": "Servicenow",
-            "schema": {
-                "properties": {
-                "user_name": {
-                    "type": "string",
-                    "title": "Username",
-                    "description": "The user's login name"
-                },
-                "name": {
-                    "type": "string",
-                    "title": "Full Name",
-                    "description": "The user's full display name"
-                },
-                "first_name": {
-                    "type": "string",
-                    "title": "First Name",
-                    "description": "The user's first name"
-                },
-                "last_name": {
-                    "type": "string",
-                    "title": "Last Name",
-                    "description": "The user's last name"
-                },
-                "email": {
-                    "type": "string",
-                    "title": "Email",
-                    "description": "The user's email address"
-                },
-                "employee_number": {
-                    "type": "string",
-                    "title": "Employee Number",
-                    "description": "The user's employee number"
-                },
-                "active": {
-                    "type": "boolean",
-                    "title": "Active",
-                    "description": "Indicates if the user is active"
-                },
-                "locked_out": {
-                    "type": "boolean",
-                    "title": "Locked Out",
-                    "description": "Indicates if the user account is locked"
-                },
-                "vip": {
-                    "type": "boolean",
-                    "title": "VIP",
-                    "description": "Indicates if the user has VIP status"
-                },
-                "password_needs_reset": {
-                    "type": "boolean",
-                    "title": "Password Reset Required",
-                    "description": "Indicates if the user's password needs to be reset"
-                },
-                "last_login": {
-                    "type": "string",
-                    "title": "Last Login",
-                    "description": "The user's last login time"
-                },
-                "phone": {
-                    "type": "string",
-                    "title": "Phone",
-                    "description": "The user's phone number"
-                },
-                "mobile_phone": {
-                    "type": "string",
-                    "title": "Mobile Phone",
-                    "description": "The user's mobile phone number"
-                },
-                "department": {
-                    "type": "string",
-                    "title": "Department",
-                    "description": "The user's department"
-                },
-                "title": {
-                    "type": "string",
-                    "title": "Job Title",
-                    "description": "The user's job title"
-                },
-                "manager": {
-                    "type": "string",
-                    "title": "Manager",
-                    "description": "The user's manager"
-                },
-                "location": {
-                    "type": "string",
-                    "title": "Location",
-                    "description": "The user's location"
-                },
-                "company": {
-                    "type": "string",
-                    "title": "Company",
-                    "description": "The user's company"
-                },
-                "roles": {
-                    "type": "string",
-                    "title": "Roles",
-                    "description": "The user's roles and permissions"
-                },
-                "time_zone": {
-                    "type": "string",
-                    "title": "Time Zone",
-                    "description": "The user's time zone"
-                },
-                "sys_created_on": {
-                    "type": "string",
-                    "title": "Created On",
-                    "description": "When the user was created"
-                },
-                "sys_updated_on": {
-                    "type": "string",
-                    "title": "Updated On",
-                    "description": "When the user was last updated"
-                },
-                "sys_updated_by": {
-                    "type": "string",
-                    "title": "Updated By",
-                    "description": "Who last updated the user record"
-                },
-                "failed_attempts": {
-                    "type": "string",
-                    "title": "Failed Login Attempts",
-                    "description": "Number of failed login attempts"
-                }
-                },
-                "required": []
-            },
-            "mirrorProperties": {},
-            "calculationProperties": {},
-            "aggregationProperties": {},
-            "relations": {}
-        }
-        ```
-
+    {
+      "identifier": "servicenow_user",
+      "description": "ServiceNow User",
+      "title": "ServiceNow User",
+      "icon": "Servicenow",
+      "schema": {
+        "properties": {
+          "user_name": {
+            "type": "string",
+            "title": "Username",
+            "description": "The user's login name"
+          },
+          "name": {
+            "type": "string",
+            "title": "Full Name",
+            "description": "The user's full display name"
+          },
+          "first_name": {
+            "type": "string",
+            "title": "First Name",
+            "description": "The user's first name"
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name",
+            "description": "The user's last name"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email",
+            "description": "The user's email address"
+          },
+          "employee_number": {
+            "type": "string",
+            "title": "Employee Number",
+            "description": "The user's employee number"
+          },
+          "active": {
+            "type": "boolean",
+            "title": "Active",
+            "description": "Indicates if the user is active"
+          },
+          "locked_out": {
+            "type": "boolean",
+            "title": "Locked Out",
+            "description": "Indicates if the user account is locked"
+          },
+          "vip": {
+            "type": "boolean",
+            "title": "VIP",
+            "description": "Indicates if the user has VIP status"
+          },
+          "password_needs_reset": {
+            "type": "boolean",
+            "title": "Password Reset Required",
+            "description": "Indicates if the user's password needs to be reset"
+          },
+          "last_login": {
+            "type": "string",
+            "title": "Last Login",
+            "description": "The user's last login time"
+          },
+          "phone": {
+            "type": "string",
+            "title": "Phone",
+            "description": "The user's phone number"
+          },
+          "mobile_phone": {
+            "type": "string",
+            "title": "Mobile Phone",
+            "description": "The user's mobile phone number"
+          },
+          "department": {
+            "type": "string",
+            "title": "Department",
+            "description": "The user's department"
+          },
+          "title": {
+            "type": "string",
+            "title": "Job Title",
+            "description": "The user's job title"
+          },
+          "manager": {
+            "type": "string",
+            "title": "Manager",
+            "description": "The user's manager"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location",
+            "description": "The user's location"
+          },
+          "company": {
+            "type": "string",
+            "title": "Company",
+            "description": "The user's company"
+          },
+          "roles": {
+            "type": "string",
+            "title": "Roles",
+            "description": "The user's roles and permissions"
+          },
+          "time_zone": {
+            "type": "string",
+            "title": "Time Zone",
+            "description": "The user's time zone"
+          },
+          "sys_created_on": {
+            "type": "string",
+            "title": "Created On",
+            "description": "When the user was created"
+          },
+          "sys_updated_on": {
+            "type": "string",
+            "title": "Updated On",
+            "description": "When the user was last updated"
+          },
+          "sys_updated_by": {
+            "type": "string",
+            "title": "Updated By",
+            "description": "Who last updated the user record"
+          },
+          "failed_attempts": {
+            "type": "string",
+            "title": "Failed Login Attempts",
+            "description": "Number of failed login attempts"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
     </details>
 
 5. Click on `Save` to create the blueprint.
@@ -193,7 +192,7 @@ Now we need to enhance the Port User blueprint to add a relation to the ServiceN
 
 4. Add the following relation to the `relations` object:
 
-    <details>
+        <details>
     <summary><b>Port User blueprint relation (Click to expand)</b></summary>
 
     ```json showLineNumbers
@@ -211,7 +210,7 @@ Now we need to enhance the Port User blueprint to add a relation to the ServiceN
 
 5. Add the following mirror property to the `mirrorProperties` object to display the ServiceNow full name:
 
-    <details>
+        <details>
     <summary><b>Port User blueprint mirror property (Click to expand)</b></summary>
 
     ```json showLineNumbers
@@ -263,7 +262,7 @@ Follow the steps below to create the webhook integration:
 
 6. Copy and paste the following mapping into the **Map the data from the external system into Port** field:
 
-    <details>
+        <details>
     <summary><b>ServiceNow users webhook mapping (Click to expand)</b></summary>
 
     ```json showLineNumbers
@@ -349,49 +348,49 @@ Follow the steps below to create the action:
 
 4. Copy and paste the following action configuration:
 
-    <details>
+        <details>
     <summary><b>Sync ServiceNow Users action (Click to expand)</b></summary>
 
     ```json showLineNumbers
-        {
-          "identifier": "sync_servicenow_users",
-          "title": "Sync ServiceNow Users",
-          "icon": "Servicenow",
-          "description": "Fetch and sync all ServiceNow users to Port",
-          "trigger": {
-            "type": "self-service",
-            "operation": "DAY-2",
-            "userInputs": {
-              "properties": {
-                "sysparm_limit": {
-                  "icon": "DefaultProperty",
-                  "type": "number",
-                  "title": "Results returned per page",
-                  "description": "The maximum number of results returned per page (default: 10,000)"
-                }
-              },
-              "required": [],
-              "order": [
-                "sysparm_limit"
-              ]
+    {
+      "identifier": "sync_servicenow_users",
+      "title": "Sync ServiceNow Users",
+      "icon": "Servicenow",
+      "description": "Fetch and sync all ServiceNow users to Port",
+      "trigger": {
+        "type": "self-service",
+        "operation": "DAY-2",
+        "userInputs": {
+          "properties": {
+            "sysparm_limit": {
+              "icon": "DefaultProperty",
+              "type": "number",
+              "title": "Results returned per page",
+              "description": "The maximum number of results returned per page (default: 10,000)"
             }
           },
-          "invocationMethod": {
-            "type": "WEBHOOK",
-            "url": "{{ .secrets.SERVICENOW_INSTANCE_URL }}/api/now/table/sys_user?sysparm_query=ORDERBYDESCsys_created_on&sysparm_limit={{ .inputs.sysparm_limit }}",
-            "agent": false,
-            "synchronized": true,
-            "method": "GET",
-            "headers": {
-              "RUN_ID": "{{ .run.id }}",
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              "Authorization": "Basic {{ .secrets.SERVICENOW_API_TOKEN }}"
-            },
-            "body": {}
-          },
-          "requiredApproval": false
+          "required": [],
+          "order": [
+            "sysparm_limit"
+          ]
         }
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "{{ .secrets.SERVICENOW_INSTANCE_URL }}/api/now/table/sys_user?sysparm_query=ORDERBYDESCsys_created_on&sysparm_limit={{ .inputs.sysparm_limit }}",
+        "agent": false,
+        "synchronized": true,
+        "method": "GET",
+        "headers": {
+          "RUN_ID": "{{ .run.id }}",
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Basic {{ .secrets.SERVICENOW_API_TOKEN }}"
+        },
+        "body": {}
+      },
+      "requiredApproval": false
+    }
     ```
 
     </details>
@@ -413,48 +412,48 @@ Follow the steps below to create the action:
 
 4. Copy and paste the following action configuration:
 
-    <details>
+        <details>
     <summary><b>Get ServiceNow user by email action (Click to expand)</b></summary>
 
     ```json showLineNumbers
-        {
-          "identifier": "get_single_servicenow_user",
-          "title": "Get ServiceNow User by Email",
-          "icon": "Servicenow",
-          "description": "Fetch a ServiceNow user to Port",
-          "trigger": {
-            "type": "self-service",
-            "operation": "DAY-2",
-            "userInputs": {
-              "properties": {
-                "email": {
-                  "icon": "DefaultProperty",
-                  "type": "string",
-                  "title": "Email of user",
-                  "description": "Email of the service now user"
-                }
-              },
-              "required": [],
-              "order": [
-                "email"
-              ]
+    {
+      "identifier": "get_single_servicenow_user",
+      "title": "Get ServiceNow User by Email",
+      "icon": "Servicenow",
+      "description": "Fetch a ServiceNow user to Port",
+      "trigger": {
+        "type": "self-service",
+        "operation": "DAY-2",
+        "userInputs": {
+          "properties": {
+            "email": {
+              "icon": "DefaultProperty",
+              "type": "string",
+              "title": "Email of user",
+              "description": "Email of the service now user"
             }
           },
-          "invocationMethod": {
-            "type": "WEBHOOK",
-            "url": "{{ .secrets.SERVICENOW_INSTANCE_URL }}/api/now/table/sys_user?sysparm_query=email={{ .inputs.email }}&sysparm_limit=1",
-            "synchronized": true,
-            "method": "GET",
-            "headers": {
-              "RUN_ID": "{{ .run.id }}",
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              "Authorization": "Basic {{ .secrets.SERVICENOW_API_TOKEN }}"
-            },
-            "body": {}
-          },
-          "requiredApproval": false
+          "required": [],
+          "order": [
+            "email"
+          ]
         }
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "{{ .secrets.SERVICENOW_INSTANCE_URL }}/api/now/table/sys_user?sysparm_query=email={{ .inputs.email }}&sysparm_limit=1",
+        "synchronized": true,
+        "method": "GET",
+        "headers": {
+          "RUN_ID": "{{ .run.id }}",
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Basic {{ .secrets.SERVICENOW_API_TOKEN }}"
+        },
+        "body": {}
+      },
+      "requiredApproval": false
+    }
     ```
 
     </details>
@@ -545,43 +544,43 @@ Follow the steps below to create the automation:
 
 4. Copy and paste the following automation configuration:
 
-    <details>
+        <details>
     <summary><b>Process single ServiceNow user automation (Click to expand)</b></summary>
 
     ```json showLineNumbers
-        {
-        "identifier": "process_single_servicenow_user",
-        "title": "Process Single ServiceNow Users",
-        "description": "Processes ServiceNow user and sends to webhook for ingestion",
-        "icon": "Servicenow",
-        "trigger": {
-            "type": "automation",
-            "event": {
-            "type": "RUN_UPDATED",
-            "actionIdentifier": "get_single_servicenow_user"
-            },
-            "condition": {
-            "type": "JQ",
-            "expressions": [
-                ".diff.after.status == \"SUCCESS\""
-            ],
-            "combinator": "and"
-            }
+    {
+      "identifier": "process_single_servicenow_user",
+      "title": "Process Single ServiceNow Users",
+      "description": "Processes ServiceNow user and sends to webhook for ingestion",
+      "icon": "Servicenow",
+      "trigger": {
+        "type": "automation",
+        "event": {
+          "type": "RUN_UPDATED",
+          "actionIdentifier": "get_single_servicenow_user"
         },
-        "invocationMethod": {
-            "type": "WEBHOOK",
-            "url": "<YOUR_WEBHOOK_URL>",
-            "agent": false,
-            "synchronized": true,
-            "method": "POST",
-            "headers": {
-            "Content-Type": "application/json"
-            },
-            "body": {
-            "response": "{{ .event.diff.after.response }}"
-            }
+        "condition": {
+          "type": "JQ",
+          "expressions": [
+            ".diff.after.status == \"SUCCESS\""
+          ],
+          "combinator": "and"
+        }
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "<YOUR_WEBHOOK_URL>",
+        "agent": false,
+        "synchronized": true,
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json"
         },
-        "publish": true
+        "body": {
+          "response": "{{ .event.diff.after.response }}"
+        }
+      },
+      "publish": true
     }
     ```
     </details>
@@ -605,45 +604,45 @@ Follow the steps below to create the automation:
 
 4. Copy and paste the following automation configuration:
 
-    <details>
+        <details>
     <summary><b>Automation to sync ServiceNow users when a new Port user is added (Click to expand)</b></summary>
 
     ```json showLineNumbers
-        {
-        "identifier": "ingest_servicenow_user",
-        "title": "Trigger servicenow_user ingestion automation",
-        "description": "This will call the webhook endpoint to ingest a single service now user",
-        "icon": "Servicenow",
-        "trigger": {
-            "type": "automation",
-            "event": {
-            "type": "ENTITY_CREATED",
-            "blueprintIdentifier": "_user"
-            },
-            "condition": {
-            "type": "JQ",
-            "expressions": [],
-            "combinator": "and"
-            }
+    {
+      "identifier": "ingest_servicenow_user",
+      "title": "Trigger servicenow_user ingestion automation",
+      "description": "This will call the webhook endpoint to ingest a single service now user",
+      "icon": "Servicenow",
+      "trigger": {
+        "type": "automation",
+        "event": {
+          "type": "ENTITY_CREATED",
+          "blueprintIdentifier": "_user"
         },
-        "invocationMethod": {
-            "type": "WEBHOOK",
-            "url": "https://api.getport.io/v1/actions/get_single_servicenow_user/runs",
-            "agent": false,
-            "synchronized": true,
-            "method": "POST",
-            "headers": {
-            "RUN_ID": "{{ .run.id }}",
-            "Content-Type": "application/json"
-            },
-            "body": {
-            "properties": {
-               "email": "{{ .event.diff.after.identifier }}"
-            }
-            }
+        "condition": {
+          "type": "JQ",
+          "expressions": [],
+          "combinator": "and"
+        }
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://api.getport.io/v1/actions/get_single_servicenow_user/runs",
+        "agent": false,
+        "synchronized": true,
+        "method": "POST",
+        "headers": {
+          "RUN_ID": "{{ .run.id }}",
+          "Content-Type": "application/json"
         },
-        "publish": true
-     }
+        "body": {
+          "properties": {
+             "email": "{{ .event.diff.after.identifier }}"
+          }
+        }
+      },
+      "publish": true
+    }
     ```
 
     </details>
