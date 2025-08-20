@@ -13,7 +13,7 @@ Using CircleCI workflows, you can easily create/update and query entities in Por
 <br></br>
 <br></br>
 
-![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/circleci/circleci-illustration.jpg)
+![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/circleci/circleci-illustration.png)
 
 ## 💡 Common CircleCI workflow usage
 

@@ -21,7 +21,8 @@ import PostgresFlexibleServerBlueprint from './database_resources/\_postgres_fle
 
 ## Mapping Storage Resources
 
-In the following example you will ingest your Azure Storage Accounts and Containers to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Storage Accounts and Containers to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 :::note
 The Storage Account has a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
@@ -40,7 +41,8 @@ Here are the API references we used to create those blueprints and app config:
 
 ## Mapping Compute Resources
 
-In the following example you will ingest your Azure Resources to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Resources to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 :::note
 The Resources below have a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
@@ -68,7 +70,8 @@ Here are the API references we used to create those blueprints and app config:
 
 ## Mapping Database Resources
 
-In the following example you will ingest your Azure Database Resources to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example demonstrates how to ingest your Azure Database Resources to Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 :::note
 The Database Resources below have a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.

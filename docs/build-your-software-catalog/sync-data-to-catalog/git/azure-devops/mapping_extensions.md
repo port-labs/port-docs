@@ -22,7 +22,7 @@ Possible Use Cases:
 
 ## Mapping file content into Port
 
-In the following example you will define and export your Azure Devops projects and their **README.md** file contents to Port:
+The following example demonstrates how to define and export your Azure Devops projects and their **README.md** file contents to Port:
 
 <RepositoryBlueprint/>
 
@@ -37,11 +37,46 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
     port:
       entity:
         mappings:
-          identifier: .project.name + "/" + .name
+          identifier: >-
+            "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
           title: .name
-          blueprint: '"azureDevopsRepository"'
+          blueprint: '"service"'
           properties:
-            url: .url
+            url: .remoteUrl
             // highlight-next-line
             readme: file://README.md
 ```
+
+## Link pipelines to repositories via selector
+You can configure your selector to include repository information in the pipeline entity mapping.
+This allows you to create a direct relationship between a pipeline and its source repository.
+
+```yaml showLineNumbers
+- kind: pipeline
+  selector:
+    query: 'true'
+    # highlight-next-line
+    includeRepo: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name
+        blueprint: '"azureDevOpsPipeline"'
+        properties:
+          url: .url
+          revision: .revision
+          folder: .folder
+        relations:
+          project: .__projectId | gsub(" "; "")
+          repository: >-
+            if .__repository
+            then .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
+            else null
+            end
+```
+:::tip Recommendation
+Use this only when necessary, as including repository data requires an extra API call per pipeline, which increases the number of requests made and can impact your Azure DevOps API rate limits.
+
+If you don’t require repo-level linkage, it’s more efficient to relate pipelines → projects instead.
+:::
