@@ -10,14 +10,14 @@ If you encounter issues while setting up or using the Port MCP Server, expand th
 <details>
 <summary>How can I connect to the MCP? (Click to expand)</summary>
 
-Refer back to the [setup instructions](/ai-agents/port-mcp-server#setup) for your specific application (Cursor, VSCode, or Claude). Make sure you're using the correct regional URL for your Port organization.
+Refer back to the [setup instructions](./overview-and-installation#installing-port-mcp) for your specific application (Cursor, VSCode, or Claude). Make sure you're using the correct regional URL for your Port organization.
 
 </details>
 
 <details>
 <summary>I completed the connection but nothing happens (Click to expand)</summary>
 
-Check that you've followed all the [setup steps](/ai-agents/port-mcp-server#setup) correctly for your application. Ensure you're authenticated with Port and have the necessary permissions. If you've followed all the steps and still have issues, please reach out to our support team.
+Check that you've followed all the [setup steps](./overview-and-installation#installing-port-mcp) correctly for your application. Ensure you're authenticated with Port and have the necessary permissions. If you've followed all the steps and still have issues, please reach out to our support team.
 
 </details>
 
