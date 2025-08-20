@@ -15,6 +15,17 @@ import TabItem from "@theme/TabItem"
 
 Once you've built your AI agents, it's time to interact with them. Port provides several ways to communicate with your AI agents.
 
+## Backend mode selection
+
+When interacting with AI agents, you can choose between two backend modes that determine the agent's capabilities:
+
+- **Standard backend**: Uses the agent's configured blueprint access and OpenAI GPT models
+- **MCP server backend**: Provides enhanced capabilities with intelligent catalog access and Claude models
+
+:::tip Backend mode is interaction-level
+The backend mode is controlled when you interact with agents (through widgets, API calls, etc.), not in the agent configuration itself. This means any agent can benefit from MCP server backend capabilities when you choose to use them.
+:::
+
 ## Interaction options
 
 You have two main approaches when interacting with AI agents in Port:
@@ -50,6 +61,18 @@ Follow these steps to add an AI agent widget:
 
 The widget provides a chat interface where you can ask questions and receive responses from the **specific agent you configured** without leaving your dashboard.
 
+### MCP server backend mode in widgets
+
+When adding an AI agent widget to your dashboard, you can configure whether to use the MCP server backend mode. During widget configuration, you'll see a "Use MCP" toggle option:
+
+<img src='/img/ai-agents/AIAgentsMCPWidgetConfig.png' width='70%' border='1px' />
+
+When MCP server backend mode is enabled, the widget interface provides enhanced capabilities and visual indicators showing which tools are being used:
+
+<img src='/img/ai-agents/AIAgentsMCPWidgetUI.png' width='80%' border='1px' />
+
+This gives you transparency into the enhanced processing and shows you exactly which MCP server tools the agent is leveraging to answer your questions.
+
 </TabItem>
 <TabItem value="slack-integration" label="Slack Integration">
 
@@ -57,7 +80,7 @@ The Slack integration provides the most natural way to interact with Port's AI a
 
 You can interact with agents in two ways:
 
-1. **Direct messaging** the [Port Slack app](/ai-agents/slack-app). This will use the agent router.
+1. **Direct messaging** the [Port Slack app](/ai-interfaces/ai-agents/slack-app). This will use the agent router.
 2. **Mentioning** the app in any channel it's invited to. This will also use the agent router.
 
 When you send a message, the app will:
@@ -74,6 +97,10 @@ When you send a message, the app will:
 - Keep conversations focused on the same topic for best results.
 - Limit threads to five consecutive messages for optimal performance.
 - For best results, start new threads for new topics or questions.
+
+:::info MCP server backend mode in Slack
+Currently, Slack interactions use the agent's default backend mode configuration. The ability to choose or override the backend mode per interaction is not yet available in Slack, but will be added in future updates.
+:::
 
 </TabItem>
 <TabItem value="actions-automations" label="Actions and automations">
@@ -111,6 +138,24 @@ The following example shows how to invoke a specific agent, but the router agent
 
 ```bash
 curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true' \\
+  -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
+  -H 'Content-Type: application/json' \\
+  --data-raw '{"prompt":"What is my next task?"}'
+```
+
+**Using MCP Server Backend Mode via API:**
+
+You can override the agent's default backend mode by adding the `use_mcp` parameter:
+
+```bash
+# Force MCP server backend mode
+curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true&use_mcp=true' \\
+  -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
+  -H 'Content-Type: application/json' \\
+  --data-raw '{"prompt":"What is my next task?"}'
+
+# Force standard backend mode  
+curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true&use_mcp=false' \\
   -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
   -H 'Content-Type: application/json' \\
   --data-raw '{"prompt":"What is my next task?"}'
@@ -232,7 +277,7 @@ AI agents are standard Port entities belonging to the `_ai_agent` blueprint. Thi
 
 You can discover available AI agents in your Port environment in a couple of ways:
 
-1.  **AI Agents Catalog Page**: Navigate to the AI Agents catalog page in Port. This page lists all the agents that have been created in your organization. For more details on creating agents, refer to the [Build an AI agent guide](/ai-agents/build-an-ai-agent).
+1.  **AI Agents Catalog Page**: Navigate to the AI Agents catalog page in Port. This page lists all the agents that have been created in your organization. For more details on creating agents, refer to the [Build an AI agent guide](/ai-interfaces/ai-agents/build-an-ai-agent).
 2.  **Via API**: Programmatically retrieve a list of all AI agents using the Port API. AI agents are entities of the `_ai_agent` blueprint. You can use the [Get all entities of a blueprint API endpoint](https://docs.port.io/api-reference/get-all-entities-of-a-blueprint) to fetch them, specifying `_ai_agent` as the blueprint identifier.
 
 <details>
@@ -259,7 +304,18 @@ The plan shows how the agent decided to tackle your request and the steps it int
 
 ### Tools used
 
-This section displays the actual steps the agent took and the APIs it used to complete your request. It can be particularly helpful for debugging when answers don't meet expectations, such as when an agent:
+This section displays the actual steps the agent took and the APIs it used to complete your request. The tools shown depend on the backend mode used:
+
+**Standard Backend Mode:**
+- Shows traditional agent tools based on configured blueprint access
+- Limited to predefined search and query capabilities
+
+**MCP Server Backend Mode:**
+- Shows enhanced MCP server tools for comprehensive data access
+- Includes all read-only tools available in the MCP server
+- Provides more detailed tool execution information
+
+This information can be particularly helpful for debugging when answers don't meet expectations, such as when an agent:
 
 - Used an incorrect field name.
 - Chose an inappropriate property.
@@ -308,14 +364,22 @@ Here are some common errors you might encounter when working with AI agents and 
 This error occurs when an AI agent tries to execute a self-service action that requires selecting entities from specific blueprints, but the agent doesn't have access to those blueprints.
 
 **How to fix:**  
-Add the missing blueprints listed in the error message to the agent's configuration.
+
+For **Standard Backend Mode:**
+- Add the missing blueprints listed in the error message to the agent's configuration.
+
+For **MCP Server Backend Mode:**
+- This error is less common since MCP mode has broader data access
+- If you encounter this error, it likely relates to action execution requirements
+- Ensure the action's entity selection fields are properly configured
+- Consider switching to MCP server backend mode for enhanced blueprint access
 </details>
 
 ## Security considerations
 
 AI agent interactions in Port are designed with security and privacy as a priority.
 
-For more information on security and data handling, see our [AI agents overview](/ai-agents/overview#security-and-data-handling). 
+For more information on security and data handling, see our [AI agents overview](/ai-interfaces/ai-agents/overview#security-and-data-handling). 
 
 ## Troubleshooting & FAQ
 
@@ -345,7 +409,7 @@ We're working on adding direct interaction through the Port UI in the future.
 
 Each agent has optional conversation starters to help you understand what it can help with. The questions you can ask depend on which agents were built in your organization.
 
-For information on building agents with specific capabilities, see our [Build an AI agent](/ai-agents/build-an-ai-agent) guide.
+For information on building agents with specific capabilities, see our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide.
 </details>
 
 <details>
@@ -371,7 +435,7 @@ Remember that AI agents are constantly learning and improving, but they're not i
 <summary><b>My agent isn't responding in Slack (Click to expand)</b></summary>
 
 Ensure that:
-- The [Port Slack app](/ai-agents/slack-app) is properly installed in your workspace.
+- The [Port Slack app](/ai-interfaces/ai-agents/slack-app) is properly installed in your workspace.
 - The app has been invited to the channel where you're mentioning it.
 - You're correctly mentioning the app (@Port).
 - You've completed the authentication flow with the app.

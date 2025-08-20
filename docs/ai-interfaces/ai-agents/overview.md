@@ -30,6 +30,21 @@ AI agents serve two primary functions:
 
 2. **Assist with actions** by helping developers complete common tasks faster. Agents can suggest and pre-fill forms, guide developers through workflows, and provide relevant context for decision-making. You can decide whether they can run an action or require human approval.
 
+## Enhanced capabilities with MCP server backend
+
+:::tip New capability
+Port AI agents now support an enhanced **MCP server backend mode** that provides significantly expanded capabilities. This is a new feature that enhances your existing agents - you can enable it for any agent to unlock these advanced capabilities.
+:::
+
+When using the MCP server backend mode, your AI agents gain:
+
+- **Expanded data access**: Intelligently queries your entire catalog without blueprint restrictions
+- **Enhanced reasoning**: Powered by Claude models for improved analysis and decision-making  
+- **Broader tool access**: Uses all read-only tools available in the MCP server for comprehensive insights
+- **Smarter action selection**: Still respects your configured allowed actions while providing better context
+
+Your existing agents can immediately benefit from these enhancements by enabling the MCP server backend mode when [interacting with them](/ai-interfaces/ai-agents/interact-with-ai-agents) through widgets and API calls.
+
 ### Example use cases
 
 **Questions your agents can answer:**
@@ -46,17 +61,18 @@ AI agents serve two primary functions:
 To start working with AI agents, follow these steps:
 
 1. **Apply for access** - Submit your application via [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
-2. **Access the feature** - If accepted, you will be able to [activate the AI agents](/ai-agents/overview#access-to-the-feature) in your Port organization.
-3. **Build your agents** - [Create custom agents](/ai-agents/build-an-ai-agent) to meet your developers' needs.
-4. **Interact with your agents** - Engage with your agents by following our [interaction guide](/ai-agents/interact-with-ai-agents).
+2. **Access the feature** - If accepted, you will be able to [activate the AI agents](/ai-interfaces/ai-agents/overview#access-to-the-feature) in your Port organization.
+3. **Build your agents** - [Create custom agents](/ai-interfaces/ai-agents/build-an-ai-agent) to meet your developers' needs.
+4. **Interact with your agents** - Engage with your agents by following our [interaction guide](/ai-interfaces/ai-agents/interact-with-ai-agents).
 
 ## Customization and control
 
-[Build and customize](/ai-agents/build-an-ai-agent) your AI agents:
+[Build and customize](/ai-interfaces/ai-agents/build-an-ai-agent) your AI agents:
 - Define which data sources your agents can access.
 - Determine what actions your agents can assist with.
 - Set permissions for who can use specific agents.
 - Configure how agents integrate with your workflows.
+- Choose between standard and MCP server backend modes when [interacting with agents](/ai-interfaces/ai-agents/interact-with-ai-agents).
 
 ## Security and data handling
 
@@ -85,9 +101,9 @@ Your organization now has the system blueprints required for the feature to work
 ## Data Model
 The data model of AI agents includes two main blueprints:
 
-1. **AI agents** - The agents themselves that you can interact with. You can build new ones and customize them as you wish. Learn more in our [Build an AI agent](/ai-agents/build-an-ai-agent) guide.
+1. **AI agents** - The agents themselves that you can interact with. You can build new ones and customize them as you wish. Learn more in our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide.
 
-2. **AI invocations** - Each interaction made with an AI agent is recorded as an invocation. This acts as a log of everything going through your AI agents so you can monitor and improve them over time. Learn more in our [Interact with AI agents](/ai-agents/interact-with-ai-agents) guide.
+2. **AI invocations** - Each interaction made with an AI agent is recorded as an invocation. This acts as a log of everything going through your AI agents so you can monitor and improve them over time. Learn more in our [Interact with AI agents](/ai-interfaces/ai-agents/interact-with-ai-agents) guide.
 
 ## Relevant guides
 
@@ -123,7 +139,7 @@ Port AI supports two primary interaction types:
 <details>
 <summary>How do users interact with Port AI? (Click to expand)</summary>
 
-- Primary interface is through our [Slack app](/ai-agents/slack-app).
+- Primary interface is through our [Slack app](/ai-interfaces/ai-agents/slack-app).
 - Full [API availability](/api-reference/port-api/).
 </details>
 
@@ -151,7 +167,12 @@ We limit this data storage strictly to these purposes. You can contact us to opt
 <details>
 <summary>Which LLM models are you using? (Click to expand)</summary>
 
-We aim to use the best models that will yield the best results while keeping your data safe; at the moment, we work with Open AI's GPT models, but this could change in the future.
+We use different models depending on the backend mode:
+
+- **Standard backend**: OpenAI's GPT models for reliable performance and broad compatibility
+- **MCP server backend**: Claude models for enhanced reasoning and analysis capabilities
+
+We aim to use the best models that will yield the best results while keeping your data safe. Model selection may evolve as we continue to optimize agent performance.
 </details>
 
 <details>
