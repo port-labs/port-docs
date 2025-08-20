@@ -29,7 +29,11 @@ This guide assumes the following:
 The relations between Git users and Port users are created automatically when we install the relevant Git integrations.   
 If you haven't installed them yet, please do so first.
 
-<h3>Add mirror properties to the Port User blueprint</h3>
+<h3>Optional: Add mirror properties to the Port User blueprint</h3>
+
+If you want to display some Git user attributes e.g. username, email, etc. in the Port User blueprint, you can add a mirror property to the Port User blueprint.
+
+Follow the steps below to add a mirror property to the Port User blueprint:
 
 1. Go to the [data model](https://app.getport.io/settings/data-model) page of your portal.
 
