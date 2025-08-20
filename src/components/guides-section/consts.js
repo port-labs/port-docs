@@ -1370,6 +1370,13 @@ export const availableGuides = [
         tags: ["SDLC", "AI", "GitHub", "Scorecards"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/self-heal-scorecards-with-ai",
+    },
+    {
+        title: "Trigger Claude Code from Port",
+        description: "Learn how to trigger Claude Code from Port to enable AI-powered coding assistance",
+        tags: ["SDLC", "Claude Code", "AI", "Actions"],
+        logos: ["AI", "Claude Code"],
+        link: "/guides/all/trigger-claude-code-from-port",
     }
 ]
 
