@@ -258,7 +258,7 @@ To update the `Snyk Target` blueprint:
                 "value": "open"
               },
               {
-                "property": "cwe",
+                "property": "category",
                 "operator": "in",
                 "value": [
                   "CWE-22",
@@ -303,7 +303,7 @@ To update the `Snyk Target` blueprint:
                 "value": "open"
               },
               {
-                "property": "cwe",
+                "property": "category",
                 "operator": "in",
                 "value": [
                   "CWE-259",
@@ -365,7 +365,7 @@ To update the `Snyk Target` blueprint:
                 "value": "open"
               },
               {
-                "property": "cwe",
+                "property": "category",
                 "operator": "in",
                 "value": [
                   "CWE-20",
@@ -430,7 +430,7 @@ To update the `Snyk Target` blueprint:
                 "value": "open"
               },
               {
-                "property": "cwe",
+                "property": "category",
                 "operator": "in",
                 "value": [
                   "CWE-73",
@@ -502,7 +502,7 @@ To update the `Snyk Target` blueprint:
                 "value": "open"
               },
               {
-                "property": "cwe",
+                "property": "category",
                 "operator": "in",
                 "value": [
                   "CWE-2",
@@ -554,7 +554,7 @@ To update the `Snyk Target` blueprint:
                 "value": "open"
               },
               {
-                "property": "cwe",
+                "property": "category",
                 "operator": "in",
                 "value": [
                   "CWE-937",
@@ -589,7 +589,7 @@ To update the `Snyk Target` blueprint:
                 "value": "open"
               },
               {
-                "property": "cwe",
+                "property": "category",
                 "operator": "in",
                 "value": [
                   "CWE-255",
@@ -643,7 +643,7 @@ To update the `Snyk Target` blueprint:
                 "value": "open"
               },
               {
-                "property": "cwe",
+                "property": "category",
                 "operator": "in",
                 "value": [
                   "CWE-345",
@@ -685,7 +685,7 @@ To update the `Snyk Target` blueprint:
                 "value": "open"
               },
               {
-                "property": "cwe",
+                "property": "category",
                 "operator": "in",
                 "value": [
                   "CWE-117",
@@ -721,7 +721,7 @@ To update the `Snyk Target` blueprint:
                 "value": "open"
               },
               {
-                "property": "cwe",
+                "property": "category",
                 "operator": "in",
                 "value": [
                   "CWE-918"
