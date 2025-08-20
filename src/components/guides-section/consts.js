@@ -1337,6 +1337,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
+        title: " Create an actions ROI dashboard",
+        description: "Create a dashboard that highlights the ROI of actions in Port",
+        tags: [ "Actions", "Dashboards", "Automations"],
+        logos: ["Actions", "Automations"],
+        link: "/guides/all/create-roi-dashboard",
+    },
+    {
         title: "Generate incident updates with AI",
         description: "Generate incident updates with AI and send them to Slack",
         tags: ["Incident management", "AI", "Automations"],
