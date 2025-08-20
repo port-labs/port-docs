@@ -168,7 +168,7 @@ The following example demonstrates how to ingest your GitHub repositories, their
 
 <PortWfWfrAppConfig/>
 
-::: tip learn more
+:::tip learn more
 - Click [Here](https://docs.github.com/en/rest/actions/workflows#get-a-workflow) for the GitHub workflow object structure.
 - Click [Here](https://docs.github.com/en/rest/actions/workflow-runs#get-a-workflow-run) for the GitHub workflow run object structure.
 
