@@ -204,6 +204,8 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <GithubUsersBlueprint/>
 
+<UsersBlueprint />
+
 <RepositoryAdminAppConfig/>
 
  <h3>Supported GitHub user types</h3>

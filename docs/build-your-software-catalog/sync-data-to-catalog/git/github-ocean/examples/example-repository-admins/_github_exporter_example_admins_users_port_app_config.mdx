@@ -20,7 +20,7 @@ resources:
             url: .html_url
             defaultBranch: .default_branch
           relations:
-            admins: "[.collaborators[] | select(.is_admin == true) | .login]"
+            admins: "[.__collaborators[] | select(.is_admin == true) | .login]"
   - kind: user
     selector:
       query: "true"
@@ -41,8 +41,8 @@ resources:
           identifier: .email
           title: .email
           blueprint: '"user"'
-          relations:
-            user: .email
+          properties:
+            email: .email
 ```
 
 </details>
