@@ -1,7 +1,6 @@
 ---
 sidebar_position: 1
 title: Overview & Installation
-slug: /ai-interfaces/ai-agents/port-mcp-server
 ---
 
 import Tabs from "@theme/Tabs"
