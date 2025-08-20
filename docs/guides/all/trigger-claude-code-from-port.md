@@ -392,7 +392,7 @@ Now let us test the complete workflow to ensure everything works correctly.
 1. Go to [Self-Service](https://app.getport.io/self-serve).  
 2. Run the **`Run Claude Code`** action.  
 3. Fill in the fields:  
-   - **Prompt** – what you want Claude Code to do (e.g., "Add input validation to the registration form")  
+   - **Prompt** – what you want Claude Code to do (e.g., "Generate Terraform modules for creating an AWS S3 bucket")  
    - **Service** – the related service  
 4. Click **Execute** and confirm a PR is created in your repo.  
 
