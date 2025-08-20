@@ -1337,6 +1337,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
+        title: "Ingest and map Slack users to Port user accounts",
+        description: "Ingest and map Slack users to Port user accounts for seamless integration",
+        tags: ["SDLC", "Slack",  "Actions", "Automations","Webhook"],
+        logos: ["Slack", "Webhook"],
+        link: "/guides/all/map-slack-users-to-port-accounts",
+    },
+    {
         title: "Ingest and map ServiceNow users to Port user accounts",
         description: "Ingest and map ServiceNow users to Port user accounts for seamless integration",
         tags: ["SDLC", "ServiceNow", "Actions", "Automations", "Webhook"],
@@ -1378,6 +1385,7 @@ export const availableGuides = [
         logos: ["AI", "GitHub"],
         link: "/guides/all/self-heal-scorecards-with-ai",
     }
+
 ]
 
 // Enhance guides with metadata (isNew property)
