@@ -25,12 +25,12 @@ By the end of this guide, your developers will be able to get information about 
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
+- A Port account with the [AI agents feature enabled](/ai-interfaces/ai-agents/overview#access-to-the-feature).
 - Appropriate permissions to create and configure AI agents.
 
 ## Set up data model
 
-To create an Incident Manager AI agent in Port, we'll need to configure two main components as described in our [Build an AI agent](/ai-agents/build-an-ai-agent) guide:
+To create an Incident Manager AI agent in Port, we'll need to configure two main components as described in our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide:
 -  The data sources it will use to answer questions about incidents and on-call rotations.
 -  The agent configuration that defines its capabilities and conversation starters.
 
@@ -93,7 +93,7 @@ For example, Opsgenie or Firehydrant.
 
 ## Interact with the Incident Manager
 
-You can interact with the Incident Manager AI agent in [several ways](/ai-agents/interact-with-ai-agents).  
+You can interact with the Incident Manager AI agent in [several ways](/ai-interfaces/ai-agents/interact-with-ai-agents).  
 This guide will demonstrate the two main ways.
 
 <Tabs groupId="interaction-methods" queryString>
@@ -135,7 +135,7 @@ Once the widget is set up, you can:
 </TabItem>
 <TabItem value="slack" label="Slack Integration">
 
-The Slack integration provides a natural way to interact with the Incident Manager agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-agents/slack-app)**.
+The Slack integration provides a natural way to interact with the Incident Manager agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-interfaces/ai-agents/slack-app)**.
 
 You can interact with the Incident Manager agent in two ways:
 1. **Direct message** the Port AI Assistant.
@@ -180,12 +180,12 @@ To get the most out of your Incident Manager agent:
 
 1. **Try it out**: Start with simple queries and see how the agent responds.
 2. **Add context**: If the response isn't what you expected, try asking again with more details.
-3. **Troubleshoot**: If you're still not getting the right answers, check our [troubleshooting guide](/ai-agents/interact-with-ai-agents#troubleshooting--faq) for common issues and solutions.
+3. **Troubleshoot**: If you're still not getting the right answers, check our [troubleshooting guide](/ai-interfaces/ai-agents/interact-with-ai-agents#troubleshooting--faq) for common issues and solutions.
 
 ## Possible enhancements
 
 You can further enhance the Incident Manager setup by:
-- **Integration expansion**: [Add more data sources](/ai-agents/build-an-ai-agent#step-2-configure-data-access) like Opsgenie or ServiceNow.
-- **Automated notifications**: [Configure the agent](/ai-agents/interact-with-ai-agents#actions-and-automations) to proactively notify about incident updates or escalations.
-- **Custom conversation starters**: Add organization-specific queries to the [conversation starters](/ai-agents/build-an-ai-agent#step-5-add-conversation-starters).
-- **Monitor and improve**: [Check how your developers are interacting](/ai-agents/interact-with-ai-agents#ai-interaction-details) with the agent and improve it according to feedback.
+- **Integration expansion**: [Add more data sources](/ai-interfaces/ai-agents/build-an-ai-agent#step-2-configure-data-access) like Opsgenie or ServiceNow.
+- **Automated notifications**: [Configure the agent](/ai-interfaces/ai-agents/interact-with-ai-agents#actions-and-automations) to proactively notify about incident updates or escalations.
+- **Custom conversation starters**: Add organization-specific queries to the [conversation starters](/ai-interfaces/ai-agents/build-an-ai-agent#step-5-add-conversation-starters).
+- **Monitor and improve**: [Check how your developers are interacting](/ai-interfaces/ai-agents/interact-with-ai-agents#ai-interaction-details) with the agent and improve it according to feedback.
