@@ -1379,6 +1379,13 @@ export const availableGuides = [
         link: "/guides/all/generate-incident-updates-with-ai",
     },
     {
+        title: "Map PRs to services in a monorepo",
+        description: "Automatically map GitHub pull requests to services in a monorepo using file path analysis",
+        tags: ["SDLC", "GitHub", "Automations"],
+        logos: ["GitHub"],
+        link: "/guides/all/map-prs-to-services-in-monorepo",
+    },
+    {
         title: "Trigger GitHub Copilot from Port",
         description: "Learn how to set up GitHub Copilot triggers from Port to enable AI-powered coding assistance",
         tags: ["SDLC", "Github Copilot", "AI", "Actions"],
