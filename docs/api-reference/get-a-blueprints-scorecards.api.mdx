@@ -5,7 +5,7 @@ description: "This route allows you to fetch all scorecards for a given blueprin
 sidebar_label: "Get a blueprint's scorecards"
 hide_title: true
 hide_table_of_contents: true
-api: eJztVE1v00AQ/SujudBKS9xwtBBSJVCF4FC15VRFaGOP41XtXXd2NiVY/u9oEidxIOXEkYs/dt+s5703zz2WFAt2nbjgMceH2kXgkITANk14ibAJCSRARVLUugaxCEyF5TJCFRgsrNyaPCybRB07LzO4PmLARbAQSSBUwKmhCFJbgZIq5wmkJnhOtnGyUYCdnPJ+ydmH7eUhQEOWPbSBCewyJJk0YaCoqXgCXdXjHstQpJa8WKW0uKhFuphnWRmKOOsCy8yFrOPQBqG3x2OyyxkaFLuKmD/i/WEdFwY7y7YlIda9HmNRU2sx71E2HWGOUdj5FRpsnf9KfiU15vPBoFNFOys1GvS2VeiB33dXkhdXOWI0f5hAcNxWYZTYoRRe6hBp6oN69GK9HIzaqYcGmZ6TYyoxF040LAxGKhI72WypLMkysTJmsmUeJ7QVyxS74CNFJfvu6kpvp61+pMqmRuBuROIwGGxJ6lBijisSNDsFcszW8+zAIWb9OSmGbNKC9srrveqJG8xx76bt3N5MHMy53RSPgAntezVvR2hP/uCj7dwX2hzNuk5SB3Y/t5OEo5812ZJ4y9P5KmzLnTSKvw0scH37GQ1q2zuF5rMrHAx2IUprvcLH029IpgP/JsIJ9xOdeyyCF/LyP6KjV0I/JOsa67yqu7W/HyftEddzNMeoqZr5K8GLJ0GvQxSt7/uljfSNm2HQ5edErHlZGFxbdnapbj/2WLqozyXmlW0i/cWzi7sxh5fwD8N9Vor9LHsd5LVtkr6hwSfavPb/GRbT0N58ekCDNqmU02g8baMxPij9s1/6PTO7z+pVY3q2pO93wRuGA3639WrFmME9WokvhmH4Bd6RYF4=
+api: eJzlVU1r20AQ/SvLXpqAa8WQkygFQ0so7SEk6cmYMpZG1taSdrMfTl2h/94ZSbbk2C60p0Iv8n7MzL55M29cSw9rJ+OFfEy0xQRs6uRyIlN0iVXGK13JWD7lygmrg0cBRaFfnNjpILwWGfok5zPhDu4i01aAWKstVmJVBDRWVX4q5oONoHAgHHqhM2FDgU74HLxIMVMV0hrFc4BC+R0bwCjKu5WN3refJy0KBFuJkoIKWBG6EYiJSHJMNoJPOdwi1UkosfLAKS2vcu+Ni6OIjt3UaOunSkfG6lJ7fDuEia6nciINWCjRo2WiaukodAkyrqXfGSR6nCdsazIsVfUFq7XPZTxrJlIxdwZoO5EVRaDdIZNvKiU0KlNo6dbic1AWUxl7G/CUfhSDOVPCKR1CcSG0QQtUHl1NZUP1c5gES/y1gFfEEz1DRbYIaexGlWZbi87oyqHjlG5vZvxzDOADZhAKLx56S0Kc6MoTIrYFYwqVtMRG3x07jDkiUgmbV114veEvOTtyzaBwSDyhtdqe8kk3JToHazxz14xJW3DcfRzKCNJUMRwo7kevd8817Hp7c3ua5VwQEzrYBMWL8nlLMqHfEvXpmP8XcKLSnvo8VOk/TcXg9XtSXjfc3zHRdNySUnJNSOQafSseloOMtrPo0LEuqs8JoYlGrck9bLd7zQVbUJC9asGovWiJmnO3wQ0GIzk8ci06+veiONBJbp9xN0h1HigPq3621ZS9mnMSEHk1rboz3borX7D9Pb0n5vefyJRhd0zOpjdcPKOdL6Fthz76HQ2/0WB748RR7kf1qIcW+99HcV8rjz98ZAqgmhC7bfnrvtMWcjsjw6HXaBNfGLvu6D8v16zEhazrFTj8aoum4ePngJbnKC23YBWsuNrUkqlyvE7Pa2hcs6uHXp7X4g9H+YWE9x1bcbtugbxpR8sN9e+F/5hmSX599zL6znSeJGj8KMjJAGP1HBR99/GJbCEwz2PdbFrd9AuOfhbga0F1EPjLGj7rUtedKqkSe/vu6qJHn+Lemvla0lj6BbAuHss=
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -47,7 +47,7 @@ This route allows you to fetch all scorecards for a given blueprint. A scorecard
 </Heading>
 
 <ParamsDetails
-  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecards you want to fetch.<br/>","required":true}]}
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint to operate on."}]}
 >
   
 </ParamsDetails>
@@ -62,7 +62,7 @@ This route allows you to fetch all scorecards for a given blueprint. A scorecard
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Default Response"}}}
+  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
 >
   
 </StatusCodes>

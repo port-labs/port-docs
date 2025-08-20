@@ -5,7 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start --port 4000",
-    "build": "docusaurus build",
+    "build": "npm run generate-guide-metadata && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -13,7 +13,8 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "generate-guide-metadata": "node scripts/generate-guide-metadata.js"
   },
   "dependencies": {
     "@docusaurus/core": "^3.8.1",
@@ -23,11 +24,11 @@
     "@docusaurus/plugin-ideal-image": "^3.8.1",
     "@docusaurus/preset-classic": "^3.8.1",
     "@docusaurus/theme-live-codeblock": "^3.8.1",
-    "@easyops-cn/docusaurus-search-local": "^0.52.0",
+    "@easyops-cn/docusaurus-search-local": "^0.52.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mdx-js/react": "^3.1.0",
-    "@mui/material": "^7.2.0",
+    "@mui/material": "^7.3.1",
     "@stackql/docusaurus-plugin-hubspot": "^1.0.1",
     "clsx": "^2.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
@@ -36,8 +37,8 @@
     "docusaurus-theme-openapi-docs": "^4.5.1",
     "prettier": "^3.6.2",
     "prism-react-renderer": "^2.4.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "react-tooltip": "^5.29.1"
   },
   "devDependencies": {
@@ -46,7 +47,7 @@
     "@docusaurus/types": "^3.8.1",
     "husky": "^9.1.7",
     "pretty-quick": "^4.2.2",
-    "typescript": "~5.8.3"
+    "typescript": "~5.9.2"
   },
   "resolutions": {
     "js-yaml": "4.0.0^"

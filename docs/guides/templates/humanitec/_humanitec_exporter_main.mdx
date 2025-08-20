@@ -4,7 +4,7 @@ import asyncio
 import argparse
 import time
 import datetime
-from decouple import config
+from decouple import config  # type: ignore
 import re
 import asyncio
 from loguru import logger
@@ -19,12 +19,32 @@ class BLUEPRINT:
     WORKLOAD = "humanitecWorkload"
     RESOURCE_GRAPH = "humanitecResourceGraph"
     RESOURCE = "humanitecResource"
+    SECRET_STORE = "humanitecSecretStore"
+    SHARED_VALUE = "humanitecSharedValue"
+    VALUE_SET_VERSION = "humanitecValueSetVersion"
+    DEPLOYMENT_SET = "humanitecDeploymentSet"
+    PIPELINE = "humanitecPipeline"
+    DEPLOYMENT_DELTA = "humanitecDeploymentDelta"
+    USER = "humanitecUser"
+    GROUP = "humanitecGroup"
 
 
 class HumanitecExporter:
-    def __init__(self, port_client, humanitec_client) -> None:
-        self.port_client = port_client
-        self.humanitec_client = humanitec_client
+    def __init__(self, args) -> None:
+
+        timeout = httpx.Timeout(10.0, connect=10.0, read=20.0, write=10.0)
+        httpx_async_client = httpx.AsyncClient(timeout=timeout)
+        self.port_client = PortClient(
+            args.port_client_id,
+            args.port_client_secret,
+            httpx_async_client=httpx_async_client,
+        )
+        self.humanitec_client = HumanitecClient(
+            args.org_id,
+            args.api_key,
+            api_url=args.api_url,
+            httpx_async_client=httpx_async_client,
+        )
 
     @staticmethod
     def convert_to_datetime(timestamp: int) -> str:
@@ -68,7 +88,7 @@ class HumanitecExporter:
 
         def create_entity(application, environment):
             return {
-                "identifier": environment["id"],
+                "identifier": f"{application['id']}/{environment['id']}",
                 "title": environment["name"],
                 "properties": {
                     "type": environment["type"],
@@ -93,7 +113,7 @@ class HumanitecExporter:
             )
             for application in applications
             for environments in [
-                await humanitec_client.get_all_environments(application)
+                await self.humanitec_client.get_all_environments(application)
             ]
             for environment in environments
         ]
@@ -102,9 +122,11 @@ class HumanitecExporter:
 
     async def sync_workloads(self):
         logger.info(f"Syncing entities for blueprint {BLUEPRINT.WORKLOAD}")
-        def create_workload_entity(resource):
+
+        def create_workload_entity(resource, application, environment):
+            identifier = f"{application['id']}/{environment['id']}/{resource['res_id'].replace('modules.', '')}"
             return {
-                "identifier": resource["res_id"].replace("modules.", ""),
+                "identifier": identifier,
                 "title": self.remove_symbols_and_title_case(
                     resource["res_id"].replace("modules.", "")
                 ),
@@ -118,22 +140,24 @@ class HumanitecExporter:
                     "graphResourceID": resource["gu_res_id"],
                 },
                 "relations": {
-                    BLUEPRINT.ENVIRONMENT: resource["env_id"],
+                    BLUEPRINT.ENVIRONMENT: f"{application['id']}/{environment['id']}",
                 },
             }
 
-        applications = await humanitec_client.get_all_applications()
+        applications = await self.humanitec_client.get_all_applications()
         for application in applications:
             environments = await self.humanitec_client.get_all_environments(application)
             for environment in environments:
                 resources = await self.humanitec_client.get_all_resources(
                     application, environment
                 )
-                resource_group = humanitec_client.group_resources_by_type(resources)
+                resource_group = self.humanitec_client.group_resources_by_type(
+                    resources
+                )
                 tasks = [
                     self.port_client.upsert_entity(
                         blueprint_id=BLUEPRINT.WORKLOAD,
-                        entity_object=create_workload_entity(resource),
+                        entity_object=create_workload_entity(resource, application, environment),
                     )
                     for resource in resource_group.get("modules", [])
                     if resource and resource["type"] == "workload"
@@ -144,7 +168,9 @@ class HumanitecExporter:
     async def sync_resource_graphs(self) -> None:
         logger.info(f"Syncing entities for blueprint {BLUEPRINT.RESOURCE_GRAPH}")
 
-        def create_resource_graph_entity(graph_data, include_relations):
+        def create_resource_graph_entity(
+            graph_data, include_relations, application, environment
+        ):
             entity = {
                 "identifier": graph_data["guresid"],
                 "title": self.remove_symbols_and_title_case(graph_data["def_id"]),
@@ -157,8 +183,10 @@ class HumanitecExporter:
                 "relations": {},
             }
             if include_relations:
+
                 entity["relations"] = {
-                    BLUEPRINT.RESOURCE_GRAPH: graph_data["depends_on"]
+                    BLUEPRINT.RESOURCE_GRAPH: graph_data["depends_on"],
+                    BLUEPRINT.ENVIRONMENT: f"{application['id']}/{environment['id']}",
                 }
             return entity
 
@@ -166,15 +194,7 @@ class HumanitecExporter:
         for application in applications:
             environments = await self.humanitec_client.get_all_environments(application)
             for environment in environments:
-                resources = await self.humanitec_client.get_all_resources(
-                    application, environment
-                )
-                resources = humanitec_client.group_resources_by_type(resources)
-                modules = resources.get("modules", [])
-                if not modules:
-                    continue
-
-                resource_graph = await humanitec_client.get_all_resource_graphs(modules,
+                graph_nodes = await self.humanitec_client.get_dependency_graph(
                     application, environment
                 )
 
@@ -183,10 +203,10 @@ class HumanitecExporter:
                     self.port_client.upsert_entity(
                         blueprint_id=BLUEPRINT.RESOURCE_GRAPH,
                         entity_object=create_resource_graph_entity(
-                            graph_data, include_relations=False
+                            node, False, application, environment
                         ),
                     )
-                    for graph_data in resource_graph
+                    for node in graph_nodes
                 ]
                 await asyncio.gather(*tasks)
 
@@ -195,39 +215,52 @@ class HumanitecExporter:
                     self.port_client.upsert_entity(
                         blueprint_id=BLUEPRINT.RESOURCE_GRAPH,
                         entity_object=create_resource_graph_entity(
-                            graph_data, include_relations=True
+                            node, True, application, environment
                         ),
                     )
-                    for graph_data in resource_graph
+                    for node in graph_nodes
                 ]
                 await asyncio.gather(*tasks)
-        logger.info(f"Finished syncing entities for blueprint {BLUEPRINT.RESOURCE_GRAPH}")
+        logger.info(
+            f"Finished syncing entities for blueprint {BLUEPRINT.RESOURCE_GRAPH}"
+        )
 
     async def enrich_resource_with_graph(self, resource, application, environment):
-        data = {
-            "id": resource["gu_res_id"],
-            "type": resource["type"],
-            "resource": resource["resource"],
-        }
-        response = await humanitec_client.get_resource_graph(
-            application, environment, [data]
-        )
+        try:
+            logger.info("Enriching resource %s with graph", resource["res_id"])
+            data = {
+                "id": resource["res_id"],
+                "type": resource["type"],
+                "resource": resource["resource"],
+            }
+            response = await self.humanitec_client.get_resource_graph(
+                application, environment, [data]
+            )
 
-        resource.update(
-            {"__resourceGraph": i for i in response if i["type"] == data["type"]}
-        )
-        return resource
+            resource.update(
+                {"__resourceGraph": i for i in response if i["type"] == data["type"]}
+            )
+            return resource
+        except Exception as e:
+            logger.error(
+                f"Failed to enrich resource {resource['res_id']} with graph: %s", str(e)
+            )
+            return resource
 
     async def sync_resources(self) -> None:
         logger.info(f"Syncing entities for blueprint {BLUEPRINT.RESOURCE}")
+
         def create_resource_entity(resource):
             workload_id = (
                 resource["res_id"].split(".")[1]
                 if resource["res_id"].split(".")[0].startswith("modules")
                 else ""
             )
-            return {
-                "identifier": resource["__resourceGraph"]["guresid"],
+            resource_id = (
+                f"{resource['app_id']}/{resource['env_id']}/{resource['res_id']}"
+            )
+            entity = {
+                "identifier": resource_id,
                 "title": self.remove_symbols_and_title_case(resource["def_id"]),
                 "properties": {
                     "type": resource["type"],
@@ -237,50 +270,370 @@ class HumanitecExporter:
                     "updateAt": resource["updated_at"],
                     "driverType": resource["driver_type"],
                 },
-                "relations": {
-                    BLUEPRINT.RESOURCE_GRAPH: resource["__resourceGraph"]["depends_on"],
-                    BLUEPRINT.WORKLOAD: workload_id,
-                },
+                "relations": {},
             }
-
-        async def fetch_resources(application, environment):
-            resources = await self.humanitec_client.get_all_resources(
-                application, environment
-            )
-            resources = humanitec_client.group_resources_by_type(resources)
-            modules = resources.get("modules", [])
-            if not modules:
-                return []
-
-            tasks = [
-                self.enrich_resource_with_graph(resource, application, environment)
-                for resource in modules
-            ]
-            enriched_resources = await asyncio.gather(*tasks)
-            return enriched_resources
+            if workload_id:
+                workload_id = f"{resource['app_id']}/{resource['env_id']}/{workload_id}"
+                entity["relations"][BLUEPRINT.WORKLOAD] = workload_id
+            return entity
 
         applications = await self.humanitec_client.get_all_applications()
         for application in applications:
             environments = await self.humanitec_client.get_all_environments(application)
-
-            resource_tasks = [
-                fetch_resources(application, environment)
-                for environment in environments
-            ]
-            all_resources = await asyncio.gather(*resource_tasks)
-            all_resources = [
-                resource for sublist in all_resources for resource in sublist
-            ]  # Flatten the list
-
-            entity_tasks = [
-                self.port_client.upsert_entity(
-                    blueprint_id=BLUEPRINT.RESOURCE,
-                    entity_object=create_resource_entity(resource),
+            for environment in environments:
+                resources = await self.humanitec_client.get_all_resources(
+                    application, environment
                 )
-                for resource in all_resources
-            ]
-            await asyncio.gather(*entity_tasks)
+
+                entity_tasks = [
+                    self.port_client.upsert_entity(
+                        blueprint_id=BLUEPRINT.RESOURCE,
+                        entity_object=create_resource_entity(resource),
+                    )
+                    for resource in resources
+                ]
+                await asyncio.gather(*entity_tasks)
+                logger.info(
+                    "Upserted resource entities for %s environment", environment["id"]
+                )
+
         logger.info(f"Finished syncing entities for blueprint {BLUEPRINT.RESOURCE}")
+
+    async def sync_secret_stores(self) -> None:
+        logger.info(f"Syncing entities for blueprint {BLUEPRINT.SECRET_STORE}")
+        secret_stores = await self.humanitec_client.get_secret_stores()
+
+        def create_secret_store_entity(secret_store):
+            # Determine the secret store type based on which configuration is present
+            secret_store_type = "unknown"
+            if secret_store.get("awssm") is not None:
+                secret_store_type = "AWS Secrets Manager"
+            elif secret_store.get("azurekv") is not None:
+                secret_store_type = "Azure Key Vault"
+            elif secret_store.get("gcpsm") is not None:
+                secret_store_type = "Google Cloud Secret Manager"
+            elif secret_store.get("humanitec") is not None:
+                secret_store_type = "Humanitec"
+            elif secret_store.get("vault") is not None:
+                secret_store_type = "HashiCorp Vault"
+            
+            # Create a title based on the type and ID
+            title = f"{secret_store_type} - {secret_store['id']}"
+            if secret_store.get("primary"):
+                title = f"{title} (Primary)"
+            
+            return {
+                "identifier": secret_store["id"],
+                "title": title,
+                "properties": {
+                    "primary": secret_store.get("primary", False),
+                    "createdAt": secret_store.get("created_at"),
+                    "createdBy": secret_store.get("created_by"),
+                    "updatedAt": secret_store.get("updated_at"),
+                    "updatedBy": secret_store.get("updated_by"),
+                    "awssm": secret_store.get("awssm"),
+                    "azurekv": secret_store.get("azurekv"),
+                    "gcpsm": secret_store.get("gcpsm"),
+                    "humanitec": secret_store.get("humanitec"),
+                    "vault": secret_store.get("vault"),
+                },
+                "relations": {},
+            }
+
+        tasks = [
+            self.port_client.upsert_entity(
+                blueprint_id=BLUEPRINT.SECRET_STORE,
+                entity_object=create_secret_store_entity(secret_store),
+            )
+            for secret_store in secret_stores
+        ]
+
+        await asyncio.gather(*tasks)
+        logger.info(f"Finished syncing entities for blueprint {BLUEPRINT.SECRET_STORE}")
+
+    async def sync_shared_values(self) -> None:
+        logger.info(f"Syncing entities for blueprint {BLUEPRINT.SHARED_VALUE}")
+        applications = await self.humanitec_client.get_all_applications()
+
+        def create_shared_value_entity(shared_value, application, environment=None):
+            # Create identifier based on source and context
+            if environment:
+                identifier = f"{application['id']}/{environment['id']}/{shared_value['key']}"
+            else:
+                identifier = f"{application['id']}/{shared_value['key']}"
+            
+            
+            # Build relations
+            relations = {BLUEPRINT.APPLICATION: application["id"]}
+            
+            if environment:
+                relations[BLUEPRINT.ENVIRONMENT] = f"{application['id']}/{environment['id']}"
+            
+            # Add secret store relation if present
+            if shared_value.get("secret_store_id"):
+                relations[BLUEPRINT.SECRET_STORE] = shared_value["secret_store_id"]
+            
+            return {
+                "identifier": identifier,
+                "title": shared_value["key"],
+                "properties": {
+                    "description": shared_value.get("description"),
+                    "isSecret": shared_value.get("is_secret", False),
+                    "key": shared_value.get("key"),
+                    "secretKey": shared_value.get("secret_key"),
+                    "secretVersion": shared_value.get("secret_version"),
+                    "source": shared_value.get("source"),
+                    "value": shared_value.get("value"),
+                    "createdAt": shared_value.get("created_at"),
+                    "updatedAt": shared_value.get("updated_at"),
+                },
+                "relations": relations,
+            }
+
+        # Sync app-level shared values
+        app_level_tasks = []
+        for application in applications:
+            shared_values = await self.humanitec_client.get_shared_values_app_level(application)
+            app_level_tasks.extend([
+                self.port_client.upsert_entity(
+                    blueprint_id=BLUEPRINT.SHARED_VALUE,
+                    entity_object=create_shared_value_entity(shared_value, application),
+                )
+                for shared_value in shared_values
+            ])
+
+        # Sync environment-level shared values
+        env_level_tasks = []
+        for application in applications:
+            environments = await self.humanitec_client.get_all_environments(application)
+            for environment in environments:
+                shared_values = await self.humanitec_client.get_shared_values(application, environment)
+                env_level_tasks.extend([
+                    self.port_client.upsert_entity(
+                        blueprint_id=BLUEPRINT.SHARED_VALUE,
+                        entity_object=create_shared_value_entity(shared_value, application, environment),
+                    )
+                    for shared_value in shared_values
+                ])
+
+        await asyncio.gather(*(app_level_tasks + env_level_tasks))
+        logger.info(f"Finished syncing entities for blueprint {BLUEPRINT.SHARED_VALUE}")
+
+    async def sync_value_set_versions(self) -> None:
+        logger.info(f"Syncing entities for blueprint {BLUEPRINT.VALUE_SET_VERSION}")
+        applications = await self.humanitec_client.get_all_applications()
+
+        def create_value_set_version_entity(value_set_version, application):
+            return {
+                "identifier": f"{application['id']}/{value_set_version['id']}",
+                "title": f"Value Set Version {value_set_version['id']}",
+                "properties": {
+                    "version": value_set_version.get("version"),
+                    "createdAt": value_set_version.get("created_at"),
+                    "createdBy": value_set_version.get("created_by"),
+                    "comment": value_set_version.get("comment"),
+                },
+                "relations": {BLUEPRINT.APPLICATION: application["id"]},
+            }
+
+        tasks = []
+        for application in applications:
+            value_set_versions = await self.humanitec_client.get_value_set_versions(application)
+            tasks.extend([
+                self.port_client.upsert_entity(
+                    blueprint_id=BLUEPRINT.VALUE_SET_VERSION,
+                    entity_object=create_value_set_version_entity(value_set_version, application),
+                )
+                for value_set_version in value_set_versions
+            ])
+
+        await asyncio.gather(*tasks)
+        logger.info(f"Finished syncing entities for blueprint {BLUEPRINT.VALUE_SET_VERSION}")
+
+    async def sync_deployment_sets(self) -> None:
+        logger.info(f"Syncing entities for blueprint {BLUEPRINT.DEPLOYMENT_SET}")
+        applications = await self.humanitec_client.get_all_applications()
+
+        def create_deployment_set_entity(deployment_set, application):
+            return {
+                "identifier": f"{application['id']}/{deployment_set['id']}",
+                "title": self.remove_symbols_and_title_case(deployment_set.get("name", deployment_set["id"])),
+                "properties": {
+                    "version": deployment_set.get("version"),
+                    "createdAt": deployment_set.get("created_at"),
+                    "createdBy": deployment_set.get("created_by"),
+                    "comment": deployment_set.get("comment"),
+                },
+                "relations": {BLUEPRINT.APPLICATION: application["id"]},
+            }
+
+        tasks = []
+        for application in applications:
+            deployment_sets = await self.humanitec_client.get_deployment_sets(application)
+            tasks.extend([
+                self.port_client.upsert_entity(
+                    blueprint_id=BLUEPRINT.DEPLOYMENT_SET,
+                    entity_object=create_deployment_set_entity(deployment_set, application),
+                )
+                for deployment_set in deployment_sets
+            ])
+
+        await asyncio.gather(*tasks)
+        logger.info(f"Finished syncing entities for blueprint {BLUEPRINT.DEPLOYMENT_SET}")
+
+    async def sync_pipelines(self) -> None:
+        logger.info(f"Syncing entities for blueprint {BLUEPRINT.PIPELINE}")
+        pipelines = await self.humanitec_client.get_pipelines()
+        
+        # Get cached applications to map pipeline to app names
+        applications = await self.humanitec_client.get_all_applications()
+        app_map = {app["id"]: app for app in applications}
+
+        def create_pipeline_entity(pipeline):
+            app_id = pipeline.get("app_id")
+            app_name = app_map.get(app_id, {}).get("name", "Unknown App")
+            
+            # Create identifier that includes app context
+            identifier = f"{app_id}/{pipeline['id']}"
+            
+            # Create title that includes app name and pipeline name
+            pipeline_name = pipeline.get("name", pipeline["id"])
+            title = f"{app_name} - {pipeline_name}"
+            
+            return {
+                "identifier": identifier,
+                "title": title,
+                "properties": {
+                    "etag": pipeline.get("etag"),
+                    "name": pipeline.get("name"),
+                    "status": pipeline.get("status"),
+                    "version": pipeline.get("version"),
+                    "createdAt": pipeline.get("created_at"),
+                    "triggerTypes": pipeline.get("trigger_types", []),
+                    "metadata": pipeline.get("metadata", {}),
+                },
+                "relations": {
+                    BLUEPRINT.APPLICATION: app_id
+                } if app_id else {},
+            }
+
+        tasks = [
+            self.port_client.upsert_entity(
+                blueprint_id=BLUEPRINT.PIPELINE,
+                entity_object=create_pipeline_entity(pipeline),
+            )
+            for pipeline in pipelines
+        ]
+
+        await asyncio.gather(*tasks)
+        logger.info(f"Finished syncing entities for blueprint {BLUEPRINT.PIPELINE}")
+
+    async def sync_deployment_deltas(self) -> None:
+        logger.info(f"Syncing entities for blueprint {BLUEPRINT.DEPLOYMENT_DELTA}")
+        applications = await self.humanitec_client.get_all_applications()
+
+        def create_deployment_delta_entity(deployment_delta, application):
+            return {
+                "identifier": f"{application['id']}/{deployment_delta['id']}",
+                "title": self.remove_symbols_and_title_case(deployment_delta.get("name", deployment_delta["id"])),
+                "properties": {
+                    "status": deployment_delta.get("status"),
+                    "createdAt": deployment_delta.get("created_at"),
+                    "createdBy": deployment_delta.get("created_by"),
+                    "comment": deployment_delta.get("comment"),
+                    "environment": deployment_delta.get("environment"),
+                },
+                "relations": {BLUEPRINT.APPLICATION: application["id"]},
+            }
+
+        tasks = []
+        for application in applications:
+            deployment_deltas = await self.humanitec_client.get_deployment_deltas(application)
+            tasks.extend([
+                self.port_client.upsert_entity(
+                    blueprint_id=BLUEPRINT.DEPLOYMENT_DELTA,
+                    entity_object=create_deployment_delta_entity(deployment_delta, application),
+                )
+                for deployment_delta in deployment_deltas
+            ])
+
+        await asyncio.gather(*tasks)
+        logger.info(f"Finished syncing entities for blueprint {BLUEPRINT.DEPLOYMENT_DELTA}")
+
+    async def sync_users_and_groups(self) -> None:
+        logger.info(f"Syncing entities for blueprints {BLUEPRINT.USER} and {BLUEPRINT.GROUP}")
+        
+        all_users, all_groups = await self.humanitec_client.get_users_and_groups()
+        
+        user_groups = {}
+        
+        for user in all_users:
+            user_groups[user["id"]] = []
+        
+        group_tasks = [
+            self.humanitec_client.get_users_in_group(group["id"])
+            for group in all_groups
+        ]
+        
+        group_results = await asyncio.gather(*group_tasks, return_exceptions=True)
+        
+        for i, result in enumerate(group_results):
+            group_id = all_groups[i]["id"]
+            
+            if isinstance(result, Exception):
+                logger.error(f"Failed to get users for group {group_id}: {str(result)}")
+                continue
+                
+            for user in result:
+                user_id = user["id"]
+                if user_id in user_groups:
+                    user_groups[user_id].append(group_id)
+
+        def create_group_entity(group):
+            return {
+                "identifier": group["id"],
+                "title": group["name"],
+                "properties": {
+                    "role": group.get("role"),
+                    "idp_id": group.get("idp_id"),
+                    "createdAt": group.get("created_at"),
+                },
+                "relations": {},
+            }
+
+        def create_user_entity(user):
+            return {
+                "identifier": user["id"],
+                "title": user["name"],
+                "properties": {
+                    "email": user.get("email"),
+                    "role": user.get("role"),
+                    "invite": user.get("invite"),
+                    "createdAt": user.get("created_at"),
+                },
+                "relations": {
+                    BLUEPRINT.GROUP: user_groups.get(user["id"], [])
+                },
+            }
+
+        group_tasks = [
+            self.port_client.upsert_entity(
+                blueprint_id=BLUEPRINT.GROUP,
+                entity_object=create_group_entity(group),
+            )
+            for group in all_groups
+        ]
+
+        user_tasks = [
+            self.port_client.upsert_entity(
+                blueprint_id=BLUEPRINT.USER,
+                entity_object=create_user_entity(user),
+            )
+            for user in all_users
+        ]
+
+        await asyncio.gather(*(group_tasks + user_tasks))
+        logger.info(f"Finished syncing {len(all_groups)} groups and {len(all_users)} users")
 
     async def sync_all(self) -> None:
         await self.sync_applications()
@@ -288,6 +641,13 @@ class HumanitecExporter:
         await self.sync_workloads()
         await self.sync_resource_graphs()
         await self.sync_resources()
+        await self.sync_secret_stores()
+        await self.sync_shared_values()
+        await self.sync_value_set_versions()
+        await self.sync_deployment_sets()
+        await self.sync_pipelines()
+        await self.sync_deployment_deltas()
+        await self.sync_users_and_groups()
         logger.info("Event Finished")
 
     async def __call__(self, args) -> None:
@@ -299,7 +659,7 @@ if __name__ == "__main__":
     def validate_args(args):
         required_keys = ["org_id", "api_key", "port_client_id", "port_client_secret"]
         missing_keys = [key for key in required_keys if not getattr(args, key)]
-        
+
         if missing_keys:
             logger.error(f"The following keys are required: {', '.join(missing_keys)}")
             return False
@@ -307,39 +667,46 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--org-id", required=False,default=config("ORG_ID",""), type=str, help="Humanitec organization ID"
+        "--org-id",
+        required=False,
+        default=config("ORG_ID", ""),
+        type=str,
+        help="Humanitec organization ID",
     )
-    parser.add_argument("--api-key", required=False,default=config("API_KEY",""), type=str, help="Humanitec API key")
+    parser.add_argument(
+        "--api-key",
+        required=False,
+        default=config("API_KEY", ""),
+        type=str,
+        help="Humanitec API key",
+    )
     parser.add_argument(
         "--api-url",
         type=str,
-        default=config("API_URL","https://api.humanitec.com"),
+        default=config("API_URL", "https://api.humanitec.com"),
         help="Humanitec API URL",
     )
     parser.add_argument(
-        "--port-client-id", type=str, required=False,default=config("PORT_CLIENT_ID",""), help="Port client ID"
+        "--port-client-id",
+        type=str,
+        required=False,
+        default=config("PORT_CLIENT_ID", ""),
+        help="Port client ID",
     )
     parser.add_argument(
-        "--port-client-secret", type=str, required=False,default = config("PORT_CLIENT_SECRET",""), help="Port client secret"
+        "--port-client-secret",
+        type=str,
+        required=False,
+        default=config("PORT_CLIENT_SECRET", ""),
+        help="Port client secret",
     )
     args = parser.parse_args()
-    if not(validate_args(args)):
+    if not (validate_args(args)):
         import sys
+
         sys.exit()
 
-    httpx_async_client = httpx.AsyncClient()
-    port_client = PortClient(
-        args.port_client_id,
-        args.port_client_secret,
-        httpx_async_client=httpx_async_client,
-    )
-    humanitec_client = HumanitecClient(
-        args.org_id,
-        args.api_key,
-        api_url=args.api_url,
-        httpx_async_client=httpx_async_client,
-    )
-    exporter = HumanitecExporter(port_client, humanitec_client)
+    exporter = HumanitecExporter(args)
     asyncio.run(exporter(args))
 
 ```

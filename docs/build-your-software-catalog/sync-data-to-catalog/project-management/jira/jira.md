@@ -20,10 +20,10 @@ import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to
 
 # Jira
 
-Port's Jira integration allows you to model Jira resources in your software catalog and ingest data into them.
+Port's Jira Cloud integration allows you to model Jira Cloud resources in your software catalog and ingest data into them.
 
-:::info Jira cloud only
-This integration supports `Jira Cloud` at the moment. To integrate Port with `Jira Server`, use [Port's webhook integration](/build-your-software-catalog/custom-integration/webhook/examples/jira-server).
+:::info Jira Cloud integration
+This integration is designed for `Jira Cloud`. For `Jira Server` (self-hosted), use [Port's Jira Server Ocean integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/).
 :::
 
 ## Overview
@@ -81,7 +81,7 @@ Choose one of the following installation methods:
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
 :::caution API Token authentication recommended
-For production, we recommend using **API Token authentication** for Port's Jira integration.  
+For production, we recommend using **API Token authentication** for Port's Jira Cloud integration.  
 It ensures stable data syncing and prevents issues caused by user account changes.  
 
 OAuth is best suited for the **initial setup** phase, such as configuring mappings.
@@ -165,7 +165,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-jira-integration/values.yaml

@@ -8,7 +8,7 @@ import ScimFunctionality from "/docs/sso-rbac/sso-providers/\_scim_functionality
 import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/\_scim_oidc_limitation.mdx"
 import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
 
-# How to configure AzureAD
+# Entra ID (AzureAD)
 
 This guide demonstrates how to configure Single Sign-On (SSO) integration between Port and Microsoft Entra ID (AzureAD) using OIDC.
 
@@ -270,7 +270,7 @@ Port can query the group membership of users who log in through the AzureAD SSO,
 
 In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission.
 
-## SCIM Configuration (beta)
+<!-- ## SCIM Configuration (beta)
 
 <ScimLimitation/>
 
@@ -289,4 +289,4 @@ You will be provided with:
 
 The `endpoint` and `token` will be used to set up the SCIM integration in your identity provider.
 
-After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-new-azure-ad-connections#configure-scim-in-azure-ad-for-oidc-apps) to enable SCIM. Begin in step 3, by registering a new application.
+After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-new-azure-ad-connections#configure-scim-in-azure-ad-for-oidc-apps) to enable SCIM. Begin in step 3, by registering a new application. -->

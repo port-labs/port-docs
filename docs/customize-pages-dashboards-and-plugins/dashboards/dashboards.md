@@ -376,7 +376,6 @@ The widget also supports a wide variety of HTML tags, allowing you to create ric
 'wbr',
 'img',
 'video',
-'svg',
 'caption',
 'col',
 'colgroup',
@@ -484,6 +483,13 @@ This widget allows you to display a list of links, both internal and external, f
 - **Internal links** - links to internal pages in your portal, such as an entity page, a catalog page, an entity's audit log page, etc.  
   These links will open in the same tab when clicked.  
   For example: "https://app.getport.io/serviceEntity?identifier=frontend".
+
+- **Dynamic links** (available in specific entity page only) - links to external websites or internal pages while using the identifier of an entity.  
+These links will open according to the methods mentioned above.  
+For example: Let's take the following specific entity page `/Services?identifier=myService`.<br/>
+  - An external link: `https://slack.com/myOrganization/channel={{url.identifier}}` -> translated into `https://slack.com/myOrganization/channel=myService`.<br/>
+  
+  - An internal link: `https://app.getport.io/PagerDutyService?identifier={{url.identifier}}` -> translated into `https://app.getport.io/PagerDutyService?identifier=myService`.
 
 During creation/editing of the widget, you can sort the links by dragging and dropping them.
 
