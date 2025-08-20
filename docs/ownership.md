@@ -219,33 +219,18 @@ In some cases, ownership needs to be assigned to a specific user and not a team.
 
 ### Automatically
 
-In many Port integrations, blueprints can have out-of-the-box relations to the 3rd party user blueprint, with a default mapping configuration that automatically sets the value of this relation.
+In many Port integrations, blueprints can have out-of-the-box relations to the **3rd party user blueprint**, with a default mapping configuration that automatically sets the value of this relation.
 
-In such cases, using the integration's mapping configuration, you can automatically create relations to the relevant Port users as well.
+Additionally, some blueprints have out-of-the-box relations to the **Port user blueprint**, with a default mapping configuration that automatically sets the value of this relation as well.
 
-Here are some common examples:  ADD TABS FOR EACH MAPPING CONFIG
-- GitHub Pull Request → creator, reviewer  
-- Jira Issue → creator, assignee  
-- PagerDuty Incident → on-call user  
+Here are some common examples:
 
-<Tabs>
-  <TabItem value="GitHub Pull Request">
-    ```yaml showLineNumbers
-    - kind: repository
-    ```
-  </TabItem>
-  <TabItem value="Jira Issue">
-    ```yaml showLineNumbers
-    - kind: repository
-    ```
-  </TabItem>
-  <TabItem value="PagerDuty Incident">
-    ```yaml showLineNumbers
-    - kind: repository
-    ```
-  </TabItem>
-</Tabs>
+- The `GitHub Pull Request` blueprint has a default relation ("git_hub_creator") to the **GitHub user** that created the PR.  
+  Additionally, it has a default relation ("creator") to the **Port user** associated with the GitHub user that created the PR.  
 
+- The `Jira Issue` blueprint has a default relation ("reporter") to the **Port user** that reported the issue.  
+
+- The `PagerDuty Incident` blueprint has a default relation ("assignee") to the **Port user** that is assigned to the incident.  
 
 ## Visualize user & team data
 
