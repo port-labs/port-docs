@@ -90,7 +90,7 @@ Additionally, you can configure your selector to limit the number of closed pull
 
 ## Map repositories and issues
 
-In the following example you will ingest your GitHub repositories and their issues to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories and their issues to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 
 <RepositoryBlueprint/>
@@ -139,14 +139,14 @@ The following example demonstrates mapping files to repository.
 
 ## Map repositories and monorepos
 
-In the following example we will ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. You may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example demonstrates how to ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. You may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
 <PortMonoRepoAppConfig/>
 
 
-To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
+To retrieve the root folders of your monorepo, use the following syntax in your `port-app-config.yml`:
 
 ```yaml
 - kind: folder
