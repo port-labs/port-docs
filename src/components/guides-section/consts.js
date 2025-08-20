@@ -1346,6 +1346,15 @@ export const availableGuides = [
     },
     {
 
+
+        title: "Ingest and map Slack users to Port user accounts",
+        description: "Ingest and map Slack users to Port user accounts for seamless integration",
+        tags: ["SDLC", "Slack",  "Actions", "Automations","Webhook"],
+        logos: ["Slack", "Webhook"],
+        link: "/guides/all/map-slack-users-to-port-accounts",
+    },
+    {
+
         title: "Ingest and map ServiceNow users to Port user accounts",
         description: "Ingest and map ServiceNow users to Port user accounts for seamless integration",
         tags: ["SDLC", "ServiceNow", "Actions", "Automations", "Webhook"],
