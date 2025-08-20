@@ -348,6 +348,14 @@ In some cases, an application's API returns an array of objects that you want to
 To achieve this, Port provides you with the `itemsToParse` key, its value should be a JQ query that returns an array.  
 In order to reference an array item attribute, use `.item` in your JQ expression.  
 
+In some cases, the response from an application's API contains an object with `item` key on the top level. In such cases, to prevent ambiguous access and unexpected results, Port provides the `itemsToParseName` key. Its value should be a string that can be referenced in your mapping properties instead of the default `.item`.
+
+:::warning Limitations
+- The `itemsToParseName` key is not supported on Github, Kubernetes and Webhook integrations.
+- When the key is enabled, you cannot use the "test mapping" option in Port's UI.
+:::
+
+
 Here is an example mapping configuration of a Jira `issue`, where we want to map each of the issue's `comments` to a separate `comment` entity:
 
 ```yaml showLineNumbers
@@ -365,6 +373,27 @@ Here is an example mapping configuration of a Jira `issue`, where we want to map
         properties:
           # highlight-next-line
           text: .item.text
+        relations:
+            issue: .key
+```
+
+or with the `itemsToParseName`: 
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: .myItem.name != 'test-item' and .issueType == 'Bug' 
+  port:
+    # highlight-next-line
+    itemsToParse: .fields.comments
+    itemsToParseName: 'myItem'
+    entity:
+      mappings:
+        # highlight-next-line
+        identifier: .myItem.id
+        blueprint: '"comment"'
+        properties:
+          # highlight-next-line
+          text: .myItem.text
         relations:
             issue: .key
 ```

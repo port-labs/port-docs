@@ -25,3 +25,6 @@ yarn-error.log*
 
 #workflow cache
 .github/script/__pycache__
+
+# Generated guide metadata
+src/components/guides-section/guide-metadata.json
