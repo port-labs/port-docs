@@ -9,7 +9,7 @@ import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/_scim_oidc_limitat
 import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
 import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
-# How to configure Okta
+# Okta
 
 Follow this step-by-step guide to configure the integration between Port and Okta.
 
@@ -138,7 +138,7 @@ To allow automatic Okta group support in Port, please follow these steps:
    3.3 Click `Save`.
 
 
-## SCIM Configuration (beta)
+<!-- ## SCIM Configuration (beta)
 
 <ScimLimitation/>
 
@@ -189,4 +189,4 @@ The `endpoint` and `token` will be used to complete the setup of the new SWA app
    - Update User Attributes
    - Deactivate Users
    <br/>
-   <img src="/img/sso/okta/OktaSCIMapp.png" width="80%" />
+   <img src="/img/sso/okta/OktaSCIMapp.png" width="80%" /> -->

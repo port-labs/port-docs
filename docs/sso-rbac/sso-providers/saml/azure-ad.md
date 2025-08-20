@@ -1,13 +1,13 @@
 ---
 title: "Microsoft Entra ID (AzureAD)"
 sidebar_position: 1
-description: Integrate Azure AD with Port using SAML
+description: Integrate Entra ID (AzureAD) with Port using SAML
 ---
 
 import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
 import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
-# How to configure Azure AD
+# Entra ID (AzureAD)
 
 Follow this step-by-step guide to configure the integration between Port and Azure AD using a SAML application
 
@@ -66,7 +66,7 @@ Alternatively, if you are syncing your groups from an on-prem AD into Entra, con
 
 <img src="/img/sso/azure-saml/azureSamlGroups.png" width="60%" border="1px" />
 
-## SCIM Configuration (beta)
+<!-- ## SCIM Configuration (beta)
 
 AzureAD SAML applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
 
@@ -83,4 +83,4 @@ You will be provided with:
 
  The `endpoint` and `token` will be used to set up the SCIM integration in your identity provider.
 
-After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-azure-ad-saml-connections#configure-scim-in-azure-ad-for-saml-apps) to enable SCIM.
+After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-azure-ad-saml-connections#configure-scim-in-azure-ad-for-saml-apps) to enable SCIM. -->

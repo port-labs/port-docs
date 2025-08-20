@@ -77,6 +77,19 @@ You can choose one of these chart types:
 You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 ::: 
 
+#### Time filtering in number charts vs. line charts
+
+The value shown in a **number chart** is calculated over **all available entities** of the selected blueprint. By default, it does not apply any time-based filtering.
+
+When a **number chart** is used alongside a [**line chart**](/customize-pages-dashboards-and-plugins/dashboards/#line-chart) in a dashboard, for example a number chart showing average monthly deployment frequency and a line chart showing deployment frequency over time, you might notice that the average values differ, even if both charts reference the same metric (e.g. deployment frequency).
+
+This difference happens because the two charts are likely working with different time ranges:
+
+- The **number chart** performs its calculation across **all available historical entities**, without limiting to a specific time range.
+- The **line chart**, in contrast, only includes entities within its **selected time range** (e.g. the last 30 days).
+
+To align both charts and ensure consistency in what they reflect, apply a time filter to the number chart that matches the line chart’s time range. This helps prevent confusion and ensures both charts are working with the same scope of data.
+
 #### Conditional formatting
 
 You can customize the appearance of a number chart based on specific conditions, helping viewers to quickly understand what the value indicates.
@@ -363,7 +376,6 @@ The widget also supports a wide variety of HTML tags, allowing you to create ric
 'wbr',
 'img',
 'video',
-'svg',
 'caption',
 'col',
 'colgroup',
@@ -471,6 +483,13 @@ This widget allows you to display a list of links, both internal and external, f
 - **Internal links** - links to internal pages in your portal, such as an entity page, a catalog page, an entity's audit log page, etc.  
   These links will open in the same tab when clicked.  
   For example: "https://app.getport.io/serviceEntity?identifier=frontend".
+
+- **Dynamic links** (available in specific entity page only) - links to external websites or internal pages while using the identifier of an entity.  
+These links will open according to the methods mentioned above.  
+For example: Let's take the following specific entity page `/Services?identifier=myService`.<br/>
+  - An external link: `https://slack.com/myOrganization/channel={{url.identifier}}` -> translated into `https://slack.com/myOrganization/channel=myService`.<br/>
+  
+  - An internal link: `https://app.getport.io/PagerDutyService?identifier={{url.identifier}}` -> translated into `https://app.getport.io/PagerDutyService?identifier=myService`.
 
 During creation/editing of the widget, you can sort the links by dragging and dropping them.
 

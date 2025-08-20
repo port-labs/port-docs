@@ -39,6 +39,17 @@ After the installation, you can customize the blueprints and/or mapping to inges
 <br/>
 <OceanContribution />
 
+## Installation methods
+
+Below is a breakdown of the supported installation methods for Port integrations.  
+
+| Installation type  | Security | Ease of Installation | Resync | Live events | Infrastructure & Maintenance Responsibility | Use Case Fit |
+| ------------------ | ---------|:--------------------:|:-------:|:-------------:| ------------------------------------------- | ------------ |
+| **Hosted by Port (OAuth)** | Port stores OAuth tokens securely. | 🟩🟩🟩🟩 | **Periodic** | ✅ <br/>(Integration-dependent) | Port handles scaling, uptime, and updates. | Ideal for quick setup with minimal operational effort. |
+| **Hosted by Port (Custom settings)** | Port stores API credentials securely. Setup requires more details (e.g., token, host) and allows access control flexibility. | 🟩🟩🟩⬜ | **Periodic** (user-selectable interval) | ✅ <br/>(Integration-dependent)| Port handles scaling, uptime, and updates.| Best for quick setup without granting OAuth permissions. |
+| **Self-hosted (Real-time)** | Managed entirely in your infrastructure. | 🟩⬜⬜⬜  | **Periodic** (custom interval) | ✅ <br/>(Depends on source system) | You provision, monitor, and maintain the integration. | Best for high-security or custom networking needs.|
+| **Scheduled (CI)**| Managed in your CI/CD environment. | 🟩🟩⬜⬜ | **Periodic** (custom interval) | ❌| Minimal infrastructure. You manage the CI/CD environment and triggers. | Best when real-time isn’t needed and you want full sync control. |
+
 ## Customize your integrations
 
 Now that you've installed an integration, let's see how you can customize it:
@@ -153,8 +164,36 @@ Shows the monitoring metrics and sync status for each `kind`.
   **Note**: The same data is also available through the [Get an integration's metrics and sync status](https://docs.port.io/api-reference/get-an-integrations-metrics-and-sync-status) API endpoint.
 
 :::tip Prometheus Metrics Endpoint
-  If you are using the **self hosted integration method**, you can get raw Prometheus metrics by accessing the following endpoint: `{your_integration's_base_url}/metrics/`.
+If you are using the **self-hosted integration method**, you can get raw Prometheus metrics by accessing the following endpoint: `{your_integration's_base_url}/metrics/`.
+
+<details>
+<summary><b>Understanding the metrics (click to expand)</b></summary>
+
+**Types of Metrics Available**
+- **duration_seconds**: Measures how long it takes for a phase to complete.  
+  _Labels_: `kind`, `phase`
+- **object_count**: Counts the number of objects handled in each phase.  
+  _Labels_: `kind`, `phase`, `object_count_type`
+- **success** : Indicates whether the phase completed successfully.   
+  _Labels_: `kind`, `phase`
+
+**Types of Labels Available**
+- **kind**: The specific type of resource handled by the integration (varies per integration).
+- **phase**: The step in the ETL process:  
+    - `extract`: Fetch data from the source.
+    - `transform`: Map or modify data before loading.
+    - `load`: Ingest the data into Port.
+    - `resync`: Full ETL process for a specific kind.
+    - `delete`: Part of the reconciliation phase.
+- **object_count_type**: Subtype of object count, which varies by phase:
+    - For `transform`: `transformed`, `filtered_out`, `failed`.
+    - For `load`: `loaded`, `failed`, `skipped`.
+    - For `extract`: `raw_extracted`, `failed`.
+    - For `deletion`: `deleted`.
+    
+</details>
 :::
+
 
 ### FAQ
 
