@@ -9,6 +9,7 @@ export const tagsCategoryMap = {
         "GitLab",
         "BitBucket",
         "AzureDevops",
+        "Claude Code",
         "Azure",
         "Webhook",
         "Kafka",
