@@ -5,23 +5,43 @@ title: Troubleshooting
 
 # Troubleshooting
 
-If you encounter issues while using the Port MCP Server, expand a section below:
+If you encounter issues while setting up or using the Port MCP Server, expand the relevant section below:
 
 <details>
-<summary>How can I connect to the MCP?</summary>
-Make sure you're using the correct regional URL for your organization and have followed the setup instructions for your client (Cursor, VSCode, Claude).
+<summary>How can I connect to the MCP? (Click to expand)</summary>
+
+Refer back to the [setup instructions](/ai-agents/port-mcp-server#setup) for your specific application (Cursor, VSCode, or Claude). Make sure you're using the correct regional URL for your Port organization.
+
 </details>
 
 <details>
-<summary>I completed the connection but nothing happens</summary>
-Ensure you authenticated successfully and have sufficient permissions. If problems persist, contact Port support.
+<summary>I completed the connection but nothing happens (Click to expand)</summary>
+
+Check that you've followed all the [setup steps](/ai-agents/port-mcp-server#setup) correctly for your application. Ensure you're authenticated with Port and have the necessary permissions. If you've followed all the steps and still have issues, please reach out to our support team.
+
 </details>
 
 <details>
-<summary>Why do I see an error about too many tools?</summary>
-Each self-service action becomes its own tool. If you have many actions, models may hit tool-count limits. Disable non-essential tools or ask an admin to review actions.
+<summary>Why do I see an error about too many tools? (Click to expand)</summary>
+
+Each self-service action in your Port instance becomes an individual tool (as `run_<action_identifier>`). If your organization has many actions, this can result in a large number of tools being available.
+
+While most AI models handle this well, some have restrictions and may limit you to around 40 tools total. If you encounter errors about tool limits:
+
+1. **Reduce the number of tools** by customizing which tools are enabled (see [Select which tools to use](available-tools#select-which-tools-to-use) section above)
+2. **Focus on essential tools** by only enabling the read-only tools you need plus a few key actions
+3. **Contact your Port Admin** to review which actions are essential for your workflow
+
+This is completely normal behavior and doesn't indicate a problem with Port MCP - it's just a limitation of some AI models.
+
 </details>
 
-:::tip Need help?
-Reach out to Port support with your client version, region (EU/US), error messages, and the steps you've tried.
+:::tip Getting Help
+If you continue to experience issues, please reach out to Port support with:
+- Your IDE/application version
+- The specific error messages you're seeing
+- Your Port region (EU/US)
+- Steps you've already tried
+
+This information will help us provide more targeted assistance.
 :::
