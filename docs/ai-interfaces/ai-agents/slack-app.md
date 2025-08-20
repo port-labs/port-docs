@@ -31,7 +31,7 @@ This can be used to get quick answers to questions about your resources, such as
 - To install the Slack app, you will first need to apply for access to Port's AI program by filling out [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
 
 - To interact with AI agents, you need to have at least one agent deployed in your portal.  
-  See the [Build an AI agent](https://docs.port.dev/ai-agents/build-an-ai-agent) page to learn more.
+  See the [Build an AI agent](https://docs.port.dev/ai-interfaces/ai-agents/build-an-ai-agent) page to learn more.
 
 ## Installation
 

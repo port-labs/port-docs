@@ -7,7 +7,7 @@ description: Learn how to leverage Port's AI capabilities to enhance incident ma
 
 When you are busy fixing an incident, you do not have time to write updates. Yes, others still need to know what is going on. In this guide, we will learn how to build an AI agent that generates incident updates and sends Slack notifications with relevant technical context.
 
-<img src="/img/guides/incident-update-with-ai-workflow.png" border="1px" width="100%" />
+<img src='/img/guides/incidentUpdateWithAIArchitecture.png' border="1px" width="100%" />
 
 
 ## Common use cases
@@ -23,7 +23,7 @@ This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - [PagerDuty integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/) is installed in your account.
 - [GitHub integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
-- You have access to [create and configure AI agents](https://docs.port.io/ai-agents/overview#getting-started-with-ai-agents) in Port.
+- You have access to [create and configure AI agents](https://docs.port.io/ai-interfaces/ai-agents/overview#getting-started-with-ai-agents) in Port.
 
 :::tip Alternative integrations
 While this guide uses PagerDuty and GitHub, you can adapt it for other incident management tools like OpsGenie or FireHydrant, and other Git providers like GitLab or Azure DevOps.
@@ -394,8 +394,12 @@ We will create two automations to orchestrate the AI-enhanced incident managemen
 4. Click `Create` to save the automation.
 
 :::caution Slack token setup
-You will need to add your Slack bot token as a secret in Port. Head to our [guide on how to install the Slack app](https://docs.port.io/ai-agents/slack-app#installation).
+You will need to add your Slack bot token as a secret in Port. Head to our [guide on how to install the Slack app](https://docs.port.io/ai-interfaces/ai-agents/slack-app#installation).
 :::
+
+Below is an example notification sent to Slack:
+
+<img src='/img/guides/incidentUpdateWithAISlackExample.png' border="1px" width="100%" />
 
 
 ## Test the workflow
@@ -417,8 +421,6 @@ Now let us test the complete workflow to ensure everything works correctly.
 <h4> Check Slack notification </h4>
 
 The AI-generated incident update should appear in your configured Slack channel with proper formatting and context.
-
-<img src="/img/guides/incident-ai-summary-workflow.png" border="1px" width="100%" />
 
 
 ## Best practices
