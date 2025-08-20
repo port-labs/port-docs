@@ -195,39 +195,38 @@ Follow the steps below to create the webhook integration:
 
     ```json showLineNumbers
     [
-        {
-            "blueprint": "hibob_user",
-            "operation": "create",
-            "filter": "(.body.response | has(\"employees\")) and (.body.response.employees | type == \"array\")",
-            "itemsToParse": ".body.response.employees | map(select(.email != null))",
-            "entity": {
-                "identifier": ".item.id | tostring",
-                "title": ".item.displayName | tostring",
-                "properties": {
-                    "id": ".item.id",
-                    "firstName": ".item.firstName",
-                    "email": ".item.email",
-                    "department": ".item.work.department",
-                    "isManager": ".item.work.isManager",
-                    "work_title": ".item.work.title",
-                    "fullName": ".item.fullName",
-                    "displayName": ".item.displayName"
-                }
-            }
-        },
-        {
-            "blueprint": "_user",
-            "operation": "create",
-            "filter": "(.body.response | has(\"employees\")) and (.body.response.employees | type == \"array\")",
-            "itemsToParse": ".body.response.employees | map(select(.email != null))",
-            "entity": {
-                "identifier": ".item.email",
-                "relations": {
-                    "hibob_user": ".item.id | tostring"
-                }
-            }
-     
+      {
+        "blueprint": "hibob_user",
+        "operation": "create",
+        "filter": "(.body.response | has(\"employees\")) and (.body.response.employees | type == \"array\")",
+        "itemsToParse": ".body.response.employees | map(select(.email != null))",
+        "entity": {
+          "identifier": ".item.id | tostring",
+          "title": ".item.displayName | tostring",
+          "properties": {
+            "id": ".item.id",
+            "firstName": ".item.firstName",
+            "email": ".item.email",
+            "department": ".item.work.department",
+            "isManager": ".item.work.isManager",
+            "work_title": ".item.work.title",
+            "fullName": ".item.fullName",
+            "displayName": ".item.displayName"
+          }
         }
+      },
+      {
+        "blueprint": "_user",
+        "operation": "create",
+        "filter": "(.body.response | has(\"employees\")) and (.body.response.employees | type == \"array\")",
+        "itemsToParse": ".body.response.employees | map(select(.email != null))",
+        "entity": {
+          "identifier": ".item.email",
+          "relations": {
+            "hibob_user": ".item.id | tostring"
+          }
+        }
+      }
     ]
     ```
 
