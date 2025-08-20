@@ -1344,6 +1344,13 @@ export const availableGuides = [
         link: "/guides/all/map-slack-users-to-port-accounts",
     },
     {
+        title: "Ingest and map ServiceNow users to Port user accounts",
+        description: "Ingest and map ServiceNow users to Port user accounts for seamless integration",
+        tags: ["SDLC", "ServiceNow", "Actions", "Automations", "Webhook"],
+        logos: ["ServiceNow", "Webhook"],
+        link: "/guides/all/map-servicenow-users-to-port-accounts",
+    },
+    {
         title: "Generate incident updates with AI",
         description: "Generate incident updates with AI and send them to Slack",
         tags: ["Incident management", "AI", "Automations"],
