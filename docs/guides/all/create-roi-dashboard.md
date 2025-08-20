@@ -5,68 +5,41 @@ description: Create a dashboard that highlights the ROI of actions and automatio
 
 # Create an actions ROI dashboard
 
-When you are trying to justify automation investments to leadership, you need concrete data showing time savings and efficiency gains. In this guide, we will build a comprehensive dashboard that tracks the ROI of your self-service actions and automations, providing the metrics you need to demonstrate business value.
-
-We will set up the necessary data model using three new [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/), define a [self-service](https://app.port.io/self-serve) action, and design a dashboard that visualizes the benefits delivered by your automations.
-
-After executing this guide, you will have a dashboard in Port that provides insights into how Port drives efficiency and ROI across your organization.
+When trying to justify investing in actions to leadership, you need concrete data showing time savings and efficiency gains.  
+In this guide, we will build a dashboard that tracks the ROI of your self-service actions in Port, providing the metrics you need to demonstrate business value.
 
 <img src="/img/guides/ROIdashboard.png" border="1px" width="100%" />
+<br/><br/>
 
-We will be using the following terms in this guide:
+We will be using the following terms throughout the guide:
 
-### Lead time saving
+- **Lead time saving** measures the amount of time saved by using **self-service** actions through Port, compared to manual request processes. Lead time covers the entire request journey, from when a request is submitted until it’s completed.
 
-**Lead time saving** measures the amount of time saved by automating and streamlining **self-service** actions through Port, compared to traditional manual request processes.  
-This metric captures the reduction in total time from when a user initiates a request to when it is fulfilled, including delays from approvals, queueing, handoffs, and clarifications.  
-Lead time saving is calculated across all **self-service** actions, from access provisioning to infrastructure changes—by benchmarking against manual equivalents to quantify the time saved.
+- **Lead time before**: How long requests typically took from submission to completion before using actions.
 
-**Why it matters:**
+- **Cycle Time Saving** measures how much faster the execution phase is once a request has been approved or started. Unlike lead time, cycle time looks only at delivery speed, not the waiting time before work begins.
 
-- Highlights the ROI of automations.
-- Demonstrates reduced friction in fulfillment workflows.
-- Supports operational efficiency tracking.
-- Informs prioritization of future self-service expansions.
-
-**Lead time before**: This value represents how long requests typically took from submission to completion before using actions. This term is used as a user input in the self-service action form, in the `Action` and `Action runs` blueprint schemas, and in calculation properties that measure time savings. 
-
-### Cycle Time Saving
-
-**Cycle Time Saving** measures the reduction in time it takes to implement or fulfill a request after it has been approved or initiated. This includes technical execution steps such as provisioning, deployment, configuration, or setup.
-
-Unlike Lead Time—which captures the total end-to-end process—Cycle Time focuses specifically on the execution phase. For example, creating a new sandbox environment or opening firewall access, which previously required manual scripts, coordination, or ticket handling.
-
-This metric is calculated across all automated self-service actions in Port, highlighting how much faster delivery happens once requests are ready to be acted on
-
-**Cycle time before**: This value represents how long the actual execution typically took before using actions. This term is used as a user input in the self-service action form, in the `Action` and `Action runs` blueprint schemas, and in calculation properties that measure execution time savings.
+- **Cycle time before**: How long the actual execution step typically took before using actions.
 
 ## Common Use Cases
 
-- Demonstrate the business value of automation investments to leadership for continued funding and expansion.
-- Track cycle time and lead time improvements to identify high-impact automation opportunities.
-- Use success metrics to justify expanding automation to more teams and use cases.
+- Demonstrate to leadership the business value of actions by sharing clear success metrics.
+- Track improvements in cycle time and lead time to see which actions deliver the most impact.
 
 ## Prerequisites
 
-- Port account
-    - A Port account with appropriate permissions to create blueprints, actions, and automations.
-    - Access to the [Builder](https://app.port.io/settings/data-model) page to create blueprints.
-    - Access to the [Self-service](https://app.port.io/self-serve) page to create actions.
-- GitHub account and repository with the following secrets configured: ([find them here](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))
-        - `PORT_CLIENT_ID`: Your Port client ID.
-        - `PORT_CLIENT_SECRET`: Your Port client secret.
+This guide assumes:
+- You have a [Port account](https://app.getport.io) and that you have finished the [onboarding process](/getting-started/overview).
+- You have a GitHub account.
 
 ## Set up data model
-
-The following blueprints represent a self-service action (Action), its category (Action categories) as well as an action's run (Action runs).
 
 ### Create the Action categories blueprint
 
 1. Go to your [Builder](https://app.port.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
 3. Click on the `{...} Edit JSON` button in the top right corner.
-4. Copy and paste the following JSON configuration into the editor.
-5. Click `Create`
+4. Copy and paste the following JSON configuration into the editor:
 
     <details>
     <summary><b>Action categories blueprint (click to expand)</b></summary>
@@ -90,16 +63,17 @@ The following blueprints represent a self-service action (Action), its category 
 
     </details>
 
-### Create the Action Runs blueprint
+5. Click `Create`.
+
+### Create the Action run blueprint
 
 1. Go to your [Builder](https://app.port.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
 3. Click on the `{...} Edit JSON` button in the top right corner.
-4. Copy and paste the following JSON configuration into the editor.
-5. Click `Create`.
+4. Copy and paste the following JSON configuration into the editor:
 
     <details>
-    <summary><b>Action Runs blueprint (click to expand)</b></summary>
+    <summary><b>Action Run blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -221,16 +195,15 @@ The following blueprints represent a self-service action (Action), its category 
     }
     ```
 
-    </details>
+    </details>    
+5. Click `Create`.
 
 ### Create the Action blueprint
 
 1. Go to your [Builder](https://app.port.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
 3. Click on the `{...} Edit JSON` button in the top right corner.
-4. Copy and paste the following JSON configuration into the editor.
-5. Click `Create`
-
+4. Copy and paste the following JSON configuration into the editor:
     <details>
     <summary><b>Action blueprint (click to expand)</b></summary>
 
@@ -648,13 +621,14 @@ The following blueprints represent a self-service action (Action), its category 
     ```
 
     </details>
+5. Click `Create`.
 
 ### Connect the blueprints
 
-After setting up both `Action Runs` and `Action` blueprint, add the following relation and mirror properties to the `Action blueprint`.
+After setting up both `Action Run` and `Action` blueprint, add the following relation and mirror properties to the `Action blueprint`.
 
 <details>
-<summary><b>Action runs blueprint (click to expand)</b></summary>
+<summary><b>Action run blueprint (click to expand)</b></summary>
 
     ``` json showLineNumbers
         "mirrorProperties": {
@@ -689,15 +663,15 @@ After setting up both `Action Runs` and `Action` blueprint, add the following re
 
 ## Create the self-service action
 
-This self-service action creates on execution:
--  A self-service action with the inputs the user provides.
--  An automation that gets triggered when an action run is changed.  
-   On trigger, if the run is sucessfull, the automation updates the following `Action run` properties:
+This self-service action performs the following:
+-  If a self-service action with the provided title doesn’t exist, the workflow creates a minimal self-service action, otherwise it uses the existing one.
+-  It then creates an automation that triggers on any run change for that action.  
+   On trigger, if the run succeeded, the automation updates the following `Action run` properties:
     - **Duration**: How long did the action run take.
     - **Waiting for approval duration**: How long did the request take to get approved.
-    - **Cycle time**: How long the did execution take.  
+    - **Cycle time**: The execution time after approval.  
 
-    All of which are used as aggregation properties in the `Action` blueprint.
+    All of which are used for aggregation properties in the `Action` blueprint.
 
 ### Set up the action's frontend
 
@@ -708,7 +682,7 @@ This self-service action creates on execution:
 5. Click `Save`.
 
     <details>
-    <summary><b>Action blueprint(click to expand)</b></summary>
+    <summary><b>Action blueprint (click to expand)</b></summary>
 
         **Remember to change the `<YOUR-ORG-NAME>` and `<YOUR-REPO-NAME>` to your GitHub organization and repository names.**
 
@@ -796,12 +770,11 @@ This self-service action creates on execution:
 ### Set up the action's backend
 
 Define the logic that our action will trigger.
-In your GitHub repository, add the following files or use your own API.
 Add the workflow to the `.github/workflows/` folder, and the other scripts to a `./scripts` folder.
-You can also use this [repository](https://github.com/port-experimental/actions-experience) if you wish.
+You can also use this [repository](https://github.com/port-experimental/actions-experience) if you wish. (TODO: Ask Hadar about this.)
 
 <details>
-<summary><b>Create port automation workflow (click to expand)</b></summary>
+<summary><b>Create Port automation workflow (click to expand)</b></summary>
 
     To the .github/workflows directory, add the following file:
 
@@ -1345,38 +1318,76 @@ You can also use this [repository](https://github.com/port-experimental/actions-
     ```
 </details>
 
-#### Set up the newly created action's backend
+**Set up the newly created action's backend**
 
-When you execute the "Setup new action experience" self-service action, it automatically creates:
-- A new self-service action with a placeholder backend.
-- An automation that tracks ROI metrics for action runs.
+When you execute the self-service action we just created, it creates a new self-service action (if one with the provided title doesn’t already exist) with a placeholder backend.
 
 :::info Next step required
-The created self-service action uses a default webhook backend (`https://example.com`) as a placeholder. You should replace this with your actual backend implementation to make the action functional. For detailed backend setup instructions, refer to the [backend configuration documentation](/actions-and-automations/create-self-service-experiences/setup-the-backend/). 
+The created self-service action uses a default webhook backend (`https://example.com`) as a placeholder. You should replace this with your backend implementation to make the action functional. For detailed backend setup instructions, refer to the [backend configuration documentation](/actions-and-automations/create-self-service-experiences/setup-the-backend/). 
 :::
 
-## Visualize Action Entities with dashboards
+### Create an actions ROI dashboard
 
 Dashboards let you observe, track, and communicate insights from your action setup.  
-You can create dashboards that pull data from the action, action category, and action run entities.
-
-### Create an ROI dashboard
+You can create dashboards that pull data from the `Action`, `Action categories`, and `Action run` entities.  
+To create the actions ROI dashboard:
 
 1. Navigate to the [Catalog](https://app.port.io/organization/catalog) page of your portal.
-2. Click on the **`+ New`** button in the left sidebar.
-3. Select **New dashboard** and name it **ROI**.
+2. Click on the `+ New` button in the left sidebar.
+3. Select **New dashboard** and name it **Actions ROI**.
 4. Click `Create`.
 
-We now have a blank dashboard where we can start adding widgets to visualize insights from our ROI components.
+A new blank dashboard is available, add widgets to start visualizing the actions ROI insights.
+
+**Create an AI agent**
+
+One of the widgets includes an AI agent widget, so before we create the widget, we need to create the agent itself.
+
+1. Go to the [AI agents](https://app.getport.io/_ai_agents) page of your portal.
+2. Click on `+ AI Agent`.
+3. Toggle `JSON mode` on.
+4. Copy and paste the following JSON schema:
+
+    <details>
+    <summary><b>AI Agent configuration (click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+    "identifier": "actions_assistant",
+    "title": "Actions assistant",
+    "icon": "Details",
+    "properties": {
+        "description": "Responds to basic queries on actions",
+        "status": "active",
+        "allowed_blueprints": [
+        "action",
+        "action_run",
+        "actions_categories",
+        "_user",
+        "_team"
+        ],
+        "prompt": "Be helpful. Each action run has a team that ran it which is the primary team and a group that ran it which is the primary group. ",
+        "execution_mode": "Automatic",
+        "conversation_starters": [
+        "What action ran the most this week ?",
+        "What is the top action? ",
+        "What is the category of action with the top savings? "
+        ]
+    },
+    "relations": {}
+    }
+    ```
+
+    </details>
+
+To learn more about AI agents, refer to the [documentation](https://docs.port.io/ai-interfaces/ai-agents/overview).
 
 ### Add widgets
 
 In the new dashboard, create the following widgets:
 
 <details>
-<summary><b>AI Agent (click to expand)</b></summary>
-
-To learn about AI Agents, refer to the [documentation](https://docs.port.io/ai-agents/build-an-ai-agent).
+<summary><b>AI Agent widget (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **AI Agent**.
 2. Title: `Actions AI assistant`.
@@ -1423,6 +1434,6 @@ To learn about AI Agents, refer to the [documentation](https://docs.port.io/ai-a
 
 </details>
 
-Congratulations! You have successfully created an ROI dashboard that demonstrates the business value of your automations in Port.
+Congratulations!🥳 You have successfully created an actions ROI dashboard that demonstrates the business value of your actions in Port.
 
 
