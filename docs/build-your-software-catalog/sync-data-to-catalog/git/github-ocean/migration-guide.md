@@ -236,36 +236,15 @@ resources:
   ```
 </details>
 
-### Pull requests and issues
+### Issues
 
-For `pull-request` and `issue` kinds, we've introduced a new `state` selector. This allows you to filter which objects are ingested based on their state (e.g., `open`, `closed`).
+We've introduced a new `state` selector. This allows you to filter which objects are ingested based on their state (e.g., `open`, `closed`).
 
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
-  - kind: pull-request
-    selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-    port:
-      entity:
-        mappings:
-          identifier: ".head.repo.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID.
-          title: ".title"
-          blueprint: '"githubPullRequest"'
-          properties:
-            creator: ".user.login"
-            assignees: "[.assignees[].login]"
-            reviewers: "[.requested_reviewers[].login]"
-            status: ".status" # merged, closed, opened
-            closedAt: ".closed_at"
-            updatedAt: ".updated_at"
-            mergedAt: ".merged_at"
-            createdAt: ".created_at"
-          relations:
-            repository: .head.repo.name
-
   - kind: issue
     selector:
       query: ".pull_request == null" # JQ boolean query. If evaluated to false - skip syncing the object.
@@ -294,29 +273,6 @@ resources:
 
 ```yaml showLineNumbers
 resources:
-  - kind: pull-request
-    selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-      state: "open" # ✅ new
-    port:
-      entity:
-        mappings:
-          identifier: ".head.repo.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID.
-          title: ".title"
-          blueprint: '"githubPullRequest"'
-          properties:
-            creator: ".user.login"
-            assignees: "[.assignees[].login]"
-            reviewers: "[.requested_reviewers[].login]"
-            status: ".state" # merged, closed, opened
-            closedAt: ".closed_at"
-            updatedAt: ".updated_at"
-            mergedAt: ".merged_at"
-            createdAt: ".created_at"
-            prNumber: ".id"
-          relations:
-            repository: .__repository #  ✅ new, it is now obvious when an attribute is added to the raw API response by the integration.
-
   - kind: issue
     selector:
       query: ".pull_request == null" # JQ boolean query. If evaluated to false - skip syncing the object.
@@ -340,6 +296,74 @@ resources:
             link: ".html_url"
           relations:
             repository: ".__repository" # ✅  new, uses leading underscore to indicate custom enrichment.
+```
+
+</details>
+
+
+### Pull requests
+
+We've introduced a new `states` selector, this allows you to filter which objects are ingested based on their state (e.g., `open`, `closed`). We also add optional selectors to allow fetching pull requests over a time period. #Ai! improve this
+
+<details>
+<summary><b>Existing configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: pull-request
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".head.repo.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID.
+          title: ".title"
+          blueprint: '"githubPullRequest"'
+          properties:
+            creator: ".user.login"
+            assignees: "[.assignees[].login]"
+            reviewers: "[.requested_reviewers[].login]"
+            status: ".status" # merged, closed, opened
+            closedAt: ".closed_at"
+            updatedAt: ".updated_at"
+            mergedAt: ".merged_at"
+            createdAt: ".created_at"
+          relations:
+            repository: .head.repo.name
+
+```
+</details>
+
+<details>
+
+<summary><b>New configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: pull-request
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      states: ["open"] # ✅ new
+      maxResults: 50 # ✅ new, limit closed PRs to 50 capped at 300
+      since: 60  # ✅ new, fetch closed PRs within 60 days capped at 90 days
+    port:
+      entity:
+        mappings:
+          identifier: ".head.repo.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID.
+          title: ".title"
+          blueprint: '"githubPullRequest"'
+          properties:
+            creator: ".user.login"
+            assignees: "[.assignees[].login]"
+            reviewers: "[.requested_reviewers[].login]"
+            status: ".state" # merged, closed, opened
+            closedAt: ".closed_at"
+            updatedAt: ".updated_at"
+            mergedAt: ".merged_at"
+            createdAt: ".created_at"
+            prNumber: ".id"
+          relations:
+            repository: .__repository #  ✅ new, it is now obvious when an attribute is added to the raw API response by the integration.
 ```
 
 </details>
