@@ -12,7 +12,6 @@ This guide demonstrates how to trigger Claude Code from Port, enabling AI-powere
 You will learn how to create self-service actions that can trigger Claude Code and configure the necessary GitHub workflows to handle the execution process with comprehensive usage tracking.
 
 <img src="/img/guides/trigger-claude-code-from-port-flow.png" border="1px" width="100%" />
-<img src="/img/guides/claude-code-pr-dashboard.png" border="1px" width="100%" />
 
 
 ## Common use cases
@@ -21,6 +20,8 @@ You will learn how to create self-service actions that can trigger Claude Code a
 - **Usage tracking** – monitor cost, activity, and results across the org.  
 - **Workflow automation** – trigger Claude Code on events like bugs or PRs.  
 - **Faster onboarding** – help new devs generate code and docs quickly. 
+
+<img src="/img/guides/claude-code-pr-dashboard.png" border="1px" width="100%" />
 
 
 ## Prerequisites
