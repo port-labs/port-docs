@@ -167,9 +167,9 @@ The basic structure of a self-service action looks like this (see key descriptio
 
 For complete examples of self-service actions using GitHub as the backend, check out the [guides section](/guides?tags=GitHub&tags=Actions).
 
-## Tracking self-service actions
+## Track self-service actions
 
-To gain visibility into how your self-service actions are being used and their performance, you can set up tracking for action runs. This allows you to monitor execution patterns, track success rates, and maintain audit trails of who executed what actions and when.  
+To gain visibility into how your self-service actions are being used and their performance, you can set up tracking for action runs. This allows you to monitor execution patterns, track success rates, and maintain audit trails what actions were executed and when. 
 
 The following tracking system works by creating a dedicated blueprint for action runs and setting up an automation that captures execution details whenever a specific self-service action is triggered as well as an automation that updates the action run's status. This approach can give you a centralized view of all action executions in your software catalog.
 

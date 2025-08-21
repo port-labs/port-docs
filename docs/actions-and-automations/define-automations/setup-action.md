@@ -47,7 +47,7 @@ Here is an example for an automation payload:
 ```
 
 :::info `.run` available values
-At invocation, `.run` contains only the run `id`.
+When the automation is triggered, the `.run` object includes only the run `id`.
 :::
 
 You may have noticed that the example above also sends `{{ .run.id }}`. This is a unique identifier for each execution of the automation, and can be used to interact with the automation run in Port from your backend.  
