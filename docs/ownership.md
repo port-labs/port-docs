@@ -49,22 +49,79 @@ Users can be synced into Port either manually or automatically, depending on you
 
 #### Custom integrations
 
-Tools for which Port does not have a built-in integration can be synced manually using the following guides:
+3rd party tools for which Port does not have a built-in integration can be synced manually using the following guides:
 
-- Slack:
-- ServiceNow:
-- HiBob:
-
-
-
-
-  
+- [Slack](https://docs.port.io/guides/all/map-slack-users-to-port-accounts/)
+- [ServiceNow](https://docs.port.io/guides/all/map-servicenow-users-to-port-accounts/)
+- [HiBob](https://docs.port.io/guides/all/map-hibob-users-to-port-accounts/)
 
 ### Automatically
+
 - **Built-in integrations**: Update the integration mapping to connect the Port user to the integration user.  **ADD TABS WITH MAPPINGS FOR EACH INTEGRATION**
 
-- **Custom integrations**: When a new Port user is created, an automation links them to the matching integration user. **ADD LINKS TO THE RELEVANT ANCHOR IN EACH GUIDE**
+  <Tabs>
+  <TabItem value="GitHub">
+  ```yaml showLineNumbers
+  - kind: user
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '"_user"'
+          relations:
+            git_hub_user: .login
+  ```
+  </TabItem>
 
+  <TabItem value="GitLab">
+  ```yaml showLineNumbers
+  - kind: group-with-members
+    selector:
+      query: 'true'
+      includeBotMembers: 'true'
+      includeInheritedMembers: 'true'
+    port:
+      itemsToParse: .__members
+      entity:
+        mappings:
+          identifier: .item.username
+          title: .item.name
+          blueprint: '"_user"'
+          relations:
+            gitlab_user: .item.username
+  ```
+  </TabItem>
+
+  <TabItem value="Azure DevOps">
+  ```yaml showLineNumbers
+  - kind: user
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: '.id'
+          title: '.user.displayName'
+          blueprint: '"_user"'
+          relations:
+            azure_devops_user: '.id'
+  ```
+  </TabItem>
+
+  <TabItem value="Jira">
+
+  </TabItem>
+
+
+
+  </Tabs>
+
+
+
+- **Custom integrations**: When a new Port user is created, an automation links them to the matching integration user. **ADD LINKS TO THE RELEVANT ANCHOR IN EACH GUIDE**
 
 
 ## Sync Teams
