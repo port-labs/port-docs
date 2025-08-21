@@ -239,7 +239,7 @@ Create a blueprint for `Action run`:
       "mirrorProperties": {},
       "calculationProperties": {},
       "aggregationProperties": {},
-      "relations": { }
+      "relations": {}
     }
     ```
     </details>
@@ -282,16 +282,16 @@ To add it, follow these steps:
         "type": "UPSERT_ENTITY",
         "blueprintIdentifier": "action_run",
         "mapping": {
-            "identifier": "{{.event.diff.after.id}}",
-            "title": "{{.event.diff.after.id}}",
-            "properties": {
-              "run_id": "{{.event.diff.after.id}}",
-              "run_url": "https://app.port.io/organization/run?runId={{.event.diff.after.id}}",
-              "status": "{{.event.diff.after.status}}",
-              "created_at": "{{.event.diff.after.createdAt}}",
-              "updated_at": "{{.event.diff.after.updatedAt}}"
-            },
-            "relations": {}
+          "identifier": "{{.event.diff.after.id}}",
+          "title": "{{.event.diff.after.id}}",
+          "properties": {
+            "run_id": "{{.event.diff.after.id}}",
+            "run_url": "https://app.port.io/organization/run?runId={{.event.diff.after.id}}",
+            "status": "{{.event.diff.after.status}}",
+            "created_at": "{{.event.diff.after.createdAt}}",
+            "updated_at": "{{.event.diff.after.updatedAt}}"
+          },
+          "relations": {}
         }
       },
       "publish": true
@@ -299,4 +299,4 @@ To add it, follow these steps:
     ```
     </details>
 
-Using the blueprint and automations will give you a tracking system that captures all execution details of a self-service action, providing visibility into usage patterns. For a more comprehensive example of how to use this tracking system in practice, including advanced reporting and ROI calculations, refer to the create ROI dashboard guide.
+Using the blueprint and automation will give you a tracking system that captures all execution details of a self-service action, providing visibility into usage patterns.
