@@ -11,13 +11,16 @@ import GithubActionModificationHint from '/docs/guides/templates/github/_github_
 This guide demonstrates how to trigger Claude Code from Port, enabling AI-powered coding assistance in your development workflow. By leveraging Claude Code, you can significantly reduce manual coding tasks and enhance productivity, allowing developers to focus on more complex problem-solving. 
 You will learn how to create self-service actions that can trigger Claude Code and configure the necessary GitHub workflows to handle the execution process with comprehensive usage tracking.
 
-<img src="/img/guides/trigger-claude-code-from-port-flow.jpg" border="1px" width="100%" />
+<img src="/img/guides/trigger-claude-code-from-port-flow.png" border="1px" width="100%" />
+<img src="/img/guides/claude-code-pr-dashboard.png" border="1px" width="100%" />
 
 
 ## Common use cases
 
-- **Trigger Claude Code for automated code generation** and assistance
-- **Enhance code quality** – use Claude Code for refactoring, updates, and documentation, reducing technical debt.
+- **Central access** – let developers run Claude Code from Port without extra tools.  
+- **Usage tracking** – monitor cost, activity, and results across the org.  
+- **Workflow automation** – trigger Claude Code on events like bugs or PRs.  
+- **Faster onboarding** – help new devs generate code and docs quickly. 
 
 
 ## Prerequisites
@@ -26,7 +29,7 @@ This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
 - You have access to [create and configure AI agents](https://docs.port.io/ai-agents/overview#getting-started-with-ai-agents) in Port.
-- Claude Code is enabled in your repository.
+- You have completed the setup in the [Track AI-driven pull requests](https://docs.port.io/guides/all/track-ai-driven-pull-requests) guide to enable AI agent tracking and visualization.
 - You have an Anthropic API key for Claude Code access.
 
 
@@ -114,7 +117,20 @@ This blueprint will track Claude Code executions, including token usage, costs, 
       "mirrorProperties": {},
       "calculationProperties": {},
       "aggregationProperties": {},
-      "relations": {}
+      "relations": {
+        "repository": {
+          "title": "Repository",
+          "target": "service",
+          "required": false,
+          "many": false
+        },
+        "ai_coding_agent": {
+          "title": "AI Coding Agent",
+          "target": "ai_coding_agent",
+          "required": false,
+          "many": false
+        }
+      }
     }
     ```
     </details>
@@ -143,7 +159,7 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 4. Copy and paste the following JSON configuration:
 
     <details>
-    <summary><b>Claude Code action (Click to expand)</b></summary>
+    <summary><b>Run Claude Code action (Click to expand)</b></summary>
 
     <GithubActionModificationHint/>
 
@@ -189,7 +205,7 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
         "workflow": "claude-backend.yaml",
         "workflowInputs": {
           "command": "{{ .inputs.prompt }}",
-          "repo_name": "{{ .inputs.service.title }}",
+          "repo_name": "{{ .inputs.service.identifier }}",
           "run_id": "{{ .run.id }}"
         },
         "reportWorkflowStatus": false
@@ -204,7 +220,7 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 
 ## Set up GitHub workflow
 
-Create the file `.github/workflows/claude-backend.yaml` in the `.github/workflows` folder of your repository.
+We recommend creating a dedicated repository for the workflows that are used by Port actions. Create the file `.github/workflows/claude-backend.yaml` in this repository to allow Claude Code to be triggered from all associated repositories.
 
 This workflow will execute Claude Code with the provided prompt, track execution progress, and report back to Port with usage metrics including token consumption, costs, and execution details.
 
@@ -212,7 +228,7 @@ This workflow will execute Claude Code with the provided prompt, track execution
 <summary><b>GitHub workflow for Claude Code execution (Click to expand)</b></summary>
 
 :::note Replace Git Credentials
-Ensure you replace the Git credentials with your actual credentials. Update the `<GIT USERNAME>` and `<GIT USER EMAIL>` fields with your GitHub username and email to ensure proper commit attribution.
+We recommend creating a GitHub machine user for automated tasks. Update the `<GIT USERNAME>` and `<GIT USER EMAIL>` fields with the machine user's credentials to ensure proper commit attribution.
 :::
 
 ```yaml showLineNumbers
@@ -245,7 +261,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.PORT_GITHUB_TOKEN }}
-          repository: port-labs/${{ inputs.repo_name }}
+          repository: ${{ inputs.repo_name }}
           ref: main
 
       - name: Configure Git 
@@ -339,14 +355,18 @@ jobs:
               "totalCost": ${{ steps.parse_results.outputs.total_cost }},
               "repository": "${{ inputs.repo_name }}"
             }
-
+          relations: |
+            {
+              "ai_coding_agent": "Claude",
+              "repository": "${{ inputs.repo_name }}"
+            }
       - name: Update Port Action Run Status to Success
         if: ${{ inputs.run_id != '' && steps.parse_results.outputs.conclusion == 'success' }}
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.us.port.io
+          baseUrl: https://api.port.io
           operation: PATCH_RUN
           runId: ${{ inputs.run_id }}
           status: "SUCCESS"
@@ -366,7 +386,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.us.port.io
+          baseUrl: https://api.port.io
           operation: PATCH_RUN
           runId: ${{ inputs.run_id }}
           status: "FAILURE"
