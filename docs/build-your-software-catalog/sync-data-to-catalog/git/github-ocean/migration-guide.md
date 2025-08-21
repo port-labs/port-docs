@@ -71,7 +71,7 @@ A key change is how we denote custom attributes. We now add a double underscore 
 
 ### Files & GitOps
 <details>
-  <summary><b>Existing Configuration (Click to expand)</b></summary>
+  <summary><b>Existing configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -99,7 +99,7 @@ resources:
 </details>
 
 <details>
-  <summary><b>New Configuration (Click to expand)</b></summary>
+  <summary><b>New configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -132,12 +132,22 @@ Here are the key changes for file mappings:
 2. File attributes are no longer nested under a `file` key. They are now at the top level of the data structure. For example, instead of `.file.path`, you should now use `.path`.
 3. The `repo` key has been renamed to `repository` when referencing the repository a file belongs to, for consistency with other data kinds.
 
+### Repository relationships
+
+The way we include `teams` and `collaborators` in a repository has changed.
+
+#### Repository and teams
+
+<details>
+  <summary><b>Existing configuration (click to expand)</b></summary>
+</details>
+
 ### Pull requests and issues
 
 For `pull-request` and `issue` kinds, we've introduced a new `state` selector. This allows you to filter which objects are ingested based on their state (e.g., `open`, `closed`).
 
 <details>
-<summary><b>Existing Configuration (Click to expand)</b></summary>
+<summary><b>Existing configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -186,7 +196,7 @@ resources:
 
 <details>
 
-<summary><b>New Configuration (Click to expand)</b></summary>
+<summary><b>New configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -245,7 +255,7 @@ resources:
 For the `folder` kind, the `folder.name` attribute is no longer part of the response. Instead, you can easily derive the folder name from the `folder.path` using a JQ expression, as shown in the example below:
 
 <details>
-  <summary><b>Existing Configuration (Click to expand)</b></summary>
+  <summary><b>Existing configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 resources:
@@ -270,7 +280,7 @@ resources:
 </details>
 
 <details>
-  <summary><b>New Configuration (Click to expand)</b></summary>
+  <summary><b>New configuration (click to expand)</b></summary>
 
 
   ```yaml showLineNumbers
@@ -307,7 +317,7 @@ This change has two main consequences:
 2. Team members are now located in a `nodes` subarray within the team object.
 
 <details>
-  <summary><b>Existing Configuration (Click to expand)</b></summary>
+  <summary><b>Existing configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 
@@ -331,7 +341,7 @@ This change has two main consequences:
 </details>
 
 <details>
-  <summary><b>New Configuration (Click to expand)</b></summary>
+  <summary><b>New configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 
