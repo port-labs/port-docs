@@ -494,7 +494,7 @@ This section provides a high-level summary of the key breaking changes for mappi
 |---|---|---|---|
 | **Authentication** | GitHub App Installation | PAT or Self-Created GitHub App | The integration can be authenticated using a Personal Access Token (PAT) or a self-created GitHub App. |
 | **Webhooks** | App Webhook | Automatic Setup by Integration | The integration now manages its own webhooks for live events. This requires `webhook` permissions and `liveEvents.baseUrl` to be set. |
-| **Workflow Runs** | 10 per repository | 100 per repository | The number of ingested workflow runs has been increased. |
+| **Workflow Runs** | 10 per repository | 100 per workflow | The number of ingested workflow runs has been increased. |
 | **Repository Type** | N/A | `repositoryType` configuration | A new top-level configuration is available to filter repositories by type (`public`, `private`, or `all`). |
 | **Repository Relationships** | `teams: true`, `collaborators: true` | `include: "teams"`, `include: "collaborators"` | The `include` selector replaces boolean flags for fetching related data. The fetched data is also now prefixed with `__` (e.g., `.__teams`). |
 | **File** properties | `.file.path` | `.path` | All file properties are now at the top level of the object, no longer nested under `.file`. |
