@@ -57,7 +57,7 @@ Users can be synced into Port either manually or automatically, depending on you
 
 ### Automatically
 
-- **Built-in integrations**: Update the integration mapping to connect the Port user to the integration user.  **ADD TABS WITH MAPPINGS FOR EACH INTEGRATION**
+- **Built-in integrations**: Update the integration mapping to connect the Port user to the integration user:
 
   <Tabs>
   <TabItem value="GitHub">
@@ -112,16 +112,29 @@ Users can be synced into Port either manually or automatically, depending on you
   </TabItem>
 
   <TabItem value="Jira">
+  ```yaml showLineNumbers
+  - kind: user
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .accountId
+          title: .displayName
+          blueprint: '"_user"'
+          relations:
+            jira_user: .accountId
+  ```
 
   </TabItem>
-
-
-
   </Tabs>
 
 
+- **Custom integrations**: We can create a simple automation to link new Port users to the matching integration user upon creation:
 
-- **Custom integrations**: When a new Port user is created, an automation links them to the matching integration user. **ADD LINKS TO THE RELEVANT ANCHOR IN EACH GUIDE**
+  - [Slack](https://docs.port.io/guides/all/map-slack-users-to-port-accounts/)
+  - [ServiceNow](https://docs.port.io/guides/all/map-servicenow-users-to-port-accounts/)
+  - [HiBob](https://docs.port.io/guides/all/map-hibob-users-to-port-accounts/)
 
 
 ## Sync Teams
