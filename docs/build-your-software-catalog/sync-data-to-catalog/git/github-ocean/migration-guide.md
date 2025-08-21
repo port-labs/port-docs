@@ -134,7 +134,7 @@ Here are the key changes for file mappings:
 
 ### Repository relationships
 
-We've consolidated how we attach teams and users to a repository using an `include` selector. # AI! improve this
+Fetching related data for a repository, like teams and collaborators, is now managed through a unified `include` selector. This replaces the previous method of using separate boolean flags for each data type, offering a more consistent and streamlined approach.
 
 #### Repository and teams
 
