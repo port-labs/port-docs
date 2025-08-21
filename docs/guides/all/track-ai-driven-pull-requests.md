@@ -168,6 +168,51 @@ This blueprint will represent all known coding agents in your system.
 
 :::note Populate Coding Agents
 Ensure that this blueprint is populated with the names of coding agents such as Copilot, Claude, Devin, etc. This will help in accurately tracking and managing AI-driven pull requests.
+
+Go to the catalog page for the `AI Coding Agent` blueprint and click on the `+ AI Coding Agent` button to add these entities using the JSON provided below:
+
+<details>
+<summary><b> Copilot entity JSON </b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "Copilot",
+  "title": "Copilot",
+  "icon": "AI",
+  "properties": {},
+  "relations": {}
+}
+```
+</details>
+
+<details>
+<summary><b> Claude entity JSON </b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "Claude",
+  "title": "Claude",
+  "icon": "AI",
+  "properties": {},
+  "relations": {}
+}
+```
+</details>
+
+
+<details>
+<summary><b> Devin entity JSON </b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "Devin",
+  "title": "Devin",
+  "icon": "AI",
+  "properties": {},
+  "relations": {}
+}
+```
+</details>
 :::
 
 
