@@ -151,15 +151,15 @@ Teams can also be synced into Port either manually or automatically, depending o
     ```yaml showLineNumbers
     - kind: team
     selector:
-        query: 'true'
+      query: 'true'
     port:
-        entity:
-        mappings:
-            identifier: .id | tostring
-            title: .name
-            blueprint: '"_team"'
-            relations:
-                git_hub_team: .id | tostring
+      entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name
+        blueprint: '"_team"'
+        relations:
+          git_hub_team: .id | tostring
     ```
 
   In this example, if the team already exists in Port, it will be connected to the GitHub team with the same identifier.  
@@ -202,18 +202,18 @@ As a user, it's important to see all of the resources owned by you or your team/
 
     ```yaml showLineNumbers
     - kind: group-with-members
-          selector:
-            query: 'true'
-            includeBotMembers: 'true'
-            includeInheritedMembers: 'true'
-          port:
-            itemsToParse: .__members
-            entity:
-              mappings:
-                identifier: .item.email
-                title: .item.name
-                team: .full_path
-                blueprint: '"_user"'
+      selector:
+        query: 'true'
+        includeBotMembers: 'true'
+        includeInheritedMembers: 'true'
+      port:
+        itemsToParse: .__members
+        entity:
+          mappings:
+            identifier: .item.email
+            title: .item.name
+            team: .full_path
+            blueprint: '"_user"'
     ```
 
 
@@ -242,22 +242,22 @@ As a user, it's important to see all of the resources owned by you or your team/
 
     ```yaml showLineNumbers
     - kind: repository
-        selector:
+      selector:
         query: 'true'
         teams: true
-        port:
+      port:
         entity:
-        mappings:
+          mappings:
             identifier: .full_name
             title: .name
             blueprint: '"githubRepository"'
             properties:
-                readme: file://README.md
-                url: .html_url
-                defaultBranch: .default_branch
-                $team: '[.teams[].id | tostring]'
+              readme: file://README.md
+              url: .html_url
+              defaultBranch: .default_branch
+              $team: '[.teams[].id | tostring]'
             relations:
-                githubTeams: '[.teams[].id | tostring]'
+              githubTeams: '[.teams[].id | tostring]'
     ```
 
   Note that this assumes Port team identifiers match GitHub team identifiers.
