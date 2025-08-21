@@ -18,13 +18,17 @@ Let's walk through the process of creating an agent that can assist your develop
 
 ## Create a new AI agent
 
-To create a new agent, head to the AI Agents catalog page (this page will be created for you when you [activate the feature](/ai-agents/overview#access-to-the-feature)).
+To create a new agent, head to the AI Agents catalog page (this page will be created for you when you [activate the feature](/ai-interfaces/ai-agents/overview#access-to-the-feature)).
 
 Click on the "New AI Agent" button and fill the form with the agent details.
 <img src='/img/ai-agents/AIAgentsList.png' width='80%' border='1px' />
 <img src='/img/ai-agents/AIAgentsAddAgentModal.png' width='80%' border='1px' />
 
 We recommend following the steps below.
+
+:::info MCP Server Backend Mode
+AI agents can be enhanced with MCP server backend mode for expanded capabilities including intelligent catalog access and Claude model processing. This is controlled when [interacting with the agents](/ai-interfaces/ai-agents/interact-with-ai-agents) through widgets and API calls, not in the agent configuration itself.
+:::
 
 ### Step 1: Define your agent's purpose
 
@@ -50,6 +54,10 @@ For example:
 - For "What are all the incidents affecting service X?", the agent needs access to `teams`, `incidents`, and `services`.
 
 Pay attention to relationships between entities to ensure your agent can provide comprehensive answers.
+
+:::tip Enhanced access with MCP server backend
+When using [MCP server backend mode](/ai-interfaces/ai-agents/interact-with-ai-agents) during interactions, the agent can intelligently access your entire catalog regardless of configured blueprints, providing more comprehensive answers.
+:::
 
 ### Step 3: Configure actions (optional)
 
@@ -147,7 +155,7 @@ Choose conversation starters that:
 When you feel your agent is ready:
 
 1. Set its status to "Active".
-2. Start interacting with it through the [available interfaces](/ai-agents/interact-with-ai-agents).
+2. Start interacting with it through the [available interfaces](/ai-interfaces/ai-agents/interact-with-ai-agents).
 
 ## Evaluating your agent performance
 
@@ -158,7 +166,7 @@ Continuous evaluation and improvement are essential for maintaining effective AI
 3. **Analyze execution plans**: Examine how the agent processes requests by reviewing the execution plan and tool calls for specific invocations. This helps identify where improvements are needed.
 4. **Refine the prompt**: Update your agent's prompt based on your findings to address common issues.
 
-For more details on how to view execution plans and analyze agent behavior, see [Interact with AI agents](/ai-agents/interact-with-ai-agents).
+For more details on how to view execution plans and analyze agent behavior, see [Interact with AI agents](/ai-interfaces/ai-agents/interact-with-ai-agents).
 
 ## Examples
 
@@ -186,7 +194,7 @@ Your goal is to help developers initiate and track deployments to various enviro
 ## Formatting the agent response
 To format the agent's response, you can specify the desired format in its prompt. For optimal results when using the UI, it's recommended to request a markdown format response. 
 This allows for better presentation and readability of the information provided by the agent.
-When sending messages through Slack, our [Slack app](/ai-agents/slack-app) convert the markdown format into a Slack compatible formatting.
+When sending messages through Slack, our [Slack app](/ai-interfaces/ai-agents/slack-app) convert the markdown format into a Slack compatible formatting.
 
 ### Example of a Markdown Response
 ```markdown
@@ -200,7 +208,7 @@ From [john-123](https://github.com/john-123)
 <details>
 <summary><b>I don't see an option to add an AI agent (Click to expand)</b></summary>
 
-Make sure you have [access to the AI agents feature](/ai-agents/overview#access-to-the-feature). Note that it's currently in closed beta and requires special access. If you believe you should have access, please contact our support.
+Make sure you have [access to the AI agents feature](/ai-interfaces/ai-agents/overview#access-to-the-feature). Note that it's currently in closed beta and requires special access. If you believe you should have access, please contact our support.
 </details>
 
 <details>
@@ -234,6 +242,10 @@ AI agents in Port can search, group, and index entities in your Port instance. H
 - **Permission model**:
   - Interaction with the AI agent is based on your user permissions.
   - Sequential automations run as Admin.
+
+:::info Enhanced capabilities with MCP server backend
+When using [MCP server backend mode](/ai-interfaces/ai-agents/interact-with-ai-agents) during interactions, many of these limitations are reduced as the agent gains access to enhanced tools and broader data access capabilities.
+:::
 </details>
 
 <details>
@@ -245,4 +257,4 @@ When configuring your agent's actions, make sure you select the "approval" optio
 ## Security considerations
 
 AI agents in Port are designed with security and privacy as a priority.
-For more information on security and data handling, see our [AI agents overview](/ai-agents/overview#security-and-data-handling). 
+For more information on security and data handling, see our [AI agents overview](/ai-interfaces/ai-agents/overview#security-and-data-handling). 

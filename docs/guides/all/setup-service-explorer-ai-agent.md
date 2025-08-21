@@ -25,7 +25,7 @@ This guide will walk you through setting up a "Service Explorer" AI agent in Por
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
+- A Port account with the [AI agents feature enabled](/ai-interfaces/ai-agents/overview#access-to-the-feature).
 - Appropriate permissions to create and configure AI agents.
 - [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) installed.
 - **Optional but recommended integrations for richer context**:
@@ -35,7 +35,7 @@ This guide assumes you have:
 
 ## Set up
 
-To create a Service Explorer AI agent in Port, we'll need to configure two main components as described in our [Build an AI agent](/ai-agents/build-an-ai-agent) guide:
+To create a Service Explorer AI agent in Port, we'll need to configure two main components as described in our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide:
 - The data sources it will use to answer questions.
 - The agent configuration that defines its capabilities and conversation starters.
 
@@ -115,7 +115,7 @@ Keep in mind that there is a trade-off between context richness and response tim
 
 ## Interact with the Service Explorer
 
-You can interact with the Service Explorer AI agent in [several ways](/ai-agents/interact-with-ai-agents). This guide will demonstrate the two main ways.
+You can interact with the Service Explorer AI agent in [several ways](/ai-interfaces/ai-agents/interact-with-ai-agents). This guide will demonstrate the two main ways.
 
 <Tabs groupId="interaction-methods" queryString>
 <TabItem value="ui" label="Port UI">
@@ -136,7 +136,7 @@ Once the widget is set up, you can ask questions directly in the chat field.
 </TabItem>
 <TabItem value="slack" label="Slack Integration">
 
-The Slack integration provides a natural way to interact with the Service Explorer agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-agents/slack-app)**.
+The Slack integration provides a natural way to interact with the Service Explorer agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-interfaces/ai-agents/slack-app)**.
 
 You can interact with the Service Explorer agent in two ways:
 1. **Direct message** the Port AI Assistant.
