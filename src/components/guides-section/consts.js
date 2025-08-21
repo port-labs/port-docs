@@ -1415,6 +1415,13 @@ export const availableGuides = [
         link: "/guides/all/self-heal-scorecards-with-ai",
     },
     {
+        title: "Track AI-driven pull requests",
+        description: "Track AI-driven pull requests and visualize them in a dashboard",
+        tags: ["Engineering metrics", "Github Copilot", "Dashboards", "AI"],
+        logos: ["GitHub"],
+        link: "/guides/all/track-ai-driven-pull-requests",
+    },
+    {
         title: "Trigger Claude Code from Port",
         description: "Learn how to trigger Claude Code from Port to enable AI-powered coding assistance",
         tags: ["SDLC", "Claude Code", "AI", "Actions"],
