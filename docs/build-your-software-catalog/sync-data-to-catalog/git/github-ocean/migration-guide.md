@@ -303,7 +303,7 @@ resources:
 
 ### Pull requests
 
-We've introduced a new `states` selector, this allows you to filter which objects are ingested based on their state (e.g., `open`, `closed`). We also add optional selectors to allow fetching pull requests over a time period. #Ai! improve this
+We've introduced new selectors to give you more control over which pull requests are ingested. The `states` selector allows you to filter pull requests by their state (e.g., `open`, `closed`). Additionally, you can use `maxResults` to limit the number of closed pull requests fetched and `since` to fetch pull requests created within a specific time period (in days).
 
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
