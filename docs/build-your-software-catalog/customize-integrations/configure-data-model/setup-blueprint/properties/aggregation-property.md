@@ -1024,6 +1024,12 @@ Count how many deployments are directly related to a cluster:
 resource "port_blueprint" "cluster_blueprint" {
   identifier = "cluster"
   title      = "Cluster"
+  relations = {
+    "deployments_rel" = {
+      title  = "Deployments"
+      target = port_blueprint.deployment_blueprint.identifier
+    }
+  }
 }
 
 resource "port_blueprint" "deployment_blueprint" {
@@ -1067,6 +1073,12 @@ resource "port_blueprint" "deployment_blueprint" {
 resource "port_blueprint" "cluster_blueprint" {
   identifier = "cluster"
   title      = "Cluster"
+  relations = {
+    "deployments_rel" = {
+      title  = "Deployments"
+      target = port_blueprint.deployment_blueprint.identifier
+    }
+  }
 }
 
 resource "port_aggregation_properties" "deployment_aggregation_properties" {
