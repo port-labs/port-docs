@@ -1,6 +1,6 @@
 ---
-sidebar_position: 4
-title: Port MCP Server
+sidebar_position: 1
+title: Overview & Installation
 ---
 
 import Tabs from "@theme/Tabs"
@@ -14,7 +14,7 @@ import TabItem from "@theme/TabItem"
     style={{borderRadius:'4px'}}
     width="568"
     height="320"
-    src="https://www.youtube.com/embed/hxUTTPSApQs" 
+    src="https://www.youtube.com/embed/WrVgQ-whBiE" 
     title="YouTube video player" 
     frameborder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -27,7 +27,7 @@ import TabItem from "@theme/TabItem"
 The Port Model Context Protocol (MCP) Server acts as a bridge, enabling Large Language Models (LLMs)—like those powering Claude, Cursor, or GitHub Copilot—to interact directly with your Port.io developer portal. This allows you to leverage natural language to query your software catalog, analyze service health, manage resources, and even streamline development workflows, all from your preferred interfaces.
 
 :::info AI Agents vs. MCP Server
-The Port MCP Server is currently in open beta and provides significant standalone value, independent of our [AI Agents feature](/ai-agents/overview). Port AI Agents are currently in closed beta with limited access, while the MCP Server gives you immediate access to streamline building in Port, query your catalog, analyze service health, and streamline development workflows using natural language.
+The Port MCP Server is currently in open beta and provides significant standalone value, independent of our [AI Agents feature](/ai-interfaces/ai-agents/overview). Port AI Agents are currently in closed beta with limited access, while the MCP Server gives you immediate access to streamline building in Port, query your catalog, analyze service health, and streamline development workflows using natural language.
 
 While the MCP Server can interact with Port AI Agents when available, the core MCP functionality can be used freely without requiring access to the closed beta AI Agents feature.
 :::
@@ -48,6 +48,21 @@ As one user put it:
 The Port MCP Server directly enables these kinds of valuable, in-context interactions.
 
 ## Key capabilities and use-cases
+
+<center>
+<div className="video-container">
+  <iframe 
+    style={{borderRadius:'4px'}}
+    width="568"
+    height="320"
+    src="https://www.youtube.com/embed/hxUTTPSApQs" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+</center>
 
 The Port MCP Server enables you to interact with your Port data and capabilities directly through natural language within your chosen LLM-powered tools. Here's what you can achieve:
 
@@ -97,11 +112,14 @@ Receive assistance with common development and operational tasks, directly withi
 
 ![Getting instructions for new service setup](/img/ai-agents/MCPClaudeServiceSetup.png)
 
-## Using Port MCP
+### Find your own use cases
 
-### Setup
+You can use Port's MCP to find the use cases that will be valuable to you. Try using this prompt: "think of creative prompts I can use to showcase the power of Port's MCP, based on the data available in Port"
 
-Setting up Port's MCP is simple. Follow the instructions for your preferred tool, or learn about the archived local MCP server.
+
+## Installing Port MCP
+
+Installing Port's MCP is simple. Follow the instructions for your preferred tool, or learn about the archived local MCP server.
 
 <Tabs groupId="mcp-setup" queryString>
 <TabItem value="cursor" label="Cursor">
@@ -283,136 +301,18 @@ The README provides the latest configuration details and examples for different 
 </TabItem>
 </Tabs>
 
-### Available tools
+## Token-based authentication
 
-The Port MCP Server exposes different sets of tools based on your role and use case. The tools you see will depend on your permissions in Port.
+You can also connect using token-based authentication for automated environments like CI/CD pipelines where interactive authentication isn't possible:
 
-<Tabs groupId="user-role" queryString>
-<TabItem value="developer" label="Developer">
+```bash
+curl -X POST "https://api.getport.io/v1/auth/access_token" \
+  -H "Content-Type: application/json" \
+  -d '{"clientId":"YOUR_CLIENT_ID","clientSecret":"YOUR_CLIENT_SECRET"}'
+```
 
-**Developers** are typically users who consume and interact with the developer portal - querying services, running actions, and analyzing data. These tools help you get information and execute approved workflows.
+For complete examples and detailed setup instructions, see our [token-based authentication guide](./token-based-authentication).
 
-**Query and analysis tools**
--   **[`get_blueprints`](/api-reference/get-all-blueprints)**: Retrieve a list of all blueprints from Port.
--   **[`get_blueprint`](/api-reference/get-a-blueprint)**: Retrieve information about a specific blueprint by its identifier.
--   **[`get_entities`](/api-reference/get-all-entities-of-a-blueprint)**: Retrieve all entities for a given blueprint.
--   **[`get_entity`](/api-reference/get-an-entity)**: Retrieve information about a specific entity.
--   **[`get_scorecards`](/api-reference/get-all-scorecards)**: Retrieve all scorecards from Port.
--   **[`get_scorecard`](/api-reference/get-a-scorecard)**: Retrieve information about a specific scorecard by its identifier.
--   **[`describe_user_details`](/api-reference/get-organization-details)**: Get information about your Port account, organization, and user profile details.
--   **`search_port_docs_sources`**: Search through Port documentation sources for relevant information.
--   **`ask_port_docs`**: Ask questions about Port documentation and get contextual answers.
+## Connecting to AI Agents
 
-**Action execution tools**
--   **[`run_<action_identifier>`](/api-reference/execute-a-self-service-action)**: Execute any action you have permission to run in Port. The `action_identifier` corresponds to the identifier of the action you want to run. For example, if you have an action with the identifier `scaffold_microservice`, you can run it using `run_scaffold_microservice`.
-
-**AI agent tools**
--   **[`invoke_ai_agent`](/api-reference/invoke-an-agent)**: Invoke a Port AI agent with a specific prompt.
-
-</TabItem>
-<TabItem value="builder" label="Builder">
-
-**Builders** are typically platform engineers or admins who design and configure the developer portal - creating blueprints, setting up scorecards, and managing the overall structure. These tools help you build and maintain the portal.
-
-**All Developer tools**
-Builders have access to all the tools available to Developers (listed in the Developer tab), plus the additional management tools below.
-
-**Blueprint management tools**
--   **[`create_blueprint`](/api-reference/create-a-blueprint)**: Create a new blueprint in Port.
--   **[`update_blueprint`](/api-reference/update-a-blueprint)**: Update an existing blueprint.
--   **[`delete_blueprint`](/api-reference/delete-a-blueprint)**: Delete a blueprint from Port.
-
-**Entity management tools**
--   **[`create_entity`](/api-reference/create-an-entity)**: Create a new entity for a specific blueprint.
--   **[`update_entity`](/api-reference/update-an-entity)**: Update an existing entity.
--   **[`delete_entity`](/api-reference/delete-an-entity)**: Delete an entity.
-
-**Scorecard management tools**
--   **[`create_scorecard`](/api-reference/create-a-scorecard)**: Create a new scorecard for a specific blueprint.
--   **[`update_scorecard`](/api-reference/change-scorecards)**: Update an existing scorecard.
--   **[`delete_scorecard`](/api-reference/delete-a-scorecard)**: Delete a scorecard from Port.
-
-</TabItem>
-</Tabs>
-
-### Select which tools to use
-
-By default, when you open a chat with Port MCP, all available tools (based on your permissions) are loaded and ready to use. However, you can customize which tools are available if you want to focus on specific workflows.
-
-For example, if you only want to query data from Port without building or modifying anything, you can limit the tools to just the read-only ones. This can help reduce complexity and ensure you don't accidentally make changes.
-
-<Tabs groupId="tool-selection" queryString>
-<TabItem value="cursor" label="Cursor">
-
-In Cursor, you can customize which tools are available through the UI after connecting to Port MCP. Once connected, you can select specific tools through Cursor's interface as shown below.
-
-![Enabling specific tools in Cursor](/img/ai-agents/MCPCursorEnableTools.png)
-
-</TabItem>
-<TabItem value="vscode" label="VSCode">
-
-In VSCode, you can customize which tools are available through the UI after connecting to Port MCP. Once connected, you can select specific tools through VSCode's interface as shown below.
-
-![Enabling specific tools in VSCode](/img/ai-agents/MCPVSCodeEnableTools.png)
-
-</TabItem>
-<TabItem value="claude" label="Claude">
-
-In Claude, you can specify which tools to enable during the custom connector setup process. You'll have the option to select specific tools through Claude's interface rather than enabling all available tools.
-
-![Enabling specific tools in Claude](/img/ai-agents/MCPClaudeEnableTools.png)
-
-Refer to the [Claude custom connector documentation](https://support.anthropic.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp) for detailed instructions on tool selection during setup.
-
-</TabItem>
-</Tabs>
-
-## Troubleshooting
-
-If you encounter issues while setting up or using the Port MCP Server, expand the relevant section below:
-
-<details>
-<summary>How can I connect to the MCP? (Click to expand)</summary>
-
-Refer back to the [setup instructions](/ai-agents/port-mcp-server#setup) for your specific application (Cursor, VSCode, or Claude). Make sure you're using the correct regional URL for your Port organization.
-
-</details>
-
-<details>
-<summary>I completed the connection but nothing happens (Click to expand)</summary>
-
-Check that you've followed all the [setup steps](/ai-agents/port-mcp-server#setup) correctly for your application. Ensure you're authenticated with Port and have the necessary permissions. If you've followed all the steps and still have issues, please reach out to our support team.
-
-</details>
-
-<details>
-<summary>How can I use the MCP server? (Click to expand)</summary>
-
-Once connected, you can interact with Port through natural language in your application's chat interface. Ask questions about your software catalog, request help with building Port resources, or analyze your data. The [available tools](/ai-agents/port-mcp-server#available-tools) depend on your permissions (Developer vs Builder role).
-
-</details>
-
-<details>
-<summary>Why do I see an error about too many tools? (Click to expand)</summary>
-
-Each self-service action in your Port instance becomes an individual tool (as `run_<action_identifier>`). If your organization has many actions, this can result in a large number of tools being available.
-
-While most AI models handle this well, some have restrictions and may limit you to around 40 tools total. If you encounter errors about tool limits:
-
-1. **Reduce the number of tools** by customizing which tools are enabled (see [Select which tools to use](#select-which-tools-to-use) section above)
-2. **Focus on essential tools** by only enabling the read-only tools you need plus a few key actions
-3. **Contact your Port Admin** to review which actions are essential for your workflow
-
-This is completely normal behavior and doesn't indicate a problem with Port MCP - it's just a limitation of some AI models.
-
-</details>
-
-:::tip Getting Help
-If you continue to experience issues, please reach out to Port support with:
-- Your IDE/application version
-- The specific error messages you're seeing
-- Your Port region (EU/US)
-- Steps you've already tried
-
-This information will help us provide more targeted assistance.
-:::
+To connect the Port MCP server to AI agents in CI/CD environments or other automated contexts where interactive authentication isn't possible, see our [token-based authentication](./token-based-authentication).

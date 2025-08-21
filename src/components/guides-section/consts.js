@@ -5,6 +5,7 @@ export const tagsCategoryMap = {
     "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
+        "Github Copilot",
         "GitLab",
         "BitBucket",
         "AzureDevops",
@@ -912,13 +913,7 @@ export const availableGuides = [
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
     },
-    {
-        title: "Create a FireHydrant Incident",
-        description: "Create a self-service action that creates a FireHydrant incident",
-        tags: ["Incident management", "FireHydrant", "GitHub", "Actions","Webhook", "Automations"],
-        logos: ["FireHydrant", "GitHub"],
-        link: "/guides/all/create-firehydrant-incident",
-    },
+
     {
         title: "Create a Linear issue",
         description: "Create a self-service action that creates a Linear issue",
@@ -934,12 +929,12 @@ export const availableGuides = [
         link: "/guides/all/create-incident-io-incident",
     },
     {
-        title: "Trigger a FireHydrant incident",
-        description: "Create a self-service action that triggers a FireHydrant incident",
+        title: "Manage FireHydrant incidents",
+        description: "Create a self-service action that manages FireHydrant incidents",
         tags: ["Incident management", "FireHydrant", "Actions", "Webhook"],
         logos: ["FireHydrant", "GitHub"],
         // category: "Getting started",
-        link: "/guides/all/trigger-firehydrant-incident",
+        link: "/guides/all/manage-firehydrant-incidents",
     },
     {
         title: "Enrich security vulnerabilities using AI",
@@ -1342,11 +1337,81 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
+        title: "Map Git users to Port user accounts",
+        description: "Automatically map Git users to their Port user accounts for seamless integration",
+        tags: ["SDLC","Git", "GitHub", "GitLab", "AzureDevops", "Automations"],
+        logos: ["Git"],
+        link: "/guides/all/map-git-users-to-port-accounts",
+    },
+    {
+        title: "Ingest and map HiBob users to Port user accounts",
+        description: "Ingest and map HiBob users to Port user accounts for seamless integration",
+        tags: ["SDLC","Actions", "Automations", "Webhook"],
+        logos: ["Webhook"],
+        link: "/guides/all/map-hibob-users-to-port-accounts",
+    },
+    {
+        title: "Map Jira users to Port user accounts",
+        description: "Automatically map Jira users to their Port user accounts for seamless integration",
+        tags: ["Jira", "Automations"],
+        logos: ["Jira"],
+        link: "/guides/all/map-jira-users-to-port-accounts",
+    },
+    {
+        title: "Ingest and map Slack users to Port user accounts",
+        description: "Ingest and map Slack users to Port user accounts for seamless integration",
+        tags: ["SDLC", "Slack",  "Actions", "Automations","Webhook"],
+        logos: ["Slack", "Webhook"],
+        link: "/guides/all/map-slack-users-to-port-accounts",
+    },
+    {
+        title: "Ingest and map ServiceNow users to Port user accounts",
+        description: "Ingest and map ServiceNow users to Port user accounts for seamless integration",
+        tags: ["SDLC", "ServiceNow", "Actions", "Automations", "Webhook"],
+        logos: ["ServiceNow", "Webhook"],
+        link: "/guides/all/map-servicenow-users-to-port-accounts",
+    },
+    {
         title: "Generate incident updates with AI",
         description: "Generate incident updates with AI and send them to Slack",
         tags: ["Incident management", "AI", "Automations"],
         logos: ["AI", "Slack", "PagerDuty"],
         link: "/guides/all/generate-incident-updates-with-ai",
+    },
+    {
+        title: "Map PRs to services in a monorepo",
+        description: "Automatically map GitHub pull requests to services in a monorepo using file path analysis",
+        tags: ["SDLC", "GitHub", "Automations"],
+        logos: ["GitHub"],
+        link: "/guides/all/map-prs-to-services-in-monorepo",
+    },
+    {
+        title: "Trigger GitHub Copilot from Port",
+        description: "Learn how to set up GitHub Copilot triggers from Port to enable AI-powered coding assistance",
+        tags: ["SDLC", "Github Copilot", "AI", "Actions"],
+        logos: ["GitHub", "AI"],
+        link: "/guides/all/trigger-github-copilot-from-port",
+    },
+    {
+        title: "Summarize Zendesk tickets with AI",
+        description: "Use Port's remote MCP to fetch ticket context and generate AI summaries on demand",
+        tags: ["AI", "Actions", "Webhook"],
+        logos: ["AI", "Webhook"],
+        link: "/guides/all/generate-zendesk-ticket-summaries-with-ai",
+    },
+    {
+        title: "Automatically resolve tickets with coding agents",
+        description: "Learn how to create an AI agent that automatically resolves tickets with coding agents",
+        tags: ["SDLC", "Jira", "Github Copilot", "AI"],
+        logos: ["Jira", "GitHub", "AI"],
+        link: "/guides/all/automatically-resolve-tickets-with-coding-agents",
+    },
+    {
+        title: "Auto-fix services when scorecards degrade",
+        description: "Learn how to use Port's AI capabilities to detect scorecard degradation and automatically use a coding agent like GitHub Copilot to fix it",
+        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/self-heal-scorecards-with-ai",
     }
 ]
 
