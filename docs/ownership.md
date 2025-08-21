@@ -47,8 +47,7 @@ Users can be synced into Port either manually or automatically, depending on you
 
   Ideal when updating a user with new data — for example, connecting it to a Slack user.
 
-#### Custom integrations
-
+**Custom integrations**:  
 3rd party tools for which Port does not have a built-in integration can be synced manually using the following guides:
 
 - [Slack](https://docs.port.io/guides/all/map-slack-users-to-port-accounts/)
@@ -132,10 +131,9 @@ Users can be synced into Port either manually or automatically, depending on you
 
 - **Custom integrations**: We can create a simple automation to link new Port users to the matching integration user upon creation:
 
-  - [Slack](https://docs.port.io/guides/all/map-slack-users-to-port-accounts/)
-  - [ServiceNow](https://docs.port.io/guides/all/map-servicenow-users-to-port-accounts/)
-  - [HiBob](https://docs.port.io/guides/all/map-hibob-users-to-port-accounts/)
-
+  - [Slack](https://docs.port.io/guides/all/map-slack-users-to-port-accounts/#sync-slack-users-when-a-new-port-user-is-added)
+  - [ServiceNow](https://docs.port.io/guides/all/map-servicenow-users-to-port-accounts/#sync-servicenow-users-when-a-new-port-user-is-added)
+  - [HiBob](https://docs.port.io/guides/all/map-hibob-users-to-port-accounts/#sync-hibob-users-when-a-new-port-user-is-added)
 
 ## Sync Teams
 
