@@ -26,14 +26,14 @@ By the end of this guide, your developers will receive automated, contextual ins
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
+- A Port account with the [AI agents feature enabled](/ai-interfaces/ai-agents/overview#access-to-the-feature).
 - Appropriate permissions to create and configure AI agents.
 - [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) configured in your Port instance.
 - [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) configured in your Port instance.
 
 ## Set up data model
 
-To create an Task Assistant AI agent in Port, we'll need to configure the following components as described in our [Build an AI agent](/ai-agents/build-an-ai-agent) guide:
+To create an Task Assistant AI agent in Port, we'll need to configure the following components as described in our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide:
 -  The data sources it will use to answer questions about tasks and their related issues and collaborators.
 -  The agent configuration that defines its capabilities and conversation starters.
 -  An automation to analyze the task and trigger the agent.

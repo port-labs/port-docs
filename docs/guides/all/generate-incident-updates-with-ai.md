@@ -23,7 +23,7 @@ This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - [PagerDuty integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/) is installed in your account.
 - [GitHub integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
-- You have access to [create and configure AI agents](https://docs.port.io/ai-agents/overview#getting-started-with-ai-agents) in Port.
+- You have access to [create and configure AI agents](https://docs.port.io/ai-interfaces/ai-agents/overview#getting-started-with-ai-agents) in Port.
 
 :::tip Alternative integrations
 While this guide uses PagerDuty and GitHub, you can adapt it for other incident management tools like OpsGenie or FireHydrant, and other Git providers like GitLab or Azure DevOps.
@@ -394,7 +394,7 @@ We will create two automations to orchestrate the AI-enhanced incident managemen
 4. Click `Create` to save the automation.
 
 :::caution Slack token setup
-You will need to add your Slack bot token as a secret in Port. Head to our [guide on how to install the Slack app](https://docs.port.io/ai-agents/slack-app#installation).
+You will need to add your Slack bot token as a secret in Port. Head to our [guide on how to install the Slack app](https://docs.port.io/ai-interfaces/ai-agents/slack-app#installation).
 :::
 
 Below is an example notification sent to Slack:
