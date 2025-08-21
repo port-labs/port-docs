@@ -1,6 +1,6 @@
 ---
 displayed_sidebar: null
-description: Learn how to set up Claude Code triggers from Port to enable AI-powered coding assistance in your development workflow with usage tracking.
+description: Learn how to trigger Claude Code from Port to enable AI-powered coding assistance in your development workflow while tracking its usage.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
