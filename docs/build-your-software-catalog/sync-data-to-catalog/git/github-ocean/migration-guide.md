@@ -208,7 +208,7 @@ resources:
             url: .html_url
             defaultBranch: .default_branch
           relations:
-            admins: "[.collaborators[].login]" # ❌ changed
+            collaborators: "[.collaborators[].login]" # ❌ changed
   ```
 </details>
 
@@ -232,7 +232,7 @@ resources:
             url: .html_url
             defaultBranch: .default_branch
           relations:
-            admins: '[.__collaborators[].login]' # ✅ new
+            collaborators: '[.__collaborators[].login]' # ✅ new
   ```
 </details>
 
