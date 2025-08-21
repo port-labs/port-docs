@@ -269,7 +269,7 @@ To add it, follow these steps:
       "trigger": {
         "type": "automation",
         "event": {
-          "type": "RUN_CREATED",
+          "type": "ANY_RUN_CHANGE",
           "actionIdentifier": "<THE_ACTION_IDENTIFIER>"
         },
         "condition": {
@@ -292,54 +292,6 @@ To add it, follow these steps:
               "updated_at": "{{.event.diff.after.updatedAt}}"
             },
             "relations": {}
-        }
-      },
-      "publish": true
-    }
-    ```
-    </details>
-
-The next automation progresses the status of the `Action run` to keep the entity up to date.  
-To add it, follow these steps:
-
-1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
-
-2. Click on the `+ Automation` button.
-
-3. Click on the `{...} Edit JSON` button in the top right corner.
-
-4. Copy and paste the following JSON configuration into the editor, then click `Save`.
-
-    <details>
-    <summary><b>Progress `Action run` automation definition (click to expand)</b></summary>
-
-    ``` json 
-    {
-      "identifier": "progress_the_action_runs_status",
-      "title": "Progress the action run's entity status",
-      "description": "Move an action run's status when it progresses",
-      "trigger": {
-        "type": "automation",
-        "event": {
-          "type": "RUN_UPDATED",
-          "actionIdentifier": "<THE_ACTION_IDENTIFIER>"
-        },
-        "condition": {
-          "type": "JQ",
-          "expressions": [
-            ".diff.before.status != .diff.after.status"
-          ],
-          "combinator": "and"
-        }
-      },
-      "invocationMethod": {
-        "type": "UPSERT_ENTITY",
-        "blueprintIdentifier": "action_run",
-        "mapping": {
-          "identifier": "{{.event.diff.after.id}}",
-          "properties": {
-            "status": "{{.event.diff.after.status}}"
-          }
         }
       },
       "publish": true
