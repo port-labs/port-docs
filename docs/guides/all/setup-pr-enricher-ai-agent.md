@@ -26,7 +26,7 @@ By the end of this guide, your developers will receive automated, contextual com
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
+- A Port account with the [AI agents feature enabled](/ai-interfaces/ai-agents/overview#access-to-the-feature).
 - Appropriate permissions to create and configure AI agents.
 - [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) configured in your Port instance.
 - [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) configured in your Port instance.
@@ -443,13 +443,13 @@ To get the most out of your PR Enricher agent:
 
 5. **Test the workflow**: Create test pull requests to verify the entire flow works as expected.
 
-6. **Troubleshoot**: If you're not getting the expected results, check our [troubleshooting guide](/ai-agents/interact-with-ai-agents#troubleshooting--faq) for common issues and solutions.
+6. **Troubleshoot**: If you're not getting the expected results, check our [troubleshooting guide](/ai-interfaces/ai-agents/interact-with-ai-agents#troubleshooting--faq) for common issues and solutions.
 
 ## Possible enhancements
 
 You can further enhance the PR Enricher setup by:
 
-- **Adding more data sources** like PagerDuty for incident context or [additional Git providers](/ai-agents/build-an-ai-agent#step-2-configure-data-access) for broader repository visibility.
-- **Configuring automated actions** such as [reviewer assignment, PR labeling, or creating follow-up Jira tickets](/ai-agents/interact-with-ai-agents#actions-and-automations).
-- **Customizing risk assessment criteria** to align with your organization's specific guidelines and [monitoring usage patterns](/ai-agents/interact-with-ai-agents#ai-interaction-details).
+- **Adding more data sources** like PagerDuty for incident context or [additional Git providers](/ai-interfaces/ai-agents/build-an-ai-agent#step-2-configure-data-access) for broader repository visibility.
+- **Configuring automated actions** such as [reviewer assignment, PR labeling, or creating follow-up Jira tickets](/ai-interfaces/ai-agents/interact-with-ai-agents#actions-and-automations).
+- **Customizing risk assessment criteria** to align with your organization's specific guidelines and [monitoring usage patterns](/ai-interfaces/ai-agents/interact-with-ai-agents#ai-interaction-details).
 
