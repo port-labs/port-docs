@@ -71,7 +71,7 @@ A key change is how we denote custom attributes. We now add a double underscore 
 
 ### Files & GitOps
 <details>
-  <summary><b>Existing configuration (click to expand)</b></summary>
+<summary><b>Existing configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -99,7 +99,7 @@ resources:
 </details>
 
 <details>
-  <summary><b>New configuration (click to expand)</b></summary>
+<summary><b>New configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -139,7 +139,7 @@ Fetching related data for a repository, like teams and collaborators, is now man
 #### Repository and teams
 
 <details>
-  <summary><b>Existing configuration (click to expand)</b></summary>
+<summary><b>Existing configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 resources:
@@ -163,7 +163,7 @@ resources:
 </details>
 
 <details>
-  <summary><b>New configuration (click to expand)</b></summary>
+<summary><b>New configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 resources:
@@ -189,7 +189,7 @@ resources:
 #### Repository and collaborators
 
 <details>
-  <summary><b>Existing configuration (click to expand)</b></summary>
+<summary><b>Existing configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 resources:
@@ -213,7 +213,7 @@ resources:
 </details>
 
 <details>
-  <summary><b>New configuration (click to expand)</b></summary>
+<summary><b>New configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 resources:
@@ -349,7 +349,7 @@ resources:
 For the `folder` kind, the `folder.name` attribute is no longer part of the response. Instead, you can easily derive the folder name from the `folder.path` using a JQ expression, as shown in the example below:
 
 <details>
-  <summary><b>Existing configuration (click to expand)</b></summary>
+<summary><b>Existing configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 resources:
@@ -374,7 +374,7 @@ resources:
 </details>
 
 <details>
-  <summary><b>New configuration (click to expand)</b></summary>
+<summary><b>New configuration (click to expand)</b></summary>
 
 
   ```yaml showLineNumbers
@@ -411,7 +411,7 @@ This change has two main consequences:
 2. Team members are now located in a `nodes` subarray within the team object.
 
 <details>
-  <summary><b>Existing configuration (click to expand)</b></summary>
+<summary><b>Existing configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 
@@ -435,7 +435,7 @@ This change has two main consequences:
 </details>
 
 <details>
-  <summary><b>New configuration (click to expand)</b></summary>
+<summary><b>New configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 
@@ -490,6 +490,7 @@ resources:
 
 This section provides a high-level summary of the key breaking changes for mappings.
 
+#AI! add the changed repository relationship to this summary table
 | Area | Old Value | New Value | Notes |
 |---|---|---|---|
 | **Authentication** | GitHub App Installation | PAT or Self-Created GitHub App | The integration can be authenticated using a Personal Access Token (PAT) or a self-created GitHub App. |
