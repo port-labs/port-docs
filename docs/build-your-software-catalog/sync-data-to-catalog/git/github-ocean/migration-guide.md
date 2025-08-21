@@ -134,12 +134,106 @@ Here are the key changes for file mappings:
 
 ### Repository relationships
 
-The way we include `teams` and `collaborators` in a repository has changed.
+We've consolidated how we attach teams and users to a repository using an `include` selector. # AI! improve this
 
 #### Repository and teams
 
 <details>
   <summary><b>Existing configuration (click to expand)</b></summary>
+
+  ```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      teams: true # ❌ changed
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+          relations:
+            githubTeams: "[.teams[].id | tostring]" # ❌ changed
+  ```
+</details>
+
+<details>
+  <summary><b>New configuration (click to expand)</b></summary>
+
+  ```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+      include: "teams" # ✅ new
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+          relations:
+            githubTeams: '[.__teams[].id | tostring]' # ✅ new
+  ```
+</details>
+
+#### Repository and collaborators
+
+<details>
+  <summary><b>Existing configuration (click to expand)</b></summary>
+
+  ```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+      collaborators: true # ❌ changed
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+          relations:
+            admins: "[.collaborators[].login]" # ❌ changed
+  ```
+</details>
+
+<details>
+  <summary><b>New configuration (click to expand)</b></summary>
+
+  ```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+      include: "collaborators" # ✅ new
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+          relations:
+            admins: '[.__collaborators[].login]' # ✅ new
+  ```
 </details>
 
 ### Pull requests and issues
