@@ -40,7 +40,7 @@ integration:
 
 ### Webhooks
 
-The integration now automatically configures webhooks on GitHub to receive live events. To enable this, you must grant your PAT permission to create organization webhooks. Additionally, you need to provide a public URL for the integration. You can do this by setting `liveEvents.baseUrl` when deploying with Helm or ArgoCD, or by setting the `OCEAN__BASE_URL` environment variable when running the integration as a Docker container. [Learn more about enabling live events](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation#deploy-the-integration).
+The integration now automatically configures webhooks on GitHub to receive live events. To enable this, you must grant your PAT permission to create organization webhooks. Additionally, you need to provide a public URL for the integration. You can do this by setting `liveEvents.baseUrl` when deploying with Helm or ArgoCD, or by setting the `OCEAN__BASE_URL` environment variable when running the integration as a Docker container. For more details, please refer to the [live events documentation](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation#enabling-live-events).
 
 ### Deployment
 
