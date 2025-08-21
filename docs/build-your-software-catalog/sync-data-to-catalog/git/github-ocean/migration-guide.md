@@ -521,7 +521,7 @@ This section provides a high-level summary of the key breaking changes for mappi
 | **Workflow Runs** | 10 per repository | 100 per workflow | The number of ingested workflow runs has been increased. |
 | **Repository Type** | N/A | `repositoryType` configuration | A new top-level configuration is available to filter repositories by type (`public`, `private`, or `all`). |
 | **Repository Relationships** | `teams: true`, `collaborators: true` | `include: "teams"`, `include: "collaborators"` | The `include` selector replaces boolean flags for fetching related data. The fetched data is also now prefixed with `__` (e.g., `.__teams`). |
-| **Pull Requests** | `.status` field | `.state` field, `states`, `maxResults`, `since` selectors | The `status` field for pull requests has been renamed to `state`. New selectors are available for more granular filtering. |
+| **Pull Requests** | N/A | `states`, `maxResults`, `since` selectors |  New selectors are available for more granular filtering. |
 | **File** properties | `.file.path` | `.path` | All file properties are now at the top level of the object, no longer nested under `.file`. |
 | **Repository** reference | `.repo` or `.head.repo.name` | `.__repository` | The integration now consistently provides repository information under the `__repository` field for all relevant kinds. |
 | **Folder** name | `.folder.name` | `.folder.path \| split('/') \| last` | The folder name is no longer directly available and should be derived from the folder path using a JQ expression. |
