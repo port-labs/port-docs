@@ -346,7 +346,16 @@ components:
                           path:
                             type: array
                             items:
-                              type: string
+                              anyOf:
+                                - type: string
+                                - type: object
+                                  properties:
+                                    relation:
+                                      type: string
+                                    maxHops:
+                                      type: number
+                                      minimum: 1
+                                      maximum: 15
                           fromBlueprint:
                             type: string
                         required:
@@ -714,7 +723,16 @@ components:
                           path:
                             type: array
                             items:
-                              type: string
+                              anyOf:
+                                - type: string
+                                - type: object
+                                  properties:
+                                    relation:
+                                      type: string
+                                    maxHops:
+                                      type: number
+                                      minimum: 1
+                                      maximum: 15
                           fromBlueprint:
                             type: string
                         required:
@@ -810,6 +828,8 @@ components:
                     type: string
                   icon:
                     type: string
+                  useMCP:
+                    type: boolean
                 additionalProperties: false
                 required:
                   - type
@@ -2072,345 +2092,6 @@ components:
                     type: string
                     enum:
                       - entities-number-chart
-                  dataset:
-                    oneOf:
-                      - type: array
-                        items:
-                          anyOf:
-                            - type: object
-                              title: Date Rule
-                              properties:
-                                property:
-                                  oneOf:
-                                    - type: string
-                                    - type: object
-                                      properties:
-                                        property:
-                                          type: string
-                                        context:
-                                          type: string
-                                          enum:
-                                            - user
-                                            - userTeams
-                                      required:
-                                        - property
-                                        - context
-                                operator:
-                                  enum:
-                                    - between
-                                    - notBetween
-                                    - =
-                                value:
-                                  type: object
-                                  oneOf:
-                                    - type: object
-                                      title: Date Range
-                                      properties:
-                                        from:
-                                          type: string
-                                          format: date-time
-                                        to:
-                                          type: string
-                                          format: date-time
-                                      required:
-                                        - from
-                                        - to
-                                    - type: object
-                                      title: Date Preset
-                                      properties:
-                                        preset:
-                                          type: string
-                                          enum:
-                                            - today
-                                            - tomorrow
-                                            - yesterday
-                                            - lastWeek
-                                            - last2Weeks
-                                            - lastMonth
-                                            - last3Months
-                                            - last6Months
-                                            - last12Months
-                                      required:
-                                        - preset
-                                    - type: object
-                                      properties:
-                                        property:
-                                          type: string
-                                        context:
-                                          type: string
-                                          enum:
-                                            - user
-                                            - userTeams
-                                      required:
-                                        - property
-                                        - context
-                              required:
-                                - property
-                                - operator
-                                - value
-                              additionalProperties: false
-                            - type: object
-                              title: Empty Rule
-                              oneOf:
-                                - type: object
-                                  title: Empty Rule
-                                  properties:
-                                    operator:
-                                      enum:
-                                        - isEmpty
-                                        - isNotEmpty
-                                    property:
-                                      type: string
-                                  required:
-                                    - operator
-                                    - property
-                                  additionalProperties: false
-                            - type: object
-                              title: Number Rule
-                              properties:
-                                property:
-                                  oneOf:
-                                    - type: string
-                                    - type: object
-                                      properties:
-                                        property:
-                                          type: string
-                                        context:
-                                          type: string
-                                          enum:
-                                            - user
-                                            - userTeams
-                                      required:
-                                        - property
-                                        - context
-                                operator:
-                                  enum:
-                                    - ">"
-                                    - ">="
-                                    - <
-                                    - <=
-                                value:
-                                  anyOf:
-                                    - type: number
-                                      title: number
-                                    - type: string
-                                      format: date-time
-                                      title: date-time
-                                    - type: object
-                                      properties:
-                                        property:
-                                          type: string
-                                        context:
-                                          type: string
-                                          enum:
-                                            - user
-                                            - userTeams
-                                      required:
-                                        - property
-                                        - context
-                              required:
-                                - property
-                                - operator
-                                - value
-                              additionalProperties: false
-                            - type: object
-                              title: Expired Rule
-                              oneOf:
-                                - type: object
-                                  title: Expired Rule
-                                  properties:
-                                    operator:
-                                      enum:
-                                        - isExpired
-                                        - isNotExpired
-                                    property:
-                                      type: string
-                                  required:
-                                    - operator
-                                    - property
-                                  additionalProperties: false
-                            - type: object
-                              title: String Rule
-                              oneOf:
-                                - type: object
-                                  title: String Rule
-                                  properties:
-                                    property:
-                                      oneOf:
-                                        - type: string
-                                        - type: object
-                                          properties:
-                                            property:
-                                              type: string
-                                            context:
-                                              type: string
-                                              enum:
-                                                - user
-                                                - userTeams
-                                          required:
-                                            - property
-                                            - context
-                                    operator:
-                                      enum:
-                                        - =
-                                        - "!="
-                                        - containsAny
-                                        - contains
-                                        - doesNotContains
-                                        - beginsWith
-                                        - doesNotBeginsWith
-                                        - endsWith
-                                        - doesNotEndsWith
-                                        - in
-                                        - notIn
-                                    value:
-                                      anyOf:
-                                        - type: "null"
-                                          title: "null"
-                                        - type: string
-                                          title: string
-                                        - type: number
-                                          title: number
-                                        - type: boolean
-                                          title: boolean
-                                        - type: string
-                                          format: date-time
-                                          title: date-time
-                                        - type: array
-                                          items:
-                                            type: string
-                                          title: array
-                                        - type: array
-                                          items:
-                                            type: number
-                                          title: array
-                                        - type: array
-                                          items:
-                                            type: boolean
-                                          title: array
-                                        - type: array
-                                          items:
-                                            type: string
-                                            format: date-time
-                                          title: array
-                                        - type: object
-                                          properties:
-                                            property:
-                                              type: string
-                                            context:
-                                              type: string
-                                              enum:
-                                                - user
-                                                - userTeams
-                                          required:
-                                            - property
-                                            - context
-                                  additionalProperties: false
-                                  required:
-                                    - property
-                                    - operator
-                                    - value
-                            - type: object
-                              title: Relation Rule
-                              properties:
-                                operator:
-                                  enum:
-                                    - relatedTo
-                                blueprint:
-                                  type: string
-                                value:
-                                  anyOf:
-                                    - type: string
-                                      title: string
-                                    - type: array
-                                      items:
-                                        type: string
-                                      title: array
-                                direction:
-                                  enum:
-                                    - upstream
-                                    - downstream
-                                required:
-                                  type: boolean
-                              additionalProperties: false
-                              required:
-                                - operator
-                                - value
-                                - blueprint
-                            - type: object
-                              title: Property schema rule
-                              properties:
-                                propertySchema:
-                                  type: object
-                                  properties:
-                                    type:
-                                      type: string
-                                    format:
-                                      type: string
-                                    items:
-                                      type: object
-                                      properties:
-                                        type:
-                                          type: string
-                                        format:
-                                          type: string
-                                      required:
-                                        - type
-                                  required:
-                                    - type
-                                  additionalProperties: false
-                                operator:
-                                  enum:
-                                    - =
-                                    - "!="
-                                    - contains
-                                value:
-                                  anyOf:
-                                    - type: "null"
-                                      title: "null"
-                                    - type: string
-                                      title: string
-                                    - type: number
-                                      title: number
-                                    - type: boolean
-                                      title: boolean
-                              required:
-                                - operator
-                                - propertySchema
-                              additionalProperties: false
-                            - type: object
-                              anyOf:
-                                - type: object
-                                  properties:
-                                    property:
-                                      type: object
-                                      properties:
-                                        path:
-                                          type: array
-                                          items:
-                                            type: string
-                                        fromBlueprint:
-                                          type: string
-                                      required:
-                                        - path
-                                      additionalProperties: false
-                                    operator:
-                                      type: string
-                                      enum:
-                                        - matchAny
-                                    value:
-                                      anyOf:
-                                        - type: string
-                                        - type: array
-                                          items:
-                                            type: string
-                                  required:
-                                    - property
-                                    - operator
-                                    - value
-                                  additionalProperties: false
-                            - $ref: "#/components/schemas/def-1"
-                      - $ref: "#/components/schemas/def-1"
                   title:
                     type: string
                   icon:
@@ -2484,9 +2165,726 @@ components:
                         - value
                 required:
                   - type
-                  - dataset
                   - unit
                 allOf:
+                  - if:
+                      properties:
+                        chartType:
+                          enum:
+                            - aggregateByProperty
+                      required:
+                        - chartType
+                    then:
+                      properties:
+                        dataset:
+                          oneOf:
+                            - type: array
+                              items:
+                                anyOf:
+                                  - type: object
+                                    title: Date Rule
+                                    properties:
+                                      property:
+                                        oneOf:
+                                          - type: string
+                                          - type: object
+                                            properties:
+                                              property:
+                                                type: string
+                                              context:
+                                                type: string
+                                                enum:
+                                                  - user
+                                                  - userTeams
+                                            required:
+                                              - property
+                                              - context
+                                      operator:
+                                        enum:
+                                          - between
+                                          - notBetween
+                                          - =
+                                      value:
+                                        type: object
+                                        oneOf:
+                                          - type: object
+                                            title: Date Range
+                                            properties:
+                                              from:
+                                                type: string
+                                                format: date-time
+                                              to:
+                                                type: string
+                                                format: date-time
+                                            required:
+                                              - from
+                                              - to
+                                          - type: object
+                                            title: Date Preset
+                                            properties:
+                                              preset:
+                                                type: string
+                                                enum:
+                                                  - today
+                                                  - tomorrow
+                                                  - yesterday
+                                                  - lastWeek
+                                                  - last2Weeks
+                                                  - lastMonth
+                                                  - last3Months
+                                                  - last6Months
+                                                  - last12Months
+                                            required:
+                                              - preset
+                                          - type: object
+                                            properties:
+                                              property:
+                                                type: string
+                                              context:
+                                                type: string
+                                                enum:
+                                                  - user
+                                                  - userTeams
+                                            required:
+                                              - property
+                                              - context
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    title: Empty Rule
+                                    oneOf:
+                                      - type: object
+                                        title: Empty Rule
+                                        properties:
+                                          operator:
+                                            enum:
+                                              - isEmpty
+                                              - isNotEmpty
+                                          property:
+                                            type: string
+                                        required:
+                                          - operator
+                                          - property
+                                        additionalProperties: false
+                                  - type: object
+                                    title: Number Rule
+                                    properties:
+                                      property:
+                                        oneOf:
+                                          - type: string
+                                          - type: object
+                                            properties:
+                                              property:
+                                                type: string
+                                              context:
+                                                type: string
+                                                enum:
+                                                  - user
+                                                  - userTeams
+                                            required:
+                                              - property
+                                              - context
+                                      operator:
+                                        enum:
+                                          - ">"
+                                          - ">="
+                                          - <
+                                          - <=
+                                      value:
+                                        anyOf:
+                                          - type: number
+                                            title: number
+                                          - type: string
+                                            format: date-time
+                                            title: date-time
+                                          - type: object
+                                            properties:
+                                              property:
+                                                type: string
+                                              context:
+                                                type: string
+                                                enum:
+                                                  - user
+                                                  - userTeams
+                                            required:
+                                              - property
+                                              - context
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    title: Expired Rule
+                                    oneOf:
+                                      - type: object
+                                        title: Expired Rule
+                                        properties:
+                                          operator:
+                                            enum:
+                                              - isExpired
+                                              - isNotExpired
+                                          property:
+                                            type: string
+                                        required:
+                                          - operator
+                                          - property
+                                        additionalProperties: false
+                                  - type: object
+                                    title: String Rule
+                                    oneOf:
+                                      - type: object
+                                        title: String Rule
+                                        properties:
+                                          property:
+                                            oneOf:
+                                              - type: string
+                                              - type: object
+                                                properties:
+                                                  property:
+                                                    type: string
+                                                  context:
+                                                    type: string
+                                                    enum:
+                                                      - user
+                                                      - userTeams
+                                                required:
+                                                  - property
+                                                  - context
+                                          operator:
+                                            enum:
+                                              - =
+                                              - "!="
+                                              - containsAny
+                                              - contains
+                                              - doesNotContains
+                                              - beginsWith
+                                              - doesNotBeginsWith
+                                              - endsWith
+                                              - doesNotEndsWith
+                                              - in
+                                              - notIn
+                                          value:
+                                            anyOf:
+                                              - type: "null"
+                                                title: "null"
+                                              - type: string
+                                                title: string
+                                              - type: number
+                                                title: number
+                                              - type: boolean
+                                                title: boolean
+                                              - type: string
+                                                format: date-time
+                                                title: date-time
+                                              - type: array
+                                                items:
+                                                  type: string
+                                                title: array
+                                              - type: array
+                                                items:
+                                                  type: number
+                                                title: array
+                                              - type: array
+                                                items:
+                                                  type: boolean
+                                                title: array
+                                              - type: array
+                                                items:
+                                                  type: string
+                                                  format: date-time
+                                                title: array
+                                              - type: object
+                                                properties:
+                                                  property:
+                                                    type: string
+                                                  context:
+                                                    type: string
+                                                    enum:
+                                                      - user
+                                                      - userTeams
+                                                required:
+                                                  - property
+                                                  - context
+                                        additionalProperties: false
+                                        required:
+                                          - property
+                                          - operator
+                                          - value
+                                  - type: object
+                                    title: Relation Rule
+                                    properties:
+                                      operator:
+                                        enum:
+                                          - relatedTo
+                                      blueprint:
+                                        type: string
+                                      value:
+                                        anyOf:
+                                          - type: string
+                                            title: string
+                                          - type: array
+                                            items:
+                                              type: string
+                                            title: array
+                                      direction:
+                                        enum:
+                                          - upstream
+                                          - downstream
+                                      required:
+                                        type: boolean
+                                    additionalProperties: false
+                                    required:
+                                      - operator
+                                      - value
+                                      - blueprint
+                                  - type: object
+                                    title: Property schema rule
+                                    properties:
+                                      propertySchema:
+                                        type: object
+                                        properties:
+                                          type:
+                                            type: string
+                                          format:
+                                            type: string
+                                          items:
+                                            type: object
+                                            properties:
+                                              type:
+                                                type: string
+                                              format:
+                                                type: string
+                                            required:
+                                              - type
+                                        required:
+                                          - type
+                                        additionalProperties: false
+                                      operator:
+                                        enum:
+                                          - =
+                                          - "!="
+                                          - contains
+                                      value:
+                                        anyOf:
+                                          - type: "null"
+                                            title: "null"
+                                          - type: string
+                                            title: string
+                                          - type: number
+                                            title: number
+                                          - type: boolean
+                                            title: boolean
+                                    required:
+                                      - operator
+                                      - propertySchema
+                                    additionalProperties: false
+                                  - type: object
+                                    anyOf:
+                                      - type: object
+                                        properties:
+                                          property:
+                                            type: object
+                                            properties:
+                                              path:
+                                                type: array
+                                                items:
+                                                  anyOf:
+                                                    - type: string
+                                                    - type: object
+                                                      properties:
+                                                        relation:
+                                                          type: string
+                                                        maxHops:
+                                                          type: number
+                                                          minimum: 1
+                                                          maximum: 15
+                                              fromBlueprint:
+                                                type: string
+                                            required:
+                                              - path
+                                            additionalProperties: false
+                                          operator:
+                                            type: string
+                                            enum:
+                                              - matchAny
+                                          value:
+                                            anyOf:
+                                              - type: string
+                                              - type: array
+                                                items:
+                                                  type: string
+                                        required:
+                                          - property
+                                          - operator
+                                          - value
+                                        additionalProperties: false
+                                  - $ref: "#/components/schemas/def-1"
+                            - $ref: "#/components/schemas/def-1"
+                      required:
+                        - dataset
+                  - if:
+                      properties:
+                        chartType:
+                          enum:
+                            - countEntities
+                      required:
+                        - chartType
+                    then:
+                      properties:
+                        dataset:
+                          oneOf:
+                            - type: array
+                              items:
+                                anyOf:
+                                  - type: object
+                                    title: Date Rule
+                                    properties:
+                                      property:
+                                        oneOf:
+                                          - type: string
+                                          - type: object
+                                            properties:
+                                              property:
+                                                type: string
+                                              context:
+                                                type: string
+                                                enum:
+                                                  - user
+                                                  - userTeams
+                                            required:
+                                              - property
+                                              - context
+                                      operator:
+                                        enum:
+                                          - between
+                                          - notBetween
+                                          - =
+                                      value:
+                                        type: object
+                                        oneOf:
+                                          - type: object
+                                            title: Date Range
+                                            properties:
+                                              from:
+                                                type: string
+                                                format: date-time
+                                              to:
+                                                type: string
+                                                format: date-time
+                                            required:
+                                              - from
+                                              - to
+                                          - type: object
+                                            title: Date Preset
+                                            properties:
+                                              preset:
+                                                type: string
+                                                enum:
+                                                  - today
+                                                  - tomorrow
+                                                  - yesterday
+                                                  - lastWeek
+                                                  - last2Weeks
+                                                  - lastMonth
+                                                  - last3Months
+                                                  - last6Months
+                                                  - last12Months
+                                            required:
+                                              - preset
+                                          - type: object
+                                            properties:
+                                              property:
+                                                type: string
+                                              context:
+                                                type: string
+                                                enum:
+                                                  - user
+                                                  - userTeams
+                                            required:
+                                              - property
+                                              - context
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    title: Empty Rule
+                                    oneOf:
+                                      - type: object
+                                        title: Empty Rule
+                                        properties:
+                                          operator:
+                                            enum:
+                                              - isEmpty
+                                              - isNotEmpty
+                                          property:
+                                            type: string
+                                        required:
+                                          - operator
+                                          - property
+                                        additionalProperties: false
+                                  - type: object
+                                    title: Number Rule
+                                    properties:
+                                      property:
+                                        oneOf:
+                                          - type: string
+                                          - type: object
+                                            properties:
+                                              property:
+                                                type: string
+                                              context:
+                                                type: string
+                                                enum:
+                                                  - user
+                                                  - userTeams
+                                            required:
+                                              - property
+                                              - context
+                                      operator:
+                                        enum:
+                                          - ">"
+                                          - ">="
+                                          - <
+                                          - <=
+                                      value:
+                                        anyOf:
+                                          - type: number
+                                            title: number
+                                          - type: string
+                                            format: date-time
+                                            title: date-time
+                                          - type: object
+                                            properties:
+                                              property:
+                                                type: string
+                                              context:
+                                                type: string
+                                                enum:
+                                                  - user
+                                                  - userTeams
+                                            required:
+                                              - property
+                                              - context
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    title: Expired Rule
+                                    oneOf:
+                                      - type: object
+                                        title: Expired Rule
+                                        properties:
+                                          operator:
+                                            enum:
+                                              - isExpired
+                                              - isNotExpired
+                                          property:
+                                            type: string
+                                        required:
+                                          - operator
+                                          - property
+                                        additionalProperties: false
+                                  - type: object
+                                    title: String Rule
+                                    oneOf:
+                                      - type: object
+                                        title: String Rule
+                                        properties:
+                                          property:
+                                            oneOf:
+                                              - type: string
+                                              - type: object
+                                                properties:
+                                                  property:
+                                                    type: string
+                                                  context:
+                                                    type: string
+                                                    enum:
+                                                      - user
+                                                      - userTeams
+                                                required:
+                                                  - property
+                                                  - context
+                                          operator:
+                                            enum:
+                                              - =
+                                              - "!="
+                                              - containsAny
+                                              - contains
+                                              - doesNotContains
+                                              - beginsWith
+                                              - doesNotBeginsWith
+                                              - endsWith
+                                              - doesNotEndsWith
+                                              - in
+                                              - notIn
+                                          value:
+                                            anyOf:
+                                              - type: "null"
+                                                title: "null"
+                                              - type: string
+                                                title: string
+                                              - type: number
+                                                title: number
+                                              - type: boolean
+                                                title: boolean
+                                              - type: string
+                                                format: date-time
+                                                title: date-time
+                                              - type: array
+                                                items:
+                                                  type: string
+                                                title: array
+                                              - type: array
+                                                items:
+                                                  type: number
+                                                title: array
+                                              - type: array
+                                                items:
+                                                  type: boolean
+                                                title: array
+                                              - type: array
+                                                items:
+                                                  type: string
+                                                  format: date-time
+                                                title: array
+                                              - type: object
+                                                properties:
+                                                  property:
+                                                    type: string
+                                                  context:
+                                                    type: string
+                                                    enum:
+                                                      - user
+                                                      - userTeams
+                                                required:
+                                                  - property
+                                                  - context
+                                        additionalProperties: false
+                                        required:
+                                          - property
+                                          - operator
+                                          - value
+                                  - type: object
+                                    title: Relation Rule
+                                    properties:
+                                      operator:
+                                        enum:
+                                          - relatedTo
+                                      blueprint:
+                                        type: string
+                                      value:
+                                        anyOf:
+                                          - type: string
+                                            title: string
+                                          - type: array
+                                            items:
+                                              type: string
+                                            title: array
+                                      direction:
+                                        enum:
+                                          - upstream
+                                          - downstream
+                                      required:
+                                        type: boolean
+                                    additionalProperties: false
+                                    required:
+                                      - operator
+                                      - value
+                                      - blueprint
+                                  - type: object
+                                    title: Property schema rule
+                                    properties:
+                                      propertySchema:
+                                        type: object
+                                        properties:
+                                          type:
+                                            type: string
+                                          format:
+                                            type: string
+                                          items:
+                                            type: object
+                                            properties:
+                                              type:
+                                                type: string
+                                              format:
+                                                type: string
+                                            required:
+                                              - type
+                                        required:
+                                          - type
+                                        additionalProperties: false
+                                      operator:
+                                        enum:
+                                          - =
+                                          - "!="
+                                          - contains
+                                      value:
+                                        anyOf:
+                                          - type: "null"
+                                            title: "null"
+                                          - type: string
+                                            title: string
+                                          - type: number
+                                            title: number
+                                          - type: boolean
+                                            title: boolean
+                                    required:
+                                      - operator
+                                      - propertySchema
+                                    additionalProperties: false
+                                  - type: object
+                                    anyOf:
+                                      - type: object
+                                        properties:
+                                          property:
+                                            type: object
+                                            properties:
+                                              path:
+                                                type: array
+                                                items:
+                                                  anyOf:
+                                                    - type: string
+                                                    - type: object
+                                                      properties:
+                                                        relation:
+                                                          type: string
+                                                        maxHops:
+                                                          type: number
+                                                          minimum: 1
+                                                          maximum: 15
+                                              fromBlueprint:
+                                                type: string
+                                            required:
+                                              - path
+                                            additionalProperties: false
+                                          operator:
+                                            type: string
+                                            enum:
+                                              - matchAny
+                                          value:
+                                            anyOf:
+                                              - type: string
+                                              - type: array
+                                                items:
+                                                  type: string
+                                        required:
+                                          - property
+                                          - operator
+                                          - value
+                                        additionalProperties: false
+                                  - $ref: "#/components/schemas/def-1"
+                            - $ref: "#/components/schemas/def-1"
+                      required:
+                        - dataset
                   - if:
                       properties:
                         chartType:
@@ -2825,6 +3223,8 @@ components:
                           type: string
                         icon:
                           type: string
+                        useMCP:
+                          type: boolean
                       additionalProperties: false
                       required:
                         - type
@@ -4088,345 +4488,6 @@ components:
                           type: string
                           enum:
                             - entities-number-chart
-                        dataset:
-                          oneOf:
-                            - type: array
-                              items:
-                                anyOf:
-                                  - type: object
-                                    title: Date Rule
-                                    properties:
-                                      property:
-                                        oneOf:
-                                          - type: string
-                                          - type: object
-                                            properties:
-                                              property:
-                                                type: string
-                                              context:
-                                                type: string
-                                                enum:
-                                                  - user
-                                                  - userTeams
-                                            required:
-                                              - property
-                                              - context
-                                      operator:
-                                        enum:
-                                          - between
-                                          - notBetween
-                                          - =
-                                      value:
-                                        type: object
-                                        oneOf:
-                                          - type: object
-                                            title: Date Range
-                                            properties:
-                                              from:
-                                                type: string
-                                                format: date-time
-                                              to:
-                                                type: string
-                                                format: date-time
-                                            required:
-                                              - from
-                                              - to
-                                          - type: object
-                                            title: Date Preset
-                                            properties:
-                                              preset:
-                                                type: string
-                                                enum:
-                                                  - today
-                                                  - tomorrow
-                                                  - yesterday
-                                                  - lastWeek
-                                                  - last2Weeks
-                                                  - lastMonth
-                                                  - last3Months
-                                                  - last6Months
-                                                  - last12Months
-                                            required:
-                                              - preset
-                                          - type: object
-                                            properties:
-                                              property:
-                                                type: string
-                                              context:
-                                                type: string
-                                                enum:
-                                                  - user
-                                                  - userTeams
-                                            required:
-                                              - property
-                                              - context
-                                    required:
-                                      - property
-                                      - operator
-                                      - value
-                                    additionalProperties: false
-                                  - type: object
-                                    title: Empty Rule
-                                    oneOf:
-                                      - type: object
-                                        title: Empty Rule
-                                        properties:
-                                          operator:
-                                            enum:
-                                              - isEmpty
-                                              - isNotEmpty
-                                          property:
-                                            type: string
-                                        required:
-                                          - operator
-                                          - property
-                                        additionalProperties: false
-                                  - type: object
-                                    title: Number Rule
-                                    properties:
-                                      property:
-                                        oneOf:
-                                          - type: string
-                                          - type: object
-                                            properties:
-                                              property:
-                                                type: string
-                                              context:
-                                                type: string
-                                                enum:
-                                                  - user
-                                                  - userTeams
-                                            required:
-                                              - property
-                                              - context
-                                      operator:
-                                        enum:
-                                          - ">"
-                                          - ">="
-                                          - <
-                                          - <=
-                                      value:
-                                        anyOf:
-                                          - type: number
-                                            title: number
-                                          - type: string
-                                            format: date-time
-                                            title: date-time
-                                          - type: object
-                                            properties:
-                                              property:
-                                                type: string
-                                              context:
-                                                type: string
-                                                enum:
-                                                  - user
-                                                  - userTeams
-                                            required:
-                                              - property
-                                              - context
-                                    required:
-                                      - property
-                                      - operator
-                                      - value
-                                    additionalProperties: false
-                                  - type: object
-                                    title: Expired Rule
-                                    oneOf:
-                                      - type: object
-                                        title: Expired Rule
-                                        properties:
-                                          operator:
-                                            enum:
-                                              - isExpired
-                                              - isNotExpired
-                                          property:
-                                            type: string
-                                        required:
-                                          - operator
-                                          - property
-                                        additionalProperties: false
-                                  - type: object
-                                    title: String Rule
-                                    oneOf:
-                                      - type: object
-                                        title: String Rule
-                                        properties:
-                                          property:
-                                            oneOf:
-                                              - type: string
-                                              - type: object
-                                                properties:
-                                                  property:
-                                                    type: string
-                                                  context:
-                                                    type: string
-                                                    enum:
-                                                      - user
-                                                      - userTeams
-                                                required:
-                                                  - property
-                                                  - context
-                                          operator:
-                                            enum:
-                                              - =
-                                              - "!="
-                                              - containsAny
-                                              - contains
-                                              - doesNotContains
-                                              - beginsWith
-                                              - doesNotBeginsWith
-                                              - endsWith
-                                              - doesNotEndsWith
-                                              - in
-                                              - notIn
-                                          value:
-                                            anyOf:
-                                              - type: "null"
-                                                title: "null"
-                                              - type: string
-                                                title: string
-                                              - type: number
-                                                title: number
-                                              - type: boolean
-                                                title: boolean
-                                              - type: string
-                                                format: date-time
-                                                title: date-time
-                                              - type: array
-                                                items:
-                                                  type: string
-                                                title: array
-                                              - type: array
-                                                items:
-                                                  type: number
-                                                title: array
-                                              - type: array
-                                                items:
-                                                  type: boolean
-                                                title: array
-                                              - type: array
-                                                items:
-                                                  type: string
-                                                  format: date-time
-                                                title: array
-                                              - type: object
-                                                properties:
-                                                  property:
-                                                    type: string
-                                                  context:
-                                                    type: string
-                                                    enum:
-                                                      - user
-                                                      - userTeams
-                                                required:
-                                                  - property
-                                                  - context
-                                        additionalProperties: false
-                                        required:
-                                          - property
-                                          - operator
-                                          - value
-                                  - type: object
-                                    title: Relation Rule
-                                    properties:
-                                      operator:
-                                        enum:
-                                          - relatedTo
-                                      blueprint:
-                                        type: string
-                                      value:
-                                        anyOf:
-                                          - type: string
-                                            title: string
-                                          - type: array
-                                            items:
-                                              type: string
-                                            title: array
-                                      direction:
-                                        enum:
-                                          - upstream
-                                          - downstream
-                                      required:
-                                        type: boolean
-                                    additionalProperties: false
-                                    required:
-                                      - operator
-                                      - value
-                                      - blueprint
-                                  - type: object
-                                    title: Property schema rule
-                                    properties:
-                                      propertySchema:
-                                        type: object
-                                        properties:
-                                          type:
-                                            type: string
-                                          format:
-                                            type: string
-                                          items:
-                                            type: object
-                                            properties:
-                                              type:
-                                                type: string
-                                              format:
-                                                type: string
-                                            required:
-                                              - type
-                                        required:
-                                          - type
-                                        additionalProperties: false
-                                      operator:
-                                        enum:
-                                          - =
-                                          - "!="
-                                          - contains
-                                      value:
-                                        anyOf:
-                                          - type: "null"
-                                            title: "null"
-                                          - type: string
-                                            title: string
-                                          - type: number
-                                            title: number
-                                          - type: boolean
-                                            title: boolean
-                                    required:
-                                      - operator
-                                      - propertySchema
-                                    additionalProperties: false
-                                  - type: object
-                                    anyOf:
-                                      - type: object
-                                        properties:
-                                          property:
-                                            type: object
-                                            properties:
-                                              path:
-                                                type: array
-                                                items:
-                                                  type: string
-                                              fromBlueprint:
-                                                type: string
-                                            required:
-                                              - path
-                                            additionalProperties: false
-                                          operator:
-                                            type: string
-                                            enum:
-                                              - matchAny
-                                          value:
-                                            anyOf:
-                                              - type: string
-                                              - type: array
-                                                items:
-                                                  type: string
-                                        required:
-                                          - property
-                                          - operator
-                                          - value
-                                        additionalProperties: false
-                                  - $ref: "#/components/schemas/def-1"
-                            - $ref: "#/components/schemas/def-1"
                         title:
                           type: string
                         icon:
@@ -4500,9 +4561,726 @@ components:
                               - value
                       required:
                         - type
-                        - dataset
                         - unit
                       allOf:
+                        - if:
+                            properties:
+                              chartType:
+                                enum:
+                                  - aggregateByProperty
+                            required:
+                              - chartType
+                          then:
+                            properties:
+                              dataset:
+                                oneOf:
+                                  - type: array
+                                    items:
+                                      anyOf:
+                                        - type: object
+                                          title: Date Rule
+                                          properties:
+                                            property:
+                                              oneOf:
+                                                - type: string
+                                                - type: object
+                                                  properties:
+                                                    property:
+                                                      type: string
+                                                    context:
+                                                      type: string
+                                                      enum:
+                                                        - user
+                                                        - userTeams
+                                                  required:
+                                                    - property
+                                                    - context
+                                            operator:
+                                              enum:
+                                                - between
+                                                - notBetween
+                                                - =
+                                            value:
+                                              type: object
+                                              oneOf:
+                                                - type: object
+                                                  title: Date Range
+                                                  properties:
+                                                    from:
+                                                      type: string
+                                                      format: date-time
+                                                    to:
+                                                      type: string
+                                                      format: date-time
+                                                  required:
+                                                    - from
+                                                    - to
+                                                - type: object
+                                                  title: Date Preset
+                                                  properties:
+                                                    preset:
+                                                      type: string
+                                                      enum:
+                                                        - today
+                                                        - tomorrow
+                                                        - yesterday
+                                                        - lastWeek
+                                                        - last2Weeks
+                                                        - lastMonth
+                                                        - last3Months
+                                                        - last6Months
+                                                        - last12Months
+                                                  required:
+                                                    - preset
+                                                - type: object
+                                                  properties:
+                                                    property:
+                                                      type: string
+                                                    context:
+                                                      type: string
+                                                      enum:
+                                                        - user
+                                                        - userTeams
+                                                  required:
+                                                    - property
+                                                    - context
+                                          required:
+                                            - property
+                                            - operator
+                                            - value
+                                          additionalProperties: false
+                                        - type: object
+                                          title: Empty Rule
+                                          oneOf:
+                                            - type: object
+                                              title: Empty Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - isEmpty
+                                                    - isNotEmpty
+                                                property:
+                                                  type: string
+                                              required:
+                                                - operator
+                                                - property
+                                              additionalProperties: false
+                                        - type: object
+                                          title: Number Rule
+                                          properties:
+                                            property:
+                                              oneOf:
+                                                - type: string
+                                                - type: object
+                                                  properties:
+                                                    property:
+                                                      type: string
+                                                    context:
+                                                      type: string
+                                                      enum:
+                                                        - user
+                                                        - userTeams
+                                                  required:
+                                                    - property
+                                                    - context
+                                            operator:
+                                              enum:
+                                                - ">"
+                                                - ">="
+                                                - <
+                                                - <=
+                                            value:
+                                              anyOf:
+                                                - type: number
+                                                  title: number
+                                                - type: string
+                                                  format: date-time
+                                                  title: date-time
+                                                - type: object
+                                                  properties:
+                                                    property:
+                                                      type: string
+                                                    context:
+                                                      type: string
+                                                      enum:
+                                                        - user
+                                                        - userTeams
+                                                  required:
+                                                    - property
+                                                    - context
+                                          required:
+                                            - property
+                                            - operator
+                                            - value
+                                          additionalProperties: false
+                                        - type: object
+                                          title: Expired Rule
+                                          oneOf:
+                                            - type: object
+                                              title: Expired Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - isExpired
+                                                    - isNotExpired
+                                                property:
+                                                  type: string
+                                              required:
+                                                - operator
+                                                - property
+                                              additionalProperties: false
+                                        - type: object
+                                          title: String Rule
+                                          oneOf:
+                                            - type: object
+                                              title: String Rule
+                                              properties:
+                                                property:
+                                                  oneOf:
+                                                    - type: string
+                                                    - type: object
+                                                      properties:
+                                                        property:
+                                                          type: string
+                                                        context:
+                                                          type: string
+                                                          enum:
+                                                            - user
+                                                            - userTeams
+                                                      required:
+                                                        - property
+                                                        - context
+                                                operator:
+                                                  enum:
+                                                    - =
+                                                    - "!="
+                                                    - containsAny
+                                                    - contains
+                                                    - doesNotContains
+                                                    - beginsWith
+                                                    - doesNotBeginsWith
+                                                    - endsWith
+                                                    - doesNotEndsWith
+                                                    - in
+                                                    - notIn
+                                                value:
+                                                  anyOf:
+                                                    - type: "null"
+                                                      title: "null"
+                                                    - type: string
+                                                      title: string
+                                                    - type: number
+                                                      title: number
+                                                    - type: boolean
+                                                      title: boolean
+                                                    - type: string
+                                                      format: date-time
+                                                      title: date-time
+                                                    - type: array
+                                                      items:
+                                                        type: string
+                                                      title: array
+                                                    - type: array
+                                                      items:
+                                                        type: number
+                                                      title: array
+                                                    - type: array
+                                                      items:
+                                                        type: boolean
+                                                      title: array
+                                                    - type: array
+                                                      items:
+                                                        type: string
+                                                        format: date-time
+                                                      title: array
+                                                    - type: object
+                                                      properties:
+                                                        property:
+                                                          type: string
+                                                        context:
+                                                          type: string
+                                                          enum:
+                                                            - user
+                                                            - userTeams
+                                                      required:
+                                                        - property
+                                                        - context
+                                              additionalProperties: false
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                        - type: object
+                                          title: Relation Rule
+                                          properties:
+                                            operator:
+                                              enum:
+                                                - relatedTo
+                                            blueprint:
+                                              type: string
+                                            value:
+                                              anyOf:
+                                                - type: string
+                                                  title: string
+                                                - type: array
+                                                  items:
+                                                    type: string
+                                                  title: array
+                                            direction:
+                                              enum:
+                                                - upstream
+                                                - downstream
+                                            required:
+                                              type: boolean
+                                          additionalProperties: false
+                                          required:
+                                            - operator
+                                            - value
+                                            - blueprint
+                                        - type: object
+                                          title: Property schema rule
+                                          properties:
+                                            propertySchema:
+                                              type: object
+                                              properties:
+                                                type:
+                                                  type: string
+                                                format:
+                                                  type: string
+                                                items:
+                                                  type: object
+                                                  properties:
+                                                    type:
+                                                      type: string
+                                                    format:
+                                                      type: string
+                                                  required:
+                                                    - type
+                                              required:
+                                                - type
+                                              additionalProperties: false
+                                            operator:
+                                              enum:
+                                                - =
+                                                - "!="
+                                                - contains
+                                            value:
+                                              anyOf:
+                                                - type: "null"
+                                                  title: "null"
+                                                - type: string
+                                                  title: string
+                                                - type: number
+                                                  title: number
+                                                - type: boolean
+                                                  title: boolean
+                                          required:
+                                            - operator
+                                            - propertySchema
+                                          additionalProperties: false
+                                        - type: object
+                                          anyOf:
+                                            - type: object
+                                              properties:
+                                                property:
+                                                  type: object
+                                                  properties:
+                                                    path:
+                                                      type: array
+                                                      items:
+                                                        anyOf:
+                                                          - type: string
+                                                          - type: object
+                                                            properties:
+                                                              relation:
+                                                                type: string
+                                                              maxHops:
+                                                                type: number
+                                                                minimum: 1
+                                                                maximum: 15
+                                                    fromBlueprint:
+                                                      type: string
+                                                  required:
+                                                    - path
+                                                  additionalProperties: false
+                                                operator:
+                                                  type: string
+                                                  enum:
+                                                    - matchAny
+                                                value:
+                                                  anyOf:
+                                                    - type: string
+                                                    - type: array
+                                                      items:
+                                                        type: string
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                              additionalProperties: false
+                                        - $ref: "#/components/schemas/def-1"
+                                  - $ref: "#/components/schemas/def-1"
+                            required:
+                              - dataset
+                        - if:
+                            properties:
+                              chartType:
+                                enum:
+                                  - countEntities
+                            required:
+                              - chartType
+                          then:
+                            properties:
+                              dataset:
+                                oneOf:
+                                  - type: array
+                                    items:
+                                      anyOf:
+                                        - type: object
+                                          title: Date Rule
+                                          properties:
+                                            property:
+                                              oneOf:
+                                                - type: string
+                                                - type: object
+                                                  properties:
+                                                    property:
+                                                      type: string
+                                                    context:
+                                                      type: string
+                                                      enum:
+                                                        - user
+                                                        - userTeams
+                                                  required:
+                                                    - property
+                                                    - context
+                                            operator:
+                                              enum:
+                                                - between
+                                                - notBetween
+                                                - =
+                                            value:
+                                              type: object
+                                              oneOf:
+                                                - type: object
+                                                  title: Date Range
+                                                  properties:
+                                                    from:
+                                                      type: string
+                                                      format: date-time
+                                                    to:
+                                                      type: string
+                                                      format: date-time
+                                                  required:
+                                                    - from
+                                                    - to
+                                                - type: object
+                                                  title: Date Preset
+                                                  properties:
+                                                    preset:
+                                                      type: string
+                                                      enum:
+                                                        - today
+                                                        - tomorrow
+                                                        - yesterday
+                                                        - lastWeek
+                                                        - last2Weeks
+                                                        - lastMonth
+                                                        - last3Months
+                                                        - last6Months
+                                                        - last12Months
+                                                  required:
+                                                    - preset
+                                                - type: object
+                                                  properties:
+                                                    property:
+                                                      type: string
+                                                    context:
+                                                      type: string
+                                                      enum:
+                                                        - user
+                                                        - userTeams
+                                                  required:
+                                                    - property
+                                                    - context
+                                          required:
+                                            - property
+                                            - operator
+                                            - value
+                                          additionalProperties: false
+                                        - type: object
+                                          title: Empty Rule
+                                          oneOf:
+                                            - type: object
+                                              title: Empty Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - isEmpty
+                                                    - isNotEmpty
+                                                property:
+                                                  type: string
+                                              required:
+                                                - operator
+                                                - property
+                                              additionalProperties: false
+                                        - type: object
+                                          title: Number Rule
+                                          properties:
+                                            property:
+                                              oneOf:
+                                                - type: string
+                                                - type: object
+                                                  properties:
+                                                    property:
+                                                      type: string
+                                                    context:
+                                                      type: string
+                                                      enum:
+                                                        - user
+                                                        - userTeams
+                                                  required:
+                                                    - property
+                                                    - context
+                                            operator:
+                                              enum:
+                                                - ">"
+                                                - ">="
+                                                - <
+                                                - <=
+                                            value:
+                                              anyOf:
+                                                - type: number
+                                                  title: number
+                                                - type: string
+                                                  format: date-time
+                                                  title: date-time
+                                                - type: object
+                                                  properties:
+                                                    property:
+                                                      type: string
+                                                    context:
+                                                      type: string
+                                                      enum:
+                                                        - user
+                                                        - userTeams
+                                                  required:
+                                                    - property
+                                                    - context
+                                          required:
+                                            - property
+                                            - operator
+                                            - value
+                                          additionalProperties: false
+                                        - type: object
+                                          title: Expired Rule
+                                          oneOf:
+                                            - type: object
+                                              title: Expired Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - isExpired
+                                                    - isNotExpired
+                                                property:
+                                                  type: string
+                                              required:
+                                                - operator
+                                                - property
+                                              additionalProperties: false
+                                        - type: object
+                                          title: String Rule
+                                          oneOf:
+                                            - type: object
+                                              title: String Rule
+                                              properties:
+                                                property:
+                                                  oneOf:
+                                                    - type: string
+                                                    - type: object
+                                                      properties:
+                                                        property:
+                                                          type: string
+                                                        context:
+                                                          type: string
+                                                          enum:
+                                                            - user
+                                                            - userTeams
+                                                      required:
+                                                        - property
+                                                        - context
+                                                operator:
+                                                  enum:
+                                                    - =
+                                                    - "!="
+                                                    - containsAny
+                                                    - contains
+                                                    - doesNotContains
+                                                    - beginsWith
+                                                    - doesNotBeginsWith
+                                                    - endsWith
+                                                    - doesNotEndsWith
+                                                    - in
+                                                    - notIn
+                                                value:
+                                                  anyOf:
+                                                    - type: "null"
+                                                      title: "null"
+                                                    - type: string
+                                                      title: string
+                                                    - type: number
+                                                      title: number
+                                                    - type: boolean
+                                                      title: boolean
+                                                    - type: string
+                                                      format: date-time
+                                                      title: date-time
+                                                    - type: array
+                                                      items:
+                                                        type: string
+                                                      title: array
+                                                    - type: array
+                                                      items:
+                                                        type: number
+                                                      title: array
+                                                    - type: array
+                                                      items:
+                                                        type: boolean
+                                                      title: array
+                                                    - type: array
+                                                      items:
+                                                        type: string
+                                                        format: date-time
+                                                      title: array
+                                                    - type: object
+                                                      properties:
+                                                        property:
+                                                          type: string
+                                                        context:
+                                                          type: string
+                                                          enum:
+                                                            - user
+                                                            - userTeams
+                                                      required:
+                                                        - property
+                                                        - context
+                                              additionalProperties: false
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                        - type: object
+                                          title: Relation Rule
+                                          properties:
+                                            operator:
+                                              enum:
+                                                - relatedTo
+                                            blueprint:
+                                              type: string
+                                            value:
+                                              anyOf:
+                                                - type: string
+                                                  title: string
+                                                - type: array
+                                                  items:
+                                                    type: string
+                                                  title: array
+                                            direction:
+                                              enum:
+                                                - upstream
+                                                - downstream
+                                            required:
+                                              type: boolean
+                                          additionalProperties: false
+                                          required:
+                                            - operator
+                                            - value
+                                            - blueprint
+                                        - type: object
+                                          title: Property schema rule
+                                          properties:
+                                            propertySchema:
+                                              type: object
+                                              properties:
+                                                type:
+                                                  type: string
+                                                format:
+                                                  type: string
+                                                items:
+                                                  type: object
+                                                  properties:
+                                                    type:
+                                                      type: string
+                                                    format:
+                                                      type: string
+                                                  required:
+                                                    - type
+                                              required:
+                                                - type
+                                              additionalProperties: false
+                                            operator:
+                                              enum:
+                                                - =
+                                                - "!="
+                                                - contains
+                                            value:
+                                              anyOf:
+                                                - type: "null"
+                                                  title: "null"
+                                                - type: string
+                                                  title: string
+                                                - type: number
+                                                  title: number
+                                                - type: boolean
+                                                  title: boolean
+                                          required:
+                                            - operator
+                                            - propertySchema
+                                          additionalProperties: false
+                                        - type: object
+                                          anyOf:
+                                            - type: object
+                                              properties:
+                                                property:
+                                                  type: object
+                                                  properties:
+                                                    path:
+                                                      type: array
+                                                      items:
+                                                        anyOf:
+                                                          - type: string
+                                                          - type: object
+                                                            properties:
+                                                              relation:
+                                                                type: string
+                                                              maxHops:
+                                                                type: number
+                                                                minimum: 1
+                                                                maximum: 15
+                                                    fromBlueprint:
+                                                      type: string
+                                                  required:
+                                                    - path
+                                                  additionalProperties: false
+                                                operator:
+                                                  type: string
+                                                  enum:
+                                                    - matchAny
+                                                value:
+                                                  anyOf:
+                                                    - type: string
+                                                    - type: array
+                                                      items:
+                                                        type: string
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                              additionalProperties: false
+                                        - $ref: "#/components/schemas/def-1"
+                                  - $ref: "#/components/schemas/def-1"
+                            required:
+                              - dataset
                         - if:
                             properties:
                               chartType:
@@ -5352,7 +6130,16 @@ components:
                           path:
                             type: array
                             items:
-                              type: string
+                              anyOf:
+                                - type: string
+                                - type: object
+                                  properties:
+                                    relation:
+                                      type: string
+                                    maxHops:
+                                      type: number
+                                      minimum: 1
+                                      maximum: 15
                           fromBlueprint:
                             type: string
                         required:
@@ -5380,7 +6167,7 @@ components:
       additionalProperties: false
       title: /schemas/entitiesQueryV2
 paths:
-  "/v1/blueprints/{blueprint_identifier}/permissions":
+  /v1/blueprints/{blueprint_identifier}/permissions:
     get:
       summary: Get a blueprint's permissions
       tags:
@@ -5794,7 +6581,16 @@ paths:
                                               path:
                                                 type: array
                                                 items:
-                                                  type: string
+                                                  anyOf:
+                                                    - type: string
+                                                    - type: object
+                                                      properties:
+                                                        relation:
+                                                          type: string
+                                                        maxHops:
+                                                          type: number
+                                                          minimum: 1
+                                                          maximum: 15
                                               fromBlueprint:
                                                 type: string
                                             required:
@@ -6056,7 +6852,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/pages/{page_identifier}/permissions":
+  /v1/pages/{page_identifier}/permissions:
     get:
       summary: Get a page's permissions
       tags:
@@ -6356,7 +7152,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{blueprint_identifier}/entities":
+  /v1/blueprints/{blueprint_identifier}/entities:
     post:
       summary: Create an entity
       tags:
@@ -6821,7 +7617,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/blueprints/{blueprint_identifier}/entities/bulk":
+  /v1/blueprints/{blueprint_identifier}/entities/bulk:
     post:
       summary: Create multiple entities
       tags:
@@ -7146,7 +7942,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}":
+  /v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}:
     patch:
       summary: Update an entity
       tags:
@@ -7951,7 +8747,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{blueprint_identifier}/entities-count":
+  /v1/blueprints/{blueprint_identifier}/entities-count:
     get:
       summary: Get a blueprint's entity count
       tags:
@@ -8020,7 +8816,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/blueprints/{blueprint_identifier}/all-entities":
+  /v1/blueprints/{blueprint_identifier}/all-entities:
     delete:
       summary: Delete all entities of a blueprint
       tags:
@@ -8136,7 +8932,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{blueprint_identifier}/bulk/entities":
+  /v1/blueprints/{blueprint_identifier}/bulk/entities:
     delete:
       summary: Delete multiple entities
       tags:
@@ -8619,7 +9415,16 @@ paths:
                                   path:
                                     type: array
                                     items:
-                                      type: string
+                                      anyOf:
+                                        - type: string
+                                        - type: object
+                                          properties:
+                                            relation:
+                                              type: string
+                                            maxHops:
+                                              type: number
+                                              minimum: 1
+                                              maximum: 15
                                   fromBlueprint:
                                     type: string
                                 required:
@@ -8873,7 +9678,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{blueprint_identifier}/entities/search":
+  /v1/blueprints/{blueprint_identifier}/entities/search:
     post:
       summary: Search a blueprint's entities
       tags:
@@ -12094,7 +12899,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{identifier}":
+  /v1/blueprints/{identifier}:
     get:
       summary: Get a blueprint
       tags:
@@ -15250,7 +16055,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{blueprint_identifier}/properties/{property_identifier}/rename":
+  /v1/blueprints/{blueprint_identifier}/properties/{property_identifier}/rename:
     patch:
       summary: Rename a property in a blueprint
       tags:
@@ -15932,7 +16737,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{blueprint_identifier}/mirror/{property_identifier}/rename":
+  /v1/blueprints/{blueprint_identifier}/mirror/{property_identifier}/rename:
     patch:
       summary: Rename a blueprint's mirror property
       tags:
@@ -16614,7 +17419,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{blueprint_identifier}/relations/{relation_identifier}/rename":
+  /v1/blueprints/{blueprint_identifier}/relations/{relation_identifier}/rename:
     patch:
       summary: Rename a blueprint's relation
       tags:
@@ -18102,7 +18907,16 @@ paths:
                                               path:
                                                 type: array
                                                 items:
-                                                  type: string
+                                                  anyOf:
+                                                    - type: string
+                                                    - type: object
+                                                      properties:
+                                                        relation:
+                                                          type: string
+                                                        maxHops:
+                                                          type: number
+                                                          minimum: 1
+                                                          maximum: 15
                                               fromBlueprint:
                                                 type: string
                                             required:
@@ -19210,7 +20024,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/actions/{action_identifier}":
+  /v1/actions/{action_identifier}:
     put:
       summary: Change an action/automation
       tags:
@@ -20014,7 +20828,16 @@ paths:
                                               path:
                                                 type: array
                                                 items:
-                                                  type: string
+                                                  anyOf:
+                                                    - type: string
+                                                    - type: object
+                                                      properties:
+                                                        relation:
+                                                          type: string
+                                                        maxHops:
+                                                          type: number
+                                                          minimum: 1
+                                                          maximum: 15
                                               fromBlueprint:
                                                 type: string
                                             required:
@@ -21136,7 +21959,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{blueprint_identifier}/actions":
+  /v1/blueprints/{blueprint_identifier}/actions:
     post:
       summary: This route is deprecated since November 20th 2024
       tags:
@@ -21351,7 +22174,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}":
+  /v1/blueprints/{blueprint_identifier}/actions/{action_identifier}:
     put:
       summary: This route is deprecated since November 20th 2024
       tags:
@@ -21560,7 +22383,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/actions/{action_identifier}/runs":
+  /v1/actions/{action_identifier}/runs:
     post:
       summary: Execute a self-service action
       tags:
@@ -21846,7 +22669,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/actions/runs/{run_id}":
+  /v1/actions/runs/{run_id}:
     patch:
       summary: Update an action run
       tags:
@@ -22378,7 +23201,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/actions/runs/{run_id}/approval":
+  /v1/actions/runs/{run_id}/approval:
     patch:
       summary: Approve an action run
       tags:
@@ -22951,7 +23774,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/actions/runs/{run_id}/logs":
+  /v1/actions/runs/{run_id}/logs:
     post:
       summary: Add a log to an action run
       tags:
@@ -23198,7 +24021,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/actions/runs/{run_id}/approvers":
+  /v1/actions/runs/{run_id}/approvers:
     get:
       summary: Get an action run's approvers
       tags:
@@ -23342,7 +24165,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/pages/{identifier}":
+  /v1/pages/{identifier}:
     get:
       summary: Get a page
       tags:
@@ -23499,7 +24322,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/pages/{page_identifier}/widgets/{widget_id}":
+  /v1/pages/{page_identifier}/widgets/{widget_id}:
     patch:
       summary: Update a widget
       tags:
@@ -24169,7 +24992,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/organization/secrets/{secret_name}":
+  /v1/organization/secrets/{secret_name}:
     get:
       summary: Get an organization secret
       tags:
@@ -24451,7 +25274,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/integration/{identifier}":
+  /v1/integration/{identifier}:
     get:
       summary: Get an integration
       tags:
@@ -24930,7 +25753,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/integration/{identifier}/logs":
+  /v1/integration/{identifier}/logs:
     get:
       summary: Get an integration's audit logs
       tags:
@@ -25017,7 +25840,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/integration/{identifier}/config":
+  /v1/integration/{identifier}/config:
     patch:
       summary: Update an integration's config
       tags:
@@ -25326,13 +26149,9 @@ paths:
                       operation:
                         oneOf:
                           - title: Advanced create
-                            description: >-
-                              If the operation is `create`, the [entity
-                              JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
-                              properties must be provided. For example:
-
+                            description: |-
+                              If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
-
                               {
                                 "operation": "create",
                                 "blueprint": "blueprint_identifier",
@@ -25349,7 +26168,6 @@ paths:
                                     "relations": {}
                                 }
                               }
-
                               ```
                             enum:
                               - create
@@ -25502,13 +26320,9 @@ paths:
                         operation:
                           oneOf:
                             - title: Advanced create
-                              description: >-
-                                If the operation is `create`, the [entity
-                                JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
-                                properties must be provided. For example:
-
+                              description: |-
+                                If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                                 ```json
-
                                 {
                                   "operation": "create",
                                   "blueprint": "blueprint_identifier",
@@ -25525,7 +26339,6 @@ paths:
                                       "relations": {}
                                   }
                                 }
-
                                 ```
                               enum:
                                 - create
@@ -25779,7 +26592,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/webhooks/{identifier}":
+  /v1/webhooks/{identifier}:
     patch:
       summary: Update a webhook
       tags:
@@ -25820,13 +26633,9 @@ paths:
                       operation:
                         oneOf:
                           - title: Advanced create
-                            description: >-
-                              If the operation is `create`, the [entity
-                              JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
-                              properties must be provided. For example:
-
+                            description: |-
+                              If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
-
                               {
                                 "operation": "create",
                                 "blueprint": "blueprint_identifier",
@@ -25843,7 +26652,6 @@ paths:
                                     "relations": {}
                                 }
                               }
-
                               ```
                             enum:
                               - create
@@ -25996,13 +26804,9 @@ paths:
                         operation:
                           oneOf:
                             - title: Advanced create
-                              description: >-
-                                If the operation is `create`, the [entity
-                                JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
-                                properties must be provided. For example:
-
+                              description: |-
+                                If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                                 ```json
-
                                 {
                                   "operation": "create",
                                   "blueprint": "blueprint_identifier",
@@ -26019,7 +26823,6 @@ paths:
                                       "relations": {}
                                   }
                                 }
-
                                 ```
                               enum:
                                 - create
@@ -26269,13 +27072,9 @@ paths:
                       operation:
                         oneOf:
                           - title: Advanced create
-                            description: >-
-                              If the operation is `create`, the [entity
-                              JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
-                              properties must be provided. For example:
-
+                            description: |-
+                              If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
-
                               {
                                 "operation": "create",
                                 "blueprint": "blueprint_identifier",
@@ -26292,7 +27091,6 @@ paths:
                                     "relations": {}
                                 }
                               }
-
                               ```
                             enum:
                               - create
@@ -26445,13 +27243,9 @@ paths:
                         operation:
                           oneOf:
                             - title: Advanced create
-                              description: >-
-                                If the operation is `create`, the [entity
-                                JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
-                                properties must be provided. For example:
-
+                              description: |-
+                                If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                                 ```json
-
                                 {
                                   "operation": "create",
                                   "blueprint": "blueprint_identifier",
@@ -26468,7 +27262,6 @@ paths:
                                       "relations": {}
                                   }
                                 }
-
                                 ```
                               enum:
                                 - create
@@ -27285,7 +28078,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/teams/{name}":
+  /v1/teams/{name}:
     get:
       summary: Get a team
       tags:
@@ -28102,7 +28895,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/users/{user_email}":
+  /v1/users/{user_email}:
     get:
       summary: Get a user
       tags:
@@ -28618,7 +29411,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/apps/{id}/rotate-secret":
+  /v1/apps/{id}/rotate-secret:
     post:
       summary: Rotate secret
       tags:
@@ -28735,7 +29528,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/apps/{id}":
+  /v1/apps/{id}:
     delete:
       summary: Delete credentials
       tags:
@@ -28964,7 +29757,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/rotate-credentials/{user_email}":
+  /v1/rotate-credentials/{user_email}:
     post:
       summary: Rotate a user's credentials
       tags:
@@ -29051,7 +29844,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/blueprints/{blueprint_identifier}/scorecards":
+  /v1/blueprints/{blueprint_identifier}/scorecards:
     post:
       summary: Create a scorecard
       tags:
@@ -30613,7 +31406,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}":
+  /v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}:
     put:
       summary: Change a scorecard
       tags:
@@ -31590,7 +32383,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/migrations/{migration_id}":
+  /v1/migrations/{migration_id}:
     get:
       summary: Get a migration
       tags:
@@ -31642,7 +32435,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/migrations/{migration_id}/cancel":
+  /v1/migrations/{migration_id}/cancel:
     post:
       summary: Cancel a migration
       tags:
@@ -31738,7 +32531,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/agent/invoke/{invocation_identifier}":
+  /v1/agent/invoke/{invocation_identifier}:
     get:
       summary: Get an invocation's result
       tags:
@@ -31791,7 +32584,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: A resource with the provided identifier was not found
-  "/v1/agent/{agentIdentifier}/invoke":
+  /v1/agent/{agentIdentifier}/invoke:
     post:
       summary: Invoke a specific agent
       tags:
@@ -32007,7 +32800,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/actions/{action_identifier}/permissions":
+  /v1/actions/{action_identifier}/permissions:
     get:
       summary: Get an action's permissions
       tags:
