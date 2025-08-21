@@ -1,12 +1,12 @@
 name: Claude Docs PR Reviewer
 on:
-  pull_request:
-    types:
-      - synchronize
-      - reopened
-      - opened
-    branches:
-      - main
+  # pull_request:
+  #   types:
+  #     - synchronize
+  #     - reopened
+  #     - opened
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1
 
@@ -40,7 +40,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1
 

@@ -69,7 +69,7 @@ To secure the SAML integration, you need to generate a certificate and send it t
 
 To expose your Okta groups to Port via the application, follow these steps:
 
-1. In the `Sign On` tab of your Okta application, click `Edit`.
+1. In the `General` tab of your Okta application, click `Edit`.
 
 2. Scroll down to the `Group Attribute Statements` section.
 
@@ -82,7 +82,7 @@ To expose your Okta groups to Port via the application, follow these steps:
 
 These groups will be ingested into Port as teams, enabling you to manage user permissions and RBAC in your Port account.
 
- ## SCIM Configuration (beta)
+ <!-- ## SCIM Configuration (beta)
 
 Okta supports [SCIM](https://auth0.com/docs/authenticate/protocols/scim) for SAML applications.
 
@@ -111,4 +111,4 @@ When configuring SCIM:
 - Set the `Unique identifier field` to `userName`.
 - For authenticating the SCIM connection, choose `HTTP Header`, and use the SCIM `token` provided by Port.
 
-:::
+::: -->
