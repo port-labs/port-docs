@@ -8,7 +8,8 @@ import GithubActionModificationHint from '/docs/guides/templates/github/_github_
 
 # Trigger Claude Code from Port
 
-This guide demonstrates how to set up Claude Code triggers from Port, enabling AI-powered coding assistance in your development workflow. By leveraging Claude Code, you can significantly reduce manual coding tasks and enhance productivity, allowing developers to focus on more complex problem-solving. You will learn how to create self-service actions that can trigger Claude Code and configure the necessary GitHub workflows to handle the execution process with comprehensive usage tracking.
+This guide demonstrates how to trigger Claude Code from Port, enabling AI-powered coding assistance in your development workflow. By leveraging Claude Code, you can significantly reduce manual coding tasks and enhance productivity, allowing developers to focus on more complex problem-solving. 
+You will learn how to create self-service actions that can trigger Claude Code and configure the necessary GitHub workflows to handle the execution process with comprehensive usage tracking.
 
 <img src="/img/guides/trigger-claude-code-from-port-flow.jpg" border="1px" width="100%" />
 
