@@ -42,7 +42,8 @@ The token should either have `admin` permissions, or `read` permissions for each
 
 ## Deploy the integration
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 

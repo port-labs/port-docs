@@ -80,7 +80,7 @@ The Slack integration provides the most natural way to interact with Port's AI a
 
 You can interact with agents in two ways:
 
-1. **Direct messaging** the [Port Slack app](/ai-agents/slack-app). This will use the agent router.
+1. **Direct messaging** the [Port Slack app](/ai-interfaces/ai-agents/slack-app). This will use the agent router.
 2. **Mentioning** the app in any channel it's invited to. This will also use the agent router.
 
 When you send a message, the app will:
@@ -277,7 +277,7 @@ AI agents are standard Port entities belonging to the `_ai_agent` blueprint. Thi
 
 You can discover available AI agents in your Port environment in a couple of ways:
 
-1.  **AI Agents Catalog Page**: Navigate to the AI Agents catalog page in Port. This page lists all the agents that have been created in your organization. For more details on creating agents, refer to the [Build an AI agent guide](/ai-agents/build-an-ai-agent).
+1.  **AI Agents Catalog Page**: Navigate to the AI Agents catalog page in Port. This page lists all the agents that have been created in your organization. For more details on creating agents, refer to the [Build an AI agent guide](/ai-interfaces/ai-agents/build-an-ai-agent).
 2.  **Via API**: Programmatically retrieve a list of all AI agents using the Port API. AI agents are entities of the `_ai_agent` blueprint. You can use the [Get all entities of a blueprint API endpoint](https://docs.port.io/api-reference/get-all-entities-of-a-blueprint) to fetch them, specifying `_ai_agent` as the blueprint identifier.
 
 <details>
@@ -379,7 +379,7 @@ For **MCP Server Backend Mode:**
 
 AI agent interactions in Port are designed with security and privacy as a priority.
 
-For more information on security and data handling, see our [AI agents overview](/ai-agents/overview#security-and-data-handling). 
+For more information on security and data handling, see our [AI agents overview](/ai-interfaces/ai-agents/overview#security-and-data-handling). 
 
 ## Troubleshooting & FAQ
 
@@ -409,7 +409,7 @@ We're working on adding direct interaction through the Port UI in the future.
 
 Each agent has optional conversation starters to help you understand what it can help with. The questions you can ask depend on which agents were built in your organization.
 
-For information on building agents with specific capabilities, see our [Build an AI agent](/ai-agents/build-an-ai-agent) guide.
+For information on building agents with specific capabilities, see our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide.
 </details>
 
 <details>
@@ -435,7 +435,7 @@ Remember that AI agents are constantly learning and improving, but they're not i
 <summary><b>My agent isn't responding in Slack (Click to expand)</b></summary>
 
 Ensure that:
-- The [Port Slack app](/ai-agents/slack-app) is properly installed in your workspace.
+- The [Port Slack app](/ai-interfaces/ai-agents/slack-app) is properly installed in your workspace.
 - The app has been invited to the channel where you're mentioning it.
 - You're correctly mentioning the app (@Port).
 - You've completed the authentication flow with the app.
