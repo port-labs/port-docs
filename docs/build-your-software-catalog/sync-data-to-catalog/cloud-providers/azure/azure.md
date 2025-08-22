@@ -26,11 +26,59 @@ Our Azure integration makes it easy to fill the software catalog with data direc
 - Watch for Azure object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Configure relations to other resources in your organization to create complete, easily digestible views of your resources and their relationships inside Port.
 
+## 🔄 Sync Strategies
+
+Port offers two approaches for syncing Azure resources to your software catalog:
+
+### Real-time Sync (Ocean Integration)
+- **Real-time updates** via Azure webhooks and events
+- **Continuous operation** as a persistent service
+- **Best for**: Production environments, real-time monitoring, compliance requirements
+
+### Incremental Sync
+- **Periodic updates** (configurable, default: 15 minutes)
+- **Change detection** using Azure Resource Graph
+- **Best for**: Cost optimization, large environments, development/staging
+
+### Quick Comparison
+
+| Feature | Real-time | Incremental |
+|---------|-----------|-------------|
+| **Update Frequency** | Immediate | Every 15+ minutes |
+| **Resource Usage** | Continuous | Periodic |
+| **Cost** | Higher | Lower |
+| **Setup** | More complex | Simpler |
+
+**Choose Real-time when**: You need immediate updates and have dedicated infrastructure
+**Choose Incremental when**: Near-real-time is sufficient and you want to optimize costs
+
 ## Installation
 
 The Azure exporter can be deployed in multiple ways, including Helm, ContainerApp, Docker and more.
 
 Continue to the [installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/installation.md) guide to learn how to install the Azure exporter.
+
+## Performance Considerations & Best Practices
+
+### Key Settings
+
+- **Change Window**: Start with 15 minutes, adjust based on needs
+- **Resource Types**: Limit to specific types for better performance
+- **Tag Filtering**: Use resource group tags to reduce data volume
+
+### Sync Frequency Recommendations
+
+| Environment | Frequency | Change Window |
+|-------------|-----------|---------------|
+| **Production** | Every 15-30 minutes | 15-30 minutes |
+| **Staging** | Every 30-60 minutes | 30-60 minutes |
+| **Development** | Every 1-2 hours | 60-120 minutes |
+
+### Cost Optimization
+
+- **API Calls**: Only processes changed resources
+- **No Persistent Infrastructure**: Runs only when needed
+- **Efficient Queries**: Uses Azure Resource Graph for change detection
 
 ## Ingest Azure resources
 
@@ -42,6 +90,9 @@ For examples on how to map resources head to the [resource templates](/build-you
 
 - Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.
 - Check out the [Azure Multi Subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md) guide for setting up synchronization of Azure resources.
+- **For real-time sync**: Follow the [installation guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/installation.md) to set up the Ocean-based integration.
+- **For incremental sync**: Use the [incremental sync approach](#incremental-sync-installation) for periodic synchronization via GitHub Actions or scheduled jobs.
+- **Need help choosing?**: Review the [sync strategies comparison](#sync-strategies) to determine the best approach for your use case.
 
 ## Configuration
 
