@@ -232,6 +232,10 @@ Create a blueprint for `Action run`:
             "type": "string",
             "title": "Updated At",
             "format": "date-time"
+          },
+          "action": {
+            "type": "string",
+            "title": "Action"
           }
         },
         "required": []
@@ -289,7 +293,8 @@ To add it, follow these steps:
             "run_url": "https://app.port.io/organization/run?runId={{.event.diff.after.id}}",
             "status": "{{.event.diff.after.status}}",
             "created_at": "{{.event.diff.after.createdAt}}",
-            "updated_at": "{{.event.diff.after.updatedAt}}"
+            "updated_at": "{{.event.diff.after.updatedAt}}",
+            "action": "{{.event.diff.after.action.title}}"
           },
           "relations": {}
         }
@@ -300,12 +305,50 @@ To add it, follow these steps:
     </details>
 
 Once implemented, you can track your self-service action runs and see how they are progressing.  
-For example, you can create the following widget to vizualize the distribution of action runs by their status:
+
+For example, you can create the following widget to vizualize how `Action runs` are distributed by status for a specific `Action` over the past month:
 
 1. Click **`+ Widget`** and select **Pie chart**.
 
-2. Title: `Action run by status`.
+2. Title: `Action runs by status`.
 
 3. Choose the `Action run` blueprint.
 
 4. Under `Breakdown by property`, select the **status** property.
+
+5. Under `Additional filters` you can choose to filter by:
+   - `Action runs` that were created in the last month.
+   - `Action runs` of a specific self-service action.  
+
+    Click on `filters`, then on `{...} Edit JSON`, and add the following snippet with your action title and relevant time frame.  
+    Below is an example JSON:
+
+    <details>
+    <summary><b>filters JSON example (click to expand)</b></summary>
+      ``` json showLineNumbers
+        {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "created_at",
+              "operator": "between",
+              "value": {
+                "from": "2025-07-23T21:00:00.000Z",
+                "to": "2025-08-23T21:00:00.000Z"
+              }
+            },
+            {
+              "property": "action",
+              "operator": "=",
+              "value": "<THE_ACTION_TITLE>"
+            }
+          ]
+        } 
+      ```
+    </details>
+
+6. Click `Save`.
+
+This will result in a widget similar to the following:  
+
+<img src='/img/self-service-actions/actionRunsByStatusPieChart.png' width='50%' border='1px' />
