@@ -169,9 +169,9 @@ For complete examples of self-service actions using GitHub as the backend, check
 
 ## Track self-service actions
 
-To gain visibility into how your self-service actions are being used and their performance, you can set up tracking for action runs. This allows you to monitor execution patterns, track success rates, and maintain audit trails what actions were executed and when. 
+To gain visibility into how your self-service actions are being used and their performance, you can set up tracking for action runs. This allows you to monitor execution patterns, track success rates, and maintain audit trails to follow what actions were executed and when. 
 
-The following tracking system works by creating a dedicated blueprint for action runs and setting up an automation that captures execution details whenever a specific self-service action is triggered as well as an automation that updates the action run's status. This approach can give you a centralized view of all action executions in your software catalog.
+The following tracking system works by creating a dedicated blueprint for action runs and setting up an automation that captures execution details whenever a specific self-service action is triggered as well as an automation that updates the action run's status.
 
 <h3>Set up data model</h3>
 
@@ -245,9 +245,9 @@ Create a blueprint for `Action run`:
     </details>
 
 
-<h3>Define the automations</h3>
+<h3>Define the automation</h3>
 
-The following automation updates the `Action run` entity with initial information regarding this run.  
+The following automation updates the `Action run` entity with information regarding this run.  
 To add it, follow these steps:
 
 1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
@@ -299,4 +299,13 @@ To add it, follow these steps:
     ```
     </details>
 
-Using the blueprint and automation will give you a tracking system that captures all execution details of a self-service action, providing visibility into usage patterns.
+Once implemented, you can track your self-service action runs and see how they are progressing.  
+For example, you can create the following widget to vizualize the distribution of action runs by their status:
+
+1. Click **`+ Widget`** and select **Pie chart**.
+
+2. Title: `Action run by status`.
+
+3. Choose the `Action run` blueprint.
+
+4. Under `Breakdown by property`, select the **status** property.
