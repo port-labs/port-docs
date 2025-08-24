@@ -396,7 +396,7 @@ Follow the steps below to create the action:
 
 Now we'll create the automations that process the Slack users list and sends the response to the webhook for bulk ingestion and single user ingestion.
 
-<h3> Create automation to bulk ingest Slack users</h3>
+### Bulk ingest Slack users
 
 This automation will trigger when the [Sync Slack Users](#sync-slack-users-self-service-action) action is executed.
 It will then process the Slack users list and send the response to the webhook for bulk ingestion.
@@ -460,7 +460,7 @@ Follow the steps below to create the automation:
 
 5. Click `Save` to create the automation.
 
-<h3> Create automation to process single Slack user</h3>
+### Process a single Slack user
 
 This automation will trigger when the [Get Slack user by email](#get-slack-user-by-email-self-service-action) action is executed.
 It will then process the Slack user and send the response to the webhook for single user ingestion.
@@ -521,7 +521,7 @@ Follow the steps below to create the automation:
 5. Click `Save` to create the automation.
 
 
-<h3> Create automation to sync Slack users when a new Port user is added</h3>
+### Sync Slack users when a new Port user is added
 
 To ensure new Port users get mapped to Slack users automatically, we'll create an automation that triggers when a new Port user is created.
 This automation will trigger the [Get Slack user by email](#get-slack-user-by-email-self-service-action) action to fetch details of the Slack user by email and trigger the [process single slack user automation](#create-automation-to-process-single-slack-user) for processing.

@@ -465,7 +465,7 @@ Follow the steps below to create the action:
 
 Now we'll create the automations that process the ServiceNow users list and sends the response to the webhook for bulk ingestion and single user ingestion.
 
-<h3> Create automation to bulk ingest ServiceNow users</h3>
+### Bulk ingest ServiceNow users
 
 This automation will trigger when the [Sync ServiceNow Users](#sync-service-now-users-self-service-action) action is executed.
 It will then process the ServiceNow users list and send the response to the webhook for bulk ingestion.
@@ -529,7 +529,7 @@ Follow the steps below to create the automation:
 5. Click `Save` to create the automation.
 
 
-<h3> Create automation to process single ServiceNow user</h3>
+### Process a single ServiceNow user
 
 This automation will trigger when the [Get ServiceNow user by email](#get-service-now-user-by-email-self-service-action) action is executed.
 It will then process the ServiceNow user and send the response to the webhook for single user ingestion.
@@ -588,8 +588,7 @@ Follow the steps below to create the automation:
 6. Click `Save` to create the automation.
 
 
-
-<h3> Create automation to sync ServiceNow users when a new Port user is added</h3>
+### Sync ServiceNow users when a new Port user is added
 
 To ensure new Port users get mapped to ServiceNow users automatically, we'll create an automation that triggers when a new Port user is created.
 This automation will trigger the [Get ServiceNow user by email](#get-service-now-user-by-email-self-service-action) action to fetch details of the ServiceNow user by email and trigger the [process single ServiceNow user automation](#create-automation-to-process-single-servicenow-user) for processing.
