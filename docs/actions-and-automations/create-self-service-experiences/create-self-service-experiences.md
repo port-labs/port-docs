@@ -310,18 +310,18 @@ For example, you can create the following widget to vizualize how `Action runs` 
 
 1. Click **`+ Widget`** and select **Pie chart**.
 
-2. Title: `Action runs by status`.
+2. Give the widget a `title` and a `description`.
 
 3. Choose the `Action run` blueprint.
 
 4. Under `Breakdown by property`, select the **status** property.
 
 5. Under `Additional filters` you can choose to filter by:
-   - `Action runs` that were created in the last month.
+   - `Action runs` that were created in the past month.
    - `Action runs` of a specific self-service action.  
 
     Click on `filters`, then on `{...} Edit JSON`, and add the following snippet with your action title and relevant time frame.  
-    Below is a JSON example for `Create s3 bucket` self-service action in the last month:
+    Below is a JSON example for `Create s3 bucket` self-service action in the past month:
 
     <details>
     <summary><b>filters JSON example (click to expand)</b></summary>
