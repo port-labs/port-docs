@@ -38,10 +38,31 @@ The Azure exporter can retrieve all the resources supported by the [Azure Resour
 
 For examples on how to map resources head to the [resource templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page.
 
+## Sync Approaches
+
+Port offers multiple approaches for synchronizing Azure resources, each suited for different use cases:
+
+### Azure Exporter (Ocean-based)
+- **Real-time updates** via Azure Event Grid
+- **Full resource scanning** for complete state synchronization
+- **Managed deployment** via Helm, Docker, or ContainerApp
+- **Best for**: Production environments requiring real-time updates and complete resource visibility
+
+### Azure Incremental Sync (Standalone)
+- **Lightweight change detection** via Azure Resource Graph
+- **Efficient polling** with configurable time windows
+- **GitHub Actions deployment** for automated workflows
+- **Best for**: Cost-conscious environments, development/testing, or when Event Grid isn't available
+
+:::tip Choosing the Right Approach
+Use the Azure exporter when you need real-time updates and have Event Grid infrastructure. Use the incremental sync integration when you want lightweight, efficient synchronization with minimal resource usage.
+:::
+
 ## Next Steps
 
 - Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.
 - Check out the [Azure Multi Subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md) guide for setting up synchronization of Azure resources.
+- Learn about [Azure Incremental Sync](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md) for lightweight, efficient change-based synchronization.
 
 ## Configuration
 
