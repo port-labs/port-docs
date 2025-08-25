@@ -380,7 +380,6 @@ Scorecards can be created by three methods:
 -   API
 -   Terraform
 
-<!-- TODO: fix this back to some actual blueprint -->
 
 :::note Available operators
 For more information of which operators you can use in the scorecard rules explained below, refer to the [Promote Scorecards](./overview.md#conditions).
