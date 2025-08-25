@@ -913,7 +913,7 @@ When a `pathFilter` is defined, Port will include only entities that can be reac
 - **Backwards path ←**  
   Following relations backwards, from the target of a relation to its source (e.g., from a service back to its repository).
 
-<h4> Structure </h4>
+**Structure**
 
 | Field                     | Description                                                                                                          |
 |---------------------------|----------------------------------------------------------------------------------------------------------------------|
@@ -921,7 +921,7 @@ When a `pathFilter` is defined, Port will include only entities that can be reac
 | `pathFilter.fromBlueprint`  | *(Optional)* The blueprint to start the path traversal from. Can be the target blueprint or omitted. If omitted, traversal starts from the source blueprint. |
 
 
-<h4> For forwards paths </h4>
+**For forwards paths**
 
 ```json showLineNumbers
 {
@@ -933,7 +933,7 @@ When a `pathFilter` is defined, Port will include only entities that can be reac
 }
 ```
 
-<h4> For backwards paths </h4>
+**For backwards paths**
 
 ```json showLineNumbers
 {
@@ -946,8 +946,7 @@ When a `pathFilter` is defined, Port will include only entities that can be reac
 }
 ```
 
-
-<h4> Examples </h4>
+#### Examples
 
 Suppose you have the following data model:
 
@@ -962,7 +961,7 @@ Suppose you have the following data model:
 
 <TabItem value="api">
 
-<h4>Example 1: Standard Path Filter - forwards path</h4>
+**Example 1: Standard Path Filter - forwards path**
 
 Count how many deployments are directly related to a cluster:
 
@@ -990,7 +989,7 @@ Count how many deployments are directly related to a cluster:
 
 The `pathFilter` with `"path": ["deployments_relation"]` counts deployments that are directly related to the cluster through the `deployments_relation` relation.
 
-<h4>Example 2: Using fromBlueprint - backwards path</h4>
+**Example 2: Using fromBlueprint - backwards path**
 
 Count how many clusters are related to a deployment:
 
@@ -1023,7 +1022,7 @@ The `fromBlueprint: "cluster"` specifies that the path traversal should start fr
 
 <TabItem value="tf">
 
-<h4>Example 1: Standard Path Filter - forwards path</h4>
+**Example 1: Standard Path Filter - forwards path**
 
 Count how many deployments are directly related to a cluster:
 
@@ -1067,7 +1066,7 @@ resource "port_aggregation_properties" "cluster_aggregation_properties" {
 
 The `path = ["deployments_relation"]` counts deployments that are directly related to the cluster through the `deployments_relation` relation.
 
-<h4>Example 2: Using fromBlueprint - backwards path</h4>
+**Example 2: Using fromBlueprint - backwards path**
 
 Count how many clusters are related to a deployment:
 
