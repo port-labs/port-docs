@@ -12,9 +12,12 @@ import HumanitecResourceBlueprint from "/docs/guides/templates/humanitec/_humani
 import HumanitecResourceGraphBlueprint from "/docs/guides/templates/humanitec/_humanitec_resource_graph_blueprint.mdx";
 import HumanitecExporterCacheScript from "/docs/guides/templates/humanitec/_humanitec_exporter_cache.mdx";
 import HumanitecExporterMainScript from "/docs/guides/templates/humanitec/_humanitec_exporter_main.mdx";
+import HumanitecExporterConfig from "/docs/guides/templates/humanitec/_humanitec_exporter_config.mdx";
 import HumanitecExporterRequirements from "/docs/guides/templates/humanitec/_humanitec_exporter_requirements.mdx";
 import HumanitecExporterPortClient from "/docs/guides/templates/humanitec/_humanitec_exporter_port_client.mdx";
 import HumanitecExporterHumanitecClient from "/docs/guides/templates/humanitec/_humanitec_exporter_humanitec_client.mdx";
+import HumanitecExporterCircuitBreaker from "/docs/guides/templates/humanitec/_humanitec_exporter_circuit_breaker.mdx";
+import HumanitecExporterRetryableHttpClient from "/docs/guides/templates/humanitec/_humanitec_exporter_retryable_http_client.mdx";
 import HumanitecGroups from "/docs/guides/templates/humanitec/_humanitec_groups.mdx";
 import HumanitecUsers from "/docs/guides/templates/humanitec/_humanitec_users.mdx";
 import HumanitecPipelines from "/docs/guides/templates/humanitec/_humanitec_pipelines.mdx";
@@ -103,6 +106,7 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 
 1. Create the following Python files in a folder named `integration` at the base directory of your GitHub repository:
     - `main.py` - Orchestrates the synchronization of data from Humanitec to Port, ensuring that resource entities are accurately mirrored and updated on your Port catalog.
+    - `config.py` - Contains the configuration constants for the integration, including cache TTL, connection pooling, and other settings.
     - `requirements.txt` - This file contains the dependencies or necessary external packages need to run the integration
 
 
@@ -111,6 +115,13 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
     <summary><b>Main Executable Script (Click to expand)</b></summary>
 
     <HumanitecExporterMainScript/>
+
+    </details>
+
+    <details>
+    <summary><b>Config (Click to expand)</b></summary>
+
+    <HumanitecExporterConfig/>
 
     </details>
 
@@ -127,6 +138,8 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
     - `port_client.py` – Manages authentication and API requests to Port, facilitating the creation and updating of entities within Port's system.
     - `humanitec_client.py` – Handles API interactions with Humanitec, including retrieving data with caching mechanisms to optimize performance.
     - `cache.py` - Provides an in-memory caching mechanism with thread-safe operations for setting, retrieving, and deleting cache entries asynchronously.
+    - `circuit_breaker.py` - Implements a circuit breaker pattern to handle transient failures in API calls, preventing cascading failures and improving the reliability of the integration.
+    - `retryable_http_client.py` - Provides a retryable HTTP client with exponential backoff and jitter to handle failed API calls due to disonnected HTTP connections.
 
   <details>
   <summary><b>Port Client (Click to expand)</b></summary>
@@ -149,6 +162,21 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
   <HumanitecExporterCacheScript/>
 
   </details>
+
+  <details>
+  <summary><b>Circuit Breaker (Click to expand)</b></summary>
+
+  <HumanitecExporterCircuitBreaker/>
+
+  </details>
+
+
+  <details>
+
+  <HumanitecExporterRetryableHttpClient/>
+
+  </details>
+
 
 ### Create the GitHub workflow
 

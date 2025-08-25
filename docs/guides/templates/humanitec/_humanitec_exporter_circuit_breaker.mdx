@@ -1,0 +1,91 @@
+```python showLineNumbers title="circuit_breaker.py"
+
+import time
+import asyncio
+from typing import Optional, Callable, Any
+from loguru import logger
+
+
+class CircuitBreaker:
+    """
+    Circuit breaker pattern to prevent cascading failures.
+    """
+    
+    def __init__(
+        self,
+        failure_threshold: int = 5,
+        recovery_timeout: float = 60.0,
+        expected_exception: type = Exception
+    ):
+        self.failure_threshold = failure_threshold
+        self.recovery_timeout = recovery_timeout
+        self.expected_exception = expected_exception
+        
+        self.failure_count = 0
+        self.last_failure_time = None
+        self.state = "CLOSED"  # CLOSED, OPEN, HALF_OPEN
+        
+    def _can_attempt_reset(self) -> bool:
+        """Check if enough time has passed to attempt reset."""
+        if self.last_failure_time is None:
+            return True
+        
+        return time.time() - self.last_failure_time >= self.recovery_timeout
+    
+    def _record_failure(self):
+        """Record a failure and potentially open the circuit."""
+        self.failure_count += 1
+        self.last_failure_time = time.time()
+        
+        if self.failure_count >= self.failure_threshold:
+            self.state = "OPEN"
+            logger.warning(f"Circuit breaker opened after {self.failure_count} failures")
+    
+    def _record_success(self):
+        """Record a success and reset the circuit."""
+        self.failure_count = 0
+        self.last_failure_time = None
+        if self.state == "HALF_OPEN":
+            self.state = "CLOSED"
+            logger.info("Circuit breaker closed after successful request")
+    
+    async def call(self, func: Callable, *args, **kwargs) -> Any:
+        """
+        Execute a function with circuit breaker protection.
+        
+        Args:
+            func: The function to execute
+            *args: Arguments for the function
+            **kwargs: Keyword arguments for the function
+            
+        Returns:
+            The result of the function call
+            
+        Raises:
+            Exception: If the circuit is open or the function fails
+        """
+        if self.state == "OPEN":
+            if self._can_attempt_reset():
+                self.state = "HALF_OPEN"
+                logger.info("Circuit breaker attempting half-open state")
+            else:
+                raise Exception(f"Circuit breaker is OPEN. Last failure: {self.last_failure_time}")
+        
+        try:
+            result = await func(*args, **kwargs)
+            self._record_success()
+            return result
+            
+        except self.expected_exception as e:
+            self._record_failure()
+            raise e
+    
+    def get_state(self) -> str:
+        """Get the current state of the circuit breaker."""
+        return self.state
+    
+    def get_failure_count(self) -> int:
+        """Get the current failure count."""
+        return self.failure_count 
+
+```
