@@ -1061,11 +1061,13 @@ Consider the following as next steps:
    - Self-service action: Create a self-service action to improve OWASP Tiers for specific repositories.
    - Create an initiative within Port to reduce a specific security weakness or promote a specific tier as a standard operating procedure.
 
-### Create scorecards using the API
+### Scorecards API examples
 
 :::note
 Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer to [Getting an API token](../build-your-software-catalog/custom-integration/api/api.md#get-api-token).
 :::
+
+#### Create scorecards
 
 In order to create a scorecard from the API, you will make a PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`.
 
@@ -1078,118 +1080,126 @@ Here are some request examples that will create the Scorecard of Ownership on th
 
 <TabItem value="python">
 
-```python showLineNumbers
-# Dependencies to install:
-# $ python -m pip install requests
+<details>
+<summary><b>Create scorecards python example (click to expand)</b></summary>
 
-# the access_token variable should already have the token from previous examples
+    ```python showLineNumbers
+    # Dependencies to install:
+    # $ python -m pip install requests
 
-import requests
+    # the access_token variable should already have the token from previous examples
 
-API_URL = 'https://api.getport.io/v1'
+    import requests
 
-blueprint_name = 'microservice'
+    API_URL = 'https://api.getport.io/v1'
 
-scorecards = [
-  {
-    'identifier': 'Ownership',
-    'title': 'Ownership',
-    'rules': [
+    blueprint_name = 'microservice'
+
+    scorecards = [
       {
-        'identifier': 'hasSlackChannel',
-        'title': 'Has Slack Channel',
-        'level': 'Silver',
-        'query': {
-          'combinator': 'and',
-          'conditions': [{'operator': 'isNotEmpty', 'property': 'slackChannel'}]
-        }
-      },
-      {
-        'identifier': 'hasTeam',
-        'title': 'Has Team',
-        'level': 'Bronze',
-        'query': {
-          'combinator': 'and',
-          'conditions': [{'operator': 'isNotEmpty', 'property': '$team'}]
-        }
+        'identifier': 'Ownership',
+        'title': 'Ownership',
+        'rules': [
+          {
+            'identifier': 'hasSlackChannel',
+            'title': 'Has Slack Channel',
+            'level': 'Silver',
+            'query': {
+              'combinator': 'and',
+              'conditions': [{'operator': 'isNotEmpty', 'property': 'slackChannel'}]
+            }
+          },
+          {
+            'identifier': 'hasTeam',
+            'title': 'Has Team',
+            'level': 'Bronze',
+            'query': {
+              'combinator': 'and',
+              'conditions': [{'operator': 'isNotEmpty', 'property': '$team'}]
+            }
+          }
+        ]
       }
     ]
-  }
-]
 
-headers = {
-    'Authorization': f'Bearer {access_token}'
-}
+    headers = {
+        'Authorization': f'Bearer {access_token}'
+    }
 
-response = requests.put(f'{API_URL}/blueprints/{blueprint_name}/scorecards', json=scorecards, headers=headers)
+    response = requests.put(f'{API_URL}/blueprints/{blueprint_name}/scorecards', json=scorecards, headers=headers)
 
-```
+    ```
+</details>
 
 </TabItem>
 
 <TabItem value="javascript">
 
-```javascript showLineNumbers
-// Dependencies to install:
-// $ npm install axios --save
+<details>
+<summary><b>Create scorecards javaScript example (click to expand)</b></summary>
 
-// the accessToken variable should already have the token from previous examples
+    ```javascript showLineNumbers
+    // Dependencies to install:
+    // $ npm install axios --save
 
-const axios = require("axios").default;
+    // the accessToken variable should already have the token from previous examples
 
-const API_URL = "https://api.getport.io/v1";
+    const axios = require("axios").default;
 
-const blueprintName = "microservice";
+    const API_URL = "https://api.getport.io/v1";
 
-const scorecards = [
-    {
-        identifier: "Ownership",
-        title: "Ownership",
-        rules: [
-            {
-                identifier: "hasSlackChannel",
-                title: "Has Slack Channel",
-                level: "Bronze",
-                query: {
-                    combinator: "and",
-                    conditions: [
-                        {
-                            operator: "isNotEmpty",
-                            property: "slackChannel",
-                        },
-                    ],
+    const blueprintName = "microservice";
+
+    const scorecards = [
+        {
+            identifier: "Ownership",
+            title: "Ownership",
+            rules: [
+                {
+                    identifier: "hasSlackChannel",
+                    title: "Has Slack Channel",
+                    level: "Bronze",
+                    query: {
+                        combinator: "and",
+                        conditions: [
+                            {
+                                operator: "isNotEmpty",
+                                property: "slackChannel",
+                            },
+                        ],
+                    },
                 },
-            },
-            {
-                identifier: "hasTeam",
-                title: "Has Team",
-                level: "Silver",
-                query: {
-                    combinator: "and",
-                    conditions: [
-                        {
-                            operator: "isNotEmpty",
-                            property: "$team",
-                        },
-                    ],
+                {
+                    identifier: "hasTeam",
+                    title: "Has Team",
+                    level: "Silver",
+                    query: {
+                        combinator: "and",
+                        conditions: [
+                            {
+                                operator: "isNotEmpty",
+                                property: "$team",
+                            },
+                        ],
+                    },
                 },
-            },
-        ],
-    },
-];
+            ],
+        },
+    ];
 
-const config = {
-    headers: {
-        Authorization: `Bearer ${accessToken}`,
-    },
-};
+    const config = {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    };
 
-const response = await axios.put(
-    `${API_URL}/blueprints/${blueprintName}/scorecards`,
-    scorecards,
-    config
-);
-```
+    const response = await axios.put(
+        `${API_URL}/blueprints/${blueprintName}/scorecards`,
+        scorecards,
+        config
+    );
+    ```
+</details>
 
 </TabItem>
 
@@ -1220,7 +1230,7 @@ We can see that the `hasSlackChannel` rule passed because we provided one to tha
 
 Therefore the level of the entity is `Bronze` because it passed all the rules in the `Bronze` level (hasSlackChannel)
 
-### Update scorecards using the API
+#### Update scorecards
 
 To update a scorecard you can use 2 different URLs:
 
@@ -1229,7 +1239,7 @@ To update a scorecard you can use 2 different URLs:
 
 The request body will include the existing body of the Scorecard, after the desired updates to the existing Scorecard have been applied.
 
-### Delete scorecards using the API
+#### Delete scorecards
 
 :::danger
 A Scorecard cannot be restored after deletion!

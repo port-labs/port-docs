@@ -374,11 +374,11 @@ For example, these services have some rules defined in their scorecards, and we 
 
 Scorecards can be created by three methods:
 
--   Port's UI (see below)
--   [Port's API](/api-reference/port-api)
--   [Terraform](../../build-your-software-catalog/custom-integration/iac/terraform/)
+-   [Port's UI](#using-the-ui)
+-   [Port's API](/api-reference/port-api) (To see API reference examples, refer to the [examples](/promote-scorecards/examples) page)
+-   [Terraform](#using-terraform)
 
-**From the UI**
+### Using the UI
 
 To create a scorecard from the UI:
 
@@ -444,7 +444,9 @@ Paste the following content inside the editor to create the scorecards of this e
   ```
 </details>
 
-**From Terraform**
+### Using Terraform
+
+**Create scorecards**
 
 In order to create a scorecard from the [Terraform provider](../../build-your-software-catalog/custom-integration/iac/terraform/) , you will need to use the `port_scorecard` resource.
 
@@ -492,35 +494,15 @@ Here is an example of how to create an Ownership scorecard with the Terraform pr
     ```
 </details>
 
-### Update Scorecards
-
-To update Scorecards, we can use the same URL and payload we have used before with the `id` that the backend generated for that scorecard.
-
-And just as we have shown earlier in the tutorial, you can update a Scorecard from the UI or from the API.
-
-**From the UI**
-
-In order to update a Scorecard from the UI, go to the DevPortal Builder page, expand the desired blue print, and switch to the Scorecards tab.
-
-An editor window will open with the current scorecards of the Blueprint. In order to update the Scorecard, change the wanted scorecard within the scorecards array, click on `save` at the bottom right corner of the editor and view the updated Scorecards.
-
-**From Terraform**
+**Update scorecards**
 
 In order to update a scorecard with the Terraform provider, you will need to run the `terraform apply -target=port_scorecard.<resourceId>` command with the updated scorecard resource.
 
-### Delete Scorecards
+**Delete Scorecards**
 
 :::danger
 A Scorecard cannot be restored after deletion!
 :::
-
-You can delete Scorecards through the UI or the API:
-
-**From the UI**
-
-To delete a Scorecard through the UI, go to the Builder page, expand the Blueprint and switch to the Scorecards tab. Hover the desired Scorecard and select "Delete Scorecard" from the three dot menu.
-
-**From Terraform**
 
 In order to delete a scorecard using the Terraform provider, use the `terraform destroy -target=port_scorecard.<resourceId>` command with the scorecard resource you want to delete. (remember that it is also possible to remove the definition of the `port_scorecard` resource from the `.tf` file and run `terraform apply`)
 
