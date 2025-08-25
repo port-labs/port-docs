@@ -201,6 +201,40 @@ export const liveEvents = {
     \n - privatized \
     \n - archived \
     \n - deleted \
+    \n\n **issues:** \
+    \n - assigned \
+    \n - closed \
+    \n - demilestoned \
+    \n - edited \
+    \n - labeled \
+    \n - locked \
+    \n - milestoned \
+    \n - opened \
+    \n - pinned \
+    \n - reopened \
+    \n - transferred \
+    \n - typed \
+    \n - unassigned \
+    \n - unlabeled \
+    \n - unlocked \
+    \n - unpinned \
+    \n - untyped \
+    \n - deleted \
+    \n\n **team:** \
+    \n - created \
+    \n - edited \
+    \n - deleted \
+    \n - added_to_repository \
+  \n\n **membership:** \
+    \n - added \
+    \n - removed \
+  \n\n **member:** \
+    \n - added \
+    \n - edited \
+    \n - removed \
+  \n\n **organization:** \
+    \n - member_added \
+    \n - member_removed \
     \n\n **pull_request:** \
     \n - opened \
     \n - edited \
