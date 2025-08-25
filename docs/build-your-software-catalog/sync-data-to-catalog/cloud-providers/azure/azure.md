@@ -43,10 +43,10 @@ For examples on how to map resources head to the [resource templates](/build-you
 Port offers multiple approaches for synchronizing Azure resources, each suited for different use cases:
 
 ### Azure Exporter (Ocean-based)
-- **Real-time updates** via Azure Event Grid
+- **Change notifications** via Azure Event Grid (when configured)
 - **Full resource scanning** for complete state synchronization
 - **Managed deployment** via Helm, Docker, or ContainerApp
-- **Best for**: Production environments requiring real-time updates and complete resource visibility
+- **Best for**: Production environments requiring comprehensive resource visibility and Event Grid change notifications
 
 ### Azure Incremental Sync (Standalone)
 - **Lightweight change detection** via Azure Resource Graph
@@ -55,7 +55,7 @@ Port offers multiple approaches for synchronizing Azure resources, each suited f
 - **Best for**: Cost-conscious environments, development/testing, or when Event Grid isn't available
 
 :::tip Choosing the Right Approach
-Use the Azure exporter when you need real-time updates and have Event Grid infrastructure. Use the incremental sync integration when you want lightweight, efficient synchronization with minimal resource usage.
+Use the Azure exporter when you need comprehensive resource scanning and can set up Event Grid for change notifications. Use the incremental sync integration when you want lightweight, efficient synchronization with minimal resource usage and don't have Event Grid infrastructure.
 :::
 
 ## Next Steps
