@@ -43,19 +43,19 @@ For examples on how to map resources head to the [resource templates](/build-you
 Port offers multiple approaches for synchronizing Azure resources, each suited for different use cases:
 
 ### Azure Exporter (Ocean-based)
-- **Change notifications** via Azure Event Grid (when configured)
-- **Full resource scanning** for complete state synchronization
+- **Full resource scanning** for complete state synchronization via **Azure Resource Manager (ARM) REST API**
+- **Change notifications** via Azure Event Grid (**available only in the Terraform deployment**)
 - **Managed deployment** via Helm, Docker, or ContainerApp
-- **Best for**: Production environments requiring comprehensive resource visibility and Event Grid change notifications
+- **Best for**: Production environments requiring comprehensive resource visibility, full resource schema, and real-time Event Grid updates(With Terraform)
 
 ### Azure Incremental Sync (Standalone)
 - **Lightweight change detection** via Azure Resource Graph
 - **Efficient polling** with configurable time windows
 - **GitHub Actions deployment** for automated workflows
-- **Best for**: Cost-conscious environments, development/testing, or when Event Grid isn't available
+- **Best for**: Production environments requiring comprehensive resource visibility, full resource schema, and real-time Event Grid updates
 
 :::tip Choosing the Right Approach
-Use the Azure exporter when you need comprehensive resource scanning and can set up Event Grid for change notifications. Use the incremental sync integration when you want lightweight, efficient synchronization with minimal resource usage and don't have Event Grid infrastructure.
+Use the Azure exporter when you need comprehensive resource scanning and can set up Event Grid for change notifications. Use the incremental sync integration when you want lightweight, efficient synchronization with minimal resource, don't have Event Grid infrastructure or partial schema coverage is acceptable.
 :::
 
 ## Next Steps

@@ -24,22 +24,22 @@ The integration queries Azure Resource Graph's change history tables:
 ### Query Strategy
 
 1. **Incremental Mode**: Queries changes within a configurable time window (default: 15 minutes)
-2. **Full Sync Mode**: Retrieves all current resources for initial onboarding
+2. **Full sync**: You can run a manual full sync workflow once to get all existing Azure resources into Port before relying on incremental polling.
 3. **Smart Joins**: Combines change data with current resource metadata for complete information
+
 
 ### Key Benefits
 
 | Approach | Advantages | Considerations |
 |----------|------------|----------------|
-| **Incremental Sync** | Fast, low-cost, minimal API usage, efficient change detection | Requires frequent polling to avoid missed changes |
-| **Full Sync** | Always complete state, no missed changes | High latency and heavy resource usage |
-| **Event Grid** | Near real-time, push-based updates | Requires infrastructure setup and Event Grid configuration |
+| **Azure Exporter (Ocean-based)** - **Full Sync + Event Grid** | **Complete schema** from ARM APIs; initial full sync plus **push-based** near real-time updates via Event Grid (**Terraform deployment only**) | Requires Terraform deployment for Event Grid; heavier API usage for full scans |
+| **Azure Incremental Sync (Standalone)** - **Polling ARG** | **Lightweight** and cost-efficient; detects and ingests only recent changes via Azure Resource Graph; simple to deploy (e.g., GitHub Actions) | **Partial schema** (limited to ARG fields); **polling** must run frequently to avoid missed changes |
+
 
 ## When to Use
 
-- **Use incremental sync** for efficient synchronization that polls Azure every few minutes
-- **Use full sync** for initial onboarding or occasional resyncs
-- **Use Event Grid** for ultra-fast updates if you already have infrastructure to support event subscriptions
+- **Use the Azure Exporter (Ocean-based)** when you need the **full ARM schema** plus **near real-time** updates through **Event Grid** (best for production and comprehensive visibility).  
+- **Use the Azure Incremental Sync** when you need **lightweight change tracking** through **Azure Resource Graph polling**, can accept a **partial schema**, and want a simple scheduled workflow (e.g., GitHub Actions).
 
 ## Prerequisites
 
@@ -253,17 +253,19 @@ The integration provides detailed logging:
 - **Port operations**: Webhook ingestion status
 - **Rate limiting**: Automatic backoff notifications
 
+
 ## Comparison with Azure Exporter
 
 | Feature | Azure Exporter | Incremental Sync Integration |
-|---------|------------------------|------------------------------|
+|---------|------------------------------|------------------------------|
 | **Architecture** | Ocean-based integration | Standalone Python application |
+| **APIs Used** | **Azure Resource Manager (ARM) REST API** + **Event Grid** | **Azure Resource Graph (ARG)** (`resources`, `resourcechanges`, `resourcecontainerchanges`) |
+| **Schema Depth** | **Complete schema**: full set of fields from ARM APIs | **Partial schema**: limited to fields exposed by ARG tables |
 | **Deployment** | Helm, Docker, ContainerApp | GitHub Actions, local execution |
 | **Change Detection** | Event Grid, full rescans | Azure Resource Graph change history |
-| **Real-time Updates** | Yes (with Event Grid) | Near real-time (configurable polling) |
+| **Real-time Updates** | Yes (**Event Grid, Terraform only**) | Near real-time (configurable polling) |
 | **Resource Usage** | Higher (full resource scanning) | Lower (change-based detection) |
 | **Setup Complexity** | Medium (Ocean integration) | Low (standalone app) |
-| **Maintenance** | Managed by Ocean updates | Self-maintained |
 
 ## Next Steps
 
