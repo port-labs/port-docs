@@ -10,9 +10,9 @@ description: Learn how to send Slack messages to users using Port's Slack app an
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Send Slack message
+# Send Slack messages using Port automations
 
-This guide will walk you through setting up automations to send Slack messages to users using Port's Slack app.
+This guide demonstrates how to set up automations to send Slack messages to users using Port's Slack app.
 In this guide, we will use the email addresses from Port integrations (such as GitHub, GitLab, Jira, etc.) to look up the corresponding Slack user IDs and send targeted messages to those users.
 
 ## Common use cases
@@ -26,7 +26,7 @@ In this guide, we will use the email addresses from Port integrations (such as G
 ## Prerequisites
 
 - A Port account with **admin** permissions.
-- Port's [Slack app](/ai-agents/slack-app) installed in your workspace.
+- Port's [Slack app](/ai-interfaces/ai-agents/slack-app) installed in your workspace.
 - Access to the Slack app bot token (automatically created as a system secret).
 
 :::tip Slack app setup
