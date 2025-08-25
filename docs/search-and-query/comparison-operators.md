@@ -249,39 +249,15 @@ The `notBetween` operator checks datetime values and returns entities whose rele
 
 ### contains
 
-The `contains` operator compares string properties based on the target property type:
-
-<Tabs values={[
-{label: "String property", value: "stringProp"},
-{label: "Array property", value: "arrayProp"}
-]}>
-
-<TabItem value="stringProp">
-When used on a string property, the operator will check if the value is contained inside the property:
+The `contains` operator checks if the specified value exists within a string property:
 
 ```json showLineNumbers
 {
   "property": "myStringProperty",
-  "operator": "myStringProperty",
+  "operator": "contains",
   "value": "mySubString"
 }
 ```
-
-</TabItem>
-
-<TabItem value="arrayProp">
-When used on a string array property, the operator will check if the value is equal to one of the strings in the array:
-
-```json showLineNumbers
-{
-  "property": "myStringArrayProp",
-  "operator": "contains",
-  "value": "myString"
-}
-```
-</TabItem>
-
-</Tabs>
 
 ### doesNotContains
 
@@ -297,7 +273,7 @@ The `contains` operator checks if the specified value **does not** exists in the
 
 ### containsAny
 
-The `containsAny` operator checks if **any** of the specified strings exist in the target array:
+The `containsAny` operator checks if **any** of the specified strings exist in the target **array**:
 
 ```json showLineNumbers
 {
@@ -309,7 +285,7 @@ The `containsAny` operator checks if **any** of the specified strings exist in t
 
 ### beginsWith
 
-The `beginsWith` operator checks if the specified property starts with the specified value**
+The `beginsWith` operator checks if the specified property starts with the specified value:
 
 ```json showLineNumbers
 {
@@ -321,7 +297,7 @@ The `beginsWith` operator checks if the specified property starts with the speci
 
 ### doesNotBeginsWith
 
-The `doesNotBeginsWith` operator checks if the specified property **does not** start with the specified value
+The `doesNotBeginsWith` operator checks if the specified property **does not** start with the specified value:
 
 ```json showLineNumbers
 {
@@ -333,7 +309,7 @@ The `doesNotBeginsWith` operator checks if the specified property **does not** s
 
 ### endsWith
 
-The `endsWith` operator checks if the specified property ends with the specified value
+The `endsWith` operator checks if the specified property ends with the specified value:
 
 ```json showLineNumbers
 {
@@ -345,7 +321,7 @@ The `endsWith` operator checks if the specified property ends with the specified
 
 ### doesNotEndsWith
 
-The `doesNotEndsWith` operator checks if the specified property **does not** end with the specified value
+The `doesNotEndsWith` operator checks if the specified property **does not** end with the specified value:
 
 ```json showLineNumbers
 {
@@ -357,7 +333,7 @@ The `doesNotEndsWith` operator checks if the specified property **does not** end
 
 ### in
 
-The `in` operator checks if a `string` property is equal to one or more specified `string` values
+The `in` operator checks if a `string` property is equal to one or more specified `string` values:
 
 <Tabs values={[
 {label: "Standard", value: "array"},
@@ -378,7 +354,7 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 
 <TabItem value="myTeamsDynamicFilter">
 
-In order to filter entities that **belong to one or more of your teams** you can use the special `My Teams` filter.
+In order to filter entities that **belong to one or more of your teams** you can use the special `My Teams` filter:
 
 ```json showLineNumbers
 {
@@ -398,7 +374,7 @@ You can also use the `My Teams` filter in the UI:
 
 ### notIn
 
-The `notIn` operator checks if a `string` property is **not equal** to all of the specified `string` values
+The `notIn` operator checks if a `string` property is **not equal** to all of the specified `string` values:
 
 ```json showLineNumbers
 {
