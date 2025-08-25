@@ -27,7 +27,9 @@ The following advanced configuration parameters are available:
 <Tabs groupId="advanced" queryString="current-config-param" defaultValue="resyncInterval" values={[
 {label: "Resync Interval", value: "resyncInterval"},
 {label: "State Key", value: "stateKey"},
-{label: "Verbosity (Log Level)", value: "verbosity"},
+{label: "Logging Level", value: "logging"},
+{label: "Metrics", value: "metrics"},
+{label: "Bulk Sync", value: "bulkSync"},
 {label: "Event listener type", value: "eventListenerType"},
 {label: "CRDs to discover", value: "crdsToDiscover"},
 ]} >
@@ -83,12 +85,41 @@ If a new resync trigger consistently aborts a running resync, it means that your
 
 </TabItem>
 
-<TabItem value="verbosity">
+<TabItem value="logging">
 
-The `verbosity` parameter is used to control the verbosity level of info logs in K8s exporter's pod.
+The `loggingLevel` parameter is used to control the level of logs in the K8s exporter's pod.
 
-- **Default value**: `0` (show all info and error logs, including info logs of successful updates)
-- **Use case**: Set the value to `-1`, if you want to clear out info logs of successful entity updates. Error logs and some info logs (initialization and teardown logs), will be reported.
+- **Default value**: `info` - show all info and error logs, including info logs of successful updates.
+- **Use case**: Set the value to `error` if you want to include error logs only (and exclude info logs).
+
+</TabItem>
+
+<TabItem value="metrics">
+
+The `metricsEnabled` parameter is used to control if the k8s exporter would expose a `/metrics` endpoint compatible with OTLP.
+
+- **Default value**: `true`
+
+The `metricsPort` parameter is used to control the port number of the metrics server.
+
+- **Default value**: `9090`
+- **Use case**: Set the value to a different port if you do not wish to expose the metrics server on `9090`.
+
+</TabItem>
+
+<TabItem value="bulkSync">
+
+The `bulkSyncMaxPayloadBytes` parameter is used to control the size (in bytes) of the bulk upserts to Port.
+
+- **Default value**: `1048576`
+
+The `bulkSyncMaxEntitiesPerBatch` parameter is used to control the number of entities to be sent as part of a bulk upsert to Port.
+
+- **Default value**: `20`
+
+The `bulkSyncBatchTimeoutSeconds` parameter is used to control the time (in seconds) to wait until flushing a bulk upsert to Port (even if the maximum number/size of entities has not been reached).
+
+- **Default value**: `5`
 
 </TabItem>
 

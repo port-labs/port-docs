@@ -184,7 +184,7 @@ export const liveEvents = {
     \n- repo:refs_changed \
     \n\n**Project:** \
     \n- project:modified",
-  Aikido: 
+  Aikido:
     '**Issues:** \
     \n- issue.open.created \
     \n- issue.snoozed \
@@ -201,16 +201,73 @@ export const liveEvents = {
     \n - privatized \
     \n - archived \
     \n - deleted \
+    \n\n **issues:** \
+    \n - assigned \
+    \n - closed \
+    \n - demilestoned \
+    \n - edited \
+    \n - labeled \
+    \n - locked \
+    \n - milestoned \
+    \n - opened \
+    \n - pinned \
+    \n - reopened \
+    \n - transferred \
+    \n - typed \
+    \n - unassigned \
+    \n - unlabeled \
+    \n - unlocked \
+    \n - unpinned \
+    \n - untyped \
+    \n - deleted \
+    \n\n **team:** \
+    \n - created \
+    \n - edited \
+    \n - deleted \
+    \n - added_to_repository \
+  \n\n **membership:** \
+    \n - added \
+    \n - removed \
+  \n\n **member:** \
+    \n - added \
+    \n - edited \
+    \n - removed \
+  \n\n **organization:** \
+    \n - member_added \
+    \n - member_removed \
     \n\n **pull_request:** \
-     \n - opened \
-     \n - edited \
-     \n - ready_for_review \
-     \n - reopened \
-     \n - synchronize \
-     \n - unassigned \
-     \n - review_request_removed \
-     \n - closed \
-    \n\n **push** ",
+    \n - opened \
+    \n - edited \
+    \n - ready_for_review \
+    \n - reopened \
+    \n - synchronize \
+    \n - unassigned \
+    \n - review_request_removed \
+    \n - closed \
+    \n\n **push** \
+    \n\n **workflow_run:** \
+    \n - in_progress \
+    \n - requested \
+    \n - completed \
+    \n\n **dependabot_alert** \
+    \n - created \
+    \n - reopened \
+    \n - auto_reopened \
+    \n - reintroduced \
+    \n - dismissed \
+    \n - auto_dismissed \
+    \n - fixed \
+    \n\n **code_scanning_alert** \
+    \n - appeared_in_branch \
+    \n - reopened \
+    \n - created \
+    \n - fixed \
+    \n - closed_by_user \
+    \n\n **deployment** \
+    \n\n **deployment_status** \
+    \n\n **release:** \
+    \n - created \
+    \n - edited",
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

@@ -68,7 +68,8 @@ The following scopes are required based on your usage.
  
 ## Deploy the integration
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -115,7 +116,7 @@ integration:
     type: POLLING
   config:
   // highlight-next-line
-    gitlabUrl: https://gitlab.com # Or your self-hosted GitLab URL
+    gitlabHost: https://gitlab.com # Or your self-hosted GitLab URL
   secrets:
   // highlight-next-line
     gitlabToken: GITLAB_TOKEN
@@ -191,7 +192,7 @@ This table summarizes the available parameters for the installation.
 | `integration.identifier`         | Change the identifier to describe your integration                                                                                  | ✅        |
 | `integration.type`               | The integration type                                                                                                                | ✅        |
 | `integration.eventListener.type` | The event listener type                                                                                                             | ✅        |
-| `integration.config.gitlabUrl`   | The GitLab instance URL                                                                                                     | ✅        |
+| `integration.config.gitlabHost`   | The GitLab instance URL                                                                                                     | ✅        |
 | `integration.secrets.gitlabToken`| The GitLab access token                                                                                                     | ✅        |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
@@ -240,7 +241,7 @@ jobs:
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           port_base_url: https://api.getport.io
           config: |
-            gitlabUrl: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITLAB_URL }}
+            gitlabHost: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITLAB_HOST }}
             gitlabToken: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN }}
 ```
 
@@ -270,7 +271,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITLAB_URL', variable: 'OCEAN__INTEGRATION__CONFIG__GITLAB_URL'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITLAB_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__GITLAB_HOST'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
@@ -284,7 +285,7 @@ pipeline {
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__GITLAB_URL=$OCEAN__INTEGRATION__CONFIG__GITLAB_URL \
+                                -e OCEAN__INTEGRATION__CONFIG__GITLAB_HOST=$OCEAN__INTEGRATION__CONFIG__GITLAB_HOST \
                                 -e OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -330,7 +331,7 @@ steps:
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
         -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
-        -e OCEAN__INTEGRATION__CONFIG__GITLAB_URL=$(OCEAN__INTEGRATION__CONFIG__GITLAB_URL) \
+        -e OCEAN__INTEGRATION__CONFIG__GITLAB_HOST=$(OCEAN__INTEGRATION__CONFIG__GITLAB_HOST) \
         -e OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN=$(OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
@@ -374,7 +375,7 @@ ingest_data:
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
         -e OCEAN__SEND_RAW_DATA_EXAMPLES=true  \
-        -e OCEAN__INTEGRATION__CONFIG__GITLAB_URL=$OCEAN__INTEGRATION__CONFIG__GITLAB_URL \
+        -e OCEAN__INTEGRATION__CONFIG__GITLAB_HOST=$OCEAN__INTEGRATION__CONFIG__GITLAB_HOST \
         -e OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \

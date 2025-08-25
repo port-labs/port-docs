@@ -42,11 +42,19 @@ This page outlines the following steps:
 - **Setup URL:** Leave this empty.
 - Uncheck **Active** under Webhooks. The [integration will automatically create the webhook if you configure the `OCEAN__BASE_URL`](#enabling-live-events) variable later during deployment.
 - **Repository Permissions:**
+  - Actions: Readonly (for syncing Workflows).
   - Checks: Readonly (for syncing `Port.yml`).
   - Contents: Readonly (for reading port configuration files and repository files).
   - Metadata: Readonly.
+  - Administration: Readonly (for syncing collaborators)
   - Pull Request: Readonly
+  - Code scanning alerts: Readonly
+  - Dependabot alerts: Readonly
+  - Deployments: Readonly
+  - Environments: Readonly
 - **Organization Permissions:**
+  - Members: Readonly (for syncing members and teams).
+  - Administration: Readonly(for syncing external identities)
   - Webhooks: Read and Write (to allow the integration create webhook).
 
 Then select "Create GitHub App"

@@ -355,7 +355,7 @@ This is particularly important for sensitive operations like production deployme
         }
       },
       "conditions": [
-        "[.results.approvingUsers.entities[] | select(.identifier != \"{{.trigger.user.email}}\") | .identifier]"
+        ".trigger.user.email as $executor | [.results.approvingUsers.entities[] | select(.identifier != $executor) | .identifier]"
       ]
     }
   }
@@ -376,7 +376,7 @@ Here's what's happening in each part:
 
 3. **The Key Condition**:
    ```json
-   "[.results.approvingUsers.entities[] | select(.identifier != \"{{.trigger.user.email}}\") | .identifier]"
+   ".trigger.user.email as $executor | [.results.approvingUsers.entities[] | select(.identifier != $executor) | .identifier]"
    ```
    This JQ expression:
    - Takes all moderator users from our query results.
