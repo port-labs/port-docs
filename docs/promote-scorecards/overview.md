@@ -255,7 +255,7 @@ Conditions are small boolean checks that help when determining the final status 
 
 | Field      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 |------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` below                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` (see all available operators below)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or any other standard entity property such as `slack_channel` including [Mirror Properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) and [Calculation Properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) |
 | `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
@@ -399,11 +399,14 @@ To create a scorecard from the UI:
      - `Blueprint` - Set to the blueprint you selected.
      - `Filter` - 
    - In the second tab (`Rules`), specify the scorecard's rules:
+     - Add [rule elements](/#rule-elements) to each [level](#levels), you can also edit the level names or add more levels.
+4. Click `Save` to create the scorecard.
 
 **Scorecard JSON structure**
 
-If you prefer, you can create the scorecard in a JSON form. Click on the `{...} Edit JSON` button in the top right corner of the scorecard creation form.
-An editor window will open with the current JSON array of the defined Scorecards. Since there is no Scorecard configured on the Blueprint at the moment, the `scorecard` arrays will be empty.  
+If you prefer, you can create the scorecard in a JSON form.  
+Click on the `{...} Edit JSON` button in the top right corner of the scorecard creation form. An editor window will open with the current JSON array of the defined Scorecards. Since there is no Scorecard configured on the Blueprint at the moment, the `scorecard` arrays will be empty.  
+
 Paste the following content inside the editor to create the scorecards of this example:
 
 <details>
