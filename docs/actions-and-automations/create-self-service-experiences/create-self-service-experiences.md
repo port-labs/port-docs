@@ -321,29 +321,28 @@ For example, you can create the following widget to vizualize how `Action runs` 
    - `Action runs` of a specific self-service action.  
 
     Click on `filters`, then on `{...} Edit JSON`, and add the following snippet with your action title and relevant time frame.  
-    Below is an example JSON:
+    Below is a JSON example for `Create s3 bucket` self-service action in the last month:
 
     <details>
     <summary><b>filters JSON example (click to expand)</b></summary>
       ``` json showLineNumbers
-        {
-          "combinator": "and",
-          "rules": [
-            {
-              "property": "created_at",
-              "operator": "between",
-              "value": {
-                "from": "2025-07-23T21:00:00.000Z",
-                "to": "2025-08-23T21:00:00.000Z"
-              }
-            },
-            {
-              "property": "action",
-              "operator": "=",
-              "value": "<THE_ACTION_TITLE>"
+      {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "created_at",
+            "operator": "between",
+            "value": {
+              "preset": "lastMonth"
             }
-          ]
-        } 
+          },
+          {
+            "property": "action",
+            "operator": "=",
+            "value": "Create s3 bucket" // Change the value to your action name
+          }
+        ]
+      }
       ```
     </details>
 
@@ -351,4 +350,4 @@ For example, you can create the following widget to vizualize how `Action runs` 
 
 This will result in a widget similar to the following:  
 
-<img src='/img/self-service-actions/actionRunsByStatusPieChart.png' width='50%' border='1px' />
+<img src='/img/self-service-actions/actionRunsPieChartExample.png' width='70%' border='1px' />
