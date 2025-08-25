@@ -908,8 +908,10 @@ The `pathFilter` option lets you control which entities are included in your agg
 
 When a `pathFilter` is defined, Port will include only entities that can be reached through the exact relationship path you specify.
 
-- **Forwards path**: Following relations forwards, from the source of a relation to its target (e.g., from a repository to its services)
-- **Backwards path**: Following relations backwards, from the target of a relation to its source (e.g., from a service back to its repository)
+- **Forwards path →**  
+  Following relations forwards, from the source of a relation to its target (e.g., from a repository to its services).
+- **Backwards path ←**  
+  Following relations backwards, from the target of a relation to its source (e.g., from a service back to its repository).
 
 <h4> Structure </h4>
 
@@ -949,7 +951,9 @@ When a `pathFilter` is defined, Port will include only entities that can be reac
 
 Suppose you have the following data model:
 
-![Blueprints graph diagram](/img/software-catalog/blueprint/pathFilterDiagramExample.png)
+<img src='/img/software-catalog/blueprint/pathFilterDiagramExample.png' width='90%' border='1px' />
+<br></br>
+<br></br>
 
 <Tabs groupId="path-filter-examples" defaultValue="api" values={[
 {label: "API", value: "api"},
