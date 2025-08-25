@@ -13,9 +13,7 @@ description: Learn how to automatically create a Slack channel and GitHub issue 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Automatically create Slack channel and GitHub issue for PagerDuty incidents
-
-## Overview
+# Auto-create Slack channel & GitHub issue for PagerDuty incidents
 
 This guide demonstrates how to set up an automated incident management system that creates a dedicated Slack channel and GitHub issue whenever a PagerDuty incident is reported.
 
@@ -101,7 +99,7 @@ To support our automated incident management workflow, we need to modify the exi
 
 5. Click "Save" to update the blueprint.
 
-:::note Service identifier mapping
+:::info Service identifier mapping
 For simplicity, this guide assumes that the GitHub `Service` entity identifier matches the `PagerDuty Service` identifier (lowercased and split by `-`).
 
 For example, a PagerDuty incident for the `My Service` PagerDuty service will be related to the `my-service` GitHub service.
