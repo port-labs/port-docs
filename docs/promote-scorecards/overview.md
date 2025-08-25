@@ -393,9 +393,18 @@ To create a scorecard from the UI:
 1. Go to your [Data model](https://app.getport.io/settings/data-model) page of your portal.
 2. Expand the relevant blueprint, and click on the `Scorecards` tab.
 3. Click on the `+ New scorecard` button, then follow the steps below:
-   - In the first tab (`Basic Details`) 
+   - In the first tab (`Basic Details`), specify the scorecard's basic information:
+     - `title` - The scorecard's title.
+     - `identifier` - The scorecard's identifier.
+     - `Blueprint` - Set to the blueprint you selected.
+     - `Filter` - 
+   - In the second tab (`Rules`), specify the scorecard's rules:
 
-An editor window will open with the current JSON array of the defined Scorecards. Since there is no Scorecard configured on the Blueprint at the moment, the `scorecard` arrays will be empty. Paste the following content inside the editor to create the scorecards of this example:
+**Scorecard JSON structure**
+
+If you prefer, you can create the scorecard in a JSON form. Click on the `{...} Edit JSON` button in the top right corner of the scorecard creation form.
+An editor window will open with the current JSON array of the defined Scorecards. Since there is no Scorecard configured on the Blueprint at the moment, the `scorecard` arrays will be empty.  
+Paste the following content inside the editor to create the scorecards of this example:
 
 <details>
 <summary><b>JSON create example (click to expand)</b></summary>
