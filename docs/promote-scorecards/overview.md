@@ -382,56 +382,65 @@ Scorecards can be created by three methods:
 
 <!-- TODO: fix this back to some actual blueprint -->
 
-:::note
+:::note Available operators
 For more information of which operators you can use in the scorecard rules explained below, refer to the [Promote Scorecards](./overview.md#conditions).
 :::
 
-#### From the UI
+<h4>From the UI</h4>
 
-To create a scorecard from the UI, go to your [Data model](https://app.getport.io/settings/data-model) page, expand the relevant blueprint, and click on the `Scorecards` tab. Finally, click on `+ New scorecard`.
+To create a scorecard from the UI:
+
+1. Go to your [Data model](https://app.getport.io/settings/data-model) page of your portal.
+2. Expand the relevant blueprint, and click on the `Scorecards` tab.
+3. Click on the `+ New scorecard` button, then follow the steps below:
+   - In the first tab (`Basic Details`) 
 
 An editor window will open with the current JSON array of the defined Scorecards. Since there is no Scorecard configured on the Blueprint at the moment, the `scorecard` arrays will be empty. Paste the following content inside the editor to create the scorecards of this example:
 
-```json showLineNumbers
-[
-  {
-    "identifier": "Ownership",
-    "title": "Ownership",
-    "rules": [
-      {
-        "identifier": "hasSlackChannel",
-        "title": "Has Slack Channel",
-        "level": "Silver",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "operator": "isNotEmpty",
-              "property": "slackChannel"
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "hasTeam",
-        "title": "Has Team",
-        "level": "Bronze",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "operator": "isNotEmpty",
-              "property": "$team"
-            }
-          ]
-        }
-      }
-    ]
-  }
-]
-```
+<details>
+<summary><b>JSON create example (click to expand)</b></summary>
 
-#### From the API
+  ```json showLineNumbers
+  [
+    {
+      "identifier": "Ownership",
+      "title": "Ownership",
+      "rules": [
+        {
+          "identifier": "hasSlackChannel",
+          "title": "Has Slack Channel",
+          "level": "Silver",
+          "query": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "operator": "isNotEmpty",
+                  "property": "slackChannel"
+              }
+            ]
+          }
+        },
+        {
+          "identifier": "hasTeam",
+          "title": "Has Team",
+          "level": "Bronze",
+          "query": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "operator": "isNotEmpty",
+                "property": "$team"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+  ```
+</details>
+
+<h4>From the API</h4>
 
 :::note
 Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer to [Getting an API token](../build-your-software-catalog/custom-integration/api/api.md#get-api-token).
@@ -590,49 +599,53 @@ We can see that the `hasSlackChannel` rule passed because we provided one to tha
 
 Therefore the level of the entity is `Bronze` because it passed all the rules in the `Bronze` level (hasSlackChannel)
 
-#### From Terraform
+<h4>From Terraform</h4>
 
 In order to create a scorecard from the [Terraform provider](../../build-your-software-catalog/custom-integration/iac/terraform/) , you will need to use the `port_scorecard` resource.
 
 Here is an example of how to create an Ownership scorecard with the Terraform provider:
 
-```hcl showLineNumbers
-resource "port_scorecard" "ownership" {
-  blueprint = "microservice"
-  identifier = "Ownership"
-  title = "Ownership"
-  rules = [
-    {
-      identifier = "hasSlackChannel"
-      title = "Has Slack Channel"
-      level = "Silver"
-      query = {
-        combinator = "and"
-        conditions = [
-          jsonencode({
-            operator = "isNotEmpty"
-            property = "slackChannel"
-          })
-        ]
-      }
-    },
-    {
-      identifier = "hasTeam"
-      title = "Has Team"
-      level = "Bronze"
-      query = {
-        combinator = "and"
-        conditions = [
-          jsonencode({
-            operator = "isNotEmpty"
-            property = "$team"
-          })
-        ]
-      }
+<details>
+<summary><b>Terraform create example (click to expand)</b></summary>
+
+    ```hcl showLineNumbers
+    resource "port_scorecard" "ownership" {
+      blueprint = "microservice"
+      identifier = "Ownership"
+      title = "Ownership"
+      rules = [
+        {
+          identifier = "hasSlackChannel"
+          title = "Has Slack Channel"
+          level = "Silver"
+          query = {
+            combinator = "and"
+            conditions = [
+              jsonencode({
+                operator = "isNotEmpty"
+                property = "slackChannel"
+              })
+            ]
+          }
+        },
+        {
+          identifier = "hasTeam"
+          title = "Has Team"
+          level = "Bronze"
+          query = {
+            combinator = "and"
+            conditions = [
+              jsonencode({
+                operator = "isNotEmpty"
+                property = "$team"
+              })
+            ]
+          }
+        }
+      ]
     }
-  ]
-}
-```
+    ```
+</details>
 
 ### Update Scorecards
 
@@ -640,13 +653,13 @@ To update Scorecards, we can use the same URL and payload we have used before wi
 
 And just as we have shown earlier in the tutorial, you can update a Scorecard from the UI or from the API.
 
-#### From the UI
+<h4>From the UI</h4>
 
 In order to update a Scorecard from the UI, go to the DevPortal Builder page, expand the desired blue print, and switch to the Scorecards tab.
 
 An editor window will open with the current scorecards of the Blueprint. In order to update the Scorecard, change the wanted scorecard within the scorecards array, click on `save` at the bottom right corner of the editor and view the updated Scorecards.
 
-#### From the API
+<h4>From the API</h4>
 
 To update a scorecard you can use 2 different URLs:
 
@@ -655,7 +668,7 @@ To update a scorecard you can use 2 different URLs:
 
 The request body will include the existing body of the Scorecard, after the desired updates to the existing Scorecard have been applied.
 
-#### From Terraform
+<h4>From Terraform</h4>
 
 In order to update a scorecard with the Terraform provider, you will need to run the `terraform apply -target=port_scorecard.<resourceId>` command with the updated scorecard resource.
 
@@ -667,11 +680,11 @@ A Scorecard cannot be restored after deletion!
 
 You can delete Scorecards through the UI or the API:
 
-#### From the UI
+<h4>From the UI</h4>
 
 To delete a Scorecard through the UI, go to the Builder page, expand the Blueprint and switch to the Scorecards tab. Hover the desired Scorecard and select "Delete Scorecard" from the three dot menu.
 
-#### From the API
+<h4>From the API</h4>
 
 -   Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`
 -   Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delete
@@ -680,7 +693,7 @@ To delete a Scorecard through the UI, go to the Builder page, expand the Bluepri
 When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties
 :::
 
-#### From Terraform
+<h4>From Terraform</h4>
 
 In order to delete a scorecard using the Terraform provider, use the `terraform destroy -target=port_scorecard.<resourceId>` command with the scorecard resource you want to delete. (remember that it is also possible to remove the definition of the `port_scorecard` resource from the `.tf` file and run `terraform apply`)
 
