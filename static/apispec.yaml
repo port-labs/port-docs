@@ -22498,6 +22498,8 @@ paths:
                           - identifier
                       properties:
                         type: object
+                      rawProperties:
+                        type: object
                       endedAt:
                         type: string
                         format: date-time
@@ -22580,6 +22582,8 @@ paths:
                           - object
                         items: {}
                       createdBy:
+                        type: string
+                      impersonatedBy:
                         type: string
                       updatedBy:
                         type: string
@@ -22801,6 +22805,8 @@ paths:
                           - identifier
                       properties:
                         type: object
+                      rawProperties:
+                        type: object
                       endedAt:
                         type: string
                         format: date-time
@@ -22883,6 +22889,8 @@ paths:
                           - object
                         items: {}
                       createdBy:
+                        type: string
+                      impersonatedBy:
                         type: string
                       updatedBy:
                         type: string
@@ -23065,6 +23073,8 @@ paths:
                           - identifier
                       properties:
                         type: object
+                      rawProperties:
+                        type: object
                       endedAt:
                         type: string
                         format: date-time
@@ -23147,6 +23157,8 @@ paths:
                           - object
                         items: {}
                       createdBy:
+                        type: string
+                      impersonatedBy:
                         type: string
                       updatedBy:
                         type: string
@@ -23313,6 +23325,8 @@ paths:
                           - identifier
                       properties:
                         type: object
+                      rawProperties:
+                        type: object
                       endedAt:
                         type: string
                         format: date-time
@@ -23395,6 +23409,8 @@ paths:
                           - object
                         items: {}
                       createdBy:
+                        type: string
+                      impersonatedBy:
                         type: string
                       updatedBy:
                         type: string
@@ -23638,6 +23654,8 @@ paths:
                             - identifier
                         properties:
                           type: object
+                        rawProperties:
+                          type: object
                         endedAt:
                           type: string
                           format: date-time
@@ -23720,6 +23738,8 @@ paths:
                             - object
                           items: {}
                         createdBy:
+                          type: string
+                        impersonatedBy:
                           type: string
                         updatedBy:
                           type: string
