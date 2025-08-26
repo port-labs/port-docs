@@ -1057,4 +1057,3 @@ Consider the following as next steps:
 3. **Portal Initiative:**
    - Self-service action: Create a self-service action to improve OWASP Tiers for specific repositories.
    - Create an initiative within Port to reduce a specific security weakness or promote a specific tier as a standard operating procedure.
-   
