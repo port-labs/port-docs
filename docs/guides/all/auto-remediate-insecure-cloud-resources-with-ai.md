@@ -157,7 +157,7 @@ However, the `RDS Instance` blueprint is not created automatically so we will ne
 
 ### Update integration mapping
 
-1. Go to the [Data Sources](https://app.getport.io/settings/data-sources) page of your portal.
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 2. Select the AWS integration.
 3. Add the following YAML block into the editor to ingest storage data from AWS:
 
