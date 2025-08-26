@@ -30072,11 +30072,11 @@ paths:
                     - combinator
                     - conditions
                   description: An optional set of
-                    [conditions](https://docs.port.io/promote-scorecards/overview#conditions)
+                    [conditions](https://docs.port.io/promote-scorecards/concepts-and-structure#conditions)
                     to filter entities that will be evaluated by the scorecard.
                 rules:
                   type: array
-                  description: The [rules](https://docs.port.io/promote-scorecards/overview#rule-elements)
+                  description: The [rules](https://docs.port.io/promote-scorecards/concepts-and-structure#rule-elements)
                     that define the scorecard.
                   items:
                     type: object
@@ -31036,12 +31036,12 @@ paths:
                       - combinator
                       - conditions
                     description: An optional set of
-                      [conditions](https://docs.port.io/promote-scorecards/overview#conditions)
+                      [conditions](https://docs.port.io/promote-scorecards/concepts-and-structure#conditions)
                       to filter entities that will be evaluated by the
                       scorecard.
                   rules:
                     type: array
-                    description: The [rules](https://docs.port.io/promote-scorecards/overview#rule-elements)
+                    description: The [rules](https://docs.port.io/promote-scorecards/concepts-and-structure#rule-elements)
                       that define the scorecard.
                     items:
                       type: object
@@ -31634,11 +31634,11 @@ paths:
                     - combinator
                     - conditions
                   description: An optional set of
-                    [conditions](https://docs.port.io/promote-scorecards/overview#conditions)
+                    [conditions](https://docs.port.io/promote-scorecards/concepts-and-structure#conditions)
                     to filter entities that will be evaluated by the scorecard.
                 rules:
                   type: array
-                  description: The [rules](https://docs.port.io/promote-scorecards/overview#rule-elements)
+                  description: The [rules](https://docs.port.io/promote-scorecards/concepts-and-structure#rule-elements)
                     that define the scorecard.
                   items:
                     type: object
@@ -32285,7 +32285,7 @@ paths:
                     filter:
                       type: string
                       description: An optional set of
-                        [conditions](https://docs.port.io/promote-scorecards/overview#conditions)
+                        [conditions](https://docs.port.io/promote-scorecards/concepts-and-structure#conditions)
                         to filter the entities that will be migrated.
                     itemsToParse:
                       type: string
