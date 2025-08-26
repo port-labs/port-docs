@@ -372,13 +372,11 @@ For example, these services have some rules defined in their scorecards, and we 
 
 ## Define scorecards
 
-Scorecards can be created by three methods:
+Port offers a variety of ways to create, edit and delete scorecards:
 
--   [Port's UI](#using-the-ui)
--   [Port's API](#using-the-api)
--   [Terraform](#using-terraform)
+<Tabs queryString="scorecards" defaultValue="UI">
 
-### Using the UI
+<TabItem value="UI">
 
 To create a scorecard from the UI:
 
@@ -454,7 +452,9 @@ Below is an example of a scorecard in JSON format:
   ```
 </details>
 
-### Using the API
+</TabItem>
+
+<TabItem value="API">
 
 :::note Access token required
 Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer to [Getting an API token](../build-your-software-catalog/custom-integration/api/api.md#get-api-token).
@@ -645,7 +645,9 @@ A Scorecard cannot be restored after deletion!
 When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties
 :::
 
-### Using Terraform
+</TabItem>
+
+<TabItem value="Terraform">
 
 **Create scorecards**
 
@@ -706,6 +708,10 @@ A Scorecard cannot be restored after deletion!
 :::
 
 In order to delete a scorecard using the Terraform provider, use the `terraform destroy -target=port_scorecard.<resourceId>` command with the scorecard resource you want to delete. (remember that it is also possible to remove the definition of the `port_scorecard` resource from the `.tf` file and run `terraform apply`)
+
+</TabItem>
+
+</Tabs>
 
 ## Next steps
 
