@@ -6,80 +6,81 @@ import FindCredentials from "/docs/build-your-software-catalog/custom-integratio
 
 # Self Hosted Installation
 
-:::note Prerequisites
+The "Self Hosted Installation" guide is specifically for organizations that run their own GitHub Enterprise instance.
 
-- A registered organization in Port;
+In organizations that have a self-hosted GitHub installation there is no access to our official public app, therefore there are some extra steps you need to take to install the GitHub app.
+
+## Prerequisites
+
+- Completed [Port onboarding process](https://docs.port.io/getting-started/overview).
 - Your Port user role is set to `Admin`.
+- Port Client ID, Client Secret, and Org ID.
+  <FindCredentials/>
 
-:::
+## Steps
 
-In organizations that have a self-hosted GitHub installation there is no access to our official public app, therefore there are some extra steps you need to take to install the GitHub app:
-
-1. [Register](#register-ports-github-app) Port's GitHub app in your GitHub organization;
-2. [Deploy](#deployment) Port's GitHub app Docker image inside your VPC;
+1. [Register](#register-ports-github-app) Port's GitHub app in your GitHub organization.
+2. [Deploy](#deployment) Port's GitHub app Docker image inside your VPC.
 3. [Install](#installing-ports-github-application) Port's GitHub app in your GitHub organization and on select repositories.
 
-## Register Port's GitHub App
+### Register Port's GitHub App
 
 1. Navigate to your organization inside your self-hosted GitHub and click on Settings:
 
-![Org view](../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
+    <img src="/img/integrations/github-app/SelfHostedOrganizaionView.png"/>
 
 2. Inside the settings view, click on Developer Settings -> and then select GitHub Apps:
 
-![Settings view](../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
+    <img src="/img/integrations/github-app/SelfHostedOrganizationSettings.png"/>
 
 3. Click on "New GitHub App":
 
-![New GitHub App](../../../../../static/img/integrations/github-app/SelfHostedNewGitHubApp.png)
+    <img src="/img/integrations/github-app/SelfHostedNewGitHubApp.png"/>
 
 4. Insert the following properties:
 
-- **GitHub App name:** port.io
-- **Homepage URL:** https://getport.io
-- **Setup URL:** https://app.getport.io
-- **Webhook URL:** HTTP Server URL, if you don't yet know the value of this step, leave it blank until you deploy the GitHub backend
-- **Webhook secret:** Webhook secret (Any string you would like)
-- **Repository Permissions:**
-  - Actions: Read and Write (for executing self-service action using GitHub workflow)
-  - Checks: Read and Write (for validating `Port.yml`)
-  - Contents: Readonly (for reading port configuration files and repository files)
-  - Metadata: Readonly
-  - Issues: Readonly
-  - Pull Request: Read and Write
-  - Dependabot alerts: Readonly
-  - Administration: Readonly (for syncing github teams)
-- **Organization Permissions:**
-  - Members: Readonly (for syncing github teams)
-- **Repository Events** (required to receive webhook changes from GitHub):
-  - Issues
-  - Pull Request
-  - Push
-  - Workflow Run
-  - Team
-  - Dependabot alerts
+    - **GitHub App name:** eg `MyPortApp` This name must be unique within the GitHub organization.
 
-Then select "Create GitHub App"
+    - **Homepage URL:** `https://getport.io`
+
+    - **Setup URL:** `https://app.getport.io`
+
+    - **Webhook URL (Required):** `HTTP Server URL`, if you don't yet know the value of this step, add a placeholder value until you deploy the GitHub backend
+
+    - **Webhook secret (Recommended):** `Webhook secret` (Any string you would like)
+
+    - **Repository Permissions:**
+
+      - Actions: Read and Write (for executing self-service action using GitHub workflow)
+      - Checks: Read and Write (for validating `Port.yml`)
+      - Contents: Readonly (for reading port configuration files and repository files)
+      - Metadata: Readonly
+      - Issues: Readonly
+      - Pull Request: Read and Write
+      - Dependabot alerts: Readonly
+      - Administration: Readonly (for syncing github teams)
+    - **Organization Permissions:**
+      - Members: Readonly (for syncing github teams)
+    - **Repository Events** (required to receive webhook changes from GitHub):
+      - Pull Request
+      - Push
+      - Workflow Run
+      - Team
+      - Dependabot alerts
+
+    Then select `Create GitHub App`.
 
 5. Go to the settings of the created GitHub App and generate a private key and save the downloaded file:
 
-![Generate Private key](../../../../../static/img/integrations/github-app/SelfHosetdGeneratePrivayKey.png)
+    <img src="/img/integrations/github-app/SelfHosetdGeneratePrivayKey.png"/>
 
 Keep the file, you will need it for the deployment step.
 
-## Deployment
+### Deployment
 
-:::note Prerequisites
+In order to make use of [Self-Service Actions using GitHub Workflow](https://docs.port.io/actions-and-automations/setup-backend/github-workflow), please contact us at [support.port.io](http://support.port.io/).
 
-You will need your Port `ORG_ID`, `CLIENT_ID` and `CLIENT_SECRET`.
-
-<FindCredentials/>
-
-:::
-
-In order to make use of [Self-Service Actions using GitHub Workflow](../../../../actions-and-automations/setup-backend/github-workflow/github-workflow.md), please contact us at [support.port.io](http://support.port.io/).
-
-## Docker
+### Docker
 
 To use our GitHub app you will need to deploy our official GitHub app docker image on your VPC.
 
@@ -97,13 +98,13 @@ Run the following command to start the app:
 docker run \
   -e APP_ID=<APP_ID from register step> \
   -e WEBHOOK_SECRET=<WEBHOOK_SECRET from previous step> \
-  -e GHE_HOST=<GITHUB BASE HOST, ie github.compay.com> \
+  -e GHE_HOST=<GITHUB BASE HOST, ie github.company.com> \
   -e PORT=<Any PORT> \
-  -e PORT_URL=https://api.getport.io \
-  -e PORT_ORG_ID=<ORG_ID> \        #For self service actions, requires a Kafka topic
+  -e PORT_API_URL=https://api.getport.io \
+  -e PORT_ORG_ID=<ORG_ID> \
   -e PORT_CLIENT_ID=<CLIENT_ID> \
   -e PORT_CLIENT_SECRET=<CLIENT_SECRET> \
-  -e PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
+  -e PRIVATE_KEY=<BASE 64 PRIVATEKEY> \ 
   -p <PORT>:<PORT> \
   ghcr.io/port-labs/port-self-hosted-github-app:0.16.7
 ```
@@ -114,8 +115,8 @@ docker run \
 | `WEBHOOK_SECRET`     | The same string that was used to register the application in the previous step      |
 | `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                     |
 | `PORT`               | The port that the GitHub App will listen to                                         |
-| `PORT_URL`           | Port's API Base URL                                                                 |
-| `PORT_ORG_ID`        | Your Port org id (For self service actions, requires a Kafka topic)                 |
+| `PORT_API_URL`       | Port's API Base URL                                                                 |
+| `PORT_ORG_ID`        | Your Port org id (Used for [self service actions](/actions-and-automations/setup-backend/webhook/kafka/kafka.md))                 |
 | `PORT_CLIENT_ID`     | Port client id for interacting with the API                                         |
 | `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                     |
 | `PRIVATE_KEY`        | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |
@@ -132,21 +133,21 @@ After you have the app registered in your organization and the Docker is up and 
 
 1. First, navigate to your organization inside your self-hosted GitHub and click on Settings:
 
-![Org view](../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
+    <img src="/img/integrations/github-app/SelfHostedOrganizaionView.png" />
 
 2. Inside the settings view, click on Developer Settings -> and then select GitHub Apps:
 
-![Settings view](../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
+    <img src="/img/integrations/github-app/SelfHostedOrganizationSettings.png" />
 
 3. Click `edit` on the GitHub app created at the step before:
 
-![GitHub app installation page](../../../../../static/img/integrations/github-app/SelfHostedEditGitHubApp.png)
+    <img src="/img/integrations/github-app/SelfHostedEditGitHubApp.png" />
 
 4. Go to Install App -> and select the installation button on your wanted organization;
 
 5. Choose the repositories you want the app to be installed for:
 
-![GitHub app installation chooses repositories](../../../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)
+    <img src="/img/integrations/github-app/SelfHostedInstallationRepoSelection.png" />
 
 ## Limitations
 
