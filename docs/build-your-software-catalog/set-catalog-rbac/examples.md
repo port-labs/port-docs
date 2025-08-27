@@ -163,8 +163,8 @@ Inherited ownership can be configured by setting the `ownership` property in the
 
 :::info Path
 
-- The `path` key is a dot-separated path of **relation identifiers** that lead to the desired blueprint;
-- The target blueprint must have `Direct` ownership configured;
+- The `path` key is a dot-separated path of **relation identifiers** that lead to the desired blueprint.
+- The target blueprint must have `Direct` ownership configured.
 - Inherited ownership can only be configured using a path of [`single`](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#single-relation-structure) type relations.
 
 :::
