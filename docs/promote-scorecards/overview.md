@@ -8,7 +8,7 @@ sidebar_label: Overview
 
 ## What is a Scorecard?
 
-**Scorecards** enable us to define and track metrics/standards for our Port entities, based on their properties.
+**Scorecards** are used to define and track metrics and standards for Port entities, based on their properties.
 Each scorecard consists of a set of rules, where each rule defines one or more conditions that need to be met.
 
 Each rule has a `level` property whose value can be defined per to the way you define standards in your organization,
@@ -20,7 +20,7 @@ for example:
 - Engineering quality can be defined as `Poor`, `Fair`, `Good`, `Excellent`.
 - Service response time can be defined as `A`, `B`, `C`, `D`, `F`.
 
-## 💡 Scorecard use cases
+## Scorecard use cases
 
 Scorecards can be used to evaluate the maturity, production readiness and engineering quality of any entity in your software catalog, for example:
 
@@ -29,7 +29,7 @@ Scorecards can be used to evaluate the maturity, production readiness and engine
 - Is Grafana defined for the K8s cluster?
 - Is the relation of a certain entity empty?
 
-In this [live demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=1) example, you can see the scorecards defined on a service and their evaluation. 🎬
+In this [live demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=2) example, you can see the scorecards defined on a service and their evaluation. 🎬
 
 ## Next steps
 

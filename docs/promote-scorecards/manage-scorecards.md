@@ -1,14 +1,14 @@
 ---
 sidebar_position: 3
-title: Managing scorecards
-sidebar_label: Managing scorecards
+title: Manage scorecards
+sidebar_label: Manage scorecards
 ---
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Managing scorecards
+# Manage scorecards
 
 ## Define scorecards
 

@@ -13,7 +13,8 @@ import TabItem from "@theme/TabItem"
 
 ## Scorecard structure table
 
-A single scorecard defines a category to group different checks, validations and evaluations. Here is the structure of a single scorecard:
+A single scorecard defines a category to group different checks, validations and evaluations.  
+Below is the structure of a single scorecard:
 
 | Field                        | Type     | Description                                                                                                                                         |
 |------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -35,7 +36,7 @@ The levels can be customized according to your organization's standards and with
 <img src='/img/scorecards/custom-scorecards-example.png' width='50%' border='1px' />
 <br/><br/>
 
-Here is an example of a few level types that can be defined:
+Below is an example of a few level types that can be defined:
 
 :::tip Level Hierarchy 
 The levels are defined in the order of importance, where the first level is the most basic level and the last level is the most advanced.  
