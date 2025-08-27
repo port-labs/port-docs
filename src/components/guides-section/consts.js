@@ -1427,6 +1427,13 @@ export const availableGuides = [
         tags: ["SDLC", "Claude Code", "AI", "Actions"],
         logos: ["AI", "Claude Code"],
         link: "/guides/all/trigger-claude-code-from-port",
+    },
+    {
+        title: "Enforce AI coding security standards",
+        description: "Learn how to enforce AI coding security standards in your organization",
+        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/enforce-ai-coding-security-standards",
     }
 ]
 
