@@ -59,6 +59,9 @@ You can use the following Port blueprint definitions and integration configurati
 
 :::caution Merge request access requirement
 Merge requests are fetched at the **group level**. Ensure your integration token has access to the parent GitLab group that contains your projects. Project-level access alone is not sufficient for merge request visibility.
+
+For more information, see the [troubleshooting](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/installation#troubleshooting) section.
+
 :::
 
 
