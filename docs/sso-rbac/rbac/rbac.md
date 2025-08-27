@@ -145,6 +145,10 @@ By default, all new users are created with the `Disabled` status (no email invit
 In your software catalog, admins can access the [Users](https://app.getport.io/_users) page to view and manage all of the user entities in the organization.  
 Here admins can also change a user's status, and invite new users.
 
+:::tip Integration and GitOps status behavior
+When creating users via integrations or GitOps workflows, the `status` field is optional and should typically be omitted. Port automatically manages user status based on authentication events. 
+:::
+
 #### Limitations
 
 - Only users with a UI/API origin can invite users and change their status.  
