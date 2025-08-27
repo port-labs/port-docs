@@ -146,7 +146,7 @@ In your software catalog, admins can access the [Users](https://app.getport.io/_
 Here admins can also change a user's status, and invite new users.
 
 :::tip Integration and GitOps status behavior
-When creating users via integrations or GitOps workflows, the `status` field is optional and should typically be omitted. Port automatically manages user status based on authentication events for SSO users.
+When creating users via integrations or GitOps workflows, the `status` field is optional and should typically be omitted. Port automatically manages user status based on authentication events for SSO users but non SSO users will be created with the `Disabled` status.
 :::
 
 #### Limitations
