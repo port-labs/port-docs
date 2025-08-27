@@ -164,10 +164,10 @@ Track metrics that indicate whether your security culture is improving:
 
 Organizations using Port's security champions approach see remarkable improvements:
 
-- **75% reduction in security vulnerabilities** reaching production through proactive identification and remediation
-- **60% improvement in security training completion rates** through champion-led peer training programs  
-- **80% of security exceptions are now self-served** through clear workflows and automated approval processes
-- **50% reduction in security-related deployment delays** through earlier security integration in development processes
+- **Reduction in security vulnerabilities** reaching production through proactive identification and remediation
+- **Improvement in security training completion rates** through champion-led peer training programs  
+- **Security exceptions are now self-served** through clear workflows and automated approval processes
+- **Reduction in security-related deployment delays** through earlier security integration in development processes
 
 ## Success metrics for security champions programs
 

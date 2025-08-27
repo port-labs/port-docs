@@ -126,8 +126,8 @@ While business context is crucial for prioritization, never ignore basic securit
 
 Organizations using Port's business-context approach to vulnerability prioritization see:
 
-- **80% reduction in security analyst time** spent investigating irrelevant alerts
-- **60% faster mean time to remediation** for truly critical vulnerabilities
+- **Reduction in security analyst time** spent investigating irrelevant alerts
+- **Faster mean time to remediation** for truly critical vulnerabilities
 - **Improved developer satisfaction** through context-rich, actionable security findings
 - **Better business alignment** between security and product teams
 - **Reduced alert fatigue** leading to higher-quality security analysis

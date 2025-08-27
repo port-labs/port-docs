@@ -193,10 +193,10 @@ Track the impact of your security automation program:
 
 Organizations implementing Port's security automation approach see:
 
-- **60% reduction in mean time to vulnerability remediation** through intelligent triage and routing
-- **80% of security exceptions handled automatically** with appropriate risk assessment and approval
-- **75% reduction in security team manual work** enabling focus on strategic threat hunting
-- **90% improvement in developer satisfaction** with security processes through reduced friction
-- **50% faster incident response** through automated context gathering and stakeholder notification
+- **Reduction in mean time to vulnerability remediation** through intelligent triage and routing
+- **Security exceptions handled automatically** with appropriate risk assessment and approval
+- **Reduction in security team manual work** enabling focus on strategic threat hunting
+- **Improvement in developer satisfaction** with security processes through reduced friction
+- **Faster incident response** through automated context gathering and stakeholder notification
 
 By combining intelligent automation with appropriate human oversight, Port enables security teams to scale their impact while reducing friction for development teams and maintaining strong security posture.
