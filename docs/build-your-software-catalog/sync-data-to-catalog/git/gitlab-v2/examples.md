@@ -57,6 +57,11 @@ You can use the following Port blueprint definitions and integration configurati
 
 ## Mapping projects, README.md and merge requests
 
+:::caution Merge request access requirement
+Merge requests are fetched at the **group level**. Ensure your integration token has access to the parent GitLab group that contains your projects. Project-level access alone is not sufficient for merge request visibility.
+:::
+
+
 The following example demonstrates how to ingest your GitLab projects, their README.md file contents and merge requests to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
