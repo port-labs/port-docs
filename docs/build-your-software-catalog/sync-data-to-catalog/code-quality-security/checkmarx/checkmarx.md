@@ -24,7 +24,11 @@ The resources that can be ingested from Checkmarx One into Port are listed below
 
 - [`Project`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/j4vd1fubv8m4z-retrieve-list-of-projects)
 - [`Scan`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/1wnhzwk5inwup-retrieve-list-of-scans)
-- [`Scan Result`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners)
+- [`SAST`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - Static Application Security Testing results
+- [`SCA`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - Software Composition Analysis results
+- [`KICS`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - Infrastructure as Code Security results
+- [`Container Security`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - Container security scan results
+- [`API Security`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - API security risks and vulnerabilities
 
 ## Setup
 
@@ -448,7 +452,7 @@ resources:
           relations:
             project: .projectId
 
-  - kind: scan_result
+  - kind: sast
     selector:
       query: 'true'
     port:
@@ -456,22 +460,132 @@ resources:
         mappings:
           identifier: .id
           title: .description
-          # Blueprint name → checkmarx + Type (with leading char upper‑cased)
-          blueprint: >
-            "checkmarx" +
-            (.type        | .[0:1] | ascii_upcase) +
-            (.type        | .[1:])
+          blueprint: '"checkmarxSast"'
           properties:
             type: .type
-            severity: .severity
+            firstScanId: .firstScanId
+            id: .id
+            status: .status
             state: .state
+            severity: (.severity // empty)
             confidenceLevel: .confidenceLevel
+            created: .created
             description: .description
+            nodes: (.data.nodes // empty)
             cweId: (.vulnerabilityDetails.cweId // empty)
-            fileName: (.data.nodes[0].fileName // empty)
-            line: (.data.nodes[0].line // empty)
         relations:
           scan: .__scan_id
+
+  - kind: sca
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .description
+          blueprint: '"checkmarxSca"'
+          properties:
+            type: .type
+            firstScanId: .firstScanId
+            id: .id
+            status: .status
+            state: .state
+            severity: (.severity // empty)
+            confidenceLevel: .confidenceLevel
+            created: .created
+            description: .description
+            packageIdentifier: (.data.packageIdentifier // empty)
+            recommendations: (.data.recommendations // empty)
+            recommendedVersion: (.data.recommendedVersion // empty)
+            packageData: (.packageData // empty)
+            cweId: (.vulnerabilityDetails.cweId // empty)
+        relations:
+          scan: .__scan_id
+
+  - kind: kics
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .description
+          blueprint: '"checkmarxKics"'
+          properties:
+            type: .type
+            firstScanId: .firstScanId
+            id: .id
+            status: .status
+            state: .state
+            severity: (.severity // empty)
+            confidenceLevel: .confidenceLevel
+            created: .created
+            description: .description
+            fileName: (.data.fileName // empty)
+            line: (.data.line // empty)
+            platform: (.data.platform // empty)
+            issueType: (.data.issueType // empty)
+            expectedValue: (.data.expectedValue // empty)
+            value: (.data.value // empty)
+        relations:
+          scan: .__scan_id
+
+  - kind: containersec
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .description
+          blueprint: '"checkmarxContainerSec"'
+          properties:
+            type: .type
+            firstScanId: .firstScanId
+            id: .id
+            status: .status
+            state: .state
+            severity: (.severity // empty)
+            confidenceLevel: .confidenceLevel
+            created: .created
+            description: .description
+            packageName: (.data.packageName // empty)
+            packageVersion: (.data.packageVersion // empty)
+            imageName: (.data.imageName // empty)
+            imageTag: (.data.imageTag // empty)
+            imageFilePath: (.data.imageFilePath // empty)
+            cweId: (.vulnerabilityDetails.cweId // empty)
+        relations:
+          scan: .__scan_id
+
+  - kind: apisec
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .risk_id
+          title: .name
+          blueprint: '"checkmarxApiSec"'
+          properties:
+            riskId: .risk_id
+            apiId: .api_id
+            severity: (.severity // empty)
+            name: .name
+            status: .status
+            httpMethod: .http_method
+            url: .url
+            origin: .origin
+            documented: .documented
+            authenticated: .authenticated
+            discoveryDate: .discovery_date
+            scanId: .scan_id
+            sastRiskId: (.sast_risk_id // empty)
+            projectId: .project_id
+            state: .state
+        relations:
+          scan: .scan_id
 ```
 
 </details>
@@ -601,15 +715,15 @@ Examples of blueprints and the relevant integration configurations:
 
 </details>
 
-### Scan Result
+### SAST
 
 <details>
-<summary>Scan Result blueprint</summary>
+<summary>SAST blueprint</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "checkmarxSscs-secret-detection",
-  "title": "Checkmarx Scan Result for SSCS",
+  "identifier": "checkmarxSast",
+  "title": "Checkmarx SASTs",
   "icon": "Checkmarx",
   "schema": {
     "properties": {
@@ -625,15 +739,21 @@ Examples of blueprints and the relevant integration configurations:
           "sscs-scorecard"
         ]
       },
-      "severity": {
+      "firstScanId": {
         "type": "string",
-        "title": "Severity",
+        "title": "First Scan ID"
+      },
+      "id": {
+        "type": "string",
+        "title": "ID"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
         "enum": [
-          "LOW",
-          "MEDIUM",
-          "HIGH",
-          "CRITICAL",
-          "INFO"
+          "NEW",
+          "RECURRENT",
+          "FIXED"
         ]
       },
       "state": {
@@ -648,27 +768,94 @@ Examples of blueprints and the relevant integration configurations:
           "FALSE_POSITIVE"
         ]
       },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": [
+          "LOW",
+          "MEDIUM",
+          "HIGH",
+          "CRITICAL"
+        ]
+      },
       "confidenceLevel": {
         "type": "number",
         "title": "Confidence Level",
         "minimum": 0,
         "maximum": 100
       },
+      "created": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At"
+      },
       "description": {
         "type": "string",
         "title": "Description"
       },
+      "nodes": {
+        "type": "array",
+        "title": "Nodes",
+        "items": {
+          "type": "object"
+        }
+      },
       "cweId": {
         "type": "string",
         "title": "CWE ID"
-      },
-      "fileName": {
+      }
+    },
+    "required": [
+      "type",
+      "id",
+      "state",
+      "description"
+    ]
+  },
+  "relations": {
+    "scan": {
+      "title": "Scan",
+      "target": "checkmarxScan",
+      "many": false,
+      "required": false
+    }
+  }
+}
+```
+
+</details>
+
+### SCA
+
+<details>
+<summary>SCA blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "checkmarxSca",
+  "title": "Checkmarx SCAs",
+  "icon": "Checkmarx",
+  "schema": {
+    "properties": {
+      "type": {
         "type": "string",
-        "title": "File Name"
+        "title": "Type",
+        "enum": [
+          "sast",
+          "sca",
+          "kics",
+          "containers",
+          "sscs-secret-detection",
+          "sscs-scorecard"
+        ]
       },
-      "line": {
-        "type": "number",
-        "title": "Line Number"
+      "firstScanId": {
+        "type": "string",
+        "title": "First Scan ID"
+      },
+      "id": {
+        "type": "string",
+        "title": "ID"
       },
       "status": {
         "type": "string",
@@ -679,32 +866,287 @@ Examples of blueprints and the relevant integration configurations:
           "FIXED"
         ]
       },
+      "state": {
+        "type": "string",
+        "title": "State",
+        "enum": [
+          "TO_VERIFY",
+          "CONFIRMED",
+          "URGENT",
+          "NOT_EXPLOITABLE",
+          "PROPOSED_NOT_EXPLOITABLE",
+          "FALSE_POSITIVE"
+        ]
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": [
+          "LOW",
+          "MEDIUM",
+          "HIGH",
+          "CRITICAL",
+          "INFO"
+        ]
+      },
+      "confidenceLevel": {
+        "type": "number",
+        "title": "Confidence Level",
+        "minimum": 0,
+        "maximum": 100
+      },
       "created": {
         "type": "string",
         "format": "date-time",
         "title": "Created At"
       },
-      "firstFoundAt": {
+      "description": {
         "type": "string",
-        "format": "date-time",
-        "title": "First Found At"
+        "title": "Description"
       },
-      "foundAt": {
+      "packageIdentifier": {
         "type": "string",
-        "format": "date-time",
-        "title": "Found At"
+        "title": "Package Identifier"
       },
-      "similarityId": {
+      "recommendations": {
         "type": "string",
-        "title": "Similarity ID"
+        "title": "Recommendations"
       },
-      "cvssScore": {
+      "recommendedVersion": {
+        "type": "string",
+        "title": "Recommended Version"
+      },
+      "packageData": {
+        "type": "object",
+        "title": "Package Data"
+      },
+      "cweId": {
+        "type": "string",
+        "title": "CWE ID"
+      }
+    },
+    "required": [
+      "type",
+      "id",
+      "state",
+      "description"
+    ]
+  },
+  "relations": {
+    "scan": {
+      "title": "Scan",
+      "target": "checkmarxScan",
+      "many": false,
+      "required": false
+    }
+  }
+}
+```
+
+</details>
+
+### KICS
+
+<details>
+<summary>KICS blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "checkmarxKics",
+  "title": "Checkmarx KICS",
+  "icon": "Checkmarx",
+  "schema": {
+    "properties": {
+      "type": {
+        "type": "string",
+        "title": "Type",
+        "enum": [
+          "sast",
+          "sca",
+          "kics",
+          "containers",
+          "sscs-secret-detection",
+          "sscs-scorecard"
+        ]
+      },
+      "firstScanId": {
+        "type": "string",
+        "title": "First Scan ID"
+      },
+      "id": {
+        "type": "string",
+        "title": "ID"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "NEW",
+          "RECURRENT",
+          "FIXED"
+        ]
+      },
+      "state": {
+        "type": "string",
+        "title": "State",
+        "enum": [
+          "TO_VERIFY",
+          "CONFIRMED",
+          "URGENT",
+          "NOT_EXPLOITABLE",
+          "PROPOSED_NOT_EXPLOITABLE",
+          "FALSE_POSITIVE"
+        ]
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": [
+          "LOW",
+          "MEDIUM",
+          "HIGH",
+          "CRITICAL",
+          "INFO"
+        ]
+      },
+      "confidenceLevel": {
         "type": "number",
-        "title": "CVSS Score"
+        "title": "Confidence Level",
+        "minimum": 0,
+        "maximum": 100
       },
-      "cveName": {
+      "created": {
         "type": "string",
-        "title": "CVE Name"
+        "format": "date-time",
+        "title": "Created At"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "fileName": {
+        "type": "string",
+        "title": "File Name"
+      },
+      "line": {
+        "type": "number",
+        "title": "Line Number"
+      },
+      "platform": {
+        "type": "string",
+        "title": "Platform"
+      },
+      "issueType": {
+        "type": "string",
+        "title": "Issue Type"
+      },
+      "expectedValue": {
+        "type": "string",
+        "title": "Expected Value"
+      },
+      "value": {
+        "type": "string",
+        "title": "Value"
+      }
+    },
+    "required": [
+      "type",
+      "id",
+      "state",
+      "description"
+    ]
+  },
+  "relations": {
+    "scan": {
+      "title": "Scan",
+      "target": "checkmarxScan",
+      "many": false,
+      "required": false
+    }
+  }
+}
+```
+
+</details>
+
+### Container Security
+
+<details>
+<summary>Container Security blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "checkmarxContainerSec",
+  "title": "Checkmarx Container Security",
+  "icon": "Checkmarx",
+  "schema": {
+    "properties": {
+      "type": {
+        "type": "string",
+        "title": "Type",
+        "enum": [
+          "sast",
+          "sca",
+          "kics",
+          "containers",
+          "sscs-secret-detection",
+          "sscs-scorecard"
+        ]
+      },
+      "firstScanId": {
+        "type": "string",
+        "title": "First Scan ID"
+      },
+      "id": {
+        "type": "string",
+        "title": "ID"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "NEW",
+          "RECURRENT",
+          "FIXED"
+        ]
+      },
+      "state": {
+        "type": "string",
+        "title": "State",
+        "enum": [
+          "TO_VERIFY",
+          "CONFIRMED",
+          "URGENT",
+          "NOT_EXPLOITABLE",
+          "PROPOSED_NOT_EXPLOITABLE",
+          "FALSE_POSITIVE"
+        ]
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": [
+          "LOW",
+          "MEDIUM",
+          "HIGH",
+          "CRITICAL",
+          "INFO"
+        ]
+      },
+      "confidenceLevel": {
+        "type": "number",
+        "title": "Confidence Level",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "created": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
       },
       "packageName": {
         "type": "string",
@@ -722,29 +1164,134 @@ Examples of blueprints and the relevant integration configurations:
         "type": "string",
         "title": "Image Tag"
       },
-      "ruleId": {
+      "imageFilePath": {
         "type": "string",
-        "title": "Rule ID"
+        "title": "Image File Path"
       },
-      "ruleName": {
+      "cweId": {
         "type": "string",
-        "title": "Rule Name"
-      },
-      "remediation": {
-        "type": "string",
-        "title": "Remediation"
-      },
-      "remediationLink": {
-        "type": "string",
-        "format": "url",
-        "title": "Remediation Link"
+        "title": "CWE ID"
       }
     },
     "required": [
       "type",
-      "severity",
+      "id",
       "state",
       "description"
+    ]
+  },
+  "relations": {
+    "scan": {
+      "title": "Scan",
+      "target": "checkmarxScan",
+      "many": false,
+      "required": false
+    }
+  }
+}
+```
+
+</details>
+
+### API Security
+
+<details>
+<summary>API Security blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "checkmarxApiSec",
+  "title": "Checkmarx API Security",
+  "icon": "Checkmarx",
+  "schema": {
+    "properties": {
+      "riskId": {
+        "type": "string",
+        "title": "Risk ID"
+      },
+      "apiId": {
+        "type": "string",
+        "title": "API ID"
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "critical"
+        ]
+      },
+      "name": {
+        "type": "string",
+        "title": "Name"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "new",
+          "recurrent",
+          "fixed"
+        ]
+      },
+      "httpMethod": {
+        "type": "string",
+        "title": "HTTP Method"
+      },
+      "url": {
+        "type": "string",
+        "title": "URL"
+      },
+      "origin": {
+        "type": "string",
+        "title": "Origin"
+      },
+      "documented": {
+        "type": "boolean",
+        "title": "Documented"
+      },
+      "authenticated": {
+        "type": "boolean",
+        "title": "Authenticated"
+      },
+      "discoveryDate": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Discovery Date"
+      },
+      "scanId": {
+        "type": "string",
+        "title": "Scan ID"
+      },
+      "sastRiskId": {
+        "type": "string",
+        "title": "SAST Risk ID"
+      },
+      "projectId": {
+        "type": "string",
+        "title": "Project ID"
+      },
+      "state": {
+        "type": "string",
+        "title": "State",
+        "enum": [
+          "to_verify",
+          "confirmed",
+          "urgent",
+          "not_exploitable",
+          "proposed_not_exploitable",
+          "false_positive"
+        ]
+      }
+    },
+    "required": [
+      "riskId",
+      "apiId",
+      "name",
+      "status",
+      "state"
     ]
   },
   "relations": {
@@ -764,14 +1311,22 @@ Examples of blueprints and the relevant integration configurations:
 
 The Checkmarx One integration supports filtering and configuration for different resource types:
 
-#### Scan Results Configuration
+#### Security Scan Results Configuration
 
-You can configure scan results with the following filters:
+You can configure security scan results (SAST, SCA, KICS, Container Security) with the following filters:
 
 - **Severity**: Filter by severity level (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`)
 - **State**: Filter by state (`TO_VERIFY`, `CONFIRMED`, `URGENT`, `NOT_EXPLOITABLE`, `PROPOSED_NOT_EXPLOITABLE`, `FALSE_POSITIVE`)
 - **Status**: Filter by status (`NEW`, `RECURRENT`, `FIXED`)
 - **Exclude Result Types**: Filter to exclude dev and test dependencies (`DEV_AND_TEST`, `NONE`)
+
+#### API Security Configuration
+
+You can configure API security results with the following options:
+
+- **Filtering**: Apply filters to API security risks
+- **Searching**: Search for specific API security issues
+- **Sorting**: Sort results by various criteria
 
 #### Scan Configuration
 
@@ -792,19 +1347,30 @@ The integration creates the following blueprints:
 - **Properties**: status, branch, createdAt, updatedAt, projectId, userAgent, configs, statusDetails
 - **Relations**: project (links to checkmarxProject)
 
-#### Checkmarx Scan Results
-- **Identifier**: `checkmarx{Type}` (dynamically generated based on result type)
-- **Properties**: type, severity, state, confidenceLevel, description, cweId, fileName, line
+#### Checkmarx SAST
+- **Identifier**: `checkmarxSast`
+- **Properties**: type, firstScanId, id, status, state, severity, confidenceLevel, created, description, nodes, cweId
 - **Relations**: scan (links to checkmarxScan)
 
-:::info Dynamic Blueprint Names
-Scan result blueprints are dynamically named based on the result type. For example:
-- `checkmarxSast` for SAST results
-- `checkmarxSca` for SCA results
-- `checkmarxKics` for KICS results
-- `checkmarxContainers` for container scan results
-- `checkmarxSscs-secret-detection` for SSCS secret detection results
-:::
+#### Checkmarx SCA
+- **Identifier**: `checkmarxSca`
+- **Properties**: type, firstScanId, id, status, state, severity, confidenceLevel, created, description, packageIdentifier, recommendations, recommendedVersion, packageData, cweId
+- **Relations**: scan (links to checkmarxScan)
+
+#### Checkmarx KICS
+- **Identifier**: `checkmarxKics`
+- **Properties**: type, firstScanId, id, status, state, severity, confidenceLevel, created, description, fileName, line, platform, issueType, expectedValue, value
+- **Relations**: scan (links to checkmarxScan)
+
+#### Checkmarx Container Security
+- **Identifier**: `checkmarxContainerSec`
+- **Properties**: type, firstScanId, id, status, state, severity, confidenceLevel, created, description, packageName, packageVersion, imageName, imageTag, imageFilePath, cweId
+- **Relations**: scan (links to checkmarxScan)
+
+#### Checkmarx API Security
+- **Identifier**: `checkmarxApiSec`
+- **Properties**: riskId, apiId, severity, name, status, httpMethod, url, origin, documented, authenticated, discoveryDate, scanId, sastRiskId, projectId, state
+- **Relations**: scan (links to checkmarxScan)
 
 ## Troubleshooting
 
