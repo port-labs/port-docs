@@ -37,11 +37,12 @@ In addition to the methods mentioned above, `admins` can find action runs using 
 - Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired entity, then select the `Runs` tab.  
    This page will display all action runs that have been executed for the selected Entity.
 
-
-## Obtain a run's id
+## Fetch an action run
 
 Once an `actionRun` is created, it will have a unique `runId`. Using this id, you can interact with the action run using Port's API. 
- 
+
+### Obtain a run's id
+
 How to obtain the `runId` of an action by method:
 
 <Tabs groupId="execution-method" defaultValue="ui" values={[
