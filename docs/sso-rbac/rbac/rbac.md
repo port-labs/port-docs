@@ -101,10 +101,7 @@ The `User` and `Team` blueprints are comprised of the following properties:
 
 When Single Sign-On (SSO) is enabled, users and teams information (including team membership) is taken directly from your identity provider (IdP).
 
-Since these teams are synced from your IdP the following actions cannot be performed on them:
-
-- Edit SSO team membership.
-- Delete SSO teams.
+Since these teams are synced from your IdP, you cannot edit SSO team membership.  
 
 :::
 
