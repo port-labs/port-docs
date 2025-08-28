@@ -1330,6 +1330,15 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
+
+        title: "Send Slack messages using Port's Slack app and automations",
+        description: "Learn how to send Slack messages to users using Port's Slack app and automations",
+        tags: ["Automations", "Slack"],
+        logos: ["Slack"],
+        link: "/guides/all/send-slack-message-to-user",
+    },
+    {
+
         title: "Map Git users to Port user accounts",
         description: "Automatically map Git users to their Port user accounts for seamless integration",
         tags: ["SDLC","Git", "GitHub", "GitLab", "AzureDevops", "Automations"],
