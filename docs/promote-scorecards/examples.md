@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
 ---
 
 # Examples
@@ -147,6 +147,3 @@ To assess the deployment frequency of a `service`, simply checking the `deployme
   ]
 }
 ```
-
-___
-
