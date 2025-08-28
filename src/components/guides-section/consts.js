@@ -27,13 +27,12 @@ export const tagsCategoryMap = {
         "Launchdarkly",
         // "Linear",
         // "Opencost",
-        // "Snyk",
+        "Snyk",
         "Datadog",
         "Dynatrace",
         "Humanitec",
         "New Relic",
         "ServiceNow",
-        "Snyk",
     ]
 };
 
