@@ -166,3 +166,188 @@ The basic structure of a self-service action looks like this (see key descriptio
 ## Examples
 
 For complete examples of self-service actions using GitHub as the backend, check out the [guides section](/guides?tags=GitHub&tags=Actions).
+
+## Track self-service actions
+
+To gain visibility into how your self-service actions are being used and their performance, you can set up tracking for action runs. This allows you to monitor execution patterns, track success rates, and maintain audit trails to follow what actions were executed and when. 
+
+The following tracking system works by creating a dedicated blueprint for action runs and setting up an automation that captures execution details whenever a specific self-service action is triggered as well as an automation that updates the action run's status.
+
+<h3>Set up data model</h3>
+
+Create a blueprint for `Action run`:
+
+1. Go to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Click on `+ Blueprint`.
+
+3. Click on the `{...} Edit JSON` button in the top right corner.
+
+4. Copy and paste the following JSON schema, then click `Save`.
+
+    <details>
+    <summary><b>Action run blueprint (click to expand)</b></summary>
+
+    ``` json
+    {
+      "identifier": "action_run",
+      "title": "Action run",
+      "icon": "Microservice",
+      "schema": {
+        "properties": {
+          "status": {
+            "icon": "DefaultProperty",
+            "title": "Status",
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "FAILURE",
+              "IN_PROGRESS",
+              "WAITING_FOR_APPROVAL",
+              "DECLINED"
+            ],
+            "enumColors": {
+              "SUCCESS": "green",
+              "FAILURE": "red",
+              "IN_PROGRESS": "lightGray",
+              "WAITING_FOR_APPROVAL": "yellow",
+              "DECLINED": "red"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At",
+            "format": "date-time"
+          },
+          "run_id": {
+            "type": "string",
+            "title": "Run ID"
+          },
+          "run_url": {
+            "type": "string",
+            "title": "Run URL",
+            "format": "url"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At",
+            "format": "date-time"
+          },
+          "action": {
+            "type": "string",
+            "title": "Action"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
+    </details>
+
+
+<h3>Define the automation</h3>
+
+The following automation updates the `Action run` entity with information regarding this run.  
+To add it, follow these steps:
+
+1. Go to the [Automations](https://app.getport.io/settings/automations) page of your portal.
+
+2. Click on the `+ Automation` button.
+
+3. Click on the `{...} Edit JSON` button in the top right corner.
+
+4. Copy and paste the following JSON configuration into the editor, then click `Save`.
+
+    <details>
+    <summary><b>Update `Action run` automation definition (click to expand)</b></summary>
+
+    ``` json 
+    {
+      "identifier": "update_action_run",
+      "title": "Update Action Run",
+      "description": "",
+      "trigger": {
+        "type": "automation",
+        "event": {
+          "type": "ANY_RUN_CHANGE",
+          "actionIdentifier": "<THE_ACTION_IDENTIFIER>"
+        },
+        "condition": {
+          "type": "JQ",
+          "expressions": [],
+          "combinator": "and"
+        }
+      },
+      "invocationMethod": {
+        "type": "UPSERT_ENTITY",
+        "blueprintIdentifier": "action_run",
+        "mapping": {
+          "identifier": "{{.event.diff.after.id}}",
+          "title": "{{.event.diff.after.id}}",
+          "properties": {
+            "run_id": "{{.event.diff.after.id}}",
+            "run_url": "https://app.port.io/organization/run?runId={{.event.diff.after.id}}",
+            "status": "{{.event.diff.after.status}}",
+            "created_at": "{{.event.diff.after.createdAt}}",
+            "updated_at": "{{.event.diff.after.updatedAt}}",
+            "action": "{{.event.diff.after.action.title}}"
+          },
+          "relations": {}
+        }
+      },
+      "publish": true
+    }
+    ```
+    </details>
+
+Once implemented, you can track your self-service action runs and see how they are progressing.  
+
+For example, you can create the following widget to vizualize how `Action runs` are distributed by status for a specific `Action` over the past month:
+
+1. Click **`+ Widget`** and select **Pie chart**.
+
+2. Give the widget a `title` and a `description`.
+
+3. Choose the `Action run` blueprint.
+
+4. Under `Breakdown by property`, select the **status** property.
+
+5. Under `Additional filters` you can choose to filter by:
+   - `Action runs` that were created in the past month.
+   - `Action runs` of a specific self-service action.  
+
+    Click on `filters`, then on `{...} Edit JSON`, and add the following snippet with your action title and relevant time frame.  
+    Below is a JSON example for `Create s3 bucket` self-service action in the past month:
+
+    <details>
+    <summary><b>filters JSON example (click to expand)</b></summary>
+      ``` json showLineNumbers
+      {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "created_at",
+            "operator": "between",
+            "value": {
+              "preset": "lastMonth"
+            }
+          },
+          {
+            "property": "action",
+            "operator": "=",
+            "value": "Create s3 bucket" // Change the value to your action name
+          }
+        ]
+      }
+      ```
+    </details>
+
+6. Click `Save`.
+
+This will result in a widget similar to the following:  
+
+<img src='/img/self-service-actions/actionRunsPieChartExample.png' width='70%' border='1px' />

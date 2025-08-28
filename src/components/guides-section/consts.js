@@ -9,6 +9,7 @@ export const tagsCategoryMap = {
         "GitLab",
         "BitBucket",
         "AzureDevops",
+        "Claude Code",
         "Azure",
         "Webhook",
         "Kafka",
@@ -549,12 +550,12 @@ export const availableGuides = [
         link: "/guides/all/change-pagerduty-incident-owner",
     },
     {
-        title: "Create a PagerDuty Incident",
-        description: "Create a self-service action that creates a PagerDuty incident",
+        title: "Interact with PagerDuty Incidents",
+        description: "Create a self-service action that creates and triggers PagerDuty incidents",
         tags: ["Incident management", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
-        link: "/guides/all/create-pagerduty-incident",
+        link: "/guides/all/interact-with-pagerduty-incidents",
     },
     {
         title: "Create a PagerDuty Service",
@@ -579,14 +580,6 @@ export const availableGuides = [
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/resolve-incident",
-    },
-    {
-        title: "Trigger a PagerDuty Incident Action",
-        description: "Create a self-service action that triggers a PagerDuty incident",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions", "Webhook", "Automations"],
-        logos: ["PagerDuty", "GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/trigger-pagerduty-incident",
     },
     {
         title: "Trigger a ServiceNow Incident",
@@ -1419,6 +1412,13 @@ export const availableGuides = [
         tags: ["Engineering metrics", "Github Copilot", "Dashboards", "AI"],
         logos: ["GitHub"],
         link: "/guides/all/track-ai-driven-pull-requests",
+    },
+    {
+        title: "Trigger Claude Code from Port",
+        description: "Learn how to trigger Claude Code from Port to enable AI-powered coding assistance",
+        tags: ["SDLC", "Claude Code", "AI", "Actions"],
+        logos: ["AI", "Claude Code"],
+        link: "/guides/all/trigger-claude-code-from-port",
     }
 ]
 
