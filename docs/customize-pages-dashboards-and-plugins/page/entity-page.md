@@ -29,6 +29,9 @@ In the top right corner of the details widget, you can find the <LogoImage logo=
 
 Additional widgets can be added by clicking on the `+ Widget` button in the top right corner of the dashboard.
 
+### Global filters
+
+You may apply filters on widgets within the overview dashboard using [Global Filters](/customize-pages-dashboards-and-plugins/page/dashboard-page#dashboard-filters)
 
 ## Related entities
 
