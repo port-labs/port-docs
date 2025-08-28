@@ -199,6 +199,57 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 <PortRepositoryTeamMappingAppConfig/>
 
 
+## Map repositories with multiple relationships
+
+You can now include multiple relationship types in a single repository configuration. For example, to include both teams and collaborators:
+
+```yaml showLineNumbers
+- kind: repository
+  selector:
+    query: "true"
+    include: ["teams", "collaborators"] # Include both teams and collaborators
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name
+        blueprint: '"githubRepository"'
+        properties:
+          readme: file://README.md
+          url: .html_url
+          defaultBranch: .default_branch
+        relations:
+          githubTeams: "[.__teams[].id | tostring]"
+          githubCollaborators: "[.__collaborators[].login]"
+```
+
+:::caution Performance consideration
+While you can include multiple relationship types in a single configuration, this may impact resync performance for large repositories. For optimal performance, consider separating into multiple repository blocks:
+
+```yaml showLineNumbers
+# Option 1: Separate blocks for better performance
+- kind: repository
+  selector:
+    query: "true"
+    include: ["teams"]
+  # ... rest of configuration
+
+- kind: repository  
+  selector:
+    query: "true"
+    include: ["collaborators"]
+  # ... rest of configuration
+
+# Option 2: Single block with multiple relationships
+- kind: repository
+  selector:
+    query: "true"
+    include: ["teams", "collaborators"]
+  # ... rest of configuration
+```
+:::
+
+
 ## Map teams and team members
 
 The following shows how we can map teams and team members using the "members" selector.
