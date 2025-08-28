@@ -19,6 +19,8 @@ import BitbucketPullrequestBlueprint from "/docs/build-your-software-catalog/syn
 import BitbucketRepositoryBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_repository_blueprint.mdx";
 import BitbucketWebhookConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_webhook_config.mdx";
 import BitbucketServerPythonScript from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_python_script.mdx";
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
+
 
 # Bitbucket (self-hosted)
 
@@ -64,6 +66,8 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-Time (self-hosted)">
+
+<IntegrationVersion integration="bitbucket-server" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -779,7 +783,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .id | tostring
+          identifier: (.toRef.repository.slug // .toRef.repository.project.key) + "-" + (.id|tostring)
           title: .title
           blueprint: '"bitbucketPullRequest"'
           properties:
