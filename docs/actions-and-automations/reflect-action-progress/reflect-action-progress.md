@@ -196,7 +196,7 @@ To cancel a pending execution request:
 
 1. Click on the <img src="/img/icons/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner of the page.
 2. Navigate to the relevant **run page**.
-3. In the top-right corner of the **run page**, click `Re-run action`.
+3. Click on the `...` button in the top-right corner of the run's `Details` window, then click on `Edit`.
 4. Change the `Status` to **FAILURE**.
 5. Click **Save**.
 
