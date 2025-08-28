@@ -170,7 +170,7 @@ resources:
   - kind: repository
     selector:
       query: "true"
-      include: "teams" # ✅ new
+      include: ["teams"] # ✅ new
     port:
       entity:
         mappings:
@@ -220,7 +220,7 @@ resources:
   - kind: repository
     selector:
       query: "true"
-      include: "collaborators" # ✅ new
+      include: ["collaborators"] # ✅ new
     port:
       entity:
         mappings:
