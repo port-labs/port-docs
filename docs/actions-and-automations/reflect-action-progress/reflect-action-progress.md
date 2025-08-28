@@ -1,6 +1,6 @@
 import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
 
-# Reflect action progress
+# Interact with actions
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -37,7 +37,7 @@ In addition to the methods mentioned above, `admins` can find action runs using 
 - Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired entity, then select the `Runs` tab.  
    This page will display all action runs that have been executed for the selected Entity.
 
-## Interacting with action runs
+## Interact with action runs
 
 Once an `actionRun` is created, it will have a unique `runId`. Using this id, you can interact with the action run using Port's API.
 
@@ -188,21 +188,30 @@ If we want to add a final log entry and also mark the action run as successful, 
 
 A log message with the `terminationStatus` key can only be sent once for an action run. After it is sent, the run status is marked accordingly and the run can no longer be modified.
 
-#### Cancel execution request
+## Cancel execution request
 
 If a user executes a self-service action that requires approval, and the run's `Status` is still `Waiting for approval`, they can withdraw their request.
 
 To cancel a pending execution request:
 
 1. Click on the <img src="/img/icons/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner of the page.
-2.  Go to the relevant **run page**.
-3. Click on the `...` button in the top-right corner of the run's `Details` window, then click on `Edit`.
+2. Navigate to the relevant **run page**.
+3. In the top-right corner of the **run page**, click `Re-run action`.
 4. Change the `Status` to **FAILURE**.
 5. Click **Save**.
 
 The run will then be marked as failed, and will no longer require approval or be eligible for execution.
 
-## Tying Entities to an action run
+## Re-run action
+
+If a user wants to re-run an action using the same inputs as a previous run, they can follow these steps:
+
+1. Click on the <img src="/img/icons/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner of the page.
+2. Navigate to the relevant **run page**.
+3. Click on the `Re-run action` in the top right corner of the action run page.
+4. Execute the action again by clicking on the `Execute` button.
+
+## Tie entities to action run
 
 You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an entity (i.e. [`POST`](/api-reference/create-an-entity), [`PUT`](/api-reference/change-an-entity), [`PATCH`](/api-reference/update-an-entity) and [`DELETE`](/api-reference/delete-an-entity) entity requests).  
 
