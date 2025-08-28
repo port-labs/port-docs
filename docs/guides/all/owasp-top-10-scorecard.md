@@ -5,12 +5,14 @@ description: Build an OWASP Top 10 security scorecard in Port using vulnerabilit
 
 # Build an OWASP Top 10 Scorecard
 
-<img src="/img/guides/owasp/chart.png" width="100%" border="1px" alt="OWASP Top 10 Chart showing Gold, Silver and Basic tier distribution" />
-<br></br>
-<br></br>
-
+## Overview
 
 This guide demonstrates how to build an [OWASP Top 10](http://owasp.org/Top10) security scorecard in Port using vulnerability data from Snyk.  
+
+<img src="/img/guides/owasp/chart.png" width="80%" border="1px" alt="OWASP Top 10 Chart showing Gold, Silver and Basic tier distribution" />
+<br></br>
+<br></br>
+
 
 The scorecard resides on the `Repository` blueprint and evaluates data sourced from the `Snyk Target` and `Snyk Vulnerability` blueprints to measure each repository’s security posture against the latest OWASP Top 10 categories.
 
