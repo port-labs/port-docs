@@ -33,6 +33,7 @@ export const tagsCategoryMap = {
         "Humanitec",
         "New Relic",
         "ServiceNow",
+        "Snyk",
     ]
 };
 
