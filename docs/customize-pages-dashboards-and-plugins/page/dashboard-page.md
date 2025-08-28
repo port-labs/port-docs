@@ -697,7 +697,7 @@ To resize a widget, hover over one of its sides until the blue bar appears, then
 
 ## Dashboard Filters
 
-With Dashboard Filters you can apply filters of selected meta properties to all widgets within the dashboard at once.
+With Dashboard Filters, you can apply filters of selected meta properties to all widgets within the dashboard at once.
 
 **Supported widgets:**
 
@@ -710,24 +710,24 @@ With Dashboard Filters you can apply filters of selected meta properties to all 
 
 **Supported meta properties:**
 
-- Owning teams
-  - You can filter entities by selecting specific teams
-  - You can use "My Teams" option to dynamically filter entities according to the user's team(s)
-  - Affects only blueprints with Owning Team property
+- **Owning teams**
+  - You can filter entities by selecting specific teams.
+  - You can use the "My Teams" option to dynamically filter entities according to the user's team(s).
+  - Affects only blueprints with an Owning Team property.
     <img src='/img/software-catalog/pages/globalFiltersAdd.png' width='70%' />
-- Title
-  - You can filter entities by their titles using different [string operators](/search-and-query/comparison-operators)
-- Identifier
-  - You can filter entities by their identifiers using different [string operators](/search-and-query/comparison-operators)
+- **Title**
+  - You can filter entities by their titles using different [string operators](/search-and-query/comparison-operators).
+- **Identifier**
+  - You can filter entities by their identifiers using different [string operators](/search-and-query/comparison-operators).
 
 ### Admin permissions
 
-As an admin (or a member with edit permissions for the dashboard) it is possible to add, edit or remove filters from the dashboard page. Then, save the view for other users.
+As an admin (or a member with edit permissions for the dashboard), you can add, edit, or remove filters from the dashboard page. Then, save the view for other users.
 
 <img src='/img/software-catalog/pages/globalFiltersSave.png' width='50%' />
 
 ### Member permissions
 
-As a member, you may view and edit the value of the current filters within the page (unless the page is locked)
+As a member, you can view and edit the value of the current filters within the page (unless the page is locked).
 
 <img src='/img/software-catalog/pages/globalFiltersMemberEdit.png' width='70%' />
