@@ -1331,7 +1331,7 @@ export const availableGuides = [
     },
     {
 
-        title: "Send Slack messages using Port automations",
+        title: "Send Slack messages using Port's Slack app and automations",
         description: "Learn how to send Slack messages to users using Port's Slack app and automations",
         tags: ["Automations", "Slack"],
         logos: ["Slack"],

@@ -10,7 +10,7 @@ description: Learn how to send Slack messages to users using Port's Slack app an
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Send Slack messages using Port automations
+# Send Slack messages using Port's Slack app and automations
 
 This guide demonstrates how to set up automations to send Slack messages to users using Port's Slack app.
 In this guide, we will use the email addresses from Port integrations (such as GitHub, GitLab, Jira, etc.) to look up the corresponding Slack user IDs and send targeted messages to those users.
