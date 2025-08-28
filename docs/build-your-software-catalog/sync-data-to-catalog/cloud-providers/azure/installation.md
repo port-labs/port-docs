@@ -10,6 +10,7 @@ import DockerParameters from "./\_azure_docker_params.mdx"
 import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import AzureAppRegistration from "./\_azure_app_registration_guide.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Installation
 
@@ -42,6 +43,8 @@ This way of deployment supports scheduled resyncs of resources from Azure to Por
 <AzureAppRegistration/>
 
 <h2> Installation </h2>
+
+<IntegrationVersion integration="azure" />
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using Helm.
 
