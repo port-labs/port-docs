@@ -12,6 +12,7 @@ import AdvancedConfig from '../../../../../generalTemplates/_ocean_advanced_conf
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 
 # Installation
@@ -60,6 +61,8 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="bitbucket-cloud" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
