@@ -12,9 +12,12 @@ import HumanitecResourceBlueprint from "/docs/guides/templates/humanitec/_humani
 import HumanitecResourceGraphBlueprint from "/docs/guides/templates/humanitec/_humanitec_resource_graph_blueprint.mdx";
 import HumanitecExporterCacheScript from "/docs/guides/templates/humanitec/_humanitec_exporter_cache.mdx";
 import HumanitecExporterMainScript from "/docs/guides/templates/humanitec/_humanitec_exporter_main.mdx";
+import HumanitecExporterConfig from "/docs/guides/templates/humanitec/_humanitec_exporter_config.mdx";
 import HumanitecExporterRequirements from "/docs/guides/templates/humanitec/_humanitec_exporter_requirements.mdx";
 import HumanitecExporterPortClient from "/docs/guides/templates/humanitec/_humanitec_exporter_port_client.mdx";
 import HumanitecExporterHumanitecClient from "/docs/guides/templates/humanitec/_humanitec_exporter_humanitec_client.mdx";
+import HumanitecExporterCircuitBreaker from "/docs/guides/templates/humanitec/_humanitec_exporter_circuit_breaker.mdx";
+import HumanitecExporterRetryableHttpClient from "/docs/guides/templates/humanitec/_humanitec_exporter_retryable_http_client.mdx";
 import HumanitecGroups from "/docs/guides/templates/humanitec/_humanitec_groups.mdx";
 import HumanitecUsers from "/docs/guides/templates/humanitec/_humanitec_users.mdx";
 import HumanitecPipelines from "/docs/guides/templates/humanitec/_humanitec_pipelines.mdx";
@@ -29,7 +32,7 @@ import HumanitecSharedValues from "/docs/guides/templates/humanitec/_humanitec_s
 
 This guide demonstrates how to create a GitHub worklow integration to facilitate the ingestion of Humanitec applications, environments, workloads, resources, resource graphs, pipelines, deployment deltas, deployment sets, secret stores, shared values, value set versions, users, groups into your Port catalog on schedule.
 
-<img src="/img/guides/humanitecEnvironments.png" alt="Humanitec Integration" width="75%" border="1px" />
+<img src="/img/guides/humanitecEnvironments.png" alt="Humanitec Integration" width="100%" border="1px" />
 
 ## Common use cases
 
@@ -52,38 +55,37 @@ As a first step, you need to create blueprint definitions in Port for the Humani
 1. Go to the [Builder](https://app.getport.io/settings/data-model/data-model) page in your Port organization.
 2. Click on the **+ Blueprint** button at the top of the page.
 3. Click on `{...} Edit JSON` button at the top right corner.
-4. Copy and paste the following blueprint JSON into the editor, repeating the process for each blueprint:
+4. Copy, paste and save the following blueprints JSON into the editor, repeating the process for each blueprint:
 
-  <HumanitecApplicationBlueprint/>
+    <HumanitecApplicationBlueprint/>
 
-  <HumanitecEnvironmentBlueprint/>
+    <HumanitecEnvironmentBlueprint/>
 
-  <HumanitecWorkloadBlueprint/>
+    <HumanitecWorkloadBlueprint/>
 
-  <HumanitecResourceGraphBlueprint/>
+    <HumanitecResourceGraphBlueprint/>
 
-  <HumanitecResourceBlueprint/>
+    <HumanitecResourceBlueprint/>
 
-  <HumanitecSecretStores/>
+    <HumanitecSecretStores/>
 
-  <HumanitecSharedValues/>
+    <HumanitecSharedValues/>
 
-  <HumanitecValueSetVersions/>
+    <HumanitecValueSetVersions/>
 
-  <HumanitecDeploymentSets/>
+    <HumanitecDeploymentSets/>
 
-  <HumanitecPipelines/>
+    <HumanitecPipelines/>
 
-  <HumanitecDeploymentDeltas/>
+    <HumanitecDeploymentDeltas/>
 
-  <HumanitecUsers/>
+    <HumanitecUsers/>
 
-  <HumanitecGroups/>
+    <HumanitecGroups/>
 
-
-:::tip Blueprint Properties
-You may select the blueprints depending on what you want to track in your Humanitec account.
-:::
+    :::tip Blueprint selection
+    You should select the blueprints depending on what you want to track in your Humanitec account.
+    :::
 
 ## Set up the integration
 
@@ -103,58 +105,90 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 
 1. Create the following Python files in a folder named `integration` at the base directory of your GitHub repository:
     - `main.py` - Orchestrates the synchronization of data from Humanitec to Port, ensuring that resource entities are accurately mirrored and updated on your Port catalog.
+
+      Add the following code to the `main.py` file:
+      <details>
+      <summary><b>Main Executable Script (Click to expand)</b></summary>
+
+      <HumanitecExporterMainScript/>
+
+      </details>
+    
+    - `config.py` - Contains the configuration constants for the integration, including cache TTL, connection pooling, and other settings.
+
+      Add the following code to the `config.py` file:
+      <details>
+      <summary><b>Config (Click to expand)</b></summary>
+
+      <HumanitecExporterConfig/>
+
+      </details>
     - `requirements.txt` - This file contains the dependencies or necessary external packages need to run the integration
 
+       Add the following code to the `requirements.txt` file:
+      <details>
+      <summary><b>Requirements (Click to expand)</b></summary>
 
+      <HumanitecExporterRequirements/>
 
-    <details>
-    <summary><b>Main Executable Script (Click to expand)</b></summary>
-
-    <HumanitecExporterMainScript/>
-
-    </details>
-
-
-    <details>
-    <summary><b>Requirements (Click to expand)</b></summary>
-
-    <HumanitecExporterRequirements/>
-
-    </details>
+      </details>
 
 
 2. Create the following Python files in a folder named `clients` at the base directory of the `integration` folder:
+
     - `port_client.py` – Manages authentication and API requests to Port, facilitating the creation and updating of entities within Port's system.
+
+      Add the following code to the `port_client.py` file:  
+      <details>
+      <summary><b>Port Client (Click to expand)</b></summary>
+
+      <HumanitecExporterPortClient/>
+
+      </details>
     - `humanitec_client.py` – Handles API interactions with Humanitec, including retrieving data with caching mechanisms to optimize performance.
+
+      Add the following code to the `humanitec_client.py` file:
+      <details>
+      <summary><b>Humanitec Client (Click to expand)</b></summary>
+
+      <HumanitecExporterHumanitecClient/>
+
+      </details>
     - `cache.py` - Provides an in-memory caching mechanism with thread-safe operations for setting, retrieving, and deleting cache entries asynchronously.
 
-  <details>
-  <summary><b>Port Client (Click to expand)</b></summary>
+      Add the following code to the `cache.py` file:
+      <details>
+      <summary><b>Cache (Click to expand)</b></summary>
 
-  <HumanitecExporterPortClient/>
+      <HumanitecExporterCacheScript/>
 
-  </details>
+      </details>
+    - `circuit_breaker.py` - Implements a circuit breaker pattern to handle transient failures in API calls, preventing cascading failures and improving the reliability of the integration.
 
-  <details>
-  <summary><b>Humanitec Client (Click to expand)</b></summary>
+      Add the following code to the `circuit_breaker.py` file:
+      <details>
+      <summary><b>Circuit Breaker (Click to expand)</b></summary>
 
-  <HumanitecExporterHumanitecClient/>
+      <HumanitecExporterCircuitBreaker/>
 
-  </details>
+      </details>
+    - `retryable_http_client.py` - Provides a retryable HTTP client with exponential backoff and jitter to handle failed API calls due to disonnected HTTP connections.
+
+      Add the following code to the `retryable_http_client.py` file:
+      <details>
+      <summary><b>Retryable HTTP Client (Click to expand)</b></summary>
+
+      <HumanitecExporterRetryableHttpClient/>
+
+      </details>
 
 
-  <details>
-  <summary><b>Cache (Click to expand)</b></summary>
-
-  <HumanitecExporterCacheScript/>
-
-  </details>
 
 ### Create the GitHub workflow
 
 Create the file `.github/workflows/humanitec-exporter.yaml` in the `.github/workflows` folder of your repository.
 
-:::tip Cron
+:::tip Cron expression
 Adjust the cron expression to fit your schedule. By default, the workflow is set to run at 2:00 AM every Monday ('0 2 * * 1').
 :::
 
@@ -199,6 +233,7 @@ jobs:
 
 </details>
 
+## Conclusion
 
 Done! Any change that happens to your application, environment, workloads, resources, resource graphs, pipelines, deployment deltas, deployment sets, secret stores, shared values, value set versions, users, groups in Humanitec will be synced to Port on the schedule interval defined in the GitHub workflow.
 
