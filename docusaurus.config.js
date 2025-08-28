@@ -170,7 +170,7 @@ const config = {
               },
               {
                 label: "Promote scorecards",
-                to: "/promote-scorecards",
+                to: "/promote-scorecards/overview",
               },
               {
                 label: "Search & query",
