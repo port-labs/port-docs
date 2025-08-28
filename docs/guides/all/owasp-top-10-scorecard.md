@@ -5,7 +5,6 @@ description: Build an OWASP Top 10 security scorecard in Port using vulnerabilit
 
 # Build an OWASP Top 10 Scorecard
 
-## Overview
 
 This guide demonstrates how to build an [OWASP Top 10](http://owasp.org/Top10) security scorecard in Port using vulnerability data from Snyk.  
 
