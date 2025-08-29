@@ -19,10 +19,7 @@ With the **MCP backend server**, the Service Explorer becomes even more powerful
 
 By the end of this guide, your developers will be able to get information about your services via Port's AI chat.
 
-<!-- <img src="/img/ai-agents/AIAgentsServiceExplorerWidgetExample.png" width="100%" border="1px" /> -->
-
 <img src="/img/guides/service-explorer-agent-demo-1.png" width="100%" border="1px" />
-
 <img src="/img/guides/service-explorer-agent-demo-2.png" width="100%" border="1px" />
 
 
