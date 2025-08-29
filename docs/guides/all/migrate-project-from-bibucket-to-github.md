@@ -467,7 +467,7 @@ The following JSON outlines the structure and parameters for this action:
           "items": {
             "type": "string",
             "format": "entity",
-            "blueprint": "bitbucketService"
+            "blueprint": "bitbucketRepository"
           }
         },
         "visibility": {
@@ -504,7 +504,7 @@ The following JSON outlines the structure and parameters for this action:
     "repo": "YOUR-REPOSITORY",
     "workflow": "migrate-to-github.yml",
     "workflowInputs": {
-      "repositories": "{{ [.inputs.service[] | {name: .identifier, project: .relations.project, workspace: .relations.bitbucketWorkspace }] }}",
+      "repositories": "{{ [.inputs.service[] | {name: .identifier, project: .relations.project, workspace: .properties.workspace }] }}",
       "visibility": "{{ .inputs.visibility | ascii_downcase }}",
       "port_context": {
         "run_id": "{{ .run.id }}",
