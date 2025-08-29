@@ -16,6 +16,7 @@ import JenkinsJobBlueprint from './\_example_jenkins_job_blueprint.mdx'
 import JenkinsJobWebhookConfig from './\_example_jenkins_job_webhook_configuration.mdx'
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Jenkins
 
@@ -79,6 +80,8 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="jenkins" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

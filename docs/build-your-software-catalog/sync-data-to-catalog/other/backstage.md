@@ -4,6 +4,7 @@ import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalo
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import ScheduledCiInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_scheduled_ci_installation.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Backstage
 
@@ -62,6 +63,8 @@ Not sure which method is right for your use case? Check the available [installat
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="backstage" />
 
 Using this installation method means that the integration will be able to update Port in real time using webhooks.
 

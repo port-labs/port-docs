@@ -10,7 +10,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Slack reminders for scorecards
 
-This guide will walk you through creating a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.port.io/promote-scorecards/#what-is-a-scorecard). 
+This guide will walk you through creating a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.port.io/promote-scorecards/overview#what-is-a-scorecard). 
 In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
 
 Once implemented:
