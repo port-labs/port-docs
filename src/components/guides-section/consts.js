@@ -1427,6 +1427,13 @@ export const availableGuides = [
         tags: ["SDLC", "Claude Code", "AI", "Actions"],
         logos: ["AI", "Claude Code"],
         link: "/guides/all/trigger-claude-code-from-port",
+    },
+    {
+        title: "Create organizational hierarchy views",
+        description: "Learn how to model and visualize hierarchy tiers in your organization",
+        tags: ["SDLC", "Dashboards"],
+        logos: ["Dashboards"],
+        link: "/guides/all/create-organizational-hierarchy-views",
     }
 ]
 
