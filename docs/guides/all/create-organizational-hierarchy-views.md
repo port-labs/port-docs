@@ -4,12 +4,12 @@ description: Learn how to model and visualize hierarchy tiers in your organizati
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
-
+import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
 
 # Create organizational hierarchy views
 
 This guide demonstrates how to:
-- Model and visualize the hierarchy tiers in your organization.
+- Model the hierarchy tiers in your organization.
 - Create dedicated views for each tier, displaying relevant information.
 
 ## Example use case
@@ -31,7 +31,7 @@ This guide assumes you have a Port account with admin access, and have completed
 
 ## Set up data model
 
-First, let's enrich the `Team` blueprint to support different tiers in our hierarchy.
+To support hierarchy tiers, we will enrich the `Team` blueprintn that is available by default.
 
 ### Add a self-relation
 
@@ -50,7 +50,7 @@ This will allow us to assign a parent team to each team entity.
 ### Add a "type" property
 
 Next, let's add a `Type` property to the `Team` blueprint to make it easier to see what tiers/types of teams exist.  
-This property can also be later used for filtering in views/dashboards.
+This property will later be used for filtering in dashboard widgets.
 
 1. In the `Team` blueprint card, click on `+ New property`, and choose `Enum` as the property type.
 
@@ -65,12 +65,12 @@ This property can also be later used for filtering in views/dashboards.
 
 To finish setting up the data model, we need to assign each team a type and a parent team.
 
-1. In the `Team` blueprint card, click on `` to view all of your teams.
+1. In the `Team` blueprint card, click on the <LogoImage logo="entitiesTable" verticalAlign="text-top" /> button to view all of your team entities.
 
-2. For each team, assign a type and a parent team by clicking on the .
+2. For each team, assign a type and a parent team by hovering over the relevant property and clicking on the <LogoImage logo="EditProperty" verticalAlign="text-top" /> button.
 
-:::tip Table filters
-To make the process of assigning types and parent teams easier, you can use table filters to hide other columns.
+:::tip Table properties
+To make the process of assigning types and parent teams easier, you can use the `Manage properties` button in the top-right corner of the table to hide other columns.
 :::
 
 ## Create dashboard
@@ -96,7 +96,7 @@ The first table will display all of the squads under the tribe of the logged-in 
 
 3. Let's define filters to ensure that only the relevant squads are displayed. Click on the `Filters` button.
 
-4. When defining filters, we can use the UI, or by writing a JSON object.  
+4. When defining filters, we can use the UI, or write a JSON object.  
    Click on the `Edit JSON`, and paste the following JSON:
 
     ```json showLineNumbers
@@ -181,3 +181,12 @@ Read more about this operator [here](/search-and-query/?relation=matchAny#relati
 :::
 
 
+## Conclusion
+
+Just like we did for the tribe lead, you can create dashboards for managers of each tier in your hierarchy, where they can track and visualize useful information about the teams they are responsible for.
+
+Additionally, you can create other widgets in the dashboard that may interest the managers of each tier.  
+Some examples include:
+- A pie chart showing the distribution of incidents across squads in a tribe.
+- Number charts displaying the number of resolved issues per squad in a tribe in a given time period.
+- A chart/table displaying the members of each tribe in a domain, by role/name.
