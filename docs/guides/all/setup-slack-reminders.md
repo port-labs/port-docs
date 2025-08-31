@@ -31,7 +31,7 @@ Once implemented:
 
 ## Implementation
 
-### Setup the action's frontend
+### Set up the action's frontend
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button on the top left corner :
@@ -120,7 +120,7 @@ The action's frontend is now ready 🥳
 
 <br/>
 
-### Setup the action's backend
+### Set up the action's backend
 
 Now we want to write the logic that our action will trigger:
 

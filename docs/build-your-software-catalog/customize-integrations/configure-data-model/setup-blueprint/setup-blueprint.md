@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
-title: Setup Blueprints
-sidebar_label: Setup Blueprints
+title: Set up Blueprints
+sidebar_label: Set up Blueprints
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx";
@@ -9,7 +9,7 @@ import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx";
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Setup Blueprints
+# Set up blueprints
 
 <center>
 
