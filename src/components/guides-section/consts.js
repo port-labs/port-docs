@@ -27,7 +27,7 @@ export const tagsCategoryMap = {
         "Launchdarkly",
         // "Linear",
         // "Opencost",
-        // "Snyk",
+        "Snyk",
         "Datadog",
         "Dynatrace",
         "Humanitec",
@@ -994,7 +994,7 @@ export const availableGuides = [
     },
     {
         title: "Set up the Service Explorer AI agent",
-        description: "Set up an AI agent that helps developers explore and understand your software catalog",
+        description: "Set up an AI agent with MCP server backend mode that helps developers explore and understand your software catalog",
         tags: ["AI", "GitHub"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/setup-service-explorer-ai-agent",
@@ -1419,6 +1419,13 @@ export const availableGuides = [
         tags: ["SDLC", "Claude Code", "AI", "Actions"],
         logos: ["AI", "Claude Code"],
         link: "/guides/all/trigger-claude-code-from-port",
+    },
+    {
+        title: "Build an OWASP Top 10 Scorecard",
+        description: "Build an OWASP Top 10 security scorecard in Port using vulnerability data from Snyk",
+        tags: ["Security", "Scorecards", "Snyk"],
+        logos: ["Snyk"],
+        link: "/guides/all/owasp-top-10-scorecard",
     }
 ]
 

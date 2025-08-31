@@ -1,6 +1,6 @@
 ---
 displayed_sidebar: null
-description: Set up a Service Explorer AI agent to help developers discover services, understand ownership, and access documentation for quick onboarding
+description: Set up a Service Explorer AI agent with MCP to help developers discover services, understand ownership, and access documentation for quick onboarding
 ---
 
 import Tabs from "@theme/Tabs"
@@ -8,11 +8,19 @@ import TabItem from "@theme/TabItem"
 
 # Set up the Service Explorer AI agent
 
-## Overview
 
-This guide will walk you through setting up a "Service Explorer" AI agent in Port. This agent helps developers discover services, understand ownership, and access documentation for quick onboarding. By the end of this guide, your developers will be able to get information about your services via Port's AI chat.
+This guide demonstrates how to set up a "Service Explorer" AI agent in Port with enhanced capabilities powered by MCP. This agent helps developers discover services, understand ownership, and access documentation for quick onboarding.
 
-<img src="/img/ai-agents/AIAgentsServiceExplorerWidgetExample.png" width="100%" border="1px" />
+With the **MCP backend server**, the Service Explorer becomes even more powerful:  
+- It can **auto-discover all blueprints, entities, and actions** in your service catalog.  
+- It provides **transparency and visibility** into what the AI agent is doing behind the scenes.  
+- It reduces manual configuration, since blueprint access is automatically managed.  
+
+By the end of this guide, your developers will be able to get information about your services via Port's AI chat.
+
+<img src="/img/guides/service-explorer-agent-demo-1.png" width="100%" border="1px" />
+<img src="/img/guides/service-explorer-agent-demo-2.png" width="100%" border="1px" />
+
 
 ## Common use cases
 
@@ -81,12 +89,19 @@ To create a Service Explorer AI agent in Port, we'll need to configure two main 
 
 5. Click on `Create` to save the agent.
 
-## Blueprint Configuration
+## Blueprint configuration
 
-### Minimum Configuration
-The guide's configuration provides a good starting point. The minimum configuration for the Service Explorer agent requires the `service` and `githubRepository` blueprints. This provides the agent with basic information about your services and their corresponding code repositories.
+### Minimum configuration
 
-### Enhancing the Agent with More Blueprints
+The Service Explorer agent requires access to the `service` and `githubRepository` blueprints.  
+This gives the agent basic visibility into your services and their corresponding code repositories.  
+
+From here, you can expand the agent’s capabilities in one of two ways:  
+- **Classic mode**: Manually add more blueprints to provide richer service context (e.g., incidents, deployments, monitoring).  
+- **MCP mode**: Enable automatic discovery and management of blueprints, entities, and actions, with built-in transparency.  
+
+
+### Classic mode
 To make the Service Explorer more powerful, you can add more blueprints to the `allowed_blueprints` array in the agent's configuration. The more context you provide, the more detailed and accurate the agent's responses will be.
 
 Here are some examples of how you can enhance the agent by adding more blueprints:
@@ -97,7 +112,7 @@ Here are some examples of how you can enhance the agent by adding more blueprint
 - **Feature Flags** (`launchDarklyFeatureFlag`): Shows which features are enabled for each service.
 - **Documentation** (`jiraProject`, `jiraIssue`): Links to project documentation and known issues.
 
-### Customizing Blueprint Access
+<h4> Customizing Blueprint Access </h4>
 You can modify the `allowed_blueprints` array at any time to add or remove blueprints.
 
 For example, if you want to give the agent access to Kubernetes information, you would add `"workload"` and `"argocdApplication"` to the array:
@@ -111,7 +126,9 @@ For example, if you want to give the agent access to Kubernetes information, you
 ]
 ```
 
-Keep in mind that there is a trade-off between context richness and response time. The more blueprints the agent has access to, the longer it may take to generate a response. It's best to start with a minimal set of blueprints and add more as needed.
+### MCP mode
+When using [MCP server backend mode](/ai-interfaces/ai-agents/interact-with-ai-agents#mcp-server-backend-mode-in-widgets), no manual additional blueprint configuration is required. MCP auto-discovers and manages access to blueprints, entities, and actions. This simplifies setup and ensures the agent always has the latest catalog context.
+
 
 ## Interact with the Service Explorer
 
@@ -127,7 +144,8 @@ The Service Explorer AI agent can be accessed through an **AI Agent widget** in 
 3. Choose `AI agent`.
 4. Type **Service Explorer** for `Title`.
 5. Select **Service Explorer** from the `Agent` dropdown.
-6. Click on `Save`.
+6. **Enable MCP backend mode** (optional): Toggle the "Use MCP" option to enable enhanced capabilities with intelligent catalog access and Claude models.
+7. Click on `Save`.
 
 Once the widget is set up, you can ask questions directly in the chat field.
 
@@ -173,7 +191,7 @@ Here are some questions you can ask the Service Explorer agent:
 
 You can further enhance the Service Explorer setup by:
 
-- **Adding more service context**: Include additional blueprints like `workload`, `newRelicService`, or `argocdApplication`.
-- **Enriching with incidents**: Add the `pagerdutyIncident` blueprint to see the incident history for each service.
-- **Including deployments**: Add deployment-related blueprints for release information.
-- **Adding custom metadata**: Add organization-specific properties to the service blueprint to provide more context.
+- **Classic mode:**: Include additional blueprints like `workload`, `newRelicService`, or `argocdApplication`.
+- **MCP mode**: Relying on MCP’s discovery to automatically include new entities and actions.
+- **Transparency logs**: Using MCP’s visibility features to monitor how the agent answers questions.
+- **Custom metadata**: Add organization-specific properties to the service blueprint for richer answers.
