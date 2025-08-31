@@ -697,7 +697,7 @@ In the new dashboard, create the following widgets:
 
 ## Related guides
 
-- **[Trigger a PagerDuty Incident](/guides/all/trigger-pagerduty-incident)**: Complete guide for creating incidents
+- **[Trigger a PagerDuty Incident](/guides/all/interact-with-pagerduty-incidents)**: Complete guide for creating incidents
 - **[Acknowledge Incident In PagerDuty](/guides/all/acknowledge-incident)**: Complete guide for acknowledging incidents  
 - **[Resolve an Incident in PagerDuty](/guides/all/resolve-incident)**: Complete guide for resolving incidents
 - **[Change On-Call User](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)**: Change who's on-call for a service

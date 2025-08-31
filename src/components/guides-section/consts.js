@@ -27,7 +27,7 @@ export const tagsCategoryMap = {
         "Launchdarkly",
         // "Linear",
         // "Opencost",
-        // "Snyk",
+        "Snyk",
         "Datadog",
         "Dynatrace",
         "Humanitec",
@@ -550,12 +550,12 @@ export const availableGuides = [
         link: "/guides/all/change-pagerduty-incident-owner",
     },
     {
-        title: "Create a PagerDuty Incident",
-        description: "Create a self-service action that creates a PagerDuty incident",
+        title: "Interact with PagerDuty Incidents",
+        description: "Create a self-service action that creates and triggers PagerDuty incidents",
         tags: ["Incident management", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
-        link: "/guides/all/create-pagerduty-incident",
+        link: "/guides/all/interact-with-pagerduty-incidents",
     },
     {
         title: "Create a PagerDuty Service",
@@ -580,14 +580,6 @@ export const availableGuides = [
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/resolve-incident",
-    },
-    {
-        title: "Trigger a PagerDuty Incident Action",
-        description: "Create a self-service action that triggers a PagerDuty incident",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions", "Webhook", "Automations"],
-        logos: ["PagerDuty", "GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/trigger-pagerduty-incident",
     },
     {
         title: "Trigger a ServiceNow Incident",
@@ -1429,11 +1421,11 @@ export const availableGuides = [
         link: "/guides/all/trigger-claude-code-from-port",
     },
     {
-        title: "Create organizational hierarchy views",
-        description: "Learn how to model and visualize hierarchy tiers in your organization",
-        tags: ["SDLC", "Dashboards"],
-        logos: ["Dashboards"],
-        link: "/guides/all/create-organizational-hierarchy-views",
+        title: "Build an OWASP Top 10 Scorecard",
+        description: "Build an OWASP Top 10 security scorecard in Port using vulnerability data from Snyk",
+        tags: ["Security", "Scorecards", "Snyk"],
+        logos: ["Snyk"],
+        link: "/guides/all/owasp-top-10-scorecard",
     }
 ]
 
