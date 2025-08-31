@@ -8,7 +8,6 @@ import TabItem from "@theme/TabItem"
 
 # Set up the Service Explorer AI agent
 
-## Overview
 
 This guide demonstrates how to set up a "Service Explorer" AI agent in Port with enhanced capabilities powered by MCP. This agent helps developers discover services, understand ownership, and access documentation for quick onboarding.
 
