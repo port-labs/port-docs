@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 ## Overview
 
-This guide will walk you through setting up a "Service Explorer" AI agent in Port with enhanced capabilities powered by MCP. This agent helps developers discover services, understand ownership, and access documentation for quick onboarding.
+This guide demonstrates how to set up a "Service Explorer" AI agent in Port with enhanced capabilities powered by MCP. This agent helps developers discover services, understand ownership, and access documentation for quick onboarding.
 
 With the **MCP backend server**, the Service Explorer becomes even more powerful:  
 - It can **auto-discover all blueprints, entities, and actions** in your service catalog.  
