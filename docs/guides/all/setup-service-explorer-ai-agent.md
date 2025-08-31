@@ -93,7 +93,7 @@ To create a Service Explorer AI agent in Port, we'll need to configure two main 
 
 ### Minimum configuration
 
-At minimum, the Service Explorer agent requires access to the `service` and `githubRepository` blueprints.  
+The Service Explorer agent requires access to the `service` and `githubRepository` blueprints.  
 This gives the agent basic visibility into your services and their corresponding code repositories.  
 
 From here, you can expand the agent’s capabilities in one of two ways:  
