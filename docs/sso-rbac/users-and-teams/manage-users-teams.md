@@ -1,10 +1,14 @@
+---
+sidebar_position: 1
+---
+
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# User & team management
+# Manage users & teams
 
 Port offers a robust Role-Based Access Control (RBAC) mechanism that allows you to control and manage all your users and teams in one place.  
 
@@ -82,11 +86,11 @@ The `User` and `Team` blueprints are comprised of the following properties:
 - Identifier - the user's email, which will be synced with the Port user's email.
 - Title - the user's name, which will be synced with the Port user's first and last name.
 - Status - the user's [status](#user-status).
-- Port Role - the user's internal [role in Port](/sso-rbac/rbac/#roles). This property affects the permissions granted to this user.
+- Port Role - the user's internal [role in Port](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions). This property affects the permissions granted to this user.
 - Moderated Blueprints - the blueprints that can be moderated by the user. Only relevant for `moderator` users.
 - Port type - the type of the user, can be one of the following:
   - Standard - human users.
-  - [Service Account](/sso-rbac/rbac/#service-accounts).
+  - [Service Account](/sso-rbac/users-and-teams/manage-users-teams#service-accounts).
 </TabItem>
 
 <TabItem value="team">
