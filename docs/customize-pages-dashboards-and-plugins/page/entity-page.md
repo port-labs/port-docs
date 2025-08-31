@@ -239,7 +239,7 @@ Follow these steps to set up a self relation in related entities:
       ```
 
       :::info maxHops limitation
-      You can only use `maxHops` once in a path and it it accepts a number between 1 and 15.
+      You can only use `maxHops` once in a path and it accepts a number between 1 and 15.
       :::
 
 6. Click on `Save` to save the tab.
