@@ -227,7 +227,7 @@ You can now include multiple relationship types in a single repository configura
 While you can include multiple relationship types in a single configuration, this may impact resync performance for large repositories. For optimal performance, consider separating into multiple repository blocks:
 
 ```yaml showLineNumbers
-# Option 1: Separate blocks for better performance
+# Separate blocks for better performance
 - kind: repository
   selector:
     query: "true"
@@ -238,13 +238,6 @@ While you can include multiple relationship types in a single configuration, thi
   selector:
     query: "true"
     include: ["collaborators"]
-  # ... rest of configuration
-
-# Option 2: Single block with multiple relationships
-- kind: repository
-  selector:
-    query: "true"
-    include: ["teams", "collaborators"]
   # ... rest of configuration
 ```
 :::
