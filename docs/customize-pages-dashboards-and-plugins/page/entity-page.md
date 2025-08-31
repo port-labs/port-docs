@@ -368,7 +368,7 @@ The following property types are supported:
 
 ### Scorecards
 
-If the entity's blueprint has any [scorecards](/promote-scorecards/) configured, a `Scorecards` tab will be automatically created in the entity page.
+If the entity's blueprint has any [scorecards](/promote-scorecards/overview) configured, a `Scorecards` tab will be automatically created in the entity page.
 
 The tab will display the entity's compliance status with each of its scorecards.
 
