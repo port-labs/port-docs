@@ -5,6 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import GlobalFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_global_filters.md"
 
 # Dashboard page
 
@@ -695,39 +696,4 @@ To resize a widget, hover over one of its sides until the blue bar appears, then
 
 <img src='/img/software-catalog/pages/widgetResizeExample.png' width='70%' />
 
-## Dashboard Filters
-
-With Dashboard Filters, you can apply filters of selected meta properties to all widgets within the dashboard at once.
-
-**Supported widgets:**
-
-1. Number chart
-2. Pie chart
-3. Line chart
-4. Table
-
-<img src='/img/software-catalog/pages/globalFiltersView.png' width='100%' />
-
-**Supported meta properties:**
-
-- **Owning teams**
-  - You can filter entities by selecting specific teams.
-  - You can use the "My Teams" option to dynamically filter entities according to the user's team(s).
-  - Affects only blueprints with an Owning Team property.
-    <img src='/img/software-catalog/pages/globalFiltersAdd.png' width='70%' />
-- **Title**
-  - You can filter entities by their titles using different [string operators](/search-and-query/comparison-operators).
-- **Identifier**
-  - You can filter entities by their identifiers using different [string operators](/search-and-query/comparison-operators).
-
-### Admin permissions
-
-As an admin (or a member with edit permissions for the dashboard), you can add, edit, or remove filters from the dashboard page. Then, save the view for other users.
-
-<img src='/img/software-catalog/pages/globalFiltersSave.png' width='50%' />
-
-### Member permissions
-
-As a member, you can view and edit the value of the current filters within the page (unless the page is locked).
-
-<img src='/img/software-catalog/pages/globalFiltersMemberEdit.png' width='70%' />
+<GlobalFilters/>

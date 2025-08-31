@@ -4,6 +4,7 @@ sidebar_position: 2
 
 import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
 import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
+import GlobalFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_global_filters.md"
 
 # Entity page
 
@@ -28,10 +29,6 @@ In the top right corner of the details widget, you can find the <LogoImage logo=
 - Show/hide specific properties in the widget.
 
 Additional widgets can be added by clicking on the `+ Widget` button in the top right corner of the dashboard.
-
-### Global filters
-
-You may apply filters on widgets within the overview dashboard using [Global Filters](/customize-pages-dashboards-and-plugins/page/dashboard-page#dashboard-filters)
 
 ## Related entities
 
@@ -384,4 +381,4 @@ Each dashboard tab name can be customized and edited.
 - You can add up to 5 dashboard tabs per entity page.
 - Dashboard tab names must be unique and are limited to 30 characters.
 
-
+<GlobalFilters/>
