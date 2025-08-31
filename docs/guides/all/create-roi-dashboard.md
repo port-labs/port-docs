@@ -771,7 +771,6 @@ This self-service action performs the following:
 
 Define the logic that our action will trigger.
 Add the workflow to the `.github/workflows/` folder, and the other scripts to a `./scripts` folder.
-You can also use this [repository](https://github.com/port-experimental/actions-experience) if you wish. (TODO: Ask Hadar about this.)
 
 <details>
 <summary><b>Create Port automation workflow (click to expand)</b></summary>
