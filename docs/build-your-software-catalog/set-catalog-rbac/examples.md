@@ -189,7 +189,7 @@ myBlueprint -> myRelatedBlueprint -> myExtraRelatedBlueprint
 The `Owning teams` column will be visible in tables containing entities of the blueprint, but will not be editable.
 :::
 
-For more detailed information about ownership configuration, see the [ownership section](/sso-rbac/rbac/#ownership) in the RBAC documentation.
+For more detailed information about ownership configuration, see the [ownership section](/sso-rbac/users-and-teams/manage-users-teams#ownership) in the RBAC documentation.
 
 ### Global VS granular permissions
 
