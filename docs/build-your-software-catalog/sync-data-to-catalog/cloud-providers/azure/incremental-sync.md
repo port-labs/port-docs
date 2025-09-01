@@ -43,7 +43,7 @@ The integration queries Azure Resource Graph's change history tables:
 
 ## Prerequisites
 
-### Azure Setup
+### Azure set up
 
 1. **Azure App Registration** with the following permissions:
    - **Azure Service Management**: `user_impersonation`
