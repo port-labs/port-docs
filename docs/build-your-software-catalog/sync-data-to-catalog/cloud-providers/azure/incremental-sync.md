@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Azure Incremental Sync Integration
+# Azure sncremental sync integration
 
 :::info Standalone Integration
 This is a **separate, standalone integration** that runs independently from the Port Azure exporter. It's designed for lightweight, efficient synchronization of Azure resources using Azure Resource Graph change detection.
