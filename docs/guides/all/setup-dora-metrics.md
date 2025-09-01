@@ -119,7 +119,7 @@ If you do not have the **lead time** configured, you can follow the example guid
 
 
 
-### Tracking strategies
+### Track strategies
 Below are the main ways you can track deployments directly within Port:
 
 <Tabs groupId="deployment-strategies" queryString defaultValue="pr-merge" values={[
@@ -269,7 +269,7 @@ Here is how you can implement this:
           blueprint: '"deployment"'
           title: .repository.name + " Deployment"
           properties:
-            createdAt: .closedDate
+            createdAt: .creationDate
             deploymentStatus: '"Success"' # Hardcoded value
             environment: '"Production"' # Hardcoded value
           relations:
