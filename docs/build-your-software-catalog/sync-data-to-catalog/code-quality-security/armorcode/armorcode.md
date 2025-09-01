@@ -159,7 +159,6 @@ This table summarizes the available parameters for the installation.
 | `integration.eventListener.type`    | The event listener type                                                                                                             | ✅        |
 | `integration.secrets.armorcodeApiToken` | The ArmorCode API Token                                                                                                            | ✅        |
 | `integration.config.armorcodeApiUrl` | The ArmorCode API URL. If not specified, the default will be https://api.armorcode.com                                              | ❌        |
-| `baseUrl`                           | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in ArmorCode            | ✅        |
 | `scheduledResyncInterval`           | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
 
@@ -192,7 +191,6 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
 | `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                          | ✅       |
-| `OCEAN__BASE_URL`                     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in ArmorCode                                                                          | ❌       |
 
 <br/>
 
@@ -308,7 +306,6 @@ Make sure to configure the following variables using [Azure Devops variable grou
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
 | `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                          | ✅       |
-| `OCEAN__BASE_URL`                     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in ArmorCode                                                                          | ❌       |
 
 <br/>
 
@@ -364,7 +361,6 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
 | `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                          | ✅       |
-| `OCEAN__BASE_URL`                     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in ArmorCode                                                                          | ❌       |
 
 <br/>
 
