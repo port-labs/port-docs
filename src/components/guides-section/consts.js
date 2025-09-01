@@ -27,7 +27,7 @@ export const tagsCategoryMap = {
         "Launchdarkly",
         // "Linear",
         // "Opencost",
-        // "Snyk",
+        "Snyk",
         "Datadog",
         "Dynatrace",
         "Humanitec",
@@ -994,7 +994,7 @@ export const availableGuides = [
     },
     {
         title: "Set up the Service Explorer AI agent",
-        description: "Set up an AI agent that helps developers explore and understand your software catalog",
+        description: "Set up an AI agent with MCP server backend mode that helps developers explore and understand your software catalog",
         tags: ["AI", "GitHub"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/setup-service-explorer-ai-agent",
@@ -1330,6 +1330,15 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
+
+        title: "Send Slack messages using Port's Slack app and automations",
+        description: "Learn how to send Slack messages to users using Port's Slack app and automations",
+        tags: ["Automations", "Slack"],
+        logos: ["Slack"],
+        link: "/guides/all/send-slack-message-to-user",
+    },
+    {
+
         title: "Map Git users to Port user accounts",
         description: "Automatically map Git users to their Port user accounts for seamless integration",
         tags: ["SDLC","Git", "GitHub", "GitLab", "AzureDevops", "Automations"],
@@ -1419,6 +1428,13 @@ export const availableGuides = [
         tags: ["SDLC", "Claude Code", "AI", "Actions"],
         logos: ["AI", "Claude Code"],
         link: "/guides/all/trigger-claude-code-from-port",
+    },
+    {
+        title: "Build an OWASP Top 10 Scorecard",
+        description: "Build an OWASP Top 10 security scorecard in Port using vulnerability data from Snyk",
+        tags: ["Security", "Scorecards", "Snyk"],
+        logos: ["Snyk"],
+        link: "/guides/all/owasp-top-10-scorecard",
     }
 ]
 

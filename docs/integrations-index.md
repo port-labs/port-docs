@@ -206,7 +206,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Jira Server integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/)
 - [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook)
 - [Jira Server webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/#alternative-option---using-the-webhook-integration)
-- [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
+- [Initiate scorecards handling with Jira issues](/scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 <!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
 
@@ -300,7 +300,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Slack
 
 - [Manual approval for self-service actions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#slack)
-- [Scorecard notifications](/promote-scorecards/manage-using-3rd-party-apps/slack)
+- [Scorecard notifications](/scorecards/manage-using-3rd-party-apps/slack)
 - [Broadcast message to API consumers](/guides/all/broadcast-api-consumers-message)
 
 ## Snyk
