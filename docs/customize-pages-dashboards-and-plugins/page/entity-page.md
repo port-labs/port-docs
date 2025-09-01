@@ -4,7 +4,7 @@ sidebar_position: 2
 
 import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
 import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
-import GlobalFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_global_filters.md"
+import DashboardFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_dashboard_filters.md"
 
 # Entity page
 
@@ -381,4 +381,4 @@ Each dashboard tab name can be customized and edited.
 - You can add up to 5 dashboard tabs per entity page.
 - Dashboard tab names must be unique and are limited to 30 characters.
 
-<GlobalFilters/>
+<DashboardFilters/>

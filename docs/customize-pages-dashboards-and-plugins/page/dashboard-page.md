@@ -5,7 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import GlobalFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_global_filters.md"
+import DashboardFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_dashboard_filters.md"
 
 # Dashboard page
 
@@ -696,4 +696,4 @@ To resize a widget, hover over one of its sides until the blue bar appears, then
 
 <img src='/img/software-catalog/pages/widgetResizeExample.png' width='70%' />
 
-<GlobalFilters/>
+<DashboardFilters/>

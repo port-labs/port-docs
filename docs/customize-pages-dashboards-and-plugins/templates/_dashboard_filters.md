@@ -1,10 +1,10 @@
-## Global filters
+## Dashboard filters
 
-**Global filters** allow you to apply selected meta property filters **across all supported widgets** within a dashboard at once. This makes it easier to explore data consistently, without having to filter each widget individually.
+**Dashboard filters** allow you to apply selected meta property filters **across all supported widgets** within a dashboard at once. This makes it easier to explore data consistently, without having to filter each widget individually.
 
 ### Supported widgets
 
-Global filters currently apply to the following widgets:
+Dashboard filters currently apply to the following widgets:
 
 - [Number chart](/customize-pages-dashboards-and-plugins/dashboards/#number-chart)
 - [Pie chart](/customize-pages-dashboards-and-plugins/dashboards/#pie-chart)
@@ -14,7 +14,7 @@ Global filters currently apply to the following widgets:
 
 ### Supported meta properties
 
-Global filters can be applied to the following properties:
+Dashboard filters can be applied to the following properties:
 - **Owning teams:**
   - Filter entities based on selected team(s).
   - Use the `My Teams` option to dynamically filter entities relevant to the current user.
@@ -28,4 +28,4 @@ Global filters can be applied to the following properties:
 
 **Member role:** As a member, you can view and edit the operator and value of the current filters within the page (unless the page is locked).
 
-<img src='/img/software-catalog/pages/globalFiltersMemberEdit.png' width='70%' />
+<img src='/img/software-catalog/pages/dashboardFiltersMemberEdit.png' width='70%' />
