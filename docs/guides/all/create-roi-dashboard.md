@@ -62,7 +62,6 @@ This guide assumes:
     ```
 
     </details>
-
 5. Click `Create`.
 
 ### Create the Action run blueprint
@@ -146,11 +145,11 @@ This guide assumes:
         },
         "team_2": {
         "title": "User teams",
-        "path": "ran_by_actual_user.teams.$identifier"
+        "path": "ran_by_actual_user.$team.$identifier"
         },
         "user_group": {
         "title": "User group",
-        "path": "ran_by_actual_user.teams.group.$title"
+        "path": "ran_by_actual_user.$team.group.$title"
         }
     },
     "calculationProperties": {
@@ -678,9 +677,7 @@ This self-service action performs the following:
 1. Head to the [Self-service](https://app.port.io/self-serve) page.
 2. Click on the `+ Action` button.
 3. Click on the `{...} Edit JSON` button.
-4. Copy and paste the following JSON configuration into the editor.
-5. Click `Save`.
-
+4. Copy and paste the following JSON configuration into the editor:
     <details>
     <summary><b>Action blueprint (click to expand)</b></summary>
 
@@ -765,7 +762,8 @@ This self-service action performs the following:
         "requiredApproval": false
         }
         ```
-    </details>
+    </details>    
+5. Click `Save`.
 
 ### Set up the action's backend
 
@@ -1317,7 +1315,7 @@ Add the workflow to the `.github/workflows/` folder, and the other scripts to a 
     ```
 </details>
 
-**Set up the newly created action's backend**
+**Set up the newly created action**
 
 When you execute the self-service action we just created, it creates a new self-service action (if one with the provided title doesn’t already exist) with a placeholder backend.
 
