@@ -170,7 +170,7 @@ make run
 
 The integration uses sophisticated KQL queries to detect changes:
 
-```kusto
+```kusto showLineNumbers
 resourcechanges 
 | extend changeTime=todatetime(properties.changeAttributes.timestamp)
 | extend targetResourceId=tostring(properties.targetResourceId)
