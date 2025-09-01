@@ -57,7 +57,7 @@ The integration queries Azure Resource Graph's change history tables:
    - `AZURE_CLIENT_SECRET`: Azure service principal client secret  
    - `AZURE_TENANT_ID`: Azure tenant ID
 
-### Port Setup
+### Port set up
 
 1. **Blueprints**: Create the required blueprints in Port before syncing
 2. **Webhook**: Set up a webhook data source for ingesting Azure resources
