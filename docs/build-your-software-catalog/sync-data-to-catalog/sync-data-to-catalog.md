@@ -43,7 +43,7 @@ After the installation, you can customize the blueprints and/or mapping to inges
 
 Below is a breakdown of the supported installation methods for Port integrations.  
 
-| Installation type  | Security | Ease of installation | Periodic sync | Live sync (webhook) | Infrastructure & maintenance responsibility | Use case fit |
+| Installation type  | Security | Ease of installation | Periodic sync | Live sync (Webhook) | Infrastructure & maintenance responsibility | Use case fit |
 | :------------------: | ---------|:--------------------:|:-------:|:-------------:| ------------------------------------------- | ------------ |
 | **Hosted by Port (OAuth)** | Port stores OAuth tokens securely. | 🟩🟩🟩🟩 | ✅<br/>(user-selectable interval) | ✅ <br/>(Integration-dependent) | Port handles scaling, uptime, and updates. | Ideal for a quick setup with minimal effort. Mainly useful for getting started with an integration. Not recommended for large-scale production environments. |
 | **Hosted by Port (Custom settings)** | Port stores API credentials securely. Setup requires more details (e.g., token, host) and allows access control flexibility. | 🟩🟩🟩⬜ | ✅<br/> (user-selectable interval) | ✅ <br/>(Integration-dependent)| Port handles scaling, uptime, and updates.| Best for quick setup without granting OAuth permissions. |
