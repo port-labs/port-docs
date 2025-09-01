@@ -32,8 +32,8 @@ The integration queries Azure Resource Graph's change history tables:
 
 | Approach | Advantages | Considerations |
 |----------|------------|----------------|
-| **Azure Exporter (Ocean-based)** - **Full Sync + Event Grid** | **Complete schema** from ARM APIs; initial full sync plus **push-based** near real-time updates via Event Grid (**Terraform deployment only**) | Requires Terraform deployment for Event Grid; heavier API usage for full scans |
-| **Azure Incremental Sync (Standalone)** - **Polling ARG** | **Lightweight** and cost-efficient; detects and ingests only recent changes via Azure Resource Graph; simple to deploy (e.g., GitHub Actions) | **Partial schema** (limited to ARG fields); **polling** must run frequently to avoid missed changes |
+| **Azure Exporter (Ocean-based)** - **Full Sync + Event Grid**. | **Complete schema** from ARM APIs, initial full sync plus **push-based** near real-time updates via Event Grid (**Terraform deployment only**). | Requires Terraform deployment for Event Grid, heavier API usage for full scans. |
+| **Azure Incremental Sync (Standalone)** - **Polling ARG**. | **Lightweight** and cost-efficient, detects and ingests only recent changes via Azure Resource Graph, simple to deploy (e.g., GitHub Actions). | **Partial schema** (limited to ARG fields), **polling** must run frequently to avoid missed changes. |
 
 
 ## When to Use
