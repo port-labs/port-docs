@@ -193,7 +193,7 @@ resourcechanges
 
 For subscriptions and resource groups:
 
-```kusto
+```kusto showLineNumbers
 resourcecontainerchanges
 | extend changeTime = todatetime(properties.changeAttributes.timestamp)
 | extend resourceType = tostring(properties.targetResourceType) 
