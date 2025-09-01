@@ -1317,21 +1317,22 @@ Add the workflow to the `.github/workflows/` folder, and the other scripts to a 
 
 **Set up the newly created action**
 
-When you execute the self-service action we just created, it creates a new self-service action (if one with the provided title doesn’t already exist) with a placeholder backend.
-
-:::info Next step required
-The created self-service action uses a default webhook backend (`https://example.com`) as a placeholder. You should replace this with your backend implementation to make the action functional. For detailed backend setup instructions, refer to the [backend configuration documentation](/actions-and-automations/create-self-service-experiences/setup-the-backend/). 
-:::
+When executing the self-service action we just created, it creates a new self-service action (if one with the same title doesn’t already exist) with a placeholder backend.
+To make that action functional, replace its frontend and backend with your own implementation. For detailed self-service action setup instructions, see the [documentation](/actions-and-automations/create-self-service-experiences/).
 
 ### Create an actions ROI dashboard
 
 Dashboards let you observe, track, and communicate insights from your action setup.  
 You can create dashboards that pull data from the `Action`, `Action categories`, and `Action run` entities.  
+
 To create the actions ROI dashboard:
 
 1. Navigate to the [Catalog](https://app.port.io/organization/catalog) page of your portal.
+
 2. Click on the `+ New` button in the left sidebar.
+
 3. Select **New dashboard** and name it **Actions ROI**.
+
 4. Click `Create`.
 
 A new blank dashboard is available, add widgets to start visualizing the actions ROI insights.
