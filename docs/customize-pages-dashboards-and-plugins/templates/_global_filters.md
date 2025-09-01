@@ -24,8 +24,8 @@ Global filters can be applied to the following properties:
 
 ### Permissions
 
-**Admin permissions:** As an admin (or a member with edit permissions for the dashboard), you can add, edit, or remove filters from the dashboard page. Then, save the view to apply it for other users.
+**Admin role:** As an admin (or a member with edit permissions for the dashboard), you can add, edit, or remove filters from the dashboard page. Then, save the view to apply it for other users.
 
-**Member permissions:** As a member, you can view and edit the value of the current filters within the page (unless the page is locked).
+**Member role:** As a member, you can view and edit the operator and value of the current filters within the page (unless the page is locked).
 
 <img src='/img/software-catalog/pages/globalFiltersMemberEdit.png' width='70%' />
