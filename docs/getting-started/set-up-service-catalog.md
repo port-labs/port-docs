@@ -68,7 +68,7 @@ If you want to create users without inviting them to the portal just yet, make s
 :::tip User & team management
 The `user` and `team` blueprints are powerful components that can be leveraged for many use cases, such as **ownership definition**, **RBAC definition**, **dynamic visualization**, and more. 
 
-Read more about them in the [User & team management](/sso-rbac/rbac/) page.
+Read more about them in the [User & team management](/sso-rbac/users-and-teams/manage-users-teams) page.
 :::
 
 ## How the service catalog works
