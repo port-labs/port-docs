@@ -38,7 +38,7 @@ The Azure exporter can retrieve all the resources supported by the [Azure Resour
 
 For examples on how to map resources head to the [resource templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page.
 
-## Sync Approaches
+## Sync approaches
 
 Port offers multiple approaches for synchronizing Azure resources, each suited for different use cases:
 
