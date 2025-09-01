@@ -93,7 +93,7 @@ The integration supports powerful filtering based on resource group tags:
 }
 ```
 
-**Filter Logic:**
+**Filter logic:**
 - **Include filters**: ALL conditions must match (AND logic)
 - **Exclude filters**: ANY condition will exclude (OR logic)
 - **Combined**: Resources must match include criteria AND NOT match exclude criteria
