@@ -104,7 +104,7 @@ The integration supports powerful filtering based on resource group tags:
 
 The integration is primarily designed to run via GitHub Actions workflows:
 
-```yaml
+```yaml showLineNumbers
 name: "Azure Incremental Sync"
 on:
   schedule:
