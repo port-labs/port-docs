@@ -68,7 +68,7 @@ Our most successful customers define Production Readiness scorecards. Think abou
 Leverage a Production Readiness scorecard to make sure that your incident response teams have covered the baseline needs of what will be required to respond to an incident.
 
 - [Ensure Production Readiness](/guides/all/ensure-production-readiness)
-- [See our scorecard guides](/promote-scorecards/overview)
+- [See our scorecard guides](/scorecards/overview)
 
 #### Track SLOs and SLIs 
 

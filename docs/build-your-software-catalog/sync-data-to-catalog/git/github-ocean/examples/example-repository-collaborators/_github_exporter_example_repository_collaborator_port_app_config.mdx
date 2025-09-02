@@ -8,6 +8,7 @@ resources:
   - kind: repository
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+      include: ["collaborators"] # Include collaborators as a relationship
     port:
       entity:
         mappings:
