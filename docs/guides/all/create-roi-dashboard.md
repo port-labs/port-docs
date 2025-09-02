@@ -5,7 +5,7 @@ description: Create a dashboard that tracks the ROI of actions in Port
 
 # Create an actions ROI dashboard
 
-When trying to justify investing in self-service actions, leadership expects to see rigorous, evidence-based metrics. 
+When trying to justify investing in self-service actions, leadership expects to see rigorous, evidence-based metrics.  
 This guide demonstrates how to build a Port dashboard that quantifies ROI, highlights time savings and efficiency gains, and clearly communicates business value.
 
 <img src="/img/guides/ROIdashboard.png" border="1px" width="100%" />
