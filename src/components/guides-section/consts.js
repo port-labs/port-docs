@@ -994,7 +994,7 @@ export const availableGuides = [
     },
     {
         title: "Set up the Service Explorer AI agent",
-        description: "Set up an AI agent that helps developers explore and understand your software catalog",
+        description: "Set up an AI agent with MCP server backend mode that helps developers explore and understand your software catalog",
         tags: ["AI", "GitHub"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/setup-service-explorer-ai-agent",
@@ -1330,6 +1330,15 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
+
+        title: "Send Slack messages using Port's Slack app and automations",
+        description: "Learn how to send Slack messages to users using Port's Slack app and automations",
+        tags: ["Automations", "Slack"],
+        logos: ["Slack"],
+        link: "/guides/all/send-slack-message-to-user",
+    },
+    {
+
         title: "Map Git users to Port user accounts",
         description: "Automatically map Git users to their Port user accounts for seamless integration",
         tags: ["SDLC","Git", "GitHub", "GitLab", "AzureDevops", "Automations"],
@@ -1386,6 +1395,13 @@ export const availableGuides = [
         link: "/guides/all/trigger-github-copilot-from-port",
     },
     {
+        title: "Trigger Google Gemini Assistant from Port",
+        description: "Learn how to trigger Google Gemini Assistant from Port to enable AI-powered coding assistance in your development workflow",
+        tags: ["SDLC", "GitHub", "AI", "Actions"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/trigger-gemini-assistant-from-port",
+    },
+    {
         title: "Summarize Zendesk tickets with AI",
         description: "Use Port's remote MCP to fetch ticket context and generate AI summaries on demand",
         tags: ["AI", "Actions", "Webhook"],
@@ -1426,6 +1442,13 @@ export const availableGuides = [
         tags: ["Security", "Scorecards", "Snyk"],
         logos: ["Snyk"],
         link: "/guides/all/owasp-top-10-scorecard",
+    },
+    {
+        title: "Enforce AI coding security standards",
+        description: "Learn how to enforce AI coding security standards in your organization",
+        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/enforce-ai-coding-security-standards",
     }
 ]
 

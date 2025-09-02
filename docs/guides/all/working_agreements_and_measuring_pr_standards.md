@@ -56,7 +56,7 @@ The following working agreements and PR checks have been implemented in our [dem
 - [**PR Has Been Open for X Days**](#pr-has-been-open-for-x-days): Monitors how long a PR has been open.
 - [**PR Batch Size Calculation**](#pr-batch-size-calculation): Calculates the batch size of the PR.
 
-These checks are implemented using Port's [scorecards](/promote-scorecards/overview).
+These checks are implemented using Port's [scorecards](/scorecards/overview).
 
 
 ## Implementation 
