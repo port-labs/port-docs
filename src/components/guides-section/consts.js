@@ -1397,7 +1397,7 @@ export const availableGuides = [
     {
         title: "Trigger Google Gemini Assistant from Port",
         description: "Learn how to trigger Google Gemini Assistant from Port to enable AI-powered coding assistance in your development workflow",
-        tags: ["SDLC", "GitHub", "AI", "Actions", "Gemini"],
+        tags: ["SDLC", "GitHub", "AI", "Actions"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/trigger-gemini-assistant-from-port",
     },
