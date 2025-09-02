@@ -57,6 +57,10 @@ For example, say we have an action with one user input that is the user's name. 
 }
 ```
 
+:::info `.run` available values
+When the action is triggered, the `.run` object includes only the run `id`.
+:::
+
 You may have noticed that the example above also sends `{{ .run.id }}`. This is a unique identifier for each execution of the action, and can be used to interact with the action run in Port from your backend.  
 
 Now you might be thinking - *how do I know what data is available to me when constructing the payload?*  

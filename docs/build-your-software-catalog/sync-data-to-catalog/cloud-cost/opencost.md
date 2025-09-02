@@ -7,6 +7,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # OpenCost
 
@@ -33,11 +34,14 @@ The resources that can be ingested from Opencost into Port are listed below. It 
 
 ## Setup
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)" default>
+
+<IntegrationVersion integration="opencost" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

@@ -42,7 +42,7 @@ Example output from the prompt:
 
 ## Prerequisites
 
-- Port remote MCP installed and connected in your IDE (Cursor, Claude, etc.). Follow the setup guide: [Port MCP Server - Setup](/ai-agents/port-mcp-server#setup)
+- Port remote MCP installed and connected in your IDE (Cursor, Claude, etc.). Follow the setup guide: [Port MCP Server - Setup](/ai-interfaces/port-mcp-server/overview-and-installation#installing-port-mcp)
 - A Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - Custom integration to ingest Zendesk tickets using [Port webhooks](/build-your-software-catalog/custom-integration/webhook).
 
@@ -226,7 +226,7 @@ Replace `<your_subdomain>` with your Zendesk subdomain, for example: `https://ac
 
 ## Create a reusable prompt
 
-We will now define a prompt entity that your IDE can invoke via [Port MCP](/ai-agents/port-mcp-server#prompts). Once created, you can run it with the ticket ID, and it will gather context and produce a structured summary.
+We will now define a prompt entity that your IDE can invoke via [Port MCP](/ai-interfaces/port-mcp-server/prompts). Once created, you can run it with the ticket ID, and it will gather context and produce a structured summary.
 
 1. Go to the [Prompts page](https://app.getport.io/prompts) in Port.
 2. Click `Create prompt`.
@@ -265,7 +265,7 @@ We will now define a prompt entity that your IDE can invoke via [Port MCP](/ai-a
 ### Test the workflow
 
 1. In Port, make sure there is a `zendesk_ticket` entity whose `identifier` matches a real Zendesk ticket ID you want to summarize.
-2. In your IDE assistant, choose **Port MCP** as the provider as described [here](/ai-agents/port-mcp-server#setup).
+2. In your IDE assistant, choose **Port MCP** as the provider as described [here](/ai-interfaces/port-mcp-server/overview-and-installation#installing-port-mcp).
 3. Run the `zendesk_ticket_summary` prompt with `ticket_id` set to that Zendesk ticket ID.
 4. The assistant will automatically execute the self-service actions to fetch comments and side conversations, then return a structured summary.
 
@@ -276,7 +276,7 @@ Summaries can include sensitive customer or internal details, so treat them as i
 :::
 
 :::info Using Port MCP prompts
-For setup and capabilities, see the Port MCP Server prompts documentation: [Port MCP Server - Prompts](/ai-agents/port-mcp-server#prompts)
+For setup and capabilities, see the Port MCP Server prompts documentation: [Port MCP Server - Prompts](/ai-interfaces/port-mcp-server/prompts)
 :::
 
 ## Best practices
