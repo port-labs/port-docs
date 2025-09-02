@@ -4,7 +4,7 @@ title: Overview
 sidebar_label: Overview
 ---
 
-# Promote scorecards
+# Scorecards
 
 ## What is a Scorecard?
 
