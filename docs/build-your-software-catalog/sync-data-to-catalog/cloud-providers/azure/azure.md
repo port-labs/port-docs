@@ -38,10 +38,31 @@ The Azure exporter can retrieve all the resources supported by the [Azure Resour
 
 For examples on how to map resources head to the [resource templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page.
 
+## Sync approaches
+
+Port offers multiple approaches for synchronizing Azure resources, each suited for different use cases:
+
+### Azure exporter (ocean-based)
+- **Full resource scanning** for complete state synchronization via **Azure Resource Manager (ARM) REST API**.
+- **Change notifications** via Azure Event Grid (**available only in the Terraform deployment**).
+- **Managed deployment** via Helm, Docker, or ContainerApp.
+- **Best for**: Production environments requiring comprehensive resource visibility, full resource schema, and real-time Event Grid updates (with Terraform).
+
+### Azure incremental sync (standalone)
+- **Lightweight change detection** via Azure Resource Graph.
+- **Efficient polling** with configurable time windows.
+- **GitHub Actions deployment** for automated workflows.
+- **Best for**: Production environments requiring comprehensive resource visibility, full resource schema, and real-time Event Grid updates.
+
+:::tip Choosing the right approach
+Use the Azure exporter when you need comprehensive resource scanning and can set up Event Grid for change notifications. Use the incremental sync integration when you want lightweight, efficient synchronization with minimal resource, don't have Event Grid infrastructure or partial schema coverage is acceptable.
+:::
+
 ## Next Steps
 
 - Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.
 - Check out the [Azure Multi Subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md) guide for setting up synchronization of Azure resources.
+- Learn about [Azure Incremental Sync](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md) for lightweight, efficient change-based synchronization.
 
 ## Configuration
 
