@@ -261,19 +261,19 @@ The integration provides detailed logging:
 | **Architecture** | Ocean-based integration | Standalone Python application |
 | **APIs Used** | **Azure Resource Manager (ARM) REST API** + **Event Grid** | **Azure Resource Graph (ARG)** (`resources`, `resourcechanges`, `resourcecontainerchanges`) |
 | **Schema Depth** | **Complete schema**: full set of fields from ARM APIs. | **Partial schema**: limited to fields exposed by ARG tables. |
-| **Deployment** | Helm, Docker, ContainerApp | GitHub Actions, local execution |
-| **Change Detection** | Event Grid, full rescans | Azure Resource Graph change history |
-| **Real-time Updates** | Yes (**Event Grid, Terraform only**) | Near real-time (configurable polling) |
-| **Resource Usage** | Higher (full resource scanning) | Lower (change-based detection) |
-| **Setup Complexity** | Medium (Ocean integration) | Low (standalone app) |
+| **Deployment** | Helm, Docker, ContainerApp | GitHub Actions, local execution. |
+| **Change Detection** | Event Grid, full rescans | Azure Resource Graph change history. |
+| **Real-time Updates** | Yes (**Event Grid, Terraform only**) | Near real-time (configurable polling). |
+| **Resource Usage** | Higher (full resource scanning) | Lower (change-based detection). |
+| **Setup Complexity** | Medium (Ocean integration) | Low (standalone app). |
 
 ## Next steps
 
 1. **Review the [README](https://github.com/port-labs/incremental-sync)** for complete setup instructions.
-2. **Set up Azure app registration** with required permissions
-3. **Create Port blueprints** for Azure resources
-4. **Configure webhook mapping** for resource ingestion
-5. **Deploy via GitHub Actions** or run locally for testing
+2. **Set up Azure app registration** with required permissions.
+3. **Create Port blueprints** for Azure resources.
+4. **Configure webhook mapping** for resource ingestion.
+5. **Deploy via GitHub Actions** or run locally for testing.
 
 :::tip Best practice
 Start with incremental sync for ongoing operations and use full sync only for initial onboarding or when you need to ensure complete data consistency.
