@@ -1395,6 +1395,13 @@ export const availableGuides = [
         link: "/guides/all/trigger-github-copilot-from-port",
     },
     {
+        title: "Trigger Google Gemini Assistant from Port",
+        description: "Learn how to trigger Google Gemini Assistant from Port to enable AI-powered coding assistance in your development workflow",
+        tags: ["SDLC", "GitHub", "AI", "Actions"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/trigger-gemini-assistant-from-port",
+    },
+    {
         title: "Summarize Zendesk tickets with AI",
         description: "Use Port's remote MCP to fetch ticket context and generate AI summaries on demand",
         tags: ["AI", "Actions", "Webhook"],
