@@ -6,7 +6,7 @@ sidebar_position: 3
 
 ## Define scorecards
 
-[Scorecards](https://docs.port.io/promote-scorecards/) are configured per blueprint, and enable you to define and track metrics/standards for your entities, based on their properties.  
+[Scorecards](https://docs.port.io/scorecards/overview) are configured per blueprint, and enable you to define and track metrics/standards for your entities, based on their properties.  
 You can define multiple tiers within a scorecard, with different criteria for each tier.
 
 Here is an example of a "Production readiness" scorecard that defines and measures criteria for a running service to be considered production-ready. As you can see, the service is compliant with one of two defined tiers:

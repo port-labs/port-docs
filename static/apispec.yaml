@@ -6121,6 +6121,7 @@ components:
                   - propertySchema
                 additionalProperties: false
               - type: object
+                title: Path filter rule
                 anyOf:
                   - type: object
                     properties:
@@ -9406,6 +9407,7 @@ paths:
                           - propertySchema
                         additionalProperties: false
                       - type: object
+                        title: Path filter rule
                         anyOf:
                           - type: object
                             properties:
@@ -22498,6 +22500,8 @@ paths:
                           - identifier
                       properties:
                         type: object
+                      rawProperties:
+                        type: object
                       endedAt:
                         type: string
                         format: date-time
@@ -22580,6 +22584,8 @@ paths:
                           - object
                         items: {}
                       createdBy:
+                        type: string
+                      impersonatedBy:
                         type: string
                       updatedBy:
                         type: string
@@ -22801,6 +22807,8 @@ paths:
                           - identifier
                       properties:
                         type: object
+                      rawProperties:
+                        type: object
                       endedAt:
                         type: string
                         format: date-time
@@ -22883,6 +22891,8 @@ paths:
                           - object
                         items: {}
                       createdBy:
+                        type: string
+                      impersonatedBy:
                         type: string
                       updatedBy:
                         type: string
@@ -23065,6 +23075,8 @@ paths:
                           - identifier
                       properties:
                         type: object
+                      rawProperties:
+                        type: object
                       endedAt:
                         type: string
                         format: date-time
@@ -23147,6 +23159,8 @@ paths:
                           - object
                         items: {}
                       createdBy:
+                        type: string
+                      impersonatedBy:
                         type: string
                       updatedBy:
                         type: string
@@ -23313,6 +23327,8 @@ paths:
                           - identifier
                       properties:
                         type: object
+                      rawProperties:
+                        type: object
                       endedAt:
                         type: string
                         format: date-time
@@ -23395,6 +23411,8 @@ paths:
                           - object
                         items: {}
                       createdBy:
+                        type: string
+                      impersonatedBy:
                         type: string
                       updatedBy:
                         type: string
@@ -23638,6 +23656,8 @@ paths:
                             - identifier
                         properties:
                           type: object
+                        rawProperties:
+                          type: object
                         endedAt:
                           type: string
                           format: date-time
@@ -23720,6 +23740,8 @@ paths:
                             - object
                           items: {}
                         createdBy:
+                          type: string
+                        impersonatedBy:
                           type: string
                         updatedBy:
                           type: string
@@ -29852,7 +29874,7 @@ paths:
       description: This route allows you to create a scorecard for a given blueprint.
         A scorecard is a set of rules that define the quality of a
         blueprint.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       requestBody:
         content:
           application/json:
@@ -30052,11 +30074,11 @@ paths:
                     - combinator
                     - conditions
                   description: An optional set of
-                    [conditions](https://docs.port.io/promote-scorecards/#conditions)
+                    [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                     to filter entities that will be evaluated by the scorecard.
                 rules:
                   type: array
-                  description: The [rules](https://docs.port.io/promote-scorecards/#rule-elements)
+                  description: The [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                     that define the scorecard.
                   items:
                     type: object
@@ -30814,7 +30836,7 @@ paths:
       description: This route allows you to modify one or more scorecards of a given
         blueprint. A scorecard is a set of rules that define the quality of a
         blueprint.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       requestBody:
         content:
           application/json:
@@ -31016,12 +31038,12 @@ paths:
                       - combinator
                       - conditions
                     description: An optional set of
-                      [conditions](https://docs.port.io/promote-scorecards/#conditions)
+                      [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                       to filter entities that will be evaluated by the
                       scorecard.
                   rules:
                     type: array
-                    description: The [rules](https://docs.port.io/promote-scorecards/#rule-elements)
+                    description: The [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                       that define the scorecard.
                     items:
                       type: object
@@ -31359,7 +31381,7 @@ paths:
       description: This route allows you to fetch all scorecards for a given
         blueprint. A scorecard is a set of rules that define the quality of a
         blueprint.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       parameters:
         - schema:
             type: string
@@ -31414,7 +31436,7 @@ paths:
       description: This route allows you to modify a specific scorecard. A scorecard
         is a set of rules that define the quality of a blueprint.<br/><br/>To
         learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       requestBody:
         content:
           application/json:
@@ -31614,11 +31636,11 @@ paths:
                     - combinator
                     - conditions
                   description: An optional set of
-                    [conditions](https://docs.port.io/promote-scorecards/#conditions)
+                    [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                     to filter entities that will be evaluated by the scorecard.
                 rules:
                   type: array
-                  description: The [rules](https://docs.port.io/promote-scorecards/#rule-elements)
+                  description: The [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                     that define the scorecard.
                   items:
                     type: object
@@ -31962,7 +31984,7 @@ paths:
       description: This route allows you to fetch a specific scorecard. A scorecard is
         a set of rules that define the quality of a blueprint.<br/><br/>To learn
         more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       parameters:
         - schema:
             type: string
@@ -32023,7 +32045,7 @@ paths:
       description: This route allows you to delete a specific scorecard. A scorecard
         is a set of rules that define the quality of a blueprint.<br/><br/>To
         learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       parameters:
         - schema:
             type: string
@@ -32118,7 +32140,7 @@ paths:
         - Scorecards
       description: This route allows you to fetch all scorecards in your Port
         organization.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       security:
         - bearer:
             - read:scorecards
@@ -32265,7 +32287,7 @@ paths:
                     filter:
                       type: string
                       description: An optional set of
-                        [conditions](https://docs.port.io/promote-scorecards/#conditions)
+                        [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                         to filter the entities that will be migrated.
                     itemsToParse:
                       type: string

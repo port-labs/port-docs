@@ -15,6 +15,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 import ServiceNowChangeRequestBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/servicenow/\_example_servicenow_change_request.mdx"
 import ServiceNowWebhookConfig from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/servicenow/\_example_servicenow_webhook_config.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 
 # ServiceNow
@@ -45,7 +46,9 @@ This means you can ingest a lot more resources from your ServiceNow instance as 
 
 ## Setup
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
+
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -56,6 +59,8 @@ Choose one of the following installation methods:
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="servicenow" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
