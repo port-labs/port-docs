@@ -1330,7 +1330,7 @@ export const availableGuides = [
     },
     {
         title: " Create an actions ROI dashboard",
-        description: "Create a dashboard that highlights the ROI of actions in Port",
+        description: "Create a dashboard that tracks the ROI of actions in Port",
         tags: [ "Actions", "Dashboards", "Automations"],
         logos: ["Actions", "Automations"],
         link: "/guides/all/create-roi-dashboard",
