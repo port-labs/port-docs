@@ -150,7 +150,7 @@ ___
 
 ### Relation operators
 
-<Tabs groupId="relation" defaultValue="relatedTo" values={[
+<Tabs groupId="relation" queryString defaultValue="relatedTo" values={[
 {label: "RelatedTo", value: "relatedTo"},
 {label: "MatchAny", value: "matchAny"}
 ]}>

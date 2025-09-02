@@ -27,7 +27,7 @@ export const tagsCategoryMap = {
         "Launchdarkly",
         // "Linear",
         // "Opencost",
-        // "Snyk",
+        "Snyk",
         "Datadog",
         "Dynatrace",
         "Humanitec",
@@ -550,12 +550,12 @@ export const availableGuides = [
         link: "/guides/all/change-pagerduty-incident-owner",
     },
     {
-        title: "Create a PagerDuty Incident",
-        description: "Create a self-service action that creates a PagerDuty incident",
+        title: "Interact with PagerDuty Incidents",
+        description: "Create a self-service action that creates and triggers PagerDuty incidents",
         tags: ["Incident management", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
-        link: "/guides/all/create-pagerduty-incident",
+        link: "/guides/all/interact-with-pagerduty-incidents",
     },
     {
         title: "Create a PagerDuty Service",
@@ -580,14 +580,6 @@ export const availableGuides = [
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/resolve-incident",
-    },
-    {
-        title: "Trigger a PagerDuty Incident Action",
-        description: "Create a self-service action that triggers a PagerDuty incident",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions", "Webhook", "Automations"],
-        logos: ["PagerDuty", "GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/trigger-pagerduty-incident",
     },
     {
         title: "Trigger a ServiceNow Incident",
@@ -1002,7 +994,7 @@ export const availableGuides = [
     },
     {
         title: "Set up the Service Explorer AI agent",
-        description: "Set up an AI agent that helps developers explore and understand your software catalog",
+        description: "Set up an AI agent with MCP server backend mode that helps developers explore and understand your software catalog",
         tags: ["AI", "GitHub"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/setup-service-explorer-ai-agent",
@@ -1338,6 +1330,15 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
+
+        title: "Send Slack messages using Port's Slack app and automations",
+        description: "Learn how to send Slack messages to users using Port's Slack app and automations",
+        tags: ["Automations", "Slack"],
+        logos: ["Slack"],
+        link: "/guides/all/send-slack-message-to-user",
+    },
+    {
+
         title: "Map Git users to Port user accounts",
         description: "Automatically map Git users to their Port user accounts for seamless integration",
         tags: ["SDLC","Git", "GitHub", "GitLab", "AzureDevops", "Automations"],
@@ -1427,6 +1428,13 @@ export const availableGuides = [
         tags: ["SDLC", "Claude Code", "AI", "Actions"],
         logos: ["AI", "Claude Code"],
         link: "/guides/all/trigger-claude-code-from-port",
+    },
+    {
+        title: "Build an OWASP Top 10 Scorecard",
+        description: "Build an OWASP Top 10 security scorecard in Port using vulnerability data from Snyk",
+        tags: ["Security", "Scorecards", "Snyk"],
+        logos: ["Snyk"],
+        link: "/guides/all/owasp-top-10-scorecard",
     }
 ]
 

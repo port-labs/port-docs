@@ -10,7 +10,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Slack reminders for scorecards
 
-This guide will walk you through creating a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.port.io/promote-scorecards/#what-is-a-scorecard). 
+This guide will walk you through creating a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.port.io/scorecards/overview#what-is-a-scorecard). 
 In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
 
 Once implemented:
@@ -31,7 +31,7 @@ Once implemented:
 
 ## Implementation
 
-### Setup the action's frontend
+### Set up the action's frontend
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button on the top left corner :
@@ -120,7 +120,7 @@ The action's frontend is now ready 🥳
 
 <br/>
 
-### Setup the action's backend
+### Set up the action's backend
 
 Now we want to write the logic that our action will trigger:
 
@@ -350,5 +350,5 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delivery lifecycle.
 
 ### More Examples
-- [Open/Close JIRA issues based on scorecards](/promote-scorecards/manage-using-3rd-party-apps/jira)
-- [Send a scorecard report on Slack](/promote-scorecards/manage-using-3rd-party-apps/slack#slack-scorecard-report-example)
+- [Open/Close JIRA issues based on scorecards](/scorecards/manage-using-3rd-party-apps/jira)
+- [Send a scorecard report on Slack](/scorecards/manage-using-3rd-party-apps/slack#slack-scorecard-report-example)

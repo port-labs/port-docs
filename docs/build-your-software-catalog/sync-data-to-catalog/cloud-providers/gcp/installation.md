@@ -6,6 +6,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import CreateServiceAccountAndKey from './\_create-service-account-and-key.mdx'
 import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-service-account.mdx'
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Installation
 
@@ -21,6 +22,8 @@ For your first deployment of the GCP exporter, we recommend starting with the He
 
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm (Scheduled)">  
+
+<IntegrationVersion integration="gcp" />
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
