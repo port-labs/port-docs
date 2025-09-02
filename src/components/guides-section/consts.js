@@ -1442,6 +1442,13 @@ export const availableGuides = [
         tags: ["Security", "Scorecards", "Snyk"],
         logos: ["Snyk"],
         link: "/guides/all/owasp-top-10-scorecard",
+    },
+    {
+        title: "Enforce AI coding security standards",
+        description: "Learn how to enforce AI coding security standards in your organization",
+        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/enforce-ai-coding-security-standards",
     }
 ]
 
