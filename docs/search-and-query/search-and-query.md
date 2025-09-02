@@ -505,7 +505,18 @@ This will return all **deployments** that are related to the "production-service
 
 Suppose you have the following data model:
 
-<img src='/img/software-catalog/pages/relatedEntitiesTeamExample.png' border='1px' width='90%' />
+<img src="/img/guides/hierarchyTiers/hierarchyTiers.png" border="1px" width="50%" />
+
+The image above represents different entities of the same blueprint, in this case `Team`.
+
+**Example 1: Basic self-relation with multiple self-relations**
+
+If you want **exactly 2 hops**, specify the relation twice:
+
+```json showLineNumbers
+
+
+```
 
 ---
 
