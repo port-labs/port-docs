@@ -5,8 +5,7 @@ description: Create a dashboard that highlights the ROI of actions and automatio
 
 # Create an actions ROI dashboard
 
-When trying to justify investing in actions to leadership, you need concrete data showing time savings and efficiency gains.  
-In this guide, we will build a dashboard that tracks the ROI of your self-service actions in Port, providing the metrics you need to demonstrate business value.
+Every initiative deserves rigorous measurement through evidence-based metrics. This guide demonstrates how to build a Port dashboard that quantifies ROI, captures efficiency gains and time savings, and communicates business value clearly.
 
 <img src="/img/guides/ROIdashboard.png" border="1px" width="100%" />
 <br/><br/>
@@ -28,9 +27,9 @@ We will be using the following terms throughout the guide:
 
 ## Prerequisites
 
-This guide assumes:
-- You have a [Port account](https://app.getport.io) and that you have finished the [onboarding process](/getting-started/overview).
-- You have a GitHub account.
+- [Port account](https://app.getport.io).
+- [Port credentials](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials)
+- [GitHub account](https://github.com/login).
 
 ## Set up data model
 
@@ -767,7 +766,12 @@ This self-service action performs the following:
 
 ### Set up the action's backend
 
-Define the logic that our action will trigger.
+Define the logic that our action will trigger.  
+In the repository where your workflow will reside, create two new secrets under `Settings -> Secrets and variables -> Actions`:
+     - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
+     - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+
+
 Add the workflow to the `.github/workflows/` folder, and the other scripts to a `./scripts` folder.
 
 <details>
