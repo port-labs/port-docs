@@ -501,9 +501,18 @@ This will return all **deployments** that are related to the "production-service
 
 ---
 
+**Examples**
+
+Suppose you have the following data model:
+
+<img src='/img/software-catalog/pages/relatedEntitiesTeamExample.png' border='1px' width='90%' />
+
+---
+
 The `matchAny` operator will match entities based on your input:
 - If you specify a single value, it will find all entities with the same identifier.
 - If you provide a list of values, it will match any entity whose identifier is in the list.
+
 
 </TabItem>
 
