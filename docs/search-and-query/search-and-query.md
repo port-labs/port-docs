@@ -514,8 +514,73 @@ The image above represents different entities of the same blueprint, in this cas
 If you want **exactly 2 hops**, specify the relation twice:
 
 ```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": {
+        "path": [
+          "self_relation",
+          "sefl_relation"
+        ]
+      },
+      "operator": "matchAny",
+      "value": "targetEntity"
+    }
+  ]
+}
+```
 
+**Example 2: Self-relation with maxHops for variable hops**
 
+If you want a variable number of hops (between 1 and 15), use maxHops:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": {
+        "path": [
+          "self_relation",
+          {
+            "relation": "self_relation",
+            "maxHops": 4
+          }
+        ],
+        "fromBlueprint": "_team"
+      },
+      "operator": "matchAny",
+      "value": "targetEntity"
+    }
+  ]
+}
+```
+
+**Example 3: Mixed approach example:**
+
+You can also mix fixed hops with variable hops. For example, if you specify `self_relation` twice followed by a `maxHops` object, the system will start traversing from the 2 hops already made and continue with the additional hops specified in `maxHops`.
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": {
+        "path": [
+          "self_relation",
+          "self_relation",
+          {
+            "relation": "self_relation",
+            "maxHops": 3
+          }
+        ],
+      "fromBlueprint": "Team",
+      "operator": "matchAny",
+      "value": "targetEntity"
+    }
+  ]
+}
 ```
 
 ---
