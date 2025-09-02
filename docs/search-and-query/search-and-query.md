@@ -28,10 +28,10 @@ To search for entities using the API, see the [search](/api-reference/search-a-b
 
 A search request is comprised of the following elements:
 
-| Field        | Description                                               |
-| ------------ | --------------------------------------------------------- |
-| `combinator` | Defines the logical operation to apply to the query rules |
-| `rules`      | An array of search rules to filter results with           |
+| Field        | Description                                                |
+| ------------ | ---------------------------------------------------------- |
+| `combinator` | Defines the logical operation to apply to the query rules. |
+| `rules`      | An array of search rules to filter results with.           |
 
 For example:
 
@@ -190,8 +190,8 @@ This query will return all of the entities that are related to one or more of th
 
 The `relatedTo` operator also supports the `required` property - which allows you to search for:
 
-- Related entities from all relations (relations with either required `true` or `false`);
-- Related entities only from required relations (relations with required `true`);
+- Related entities from all relations (relations with either required `true` or `false`).
+- Related entities only from required relations (relations with required `true`).
 - Related entities only from non-required relations (relations with required `false`).
 
 For example, to search only for related entities that _require_ the `myEntity` entity from the `myBlueprint` blueprint, use the following search rule:
@@ -252,7 +252,7 @@ By looking at the resulting graph layout, we can also map the directions:
 
 ![Dependency graph upstream downstream diagram](/img/software-catalog/search-in-port/search-direction-diagram.png)
 
-- To search for entities which the source depends on - use `"direction": "upstream"`;
+- To search for entities which the source depends on - use `"direction": "upstream"`.
 - To search for entities which depend on the source - use `"direction": "downstream"`.
 
 In the example shown above, if we want to get the `Microservice` and `Environment` that _Order-Service-Production_ depends on, the search rule would be:
