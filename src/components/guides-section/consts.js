@@ -154,8 +154,8 @@ export const availableGuides = [
         link: "/guides/all/manage-resources-using-k8s-crds",
     },
     {
-        title: "Automate incident management",
-        description: "Automate notifications and documentation of incidents",
+        title: "Auto-create Slack channel & GitHub issue for PagerDuty incidents",
+        description: "Automatically create a Slack channel and GitHub issue when a PagerDuty incident is reported",
         tags: ["Incident management", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
