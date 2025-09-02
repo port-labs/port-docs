@@ -1400,6 +1400,13 @@ export const availableGuides = [
         link: "/guides/all/trigger-github-copilot-from-port",
     },
     {
+        title: "Trigger Google Gemini Assistant from Port",
+        description: "Learn how to trigger Google Gemini Assistant from Port to enable AI-powered coding assistance in your development workflow",
+        tags: ["SDLC", "GitHub", "AI", "Actions"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/trigger-gemini-assistant-from-port",
+    },
+    {
         title: "Summarize Zendesk tickets with AI",
         description: "Use Port's remote MCP to fetch ticket context and generate AI summaries on demand",
         tags: ["AI", "Actions", "Webhook"],
@@ -1440,6 +1447,13 @@ export const availableGuides = [
         tags: ["Security", "Scorecards", "Snyk"],
         logos: ["Snyk"],
         link: "/guides/all/owasp-top-10-scorecard",
+    },
+    {
+        title: "Enforce AI coding security standards",
+        description: "Learn how to enforce AI coding security standards in your organization",
+        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/enforce-ai-coding-security-standards",
     }
 ]
 
