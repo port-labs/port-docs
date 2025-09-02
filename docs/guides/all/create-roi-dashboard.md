@@ -1,11 +1,11 @@
 ---
 displayed_sidebar: null
-description: Create a dashboard that highlights the ROI of actions and automations in Port
+description: Create a dashboard that tracks the ROI of actions in Port
 ---
 
 # Create an actions ROI dashboard
 
-Every initiative deserves rigorous measurement through evidence-based metrics. This guide demonstrates how to build a Port dashboard that quantifies ROI, captures efficiency gains and time savings, and communicates business value clearly.
+When trying to justify investing in self-service actions, leadership expects to see rigorous, evidence-based metrics. This guide demonstrates how to build a Port dashboard that quantifies ROI, highlights time savings and efficiency gains, and clearly communicates business value.
 
 <img src="/img/guides/ROIdashboard.png" border="1px" width="100%" />
 <br/><br/>
