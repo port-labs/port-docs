@@ -8,8 +8,8 @@ import GithubActionModificationHint from '/docs/guides/templates/github/_github_
 
 # Trigger Google Gemini Assistant from Port
 
-This guide demonstrates how to trigger Google Gemini Assistant from Port, enabling AI-powered coding assistance in your development workflow. By leveraging Gemini Assistant, you can significantly reduce manual coding tasks and enhance productivity, allowing developers to focus on more complex problem-solving. 
-You will learn how to create self-service actions that can trigger Gemini Assistant and configure the necessary GitHub workflows to handle the execution process with comprehensive execution tracking.
+This guide demonstrates how to trigger Google Gemini Assistant from Port, enabling AI-powered coding assistance in your development workflow. By leveraging Gemini Assistant, you can significantly reduce manual coding tasks and enhance productivity, allowing developers to focus on more complex problem-solving.  
+The guide shows how to create self-service actions that can trigger Gemini Assistant and configure the necessary GitHub workflows to handle the execution process with comprehensive execution tracking.
 
 <img src="/img/guides/trigger-gemini-assistant-from-port-flow.jpg" border="1px" width="100%" />
 
