@@ -347,4 +347,4 @@ For example, these services have some rules defined in their scorecards, and we 
 
 ## Next steps
   
-Next, let’s look at how you can create and [manage scorecards](/promote-scorecards/manage-scorecards) in Port, whether through the UI, API, or Terraform.
+Next, let’s look at how you can create and [manage scorecards](/scorecards/manage-scorecards) in Port, whether through the UI, API, or Terraform.
