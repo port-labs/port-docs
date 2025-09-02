@@ -5,7 +5,8 @@ description: Create a dashboard that tracks the ROI of actions in Port
 
 # Create an actions ROI dashboard
 
-When trying to justify investing in self-service actions, leadership expects to see rigorous, evidence-based metrics. This guide demonstrates how to build a Port dashboard that quantifies ROI, highlights time savings and efficiency gains, and clearly communicates business value.
+When trying to justify investing in self-service actions, leadership expects to see rigorous, evidence-based metrics. 
+This guide demonstrates how to build a Port dashboard that quantifies ROI, highlights time savings and efficiency gains, and clearly communicates business value.
 
 <img src="/img/guides/ROIdashboard.png" border="1px" width="100%" />
 <br/><br/>
@@ -28,7 +29,7 @@ We will be using the following terms throughout the guide:
 ## Prerequisites
 
 - [Port account](https://app.getport.io).
-- [Port credentials](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials)
+- [Port credentials](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials).
 - [GitHub account](https://github.com/login).
 
 ## Set up data model
@@ -1435,7 +1436,5 @@ In the new dashboard, create the following widgets:
 6. Click `Save`.
 
 </details>
-
-Congratulations!🥳 You have successfully created an actions ROI dashboard that demonstrates the business value of your actions in Port.
 
 
