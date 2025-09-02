@@ -21,6 +21,7 @@ High quality search is essential to effectively track assets in your software ca
 - Filter all services running in a specific cluster (in a query or self service form).
 - Catalog initial filters based on the logged in user's properties.
 
+
 ## Search request
 
 A search request contains filters and rules to find matching <PortTooltip id="entity">entities</PortTooltip> in your software catalog.  
@@ -149,7 +150,7 @@ ___
 
 ### Relation operators
 
-<Tabs groupId="relation" defaultValue="relatedTo" values={[
+<Tabs groupId="relation" queryString defaultValue="relatedTo" values={[
 {label: "RelatedTo", value: "relatedTo"},
 {label: "MatchAny", value: "matchAny"}
 ]}>

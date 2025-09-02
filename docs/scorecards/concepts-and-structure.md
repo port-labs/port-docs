@@ -1,45 +1,20 @@
 ---
-sidebar_position: 1
-title: Promote scorecards
-sidebar_label: Promote scorecards
+sidebar_position: 2
+title: Concepts and structure
+sidebar_label: Concepts and structure
 ---
 
 import CombinatorIntro from "/docs/search-and-query/\_combinator_intro.md"
-import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Promote scorecards
-
-## What is a Scorecard?
-
-**Scorecards** enable us to define and track metrics/standards for our Port entities, based on their properties.
-Each scorecard consists of a set of rules, where each rule defines one or more conditions that need to be met.
-
-Each rule has a `level` property whose value can be defined per to the way you define standards in your organization,
-for example:
-
-- Service maturity can be defined as `Basic`, `Bronze`, `Silver`, `Gold`.
-- Security standards can be defined as `Low`, `Medium`, `High`, `Critical`.
-- Production readiness can be defined as traffic light colors `Red`, `Orange`, `Yellow`, `Green`.
-- Engineering quality can be defined as `Poor`, `Fair`, `Good`, `Excellent`.
-- Service response time can be defined as `A`, `B`, `C`, `D`, `F`.
-
-## 💡 Scorecard use cases
-
-Scorecards can be used to evaluate the maturity, production readiness and engineering quality of any entity in your software catalog, for example:
-
-- Does a service have an on-call defined?
-- Does a README.md file exist in the repository?
-- Is Grafana defined for the K8s cluster?
-- Is the relation of a certain entity empty?
-
-In this [live demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=1) example, you can see the scorecards defined on a service and their evaluation. 🎬
+# Concepts and structure
 
 ## Scorecard structure table
 
-A single scorecard defines a category to group different checks, validations and evaluations. Here is the structure of a single scorecard:
+A single scorecard defines a category to group different checks, validations and evaluations.  
+Below is the structure of a single scorecard:
 
 | Field                        | Type     | Description                                                                                                                                         |
 |------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -61,7 +36,7 @@ The levels can be customized according to your organization's standards and with
 <img src='/img/scorecards/custom-scorecards-example.png' width='50%' border='1px' />
 <br/><br/>
 
-Here is an example of a few level types that can be defined:
+Below is an example of a few level types that can be defined:
 
 :::tip Level Hierarchy 
 The levels are defined in the order of importance, where the first level is the most basic level and the last level is the most advanced.  
@@ -255,7 +230,7 @@ Conditions are small boolean checks that help when determining the final status 
 
 | Field      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 |------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` below                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` (see all available operators below)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or any other standard entity property such as `slack_channel` including [Mirror Properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) and [Calculation Properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) |
 | `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
@@ -371,14 +346,5 @@ For example, these services have some rules defined in their scorecards, and we 
 ![catalogRuleSummaries](../../static/img/software-catalog/scorecard/catalogRuleSummaries.png)
 
 ## Next steps
-
-[Explore How to Create, Edit, and Delete Scorecards with basic examples](/promote-scorecards/usage)
-
-[Dive into advanced operations on Scorecards with our API ➡️ ](/api-reference/port-api)
-
-## Scorecards as Blueprints
-
-Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip>.   
-This feature enables you to create and manage scorecards using dedicated blueprints, allowing for rich customization, visualization and automation of your scorecards.  
-
-To learn more, refer to the [scorecards as blueprints](/promote-scorecards/scorecards-as-blueprints) page.
+  
+Next, let’s look at how you can create and [manage scorecards](/scorecards/manage-scorecards) in Port, whether through the UI, API, or Terraform.

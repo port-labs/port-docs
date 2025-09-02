@@ -46,7 +46,11 @@ Here is an example for an automation payload:
 }
 ```
 
-You may have noticed that the example above also sends `{{ .run.id }}`. This is a unique identifier for each execution of the automation, and can be used to interact with the autmation run in Port from your backend.  
+:::info `.run` available values
+When the automation is triggered, the `.run` object includes only the run `id`.
+:::
+
+You may have noticed that the example above also sends `{{ .run.id }}`. This is a unique identifier for each execution of the automation, and can be used to interact with the automation run in Port from your backend.  
 
 Now you might be thinking - *how do I know what data is available to me when constructing the payload?*  
 Enter `trigger data`.
