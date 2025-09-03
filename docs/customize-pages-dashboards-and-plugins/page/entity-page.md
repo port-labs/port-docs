@@ -329,11 +329,11 @@ You can also mix fixed hops with variable hops. For example, if you specify `sel
   },
   "relationPath": {
     "path": [
-      "self_relation",
-      "self_relation",
+      "self_relation",    // 1st hop: Unit -> Basic Team
+      "self_relation",    // 2nd hop: Basic Team -> Group  
       {
         "relation": "team_self_relation",
-        "maxHops": 3
+        "maxHops": 3      // Continues from Group, adding up to 3 more hops (Group -> Office -> etc.)
       }
     ],
     "fromBlueprint": "Team"
