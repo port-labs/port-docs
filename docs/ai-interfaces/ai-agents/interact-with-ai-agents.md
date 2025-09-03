@@ -400,6 +400,8 @@ Port applies limits to AI agent interactions to ensure fair usage across all cus
 - **Query limit**: ~40 queries per hour.
 - **Token usage limit**: 800,000 tokens per hour.
 
+You can view your quota limits are available in the API response.
+
 :::caution Usage limits
 Usage limits may change without prior notice. Once a limit is reached, you will need to wait until it resets.  
 If you attempt to interact with an agent after reaching a limit, you will receive an error message indicating that the limit has been exceeded.
@@ -502,6 +504,17 @@ Ensure that:
 <summary><b>How can I provide feedback on agent responses? (Click to expand)</b></summary>
 
 The AI invocation entity contains the `feedback` property where you can mark is as `Negative` or `Positive`. We're working on adding a more convenient way to rate conversation from Slack and from the UI.
+</details>
+
+<details>
+<summary><b>What are the usage limits and how can I know them? (Click to expand)</b></summary>
+
+Port applies the following limits to AI agent interactions:
+- **Query limit**: ~40 queries per hour
+- **Token usage limit**: 800,000 tokens per hour
+
+You can monitor your current usage in the final `done` event showing your remaining requests, tokens, and reset time.
+
 </details>
 
 <details>
