@@ -648,7 +648,7 @@ The following rule asserts that only users with `manager` role will get the resu
   }
 ]
 ```
-Only users in these team will get the entities
+The following rule asserts that only users in the user's team/s will get the resulting entities:
 ```json showLineNumbers
 [
   ...other rules
