@@ -606,7 +606,7 @@ This can be used in either the `property` or `value` key in a query rule:
 | `userTeams` | The entities of the owning teams of the user triggering the query                                                                     |
 
 #### Usage examples
-Owned by team rule, will filter only the entities onwed by one of the teams of the user
+The following rule will result in the entities owned by any one of the user's teams:
 ```json showLineNumbers
 [ 
   ...other rules
