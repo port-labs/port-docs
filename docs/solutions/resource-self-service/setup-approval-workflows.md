@@ -3,7 +3,7 @@ title: "Setup approval workflows"
 sidebar_position: 4
 ---
 
-# Setup approval workflows
+# Set up approval workflows
 
 Effective platform engineering requires oversight at every level—whether it's a human developer requesting a production database or an AI agent automatically scaling infrastructure. Without proper controls, self-service can quickly become a security and compliance nightmare. Port provides three complementary layers of governance: Role-Based Access Control (RBAC) for user permissions, approval workflows for human oversight, and dynamic permissions for context-aware access control.
 

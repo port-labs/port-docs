@@ -35,12 +35,12 @@ To create a scorecard from the UI:
 
 5. In the **Rules** tab, define the scorecard's rules:
 
-     - Add or remove [levels](/promote-scorecards/concepts-and-structure#levels), as well as edit their names. 
-     - Add [rule elements](/promote-scorecards/concepts-and-structure#rule-elements) to each level:
+     - Add or remove [levels](/scorecards/concepts-and-structure#levels), as well as edit their names. 
+     - Add [rule elements](/scorecards/concepts-and-structure#rule-elements) to each level:
        - `Title` - The rule's title.
        - `Identifier` - The rule's identifier.
        - `Description` - The rule's description.
-       - `Conditions` - The rule's [conditions](/promote-scorecards/concepts-and-structure#conditions).
+       - `Conditions` - The rule's [conditions](/scorecards/concepts-and-structure#conditions).
 
 6. Click `Save` to create the scorecard.
 
@@ -358,7 +358,7 @@ In order to delete a scorecard using the Terraform provider, use the `terraform 
 Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip>.   
 This feature enables you to create and manage scorecards using dedicated blueprints, allowing for rich customization, visualization and automation of your scorecards.  
 
-To learn more, refer to the [scorecards as blueprints](/promote-scorecards/scorecards-as-blueprints) page.
+To learn more, refer to the [scorecards as blueprints](/scorecards/scorecards-as-blueprints) page.
 
 ## Next steps
 
