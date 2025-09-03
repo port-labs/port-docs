@@ -620,7 +620,7 @@ The following rule will result in the entities owned by any one of the user's te
   }
 ]
 ```
-Filter entities with the same department as the user
+The following rule will result in entities with the same department as the user's:
 ```json showLineNumbers
 [ 
   ...other rules
