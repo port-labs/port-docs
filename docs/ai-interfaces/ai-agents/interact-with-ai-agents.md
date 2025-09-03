@@ -147,7 +147,7 @@ curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true' \\
 
 When processing the streaming response, you'll receive quota usage information in the final `done` event. Here's a JavaScript example of how to handle this:
 
-```javascript
+```javascript showLineNumbers
 const eventSource = new EventSource(apiUrl);
 
 eventSource.addEventListener('done', (event) => {
