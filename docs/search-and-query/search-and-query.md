@@ -634,7 +634,7 @@ The following rule will result in entities with the same department as the user'
   }
 ]
 ```
-Only users with manager role will get the entities
+The following rule asserts that only users with `manager` role will get the resulting entities:
 ```json showLineNumbers
 [ 
   ...other rules
