@@ -6121,6 +6121,7 @@ components:
                   - propertySchema
                 additionalProperties: false
               - type: object
+                title: Path filter rule
                 anyOf:
                   - type: object
                     properties:
@@ -6857,9 +6858,7 @@ paths:
       summary: Get a page's permissions
       tags:
         - Pages
-      description: >
-        **The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>**
-        This route allows you to get a specific page's
+      description: This route allows you to get a specific page's
         permissions.<br/><br/>To learn more about pages, check out the
         [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/page-permissions).
       parameters:
@@ -6910,9 +6909,8 @@ paths:
       summary: Update a page's permissions
       tags:
         - Pages
-      description: >
-        **The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>**
-        This route allows you to update a specific page’s permissions.<br/><br/>To learn more about pages, check out the
+      description: This route allows you to update a specific page’s permissions.
+        <br/><br/>To learn more about pages, check out the
         [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/page-permissions).
       requestBody:
         content:
@@ -9406,6 +9404,7 @@ paths:
                           - propertySchema
                         additionalProperties: false
                       - type: object
+                        title: Path filter rule
                         anyOf:
                           - type: object
                             properties:
@@ -29872,7 +29871,7 @@ paths:
       description: This route allows you to create a scorecard for a given blueprint.
         A scorecard is a set of rules that define the quality of a
         blueprint.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       requestBody:
         content:
           application/json:
@@ -30072,11 +30071,11 @@ paths:
                     - combinator
                     - conditions
                   description: An optional set of
-                    [conditions](https://docs.port.io/promote-scorecards/#conditions)
+                    [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                     to filter entities that will be evaluated by the scorecard.
                 rules:
                   type: array
-                  description: The [rules](https://docs.port.io/promote-scorecards/#rule-elements)
+                  description: The [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                     that define the scorecard.
                   items:
                     type: object
@@ -30834,7 +30833,7 @@ paths:
       description: This route allows you to modify one or more scorecards of a given
         blueprint. A scorecard is a set of rules that define the quality of a
         blueprint.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       requestBody:
         content:
           application/json:
@@ -31036,12 +31035,12 @@ paths:
                       - combinator
                       - conditions
                     description: An optional set of
-                      [conditions](https://docs.port.io/promote-scorecards/#conditions)
+                      [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                       to filter entities that will be evaluated by the
                       scorecard.
                   rules:
                     type: array
-                    description: The [rules](https://docs.port.io/promote-scorecards/#rule-elements)
+                    description: The [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                       that define the scorecard.
                     items:
                       type: object
@@ -31379,7 +31378,7 @@ paths:
       description: This route allows you to fetch all scorecards for a given
         blueprint. A scorecard is a set of rules that define the quality of a
         blueprint.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       parameters:
         - schema:
             type: string
@@ -31434,7 +31433,7 @@ paths:
       description: This route allows you to modify a specific scorecard. A scorecard
         is a set of rules that define the quality of a blueprint.<br/><br/>To
         learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       requestBody:
         content:
           application/json:
@@ -31526,6 +31525,24 @@ paths:
                                   type: string
                             required:
                               - property
+                              - operator
+                              - value
+                          - type: object
+                            title: Relation containsAny condition
+                            properties:
+                              relation:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - containsAny
+                                  - in
+                              value:
+                                type: array
+                                items:
+                                  type: string
+                            required:
+                              - relation
                               - operator
                               - value
                           - type: object
@@ -31634,11 +31651,12 @@ paths:
                     - combinator
                     - conditions
                   description: An optional set of
-                    [conditions](https://docs.port.io/promote-scorecards/#conditions)
+                    [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                     to filter entities that will be evaluated by the scorecard.
                 rules:
                   type: array
-                  description: The [rules](https://docs.port.io/promote-scorecards/#rule-elements)
+                  description: The
+                    [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                     that define the scorecard.
                   items:
                     type: object
@@ -31734,6 +31752,24 @@ paths:
                                         type: string
                                   required:
                                     - property
+                                    - operator
+                                    - value
+                                - type: object
+                                  title: Relation containsAny condition
+                                  properties:
+                                    relation:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - containsAny
+                                        - in
+                                    value:
+                                      type: array
+                                      items:
+                                        type: string
+                                  required:
+                                    - relation
                                     - operator
                                     - value
                                 - type: object
@@ -31982,7 +32018,7 @@ paths:
       description: This route allows you to fetch a specific scorecard. A scorecard is
         a set of rules that define the quality of a blueprint.<br/><br/>To learn
         more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       parameters:
         - schema:
             type: string
@@ -32043,7 +32079,7 @@ paths:
       description: This route allows you to delete a specific scorecard. A scorecard
         is a set of rules that define the quality of a blueprint.<br/><br/>To
         learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       parameters:
         - schema:
             type: string
@@ -32138,7 +32174,7 @@ paths:
         - Scorecards
       description: This route allows you to fetch all scorecards in your Port
         organization.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/).
+        [documentation](https://docs.port.io/scorecards/overview).
       security:
         - bearer:
             - read:scorecards
@@ -32285,7 +32321,7 @@ paths:
                     filter:
                       type: string
                       description: An optional set of
-                        [conditions](https://docs.port.io/promote-scorecards/#conditions)
+                        [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                         to filter the entities that will be migrated.
                     itemsToParse:
                       type: string
