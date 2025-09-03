@@ -606,7 +606,7 @@ This can be used in either the `property` or `value` key in a query rule:
 | `userTeams` | The entities of the owning teams of the user triggering the query                                                                     |
 
 #### Usage examples
-##### Owned by team rule, will filter only the entities onwed by one of the teams of the user
+Owned by team rule, will filter only the entities onwed by one of the teams of the user
 ```json showLineNumbers
 [ 
   ...other rules
@@ -620,7 +620,7 @@ This can be used in either the `property` or `value` key in a query rule:
   }
 ]
 ```
-##### Filter entities with the same department as the user
+Filter entities with the same department as the user
 ```json showLineNumbers
 [ 
   ...other rules
@@ -634,7 +634,7 @@ This can be used in either the `property` or `value` key in a query rule:
   }
 ]
 ```
-##### Only users with `manager` role will get the entities -
+Only users with `manager` role will get the entities
 ```json showLineNumbers
 [ 
   ...other rules
@@ -648,7 +648,7 @@ This can be used in either the `property` or `value` key in a query rule:
   }
 ]
 ```
-##### Only users in these team will get the entities -
+Only users in these team will get the entities
 ```json showLineNumbers
 [
   ...other rules
