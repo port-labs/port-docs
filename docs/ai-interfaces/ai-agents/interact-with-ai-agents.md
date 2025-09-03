@@ -213,7 +213,13 @@ event: execution
 data: Your final answer from the agent.
 
 event: done
-data: {}
+data: {
+  "maxRequests": 200,
+  "remainingRequests": 193,
+  "maxTokens": 200000,
+  "remainingTokens": 179910,
+  "remainingTimeMs": 903
+}
 ```
 
 **Possible Event Types:**
