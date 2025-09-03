@@ -214,8 +214,7 @@ To add a self-relation tab to the related entities:
 4. If you want to traverse more than one hop, switch to `Json mode`. 
 
    In JSON mode you can:
-   - Specify multiple self-relation identifiers (for fixed hops).  
-     For example, to traverse exactly 2 hops, list the relation twice in the path array:
+   - Specify multiple self-relation identifiers (for fixed hops).
      ```json showLineNumbers
       "relationPath": {
       "path": [
@@ -225,8 +224,7 @@ To add a self-relation tab to the related entities:
       }
      ```
      
-   - Use maxHops (for variable hops).  
-     For example, here we use `maxHops` to allow a flexible number of traversals (1–15). In this case, the system will traverse up to 4 hops:
+   - Use maxHops (for variable hops).
      ```json showLineNumbers
       "relationPath": {
         {
@@ -235,8 +233,7 @@ To add a self-relation tab to the related entities:
         }
       }
       ```
-   - Combine fixed hops with maxHops for mixed control.  
-     In this example, the system traverses 2 fixed hops, then continues with up to 3 additional hops via maxHops:
+   - Combine fixed hops with maxHops for mixed control.
 
       ```json showLineNumbers
       "relationPath": {
@@ -250,8 +247,8 @@ To add a self-relation tab to the related entities:
       }
       ```
 
-      :::info maxHops limitation
-      You can only use `maxHops` once in a path and it accepts a number between 1 and 15.
+      :::info `maxHops` limitation
+      The `maxHops` parameter can only be applied **once** per path, and it accepts values from **1 to 15**.
       :::
 
 5. Click on `Save` to save the tab.
@@ -316,7 +313,7 @@ If you want a variable number of hops (between 1 and 15), use maxHops:
 }
 ```
 
-In this case, the added tab under the `Unit`entity should show the `Basic Team`, `Group` and `Office` entities.
+In this case, the added tab under the `Unit` entity should show the `Basic Team`, `Group` and `Office` entities.
 
 **Mixed approach example:**
 
@@ -335,7 +332,7 @@ You can also mix fixed hops with variable hops. For example, if you specify `sel
       "self_relation",
       "self_relation",
       {
-        "relation": "self_relation",
+        "relation": "team_self_relation",
         "maxHops": 3
       }
     ],
@@ -344,7 +341,7 @@ You can also mix fixed hops with variable hops. For example, if you specify `sel
 }
 ```
 
-In this example, the system will traverse 2 fixed hops (Unit → Basic Team → Group) and then continue with up to 3 additional hops using the `team_self_relation`, starting from where the fixed hops left off. This could represent a complete organizational hierarchy from Unit all the way up to higher-level organizational structures.
+In this example, the system will traverse 2 fixed hops (`Unit` → `Basic Team` → `Group`) and then continue with up to 3 additional hops using the `team_self_relation`, starting from where the fixed hops left off. This could represent a complete organizational hierarchy from Unit all the way up to higher-level organizational structures.
 
 In this case, the added tab under the `Unit`entity should show the `Group` and `Office` entities.
 

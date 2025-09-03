@@ -502,39 +502,19 @@ This will return all **deployments** that are related to the "production-service
 
 ---
 
-**Examples**
+**Examples: self-relation**
 
 Suppose you have the following data model:
 
 <img src="/img/guides/hierarchyTiers/hierarchyTiers.png" border="1px" width="50%" />
+<br/><br/>
 
-The image above represents different entities of the same blueprint, in this case `Team`.
+The image above represents an organization hierarchy, with different entities of the same **blueprint**, in this case `Team`.  
+Let's assume the blueprint has a self-relation and call it `parent`.
 
-**Example 1: Basic self-relation with multiple self-relations**
+**Example 1: basic self-relation with fixed hops count**
 
-If you want **exactly 2 hops**, specify the relation twice:
-
-```json showLineNumbers
-{
-  "combinator": "and",
-  "rules": [
-    {
-      "property": {
-        "path": [
-          "self_relation",
-          "sefl_relation"
-        ]
-      },
-      "operator": "matchAny",
-      "value": "targetEntity"
-    }
-  ]
-}
-```
-
-**Example 2: Self-relation with maxHops for variable hops**
-
-If you want a variable number of hops (between 1 and 15), use maxHops:
+If you want **exactly 2 hops**, specify the self-relation twice:
 
 ```json showLineNumbers
 {
@@ -543,13 +523,10 @@ If you want a variable number of hops (between 1 and 15), use maxHops:
     {
       "property": {
         "path": [
-          "self_relation",
-          {
-            "relation": "self_relation",
-            "maxHops": 4
-          }
+          "parent",
+          "parent"
         ],
-        "fromBlueprint": "_team"
+        "fromBlueprint" : "Team"
       },
       "operator": "matchAny",
       "value": "targetEntity"
@@ -557,10 +534,19 @@ If you want a variable number of hops (between 1 and 15), use maxHops:
   ]
 }
 ```
+ 
+For example, if the `value` is `Squad`:
+- First hop: `Squad` → `Tribe`.
+- Second hop: `Tribe` → `Domain`.
 
-**Example 3: Mixed approach example:**
+Result: `Domain` (only the final destination after exactly 2 hops).
 
-You can also mix fixed hops with variable hops. For example, if you specify `self_relation` twice followed by a `maxHops` object, the system will start traversing from the 2 hops already made and continue with the additional hops specified in `maxHops`.
+___
+
+**Example 2: self-relation with maxHops for variable hops**
+
+If you want a variable number of hops (between 1 and 15), use `maxHops`.  
+`maxHops` specifies the maximum number of hops to traverse through the self-relation.
 
 ```json showLineNumbers
 {
@@ -569,20 +555,66 @@ You can also mix fixed hops with variable hops. For example, if you specify `sel
     {
       "property": {
         "path": [
-          "self_relation",
-          "self_relation",
           {
-            "relation": "self_relation",
+            "relation": "parent",
             "maxHops": 3
           }
         ],
-      "fromBlueprint": "Team",
+        "fromBlueprint": "Team"
+      },
       "operator": "matchAny",
       "value": "targetEntity"
     }
   ]
 }
 ```
+
+For example, if the `value` is `Squad`:
+- First hop: `Squad` → `Tribe`.
+- Second hop: `Tribe` → `Domain`.
+- Third hop: `Domain` → `Group`.
+
+Result: `Tribe`, `Domain` and `Group` (all entities found along the path up to 3 hops).
+
+:::info `maxHops` limitation
+The `maxHops` parameter can only be applied **once** per path, and it accepts values from **1 to 15**.
+:::
+
+___
+
+**Example 3: mixed approach**
+
+You can also mix fixed hops with variable hops. For example, if you specify the self-relation twice followed by a `maxHops` object, the system will start traversing from the 2 hops already made and continue with the additional hops specified in `maxHops`.
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": {
+        "path": [
+          "parent",
+          "parent",
+          {
+            "relation": "parent",
+            "maxHops": 3
+          }
+          ],
+          "fromBlueprint": "Team"
+        },
+      "operator": "matchAny",
+      "value": "targetEntity"  
+    }
+  ]
+}
+```
+
+For example, if the `value` is `Squad`:
+- First hop: `Squad` → `Tribe`.
+- Second hop: `Tribe` → `Domain`.
+- Third hop: `Domain` → `Group`.
+
+Result: `Domain` (from fixed hops) and `Group` (from variable hops, up to 3 additional hops).
 
 ---
 
