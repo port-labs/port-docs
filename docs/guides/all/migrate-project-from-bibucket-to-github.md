@@ -4,7 +4,7 @@ Migrating From Bitbucket to GitHub
 
 ## 1. Introduction
 
-Migrating repositories from Bitbucket Server to GitHub Enterprise can streamline development workflows, centralize code management, and take advantage of GitHub’s extensive ecosystem. By using [Port](https://getport.io/)’s self-service action (SSA), this process can be made as easy as possible. In this guide, we will be walking through the process of setting up our Port environment to make migration processes easy. Here is an outline of the steps we will be taking:
+Migrating repositories from Bitbucket Server to GitHub Enterprise can streamline development workflows, centralize code management, and take advantage of GitHub’s extensive ecosystem. By using [Port](https://port.io/)’s self-service action (SSA), this process can be made as easy as possible. In this guide, we will be walking through the process of setting up our Port environment to make migration processes easy. Here is an outline of the steps we will be taking:
 
 1. **Set up relevant integrations on Port** – Provide Port access to both Bitbucket and GitHub, enabling Port to discover your repositories and metadata.
 2. **Set Up Repository Blueprints** – Define blueprints that map critical repository properties from Bitbucket and GitHub into Port.
@@ -21,7 +21,7 @@ Port ensures all the relevant repository data—like URLs, readmes, codeowner fi
 
 You should have the following in place for this migration:
 
-- A Port account (sign up at https://getport.io to create one)
+- A Port account (sign up at https://port.io to create one)
 - A Bitbucket account with the specified project and set of repositories you want to migrate to GitHub
 - A GitHub organization where you have owner permissions or permissions to create a repository
 
@@ -443,7 +443,7 @@ With your GitHub and Bitbucket integrations set up and your blueprints ready, th
 
 A **Self-Service Action (SSA)** in Port is how you define a user-facing action (in this case, “Migrate Service From Bitbucket To GitHub”). To set this up, follow the steps below:
 
-1. Go to the [**Self-service**](https://app.getport.io/self-serve) page
+1. Go to the [**Self-service**](https://app.port.io/organization/self-serve) page
 2. Click on the **+ Action** button at the top right corner
 3. Click on **Edit JSON** to enter JSON mode
 4. Paste the following JSON replacing the `org` and `repo`  fields with:
