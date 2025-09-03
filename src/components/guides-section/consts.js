@@ -154,8 +154,8 @@ export const availableGuides = [
         link: "/guides/all/manage-resources-using-k8s-crds",
     },
     {
-        title: "Automate incident management",
-        description: "Automate notifications and documentation of incidents",
+        title: "Auto-create Slack channel & GitHub issue for PagerDuty incidents",
+        description: "Automatically create a Slack channel and GitHub issue when a PagerDuty incident is reported",
         tags: ["Incident management", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
@@ -836,7 +836,6 @@ export const availableGuides = [
 
     },
     {
-
         title: "Track SLOs and SLIs for services",
         description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
         tags: ["Engineering metrics", "New Relic", "Dashboards"],
@@ -1330,7 +1329,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
-
+        title: " Create an actions ROI dashboard",
+        description: "Create a dashboard that tracks the ROI of actions in Port",
+        tags: [ "Actions", "Dashboards", "Automations"],
+        logos: ["Actions", "Automations"],
+        link: "/guides/all/create-roi-dashboard",
+    },
+    {
         title: "Send Slack messages using Port's Slack app and automations",
         description: "Learn how to send Slack messages to users using Port's Slack app and automations",
         tags: ["Automations", "Slack"],
