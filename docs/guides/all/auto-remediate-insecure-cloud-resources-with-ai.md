@@ -31,8 +31,8 @@ This guide assumes the following:
 - You have installed [Port's AWS integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws) (or [GCP](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/)/[Azure](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/))
 - You have completed the setup in the [Trigger Claude Code from Port guide](https://docs.port.io/guides/all/trigger-claude-code-from-port)
 
-:::tip Multi-cloud support
-While this guide focuses on AWS RDS instances, the same approach can be applied to other cloud providers and resource types by adjusting the blueprint schemas and security policies.
+:::tip Multi-cloud and multi-agent support
+While this guide focuses on AWS RDS instances and uses Claude Code, the same approach can be applied to other cloud providers and resource types by adjusting the blueprint schemas and security policies. You can also use other AI coding agents like GitHub Copilot or Gemini to generate the infrastructure-as-code patches.
 :::
 
 
@@ -336,4 +336,5 @@ Create a security group blueprint to monitor for overly permissive rules:
 
 ## Related guides
 
-- [Trigger GitHub Copilot from Port](/guides/all/trigger-github-copilot-from-port) - Set up GitHub Copilot integration with Port
+- [Trigger GitHub Copilot from Port](/guides/all/trigger-github-copilot-from-port)
+- [Trigger Google Gemini Assistant from Port](/guides/all/trigger-gemini-assistant-from-port)
