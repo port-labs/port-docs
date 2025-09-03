@@ -567,11 +567,7 @@ Since we don't have context of the logged-in user when using the API, these func
 
 ### Contextual query rules
 
-:::info Closed beta feature
-This capability is currently in closed beta, and is not yet generally available.  
-If you would like to join the beta, please reach out to us.
-:::
-To implement specific and/or complex queries, you can add the context of the triggering user to a query rule, allowing you to access that user's entity and/or owning teams.  
+To implement specific and/or complex queries, you can add the context of the triggering user to a query rule, allowing you to access that user's properties and/or owning teams.  
 You can mix contextual query rules freely with other rules as part of your queries.
 This can be used in either the `property` or `value` key in a query rule:
 
@@ -610,13 +606,27 @@ This can be used in either the `property` or `value` key in a query rule:
 | `userTeams` | The entities of the owning teams of the user triggering the query                                                                     |
 
 #### Usage examples
-
+owned by team rule, will filter only the entities onwed by one of the teams of the user
 ```json showLineNumbers
 [ 
   ...other rules
-  { // filter entities with the same department as the user
-    "property": "department",
+  { 
+    "property": "$team",
     "operator": "containsAny",
+    "value": {
+      "context": "userTeams",
+      "property": "$identifier"
+    }
+  }
+]
+```
+filter entities with the same department as the user -
+```json showLineNumbers
+[ 
+  ...other rules
+  { 
+    "property": "department",
+    "operator": "=",
     "value": {
       "context": "user",
       "property": "department"
@@ -624,23 +634,25 @@ This can be used in either the `property` or `value` key in a query rule:
   }
 ]
 ```
+only users with `manager` role will get the entities -
 ```json showLineNumbers
 [ 
   ...other rules
-  { // only users with `manager` role will get the entities
+  { 
     "property": {
       "context": "user",
-      "property": "role"
+      "property": "port_role"
     },
     "operator": "=",
     "value": "manager"
   }
 ]
 ```
+only users in these team will get the entities -
 ```json showLineNumbers
 [
   ...other rules
-  { // only users in these team will get the entities
+  { // 
     "property": {
       "context": "userTeams",
       "property": "$identifier"
