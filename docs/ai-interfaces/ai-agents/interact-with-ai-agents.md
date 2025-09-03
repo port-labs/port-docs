@@ -281,7 +281,7 @@ The final textual answer or a chunk of the answer from the agent for the user. F
 
 Signals that the agent has finished processing and the response stream is complete. This event also includes quota usage information for managing your API limits.
 
-```json
+```json showLineNumbers
 {
   "quotaUsage": {
     "maxRequests": 200,
