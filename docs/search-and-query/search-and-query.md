@@ -634,7 +634,7 @@ Filter entities with the same department as the user
   }
 ]
 ```
-Only users with `manager` role will get the entities
+Only users with manager role will get the entities
 ```json showLineNumbers
 [ 
   ...other rules
@@ -652,7 +652,7 @@ Only users in these team will get the entities
 ```json showLineNumbers
 [
   ...other rules
-  { // 
+  { 
     "property": {
       "context": "userTeams",
       "property": "$identifier"
