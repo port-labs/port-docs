@@ -141,11 +141,6 @@ To give `read` permissions to members of the owning team of an entity, change th
 
 <TabItem value="policy" label="Policy">
 
-:::info Closed beta feature
-This capability is currently in closed beta, and is not yet generally available.  
-If you would like to join the beta, please reach out to us.
-:::
-
 The `policy` key allows you to give **dynamic** `read` permissions to users, by using [search queries](/search-and-query/#rules).
 
 You can also use [contextual query rules](/search-and-query/#contextual-query-rules) to get the context of the user executing the query.
