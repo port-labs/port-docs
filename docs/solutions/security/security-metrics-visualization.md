@@ -7,7 +7,8 @@ sidebar_position: 3
 
 Security metrics are broken. Most CISOs are drowning in vanity metrics that look impressive in PowerPoint but don't actually tell them anything meaningful about their organization's security posture. Raw vulnerability counts, generic compliance percentages, and meaningless "security scores" dominate executive dashboards while the metrics that actually matter—like mean time to remediation, business risk exposure, and security culture adoption—remain buried in operational tools.
 
-![Security Metrics Executive Dashboard](/img/solutions/security/security_executive_dashboard.png)
+<!-- TODO: Add security metrics executive dashboard image -->
+<!-- ![Security Metrics Executive Dashboard](/img/solutions/security/security_executive_dashboard.png) -->
 
 ## Why traditional security metrics miss the mark
 

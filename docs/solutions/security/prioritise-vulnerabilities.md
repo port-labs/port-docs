@@ -7,7 +7,8 @@ sidebar_position: 2
 
 The harsh reality of modern application security is that you can't fix everything at once. Every day, new vulnerabilities are discovered, scanners flag thousands of potential issues, and security teams struggle to decide what deserves immediate attention versus what can wait. The traditional approach—treating all "critical" vulnerabilities equally—leads to analyst burnout and important issues slipping through the cracks.
 
-![Vulnerability Prioritization Dashboard](/img/solutions/security/vulnerability_prioritization_dashboard.png)
+<!-- TODO: Add vulnerability prioritization dashboard image -->
+<!-- ![Vulnerability Prioritization Dashboard](/img/solutions/security/vulnerability_prioritization_dashboard.png) -->
 
 ## Why most vulnerability prioritization fails
 

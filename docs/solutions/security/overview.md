@@ -13,7 +13,8 @@ You know the drill: it's Thursday afternoon, and you're staring at yet another C
 
 This is where most security programs get stuck—in a cycle of prioritizing everything (which means prioritizing nothing) and burning out both security teams and developers with endless streams of context-free alerts.
 
-![Security Solution Architecture](/img/solutions/security/security_solution_architecture.png)
+<!-- TODO: Add security solution architecture image -->
+<!-- ![Security Solution Architecture](/img/solutions/security/security_solution_architecture.png) -->
 
 ## How can Port help?
 

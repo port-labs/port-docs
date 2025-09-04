@@ -9,7 +9,8 @@ Manual security processes don't scale. Every day, security teams face an overwhe
 
 The traditional model—where every security decision must flow through a central security team—creates bottlenecks that slow development while paradoxically making organizations less secure. When security processes are friction-heavy and opaque, teams find workarounds that bypass security entirely.
 
-![Security Actions Workflow](/img/solutions/security/security_actions_workflow.png)
+<!-- TODO: Add security actions workflow image -->
+<!-- ![Security Actions Workflow](/img/solutions/security/security_actions_workflow.png) -->
 
 ## Why manual security processes create risk
 

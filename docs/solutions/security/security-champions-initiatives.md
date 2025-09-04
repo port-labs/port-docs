@@ -9,7 +9,8 @@ The most successful security programs aren't built by security teams alone—the
 
 The reality is that developers want to build secure software, but they're often overwhelmed by conflicting requirements, unclear guidance, and tooling that slows them down. The key is making security the easy choice through clear standards, automated guardrails, and recognition for security-positive behaviors.
 
-![Security Champions Dashboard](/img/solutions/security/security_champions_dashboard.png)
+<!-- TODO: Add security champions dashboard image -->
+<!-- ![Security Champions Dashboard](/img/solutions/security/security_champions_dashboard.png) -->
 
 ## Why security champions programs fail
 
