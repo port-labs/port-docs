@@ -3,181 +3,229 @@ title: Security champions & initiatives
 sidebar_position: 4
 ---
 
-# Security champions & initiatives
+# Security Champions & Initiatives
 
-The most successful security programs aren't built by security teams alone—they're built by turning every developer into a security champion. But scaling security culture across an organization is hard. Traditional approaches rely on mandatory training sessions, lengthy security checklists, and penalty-based compliance models that create friction between security and engineering teams.
+> **Port empowers organizations to scale security culture by making secure development measurable, actionable, and rewarding.**
+> **Port helps you turn security from a siloed function into a shared, measurable responsibility across your entire organization.**
 
-The reality is that developers want to build secure software, but they're often overwhelmed by conflicting requirements, unclear guidance, and tooling that slows them down. The key is making security the easy choice through clear standards, automated guardrails, and recognition for security-positive behaviors.
+---
 
-<!-- TODO: Add security champions dashboard image -->
-<!-- ![Security Champions Dashboard](/img/solutions/security/security_champions_dashboard.png) -->
+## Introduction
 
-## Why security champions programs fail
+The most successful security programs are **not built by security teams alone**—they are built by empowering every developer to take part in protecting the business.  
 
-Most security champions programs start with good intentions but struggle with execution:
+Traditional approaches rely on:
+- Mandatory training sessions,
+- Security checklists,
+- Penalty-driven compliance.
 
-- **Lack of clear expectations**: Champions don't know what's expected of them beyond "promote security"
-- **No measurable outcomes**: Success is defined by activities (training completed) rather than results (vulnerabilities reduced)
-- **Tool friction**: Security tools create more work without providing clear value to developers
-- **Recognition gaps**: Security champions get extra responsibilities but no career advancement or peer recognition
-- **Sustainability issues**: Programs depend on a few enthusiastic volunteers who eventually burn out
+These often create friction between security and engineering teams and fail to build sustainable engagement.
 
-## Scorecards and initiatives to set up success
+The reality: most developers **want** to build secure software but are overwhelmed by:
+- Conflicting security requirements,
+- Unclear guidance,
+- Tools that slow them down.
 
-Port transforms security champions programs from volunteer-driven initiatives into systematic, measurable, and sustainable cultural change programs. Here's how:
+The solution is to **make security the easy and rewarding choice** through:
+- Clear standards and expectations,
+- Automated guardrails,
+- Recognition and motivation for security-positive behaviors.
 
-### Security scorecards that drive the right behaviors
+Port provides the foundation to scale these efforts by connecting **people, processes, and technology** in one platform.
 
-Instead of abstract security requirements, use scorecards to define clear, measurable security standards:
+---
 
-#### Application security scorecard
-Track the security practices that prevent vulnerabilities from reaching production:
+## Why Many Security Champion Programs Fail
 
-- **Dependency management**: Are all dependencies up-to-date and vulnerability-free?
-- **Secure coding practices**: Are security linters and SAST tools integrated into CI/CD?
-- **Access controls**: Are proper authentication and authorization implemented?
-- **Data protection**: Are sensitive data handling practices followed?
-- **Security testing**: Are security tests included in the CI/CD pipeline?
+Most security champion programs start with enthusiasm but fizzle out due to poor execution.
 
-#### Infrastructure security scorecard
-Ensure the infrastructure supporting applications follows security best practices:
+| Common Failure | Impact on the Program |
+|----------------|-----------------------|
+| **Unclear expectations** | Champions are unsure of their role beyond vague directives like "promote security." |
+| **No measurable outcomes** | Progress is tracked by activity (training hours) rather than meaningful results (vulnerabilities reduced). |
+| **Tool friction** | Security tools create extra work without providing developers clear value or context. |
+| **Recognition gaps** | Champions take on extra responsibilities without career incentives or visibility. |
+| **Unsustainable model** | Programs rely on a few motivated individuals who eventually burn out. |
 
-- **Network security**: Are proper network segmentation and firewall rules in place?
-- **Identity and access management**: Are least-privilege principles enforced?
-- **Encryption standards**: Are data encryption requirements met for data at rest and in transit?
-- **Configuration management**: Are hardening standards applied consistently?
-- **Monitoring and logging**: Are security events properly logged and monitored?
+---
 
-#### Operational security scorecard
-Track the operational practices that prevent and respond to security incidents:
+## Port’s Approach: Measurable, Sustainable, Scalable
 
-- **Incident response preparedness**: Are runbooks up-to-date and teams trained?
-- **Vulnerability management**: Are vulnerabilities triaged and remediated within SLA?
-- **Access review processes**: Are user access rights regularly reviewed and updated?
-- **Backup and recovery**: Are backup procedures tested and recovery time objectives met?
-- **Compliance documentation**: Are audit trails and documentation maintained?
+Port turns security champions programs from volunteer-driven efforts into **systematic, measurable cultural transformation initiatives**.
 
-:::tip Start with what teams can control
-Design scorecards around practices that development teams can directly influence. Avoid metrics that depend on external factors or other teams' actions.
+It does this through three pillars:
+1. **Scorecards** – to set clear standards and expectations.
+2. **Initiatives** – to create momentum and shared goals.
+3. **Guardrails & Automation** – to make secure development frictionless.
+
+---
+
+## 1. Scorecards: Defining Security Success
+
+Scorecards in Port translate abstract security principles into **concrete, trackable practices** for teams and services.  
+Each scorecard contains criteria that teams can directly influence.
+
+### Application Security Scorecard
+Track practices that prevent vulnerabilities from reaching production:
+- **Dependency management** – Vulnerable dependencies are updated promptly.
+- **Secure coding practices** – Security linters and SAST integrated into CI/CD.
+- **Access controls** – Proper authentication and authorization in place.
+- **Data protection** – Sensitive data handled according to policy.
+- **Security testing** – Security tests included in CI/CD pipelines.
+
+### Infrastructure Security Scorecard
+Ensure infrastructure is deployed and maintained securely:
+- **Network security** – Proper segmentation and firewall rules.
+- **IAM hygiene** – Enforcing least-privilege principles.
+- **Encryption standards** – Data encryption at rest and in transit.
+- **Configuration management** – Systems hardened consistently.
+- **Logging & monitoring** – Security events captured and monitored.
+
+### Operational Security Scorecard
+Measure preparedness and response capabilities:
+- **Incident response readiness** – Runbooks updated and teams trained.
+- **Vulnerability management** – Vulnerabilities triaged and remediated within SLA.
+- **Access reviews** – Regular audits of permissions and roles.
+- **Backup and recovery** – Recovery processes tested regularly.
+- **Compliance tracking** – Audit trails maintained and up-to-date.
+
+:::tip
+**Start small and iterate:**  
+Focus scorecards on practices that teams directly control to ensure quick wins and early adoption.
 :::
 
-### Security initiatives that create momentum
+---
 
-Transform scorecards from static compliance tools into dynamic improvement programs:
+## 2. Initiatives: Driving Momentum and Engagement
 
-#### Progressive improvement campaigns
-Instead of expecting teams to achieve 100% compliance immediately, create campaigns that focus on specific improvements:
+Scorecards define **what good looks like**.  
+**Initiatives** provide the **why and when**, turning goals into campaigns that drive real change.
 
-- **"Zero Critical Vulnerabilities" initiative**: Focus all teams on eliminating critical-severity vulnerabilities from production services
-- **"Secrets Management Adoption"**: Drive adoption of proper secrets management practices across all services
-- **"Branch Protection Compliance"**: Ensure all production code repositories have proper branch protection rules enabled
+### Progressive Improvement Campaigns
+Rather than demanding 100% compliance immediately, focus on specific, achievable improvements.
 
-#### Recognition and gamification
-Make security improvements visible and rewarding:
+Examples:
+- **Zero Critical Vulnerabilities** – Eliminate critical vulnerabilities in production systems.
+- **Secrets Management Adoption** – Drive adoption of secure secrets storage practices.
+- **Branch Protection Compliance** – Ensure all production repos enforce branch protection rules.
 
-- **Security champion leaderboards**: Track which teams are making the most security improvements
-- **Achievement badges**: Recognize specific security milestones (first team to achieve 90% scorecard compliance)
-- **Security improvement showcases**: Highlight teams that have made significant security improvements
-- **Cross-team learning sessions**: Let high-performing teams share their security practices with others
+These campaigns can be **tracked in Port** through:
+- Dashboards that visualize campaign progress,
+- Automated alerts when thresholds are reached,
+- Scorecard metrics tied to completion targets.
 
-### Security guardrails that prevent issues
+### Recognition and Gamification
+Security is a team sport.  
+Recognizing and rewarding improvements encourages ongoing participation.
 
-Build security into your development platform so secure practices become the default choice:
+Examples:
+- **Leaderboards** – Rank teams by their improvement scores.
+- **Achievement badges** – Reward milestones like "90% scorecard compliance."
+- **Improvement showcases** – Share success stories at company all-hands.
+- **Cross-team learning sessions** – High-performing teams teach others.
 
-#### Automated policy enforcement
-Use Port's automation capabilities to enforce security policies without manual intervention:
+---
 
-- **Branch protection requirements**: Automatically enable branch protection on new repositories
-- **Dependency vulnerability checking**: Block deployments with critical vulnerability dependencies
-- **Secrets detection**: Prevent commits containing hardcoded secrets or API keys
-- **Security scan gates**: Require passing security scans before production deployments
+## 3. Guardrails and Automation: Secure by Default
 
-#### Self-service security tools
-Make security tools accessible and easy to use through Port's self-service actions:
+Secure practices must be **built into the development workflow** so teams don’t rely solely on manual checks.
 
-- **Security scan initiation**: Let developers trigger security scans on-demand
-- **Vulnerability exception requests**: Provide clear workflows for requesting security exceptions
-- **Security consultation requests**: Enable easy access to security team expertise
-- **Compliance status checks**: Let teams check their compliance status before releases
+### Automated Policy Enforcement
+Use Port automations to **enforce policies automatically**, reducing human error:
+- Auto-enable **branch protection rules** on new repos ([Setup branch protection rules](/guides/all/setup-branch-protection-rules/)).
+- Block deployments with **critical vulnerabilities** detected by scanners like Trivy or Wiz.
+- Prevent commits with **hardcoded secrets**.
+- Require **security scan gates** to pass before production deployments.
 
-## Putting security champions into practice
+### Self-Service Security Actions
+Make security tools and processes easily accessible through **self-service actions**:
+- Trigger security scans on-demand.
+- Submit vulnerability exception requests.
+- Request consultations with security teams.
+- Check compliance status before releases.
 
-### Step 1: Identify and empower champions
+By making security **self-service and embedded**, teams fix issues faster without waiting on central security bottlenecks.
 
-Security champions should represent each development team and have the influence to drive change:
+---
 
-- **Selection criteria**: Choose developers who are respected by their peers and interested in security
-- **Time allocation**: Provide dedicated time for security champion activities (typically 10-20% of their role)
-- **Training and development**: Invest in security training and certification for champions
-- **Career progression**: Include security champion contributions in performance reviews and promotion criteria
+## Putting Security Champions Into Practice
 
-### Step 2: Define clear expectations and success criteria
+### Step 1: Identify and Empower Champions
+- **Selection** – Choose respected developers with influence and interest in security.
+- **Time allocation** – Dedicate 10–20% of their role to security initiatives.
+- **Training** – Provide certifications and ongoing education.
+- **Career growth** – Recognize champion contributions in performance reviews and promotions.
 
-Champions need to understand exactly what success looks like:
+### Step 2: Define Clear Expectations
+Champions should have **specific, measurable responsibilities**:
+- Review code for security issues.
+- Lead team-level security training.
+- Drive scorecard improvements.
+- Report vulnerabilities and guide remediation.
 
-- **Specific responsibilities**: Code reviews for security issues, security training delivery, scorecard improvement facilitation
-- **Measurable outcomes**: Team scorecard scores, vulnerability remediation times, security training completion rates
-- **Support structure**: Regular champion meetings, access to security team expertise, escalation procedures
-- **Recognition programs**: Public acknowledgment, conference speaking opportunities, internal awards
+Success is tracked through:
+- Team scorecard performance,
+- Remediation timelines,
+- Training engagement rates.
 
-### Step 3: Implement security scorecards
+### Step 3: Implement Scorecards
+Start small with key security practices:
+- [Track GitLab project maturity](/guides/all/track-gitlab-project-maturity-with-scorecards/).
+- Add service-level scorecards for application, infrastructure, and operational practices.
+- Gradually expand to advanced metrics like incident response and compliance readiness.
 
-Start with a focused set of security standards that are achievable and measurable:
+### Step 4: Establish Continuous Improvement
+Create a cycle of **review, plan, and improve**:
+- **Monthly reviews** – Assess scorecard performance.
+- **Quarterly planning** – Launch new improvement campaigns.
+- **Retrospectives** – Analyze incidents to identify systemic fixes.
+- **Cross-team forums** – Share practices and lessons learned.
 
-- [Setup branch protection rules](/guides/all/setup-branch-protection-rules/) to ensure code review requirements
-- [Track GitLab project maturity](/guides/all/track-gitlab-project-maturity-with-scorecards/) including security configurations
-- Implement service-level security scorecards covering application, infrastructure, and operational security
-
-### Step 4: Create continuous improvement cycles
-
-Security is not a destination but a journey of continuous improvement:
-
-- **Regular scorecard reviews**: Monthly team reviews of security scorecard performance
-- **Initiative planning**: Quarterly planning sessions to identify security improvement initiatives
-- **Cross-team sharing**: Regular forums for teams to share security practices and learnings
-- **Retrospectives**: Post-incident reviews that focus on prevention and process improvement
-
-:::caution Balance automation with human judgment
-While automated guardrails are essential, make sure there are clear escalation paths for situations that require human judgment. Over-automation can create process bottlenecks.
+:::caution
+**Balance automation and human judgment:**  
+Automation accelerates security, but always provide clear escalation paths for exceptions and edge cases.
 :::
 
-## Building sustainable security culture
+---
 
-### Make security everyone's job
+## Measuring Cultural Change
 
-The goal is to distribute security responsibility across the organization rather than centralizing it in a security team:
+Track cultural indicators to understand program health:
 
-- **Embed security in existing processes**: Add security requirements to existing code review, deployment, and monitoring processes
-- **Provide context-specific guidance**: Give developers security guidance relevant to their specific technology stack and use cases
-- **Create learning opportunities**: Turn security incidents into learning experiences rather than blame sessions
-- **Recognize security-positive behaviors**: Celebrate when teams proactively identify and fix security issues
+| Metric | What It Shows |
+|--------|---------------|
+| **Proactive issue reporting** | Teams are finding and reporting issues before external discovery. |
+| **Training engagement** | Developers are participating actively in security education. |
+| **Cross-team collaboration** | Security knowledge is being shared across teams. |
+| **Tool adoption** | Teams are adopting security tools voluntarily, not just out of compliance. |
 
-### Measure culture change
+---
 
-Track metrics that indicate whether your security culture is improving:
+## Success Metrics for Security Champion Programs
 
-- **Proactive security issue reporting**: Are teams finding and reporting security issues before external discovery?
-- **Security training engagement**: Are teams actively participating in security training and education?
-- **Cross-team collaboration**: Are teams sharing security practices and learnings with each other?
-- **Security tool adoption**: Are teams voluntarily adopting security tools and practices beyond minimum requirements?
+You’ll know the program is working when:
+- Champions are seen as **trusted technical leaders** by their peers.
+- Teams **compete to improve scorecard scores** instead of seeing compliance as a burden.
+- Security improvements happen **organically**, not only through mandates.
+- Security incidents are treated as **learning opportunities**, not blame games.
+- New developers are mentored on security by their teams, **not just the central security group**.
 
-## Real-world success stories
+---
 
-Organizations using Port's security champions approach see remarkable improvements:
+## Outcomes With Port
 
-- **Reduction in security vulnerabilities** reaching production through proactive identification and remediation
-- **Improvement in security training completion rates** through champion-led peer training programs  
-- **Security exceptions are now self-served** through clear workflows and automated approval processes
-- **Reduction in security-related deployment delays** through earlier security integration in development processes
+Organizations using Port to power their champions program have achieved:
+- **Fewer vulnerabilities reaching production** thanks to proactive team ownership.
+- **Faster remediation times** due to automated triage and self-service fixes.
+- **Reduced deployment delays** by integrating security earlier in workflows.
+- **Improved training completion** driven by peer-to-peer champion-led programs.
 
-## Success metrics for security champions programs
 
-You'll know your security champions program is working when:
+Security champions bridge the gap between **security strategy** and **engineering execution**.  
+With Port, you can:
+- Define clear expectations through scorecards,
+- Drive progress with initiatives and campaigns,
+- Automate guardrails to make security seamless,
+- Measure cultural change with actionable metrics.
 
-- **Champions are recognized as technical leaders** within their teams and across the organization
-- **Security improvements happen organically** without constant prodding from the security team
-- **Teams compete to achieve higher security scorecard scores** rather than treating compliance as a burden
-- **Security incidents become learning opportunities** that strengthen practices rather than create blame cycles
-- **New team members are mentored on security practices** by existing team members rather than just the security team
 
-By combining clear expectations, measurable outcomes, and the right tooling, Port helps organizations build security champions programs that create lasting cultural change and measurably improve security posture.
