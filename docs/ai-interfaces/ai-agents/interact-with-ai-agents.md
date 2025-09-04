@@ -143,6 +143,37 @@ curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true' \\
   --data-raw '{"prompt":"What is my next task?"}'
 ```
 
+**Processing Quota Information:**
+
+When processing the streaming response, you'll receive quota usage information in the final `done` event. Here's a JavaScript example of how to handle this:
+
+```javascript showLineNumbers
+const eventSource = new EventSource(apiUrl);
+
+eventSource.addEventListener('done', (event) => {
+  const data = JSON.parse(event.data);
+  
+  if (data.quotaUsage) {
+    const { remainingRequests, remainingTokens, remainingTimeMs } = data.quotaUsage;
+    
+    // Check if quota is running low
+    if (remainingRequests < 10 || remainingTokens < 10000) {
+      console.warn('Quota running low, consider rate limiting');
+      // Implement rate limiting logic
+    }
+    
+    // Schedule next request after quota reset if needed
+    if (remainingRequests === 0) {
+      setTimeout(() => {
+        // Safe to make next request
+      }, remainingTimeMs);
+    }
+  }
+  
+  eventSource.close();
+});
+```
+
 **Using MCP Server Backend Mode via API:**
 
 You can override the agent's default backend mode by adding the `use_mcp` parameter:
@@ -182,7 +213,13 @@ event: execution
 data: Your final answer from the agent.
 
 event: done
-data: {}
+data: {
+  "maxRequests": 200,
+  "remainingRequests": 193,
+  "maxTokens": 200000,
+  "remainingTokens": 179910,
+  "remainingTimeMs": 903
+}
 ```
 
 **Possible Event Types:**
@@ -242,11 +279,30 @@ The final textual answer or a chunk of the answer from the agent for the user. F
 <details>
 <summary><b><code>done</code> (Click to expand)</b></summary>
 
-Signals that the agent has finished processing and the response stream is complete.
+Signals that the agent has finished processing and the response stream is complete. This event also includes quota usage information for managing your API limits.
 
-```json
-{}
+```json showLineNumbers
+{
+  "quotaUsage": {
+    "maxRequests": 200,
+    "remainingRequests": 193,
+    "maxTokens": 200000,
+    "remainingTokens": 179910,
+    "remainingTimeMs": 903
+  }
+}
 ```
+
+**Quota Usage Fields:**
+- `maxRequests`: Maximum number of requests allowed in the current rolling window
+- `remainingRequests`: Number of requests remaining in the current window
+- `maxTokens`: Maximum number of tokens allowed in the current rolling window  
+- `remainingTokens`: Number of tokens remaining in the current window
+- `remainingTimeMs`: Time in milliseconds until the rolling window resets
+
+:::tip Managing quota usage
+Use the quota information in the `done` event to implement client-side rate limiting and avoid hitting API limits. When `remainingRequests` or `remainingTokens` are low, consider adding delays between requests or queuing them for later execution.
+:::
 </details>
 
 </TabItem>
@@ -343,6 +399,8 @@ Port applies limits to AI agent interactions to ensure fair usage across all cus
 
 - **Query limit**: ~40 queries per hour.
 - **Token usage limit**: 800,000 tokens per hour.
+
+You can view your quota limits are available in the API response.
 
 :::caution Usage limits
 Usage limits may change without prior notice. Once a limit is reached, you will need to wait until it resets.  
@@ -446,6 +504,17 @@ Ensure that:
 <summary><b>How can I provide feedback on agent responses? (Click to expand)</b></summary>
 
 The AI invocation entity contains the `feedback` property where you can mark is as `Negative` or `Positive`. We're working on adding a more convenient way to rate conversation from Slack and from the UI.
+</details>
+
+<details>
+<summary><b>What are the usage limits and how can I know them? (Click to expand)</b></summary>
+
+Port applies the following limits to AI agent interactions:
+- **Query limit**: ~40 queries per hour
+- **Token usage limit**: 800,000 tokens per hour
+
+You can monitor your current usage in the final `done` event showing your remaining requests, tokens, and reset time.
+
 </details>
 
 <details>
