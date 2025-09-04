@@ -1,136 +1,112 @@
 ---
-title: Prioritize vulnerabilities  
+title: Prioritize Vulnerabilities
 sidebar_position: 2
 ---
 
-# Prioritize vulnerabilities
+# Prioritize Vulnerabilities
 
-The harsh reality of modern application security is that you can't fix everything at once. Every day, new vulnerabilities are discovered, scanners flag thousands of potential issues, and security teams struggle to decide what deserves immediate attention versus what can wait. The traditional approach—treating all "critical" vulnerabilities equally—leads to analyst burnout and important issues slipping through the cracks.
+> **Port transforms vulnerability management from chaos to clarity — helping security teams focus on what truly matters to the business.**
 
-<!-- TODO: Add vulnerability prioritization dashboard image -->
-<!-- ![Vulnerability Prioritization Dashboard](/img/solutions/security/vulnerability_prioritization_dashboard.png) -->
+---
 
-## Why most vulnerability prioritization fails
+## Introduction
 
-Most organizations approach vulnerability management backward. They start with the vulnerability (usually sorted by CVSS score) and then try to figure out if it matters. This leads to:
+Modern application security is complex. Vulnerabilities emerge across code, open source libraries, cloud configurations, infrastructure, and IaC—yet security teams still struggle to focus on what truly matters. Without business context, every "critical" issue looks urgent, leading to alert fatigue, resource waste, and dangerous blind spots.
 
-- **Alert fatigue**: Security teams spend hours investigating vulnerabilities in deprecated services
-- **Misaligned priorities**: Developers receive urgent tickets for issues that don't impact production
-- **Resource waste**: Critical business services remain vulnerable while teams chase phantom threats
-- **Missed context**: High-severity vulnerabilities in low-risk environments get the same attention as exploitable issues in customer-facing systems
+Let’s rethink vulnerability prioritization by designing around **business context first**.
 
-## The Port approach: business context first
+---
 
-Port flips the traditional model by starting with business context and working backward to prioritization. Every vulnerability is automatically enriched with:
+## Common Failures in Vulnerability Prioritization
 
-### Service context and mapping
+Many organizations fall into common traps. Here’s how they go wrong—and how Port helps avoid it:
 
-Understanding which services are actually critical to your business is the foundation of intelligent prioritization. Port's software catalog provides this context automatically:
+| Failing Approach              | What Goes Wrong | How Port Fixes It |
+|------------------------------|------------------|--------------------|
+| **Backward (vulnerability-first)** | Prioritize by CVSS, then ask what matters | Port enriches vulnerabilities with ownership, service criticality, and environment context **before** prioritizing |
+| **Severity-only (CVSS bias)** | All CVSS 9.0s treated equal regardless of business impact | Port layers in service criticality, data sensitivity, and customer exposure for smarter prioritization |
+| **Exploit-blind** | Ignores known exploited or high-risk vulnerabilities | Port lets you surface known-exploited issues (KEV, EPSS) via custom blueprint properties and automate escalation |
+| **Asset-blind** | No owner, no context, no priority | Port’s software catalog forces mapping of services to owners, environments, and business properties |
+| **Siloed tooling** | Multiple dashboards, inconsistent IDs, manual merging | Port ingests vulnerability alerts from scanners like Trivy, Wiz, Dependabot via integrations or custom APIs, into a unified catalog |
+| **One-size-fits-all** | Equal SLAs for all services, unrealistic outcomes | Port enables different SLAs and triage workflows per service criticality using automations and dashboards |
+| **Snapshot-only** | Scanning periodically misses drift | Port supports continuous ingestion (e.g., via webhook integrations) and dashboards for real-time tracking |
+| **Ticket-dump** | Flood of generic tickets, no one fixes them | Port allows context-aware notifications and automations (e.g., escalating only high-context issues) |
+| **Compliance-first** | Audit green, real risk remains | Port scorecards allow tracking of both compliance and actual exposure over time |
+| **Patch-everything-now** | Teams burn out, systems break | Port’s business scoring enables prioritizing high-risk/high-impact fixes first |
 
-- **Service criticality**: Customer-facing payment services get different treatment than internal development tools
-- **Ownership mapping**: Every vulnerability is instantly routed to the right team with full context
-- **Dependency relationships**: Understand cascade effects before they impact production
-- **Environment classification**: Production vulnerabilities are prioritized over development environment issues
+> **Vulnerability counts don’t equal risk.**  
+> Without context, teams end up chasing numbers instead of protecting what matters to the business.
 
-### Real-time business impact assessment
+---
 
-Port connects security findings to business metrics that matter:
+## The Port Approach: Business-First, Context-Driven Prioritization
 
-- **Customer exposure**: Which vulnerabilities affect services that handle customer data or payments?
-- **Revenue impact**: What's the potential business cost if this vulnerability is exploited?
-- **Compliance requirements**: Which findings affect services subject to regulatory requirements?
-- **Recent changes**: Has this service been modified recently, increasing risk?
+Port transforms vulnerability data into actionable intelligence by anchoring it directly to business context:
 
-:::tip Start with what matters most
-Instead of asking "How severe is this vulnerability?", ask "How critical is this service to our business?" The vulnerability management follows naturally from there.
-:::
+### 1. Unified Context via Software Catalog
 
-## All business context lives in Port
+- Use **blueprints, relations, and entities** to represent services, ownership, criticality, environments, and compliance scope :contentReference[oaicite:1]{index=1}.
+- Integrate with tools like **Trivy, Wiz, Dependabot, Orca, Snyk**, etc., to ingest vulnerabilities into Port with service links :contentReference[oaicite:2]{index=2}.
+- Leverage **API ingestion** for custom tools or vulnerability sources, using Port’s REST API to create/update vulnerability entities linked to services :contentReference[oaicite:3]{index=3}.
 
-The key to effective vulnerability prioritization is having all your business context in one place. Port's software catalog becomes the single source of truth for:
+### 2. Business Context Enrichment
 
-### Service ownership and contact information
-- **Clear ownership**: Every service has designated owners who understand the business impact
-- **Escalation paths**: Automated routing ensures critical issues reach the right people immediately
-- **Team structures**: Understand which teams have capacity to address security issues
+- Vulnerabilities are enriched with metadata like **service ownership, environment (prod, staging), business criticality, data sensitivity, compliance implications**, and recent change status.
+- Enables answering: *Which vulnerabilities threaten our revenue-critical production systems?*
 
-### Service classification and criticality
-- **Business impact levels**: Revenue-generating, customer-facing, internal tools, development utilities
-- **Data sensitivity**: Services handling PII, payment data, or other sensitive information
-- **Compliance scope**: Services subject to SOX, PCI, HIPAA, or other regulatory requirements
-- **Customer tiers**: Different treatment for vulnerabilities affecting enterprise vs. free-tier customers
+### 3. Real-Time Dashboards & Scorecards
 
-### Technical architecture and dependencies
-- **Service relationships**: Understand which vulnerabilities could cascade across systems
-- **Technology stack**: Prioritize based on exploitability and exposure patterns
-- **Network exposure**: Internet-facing services get different treatment than internal components
-- **Authentication boundaries**: Services behind authentication have different risk profiles
+- Build dashboards to track vulnerabilities by severity, status, team, or service using Port’s UI and widget capabilities :contentReference[oaicite:4]{index=4}.
+- Track maturity with **scorecards**, showing metrics like mean time to remediation (MTTR), percentage of services with owners, or open critical vulnerabilities over time, using Port's scorecard feature :contentReference[oaicite:5]{index=5}.
 
-## How to implement intelligent vulnerability prioritization
+### 4. Automation & Context-Aware Workflows
 
-### Start by enriching your software catalog
+- Define automations to **escalate high-priority issues**, such as when a vulnerability in a customer-facing prod service becomes critical :contentReference[oaicite:6]{index=6}.
+- Build self-service actions to create tickets in Jira, Slack alerts, or trigger remediation workflows—only where business risk justifies action.
+- Use Port's API and mapping layers to tailor behavior—e.g., API-driven rules, triage pipelines, or dynamic SLAs.
 
-Before you can prioritize effectively, ensure your software catalog contains the business context needed for intelligent decision-making:
+### 5. API-Driven Integration & Extensibility
 
-[Build your software catalog](/getting-started/overview) with rich metadata about service criticality, ownership, and dependencies.
+- Port’s **REST API** supports managing blueprints, entities, scorecards, and actions programmatically :contentReference[oaicite:7]{index=7}.
+- Automate service metadata updates from CI/CD, incident systems, or IaC pipelines, keeping business context fresh.
 
-### Connect your security tools
+---
 
-Port integrates with leading security tools to automatically enrich findings with business context:
+## Putting It Into Practice: A Practical Workflow
 
-- [Visualize Wiz vulnerabilities](/guides/all/visualize-your-wiz-vulnerabilities/) - See Wiz findings enriched with service context and ownership
-- [Visualize GitHub Dependabot alerts](/guides/all/visualize-your-github-dependabot-alerts/) - Connect dependency vulnerabilities to impacted services
-- [Track security configurations](/guides/all/visualize-your-aws-storage-configuration/) - Monitor AWS storage security with business impact context
+1. **Setup your software catalog** with service metadata (ownership, criticality, compliance, environments) and vulnerability blueprints (e.g., Trivy, Wiz).
+2. **Ingest vulnerabilities** via native integrations or API into Port, linking them to the relevant service entities.
+3. **Create dashboards** to visualize the active threat landscape in context (e.g., “Critical findings in production, by service owner”).
+4. **Define priority scoring** combining severity with business context—for instance:
+   - Production service = +100
+   - High revenue impact = +50
+   - Customer data involved = +30
+   - Known-exploited = +70
+5. **Automate workflows**:
+   - Immediately notify owners when score exceeds threshold.
+   - Escalate top-10 findings to leadership daily.
+   - Create tickets and set different SLA windows based on business tier.
+6. **Track progress with scorecards**:
+   - Average remediation time for production-ranked vulnerabilities.
+   - % of services with defined ownership.
+   - Trend of high-risk vulnerabilities over time.
 
-### Implement risk-based scoring
+---
 
-Traditional CVSS scoring doesn't consider your specific business context. Port enables risk-based scoring that factors in:
+## Port Benefits
 
-1. **Exploitability in your environment**: Is the vulnerable service actually reachable?
-2. **Business criticality**: Revenue impact if this service is compromised
-3. **Data sensitivity**: Types of data handled by the affected service
-4. **Compliance implications**: Regulatory requirements for the affected service
-5. **Remediation complexity**: How difficult and risky is it to fix this issue?
+By using Port’s business-context-led approach to vulnerability prioritization, organizations achieve:
 
-## Put prioritization into practice
+- **50%+ reduction** in wasted remediation time
+- **Faster MTTR on truly critical issues**
+- **Improved developer experience** with context-aware, actionable findings
+- **Better alignment** between security, product, and engineering teams
+- **Higher trust and accountability**, backed by dashboards and scorecards
 
-### Automated triage workflows
+---
 
-Set up automated rules that route vulnerabilities based on business context:
+## Summary
 
-- High-severity vulnerabilities in customer-facing services → immediate escalation
-- Medium-severity findings in internal tools → standard team queue
-- Low-severity issues in development environments → batch processing during maintenance windows
+Port turns vulnerability management from a chaotic, reactive process into a business-first security capability. By unifying all types of vulnerabilities, enriching them with business context, and enabling API and automation-led prioritization, Port ensures you fix what matters—fast, strategically, and sustainably.
 
-### Context-aware notifications
-
-Instead of generic security alerts, send notifications with full business context:
-
-- "Critical vulnerability detected in payment processing service (affects 50k customers)"
-- "High-severity finding in internal tooling (no customer impact, non-urgent)"
-- "Compliance-related vulnerability in SOX-scoped financial reporting service"
-
-### Risk-based SLAs
-
-Implement different response times based on actual business risk:
-
-- **Critical business services**: 2-hour response time for high-severity vulnerabilities  
-- **Customer-facing services**: 24-hour response for medium-severity findings
-- **Internal tools**: 1-week response for non-critical vulnerabilities
-- **Development environments**: Address during regular maintenance windows
-
-:::caution Don't ignore the fundamentals
-While business context is crucial for prioritization, never ignore basic security hygiene. Use Port's scorecards to ensure all services meet minimum security standards regardless of business criticality.
-:::
-
-## Real-world benefits
-
-Organizations using Port's business-context approach to vulnerability prioritization see:
-
-- **Reduction in security analyst time** spent investigating irrelevant alerts
-- **Faster mean time to remediation** for truly critical vulnerabilities
-- **Improved developer satisfaction** through context-rich, actionable security findings
-- **Better business alignment** between security and product teams
-- **Reduced alert fatigue** leading to higher-quality security analysis
-
-By connecting vulnerability data to business context, Port transforms security from a compliance burden into a strategic capability that protects what matters most while enabling developer productivity.
+> **Port transforms vulnerability management from chaos to clarity — helping security teams focus on what truly matters to the business.**
