@@ -20,11 +20,11 @@ From mid-September 2025 through mid-November 2025, several modifications will be
 The table below outlines the upcoming changes, example implications, and current progress status.  
 The Status will be updated as work moves forward, from `Not Started` → `WIP` → `Released`.
 
-| Change  | Example Implication  | Status    | ETA |
-|---------|----------------------|:---------:|-----|
-| Add validations, restrictions, and clearer error messages for the widgets schema. | If extra or invalid properties are sent, you will receive a descriptive error showing which one. You should delete the properties and match the current schema. | `WIP`  | |
-| Add validations, restrictions, and clearer error messages for the pages schema.| For example, the API will block creating two home pages and require you to keep only one. | `Not started`  | |
-| Enforce a dashboard widget wrapper when creating a new dashboard page.| If you try to create a dashboard page without wrapping the widget, the API (or Terraform) will return an error requiring you to add the wrapper in the JSON. | `Not started`  | |
+| Change  | Example Implication  | Status    |
+|---------|----------------------|:---------:|
+| Add validations, restrictions, and clearer error messages for the widgets schema. | If extra or invalid properties are sent, you will receive a descriptive error showing which one. You should delete the properties and match the current schema. | `WIP`  |
+| Add validations, restrictions, and clearer error messages for the pages schema.| For example, the API will block creating two home pages and require you to keep only one. | `Not started`  |
+| Enforce a dashboard widget wrapper when creating a new dashboard page.| If you try to create a dashboard page without wrapping the widget, the API (or Terraform) will return an error requiring you to add the wrapper in the JSON. | `Not started`  |
 
 Until the new structure is released, you can refer to the [Swagger API documentation](https://api.port.io/swagger/#Pages) for the available endpoints and their usage.
 
