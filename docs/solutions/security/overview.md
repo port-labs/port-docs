@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # From Noise to Business Impact
 
-Security Belongs in Your Internal Developer Portal (iDP).
+Security Belongs in Your Internal Developer Portal (IDP).
 > **Port transforms security from a source of friction into a driver of clarity, action, and resilience.**
 
 ---
@@ -14,12 +14,12 @@ Security Belongs in Your Internal Developer Portal (iDP).
 
 Modern security teams face an overwhelming challenge: too many alerts, not enough context. Traditional security tools generate massive amounts of noise—vulnerabilities, misconfigurations, and compliance failures—without clearly indicating which ones truly matter to the business. Developers are often handed context-free tickets that lead to frustration, burnout, and unresolved risks.
 
-Port changes this dynamic by bringing security into your **internal developer platform (IDP)**. With Port, every alert is enriched with **business context**—ownership, environment, lifecycle stage, and criticality—so security teams and engineering teams can align on what matters most.  
+Port changes this dynamic by bringing security into your **Internal Developer Portal (IDP)**. With Port, every alert is enriched with **business context**—ownership, environment, lifecycle stage, and criticality—so security teams and engineering teams can align on what matters most.  
 This shared visibility enables organizations to focus on measurable risk reduction instead of firefighting endless streams of context-free alerts.
 
 ---
 
-## The Problem: Alert fatigue
+## The Problem: Alert Fatigue
 
 Every security leader knows the story.  
 
@@ -67,10 +67,10 @@ This is exactly where **Port** comes in.
 
 ---
 
-## Why Port: Security in the Internal Developer Platform
+## Why Port: Security in the Internal Developer Portal
 
 Port acts as the **business context engine** your security program has been missing.  
-By embedding security directly into your internal developer portal, Port transforms raw alerts into **actionable, prioritized insights**.
+By embedding security directly into your Internal Developer Portal, Port transforms raw alerts into **actionable, prioritized insights**.
 
 ### How Port Helps
 - **Ownership clarity**  
