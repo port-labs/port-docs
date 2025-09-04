@@ -4,7 +4,9 @@ sidebar_position: 2
 
 # Relation operators
 
-## Related to
+This page details the available relation operators when writing [rules](/search-and-query/#rules) as part of the search route.
+
+## RelatedTo
 
 The `relatedTo` operator will return all entities that have a relationship with the specified entity:
 
@@ -119,7 +121,7 @@ In the example shown above, if we want to get the `Microservice` and `Environmen
 And the result shall be:
 
 <details>
-<summary>Order-Service-Production upstream related entities</summary>
+<summary><b>Order-Service-Production upstream related entities (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -179,7 +181,7 @@ If we want to get all of the `deploymentConfigs` that are deployed in the _Produ
 And the result shall be:
 
 <details>
-<summary>Production downstream related entities</summary>
+<summary><b>Production downstream related entities (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -240,7 +242,11 @@ And the result shall be:
 
 </details>
 
-## Match any
+## MatchAny
+
+The `matchAny` operator will match entities based on your input:
+- If you specify a single value, it will find all entities with the same identifier.
+- If you provide a list of values, it will match any entity whose identifier is in the list.
 
 ### Related to by specific path
 
@@ -351,15 +357,22 @@ This will return all **deployments** that are related to the "production-service
 
 ## Self-relation
 
-**Examples**
+Self-relations allow a blueprint to reference itself, so entities of the same type can be connected.
 
-Suppose you have the following data model:
+For example, consider a `Team` blueprint used to represent an organization’s hierarchy:
 
-<img src="/img/guides/hierarchyTiers/hierarchyTiers.png" border="1px" width="50%" />
-<br/><br/>
+- `Squad` is a `Team`.
+- A `Squad` can relate to a `Tribe`.
+- A `Tribe` can relate to a `Domain`, and so on.
 
-The image above represents an organization hierarchy, with different entities of the same **blueprint**, in this case `Team`.  
-Let's assume the blueprint has a self-relation and call it `parent`.
+All of these entities are instances of the `Team` blueprint, connected through a self-relation, let's call it `parent`.
+
+<img src="/img/guides/hierarchyTiers/hierarchyTiers.png" border="1px" width="50%" />  
+<br/><br/>  
+
+The diagram above illustrates this hierarchy, where different entities are linked by the same self-relation within the `Team` blueprint.
+
+### Examples
 
 **Example 1: basic self-relation with fixed hops count**
 
@@ -464,9 +477,3 @@ For example, if the `value` is `Squad`:
 - Third hop: `Domain` → `Group`.
 
 Result: `Domain` (from fixed hops) and `Group` (from variable hops, up to 3 additional hops).
-
----
-
-The `matchAny` operator will match entities based on your input:
-- If you specify a single value, it will find all entities with the same identifier.
-- If you provide a list of values, it will match any entity whose identifier is in the list.

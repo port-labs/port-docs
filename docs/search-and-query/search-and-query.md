@@ -150,7 +150,7 @@ ___
 
 ### Relation operators
 
-TODO: Add a line here referncing the page.
+Several relation-based operators are available, see them [here](./relation-operators).
 
 #### Usage examples
 
