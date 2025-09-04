@@ -9,6 +9,34 @@ sidebar_position: 2
 
 ---
 
+## Executive Summary
+
+Modern security teams face an impossible task: thousands of vulnerabilities discovered daily across code, infrastructure, cloud, and open source dependencies. Without business context, every issue appears urgent, leading to **alert fatigue**, wasted resources, and dangerous blind spots.
+
+Port solves this by **anchoring vulnerability management to business context**.  
+Instead of starting with raw scanner data, Port starts with what matters most: your services, their owners, their environments, and their business impact.  
+This context powers:
+
+- **Unified visibility** – All vulnerabilities from all scanners in a single platform.  
+- **Risk-based prioritization** – Focus on vulnerabilities that truly impact production and revenue.  
+- **Automated workflows** – Route issues to the right teams with the right urgency.  
+- **Measurable outcomes** – Dashboards and scorecards to track progress over time.
+
+The result? Security teams fix the **right vulnerabilities**, faster, while developers get actionable tickets instead of endless noise.
+
+---
+
+## How It Works: Vulnerability Ingestion Flow
+
+Port integrates with your existing security stack, automatically ingesting vulnerability data, enriching it with business context, and prioritizing it for action.
+
+<!-- TO-Do -->
+<!-- Mermaid graph -->
+
+> **Port transforms vulnerability management from chaos to clarity — helping security teams focus on what truly matters to the business.**
+
+---
+
 ## Introduction
 
 Modern application security is complex. Vulnerabilities emerge across code, open source libraries, cloud configurations, infrastructure, and IaC—yet security teams still struggle to focus on what truly matters. Without business context, every "critical" issue looks urgent, leading to alert fatigue, resource waste, and dangerous blind spots.
@@ -93,7 +121,7 @@ Port transforms vulnerability data into actionable intelligence by anchoring it 
 
 ---
 
-## Port Benefits
+## Benefits with port
 
 By using Port’s business-context-led approach to vulnerability prioritization, organizations achieve:
 
