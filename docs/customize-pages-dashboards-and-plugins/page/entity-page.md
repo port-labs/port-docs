@@ -192,7 +192,7 @@ Before performing the following steps, make sure the desired blueprint has a rel
 
 <details>
 <summary><b>Add self-relation (click to exapnd)</b></summary>
-1. Go to your [Builder](https://app.getport.io/settings/data-model) page of your portal.
+1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Choose the relevant blueprint.
 3. Click the `+ New relation` button.
 4. Give the property a `title`, choose the same blueprint in the `Related to` field.
