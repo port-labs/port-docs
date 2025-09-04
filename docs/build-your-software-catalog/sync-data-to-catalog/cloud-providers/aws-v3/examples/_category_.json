@@ -1,0 +1,8 @@
+{
+  "label": "Examples",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Comprehensive examples for configuring the AWS-v3 integration with various AWS services, filtering options, and advanced use cases."
+  }
+}
