@@ -3,7 +3,7 @@ title: Compliance-as-Code
 sidebar_position: 5
 ---
 
-# Compliance-as-Code
+# Compliance as Code
 
 > **Port transforms compliance from a manual, reactive burden into an automated, continuous, and measurable practice.**
 
