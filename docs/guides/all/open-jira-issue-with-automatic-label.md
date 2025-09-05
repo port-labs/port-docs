@@ -623,5 +623,5 @@ You should have installed the [Port's GitHub app](https://github.com/apps/getpor
 ## More Self Service Jira Actions Examples
 - [Report a bug in Jira](https://docs.port.io/guides/all/report-a-bug/) using Port's self-service actions
 - [Create Jira issues from Dependabot alerts](https://docs.port.io/guides/all/create-jira-issue-from-dependabot)
-- [Open/close JIRA issues for entities with violated scorecard rules](https://docs.port.io/promote-scorecards/manage-using-3rd-party-apps/jira)
+- [Open/close JIRA issues for entities with violated scorecard rules](https://docs.port.io/scorecards/manage-using-3rd-party-apps/jira)
 - [Change status and assignee of Jira tickets](https://docs.port.io/guides/all/change-status-and-assignee-of-jira-ticket)

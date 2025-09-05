@@ -44,16 +44,20 @@ To create a personal access token see Github's [managing your personal access to
   These are the necessary permissions if you're creating a fine-grained PAT.
   
   **Repository permissions:**
-  - **Actions**: Readonly
-  - **Content**: Readonly
+  - **Content**: Readonly (For reading files)
   - **Metadata**: Readonly
+  - **Administration:** Readonly (for syncing repository teams and collaborators)
   - **Pull Requests**: Readonly
+  - **Issues**: Readonly
+  - **Actions**: Readonly
   - **Code scanning alerts**: Readonly
   - **Dependabot alerts**: Readonly
   - **Deployments**: Readonly
   - **Environments**: Readonly
   
   **Organization permissions:**
+  - **Members**: Readonly(for syncing users and teams)
+  - **Administration**: Readonly(for syncing external identities)
   - **Webhooks**: Read and Write (for managing webhook)
 
 

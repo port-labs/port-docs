@@ -12,6 +12,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Installation
 
@@ -68,7 +69,8 @@ The following scopes are required based on your usage.
  
 ## Deploy the integration
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -79,6 +81,8 @@ Choose one of the following installation methods:
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="gitlab-v2" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -396,3 +400,34 @@ ingest_data:
 </TabItem>
 
 </Tabs>
+
+## Troubleshooting
+
+<h3>Merge requests not appearing in catalog</h3>
+
+If you can see your GitLab repositories in Port but merge requests are missing, this is likely due to insufficient group-level permissions.
+
+<h4>Symptoms</h4>
+- ✅ GitLab projects/repositories are visible in Port.
+- ❌ Merge requests are missing from the catalog.
+- ❌ No error messages in integration logs.
+
+<h4>Root cause</h4>
+The GitLab V2 integration fetches merge requests using **group-level API queries**. If your integration token only has access to individual projects (e.g., Developer or Maintainer role at the project level), it cannot access the group-level merge request data.
+
+<h4>Solution</h4>
+Ensure your integration token has access to the **parent GitLab group** that contains your projects:
+
+  - **For Personal Access Tokens**: The user must be a member of the group with at least Guest-level access.
+
+  - **For Group Access Tokens**: Create the token in the parent group with appropriate scopes.
+
+  - **For Service Account Tokens**: Add the service account to the group with at least Guest-level access.
+
+<h4>Verification</h4>
+To verify your token has the correct permissions:
+
+  - Test the token against GitLab's group API: `GET /api/v4/groups/{group_id}/merge_requests`
+  - Ensure the token can list merge requests at the group level.
+  - Check that the group is accessible with your current token permissions.
+
