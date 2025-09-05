@@ -1454,6 +1454,13 @@ export const availableGuides = [
         tags: ["SDLC", "AI", "GitHub", "Scorecards"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/enforce-ai-coding-security-standards",
+    },
+    {
+        title: "Manage AI instructions with Port",
+        description: "Learn how to centralize AI instructions in Port and automatically sync them to GitHub repositories",
+        tags: ["SDLC", "GitHub", "AI",  "Automations"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/manage-ai-instructions",
     }
 ]
 
