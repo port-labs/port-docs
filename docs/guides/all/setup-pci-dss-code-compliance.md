@@ -167,7 +167,7 @@ By organizing into levels, all teams can progressively improve security posture 
           }
         ]
       },
-      "description": "No High ",
+      "description": "No High severity open source vulnerabilities",
       "title": "No High Open Source"
     },
     {
@@ -183,7 +183,7 @@ By organizing into levels, all teams can progressively improve security posture 
           }
         ]
       },
-      "description": "No High Open Source",
+      "description": "No High severity code issues",
       "title": "No High Code Issues"
     }
   ],
@@ -216,12 +216,13 @@ By organizing into levels, all teams can progressively improve security posture 
 
 ## New Properties
 
-New properties have been created on Snyk Target Blueprint and then shown as mirrored properties on Repository blueprint. This can be attached to a service blueprint as well or as deemed appropriate to where the 
+New properties have been created on Snyk Target Blueprint and then shown as mirrored properties on Repository blueprint. This can be attached to a service blueprint as well or as deemed appropriate to where the data is most relevant. 
 
 <details>
 <summary><b>PCI DSS Scorecard (Click to expand)</b></summary>
 
 ```json showLineNumbers
+{
     "hardcoded_secrets": {
       "title": "hardcoded_secrets",
       "icon": "Bug",
@@ -254,6 +255,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 <details>
 <summary><b>ASV Pass parity (Click to expand)</b></summary>
 ```json showLineNumbers
+{
  "asv_pass_parity": {
       "title": "ASV Pass Parity",
       "icon": "Bug",
@@ -300,6 +302,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 <details>
 <summary><b>Maximum Risk Score aggregation(Click to expand)</b></summary>
 ```json showLineNumbers
+{
     "max_risk_score": {
       "title": "Max risk score",
       "icon": "Bug",
@@ -343,6 +346,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 <details>
 <summary><b>Critical severity package vulnerabilities(Click to expand)</b></summary>
 ```json showLineNumbers
+{
     "open_sca_critical": {
       "title": "Open SCA Critical",
       "icon": "Bug",
@@ -387,6 +391,8 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 
 <details>
 <summary><b>High severity package vulnerabilities(Click to expand)</b></summary>
+```json showLineNumbers
+{
     "open_sca_high": {
       "title": "Open SCA High",
       "icon": "Bug",
@@ -431,6 +437,8 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 
 <details>
 <summary><b>High severity code vulnerabilities(Click to expand)</b></summary>
+```json showLineNumbers
+{
     "open_sast_high": {
       "title": "Open SAST High",
       "icon": "Bug",
@@ -551,20 +559,20 @@ Below are all rules organized by the level at which they apply.
 
 #### 5. Secure Cryptography
 
-* **Identifier:** `insecure_crypto`
-* **Goal:** Ensure proper use of secure algorithms and key management practices.
-* **Rule:** `a2_cryptographic_failures = 0`
-* **Description:**
+- **Identifier:** `insecure_crypto`
+- **Goal:** Ensure proper use of secure algorithms and key management practices.
+- **Rule:** `a2_cryptographic_failures = 0`
+- **Description:**
   Detects use of weak cryptographic algorithms or incorrect implementation of crypto operations.
 
 ---
 
 #### 6. ASV Parity for Public-Facing Assets
 
-* **Identifier:** `asv_pass_parity`
-* **Goal:** Align with PCI DSS **Approved Scanning Vendor (ASV)** pass/fail standards.
-* **Rule:** `max_risk_score_replacing_asv = 400`
-* **Description:**
+- **Identifier:** `asv_pass_parity`
+- **Goal:** Align with PCI DSS **Approved Scanning Vendor (ASV)** pass/fail standards.
+- **Rule:** `max_risk_score_replacing_asv = 400`
+- **Description:**
   Ensures public-facing services do not have vulnerabilities equivalent to CVSS ≥ 4.0.
 
 > **Key Note:**
@@ -603,8 +611,8 @@ Below are all rules organized by the level at which they apply.
 
 - **Identifier:** `no_high_code_issues`
 - **Goal:** Ensure all high-risk static analysis findings are remediated.
-* **Rule:** `open_sast_high = 0`
-* **Description:**
+- **Rule:** `open_sast_high = 0`
+- **Description:**
   There must be **no high-severity SAST issues** remaining unresolved.
 
 ---
@@ -639,10 +647,10 @@ Ensure outputs from scanning tools are mapped to Port properties:
 
 ### 2. Deploy via Port or Pulumi
 
-* **Direct JSON upload:**
+- **Direct JSON upload:**
   Use the JSON configuration directly in the Port UI.
 
-* **Infrastructure-as-code approach:**
+- **Infrastructure-as-code approach:**
   Convert the JSON to TypeScript and deploy using the [Port Pulumi provider](https://docs.port.io/).
 
 ---
@@ -657,16 +665,16 @@ Ensure outputs from scanning tools are mapped to Port properties:
 
 ## Benefits of This Scorecard
 
-* **Automated Compliance Tracking**
+- **Automated Compliance Tracking**
   Continuously validates PCI DSS compliance without manual intervention.
 
-* **Actionable Insights**
+- **Actionable Insights**
   Highlights specific areas needing remediation at both code and dependency levels.
 
-* **Maturity Measurement**
+- **Maturity Measurement**
   Provides a clear path for teams to progress from basic hygiene to advanced compliance.
 
-* **Audit Readiness**
+- **Audit Readiness**
   Simplifies PCI audits by providing up-to-date evidence of secure development practices.
 
 ---
@@ -688,8 +696,8 @@ This visual shows how code scan results flow through the system, get evaluated, 
 
 ## Key Takeaways
 
-* **Bronze → Platinum** represents progressive enforcement of PCI DSS secure coding requirements.
-* Using **Snyk Risk Score** as a proxy ensures external exposure checks align with ASV expectations even without direct CVSS data. In the future iterations, the intent will be to ingest CVSS Score detail for all `package vulnerabilities`.
-* This scorecard provides a practical, automated way to track and improve compliance continuously.
-* This scorecard can serve as a starting point.
+- **Bronze → Platinum** represents progressive enforcement of PCI DSS secure coding requirements.
+- Using **Snyk Risk Score** as a proxy ensures external exposure checks align with ASV expectations even without direct CVSS data. In the future iterations, the intent will be to ingest CVSS Score detail for all `package vulnerabilities`.
+- This scorecard provides a practical, automated way to track and improve compliance continuously.
+- This scorecard can serve as a starting point.
 
