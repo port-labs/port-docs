@@ -1449,6 +1449,13 @@ export const availableGuides = [
         tags: ["SDLC", "AI", "GitHub", "Scorecards"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/enforce-ai-coding-security-standards",
+    },
+    {
+        title: "Set up internal docs for AI context",
+        description: "Centralize internal documentation and enable AI-powered question answering using Port's general AI interface",
+        tags: ["SDLC","AI"],
+        logos: ["AI"],
+        link: "/guides/all/setup-internal-docs-ai-context",
     }
 ]
 
