@@ -4,6 +4,7 @@ sidebar_position: 2
 
 import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
 import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
+import DashboardFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_dashboard_filters.md"
 
 # Entity page
 
@@ -28,7 +29,6 @@ In the top right corner of the details widget, you can find the <LogoImage logo=
 - Show/hide specific properties in the widget.
 
 Additional widgets can be added by clicking on the `+ Widget` button in the top right corner of the dashboard.
-
 
 ## Related entities
 
@@ -239,7 +239,7 @@ Follow these steps to set up a self relation in related entities:
       ```
 
       :::info maxHops limitation
-      You can only use `maxHops` once in a path and it it accepts a number between 1 and 15.
+      You can only use `maxHops` once in a path and it accepts a number between 1 and 15.
       :::
 
 6. Click on `Save` to save the tab.
@@ -368,7 +368,7 @@ The following property types are supported:
 
 ### Scorecards
 
-If the entity's blueprint has any [scorecards](/promote-scorecards/overview) configured, a `Scorecards` tab will be automatically created in the entity page.
+If the entity's blueprint has any [scorecards](/scorecards/overview) configured, a `Scorecards` tab will be automatically created in the entity page.
 
 The tab will display the entity's compliance status with each of its scorecards.
 
@@ -381,4 +381,4 @@ Each dashboard tab name can be customized and edited.
 - You can add up to 5 dashboard tabs per entity page.
 - Dashboard tab names must be unique and are limited to 30 characters.
 
-
+<DashboardFilters/>

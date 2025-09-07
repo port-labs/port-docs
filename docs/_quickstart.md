@@ -114,7 +114,7 @@ Take a look at your `Service` blueprint, it has a `Production Readiness` scoreca
 
 **Learn more:**
 
-- [Promote scorecards](https://docs.port.io/promote-scorecards/overview)
+- [Promote scorecards](https://docs.port.io/scorecards/overview)
 
 ---
 

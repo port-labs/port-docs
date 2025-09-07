@@ -6121,6 +6121,7 @@ components:
                   - propertySchema
                 additionalProperties: false
               - type: object
+                title: Path filter rule
                 anyOf:
                   - type: object
                     properties:
@@ -6857,9 +6858,7 @@ paths:
       summary: Get a page's permissions
       tags:
         - Pages
-      description: >
-        **The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>**
-        This route allows you to get a specific page's
+      description: This route allows you to get a specific page's
         permissions.<br/><br/>To learn more about pages, check out the
         [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/page-permissions).
       parameters:
@@ -6910,9 +6909,8 @@ paths:
       summary: Update a page's permissions
       tags:
         - Pages
-      description: >
-        **The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>**
-        This route allows you to update a specific page’s permissions.<br/><br/>To learn more about pages, check out the
+      description: This route allows you to update a specific page’s permissions.
+        <br/><br/>To learn more about pages, check out the
         [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/page-permissions).
       requestBody:
         content:
@@ -7452,26 +7450,26 @@ paths:
             will be excluded from the entities.
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
           in: query
           name: include
           required: false
+          style: form
+          explode: true
           description: 'An array of values from the [entity
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure).
             Only these values will be returned in the response.<br/>For example:
             `{ "properties.propertyIdentifier","identifier"}`'
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
           in: query
           name: exclude
           required: false
+          style: form
+          explode: true
           description: 'An array of values from the [entity
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
@@ -8455,26 +8453,26 @@ paths:
             will be excluded from the entities.
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
           in: query
           name: include
           required: false
+          style: form
+          explode: true
           description: 'An array of values from the [entity
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure).
             Only these values will be returned in the response.<br/>For example:
             `{ "properties.propertyIdentifier","identifier"}`'
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
           in: query
           name: exclude
           required: false
+          style: form
+          explode: true
           description: 'An array of values from the [entity
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
@@ -9406,6 +9404,7 @@ paths:
                           - propertySchema
                         additionalProperties: false
                       - type: object
+                        title: Path filter rule
                         anyOf:
                           - type: object
                             properties:
@@ -9477,26 +9476,26 @@ paths:
             will be excluded from the entities.
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
           in: query
           name: include
           required: false
+          style: form
+          explode: true
           description: 'An array of values from the [entity
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure).
             Only these values will be returned in the response.<br/>For example:
             `{ "properties.propertyIdentifier","identifier"}`'
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
           in: query
           name: exclude
           required: false
+          style: form
+          explode: true
           description: 'An array of values from the [entity
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
@@ -19901,30 +19900,28 @@ paths:
       parameters:
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
           in: query
           name: action_identifier
           required: false
+          style: form
+          explode: true
           description: The identifier/s of the action/s and/or automation/s you want to
             fetch.
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
           in: query
           name: blueprint_identifier
           required: false
+          style: form
+          explode: true
           description: The identifier/s of the blueprint/s whose actions/automations you
             wish to fetch.
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
               enum:
@@ -19934,6 +19931,8 @@ paths:
           in: query
           name: operation
           required: false
+          style: form
+          explode: true
           description: The [operation
             type/s](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details)
             of the action/s you want to fetch. Relevant only for self-service
@@ -26168,7 +26167,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: Advanced create
+                          - type: object 
+                            title: Advanced create
                             description: |-
                               If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
@@ -26200,7 +26200,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: Delete
+                          - type: object
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -26652,7 +26653,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: Advanced create
+                          - type: object
+                            title: Advanced create
                             description: |-
                               If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
@@ -26684,7 +26686,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: Delete
+                          - type: object
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -27091,7 +27094,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: Advanced create
+                          - type: object
+                            title: Advanced create
                             description: |-
                               If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
@@ -27123,7 +27127,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: Delete
+                          - type: object
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -27687,13 +27692,13 @@ paths:
           description: Fetch all audit logs related to the specified webhook event.
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
           in: query
           name: origin
           required: false
+          style: form
+          explode: true
           description: Fetch all audit logs coming from the specified origin/s. This
             refers to the integration/s that triggered the log. For operations
             performed via Port's UI, the origin will be `UI`.
@@ -27706,8 +27711,6 @@ paths:
         - schema:
             anyOf:
               - type: array
-                style: form
-                explode: true
                 items:
                   enum:
                     - blueprint
@@ -27727,11 +27730,11 @@ paths:
           in: query
           name: resources
           required: false
+          style: form
+          explode: true
           description: Fetch all audit logs related to the specified resource type/s.
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               enum:
                 - action
@@ -27746,6 +27749,8 @@ paths:
           in: query
           name: includes
           required: false
+          style: form
+          explode: true
           description: The fields you want to include in the response. If used, only the
             specified fields will be included in the response.
         - schema:
@@ -27843,8 +27848,6 @@ paths:
       parameters:
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               enum:
                 - id
@@ -27861,6 +27864,8 @@ paths:
           in: query
           name: fields
           required: false
+          style: form
+          explode: true
           description: The fields you want to fetch for each team. If used, only the
             specified fields will be included in the response.
       security:
@@ -28109,8 +28114,6 @@ paths:
       parameters:
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               enum:
                 - id
@@ -28127,6 +28130,8 @@ paths:
           in: query
           name: fields
           required: false
+          style: form
+          explode: true
           description: The fields you want to fetch for the team. If used, only the
             specified fields will be included in the response.
         - schema:
@@ -28627,8 +28632,6 @@ paths:
       parameters:
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
               enum:
@@ -28658,6 +28661,8 @@ paths:
           in: query
           name: fields
           required: false
+          style: form
+          explode: true
           description: The fields you want to fetch for each user. If used, only the
             specified fields will be included in the response.
       security:
@@ -29345,8 +29350,6 @@ paths:
       parameters:
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
               enum:
@@ -29359,6 +29362,8 @@ paths:
           in: query
           name: fields
           required: false
+          style: form
+          explode: true
           description: The fields to include in the response. If not specified, all fields
             will be included.
       security:
@@ -29872,7 +29877,7 @@ paths:
       description: This route allows you to create a scorecard for a given blueprint.
         A scorecard is a set of rules that define the quality of a
         blueprint.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/overview).
+        [documentation](https://docs.port.io/scorecards/overview).
       requestBody:
         content:
           application/json:
@@ -29964,6 +29969,24 @@ paths:
                                   type: string
                             required:
                               - property
+                              - operator
+                              - value
+                          - type: object
+                            title: Relation containsAny condition
+                            properties:
+                              relation:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - containsAny
+                                  - in
+                              value:
+                                type: array
+                                items:
+                                  type: string
+                            required:
+                              - relation
                               - operator
                               - value
                           - type: object
@@ -30072,11 +30095,12 @@ paths:
                     - combinator
                     - conditions
                   description: An optional set of
-                    [conditions](https://docs.port.io/promote-scorecards/concepts-and-structure#conditions)
+                    [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                     to filter entities that will be evaluated by the scorecard.
                 rules:
                   type: array
-                  description: The [rules](https://docs.port.io/promote-scorecards/concepts-and-structure#rule-elements)
+                  description: The
+                    [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                     that define the scorecard.
                   items:
                     type: object
@@ -30172,6 +30196,24 @@ paths:
                                         type: string
                                   required:
                                     - property
+                                    - operator
+                                    - value
+                                - type: object
+                                  title: Relation containsAny condition
+                                  properties:
+                                    relation:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - containsAny
+                                        - in
+                                    value:
+                                      type: array
+                                      items:
+                                        type: string
+                                  required:
+                                    - relation
                                     - operator
                                     - value
                                 - type: object
@@ -30423,6 +30465,24 @@ paths:
                                       - operator
                                       - value
                                   - type: object
+                                    title: Relation containsAny condition
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                          - in
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - relation
+                                      - operator
+                                      - value
+                                  - type: object
                                     title: Property comparison
                                     properties:
                                       property:
@@ -30633,6 +30693,24 @@ paths:
                                       - operator
                                       - value
                                   - type: object
+                                    title: Relation containsAny condition
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                          - in
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - relation
+                                      - operator
+                                      - value
+                                  - type: object
                                     title: Property comparison
                                     properties:
                                       property:
@@ -30834,7 +30912,7 @@ paths:
       description: This route allows you to modify one or more scorecards of a given
         blueprint. A scorecard is a set of rules that define the quality of a
         blueprint.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/overview).
+        [documentation](https://docs.port.io/scorecards/overview).
       requestBody:
         content:
           application/json:
@@ -30928,6 +31006,24 @@ paths:
                                     type: string
                               required:
                                 - property
+                                - operator
+                                - value
+                            - type: object
+                              title: Relation containsAny condition
+                              properties:
+                                relation:
+                                  type: string
+                                operator:
+                                  type: string
+                                  enum:
+                                    - containsAny
+                                    - in
+                                value:
+                                  type: array
+                                  items:
+                                    type: string
+                              required:
+                                - relation
                                 - operator
                                 - value
                             - type: object
@@ -31036,12 +31132,13 @@ paths:
                       - combinator
                       - conditions
                     description: An optional set of
-                      [conditions](https://docs.port.io/promote-scorecards/concepts-and-structure#conditions)
+                      [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                       to filter entities that will be evaluated by the
                       scorecard.
                   rules:
                     type: array
-                    description: The [rules](https://docs.port.io/promote-scorecards/concepts-and-structure#rule-elements)
+                    description: The
+                      [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                       that define the scorecard.
                     items:
                       type: object
@@ -31137,6 +31234,24 @@ paths:
                                           type: string
                                     required:
                                       - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    title: Relation containsAny condition
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                          - in
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - relation
                                       - operator
                                       - value
                                   - type: object
@@ -31379,7 +31494,7 @@ paths:
       description: This route allows you to fetch all scorecards for a given
         blueprint. A scorecard is a set of rules that define the quality of a
         blueprint.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/overview).
+        [documentation](https://docs.port.io/scorecards/overview).
       parameters:
         - schema:
             type: string
@@ -31434,7 +31549,7 @@ paths:
       description: This route allows you to modify a specific scorecard. A scorecard
         is a set of rules that define the quality of a blueprint.<br/><br/>To
         learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/overview).
+        [documentation](https://docs.port.io/scorecards/overview).
       requestBody:
         content:
           application/json:
@@ -31526,6 +31641,24 @@ paths:
                                   type: string
                             required:
                               - property
+                              - operator
+                              - value
+                          - type: object
+                            title: Relation containsAny condition
+                            properties:
+                              relation:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - containsAny
+                                  - in
+                              value:
+                                type: array
+                                items:
+                                  type: string
+                            required:
+                              - relation
                               - operator
                               - value
                           - type: object
@@ -31634,11 +31767,12 @@ paths:
                     - combinator
                     - conditions
                   description: An optional set of
-                    [conditions](https://docs.port.io/promote-scorecards/concepts-and-structure#conditions)
+                    [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                     to filter entities that will be evaluated by the scorecard.
                 rules:
                   type: array
-                  description: The [rules](https://docs.port.io/promote-scorecards/concepts-and-structure#rule-elements)
+                  description: The
+                    [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                     that define the scorecard.
                   items:
                     type: object
@@ -31734,6 +31868,24 @@ paths:
                                         type: string
                                   required:
                                     - property
+                                    - operator
+                                    - value
+                                - type: object
+                                  title: Relation containsAny condition
+                                  properties:
+                                    relation:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - containsAny
+                                        - in
+                                    value:
+                                      type: array
+                                      items:
+                                        type: string
+                                  required:
+                                    - relation
                                     - operator
                                     - value
                                 - type: object
@@ -31982,7 +32134,7 @@ paths:
       description: This route allows you to fetch a specific scorecard. A scorecard is
         a set of rules that define the quality of a blueprint.<br/><br/>To learn
         more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/overview).
+        [documentation](https://docs.port.io/scorecards/overview).
       parameters:
         - schema:
             type: string
@@ -32043,7 +32195,7 @@ paths:
       description: This route allows you to delete a specific scorecard. A scorecard
         is a set of rules that define the quality of a blueprint.<br/><br/>To
         learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/overview).
+        [documentation](https://docs.port.io/scorecards/overview).
       parameters:
         - schema:
             type: string
@@ -32138,7 +32290,7 @@ paths:
         - Scorecards
       description: This route allows you to fetch all scorecards in your Port
         organization.<br/><br/>To learn more about scorecards, check out the
-        [documentation](https://docs.port.io/promote-scorecards/overview).
+        [documentation](https://docs.port.io/scorecards/overview).
       security:
         - bearer:
             - read:scorecards
@@ -32189,8 +32341,6 @@ paths:
       parameters:
         - schema:
             type: array
-            style: form
-            explode: true
             items:
               type: string
               enum:
@@ -32204,6 +32354,8 @@ paths:
           in: query
           name: status
           required: false
+          style: form
+          explode: true
         - schema:
             type: string
           in: query
@@ -32285,7 +32437,7 @@ paths:
                     filter:
                       type: string
                       description: An optional set of
-                        [conditions](https://docs.port.io/promote-scorecards/concepts-and-structure#conditions)
+                        [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                         to filter the entities that will be migrated.
                     itemsToParse:
                       type: string
