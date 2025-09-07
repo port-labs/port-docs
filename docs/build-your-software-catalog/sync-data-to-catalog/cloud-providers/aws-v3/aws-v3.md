@@ -214,7 +214,7 @@ resources:
 
 ### AWS SDK v3 Specific Features
 
-The AWS-v3 integration leverages several AWS SDK v3 specific features:
+The AWS Hosted by Port integration leverages several AWS SDK v3 specific features:
 
 - **Modular Architecture**: Only imports the specific AWS services you need, reducing bundle size
 - **Enhanced TypeScript Support**: Full TypeScript support with better type inference
@@ -223,7 +223,7 @@ The AWS-v3 integration leverages several AWS SDK v3 specific features:
 
 ### Resource Discovery Optimization
 
-The AWS-v3 integration includes several optimizations for resource discovery:
+The AWS Hosted by Port integration includes several optimizations for resource discovery:
 
 - **Parallel Processing**: Processes multiple regions and services in parallel
 - **Smart Caching**: Implements intelligent caching to reduce API calls
@@ -285,7 +285,7 @@ resources:
 
 If you encounter compatibility issues with AWS SDK v3:
 
-1. Ensure you're using the latest version of the AWS-v3 integration
+1. Ensure you're using the latest version of the AWS Hosted by Port integration
 2. Check that your AWS credentials are properly configured
 3. Verify that the required AWS services are available in your region
 
@@ -322,7 +322,7 @@ This will provide detailed information about:
 
 ## Migration from AWS Integration
 
-If you're migrating from the standard AWS integration to AWS-v3:
+If you're migrating from the standard AWS integration to AWS Hosted by Port:
 
 1. **Backup Configuration**: Save your current configuration
 2. **Update Mapping**: Review and update your mapping configuration if needed
@@ -343,4 +343,4 @@ The main differences in configuration:
 - **Documentation**: [AWS SDK v3 Documentation](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/)
 - **Community**: [Port Community Forum](https://github.com/port-labs/port/discussions)
 - **Issues**: [Report Issues](https://github.com/port-labs/ocean/issues)
-- **Source Code**: [AWS-v3 Integration](https://github.com/port-labs/ocean/tree/main/integrations/aws-v3)
+- **Source Code**: [AWS Hosted by Port Integration](https://github.com/port-labs/ocean/tree/main/integrations/aws-v3)
