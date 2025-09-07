@@ -54,9 +54,9 @@ Below is a breakdown of the supported installation methods for Port integrations
 :::caution Integration Service Account Limitation
 Service accounts (machine tokens) are currently not supported for Ocean integrations. This is a known limitation that affects:
 
-- **Audit/event logging functionality** - Service account tokens may not properly log events
-- **Token validation** - Machine user tokens cannot be properly validated by the system
-- **Some integration features** - May experience reduced functionality
+- **Audit/event logging functionality** - Service account tokens may not properly log events.
+- **Token validation** - Machine user tokens cannot be properly validated by the system.
+- **Some integration features** - May experience reduced functionality.
 
 **Current workaround**: Use personal or organizational credentials until this limitation is resolved.
 
