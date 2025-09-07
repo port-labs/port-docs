@@ -26167,7 +26167,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: Advanced create
+                          - type: object 
+                            title: Advanced create
                             description: |-
                               If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
@@ -26199,7 +26200,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: Delete
+                          - type: object
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -26651,7 +26653,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: Advanced create
+                          - type: object
+                            title: Advanced create
                             description: |-
                               If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
@@ -26683,7 +26686,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: Delete
+                          - type: object
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -27090,7 +27094,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: Advanced create
+                          - type: object
+                            title: Advanced create
                             description: |-
                               If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
@@ -27122,7 +27127,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: Delete
+                          - type: object
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
