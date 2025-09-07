@@ -29966,6 +29966,24 @@ paths:
                               - operator
                               - value
                           - type: object
+                            title: Relation containsAny condition
+                            properties:
+                              relation:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - containsAny
+                                  - in
+                              value:
+                                type: array
+                                items:
+                                  type: string
+                            required:
+                              - relation
+                              - operator
+                              - value
+                          - type: object
                             title: Property comparison
                             properties:
                               property:
@@ -30075,7 +30093,8 @@ paths:
                     to filter entities that will be evaluated by the scorecard.
                 rules:
                   type: array
-                  description: The [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
+                  description: The
+                    [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                     that define the scorecard.
                   items:
                     type: object
@@ -30171,6 +30190,24 @@ paths:
                                         type: string
                                   required:
                                     - property
+                                    - operator
+                                    - value
+                                - type: object
+                                  title: Relation containsAny condition
+                                  properties:
+                                    relation:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - containsAny
+                                        - in
+                                    value:
+                                      type: array
+                                      items:
+                                        type: string
+                                  required:
+                                    - relation
                                     - operator
                                     - value
                                 - type: object
@@ -30422,6 +30459,24 @@ paths:
                                       - operator
                                       - value
                                   - type: object
+                                    title: Relation containsAny condition
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                          - in
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - relation
+                                      - operator
+                                      - value
+                                  - type: object
                                     title: Property comparison
                                     properties:
                                       property:
@@ -30629,6 +30684,24 @@ paths:
                                           type: string
                                     required:
                                       - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    title: Relation containsAny condition
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                          - in
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - relation
                                       - operator
                                       - value
                                   - type: object
@@ -30930,6 +31003,24 @@ paths:
                                 - operator
                                 - value
                             - type: object
+                              title: Relation containsAny condition
+                              properties:
+                                relation:
+                                  type: string
+                                operator:
+                                  type: string
+                                  enum:
+                                    - containsAny
+                                    - in
+                                value:
+                                  type: array
+                                  items:
+                                    type: string
+                              required:
+                                - relation
+                                - operator
+                                - value
+                            - type: object
                               title: Property comparison
                               properties:
                                 property:
@@ -31040,7 +31131,8 @@ paths:
                       scorecard.
                   rules:
                     type: array
-                    description: The [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
+                    description: The
+                      [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                       that define the scorecard.
                     items:
                       type: object
@@ -31136,6 +31228,24 @@ paths:
                                           type: string
                                     required:
                                       - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    title: Relation containsAny condition
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                          - in
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - relation
                                       - operator
                                       - value
                                   - type: object
