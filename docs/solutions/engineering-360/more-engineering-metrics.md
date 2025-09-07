@@ -77,3 +77,11 @@ Moreover, correlating this data with other trends around engineering and quality
 By analyzing Copilot's impact across different teams and project types, organizations can make data-driven decisions about expanding or optimizing their AI tooling investments. 
 
 - [Ingest Copilot Usage Metrics to Port](/build-your-software-catalog/sync-data-to-catalog/ai-agents/github-copilot/)
+
+## Track AI-driven pull requests and coding agent activity
+
+As engineering teams adopt AI coding agents like GitHub Copilot, Claude, and Devin, managing the increased volume of AI-generated pull requests becomes challenging. Port's AI control center automatically identifies and displays AI-driven PRs in real-time, giving engineering leaders visibility into AI contributions across the organization.
+
+By tracking AI agent participation rates, review cycles, and contribution distribution, teams can make data-driven decisions about AI tool adoption while ensuring quality standards are maintained.
+
+- [Track AI-driven pull requests](/guides/all/track-ai-driven-pull-requests)
