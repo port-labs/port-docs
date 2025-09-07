@@ -359,18 +359,11 @@ This will return all **deployments** that are related to the "production-service
 
 Self-relations allow a blueprint to reference itself, so entities of the same type can be connected.
 
-For example, consider a `Team` blueprint used to represent an organization’s hierarchy:
-
-- `Squad` is a `Team`.
-- A `Squad` can relate to a `Tribe`.
-- A `Tribe` can relate to a `Domain`, and so on.
-
-All of these entities are instances of the `Team` blueprint, connected through a self-relation, let's call it `parent`.
-
 <img src="/img/guides/hierarchyTiers/hierarchyTiers.png" border="1px" width="50%" />  
 <br/><br/>  
 
-The diagram above illustrates this hierarchy, where different entities are linked by the same self-relation within the `Team` blueprint.  
+In this example, a **group** is comprised of one or more **domains**, which are comprised of one or more **tribes**, and so on.  
+The diagram illustrates the hierarchy, where different entities are linked by the same self-relation (parent) within the `Team` blueprint.  
 
 You can use the `matchAny` operator to search through self-relations, allowing you to find entities at various levels of the hierarchy.
 
