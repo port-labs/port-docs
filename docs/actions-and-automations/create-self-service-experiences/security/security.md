@@ -13,6 +13,6 @@ When Port makes outbound calls (for example when using the [Webhook](/actions-an
 Port outbound calls will originate from one of the following IP addresses:
 
 ```text
-US region - 44.221.30.248, 44.193.148.179, 34.197.132.205 
-EU region - 3.251.12.205, 34.252.219.131, 54.75.236.107
+US - 44.221.30.248, 44.193.148.179, 34.197.132.205 
+EU - 3.251.12.205, 34.252.219.131, 54.75.236.107
 ```
