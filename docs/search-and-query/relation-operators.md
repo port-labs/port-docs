@@ -370,7 +370,9 @@ All of these entities are instances of the `Team` blueprint, connected through a
 <img src="/img/guides/hierarchyTiers/hierarchyTiers.png" border="1px" width="50%" />  
 <br/><br/>  
 
-The diagram above illustrates this hierarchy, where different entities are linked by the same self-relation within the `Team` blueprint.
+The diagram above illustrates this hierarchy, where different entities are linked by the same self-relation within the `Team` blueprint.  
+
+You can use the `matchAny` operator to search through self-relations, allowing you to find entities at various levels of the hierarchy.
 
 ### Examples
 
@@ -438,7 +440,7 @@ For example, if the `value` is `Squad`:
 
 Result: `Tribe`, `Domain` and `Group` (all entities found along the path up to 3 hops).
 
-:::info `maxHops` limitation
+:::info maxHops limitation
 The `maxHops` parameter can only be applied **once** per path, and it accepts values from **1 to 15**.
 :::
 
