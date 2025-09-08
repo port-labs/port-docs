@@ -340,6 +340,10 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | `OCEAN__INITIALIZE_PORT_RESOURCES`    | Default true, When set to false the integration will not create default blueprints and the port App config Mapping. | ❌       |
 | `OCEAN__SEND_RAW_DATA_EXAMPLES`        | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true.                        | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`      | Change the identifier to describe your integration, if not set will use the default one.                            | ❌       |
+| `OCEAN__EVENT_LISTENER`               | [The event listener object](https://ocean.getport.io/framework/features/event-listener/). | |
+| `OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_ID` | The client ID of the Azure App Registration.| |
+| `OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_SECRET` | The client secret of the Azure App Registration. | |
+| `OCEAN__INTEGRATION__CONFIG__AZURE_TENANT_ID` | The tenant ID of the Azure App Registration. | |
 
 <br/>
 
