@@ -67,11 +67,8 @@ AWS Hosted by Port provides several advantages over the standard AWS integration
 
 ## Getting started
 
-Continue to the [installation](./installations/installation.md) guide to learn how to install AWS Hosted by Port.
+Continue to the [installation](./installations/installations.md) guide to learn how to install AWS Hosted by Port.
 
-## Multiple accounts support
-
-To properly configure permissions for production and to enable multiple accounts collection check out our [multiple accounts guide](./installations/multi_account.md)
 
 ## Configuration
 
@@ -340,7 +337,5 @@ The main differences in configuration:
 
 ## Support and Resources
 
-- **Documentation**: [AWS SDK v3 Documentation](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/)
 - **Community**: [Port Community Forum](https://github.com/port-labs/port/discussions)
 - **Issues**: [Report Issues](https://github.com/port-labs/ocean/issues)
-- **Source Code**: [AWS Hosted by Port Integration](https://github.com/port-labs/ocean/tree/main/integrations/aws-v3)
