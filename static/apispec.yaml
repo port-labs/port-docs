@@ -18119,7 +18119,7 @@ paths:
               properties:
                 identifier:
                   type: string
-                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:=-]+$
                   description: The identifier of the action.
                 title:
                   type: string
@@ -26167,7 +26167,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: Advanced create
+                          - type: object 
+                            title: Advanced create
                             description: |-
                               If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
@@ -26199,7 +26200,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: Delete
+                          - type: object
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -26651,7 +26653,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: Advanced create
+                          - type: object
+                            title: Advanced create
                             description: |-
                               If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
@@ -26683,7 +26686,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: Delete
+                          - type: object
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -27090,7 +27094,8 @@ paths:
                     properties:
                       operation:
                         oneOf:
-                          - title: Advanced create
+                          - type: object
+                            title: Advanced create
                             description: |-
                               If the operation is `create`, the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) properties must be provided. For example:
                               ```json
@@ -27122,7 +27127,8 @@ paths:
                             required:
                               - type
                             additionalProperties: false
-                          - title: Delete
+                          - type: object
+                            title: Delete
                             description: >-
                               If the selected operation is `delete`, a blueprint
                               identifier, and entity identifier must be
@@ -29966,6 +29972,24 @@ paths:
                               - operator
                               - value
                           - type: object
+                            title: Relation containsAny condition
+                            properties:
+                              relation:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - containsAny
+                                  - in
+                              value:
+                                type: array
+                                items:
+                                  type: string
+                            required:
+                              - relation
+                              - operator
+                              - value
+                          - type: object
                             title: Property comparison
                             properties:
                               property:
@@ -30075,7 +30099,8 @@ paths:
                     to filter entities that will be evaluated by the scorecard.
                 rules:
                   type: array
-                  description: The [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
+                  description: The
+                    [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                     that define the scorecard.
                   items:
                     type: object
@@ -30171,6 +30196,24 @@ paths:
                                         type: string
                                   required:
                                     - property
+                                    - operator
+                                    - value
+                                - type: object
+                                  title: Relation containsAny condition
+                                  properties:
+                                    relation:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - containsAny
+                                        - in
+                                    value:
+                                      type: array
+                                      items:
+                                        type: string
+                                  required:
+                                    - relation
                                     - operator
                                     - value
                                 - type: object
@@ -30422,6 +30465,24 @@ paths:
                                       - operator
                                       - value
                                   - type: object
+                                    title: Relation containsAny condition
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                          - in
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - relation
+                                      - operator
+                                      - value
+                                  - type: object
                                     title: Property comparison
                                     properties:
                                       property:
@@ -30629,6 +30690,24 @@ paths:
                                           type: string
                                     required:
                                       - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    title: Relation containsAny condition
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                          - in
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - relation
                                       - operator
                                       - value
                                   - type: object
@@ -30930,6 +31009,24 @@ paths:
                                 - operator
                                 - value
                             - type: object
+                              title: Relation containsAny condition
+                              properties:
+                                relation:
+                                  type: string
+                                operator:
+                                  type: string
+                                  enum:
+                                    - containsAny
+                                    - in
+                                value:
+                                  type: array
+                                  items:
+                                    type: string
+                              required:
+                                - relation
+                                - operator
+                                - value
+                            - type: object
                               title: Property comparison
                               properties:
                                 property:
@@ -31040,7 +31137,8 @@ paths:
                       scorecard.
                   rules:
                     type: array
-                    description: The [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
+                    description: The
+                      [rules](https://docs.port.io/scorecards/concepts-and-structure/#rule-elements)
                       that define the scorecard.
                     items:
                       type: object
@@ -31136,6 +31234,24 @@ paths:
                                           type: string
                                     required:
                                       - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    title: Relation containsAny condition
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                          - in
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - relation
                                       - operator
                                       - value
                                   - type: object
