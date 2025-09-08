@@ -2,9 +2,9 @@
 sidebar_position: 3
 ---
 
-# Multi-organization support
+# Multiple organization membership
 
-Multi-organization within Port means that users can belong to more than one organization simultaneously, for example, prod and dev. This enables:
+Multiple organization membership within Port means that users can belong to more than one organization simultaneously, for example, prod and dev. This enables:
 
 - **Cross-organization access**: Users can work across multiple organizations without needing separate accounts.
 - **Seamless switching**: Switch between organizations using the [UI](#switch-organization).
