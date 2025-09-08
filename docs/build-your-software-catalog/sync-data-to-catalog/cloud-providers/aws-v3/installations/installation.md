@@ -61,37 +61,23 @@ For a single AWS account, you'll deploy a CloudFormation stack that creates the 
 #### Step 2: Deploy CloudFormation Stack
 
 1. **Access the CloudFormation Template**:
-   - Navigate to the [single-account integration template](https://port-cloudformation-templates.s3.eu-west-1.amazonaws.com/stable/ocean/aws-v3/single-account-integration.yaml)
-   - Download the template or copy the S3 URL for direct deployment
+   - Go to [Port Data Sources](https://app.getport.io/settings/data-sources)
+   - Click **+ Add Integration** → **AWS Hosted by Port**
+   - Select **Single Account** and click the **"Click here"** link in step 3
+   - This will open CloudFormation with pre-configured parameters
 
 2. **Deploy via AWS Console**:
-   - Go to [AWS CloudFormation](https://console.aws.amazon.com/cloudformation/) in your AWS Console
-   - Click **Create Stack** → **With new resources (standard)**
-   - Choose **Template is ready** → **Upload a template file**
-   - Upload the downloaded template or paste the S3 URL directly
+   - In the CloudFormation console, review the pre-configured parameters
+   - Scroll down to the bottom of the page
+   - Check the box **"I acknowledge that AWS CloudFormation might create IAM resources with custom names"**
+   - Click **Create Stack**
 
-3. **Configure Stack Parameters**:
-   
-   **Required Parameters**:
-   - **Port Organisation ID**: Your Port organization ID (e.g., `org_1234567890`)
-     - *Find this in Port → Settings → General*
-   - **Integration Identifier**: A unique identifier for this integration (e.g., `aws-v3-prod`)
-     - *Use lowercase letters, numbers, and hyphens only*
-   
-   **Optional Parameters**:
-   - **Custom Role Name**: Leave empty for auto-generated name, or specify a custom name
-     - *Default: `PortIntegrationRole-{IntegrationIdentifier}`*
-   
-   **Advanced Parameters** (keep defaults unless you have specific requirements):
-   - **OIDC Provider URL**: Keep the default value (do not change)
-   - **OIDC JWT Subject**: Keep the default value (do not change)
-   - **Create OIDC Provider**: Set to `true` (unless you already have one)
 
 #### Step 3: Configure Integration in Port
 
-1. **Navigate to Port Ocean**:
-   - Go to your Port Ocean environment
-   - Navigate to **Integrations**
+1. **Navigate to Port**:
+   - Go to your Port environment
+   - Navigate to **[Port Data Sources](https://app.getport.io/settings/data-sources)**
 
 2. **Add AWS Hosted by Port Integration**:
    - Click **+ Add Integration**
@@ -175,66 +161,17 @@ You must run the multi-account installation from your AWS Organizations **manage
 #### Step 2: Deploy Multi-Account CloudFormation Stack
 
 1. **Access the CloudFormation Template**:
-   - Navigate to the [multi-account integration template](https://port-cloudformation-templates.s3.eu-west-1.amazonaws.com/stable/ocean/aws-v3/multi-account-integration.yaml)
+   - Go to [Port Data Sources](https://app.getport.io/settings/data-sources)
+   - Click **+ Add Integration** → **AWS Hosted by Port**
+   - Select **Multiple Accounts** and click the **"Click here"** link in step 3
+   - This will open CloudFormation with pre-configured parameters
 
 2. **Deploy via AWS Console**:
-   - In your **management account**, go to AWS CloudFormation
-   - Click **Create Stack** → **With new resources (standard)**
-   - Choose **Template is ready** → **Upload a template file**
-   - Upload the template or use the S3 URL directly
+   - In the CloudFormation console, review the pre-configured parameters
+   - Scroll down to the bottom of the page
+   - Check the box **"I acknowledge that AWS CloudFormation might create IAM resources with custom names"**
+   - Click **Create Stack**
 
-3. **Configure Stack Parameters**:
-
-   **Scope of Rollout**:
-   - **Target OU IDs**: Comma-separated list of OU IDs
-     - *Example: `ou-prod-12345678,ou-staging-87654321`*
-   - **Account Scope**: Choose from:
-     - `ALL`: All accounts in the specified OUs
-     - `INTERSECTION`: Only accounts that are in both the OUs and the specified account list
-     - `DIFFERENCE`: All accounts in OUs except those in the specified account list
-   - **Target Account IDs**: Comma-separated list of specific account IDs
-     - *Example: `123456789012,098765432109`*
-
-   **Port Identifiers**:
-   - **Port Organization ID**: Your Port organization ID
-     - *Example: `org_abc123def456`*
-   - **Integration Identifier**: A unique identifier for this integration
-     - *Example: `aws-v3-multi-account`*
-
-   **IAM Role Settings**:
-   - **Custom Role Name**: Leave empty for auto-generated name, or specify a custom name
-     - *Default: `PortIntegrationRole-{IntegrationIdentifier}`*
-
-   **OIDC Settings** (keep defaults):
-   - **OIDC Provider URL**: Keep the default value (do not change)
-   - **OIDC JWT Subject**: Keep the default value (do not change)
-
-   **Advanced**:
-   - **StackSet Name**: Custom name for the StackSet
-     - *Default: `Port-Integration-v3`*
-   - **Create OIDC Provider**: Set to `true` (unless you already have one)
-
-:::tip Account Filtering Examples
-
-**Scenario 1: Deploy to all production accounts**
-- Target OU IDs: `ou-prod-12345678`
-- Account Scope: `ALL`
-- Target Account IDs: (leave empty)
-- *Result: All accounts in the Production OU*
-
-**Scenario 2: Deploy to specific accounts only**
-- Target OU IDs: `ou-prod-12345678,ou-staging-87654321`
-- Account Scope: `INTERSECTION`
-- Target Account IDs: `123456789012,234567890123`
-- *Result: Only these 2 accounts if they're in the specified OUs*
-
-**Scenario 3: Deploy to all accounts except test accounts**
-- Target OU IDs: `ou-prod-12345678`
-- Account Scope: `DIFFERENCE`
-- Target Account IDs: `345678901234,456789012345`
-- *Result: All accounts in Production OU except the 2 test accounts*
-
-:::
 
 #### Step 3: Monitor Deployment
 
@@ -245,13 +182,12 @@ You must run the multi-account installation from your AWS Organizations **manage
 
 2. **Verify IAM Roles**:
    - Check that the IAM roles were created in each target account
-   - Verify the roles have the correct trust relationships
 
 #### Step 4: Configure Integration in Port
 
-1. **Navigate to Port Ocean**:
-   - Go to your Port Ocean environment
-   - Navigate to **Integrations**
+1. **Navigate to Port**:
+   - Go to your Port environment
+   - Navigate to **[Port Data Sources](https://app.getport.io/settings/data-sources)**
 
 2. **Add AWS Hosted by Port Integration**:
    - Click **+ Add Integration**
@@ -259,7 +195,7 @@ You must run the multi-account installation from your AWS Organizations **manage
 
 3. **Get the Role ARN**:
    - After CloudFormation deployment completes, go to the **Outputs** tab
-   - Copy the **Management Account Role ARN** value
+   - Copy the **PortintegrationRoleArn** value
 
 4. **Complete Integration Setup**:
    - Return to the Port integration form
@@ -302,40 +238,4 @@ After installation, verify that the integration is working:
 - **Duplicate Integration Identifier**: Use a unique identifier that hasn't been used before
 - **Insufficient IAM Permissions**: Ensure your AWS user has CloudFormation and IAM permissions
 - **OIDC Provider Already Exists**: Set "Create OIDC Provider" to `false` if you already have one
-
-#### StackSet Deployment Failures (Multi-Account)
-
-**Error**: `StackSet deployment failed on account X`
-
-**Solutions**:
-- **Target Account Not in OU**: Verify the account is actually in the specified organizational unit
-- **Insufficient Permissions**: Ensure the management account has StackSets permissions
-- **Account Suspended**: Check if the target account is suspended or has billing issues
-
-#### Port Integration Connection Issues
-
-**Error**: `Integration shows "Failed" status in Port`
-
-**Solutions**:
-- **Integration Identifier Mismatch**: Ensure the identifier in Port matches CloudFormation exactly
-- **IAM Role Not Found**: Verify the CloudFormation stack completed successfully
-- **OIDC Trust Relationship Issues**: Check that the OIDC provider was created correctly
-
-### Getting Help
-
-If you encounter issues during installation:
-
-1. **Check Logs**: Review integration logs for error details
-2. **Documentation**: Refer to the [AWS Hosted by Port documentation](../aws-v3.md)
-3. **Community**: Ask questions in the [Port Community Forum](https://github.com/port-labs/port/discussions)
-4. **Support**: Contact Port support for enterprise customers
-
-## Next Steps
-
-After successful installation:
-
-1. **Configure Multiple Accounts**: Set up [multi-account support](./multi_account.md)
-2. **Customize Mapping**: Learn about [advanced configuration](../aws-v3.md#advanced-configuration)
-3. **Set Up Monitoring**: Configure [monitoring and alerting](../aws-v3.md#troubleshooting)
-4. **Optimize Performance**: Review [performance tuning](../aws-v3.md#resource-discovery-optimization)
 
