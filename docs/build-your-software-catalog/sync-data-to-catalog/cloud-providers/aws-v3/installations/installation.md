@@ -241,7 +241,7 @@ You must run the multi-account installation from your AWS Organizations **manage
 1. **Check StackSet Status**:
    - Go to **CloudFormation** → **StackSets** in your management account
    - Monitor the deployment progress across all target accounts
-   - Ensure all stack instances show "CURRENT" status
+   - Ensure all stack instances show "CREATE_COMPLETE" status
 
 2. **Verify IAM Roles**:
    - Check that the IAM roles were created in each target account
