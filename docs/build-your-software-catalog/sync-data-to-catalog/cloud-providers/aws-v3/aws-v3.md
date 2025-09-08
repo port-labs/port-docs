@@ -69,6 +69,8 @@ AWS Hosted by Port provides several advantages over the standard AWS integration
 
 Continue to the [installation](./installations/installations.md) guide to learn how to install AWS Hosted by Port.
 
+For detailed information about the IAM role architecture and security model, see the [IAM Role Architecture](./installations/iam-role-architecture.md) guide.
+
 
 ## Configuration
 

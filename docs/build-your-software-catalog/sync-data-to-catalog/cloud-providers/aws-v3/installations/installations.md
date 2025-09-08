@@ -98,6 +98,8 @@ For a single AWS account, you'll deploy a CloudFormation stack that creates the 
 
 :::tip Why Can't I Use an Existing Role?
 AWS Hosted by Port requires specific OIDC trust relationships and permissions that are automatically configured by the CloudFormation template. Using an existing role would require manual configuration of these complex trust relationships, which is why we provide the CloudFormation template to ensure proper setup.
+
+**Learn More**: For detailed information about the IAM role architecture and permissions, see the [IAM Role Architecture](./iam-role-architecture.md) guide.
 :::
 
 </TabItem>
