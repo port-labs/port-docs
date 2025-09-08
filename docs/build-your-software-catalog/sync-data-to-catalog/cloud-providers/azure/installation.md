@@ -325,6 +325,65 @@ kubectl apply -f azure-integration.yaml
 
 </TabItem>
 
+<TabItem value="gitlab" label="GitLab">
+
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+
+| Parameter                             | Description                                                                                                         | Required |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__PORT__CLIENT_ID`              | Your port client id.                                                                                                | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`          | Your port client secret.                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`               | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US.                            | ✅       |
+| `OCEAN__SECRET__AZURE_CLIENT_ID`      | Your Azure client ID.                                                                                               | ✅       |
+| `OCEAN__SECRET__AZURE_CLIENT_SECRET`  | Your Azure client secret.                                                                                           | ✅       |
+| `OCEAN__SECRET__AZURE_TENANT_ID`      | Your Azure tenant ID.                                                                                               | ✅       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`    | Default true, When set to false the integration will not create default blueprints and the port App config Mapping. | ❌       |
+| `OCEAN__SEND_RAW_DATA_EXAMPLES`        | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true.                        | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`      | Change the identifier to describe your integration, if not set will use the default one.                            | ❌       |
+
+<br/>
+
+Here is an example for `.gitlab-ci.yml` pipeline file:
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+
+variables:
+  INTEGRATION_TYPE: azure
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+        docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__PORT__CLIENT_ID=$PORT_CLIENT_ID \
+          -e OCEAN__PORT__CLIENT_SECRET=$PORT_CLIENT_SECRET \
+          -e OCEAN__PORT__BASE_URL="https://api.port.io" \
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+          -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
+          -e OCEAN__EVENT_LISTENER='{"type": "ONCE"}' \
+          -e OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_ID="Enter value here" \
+          -e OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_SECRET="Enter value here" \
+          -e OCEAN__INTEGRATION__CONFIG__AZURE_TENANT_ID="Enter value here" \
+          $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+```
+
+</TabItem>
+
 </Tabs>
 
 </TabItem>
