@@ -1,8 +1,4 @@
 {
   "label": "AWS Hosted by Port",
-  "position": 3,
-  "link": {
-    "type": "generated-index",
-    "description": "AWS Hosted by Port integration documentation. Learn how to integrate your AWS resources with zero maintenance required - fully hosted and managed by Port."
-  }
+  "position": 12
 }
