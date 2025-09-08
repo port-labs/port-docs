@@ -408,6 +408,41 @@ If you attempt to interact with an agent after reaching a limit, you will receiv
 The query limit is estimated and depends on the actual token usage.
 :::
 
+## Monitoring your quota
+
+### Check quota via API
+
+You can monitor your current quota usage by making a GET request to the `/v1/quota` endpoint:
+
+```bash
+curl -L 'https://api.port.io/v1/quota' \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer <YOUR_API_TOKEN>'
+```
+
+**Response example:**
+```json showLineNumbers
+{
+  "ok": true,
+  "monthlyQuotaUsage": {
+    "monthlyLimit": 1000,
+    "remainingQuota": 991,
+    "month": "2025-01",
+    "remainingTimeMs": 1936718411
+  }
+}
+```
+
+**Response fields:**
+- `monthlyLimit`: Maximum number of AI requests allowed per month
+- `remainingQuota`: Number of AI requests remaining in current month
+- `month`: Current quota month in YYYY-MM format  
+- `remainingTimeMs`: Time in milliseconds until quota resets
+
+:::tip Proactive quota monitoring
+Check your quota before making multiple AI agent requests to avoid hitting limits. When `remainingQuota` is low, consider implementing rate limiting or queuing requests until the quota resets.
+:::
+
 ## Common errors
 
 Here are some common errors you might encounter when working with AI agents and how to resolve them:
@@ -513,7 +548,12 @@ Port applies the following limits to AI agent interactions:
 - **Query limit**: ~40 queries per hour
 - **Token usage limit**: 800,000 tokens per hour
 
-You can monitor your current usage in the final `done` event showing your remaining requests, tokens, and reset time.
+You can monitor your current usage in several ways:
+- Check the final `done` event in streaming responses for remaining requests, tokens, and reset time
+- Make a GET request to `/v1/quota` to see your monthly quota status
+- View quota information in AI invocation details
+
+For detailed quota monitoring, see the [Monitoring your quota](#monitoring-your-quota) section above.
 
 </details>
 
