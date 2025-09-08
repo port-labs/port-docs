@@ -1451,11 +1451,11 @@ export const availableGuides = [
         link: "/guides/all/enforce-ai-coding-security-standards",
     },
     {
-        title: "Set up internal docs for AI context",
-        description: "Centralize internal documentation and enable AI-powered question answering using Port's general AI interface",
+        title: "Find internal documentation with AI",
+        description: "Find internal documentation using AI by storing documentation as entities in your Port catalog",
         tags: ["SDLC","AI"],
         logos: ["AI"],
-        link: "/guides/all/setup-internal-docs-ai-context",
+        link: "/guides/all/find-internal-documentation-with-ai",
     }
 ]
 

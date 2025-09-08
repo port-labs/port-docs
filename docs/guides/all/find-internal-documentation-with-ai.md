@@ -1,15 +1,15 @@
 ---
 displayed_sidebar: null
-description: Learn how to centralize internal documentation and enable AI-powered question answering using Port's general AI interface
+description: Learn how to find internal documentation with AI
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Set up internal docs for AI context
+# Find internal documentation with AI
 
 
-This guide demonstrates how to centralize your internal documentation in Port and enable AI-powered question answering using Port's general AI interface. By storing documentation as entities, you can ask questions like "When was this document last updated?", "Who owns this document?", or "What are all the product-related docs?" and get intelligent responses.
+This guide demonstrates how to find internal documentation with AI. By storing documentation as entities, you can ask questions like "When was this document last updated?", "Who owns this document?", or "What are all the product-related docs?" and get intelligent responses.
 
 <img src="/img/guides/internal-docs-ai-context-1.png" width="100%" border="1px" />
 
@@ -499,9 +499,6 @@ Try: "I'm working on integrating user authentication, what API documentation sho
 - **"Which team maintains..."** - Team ownership implies cataloged entities
 
 **Rule of thumb**: If Port has documentation on the topic, add "in our catalog" to avoid ambiguity.
-
-
-
 
 
 ## Conclusion
