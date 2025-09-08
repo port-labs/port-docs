@@ -10,42 +10,12 @@ import TabItem from "@theme/TabItem"
 
 In the age of AI coding agents (Claude, Copilot, Gemini, Cursor), teams need a single source of truth for how autonomous agents should contribute to repositories. Traditionally, these rules are stored manually in different locations based on the coding agent's specification - such as `.cursor/rules`, `.github/copilot-instructions`, or other agent-specific folders. However, managing these scattered files at scale is cumbersome and leads to inconsistency.
 
-We propose adopting the `AGENTS.md` structure as a unified standard for all AI coding instructions, regardless of the specific agent being used.
+To deal with this challenge, you can adopt the [`AGENTS.md`](https://agents.md) structure as a unified standard for all AI coding instructions, regardless of the specific agent being used, and automate it with Port.
 
 This guide demonstrates how to centralize these instructions inside your internal developer portal, and automatically sync them back into GitHub repositories whenever they are updated. This ensures consistency, visibility, and automation — without developers needing to manually edit `AGENTS.md`.
 
-<details>
 
-<summary> Our AGENTS.md pattern explained </summary>
-
-:::tip Our proposed AGENTS.md pattern
-Our approach involves creating a centralized `AGENTS.md` file at the root of your repository that serves as the single source of truth for all AI coding instructions. To make your AI coding agents (Claude, Copilot, Gemini) reference this standardized file, you need to configure them to point to it:
-
-**For Cursor:**
-Create a `.cursor/rules` file with:
-```yaml
----
-description: General Guidelines
-globs:
-alwaysApply: true
----
-
-@AGENTS.md
-```
-
-**For GitHub Copilot:**
-In your repository settings or `.github/copilot-instructions.md`, add:
-```markdown
-Reference the `AGENTS.md` file for all coding guidelines and instructions.
-```
-
-**For other AI agents:**
-Configure them to reference the `AGENTS.md` file in their respective configuration files.
-
-This approach ensures all AI agents follow the same centralized guidelines while maintaining their specific configuration requirements.
-:::
-
-</details>
+<img src="/img/guides/sync-ai-instructions-workflow.jpg" border="1px" width="100%" />
 
 ## Common use cases
 
@@ -133,6 +103,62 @@ Now we need to configure the GitHub integration to automatically sync the AI ins
 :::caution File path considerations
 The integration will look for the `AGENTS.md` file at the root of each repository. Ensure your repositories follow this standardized file structure for consistent mapping across your organization.
 :::
+
+## Centralizing AI instructions
+
+The AGENTS.md pattern involves creating a centralized `AGENTS.md` file at the root of your repository that serves as the single source of truth for all AI coding instructions. To make your AI coding agents reference this standardized file, you need to configure them to point to it:
+
+<Tabs groupId="agent-config" queryString>
+<TabItem value="cursor" label="Cursor" default>
+
+Create a `.cursor/rules` file in your repository with the following configuration:
+
+```yaml showLineNumbers
+---
+description: General Guidelines
+globs:
+alwaysApply: true
+---
+
+@AGENTS.md
+```
+
+This configuration tells Cursor to always apply the guidelines from the `AGENTS.md` file to all files in your repository.
+
+</TabItem>
+
+<TabItem value="copilot" label="GitHub Copilot">
+
+In your repository settings or create a `.github/copilot-instructions.md` file with:
+
+```markdown showLineNumbers
+Reference the `AGENTS.md` file for all coding guidelines and instructions.
+```
+
+</TabItem>
+
+<TabItem value="claude" label="Claude Code">
+
+
+For Claude Code, you can reference the `AGENTS.md` file in your `CLAUDE.md`:
+
+```markdown showLineNumbers
+Please follow the coding guidelines and instructions specified in the `AGENTS.md` file at the root of this repository.
+```
+
+</TabItem>
+
+<TabItem value="other" label="Other AI Agents">
+
+For other AI coding agents, configure them to reference the `AGENTS.md` file in their respective configuration files:
+
+- **Gemini CLI**: Add reference in your `GEMINI.md` custom instructions file 
+- **Custom agents**: Include instructions to read and follow the `AGENTS.md` file
+
+The key is to ensure all agents point to the same centralized source of truth.
+
+</TabItem>
+</Tabs>
 
 ## Configure AI agent
 
