@@ -81,9 +81,9 @@ GitLab uses numeric access levels to define permissions:
   - **Default value**: `true`
   - **Use case**: Set to `false` to include all accessible resources without filtering
 
-- **`minAccessLevel`**: Integer specifying minimum access level required
+- **`minAccessLevel`**: Integer specifying the minimal required access level
   - **Default value**: `30` (Developer)
-  - **Use case**: Restrict integration to resources where the token has specified access level or higher
+  - **Use case**: Restrict integration to resources where the token has the specified access level or higher
 
 <h3>Configuration examples</h3>
 
