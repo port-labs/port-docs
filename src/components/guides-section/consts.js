@@ -1454,6 +1454,13 @@ export const availableGuides = [
         tags: ["SDLC", "AI", "GitHub", "Scorecards"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/enforce-ai-coding-security-standards",
+    },
+    {
+        title: "Promote resources across environments",
+        description: "Learn how to promote resources from dev to prod from your portal",
+        tags: ["SDLC", "Git"],
+        logos: ["SDLC", "Git"],
+        link: "/guides/all/promote-resources-across-environments",
     }
 ]
 
