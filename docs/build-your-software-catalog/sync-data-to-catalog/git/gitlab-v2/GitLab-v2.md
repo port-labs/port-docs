@@ -118,7 +118,17 @@ resources:
 
 </details>
 
+## Access control
 
+The GitLab integration supports configurable access control to determine which resources are visible and accessible to the integration.
+
+You can configure access control using the `visibility` configuration block in the integration mapping. 
+
+This allows you to filter resources based on GitLab access levels (Guest, Reporter, Developer, Maintainer, Owner). You can also disable access level filtering entirely to include all accessible resources.
+
+:::tip Access control configuration
+For detailed configuration options, access level reference, and practical examples, see the [Advanced configuration](./advanced.md#access-control) section.
+:::
 
 ## Capabilities
 
