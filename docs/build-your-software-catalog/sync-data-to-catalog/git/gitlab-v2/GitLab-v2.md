@@ -50,9 +50,6 @@ This is the default mapping configuration for this integration:
 ```yaml showLineNumbers
 deleteDependentEntities: true
 createMissingRelatedEntities: true
-visibility:
-  useMinAccessLevel: true
-  minAccessLevel: 30
 resources:
 - kind: project
   selector:
