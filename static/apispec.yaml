@@ -25316,9 +25316,9 @@ paths:
         Starting **November 15th**, the permissions for this endpoint will change.   
 
         **Planned change:**  
-        This endpoint will be **restricted to `admins` only**.  
+        This endpoint will be **blocked for `members`**.  
 
-        If you use this endpoint, make sure the request is run by a user with `admin` permissions.
+        If you use this endpoint, make sure the request is run by a user with `moderator` or `admin` permissions.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         :::
       parameters:
@@ -25806,9 +25806,9 @@ paths:
         Starting **November 15th**, the permissions for this endpoint will change.   
 
         **Planned change:**  
-        This endpoint will be **restricted to `admins` only**.  
+        This endpoint will be **blocked for `members`**.  
 
-        If you use this endpoint, make sure the request is run by a user with `admin` permissions.
+        If you use this endpoint, make sure the request is run by a user with `moderator` or `admin` permissions.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         :::
       parameters:
@@ -27554,9 +27554,9 @@ paths:
         Starting **November 15th**, the permissions for this endpoint will change.   
 
         **Planned change:**  
-        This endpoint will be **restricted to `admins` only**.  
+        This endpoint will be **blocked for `members`**.  
 
-        If you use this endpoint, make sure the request is run by a user with `admin` permissions.
+        If you use this endpoint, make sure the request is run by a user with `moderator` or `admin` permissions.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         :::
       parameters:
@@ -33278,9 +33278,9 @@ paths:
           Starting **November 15th**, the permissions for this endpoint will change.   
 
           **Planned change:**  
-          This endpoint will be **restricted to `admins` only**.  
+          This endpoint will be **blocked for `members`**.  
 
-          If you use this endpoint, make sure the request is run by a user with `admin` permissions.
+          If you use this endpoint, make sure the request is run by a user with `moderator` or `admin` permissions.
           To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
           :::
         tags:
