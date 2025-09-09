@@ -1,11 +1,15 @@
+import guideMetadata from './guide-metadata.json';
+
 export const tagsCategoryMap = {
     "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog", "Approval workflow"],
     "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
+        "Github Copilot",
         "GitLab",
         "BitBucket",
         "AzureDevops",
+        "Claude Code",
         "Azure",
         "Webhook",
         "Kafka",
@@ -23,7 +27,7 @@ export const tagsCategoryMap = {
         "Launchdarkly",
         // "Linear",
         // "Opencost",
-        // "Snyk",
+        "Snyk",
         "Datadog",
         "Dynatrace",
         "Humanitec",
@@ -39,7 +43,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/scaffold-a-new-service",
     },
     {
@@ -48,7 +52,7 @@ export const availableGuides = [
         tags: ["SDLC", "Scorecards", "PagerDuty"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["PagerDuty", "Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/ensure-production-readiness",
     },
     {
@@ -57,7 +61,7 @@ export const availableGuides = [
         tags: ["IaC for devs", "AWS", "Actions", "Cloud access management"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["AWS", "Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/create-cloud-resource-using-iac",
     },
     {
@@ -65,7 +69,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime",
         tags: ["K8s for devs", "Actions", "Dashboards", "Scorecards"],
         logos: ["Kubernetes" ],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/visualize-service-k8s-runtime",
     },
     {
@@ -73,7 +77,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime using ArgoCD",
         tags: ["K8s for devs", "ArgoCD", "Actions", "Dashboards", "Scorecards"],
         logos: ["ArgoCD", "Kubernetes"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/visualize-service-argocd-runtime",
     },
     {
@@ -82,7 +86,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/let-developers-enrich-services-using-gitops",
     },
     {
@@ -90,7 +94,7 @@ export const availableGuides = [
         description: "Send a Slack reminder for uncompleted scorecard rules using a self-service action",
         tags: ["Engineering metrics", "Actions", "Scorecards"],
         logos: ["Slack"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/setup-slack-reminders",
     },
     {
@@ -98,7 +102,7 @@ export const availableGuides = [
         description: "Create & use surveys in your portal to collect feedback from your users",
         tags: ["Engineering metrics", "Actions"],
         logos: ["Actions"],
-        category: "Experiences",
+        // category: "Experiences",
         link: "/guides/all/create-and-use-surveys-in-your-portal",
     },
     {
@@ -106,7 +110,7 @@ export const availableGuides = [
         description: "Create & track DORA metrics in your portal to measure engineering performance",
         tags: ["Engineering metrics", "Actions"],
         logos: ["Actions"],
-        category: "Experiences",
+        // category: "Experiences",
         link: "/guides/all/create-and-track-dora-metrics-in-your-portal",
     },
     {
@@ -114,7 +118,7 @@ export const availableGuides = [
         description: "Set up deployments using GitLab merge requests or jobs",
         tags: ["Engineering metrics"],
         logos: ["GitLab"],
-        category: "Experiences",
+        // category: "Experiences",
         link: "/guides/all/set-up-deployments-dora-gitlab",
     },
     {
@@ -122,7 +126,7 @@ export const availableGuides = [
         description: "Configure DORA metrics tracking using Jira for both deployments and incidents",
         tags: ["Engineering metrics", "Jira"],
         logos: ["Jira"],
-        category: "Experiences",
+        // category: "Experiences",
         link: "/guides/all/setup-dora-metrics-jira",
     },
     {
@@ -150,8 +154,8 @@ export const availableGuides = [
         link: "/guides/all/manage-resources-using-k8s-crds",
     },
     {
-        title: "Automate incident management",
-        description: "Automate notifications and documentation of incidents",
+        title: "Auto-create Slack channel & GitHub issue for PagerDuty incidents",
+        description: "Automatically create a Slack channel and GitHub issue when a PagerDuty incident is reported",
         tags: ["Incident management", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
@@ -546,12 +550,12 @@ export const availableGuides = [
         link: "/guides/all/change-pagerduty-incident-owner",
     },
     {
-        title: "Create a PagerDuty Incident",
-        description: "Create a self-service action that creates a PagerDuty incident",
+        title: "Interact with PagerDuty Incidents",
+        description: "Create a self-service action that creates and triggers PagerDuty incidents",
         tags: ["Incident management", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
-        link: "/guides/all/create-pagerduty-incident",
+        link: "/guides/all/interact-with-pagerduty-incidents",
     },
     {
         title: "Create a PagerDuty Service",
@@ -576,14 +580,6 @@ export const availableGuides = [
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/resolve-incident",
-    },
-    {
-        title: "Trigger a PagerDuty Incident Action",
-        description: "Create a self-service action that triggers a PagerDuty incident",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions", "Webhook", "Automations"],
-        logos: ["PagerDuty", "GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/trigger-pagerduty-incident",
     },
     {
         title: "Trigger a ServiceNow Incident",
@@ -840,7 +836,6 @@ export const availableGuides = [
 
     },
     {
-
         title: "Track SLOs and SLIs for services",
         description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
         tags: ["Engineering metrics", "New Relic", "Dashboards"],
@@ -910,13 +905,7 @@ export const availableGuides = [
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
     },
-    {
-        title: "Create a FireHydrant Incident",
-        description: "Create a self-service action that creates a FireHydrant incident",
-        tags: ["Incident management", "FireHydrant", "GitHub", "Actions","Webhook", "Automations"],
-        logos: ["FireHydrant", "GitHub"],
-        link: "/guides/all/create-firehydrant-incident",
-    },
+
     {
         title: "Create a Linear issue",
         description: "Create a self-service action that creates a Linear issue",
@@ -932,12 +921,12 @@ export const availableGuides = [
         link: "/guides/all/create-incident-io-incident",
     },
     {
-        title: "Trigger a FireHydrant incident",
-        description: "Create a self-service action that triggers a FireHydrant incident",
+        title: "Manage FireHydrant incidents",
+        description: "Create a self-service action that manages FireHydrant incidents",
         tags: ["Incident management", "FireHydrant", "Actions", "Webhook"],
         logos: ["FireHydrant", "GitHub"],
         // category: "Getting started",
-        link: "/guides/all/trigger-firehydrant-incident",
+        link: "/guides/all/manage-firehydrant-incidents",
     },
     {
         title: "Enrich security vulnerabilities using AI",
@@ -1004,7 +993,7 @@ export const availableGuides = [
     },
     {
         title: "Set up the Service Explorer AI agent",
-        description: "Set up an AI agent that helps developers explore and understand your software catalog",
+        description: "Set up an AI agent with MCP server backend mode that helps developers explore and understand your software catalog",
         tags: ["AI", "GitHub"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/setup-service-explorer-ai-agent",
@@ -1199,6 +1188,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-gitlab-deployments",
     },
     {
+        title: "Visualize and manage your Azure DevOps deployments",
+        description: "Create a dashboard that visualizes and manages your Azure DevOps deployments",
+        tags: ["SDLC", "AzureDevops", "Actions", "Dashboards"],
+        logos: ["AzureDevops"],
+        link: "/guides/all/visualize-and-manage-azure-devops-deployments",
+    },
+    {
         title: "Visualize and manage your Statuspage incidents and components",
         description: "Create a dashboard that visualizes and manages your Statuspage incidents and components",
         tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
@@ -1332,5 +1328,137 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
-    
+    {
+        title: " Create an actions ROI dashboard",
+        description: "Create a dashboard that tracks the ROI of actions in Port",
+        tags: [ "Actions", "Dashboards", "Automations"],
+        logos: ["Actions", "Automations"],
+        link: "/guides/all/create-roi-dashboard",
+    },
+    {
+        title: "Send Slack messages using Port's Slack app and automations",
+        description: "Learn how to send Slack messages to users using Port's Slack app and automations",
+        tags: ["Automations", "Slack"],
+        logos: ["Slack"],
+        link: "/guides/all/send-slack-message-to-user",
+    },
+    {
+
+        title: "Map Git users to Port user accounts",
+        description: "Automatically map Git users to their Port user accounts for seamless integration",
+        tags: ["SDLC","Git", "GitHub", "GitLab", "AzureDevops", "Automations"],
+        logos: ["Git"],
+        link: "/guides/all/map-git-users-to-port-accounts",
+    },
+    {
+        title: "Ingest and map HiBob users to Port user accounts",
+        description: "Ingest and map HiBob users to Port user accounts for seamless integration",
+        tags: ["SDLC","Actions", "Automations", "Webhook"],
+        logos: ["Webhook"],
+        link: "/guides/all/map-hibob-users-to-port-accounts",
+    },
+    {
+        title: "Map Jira users to Port user accounts",
+        description: "Automatically map Jira users to their Port user accounts for seamless integration",
+        tags: ["Jira", "Automations"],
+        logos: ["Jira"],
+        link: "/guides/all/map-jira-users-to-port-accounts",
+    },
+    {
+        title: "Ingest and map Slack users to Port user accounts",
+        description: "Ingest and map Slack users to Port user accounts for seamless integration",
+        tags: ["SDLC", "Slack",  "Actions", "Automations","Webhook"],
+        logos: ["Slack", "Webhook"],
+        link: "/guides/all/map-slack-users-to-port-accounts",
+    },
+    {
+        title: "Ingest and map ServiceNow users to Port user accounts",
+        description: "Ingest and map ServiceNow users to Port user accounts for seamless integration",
+        tags: ["SDLC", "ServiceNow", "Actions", "Automations", "Webhook"],
+        logos: ["ServiceNow", "Webhook"],
+        link: "/guides/all/map-servicenow-users-to-port-accounts",
+    },
+    {
+        title: "Generate incident updates with AI",
+        description: "Generate incident updates with AI and send them to Slack",
+        tags: ["Incident management", "AI", "Automations"],
+        logos: ["AI", "Slack", "PagerDuty"],
+        link: "/guides/all/generate-incident-updates-with-ai",
+    },
+    {
+        title: "Map PRs to services in a monorepo",
+        description: "Automatically map GitHub pull requests to services in a monorepo using file path analysis",
+        tags: ["SDLC", "GitHub", "Automations"],
+        logos: ["GitHub"],
+        link: "/guides/all/map-prs-to-services-in-monorepo",
+    },
+    {
+        title: "Trigger GitHub Copilot from Port",
+        description: "Learn how to set up GitHub Copilot triggers from Port to enable AI-powered coding assistance",
+        tags: ["SDLC", "Github Copilot", "AI", "Actions"],
+        logos: ["GitHub", "AI"],
+        link: "/guides/all/trigger-github-copilot-from-port",
+    },
+    {
+        title: "Trigger Google Gemini Assistant from Port",
+        description: "Learn how to trigger Google Gemini Assistant from Port to enable AI-powered coding assistance in your development workflow",
+        tags: ["SDLC", "GitHub", "AI", "Actions"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/trigger-gemini-assistant-from-port",
+    },
+    {
+        title: "Summarize Zendesk tickets with AI",
+        description: "Use Port's remote MCP to fetch ticket context and generate AI summaries on demand",
+        tags: ["AI", "Actions", "Webhook"],
+        logos: ["AI", "Webhook"],
+        link: "/guides/all/generate-zendesk-ticket-summaries-with-ai",
+    },
+    {
+        title: "Automatically resolve tickets with coding agents",
+        description: "Learn how to create an AI agent that automatically resolves tickets with coding agents",
+        tags: ["SDLC", "Jira", "Github Copilot", "AI"],
+        logos: ["Jira", "GitHub", "AI"],
+        link: "/guides/all/automatically-resolve-tickets-with-coding-agents",
+    },
+    {
+        title: "Auto-fix services when scorecards degrade",
+        description: "Learn how to use Port's AI capabilities to detect scorecard degradation and automatically use a coding agent like GitHub Copilot to fix it",
+        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/self-heal-scorecards-with-ai",
+    },
+    {
+        title: "Track AI-driven pull requests",
+        description: "Track AI-driven pull requests and visualize them in a dashboard",
+        tags: ["Engineering metrics", "Github Copilot", "Dashboards", "AI"],
+        logos: ["GitHub"],
+        link: "/guides/all/track-ai-driven-pull-requests",
+    },
+    {
+        title: "Trigger Claude Code from Port",
+        description: "Learn how to trigger Claude Code from Port to enable AI-powered coding assistance",
+        tags: ["SDLC", "Claude Code", "AI", "Actions"],
+        logos: ["AI", "Claude Code"],
+        link: "/guides/all/trigger-claude-code-from-port",
+    },
+    {
+        title: "Build an OWASP Top 10 Scorecard",
+        description: "Build an OWASP Top 10 security scorecard in Port using vulnerability data from Snyk",
+        tags: ["Security", "Scorecards", "Snyk"],
+        logos: ["Snyk"],
+        link: "/guides/all/owasp-top-10-scorecard",
+    },
+    {
+        title: "Enforce AI coding security standards",
+        description: "Learn how to enforce AI coding security standards in your organization",
+        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/enforce-ai-coding-security-standards",
+    }
 ]
+
+// Enhance guides with metadata (isNew property)
+export const enhancedAvailableGuides = availableGuides.map(guide => ({
+    ...guide,
+    isNew: guideMetadata[guide.link]?.isNew || false
+}));

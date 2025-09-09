@@ -12,6 +12,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Linear
 
@@ -35,7 +36,8 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -46,6 +48,8 @@ Choose one of the following installation methods:
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-Time (self-hosted)">
+
+<IntegrationVersion integration="linear" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -115,7 +119,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-linear-integration/values.yaml
@@ -163,8 +167,8 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.linearApiKey` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                               |                                  | ✅        |
 | `integration.eventListener.type`   | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
 | `integration.type`                 | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |
-| `integration.config.appHost` (deprecated)       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear. This field is deprecated. Please use the `baseUrl` field instead                                                                                                                                                                           | https://my-ocean-integration.com | ❌        |
-| `baseUrl`                 | The base url of the instance where the Linear integration is hosted, used for real-time updates.                                                                                                                                                                                                                                                               | https://my-ocean-integration.com | ❌      |
+| `integration.config.appHost` (deprecated)       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear. This field is deprecated. Please use the `liveEvents.baseUrl`field instead                                                                                                                                                                           | https://my-ocean-integration.com | ❌        |
+| `liveEvents.baseUrl`                | The base url of the instance where the Linear integration is hosted, used for real-time updates.                                                                                                                                                                                                                                                               | https://my-ocean-integration.com | ❌      |
 | `scheduledResyncInterval`          | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |                                  | ❌        |
 | `initializePortResources`          | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |                                  | ❌        |
 | `sendRawDataExamples`              | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |                                  | ❌        |
@@ -198,7 +202,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `identifier`                | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌        |
 | `version`                   | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌        |`
 | `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      | true    |          | ❌       |
-| `baseUrl`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
+| `liveEvents.baseUrl`               | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
 <br/>
 
 :::tip Ocean Sail Github Action

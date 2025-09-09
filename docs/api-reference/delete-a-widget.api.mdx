@@ -1,0 +1,72 @@
+---
+id: delete-a-widget
+title: "Delete a widget"
+description: "**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>** This route allows you to delete a specific widget in your portal. <br/><br/>To learn more about pages, checkout the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page)."
+sidebar_label: "Delete a widget"
+hide_title: true
+hide_table_of_contents: true
+api: eJztV8tu4zYU/RWCmyaBY8XprIyiQIpkUXQKBGm6co2Clq5tTihS5cOpx9C/91xKfjT2DGZSoAjQbhxJ98FzD+8rGxnVIsjxRN6rBQU5HciKQul1E7WzciwvLh6XJLJQ3Nz/KHQQZfKebDRroa2YUVQDftBxJxFz52t8EEaVT/hKPiporJTRlWK/QShbica7SOX+HQalS6YS8FGRF2uXvGgcjI1INgU1MyT0XKRAULalw2ElYAy/m/ni+/wj7g2pQPAwh4PoRAT4SYfercivND1PzwrV6MusQrakomHxOSIBbIJ3bRewQ6CA0Tht48EBFxfikUXepUhCGeOeAwPlsyoyxB9FaKjUc12KZ10tKDI7B7EMxd7doxMA7K2o+Wg1g1eR4QxEuaTyid9zCJUrUw1qM33Ts2WMTRgXBT6HIbsdaleUKURX6490mV1cViosZ075KlyC3svGpIW2IYdblApI3CJrng9/s3IgG+VVjQA8p8NGBgColRxvZFw3hEwI0YMZKNbavie7iEs5HrUDqTlNGoXXgbTwkN8W9LuugBc0kIfA0x9Je6rkOPpE7eCf+e94xQnHnpHAgZCHOq5zGDPQCwTjyZRFnkKDdEOi49zrqyv+8/d8v82XWImQypJCmCdj1jildDYiHNZXTWN0mS+i+BDY6DCYL/LWR+xmH5DATL13DYpEd7jcE/+STTVgc1DTFjSoqtLsVZn7A+25MoEOSZiwOQzY5N3V6BSkuUomioeeiq8J7hROGIfYA8GZ5L3zx7cKSQ0CkBcnZO1RAFs/08/GvY3y3XGUN2gBATVXEoowLnMRAf0KSYnesctM8ayCsI47VrLVm6Zib/V5Ul428Ncx0VM7+vaY2gfgoxDFzFVrHgfRoYkpvyBxZnSNJo5vo5/1D+dvms6vI/HLY+6Ju74+Jo4HKUe+p79y1JFeq1h2V5MHyzdB9NS8ZQpfm5Gv4aHteMV8WjrgkN2szVOL54QsVqNujhebF8OnLbppAclubLSSp4RfbWdd8gY+tkMV28F2pkqeVMfSFPYKBwPnF8ba0b8dOzs6YfYTrfcj7CYhEq8/5tuU/ZRbksLikznXdu6yuY6G9e9xHi9gUGXYHZOj4RVfXuNCrFVOh9777XYV6UKWL65gs8+q/xe8/8yC12dipD9j0RhcGOdOTu5NX0YTuRrlmuJ/BQZyfLzH9bXEwv0ShhJYOu4zE7nZzHA9v3rTtvwZXdPzHobHlfKaLzgXXKXzZVenO8Rhep499M3nXHwqhG2FWS4v5GDiNzw+od6Od1Gu6H/x+D1L7RTKfYUzB538BothEw8sj5o8d5hd37u9e3/3eAd1lfjCDtvLU24v/QMfcBLYy77ToeBfJuakyWbTNa+23el3ok9a9FFutZknXkn/AhHbC4k=
+sidebar_class_name: "delete api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete a widget"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/pages/{page_identifier}/widgets/{widget_id}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+**The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>** This route allows you to delete a specific widget in your portal. <br/><br/>To learn more about pages, checkout the [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page).
+
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"page_identifier","required":true},{"schema":{"type":"string","minLength":1},"in":"path","name":"widget_id","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Deleted successfully","content":{"application/json":{"schema":{"description":"Deleted successfully","type":"object","properties":{"ok":{"enum":[true]}},"additionalProperties":false,"required":["ok"]}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

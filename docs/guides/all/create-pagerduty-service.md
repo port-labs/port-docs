@@ -24,11 +24,7 @@ You can implement this action in two ways:
 
 - Complete the [onboarding process](/getting-started/overview).
 - Access to your PagerDuty organization with permissions to manage services.
-- Optional - Install Port's PagerDuty integration [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty)
-
-	:::tip PagerDuty Integration
-	This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your PagerDuty services.
-	:::
+- Optional - Install Port's [PagerDuty integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty).
 
 ## Set up data model
 
@@ -509,34 +505,35 @@ However, we highly recommend you install the PagerDuty integration to have these
 
 ## Let's test it!
 
-1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal.
 
 2. Choose either the GitHub workflow or webhook implementation:
-   - For GitHub workflow: Click on `Create Service`
-   - For webhook: Click on `Create Service (Webhook)`
+   - For GitHub workflow: Click on `Create Service`.
+   - For webhook: Click on `Create Service (Webhook)`.
 
 3. Enter the required information:
-   - Name of the service
-   - Description (optional)
-   - Escalation Policy ID
+   - Name of the service.
+   - Description (optional).
+   - Escalation Policy ID.
 
       :::info Escalation Policy ID
       The escalation policy ID is a unique identifier (e.g., P7LVMYP) that you can find in your PagerDuty dashboard:
-      1. Go to Configuration → Escalation Policies
-      2. Click on the policy you want to use
-      3. The ID is the last part of the URL (e.g., in https://example-subdomain.pagerduty.com/escalation_policies/P7LAMYP, the ID is P7LAMYP)
+      1. Go to Configuration → Escalation Policies.
+      2. Click on the policy you want to use.
+      3. The ID is the last part of the URL (e.g., in https://example-subdomain.pagerduty.com/escalation_policies/P7LAMYP, the ID is P7LAMYP).
       :::
 
-4. Click on `Execute`
+4. Click on `Execute`.
 
-5. Done! Wait for the service to be created in PagerDuty
+5. Done! Wait for the service to be created in PagerDuty.
 
-## More Self Service PagerDuty Actions Examples
-- [Acknowledge Incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
-- [Change On-Call User](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)
-- [Create PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-incident)
-- [Change PagerDuty incident owner](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
-- [Escalate an incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
-- [Resolve an incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
-- [Trigger PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
+## Related guides
+
+- [Acknowledge Incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident).
+- [Change On-Call User](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user).
+- [Create PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/interact-with-pagerduty-incidents).
+- [Change PagerDuty incident owner](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner).
+- [Escalate an incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident).
+- [Resolve an incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident).
+- [Trigger PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident).
 

@@ -17,13 +17,14 @@ import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-cata
 import JiraTeamExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_response.mdx"
 import JiraTeamEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_entity.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Jira
 
-Port's Jira integration allows you to model Jira resources in your software catalog and ingest data into them.
+Port's Jira Cloud integration allows you to model Jira Cloud resources in your software catalog and ingest data into them.
 
-:::info Jira cloud only
-This integration supports `Jira Cloud` at the moment. To integrate Port with `Jira Server`, use [Port's webhook integration](/build-your-software-catalog/custom-integration/webhook/examples/jira-server).
+:::info Jira Cloud integration
+This integration is designed for `Jira Cloud`. For `Jira Server` (self-hosted), use [Port's Jira Server Ocean integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/).
 :::
 
 ## Overview
@@ -73,15 +74,15 @@ The Port Jira integration requires the following API token scopes:
 | **manage:jira-webhook** | Register, update, or delete dynamic webhooks. | Receive real-time callbacks when issues change instead of polling. |
 
 
-Choose one of the following installation methods:
-
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
 :::caution API Token authentication recommended
-For production, we recommend using **API Token authentication** for Port's Jira integration.  
+For production, we recommend using **API Token authentication** for Port's Jira Cloud integration.  
 It ensures stable data syncing and prevents issues caused by user account changes.  
 
 OAuth is best suited for the **initial setup** phase, such as configuring mappings.
@@ -92,6 +93,8 @@ OAuth is best suited for the **initial setup** phase, such as configuring mappin
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="jira" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -165,7 +168,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-jira-integration/values.yaml

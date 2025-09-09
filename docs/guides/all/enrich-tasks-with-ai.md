@@ -26,14 +26,14 @@ By the end of this guide, your developers will receive automated, contextual ins
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
+- A Port account with the [AI agents feature enabled](/ai-interfaces/ai-agents/overview#access-to-the-feature).
 - Appropriate permissions to create and configure AI agents.
 - [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) configured in your Port instance.
 - [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) configured in your Port instance.
 
 ## Set up data model
 
-To create an Task Assistant AI agent in Port, we'll need to configure the following components as described in our [Build an AI agent](/ai-agents/build-an-ai-agent) guide:
+To create an Task Assistant AI agent in Port, we'll need to configure the following components as described in our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide:
 -  The data sources it will use to answer questions about tasks and their related issues and collaborators.
 -  The agent configuration that defines its capabilities and conversation starters.
 -  An automation to analyze the task and trigger the agent.
@@ -84,7 +84,7 @@ Install the following integration to have access to these data sources:
          "comment_on_jira_issue"
        ],
        "executionMode": "Automatic",
-       "prompt": "# Task\nWhen a user starts a task, automatically send a greeting using their first name and explain this is an automatic message. Then share three sections with emojis for helpful context.\n\n## Message Format\n\nHey there [User's First Name], it's Clarity :crystal_ball: - the Port AI agent!\nI noticed you just started working on a new task: [link to assigned issue].\nHere's some context to help you get started :blobdance:\n\n:male-technologist: Devs who might have input:\nList up to 3 developers (excluding the user), explain briefly why each is relevant. If none, write a meaningful explanation.\n\n:jira: Similar Jira Issues:\nList up to 3 Jira issues (not assigned to the user), mention the assigned person and why it's relevant. If none, explain why.\n\n:github_on_fire: Similar Pull Requests:\nList up to 3 pull requests (not assigned to the user), mention the creator and why it's relevant. If none, explain why.\n\n## Guidelines\n- Each section can have fewer than 3 items. Always explain if empty.",
+       "prompt": "## Comment Format\n\nHey there [User's First Name], it's Clarity - the Port AI agent!\nI noticed you just started working on a new task: [link to assigned issue].\nHere's some context to help you get started\n\nDevs who might have input:\nList up to 3 developers (excluding the user), explain briefly why each is relevant. If none, write a meaningful explanation.\n\nSimilar Jira Issues:\nList up to 3 Jira issues (not assigned to the user), mention the assigned person and why it's relevant. If none, explain why.\n\nSimilar Pull Requests:\nList up to 3 pull requests (not assigned to the user), mention the creator and why it's relevant. If none, explain why.\n\nEach section can have fewer than 3 items. Always explain if empty.\n\n## Instructions\n\nSend the comment according to the format above in the most relevant given JIRA Issue. Use the `comment_on_jira_issue` tool to achieve that.",
        "allowed_tools": [
          "Entities Search",
          "Entities Similarity Search",

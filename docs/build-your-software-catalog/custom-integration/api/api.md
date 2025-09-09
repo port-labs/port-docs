@@ -1070,7 +1070,7 @@ It is also possible to delete all entities using Port's web UI:
 2. Click on the "Delete All `BLUEPRINT_NAME`" button on the desired blueprint.
 3. Follow the instructions.
 
-**Note:** only users with the [admin](/sso-rbac/rbac/rbac.md#roles) role can use Port's UI to perform the delete all operation.
+**Note:** only users with the [admin](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions) role can use Port's UI to perform the delete all operation.
 
 :::
 

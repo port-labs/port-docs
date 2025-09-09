@@ -12,6 +12,7 @@ import DatadogConfiguration from "../resources/datadog/\_example_datadog_webhook
 import DatadogMicroserviceBlueprint from "../resources/datadog/\_example_datadog_microservice.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 
 # Datadog
@@ -25,19 +26,6 @@ This integration allows you to:
 - Map and organize your desired Datadog resources and their metadata in Port (see supported resources below).
 - Watch for Datadog object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
-## BaseUrl & Webhook Configuration
-
-:::warning AppHost deprecation
-**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
-:::
-
-The `baseUrl` parameter enables real-time updates from Datadog to Port. If not provided:
-- The integration will still function normally
-- You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
-- Manual resyncs can be triggered via Port's UI
-
-The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
-
 ### Supported Resources
 
 - [`Monitor`](https://docs.datadoghq.com/api/latest/monitors/#get-all-monitor-details)
@@ -47,15 +35,17 @@ The `integration.secrets.webhookSecret` parameter secures your webhooks. If not 
 - [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)*
 - [`User`](https://docs.datadoghq.com/api/latest/users/#list-all-users)
 - [`Team`](https://docs.datadoghq.com/api/latest/teams/#get-all-teams)
+- [`Service Dependency`](https://docs.datadoghq.com/api/latest/service-dependencies/#get-all-service-dependencies)
 <br />
 
-  *_SLO History and Service Metric resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
+  *_SLO History, Service Metric and Service Dependency resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
 
 <br />
 
 ## Setup
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -66,6 +56,8 @@ Choose one of the following installation methods:
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="datadog" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -80,7 +72,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="datadog" />
+<OceanRealtimeInstallation integration="datadog" webhookSecret="integration.secrets.webhookSecret"/>
 
 <PortApiRegionTip/>
 
@@ -137,7 +129,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-datadog-integration/values.yaml
@@ -186,7 +178,7 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.datadogApplicationKey` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)                                                                                                                                                            |                                  | ✅        |
 | `integration.config.datadogBaseUrl`         | The base Datadog host. Defaults to https://api.datadoghq.com. If in EU, use https://api.datadoghq.eu                                                                                                                                                                                           |                                  | ✅        |
 | `integration.secrets.webhookSecret`   | Webhook secret for authenticating incoming events. [Learn more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                                                                                                                                                                                   |                                  | ❌        |
-| `baseUrl`                | The base url of the instance where the Datadog integration is hosted, used for real-time updates. (e.g.`https://mydatadogeoceanintegration.com`)                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
+| `liveEvents.baseUrl`               | The base url of the instance where the Datadog integration is hosted, used for real-time updates. (e.g.`https://mydatadogeoceanintegration.com`)                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
 | `integration.config.appHost`(deprecated)                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                                                                                                                                                                          | https://my-ocean-integration.com | ❌         |
 | `integration.eventListener.type`            | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
 | `integration.type`                          | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |
@@ -1059,6 +1051,35 @@ This enrichment significantly enhances the usability of the Datadog response by 
 
 </details>
 
+<details>
+<summary> Service Dependency response data</summary>
+
+```json showLineNumbers
+{
+  "service_a": {
+    "calls": [
+      "service_b",
+      "service_c"
+    ]
+  },
+  "service_b": {
+    "calls": [
+      "service_o"
+    ]
+  },
+  "service_c": {
+    "calls": [
+      "service_o"
+    ]
+  },
+  "service_o": {
+    "calls": []
+  }
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1271,6 +1292,25 @@ The combination of the sample payload and the Ocean configuration generates the 
     ]
   },
   "icon": "Datadog"
+}
+```
+
+</details>
+
+<details>
+<summary>Service dependency entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "service_a",
+  "title": "Dummy",
+  "icon": "Datadog",
+  "relations": {
+    "dependencies": [
+      "service_b",
+      "service_c"
+    ]
+  }
 }
 ```
 

@@ -1,0 +1,258 @@
+```python showLineNumbers title="retryable_http_client.py"
+
+import httpx
+import asyncio
+import time
+from typing import Any, Dict, Optional
+from loguru import logger
+from config import (
+    MAX_RETRY_ATTEMPTS, 
+    DEFAULT_TIMEOUT_SECONDS, 
+    RETRY_DELAY_SECONDS,
+    USE_EXPONENTIAL_BACKOFF,
+    MAX_RETRY_DELAY_SECONDS,
+    MAX_CONNECTIONS,
+    MAX_KEEPALIVE_CONNECTIONS,
+    KEEPALIVE_EXPIRY
+)
+from .circuit_breaker import CircuitBreaker
+
+
+class RetryableHTTPClient:
+    """
+    A wrapper around httpx.AsyncClient that provides automatic retry functionality
+    with client recreation on timeout errors.
+    """
+    
+    def __init__(self, timeout: Optional[httpx.Timeout] = None, **kwargs):
+        self.timeout = timeout or httpx.Timeout(DEFAULT_TIMEOUT_SECONDS)
+        self.max_retries = MAX_RETRY_ATTEMPTS
+        self.retry_delay = RETRY_DELAY_SECONDS
+        self.use_exponential_backoff = USE_EXPONENTIAL_BACKOFF
+        self.max_retry_delay = MAX_RETRY_DELAY_SECONDS
+        
+        # Connection health monitoring
+        self.client_created_at = time.time()
+        self.request_count = 0
+        self.last_refresh_time = time.time()
+        self.refresh_interval = 300  # Refresh client every 5 minutes
+        
+        # Circuit breaker for additional protection
+        self.circuit_breaker = CircuitBreaker(
+            failure_threshold=10,
+            recovery_timeout=120.0,  # 2 minutes
+            expected_exception=(httpx.TimeoutException, httpx.ConnectTimeout, httpx.ReadTimeout)
+        )
+        
+        # Track active requests to prevent premature closure
+        self._active_requests = 0
+        self._closed = False
+        
+        # Create client with connection pooling limits
+        self.limits = httpx.Limits(
+            max_connections=MAX_CONNECTIONS,
+            max_keepalive_connections=MAX_KEEPALIVE_CONNECTIONS,
+            keepalive_expiry=KEEPALIVE_EXPIRY
+        )
+        
+        self._client = httpx.AsyncClient(
+            timeout=self.timeout,
+            limits=self.limits,
+            **kwargs
+        )
+
+    def _should_refresh_client(self) -> bool:
+        """Check if the client should be refreshed based on time or request count."""
+        current_time = time.time()
+        time_since_refresh = current_time - self.last_refresh_time
+        
+        # Refresh if:
+        # 1. More than refresh_interval seconds have passed, OR
+        # 2. We've made more than 1000 requests (to prevent connection pool issues)
+        return time_since_refresh > self.refresh_interval or self.request_count > 1000
+
+    def _refresh_client_if_needed(self):
+        """Refresh the client if it's been running for too long."""
+        if self._should_refresh_client():
+            logger.info(f"Refreshing HTTP client after {self.request_count} requests and "
+                       f"{time.time() - self.last_refresh_time:.1f}s of operation")
+            self._reconnect_client()
+            self.request_count = 0
+            self.last_refresh_time = time.time()
+
+    def _reconnect_client(self, timeout: Optional[httpx.Timeout] = None):
+        """Reconnect the HTTP client by creating a new one."""
+        if self._client and not self._closed:
+            try:
+                # Close the old client
+                self._client.close()
+            except Exception:
+                pass  # Ignore errors when closing
+        
+        new_timeout = timeout or self.timeout
+        self._client = httpx.AsyncClient(timeout=new_timeout, limits=self.limits)
+        logger.debug("Reconnected HTTP client with fresh connection pool")
+
+    def _calculate_retry_delay(self, attempt: int) -> float:
+        """Calculate delay for retry attempt using exponential backoff."""
+        if not self.use_exponential_backoff:
+            return self.retry_delay
+        
+        # Exponential backoff: delay = base_delay * (2^attempt)
+        delay = self.retry_delay * (2 ** attempt)
+        # Cap the delay at max_retry_delay
+        return min(delay, self.max_retry_delay)
+
+    async def _make_request(self, method: str, url: str, headers: Optional[Dict[str, str]] = None, 
+                           json: Optional[Any] = None, **kwargs) -> httpx.Response:
+        """Internal method to make the actual HTTP request."""
+        if self._closed:
+            raise RuntimeError("Cannot send a request, as the client has been closed.")
+        
+        self._active_requests += 1
+        try:
+            return await self._client.request(method, url, headers=headers, json=json, **kwargs)
+        finally:
+            self._active_requests -= 1
+
+    async def request(
+        self,
+        method: str,
+        url: str,
+        headers: Optional[Dict[str, str]] = None,
+        json: Optional[Any] = None,
+        **kwargs
+    ) -> httpx.Response:
+        """
+        Make an HTTP request with automatic retry on timeout errors and circuit breaker protection.
+        
+        Args:
+            method: HTTP method (GET, POST, etc.)
+            url: Request URL
+            headers: Request headers
+            json: JSON payload
+            **kwargs: Additional arguments to pass to httpx.AsyncClient.request
+            
+        Returns:
+            httpx.Response: The HTTP response
+            
+        Raises:
+            httpx.TimeoutException: If all retry attempts fail due to timeout
+            httpx.HTTPStatusError: For HTTP error responses
+            Exception: For other errors
+        """
+        if self._closed:
+            raise RuntimeError("Cannot send a request, as the client has been closed.")
+        
+        # Check if we should refresh the client before making the request
+        self._refresh_client_if_needed()
+        
+        # Use circuit breaker to protect against cascading failures
+        async def _request_with_retry():
+            last_exception = None
+            
+            for attempt in range(self.max_retries + 1):
+                try:
+                    self.request_count += 1
+                    logger.debug(f"Making {method} request to {url} (attempt {attempt + 1}/{self.max_retries + 1})")
+                    response = await self._make_request(method, url, headers=headers, json=json, **kwargs)
+                    response.raise_for_status()
+                    return response
+                    
+                except httpx.ConnectTimeout as e:
+                    last_exception = e
+                    retry_delay = self._calculate_retry_delay(attempt)
+                    
+                    logger.warning(
+                        f"Connection timeout on attempt {attempt + 1}/{self.max_retries + 1} "
+                        f"for {method} {url}: {str(e)}. "
+                        f"Reconnecting and retrying in {retry_delay:.1f}s..."
+                    )
+                    
+                    if attempt < self.max_retries:
+                        # Reconnect the HTTP client for the next attempt
+                        self._reconnect_client()
+                        # Add exponential backoff delay before retrying
+                        await asyncio.sleep(retry_delay)
+                    else:
+                        logger.error(f"All {self.max_retries + 1} attempts failed for {method} {url}")
+                        raise last_exception
+                        
+                except (httpx.TimeoutException, httpx.ReadTimeout) as e:
+                    last_exception = e
+                    retry_delay = self._calculate_retry_delay(attempt)
+                    
+                    logger.warning(
+                        f"Timeout error on attempt {attempt + 1}/{self.max_retries + 1} "
+                        f"for {method} {url}: {str(e)}. "
+                        f"Retrying in {retry_delay:.1f}s..."
+                    )
+                    
+                    if attempt < self.max_retries:
+                        # Add exponential backoff delay before retrying
+                        await asyncio.sleep(retry_delay)
+                    else:
+                        logger.error(f"All {self.max_retries + 1} attempts failed for {method} {url}")
+                        raise last_exception
+                        
+                except httpx.HTTPStatusError as e:
+                    logger.error(f"HTTP error occurred: {e.response.text}")
+                    raise
+                except Exception as e:
+                    logger.error(f"An error occurred: {str(e)}")
+                    raise
+        
+        return await self.circuit_breaker.call(_request_with_retry)
+
+    async def get(self, url: str, **kwargs) -> httpx.Response:
+        """Make a GET request with retry functionality."""
+        return await self.request("GET", url, **kwargs)
+
+    async def post(self, url: str, **kwargs) -> httpx.Response:
+        """Make a POST request with retry functionality."""
+        return await self.request("POST", url, **kwargs)
+
+    async def put(self, url: str, **kwargs) -> httpx.Response:
+        """Make a PUT request with retry functionality."""
+        return await self.request("PUT", url, **kwargs)
+
+    async def delete(self, url: str, **kwargs) -> httpx.Response:
+        """Make a DELETE request with retry functionality."""
+        return await self.request("DELETE", url, **kwargs)
+
+    async def close(self):
+        """Close the underlying HTTP client only when explicitly requested."""
+        if self._client and not self._closed:
+            # Wait for active requests to complete with timeout
+            timeout = 30  # 30 seconds timeout
+            start_time = time.time()
+            
+            while self._active_requests > 0 and (time.time() - start_time) < timeout:
+                logger.debug(f"Waiting for {self._active_requests} active requests to complete before closing")
+                await asyncio.sleep(0.1)
+            
+            if self._active_requests > 0:
+                logger.warning(f"Force closing client with {self._active_requests} active requests after {timeout}s timeout")
+            
+            try:
+                await self._client.aclose()
+                self._closed = True
+                logger.debug("HTTP client closed successfully")
+            except Exception as e:
+                logger.warning(f"Error closing HTTP client: {e}")
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # Don't create a task for closing in sync context
+        pass
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        # Only close if explicitly requested
+        pass 
+
+```

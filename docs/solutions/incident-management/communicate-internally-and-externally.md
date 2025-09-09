@@ -25,6 +25,8 @@ In high-pressure moments, clear and timely communication prevents confusion, bui
 - [Create and Update Statuspage Incidents](../../guides/all/visualize-and-manage-statuspage-incidents#set-up-self-service-actions)
 - [Update ServiceNow Incident](../../guides/all/interact-with-servicenow/)
 - [Setup Incident Manager AI Agent](../../guides/all/setup-incident-manager-ai-agent)
+- [Generate incident updates with AI](../../guides/all/generate-incident-updates-with-ai)
+- [Summarize Zendesk tickets with AI](../../guides/all/generate-zendesk-ticket-summaries-with-ai/)
 
 :::tip Over-communicate in a Crisis
 When in doubt, share more. Frequent, clear updates—internally and externally—reduce stress and build trust during incidents.

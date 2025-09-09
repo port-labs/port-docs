@@ -1,0 +1,71 @@
+---
+id: update-a-user
+title: "Update a user"
+description: "This route allows you to update a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Update a user"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlV0tv4zYQ/isEL02AxIrTPRlFAe+2QIN2iyBNToZRUBJtcyOR6pC01zX03ztDSpYSy1knewnQi0yT8/zmweGOO7G0fDLjD1aC5fMLnkubgaqcMppP+P1KWQbGO8lEUZiNZVvjmTPMV7mgTeaR8QfLcumEKuyIBY5MaJZKOst7xG4lW3IwhUwsExrPpSgTO/opheTn8Lk3rJACNCsNoIYUtQc2exHY8Kdlw2W2ktkjIxKSPstN5kupnSD752cr5yo7SRLctqPKgBspk1hrLiEVWUKfS7OWsFZyk5yP+AUH+Y+X1n00+ZZPdjwz2qE0WoqqKlQW5CZfLIGz4xa1l4JWbltJhMukX2TmUE4FppLglLR0GszukQkAsUWqUukbJ0s8Gl9wFVd7IutA6SWvD0MiIw4hFBuhHUEsrFVLTasW5RGxBpQGNL9GmRYlKjOLIDkIHNTcqMUt1IyCRJ4rkiKK2x4YC1FYWddEUAlAyY7ybjIbALOzSZEplXArtJyswX+k6m+kV0UTNQUy5xMHXg75ECgZmgTS7n0J5vZdITMpUY1GF7AWrMw8KLcN9qWYkxKoVmI6T3wsGSJEqZXRNgb5+uqKfp4a8RB4cmZ9lqEJC18UW0q4kzPsaUaZR/pK7Us0iJyeI0wRjiEAFwqs+zMgN3BaiBcOK5U5D8NnFuvMD6eRyge348aQGjBrlYdcODlZkS0DSbBO3eExem2gFHjCCfpLp9BDZInRexWLgeUpdh2p/kEo6n7WzohmXr+hXknMkeZyonV6OPDP7AtUwULE4rMs09MidUQnyrgZzo8XMoqy9A+zVPr0yD1zIqrdK3kqsoEfSjvFCq2c7BuYGgRZaE6tZSF8gXo0VnB90C+PlfkTMx7pnv1me/xwNT5sI79E9eyuaTjf20GQ2bpWLXYQAAOD6OMVYMXyhExBua2c07z8cOjllGFDNR4yyTbKrUKzbhpEzvCjnVoo7N0bYZk2ji2M1/m7hqLjehmU5/n0NiQaaMc/HkJ7FwccluKEw3BScwanLQFLyc4KVSpHe+PP6uP5u4bzdSCe7nMD3PX1IXA0RZDnHfy5kRF07DtZDE2YlHG8baB5zxC+NSPfgkMdccVhb2XyOMplNMuFkW7Ck/U4CcNUsuvGupoaNY7m7XjoAUcb3g70olLtPI8ADJ162xH0Rrm/yKIIcjvQdbdYpX6X227GnHq0F9S/IWa8GUNXUuCYEpAlGO66B8OvX0VZFbI38M/aOMz3N3u3FebahQn6lSM+fosGs+ntDeoivyPg49FVGJCMdaXQ3ZXd3DXNE4w/i1Pv7fK/e8Q14XTyq0uqQmDYaOyDMBrHlJvx9RgJ4wR/wSe91wSGamWo7GZ8t0uFlQ+A9zxtY6CBngK4XAtQIqWYYWbmytI6Hy6YfiDO7ppaPGdve5Qc8a3NX03JuxaFp3+4fMRsfvJUqinrmgwm0yPBp2jg5T2J6QQcNCwqtMgRR6QXaee9er+d3n/6DanT5lldmpyYQGxoNMJvsNYExOKDmfZ2OJ/ppQ+NjUeh4V3pKYL9on0MRdssyK1BPJ5Xc/SEvuTXIMtuF1tCXe/p49FRjgbblprCg4Nl/R9Qgwpd
+sidebar_class_name: "patch api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update a user"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/users/{user_email}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to update a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"user_email","required":true,"description":"The email address of the user you want to operate on."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"roles":{"type":"array","minItems":1,"items":{"type":"string"},"description":"The roles you want to assign to the user."},"teams":{"type":"array","items":{"type":"string"},"description":"The names of the teams you want to assign the user to."}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Updated successfully.","content":{"application/json":{"schema":{"properties":{"ok":{"enum":[true]},"email":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"picture":{"type":"string"},"status":{"type":"string"},"id":{"type":"string"},"type":{"type":"string"},"providers":{"type":"array","items":{"type":"string"}},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"},"orgs":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string"}},"required":["id"]}},"teams":{"type":"array","items":{"type":"string"}},"roles":{"type":"array","items":{"type":"object","properties":{"name":{"type":"string"}},"required":["name"]}},"orgMembers":{"type":"array","items":{"type":"object","properties":{"orgId":{"type":"string"},"status":{"type":"string"},"lastLoginAt":{"type":"string","format":"date-time"}},"required":["orgId","status","lastLoginAt"]}},"termsAccepted":{"type":"boolean","default":null}},"description":"Updated successfully.","required":["ok"],"additionalProperties":false}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}},"413":{"description":"Request body is too large (limit is 1MiB)","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false,"description":"Request body is too large (limit is 1MiB)"}}}},"422":{"description":"The json provided does not match the route's schema","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"The json provided does not match the route's schema"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -1,20 +1,35 @@
 ```python showLineNumbers title="port_client.py"
 
 import httpx
-from typing import Any, Dict
+from typing import Any, Dict, Optional, List
 from loguru import logger
-from typing import List, Dict, Optional, Union
-from .cache import InMemoryCache
+from .retryable_http_client import RetryableHTTPClient
 
 
 class PortClient:
-    def __init__(self, client_id, client_secret, **kwargs) -> None:
-        self.httpx_async_client = kwargs.get("httpx_async_client", httpx.AsyncClient())
+    def __init__(self, client_id: str, client_secret: str, **kwargs) -> None:
+        # Inject the retryable HTTP client
+        self.http_client = kwargs.get("http_client")
+        if not self.http_client:
+            timeout = kwargs.get("timeout", httpx.Timeout(20))
+            self.http_client = RetryableHTTPClient(timeout=timeout)
+        
         self.client_id = client_id
-        self.cache = InMemoryCache()
         self.client_secret = client_secret
         self.base_url = kwargs.get("base_url", "https://api.getport.io/v1")
         self.port_headers = None
+
+    async def send_api_request(
+        self,
+        method: str,
+        endpoint: str,
+        headers: Optional[Dict[str, str]] = None,
+        json: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """Send API request using the injected retryable HTTP client."""
+        url = f"{self.base_url}{endpoint}"
+        response = await self.http_client.request(method, url, headers=headers, json=json)
+        return response.json()
 
     async def get_port_access_token(self) -> str:
         credentials = {"clientId": self.client_id, "clientSecret": self.client_secret}
@@ -28,30 +43,10 @@ class PortClient:
         port_headers = {"Authorization": f"Bearer {access_token}"}
         return port_headers
 
-    async def send_api_request(
-        self,
-        method: str,
-        endpoint: str,
-        headers: Dict[str, str] | None = None,
-        json: Dict[str, Any] | None = None,
-    ) -> Dict[str, Any]:
-        url = f"{self.base_url}{endpoint}"
-        try:
-            response = await self.httpx_async_client.request(
-                method, url, headers=headers, json=json
-            )
-            response.raise_for_status()
-            return response.json()
-        except httpx.HTTPStatusError as e:
-            logger.error(f"HTTP error occurred: {e.response.text}")
-            raise
-        except Exception as e:
-            logger.error(f"An error occurred: {str(e)}")
-            raise
-
     async def upsert_entity(
         self, blueprint_id: str, entity_object: Dict[str, Any]
-    ) -> None:
+    ) -> Dict[str, Any]:
+        """Upsert a single entity (legacy method for backward compatibility)."""
         endpoint = f"/blueprints/{blueprint_id}/entities?upsert=true&merge=true"
         port_headers = (
             self.port_headers if self.port_headers else await self.get_port_headers()
@@ -61,5 +56,80 @@ class PortClient:
         )
         logger.info(response)
         return response
+
+    async def upsert_entities_bulk(
+        self, blueprint_id: str, entity_objects: List[Dict[str, Any]]
+    ) -> Dict[str, Any]:
+        """
+        Upsert multiple entities using the bulk endpoint.
+        
+        Args:
+            blueprint_id: The blueprint identifier
+            entity_objects: List of entity objects to upsert (max 20 per request)
+            
+        Returns:
+            Dict containing the response from the bulk operation
+            
+        Raises:
+            ValueError: If more than 20 entities are provided
+        """
+        if len(entity_objects) > 20:
+            raise ValueError(f"Maximum 20 entities allowed per bulk request, got {len(entity_objects)}")
+        
+        endpoint = f"/blueprints/{blueprint_id}/entities/bulk?upsert=true&merge=true"
+        port_headers = (
+            self.port_headers if self.port_headers else await self.get_port_headers()
+        )
+        
+        response = await self.send_api_request(
+            "POST", endpoint, headers=port_headers, json={"entities": entity_objects}
+        )
+        
+        logger.info(f"Bulk upserted {len(entity_objects)} entities for blueprint {blueprint_id}")
+        return response
+
+    async def upsert_entities_batched(
+        self, blueprint_id: str, entity_objects: List[Dict[str, Any]], batch_size: int = 20
+    ) -> List[Dict[str, Any]]:
+        """
+        Upsert multiple entities in batches using the bulk endpoint.
+        
+        Args:
+            blueprint_id: The blueprint identifier
+            entity_objects: List of entity objects to upsert
+            batch_size: Number of entities per batch (max 20)
+            
+        Returns:
+            List of responses from all batch operations
+        """
+        if batch_size > 20:
+            batch_size = 20
+            logger.warning(f"Batch size reduced to 20 (maximum allowed)")
+        
+        responses = []
+        total_entities = len(entity_objects)
+        
+        for i in range(0, total_entities, batch_size):
+            batch = entity_objects[i:i + batch_size]
+            batch_num = (i // batch_size) + 1
+            total_batches = (total_entities + batch_size - 1) // batch_size
+            
+            logger.info(f"Processing batch {batch_num}/{total_batches} with {len(batch)} entities")
+            
+            try:
+                response = await self.upsert_entities_bulk(blueprint_id, batch)
+                responses.append(response)
+                logger.info(f"Successfully processed batch {batch_num}/{total_batches}")
+            except Exception as e:
+                logger.error(f"Failed to process batch {batch_num}/{total_batches}: {e}")
+                raise
+        
+        logger.info(f"Completed bulk upsert of {total_entities} entities in {len(responses)} batches")
+        return responses
+
+    async def close(self):
+        """Close the HTTP client."""
+        if self.http_client:
+            await self.http_client.close()
 
 ```

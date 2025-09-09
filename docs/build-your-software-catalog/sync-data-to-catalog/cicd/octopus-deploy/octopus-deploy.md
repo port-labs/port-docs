@@ -12,6 +12,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Octopus Deploy Integration
 
@@ -37,27 +38,10 @@ Some of the resources that can be ingested from Octopus Deploy into Port are lis
 The integration supports additional resources, see the [ingest additional resources](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy/mapping-extra-resources) page for more information
 :::
 
-## BaseUrl & webhook configuration
-
-:::warning AppHost deprecation
-**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
-:::
-
-The `baseUrl` parameter enables real-time updates from Octopus to Port.  
-If not provided:
-- The integration will still function normally
-- You should use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) to configure updates at a set interval.
-- Manual resyncs can be triggered via Port's UI
-
-The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
-
-
-In order for the Octopus integration to update the data in Port on every change in the Octopus resources, you need to specify the `baseUrl` parameter.
-The `baseUrl` parameter should be set to the `url` of your Octopus integration instance. In addition, your Octopus instance (whether it is Octopus SaaS or a self-hosted version of Octopus) needs to have the option to send webhook requests to the Octopus integration instance, so please configure your network accordingly.
-
 ## Setup
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -68,6 +52,8 @@ Choose one of the following installation methods:
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="octopus" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -82,7 +68,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="Octopus" />
+<OceanRealtimeInstallation integration="Octopus" webhookSecret="integration.secrets.webhookSecret" />
 
 <PortApiRegionTip/>
 
@@ -140,7 +126,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-octopus-integration/values.yaml
@@ -193,7 +179,7 @@ This table summarizes the available parameters for the installation.
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                           | ❌        |
 | `sendRawDataExamples`               | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                     | ❌        |
 | `integration.secrets.webhookSecret`           | Webhook secret for authenticating incoming events. [Learn more](https://octopus.com/docs/administration/managing-infrastructure/subscriptions)                                           | ❌        |
-| `baseUrl`               | The base url of the instance where the Octopus integration is hosted, used for real-time updates. (e.g.`https://myoctopusdeployoceanintegration.com`)                    | ❌        |
+| `liveEvents.baseUrl`              | The base url of the instance where the Octopus integration is hosted, used for real-time updates. (e.g.`https://myoctopusdeployoceanintegration.com`)                    | ❌        |
 <br/>
 
 <AdvancedConfig/>

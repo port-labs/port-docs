@@ -96,7 +96,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## FireHydrant
 
 - [FireHydrant integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant.md)
-- [Self-service action to trigger a FireHydrant incident](https://docs.port.io/guides/all/create-firehydrant-incident)
+- [Self-service actions to create or trigger a FireHydrant incident](/guides/all/manage-firehydrant-incidents)
 
 ## Git
 
@@ -203,10 +203,11 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Jira
 
 - [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/jira.md)
+- [Jira Server integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/)
 - [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook)
-- [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
+- [Jira Server webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira-server/#alternative-option---using-the-webhook-integration)
+- [Initiate scorecards handling with Jira issues](/scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
-- [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
 <!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
 
 ## Kafka
@@ -270,7 +271,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Ensure production readiness](/guides/all/ensure-production-readiness.md)
 - [Self service for a new PagerDuty incident using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/pagerduty)
 - [Self-service action to escalate a PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
-- [Self-service action to trigger a PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
+- [Self-service action to trigger a PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/interact-with-pagerduty-incidents)
 - [Self-service action to change a PagerDuty incident owner](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
 - [Self-service action to create a PagerDuty service from Port](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)
 - [Self-service action to acknowledge a PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
@@ -299,7 +300,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Slack
 
 - [Manual approval for self-service actions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#slack)
-- [Scorecard notifications](/promote-scorecards/manage-using-3rd-party-apps/slack)
+- [Scorecard notifications](/scorecards/manage-using-3rd-party-apps/slack)
 - [Broadcast message to API consumers](/guides/all/broadcast-api-consumers-message)
 
 ## Snyk

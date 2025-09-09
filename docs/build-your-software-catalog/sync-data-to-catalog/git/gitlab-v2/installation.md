@@ -12,6 +12,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Installation
 
@@ -65,18 +66,11 @@ The following scopes are required based on your usage.
 - If you're **not using realtime updates**, the token needs `read_api` and `read_repository` scopes.
 :::
 
-### Configure Realtime webhook events
-
-:::tip
-The `baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
-
-If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
-:::
-
  
 ## Deploy the integration
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -87,6 +81,8 @@ Choose one of the following installation methods:
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="gitlab-v2" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -123,7 +119,7 @@ integration:
     type: POLLING
   config:
   // highlight-next-line
-    gitlabUrl: https://gitlab.com # Or your self-hosted GitLab URL
+    gitlabHost: https://gitlab.com # Or your self-hosted GitLab URL
   secrets:
   // highlight-next-line
     gitlabToken: GITLAB_TOKEN
@@ -153,7 +149,7 @@ spec:
   sources:
   - repoURL: 'https://port-labs.github.io/helm-charts/'
     chart: port-ocean
-    targetRevision: 0.8.5
+    targetRevision: 0.9.5
     helm:
       valueFiles:
       - $values/argocd/my-ocean-gitlab-integration/values.yaml
@@ -199,12 +195,12 @@ This table summarizes the available parameters for the installation.
 | `integration.identifier`         | Change the identifier to describe your integration                                                                                  | ✅        |
 | `integration.type`               | The integration type                                                                                                                | ✅        |
 | `integration.eventListener.type` | The event listener type                                                                                                             | ✅        |
-| `integration.config.gitlabUrl`   | The GitLab instance URL                                                                                                     | ✅        |
+| `integration.config.gitlabHost`   | The GitLab instance URL                                                                                                     | ✅        |
 | `integration.secrets.gitlabToken`| The GitLab access token                                                                                                     | ✅        |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
 | `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
-| `baseUrl`                        | The base url of the instance where the GitLab integration is hosted, used for real-time updates. (e.g.`https://mygitlaboceanintegration.com`)                 | ❌        |
+| `liveEvents.baseUrl`              | The base url of the instance where the Gitlab integration is hosted, used for real-time updates. (e.g.`https://mygitlabintegration.com`)                    | ❌        |
 
 <br/>
 
@@ -248,7 +244,7 @@ jobs:
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           port_base_url: https://api.getport.io
           config: |
-            gitlabUrl: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITLAB_URL }}
+            gitlabHost: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITLAB_HOST }}
             gitlabToken: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN }}
 ```
 
@@ -278,7 +274,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITLAB_URL', variable: 'OCEAN__INTEGRATION__CONFIG__GITLAB_URL'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITLAB_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__GITLAB_HOST'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
@@ -292,7 +288,7 @@ pipeline {
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__GITLAB_URL=$OCEAN__INTEGRATION__CONFIG__GITLAB_URL \
+                                -e OCEAN__INTEGRATION__CONFIG__GITLAB_HOST=$OCEAN__INTEGRATION__CONFIG__GITLAB_HOST \
                                 -e OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -338,7 +334,7 @@ steps:
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
         -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
-        -e OCEAN__INTEGRATION__CONFIG__GITLAB_URL=$(OCEAN__INTEGRATION__CONFIG__GITLAB_URL) \
+        -e OCEAN__INTEGRATION__CONFIG__GITLAB_HOST=$(OCEAN__INTEGRATION__CONFIG__GITLAB_HOST) \
         -e OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN=$(OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
@@ -382,7 +378,7 @@ ingest_data:
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
         -e OCEAN__SEND_RAW_DATA_EXAMPLES=true  \
-        -e OCEAN__INTEGRATION__CONFIG__GITLAB_URL=$OCEAN__INTEGRATION__CONFIG__GITLAB_URL \
+        -e OCEAN__INTEGRATION__CONFIG__GITLAB_HOST=$OCEAN__INTEGRATION__CONFIG__GITLAB_HOST \
         -e OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -404,3 +400,34 @@ ingest_data:
 </TabItem>
 
 </Tabs>
+
+## Troubleshooting
+
+<h3>Merge requests not appearing in catalog</h3>
+
+If you can see your GitLab repositories in Port but merge requests are missing, this is likely due to insufficient group-level permissions.
+
+<h4>Symptoms</h4>
+- ✅ GitLab projects/repositories are visible in Port.
+- ❌ Merge requests are missing from the catalog.
+- ❌ No error messages in integration logs.
+
+<h4>Root cause</h4>
+The GitLab V2 integration fetches merge requests using **group-level API queries**. If your integration token only has access to individual projects (e.g., Developer or Maintainer role at the project level), it cannot access the group-level merge request data.
+
+<h4>Solution</h4>
+Ensure your integration token has access to the **parent GitLab group** that contains your projects:
+
+  - **For Personal Access Tokens**: The user must be a member of the group with at least Guest-level access.
+
+  - **For Group Access Tokens**: Create the token in the parent group with appropriate scopes.
+
+  - **For Service Account Tokens**: Add the service account to the group with at least Guest-level access.
+
+<h4>Verification</h4>
+To verify your token has the correct permissions:
+
+  - Test the token against GitLab's group API: `GET /api/v4/groups/{group_id}/merge_requests`
+  - Ensure the token can list merge requests at the group level.
+  - Check that the group is accessible with your current token permissions.
+

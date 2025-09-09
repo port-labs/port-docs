@@ -33,7 +33,7 @@ The action we will create in this guide will:
 
 ## Implementation
 
-###  Setup the action's frontend
+###  Set up the action's frontend
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button in the top-right corner (or in the middle if there are no actions yet):
@@ -253,7 +253,7 @@ The action's frontend is now ready 🥳
 
 <br/>
 
-### Setup the action's backend
+### Set up the action's backend
 
 Now we want to write the logic that our action will trigger.
 
@@ -1108,7 +1108,7 @@ stages:
                       "project":"${{ variables.PROJECT_ID }}"
                     }
                   }' \
-                "https://api.getport.io/v1/blueprints/azureDevopsRepository/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
+                "https://api.getport.io/v1/blueprints/service/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
               
   - stage: upsert_service
     dependsOn:
@@ -1134,7 +1134,7 @@ stages:
                       "description":"${{ variables.DESCRIPTION }}"
                     },
                     "relations": {
-                      "azureDevopsRepository": "${{ variables.SERVICE_NAME }}"
+                      "service": "${{ variables.SERVICE_NAME }}"
                     }
                   }' \
                 "https://api.getport.io/v1/blueprints/service/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"    

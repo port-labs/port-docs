@@ -1,0 +1,28 @@
+<details>
+
+<summary><b>Port config YAML (click to expand)</b></summary>
+
+```yaml showLineNumbers
+ - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: '**/package.json'
+          repos:
+            - name: vscode
+              branch: main
+    port:
+      itemsToParse: .content.dependencies | to_entries
+      entity:
+        mappings:
+          identifier: >-
+            .item.key + "_" + if (.item.value | startswith("^")) then
+            .item.value[1:] else .item.value end
+          title: .item.key + "@" + .item.value
+          blueprint: '"package"'
+          properties:
+            package: .item.key
+            version: .item.value
+```
+
+</details>
