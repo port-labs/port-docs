@@ -61,7 +61,7 @@ The `createMissingRelatedEntities` parameter enables automatic creation of place
 
 <TabItem value="accessControl" label="Access control">
 
-The `visibility` configuration allows us to control which GitLab resources are accessible to the integration based on access levels.
+The `visibility` configuration allows you to control which GitLab resources are accessible to the integration based on access levels.
 
 <h3>Access levels</h3>
 
