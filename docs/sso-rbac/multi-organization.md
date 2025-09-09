@@ -17,13 +17,12 @@ To group existing organizations under one account, customers need to provide Por
 
 ## Add organizations
 
-As an `account admin`, you can create new organizations directly from the UI using the `Add organization` (TODO - change it to its actual name) button.
+As an `account admin`, you can create new organizations directly from the UI using the `+ Create new organization` button.
 If you wish to grant `account admin` permissions to another user, please contact Port's support team.
 
 ## Switch organizations
 
 In order to switch to a different organization:  
-(TODO: make sure what are the steps here)
 
 1. Go to your [Port application](https://app.port.io).
 2. Click on the logo in the top left corner of the page.
