@@ -50,6 +50,9 @@ This is the default mapping configuration for this integration:
 ```yaml showLineNumbers
 deleteDependentEntities: true
 createMissingRelatedEntities: true
+visibility:
+  useMinAccessLevel: true
+  minAccessLevel: 30
 resources:
 - kind: project
   selector:
@@ -118,7 +121,17 @@ resources:
 
 </details>
 
+## Access control
 
+The GitLab integration supports configurable access control to determine which resources are visible and accessible to the integration.
+
+We can configure access control using the `visibility` configuration block in the integration mapping. 
+
+This allows us to filter resources based on GitLab access levels (Guest, Reporter, Developer, Maintainer, Owner). We can also disable access level filtering entirely to include all accessible resources.
+
+:::tip Access control configuration
+For detailed configuration options, access level reference, and practical examples, check the [Advanced configuration](./advanced.md#access-control) section.
+:::
 
 ## Capabilities
 
