@@ -355,14 +355,16 @@ We will create a detailed scorecard that evaluates repositories based on their c
 
 6. Click `Save` to create the scorecard.
 
-:::tip Rule customization
-You can customize the scoring rules based on your organization's specific requirements:
-- Add rules for specific security keywords or patterns
-- Include rules for minimum content length
-- Create rules for specific AI tool compliance
-- Add rules for regular updates to security guidelines
-:::
+:::info Scorecard rules explained
+This scorecard evaluates repositories based on four key AI coding security standards:
 
+1. **Security Instructions**: Checks if repositories have AI-specific security guidelines
+2. **GitHub Copilot Documentation Standards**: Verifies presence of documentation instructions for AI tools
+3. **GitHub Copilot Coding Standards**: Ensures general coding instructions are defined for AI assistance
+4. **Language-Specific Coding Standards**: Validates that language-specific AI coding guidelines exist
+
+You can modify these rules to match your organization's specific requirements by adjusting the property names, adding new conditions, or changing the scoring criteria.
+:::
 
 
 ## Create dashboard
@@ -408,6 +410,8 @@ In the new dashboard, create the following widgets:
 8. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
 </details>
+
+<img src='/img/guides/ai-coding-security-standards-entire-dashboard.png' border="1px" width="100%" />
 
 ## Related guides
 
