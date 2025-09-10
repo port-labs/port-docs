@@ -3,6 +3,8 @@ displayed_sidebar: null
 description: Build an OWASP Top 10 security scorecard in Port using vulnerability data from Snyk.
 ---
 
+import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
+
 # Promote resources across environments
 
 This guide explores the concept of managing a portal across multiple environments, e.g. promoting a service from a development environment to a production environment.
@@ -110,36 +112,26 @@ The following steps outline the recommended process for managing your resources 
 ## Approach 2: Use JSON resource definitions
 
 Being an API-first solution, Port allows you to define portal resources (blueprints, scorecards, automations, etc.) as JSON objects.  
-This approach demonstrates how to manage your resource definitions using a dedicated Git repository.
+This approach demonstrates how to manage your resource definitions in a dedicated Git repository.
 
-1. **Create a dedicated Git repository**  
-   Follow the instructions in the [Port resource definitions documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) to create a dedicated Git repository.
+1. **Organize your Git repository**  
+   In your dedicated Git repository, create a folder for each environment you want to manage (e.g. `development`, `production`, etc.).  
+   In each environment folder, create a folder for each resource type (e.g. `blueprints`, `scorecards`, `automations`, etc.).  
+   
+2. **Set up development environment**  
+   - Using Port's UI in your development environment, create the resources you want to promote to your production environment.  
 
-2. **Create a dedicated Git repository**  
-   Follow the instructions in the [Port resource definitions documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) to create a dedicated Git repository.
-  
+   - Save the resource definitions to a JSON file. This can be done in the following ways:
+     - Using [Port's API](https://docs.port.io/api-reference/port-api), call the relevant GET endpoint to retrieve the definition/s of the desired resource type.
+     - Using Port's UI, click on the `...` button in the top right corner of a resource, then click `Edit`.  
+     - For **entities** - you can export all entities of a specific blueprint at once by clicking on the <LogoImage logo="export" verticalAlign="text-top" /> (`Export`) button in the top right corner of the relevant catalog page.
+      
+   - Save your JSON definitions in the `development` folder in your Git repository.
 
-1. Click on the `Snyk Vulnerability` blueprint.
+3. **Promote to production environment**  
+   - Copy the relevant JSON definitions to the `production` folder in your Git repository.
+   - Using [Port's API](https://docs.port.io/api-reference/port-api), call the relevant POST endpoint to apply the resource definitions to your production environment.
 
-2. Click on the `...` button in the top right corner, then click on the `{...} Edit JSON` button. 
-
-3. Update the existing JSON by incorporating the following data in it, then click `Save`.
-
-    <details>
-    <summary><b>Snyk Vulnerability blueprint (click to expand)</b></summary>
-          ```json showLineNumbers
-          {
-            "properties": {
-              "category": {
-                "type": "string",
-                "title": "Category"
-              }
-            }
-          }
-          ```
-    </details>
-
-4. Click on the `Save` button to save the changes.
 
 ### Update Snyk mapping configuration
 
