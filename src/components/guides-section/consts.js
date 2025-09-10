@@ -1454,6 +1454,13 @@ export const availableGuides = [
         tags: ["SDLC", "AI", "GitHub", "Scorecards"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/enforce-ai-coding-security-standards",
+    },
+    {
+        title: "Find internal documentation with AI",
+        description: "Find internal documentation using AI by storing documentation as entities in your Port catalog",
+        tags: ["SDLC","AI"],
+        logos: ["AI"],
+        link: "/guides/all/find-internal-documentation-with-ai",
     }
 ]
 
