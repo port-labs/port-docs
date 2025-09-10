@@ -8,7 +8,6 @@ Multiple organization membership within Port means that users can belong to more
 
 - **Cross-organization access**: Users can work across multiple organizations without needing separate accounts.
 - **Seamless switching**: Switch between organizations using the [UI](#switch-organization).
-- **Unified identity**: Maintain a single identity while accessing multiple organizational contexts.
 
 :::info Feature availability
 The **multi-organization feature** is available on request and must be enabled by Port's support team.  
@@ -45,3 +44,12 @@ To enable automatic user access:
 1. Navigate to the organization settings.
 2. Enable "Automatic user access" for the organization.
 3. `Save` settings.
+
+## SSO access to organizations
+
+When users connect with SSO, their access is determined by:
+
+- **Explicit invitations**: Organizations where the user has been explicitly invited.
+- **Automatic user access**: Organizations that have "Automatic User Access" enabled.
+
+On login, Port checks which organizations the user has been explicitly invited to, plus which organizations have automatic user access enabled, and grants access to those organizations only.
