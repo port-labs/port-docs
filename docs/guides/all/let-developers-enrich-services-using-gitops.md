@@ -342,7 +342,7 @@ Then, fill out your workflow details:
 
 The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
-### Setup the action's backend
+### Set up the action's backend
 
 Our action will create a pull-request in the  repository, containing a `port.yml` file that will add data to the repository in Port. Choose a backend type below to setup the workflow:
 

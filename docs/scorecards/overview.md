@@ -4,7 +4,7 @@ title: Overview
 sidebar_label: Overview
 ---
 
-# Promote scorecards
+# Scorecards
 
 ## What is a Scorecard?
 
@@ -33,4 +33,4 @@ In this [live demo](https://demo.getport.io/serviceEntity?identifier=authenticat
 
 ## Next steps
 
-Now that we know what scorecards are and what are their use cases, let's dive into some [concepts and the scorecard's structure](/promote-scorecards/concepts-and-structure).
+Now that we know what scorecards are and what are their use cases, let's dive into some [concepts and the scorecard's structure](/scorecards/concepts-and-structure).

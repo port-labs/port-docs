@@ -438,4 +438,4 @@ Choose the approach that best fits your team's workflow and requirements. Search
 More relevant guides and examples:
 
 - [Port's Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
-- [Integrate scorecards with Slack](https://docs.port.io/promote-scorecards/manage-using-3rd-party-apps/slack)
+- [Integrate scorecards with Slack](https://docs.port.io/scorecards/manage-using-3rd-party-apps/slack)

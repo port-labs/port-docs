@@ -1,5 +1,5 @@
 ---
-title: Setup Actions
+title: Set up Actions
 ---
 
 import ApiRef from "/docs/api-reference/\_learn_more_reference.mdx";
@@ -8,7 +8,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Setup frontend
+# Set up frontend
 
 <center>
 

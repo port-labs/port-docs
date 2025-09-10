@@ -154,8 +154,8 @@ export const availableGuides = [
         link: "/guides/all/manage-resources-using-k8s-crds",
     },
     {
-        title: "Automate incident management",
-        description: "Automate notifications and documentation of incidents",
+        title: "Auto-create Slack channel & GitHub issue for PagerDuty incidents",
+        description: "Automatically create a Slack channel and GitHub issue when a PagerDuty incident is reported",
         tags: ["Incident management", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
@@ -836,7 +836,6 @@ export const availableGuides = [
 
     },
     {
-
         title: "Track SLOs and SLIs for services",
         description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
         tags: ["Engineering metrics", "New Relic", "Dashboards"],
@@ -931,8 +930,8 @@ export const availableGuides = [
     },
     {
         title: "Enrich security vulnerabilities using AI",
-        description: "Leverage AI tools to get detailed analysis and remediation strategies for security vulnerabilities",
-        tags: ["Security", "AI", "Actions", "Automations"],
+        description: "Use Port AI agents with Claude Code to enrich security vulnerabilities and trigger automated fixes",
+        tags: ["Security", "Claude Code", "GitHub", "AI"],
         logos: ["AI", "Snyk", "Wiz"],
         link: "/guides/all/enrich-security-vulnerability-using-ai",
     },
@@ -994,7 +993,7 @@ export const availableGuides = [
     },
     {
         title: "Set up the Service Explorer AI agent",
-        description: "Set up an AI agent that helps developers explore and understand your software catalog",
+        description: "Set up an AI agent with MCP server backend mode that helps developers explore and understand your software catalog",
         tags: ["AI", "GitHub"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/setup-service-explorer-ai-agent",
@@ -1330,6 +1329,21 @@ export const availableGuides = [
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
     {
+        title: " Create an actions ROI dashboard",
+        description: "Create a dashboard that tracks the ROI of actions in Port",
+        tags: [ "Actions", "Dashboards", "Automations"],
+        logos: ["Actions", "Automations"],
+        link: "/guides/all/create-roi-dashboard",
+    },
+    {
+        title: "Send Slack messages using Port's Slack app and automations",
+        description: "Learn how to send Slack messages to users using Port's Slack app and automations",
+        tags: ["Automations", "Slack"],
+        logos: ["Slack"],
+        link: "/guides/all/send-slack-message-to-user",
+    },
+    {
+
         title: "Map Git users to Port user accounts",
         description: "Automatically map Git users to their Port user accounts for seamless integration",
         tags: ["SDLC","Git", "GitHub", "GitLab", "AzureDevops", "Automations"],
@@ -1386,6 +1400,13 @@ export const availableGuides = [
         link: "/guides/all/trigger-github-copilot-from-port",
     },
     {
+        title: "Trigger Google Gemini Assistant from Port",
+        description: "Learn how to trigger Google Gemini Assistant from Port to enable AI-powered coding assistance in your development workflow",
+        tags: ["SDLC", "GitHub", "AI", "Actions"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/trigger-gemini-assistant-from-port",
+    },
+    {
         title: "Summarize Zendesk tickets with AI",
         description: "Use Port's remote MCP to fetch ticket context and generate AI summaries on demand",
         tags: ["AI", "Actions", "Webhook"],
@@ -1426,6 +1447,20 @@ export const availableGuides = [
         tags: ["Security", "Scorecards", "Snyk"],
         logos: ["Snyk"],
         link: "/guides/all/owasp-top-10-scorecard",
+    },
+    {
+        title: "Enforce AI coding security standards",
+        description: "Learn how to enforce AI coding security standards in your organization",
+        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/enforce-ai-coding-security-standards",
+    },
+    {
+        title: "Manage AI instructions with Port",
+        description: "Learn how to centralize AI instructions in Port and automatically sync them to GitHub repositories",
+        tags: ["SDLC", "GitHub", "AI",  "Automations"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/manage-ai-instructions",
     }
 ]
 

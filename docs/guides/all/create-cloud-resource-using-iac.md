@@ -45,7 +45,7 @@ In this guide we will add a new property to our `Repository` <PortTooltip id="bl
 
 This property is empty for now in all repositories, we will fill it as part of the action we're about to create 😎
 
-## Setup the action's frontend
+## Set up the action's frontend
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button in the top-right corner :
@@ -222,7 +222,7 @@ The last step is customizing the action's permissions. For simplicity's sake, we
 
 The action's frontend is now ready 🥳
 
-## Setup the action's backend
+## Set up the action's backend
 
 Now we want to write the logic that our action will trigger.
 
