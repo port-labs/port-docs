@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import Tabs from "@theme/Tabs";
@@ -7,8 +7,8 @@ import TabItem from "@theme/TabItem";
 
 # Installation
 
-:::warning Beta Access Required
-AWS Hosted by Port is currently in beta mode. Contact your Port representative to request access to this integration before proceeding with installation.
+:::warning Beta Feature
+AWS Hosted by Port is currently in **beta mode** and is not yet available for all Port users. Contact your Port representative to request access to this integration.
 :::
 
 AWS Hosted by Port is available through **Port's Ocean SaaS platform**.  
@@ -197,7 +197,7 @@ After installation, verify that the integration is working:
    - Check for any error messages.
 
 2. **Verify Data Flow**:
-   - Go to **Software Catalog**
+   - Go to the [catalog](https://app.getport.io/organization/catalog) page of your portal.
    - Look for entities created by the integration.
    - Verify that AWS resources are being imported correctly.
 

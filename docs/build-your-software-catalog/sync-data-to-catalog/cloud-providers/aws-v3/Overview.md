@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 ---
 
 import Tabs from "@theme/Tabs";
@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem";
 import Image from "@theme/IdealImage";
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
-# AWS Hosted by Port
+# Overview
 
 :::warning Beta Feature
 AWS Hosted by Port is currently in **beta mode** and is not yet available for all Port users. Contact your Port representative to request access to this integration.
@@ -49,9 +49,9 @@ AWS Hosted by Port provides several advantages over the standard AWS integration
 
 ## Getting started
 
-Continue to the [installation](./installations/installations.md) guide to learn how to install AWS Hosted by Port.
+Continue to the [installation](./installations.md) guide to learn how to install AWS Hosted by Port.
 
-For detailed information about the IAM role architecture and security model, see the [IAM Role Architecture](./installations/iam-role-architecture.md) guide.
+For detailed information about the IAM role architecture and security model, see the [IAM Role Architecture](./iam-role-architecture.md) guide.
 
 ## Configuration
 
@@ -64,7 +64,7 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 This is the default mapping configuration you get after installing AWS Hosted by Port.
 
 <details>
-<summary><b>Default mapping configuration (Click to expand)</b></summary>
+<summary><b>Default mapping configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
