@@ -7,6 +7,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials.mdx"
+import DockerParameters from "./_checkmarx_docker_parameters.mdx"
 
 # Checkmarx One
 
@@ -101,7 +102,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation integration="Checkmarx One" />
+<OceanSaasInstallation integration="CheckmarxOne" />
 
 </TabItem>
 
@@ -119,7 +120,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm">
 
-<OceanRealtimeInstallation integration="Checkmarx One" />
+<OceanRealtimeInstallation integration="CheckmarxOne" />
 
 <PortApiRegionTip/>
 
@@ -130,6 +131,9 @@ For details about the available parameters for the installation, see the table b
 To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-checkmarx-one-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `checkmarxTenant` and checkmarxApiKey.
 
 ```yaml showLineNumbers
 initializePortResources: true
@@ -142,14 +146,22 @@ integration:
   config:
     checkmarxBaseUrl: https://ast.checkmarx.net/api
     checkmarxIamUrl: https://iam.checkmarx.net
-    checkmarxTenant: YOUR_TENANT_NAME
+    checkmarxTenant: CHECKMARX_TENANT_NAME
   secrets:
-    checkmarxApiKey: YOUR_API_KEY
+    checkmarxApiKey: CHECKMARX_API_KEY
 ```
 
 <br/>
 
-2. Create an ArgoCD application manifest file `my-ocean-checkmarx-one-integration.yaml`:
+2. Install the `my-ocean-checkmarx-one-integration` ArgoCD Application by creating the following `my-ocean-checkmarx-one-integration.yaml` manifest:
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
 
 ```yaml showLineNumbers
 apiVersion: argoproj.io/v1alpha1
@@ -158,14 +170,30 @@ metadata:
   name: my-ocean-checkmarx-one-integration
   namespace: argocd
 spec:
-  project: default
-  source:
-    repoURL: YOUR_GIT_REPO_URL
-    targetRevision: main
-    path: argocd/my-ocean-checkmarx-one-integration
   destination:
     server: https://kubernetes.default.svc
     namespace: my-ocean-checkmarx-one-integration
+  project: default
+  sources:
+    - repoURL: 'https://port-labs.github.io/helm-charts/'
+      chart: port-ocean
+      targetRevision: 0.9.5
+      helm:
+        valueFiles:
+        - $values/argocd/
+        my-ocean-checkmarx-one-integration/values.yaml
+        // highlight-start
+        parameters:
+          - name: port.clientId
+            value: YOUR_PORT_CLIENT_ID
+          - name: port.clientSecret
+            value: YOUR_PORT_CLIENT_SECRET
+          - name: port.baseUrl
+            value: https://api.getport.io
+    - repoURL: YOUR_GIT_REPO_URL
+    // highlight-end
+    targetRevision: main
+    ref: values
   syncPolicy:
     automated:
       prune: true
@@ -174,6 +202,8 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
+</details>
 <br/>
 
 3. Apply your application manifest with `kubectl`:
@@ -203,6 +233,7 @@ Note the parameters specific to this integration, they are last in the table.
 | `integration.config.checkmarxIamUrl`             | The Checkmarx One IAM URL for your region                                                                                                               | ✅        |
 | `integration.config.checkmarxTenant`             | Your Checkmarx One tenant name                                                                                                                           | ✅        |
 | `integration.secrets.checkmarxApiKey`            | Your Checkmarx One API key                                                                                                                               | ✅        |
+| `integration.secrets.webhookSecret`            | A secret to secure webhooks from Checkmarx One. This is optional but highly recommended for security if you enable live-events.                                                                                                                               | ❌        |
 
 <br/>
 
@@ -223,14 +254,7 @@ If you want the integration to update Port in real time using polling you should
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Secret Name                                    | Description                                    |
-|------------------------------------------------|------------------------------------------------|
-| `OCEAN__PORT__CLIENT_ID`                       | Your Port client ID                            |
-| `OCEAN__PORT__CLIENT_SECRET`                   | Your Port client secret                        |
-| `OCEAN__INTEGRATION__CONFIG__CHECKMARX_BASE_URL` | Your Checkmarx One API base URL               |
-| `OCEAN__INTEGRATION__CONFIG__CHECKMARX_IAM_URL`  | Your Checkmarx One IAM URL                    |
-| `OCEAN__INTEGRATION__CONFIG__CHECKMARX_TENANT`   | Your Checkmarx One tenant name                |
-| `OCEAN__INTEGRATION__SECRETS__CHECKMARX_API_KEY` | Your Checkmarx One API key                    |
+<DockerParameters />
 
 <br/>
 
@@ -238,17 +262,14 @@ Here is an example for `checkmarx-one-integration.yml` workflow file:
 
 ```yaml showLineNumbers
 name: Checkmarx One Exporter Workflow
-
 on:
   workflow_dispatch:
   schedule:
     - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
-
 jobs:
   run-integration:
     runs-on: ubuntu-latest
     timeout-minutes: 30 # Set a time limit for the job
-
     steps:
       - uses: port-labs/ocean-sail@v1
         with:
@@ -276,14 +297,7 @@ Your Jenkins agent should be able to run docker commands.
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
 
-| Credential ID                                   | Description                                    |
-|------------------------------------------------|------------------------------------------------|
-| `OCEAN__PORT__CLIENT_ID`                        | Your Port client ID                            |
-| `OCEAN__PORT__CLIENT_SECRET`                    | Your Port client secret                        |
-| `OCEAN__INTEGRATION__CONFIG__CHECKMARX_BASE_URL` | Your Checkmarx One API base URL               |
-| `OCEAN__INTEGRATION__CONFIG__CHECKMARX_IAM_URL`  | Your Checkmarx One IAM URL                    |
-| `OCEAN__INTEGRATION__CONFIG__CHECKMARX_TENANT`   | Your Checkmarx One tenant name                |
-| `OCEAN__INTEGRATION__SECRETS__CHECKMARX_API_KEY` | Your Checkmarx One API key                    |
+<DockerParameters />
 
 <br/>
 
@@ -346,14 +360,7 @@ Your Azure DevOps agent should be able to run docker commands.
 Make sure to configure the following [Azure DevOps Variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch)
 as secret variables:
 
-| Variable Name                                   | Description                                    |
-|------------------------------------------------|------------------------------------------------|
-| `OCEAN__PORT__CLIENT_ID`                        | Your Port client ID                            |
-| `OCEAN__PORT__CLIENT_SECRET`                    | Your Port client secret                        |
-| `OCEAN__INTEGRATION__CONFIG__CHECKMARX_BASE_URL` | Your Checkmarx One API base URL               |
-| `OCEAN__INTEGRATION__CONFIG__CHECKMARX_IAM_URL`  | Your Checkmarx One IAM URL                    |
-| `OCEAN__INTEGRATION__CONFIG__CHECKMARX_TENANT`   | Your Checkmarx One tenant name                |
-| `OCEAN__INTEGRATION__SECRETS__CHECKMARX_API_KEY` | Your Checkmarx One API key                    |
+<DockerParameters />
 
 <br/>
 
@@ -362,19 +369,15 @@ Here is an example for `checkmarx-one-integration.yml` pipeline file:
 ```yaml showLineNumbers
 trigger:
 - main
-
 pool:
   vmImage: "ubuntu-latest"
-
 variables:
   - group: port-ocean-credentials
-
 steps:
 - script: |
     # Set Docker image and run the container
     integration_type="checkmarx-one"
     version="latest"
-
     image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
 
     docker run -i --rm \
@@ -389,17 +392,26 @@ steps:
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
         -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $image_name
+    exit $?
+  displayName: 'Ingest Data into Port'
 ```
 
 </TabItem>
 </Tabs>
 
+<PortApiRegionTip/>
+
+<AdvancedConfig/>
+
 </TabItem>
 </Tabs>
 
-<MetricsAndSyncStatus />
 
 ## Configuration
+
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
 ### Default mapping configuration
 
@@ -458,23 +470,20 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .id
-          title: .description
+          identifier: .resultHash
+          title: .queryName
           blueprint: '"checkmarxSast"'
           properties:
-            type: .type
-            firstScanId: .firstScanId
-            id: .id
+            firstScanId: .firstScanID
             status: .status
             state: .state
             severity: (.severity // empty)
             confidenceLevel: .confidenceLevel
-            created: .created
-            description: .description
-            nodes: (.data.nodes // empty)
-            cweId: (.vulnerabilityDetails.cweId // empty)
-        relations:
-          scan: .__scan_id
+            created: .firstFoundAt
+            nodes: (.nodes // empty)
+            cweId: (.cweID // empty)
+          relations:
+            scan: .scanID
 
   - kind: sca
     selector:
@@ -483,25 +492,22 @@ resources:
       entity:
         mappings:
           identifier: .id
-          title: .description
-          blueprint: '"checkmarxSca"'
+          title: .data.packageIdentifier
+          blueprint: '"checkmarxSCA"'
           properties:
-            type: .type
             firstScanId: .firstScanId
-            id: .id
             status: .status
             state: .state
-            severity: (.severity // empty)
-            confidenceLevel: .confidenceLevel
+            severity: .severity
             created: .created
             description: .description
-            packageIdentifier: (.data.packageIdentifier // empty)
-            recommendations: (.data.recommendations // empty)
-            recommendedVersion: (.data.recommendedVersion // empty)
-            packageData: (.packageData // empty)
-            cweId: (.vulnerabilityDetails.cweId // empty)
-        relations:
-          scan: .__scan_id
+            packageIdentifier: .data.packageIdentifier
+            recommendations: .data.recommendations
+            recommendedVersion: .data.recommendedVersion
+            packageData: .data.packageData
+            cweId: .vulnerabilityDetails.cweId
+          relations:
+            scan: .__scan_id
 
   - kind: kics
     selector:
@@ -531,33 +537,31 @@ resources:
         relations:
           scan: .__scan_id
 
-  - kind: containersec
+  - kind: containers
     selector:
       query: 'true'
     port:
       entity:
         mappings:
           identifier: .id
-          title: .description
-          blueprint: '"checkmarxContainerSec"'
+          title: .id
+          blueprint: '"checkmarxContainerSecurity"'
           properties:
-            type: .type
             firstScanId: .firstScanId
-            id: .id
             status: .status
             state: .state
-            severity: (.severity // empty)
+            severity: .severity
             confidenceLevel: .confidenceLevel
             created: .created
             description: .description
-            packageName: (.data.packageName // empty)
-            packageVersion: (.data.packageVersion // empty)
-            imageName: (.data.imageName // empty)
-            imageTag: (.data.imageTag // empty)
-            imageFilePath: (.data.imageFilePath // empty)
-            cweId: (.vulnerabilityDetails.cweId // empty)
-        relations:
-          scan: .__scan_id
+            packageName: .data.packageName
+            packageVersion: .data.packageVersion
+            imageName: .data.imageName
+            imageTag: .data.imageTag
+            imageFilePath: .data.imageFilePath
+            cweId: .vulnerabilityDetails.cweId
+          relations:
+            scan: .__scan_id
 
   - kind: apisec
     selector:
@@ -590,9 +594,11 @@ resources:
 
 </details>
 
+<MetricsAndSyncStatus />
+
 ## Examples
 
-Examples of blueprints and the relevant integration configurations:
+Examples of blueprints:
 
 ### Project
 
@@ -664,40 +670,55 @@ Examples of blueprints and the relevant integration configurations:
       "status": {
         "type": "string",
         "title": "Status",
-        "enum": ["Running", "Completed", "Failed", "Canceled", "Queued"]
+        "enum": [
+          "Queued",
+          "Running",
+          "Completed",
+          "Failed",
+          "Partial",
+          "Canceled"
+        ],
+        "description": "The status of the scan. Possible values: Queued, Running, Completed, Failed, Partial, Canceled."
       },
       "branch": {
         "type": "string",
-        "title": "Branch"
+        "title": "Branch",
+        "description": "The branch of the repository that was scanned."
       },
       "createdAt": {
         "type": "string",
         "format": "date-time",
-        "title": "Created At"
+        "title": "Created At",
+        "description": "The date and time when the scan was created."
       },
       "updatedAt": {
         "type": "string",
         "format": "date-time",
-        "title": "Updated At"
+        "title": "Updated At",
+        "description": "The date and time when the scan was last updated."
       },
       "projectId": {
         "type": "string",
-        "title": "Project ID"
+        "title": "Project ID",
+        "description": "The identifier of the project to which this scan belongs."
       },
       "userAgent": {
         "type": "string",
-        "title": "User Agent"
+        "title": "User Agent",
+        "description": "The user agent used to initiate the scan."
       },
       "configs": {
         "type": "object",
-        "title": "Configurations"
+        "title": "Configurations",
+        "description": "Configuration details for the scan."
       },
       "statusDetails": {
         "type": "array",
         "items": {
           "type": "object"
         },
-        "title": "Status Details"
+        "title": "Status Details",
+        "description": "Detailed status information for the scan."
       }
     },
     "required": ["status", "projectId"]
@@ -723,101 +744,98 @@ Examples of blueprints and the relevant integration configurations:
 ```json showLineNumbers
 {
   "identifier": "checkmarxSast",
+  "description": "Represents a Checkmarx Static Application Security Testing (SAST) finding in the catalogue",
   "title": "Checkmarx SASTs",
   "icon": "Checkmarx",
   "schema": {
     "properties": {
-      "type": {
-        "type": "string",
-        "title": "Type",
-        "enum": [
-          "sast",
-          "sca",
-          "kics",
-          "containers",
-          "sscs-secret-detection",
-          "sscs-scorecard"
-        ]
-      },
       "firstScanId": {
         "type": "string",
-        "title": "First Scan ID"
-      },
-      "id": {
-        "type": "string",
-        "title": "ID"
+        "title": "First Scan ID",
+        "description": "The identifier of the first scan in which this SAST finding appeared."
       },
       "status": {
         "type": "string",
         "title": "Status",
+        "description": "The status of the SAST finding",
         "enum": [
           "NEW",
           "RECURRENT",
           "FIXED"
-        ]
+        ],
+        "enumColors": {
+          "NEW": "lightGray",
+          "RECURRENT": "lightGray",
+          "FIXED": "lightGray"
+        }
       },
       "state": {
+        "icon": "DefaultProperty",
         "type": "string",
         "title": "State",
-        "enum": [
-          "TO_VERIFY",
-          "CONFIRMED",
-          "URGENT",
-          "NOT_EXPLOITABLE",
-          "PROPOSED_NOT_EXPLOITABLE",
-          "FALSE_POSITIVE"
-        ]
+        "description": "The state of the SAST finding"
       },
       "severity": {
         "type": "string",
+        "description": "The severity level of the SAST finding",
         "title": "Severity",
         "enum": [
           "LOW",
           "MEDIUM",
           "HIGH",
           "CRITICAL"
-        ]
+        ],
+        "enumColors": {
+          "LOW": "lightGray",
+          "MEDIUM": "lightGray",
+          "HIGH": "lightGray",
+          "CRITICAL": "lightGray"
+        }
       },
       "confidenceLevel": {
         "type": "number",
         "title": "Confidence Level",
+        "description": "The confidence level (0-100) assigned to the SAST finding",
         "minimum": 0,
         "maximum": 100
       },
       "created": {
         "type": "string",
-        "format": "date-time",
-        "title": "Created At"
+        "title": "Created At",
+        "description": "The date and time when the SAST finding was created",
+        "format": "date-time"
       },
       "description": {
         "type": "string",
-        "title": "Description"
+        "title": "Description",
+        "description": "The description of the SAST result"
       },
       "nodes": {
-        "type": "array",
-        "title": "Nodes",
         "items": {
           "type": "object"
-        }
+        },
+        "icon": "DefaultProperty",
+        "type": "array",
+        "title": "Nodes",
+        "description": "The list of nodes or code locations related to the SAST finding"
       },
       "cweId": {
         "type": "string",
-        "title": "CWE ID"
+        "title": "CWE ID",
+        "description": "The CWE (Common Weakness Enumeration) identifier associated with this SAST finding"
       }
     },
-    "required": [
-      "type",
-      "id",
-      "state",
-      "description"
-    ]
+    "required": []
   },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
     "scan": {
       "title": "Scan",
       "target": "checkmarxScan",
-      "many": false,
-      "required": false
+      "required": false,
+      "many": false
     }
   }
 }
@@ -832,112 +850,89 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "checkmarxSca",
-  "title": "Checkmarx SCAs",
+  "identifier": "checkmarxSCA",
+  "title": "Checkmarx SCA",
   "icon": "Checkmarx",
   "schema": {
     "properties": {
-      "type": {
+      "severity": {
         "type": "string",
-        "title": "Type",
-        "enum": [
-          "sast",
-          "sca",
-          "kics",
-          "containers",
-          "sscs-secret-detection",
-          "sscs-scorecard"
-        ]
-      },
-      "firstScanId": {
-        "type": "string",
-        "title": "First Scan ID"
-      },
-      "id": {
-        "type": "string",
-        "title": "ID"
-      },
-      "status": {
-        "type": "string",
-        "title": "Status",
-        "enum": [
-          "NEW",
-          "RECURRENT",
-          "FIXED"
-        ]
+        "title": "Severity",
+        "description": "The severity level of the SCA finding."
       },
       "state": {
         "type": "string",
         "title": "State",
-        "enum": [
-          "TO_VERIFY",
-          "CONFIRMED",
-          "URGENT",
-          "NOT_EXPLOITABLE",
-          "PROPOSED_NOT_EXPLOITABLE",
-          "FALSE_POSITIVE"
-        ]
+        "description": "The state of the SCA finding."
       },
-      "severity": {
+      "description": {
         "type": "string",
-        "title": "Severity",
-        "enum": [
-          "LOW",
-          "MEDIUM",
-          "HIGH",
-          "CRITICAL",
-          "INFO"
-        ]
+        "title": "Description",
+        "description": "A description of the SCA finding."
       },
-      "confidenceLevel": {
-        "type": "number",
-        "title": "Confidence Level",
-        "minimum": 0,
-        "maximum": 100
+      "cweId": {
+        "type": "string",
+        "title": "CWE ID",
+        "description": "The Common Weakness Enumeration (CWE) identifier related to the vulnerability."
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "description": "The current status of the SCA finding."
       },
       "created": {
         "type": "string",
         "format": "date-time",
-        "title": "Created At"
+        "title": "Created",
+        "description": "The date and time when the SCA finding was created."
       },
-      "description": {
+      "firstScanId": {
         "type": "string",
-        "title": "Description"
+        "title": "First Scan ID",
+        "description": "The identifier of the first scan in which this SCA issue was detected."
       },
       "packageIdentifier": {
         "type": "string",
-        "title": "Package Identifier"
+        "title": "Package Identifier",
+        "description": "The identifier of the affected package."
       },
       "recommendations": {
-        "type": "string",
-        "title": "Recommendations"
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Recommendations",
+        "description": "Recommended actions to remediate the SCA finding."
       },
       "recommendedVersion": {
         "type": "string",
-        "title": "Recommended Version"
+        "title": "Recommended Version",
+        "description": "The recommended version of the package to resolve the vulnerability."
       },
       "packageData": {
-        "type": "object",
+        "items": {
+          "type": "object"
+        },
+        "type": "array",
         "title": "Package Data"
       },
-      "cweId": {
+      "confidenceLevel": {
         "type": "string",
-        "title": "CWE ID"
+        "title": "Confidence Level",
+        "description": "The confidence level of the SCA finding."
       }
     },
-    "required": [
-      "type",
-      "id",
-      "state",
-      "description"
-    ]
+    "required": []
   },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
     "scan": {
       "title": "Scan",
       "target": "checkmarxScan",
-      "many": false,
-      "required": false
+      "required": false,
+      "many": false
     }
   }
 }
@@ -953,50 +948,35 @@ Examples of blueprints and the relevant integration configurations:
 ```json showLineNumbers
 {
   "identifier": "checkmarxKics",
+  "description": "Represents a KICS issue detected by Checkmarx One",
   "title": "Checkmarx KICS",
   "icon": "Checkmarx",
   "schema": {
     "properties": {
-      "type": {
-        "type": "string",
-        "title": "Type",
-        "enum": [
-          "sast",
-          "sca",
-          "kics",
-          "containers",
-          "sscs-secret-detection",
-          "sscs-scorecard"
-        ]
-      },
       "firstScanId": {
         "type": "string",
-        "title": "First Scan ID"
-      },
-      "id": {
-        "type": "string",
-        "title": "ID"
+        "title": "First Scan ID",
+        "description": "The identifier of the first scan in which this KICS issue was detected"
       },
       "status": {
         "type": "string",
         "title": "Status",
+        "description": "The current status of the KICS issue, indicating if it is new, recurring, or has been fixed.",
         "enum": [
           "NEW",
           "RECURRENT",
           "FIXED"
-        ]
+        ],
+        "enumColors": {
+          "NEW": "lightGray",
+          "RECURRENT": "lightGray",
+          "FIXED": "lightGray"
+        }
       },
       "state": {
         "type": "string",
-        "title": "State",
-        "enum": [
-          "TO_VERIFY",
-          "CONFIRMED",
-          "URGENT",
-          "NOT_EXPLOITABLE",
-          "PROPOSED_NOT_EXPLOITABLE",
-          "FALSE_POSITIVE"
-        ]
+        "description": "The state of the KICS issue, reflecting its verification and remediation status",
+        "title": "State"
       },
       "severity": {
         "type": "string",
@@ -1007,30 +987,36 @@ Examples of blueprints and the relevant integration configurations:
           "HIGH",
           "CRITICAL",
           "INFO"
-        ]
-      },
-      "confidenceLevel": {
-        "type": "number",
-        "title": "Confidence Level",
-        "minimum": 0,
-        "maximum": 100
+        ],
+        "enumColors": {
+          "LOW": "lightGray",
+          "MEDIUM": "lightGray",
+          "HIGH": "lightGray",
+          "CRITICAL": "lightGray",
+          "INFO": "lightGray"
+        }
       },
       "created": {
         "type": "string",
-        "format": "date-time",
-        "title": "Created At"
+        "title": "Created At",
+        "description": "The date and time when the KICS issue was first identified",
+        "format": "date-time"
       },
       "description": {
+        "icon": "DefaultProperty",
         "type": "string",
-        "title": "Description"
+        "title": "Description",
+        "description": "A description of the KICS issue."
       },
       "fileName": {
         "type": "string",
-        "title": "File Name"
+        "title": "File Name",
+        "description": "The name of the file where the KICS issue was found."
       },
       "line": {
-        "type": "number",
-        "title": "Line Number"
+        "type": "string",
+        "title": "Line Number",
+        "description": "The line number in the file where the KICS issue occurs"
       },
       "platform": {
         "type": "string",
@@ -1038,30 +1024,31 @@ Examples of blueprints and the relevant integration configurations:
       },
       "issueType": {
         "type": "string",
-        "title": "Issue Type"
+        "title": "Issue Type",
+        "description": "The type or category of the KICS issue"
       },
-      "expectedValue": {
+      "expected_value": {
         "type": "string",
-        "title": "Expected Value"
+        "title": "Expected Value",
+        "description": "The value that was expected in the configuration"
       },
       "value": {
         "type": "string",
-        "title": "Value"
+        "title": "Value",
+        "description": "The actual value found in the configuration that triggered the KICS issue"
       }
     },
-    "required": [
-      "type",
-      "id",
-      "state",
-      "description"
-    ]
+    "required": []
   },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
     "scan": {
       "title": "Scan",
       "target": "checkmarxScan",
-      "many": false,
-      "required": false
+      "required": false,
+      "many": false
     }
   }
 }
@@ -1076,116 +1063,89 @@ Examples of blueprints and the relevant integration configurations:
 
 ```json showLineNumbers
 {
-  "identifier": "checkmarxContainerSec",
+  "identifier": "checkmarxContainerSecurity",
   "title": "Checkmarx Container Security",
   "icon": "Checkmarx",
   "schema": {
     "properties": {
-      "type": {
-        "type": "string",
-        "title": "Type",
-        "enum": [
-          "sast",
-          "sca",
-          "kics",
-          "containers",
-          "sscs-secret-detection",
-          "sscs-scorecard"
-        ]
-      },
       "firstScanId": {
         "type": "string",
-        "title": "First Scan ID"
-      },
-      "id": {
-        "type": "string",
-        "title": "ID"
+        "title": "First Scan ID",
+        "description": "The identifier of the first scan in which this container security issue was detected."
       },
       "status": {
         "type": "string",
         "title": "Status",
-        "enum": [
-          "NEW",
-          "RECURRENT",
-          "FIXED"
-        ]
+        "description": "The current status of the container security finding."
       },
       "state": {
         "type": "string",
         "title": "State",
-        "enum": [
-          "TO_VERIFY",
-          "CONFIRMED",
-          "URGENT",
-          "NOT_EXPLOITABLE",
-          "PROPOSED_NOT_EXPLOITABLE",
-          "FALSE_POSITIVE"
-        ]
+        "description": "The state of the container security finding."
       },
       "severity": {
         "type": "string",
         "title": "Severity",
-        "enum": [
-          "LOW",
-          "MEDIUM",
-          "HIGH",
-          "CRITICAL",
-          "INFO"
-        ]
+        "description": "The severity level of the container security finding."
       },
       "confidenceLevel": {
-        "type": "number",
+        "type": "string",
         "title": "Confidence Level",
-        "minimum": 0,
-        "maximum": 100
+        "description": "The confidence level of the container security finding."
       },
       "created": {
         "type": "string",
         "format": "date-time",
-        "title": "Created At"
+        "title": "Created",
+        "description": "The date and time when the container security finding was created."
       },
       "description": {
         "type": "string",
-        "title": "Description"
+        "title": "Description",
+        "description": "A description of the container security finding."
       },
       "packageName": {
         "type": "string",
-        "title": "Package Name"
+        "title": "Package Name",
+        "description": "The name of the affected package in the container."
       },
       "packageVersion": {
         "type": "string",
-        "title": "Package Version"
+        "title": "Package Version",
+        "description": "The version of the affected package in the container."
       },
       "imageName": {
         "type": "string",
-        "title": "Image Name"
+        "title": "Image Name",
+        "description": "The name of the container image."
       },
       "imageTag": {
         "type": "string",
-        "title": "Image Tag"
+        "title": "Image Tag",
+        "description": "The tag of the container image."
       },
       "imageFilePath": {
         "type": "string",
-        "title": "Image File Path"
+        "title": "Image File Path",
+        "description": "The file path within the container image where the issue was found."
       },
       "cweId": {
         "type": "string",
-        "title": "CWE ID"
+        "title": "CWE ID",
+        "description": "The Common Weakness Enumeration (CWE) identifier related to the vulnerability."
       }
     },
-    "required": [
-      "type",
-      "id",
-      "state",
-      "description"
-    ]
+    "required": []
   },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
     "scan": {
       "title": "Scan",
       "target": "checkmarxScan",
-      "many": false,
-      "required": false
+      "required": false,
+      "many": false
     }
   }
 }
@@ -1207,11 +1167,13 @@ Examples of blueprints and the relevant integration configurations:
     "properties": {
       "riskId": {
         "type": "string",
-        "title": "Risk ID"
+        "title": "Risk ID",
+        "description": "The unique identifier for the API security risk."
       },
       "apiId": {
         "type": "string",
-        "title": "API ID"
+        "title": "API ID",
+        "description": "The identifier of the API associated with the risk."
       },
       "severity": {
         "type": "string",
@@ -1221,11 +1183,13 @@ Examples of blueprints and the relevant integration configurations:
           "medium",
           "high",
           "critical"
-        ]
+        ],
+        "description": "The severity level of the API security risk."
       },
       "name": {
         "type": "string",
-        "title": "Name"
+        "title": "Name",
+        "description": "The name of the API security risk."
       },
       "status": {
         "type": "string",
@@ -1234,44 +1198,54 @@ Examples of blueprints and the relevant integration configurations:
           "new",
           "recurrent",
           "fixed"
-        ]
+        ],
+        "description": "The status of the API security risk."
       },
       "httpMethod": {
         "type": "string",
-        "title": "HTTP Method"
+        "title": "HTTP Method",
+        "description": "The HTTP method associated with the API risk (e.g., GET, POST)."
       },
       "url": {
         "type": "string",
-        "title": "URL"
+        "title": "URL",
+        "description": "The URL endpoint associated with the API risk."
       },
       "origin": {
         "type": "string",
-        "title": "Origin"
+        "title": "Origin",
+        "description": "The origin or source of the API risk."
       },
       "documented": {
         "type": "boolean",
-        "title": "Documented"
+        "title": "Documented",
+        "description": "Indicates whether the API is documented."
       },
       "authenticated": {
         "type": "boolean",
-        "title": "Authenticated"
+        "title": "Authenticated",
+        "description": "Indicates whether the API requires authentication."
       },
       "discoveryDate": {
         "type": "string",
         "format": "date-time",
-        "title": "Discovery Date"
+        "title": "Discovery Date",
+        "description": "The date and time when the API risk was discovered."
       },
       "scanId": {
         "type": "string",
-        "title": "Scan ID"
+        "title": "Scan ID",
+        "description": "The identifier of the scan in which the risk was found."
       },
       "sastRiskId": {
         "type": "string",
-        "title": "SAST Risk ID"
+        "title": "SAST Risk ID",
+        "description": "The identifier of the related SAST risk, if available."
       },
       "projectId": {
         "type": "string",
-        "title": "Project ID"
+        "title": "Project ID",
+        "description": "The identifier of the project associated with the API risk."
       },
       "state": {
         "type": "string",
@@ -1283,7 +1257,8 @@ Examples of blueprints and the relevant integration configurations:
           "not_exploitable",
           "proposed_not_exploitable",
           "false_positive"
-        ]
+        ],
+        "description": "The state of the API security risk."
       }
     },
     "required": [
@@ -1311,66 +1286,75 @@ Examples of blueprints and the relevant integration configurations:
 
 The Checkmarx One integration supports filtering and configuration for different resource types:
 
-#### Security Scan Results Configuration
+#### Project Resources
 
-You can configure security scan results (SAST, SCA, KICS, Container Security) with the following filters:
+Projects can be synchronized without additional filtering options.
 
+#### Scan Resources
+
+Scans can be filtered using the following scan filter options:
+
+- **Project Names** (`projectIds`): Filter scans by their project name
+- **Branches**: Filter results by the name of the Git branch that was scanned
+- **Statuses**: Filter results by the execution status of the scans (case insensitive, OR operator for multiple statuses):
+  - `Queued`
+  - `Running` 
+  - `Completed`
+  - `Failed`
+  - `Partial`
+  - `Canceled`
+- **Since**: Filter results by the date and time when the scan was created (UNIX timestamp in seconds, default: 90 days)
+
+#### Security Scan Results (SCA/Containers) Configuration
+
+You can configure security scan results (SCA, Container Security) with the following filters:
+
+- **Scan Filter**: Apply the same scan filtering options as above
 - **Severity**: Filter by severity level (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`)
-- **State**: Filter by state (`TO_VERIFY`, `CONFIRMED`, `URGENT`, `NOT_EXPLOITABLE`, `PROPOSED_NOT_EXPLOITABLE`, `FALSE_POSITIVE`)
+- **State**: Filter by state:
+  - `TO_VERIFY`
+  - `CONFIRMED`
+  - `URGENT`
+  - `NOT_EXPLOITABLE`
+  - `PROPOSED_NOT_EXPLOITABLE`
+  - `FALSE_POSITIVE`
 - **Status**: Filter by status (`NEW`, `RECURRENT`, `FIXED`)
 - **Exclude Result Types**: Filter to exclude dev and test dependencies (`DEV_AND_TEST`, `NONE`)
 
+#### SAST (Static Application Security Testing) Configuration
+
+SAST results can be configured with comprehensive filtering options:
+
+- **Scan Filter**: Apply the same scan filtering options as above
+- **Compliance**: Filter by compliance standard (exact match, case insensitive)
+- **Group**: Filter by vulnerability group (substring match)
+- **Include Nodes**: Include or omit node data (default: `true`)
+- **Language**: Filter by language (exact match, case insensitive)
+- **Result ID**: Filter by unique result hash
+- **Severity**: Filter by severity level (`critical`, `high`, `medium`, `low`, `info`)
+- **Status**: Filter by status (`new`, `recurrent`, `fixed`)
+- **Category**: Filter by comma separated list of categories
+- **State**: Filter by state:
+  - `to_verify`
+  - `not_exploitable`
+  - `proposed_not_exploitable`
+  - `confirmed`
+  - `urgent`
+
+#### KICS (Infrastructure as Code Security) Configuration
+
+KICS results can be configured with the following filters:
+
+- **Scan Filter**: Apply the same scan filtering options as above
+- **Severity**: Filter KICS results by severity levels (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`)
+- **Status**: Filter KICS results by status (`NEW`, `RECURRENT`, `FIXED`)
+
 #### API Security Configuration
 
-You can configure API security results with the following options:
+API security results can be configured with:
 
-- **Filtering**: Apply filters to API security risks
-- **Searching**: Search for specific API security issues
-- **Sorting**: Sort results by various criteria
+- **Scan Filter**: Apply the same scan filtering options as above
 
-#### Scan Configuration
-
-You can configure scans to filter by specific project IDs:
-
-- **Project IDs**: Limit search to specific project IDs
-
-### Blueprint Structure
-
-The integration creates the following blueprints:
-
-#### Checkmarx Project
-- **Identifier**: `checkmarxProject`
-- **Properties**: name, createdAt, updatedAt, tags, repoUrl, mainBranch, origin, criticality
-
-#### Checkmarx Scan
-- **Identifier**: `checkmarxScan`
-- **Properties**: status, branch, createdAt, updatedAt, projectId, userAgent, configs, statusDetails
-- **Relations**: project (links to checkmarxProject)
-
-#### Checkmarx SAST
-- **Identifier**: `checkmarxSast`
-- **Properties**: type, firstScanId, id, status, state, severity, confidenceLevel, created, description, nodes, cweId
-- **Relations**: scan (links to checkmarxScan)
-
-#### Checkmarx SCA
-- **Identifier**: `checkmarxSca`
-- **Properties**: type, firstScanId, id, status, state, severity, confidenceLevel, created, description, packageIdentifier, recommendations, recommendedVersion, packageData, cweId
-- **Relations**: scan (links to checkmarxScan)
-
-#### Checkmarx KICS
-- **Identifier**: `checkmarxKics`
-- **Properties**: type, firstScanId, id, status, state, severity, confidenceLevel, created, description, fileName, line, platform, issueType, expectedValue, value
-- **Relations**: scan (links to checkmarxScan)
-
-#### Checkmarx Container Security
-- **Identifier**: `checkmarxContainerSec`
-- **Properties**: type, firstScanId, id, status, state, severity, confidenceLevel, created, description, packageName, packageVersion, imageName, imageTag, imageFilePath, cweId
-- **Relations**: scan (links to checkmarxScan)
-
-#### Checkmarx API Security
-- **Identifier**: `checkmarxApiSec`
-- **Properties**: riskId, apiId, severity, name, status, httpMethod, url, origin, documented, authenticated, discoveryDate, scanId, sastRiskId, projectId, state
-- **Relations**: scan (links to checkmarxScan)
 
 ## Troubleshooting
 
@@ -1390,3 +1374,267 @@ The integration provides detailed logging for debugging:
 - Monitor for any rate limiting or permission errors
 
 For more detailed troubleshooting, refer to the [Checkmarx One API documentation](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide).
+
+
+## Alternative installation via webhook
+
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Checkmarx One. If so, use the following instructions:
+
+**Note** that when using the webhook installation method, data will be ingested into Port only when the webhook is triggered.
+
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+In this example you are going to create a webhook integration between [Checkmarx One](https://checkmarx.com/) and Port, which will ingest Checkmarx One scan events and results.
+
+<h2> Port configuration </h2>
+
+Create the following blueprint definitions:
+
+<details>
+<summary>Checkmarx Scan blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "checkmarxScan",
+  "title": "Checkmarx Scan",
+  "icon": "Checkmarx",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "Queued",
+          "Running",
+          "Completed",
+          "Failed",
+          "Partial",
+          "Canceled"
+        ],
+        "description": "The status of the scan. Possible values: Queued, Running, Completed, Failed, Partial, Canceled."
+      },
+      "branch": {
+        "type": "string",
+        "title": "Branch",
+        "description": "The branch of the repository that was scanned."
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At",
+        "description": "The date and time when the scan was created."
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Updated At",
+        "description": "The date and time when the scan was last updated."
+      },
+      "projectId": {
+        "type": "string",
+        "title": "Project ID",
+        "description": "The identifier of the project to which this scan belongs."
+      },
+      "userAgent": {
+        "type": "string",
+        "title": "User Agent",
+        "description": "The user agent used to initiate the scan."
+      }
+    },
+    "required": ["status", "projectId"]
+  },
+  "relations": {}
+}
+```
+
+</details>
+
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
+
+<details>
+<summary>Checkmarx One webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `Checkmarx One mapper`;
+   2. Identifier : `checkmarx_one_mapper`;
+   3. Description : `A webhook configuration to map Checkmarx One scan events to Port`;
+   4. Icon : `Checkmarx`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+```json showLineNumbers
+{
+  "mappings": [
+    {
+      "blueprint": "checkmarxScan",
+      "itemsToParse": ".body",
+      "entity": {
+        "identifier": ".item.scanId",
+        "title": "(.item.projectId + \"-\" + .item.scanId)",
+        "properties": {
+          "status": ".item.status",
+          "branch": ".item.branch",
+          "createdAt": ".item.createdAt",
+          "updatedAt": ".item.updatedAt",
+          "projectId": ".item.projectId",
+          "userAgent": ".item.userAgent"
+        }
+      }
+    }
+  ],
+  "enabled": true,
+  "security": {}
+}
+```
+
+3. Click **Save** at the bottom of the page.
+
+</details>
+
+<h2> Create a webhook in Checkmarx One </h2>
+
+You can follow the instruction in [Checkmarx One's webhook documentation](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide), they are also outlined here for reference:
+
+1. Log in to Checkmarx One with admin permissions.
+2. Navigate to **Settings** > **Webhooks**.
+3. Click **Add Webhook**.
+4. Input the following details:
+   1. `Name` - use a meaningful name such as Port Webhook.
+   2. `Payload URL` - enter the value of the `url` key you received after creating the webhook configuration.
+   3. Under `Events` - select the following events:
+      - `Project Created`
+      - `Completed Scan`
+      - `Failed Scan`
+      - `Partial Scan`
+5. Click **Create Webhook** at the bottom of the page.
+
+:::tip Checkmarx One events and payload
+In order to view the different payloads and events available in Checkmarx One webhooks, [look here](https://docs.checkmarx.com/en/34965-68538-configuring-projects.html#UUID-1a1413d4-5d19-ddc0-aa35-51ff05ef0ade_UUID-a11c3b46-abfa-c26f-026b-0a9c04a79a46)
+:::
+
+Done! any project creation and scan completion event (successful, failed, or partial) will trigger a webhook event that Checkmarx One will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+<h2> Webhook Configuration Options </h2>
+
+Checkmarx One supports two types of webhook configurations with different scoping levels:
+
+### Tenant-Level Webhooks
+- **Scope**: Receive events from all projects within your Checkmarx One tenant
+- **Use Case**: When you want to monitor all security scans across your entire organization
+- **Configuration**: Set up the webhook at the tenant level in Checkmarx One settings
+- **Events**: All scan events (`scan_completed_successfully`, `scan_failed`, `scan_partial`) from any project
+
+### Project-Scoped Webhooks
+- **Scope**: Receive events only from specific projects you select
+- **Use Case**: When you want to monitor only certain critical projects or applications
+- **Configuration**: Set up the webhook at the project level in Checkmarx One settings
+- **Events**: Scan events only from the selected project(s)
+
+:::tip Choosing the Right Scope
+- Use **tenant-level webhooks** for comprehensive security monitoring across your organization
+- Use **project-scoped webhooks** when you need granular control or want to reduce noise from non-critical projects
+:::
+
+<h2> Let's Test It </h2>
+
+This section includes a sample webhook event sent from Checkmarx One when a scan is completed. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+
+<h3> Payload </h3>
+
+Here is an example of the payload structure sent to the webhook URL when a Checkmarx One scan is completed:
+
+<details>
+<summary> Webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "id": "f62213cb-183b-4a48-b880-56640d45d209",
+  "status": "Running",
+  "branch": "main",
+  "createdAt": "2025-09-08T17:39:31.344557Z",
+  "updatedAt": "2025-09-08T17:39:31.448929Z",
+  "projectId": "6ace8769-7ad3-4812-8990-0d4111ba0156",
+  "projectName": "Test-Project/test-repo",
+  "userAgent": "grpc-java-netty/1.63.0",
+  "initiator": "user@company.org",
+  "tags": {},
+  "metadata": {
+    "id": "f62213cb-183b-4a48-b880-56640d45d209",
+    "type": "git",
+    "Handler": {
+      "GitHandler": {
+        "branch": "main",
+        "repo_url": "https://github.com/Test-Org/test-repo",
+        "credentials": {
+          "type": "apiKey",
+          "value": "*****",
+          "username": "*****"
+        }
+      }
+    },
+    "configs": [
+      {
+        "type": "sast",
+        "value": {
+          "presetName": "",
+          "incremental": "false"
+        }
+      },
+      {
+        "type": "sca"
+      },
+      {
+        "type": "kics"
+      },
+      {
+        "type": "apisec"
+      }
+    ],
+    "project": {
+      "id": "6ace8769-7ad3-4812-8990-0d4111ba0156"
+    },
+    "created_at": {
+      "nanos": 128635019,
+      "seconds": 1757353171
+    }
+  },
+  "engines": [
+    "sast",
+    "sca",
+    "kics",
+    "apisec"
+  ],
+  "sourceType": "github",
+  "sourceOrigin": "Project Scan"
+}
+```
+
+</details>
+
+<h3> Mapping Result </h3>
+
+The combination of the sample payload and the webhook configuration generates the following Port entity:
+
+```json showLineNumbers
+{
+  "identifier": "f62213cb-183b-4a48-b880-56640d45d209",
+  "title": "6ace8769-7ad3-4812-8990-0d4111ba0156-f62213cb-183b-4a48-b880-56640d45d209",
+  "blueprint": "checkmarxScan",
+  "properties": {
+    "status": "Running",
+    "branch": "main",
+    "createdAt": "2025-09-08T17:39:31.344557Z",
+    "updatedAt": "2025-09-08T17:39:31.448929Z",
+    "projectId": "6ace8769-7ad3-4812-8990-0d4111ba0156",
+    "userAgent": "grpc-java-netty/1.63.0",
+    "configs": {},
+    "statusDetails": []
+  },
+  "relations": {
+    "project": "6ace8769-7ad3-4812-8990-0d4111ba0156"
+  }
+}
+```
+
+</details>
