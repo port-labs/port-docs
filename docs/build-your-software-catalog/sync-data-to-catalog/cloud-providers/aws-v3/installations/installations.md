@@ -45,26 +45,25 @@ For a single AWS account, you'll deploy a CloudFormation stack that creates the 
 <h4>Step 2: Deploy CloudFormation Stack</h4>
 
 - **Access the CloudFormation Template**:
-   - Go to [Port Data Sources](https://app.getport.io/settings/data-sources).
-   - Click **+ Add Integration** → **AWS Hosted by Port**.
-   - Select **Single Account** and click the **"Click here"** link in step 3.
+   - Go to [Data Sources](https://app.getport.io/settings/data-sources) page.
+   - Click on the `+ Data source` button in the top right corner of the page.
+   - Select **AWS Hosted by Port** from the cloud providers section.
+   - Select **Single Account** and click the `Click here` link in step 3.
    - This will open CloudFormation with pre-configured parameters.
 
 - **Deploy via AWS Console**:
    - In the CloudFormation console, review the pre-configured parameters.
    - Scroll down to the bottom of the page.
-   - Check the box **"I acknowledge that AWS CloudFormation might create IAM resources with custom names"**.
-   - Click **Create Stack**.
+   - Check the box that states **"I acknowledge that AWS CloudFormation might create IAM resources with custom names"**.
+   - Click `Create Stack`.
 
 
 <h4>Step 3: Configure Integration in Port</h4>
 
-- **Navigate to Port**:
-   - Go to your Port environment.
-   - Navigate to **[Port Data Sources](https://app.getport.io/settings/data-sources)**.
+- Navigate to the [Data Sources](https://app.getport.io/settings/data-sources) page of your portal.
 
 - **Add AWS Hosted by Port Integration**:
-   - Click `+ Add Integration`.
+   - Click on the `+ Data source` button in the top right corner of the page.
    - Select **AWS Hosted by Port** from the cloud providers section.
 
 - **Get the Role ARN**:
@@ -120,8 +119,8 @@ You must run the multi-account installation from your AWS Organizations **manage
 :::
 
 - **Access Management Account**:
-   - Log into your AWS Organizations management account
-   - Navigate to [AWS Organizations](https://console.aws.amazon.com/organizations/) service
+   - Log into your AWS Organizations management account.
+   - Navigate to [AWS Organizations](https://console.aws.amazon.com/organizations/) service.
 
 - **Find Your OU IDs**:
    - In AWS Organizations, open **organizational units** in the left sidebar.
@@ -131,7 +130,6 @@ You must run the multi-account installation from your AWS Organizations **manage
    - You can also target specific account IDs if needed.
 
 :::tip Common OU Naming Patterns Examples
-
 - `ou-prod-12345678` (Production)
 - `ou-staging-87654321` (Staging)  
 - `ou-dev-11223344` (Development)
@@ -141,50 +139,49 @@ You must run the multi-account installation from your AWS Organizations **manage
 <h4>Step 2: Deploy Multi-Account CloudFormation Stack</h4>
 
 - **Access the CloudFormation Template**:
-   - Go to [Port Data Sources](https://app.getport.io/settings/data-sources)
-   - Click **+ Add Integration** → **AWS Hosted by Port**
-   - Select **Multiple Accounts** and click the **"Click here"** link in step 3
-   - This will open CloudFormation with pre-configured parameters
+   - Go to the  [Data sources](https://app.getport.io/settings/data-sources) page of your portal.
+   - Click on the `+ Data source` button in the top right corner of the page.
+   - Select **AWS Hosted by Port** from the cloud providers section.
+   - Select **Multiple Accounts** and click the `Click here` link in step 3.
+   - This will open CloudFormation with pre-configured parameters.
 
 - **Deploy via AWS Console**:
-   - In the CloudFormation console, review the pre-configured parameters
-   - Scroll down to the bottom of the page
-   - Check the box **"I acknowledge that AWS CloudFormation might create IAM resources with custom names"**
-   - Click **Create Stack**
+   - In the CloudFormation console, review the pre-configured parameters.
+   - Scroll down to the bottom of the page.
+   - Check the box **"I acknowledge that AWS CloudFormation might create IAM resources with custom names"**.
+   - Click `Create Stack`.
 
 
 <h4>Step 3: Monitor Deployment</h4>
 
 - **Check StackSet Status**:
-   - Go to **CloudFormation** → **StackSets** in your management account
-   - Monitor the deployment progress across all target accounts
-   - Ensure all stack instances show "CREATE_COMPLETE" status
+   - Go to **CloudFormation** → **StackSets** in your management account.
+   - Monitor the deployment progress across all target accounts.
+   - Ensure all stack instances show `CREATE_COMPLETE` status.
 
 - **Verify IAM Roles**:
-   - Check that the IAM roles were created in each target account
+   - Check that the IAM roles were created in each target account.
 
 <h4>Step 4: Configure Integration in Port</h4>
 
-- **Navigate to Port**:
-   - Go to your Port environment
-   - Navigate to **[Port Data Sources](https://app.getport.io/settings/data-sources)**
+- Navigate to the [Data sources](https://app.getport.io/settings/data-sources) page of your portal.
 
 - **Add AWS Hosted by Port Integration**:
-   - Click **+ Add Integration**
-   - Select **AWS Hosted by Port** from the cloud providers section
+   - Click on the `+ Data source` button in the top right corner of the page.
+   - Select **AWS Hosted by Port** from the cloud providers section.
 
 - **Get the Role ARN**:
-   - After CloudFormation deployment completes, go to the **Outputs** tab
-   - Copy the **PortintegrationRoleArn** value
+   - After CloudFormation deployment completes, go to the **Outputs** tab.
+   - Copy the **PortintegrationRoleArn** value.
 
 - **Complete Integration Setup**:
-   - Return to the Port integration form
-   - Paste the **Management Account Role ARN** into the **Account Role Arn** field
-   - Click **Done**
+   - Return to the Port integration form.
+   - Paste the **Management Account Role ARN** into the **Account Role Arn** field.
+   - Click `Done`.
 
 - **Verify Multi-Account Connection**:
-   - Port will automatically detect the IAM roles across all accounts
-   - The integration will start discovering resources from all configured accounts
+   - Port will automatically detect the IAM roles across all accounts.
+   - The integration will start discovering resources from all configured accounts.
 
 </TabItem>
 
@@ -195,14 +192,14 @@ You must run the multi-account installation from your AWS Organizations **manage
 After installation, verify that the integration is working:
 
 1. **Check Integration Status**:
-   - Go to **Settings** → **Integrations**
-   - Verify the AWS Hosted by Port integration shows as "Active"
-   - Check for any error messages
+   - Go to **Settings** → **Integrations**.
+   - Verify the AWS Hosted by Port integration shows as "Active".
+   - Check for any error messages.
 
 2. **Verify Data Flow**:
    - Go to **Software Catalog**
-   - Look for entities created by the integration
-   - Verify that AWS resources are being imported correctly
+   - Look for entities created by the integration.
+   - Verify that AWS resources are being imported correctly.
 
 
 ## Troubleshooting
@@ -212,8 +209,8 @@ Common Installation Issue - CloudFormation Stack Creation Failures.
 **Error**: `Stack creation failed: CREATE_FAILED`
 
 **Solutions**:
-- **Invalid Port Organization ID**: Verify the format is `org_` followed by alphanumeric characters
-- **Duplicate Integration Identifier**: Use a unique identifier that hasn't been used before
-- **Insufficient IAM Permissions**: Ensure your AWS user has CloudFormation and IAM permissions
-- **OIDC Provider Already Exists**: Set "Create OIDC Provider" to `false` if you already have one
+- **Invalid Port Organization ID**: Verify the format is `org_` followed by alphanumeric characters.
+- **Duplicate Integration Identifier**: Use a unique identifier that hasn't been used before.
+- **Insufficient IAM Permissions**: Ensure your AWS user has CloudFormation and IAM permissions.
+- **OIDC Provider Already Exists**: Set "Create OIDC Provider" to `false` if you already have one.
 
