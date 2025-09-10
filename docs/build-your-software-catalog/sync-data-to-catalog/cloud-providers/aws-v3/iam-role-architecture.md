@@ -15,6 +15,8 @@ The integration is designed to work with the full `ReadOnlyAccess` policy, which
 - **Reliable operation** without permission-related issues.
 :::
 
+If you prefer to create the IAM role manually rather than using the CloudFormation template, the following sections describe the setup we implement. This will help you understand the reasoning behind our design choices and adapt them if you decide to configure the role differently.
+
 ## Role structure
 
 For multi-account setups, the role structure is replicated across all target accounts.
@@ -74,7 +76,7 @@ The IAM role uses an **OIDC (OpenID Connect) trust policy** with **IRSA (IAM Rol
 
 The role uses the **AWS managed `ReadOnlyAccess` policy**, which provides comprehensive read-only access to all AWS services:
 
-```yaml
+```yaml showLineNumbers
 ManagedPolicyArns:
   - arn:aws:iam::aws:policy/ReadOnlyAccess
 ```
@@ -86,17 +88,6 @@ ManagedPolicyArns:
 - **AWS Maintained**: AWS manages and updates the policy as needed.
 - **Read-Only Security**: Only read permissions, no write/delete/create access.
 
-## Permission categories
-
-Since the role uses the AWS managed `ReadOnlyAccess` policy, it has comprehensive read-only access to **all AWS services**.  
-Here are the key categories relevant to AWS Hosted by Port:
-
-- **Comprehensive Discovery**: Access to all AWS resource types.
-- **Future-Proof**: New services are automatically supported without redeployment.
-- **Operational Efficiency**: No CloudFormation updates needed when adding new services.
-- **Consistent Access**: Same permission model across all services.
-- **No Maintenance**: AWS manages policy updates.
-
 ## Security considerations
 
-From a security view point the integration uses a **read-only** role. It can list/describe and read metadata/tags, but cannot create, modify, delete, or change policies. No cross-account access is available unless it is explicitly configured.
+From a security view point the integration uses a **read-only** role. It can list/describe and read metadata/tags, but cannot create, modify, delete, or change any resource. 

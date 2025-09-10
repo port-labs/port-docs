@@ -67,123 +67,76 @@ This is the default mapping configuration you get after installing AWS Hosted by
 <summary><b>Default mapping configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
 resources:
-- kind: AWS::Organizations::Account
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .Id
-        title: .Name
-        blueprint: '"awsAccount"'
-        properties:
-          arn: .Arn
-          email: .Email
-          status: .Status
-          joined_method: .JoinedMethod
-          joined_timestamp: .JoinedTimestamp | sub(" "; "T")
-- kind: AWS::S3::Bucket
-  selector:
-    query: 'true'
-    useGetResourceAPI: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .Identifier
-        title: .Identifier
-        blueprint: '"cloudResource"'
-        properties:
-          kind: .__Kind
-          region: .Properties.RegionalDomainName | capture(".*\\.(?<region>[^\\.]+)\\.amazonaws\\.com")
-            | .region
-          tags: .Properties.Tags
-          arn: .Properties.Arn
-          link: .Properties | select(.Arn != null) | "https://console.aws.amazon.com/go/view?arn="
-            + .Arn
-        relations:
-          account: .__AccountId
-- kind: AWS::EC2::Instance
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .Identifier
-        title: .Identifier
-        blueprint: '"cloudResource"'
-        properties:
-          kind: .__Kind
-          region: .__Region
-          tags: .Properties.Tags
-          arn: .Properties.Arn
-          link: .Properties | select(.Arn != null) | "https://console.aws.amazon.com/go/view?arn="
-            + .Arn
-        relations:
-          account: .__AccountId
-- kind: AWS::ECS::Cluster
-  selector:
-    query: 'true'
-    useGetResourceAPI: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .Properties.Arn
-        title: .Identifier
-        blueprint: '"cloudResource"'
-        properties:
-          kind: .__Kind
-          region: .__Region
-          tags: .Properties.Tags
-          arn: .Properties.Arn
-          link: .Properties | select(.Arn != null) | "https://console.aws.amazon.com/go/view?arn="
-            + .Arn
-        relations:
-          account: .__AccountId
-- kind: AWS::Lambda::Function
-  selector:
-    query: 'true'
-    useGetResourceAPI: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .Properties.FunctionName
-        title: .Properties.FunctionName
-        blueprint: '"cloudResource"'
-        properties:
-          kind: .__Kind
-          region: .__Region
-          runtime: .Properties.Runtime
-          memory_size: .Properties.MemorySize
-          timeout: .Properties.Timeout
-          tags: .Properties.Tags
-          arn: .Properties.Arn
-          link: .Properties | select(.Arn != null) | "https://console.aws.amazon.com/go/view?arn="
-            + .Arn
-        relations:
-          account: .__AccountId
-- kind: AWS::RDS::DBInstance
-  selector:
-    query: 'true'
-    useGetResourceAPI: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .Properties.DBInstanceIdentifier
-        title: .Properties.DBInstanceIdentifier
-        blueprint: '"cloudResource"'
-        properties:
-          kind: .__Kind
-          region: .__Region
-          engine: .Properties.Engine
-          engine_version: .Properties.EngineVersion
-          instance_class: .Properties.DBInstanceClass
-          tags: .Properties.Tags
-          arn: .Properties.Arn
-          link: .Properties | select(.Arn != null) | "https://console.aws.amazon.com/go/view?arn="
-            + .Arn
-        relations:
-          account: .__AccountId
+  - kind: AWS::Account::Info
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.Id
+          title: .Properties.Name
+          blueprint: '"awsAccount"'
+  - kind: AWS::S3::Bucket
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.Arn
+          title: .Properties.BucketName
+          blueprint: '"s3Bucket"'
+          properties:
+            arn: .Properties.Arn
+            region: .Properties.LocationConstraint
+            creationDate: .Properties.CreationDate
+            tags: .Properties.Tags
+          relations:
+            account: .__ExtraContext.AccountId
+  - kind: AWS::EC2::Instance
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.InstanceId
+          title: .Properties.InstanceId
+          blueprint: '"ec2Instance"'
+          properties:
+            instanceType: .Properties.InstanceType
+            state: .Properties.State.Name
+            publicIpAddress: .Properties.PublicIpAddress
+            privateIpAddress: .Properties.PrivateIpAddress
+            tags: .Properties.Tags
+            arn: >-
+              "arn:aws:ec2:" + .__Region + ":" + .__AccountId + ":instance/" +
+              .Properties.InstanceId
+          relations:
+            account: .__ExtraContext.AccountId
+  - kind: AWS::ECS::Cluster
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.ClusterArn
+          title: .Properties.ClusterName
+          blueprint: '"ecsCluster"'
+          properties:
+            status: .Properties.Status
+            runningTasksCount: .Properties.RunningTasksCount
+            activeServicesCount: .Properties.ActiveServicesCount
+            pendingTasksCount: .Properties.PendingTasksCount
+            registeredContainerInstancesCount: .Properties.RegisteredContainerInstancesCount
+            capacityProviders: .Properties.CapacityProviders
+            clusterArn: .Properties.ClusterArn
+            tags: .Properties.Tags
+          relations:
+            account: .__ExtraContext.AccountId
+
 ```
 
 </details>
