@@ -169,7 +169,8 @@ Let's add some sample internal documentation to demonstrate the AI capabilities:
 <Tabs groupId="ingestion-method" queryString defaultValue="ui" values={[
 {label: "Port UI", value: "ui"},
 {label: "API", value: "api"},
-{label: "Webhook", value: "webhook"}
+{label: "Webhook", value: "webhook"},
+{label: "Integration", value: "integration"}
 ]}>
 
 <TabItem value="ui">
@@ -187,24 +188,24 @@ Let's add some sample internal documentation to demonstrate the AI capabilities:
 
     ```json showLineNumbers
     {
-        "properties": {
-            "content": "# User Authentication API\n\n## Overview\nThis API handles user authentication and authorization for our platform.\n\n## Endpoints\n\n### POST /auth/login\nAuthenticates a user and returns a JWT token.\n\n**Request Body:**\n```json\n{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}\n```\n\n**Response:**\n```json\n{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"expires_in\": 3600\n}\n```\n\n### GET /auth/me\nReturns current user information.\n\n**Headers:**\n- `Authorization: Bearer <token>`\n\n**Response:**\n```json\n{\n  \"id\": \"user123\",\n  \"email\": \"user@example.com\",\n  \"name\": \"John Doe\"\n}\n```\n\n## Error Codes\n- `400`: Invalid credentials\n- `401`: Unauthorized\n- `429`: Rate limit exceeded",
-            "documentType": "API Documentation",
-            "product": "Authentication Service",
-            "team": "Backend Engineering",
-            "owner": "john.doe@company.com",
-            "lastUpdated": "2024-01-15T10:30:00.000Z",
-            "version": "2.1.0",
-            "status": "Approved",
-            "tags": ["api", "authentication", "jwt", "backend"],
-            "summary": "Complete API documentation for user authentication endpoints",
-            "audience": "Engineering",
-            "priority": "High"
+      "properties": {
+        "content": "# User Authentication API\n\n## Overview\nThis API handles user authentication and authorization for our platform.\n\n## Endpoints\n\n### POST /auth/login\nAuthenticates a user and returns a JWT token.\n\n**Request Body:**\n```json\n{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}\n```\n\n**Response:**\n```json\n{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"expires_in\": 3600\n}\n```\n\n### GET /auth/me\nReturns current user information.\n\n**Headers:**\n- `Authorization: Bearer <token>`\n\n**Response:**\n```json\n{\n  \"id\": \"user123\",\n  \"email\": \"user@example.com\",\n  \"name\": \"John Doe\"\n}\n```\n\n## Error Codes\n- `400`: Invalid credentials\n- `401`: Unauthorized\n- `429`: Rate limit exceeded",
+        "documentType": "API Documentation",
+        "product": "Authentication Service",
+        "team": "Backend Engineering",
+         "owner": "john.doe@company.com",
+        "lastUpdated": "2024-01-15T10:30:00.000Z",
+        "version": "2.1.0",
+        "status": "Approved",
+        "tags": ["api", "authentication", "jwt", "backend"],
+        "summary": "Complete API documentation for user authentication endpoints",
+        "audience": "Engineering",
+        "priority": "High"
         },
-        "relations": {},
-        "icon": "FileText",
-        "identifier": "auth-api-docs-v2",
-        "title": "User Authentication API Documentation"
+      "relations": {},
+      "icon": "FileText",
+      "identifier": "auth-api-docs-v2",
+      "title": "User Authentication API Documentation"
     }
     ```
     </details>
@@ -222,24 +223,24 @@ Let's add some sample internal documentation to demonstrate the AI capabilities:
 
     ```json showLineNumbers
     {
-        "properties": {
-            "content": "# Database Connection Issues Troubleshooting\n\n## Common Issues\n\n### Connection Timeout\n**Symptoms:**\n- API requests timing out\n- Database connection errors in logs\n- High response times\n\n**Diagnosis:**\n1. Check database connection pool status\n2. Review connection timeout settings\n3. Monitor database server resources\n\n**Solutions:**\n1. Increase connection pool size\n2. Adjust timeout values\n3. Scale database resources\n\n### Connection Pool Exhaustion\n**Symptoms:**\n- \"No available connections\" errors\n- Application hangs\n- Database locks\n\n**Diagnosis:**\n1. Check active connections\n2. Review connection leak patterns\n3. Analyze connection usage\n\n**Solutions:**\n1. Fix connection leaks in code\n2. Implement connection monitoring\n3. Add connection pool alerts\n\n## Prevention\n- Regular connection pool monitoring\n- Code reviews for connection management\n- Load testing with realistic scenarios",
-            "documentType": "Troubleshooting",
-            "product": "Database Infrastructure",
-            "team": "Platform Engineering",
-            "owner": "jane.smith@company.com",
-            "lastUpdated": "2024-01-20T14:15:00.000Z",
-            "version": "1.3.0",
-            "status": "Approved",
-            "tags": ["database", "troubleshooting", "connections", "performance"],
-            "summary": "Comprehensive guide for diagnosing and resolving database connection issues",
-            "audience": "Engineering",
-            "priority": "Critical"
-        },
-        "relations": {},
-        "icon": "FileText",
-        "identifier": "db-connection-troubleshooting",
-        "title": "Database Connection Issues Troubleshooting Guide"
+      "properties": {
+        "content": "# Database Connection Issues Troubleshooting\n\n## Common Issues\n\n### Connection Timeout\n**Symptoms:**\n- API requests timing out\n- Database connection errors in logs\n- High response times\n\n**Diagnosis:**\n1. Check database connection pool status\n2. Review connection timeout settings\n3. Monitor database server resources\n\n**Solutions:**\n1. Increase connection pool size\n2. Adjust timeout values\n3. Scale database resources\n\n### Connection Pool Exhaustion\n**Symptoms:**\n- \"No available connections\" errors\n- Application hangs\n- Database locks\n\n**Diagnosis:**\n1. Check active connections\n2. Review connection leak patterns\n3. Analyze connection usage\n\n**Solutions:**\n1. Fix connection leaks in code\n2. Implement connection monitoring\n3. Add connection pool alerts\n\n## Prevention\n- Regular connection pool monitoring\n- Code reviews for connection management\n- Load testing with realistic scenarios",
+        "documentType": "Troubleshooting",
+        "product": "Database Infrastructure",
+        "team": "Platform Engineering",
+        "owner": "jane.smith@company.com",
+        "lastUpdated": "2024-01-20T14:15:00.000Z",
+        "version": "1.3.0",
+        "status": "Approved",
+        "tags": ["database", "troubleshooting", "connections", "performance"],
+        "summary": "Comprehensive guide for diagnosing and resolving database connection issues",
+        "audience": "Engineering",
+        "priority": "Critical"
+      },
+     "relations": {},
+     "icon": "FileText",
+     "identifier": "db-connection-troubleshooting",
+     "title": "Database Connection Issues Troubleshooting Guide"
     }
     ```
     </details>
@@ -257,24 +258,24 @@ Let's add some sample internal documentation to demonstrate the AI capabilities:
 
     ```json showLineNumbers
     {
-        "properties": {
-            "content": "# New Developer Onboarding Guide\n\n## Week 1: Environment Setup\n\n### Day 1-2: Development Environment\n1. **Access Setup**\n   - Request VPN access\n   - Set up development machine\n   - Install required tools (Docker, Git, IDE)\n\n2. **Repository Access**\n   - Clone main repositories\n   - Set up SSH keys\n   - Configure Git settings\n\n### Day 3-5: First Project\n1. **Choose Starter Task**\n   - Pick from \"good first issue\" list\n   - Set up local development environment\n   - Make first contribution\n\n## Week 2: Team Integration\n\n### Meetings and Processes\n1. **Team Meetings**\n   - Daily standups (9:30 AM)\n   - Weekly planning (Monday 2 PM)\n   - Retrospectives (Friday 4 PM)\n\n2. **Development Process**\n   - Code review process\n   - Testing requirements\n   - Deployment procedures\n\n## Resources\n- [Internal Wiki](https://wiki.company.com)\n- [API Documentation](/docs/api)\n- [Architecture Overview](/docs/architecture)\n- [Team Slack Channel](#dev-team)",
-            "documentType": "Onboarding",
-            "product": "Engineering",
-            "team": "Engineering",
-            "owner": "hr@company.com",
-            "lastUpdated": "2024-01-10T09:00:00.000Z",
-            "version": "3.0.0",
-            "status": "Approved",
-            "tags": ["onboarding", "new-hires", "development", "process"],
-            "summary": "Complete onboarding guide for new developers joining the engineering team",
-            "audience": "New Hires",
-            "priority": "High"
-        },
-        "relations": {},
-        "icon": "FileText",
-        "identifier": "dev-onboarding-guide",
-        "title": "New Developer Onboarding Guide"
+      "properties": {
+        "content": "# New Developer Onboarding Guide\n\n## Week 1: Environment Setup\n\n### Day 1-2: Development Environment\n1. **Access Setup**\n   - Request VPN access\n   - Set up development machine\n   - Install required tools (Docker, Git, IDE)\n\n2. **Repository Access**\n   - Clone main repositories\n   - Set up SSH keys\n   - Configure Git settings\n\n### Day 3-5: First Project\n1. **Choose Starter Task**\n   - Pick from \"good first issue\" list\n   - Set up local development environment\n   - Make first contribution\n\n## Week 2: Team Integration\n\n### Meetings and Processes\n1. **Team Meetings**\n   - Daily standups (9:30 AM)\n   - Weekly planning (Monday 2 PM)\n   - Retrospectives (Friday 4 PM)\n\n2. **Development Process**\n   - Code review process\n   - Testing requirements\n   - Deployment procedures\n\n## Resources\n- [Internal Wiki](https://wiki.company.com)\n- [API Documentation](/docs/api)\n- [Architecture Overview](/docs/architecture)\n- [Team Slack Channel](#dev-team)",
+        "documentType": "Onboarding",
+        "product": "Engineering",
+        "team": "Engineering",
+        "owner": "hr@company.com",
+        "lastUpdated": "2024-01-10T09:00:00.000Z",
+        "version": "3.0.0",
+        "status": "Approved",
+        "tags": ["onboarding", "new-hires", "development", "process"],
+        "summary": "Complete onboarding guide for new developers joining the engineering team",
+        "audience": "New Hires",
+        "priority": "High"
+      },
+      "relations": {},
+      "icon": "FileText",
+      "identifier": "dev-onboarding-guide",
+      "title": "New Developer Onboarding Guide"
     }
     ```
     </details>
@@ -383,123 +384,86 @@ Set up a webhook to automatically sync documentation from external systems:
 
 </TabItem>
 
+<TabItem value="integration">
+
+<h3> GitHub Integration for markdown files</h3>
+
+Another popular use case is documentation being markdown files in a GitHub repo.   
+You can set up a GitHub integration to automatically sync markdown files (excluding README files):
+
+1. Install the [Port GitHub App](https://github.com/apps/getport-io) in your organization.
+
+2. Go to [data sources](https://app.getport.io/settings/data-sources).
+
+3. Under `Exporters`, click on your GitHub organization.
+
+4. Add a file mapping to sync markdown files:
+ 
+    <details>
+    <summary>GitHub integration configuration</summary>
+
+        ```yaml showLineNumbers 
+        resources:
+        - kind: file
+            selector:
+            query: '.file.name | contains("README") | not'
+            files:
+                - path: '**/*.md'
+                skipParsing: true
+            port:
+            entity:
+                mappings:
+                identifier: .file.path | split("/") | last | split(".") | first
+                title: .file.name | split(".") | first | replace("-", " ") | title
+                blueprint: '"internal_docs"'
+                properties:
+                    content: .file.content
+                    documentType: .file.path | split("/") | first | title
+                    product: .repo.name
+                    team: .repo.owner.login
+                    owner: .repo.owner.login + "@company.com"
+                    lastUpdated: .file.lastModified
+                    version: .file.sha[0:7]
+                    status: "Approved"
+                    tags: 
+                    - (.file.path | split("/") | first | downcase)
+                    - "github"
+                    - "markdown"
+                    summary: .file.content | split("\n") | first | replace("#", "") | strip
+                    audience: "All Teams"
+                    priority: "Medium"
+        ```
+
+        :::tip Advanced Filtering
+        You can customize the `query` field to filter files more specifically:
+        - `'.file.name | contains("README") | not'` - Exclude README files
+        - `'.file.path | startswith("docs/")'` - Only sync files from docs/ directory
+        - `'.file.name | contains("draft") | not'` - Exclude draft files
+        :::
+
+    </details>
+
+</TabItem>
+
 </Tabs>
 
 ## Test AI-powered documentation queries
 
-Now let's test the AI capabilities with various types of questions. **Key principle**: Keep questions concise when the context is clear, but add specificity when there's potential for ambiguity.
+You can toggle the AI assistant on and off by pressing `Ctrl + I` (or `Command + I` on Mac).
 
-<h3> Basic document discovery</h3>
+<img src="/img/guides/port-ai-assistant-interface.png" width="100%" border="1px" />
 
-**Question**: "What API documentation do we have in our catalog?"
+Try these example queries to test your AI-powered documentation search:
 
-**Expected response**: The AI should list all documents with `documentType: "API Documentation"` and provide summaries.
+- "What API documentation do we have in our catalog?"
+- "Who owns the authentication API documentation?"
+- "What documentation was updated in the last month in our catalog?"
+- "Show me all documentation related to the authentication service in our catalog"
+- "What critical documentation needs review in our catalog?"
 
-**Note**: Without "in our catalog", this question is ambiguous - the AI will search Port's own API documentation (docs.getport.io) instead of your cataloged internal docs.
-
-<h3> Ownership and maintenance</h3>
-
-**Question**: "Who owns the authentication API documentation?"
-
-**Expected response**: The AI should identify the owner and provide document details.
-
-**Note**: The context of "authentication API documentation" makes it clear you're asking about cataloged docs, not external documentation.
-
-<h3> Time-based queries</h3>
-
-**Question**: "What documentation was updated in the last month in our catalog?"
-
-**Expected response**: The AI should filter documents by `lastUpdated` date and show recent changes.
-
-**Note**: Without "in our catalog", this could be ambiguous - the AI might search Port's documentation instead of your cataloged internal docs.
-
-<h3> Product-specific queries</h3>
-
-**Question**: "Show me all documentation related to the authentication service in our catalog"
-
-**Expected response**: The AI should find documents where `product` contains "authentication" or related tags.
-
-**Note**: Without "in our catalog", this could be ambiguous - the AI might search Port's documentation about authentication instead of your cataloged docs.
-
-<h3> Status and priority queries</h3>
-
-**Question**: "What critical documentation needs review in our catalog?"
-
-**Expected response**: The AI should find documents with `priority: "Critical"` and `status: "Review"`.
-
-**Note**: Without "in our catalog", this could be ambiguous - the AI might search Port's documentation instead of your cataloged internal docs.
-
-## Advanced AI prompt techniques
-
-Here are some effective ways to get the most out of your documentation AI:
-
-<h3> 1. Start concise, add context only when needed:</h3>
-
-**✅ Concise (when context is clear):**
-- "Who owns the database docs?" (ownership implies cataloged entities)
-- "Show me troubleshooting guides" (in catalog context, this is clear)
-- "What's the status of our onboarding docs?" (status implies cataloged entities)
-
-**✅ Add context when ambiguous with Port docs:**
-- "What API documentation do we have in our catalog?" (vs Port's API docs)
-- "Show me troubleshooting guides in our catalog" (vs Port's troubleshooting docs)
-- "What documentation was updated recently in our catalog?" (vs Port's docs)
-
-**❌ Ambiguous (will search Port docs instead):**
-- "What API documentation do we have?" (searches docs.getport.io)
-- "Show me authentication documentation" (searches Port's auth docs)
-- "What's the latest documentation?" (searches Port's docs)
-
-<h3> 2. Use specific keywords when needed</h3>
-
-**❌ Vague queries:**
-- "Show me docs"
-- "What's available?"
-
-**✅ Specific queries:**
-- "Show me all documentation for the authentication service in our catalog"
-- "What documentation was updated this week in our catalog?"
-- "Find critical documentation that needs review in our catalog"
-
-<h3> 3. Contextual Queries</h3>
-
-Instead of: "Show me the API docs"
-Try: "I'm working on integrating user authentication, what API documentation should I reference in our catalog?"
-
-<h3> 4. Comparative Analysis</h3>
-
-"Compare the troubleshooting guides for database and authentication issues in our catalog"
-
-<h3> 5. Gap Analysis</h3>
-
-"What documentation do we have for new developers versus what's missing in our catalog?"
-
-<h3> 6. Maintenance Queries</h3>
-
-"Which documents haven't been updated in 6 months and might be outdated in our catalog?"
-
-<h3> 7. Cross-referencing</h3>
-
-"Find all documents that reference the authentication service in our catalog"
-
-<h3> 8. When to add context</h3>
-
-**Key rule**: Any question that could be answered by docs.getport.io will be ambiguous and needs "in our catalog" to clarify.
-
-**Always add "in our catalog" for:**
-- **"API documentation"** - Without this, searches Port's API docs (docs.getport.io)
-- **"Authentication docs"** - Without this, searches Port's authentication docs
-- **"Troubleshooting guides"** - Without this, searches Port's troubleshooting docs
-- **"What documentation..."** - Without this, searches Port's general docs
-- **"Show me docs..."** - Without this, searches Port's docs
-
-**Don't need "in our catalog" for:**
-- **"Who owns..."** - Ownership implies cataloged entities
-- **"What's the status of..."** - Status implies cataloged entities  
-- **"Which team maintains..."** - Team ownership implies cataloged entities
-
-**Rule of thumb**: If Port has documentation on the topic, add "in our catalog" to avoid ambiguity.
-
+:::tip AI Response Behavior
+Sometimes, the AI might think you want to query Port technical documentation. In that case, you can instruct it to focus on your internal documentation by adding "in our catalog" or "from our internal documentation" to your prompt to clarify that you're asking about your cataloged entities rather than Port's general documentation.
+:::
 
 ## Conclusion
 
