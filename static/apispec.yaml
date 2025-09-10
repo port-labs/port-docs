@@ -82,6 +82,7 @@ components:
                               - today
                               - tomorrow
                               - yesterday
+                              - lastDay
                               - lastWeek
                               - last2Weeks
                               - lastMonth
@@ -455,6 +456,7 @@ components:
                               - today
                               - tomorrow
                               - yesterday
+                              - lastDay
                               - lastWeek
                               - last2Weeks
                               - lastMonth
@@ -2228,6 +2230,7 @@ components:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -2587,6 +2590,7 @@ components:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -4624,6 +4628,7 @@ components:
                                                         - today
                                                         - tomorrow
                                                         - yesterday
+                                                        - lastDay
                                                         - lastWeek
                                                         - last2Weeks
                                                         - lastMonth
@@ -4983,6 +4988,7 @@ components:
                                                         - today
                                                         - tomorrow
                                                         - yesterday
+                                                        - lastDay
                                                         - lastWeek
                                                         - last2Weeks
                                                         - lastMonth
@@ -5771,6 +5777,7 @@ components:
                               - today
                               - tomorrow
                               - yesterday
+                              - lastDay
                               - lastWeek
                               - last2Weeks
                               - lastMonth
@@ -6318,6 +6325,7 @@ paths:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -9149,6 +9157,7 @@ paths:
                                       - today
                                       - tomorrow
                                       - yesterday
+                                      - lastDay
                                       - lastWeek
                                       - last2Weeks
                                       - lastMonth
@@ -18642,6 +18651,7 @@ paths:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -20563,6 +20573,7 @@ paths:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
