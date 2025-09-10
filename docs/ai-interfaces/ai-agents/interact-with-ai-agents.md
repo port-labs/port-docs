@@ -153,8 +153,8 @@ const eventSource = new EventSource(apiUrl);
 eventSource.addEventListener('done', (event) => {
   const data = JSON.parse(event.data);
   
-  if (data.quotaUsage) {
-    const { remainingRequests, remainingTokens, remainingTimeMs } = data.quotaUsage;
+  if (data.rateLimitUsage) {
+    const { remainingRequests, remainingTokens, remainingTimeMs } = data.rateLimitUsage;
     
     // Check if quota is running low
     if (remainingRequests < 10 || remainingTokens < 10000) {
@@ -214,11 +214,19 @@ data: Your final answer from the agent.
 
 event: done
 data: {
-  "maxRequests": 200,
-  "remainingRequests": 193,
-  "maxTokens": 200000,
-  "remainingTokens": 179910,
-  "remainingTimeMs": 903
+  "rateLimitUsage": {
+    "maxRequests": 200,
+    "remainingRequests": 193,
+    "maxTokens": 200000,
+    "remainingTokens": 179910,
+    "remainingTimeMs": 903
+  },
+  "monthlyQuotaUsage": {
+    "monthlyLimit": 20,
+    "remainingQuota": 19,
+    "month": "2025-09",
+    "remainingTimeMs": 1766899073
+  }
 }
 ```
 
@@ -283,12 +291,18 @@ Signals that the agent has finished processing and the response stream is comple
 
 ```json showLineNumbers
 {
-  "quotaUsage": {
+  "rateLimitUsage": {
     "maxRequests": 200,
     "remainingRequests": 193,
     "maxTokens": 200000,
     "remainingTokens": 179910,
     "remainingTimeMs": 903
+  },
+  "monthlyQuotaUsage": {
+    "monthlyLimit": 20,
+    "remainingQuota": 19,
+    "month": "2025-09",
+    "remainingTimeMs": 1766899073
   }
 }
 ```
@@ -415,16 +429,20 @@ The query limit is estimated and depends on the actual token usage.
 Port has two different types of limits for AI agent interactions:
 
 - **Rate limits**: Short-term limits (~40 queries per hour, 800,000 tokens per hour) that reset hourly
-- **Monthly quota**: Long-term limits that reset monthly and track your total usage across the month
+- **Monthly quota**: Long-term limits (default: 20 requests per month) that reset monthly and track your total usage across the month
 
-The `/v1/quota` endpoint shows your **monthly quota** usage, which is separate from the hourly rate limits.
+The `/v1/quota/ai-invocations` endpoint shows your **monthly quota** usage, which is separate from the hourly rate limits.
+
+:::info Quota increases
+Customers can get increased monthly quotas based on their usage patterns and agreement with Port. Contact support to discuss quota adjustments for your organization's needs.
+:::
 
 ### Check monthly quota via API
 
-You can monitor your current monthly quota usage by making a GET request to the `/v1/quota` endpoint:
+You can monitor your current monthly quota usage by making a GET request to the `/v1/quota/ai-invocations` endpoint:
 
 ```bash
-curl -L 'https://api.port.io/v1/quota' \
+curl -L 'https://api.port.io/v1/quota/ai-invocations' \
   -H 'Accept: application/json' \
   -H 'Authorization: Bearer <YOUR_API_TOKEN>'
 ```
@@ -434,9 +452,9 @@ curl -L 'https://api.port.io/v1/quota' \
 {
   "ok": true,
   "monthlyQuotaUsage": {
-    "monthlyLimit": 1000,
-    "remainingQuota": 991,
-    "month": "2025-01",
+    "monthlyLimit": 20,
+    "remainingQuota": 19,
+    "month": "2025-09",
     "remainingTimeMs": 1936718411
   }
 }
@@ -559,10 +577,10 @@ Port applies the following limits to AI agent interactions:
 
 You can monitor your current usage in several ways:
 - Check the final `done` event in streaming responses for remaining requests, tokens, and reset time (hourly rate limits)
-- Make a GET request to `/v1/quota` to see your monthly quota status
+- Make a GET request to `/v1/quota/ai-invocations` to see your monthly quota status
 - View quota information in AI invocation details
 
-Note that Port has both hourly rate limits and monthly quotas. For detailed quota monitoring, see the [Monitoring your quota](#monitoring-your-quota) section above.
+Note that Port has both hourly rate limits and monthly quotas (default: 20 requests per month). For detailed quota monitoring, see the [Monitoring your quota](#monitoring-your-quota) section above.
 
 </details>
 
