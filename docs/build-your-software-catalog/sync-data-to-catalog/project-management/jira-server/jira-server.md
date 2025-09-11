@@ -188,10 +188,6 @@ This table summarizes the available parameters for the installation.
 
 This workflow/pipeline will run the Jira Server integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Realtime updates
-If you want the integration to update Port in real time you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
-:::
-
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 
