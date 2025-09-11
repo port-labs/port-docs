@@ -41,11 +41,9 @@ We're actively working on adding support for additional AWS resource types to pr
 
 AWS Hosted by Port provides several advantages over the standard AWS integration:
 
-- **Fully Hosted**: No infrastructure to maintain, update, or monitor.
-- **Simplified Installation**: Just deploy CloudFormation templates to create IAM roles.
-- **Complete Data**: Ensures no missing or incomplete resource information.
-- **Periodic Sync**: Regular updates to keep your catalog current.
-- **Zero Maintenance**: Port handles all updates, scaling, and infrastructure management.
+- **Fully hosted**: No infrastructure to maintain, update, or monitor.
+- **Simplified installation**: Just deploy CloudFormation templates to create IAM roles.
+- **Complete data**: Ensures no missing or incomplete resource information.
 
 ## Getting started
 

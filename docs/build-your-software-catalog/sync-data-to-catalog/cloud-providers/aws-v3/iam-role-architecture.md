@@ -37,7 +37,7 @@ PortIntegrationOIDCProvider:
         Value: !Ref IntegrationIdentifier
 ```
 
-**Key Details**:
+**Key details**:
 - **EKS OIDC URL**: Points to Port's production EKS cluster in EU-West-1.
 - **Client ID**: Uses `sts.amazonaws.com` for IRSA authentication.
 - **Reusable**: Can be shared across multiple integrations in the same account.
@@ -66,11 +66,9 @@ The IAM role uses an **OIDC (OpenID Connect) trust policy** with **IRSA (IAM Rol
 }
 ```
 
-**Key Security Features**:
-- **IRSA Authentication**: Uses EKS service account-based authentication.
-- **Audience Validation**: Only AWS STS service can assume the role.
-- **Subject Validation**: Role is tied to Port's specific EKS service account.
-- **Temporary Credentials**: All access uses short-lived tokens (typically 1 hour).
+**Key security features**:
+- **OIDC authentication**: Role is tied to Port's specific EKS service account.
+- **Temporary credentials**: All access uses short-lived tokens (typically 1 hour).
 
 ### Permissions policy
 
@@ -81,12 +79,12 @@ ManagedPolicyArns:
   - arn:aws:iam::aws:policy/ReadOnlyAccess
 ```
 
-**Strategic Benefits**:
-- **Future-Proof**: Automatically includes new AWS services without CloudFormation updates.
-- **Operational Simplicity**: No need to redeploy when adding support for new services.
-- **Comprehensive Coverage**: Access to all AWS services with read-only permissions.
-- **AWS Maintained**: AWS manages and updates the policy as needed.
-- **Read-Only Security**: Only read permissions, no write/delete/create access.
+**Strategic benefits**:
+- **Future-proof**: Automatically includes new AWS services without CloudFormation updates.
+- **Operational simplicity**: No need to redeploy when adding support for new services.
+- **Comprehensive coverage**: Access to all AWS services with read-only permissions.
+- **AWS maintained**: AWS manages and updates the policy as needed.
+- **Read-Only security**: Only read permissions, no write/delete/create access.
 
 ## Security considerations
 
