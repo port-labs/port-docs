@@ -428,8 +428,8 @@ The query limit is estimated and depends on the actual token usage.
 
 Port has two different types of limits for AI agent interactions:
 
-- **Rate limits**: Short-term limits (~40 queries per hour, 800,000 tokens per hour) that reset hourly
-- **Monthly quota**: Long-term limits (default: 20 requests per month) that reset monthly and track your total usage across the month
+- **Rate limits**: Hourly limit (~40 queries per hour, 800,000 tokens per hour) that reset hourly
+- **Quota**: Monthly quota that track your total usage across the month. Each invocation of Port AI counts as one.
 
 The `/v1/quota/ai-invocations` endpoint shows your **monthly quota** usage, which is separate from the hourly rate limits.
 
