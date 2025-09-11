@@ -137,11 +137,12 @@ resource "port_system_blueprint" "user" {
 
 A user can have one of the following statuses at any given time:
 
+- `Staged`: the user exists but hasn't been invited by email.
 - `Active` - the user has logged into Port and can use the portal normally.
 - `Invited` - the user was invited to Port via an invitation email.
 - `Disabled` - the user is disabled and cannot use Port.
 
-By default, all new users are created with the `Disabled` status (no email invitation is sent).
+By default, all new users are created with the `Staged` status (the user exists but hasn't been invited by email).
 
 In your software catalog, admins can access the [Users](https://app.getport.io/_users) page to view and manage all of the user entities in the organization.  
 Here admins can also change a user's status, and invite new users.
