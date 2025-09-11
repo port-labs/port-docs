@@ -15,7 +15,7 @@ Using the aggregation property enables you to see relevant metrics on related en
 
 Aggregations can be performed on any blueprint that is related in any way to the current blueprint (directly, indirectly, upstream or downstream).
 
-## 💡 Common aggregation usage
+## Common aggregation usage
 
 For example, if you have a microservice blueprint, you can define aggregation properties on it to calculate metrics based on related entities such as:
 
@@ -902,6 +902,222 @@ Coming soon...
 
 </Tabs>
 
+### Path Filter
+
+The `pathFilter` option lets you control which entities are included in your aggregation calculation based on their relationship path from the source entity. This is useful for complex relationship chains, where you may want to aggregate data only from entities connected through specific paths.
+
+When a `pathFilter` is defined, Port will include only entities that can be reached through the exact relationship path you specify.
+
+- **Forwards path →**  
+  Following relations forwards, from the source of a relation to its target (e.g., from a repository to its services).
+- **Backwards path ←**  
+  Following relations backwards, from the target of a relation to its source (e.g., from a service back to its repository).
+
+**Structure**
+
+| Field                     | Description                                                                                                          |
+|---------------------------|----------------------------------------------------------------------------------------------------------------------|
+| `pathFilter.path`           | An array containing the full path of relation identifiers to traverse.                                               |
+| `pathFilter.fromBlueprint`  | *(Optional)* The blueprint to start the path traversal from. Can be the target blueprint or omitted. If omitted, traversal starts from the source blueprint. |
+
+
+**For forwards paths**
+
+```json showLineNumbers
+{
+  "pathFilter": [
+    {
+      "path": ["relation1", "relation2", "relation3"]
+    }
+  ]
+}
+```
+
+**For backwards paths**
+
+```json showLineNumbers
+{
+  "pathFilter": [
+    {
+      "path": ["relation1", "relation2", "relation3"],
+      "fromBlueprint": "{{targetBlueprint}}"
+    }
+  ]
+}
+```
+
+#### Examples
+
+Suppose you have the following data model:
+
+<img src='/img/software-catalog/blueprint/pathFilterDiagramExample.png' width='90%' border='1px' />
+<br></br>
+<br></br>
+
+<Tabs groupId="path-filter-examples" defaultValue="api" values={[
+{label: "API", value: "api"},
+{label: "Terraform", value: "tf"}
+]}>
+
+<TabItem value="api">
+
+**Example 1: Standard Path Filter - forwards path**
+
+Count how many deployments are directly related to a cluster:
+
+```json
+{
+  "identifier": "cluster",
+  "title": "Cluster",
+  "aggregationProperties": {
+    "deploymentCount": {
+      "title": "Deployment Count",
+      "target": "deployment",
+      "pathFilter": [
+        {
+          "path": ["deployments_relation"]
+        }
+      ],
+      "calculationSpec": {
+        "calculationBy": "entities",
+        "func": "count"
+      }
+    }
+  }
+}
+```
+
+The `pathFilter` with `"path": ["deployments_relation"]` counts deployments that are directly related to the cluster through the `deployments_relation` relation.
+
+**Example 2: Using fromBlueprint - backwards path**
+
+Count how many clusters are related to a deployment:
+
+```json
+{
+  "identifier": "deployment",
+  "title": "Deployment",
+  "aggregationProperties": {
+    "clusterCount": {
+      "title": "Cluster Count",
+      "target": "cluster",
+      "pathFilter": [
+        {
+          "path": ["deployments_relation"],
+          "fromBlueprint": "cluster"
+        }
+      ],
+      "calculationSpec": {
+        "calculationBy": "entities",
+        "func": "count"
+      }
+    }
+  }
+}
+```
+
+The `fromBlueprint: "cluster"` specifies that the path traversal should start from the cluster blueprint (the target), then follow the path backwards through `deployments_relation` to deployment.
+
+</TabItem>
+
+<TabItem value="tf">
+
+**Example 1: Standard Path Filter - forwards path**
+
+Count how many deployments are directly related to a cluster:
+
+```hcl
+resource "port_blueprint" "cluster_blueprint" {
+  identifier = "cluster"
+  title      = "Cluster"
+  relations = {
+    "deployments_relation" = {
+      title  = "Deployments"
+      target = port_blueprint.deployment_blueprint.identifier
+    }
+  }
+}
+
+resource "port_blueprint" "deployment_blueprint" {
+  identifier = "deployment"
+  title      = "Deployment"
+}
+
+resource "port_aggregation_properties" "cluster_aggregation_properties" {
+  blueprint_identifier = port_blueprint.cluster_blueprint.identifier
+  properties           = {
+    deployment_count = {
+      target_blueprint_identifier = port_blueprint.deployment_blueprint.identifier
+      title                       = "Deployment Count"
+      icon                        = "Terraform"
+      description                 = "Deployment Count"
+      path_filter                 = [
+        {
+          path = ["deployments_relation"]
+        }
+      ]
+      method                      = {
+        count_entities = true
+      }
+    }
+  }
+}
+```
+
+The `path = ["deployments_relation"]` counts deployments that are directly related to the cluster through the `deployments_relation` relation.
+
+**Example 2: Using fromBlueprint - backwards path**
+
+Count how many clusters are related to a deployment:
+
+```hcl
+resource "port_blueprint" "deployment_blueprint" {
+  identifier = "deployment"
+  title      = "Deployment"
+}
+
+resource "port_blueprint" "cluster_blueprint" {
+  identifier = "cluster"
+  title      = "Cluster"
+  relations = {
+    "deployments_relation" = {
+      title  = "Deployments"
+      target = port_blueprint.deployment_blueprint.identifier
+    }
+  }
+}
+
+resource "port_aggregation_properties" "deployment_aggregation_properties" {
+  blueprint_identifier = port_blueprint.deployment_blueprint.identifier
+  properties           = {
+    cluster_count = {
+      target_blueprint_identifier = port_blueprint.cluster_blueprint.identifier
+      title                       = "Cluster Count"
+      icon                        = "Terraform"
+      description                 = "Cluster Count"
+      path_filter                 = [
+        {
+          path = ["deployments_relation"]
+          from_blueprint = "cluster"
+        }
+      ]
+      method                      = {
+        count_entities = true
+      }
+    }
+  }
+}
+```
+
+The `from_blueprint = "cluster"` specifies that the path traversal should start from the cluster blueprint (the target), then follow the path backwards through `deployments_relation` to deployment.
+
+</TabItem>
+
+</Tabs>
+
+:::tip Path Filter Performance
+Path filters can affect the performance of aggregation calculations. In general, shorter and more direct paths perform better than long or complex multi-hop paths.
+:::
 
 ## Limitations
 

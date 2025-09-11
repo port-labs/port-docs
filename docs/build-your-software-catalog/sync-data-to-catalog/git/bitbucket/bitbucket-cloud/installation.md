@@ -12,6 +12,7 @@ import AdvancedConfig from '../../../../../generalTemplates/_ocean_advanced_conf
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 
 # Installation
@@ -35,20 +36,21 @@ This page details how to install Port's Bitbucket Cloud integration (powered by 
 
 :::tip Use of dedicated accounts and tokens
 
-We recommend using workspace tokens from accounts dedicated to the integration, as this will provide a more secure and scalable solution.
+We recommend using multiple workspace tokens for the integration, as this will provide a more secure and scalable solution. Using multiple workspace tokens helps distribute the load and avoid rate limiting issues. You can provide multiple workspace tokens as a comma-separated string in the configuration.
 
-Different credentials from the same Bitbucket account share the same rate limits, which can cause issues when using the integration in a large organization. Using dedicated workspace tokens helps manage rate limits more effectively.
+If you are using the username and app password, we recommend using a dedicated account for the integration, as different credentials from the same Bitbucket account share the same rate limits, which can cause issues when using the integration in a large organization.
 :::
 
 The integration requires either a workspace token or an app password with username to authenticate with your Bitbucket Cloud account.  You can create a workspace token by following the steps [here](https://support.atlassian.com/bitbucket-cloud/docs/workspace-access-tokens/) or an app password by following [these steps](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/).  
 
 The token or app password should have `read` permission scope for each of the supported resources you want to ingest into Port and a `read` and `write` permission scope for the webhooks.
 
-We recommend using workspace tokens when possible, as they provide better security and are easier to manage than app passwords.
+We recommend using multiple workspace tokens when possible, as they provide better security, are easier to manage than app passwords, and help avoid rate limiting issues by distributing requests across different tokens.
 
 ## Deploy the integration
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -59,6 +61,8 @@ Choose one of the following installation methods:
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="bitbucket-cloud" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -180,7 +184,7 @@ This table summarizes the available parameters for the installation.
 | `integration.config.bitbucketUsername`      | The username of the Bitbucket Cloud account                                                  | ✅        |
 | `integration.config.bitbucketWorkspace`     | The workspace of the Bitbucket Cloud account             | ✅        |
 | `integration.config.bitbucketAppPassword`   | The app password of the Bitbucket Cloud account             | ✅        |
-| `integration.config.bitbucketWorkspaceToken`| The workspace token of the Bitbucket Cloud account             | ✅        |
+| `integration.config.bitbucketWorkspaceToken`| The workspace token(s) for the Bitbucket Cloud account (can be a single token or comma-separated string of multiple tokens)             | ✅        |
 | `integration.config.webhookSecret`          | The secret used to verify the webhook requests             | ❌        |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
@@ -197,9 +201,7 @@ This table summarizes the available parameters for the installation.
 
 This workflow/pipeline will run the Bitbucket Cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
-:::
+
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 

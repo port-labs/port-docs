@@ -12,6 +12,7 @@ import DatadogConfiguration from "../resources/datadog/\_example_datadog_webhook
 import DatadogMicroserviceBlueprint from "../resources/datadog/\_example_datadog_microservice.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 
 # Datadog
@@ -34,15 +35,17 @@ This integration allows you to:
 - [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)*
 - [`User`](https://docs.datadoghq.com/api/latest/users/#list-all-users)
 - [`Team`](https://docs.datadoghq.com/api/latest/teams/#get-all-teams)
+- [`Service Dependency`](https://docs.datadoghq.com/api/latest/service-dependencies/#get-all-service-dependencies)
 <br />
 
-  *_SLO History and Service Metric resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
+  *_SLO History, Service Metric and Service Dependency resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
 
 <br />
 
 ## Setup
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -53,6 +56,8 @@ Choose one of the following installation methods:
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="datadog" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -190,9 +195,7 @@ This table summarizes the available parameters for the installation.
 
 This workflow/pipeline will run the Datadog integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
-:::
+
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
@@ -1046,6 +1049,35 @@ This enrichment significantly enhances the usability of the Datadog response by 
 
 </details>
 
+<details>
+<summary> Service Dependency response data</summary>
+
+```json showLineNumbers
+{
+  "service_a": {
+    "calls": [
+      "service_b",
+      "service_c"
+    ]
+  },
+  "service_b": {
+    "calls": [
+      "service_o"
+    ]
+  },
+  "service_c": {
+    "calls": [
+      "service_o"
+    ]
+  },
+  "service_o": {
+    "calls": []
+  }
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1258,6 +1290,25 @@ The combination of the sample payload and the Ocean configuration generates the 
     ]
   },
   "icon": "Datadog"
+}
+```
+
+</details>
+
+<details>
+<summary>Service dependency entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "service_a",
+  "title": "Dummy",
+  "icon": "Datadog",
+  "relations": {
+    "dependencies": [
+      "service_b",
+      "service_c"
+    ]
+  }
 }
 ```
 

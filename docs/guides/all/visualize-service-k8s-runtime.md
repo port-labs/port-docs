@@ -106,32 +106,32 @@ We achieved this by adding a [mapping definition](https://github.com/port-labs/t
         apiVersion: apps/v1
         kind: Deployment
         metadata:
-        name: awesomeapp
-        labels:
+          name: awesomeapp
+          labels:
             app: nginx
             portWorkload: AwesomeWorkload
         spec:
-        replicas: 2
-        selector:
+          replicas: 2
+          selector:
             matchLabels:
-            app: nginx
-        template:
+              app: nginx
+          template:
             metadata:
-            labels:
+              labels:
                 app: nginx
             spec:
-            containers:
+              containers:
                 - name: nginx
                   image: nginx:1.14.2
                   resources:
-                      limits:
+                    limits:
                       cpu: "200m"
                       memory: "256Mi"
-                      requests:
-                        cpu: "100m"
-                        memory: "128Mi"
+                    requests:
+                      cpu: "100m"
+                      memory: "128Mi"
                   ports:
-                      - containerPort: 80
+                    - containerPort: 80
     ```
 
     </details>

@@ -10,7 +10,7 @@ import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to
 This page documents the latest GitLab integration, released in April 2025.  
 For documentation of the previous integration, check out the [GitLab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/) page.  
 
-For users upgrading from the v1 integration, a migration guide will be available soon. Stay tuned!
+For users upgrading from the v1 integration, see the [migration guide](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/migration) to learn how to migrate to the new GitLab-v2 integration.
 :::
 
 Port's GitLab-v2 integration allows you to model GitLab resources in your software catalog and ingest data into them.
@@ -118,7 +118,17 @@ resources:
 
 </details>
 
+## Access control
 
+The GitLab integration supports configurable access control to determine which resources are visible and accessible to the integration.
+
+You can configure access control using the `visibility` configuration block in the integration mapping. 
+
+This allows you to filter resources based on GitLab access levels (Guest, Reporter, Developer, Maintainer, Owner). You can also disable access level filtering entirely to include all accessible resources.
+
+:::tip Access control configuration
+For detailed configuration options, access level reference, and practical examples, see the [Advanced configuration](./advanced.md#access-control) section.
+:::
 
 ## Capabilities
 
@@ -138,7 +148,7 @@ resources:
     selector:
       query: 'true'
       files:
-        path: '**/package.json'
+        path: 'package.json'
         repos:
           # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
           - group/my-project
@@ -412,7 +422,7 @@ resources:
     selector:
       query: 'true'
       files:
-        path: '**/package.json'
+        path: 'package.json'
         # Note that in this case we are fetching from a specific repository
         repos:
           - group/my-project

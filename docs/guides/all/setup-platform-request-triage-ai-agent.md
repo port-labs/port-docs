@@ -24,8 +24,8 @@ This guide will walk you through setting up a "Platform Request Triage" AI agent
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
-- The [Port Slack App](/ai-agents/slack-app) installed and configured.
+- A Port account with the [AI agents feature enabled](/ai-interfaces/ai-agents/overview#access-to-the-feature).
+- The [Port Slack App](/ai-interfaces/ai-agents/slack-app) installed and configured.
 
 ## Setup
 
@@ -253,7 +253,7 @@ This action will be used by the AI agent to create new platform requests.
       The credential name follows the pattern `__SLACK_APP_BOT_TOKEN_Txxxxxxxxxx`.
     - **Channel ID**: Replace `YOUR_CHANNEL_ID` with the ID of the Slack channel where you want to send notifications. You can also use a JQ expression to dynamically select the channel.
 
-    For more details, refer to the [Port Slack App](/ai-agents/slack-app) documentation.
+    For more details, refer to the [Port Slack App](/ai-interfaces/ai-agents/slack-app) documentation.
     :::
 
 5.  Click `Create`.

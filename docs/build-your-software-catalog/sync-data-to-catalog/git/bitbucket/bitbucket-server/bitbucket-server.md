@@ -19,6 +19,8 @@ import BitbucketPullrequestBlueprint from "/docs/build-your-software-catalog/syn
 import BitbucketRepositoryBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_repository_blueprint.mdx";
 import BitbucketWebhookConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_webhook_config.mdx";
 import BitbucketServerPythonScript from "/docs/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server/_resources/\_example_bitbucket_python_script.mdx";
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
+
 
 # Bitbucket (self-hosted)
 
@@ -52,7 +54,8 @@ It is possible to reference any field that appears in the API responses linked b
 ## Setup
 
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -63,6 +66,8 @@ Choose one of the following installation methods:
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-Time (self-hosted)">
+
+<IntegrationVersion integration="bitbucket-server" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -211,9 +216,7 @@ This table summarizes the available parameters for the installation.
 
 This workflow/pipeline will run the Bitbucket (Self-Hosted) integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
-:::
+
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
@@ -778,7 +781,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .id | tostring
+          identifier: (.toRef.repository.slug // .toRef.repository.project.key) + "-" + (.id|tostring)
           title: .title
           blueprint: '"bitbucketPullRequest"'
           properties:

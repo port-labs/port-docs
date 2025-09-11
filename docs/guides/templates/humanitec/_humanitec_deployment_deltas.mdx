@@ -1,0 +1,71 @@
+<details>
+<summary><b>Humanitec Deployment Deltas (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "humanitecDeploymentDelta",
+  "title": "Humanitec Deployment Delta",
+  "icon": "Deployment",
+  "schema": {
+    "properties": {
+      "archived": {
+        "title": "Archived",
+        "description": "Whether the deployment delta is archived",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "contributers": {
+        "title": "Contributers",
+        "description": "The contributers of the deployment delta",
+        "type": "array",
+        "icon": "DefaultProperty"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "description": "The date and time when the deployment delta was created",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      },
+      "createdBy": {
+        "title": "Created By",
+        "description": "The user who created the deployment delta",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "modules": {
+        "title": "Modules",
+        "description": "The modules for the deployment delta",
+        "type": "object",
+        "icon": "DefaultProperty"
+      },
+      "shared": {
+        "title": "Shared",
+        "description": "The shared for the deployment delta",
+        "type": "array",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "humanitecApplication": {
+      "title": "Application",
+      "target": "humanitecApplication",
+      "required": false,
+      "many": false
+    },
+    "humanitecEnvironment": {
+      "title": "Environment",
+      "target": "humanitecEnvironment",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

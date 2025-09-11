@@ -1,0 +1,37 @@
+<details>
+  <summary><b>Port port-app-config.yaml (click to expand)</b></summary>
+
+```yaml showLineNumbers
+  - kind: team
+    selector:
+      query: 'true'
+      members: true
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"githubTeam"'
+          properties:
+            slug: .slug
+            description: .description
+            link: .url
+            permission: .permission
+            notification_setting: .notificationSetting
+          relations:
+            team_member: '[.members.nodes[].login]'
+  - kind: team
+    selector:
+      query: 'true'
+      members: true
+    port:
+      itemsToParse: .members.nodes
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '"githubTeamMember"'
+          properties:
+            name: .name
+```
+</details>

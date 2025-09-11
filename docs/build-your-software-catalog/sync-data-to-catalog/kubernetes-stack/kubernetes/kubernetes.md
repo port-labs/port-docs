@@ -38,7 +38,7 @@ This integration allows you to:
 
 ### Supported Resources
 
-The resources that can be mapped from Kubernetes cluster into Port include:
+The default resources ingested by the integration are:
 - [`Namespaces`](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
 - [`Pods`](https://kubernetes.io/docs/concepts/workloads/pods/)
 - [`ReplicaSets`](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/)
@@ -61,7 +61,8 @@ The resources listed above are just a subset of what the Kubernetes integration 
 
 ## Setup
 
-Choose one of the following installation methods:
+Choose one of the following installation methods:  
+Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 

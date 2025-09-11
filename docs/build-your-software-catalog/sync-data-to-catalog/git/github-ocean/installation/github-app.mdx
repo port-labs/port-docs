@@ -1,0 +1,94 @@
+---
+sidebar_position: 1
+---
+
+import PortApiRegionTip from "/docs/generalTemplates/\_port_region_parameter_explanation_template.md"
+import InstallMethods from "./\_install_methods.mdx"
+
+# Custom Github App
+
+This page details how to install Port's GitHub integration using a custom [GitHub App](https://docs.github.com/en/apps/using-github-apps/about-using-github-apps), which provides automatic access token rotation.
+
+This page outlines the following steps:
+
+1. How to [create](#create-a-github-app) a new app in your GitHub organization;
+2. How to [install](#installing-github-app) the GitHub app in your GitHub organization and select repositories.
+3. How to [deploy](#deploy-the-integration) the integration in the configuration that fits your use case.
+
+## Prerequisites
+
+- A GitHub account with permissions to create and manage GitHub Apps in your organization. This typically requires being an **Organization Owner** or having the **["App Manager"](https://docs.github.com/en/organizations/managing-programmatic-access-to-your-organization/adding-and-removing-github-app-managers-in-your-organization)** role.
+- Your Port user role is set to `Admin`.
+
+## Create a GitHub app
+
+1. Navigate to your Github organization and click on Settings:
+
+![Org view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizaionView.png)
+
+2. Inside the settings view, click on **Developer Settings** -> and then select **GitHub Apps**:
+
+![Settings view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizationSettings.png)
+
+3. Click on "New GitHub App":
+
+![New GitHub App](../../../../../../static/img/integrations/github-ocean/SelfHostedNewGitHubApp.png)
+
+4. Insert the following properties:
+
+- **GitHub App name:** Choose a unique name for the app. Note that GitHub App names must be globally unique.
+- **Homepage URL:** https://port.io
+- **Callback URL:** Leave this empty.
+- **Setup URL:** Leave this empty.
+- Uncheck **Active** under Webhooks. The [integration will automatically create the webhook if you configure the `OCEAN__BASE_URL`](#enabling-live-events) variable later during deployment.
+- **Repository Permissions:**
+  - Actions: Readonly (for syncing Workflows).
+  - Checks: Readonly (for syncing `Port.yml`).
+  - Contents: Readonly (for reading port configuration files and repository files).
+  - Metadata: Readonly.
+  - Administration: Readonly (for syncing collaborators)
+  - Pull Request: Readonly
+  - Code scanning alerts: Readonly
+  - Dependabot alerts: Readonly
+  - Deployments: Readonly
+  - Environments: Readonly
+- **Organization Permissions:**
+  - Members: Readonly (for syncing members and teams).
+  - Administration: Readonly(for syncing external identities)
+  - Webhooks: Read and Write (to allow the integration create webhook).
+
+Then select "Create GitHub App"
+
+5. Go to the `Private keys` at the bottom of the `General` settings page:
+
+![Generate Private key](../../../../../../static/img/integrations/github-app/SelfHosetdGeneratePrivayKey.png)
+
+Keep the file, you will need it for the deployment step.
+
+## Installing GitHub App
+
+After you have the app registered in your organization, you can install it and select the repositories to integrate it with:
+
+1. First, navigate to your organization and click on Settings:
+
+![Org view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizaionView.png)
+
+2. Inside the settings view, click on Developer Settings -> and then select GitHub Apps:
+
+![Settings view](../../../../../../static/img/integrations/github-ocean/SelfHostedOrganizationSettings.png)
+
+3. Click `edit` on the GitHub app created at the step before:
+
+![GitHub integration installation page](../../../../../../static/img/integrations/github-ocean/SelfHostedEditGitHubApp.png)
+
+4. Go to Install App -> and select the installation button on your wanted organization;
+
+5. Choose the repositories you want the integration to be installed for:
+
+![GitHub integration installation chooses repositories](../../../../../../static/img/integrations/github-ocean/SelfHostedInstallationRepoSelection.png)
+
+<InstallMethods setupName="app" />
+
+:::note Self-Service Actions
+To use [Self-Service Actions with GitHub Workflows](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/), you need to install our [public GitHub Cloud App](../../github#setup).
+:::
