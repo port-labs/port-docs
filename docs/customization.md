@@ -37,7 +37,7 @@ To change them:
 - The title is limited to 30 characters.
 - The logo URL must be a valid public link (e.g. `https://example.com/logo.png`).
 
-### Add an organization announcement banner
+### Add an announcement banner
 
 Organization admins can configure an **announcement banner** that appears at the top of the portal for all users. The banner can be enabled or disabled at any time.  
 
