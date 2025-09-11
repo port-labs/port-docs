@@ -52,9 +52,9 @@ To add the banner:
 3. Open the `Announcment` tab, and toggle `Enable announcement` to turn it on.
 
 4. Fill in the banner details:
-    - **Announcement:** The text that will appear in the banner.
+    - **Announcement:** The text that will appear in the banner. (Maximum 300 characters)
     - **Color:** Choose a color for your banner. Currently, the available colors are **blue** and **red**.
-    - **Link (optional):** Add a URL to make the banner clickable and direct users to the provided link.
+    - **Link (optional):** Add a URL to make the banner clickable and direct users to the provided link. (Maximum 300 characters)
 
 5. Click `Save`.
 
