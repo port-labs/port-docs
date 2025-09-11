@@ -439,32 +439,7 @@ Customers can get increased monthly quotas based on their usage patterns and agr
 
 ### Check monthly quota via API
 
-You can monitor your current monthly quota usage by making a GET request to the `/v1/quota/ai-invocations` endpoint:
-
-```bash
-curl -L 'https://api.port.io/v1/quota/ai-invocations' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer <YOUR_API_TOKEN>'
-```
-
-**Response example:**
-```json showLineNumbers
-{
-  "ok": true,
-  "monthlyQuotaUsage": {
-    "monthlyLimit": 20,
-    "remainingQuota": 19,
-    "month": "2025-09",
-    "remainingTimeMs": 1936718411
-  }
-}
-```
-
-**Response fields:**
-- `monthlyLimit`: Maximum number of AI requests allowed per month
-- `remainingQuota`: Number of AI requests remaining in current month
-- `month`: Current quota month in YYYY-MM format  
-- `remainingTimeMs`: Time in milliseconds until quota resets
+You can monitor your current monthly quota usage by making a GET request to the `/v1/quota/ai-invocations` endpoint
 
 :::tip Proactive quota monitoring
 Check your monthly quota before making multiple AI agent requests to avoid hitting limits. When `remainingQuota` is low, consider implementing rate limiting or queuing requests until the monthly quota resets. Note that you may also encounter hourly rate limits, which are separate from this monthly quota.
@@ -577,10 +552,9 @@ Port applies the following limits to AI agent interactions:
 
 You can monitor your current usage in several ways:
 - Check the final `done` event in streaming responses for remaining requests, tokens, and reset time (hourly rate limits)
-- Make a GET request to `/v1/quota/ai-invocations` to see your monthly quota status
 - View quota information in AI invocation details
 
-Note that Port has both hourly rate limits and monthly quotas (default: 20 requests per month). For detailed quota monitoring, see the [Monitoring your quota](#monitoring-your-quota) section above.
+Note that Port has both hourly rate limits and monthly quotas. For detailed quota information, see the [Monitoring your quota](#monitoring-your-quota) section above.
 
 </details>
 
