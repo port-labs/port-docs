@@ -7,7 +7,7 @@ sidebar_class_name: custom-sidebar-item sidebar-menu-customization
 
 # Customization & accessibility
 
-Port offers various customization options to help you tailor the developer portal to your organization's branding and style.
+Port offers various customization options to help you tailor the developer portal to your organization's branding and style as well as communicate important information to your users.
 
 ## Portal customization
 
