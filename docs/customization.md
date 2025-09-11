@@ -32,6 +32,26 @@ To change them:
 
 4. Click on `Save`.
 
+### Add an organization announcement banner
+
+Organization admins can configure an **announcement banner** that appears at the top of the portal for all users.
+
+To add the banner:
+
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
+
+2. Click on `Organization settings` in the sidebar.
+
+3. Open the `Announcment` tab, and toggle `Enable announcement` to turn it on.
+
+4. Fill in the banner details:
+
+  - **Announcement:** The text that will show in the banner.
+  - **Color:** Choose a color for your banner. Currently, the available colors are **blue** and **red**.
+  - **Link (optional):** Add a URL to make the banner clickable and direct users to the provided link.
+
+5. Click `Save`.
+
 #### Limitations
 
 - The title is limited to 30 characters.
