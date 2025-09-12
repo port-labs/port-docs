@@ -748,4 +748,3 @@ Now let us test the complete workflow to ensure everything works correctly.
 - [Manage Kubernetes clusters](/guides/all/manage-clusters)
 - [Trigger GitHub Copilot from Port](/guides/all/trigger-github-copilot-from-port)
 - [Set up the Task Manager AI agent](/guides/all/setup-task-manager-ai-agent)
-- [Automate Jira to GitHub Copilot](/guides/all/automate-jira-to-github-copilot)
