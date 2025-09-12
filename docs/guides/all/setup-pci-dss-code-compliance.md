@@ -1,26 +1,26 @@
 ---
 displayed_sidebar: null
-description: PCI DSS Code security scorecard
+description: Build a comprehensive PCI DSS Code Security Scorecard in Port to continuously track compliance with PCI DSS requirements using vulnerability data from Snyk. This scorecard includes 5-level maturity model from Basic to Platinum.
 ---
 
 # PCI DSS Code Security Scorecard
 
-The **PCI DSS Code Security Scorecard** is designed to continuously track compliance with PCI DSS requirements by leveraging code scans and vulnerability data.  
-It helps teams enforce secure coding practices, identify weaknesses early, and measure progress towards PCI compliance maturity.
+The **PCI DSS Code Security Scorecard** is designed to continuously track compliance with PCI DSS requirements by leveraging static application security testing (SAST) and software composition analysis (SCA) data from Snyk.  
+It helps development teams enforce secure coding practices, identify security weaknesses early in the development lifecycle, and measure progress towards PCI DSS compliance maturity.
 
-This scorecard evaluates repositories and services based on:
-- Scan recency
-- Severity of open vulnerabilities
-- Cryptographic hygiene
-- Exposure of public-facing assets
-- Secure dependency management
+This comprehensive security scorecard evaluates repositories and services based on:
+- **Scan recency** - Ensures regular vulnerability scanning (PCI DSS 6.3.1)
+- **Severity of open vulnerabilities** - Tracks critical and high-severity issues
+- **Cryptographic hygiene** - Validates secure crypto implementation (PCI DSS 6.5.3)
+- **Exposure of public-facing assets** - ASV compliance for external scans (PCI DSS 11.2.2)
+- **Secure dependency management** - Monitors open-source component security
 
 # Dependencies
 - Depends on [OWASP Top 10 Scorecard](/guides/all/owasp-top-10-scorecard) to make use of some of the aggregation properties generated previously
 
 By organizing into levels, all teams can progressively improve security posture and demonstrate compliance readiness.
 
----
+
 
 ## Scorecard
 
@@ -127,7 +127,7 @@ By organizing into levels, all teams can progressively improve security posture 
         "combinator": "and",
         "conditions": [
           {
-            "operator": "=",
+            "operator": "<",
             "property": "max_risk_score_replacing_asv",
             "value": 400
           }
@@ -565,17 +565,17 @@ The scorecard uses **five maturity levels**, with each level building on the rul
 | **Gold**   | Focuses on cryptographic security and external vulnerability exposure management.             |
 | **Platinum** | Represents the highest standard, requiring zero high-risk issues and strict dependency security. |
 
-> **How levels work:**  
-> - To reach a higher level, **all rules in that level and all lower levels must pass**.  
-> - This creates a clear maturity path from basic hygiene to advanced compliance.
+#### **How levels work:**  
+ - To reach a higher level, **all rules in that level and all lower levels must pass**.  
+ - This creates a clear maturity path from basic hygiene to advanced compliance.
 
----
+
 
 ## Rules by Level
 
 Below are all rules organized by the level at which they apply.
 
----
+
 
 ### Bronze Level
 
@@ -587,7 +587,7 @@ Below are all rules organized by the level at which they apply.
   PCI DSS 6.3.1 requires continuous vulnerability identification.  
   This rule ensures a SAST scan has been run within the last 30 days.
 
----
+
 
 #### 2. No Open Critical Issues
 - **Identifier:** `open_critical_thresh`
@@ -596,7 +596,7 @@ Below are all rules organized by the level at which they apply.
 - **Description:**  
   There must be **zero open critical vulnerabilities** in the codebase.
 
----
+
 
 ### Silver Level
 
@@ -615,7 +615,7 @@ Below are all rules organized by the level at which they apply.
   - Injection flaws (e.g., SQL injection, XSS)
   - Broken authentication and authorization logic
 
----
+
 
 #### 4. No Hardcoded Secrets
 
@@ -625,7 +625,7 @@ Below are all rules organized by the level at which they apply.
 - **Description:**
   Detects and blocks hardcoded passwords, API keys, and other secrets.
 
----
+
 
 ### Gold Level
 
@@ -637,21 +637,21 @@ Below are all rules organized by the level at which they apply.
 - **Description:**
   Detects use of weak cryptographic algorithms or incorrect implementation of crypto operations.
 
----
+
 
 #### 6. ASV Parity for Public-Facing Assets
 
 - **Identifier:** `asv_pass_parity`
 - **Goal:** Align with PCI DSS **Approved Scanning Vendor (ASV)** pass/fail standards.
-- **Rule:** `max_risk_score_replacing_asv = 400`
+- **Rule:** `max_risk_score_replacing_asv < 400`
 - **Description:**
   Ensures public-facing services do not have vulnerabilities equivalent to CVSS ≥ 4.0.
 
-> **Key Note:**
-> CVSS data is not directly available in this system.
-> Instead, we use **Snyk Risk Score** as a proxy, with a threshold of **400** chosen to approximate the CVSS 4.0 boundary required by PCI DSS for external scans.
+#### **Key Note:**
+- CVSS data is not directly available in this system.
+- Instead, we use **Snyk Risk Score** as a proxy, with a threshold of **400** chosen to approximate the CVSS 4.0 boundary required by PCI DSS for external scans.
 
----
+
 
 ### Platinum Level
 
@@ -666,8 +666,11 @@ Below are all rules organized by the level at which they apply.
   ```
 - **Description:**
   Allows team-specific compliance requirements to be enforced at the highest level.
+  
+:::tip **Note:** Replace `"example_team"` with your actual team name or remove this rule if not needed.
+:::
 
----
+
 
 #### 8. No High-Risk Open Source Vulnerabilities
 
@@ -677,7 +680,7 @@ Below are all rules organized by the level at which they apply.
 - **Description:**
   Requires **zero high-severity vulnerabilities** in all open-source components.
 
----
+
 
 #### 9. No High-Risk Code Issues
 
@@ -687,7 +690,23 @@ Below are all rules organized by the level at which they apply.
 - **Description:**
   There must be **no high-severity SAST issues** remaining unresolved.
 
----
+
+
+## PCI DSS Requirements Alignment
+
+This scorecard addresses key PCI DSS requirements for secure development:
+
+| PCI DSS Requirement | Scorecard Rule | Level | Description |
+|-------------------|----------------|-------|-------------|
+| **6.3.1** - Continuous vulnerability identification | `sast_recent` | Bronze | Ensures SAST scans run within 30 days |
+| **6.5.1** - Injection flaws | `a3_injection = 0` | Silver | Prevents SQL injection, XSS, etc. |
+| **6.5.2** - Broken authentication | `a1_access_control_flaws = 0` | Silver | Addresses authentication/authorization issues |
+| **6.5.3** - Cryptographic failures | `a2_cryptographic_failures = 0` | Gold | Ensures secure crypto implementation |
+| **6.5.4** - Insecure communications | `hardcoded_secrets = 0` | Silver | Prevents credential exposure |
+| **11.2.2** - External vulnerability scans | `asv_pass_parity` | Gold | ASV compliance for public-facing assets |
+| **6.2** - Secure development practices | All levels | Bronze+ | Comprehensive secure coding standards |
+
+**Note:** This scorecard focuses on **code security** aspects of PCI DSS. Additional requirements for network security, access controls, and data protection should be implemented separately.
 
 ## Summary of Rule Coverage
 
@@ -698,7 +717,7 @@ Below are all rules organized by the level at which they apply.
 | **Gold**     | Cryptography & external exposure | Secure crypto, ASV parity                   |
 | **Platinum** | Zero-tolerance for high risks    | No high SAST, No high SCA, Max risk scoring |
 
----
+
 
 ## Implementation Steps
 
@@ -715,7 +734,7 @@ Ensure outputs from scanning tools are mapped to Port properties:
 * `open_sast_high`
 * `max_risk_score_replacing_asv`
 
----
+
 
 ### 2. Deploy via Port or Pulumi
 
@@ -725,7 +744,7 @@ Ensure outputs from scanning tools are mapped to Port properties:
 - **Infrastructure-as-code approach:**
   Convert the JSON to TypeScript and deploy using the [Port Pulumi provider](https://docs.port.io/).
 
----
+
 
 ### 3. Monitor Compliance Progress
 
@@ -733,7 +752,7 @@ Ensure outputs from scanning tools are mapped to Port properties:
 * Use levels as **milestones** to measure progression toward PCI DSS compliance.
 * Generate reports for PCI DSS audits using scorecard data as automated evidence.
 
----
+
 
 ## Benefits of This Scorecard
 
@@ -749,22 +768,11 @@ Ensure outputs from scanning tools are mapped to Port properties:
 - **Audit Readiness**
   Simplifies PCI audits by providing up-to-date evidence of secure development practices.
 
----
 
-## Compliance Flow
-
-```mermaid
-flowchart TD
-    A[Code Scan Run] --> B[Findings Ingested to Port]
-    B --> C[Scorecard Evaluation]
-    C -->|Pass| D[Advance Level: Bronze → Silver → Gold → Platinum]
-    C -->|Fail| E[Remediation Required]
-    E --> A
-```
 
 This visual shows how code scan results flow through the system, get evaluated, and determine compliance level progression.
 
----
+
 
 ## Key Takeaways
 
