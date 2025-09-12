@@ -481,6 +481,78 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 ```
 </details>
 
+<details>
+<summary><b>SAST Last Scan Days (Click to expand)</b></summary>
+```json showLineNumbers
+{
+    "sast_last_scan_days": {
+      "title": "SAST Last Scan Days",
+      "icon": "Calendar",
+      "type": "number",
+      "description": "Number of days since the last SAST scan",
+      "target": "snykTarget",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "lastScanDate",
+            "operator": "exists"
+          }
+        ]
+      },
+      "calculationSpec": {
+        "func": "daysSince",
+        "property": "lastScanDate",
+        "calculationBy": "property"
+      }
+    }
+}
+```
+</details>
+
+<details>
+<summary><b>Open Critical Vulnerabilities (Click to expand)</b></summary>
+```json showLineNumbers
+{
+    "open_critical": {
+      "title": "Open Critical",
+      "icon": "Bug",
+      "type": "number",
+      "description": "Number of open critical severity vulnerabilities",
+      "target": "snykVulnerability",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "open"
+          },
+          {
+            "property": "severity",
+            "operator": "=",
+            "value": "critical"
+          }
+        ]
+      },
+      "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+      },
+      "pathFilter": [
+        {
+          "fromBlueprint": "snykVulnerability",
+          "path": [
+            "project",
+            "snyk_target"
+          ]
+        }
+      ]
+    }
+}
+```
+</details>
+
 ## Scorecard Levels
 
 The scorecard uses **five maturity levels**, with each level building on the rules from the previous one.
