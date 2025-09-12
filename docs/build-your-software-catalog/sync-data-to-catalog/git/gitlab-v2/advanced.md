@@ -59,4 +59,67 @@ The `createMissingRelatedEntities` parameter enables automatic creation of place
 
 </TabItem>
 
+<TabItem value="accessControl" label="Access control">
+
+The `visibility` configuration allows you to control which GitLab resources are accessible to the integration based on access levels.
+
+<h3>Access levels</h3>
+
+GitLab uses numeric access levels to define permissions:
+
+| Level | Role | Description |
+|-------|------|-------------|
+| 10 | Guest | Read-only access to public resources |
+| 20 | Reporter | Can view and download code |
+| 30 | Developer | Can push code and manage issues |
+| 40 | Maintainer | Can manage project settings |
+| 50 | Owner | Full administrative access |
+
+<h3>Parameters</h3>
+
+- **`useMinAccessLevel`**: Boolean flag to enable/disable access level filtering
+  - **Default value**: `true`
+  - **Use case**: Set to `false` to include all accessible resources without filtering
+
+- **`minAccessLevel`**: Integer specifying the minimal required access level
+  - **Default value**: `30` (Developer)
+  - **Use case**: Restrict integration to resources where the token has the specified access level or higher
+
+<h3>Configuration examples</h3>
+
+```yaml showLineNumbers
+# Only sync owned projects
+visibility:
+  useMinAccessLevel: true
+  minAccessLevel: 50
+resources:
+  - kind: project
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"service"'
+```
+
+```yaml showLineNumbers
+# Include all accessible resources
+visibility:
+  useMinAccessLevel: false
+resources:
+  - kind: project
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"service"'
+```
+
+</TabItem>
+
 </Tabs>
