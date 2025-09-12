@@ -930,8 +930,8 @@ export const availableGuides = [
     },
     {
         title: "Enrich security vulnerabilities using AI",
-        description: "Leverage AI tools to get detailed analysis and remediation strategies for security vulnerabilities",
-        tags: ["Security", "AI", "Actions", "Automations"],
+        description: "Use Port AI agents with Claude Code to enrich security vulnerabilities and trigger automated fixes",
+        tags: ["Security", "Claude Code", "GitHub", "AI"],
         logos: ["AI", "Snyk", "Wiz"],
         link: "/guides/all/enrich-security-vulnerability-using-ai",
     },
@@ -1461,6 +1461,14 @@ export const availableGuides = [
         tags: ["K8s for devs", "AI", "Kubernetes", "Actions", "Automations"],
         logos: ["AI", "Kubernetes"],
         link: "/guides/all/heal-unhealthy-k8s-pods",
+    },
+    {
+
+        title: "Manage AI instructions with Port",
+        description: "Learn how to centralize AI instructions in Port and automatically sync them to GitHub repositories",
+        tags: ["SDLC", "GitHub", "AI",  "Automations"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/manage-ai-instructions",
     }
 ]
 
