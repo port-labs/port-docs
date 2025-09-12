@@ -4,6 +4,7 @@ sidebar_position: 2
 
 import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
 import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
+import DashboardFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_dashboard_filters.md"
 
 # Entity page
 
@@ -28,7 +29,6 @@ In the top right corner of the details widget, you can find the <LogoImage logo=
 - Show/hide specific properties in the widget.
 
 Additional widgets can be added by clicking on the `+ Widget` button in the top right corner of the dashboard.
-
 
 ## Related entities
 
@@ -67,7 +67,7 @@ When looking at the entity page of a certain `Workflow Run`, the related entitie
 
 
 :::tip Relation path options
-The relation path dropdown displays straightforward, acyclic paths. For complex scenarios involving circular relationships, advanced path configurations, multiple self relations, or maxHops, use [JSON mode](#filters-and-edit-json).
+The relation path dropdown displays straightforward, acyclic paths. For complex scenarios involving circular relationships, advanced path configurations, multiple self-relations, or maxHops, use [JSON mode](#filters-and-edit-json).
 
 Using "All paths" is less performant than selecting a specific path, as it requires the system to evaluate multiple relationship paths.
 :::
@@ -174,48 +174,58 @@ If **Deployment Workflow** has multiple relations to **Microservice** (e.g., `de
 Additionally, when you have an existing relation between blueprints, Port automatically creates a mirror property relation that allows you to traverse the relationship in both directions. This mirror relation will appear as an option in the relation dropdown, enabling you to explore connections from either side of the relationship.
 :::
 
-#### Self relation
+#### Self-relation
 
-A self relation allows a blueprint to establish a relationship with itself. This is useful when you want entities of the same blueprint to be related to other entities within that same blueprint.
+A self-relation allows a blueprint to establish a relationship with itself. This is useful when you want entities of the same blueprint to be related to other entities within that same blueprint.
 
-For example, consider an **Organization** blueprint where:
-- Organizations contain teams
-- Teams can belong to other organizational entities (like groups)
-- All entities share the same blueprint but have hierarchical relationships
+For example, consider a **Team** blueprint where:
+- Organizations contain teams.
+- Teams can belong to other organizational entities (like groups).
 
-When defining a self relation, you can specify how many "hops" to traverse in the relationship chain.   
+All entities share the same blueprint but have hierarchical relationships.
+
+When defining a self-relation, you can specify how many "hops" to traverse in the relationship chain.   
 Hops represent the number of jumps you want to make upstream or downstream through the self-relation.
 
-<h4>Set up self relations</h4>
+:::tip Create a self-relation
+Before performing the following steps, make sure the desired blueprint has a relation to itself.
 
-Follow these steps to set up a self relation in related entities:
+<details>
+<summary><b>Add self-relation (click to exapnd)</b></summary>
+1. Go to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
+2. Choose the relevant blueprint.
+3. Click the `+ New relation` button.
+4. Give the property a `title`, choose the same blueprint in the `Related to` field.
+5. Choose the entity limit and whether its required.
+6. Click `Save`.
+</details>
+:::
 
-1. Click the `+` button above the Related Entities table.
+**Set up self-relations tab**
 
-2. Choose your blueprint as the `Related blueprint`.
+To add a self-relation tab to the related entities:
 
-3. Select the self relation path from the available paths.
+1. Click the `+` button in the **Related Entities** table.
 
-   :::tip How self relation hops work
-     If you want more than one **hop** then you would have to toggle `Json mode` on to specify more than one self relation blueprint identifier for the number of **hops** you want to make.
-   :::
+2. Choose your blueprint as the **Related blueprint**.
 
-4. You can also toggle to `Json mode` in the "Add tab" dialog to define the relationship path with precise control over hops.
+3. Select the self-relation path from the available paths.  
 
-   For example if we want to make 2 hops then we would have to specify 2 self relation blueprint identifiers in the path array.
+4. If you want to traverse more than one hop, switch to `Json mode`. 
 
+   In JSON mode you can:
+   - Specify multiple self-relation identifiers (for fixed hops).
      ```json showLineNumbers
-    "relationPath": {
+      "relationPath": {
       "path": [
         "self_relation",
         "self_relation"
-      ]
-     }
+        ]
+      }
      ```
-
-      In JSON mode, you can use the `maxHops` feature to control the number of relationship traversals. Path elements can be objects instead of strings, and `maxHops` can only be specified once in the path.
-
-      ```json showLineNumbers
+     
+   - Use maxHops (for variable hops).
+     ```json showLineNumbers
       "relationPath": {
         {
           "relation": "<SELF_RELATION_IDENTIFIER>",
@@ -223,8 +233,7 @@ Follow these steps to set up a self relation in related entities:
         }
       }
       ```
-
-      You can also have a mix of fixed and variable hops.
+   - Combine fixed hops with maxHops for mixed control.
 
       ```json showLineNumbers
       "relationPath": {
@@ -238,27 +247,28 @@ Follow these steps to set up a self relation in related entities:
       }
       ```
 
-      :::info maxHops limitation
-      You can only use `maxHops` once in a path and it it accepts a number between 1 and 15.
+      :::info `maxHops` limitation
+      The `maxHops` parameter can only be applied **once** per path, and it accepts values from **1 to 15**.
       :::
 
-6. Click on `Save` to save the tab.
+5. Click on `Save` to save the tab.
 
-:::info Self relation identifier
-Note that `self_relation` in these examples represents the identifier of the self relation you created in your blueprint. Replace it with your actual self relation identifier.
+:::info Self-relation identifier
+Note that `self_relation` in these examples represents the identifier of the self-relation you created in your blueprint. Replace it with your actual self-relation identifier.
 :::
 
 
-<h4>Examples</h4>
+**Examples**
+
 Let's take a look at some examples using the concept of Teams.
 
-<img src='/img/software-catalog/pages/relatedEntitiesTeamExample.png' border='1px' width='100%' />
+<img src='/img/software-catalog/pages/relatedEntitiesTeamExample.png' border='1px' width='90%' />
 
 <br /><br />
 
-**Basic self relation with multiple self relations:**
+**Basic self-relation with multiple self-relations:**
 
-If you want exactly 2 hops, specify the relation twice:
+If you want **exactly 2 hops**, specify the relation twice:
 
 ```json showLineNumbers
 {
@@ -277,8 +287,9 @@ If you want exactly 2 hops, specify the relation twice:
   }
 }
 ```
+In this case, the added tab under the `Unit` entity should show the `Group` entity.
 
-**Self relation with maxHops for variable hops:**
+**Self-relation with maxHops for variable hops:**
 
 If you want a variable number of hops (between 1 and 15), use maxHops:
 
@@ -302,24 +313,37 @@ If you want a variable number of hops (between 1 and 15), use maxHops:
 }
 ```
 
+In this case, the added tab under the `Unit` entity should show the `Basic Team`, `Group` and `Office` entities.
+
 **Mixed approach example:**
 
 You can also mix fixed hops with variable hops. For example, if you specify `self_relation` twice followed by a `maxHops` object, the system will start traversing from the 2 hops already made and continue with the additional hops specified in `maxHops`.
 
 ```json showLineNumbers
-"relationPath": {
-  "path": [
-    "self_relation",           // 1st hop: Unit -> Basic Team
-    "self_relation",           // 2nd hop: Basic Team -> Group  
-    {
-      "relation": "team_self_relation",
-      "maxHops": 3            // Continues from Group, adding up to 3 more hops (Group -> Office -> etc.)
-    }
-  ]
+{
+  "title": "Team Hierarchy",
+  "targetBlueprint": "Team",
+  "dataset": {
+    "combinator": "and",
+    "rules": []
+  },
+  "relationPath": {
+    "path": [
+      "self_relation",    // 1st hop: Unit -> Basic Team
+      "self_relation",    // 2nd hop: Basic Team -> Group  
+      {
+        "relation": "team_self_relation",
+        "maxHops": 3      // Continues from Group, adding up to 3 more hops (Group -> Office -> etc.)
+      }
+    ],
+    "fromBlueprint": "Team"
+  }
 }
 ```
 
-In this example, the system will traverse 2 fixed hops (Unit → Basic Team → Group) and then continue with up to 3 additional hops using the `team_self_relation`, starting from where the fixed hops left off. This could represent a complete organizational hierarchy from Unit all the way up to higher-level organizational structures.
+In this example, the system will traverse 2 fixed hops (`Unit` → `Basic Team` → `Group`) and then continue with up to 3 additional hops using the `team_self_relation`, starting from where the fixed hops left off. This could represent a complete organizational hierarchy from Unit all the way up to higher-level organizational structures.
+
+In this case, the added tab under the `Unit`entity should show the `Group` and `Office` entities.
 
 **Simple relation path example:**
 
@@ -368,7 +392,7 @@ The following property types are supported:
 
 ### Scorecards
 
-If the entity's blueprint has any [scorecards](/promote-scorecards/) configured, a `Scorecards` tab will be automatically created in the entity page.
+If the entity's blueprint has any [scorecards](/scorecards/overview) configured, a `Scorecards` tab will be automatically created in the entity page.
 
 The tab will display the entity's compliance status with each of its scorecards.
 
@@ -381,4 +405,4 @@ Each dashboard tab name can be customized and edited.
 - You can add up to 5 dashboard tabs per entity page.
 - Dashboard tab names must be unique and are limited to 30 characters.
 
-
+<DashboardFilters/>

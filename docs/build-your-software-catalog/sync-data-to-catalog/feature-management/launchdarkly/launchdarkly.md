@@ -12,6 +12,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 
 # LaunchDarkly
@@ -51,6 +52,8 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="launchdarkly" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -183,9 +186,7 @@ The integration uses polling to pull the configuration from Port every minute an
 
 This workflow/pipeline will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
-:::
+
 
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">

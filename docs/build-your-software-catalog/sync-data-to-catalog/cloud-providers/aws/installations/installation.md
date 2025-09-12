@@ -4,6 +4,7 @@ sidebar_position: 0
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Installation
 
@@ -26,6 +27,9 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm (Scheduled)">
+
+<IntegrationVersion integration="aws" />
+
 The AWS integration is deployed using Helm on you cluster.
 You can check out the Helm chart [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-ocean).
 

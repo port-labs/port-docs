@@ -1,180 +1,37 @@
 ---
-sidebar_position: 2
+displayed_sidebar: null
+description: Build an OWASP Top 10 security scorecard in Port using vulnerability data from Snyk.
 ---
 
-# Examples
+# Build an OWASP Top 10 Scorecard
 
-### Ownership scorecard
 
-The following example demonstrates an ownership scorecard.
-
-It has one filter defined:
-
-- Only evaluate entities that are related to production (indicated by checking that the `is_production` property is set to `true`).
-
-It has two rules:
-
-- Check that a defined on-call exists and that the number of `open_incidents` is lower than 5;
-- Check if a team exists.
-
-```json showLineNumbers
-[
-  {
-    "title": "Ownership",
-    "identifier": "ownership",
-    "filter": {
-      "combinator": "and",
-      "conditions": [
-        {
-          "property": "is_production",
-          "operator": "=",
-          "value": true
-        }
-      ]
-    },
-    "rules": [
-      {
-        "title": "Has on call?",
-        "identifier": "has_on_call",
-        "level": "Gold",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "operator": "isNotEmpty",
-              "property": "on_call"
-            },
-            {
-              "operator": "<",
-              "property": "open_incidents",
-              "value": 5
-            }
-          ]
-        }
-      },
-      {
-        "title": "Has a team?",
-        "identifier": "has_team",
-        "level": "Silver",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "operator": "isNotEmpty",
-              "property": "$team"
-            }
-          ]
-        }
-      }
-    ]
-  }
-]
-```
-___
-
-### Ensure relation existence
-
-Say we have a `service` blueprint that has a relation to another blueprint named `domain`.  
-We can define a scorecard that checks that all of our services have a related domain. Services with empty `domain` relations will fail this check:
-
-```json showLineNumbers
-{
-  "title": "Domain definition",
-  "identifier": "domain_definition",
-  "rules": [
-    {
-      "identifier": "hasDomain",
-      "title": "Has domain",
-      "level": "Bronze",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": "isNotEmpty",
-            "relation": "domain"
-          }
-        ]
-      }
-    }
-  ]
-}
-```
-
-___
-
-### DORA metrics based on number of deployments
-
-To assess the deployment frequency of a `service`, simply checking the `deployment` relation is not enough — we need to know the exact number of deployments. To achieve this, we can:
-
-- Add an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property.md) to the `service` blueprint that counts the number of related `deployment` entities.
-- Add a scorecard with a rule based on the new aggregation property:
-
-```json showLineNumbers
-{ 
-  "title": "DORA Metrics",
-  "identifier": "dora_metrics",
-  "rules": [
-    {
-      "identifier": "deployFreqBronze",
-      "title": "Deployment frequency > 2",
-      "level": "Bronze",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": ">",
-            "property": "deployment_frequency",
-            "value": 3
-          }
-        ]
-      }
-    },
-    {
-      "identifier": "deployFreqSilver",
-      "title": "Deployment frequency > 4",
-      "level": "Silver",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": ">",
-            "property": "deployment_frequency",
-            "value": 4
-          }
-        ]
-      }
-    }
-  ]
-}
-```
-
-___
-
-### OWASP top 10 scorecard
+This guide demonstrates how to build an [OWASP Top 10](http://owasp.org/Top10) security scorecard in Port using vulnerability data from Snyk.  
 
 <img src="/img/guides/owasp/chart.png" width="80%" border="1px" alt="OWASP Top 10 Chart showing Gold, Silver and Basic tier distribution" />
 <br></br>
 <br></br>
 
-This section explains how to build an [OWASP Top 10](http://owasp.org/Top10) security scorecard in Port using vulnerability data from Snyk.  
+
 The scorecard resides on the `Repository` blueprint and evaluates data sourced from the `Snyk Target` and `Snyk Vulnerability` blueprints to measure each repository’s security posture against the latest OWASP Top 10 categories.
 
 1. `Snyk Vulnerability` – Represents individual vulnerabilities of various types.
 2. `Snyk Target` – Evaluated against 10 rules, each corresponding to an OWASP Top 10 category.
 3. `Repository` – The primary entity where the scorecard resides.
 
-<h2>Prerequisites</h2>
-- This example assumes you have a Port account and that you have finished the [onboarding process](https://docs.port.io/getting-started/overview).
-- Install Port's [GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup).
-- Install Port's [Snyk integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/).
+## Prerequisites
+- A Port account with the [onboarding process](https://docs.port.io/getting-started/overview) completed.
+- Port's [GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) installed.
+- Port's [Snyk integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/) installed.
 
-<h2> Set up data model </h2>
-<h3>Snyk Vulnerability</h3>
+## Set up data model
 
-To accurately benchmark against the OWASP Top 10 for code, most static analysis tools support generating `Common Weakness Enumeration` (CWE) IDs. We will store the `CWE` value in a property called `category`.  
-If the property is not yet included in your `Snyk Vulnerability` blueprint, follow these steps:
+### Update Snyk vulnerability blueprint
 
-**Update the `Snyk Vulnerability` blueprint:**
+To accurately benchmark against the OWASP Top 10 for code, most static analysis tools support generating `Common Weakness Enumeration` (CWE) IDs. We will store the `CWE` value in a property called `category`. 
+
+If the property is not yet included in your `Snyk Vulnerability` blueprint, follow these steps to add it:
+
 1. Navigate to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
 
 2. Click on the `Snyk Vulnerability` blueprint.
@@ -185,18 +42,22 @@ If the property is not yet included in your `Snyk Vulnerability` blueprint, foll
 
     <details>
     <summary><b>Snyk Vulnerability blueprint (click to expand)</b></summary>
-          ```json 
+          ```json showLineNumbers
           {
             "properties": {
               "category": {
                 "type": "string",
                 "title": "Category"
               }
+            }
           }
           ```
     </details>
 
-**Update the mapping configuration:**
+5. Click on the `Save` button to save the changes.
+
+### Update Snyk mapping configuration
+
 1. Head over to your [Data sources](https://app.port.io/settings/data-sources) page.
 
 2. Under `Exporters`, click on your Snyk integration.
@@ -205,25 +66,27 @@ If the property is not yet included in your `Snyk Vulnerability` blueprint, foll
 
     <details>
     <summary><b>Mapping configuration (click to expand)</b></summary>
-          ```yaml 
+          ```yaml showLineNumbers
           resources:
             - kind: vulnerability
               port:
                 entity:
                   mappings:
+                  //highlight-start
                     cwe: .attributes.classes[0].id  
+                  //highlight-end
           ```
     </details>
       
 4. Click on the `Save & Resync` button to save the changes and resync the integration.
 
-<h3>Snyk Target</h3>
+### Update Snyk Target blueprint
 
 With the addition of the `CWE` property to the `Snyk Vulnerability` blueprint, you can now classify vulnerabilities by CWE and align them with the [OWASP Top 10](http://owasp.org/Top10) categories.
 
-Update the `Snyk Target` blueprint to include 10 dedicated properties, one for each OWASP Top 10 code category, so issues can be grouped and reported by category.
+Update the `Snyk Target` blueprint to include 10 aggregation properties, one for each OWASP Top 10 code category, so issues can be grouped and reported by category.
 
-To update the `Snyk Target` blueprint:
+To update the `Snyk Target` blueprint, follow these steps:
 
 1. Navigate to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
 
@@ -741,15 +604,19 @@ To update the `Snyk Target` blueprint:
 
 5. Click on `Save` to update the blueprint.
 
-<h3>Repository</h3>
+### Add mirror properties to the Repository blueprint
 
-The `Snyk Target` blueprint should have a defined relation with the `GitHub Repository` blueprint.
-If your current model does not include a relation from the `Repository` blueprint to the `Snyk Target` blueprint, add it.
+:::tip Relation requirement
+The `Snyk Target` blueprint should have a defined relation with the `GitHub Repository` blueprint to be able to mirror properties from the `Snyk Target` blueprint to the `GitHub Repository` blueprint.
 
-The next step is to add the OWASP identifiers as mirrored properties to the `GitHub Repository` blueprint, and update the mapping configuration so that each `GitHub Repository` is automatically linked to its corresponding `Snyk Target`.  
+If your current model does not include a relation from the `Repository` blueprint to the `Snyk Target` blueprint, [add it](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
+:::
+
+
+The next step is to add the OWASP identifiers as mirrored properties to the `GitHub Repository` blueprint, and update the GitHub mapping configuration so that each `GitHub Repository` is automatically linked to its corresponding `Snyk Target`.  
 This link is what allows the mirrored OWASP properties to pull their values from the related Snyk data. 
 
-**Update the `GitHub Repository` blueprint:**
+Follow the steps below to add the OWASP mirror properties to the `GitHub Repository` blueprint:
 
 1. Navigate to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
 
@@ -760,7 +627,7 @@ This link is what allows the mirrored OWASP properties to pull their values from
 4. Update the mirrorProperties to include the snippet below:
 
     <details>
-    <summary><b>GitHub Repository Blueprint (click to expand)</b></summary>
+    <summary><b>Add mirror properties to GitHub Repository blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -812,7 +679,7 @@ This link is what allows the mirrored OWASP properties to pull their values from
 
 5.  Click on `Save` to update the blueprint.
 
-**Update the mapping configuration:**
+### Update GitHub mapping configuration
 
 1. Head over to your [Data sources](https://app.port.io/settings/data-sources) page.
 
@@ -822,30 +689,38 @@ This link is what allows the mirrored OWASP properties to pull their values from
 
     <details>
     <summary><b>Mapping configuration (click to expand)</b></summary>
-          ```yaml 
-          - kind: repository
-            port:
-              entity:
-                mappings:
-                  relations:
-                    snyk_target:
-                      combinator: '"and"'
-                      rules:
-                        - property: '"$title"'
-                          operator: '"="'
-                          value: .full_name
+          ```yaml showLineNumbers
+        - kind: repository
+         selector:
+           query: 'true' 
+         port:
+           entity:
+             mappings:
+               identifier: .full_name
+               blueprint: '"githubRepository"'
+               //highlight-start
+               relations:
+                 snyk_target:
+                   combinator: '"and"'
+                   rules:
+                     - property: '"$title"'
+                       operator: '"="'
+                       value: .full_name
+               //highlight-end
           ```
     </details>
       
 4. Click on the `Save & Resync` button to save the changes and resync the integration.
 
-<h2>Set up the scorecard</h2>
+## Set up the scorecard
 
 The final step is to create a scorecard that reflects the security maturity of a `Respository` against the OWASP Top 10 categories.
 
 <img src='/img/guides/owasp/scorecard-pass.png' width='80%' border='1px' />
+<br></br>
+<br></br>
 
-<h4>To create an OWASP Top 10 Scorecard:</h4>
+To create an OWASP Top 10 Scorecard, follow these steps:
 
 1. Go to your [Data model](https://app.getport.io/settings/data-model) page.
 
@@ -1037,7 +912,9 @@ The final step is to create a scorecard that reflects the security maturity of a
     ```
     </details>
 
-<h3>Troubleshooting</h3>
+6. Click on `Save` to create the scorecard.
+
+## Troubleshooting
 
 Some common issues you may encounter during the implementation:
 
@@ -1045,7 +922,7 @@ Some common issues you may encounter during the implementation:
 2. **OWASP Top 10 2021:** `CWE` field is key to accurately measuring and benchmarking against OWASP Top 10. The current measurement rules are based on the latest OWASP Top 10 i.e. OWASP Top 10 2021 as of this write-up. Discrepancy may arise if following this example without consideration for reviewing against latest OWASP Top 10 issues and the associated CWEs.
 3. **Missing property data:** This can happen when `CWE` property has been defined on the `Snyk Vulnerability` blueprint, however a sync has not yet occurred.
 
-<h3>Next steps</h3>
+## Next steps
 
 Consider the following as next steps:
 

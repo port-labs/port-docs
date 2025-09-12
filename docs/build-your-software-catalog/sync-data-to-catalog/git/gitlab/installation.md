@@ -11,7 +11,7 @@ import AdvancedConfig from '/docs/generalTemplates/_ocean_advanced_configuration
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation_oauth.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
-
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Installation
 
@@ -229,6 +229,8 @@ Not sure which method is right for your use case? Check the available [installat
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
+<IntegrationVersion integration="gitlab" />
+
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
 <h2> Prerequisites </h2>
@@ -358,9 +360,7 @@ Note the parameters specific to this integration, they are last in the table.
 
 This pipeline will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
-:::
+
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="gitlab" label="GitLab">

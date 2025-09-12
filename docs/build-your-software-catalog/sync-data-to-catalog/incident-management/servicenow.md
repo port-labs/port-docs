@@ -15,6 +15,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 import ServiceNowChangeRequestBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/servicenow/\_example_servicenow_change_request.mdx"
 import ServiceNowWebhookConfig from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/servicenow/\_example_servicenow_webhook_config.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 
 # ServiceNow
@@ -58,6 +59,8 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="servicenow" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -192,10 +195,6 @@ This table summarizes the available parameters for the installation.
 
 
 This workflow/pipeline will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Real-time updates 
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
-:::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">

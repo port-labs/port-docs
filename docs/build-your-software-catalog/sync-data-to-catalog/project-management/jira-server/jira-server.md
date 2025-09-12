@@ -3,6 +3,7 @@ import TabItem from "@theme/TabItem"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Jira Server (self-hosted)
 
@@ -36,6 +37,8 @@ Not sure which method is right for your use case? Check the available [installat
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)" default>
+
+<IntegrationVersion integration="jira-server" />
 
 This workflow will run the Jira Server integration and update Port in real time using scheduled polling.
 
@@ -184,10 +187,6 @@ This table summarizes the available parameters for the installation.
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
 This workflow/pipeline will run the Jira Server integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates
-If you want the integration to update Port in real time you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
-:::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">

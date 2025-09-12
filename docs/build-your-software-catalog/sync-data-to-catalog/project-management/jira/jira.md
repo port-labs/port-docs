@@ -17,6 +17,7 @@ import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-cata
 import JiraTeamExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_response.mdx"
 import JiraTeamEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_entity.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Jira
 
@@ -92,6 +93,8 @@ OAuth is best suited for the **initial setup** phase, such as configuring mappin
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+<IntegrationVersion integration="jira" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -229,10 +232,6 @@ This table summarizes the available parameters for the installation.
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
 This workflow/pipeline will run the Jira integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
-:::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
