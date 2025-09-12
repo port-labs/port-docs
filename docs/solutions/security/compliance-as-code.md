@@ -3,11 +3,11 @@ title: Compliance-as-Code
 sidebar_position: 5
 ---
 
-# Compliance as Code
+# Compliance as code
 
-> **Port transforms compliance from a manual, reactive burden into an automated, continuous, and measurable practice.**
-
----
+:::tip Transform compliance into continuous practice
+**Port transforms compliance from a manual, reactive burden into an automated, continuous, and measurable practice.**
+:::
 
 ## Introduction
 
@@ -19,7 +19,7 @@ Compliance is critical, but most organizations still rely on outdated, manual me
 This creates **painful audits**, stale evidence, and gaps between what's documented and what's actually happening in production.  
 By the time auditors arrive, teams scramble to collect last-minute proof of compliance.
 
-**Compliance-as-Code** changes this by embedding compliance directly into your engineering workflows.  
+**Compliance-as-code** changes this by embedding compliance directly into your engineering workflows.  
 With Port, compliance becomes:
 
 - **Continuous** – Evidence updates automatically as systems change.  
@@ -29,9 +29,7 @@ With Port, compliance becomes:
 
 The result: always audit-ready, with **reduced costs, faster certification cycles, and lower regulatory risk**.
 
----
-
-## Why Traditional Compliance Fails
+## Why traditional compliance fails
 
 | Challenge | Legacy Approach | Impact |
 |------------|----------------|--------|
@@ -41,16 +39,16 @@ The result: always audit-ready, with **reduced costs, faster certification cycle
 | **Reactive discovery** | Gaps found only during audits | Costly, high-risk surprises |
 | **High overhead** | Weeks spent preparing evidence manually | Slower product delivery, higher costs |
 
-> **Problem:** Compliance is treated as a static checkbox exercise instead of a living, continuous practice.
+:::warning Problem
+**Compliance is treated as a static checkbox exercise instead of a living, continuous practice.**
+:::
 
----
-
-## Port’s Approach: Compliance Built Into Your Platform
+## Port's approach: compliance built into your platform
 
 Port makes compliance **part of your internal developer platform**, using the same building blocks that manage services, security, and ownership.  
 This aligns compliance work with how engineering teams already operate.
 
-| Port Pillar | Role in Compliance-as-Code |
+| Port Pillar | Role in compliance-as-code |
 |-------------|---------------------------|
 | **Blueprints** | Model compliance entities: services, controls, audits, and evidence. |
 | **Scorecards** | Measure compliance maturity and track control performance in real-time. |
@@ -58,13 +56,13 @@ This aligns compliance work with how engineering teams already operate.
 | **Integrations** | Ingest data from cloud, code, and security tools for continuous updates. |
 | **Dashboards** | Visualize compliance status for executives, auditors, and teams. |
 
-> **Key idea:** Compliance isn’t a separate process—it lives alongside service ownership, vulnerabilities, and risk in the same Port platform.
+:::info Key idea
+**Compliance isn't a separate process—it lives alongside service ownership, vulnerabilities, and risk in the same Port platform.**
+:::
 
----
+## Step 1: map compliance to real systems
 
-## Step 1: Map Compliance to Real Systems
-
-The foundation of Compliance-as-Code is **mapping controls to the actual services and teams they affect**.
+The foundation of compliance-as-code is **mapping controls to the actual services and teams they affect**.
 
 With Port:
 - Use **Blueprints** to define core compliance entities:
@@ -84,9 +82,7 @@ This creates a **single source of truth** for compliance across the organization
 - Ownership is automatically assigned to the teams managing those services.
 - Dashboards show which services are compliant and which require attention.
 
----
-
-## Step 2: Automate Evidence Collection
+## Step 2: automate evidence collection
 
 Collecting compliance evidence manually wastes time and creates stale, unreliable data.  
 Port integrates with your systems to **automate evidence ingestion**.
@@ -105,13 +101,11 @@ You can also use the **Port REST API** to ingest custom evidence from other sour
 
 Result: evidence updates **continuously** as your environment evolves.
 
----
-
-## Step 3: Define Compliance Scorecards
+## Step 3: define compliance scorecards
 
 Scorecards turn abstract frameworks into **measurable, trackable outcomes**.
 
-### Example: SOC 2 Control Scorecard
+### Example: SOC 2 control scorecard
 | Control Area | Example Check | Source |
 |--------------|---------------|--------|
 | Access Control | All production systems enforce MFA | AWS IAM integration |
@@ -130,9 +124,7 @@ Dashboards then show:
 - Overall readiness by service or business unit,
 - Historical progress over time.
 
----
-
-## Step 4: Automate Compliance Workflows
+## Step 4: automate compliance workflows
 
 Compliance data is most valuable when **it drives action**.  
 Use Port **automations** to close the loop.
@@ -143,11 +135,9 @@ Examples:
 - Escalate overdue controls to leadership after SLA deadlines pass.
 - Trigger remediation pipelines automatically for specific failures.
 
-This ensures compliance issues don’t just get logged—they get **fixed**.
+This ensures compliance issues don't just get logged—they get **fixed**.
 
----
-
-## Step 5: Enable Continuous Audit Readiness
+## Step 5: enable continuous audit readiness
 
 With all compliance data flowing through Port, audits become **continuous and painless**:
 - Evidence is **always current** and linked to the right controls.

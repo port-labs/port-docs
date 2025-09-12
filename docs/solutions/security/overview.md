@@ -3,29 +3,28 @@ title: Overview
 sidebar_position: 1
 ---
 
-# From Noise to Business Impact
+# From noise to business impact
 
-Security Belongs in Your Internal Developer Portal (IDP).
-> **Port transforms security from a source of friction into a driver of clarity, action, and resilience.**
+Security belongs in your internal developer portal (IDP).
 
----
+:::tip Transform security from friction to clarity
+**Port transforms security from a source of friction into a driver of clarity, action, and resilience.**
+:::
 
-## Executive Summary
+## Executive summary
 
 Modern security teams face an overwhelming challenge: too many alerts, not enough context. Traditional security tools generate massive amounts of noise—vulnerabilities, misconfigurations, and compliance failures—without clearly indicating which ones truly matter to the business. Developers are often handed context-free tickets that lead to frustration, burnout, and unresolved risks.
 
-Port changes this dynamic by bringing security into your **Internal Developer Portal (IDP)**. With Port, every alert is enriched with **business context**—ownership, environment, lifecycle stage, and criticality—so security teams and engineering teams can align on what matters most.  
-This shared visibility enables organizations to focus on measurable risk reduction instead of firefighting endless streams of context-free alerts.
+Port changes this dynamic by bringing security into your **internal developer portal (IDP)**. With Port, every alert is enriched with **business context**—ownership, environment, lifecycle stage, and criticality—so security and engineering teams can align on what matters most.  
+This shared visibility enables organizations to focus on measurable risk reduction instead of fighting endless streams of context-free alerts.
 
----
-
-## The Problem: Alert Fatigue
+## The problem: alert fatigue
 
 Every security leader knows the story.  
 
 - Vulnerability scanners flag every possible misconfiguration.  
 - Compliance dashboards display a sea of red.
-- CSPM & ASPM tools generate numerours findings.
+- CSPM & ASPM tools generate numerous findings.
 
 By the end of the week, you’re staring at a CSV export with **15,000 “critical” vulnerabilities**.  
 Yet when you dig deeper, you find:
@@ -37,9 +36,7 @@ Yet when you dig deeper, you find:
 Meanwhile, developers are handed generic tickets with no context or clarity, leaving them disengaged and overwhelmed.  
 The result? A security program that *looks* busy, but struggles to drive meaningful business outcomes.
 
----
-
-## The Gap: Tools Without Context
+## The gap: tools without context
 
 Modern security stacks are exceptional at **detection** but weak at **connection**.  
 They can tell you *that something is wrong*, but not whether it **matters**.
@@ -51,9 +48,7 @@ Examples:
 
 This lack of context creates a cycle where both security and engineering teams are **busy but ineffective**, drowning in noise without clarity or alignment.
 
----
-
-## The Shift: From Gatekeeper to Business Enabler
+## The shift: from gatekeeper to business enabler
 
 Modern CISOs and CTOs are rethinking their approach to security.  
 Instead of acting as gatekeepers who slow down development, they are building **shared platforms** where security and engineering collaborate to reduce risk **together**.
@@ -65,14 +60,12 @@ This requires a fundamental shift:
 
 This is exactly where **Port** comes in.
 
----
-
-## Why Port: Security in the Internal Developer Portal
+## Why Port: security in the internal developer portal
 
 Port acts as the **business context engine** your security program has been missing.  
-By embedding security directly into your Internal Developer Portal, Port transforms raw alerts into **actionable, prioritized insights**.
+By embedding security directly into your internal developer portal, Port transforms raw alerts into **actionable, prioritized insights**.
 
-### How Port Helps
+### How Port helps
 - **Ownership clarity**  
   Every vulnerability is automatically linked to the team that owns the service.
 
@@ -86,7 +79,7 @@ By embedding security directly into your Internal Developer Portal, Port transfo
   Security leaders can answer questions instantly:  
   *What matters? Where is it? Who is fixing it?*
 
-### Scorecards: Measuring Security Maturity
+### Scorecards: measuring security maturity
 
 Security isn’t just about fixing today’s vulnerabilities — it’s about **improving your organization’s ability to manage risk over time**.  
 Port’s **Scorecards** feature gives you a clear, measurable way to track this progress.
@@ -101,27 +94,24 @@ With Scorecards, you can:
 
 Instead of a static compliance report, scorecards give you a **living, breathing measurement system** that evolves as your security program matures.
 
-> *“You can’t improve what you don’t measure.”*  
-> Scorecards ensure you’re not just reducing alerts — you’re systematically improving security maturity across your organization.
+:::info You can't improve what you don't measure
+**Scorecards ensure you're not just reducing alerts — you're systematically improving security maturity across your organization.**
+:::
 
----
-
-## From 15,000 Alerts to 12 Critical Issues
+## From thousands of alerts to 12 critical issues
 
 Imagine reporting to your CISO:  
 
-> *“We have 15,000 critical vulnerabilities.”*
+*"We have 15,000 critical vulnerabilities."*
 
 Now imagine instead saying:  
 
-> *“Here are the 12 vulnerabilities affecting our revenue-generating production services,  
-mapped to their owners, with real-time remediation status.”*
+*"Here are the 12 vulnerabilities affecting our revenue-generating production services,  
+mapped to their owners, with real-time remediation status."*
 
-That’s the difference Port makes.
+That's the difference Port makes.
 
----
-
-## The Outcome: Security That Scales With the Business
+## The outcome: security that scales with the business
 
 When security is integrated into your internal developer platform, you achieve what traditional tools alone cannot:
 
@@ -132,9 +122,7 @@ When security is integrated into your internal developer platform, you achieve w
 
 Instead of chasing every alert, you focus on **what truly matters**—protecting the business and enabling teams to move faster, safely.
 
----
-
-## The Call to Action: Lead Through Context
+## The call to action: lead through context
 
 The security landscape isn’t getting simpler.  
 Threats are multiplying, compliance demands are growing, and engineering velocity keeps accelerating.  

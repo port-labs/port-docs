@@ -159,21 +159,21 @@ While automation can dramatically improve efficiency, ensure you maintain approp
 
 ## Building your security automation program
 
-### Phase 1: Automate routine decisions
+### Phase 1: automate routine decisions
 
 Start with low-risk, high-volume decisions that consume significant analyst time:
 - Development environment vulnerability approvals
 - Routine security exception renewals
 - Basic compliance checks and reporting
 
-### Phase 2: Implement intelligent triage
+### Phase 2: implement intelligent triage
 
 Add business context to security decision-making:
 - Risk-based vulnerability prioritization
 - Automated escalation based on service criticality
 - Context-enriched security alerts and notifications
 
-### Phase 3: Enable predictive capabilities
+### Phase 3: enable predictive capabilities
 
 Build forward-looking automation that prevents security issues:
 - Predictive vulnerability analysis based on code changes
