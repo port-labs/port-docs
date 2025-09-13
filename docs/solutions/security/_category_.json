@@ -1,0 +1,9 @@
+{
+    "label": "Security",
+    "collapsible": true,
+    "collapsed": true,
+    "position": 4,
+    "customProps": {
+      "description": "Security"
+    }
+  }
