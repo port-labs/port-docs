@@ -82,6 +82,7 @@ components:
                               - today
                               - tomorrow
                               - yesterday
+                              - lastDay
                               - lastWeek
                               - last2Weeks
                               - lastMonth
@@ -455,6 +456,7 @@ components:
                               - today
                               - tomorrow
                               - yesterday
+                              - lastDay
                               - lastWeek
                               - last2Weeks
                               - lastMonth
@@ -2228,6 +2230,7 @@ components:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -2587,6 +2590,7 @@ components:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -4624,6 +4628,7 @@ components:
                                                         - today
                                                         - tomorrow
                                                         - yesterday
+                                                        - lastDay
                                                         - lastWeek
                                                         - last2Weeks
                                                         - lastMonth
@@ -4983,6 +4988,7 @@ components:
                                                         - today
                                                         - tomorrow
                                                         - yesterday
+                                                        - lastDay
                                                         - lastWeek
                                                         - last2Weeks
                                                         - lastMonth
@@ -5771,6 +5777,7 @@ components:
                               - today
                               - tomorrow
                               - yesterday
+                              - lastDay
                               - lastWeek
                               - last2Weeks
                               - lastMonth
@@ -6318,6 +6325,7 @@ paths:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -9149,6 +9157,7 @@ paths:
                                       - today
                                       - tomorrow
                                       - yesterday
+                                      - lastDay
                                       - lastWeek
                                       - last2Weeks
                                       - lastMonth
@@ -18642,6 +18651,7 @@ paths:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -20040,7 +20050,7 @@ paths:
               properties:
                 identifier:
                   type: string
-                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:=-]+$
                   description: The identifier of the action.
                 title:
                   type: string
@@ -20563,6 +20573,7 @@ paths:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -33259,7 +33270,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/integration/{integrationInternalId}/syncMetrics":
+  /v1/integration/{integrationInternalId}/syncMetrics:
       get:
         summary: Get an integration's metrics and sync status
         description: |
@@ -33636,6 +33647,23 @@ paths:
                     - data
                   additionalProperties: false
           "401":
+            description: Default Response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    ok:
+                      type: boolean
+                    error:
+                      type: string
+                    message:
+                      type: string
+                  required:
+                    - ok
+                    - error
+                  additionalProperties: false
+          "404":
             description: Default Response
             content:
               application/json:
