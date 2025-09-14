@@ -409,12 +409,19 @@ We limit this data storage strictly to these purposes. You can contact us to opt
 
 ## Limits
 
-Port applies limits to AI agent interactions to ensure fair usage across all customers:
+Port applies two different types of limits to AI agent interactions to ensure fair usage across all customers:
 
-- **Query limit**: ~40 queries per hour.
-- **Token usage limit**: 800,000 tokens per hour.
+### Rate limits
+- **Query limit**: ~40 queries per hour
+- **Token usage limit**: 800,000 tokens per hour
+- These limits reset hourly
 
-You can view your quota limits are available in the API response.
+### Monthly quota
+- **Default quota**: 20 AI invocations per month
+- Each invocation of Port AI counts as one request against your quota
+- Quota resets monthly
+
+
 
 :::caution Usage limits
 Usage limits may change without prior notice. Once a limit is reached, you will need to wait until it resets.  
@@ -422,23 +429,14 @@ If you attempt to interact with an agent after reaching a limit, you will receiv
 The query limit is estimated and depends on the actual token usage.
 :::
 
-## Monitoring your quota
+### Monitor your usage
 
-### Monthly quota vs rate limits
+You can monitor your current usage in several ways:
 
-Port has two different types of limits for AI agent interactions:
+#### Rate limits
+- Check the final `done` event in streaming responses for remaining requests, tokens, and reset time
 
-- **Rate limits**: Hourly limit (~40 queries per hour, 800,000 tokens per hour) that reset hourly
-- **Quota**: Monthly quota that track your total usage across the month. Each invocation of Port AI counts as one.
-
-The `/v1/quota/ai-invocations` endpoint shows your **monthly quota** usage, which is separate from the hourly rate limits.
-
-:::info Quota increases
-Customers can get increased monthly quotas based on their usage patterns and agreement with Port. Contact support to discuss quota adjustments for your organization's needs.
-:::
-
-### Check monthly quota via API
-
+#### Monthly quota
 You can monitor your current monthly quota usage by making a GET request to the `/v1/quota/ai-invocations` endpoint
 
 :::tip Proactive quota monitoring
@@ -552,9 +550,36 @@ Port applies the following limits to AI agent interactions:
 
 You can monitor your current usage in several ways:
 - Check the final `done` event in streaming responses for remaining requests, tokens, and reset time (hourly rate limits)
-- View quota information in AI invocation details
+- Make a GET request to `/v1/quota/ai-invocations` to see your monthly quota status
 
-Note that Port has both hourly rate limits and monthly quotas. For detailed quota information, see the [Monitoring your quota](#monitoring-your-quota) section above.
+Note that Port has both hourly rate limits and monthly quotas. For detailed information, see the [Limits](#limits) section above.
+
+</details>
+
+<details>
+<summary><b>What happens when I reach a limit and what can I do? (Click to expand)</b></summary>
+
+**What happens when you reach a limit:**
+- You are temporarily blocked from making new AI agent requests
+- You will receive an error message indicating which limit has been exceeded
+- Access resumes automatically when the limit resets
+
+**What you can do:**
+
+**For rate limits (hourly):**
+- Wait for the limits to reset (they reset every hour)
+- Monitor the `remainingTimeMs` field to know exactly when you can make requests again
+- The error message will indicate it's a rate limit issue
+
+**For monthly quota:**
+- Wait for the monthly quota to reset at the beginning of the next month
+- Contact our support team to learn more about our plans and quota upgrades available for your organization
+- The error message will indicate it's a quota limit issue
+
+**General recommendations:**
+- Implement rate limiting in your applications to avoid hitting limits
+- Monitor your usage proactively using the monitoring methods described above
+- Consider batching requests or optimizing your AI agent interactions for efficiency
 
 </details>
 
