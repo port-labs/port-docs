@@ -20050,7 +20050,7 @@ paths:
               properties:
                 identifier:
                   type: string
-                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:=-]+$
                   description: The identifier of the action.
                 title:
                   type: string
@@ -33230,7 +33230,7 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/integration/{integrationInternalId}/syncMetrics":
+  /v1/integration/{integrationInternalId}/syncMetrics:
       get:
         summary: Get an integration's metrics and sync status
         description: This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
@@ -33615,7 +33615,24 @@ paths:
                     - ok
                     - error
                   additionalProperties: false
-          "500":
+          "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
             description: Default Response
             content:
               application/json:
