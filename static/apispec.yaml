@@ -19901,12 +19901,16 @@ paths:
       summary: Get actions/automations
       tags:
         - Actions
-      description: This route allows you to fetch one or more self-service actions
+      description: |
+        This route allows you to fetch one or more self-service actions
         and/or automations in your Port account.<br/><br/>The call will perform
         a logical `AND` between all query parameters below, and return all
         actions and automations that match the criteria.<br/><br/>To learn more
         about actions and automations, check out the
         [documentation](https://docs.port.io/actions-and-automations/).
+        :::info
+        Set the `version` parameter to `v2` for the latest version of the API.
+        :::
       parameters:
         - schema:
             type: array
@@ -19995,11 +19999,7 @@ paths:
           in: query
           name: version
           required: false
-          description: |
-            Specifies the API version to use.  
-            Use `v2` for the latest API (supports global actions).  
-            `v1` is kept for backward compatibility and only supports
-            actions tied to a blueprint.
+          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
       security:
         - bearer:
             - read:actions
@@ -22693,11 +22693,15 @@ paths:
       summary: Update an action run
       tags:
         - Action Runs
-      description: This route allows you to update an action run's details. This can
+      description: |
+        This route allows you to update an action run's details. This can
         be used to update the run's status & label, and add links to it (e.g.
         external logs of the job runner).<br/><br/>To learn more about action
         runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
+        :::info
+        Set the `version` parameter to `v2` for the latest version of the API.
+        :::
       requestBody:
         content:
           application/json:
@@ -22744,7 +22748,7 @@ paths:
           in: query
           name: version
           required: false
-          description: Please use `v2` for the latest version of the API.
+          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: path
@@ -23000,9 +23004,13 @@ paths:
       summary: Get an action run's details
       tags:
         - Action Runs
-      description: This route allows you to fetch the details of an action
+      description: |
+        This route allows you to fetch the details of an action
         run.<br/><br/>To learn more about action runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
+        :::info
+        Set the `version` parameter to `v2` for the latest version of the API.
+        :::
       parameters:
         - schema:
             type: string
@@ -23012,7 +23020,7 @@ paths:
           in: query
           name: version
           required: false
-          description: Please use `v2` for the latest version of the API.
+          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: path
@@ -23235,10 +23243,14 @@ paths:
       summary: Approve an action run
       tags:
         - Action Runs
-      description: This route allows you to approve or decline a request to execute an
+      description: |
+        This route allows you to approve or decline a request to execute an
         action that requires approval.<br/><br/>To learn more about manual
         approval for actions, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
+        :::info
+        Set the `version` parameter to `v2` for the latest version of the API.
+        :::
       requestBody:
         content:
           application/json:
@@ -23266,7 +23278,7 @@ paths:
           in: query
           name: version
           required: false
-          description: Please use `v2` for the latest version of the API.
+          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: path
@@ -23523,11 +23535,15 @@ paths:
       summary: Get all action runs
       tags:
         - Action Runs
-      description: This route allows you to fetch all action runs in your Port
+      description: |
+        This route allows you to fetch all action runs in your Port
         account. The route will perform a logical `AND` between all query
         parameters below, and return all action runs that match the
         criteria.<br/><br/>To learn more about action runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
+        :::info
+        Set the `version` parameter to `v2` for the latest version of the API.
+        :::
       parameters:
         - schema:
             type: string
@@ -23583,7 +23599,7 @@ paths:
           in: query
           name: version
           required: false
-          description: Please use `v2` for the latest version of the API.
+          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: query
