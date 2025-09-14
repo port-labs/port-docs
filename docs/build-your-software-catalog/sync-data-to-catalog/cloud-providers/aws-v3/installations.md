@@ -8,10 +8,10 @@ import TabItem from "@theme/TabItem";
 # Installation
 
 :::warning Beta Feature
-AWS Hosted by Port is currently in **beta mode** and is not yet available for all Port users. Contact your Port representative to request access to this integration.
+AWS Hosted by Port is currently in **beta mode** and is not yet available for all Port users. Contact Port's support team to get access to this integration.
 :::
 
-AWS Hosted by Port is available through **Port's Ocean SaaS platform**.  
+AWS Hosted by Port is available through [Port's Ocean SaaS framework](https://ocean.getport.io/integrations-library/).  
 
 The installation process is simple - you only need to create IAM roles in your AWS accounts to grant the integration access to read your resources. The integration handles everything else automatically.
 
@@ -19,7 +19,7 @@ The installation process is simple - you only need to create IAM roles in your A
 
 AWS Hosted by Port runs on **Port's servers** and connects to your AWS accounts using **OIDC (OpenID Connect)** authentication. Here's how it works:
 
-1. **You create IAM roles** in your AWS accounts using our CloudFormation templates.
+1. **You create IAM roles** in your AWS accounts using Port's CloudFormation templates.
 2. **Port's servers assume these roles** using OIDC to get temporary AWS credentials.
 3. **Port discovers your AWS resources** by calling AWS APIs with the assumed roles.
 4. **Port exports the resources** to your Port account in the software catalog.
@@ -62,7 +62,7 @@ For a single AWS account, you will deploy a CloudFormation stack that creates th
    - In the CloudFormation console, review the pre-configured parameters.
    - Scroll down to the bottom of the page.
    - Check the box that states **"I acknowledge that AWS CloudFormation might create IAM resources with custom names"**.  
-      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/AWS-CloudFormation-checkbox.png' width='100%' border='1px' />
+      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/CloudFormationcheckbox.png' width='100%' border='1px' />
    - Click `Create Stack`.
 
 
@@ -70,10 +70,10 @@ For a single AWS account, you will deploy a CloudFormation stack that creates th
 
 - **Get the role ARN**:
    - Ensure the stack shows `CREATE_COMPLETE` status.
-      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/CREATE_COMPLETE.png' width='60%' border='1px' />
+      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/CreateCompleteStatus.png' width='60%' border='1px' />
    - After CloudFormation deployment completes, go to the **Outputs** tab.
    - Copy the value of **PortIntegrationRoleArn**.
-      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/PortIntegreationRoleArn-value.png' width='90%' border='1px' />
+      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/PortIntegreationRoleArnValue.png' width='90%' border='1px' />
    - Paste it into the **Account Role Arn** field in the Port integration form.
    - Click `Done`.
 
@@ -134,7 +134,7 @@ You must run the multi-account installation from your AWS Organizations **manage
    - In the CloudFormation console, review the pre-configured parameters.
    - Scroll down to the bottom of the page.
    - Check the box **"I acknowledge that AWS CloudFormation might create IAM resources with custom names"**. 
-      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/AWS-CloudFormation-checkbox.png' width='100%' border='1px' />
+      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/CloudFormationcheckbox.png' width='100%' border='1px' />
    - Click `Create Stack`.
 
 
@@ -143,7 +143,7 @@ You must run the multi-account installation from your AWS Organizations **manage
 - **Check StackSet status**:
    - Go to **CloudFormation** → **Stacks** in your management account.
    - Make sure your stack status is `CREATE_COMPLETE`.
-     <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/CREATE_COMPLETE.png' width='60%' border='1px' />
+     <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/CreateCompleteStatus.png' width='60%' border='1px' />
 
 - **Verify IAM roles**:
    - Check that the IAM roles were created in each target account.
@@ -153,7 +153,7 @@ You must run the multi-account installation from your AWS Organizations **manage
 - **Get the role ARN**:
    - After CloudFormation deployment completes, go to the **Outputs** tab.
    - Copy the value of **PortIntegrationRoleArn**.
-      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/PortIntegreationRoleArn-value.png' width='90%' border='1px' />
+      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/PortIntegreationRoleArnValue.png' width='90%' border='1px' />
    - Paste it into the **Account Role Arn** field in the Port integration form.
    - Click `Done`.
 
