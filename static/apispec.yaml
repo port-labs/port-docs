@@ -25288,9 +25288,17 @@ paths:
       summary: Get all integrations
       tags:
         - Integrations
-      description: This route allows you to fetch all integrations in your Port
+      description: |
+        This route allows you to fetch all integrations in your Port
         organization.<br/><br/>To learn more about integrations, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br> 
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       security:
         - bearer:
             - read:integrations
@@ -25334,9 +25342,17 @@ paths:
       summary: Get an integration
       tags:
         - Integrations
-      description: This route allows you to fetch a specific integration in your Port
+      description: |
+        This route allows you to fetch a specific integration in your Port
         organization.<br/><br/>To learn more about integrations, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br>
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       parameters:
         - schema:
             type: string
@@ -25813,10 +25829,18 @@ paths:
       summary: Get an integration's audit logs
       tags:
         - Integrations
-      description: This route allows you to fetch the audit logs of a specific
+      description: |
+        This route allows you to fetch the audit logs of a specific
         integration in your Port organization.<br/><br/>To learn more about
         integrations, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br>
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       parameters:
         - schema:
             type: number
@@ -26606,11 +26630,19 @@ paths:
       summary: Get all webhooks
       tags:
         - Webhook
-      description: This route allows you to fetch all webhooks configured in your Port
+      description: |
+        This route allows you to fetch all webhooks configured in your Port
         organization. You can also see them in the [data sources
         page](https://app.getport.io/settings/data-sources) of your Port
         account.<br/><br/>To learn more about webhooks, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/). <br></br>
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       security:
         - bearer:
             - read:integrations
@@ -27540,11 +27572,19 @@ paths:
       summary: Get a webhook
       tags:
         - Webhook
-      description: This route allows you to fetch a specific webhook in your Port
+      description: |
+        This route allows you to fetch a specific webhook in your Port
         organization. You can also see it in the [data sources
         page](https://app.getport.io/settings/data-sources) of your Port
         account.<br/><br/>To learn more about webhooks, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/). <br></br>
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       parameters:
         - schema:
             type: string
@@ -33258,7 +33298,15 @@ paths:
   /v1/integration/{integrationInternalId}/syncMetrics:
       get:
         summary: Get an integration's metrics and sync status
-        description: This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+        description: |
+          This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br>
+          :::warning Permission requirements
+          To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+          To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+          
+          If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+          :::
         tags:
           - Integrations
         parameters:
