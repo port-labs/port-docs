@@ -39,7 +39,7 @@ We're actively working on adding support for additional AWS resource types to pr
 
 ## Key advantages
 
-AWS Hosted by Port provides several advantages over the [self-hosted AWS integration](/aws/installations/installation):
+AWS Hosted by Port provides several advantages over the [self-hosted AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/installations/installation.md):
 
 - **Fully hosted**: No infrastructure to maintain, update, or monitor.
 - **Simplified installation**: Just deploy CloudFormation templates to create IAM roles.
