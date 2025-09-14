@@ -19995,6 +19995,11 @@ paths:
           in: query
           name: version
           required: false
+          description: |
+            Specifies the API version to use.  
+            Use `v2` for the latest API (supports global actions).  
+            `v1` is kept for backward compatibility and only supports
+            actions tied to a blueprint.
       security:
         - bearer:
             - read:actions
@@ -22739,6 +22744,7 @@ paths:
           in: query
           name: version
           required: false
+          description: Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: path
@@ -23006,6 +23012,7 @@ paths:
           in: query
           name: version
           required: false
+          description: Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: path
@@ -23259,6 +23266,7 @@ paths:
           in: query
           name: version
           required: false
+          description: Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: path
@@ -23575,6 +23583,7 @@ paths:
           in: query
           name: version
           required: false
+          description: Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: query
