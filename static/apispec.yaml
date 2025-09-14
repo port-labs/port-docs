@@ -33616,23 +33616,23 @@ paths:
                     - error
                   additionalProperties: false
           "404":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  ok:
-                    type: boolean
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-        "500":
+            description: Default Response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    ok:
+                      type: boolean
+                    error:
+                      type: string
+                    message:
+                      type: string
+                  required:
+                    - ok
+                    - error
+                  additionalProperties: false
+          "500":
             description: Default Response
             content:
               application/json:
