@@ -1459,7 +1459,7 @@ export const availableGuides = [
         title: "Promote resources across environments",
         description: "Learn how to promote resources from dev to prod from your portal",
         tags: ["SDLC", "Git"],
-        logos: ["SDLC", "Git"],
+        logos: ["Git"],
         link: "/guides/all/promote-resources-across-environments",
     }
 ]

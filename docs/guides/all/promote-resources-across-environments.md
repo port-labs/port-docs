@@ -7,9 +7,9 @@ import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
 
 # Promote resources across environments
 
-This guide explores the concept of managing a portal across multiple environments, e.g. promoting a service from a development environment to a production environment.
+This guide explores the concept of managing a portal and its resources across multiple environments, e.g. promoting a service from a development environment to a production environment.
 
-The guide suggests two approaches to achieve this, each with their own pros and cons:
+The guide presents two approaches to achieve this:
 
 1. Using IaC (Terraform) to define and manage resources.
 2. Using Port resource definitions (in JSON format) in a dedicated Git repository to define and manage resources.
@@ -22,9 +22,63 @@ The guide suggests two approaches to achieve this, each with their own pros and 
 
 - For the second approach, you will need to have a dedicated Git repository to store the resource definitions. In this guide, we will use GitHub as an example.
 
-## Approach 1: Use IaC (Terraform)
+## Approach 1: IaC (Terraform)
+
 
 Port offers a [Terraform provider](https://registry.terraform.io/providers/port-labs/port/latest/docs) that allows you to define and manage portal resources (blueprints, scorecards, automations, etc.) as Terraform code.
+
+Before you dive into the details of the approach, we recommend to go over best practices when using Terraform & Port:
+
+<details>
+<summary><b>Best practices when using Terraform & Port (click to expand)</b></summary>
+
+1. **Define Terraform scope**  
+   Decide which resources you want to manage with Terraform (e.g. pages, catalog, integrations). Use Terraform for resources you already manage as code (cloud accounts, databases, Lambdas).  
+   For data sourced from other systems, prefer Port’s native integrations (GitHub, Kubernetes, cloud providers, Terraform Cloud) to keep data up to date. It’s often easiest to start with the UI, then transition to Terraform using the [Import Generator](https://github.com/port-experimental/terraform-import-generator).
+
+2. **Pin and configure the provider**  
+   - Pin provider versions (e.g., `~> 2.x`) and upgrade intentionally.
+   - Obtain your Port client ID & client secret, and choose the EU/US API base URL that matches your account region. See [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/iac/terraform/) for more details.
+   - Follow standard Terraform practice to configure the provider, like aliases and inheritance. 
+
+3. **Structure your repository and state**  
+   - Use a remote backend with state locking (e.g., Terraform Cloud, S3+DynamoDB) to prevent conflicts.
+   - Separate state files per environment (prod, stage) and enforce plan/apply gates in CI.
+
+4. **Model catalog as code with `port_blueprint`**  
+   Define blueprints in Terraform so your catalog schema (properties, relations, calculations, etc.) is versioned and reviewable. Refer to documentation for examples covering all property types and advanced features like mirror and calculation properties.
+
+5. **Manage entities with `port_entity`**  
+   Define entities with all of their relevant properties.  
+   The provider uses a create/override strategy: any property omitted in Terraform will be reset to empty.  
+   Always model the full desired entity shape in code.  
+   Use registry options like `create_missing_related_entities`, and fields such as `teams` and `run_id` for traceability.
+
+6. **Extend system blueprints properly**  
+   `User` and `Team` are system blueprints—extend them using `port_system_blueprint` (not `port_blueprint`) and import them to state before making changes. Supported from provider `v2.2.0`.
+
+7. **Import existing resources before management**  
+   If a resource already exists (via UI or integration), import it to state before managing with Terraform.  
+   - Blueprints: `terraform import port_blueprint.my "blueprintId"`  
+   - Entities: `terraform import port_entity.my "blueprintId:entityId"`  
+   - Other resources (scorecards, actions, webhooks, integrations) have documented import forms.
+
+8. **Define self-service actions and permissions in code**  
+   Use `port_action` to codify self-service experiences (inputs, triggers, conditions). For actions that invoke Terraform (e.g., GitHub workflow, Terraform Cloud run), store credentials in Port secrets or use an execution agent.
+
+9. **Manage integrations declaratively**  
+   Use `port_integration` to manage configuration and mappings for existing integrations (not to create new ones). Import by installation ID, then manage mappings in code.
+
+10. **Promote changes safely**  
+   Follow standard Terraform best practices: run `terraform validate` and `plan` in CI, and require peer review before applying changes. Optionally, expose “plan & apply” as a Port action for controlled no-code provisioning flows.
+
+11. **Separate regions, accounts, and environments**  
+   For multiple Port accounts or regions (EU/US), set the correct `base_url` per environment or use provider aliases. Avoid mixing resources across environments.
+
+12. **Handle evolution and breaking changes deliberately**  
+   For refactors (e.g., renaming properties or relations), use dedicated API endpoints and plan changes carefully to avoid breaking dependencies, especially when multiple blueprints or entities are involved.
+
+</details>
 
 The following steps outline the recommended process for managing your resources across environments using Terraform, while maintaining consistency and minimizing errors:
 
@@ -36,7 +90,7 @@ The following steps outline the recommended process for managing your resources 
    In your Terraform configuration, add the following import blocks:
 
    <details>
-   <summary><b>Import blocks (click to expand)</b></summary>
+   <summary><b>`import` blocks (click to expand)</b></summary>
     ```hcl showLineNumbers
     terraform {
       required_providers {
@@ -109,7 +163,7 @@ The following steps outline the recommended process for managing your resources 
    Once you're satisfied with the plan, run `terraform apply` to apply the changes to your production environment.
 
 
-## Approach 2: Use JSON resource definitions
+## Approach 2: JSON resource definitions
 
 Being an API-first solution, Port allows you to define portal resources (blueprints, scorecards, automations, etc.) as JSON objects.  
 This approach demonstrates how to manage your resource definitions in a dedicated Git repository.
@@ -133,881 +187,276 @@ This approach demonstrates how to manage your resource definitions in a dedicate
    - Using [Port's API](https://docs.port.io/api-reference/port-api), call the relevant POST endpoint to apply the resource definitions to your production environment.
 
 
-### Update Snyk mapping configuration
+### Example: GitHub workflow
 
-1. Head over to your [Data sources](https://app.port.io/settings/data-sources) page.
+Below is an example of a GitHub workflow that automates the promotion of resources from a development environment to a production environment.
 
-2. Under `Exporters`, click on your Snyk integration.
+#### Prerequisites
 
-3. In the **Mapping** tab, edit the YAML in the bottom-left panel and add the following entry under the `vulnerability` kind:  
+Before using this workflow, make sure to:
 
-    <details>
-    <summary><b>Mapping configuration (click to expand)</b></summary>
-          ```yaml showLineNumbers
-          resources:
-            - kind: vulnerability
-              port:
-                entity:
-                  mappings:
-                  //highlight-start
-                    cwe: .attributes.classes[0].id  
-                  //highlight-end
-          ```
-    </details>
-      
-4. Click on the `Save & Resync` button to save the changes and resync the integration.
+1. **Set up repository secrets:**
+   - `PORT_PRODUCTION_TOKEN`: Your Port API token for the production environment.
 
-### Update Snyk Target blueprint
+2. **Configure Port API tokens:**
+   - Generate API tokens for your production Port environment.
+   - Store them securely as GitHub repository secrets.
 
-With the addition of the `CWE` property to the `Snyk Vulnerability` blueprint, you can now classify vulnerabilities by CWE and align them with the [OWASP Top 10](http://owasp.org/Top10) categories.
+3. **Organize your repository structure:**
+   - Create `development/` and `production/` folders.
+   - Add subfolders for each resource type (`blueprints/`, `scorecards/`, `actions/`).  
+   The structure of the repository should look something like this:
 
-Update the `Snyk Target` blueprint to include 10 aggregation properties, one for each OWASP Top 10 code category, so issues can be grouped and reported by category.
+      <details>
+      <summary><b>Repository structure (click to expand)</b></summary>
 
-To update the `Snyk Target` blueprint, follow these steps:
+      ```
+      ├── .github/
+      │   └── workflows/
+      │       └── promote-to-production.yml
+      ├── development/
+      │   ├── blueprints/
+      │   │   ├── service.json
+      │   │   └── microservice.json
+      │   ├── scorecards/
+      │   │   └── security-scorecard.json
+      │   └── actions/
+      │       └── deploy-service.json
+      └── production/
+          ├── blueprints/
+          ├── scorecards/
+          └── actions/
+      ```
+      </details>
 
-1. Navigate to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
+#### Workflow file
 
-2. Click on the `Snyk Target` blueprint.
+The workflow file might look like this:
 
-3. Click on the `...` button in the top right corner, then click on the `{...} Edit JSON` button. 
+<details>
+<summary><b>`promote-to-production.yml` (click to expand)</b></summary>
+```yaml showLineNumbers
+name: Promote Resources from Development to Production
 
-4. Update the aggregation properties to include the snippet JSON snippet below:
+on:
+  workflow_dispatch:
+    inputs:
+      resource_type:
+        description: 'Type of resource to promote'
+        required: true
+        type: choice
+        options:
+          - blueprints
+          - scorecards
+          - actions
+          - all
+      resource_name:
+        description: 'Specific resource name (optional, leave empty for all)'
+        required: false
+        type: string
 
-    <details>
-    <summary><b>Snyk Target blueprint (click to expand)</b></summary>
-    ```json showLineNumbers
-    {
-      "aggregationProperties": {
-        "a1_access_control_flaws": {
-          "title": "A1 Access Control Flaws",
-          "icon": "Shield",
-          "type": "number",
-          "description": "Check if repo is free of OWASP Top 10 A1 - Access Control Flaws",
-          "target": "snykVulnerability",
-          "query": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "type",
-                "operator": "=",
-                "value": "code"
-              },
-              {
-                "property": "status",
-                "operator": "=",
-                "value": "open"
-              },
-              {
-                "property": "category",
-                "operator": "in",
-                "value": [
-                  "CWE-22",
-                  "CWE-23",
-                  "CWE-35",
-                  "CWE-59",
-                  "CWE-200",
-                  "CWE-201",
-                  "CWE-219",
-                  "CWE-264",
-                  "CWE-275",
-                  "CWE-276",
-                  "CWE-284",
-                  "CWE-352",
-                  "CWE-359"
-                ]
-              }
-            ]
-          },
-          "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-          }
-        },
-        "a2_cryptographic_failures": {
-          "title": "A2 Cryptographic Failures",
-          "icon": "Shield",
-          "type": "number",
-          "description": "OWASP Top 10 A2 Cryptographic Failures",
-          "target": "snykVulnerability",
-          "query": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "type",
-                "operator": "=",
-                "value": "code"
-              },
-              {
-                "property": "status",
-                "operator": "=",
-                "value": "open"
-              },
-              {
-                "property": "category",
-                "operator": "in",
-                "value": [
-                  "CWE-259",
-                  "CWE-261",
-                  "CWE-296",
-                  "CWE-310",
-                  "CWE-319",
-                  "CWE-321",
-                  "CWE-322",
-                  "CWE-323",
-                  "CWE-324",
-                  "CWE-325",
-                  "CWE-326",
-                  "CWE-327",
-                  "CWE-328",
-                  "CWE-329",
-                  "CWE-330",
-                  "CWE-331",
-                  "CWE-335",
-                  "CWE-336",
-                  "CWE-337",
-                  "CWE-338",
-                  "CWE-340",
-                  "CWE-347",
-                  "CWE-523",
-                  "CWE-720",
-                  "CWE-757",
-                  "CWE-759",
-                  "CWE-760",
-                  "CWE-780",
-                  "CWE-818",
-                  "CWE-916"
-                ]
-              }
-            ]
-          },
-          "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-          }
-        },
-        "a3_injection": {
-          "title": "A3 Injection",
-          "icon": "Shield",
-          "type": "number",
-          "description": "Check if repo is free of OWASP Top 10 A3 - Injection flaws",
-          "target": "snykVulnerability",
-          "query": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "type",
-                "operator": "=",
-                "value": "code"
-              },
-              {
-                "property": "status",
-                "operator": "=",
-                "value": "open"
-              },
-              {
-                "property": "category",
-                "operator": "in",
-                "value": [
-                  "CWE-20",
-                  "CWE-74",
-                  "CWE-75",
-                  "CWE-77",
-                  "CWE-78",
-                  "CWE-79",
-                  "CWE-80",
-                  "CWE-83",
-                  "CWE-87",
-                  "CWE-88",
-                  "CWE-89",
-                  "CWE-90",
-                  "CWE-91",
-                  "CWE-93",
-                  "CWE-94",
-                  "CWE-95",
-                  "CWE-96",
-                  "CWE-97",
-                  "CWE-98",
-                  "CWE-99",
-                  "CWE-100",
-                  "CWE-113",
-                  "CWE-116",
-                  "CWE-138",
-                  "CWE-184",
-                  "CWE-470",
-                  "CWE-471",
-                  "CWE-564",
-                  "CWE-610",
-                  "CWE-643",
-                  "CWE-644",
-                  "CWE-652",
-                  "CWE-917"
-                ]
-              }
-            ]
-          },
-          "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-          }
-        },
-        "a4_insecure_design": {
-          "title": "A4 Insecure Design",
-          "icon": "Shield",
-          "type": "number",
-          "description": "OWASP top 10 A4 - Insecure design security weakness",
-          "target": "snykVulnerability",
-          "query": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "type",
-                "operator": "=",
-                "value": "code"
-              },
-              {
-                "property": "status",
-                "operator": "=",
-                "value": "open"
-              },
-              {
-                "property": "category",
-                "operator": "in",
-                "value": [
-                  "CWE-73",
-                  "CWE-183",
-                  "CWE-209",
-                  "CWE-213",
-                  "CWE-235",
-                  "CWE-256",
-                  "CWE-257",
-                  "CWE-266",
-                  "CWE-269",
-                  "CWE-280",
-                  "CWE-311",
-                  "CWE-312",
-                  "CWE-313",
-                  "CWE-316",
-                  "CWE-419",
-                  "CWE-430",
-                  "CWE-434",
-                  "CWE-444",
-                  "CWE-451",
-                  "CWE-472",
-                  "CWE-501",
-                  "CWE-522",
-                  "CWE-525",
-                  "CWE-539",
-                  "CWE-579",
-                  "CWE-598",
-                  "CWE-602",
-                  "CWE-642",
-                  "CWE-646",
-                  "CWE-650",
-                  "CWE-653",
-                  "CWE-656",
-                  "CWE-657",
-                  "CWE-799",
-                  "CWE-807",
-                  "CWE-840",
-                  "CWE-841",
-                  "CWE-927",
-                  "CWE-1021",
-                  "CWE-1173"
-                ]
-              }
-            ]
-          },
-          "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-          }
-        },
-        "a5_security_misconfigurations": {
-          "title": "A5 Security Misconfigurations",
-          "icon": "Shield",
-          "type": "number",
-          "description": "OWASP Top 10 - A5 Security misconfigurations",
-          "target": "snykVulnerability",
-          "query": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "type",
-                "operator": "=",
-                "value": "code"
-              },
-              {
-                "property": "status",
-                "operator": "=",
-                "value": "open"
-              },
-              {
-                "property": "category",
-                "operator": "in",
-                "value": [
-                  "CWE-2",
-                  "CWE-11",
-                  "CWE-13",
-                  "CWE-15",
-                  "CWE-16",
-                  "CWE-260",
-                  "CWE-315",
-                  "CWE-520",
-                  "CWE-526",
-                  "CWE-537",
-                  "CWE-541",
-                  "CWE-547",
-                  "CWE-611",
-                  "CWE-614",
-                  "CWE-756",
-                  "CWE-776",
-                  "CWE-942",
-                  "CWE-1004",
-                  "CWE-1032",
-                  "CWE-1174"
-                ]
-              }
-            ]
-          },
-          "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-          }
-        },
-        "a6_vulnerable_components": {
-          "title": "A6 Vulnerable components",
-          "icon": "Shield",
-          "type": "number",
-          "description": "OWASP A6 - Vulnerable and outdated components in use.",
-          "target": "snykVulnerability",
-          "query": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "type",
-                "operator": "=",
-                "value": "code"
-              },
-              {
-                "property": "status",
-                "operator": "=",
-                "value": "open"
-              },
-              {
-                "property": "category",
-                "operator": "in",
-                "value": [
-                  "CWE-937",
-                  "CWE-1035",
-                  "CWE-1104"
-                ]
-              }
-            ]
-          },
-          "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-          }
-        },
-        "a7_authentication_failures": {
-          "title": "A7 Authentication Failures",
-          "icon": "Shield",
-          "type": "number",
-          "description": "OWASP Top 10 - Identification & Authentication Failures",
-          "target": "snykVulnerability",
-          "query": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "type",
-                "operator": "=",
-                "value": "code"
-              },
-              {
-                "property": "status",
-                "operator": "=",
-                "value": "open"
-              },
-              {
-                "property": "category",
-                "operator": "in",
-                "value": [
-                  "CWE-255",
-                  "CWE-259",
-                  "CWE-287",
-                  "CWE-288",
-                  "CWE-290",
-                  "CWE-294",
-                  "CWE-295",
-                  "CWE-297",
-                  "CWE-300",
-                  "CWE-302",
-                  "CWE-304",
-                  "CWE-306",
-                  "CWE-307",
-                  "CWE-346",
-                  "CWE-384",
-                  "CWE-521",
-                  "CWE-613",
-                  "CWE-620",
-                  "CWE-640",
-                  "CWE-798",
-                  "CWE-940",
-                  "CWE-1216"
-                ]
-              }
-            ]
-          },
-          "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-          }
-        },
-        "a8_integrity_failures": {
-          "title": "A8 Integrity Failures",
-          "icon": "Shield",
-          "type": "number",
-          "description": "OWASP Top 10 - A8 - Software & Integrity failures",
-          "target": "snykVulnerability",
-          "query": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "type",
-                "operator": "=",
-                "value": "code"
-              },
-              {
-                "property": "status",
-                "operator": "=",
-                "value": "open"
-              },
-              {
-                "property": "category",
-                "operator": "in",
-                "value": [
-                  "CWE-345",
-                  "CWE-353",
-                  "CWE-426",
-                  "CWE-494",
-                  "CWE-502",
-                  "CWE-565",
-                  "CWE-784",
-                  "CWE-829",
-                  "CWE-830",
-                  "CWE-915"
-                ]
-              }
-            ]
-          },
-          "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-          }
-        },
-        "a9_logging": {
-          "title": "A9 Logging",
-          "icon": "Shield",
-          "type": "number",
-          "description": "OWASP Top 10 - A9 Security logging & Monitoring",
-          "target": "snykVulnerability",
-          "query": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "type",
-                "operator": "=",
-                "value": "code"
-              },
-              {
-                "property": "status",
-                "operator": "=",
-                "value": "open"
-              },
-              {
-                "property": "category",
-                "operator": "in",
-                "value": [
-                  "CWE-117",
-                  "CWE-223",
-                  "CWE-532",
-                  "CWE-778"
-                ]
-              }
-            ]
-          },
-          "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-          }
-        },
-        "a10_ssrf": {
-          "title": "A10 SSRF",
-          "icon": "Shield",
-          "type": "number",
-          "description": "OWASP Top 10 - A10 Server side request forgery",
-          "target": "snykVulnerability",
-          "query": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "type",
-                "operator": "=",
-                "value": "code"
-              },
-              {
-                "property": "status",
-                "operator": "=",
-                "value": "open"
-              },
-              {
-                "property": "category",
-                "operator": "in",
-                "value": [
-                  "CWE-918"
-                ]
-              }
-            ]
-          },
-          "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-          }
-        }
-      }
-    }
-    ```
-    </details>
+env:
+  PORT_API_URL: "https://api.getport.io/v1"
 
-5. Click on `Save` to update the blueprint.
+jobs:
+  promote-resources:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: |
+          npm install -g jq
+          
+      - name: Validate development resources
+        run: |
+          echo "Validating development resources..."
+          for file in development/**/*.json; do
+            if [ -f "$file" ]; then
+              echo "Validating $file"
+              jq empty "$file" || (echo "Invalid JSON in $file" && exit 1)
+            fi
+          done
+          
+      - name: Promote Blueprints
+        if: ${{ github.event.inputs.resource_type == 'blueprints' || github.event.inputs.resource_type == 'all' }}
+        run: |
+          echo "Promoting blueprints..."
+          
+          if [ -n "${{ github.event.inputs.resource_name }}" ]; then
+            # Promote specific blueprint
+            file="development/blueprints/${{ github.event.inputs.resource_name }}.json"
+            if [ -f "$file" ]; then
+              echo "Promoting blueprint: ${{ github.event.inputs.resource_name }}"
+              
+              # Copy to production folder
+              cp "$file" "production/blueprints/"
+              
+              # Apply to Port production environment
+              curl -X POST "$PORT_API_URL/blueprints" \
+                -H "Authorization: Bearer ${{ secrets.PORT_PRODUCTION_TOKEN }}" \
+                -H "Content-Type: application/json" \
+                -d @"$file"
+            else
+              echo "Blueprint file not found: $file"
+              exit 1
+            fi
+          else
+            # Promote all blueprints
+            for file in development/blueprints/*.json; do
+              if [ -f "$file" ]; then
+                filename=$(basename "$file")
+                echo "Promoting blueprint: $filename"
+                
+                # Copy to production folder
+                cp "$file" "production/blueprints/"
+                
+                # Apply to Port production environment
+                curl -X POST "$PORT_API_URL/blueprints" \
+                  -H "Authorization: Bearer ${{ secrets.PORT_PRODUCTION_TOKEN }}" \
+                  -H "Content-Type: application/json" \
+                  -d @"$file"
+              fi
+            done
+          fi
+          
+      - name: Promote Scorecards
+        if: ${{ github.event.inputs.resource_type == 'scorecards' || github.event.inputs.resource_type == 'all' }}
+        run: |
+          echo "Promoting scorecards..."
+          
+          if [ -n "${{ github.event.inputs.resource_name }}" ]; then
+            # Promote specific scorecard
+            file="development/scorecards/${{ github.event.inputs.resource_name }}.json"
+            if [ -f "$file" ]; then
+              echo "Promoting scorecard: ${{ github.event.inputs.resource_name }}"
+              
+              # Copy to production folder
+              cp "$file" "production/scorecards/"
+              
+              # Apply to Port production environment
+              curl -X POST "$PORT_API_URL/scorecards" \
+                -H "Authorization: Bearer ${{ secrets.PORT_PRODUCTION_TOKEN }}" \
+                -H "Content-Type: application/json" \
+                -d @"$file"
+            else
+              echo "Scorecard file not found: $file"
+              exit 1
+            fi
+          else
+            # Promote all scorecards
+            for file in development/scorecards/*.json; do
+              if [ -f "$file" ]; then
+                filename=$(basename "$file")
+                echo "Promoting scorecard: $filename"
+                
+                # Copy to production folder
+                cp "$file" "production/scorecards/"
+                
+                # Apply to Port production environment
+                curl -X POST "$PORT_API_URL/scorecards" \
+                  -H "Authorization: Bearer ${{ secrets.PORT_PRODUCTION_TOKEN }}" \
+                  -H "Content-Type: application/json" \
+                  -d @"$file"
+              fi
+            done
+          fi
+          
+      - name: Promote Actions
+        if: ${{ github.event.inputs.resource_type == 'actions' || github.event.inputs.resource_type == 'all' }}
+        run: |
+          echo "Promoting actions..."
+          
+          if [ -n "${{ github.event.inputs.resource_name }}" ]; then
+            # Promote specific action
+            file="development/actions/${{ github.event.inputs.resource_name }}.json"
+            if [ -f "$file" ]; then
+              echo "Promoting action: ${{ github.event.inputs.resource_name }}"
+              
+              # Copy to production folder
+              cp "$file" "production/actions/"
+              
+              # Apply to Port production environment
+              curl -X POST "$PORT_API_URL/actions" \
+                -H "Authorization: Bearer ${{ secrets.PORT_PRODUCTION_TOKEN }}" \
+                -H "Content-Type: application/json" \
+                -d @"$file"
+            else
+              echo "Action file not found: $file"
+              exit 1
+            fi
+          else
+            # Promote all actions
+            for file in development/actions/*.json; do
+              if [ -f "$file" ]; then
+                filename=$(basename "$file")
+                echo "Promoting action: $filename"
+                
+                # Copy to production folder
+                cp "$file" "production/actions/"
+                
+                # Apply to Port production environment
+                curl -X POST "$PORT_API_URL/actions" \
+                  -H "Authorization: Bearer ${{ secrets.PORT_PRODUCTION_TOKEN }}" \
+                  -H "Content-Type: application/json" \
+                  -d @"$file"
+              fi
+            done
+          fi
+          
+      - name: Commit promoted resources
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add production/
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Promote ${{ github.event.inputs.resource_type }} to production"
+            git push
+          fi
+          
+      - name: Create deployment summary
+        run: |
+          echo "## 🚀 Resource Promotion Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Resource Type:** ${{ github.event.inputs.resource_type }}" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -n "${{ github.event.inputs.resource_name }}" ]; then
+            echo "**Resource Name:** ${{ github.event.inputs.resource_name }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Resource Name:** All resources of type" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "**Environment:** Production" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ✅ Successfully promoted" >> $GITHUB_STEP_SUMMARY
+```
+</details>
 
-### Add mirror properties to the Repository blueprint
+**Usage:**
 
-:::tip Relation requirement
-The `Snyk Target` blueprint should have a defined relation with the `GitHub Repository` blueprint to be able to mirror properties from the `Snyk Target` blueprint to the `GitHub Repository` blueprint.
+1. **Manual trigger:**  
+Go to the `Actions` tab in your GitHub repository and manually trigger the workflow, selecting the resource type and optionally a specific resource name.
 
-If your current model does not include a relation from the `Repository` blueprint to the `Snyk Target` blueprint, [add it](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
-:::
+2. **Promote specific resource:**
+   ```bash
+   # Trigger via GitHub CLI
+   gh workflow run promote-to-production.yml \
+     -f resource_type=blueprints \
+     -f resource_name=service
+   ```
 
-
-The next step is to add the OWASP identifiers as mirrored properties to the `GitHub Repository` blueprint, and update the GitHub mapping configuration so that each `GitHub Repository` is automatically linked to its corresponding `Snyk Target`.  
-This link is what allows the mirrored OWASP properties to pull their values from the related Snyk data. 
-
-Follow the steps below to add the OWASP mirror properties to the `GitHub Repository` blueprint:
-
-1. Navigate to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
-
-2. Click on the `GitHub Repository` blueprint.
-
-3. Click on the `...` button in the top right corner, then click on the `{...} Edit JSON` button. 
-
-4. Update the mirrorProperties to include the snippet below:
-
-    <details>
-    <summary><b>Add mirror properties to GitHub Repository blueprint (click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-      "mirrorProperties": {
-        "a1_access_control_flaws": {
-          "title": "A1 Access Control Flaws",
-          "path": "snyk_target.a1_access_control_flaws"
-        },
-        "a2_cryptographic_failures": {
-          "title": "A2 Cryptographic Failures",
-          "path": "snyk_target.a2_cryptographic_failures"
-        },
-        "a3_injection": {
-          "title": "A3 Injection",
-          "path": "snyk_target.a3_injection"
-        },
-        "a4_insecure_design": {
-          "title": "A4 Insecure Design",
-          "path": "snyk_target.a4_insecure_design"
-        },
-        "a5_security_misconfigurations": {
-          "title": "A5 Security Misconfigurations",
-          "path": "snyk_target.a5_security_misconfigurations"
-        },
-        "a6_vulnerable_components": {
-          "title": "A6 Vulnerable Components",
-          "path": "snyk_target.a6_vulnerable_components"
-        },
-        "a7_authentication_failures": {
-          "title": "A7 Authentication Failures",
-          "path": "snyk_target.a7_authentication_failures"
-        },
-        "a8_integrity_failures": {
-          "title": "A8 Integrity Failures",
-          "path": "snyk_target.a8_integrity_failures"
-        },
-        "a9_logging": {
-          "title": "A9 Logging",
-          "path": "snyk_target.a9_logging"
-        },
-        "a10_ssrf": {
-          "title": "A10 SSRF",
-          "path": "snyk_target.a10_ssrf"
-        }
-      }
-    }
-    ```
-    </details>
-
-5.  Click on `Save` to update the blueprint.
-
-### Update GitHub mapping configuration
-
-1. Head over to your [Data sources](https://app.port.io/settings/data-sources) page.
-
-2. Under `Exporters`, click on your desired GitHub organization.
-
-3. In the **Mapping** tab, edit the YAML in the bottom-left panel and add the following entry under the `repository` kind:  
-
-    <details>
-    <summary><b>Mapping configuration (click to expand)</b></summary>
-          ```yaml showLineNumbers
-        - kind: repository
-         selector:
-           query: 'true' 
-         port:
-           entity:
-             mappings:
-               identifier: .full_name
-               blueprint: '"githubRepository"'
-               //highlight-start
-               relations:
-                 snyk_target:
-                   combinator: '"and"'
-                   rules:
-                     - property: '"$title"'
-                       operator: '"="'
-                       value: .full_name
-               //highlight-end
-          ```
-    </details>
-      
-4. Click on the `Save & Resync` button to save the changes and resync the integration.
-
-## Set up the scorecard
-
-The final step is to create a scorecard that reflects the security maturity of a `Respository` against the OWASP Top 10 categories.
-
-<img src='/img/guides/owasp/scorecard-pass.png' width='80%' border='1px' />
-<br></br>
-<br></br>
-
-To create an OWASP Top 10 Scorecard, follow these steps:
-
-1. Go to your [Data model](https://app.getport.io/settings/data-model) page.
-
-2. Search for the **GitHub Repository** blueprint and select it.
-
-3. Click on the `Scorecards` tab.
-
-4. Click on `+ New Scorecard` to create a new scorecard.
-
-5. Add this JSON configuration and click `Save`.
-
-    <details>
-    <summary><b>OWASP Top 10 Scorecard (click to expand)</b></summary>
-    ```json showLineNumbers
-    {
-      "identifier": "OWASPScoreCard",
-      "title": "OWASP Top 10",
-      "levels": [
-        {
-          "color": "paleBlue",
-          "title": "Basic"
-        },
-        {
-          "color": "bronze",
-          "title": "Bronze"
-        },
-        {
-          "color": "silver",
-          "title": "Silver"
-        },
-        {
-          "color": "gold",
-          "title": "Gold"
-        }
-      ],
-      "rules": [
-        {
-          "identifier": "has_owasp_a6",
-          "title": "A06 Vulnerable Components",
-          "level": "Gold",
-          "query": {
-            "combinator": "and",
-            "conditions": [
-              {
-                "value": 0,
-                "operator": "=",
-                "property": "a6_vulnerable_components"
-              }
-            ]
-          }
-        },
-        {
-          "identifier": "has_owasp_a1",
-          "title": "A01 Broken Access Control",
-          "level": "Bronze",
-          "query": {
-            "combinator": "and",
-            "conditions": [
-              {
-                "value": 0,
-                "operator": "=",
-                "property": "a1_access_control_flaws"
-              }
-            ]
-          }
-        },
-        {
-          "identifier": "has_owasp_a4",
-          "title": "A04 Insecure Design",
-          "level": "Gold",
-          "query": {
-            "combinator": "and",
-            "conditions": [
-              {
-                "value": 0,
-                "operator": "=",
-                "property": "a4_insecure_design"
-              }
-            ]
-          }
-        },
-        {
-          "identifier": "has_owasp_a8",
-          "title": "A08 Integrity Failures",
-          "level": "Silver",
-          "query": {
-            "combinator": "and",
-            "conditions": [
-              {
-                "value": 0,
-                "operator": "=",
-                "property": "a8_integrity_failures"
-              }
-            ]
-          }
-        },
-        {
-          "identifier": "has_owasp_a7",
-          "title": "A07 Authentication Failures",
-          "level": "Bronze",
-          "query": {
-            "combinator": "and",
-            "conditions": [
-              {
-                "value": 0,
-                "operator": "=",
-                "property": "a7_authentication_failures"
-              }
-            ]
-          }
-        },
-        {
-          "identifier": "has_owasp_a3",
-          "title": "A03 Injection",
-          "level": "Bronze",
-          "query": {
-            "combinator": "and",
-            "conditions": [
-              {
-                "value": 0,
-                "operator": "=",
-                "property": "a3_injection"
-              }
-            ]
-          }
-        },
-        {
-          "identifier": "has_owasp_a5",
-          "title": "A05 Security Misconfigurations",
-          "level": "Gold",
-          "query": {
-            "combinator": "and",
-            "conditions": [
-              {
-                "value": 0,
-                "operator": "=",
-                "property": "a5_security_misconfigurations"
-              }
-            ]
-          }
-        },
-        {
-          "identifier": "has_owasp_a2",
-          "title": "A02 Cryptographic Failures",
-          "level": "Silver",
-          "query": {
-            "combinator": "and",
-            "conditions": [
-              {
-                "value": 0,
-                "operator": "=",
-                "property": "a2_cryptographic_failures"
-              }
-            ]
-          }
-        },
-        {
-          "identifier": "has_owasp_a9",
-          "title": "A09 Logging ",
-          "level": "Silver",
-          "query": {
-            "combinator": "and",
-            "conditions": [
-              {
-                "value": 0,
-                "operator": "=",
-                "property": "a9_logging"
-              }
-            ]
-          }
-        },
-        {
-          "identifier": "has_owasp_a10",
-          "title": "A10 SSRF",
-          "level": "Bronze",
-          "query": {
-            "combinator": "and",
-            "conditions": [
-              {
-                "value": 0,
-                "operator": "=",
-                "property": "a10_ssrf"
-              }
-            ]
-          }
-        }
-      ]
-    }
-    ```
-    </details>
-
-6. Click on `Save` to create the scorecard.
-
-## Troubleshooting
-
-Some common issues you may encounter during the implementation:
-
-1. **Invalid token:** The `SNYK_TOKEN` does not have privileges or otherwise has been revoked. Ensure that the token is valid and has required permissions so that issues and targets across the Snyk Group can be queried for.
-2. **OWASP Top 10 2021:** `CWE` field is key to accurately measuring and benchmarking against OWASP Top 10. The current measurement rules are based on the latest OWASP Top 10 i.e. OWASP Top 10 2021 as of this write-up. Discrepancy may arise if following this example without consideration for reviewing against latest OWASP Top 10 issues and the associated CWEs.
-3. **Missing property data:** This can happen when `CWE` property has been defined on the `Snyk Vulnerability` blueprint, however a sync has not yet occurred.
-
-## Next steps
-
-Consider the following as next steps:
-
-1. **Quality standards:**
-   - Eliminate chaos and promote `minimum viable security product` with tiering.
-   - Establish a customized standard that best meets your organization's culture by classifying the OWASP Top 10.
-2. **Self-service actions:**
-   - Automatically assign Owners and create a self-service action that triggers an alert to repository owners when tier standards are unmet.
-3. **Portal Initiative:**
-   - Self-service action: Create a self-service action to improve OWASP Tiers for specific repositories.
-   - Create an initiative within Port to reduce a specific security weakness or promote a specific tier as a standard operating procedure.
+3. **Promote all resources of a type:**
+   ```bash
+   # Promote all blueprints
+   gh workflow run promote-to-production.yml \
+     -f resource_type=blueprints
+   ```
