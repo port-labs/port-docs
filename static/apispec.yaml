@@ -19908,7 +19908,7 @@ paths:
         actions and automations that match the criteria.<br/><br/>To learn more
         about actions and automations, check out the
         [documentation](https://docs.port.io/actions-and-automations/).
-        :::info
+        :::info Version parameter value
         Set the `version` parameter to `v2` for the latest version of the API.
         :::
       parameters:
@@ -22699,7 +22699,7 @@ paths:
         external logs of the job runner).<br/><br/>To learn more about action
         runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
-        :::info
+        :::info Version parameter value
         Set the `version` parameter to `v2` for the latest version of the API.
         :::
       requestBody:
@@ -23008,7 +23008,7 @@ paths:
         This route allows you to fetch the details of an action
         run.<br/><br/>To learn more about action runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
-        :::info
+        :::info Version parameter value
         Set the `version` parameter to `v2` for the latest version of the API.
         :::
       parameters:
@@ -23248,7 +23248,7 @@ paths:
         action that requires approval.<br/><br/>To learn more about manual
         approval for actions, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
-        :::info
+        :::info Version parameter value
         Set the `version` parameter to `v2` for the latest version of the API.
         :::
       requestBody:
@@ -23541,7 +23541,7 @@ paths:
         parameters below, and return all action runs that match the
         criteria.<br/><br/>To learn more about action runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
-        :::info
+        :::info Version parameter value
         Set the `version` parameter to `v2` for the latest version of the API.
         :::
       parameters:
