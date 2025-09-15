@@ -39,11 +39,11 @@ Automatic user access makes it easy to onboard large groups of users:
 - When users log in via SSO, they automatically get the default `member` role in the organizations.
 
 To enable automatic user access:  
-(TODO: make sure what are the steps here)
 
-1. Navigate to the organization settings.
-2. Enable "Automatic user access" for the organization.
-3. `Save` settings.
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
+2. Click on `Organization settings` in the sidebar.
+3. Enable the "Automatic user access" for the organization.
+4. Click `Save`.
 
 ## SSO access to organizations
 
