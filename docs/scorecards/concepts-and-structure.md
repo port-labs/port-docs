@@ -11,18 +11,25 @@ import TabItem from "@theme/TabItem"
 
 # Concepts and structure
 
-## Scorecard structure table
+## Scorecard structure
 
 A single scorecard defines a category to group different checks, validations and evaluations.  
-Below is the structure of a single scorecard:
+Below is the structure of a single `scorecard` blueprint:
 
-| Field                        | Type     | Description                                                                                                                                         |
-|------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `title`                      | `String` | Scorecard name that will be shown in the UI                                                                                                         |
-| `identifier`                 | `String` | The unique identifier of the `Scorecard`. The identifier is used for API calls, programmatic access and distinguishing between different scorecards |
-| [`filter`](#filter-elements) | `Object` | Optional set of [conditions](#conditions) to filter entities that will be evaluated by the scorecard                                                |
-| [`levels`](#levels)          | `Array`  | The levels that we define for the scorecard, for example `Basic`, `Bronze`, `Silver`, `Gold`                                                        |
-| [`rules`](#rule-elements)    | `Object` | The rules that we create for each scorecard to determine its level                                                                                  |
+The `Scorecard` blueprint contains the following properties:
+| Name | Type | Description |
+|------|------|-------------|
+| Blueprint | string (format: blueprints) | The target blueprint whose entities will be evaluated |
+| [Levels](#levels) | array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold) |
+| [Filter](#filter-elements) | object | Optional query to filter which entities should be evaluated |
+| [Rules](#rule-elements) Tested | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of rule evaluations performed |
+| Rules Passed | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful rule evaluations |
+| % of Rules Passed | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules |
+
+Relations:
+| Name | Target Blueprint | Required | Many | Description |
+|:----:|:----------------:|:--------:|:-----:|:----------:|
+| - | - | - | - | No default relations |
 
 A scorecard contains and groups multiple rules that are relevant to its specific category, for example a scorecard for _service maturity_ can contain 3 rules, while the _production readiness_ scorecard can contain 2 completely different rules.
 
@@ -161,13 +168,44 @@ Rules enable you to generate checks inside a scorecard only for entities and pro
 
 A scorecard rule is a single evaluation consisting of multiple checks, each rule has a level which directly translates to how important it is for the check to pass (the more basic the check, the lower its level):
 
-| Field         | Type     | Description                                                                                                                                                   |
-|---------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `title`       | `String` | `Rule` name that will be shown in the UI                                                                                                                      |
-| `description` | `String` | Description that will be shown in the UI when the rule is expanded. Value that contains markdown is also supported and will be displayed in a markdown format |
-| `identifier`  | `String` | The unique identifier of the `Rule`                                                                                                                           |
-| `level`       | `String` | One of the levels defined in the scorecard [levels key](#levels)                                                                                              |
-| `query`       | `Object` | The query is built from a [`combinator`](#combinator) (or / and) and an array of [`conditions`](#conditions)                                                  |
+### Rule blueprint
+
+The `Rule` blueprint contains the following properties:
+| Name | Type | Description |
+|------|------|-------------|
+| Level | string (enum) | The required level for this rule (must be one of the scorecard's defined levels) |
+| Query | object | The evaluation criteria for entities |
+| Rule Description | string | Optional explanation of the rule's logic |
+| Entities Tested | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities evaluated by this rule |
+| Entities Passed | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities that passed this rule |
+| % of Entities Passed | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed entities |
+
+Relations:
+| Name | Target Blueprint | Required | Many | Description |
+|:----:|:----------------:|:---------:|:-----:|:-----------:|
+| scorecard | Scorecard | true | false | The scorecard this rule belongs to |
+
+The `Rule result` blueprint contains the following properties:
+| Name | Type | Description |
+|------|------|-------------|
+| Result | string (enum) | Whether the entity passed the rule ("Passed" or "Not passed") |
+| Entity | string | The identifier of the evaluated entity |
+| Result Last Change | string (date-time) | Timestamp of the last result change |
+| Level | string (mirror) | Mirror property from the related rule |
+| Scorecard | string (mirror) | Mirror property showing the parent scorecard title |
+| Blueprint | string (mirror) | Mirror property showing the target blueprint |
+| Entity Link | string (url) | Calculated URL to the evaluated entity |
+
+Relations:
+| Name | Target Blueprint | Required | Many | Description |
+|------|-----------------|----------|-------|-------------|
+| rule | Rule | true | false | The rule that generated this result |
+| [Blueprint Identifier] | [Dynamic] | false | false | Automatically created relation to the target blueprint when a new scorecard is created |
+
+:::info Dynamic Relations
+When a new scorecard is created, Port automatically creates a relation in the Rule Result blueprint to the scorecard's target blueprint. For example, if you create a scorecard for the "service" blueprint, a new relation named "service" will be added to the Rule Result blueprint.
+:::
+
 
 ### Combinator
 

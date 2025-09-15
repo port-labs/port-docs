@@ -353,13 +353,6 @@ In order to delete a scorecard using the Terraform provider, use the `terraform 
 
 </Tabs>
 
-## Scorecards as Blueprints
-
-Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip>.   
-This feature enables you to create and manage scorecards using dedicated blueprints, allowing for rich customization, visualization and automation of your scorecards.  
-
-To learn more, refer to the [scorecards as blueprints](/scorecards/scorecards-as-blueprints) page.
-
 ## Next steps
 
 [Dive into advanced operations on Scorecards with our API ➡️ ](/api-reference/port-api)

@@ -59,9 +59,9 @@ The `Scorecard` blueprint contains the following properties:
 | Name | Type | Description |
 |------|------|-------------|
 | Blueprint | string (format: blueprints) | The target blueprint whose entities will be evaluated |
-| Levels | array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold) |
-| Filter | object | Optional query to filter which entities should be evaluated |
-| Rules Tested | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of rule evaluations performed |
+| [Levels](/scorecards/concepts-and-structure#levels) | array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold) |
+| [Filter](/scorecards/concepts-and-structure#filter-elements) | object | Optional query to filter which entities should be evaluated |
+| [Rules](/scorecards/concepts-and-structure#rule-elements) Tested | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of rule evaluations performed |
 | Rules Passed | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful rule evaluations |
 | % of Rules Passed | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules |
 
