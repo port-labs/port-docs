@@ -7,7 +7,10 @@ import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
 
 # Promote resources across environments
 
-This guide explores the concept of managing a portal and its resources across multiple environments, e.g. promoting a service from a development environment to a production environment.
+Managing multiple environments (such as `development`, `staging`, and `production`) is a fundamental practice in modern software delivery. Each environment serves a distinct purpose, and promoting resources across these environments must be done in a controlled, repeatable way.
+
+This approach helps ensure consistency, reduces the risk of errors, and enables safer deployments.  
+By managing resources across environments, teams can catch issues early, maintain high quality, and deliver changes to users with confidence.
 
 The guide presents two approaches to achieve this:
 
@@ -166,7 +169,7 @@ The following steps outline the recommended process for managing your resources 
    Once you're satisfied with the plan, run `terraform apply` to apply the changes to your production environment.
 
 
-## Approach 2: JSON resource definitions
+## Approach 2: JSON definitions (GitOps)
 
 Being an API-first solution, Port allows you to define portal resources (blueprints, scorecards, automations, etc.) as JSON objects.  
 This approach demonstrates how to manage your resource definitions in a dedicated Git repository.
@@ -179,9 +182,8 @@ This approach demonstrates how to manage your resource definitions in a dedicate
    - Using Port's UI in your development environment, create the resources you want to promote to your production environment.  
 
    - Save the resource definitions to a JSON file. This can be done in the following ways:
-     - Using [Port's API](https://docs.port.io/api-reference/port-api), call the relevant GET endpoint to retrieve the definition/s of the desired resource type.
+     - Using [Port's API](https://docs.port.io/api-reference/port-api), call the relevant GET endpoint to retrieve the definition/s of the desired resource type.  
      - Using Port's UI, click on the `...` button in the top right corner of a resource, then click `Edit`.  
-     - For **entities** - you can export all entities of a specific blueprint at once by clicking on the <LogoImage logo="export" verticalAlign="text-top" /> (`Export`) button in the top right corner of the relevant catalog page.
       
    - Save your JSON definitions in the `development` folder in your Git repository.
 
@@ -189,12 +191,204 @@ This approach demonstrates how to manage your resource definitions in a dedicate
    - Copy the relevant JSON definitions to the `production` folder in your Git repository.
    - Using [Port's API](https://docs.port.io/api-reference/port-api), call the relevant POST endpoint to apply the resource definitions to your production environment.
 
+### Examples
 
-### Example: GitHub workflow
+#### Export data using a GitHub workflow
+
+Below is an example of a GitHub workflow that automatically exports data from your development environment using Port's API and saves it to your dedicated repository.
+
+**Prerequisites**
+
+Generate API credentials for your Port development environment and store them as GitHub repository secrets named `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET`.
+
+**Workflow file**
+
+<details>
+<summary><b>`export-port-data.yml` (click to expand)</b></summary>
+```yaml showLineNumbers
+name: Export Port Data to Repository
+
+on:
+  workflow_dispatch:
+    inputs:
+      export_type:
+        description: 'Type of data to export'
+        required: true
+        type: choice
+        options:
+          - all
+          - blueprints
+          - scorecards
+          - actions
+      blueprint_filter:
+        description: 'Specific blueprint to export (optional)'
+        required: false
+        type: string
+
+env:
+  PORT_API_URL: "https://api.getport.io/v1"
+  EXPORT_DIR: "development"
+  TIMESTAMP: ${{ github.run_number }}-${{ github.run_id }}
+
+jobs:
+  export-port-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: |
+          npm install -g jq
+          
+      - name: Get Port Access Token
+        id: get_token
+        run: |
+          echo "Getting Port access token..."
+          access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+                "clientId": "${{ secrets.PORT_CLIENT_ID }}",
+                "clientSecret": "${{ secrets.PORT_CLIENT_SECRET }}"
+            }' | jq '.accessToken' | sed 's/"//g')
+          
+          if [ -z "$access_token" ] || [ "$access_token" = "null" ]; then
+            echo "Failed to get access token"
+            exit 1
+          fi
+          
+          echo "access_token=$access_token" >> $GITHUB_ENV
+          echo "✅ Successfully obtained access token"
+          
+      - name: Create export directory
+        run: |
+          mkdir -p $EXPORT_DIR/$TIMESTAMP
+          echo "Created export directory: $EXPORT_DIR/$TIMESTAMP"
+          
+      - name: Export Blueprints
+        if: ${{ github.event.inputs.export_type == 'blueprints' || github.event.inputs.export_type == 'all' }}
+        run: |
+          echo "📋 Exporting blueprints..."
+          
+          # Get all blueprints
+          blueprints_response=$(curl -X GET "$PORT_API_URL/blueprints" \
+            -H "Authorization: Bearer ${{ env.access_token }}" \
+            -H "Content-Type: application/json")
+          
+          if [ $? -eq 0 ] && [ -n "$blueprints_response" ]; then
+            echo "$blueprints_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/blueprints.json"
+            
+            # Count blueprints
+            blueprint_count=$(echo "$blueprints_response" | jq '.blueprints | length')
+            echo "✅ Exported $blueprint_count blueprints"
+            
+            # Export individual blueprint definitions if requested
+            if [ -n "${{ github.event.inputs.blueprint_filter }}" ]; then
+              blueprint_id="${{ github.event.inputs.blueprint_filter }}"
+              echo "📄 Exporting detailed definition for blueprint: $blueprint_id"
+              
+              blueprint_detail=$(curl -X GET "$PORT_API_URL/blueprints/$blueprint_id" \
+                -H "Authorization: Bearer ${{ env.access_token }}" \
+                -H "Content-Type: application/json")
+              
+              if [ $? -eq 0 ] && [ -n "$blueprint_detail" ]; then
+                echo "$blueprint_detail" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/blueprint-$blueprint_id.json"
+                echo "✅ Exported detailed definition for blueprint: $blueprint_id"
+              fi
+            fi
+          else
+            echo "❌ Failed to export blueprints"
+            exit 1
+          fi
+          
+      - name: Export Scorecards
+        if: ${{ github.event.inputs.export_type == 'scorecards' || github.event.inputs.export_type == 'all' }}
+        run: |
+          echo "📊 Exporting scorecards..."
+          
+          scorecards_response=$(curl -X GET "$PORT_API_URL/scorecards" \
+            -H "Authorization: Bearer ${{ env.access_token }}" \
+            -H "Content-Type: application/json")
+          
+          if [ $? -eq 0 ] && [ -n "$scorecards_response" ]; then
+            echo "$scorecards_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/scorecards.json"
+            
+            scorecard_count=$(echo "$scorecards_response" | jq '.scorecards | length')
+            echo "✅ Exported $scorecard_count scorecards"
+          else
+            echo "❌ Failed to export scorecards"
+            exit 1
+          fi
+          
+      - name: Export Actions
+        if: ${{ github.event.inputs.export_type == 'actions' || github.event.inputs.export_type == 'all' }}
+        run: |
+          echo "⚡ Exporting actions..."
+          
+          actions_response=$(curl -X GET "$PORT_API_URL/actions" \
+            -H "Authorization: Bearer ${{ env.access_token }}" \
+            -H "Content-Type: application/json")
+          
+          if [ $? -eq 0 ] && [ -n "$actions_response" ]; then
+            echo "$actions_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/actions.json"
+            
+            action_count=$(echo "$actions_response" | jq '.actions | length')
+            echo "✅ Exported $action_count actions"
+          else
+            echo "❌ Failed to export actions"
+            exit 1
+          fi
+          
+      - name: Commit exported data
+        run: |
+          echo "💾 Committing exported data to repository..."
+          
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          git add "$EXPORT_DIR/"
+          
+          if git diff --staged --quiet; then
+            echo "ℹ️ No changes to commit"
+          else
+            git commit -m "Export Port data - $TIMESTAMP
+
+            - Export type: ${{ github.event.inputs.export_type }}
+            - Blueprint filter: ${{ github.event.inputs.blueprint_filter || 'None' }}
+            - GitHub run: ${{ github.run_id }}"
+            
+            git push
+            echo "✅ Exported data committed to repository"
+          fi
+```
+</details>
+
+**Usage (GitHub CLI):**
+```bash
+# Export all blueprints, scorecards, and actions
+gh workflow run export-port-data.yml -f export_type=all
+
+# Export specific blueprint
+gh workflow run export-port-data.yml \
+  -f export_type=blueprints \
+  -f blueprint_filter=service
+```
+
+---
+
+#### Promote resources using a GitHub workflow
 
 Below is an example of a GitHub workflow that automates the promotion of resources from a development environment to a production environment.
 
-#### Prerequisites
+**Prerequisites**
 
 Before using this workflow, make sure to:
 
@@ -232,7 +426,7 @@ Before using this workflow, make sure to:
       ```
       </details>
 
-#### Workflow file
+**Workflow file**
 
 The workflow file might look like this:
 
