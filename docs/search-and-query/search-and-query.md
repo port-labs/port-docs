@@ -29,10 +29,10 @@ To search for entities using the API, see the [search](/api-reference/search-a-b
 
 A search request is comprised of the following elements:
 
-| Field        | Description                                               |
-| ------------ | --------------------------------------------------------- |
-| `combinator` | Defines the logical operation to apply to the query rules |
-| `rules`      | An array of search rules to filter results with           |
+| Field        | Description                                                |
+| ------------ | ---------------------------------------------------------- |
+| `combinator` | Defines the logical operation to apply to the query rules. |
+| `rules`      | An array of search rules to filter results with.           |
 
 For example:
 
@@ -150,365 +150,7 @@ ___
 
 ### Relation operators
 
-<Tabs groupId="relation" queryString defaultValue="relatedTo" values={[
-{label: "RelatedTo", value: "relatedTo"},
-{label: "MatchAny", value: "matchAny"}
-]}>
-
-<TabItem value="relatedTo">
-
-The `relatedTo` operator will return all entities that have a relationship with the specified entity:
-
-<h4> Structure </h4>
-
-| Field       | Description                                                                               |
-| ----------- | ----------------------------------------------------------------------------------------- |
-| `operator`  | Search operator to use when evaluating this rule, see a list of available operators below |
-| `blueprint` | Blueprint of the entity identifier specified in the `value` field                         |
-| `value`     | Value to filter by                                                                        |
-
-
-```json showLineNumbers
-{
-  "operator": "relatedTo",
-  "blueprint": "myBlueprint",
-  "value": "myEntity"
-}
-```
-
-The operator also supports multiple related entities as the searched value:
-
-```json showLineNumbers
-{
-  "operator": "relatedTo",
-  "blueprint": "myBlueprint",
-  "value": ["myFirstEntity", "mySecondEntity"]
-}
-```
-This query will return all of the entities that are related to one or more of the identifiers in the value array.
-
-<h4> Required </h4>
-
-The `relatedTo` operator also supports the `required` property - which allows you to search for:
-
-- Related entities from all relations (relations with either required `true` or `false`);
-- Related entities only from required relations (relations with required `true`);
-- Related entities only from non-required relations (relations with required `false`).
-
-For example, to search only for related entities that _require_ the `myEntity` entity from the `myBlueprint` blueprint, use the following search rule:
-
-```json showLineNumbers
-{
-  "operator": "relatedTo",
-  "required": true,
-  "value": "myEntity",
-  "blueprint": "myBlueprint"
-}
-```
-
-<h4> Direction </h4>
-
-The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent entities in a specific direction on the dependency graph. To better understand the functionality of this property, let's take a look at the example below:
-
-Let's assume that we have the blueprints `deploymentConfig` and `microservice` with the following relation definition (declared on the `deploymentConfig` blueprint):
-
-```json showLineNumbers
-"relations": {
-  "microservice": {
-    "description": "The service this Deployment Config belongs to",
-    "many": false,
-    "required": false,
-    "target": "microservice",
-    "title": "Microservice"
-  }
-}
-```
-
-In addition, we have the following entities:
-
-```text showLineNumbers
-Deployment Configs:
-- Order-Service-Production
-- Cart-Service-Production
-
-Microservices:
-- Order Service
-- Cart Service
-
-Environments:
-- Production
-```
-
-And the following relations:
-
-```text showLineNumbers
-Order-Service-Production -> Order-Service
-Order-Service-Production -> Production
-
-Cart-Service-Production -> Cart-Service
-Cart-Service-Production -> Production
-```
-
-By looking at the resulting graph layout, we can also map the directions:
-
-![Dependency graph upstream downstream diagram](/img/software-catalog/search-in-port/search-direction-diagram.png)
-
-- To search for entities which the source depends on - use `"direction": "upstream"`;
-- To search for entities which depend on the source - use `"direction": "downstream"`.
-
-In the example shown above, if we want to get the `Microservice` and `Environment` that _Order-Service-Production_ depends on, the search rule would be:
-
-```json showLineNumbers
-{
-  "operator": "relatedTo",
-  "blueprint": "deploymentConfig",
-  "value": "Order-Service-Production",
-  "direction": "upstream"
-}
-```
-
-And the result shall be:
-
-<details>
-<summary>Order-Service-Production upstream related entities</summary>
-
-```json showLineNumbers
-{
-  "ok": true,
-  "matchingBlueprints": ["microservice", "environment"],
-  "entities": [
-    {
-      "identifier": "Order-Service",
-      "title": "Order-Service",
-      "blueprint": "microservice",
-      "properties": {
-        "on-call": "mor@getport.io",
-        "language": "Python",
-        "slack-notifications": "https://slack.com/Order-Service",
-        "launch-darkly": "https://launchdarkly.com/Order-Service"
-      },
-      "relations": {},
-      "createdAt": "2022-11-17T15:54:20.432Z",
-      "createdBy": "auth0|62ab380295b34240aa511cdb",
-      "updatedAt": "2022-11-17T15:54:20.432Z",
-      "updatedBy": "auth0|62ab380295b34240aa511cdb"
-    },
-    {
-      "identifier": "Production",
-      "title": "Production",
-      "blueprint": "environment",
-      "properties": {
-        "awsRegion": "eu-west-1",
-        "configUrl": "https://github.com/config-labs/kube/config.yml",
-        "slackChannel": "https://yourslack.slack.com/archives/CHANNEL-ID",
-        "onCall": "Mor P",
-        "namespace": "Production"
-      },
-      "relations": {},
-      "createdAt": "2022-09-19T08:54:23.025Z",
-      "createdBy": "Cnc3SiO7T0Ld1y1u0BsBZFJn0SCiPeLS",
-      "updatedAt": "2022-10-16T09:28:32.960Z",
-      "updatedBy": "auth0|62ab380295b34240aa511cdb"
-    }
-  ]
-}
-```
-
-</details>
-
-If we want to get all of the `deploymentConfigs` that are deployed in the _Production_ `Environment`, the search rule would be:
-
-```json showLineNumbers
-{
-  "operator": "relatedTo",
-  "blueprint": "environment",
-  "value": "Production",
-  "direction": "downstream"
-}
-```
-
-And the result shall be:
-
-<details>
-<summary>Production downstream related entities</summary>
-
-```json showLineNumbers
-{
-  "ok": true,
-  "matchingBlueprints": ["deploymentConfig"],
-  "entities": [
-    {
-      "identifier": "Order-Service-Production",
-      "title": "Order-Service-Production",
-      "blueprint": "deploymentConfig",
-      "properties": {
-        "url": "https://github.com/port-labs/order-service",
-        "config": {
-          "encryption": "SHA256"
-        },
-        "monitor-links": [
-          "https://grafana.com",
-          "https://prometheus.com",
-          "https://datadog.com"
-        ]
-      },
-      "relations": {
-        "microservice": "Order-Service",
-        "environment": "Production"
-      },
-      "createdAt": "2022-11-17T15:55:55.591Z",
-      "createdBy": "auth0|62ab380295b34240aa511cdb",
-      "updatedAt": "2022-11-17T15:55:55.591Z",
-      "updatedBy": "auth0|62ab380295b34240aa511cdb"
-    },
-    {
-      "identifier": "Cart-Service-Production",
-      "title": "Cart-Service-Production",
-      "blueprint": "deploymentConfig",
-      "properties": {
-        "url": "https://github.com/port-labs/cart-service",
-        "config": {
-          "foo": "bar"
-        },
-        "monitor-links": [
-          "https://grafana.com",
-          "https://prometheus.com",
-          "https://datadog.com"
-        ]
-      },
-      "relations": {
-        "microservice": "Cart-Service",
-        "environment": "Production"
-      },
-      "createdAt": "2022-11-17T15:55:10.714Z",
-      "createdBy": "auth0|62ab380295b34240aa511cdb",
-      "updatedAt": "2022-11-17T15:55:20.253Z",
-      "updatedBy": "auth0|62ab380295b34240aa511cdb"
-    }
-  ]
-}
-```
-
-</details>
-
-</TabItem>
-
-<TabItem value="matchAny">
-
-<h4> Related to by specific path </h4>
-
-You can search for entities that are related through a specific path of relations. This is useful when you want to find entities that are connected through a specific chain of relationships.
-
-
-<h4> Structure </h4>
-
-| Field                     | Description                                                                                                          |
-|---------------------------|----------------------------------------------------------------------------------------------------------------------|
-| `property.path`           | An array containing the full path of relation identifiers to traverse.                                               |
-| `property.fromBlueprint`  | *(Optional)* The blueprint to start the path traversal from. If omitted, traversal starts from the target blueprint. |
-| `operator`                | The search operator to use. For this feature, use `"matchAny"`.                                                      |
-| `value`                   | The value or list of values to match against the target entity identifiers at the end of the path.                   |
-
-
-<h4> For upstream paths: </h4>
-
-```json showLineNumbers
-{
-  "property": {
-    "path": ["relation1", "relation2", "relation3"]
-  },
-  "operator": "matchAny",
-  "value": "targetEntity"
-}
-```
-
-<h4> For downstream paths: </h4>
-
-```json showLineNumbers
-{
-  "property": {
-    "path": ["relation1", "relation2", "relation3"],
-    "fromBlueprint": "sourceBlueprint"
-  },
-  "operator": "matchAny",
-  "value": "targetEntity"
-}
-```
-
-When using downstream paths, the `fromBlueprint` parameter specifies the source blueprint from which to start the path traversal. 
-
-Instead of thinking about the path as downstream from the target, we treat it as upstream from the specified blueprint to the target blueprint. This means that the path will be traversed starting from entities of the specified `fromBlueprint`.
-
-<h4> Examples </h4>
-
-Suppose you have the following data model:
-
-![Dependency graph upstream downstream diagram](/img/software-catalog/search-in-port/specific-path-diagram-example.png)
-
-<h4> Example 1: Find all services related to a cluster (upstream) </h4>
-
-To find all services that are related to a specific cluster (e.g., "production-cluster"):
-
-```json showLineNumbers
-{
-  "combinator": "and",
-  "rules": [
-    {
-      "property": "$blueprint",
-      "operator": "=",
-      "value": "service"
-    },
-    {
-      "property": {
-        "path": ["deployedOn"]
-      },
-      "operator": "matchAny",
-      "value": "production-cluster"
-    }
-  ]
-}
-```
-
-This will return all **services** that have a deployment in the "production-cluster".
-
----
-
-<h4> Example 2: Find all deployments related to a specific service (downstream) </h4>
-
-To find all deployments related to a specific service (e.g., "production-service"):
-
-```json showLineNumbers
-{
-  "combinator": "and",
-  "rules": [
-    {
-      "property": "$blueprint",
-      "operator": "=",
-      "value": "deployment"
-    },
-    {
-      "property": {
-        "path": ["deployedOn", "deployments"],
-        "fromBlueprint": "service"
-      },
-      "operator": "matchAny",
-      "value": "production-service"
-    }
-  ]
-}
-```
-
-This will return all **deployments** that are related to the "production-service".
-
----
-
-The `matchAny` operator will match entities based on your input:
-- If you specify a single value, it will find all entities with the same identifier.
-- If you provide a list of values, it will match any entity whose identifier is in the list.
-
-</TabItem>
-
-</Tabs>
+Several relation-based operators are available, see them [here](./relation-operators).
 
 ### Dynamic properties
 
@@ -522,6 +164,7 @@ When using Port's UI, you can use properties of the logged-in user when writing 
 :::info UI only
 Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
 :::
+Several relation-based operators are available, see them [here](./relation-operators).
 
 #### Usage examples
 
@@ -567,11 +210,7 @@ Since we don't have context of the logged-in user when using the API, these func
 
 ### Contextual query rules
 
-:::info Closed beta feature
-This capability is currently in closed beta, and is not yet generally available.  
-If you would like to join the beta, please reach out to us.
-:::
-To implement specific and/or complex queries, you can add the context of the triggering user to a query rule, allowing you to access that user's entity and/or owning teams.  
+To implement specific and/or complex queries, you can add the context of the triggering user to a query rule, allowing you to access that user's properties and/or owning teams.  
 You can mix contextual query rules freely with other rules as part of your queries.
 This can be used in either the `property` or `value` key in a query rule:
 
@@ -610,13 +249,27 @@ This can be used in either the `property` or `value` key in a query rule:
 | `userTeams` | The entities of the owning teams of the user triggering the query                                                                     |
 
 #### Usage examples
-
+The following rule will result in the entities owned by any one of the user's teams:
 ```json showLineNumbers
 [ 
   ...other rules
-  { // filter entities with the same department as the user
-    "property": "department",
+  { 
+    "property": "$team",
     "operator": "containsAny",
+    "value": {
+      "context": "userTeams",
+      "property": "$identifier"
+    }
+  }
+]
+```
+The following rule will result in entities with the same department as the user's:
+```json showLineNumbers
+[ 
+  ...other rules
+  { 
+    "property": "department",
+    "operator": "=",
     "value": {
       "context": "user",
       "property": "department"
@@ -624,23 +277,25 @@ This can be used in either the `property` or `value` key in a query rule:
   }
 ]
 ```
+The following rule asserts that only users with `manager` role will get the resulting entities:
 ```json showLineNumbers
 [ 
   ...other rules
-  { // only users with `manager` role will get the entities
+  { 
     "property": {
       "context": "user",
-      "property": "role"
+      "property": "port_role"
     },
     "operator": "=",
     "value": "manager"
   }
 ]
 ```
+The following rule asserts that only users in the user's team/s will get the resulting entities:
 ```json showLineNumbers
 [
   ...other rules
-  { // only users in these team will get the entities
+  { 
     "property": {
       "context": "userTeams",
       "property": "$identifier"
