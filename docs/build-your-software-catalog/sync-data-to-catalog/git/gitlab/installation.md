@@ -360,9 +360,7 @@ Note the parameters specific to this integration, they are last in the table.
 
 This pipeline will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
-:::
+
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="gitlab" label="GitLab">
