@@ -140,7 +140,7 @@ A user can have one of the following statuses at any given time within the scope
 - `Staged`- the user exists but hasn't been invited by email.
 - `Active` - the user has logged into Port and can use the portal normally.
 - `Invited` - the user was invited to Port via an invitation email.
-- `Disabled` - the user cannot use this specific Port organization, and should contact the organization admin.
+- `Disabled` - the user cannot use this specific Port organization. Contact the organization admin to regain access.
 
 By default, all new users are created with the `Staged` status (the user exists but hasn't been invited by email), after login, the user status is set to `Active`.
 
