@@ -11,12 +11,13 @@ Multiple organization membership within Port means that users can belong to more
 
 :::info Feature availability
 The **multi-organization feature** is available on request and must be enabled by Port's support team.  
-To group existing organizations under one account, customers need to provide Port with the relevant `OrgIDs` and the SSO connection to use.
+To group existing organizations under one account, customers need to provide Port with the relevant `OrgIDs` and the SSO connection to use.  
+Organizations can be grouped only if they are in the same region.
 :::
 
 ## Add organizations
 
-As an `account admin`, you can create new organizations directly from the UI using the `+ Create new organization` button.
+As an `account admin` of a paid account, you can create new organizations directly from the UI using the `+ Create new organization` button.
 If you wish to grant `account admin` permissions to another user, please contact Port's support team.
 
 ## Switch organizations
