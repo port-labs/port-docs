@@ -49,10 +49,10 @@ Before you dive into the details of the approach, we recommend to go over best p
    Define blueprints in Terraform so your catalog schema (properties, relations, calculations, etc.) is versioned and reviewable. Refer to documentation for examples covering all property types and advanced features like mirror and calculation properties.
 
 5. **Manage entities with `port_entity`**  
-   Define entities with all of their relevant properties.  
+   - Define entities with all of their relevant properties.  
    The provider uses a create/override strategy: any property omitted in Terraform will be reset to empty.  
-   Always model the full desired entity shape in code.  
-   Use registry options like `create_missing_related_entities`, and fields such as `teams` and `run_id` for traceability.
+   - Always model the full desired entity shape in code.  
+   - Use registry options like `create_missing_related_entities`, and fields such as `teams` and `run_id` for traceability.
 
 6. **Extend system blueprints properly**  
    `User` and `Team` are system blueprints—extend them using `port_system_blueprint` (not `port_blueprint`) and import them to state before making changes. Supported from provider `v2.2.0`.
@@ -61,16 +61,19 @@ Before you dive into the details of the approach, we recommend to go over best p
    If a resource already exists (via UI or integration), import it to state before managing with Terraform.  
    - Blueprints: `terraform import port_blueprint.my "blueprintId"`  
    - Entities: `terraform import port_entity.my "blueprintId:entityId"`  
-   - Other resources (scorecards, actions, webhooks, integrations) have documented import forms.
+   - For other resources (scorecards, actions, webhooks, integrations), refer to the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/iac/terraform/#import-existing-data-to-the-terraform-state) for import forms.
 
 8. **Define self-service actions and permissions in code**  
-   Use `port_action` to codify self-service experiences (inputs, triggers, conditions). For actions that invoke Terraform (e.g., GitHub workflow, Terraform Cloud run), store credentials in Port secrets or use an execution agent.
+   Use `port_action` to codify self-service experiences (inputs, triggers, conditions).  
+   For actions that invoke Terraform (e.g., GitHub workflow, Terraform Cloud run), store credentials in Port secrets or use an execution agent.
 
 9. **Manage integrations declaratively**  
-   Use `port_integration` to manage configuration and mappings for existing integrations (not to create new ones). Import by installation ID, then manage mappings in code.
+   Use `port_integration` to manage configuration and mappings for existing integrations.  
+   Import by installation ID, then manage mapping in code.
 
 10. **Promote changes safely**  
-   Follow standard Terraform best practices: run `terraform validate` and `plan` in CI, and require peer review before applying changes. Optionally, expose “plan & apply” as a Port action for controlled no-code provisioning flows.
+   Follow standard Terraform best practices: run `terraform validate` and `plan` in CI, and require peer review before running `apply`.  
+   Optionally, expose “plan & apply” as a Port action for controlled no-code provisioning flows (e.g., a user [requests an S3 bucket](https://docs.port.io/guides/all/terraform-plan-and-apply-aws-resource/), the action runs Terraform and writes the entity back).
 
 11. **Separate regions, accounts, and environments**  
    For multiple Port accounts or regions (EU/US), set the correct `base_url` per environment or use provider aliases. Avoid mixing resources across environments.
