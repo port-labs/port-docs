@@ -195,6 +195,14 @@ If you encounter errors:
 - **Permission issues**: You may need to run with appropriate permissions
 :::
 
+:::warning VSCode action tool issue
+In some versions of VS Code, Port MCP server might not start or return an error in the chat becaude of a configuration issue with the action related tools. To deal with it, [deselect](./available-tools#select-which-tools-to-use)  the tools `create_action`, `update_action`, and `delete_action`.
+This is relevant for cases where you see an error like this one:
+```
+Failed to validate tool mcp_port_create_action: Error: tool parameters array type must have items. Please open a Github issue for the MCP server or extension which provides this tool
+```
+:::
+
 
 **Step 1: Configure MCP Server Settings**
 
