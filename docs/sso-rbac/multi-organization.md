@@ -36,7 +36,7 @@ Note that when users log in, they automatically access their **last visited** or
 
 Automatic user access makes it easy to onboard large groups of users:
 
-- Account admins can mark an organization as publicly accessible to SSO users.
+- Account admins and admins can mark an organization as publicly accessible to SSO users.
 - When users log in via SSO, they automatically get the default `member` role in the organizations.
 
 To enable automatic user access:  
