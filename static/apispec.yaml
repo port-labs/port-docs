@@ -82,6 +82,7 @@ components:
                               - today
                               - tomorrow
                               - yesterday
+                              - lastDay
                               - lastWeek
                               - last2Weeks
                               - lastMonth
@@ -455,6 +456,7 @@ components:
                               - today
                               - tomorrow
                               - yesterday
+                              - lastDay
                               - lastWeek
                               - last2Weeks
                               - lastMonth
@@ -2228,6 +2230,7 @@ components:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -2587,6 +2590,7 @@ components:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -4624,6 +4628,7 @@ components:
                                                         - today
                                                         - tomorrow
                                                         - yesterday
+                                                        - lastDay
                                                         - lastWeek
                                                         - last2Weeks
                                                         - lastMonth
@@ -4983,6 +4988,7 @@ components:
                                                         - today
                                                         - tomorrow
                                                         - yesterday
+                                                        - lastDay
                                                         - lastWeek
                                                         - last2Weeks
                                                         - lastMonth
@@ -5771,6 +5777,7 @@ components:
                               - today
                               - tomorrow
                               - yesterday
+                              - lastDay
                               - lastWeek
                               - last2Weeks
                               - lastMonth
@@ -6318,6 +6325,7 @@ paths:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -7474,11 +7482,11 @@ paths:
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
-        - schema:
-            type: boolean
-          in: query
-          name: compact
-          required: false
+        # - schema:
+        #     type: boolean
+        #   in: query
+        #   name: compact
+        #   required: false
         - schema:
             type: boolean
             default: false
@@ -8477,11 +8485,11 @@ paths:
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
-        - schema:
-            type: boolean
-          in: query
-          name: compact
-          required: false
+        # - schema:
+        #     type: boolean
+        #   in: query
+        #   name: compact
+        #   required: false
         - schema:
             type: boolean
             default: false
@@ -9149,6 +9157,7 @@ paths:
                                       - today
                                       - tomorrow
                                       - yesterday
+                                      - lastDay
                                       - lastWeek
                                       - last2Weeks
                                       - lastMonth
@@ -9500,11 +9509,11 @@ paths:
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
-        - schema:
-            type: boolean
-          in: query
-          name: compact
-          required: false
+        # - schema:
+        #     type: boolean
+        #   in: query
+        #   name: compact
+        #   required: false
         - schema:
             type: boolean
             default: false
@@ -18119,7 +18128,7 @@ paths:
               properties:
                 identifier:
                   type: string
-                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:=-]+$
                   description: The identifier of the action.
                 title:
                   type: string
@@ -18642,6 +18651,7 @@ paths:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -19891,12 +19901,16 @@ paths:
       summary: Get actions/automations
       tags:
         - Actions
-      description: This route allows you to fetch one or more self-service actions
+      description: |
+        This route allows you to fetch one or more self-service actions
         and/or automations in your Port account.<br/><br/>The call will perform
         a logical `AND` between all query parameters below, and return all
         actions and automations that match the criteria.<br/><br/>To learn more
         about actions and automations, check out the
         [documentation](https://docs.port.io/actions-and-automations/).
+        :::info Version parameter value
+        Set the `version` parameter to `v2` for the latest version of the API.
+        :::
       parameters:
         - schema:
             type: array
@@ -19985,6 +19999,7 @@ paths:
           in: query
           name: version
           required: false
+          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
       security:
         - bearer:
             - read:actions
@@ -20040,7 +20055,7 @@ paths:
               properties:
                 identifier:
                   type: string
-                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:=-]+$
                   description: The identifier of the action.
                 title:
                   type: string
@@ -20563,6 +20578,7 @@ paths:
                                                   - today
                                                   - tomorrow
                                                   - yesterday
+                                                  - lastDay
                                                   - lastWeek
                                                   - last2Weeks
                                                   - lastMonth
@@ -22677,11 +22693,15 @@ paths:
       summary: Update an action run
       tags:
         - Action Runs
-      description: This route allows you to update an action run's details. This can
+      description: |
+        This route allows you to update an action run's details. This can
         be used to update the run's status & label, and add links to it (e.g.
         external logs of the job runner).<br/><br/>To learn more about action
         runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
+        :::info Version parameter value
+        Set the `version` parameter to `v2` for the latest version of the API.
+        :::
       requestBody:
         content:
           application/json:
@@ -22728,6 +22748,7 @@ paths:
           in: query
           name: version
           required: false
+          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: path
@@ -22983,9 +23004,13 @@ paths:
       summary: Get an action run's details
       tags:
         - Action Runs
-      description: This route allows you to fetch the details of an action
+      description: |
+        This route allows you to fetch the details of an action
         run.<br/><br/>To learn more about action runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
+        :::info Version parameter value
+        Set the `version` parameter to `v2` for the latest version of the API.
+        :::
       parameters:
         - schema:
             type: string
@@ -22995,6 +23020,7 @@ paths:
           in: query
           name: version
           required: false
+          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: path
@@ -23217,10 +23243,14 @@ paths:
       summary: Approve an action run
       tags:
         - Action Runs
-      description: This route allows you to approve or decline a request to execute an
+      description: |
+        This route allows you to approve or decline a request to execute an
         action that requires approval.<br/><br/>To learn more about manual
         approval for actions, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
+        :::info Version parameter value
+        Set the `version` parameter to `v2` for the latest version of the API.
+        :::
       requestBody:
         content:
           application/json:
@@ -23248,6 +23278,7 @@ paths:
           in: query
           name: version
           required: false
+          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: path
@@ -23504,11 +23535,15 @@ paths:
       summary: Get all action runs
       tags:
         - Action Runs
-      description: This route allows you to fetch all action runs in your Port
+      description: |
+        This route allows you to fetch all action runs in your Port
         account. The route will perform a logical `AND` between all query
         parameters below, and return all action runs that match the
         criteria.<br/><br/>To learn more about action runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
+        :::info Version parameter value
+        Set the `version` parameter to `v2` for the latest version of the API.
+        :::
       parameters:
         - schema:
             type: string
@@ -23564,6 +23599,7 @@ paths:
           in: query
           name: version
           required: false
+          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
         - schema:
             type: string
           in: query
@@ -24141,12 +24177,12 @@ paths:
         learn more about pages, checkout the
         [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page).
       parameters:
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: compact
-          required: true
+        # - schema:
+        #     type: boolean
+        #     default: false
+        #   in: query
+        #   name: compact
+        #   required: true
       security:
         - bearer: []
       responses:
@@ -24756,6 +24792,13 @@ paths:
                     portalTitle:
                       type: string
                       maxLength: 30
+                    supportUserPermission:
+                      type: string
+                      enum:
+                        - OPT_OUT
+                        - READ_ONLY
+                        - FULL_PERMISSIONS
+                      description: Permission level for Port support users accessing this organization
                 isOnboarded:
                   type: boolean
                 toolSelectionProvisioning:
@@ -25252,9 +25295,17 @@ paths:
       summary: Get all integrations
       tags:
         - Integrations
-      description: This route allows you to fetch all integrations in your Port
+      description: |
+        This route allows you to fetch all integrations in your Port
         organization.<br/><br/>To learn more about integrations, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br> 
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       security:
         - bearer:
             - read:integrations
@@ -25298,9 +25349,17 @@ paths:
       summary: Get an integration
       tags:
         - Integrations
-      description: This route allows you to fetch a specific integration in your Port
+      description: |
+        This route allows you to fetch a specific integration in your Port
         organization.<br/><br/>To learn more about integrations, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br>
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       parameters:
         - schema:
             type: string
@@ -25777,10 +25836,18 @@ paths:
       summary: Get an integration's audit logs
       tags:
         - Integrations
-      description: This route allows you to fetch the audit logs of a specific
+      description: |
+        This route allows you to fetch the audit logs of a specific
         integration in your Port organization.<br/><br/>To learn more about
         integrations, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br>
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       parameters:
         - schema:
             type: number
@@ -26570,11 +26637,19 @@ paths:
       summary: Get all webhooks
       tags:
         - Webhook
-      description: This route allows you to fetch all webhooks configured in your Port
+      description: |
+        This route allows you to fetch all webhooks configured in your Port
         organization. You can also see them in the [data sources
         page](https://app.getport.io/settings/data-sources) of your Port
         account.<br/><br/>To learn more about webhooks, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/). <br></br>
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       security:
         - bearer:
             - read:integrations
@@ -27504,11 +27579,19 @@ paths:
       summary: Get a webhook
       tags:
         - Webhook
-      description: This route allows you to fetch a specific webhook in your Port
+      description: |
+        This route allows you to fetch a specific webhook in your Port
         organization. You can also see it in the [data sources
         page](https://app.getport.io/settings/data-sources) of your Port
         account.<br/><br/>To learn more about webhooks, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/). <br></br>
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       parameters:
         - schema:
             type: string
@@ -33219,10 +33302,18 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  "/v1/integration/{integrationInternalId}/syncMetrics":
+  /v1/integration/{integrationInternalId}/syncMetrics:
       get:
         summary: Get an integration's metrics and sync status
-        description: This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
+        description: |
+          This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br>
+          :::warning Permission requirements
+          To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+          To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+          
+          If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+          :::
         tags:
           - Integrations
         parameters:
@@ -33588,6 +33679,23 @@ paths:
                     - data
                   additionalProperties: false
           "401":
+            description: Default Response
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    ok:
+                      type: boolean
+                    error:
+                      type: string
+                    message:
+                      type: string
+                  required:
+                    - ok
+                    - error
+                  additionalProperties: false
+          "404":
             description: Default Response
             content:
               application/json:
