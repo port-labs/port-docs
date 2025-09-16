@@ -15,9 +15,9 @@ To group existing organizations under one account, customers need to provide Por
 Organizations can be grouped only if they are in the same region.
 :::
 
-## Add organizations
+## Create an organization
 
-As an `account admin` of a paid account, you can create new organizations directly from the UI using the `+ Create new organization` button.
+As an `account admin` of a paid account, you can create new organizations directly from the UI using the `+ Create Organization` button.
 If you wish to grant `account admin` permissions to another user, please contact Port's support team.
 
 ## Switch organizations
@@ -43,7 +43,7 @@ To enable automatic user access:
 
 1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
 2. Click on `Organization settings` in the sidebar.
-3. Enable the "Automatic user access" for the organization.
+3. In the `Settings` tab, enable the "Automatic user access" for the organization.
 4. Click `Save`.
 
 ## SSO access to organizations
