@@ -7482,11 +7482,6 @@ paths:
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
-        # - schema:
-        #     type: boolean
-        #   in: query
-        #   name: compact
-        #   required: false
         - schema:
             type: boolean
             default: false
@@ -8485,11 +8480,6 @@ paths:
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
-        # - schema:
-        #     type: boolean
-        #   in: query
-        #   name: compact
-        #   required: false
         - schema:
             type: boolean
             default: false
@@ -9509,11 +9499,6 @@ paths:
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
-        # - schema:
-        #     type: boolean
-        #   in: query
-        #   name: compact
-        #   required: false
         - schema:
             type: boolean
             default: false
@@ -24177,12 +24162,6 @@ paths:
         learn more about pages, checkout the
         [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page).
       parameters:
-        # - schema:
-        #     type: boolean
-        #     default: false
-        #   in: query
-        #   name: compact
-        #   required: true
       security:
         - bearer: []
       responses:
