@@ -1457,7 +1457,7 @@ export const availableGuides = [
     },
     {
         title: "Heal unhealthy k8s pods",
-        description: "Learn how to use Port's AI capabilities to detect unhealthy Kubernetes pods and automatically trigger remediation actions to restore service health",
+        description: "Detect unhealthy Kubernetes pods and automatically trigger remediation actions using Port AI",
         tags: ["K8s for devs", "AI", "Kubernetes", "Actions", "Automations"],
         logos: ["AI", "Kubernetes"],
         link: "/guides/all/heal-unhealthy-k8s-pods",
