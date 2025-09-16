@@ -1,0 +1,64 @@
+<details>
+<summary>Build blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "build",
+  "title": "Build",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Status"
+      },
+      "result": {
+        "type": "string",
+        "title": "Result"
+      },
+      "queueTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Queue Time"
+      },
+      "startTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Start Time"
+      },
+      "finishTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Finish Time"
+      },
+      "definitionName": {
+        "type": "string",
+        "title": "Definition Name"
+      },
+      "requestedFor": {
+        "type": "string",
+        "title": "Requested For"
+      },
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "project",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
