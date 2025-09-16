@@ -35,6 +35,15 @@ import PortUsersAndTeamsAppConfig from './example-users-and-teams/\_azuredevops_
 import UsersBlueprint from './example-users-and-teams/\_azuredevops_exporter_example_user_blueprint.mdx'
 import TeamsBlueprint from './example-users-and-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
 
+import EnvironmentBlueprint from './example-environment/\_azuredevops_exporter_example_environment_blueprint.mdx'
+import PortEnvironmentAppConfig from './example-environment/\_azuredevops_exporter_example_environment_port_app_config.mdx'
+
+import ReleaseDeploymentBlueprint from './example-release-deployment/\_azuredevops_exporter_example_release_deployment_blueprint.mdx'
+import PortReleaseDeploymentAppConfig from './example-release-deployment/\_azuredevops_exporter_example_release_deployment_port_app_config.mdx'
+
+import PipelineDeploymentBlueprint from './example-pipeline-deployment/\_azuredevops_exporter_example_pipeline_deployment_blueprint.mdx'
+import PortPipelineDeploymentAppConfig from './example-pipeline-deployment/\_azuredevops_exporter_example_pipeline_deployment_port_app_config.mdx'
+
 
 
 # Examples
@@ -248,6 +257,30 @@ The following example shows how to ingest your Azure Devops repositories and the
 <RepositoryBlueprint/>
 
 <PortMonoRepoAppConfig/>
+
+## Mapping environments
+
+The following example demonstrates how to ingest Azure DevOps environments to Port. Environments represent deployment targets in Azure DevOps and are used to track deployments across different stages.
+
+<EnvironmentBlueprint/>
+
+<PortEnvironmentAppConfig/>
+
+## Mapping release deployments
+
+The following example demonstrates how to ingest Azure DevOps release deployments to Port. Release deployments track the deployment of releases to specific environments, providing visibility into your Classic Release pipeline deployments.
+
+<ReleaseDeploymentBlueprint/>
+
+<PortReleaseDeploymentAppConfig/>
+
+## Mapping pipeline deployments
+
+The following example demonstrates how to ingest Azure DevOps pipeline deployments to Port. Pipeline deployments track deployments from YAML pipelines to environments, providing visibility into your modern CI/CD pipeline deployments.
+
+<PipelineDeploymentBlueprint/>
+
+<PortPipelineDeploymentAppConfig/>
 
 ## Mapping supported resources
 

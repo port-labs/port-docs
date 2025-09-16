@@ -1,0 +1,26 @@
+<details>
+
+<summary>Integration mapping</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: environment
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name | tostring
+          blueprint: '"azureDevopsEnvironment"'
+          properties:
+            description: .description
+            createdOn: .createdOn
+            lastModifiedOn: .lastModifiedOn
+          relations:
+            project: .project.id
+
+
+```
+
+</details>

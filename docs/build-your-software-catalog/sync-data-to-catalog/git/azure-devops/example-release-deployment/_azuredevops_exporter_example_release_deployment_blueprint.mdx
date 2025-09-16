@@ -1,0 +1,73 @@
+<details>
+<summary>Release Deployment blueprint</summary>
+
+```json showLineNumbers
+  {
+    "identifier": "azureDevopsReleaseDeployment",
+    "title": "Azure DevOps Release Deployment",
+    "icon": "AzureDevops",
+    "schema": {
+      "properties": {
+        "status": {
+          "title": "Status",
+          "type": "string",
+          "icon": "DefaultProperty",
+          "description": "The deployment status"
+        },
+        "url": {
+          "title": "URL",
+          "type": "string",
+          "format": "url",
+          "icon": "AzureDevops",
+          "description": "Link to the deployment in Azure DevOps"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string",
+          "description": "The reason for the deployment"
+        },
+        "startedOn": {
+          "title": "Started On",
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the deployment started"
+        },
+        "completedOn": {
+          "title": "Completed On",
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the deployment completed"
+        },
+        "requestedBy": {
+          "title": "Requested By",
+          "type": "string",
+          "icon": "User",
+          "description": "The person who requested the deployment"
+        },
+        "operationStatus": {
+          "title": "Operation Status",
+          "type": "string",
+          "description": "The operation status of the deployment"
+        },
+        "environment": {
+          "title": "Environment",
+          "type": "string",
+          "description": "The target environment name"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "release": {
+        "title": "Release",
+        "target": "release",
+        "required": true,
+        "many": false
+      }
+    }
+  }
+```
+</details>

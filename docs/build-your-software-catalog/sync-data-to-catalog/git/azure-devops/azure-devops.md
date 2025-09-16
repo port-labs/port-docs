@@ -163,6 +163,60 @@ resources:
               value: '[.reviewers[].uniqueName]'
           azure_devops_reviewers: '[.reviewers[].id]'
           azure_devops_creator: .createdBy.id
+- kind: environment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name | tostring
+        blueprint: '"azureDevopsEnvironment"'
+        properties:
+          description: .description
+          createdOn: .createdOn
+          lastModifiedOn: .lastModifiedOn
+        relations:
+          project: .project.id
+- kind: release-deployment
+  selector:
+    query: 'true'
+    includeRelease: true
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .release.name + "-" + (.id | tostring) | gsub(" "; "")
+        blueprint: '"azureDevopsReleaseDeployment"'
+        properties:
+          status: .deploymentStatus
+          url: .url
+          reason: .reason
+          startedOn: .startedOn
+          completedOn: .completedOn
+          requestedBy: .requestedBy.displayName
+          operationStatus: .operationStatus
+          environment: .releaseEnvironment.name
+        relations:
+          release: .release.id | tostring
+- kind: pipeline-deployment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .requestIdentifier | tostring
+        blueprint: '"azureDevopsPipelineDeployment"'
+        properties:
+          planType: .planType
+          stageName: .stageName
+          jobName: .jobName
+          result: .result
+          startTime: .startTime
+          finishTime: .finishTime
+        relations:
+          environment: .environment.id | tostring
 ```
 
 </details>
