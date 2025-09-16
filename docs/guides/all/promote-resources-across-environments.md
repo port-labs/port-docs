@@ -141,7 +141,7 @@ The following steps outline the recommended process for managing your resources 
    - Remove the provider blocks - since the provider is usually set at a higher level, remove the `provider = port-labs` lines from both resources.
    - Remove null properties - clean up the configuration by removing all properties that are set to `null`.
 
-6. **Dynamic referencing**  
+   **Dynamic referencing**  
    If you have dependencies between two or more resources, you will need to manually handle them using dynamic referencing.
 
    For example, a self-service action that creates new instances of a blueprint will depend on that blueprint.  
@@ -163,11 +163,19 @@ The following steps outline the recommended process for managing your resources 
     }
     ```
 
-7. **Apply Changes in Production**  
+6. **Apply Changes in Production**  
    Before applying any changes, run `terraform plan` in your production environment to view the planned changes and ensure everything is set up correctly.
    
    Once you're satisfied with the plan, run `terraform apply` to apply the changes to your production environment.
 
+:::info Sync changes between UI and IaC
+
+After `import`ing, any changes made to the UI will not be automatically reflected in your IaC configuration.  
+To sync changes, you can:
+- Refrain from using the UI to change resources that are configured with IaC, and only use IaC to make changes.
+- Remember to always update the relevant IaC files after making changes via the UI.
+
+:::
 
 ## Approach 2: JSON definitions (GitOps)
 
