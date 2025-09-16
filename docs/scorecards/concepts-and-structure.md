@@ -16,15 +16,14 @@ import TabItem from "@theme/TabItem"
 A single scorecard defines a category to group different checks, validations and evaluations.  
 Below is the structure of a single `scorecard` blueprint:
 
-The `Scorecard` blueprint contains the following properties:
 | Name | Type | Description |
 |------|------|-------------|
-| Blueprint | string (format: blueprints) | The target blueprint whose entities will be evaluated |
-| [Levels](#levels) | array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold) |
-| [Filter](#filter-elements) | object | Optional query to filter which entities should be evaluated |
-| [Rules](#rule-elements) Tested | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of rule evaluations performed |
-| Rules Passed | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful rule evaluations |
-| % of Rules Passed | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules |
+| `Blueprint` | string (format: blueprints) | The target blueprint whose entities will be evaluated. |
+| [`Levels`](#levels) | array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold). |
+| [`Filter`](#filter-elements) | object | Optional query to filter which entities should be evaluated. |
+| `Rules Tested` | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of [rule](#rule-elements) evaluations performed. |
+|` Rules Passed` | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful [rule](#rule-elements) evaluations. |
+| `% of Rules Passed` | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules. |
 
 Relations:
 | Name | Target Blueprint | Required | Many | Description |
@@ -166,46 +165,7 @@ If the entity didn't pass any rule, it will be at the `Basic` level, and thus ca
 
 Rules enable you to generate checks inside a scorecard only for entities and properties.
 
-A scorecard rule is a single evaluation consisting of multiple checks, each rule has a level which directly translates to how important it is for the check to pass (the more basic the check, the lower its level):
-
-### Rule blueprint
-
-The `Rule` blueprint contains the following properties:
-| Name | Type | Description |
-|------|------|-------------|
-| Level | string (enum) | The required level for this rule (must be one of the scorecard's defined levels) |
-| Query | object | The evaluation criteria for entities |
-| Rule Description | string | Optional explanation of the rule's logic |
-| Entities Tested | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities evaluated by this rule |
-| Entities Passed | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities that passed this rule |
-| % of Entities Passed | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed entities |
-
-Relations:
-| Name | Target Blueprint | Required | Many | Description |
-|:----:|:----------------:|:---------:|:-----:|:-----------:|
-| scorecard | Scorecard | true | false | The scorecard this rule belongs to |
-
-The `Rule result` blueprint contains the following properties:
-| Name | Type | Description |
-|------|------|-------------|
-| Result | string (enum) | Whether the entity passed the rule ("Passed" or "Not passed") |
-| Entity | string | The identifier of the evaluated entity |
-| Result Last Change | string (date-time) | Timestamp of the last result change |
-| Level | string (mirror) | Mirror property from the related rule |
-| Scorecard | string (mirror) | Mirror property showing the parent scorecard title |
-| Blueprint | string (mirror) | Mirror property showing the target blueprint |
-| Entity Link | string (url) | Calculated URL to the evaluated entity |
-
-Relations:
-| Name | Target Blueprint | Required | Many | Description |
-|------|-----------------|----------|-------|-------------|
-| rule | Rule | true | false | The rule that generated this result |
-| [Blueprint Identifier] | [Dynamic] | false | false | Automatically created relation to the target blueprint when a new scorecard is created |
-
-:::info Dynamic Relations
-When a new scorecard is created, Port automatically creates a relation in the Rule Result blueprint to the scorecard's target blueprint. For example, if you create a scorecard for the "service" blueprint, a new relation named "service" will be added to the Rule Result blueprint.
-:::
-
+A scorecard rule is a single evaluation consisting of multiple checks, each rule has a level which directly translates to how important it is for the check to pass (the more basic the check, the lower its level).
 
 ### Combinator
 
@@ -274,23 +234,63 @@ Conditions are small boolean checks that help when determining the final status 
 
 #### Available operators
 
-| Operator            | Supported Types                                  | Description                                                           |
-|---------------------|--------------------------------------------------|-----------------------------------------------------------------------|
-| `=`                 | `String`, `Number`, `Boolean`                    | checks if the rule value is equal to the entity value                 |
-| `!=`                | `String`, `Number`, `Boolean`                    | checks if the rule value is not equal to the entity value             |
-| `<=`                | `Number`                                         | checks if the rule value is less than or equal to the entity value    |
-| `>=`                | `Number`                                         | checks if the rule value is greater than or equal to the entity value |
-| `<`                 | `Number`                                         | checks if the rule value is less than the entity value                |
-| `>`                 | `Number`                                         | checks if the rule value is greater than the entity value             |
-| `contains`          | `String`, `Number`                               | checks if the rule value is contained within the entity value         |
-| `containsAny`       | `Array`                                          | checks if any of the specified strings exist in the target array      |
-| `doesNotContains`   | `String`, `Number`                               | checks if the rule value is not contained within the entity value     |
-| `endsWith`          | `String`, `Number`                               | checks if the rule value ends with the entity value                   |
-| `doesNotEndsWith`   | `String`, `Number`                               | checks if the rule value does not end with the entity value           |
-| `beginsWith`        | `String`, `Number`                               | checks if the rule value begins with the entity value                 |
-| `doesNotBeginsWith` | `String`, `Number`                               | checks if the rule value does not begin with the entity value         |
-| `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is an empty string, array, or object         |
-| `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is not an empty string, array, or object     |
+| Operator            | Supported Types                                  | Description                                                            |
+|---------------------|--------------------------------------------------|------------------------------------------------------------------------|
+| `=`                 | `String`, `Number`, `Boolean`                    | checks if the rule value is equal to the entity value.                 |
+| `!=`                | `String`, `Number`, `Boolean`                    | checks if the rule value is not equal to the entity value.             |
+| `<=`                | `Number`                                         | checks if the rule value is less than or equal to the entity value.    |
+| `>=`                | `Number`                                         | checks if the rule value is greater than or equal to the entity value. |
+| `<`                 | `Number`                                         | checks if the rule value is less than the entity value.                |
+| `>`                 | `Number`                                         | checks if the rule value is greater than the entity value.             |
+| `contains`          | `String`, `Number`                               | checks if the rule value is contained within the entity value.         |
+| `containsAny`       | `Array`                                          | checks if any of the specified strings exist in the target array.      |
+| `doesNotContains`   | `String`, `Number`                               | checks if the rule value is not contained within the entity value.     |
+| `endsWith`          | `String`, `Number`                               | checks if the rule value ends with the entity value.                   |
+| `doesNotEndsWith`   | `String`, `Number`                               | checks if the rule value does not end with the entity value.           |
+| `beginsWith`        | `String`, `Number`                               | checks if the rule value begins with the entity value.                 |
+| `doesNotBeginsWith` | `String`, `Number`                               | checks if the rule value does not begin with the entity value.         |
+| `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is an empty string, array, or object.         |
+| `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is not an empty string, array, or object.     |
+
+### Rule blueprint
+
+The `Rule` blueprint contains the following properties:
+| Name | Type | Description |
+|------|------|-------------|
+| `Level` | string (enum) | The required level for this rule (must be one of the scorecard's defined levels). |
+| `Query` | object | The evaluation criteria for entities. |
+| `Rule Description` | string | Optional explanation of the rule's logic. |
+| `Entities Tested` | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities evaluated by this rule. |
+| `Entities Passed` | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities that passed this rule. |
+| `% of Entities Passed` | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed entities. |
+
+Relations:
+| Name | Target Blueprint | Required | Many | Description |
+|:----:|:----------------:|:---------:|:-----:|:-----------:|
+| scorecard | Scorecard | true | false | The scorecard this rule belongs to |
+
+### Rule result blueprint
+
+The `Rule result` blueprint contains the following properties:
+| Name | Type | Description |
+|------|------|-------------|
+| `Result` | string (enum) | Whether the entity passed the rule ("Passed" or "Not passed"). |
+| `Entity` | string | The identifier of the evaluated entity. |
+| `Level` | string (mirror) | Mirror property from the related rule. |
+| `Scorecard` | string (mirror) | Mirror property showing the parent scorecard title. |
+| `Blueprint` | string (mirror) | Mirror property showing the target blueprint. |
+| `Entity Link` | string (url) | Calculated URL to the evaluated entity. |
+
+Relations:
+| Name | Target Blueprint | Required | Many | Description |
+|------|-----------------|----------|-------|-------------|
+| rule | Rule | true | false | The rule that generated this result. |
+| [Blueprint Identifier] | [Dynamic] | false | false | Automatically created relation to the target blueprint when a new scorecard is created. |
+| Owning Teams | Teams | false | false | Automatically created relation to the Team blueprint when a scorecard is created. |
+
+:::info Dynamic Relations
+When a new scorecard is created, Port automatically creates a relation in the Rule Result blueprint to the scorecard's target blueprint. For example, if you create a scorecard for the "service" blueprint, a new relation named "service" will be added to the Rule Result blueprint.
+:::
 
 ## Scorecard total level calculation
 
@@ -347,41 +347,66 @@ A scorecard filter is used to make sure only relevant entities are evaluated, on
 
 | Field                       | Description                                               |
 |-----------------------------|-----------------------------------------------------------|
-| [`combinator`](#combinator) | Defines the logical operation to apply to the query rules |
-| [`conditions`](#conditions) | An array of boolean conditions to filter entities with    |
+| [`combinator`](#combinator) | Defines the logical operation to apply to the query rules.|
+| [`conditions`](#conditions) | An array of boolean conditions to filter entities with.   |
+
+## Important Notes
+
+1. The scorecard blueprints are protected and their core structure cannot be modified:
+   - Default properties cannot be changed or deleted.
+   - Required relations cannot be modified.
+   - The blueprints themselves cannot be deleted.
+
+2. You can extend the blueprints with:
+   - New properties.
+   - New non-required relations.
+   - Additional configurations that don't affect the core functionality.
+
+3. Rule Results are automatically generated and managed by Port:
+   - They cannot be created, deleted, or modified directly.
+   - You can update the custom properties you created for the rule results.
+   - Rule results are not searchable in the global search.
+   - They are updated automatically when rules are evaluated.
+
+## Validation Rules
+
+The system enforces several validation rules to maintain data integrity:
+
+1. Rule levels must match one of the levels defined in their parent scorecard.
+2. Scorecard blueprint built-in relations cannot be renamed or modified.
+3. Rule results maintain immutable core properties while allowing updates to custom properties.
 
 ## Scorecard UI indications
 
 After configuring scorecards for the blueprint, each entity created from it will have a `Scorecards` tab in
 its [entity page](/customize-pages-dashboards-and-plugins/page/entity-page), detailing the different checks and their results:
 
-![Developer Portal Scorecards Tab](../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
+ <img src='/img/software-catalog/scorecard/tutorial/ScorecardsTab.png' width='100%' border='1px' />
 
 Additionally, the [catalog page](/customize-pages-dashboards-and-plugins/page/catalog-page) of each blueprint will automatically have a column for each scorecard rule.  
-For example, this `service` blueprint has 4 rules configured, and we can see a column for each of them in the catalog:
+For example, this `Microservice` blueprint has five rules configured, and we can see a column for each of them in the catalog:
 
-![catalogPageScorecardColumns](../../static/img/software-catalog/scorecard/catalogPageScorecardColumns.png)
+ <img src='/img/software-catalog/scorecard/catalogPageScorecardColumns.png' width='100%' border='1px' />
 
 ### Customizing views
 
 You can use table operations (sort, edit, group-by, etc.) to create various helpful views of your scorecards.  
-For example, here are the scores of all `Services` in an organization grouped by team:
+For example, here are the scores of all `Microservice` in an organization grouped by team:
 
-![catalogViewScorecardsByTeam](../../static/img/software-catalog/scorecard/catalogViewScorecardsByTeam.png)
+ <img src='/img/software-catalog/scorecard/catalogViewScorecardsByTeam.png' width='100%' border='1px' />
 
 Note that every column (scorecard metric) in the table has an aggregation in the bottom, hover over it to see the compliance of this metric across all entities in the table.
 
 ### Rule result summaries
 
 Scorecard rules are automatically added as columns in the relevant catalog page, and each such column is summarized on the bottom.  
-For example, these services have some rules defined in their scorecards, and we can see that:
+For example, these microservices have some rules defined in their scorecards, and we can see that:
 
-- 100% of `Team Batman's` services have an on-call defined, but only 67% of them have a PR cycle time shorter than 1500
-	minutes.
-- The bottom of the table contains an aggregation of the results of each rule for all services (across all teams). 11
-	out of 18 services in total have a build success rate that is higher than 70%.
+- 100% of `Ecosystem team's` microservices have an on-call defined, but only 67% of them have domain configured.
+- The bottom of the table contains an aggregation of the results of each rule for all microservices (across all teams). Six
+	out of eight microservices in total have a domain configured.
 
-![catalogRuleSummaries](../../static/img/software-catalog/scorecard/catalogRuleSummaries.png)
+<img src='/img/software-catalog/scorecard/catalogRuleSummaries.png' width='100%' border='1px' />
 
 ## Next steps
   
