@@ -148,7 +148,6 @@ The following steps outline the recommended process for managing your resources 
    In such a case, use dynamic referencing instead of hardcoding the blueprint identifier:
 
     ```hcl showLineNumbers
-
     resource "port_action" "scaffold_a_new_service" {
       identifier                    = "scaffold_a_new_service"
       required_approval             = "false"
@@ -201,15 +200,22 @@ This approach demonstrates how to manage your resource definitions in a dedicate
 
 ### Examples
 
-#### Export data using a GitHub workflow
+#### Export data using a CI/CD workflow
 
-Below is an example of a GitHub workflow that automatically exports data from your development environment using Port's API and saves it to your dedicated repository.
+Below are examples of CI/CD workflows that automatically export data from your development environment using Port's API and save it to your dedicated repository.
 
 **Prerequisites**
 
-Generate API credentials for your Port development environment and store them as GitHub repository secrets named `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET`.
+Generate API credentials for your Port development environment and store them as CI/CD variables:
+- GitHub: Repository secrets named `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET`
+- GitLab: Project variables named `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET`
+- Azure DevOps: Pipeline variables named `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET`
 
-**Workflow file**
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs groupId="cicd-platform" queryString>
+<TabItem value="github" label="GitHub workflow">
 
 <details>
 <summary><b>`export-port-data.yml` (click to expand)</b></summary>
@@ -390,22 +396,341 @@ gh workflow run export-port-data.yml \
   -f blueprint_filter=service
 ```
 
+</TabItem>
+<TabItem value="gitlab" label="GitLab pipeline">
+
+<details>
+<summary><b>`.gitlab-ci.yml` (click to expand)</b></summary>
+```yaml showLineNumbers
+stages:
+  - export
+
+variables:
+  PORT_API_URL: "https://api.getport.io/v1"
+  EXPORT_DIR: "development"
+  TIMESTAMP: "${CI_PIPELINE_ID}-${CI_JOB_ID}"
+
+export-port-data:
+  stage: export
+  image: node:18
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "web"
+  variables:
+    EXPORT_TYPE: $EXPORT_TYPE
+    BLUEPRINT_FILTER: $BLUEPRINT_FILTER
+  before_script:
+    - npm install -g jq
+    - git config --global user.email "gitlab-ci@gitlab.com"
+    - git config --global user.name "GitLab CI"
+  script:
+    - echo "Getting Port access token..."
+    - |
+      access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+            "clientId": "${PORT_CLIENT_ID}",
+            "clientSecret": "${PORT_CLIENT_SECRET}"
+        }' | jq '.accessToken' | sed 's/"//g')
+      
+      if [ -z "$access_token" ] || [ "$access_token" = "null" ]; then
+        echo "Failed to get access token"
+        exit 1
+      fi
+      
+      echo "access_token=$access_token" >> $GITHUB_ENV
+      echo "✅ Successfully obtained access token"
+    - mkdir -p $EXPORT_DIR/$TIMESTAMP
+    - echo "Created export directory: $EXPORT_DIR/$TIMESTAMP"
+    - |
+      if [ "$EXPORT_TYPE" = "blueprints" ] || [ "$EXPORT_TYPE" = "all" ]; then
+        echo "📋 Exporting blueprints..."
+        
+        blueprints_response=$(curl -X GET "$PORT_API_URL/blueprints" \
+          -H "Authorization: Bearer $access_token" \
+          -H "Content-Type: application/json")
+        
+        if [ $? -eq 0 ] && [ -n "$blueprints_response" ]; then
+          echo "$blueprints_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/blueprints.json"
+          
+          blueprint_count=$(echo "$blueprints_response" | jq '.blueprints | length')
+          echo "✅ Exported $blueprint_count blueprints"
+          
+          if [ -n "$BLUEPRINT_FILTER" ]; then
+            blueprint_id="$BLUEPRINT_FILTER"
+            echo "📄 Exporting detailed definition for blueprint: $blueprint_id"
+            
+            blueprint_detail=$(curl -X GET "$PORT_API_URL/blueprints/$blueprint_id" \
+              -H "Authorization: Bearer $access_token" \
+              -H "Content-Type: application/json")
+            
+            if [ $? -eq 0 ] && [ -n "$blueprint_detail" ]; then
+              echo "$blueprint_detail" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/blueprint-$blueprint_id.json"
+              echo "✅ Exported detailed definition for blueprint: $blueprint_id"
+            fi
+          fi
+        else
+          echo "❌ Failed to export blueprints"
+          exit 1
+        fi
+      fi
+    - |
+      if [ "$EXPORT_TYPE" = "scorecards" ] || [ "$EXPORT_TYPE" = "all" ]; then
+        echo "📊 Exporting scorecards..."
+        
+        scorecards_response=$(curl -X GET "$PORT_API_URL/scorecards" \
+          -H "Authorization: Bearer $access_token" \
+          -H "Content-Type: application/json")
+        
+        if [ $? -eq 0 ] && [ -n "$scorecards_response" ]; then
+          echo "$scorecards_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/scorecards.json"
+          
+          scorecard_count=$(echo "$scorecards_response" | jq '.scorecards | length')
+          echo "✅ Exported $scorecard_count scorecards"
+        else
+          echo "❌ Failed to export scorecards"
+          exit 1
+        fi
+      fi
+    - |
+      if [ "$EXPORT_TYPE" = "actions" ] || [ "$EXPORT_TYPE" = "all" ]; then
+        echo "⚡ Exporting actions..."
+        
+        actions_response=$(curl -X GET "$PORT_API_URL/actions" \
+          -H "Authorization: Bearer $access_token" \
+          -H "Content-Type: application/json")
+        
+        if [ $? -eq 0 ] && [ -n "$actions_response" ]; then
+          echo "$actions_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/actions.json"
+          
+          action_count=$(echo "$actions_response" | jq '.actions | length')
+          echo "✅ Exported $action_count actions"
+        else
+          echo "❌ Failed to export actions"
+          exit 1
+        fi
+      fi
+    - echo "💾 Committing exported data to repository..."
+    - git add "$EXPORT_DIR/"
+    - |
+      if git diff --staged --quiet; then
+        echo "ℹ️ No changes to commit"
+      else
+        git commit -m "Export Port data - $TIMESTAMP
+
+        - Export type: $EXPORT_TYPE
+        - Blueprint filter: ${BLUEPRINT_FILTER:-None}
+        - GitLab pipeline: $CI_PIPELINE_ID"
+        
+        git push origin $CI_COMMIT_REF_NAME
+        echo "✅ Exported data committed to repository"
+      fi
+```
+</details>
+
+**Usage:**
+1. Go to **CI/CD > Pipelines** in your GitLab project
+2. Click **Run pipeline**
+3. Set variables:
+   - `EXPORT_TYPE`: `all`, `blueprints`, `scorecards`, or `actions`
+   - `BLUEPRINT_FILTER`: (optional) specific blueprint identifier
+
+</TabItem>
+<TabItem value="azure" label="Azure DevOps pipeline">
+
+<details>
+<summary><b>`azure-pipelines.yml` (click to expand)</b></summary>
+```yaml showLineNumbers
+trigger: none
+
+variables:
+  PORT_API_URL: 'https://api.getport.io/v1'
+  EXPORT_DIR: 'development'
+  TIMESTAMP: '$(Build.BuildId)-$(Build.BuildNumber)'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+parameters:
+- name: exportType
+  displayName: 'Type of data to export'
+  type: string
+  default: 'all'
+  values:
+  - all
+  - blueprints
+  - scorecards
+  - actions
+- name: blueprintFilter
+  displayName: 'Specific blueprint to export (optional)'
+  type: string
+  default: ''
+
+stages:
+- stage: ExportPortData
+  displayName: 'Export Port Data'
+  jobs:
+  - job: ExportJob
+    displayName: 'Export Port Data to Repository'
+    steps:
+    - task: NodeTool@0
+      displayName: 'Use Node.js 18'
+      inputs:
+        versionSpec: '18.x'
+    
+    - script: |
+        npm install -g jq
+      displayName: 'Install dependencies'
+    
+    - script: |
+        echo "Getting Port access token..."
+        access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "clientId": "$(PORT_CLIENT_ID)",
+              "clientSecret": "$(PORT_CLIENT_SECRET)"
+          }' | jq '.accessToken' | sed 's/"//g')
+        
+        if [ -z "$access_token" ] || [ "$access_token" = "null" ]; then
+          echo "Failed to get access token"
+          exit 1
+        fi
+        
+        echo "access_token=$access_token" >> $GITHUB_ENV
+        echo "✅ Successfully obtained access token"
+      displayName: 'Get Port Access Token'
+    
+    - script: |
+        mkdir -p $(EXPORT_DIR)/$(TIMESTAMP)
+        echo "Created export directory: $(EXPORT_DIR)/$(TIMESTAMP)"
+      displayName: 'Create export directory'
+    
+    - script: |
+        if [ "$(exportType)" = "blueprints" ] || [ "$(exportType)" = "all" ]; then
+          echo "📋 Exporting blueprints..."
+          
+          blueprints_response=$(curl -X GET "$(PORT_API_URL)/blueprints" \
+            -H "Authorization: Bearer $access_token" \
+            -H "Content-Type: application/json")
+          
+          if [ $? -eq 0 ] && [ -n "$blueprints_response" ]; then
+            echo "$blueprints_response" | jq '.' > "$(EXPORT_DIR)/$(TIMESTAMP)/blueprints.json"
+            
+            blueprint_count=$(echo "$blueprints_response" | jq '.blueprints | length')
+            echo "✅ Exported $blueprint_count blueprints"
+            
+            if [ -n "$(blueprintFilter)" ]; then
+              blueprint_id="$(blueprintFilter)"
+              echo "📄 Exporting detailed definition for blueprint: $blueprint_id"
+              
+              blueprint_detail=$(curl -X GET "$(PORT_API_URL)/blueprints/$blueprint_id" \
+                -H "Authorization: Bearer $access_token" \
+                -H "Content-Type: application/json")
+              
+              if [ $? -eq 0 ] && [ -n "$blueprint_detail" ]; then
+                echo "$blueprint_detail" | jq '.' > "$(EXPORT_DIR)/$(TIMESTAMP)/blueprint-$blueprint_id.json"
+                echo "✅ Exported detailed definition for blueprint: $blueprint_id"
+              fi
+            fi
+          else
+            echo "❌ Failed to export blueprints"
+            exit 1
+          fi
+        fi
+      displayName: 'Export Blueprints'
+    
+    - script: |
+        if [ "$(exportType)" = "scorecards" ] || [ "$(exportType)" = "all" ]; then
+          echo "📊 Exporting scorecards..."
+          
+          scorecards_response=$(curl -X GET "$(PORT_API_URL)/scorecards" \
+            -H "Authorization: Bearer $access_token" \
+            -H "Content-Type: application/json")
+          
+          if [ $? -eq 0 ] && [ -n "$scorecards_response" ]; then
+            echo "$scorecards_response" | jq '.' > "$(EXPORT_DIR)/$(TIMESTAMP)/scorecards.json"
+            
+            scorecard_count=$(echo "$scorecards_response" | jq '.scorecards | length')
+            echo "✅ Exported $scorecard_count scorecards"
+          else
+            echo "❌ Failed to export scorecards"
+            exit 1
+          fi
+        fi
+      displayName: 'Export Scorecards'
+    
+    - script: |
+        if [ "$(exportType)" = "actions" ] || [ "$(exportType)" = "all" ]; then
+          echo "⚡ Exporting actions..."
+          
+          actions_response=$(curl -X GET "$(PORT_API_URL)/actions" \
+            -H "Authorization: Bearer $access_token" \
+            -H "Content-Type: application/json")
+          
+          if [ $? -eq 0 ] && [ -n "$actions_response" ]; then
+            echo "$actions_response" | jq '.' > "$(EXPORT_DIR)/$(TIMESTAMP)/actions.json"
+            
+            action_count=$(echo "$actions_response" | jq '.actions | length')
+            echo "✅ Exported $action_count actions"
+          else
+            echo "❌ Failed to export actions"
+            exit 1
+          fi
+        fi
+      displayName: 'Export Actions'
+    
+    - script: |
+        echo "💾 Committing exported data to repository..."
+        
+        git config --global user.email "azure-pipelines@azure.com"
+        git config --global user.name "Azure Pipelines"
+        
+        git add "$(EXPORT_DIR)/"
+        
+        if git diff --staged --quiet; then
+          echo "ℹ️ No changes to commit"
+        else
+          git commit -m "Export Port data - $(TIMESTAMP)
+
+          - Export type: $(exportType)
+          - Blueprint filter: $(blueprintFilter)
+          - Azure pipeline: $(Build.BuildId)"
+          
+          git push origin $(Build.SourceBranchName)
+          echo "✅ Exported data committed to repository"
+        fi
+      displayName: 'Commit exported data'
+```
+</details>
+
+**Usage:**
+1. Go to **Pipelines** in your Azure DevOps project
+2. Click **Run pipeline** on your pipeline
+3. Set parameters:
+   - `exportType`: `all`, `blueprints`, `scorecards`, or `actions`
+   - `blueprintFilter`: (optional) specific blueprint identifier
+
+</TabItem>
+</Tabs>
+
 ---
 
-#### Promote resources using a GitHub workflow
+#### Promote resources using a CI/CD workflow
 
-Below is an example of a GitHub workflow that automates the promotion of resources from a development environment to a production environment.
+Below are examples of CI/CD workflows that automate the promotion of resources from a development environment to a production environment.
 
 **Prerequisites**
 
-Before using this workflow, make sure to:
+Before using these workflows, make sure to:
 
-1. **Set up repository secrets:**
+1. **Set up CI/CD credentials:**
    - `PORT_PRODUCTION_TOKEN`: Your Port API token for the production environment.
+   - GitHub: Store as repository secrets
+   - GitLab: Store as project variables  
+   - Azure DevOps: Store as pipeline variables
 
 2. **Configure Port API tokens:**
    - Generate API tokens for your production Port environment.
-   - Store them securely as GitHub repository secrets.
+   - Store them securely in your CI/CD platform.
 
 3. **Organize your repository structure:**
    - Create `development/` and `production/` folders.
@@ -434,9 +759,10 @@ Before using this workflow, make sure to:
       ```
       </details>
 
-**Workflow file**
+<Tabs groupId="cicd-platform-promote" queryString>
+<TabItem value="github" label="GitHub Actions">
 
-The workflow file might look like this:
+**Workflow file**
 
 <details>
 <summary><b>`promote-to-production.yml` (click to expand)</b></summary>
@@ -665,3 +991,333 @@ Go to the `Actions` tab in your GitHub repository and manually trigger the workf
    gh workflow run promote-to-production.yml \
      -f resource_type=blueprints
    ```
+
+</TabItem>
+<TabItem value="gitlab" label="GitLab CI">
+
+**Workflow file**
+
+<details>
+<summary><b>`.gitlab-ci.yml` (click to expand)</b></summary>
+```yaml showLineNumbers
+stages:
+  - promote
+
+variables:
+  PORT_API_URL: "https://api.getport.io/v1"
+
+promote-resources:
+  stage: promote
+  image: node:18
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "web"
+  variables:
+    RESOURCE_TYPE: $RESOURCE_TYPE
+    RESOURCE_NAME: $RESOURCE_NAME
+  before_script:
+    - npm install -g jq
+    - git config --global user.email "gitlab-ci@gitlab.com"
+    - git config --global user.name "GitLab CI"
+  script:
+    - echo "Validating development resources..."
+    - |
+      for file in development/**/*.json; do
+        if [ -f "$file" ]; then
+          echo "Validating $file"
+          jq empty "$file" || (echo "Invalid JSON in $file" && exit 1)
+        fi
+      done
+    - |
+      if [ "$RESOURCE_TYPE" = "blueprints" ] || [ "$RESOURCE_TYPE" = "all" ]; then
+        echo "Promoting blueprints..."
+        
+        if [ -n "$RESOURCE_NAME" ]; then
+          file="development/blueprints/$RESOURCE_NAME.json"
+          if [ -f "$file" ]; then
+            echo "Promoting blueprint: $RESOURCE_NAME"
+            cp "$file" "production/blueprints/"
+            curl -X POST "$PORT_API_URL/blueprints" \
+              -H "Authorization: Bearer ${PORT_PRODUCTION_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d @"$file"
+          else
+            echo "Blueprint file not found: $file"
+            exit 1
+          fi
+        else
+          for file in development/blueprints/*.json; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file")
+              echo "Promoting blueprint: $filename"
+              cp "$file" "production/blueprints/"
+              curl -X POST "$PORT_API_URL/blueprints" \
+                -H "Authorization: Bearer ${PORT_PRODUCTION_TOKEN}" \
+                -H "Content-Type: application/json" \
+                -d @"$file"
+            fi
+          done
+        fi
+      fi
+    - |
+      if [ "$RESOURCE_TYPE" = "scorecards" ] || [ "$RESOURCE_TYPE" = "all" ]; then
+        echo "Promoting scorecards..."
+        
+        if [ -n "$RESOURCE_NAME" ]; then
+          file="development/scorecards/$RESOURCE_NAME.json"
+          if [ -f "$file" ]; then
+            echo "Promoting scorecard: $RESOURCE_NAME"
+            cp "$file" "production/scorecards/"
+            curl -X POST "$PORT_API_URL/scorecards" \
+              -H "Authorization: Bearer ${PORT_PRODUCTION_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d @"$file"
+          else
+            echo "Scorecard file not found: $file"
+            exit 1
+          fi
+        else
+          for file in development/scorecards/*.json; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file")
+              echo "Promoting scorecard: $filename"
+              cp "$file" "production/scorecards/"
+              curl -X POST "$PORT_API_URL/scorecards" \
+                -H "Authorization: Bearer ${PORT_PRODUCTION_TOKEN}" \
+                -H "Content-Type: application/json" \
+                -d @"$file"
+            fi
+          done
+        fi
+      fi
+    - |
+      if [ "$RESOURCE_TYPE" = "actions" ] || [ "$RESOURCE_TYPE" = "all" ]; then
+        echo "Promoting actions..."
+        
+        if [ -n "$RESOURCE_NAME" ]; then
+          file="development/actions/$RESOURCE_NAME.json"
+          if [ -f "$file" ]; then
+            echo "Promoting action: $RESOURCE_NAME"
+            cp "$file" "production/actions/"
+            curl -X POST "$PORT_API_URL/actions" \
+              -H "Authorization: Bearer ${PORT_PRODUCTION_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d @"$file"
+          else
+            echo "Action file not found: $file"
+            exit 1
+          fi
+        else
+          for file in development/actions/*.json; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file")
+              echo "Promoting action: $filename"
+              cp "$file" "production/actions/"
+              curl -X POST "$PORT_API_URL/actions" \
+                -H "Authorization: Bearer ${PORT_PRODUCTION_TOKEN}" \
+                -H "Content-Type: application/json" \
+                -d @"$file"
+            fi
+          done
+        fi
+      fi
+    - git add production/
+    - |
+      if git diff --staged --quiet; then
+        echo "No changes to commit"
+      else
+        git commit -m "Promote $RESOURCE_TYPE to production"
+        git push origin $CI_COMMIT_REF_NAME
+      fi
+```
+</details>
+
+**Usage:**
+1. Go to **CI/CD > Pipelines** in your GitLab project
+2. Click **Run pipeline**
+3. Set variables:
+   - `RESOURCE_TYPE`: `blueprints`, `scorecards`, `actions`, or `all`
+   - `RESOURCE_NAME`: (optional) specific resource name
+
+</TabItem>
+<TabItem value="azure" label="Azure DevOps">
+
+**Workflow file**
+
+<details>
+<summary><b>`azure-pipelines.yml` (click to expand)</b></summary>
+```yaml showLineNumbers
+trigger: none
+
+variables:
+  PORT_API_URL: 'https://api.getport.io/v1'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+parameters:
+- name: resourceType
+  displayName: 'Type of resource to promote'
+  type: string
+  default: 'all'
+  values:
+  - blueprints
+  - scorecards
+  - actions
+  - all
+- name: resourceName
+  displayName: 'Specific resource name (optional)'
+  type: string
+  default: ''
+
+stages:
+- stage: PromoteResources
+  displayName: 'Promote Resources to Production'
+  jobs:
+  - job: PromoteJob
+    displayName: 'Promote Resources from Development to Production'
+    steps:
+    - task: NodeTool@0
+      displayName: 'Use Node.js 18'
+      inputs:
+        versionSpec: '18.x'
+    
+    - script: |
+        npm install -g jq
+      displayName: 'Install dependencies'
+    
+    - script: |
+        echo "Validating development resources..."
+        for file in development/**/*.json; do
+          if [ -f "$file" ]; then
+            echo "Validating $file"
+            jq empty "$file" || (echo "Invalid JSON in $file" && exit 1)
+          fi
+        done
+      displayName: 'Validate development resources'
+    
+    - script: |
+        if [ "$(resourceType)" = "blueprints" ] || [ "$(resourceType)" = "all" ]; then
+          echo "Promoting blueprints..."
+          
+          if [ -n "$(resourceName)" ]; then
+            file="development/blueprints/$(resourceName).json"
+            if [ -f "$file" ]; then
+              echo "Promoting blueprint: $(resourceName)"
+              cp "$file" "production/blueprints/"
+              curl -X POST "$(PORT_API_URL)/blueprints" \
+                -H "Authorization: Bearer $(PORT_PRODUCTION_TOKEN)" \
+                -H "Content-Type: application/json" \
+                -d @"$file"
+            else
+              echo "Blueprint file not found: $file"
+              exit 1
+            fi
+          else
+            for file in development/blueprints/*.json; do
+              if [ -f "$file" ]; then
+                filename=$(basename "$file")
+                echo "Promoting blueprint: $filename"
+                cp "$file" "production/blueprints/"
+                curl -X POST "$(PORT_API_URL)/blueprints" \
+                  -H "Authorization: Bearer $(PORT_PRODUCTION_TOKEN)" \
+                  -H "Content-Type: application/json" \
+                  -d @"$file"
+              fi
+            done
+          fi
+        fi
+      displayName: 'Promote Blueprints'
+    
+    - script: |
+        if [ "$(resourceType)" = "scorecards" ] || [ "$(resourceType)" = "all" ]; then
+          echo "Promoting scorecards..."
+          
+          if [ -n "$(resourceName)" ]; then
+            file="development/scorecards/$(resourceName).json"
+            if [ -f "$file" ]; then
+              echo "Promoting scorecard: $(resourceName)"
+              cp "$file" "production/scorecards/"
+              curl -X POST "$(PORT_API_URL)/scorecards" \
+                -H "Authorization: Bearer $(PORT_PRODUCTION_TOKEN)" \
+                -H "Content-Type: application/json" \
+                -d @"$file"
+            else
+              echo "Scorecard file not found: $file"
+              exit 1
+            fi
+          else
+            for file in development/scorecards/*.json; do
+              if [ -f "$file" ]; then
+                filename=$(basename "$file")
+                echo "Promoting scorecard: $filename"
+                cp "$file" "production/scorecards/"
+                curl -X POST "$(PORT_API_URL)/scorecards" \
+                  -H "Authorization: Bearer $(PORT_PRODUCTION_TOKEN)" \
+                  -H "Content-Type: application/json" \
+                  -d @"$file"
+              fi
+            done
+          fi
+        fi
+      displayName: 'Promote Scorecards'
+    
+    - script: |
+        if [ "$(resourceType)" = "actions" ] || [ "$(resourceType)" = "all" ]; then
+          echo "Promoting actions..."
+          
+          if [ -n "$(resourceName)" ]; then
+            file="development/actions/$(resourceName).json"
+            if [ -f "$file" ]; then
+              echo "Promoting action: $(resourceName)"
+              cp "$file" "production/actions/"
+              curl -X POST "$(PORT_API_URL)/actions" \
+                -H "Authorization: Bearer $(PORT_PRODUCTION_TOKEN)" \
+                -H "Content-Type: application/json" \
+                -d @"$file"
+            else
+              echo "Action file not found: $file"
+              exit 1
+            fi
+          else
+            for file in development/actions/*.json; do
+              if [ -f "$file" ]; then
+                filename=$(basename "$file")
+                echo "Promoting action: $filename"
+                cp "$file" "production/actions/"
+                curl -X POST "$(PORT_API_URL)/actions" \
+                  -H "Authorization: Bearer $(PORT_PRODUCTION_TOKEN)" \
+                  -H "Content-Type: application/json" \
+                  -d @"$file"
+              fi
+            done
+          fi
+        fi
+      displayName: 'Promote Actions'
+    
+    - script: |
+        echo "Committing promoted resources..."
+        
+        git config --global user.email "azure-pipelines@azure.com"
+        git config --global user.name "Azure Pipelines"
+        
+        git add production/
+        
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Promote $(resourceType) to production"
+          git push origin $(Build.SourceBranchName)
+        fi
+      displayName: 'Commit promoted resources'
+```
+</details>
+
+**Usage:**
+1. Go to **Pipelines** in your Azure DevOps project
+2. Click **Run pipeline** on your pipeline
+3. Set parameters:
+   - `resourceType`: `blueprints`, `scorecards`, `actions`, or `all`
+   - `resourceName`: (optional) specific resource name
+
+</TabItem>
+</Tabs>
