@@ -11,6 +11,11 @@ import TabItem from "@theme/TabItem"
 
 # Concepts and structure
 
+In your [Builder](https://app.getport.io/settings/data-model) page scorecards are represented by three blueprints:
+- [`Scorecard`](#scorecard-structure) - Represents a collection of rules and levels for evaluating entities.
+- [`Rule`](#rule-blueprint) - Defines specific criteria for evaluation.
+- [`Rule Result`](#rule-result-blueprint) - Stores the evaluation results for each entity.
+
 ## Scorecard structure
 
 A single scorecard defines a category to group different checks, validations and evaluations.  
