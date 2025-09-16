@@ -18,12 +18,12 @@ Below is the structure of a single `scorecard` blueprint:
 
 | Name | Type | Description |
 |------|------|-------------|
-| `Blueprint` | string (format: blueprints) | The target blueprint whose entities will be evaluated. |
-| [`Levels`](#levels) | array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold). |
-| [`Filter`](#filter-elements) | object | Optional query to filter which entities should be evaluated. |
-| `Rules Tested` | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of [rule](#rule-elements) evaluations performed. |
-|` Rules Passed` | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful [rule](#rule-elements) evaluations. |
-| `% of Rules Passed` | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules. |
+| `Blueprint` | String (format: blueprints) | The target blueprint whose entities will be evaluated. |
+| [`Levels`](#levels) | Array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold). |
+| [`Filter`](#filter-elements) | Object | Optional query to filter which entities should be evaluated. |
+| `Rules tested` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of [rule](#rule-elements) evaluations performed. |
+|` Rules passed` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful [rule](#rule-elements) evaluations. |
+| `% of rules passed` | Number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules. |
 
 Relations:
 | Name | Target Blueprint | Required | Many | Description |
@@ -257,36 +257,37 @@ Conditions are small boolean checks that help when determining the final status 
 The `Rule` blueprint contains the following properties:
 | Name | Type | Description |
 |------|------|-------------|
-| `Level` | string (enum) | The required level for this rule (must be one of the scorecard's defined levels). |
-| `Query` | object | The evaluation criteria for entities. |
-| `Rule Description` | string | Optional explanation of the rule's logic. |
-| `Entities Tested` | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities evaluated by this rule. |
-| `Entities Passed` | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities that passed this rule. |
-| `% of Entities Passed` | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed entities. |
+| `Level` | String (enum) | The required level for this rule (must be one of the scorecard's defined levels). |
+| `Query` | Object | The evaluation criteria for entities. |
+| `Rule description` | String | Optional explanation of the rule's logic. |
+| `Entities tested` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities evaluated by this rule. |
+| `Entities passed` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities that passed this rule. |
+| `% of entities passed` | Number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed entities. |
 
 Relations:
 | Name | Target Blueprint | Required | Many | Description |
 |:----:|:----------------:|:---------:|:-----:|:-----------:|
-| scorecard | Scorecard | true | false | The scorecard this rule belongs to |
+| Scorecard | Scorecard | true | false | The scorecard this rule belongs to |
 
 ### Rule result blueprint
 
 The `Rule result` blueprint contains the following properties:
 | Name | Type | Description |
 |------|------|-------------|
-| `Result` | string (enum) | Whether the entity passed the rule ("Passed" or "Not passed"). |
-| `Entity` | string | The identifier of the evaluated entity. |
-| `Level` | string (mirror) | Mirror property from the related rule. |
-| `Scorecard` | string (mirror) | Mirror property showing the parent scorecard title. |
-| `Blueprint` | string (mirror) | Mirror property showing the target blueprint. |
-| `Entity Link` | string (url) | Calculated URL to the evaluated entity. |
+| `Result` | String (enum) | Whether the entity passed the rule ("Passed" or "Not passed"). |
+| `Entity` | String | The identifier of the evaluated entity. |
+| `Entity link` | String (url) | Calculated URL to the evaluated entity. |
+| `Result last change` | Date-Time (mirror) | Last time the rule result changed. |
+| `Scorecard` | String (mirror) | Mirror property showing the parent scorecard title. |
+| `Blueprint` | String (mirror) | Mirror property showing the target blueprint. |
+| `Level` | String (mirror) | Mirror property from the related rule. |
 
 Relations:
 | Name | Target Blueprint | Required | Many | Description |
 |------|-----------------|----------|-------|-------------|
-| rule | Rule | true | false | The rule that generated this result. |
+| Rule | Rule | true | false | The rule that generated this result. |
 | [Blueprint Identifier] | [Dynamic] | false | false | Automatically created relation to the target blueprint when a new scorecard is created. |
-| Owning Teams | Teams | false | false | Automatically created relation to the Team blueprint when a scorecard is created. |
+| Owning Teams | Teams | false | true | The relation to the Team blueprint is created by default. |
 
 :::info Dynamic Relations
 When a new scorecard is created, Port automatically creates a relation in the Rule Result blueprint to the scorecard's target blueprint. For example, if you create a scorecard for the "service" blueprint, a new relation named "service" will be added to the Rule Result blueprint.
