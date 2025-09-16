@@ -1,22 +1,36 @@
 ---
-sidebar_position: 0
+sidebar_position: 4
 ---
 
-import S3BucketBlueprint from './s3/buckets/_s3_bucket_blueprint.mdx'
-import S3PortAppConfig from './s3/buckets/_s3_bucket_port_app_config.mdx'
-import S3BucketProperties from './s3/buckets/_s3_bucket_properties.mdx'
-import EcsClusterBlueprint from './ecs/clusters/_ecs_cluster_blueprint.mdx'
-import EcsClusterConfig from './ecs/clusters/_ecs_cluster_port_app_config.mdx'
-import EcsClusterProperties from './ecs/clusters/_ecs_cluster_properties.mdx'
-import Ec2InstanceBlueprint from './ec2/instances/_ec2_instance_blueprint.mdx'
-import Ec2InstanceConfig from './ec2/instances/_ec2_instance_port_app_config.mdx'
-import Ec2InstanceProperties from './ec2/instances/_ec2_instance_properties.mdx'
+import AccountInfoBlueprint from './examples/account_info/_account_info_blueprint.mdx'
+import AccountInfoConfig from './examples/account_info/_account_info_port_app_config.mdx'
+import S3BucketBlueprint from './examples/s3/buckets/_s3_bucket_blueprint.mdx'
+import S3PortAppConfig from './examples/s3/buckets/_s3_bucket_port_app_config.mdx'
+import S3BucketProperties from './examples/s3/buckets/_s3_bucket_properties.mdx'
+import EcsClusterBlueprint from './examples/ecs/clusters/_ecs_cluster_blueprint.mdx'
+import EcsClusterConfig from './examples/ecs/clusters/_ecs_cluster_port_app_config.mdx'
+import EcsClusterProperties from './examples/ecs/clusters/_ecs_cluster_properties.mdx'
+import Ec2InstanceBlueprint from './examples/ec2/instances/_ec2_instance_blueprint.mdx'
+import Ec2InstanceConfig from './examples/ec2/instances/_ec2_instance_port_app_config.mdx'
+import Ec2InstanceProperties from './examples/ec2/instances/_ec2_instance_properties.mdx'
 
 # Examples
 
 This page contains practical examples for mapping AWS resources to Port using AWS Hosted by Port.
 
 These examples demonstrate how to create blueprints and configure mappings to ingest your AWS infrastructure into your Port software catalog.
+
+## AWS Account
+
+### AccountInfo
+
+The following example demonstrates how to ingest your AWS Account information to Port.
+
+You can use the following Port blueprint definitions and integration configuration:
+
+<AccountInfoBlueprint/>
+
+<AccountInfoConfig/>
 
 ## Amazon S3
 

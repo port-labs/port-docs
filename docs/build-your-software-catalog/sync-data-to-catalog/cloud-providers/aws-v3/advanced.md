@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 # Advanced
@@ -36,7 +36,7 @@ You can include a **maximum of 3 optional actions per resource kind** (excluding
 
 Each AWS resource has its own set of available actions. To find which actions are available for a specific resource, you can:
 
-1. Check the resource's properties table in the [Examples](./examples/examples.md) page
+1. Check the resource's properties table in the [Examples](./examples.md) page
 2. Look at the "Action Required" column to see which properties need optional actions
 3. Use the action names shown in that column in your `includeActions` list
 
