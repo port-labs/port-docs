@@ -75,9 +75,10 @@ The different components that make up a basic property definition are listed in 
 
 | Field         | Description                                                                                                                                                                        |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`       | Property title.                                                                                                                                                                     |
+| `title`       | Property title.                                                                                                                                                                    |
+| `identifier`  | Property identifer. (Maximum 30 characters)                                                                                                                                        |
 | `type`        | **Mandatory field.** The data type of the property.                                                                                                                                |
-| `icon`        | Icon for the property. <br /><br />See the [full icon list](../setup-blueprint.md#full-icon-list).                                                                                  |
+| `icon`        | Icon for the property. <br /><br />See the [full icon list](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/#full-icon-list).                                                                                 |
 | `description` | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property. |
 | `default`     | Default value for this property in case an entity is created without explicitly providing a value.                                                                                 |
 

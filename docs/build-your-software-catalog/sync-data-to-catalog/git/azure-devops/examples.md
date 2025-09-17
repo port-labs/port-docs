@@ -35,6 +35,15 @@ import PortUsersAndTeamsAppConfig from './example-users-and-teams/\_azuredevops_
 import UsersBlueprint from './example-users-and-teams/\_azuredevops_exporter_example_user_blueprint.mdx'
 import TeamsBlueprint from './example-users-and-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
 
+import BuildBlueprint from './example-build/\_azuredevops_exporter_example_build_blueprint.mdx'
+import PortBuildAppConfig from './example-build/\_azuredevops_exporter_example_build_port_app_config.mdx'
+
+import PipelineStageBlueprint from './example-pipeline-stage/\_azuredevops_exporter_example_pipeline_stage_blueprint.mdx'
+import PortPipelineStageAppConfig from './example-pipeline-stage/\_azuredevops_exporter_example_pipeline_stage_port_app_config.mdx'
+
+import PipelineRunBlueprint from './example-pipeline-run/\_azuredevops_exporter_example_pipeline_run_blueprint.mdx'
+import PortPipelineRunAppConfig from './example-pipeline-run/\_azuredevops_exporter_example_pipeline_run_port_app_config.mdx'
+
 import EnvironmentBlueprint from './example-environment/\_azuredevops_exporter_example_environment_blueprint.mdx'
 import PortEnvironmentAppConfig from './example-environment/\_azuredevops_exporter_example_environment_port_app_config.mdx'
 
@@ -43,7 +52,6 @@ import PortReleaseDeploymentAppConfig from './example-release-deployment/\_azure
 
 import PipelineDeploymentBlueprint from './example-pipeline-deployment/\_azuredevops_exporter_example_pipeline_deployment_blueprint.mdx'
 import PortPipelineDeploymentAppConfig from './example-pipeline-deployment/\_azuredevops_exporter_example_pipeline_deployment_port_app_config.mdx'
-
 
 
 # Examples
@@ -109,6 +117,71 @@ You can use the following Port blueprint definitions and integration configurati
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port.
+
+## Mapping builds
+
+The following example demonstrates how to ingest your Azure DevOps builds to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<ProjectBlueprint/>
+
+<BuildBlueprint/>
+
+<PortBuildAppConfig/>
+
+:::tip To Learn more
+
+- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure DevOps objects to Port entities.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/build/builds/list?view=azure-devops-rest-7.1&tabs=HTTP#build) for the Azure DevOps build object structure.
+
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your builds.
+
+## Mapping pipeline stages
+
+The following example demonstrates how to ingest your Azure DevOps pipeline stages to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<ProjectBlueprint/>
+
+<BuildBlueprint/>
+
+<PipelineStageBlueprint/>
+
+<PortPipelineStageAppConfig/>
+
+:::tip To Learn more
+
+- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure DevOps objects to Port entities.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/runs/list-stages?view=azure-devops-rest-7.1&tabs=HTTP#stage) for the Azure DevOps pipeline-stage object structure.
+
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your pipeline stages.
+
+## Mapping pipeline runs
+
+The following example demonstrates how to ingest your Azure DevOps pipeline runs to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<ProjectBlueprint/>
+
+<PipelineRunBlueprint/>
+
+<PortPipelineRunAppConfig/>
+
+:::tip To Learn more
+
+- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure DevOps objects to Port entities.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/runs/list?view=azure-devops-rest-7.1&tabs=HTTP#run) for the Azure DevOps pipeline-run object structure.
+
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your pipeline runs.
 
 ## Mapping users and teams
 
