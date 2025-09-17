@@ -23,10 +23,9 @@ The guide presents two approaches to achieve this:
 
 - For the first approach, you will need to have a Terraform account and be able to create and manage resources in your desired environment.
 
-- For the second approach, you will need to have a dedicated Git repository to store the resource definitions. In this guide, we will use GitHub as an example.
+- For the second approach, you will need to have a dedicated Git repository to store the resource definitions.
 
 ## Approach 1: IaC (Terraform)
-
 
 Port offers a [Terraform provider](https://registry.terraform.io/providers/port-labs/port/latest/docs) that allows you to define and manage portal resources (blueprints, scorecards, automations, etc.) as Terraform code.
 
@@ -88,11 +87,11 @@ Before you dive into the details of the approach, we recommend to go over best p
 
 The following steps outline the recommended process for managing your resources across environments using Terraform, while maintaining consistency and minimizing errors:
 
-1. **Set up development environment**  
+**Set up development environment**  
    Using Port's UI in your development environment, create the resources you want to promote to your production environment.  
    As an example, we will use the `Service` blueprint, and the `Own services` self-service action. These two resources are automatically created when you create a Port account.
 
-2. **Update Terraform configuration**  
+**Update Terraform configuration**  
    In your Terraform configuration, add the following import blocks:
 
    <details>
@@ -125,7 +124,7 @@ The following steps outline the recommended process for managing your resources 
     ```
     </details>
 
-3. **Generate Terraform configuration**  
+**Generate Terraform configuration**  
    Using the Terraform CLI, generate configuration files from the resources created in your development environment:
    
    ```bash showLineNumbers
@@ -133,36 +132,15 @@ The following steps outline the recommended process for managing your resources 
    terraform plan -generate-config-out=generated.tf
    ```
 
-4. **Validate the configuration**  
+**Validate the configuration**  
    Check the resulting `generated.tf` file, ensuring it includes the desired configuration for both the `Own services` and `Service` resources.
 
-5. **Copy and adjust for Production**  
+**Copy and adjust for Production**  
    - Copy the `generated.tf` file to your production environment.
    - Remove the provider blocks - since the provider is usually set at a higher level, remove the `provider = port-labs` lines from both resources.
    - Remove null properties - clean up the configuration by removing all properties that are set to `null`.
 
-   **Dynamic referencing**  
-   If you have dependencies between two or more resources, you will need to manually handle them using dynamic referencing.
-
-   For example, a self-service action that creates new instances of a blueprint will depend on that blueprint.  
-   In such a case, use dynamic referencing instead of hardcoding the blueprint identifier:
-
-    ```hcl showLineNumbers
-    resource "port_action" "scaffold_a_new_service" {
-      identifier                    = "scaffold_a_new_service"
-      required_approval             = "false"
-      self_service_trigger = {
-        # highlight-next-line
-        blueprint_identifier = port_blueprint.service.identifier # instead of "service"
-        operation            = "DAY-2"
-        user_properties = {
-        }
-      }
-    …
-    }
-    ```
-
-6. **Apply Changes in Production**  
+**Apply Changes in Production**  
    Before applying any changes, run `terraform plan` in your production environment to view the planned changes and ensure everything is set up correctly.
    
    Once you're satisfied with the plan, run `terraform apply` to apply the changes to your production environment.
@@ -175,6 +153,65 @@ To sync changes, you can:
 - Remember to always update the relevant IaC files after making changes via the UI.
 
 :::
+
+### Dependency management
+
+#### Dynamic referencing
+
+If you have dependencies between two or more resources, you will need to manually handle them using dynamic referencing.
+
+For example, a self-service action that creates new instances of a blueprint will depend on that blueprint.  
+In such a case, use dynamic referencing instead of hardcoding the blueprint identifier:
+
+```hcl showLineNumbers
+resource "port_action" "scaffold_a_new_service" {
+  identifier                    = "scaffold_a_new_service"
+  required_approval             = "false"
+  self_service_trigger = {
+    # highlight-next-line
+    blueprint_identifier = port_blueprint.service.identifier # instead of "service"
+    operation            = "DAY-2"
+    user_properties = {
+    }
+  }
+…
+}
+```
+
+#### Resource creation order
+
+When resources depend on each other, Terraform may attempt to create them in the wrong order, leading to dependency errors. You can resolve this using the `depends_on` meta-argument to explicitly define the order of resource creation.
+
+For example, if you have two blueprints where one has a relation to the other, you can ensure proper creation order:
+
+```hcl showLineNumbers
+resource "port_blueprint" "githubRepository" {
+  identifier = "githubRepository"
+  title      = "GitHub Repository"
+  # ... other configuration
+}
+
+resource "port_blueprint" "service" {
+  identifier = "service"
+  title      = "Service"
+  
+  relations = {
+    "repository" = {
+      title = "Repository"
+      target = "githubRepository"
+    }
+  }
+  
+  # highlight-next-line
+  depends_on = [port_blueprint.githubRepository]
+}
+```
+
+The `depends_on` meta-argument ensures that:
+- The `githubRepository` blueprint is created first
+- The `service` blueprint is created after the `githubRepository` blueprint, allowing the relation to be properly established
+
+**Note:** Use `depends_on` sparingly and only when Terraform cannot automatically infer dependencies from resource references. Overuse can make your configuration harder to maintain and may hide implicit dependencies.
 
 ## Approach 2: JSON definitions (GitOps)
 
@@ -198,11 +235,20 @@ This approach demonstrates how to manage your resource definitions in a dedicate
    - Copy the relevant JSON definitions to the `production` folder in your Git repository.
    - Using [Port's API](https://docs.port.io/api-reference/port-api), call the relevant POST endpoint to apply the resource definitions to your production environment.
 
+:::info Dependency management
+
+In some cases, resources may depend on each other. For example, **blueprint A** may have a relation to **blueprint B**, meaning that blueprint B must be created before blueprint A.
+
+In such cases, you will need to manually handle the dependencies between resources and create them in the correct order.
+:::
+
 ### Examples
 
 #### Export data using a CI/CD workflow
 
 Below are examples of CI/CD workflows that automatically export data from your development environment using Port's API and save it to your dedicated repository.
+
+These workflows export resource definitions (such as blueprints, scorecards, and actions) from one of your Port environments using Port's API, and save them as JSON files in the dedicated repository under the appropriate environment folder.
 
 **Prerequisites**
 
