@@ -17,7 +17,13 @@ Organizations can be grouped only if they are in the same region.
 
 ## Create an organization
 
-As an `account admin` of a paid account, you can create new organizations directly from the UI using the `+ Create Organization` button.
+As an `account admin` of a paid account, you can create new organizations directly from the UI:
+
+1. Go to your [Port application](https://app.port.io).
+2. Click on the logo in the top left corner of the page.
+3. Click on the `+ Create Organization` button.
+4. Follow the steps to create a new organization.
+
 If you wish to grant `account admin` permissions to another user, please contact Port's support team.
 
 ## Switch organizations
