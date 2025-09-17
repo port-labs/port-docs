@@ -109,16 +109,12 @@ By default, each entity has the following meta-properties: `identifier`, `title`
 
 | Field        | Type     | Description                                                                                                                                                                                                                                                            |
 | ------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier` | `String` | Unique identifier. <br /> Note that while the identifier is unique, it can be changed after creation.                                                                                                                                                                  |
+| `identifier` | `String` | Unique identifier. <br /> Note that while the identifier is unique, it can be changed after creation. (Maximum 1000 characters)                                                                                                                                                      |
 | `title`      | `String` | Entity name that will be shown in the UI.                                                                                                                                                                                                                              |
 | `team`       | `Array`  | **Optional Field.** An array of the associated [teams](/sso-rbac/users-and-teams/manage-users-teams).                                                                               |
 | `blueprint`  | `String` | The name of the [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint) that this entity is based on.                                                                                                                                                |
 | `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the blueprint definition**, and each value matches the `type` of the property.                                                                                                      |
 | `relations`  | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints) that is defined on the blueprint. |
-
-:::tip Entity identifier limit
-Entity identifiers are limited to a maximum of 1000 characters.
-:::
 
 ## Monitoring and sync status
 
