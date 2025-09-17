@@ -1,3 +1,5 @@
+import SupportUserPermissions from "/docs/generalTemplates/_support_user_permissions.md"
+
 # Port RBAC capabilities overview
 
 This page provides a comprehensive summary of all of Port's RBAC capabilities, and links to their associated documentation pages. They are grouped into 3 key topics:
@@ -136,7 +138,7 @@ For more details about Port roles, see the [relevant documentation](/sso-rbac/us
 
 ### Support user access
 
-Port's support team may need access to your organization to provide technical assistance. Organizations can control this access through support user permissions, including the ability to set access duration and disable access completely.
+<SupportUserPermissions/>
 
 For more information, see the [support user permissions](/sso-rbac/users-and-teams/manage-users-teams#support-user-permissions).
 

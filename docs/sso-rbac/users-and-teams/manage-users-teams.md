@@ -5,6 +5,7 @@ sidebar_position: 1
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
+import SupportUserPermissions from "/docs/generalTemplates/_support_user_permissions.md"
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -54,18 +55,19 @@ For more information and examples, see the [catalog RBAC](/build-your-software-c
 
 ## Support user permissions
 
-Port's support team may need access to your organization to provide technical assistance. You can control this access through support user permissions.
+<SupportUserPermissions/>
 
 ### Access duration
 
-Port support user access is enabled by default, you can choose to provide different access to your organization: **1 week**, **1 month**, **1 year**, **Permanent access (default)**.
+Support user access is enabled by default.  
+You can define how long this access will be valid: **1 week**, **1 month**, **1 year**, **Permanent access (default)**.
 
 ### Support user capabilities
 
 Support users can be created with the following restrictions:
 
-- **Read-only access** - Support users can be created as `read-only` users.
-- **Admin/edit access** - Support users can be created as `admin` users, their actions will appear in your organization's audit log. This requires both Port manager approval and customer approval via the support user permission process.
+- **Read-only access** - can be created as `read-only` users.
+- **Admin/edit access** - can be created as `admin` users, their actions will appear in your organization's audit log. This requires both Port manager approval and customer approval via the support user permission process.
 
 :::info Emergency access
 
