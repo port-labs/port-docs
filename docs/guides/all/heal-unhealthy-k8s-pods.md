@@ -1141,7 +1141,7 @@ Next, we will create an AI agent that analyzes pod health issues and creates com
 
 ## Set up automation
 
-We will create an automation to trigger the ai agent when the health of a kubernetespod moves from healthy to unhealthy 
+Next, we will create an automation to trigger the ai agent when the health of a Kubernetes pod moves from healthy to unhealthy. 
 
 Follow the steps below to create the automation:
 
