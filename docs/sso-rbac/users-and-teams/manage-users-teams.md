@@ -52,6 +52,29 @@ These roles can be used to define specific permissions for assets in your softwa
 For example, you can define that all `Members` can create new entities from a specific blueprint, while only `Moderators` can edit them.  
 For more information and examples, see the [catalog RBAC](/build-your-software-catalog/set-catalog-rbac/) section.
 
+## Support user permissions
+
+Port's support team may need access to your organization to provide technical assistance. You can control this access through support user permissions.
+
+### Access duration
+
+Port support user access is enabled by default, you can choose to provide different access to your organization: **1 week**, **1 month**, **1 year**, **Permanent access (default)**.
+
+### Support user capabilities
+
+Support users can be created with the following restrictions:
+
+- **Read-only access** - Support users can be created as `read-only` users.
+- **Admin/edit access** - Support users can be created as `admin` users, their actions will appear in your organization's audit log. This requires both Port manager approval and customer approval via the support user permission process.
+
+:::info Emergency access
+
+In critical situations, Port can request emergency access to your organization even if support user permissions are disabled. This requires:
+
+1. **Organization approval** - the organization admin must approve the emergency access request.
+2. **Port approval** - Internal Port approval process.
+:::
+
 ## Ownership & user management
 
 After creating a Port account, two <PortTooltip id="blueprint">blueprints</PortTooltip> will be automatically created in your [data model](https://app.getport.io/settings/data-model) - `User` and `Team`.

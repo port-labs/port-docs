@@ -75,6 +75,16 @@ Every Port account receives its own dedicated database for data storage, access 
 
 Customer data is never transferred or stored on employee machines or devices.
 
+### Support user access
+
+Port's support team may require access to your organization to provide technical assistance. This access is controlled through support user permissions and includes several security measures:
+
+- Support user actions are not logged in your audit log.
+- You can set the access duration or disable support access completely.
+- Emergency access requires dual approval (organization + Port).
+
+For more information, see the [support user permissions](/sso-rbac/users-and-teams/manage-users-teams#support-user-permissions).
+
 ### Data retention
 
 Data ingested into Port by its users is managed by them, and if not deleted by the user, will be retained indefinitely.

@@ -134,6 +134,12 @@ In addition to the permissions designated for each role, permissions are also in
 
 For more details about Port roles, see the [relevant documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
 
+### Support user access
+
+Port's support team may need access to your organization to provide technical assistance. Organizations can control this access through support user permissions, including the ability to set access duration and disable access completely.
+
+For more information, see the [support user permissions](/sso-rbac/users-and-teams/manage-users-teams#support-user-permissions).
+
 ### Blueprint permissions
 
 Blueprint permissions allow a granular configuration of the various roles: admin, member or blueprint collaborator. 
