@@ -1463,12 +1463,18 @@ export const availableGuides = [
         link: "/guides/all/find-internal-documentation-with-ai",
     },
     {
+        title: "Heal unhealthy k8s pods",
+        description: "Detect unhealthy Kubernetes pods and automatically trigger remediation actions using Port AI",
+        tags: ["K8s for devs", "AI", "Kubernetes", "Actions", "Automations"],
+        logos: ["AI", "Kubernetes"],
+        link: "/guides/all/heal-unhealthy-k8s-pods",
+    },
+    {
         title: "Manage AI instructions with Port",
         description: "Learn how to centralize AI instructions in Port and automatically sync them to GitHub repositories",
         tags: ["SDLC", "GitHub", "AI",  "Automations"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/manage-ai-instructions",
-
     }
 ]
 
