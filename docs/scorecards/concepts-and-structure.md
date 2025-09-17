@@ -30,10 +30,7 @@ Below is the structure of a single `scorecard` blueprint:
 |` Rules passed` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful [rule](#rule-elements) evaluations. |
 | `% of rules passed` | Number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules. |
 
-Relations:
-| Name | Target Blueprint | Required | Many | Description |
-|:----:|:----------------:|:--------:|:-----:|:----------:|
-| - | - | - | - | No default relations |
+Relations: The scorecard blueprint doesn't have any relations by default.
 
 A scorecard contains and groups multiple rules that are relevant to its specific category, for example a scorecard for _service maturity_ can contain 3 rules, while the _production readiness_ scorecard can contain 2 completely different rules.
 
@@ -60,6 +57,7 @@ If the entity didn't pass any rule, it will be at the `Basic` level, and thus ca
 <Tabs queryString="Levels" defaultValue="Default">
 
 <TabItem value="Default">
+
 ```json showLineNumbers
 {
   "identifier": "Ownership",
@@ -107,7 +105,8 @@ If the entity didn't pass any rule, it will be at the `Basic` level, and thus ca
 
 
 <TabItem value="Custom">
-```json
+
+```json showLineNumbers
 {
   "identifier": "monitoringMaturity",
   "title": "Monitoring Maturity",
@@ -134,7 +133,8 @@ If the entity didn't pass any rule, it will be at the `Basic` level, and thus ca
 </TabItem>
 
 <TabItem value="Traffic Light">
-```json
+
+```json showLineNumbers
 {
   "identifier": "ProductionReadiness",
   "title": "Production Readiness",
