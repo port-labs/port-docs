@@ -24771,13 +24771,13 @@ paths:
                     portalTitle:
                       type: string
                       maxLength: 30
-                    supportUserPermission:
-                      type: string
-                      enum:
-                        - OPT_OUT
-                        - READ_ONLY
-                        - FULL_PERMISSIONS
-                      description: Permission level for Port support users accessing this organization
+                    # supportUserPermission:
+                    #   type: string
+                    #   enum:
+                    #     - OPT_OUT
+                    #     - READ_ONLY
+                    #     - FULL_PERMISSIONS
+                    #   description: Permission level for Port support users accessing this organization
                 isOnboarded:
                   type: boolean
                 toolSelectionProvisioning:
