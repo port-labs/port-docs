@@ -17,7 +17,7 @@ Organizations can be grouped only if they are in the same region.
 
 ## Create an organization
 
-As an `account admin` of a paid account, you can create new organizations directly from the UI:
+As a user with `account admin` permissions on a paid account, you can create new organizations directly from the UI:
 
 1. Go to your [Port application](https://app.port.io).
 2. Click on the logo in the top left corner of the page.
@@ -25,6 +25,10 @@ As an `account admin` of a paid account, you can create new organizations direct
 4. Follow the steps to create a new organization.
 
 If you wish to grant `account admin` permissions to another user, please contact Port's support team.
+
+:::info Account admin permission
+`Account admin` is a permission that can be granted in addition to a user's existing role (`admin`, `moderator`, or `member`).
+:::
 
 ## Switch organizations
 
@@ -42,7 +46,7 @@ Note that when users log in, they automatically access their **last visited** or
 
 Automatic user access makes it easy to onboard large groups of users:
 
-- Account admins and admins can mark an organization as publicly accessible to SSO users.
+- Users with account admin permissions and organization admins can mark an organization as publicly accessible to SSO users.
 - When users log in via SSO, they automatically get the default `member` role in the organizations.
 
 To enable automatic user access:  
