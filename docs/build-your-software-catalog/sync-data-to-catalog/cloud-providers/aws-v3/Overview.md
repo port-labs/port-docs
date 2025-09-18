@@ -140,3 +140,7 @@ resources:
 </details>
 
 <MetricsAndSyncStatus/>
+
+## Advanced
+
+Refer to the [Advanced configuration](./advanced.md) page for advanced use cases and examples.
