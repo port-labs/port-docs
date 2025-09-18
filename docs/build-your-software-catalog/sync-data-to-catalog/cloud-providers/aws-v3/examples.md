@@ -13,6 +13,9 @@ import EcsClusterProperties from './examples/ecs/clusters/_ecs_cluster_propertie
 import Ec2InstanceBlueprint from './examples/ec2/instances/_ec2_instance_blueprint.mdx'
 import Ec2InstanceConfig from './examples/ec2/instances/_ec2_instance_port_app_config.mdx'
 import Ec2InstanceProperties from './examples/ec2/instances/_ec2_instance_properties.mdx'
+import OrganizationsAccountBlueprint from './examples/organizations/accounts/_organizations_accounts_blueprint.mdx'
+import OrganizationsAccountConfig from './examples/organizations/accounts/_organizations_accounts_port_app_config.mdx'
+import OrganizationsAccountProperties from './examples/organizations/accounts/_organizations_accounts_properties.mdx'
 
 # Examples
 
@@ -31,6 +34,24 @@ You can use the following Port blueprint definitions and integration configurati
 <AccountInfoBlueprint/>
 
 <AccountInfoConfig/>
+
+## AWS Organizations
+
+### Organizations Accounts
+
+The following example demonstrates how to ingest your AWS Organizations Accounts to Port.
+
+You can use the following Port blueprint definitions and integration configuration:
+
+<OrganizationsAccountBlueprint/>
+
+<OrganizationsAccountConfig/>
+
+You can reference any of the following Organizations Account properties in your mapping configuration:
+
+<OrganizationsAccountProperties/>
+
+For more details about Organizations Account properties, refer to the [AWS Organizations API documentation](https://docs.aws.amazon.com/organizations/latest/APIReference/API_DescribeAccount.html).
 
 ## Amazon S3
 
