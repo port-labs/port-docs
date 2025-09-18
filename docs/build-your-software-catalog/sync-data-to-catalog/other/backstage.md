@@ -62,7 +62,13 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
+
+<OceanSaasInstallation integration="Backstage" />
+
+</TabItem>
+
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 <IntegrationVersion integration="backstage" />
 
