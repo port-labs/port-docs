@@ -8,6 +8,10 @@ import TabItem from "@theme/TabItem"
 
 # Context Engineering with Port AI
 
+:::info Closed Beta
+Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
+:::
+
 Context engineering is the practice of constructing an optimal information environment that provides the right amount of directions, tools, and knowledge for AI systems to successfully solve problems. Unlike prompt engineering, which focuses on crafting individual requests, context engineering ensures AI has access to relevant, structured data and capabilities needed for consistent, accurate results.
 
 ## What is Context Engineering?

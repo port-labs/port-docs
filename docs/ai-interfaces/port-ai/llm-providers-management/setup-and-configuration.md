@@ -8,6 +8,10 @@ import TabItem from "@theme/TabItem"
 
 # Setup & Configuration
 
+:::info Closed Beta
+Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
+:::
+
 This guide covers all technical details for setting up and configuring LLM providers, including permissions, changing defaults, validation flow, and troubleshooting common issues.
 
 ## Permissions & Access Control

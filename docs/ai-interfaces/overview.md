@@ -12,7 +12,7 @@ We're committed to developing AI responsibly, maintaining high standards of data
 ## Port's AI Offerings
 
 :::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of Q4 2025.
+Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
 :::
 
 

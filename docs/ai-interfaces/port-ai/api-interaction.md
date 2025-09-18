@@ -8,6 +8,10 @@ import TabItem from "@theme/TabItem"
 
 # Port AI API Interaction
 
+:::info Closed Beta
+Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
+:::
+
 Port AI can be accessed programmatically through Port's API, enabling integration into custom applications and workflows. This provides the most flexible way to incorporate Port AI capabilities into your existing tools and processes.
 
 ## API Endpoints

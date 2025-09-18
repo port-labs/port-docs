@@ -8,6 +8,10 @@ import TabItem from "@theme/TabItem"
 
 # AI Chat Widget
 
+:::info Closed Beta
+Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
+:::
+
 The AI Chat Widget provides a customizable interface for interacting with [Port AI](/ai-interfaces/port-ai/overview) directly within your dashboards. Platform engineers can configure the widget's prompts, conversation starters, and available tools to create tailored AI chat experiences for developers.
 
 ## What is the AI Chat Widget?

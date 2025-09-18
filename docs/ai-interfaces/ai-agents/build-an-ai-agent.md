@@ -5,11 +5,12 @@ title: Build an AI agent
 
 # Build an AI agent
 
-import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md'
+:::info Closed Beta
+Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
+:::
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-
-<ClosedBetaFeatureNotice id="ai-form" />
 
 :::info Built on Port AI
 AI Agents are built on top of [Port AI](/ai-interfaces/port-ai/overview) and leverage its underlying capabilities for data access, security, and execution. This guide focuses on agent-specific building techniques.
