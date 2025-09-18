@@ -163,6 +163,64 @@ resources:
               value: '[.reviewers[].uniqueName]'
           azure_devops_reviewers: '[.reviewers[].id]'
           azure_devops_creator: .createdBy.id
+- kind: build
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .__project.id + "-" + (.id | tostring) | gsub(" "; "")
+        title: .buildNumber
+        blueprint: '"build"'
+        properties:
+          status: .status
+          result: .result
+          queueTime: .queueTime
+          startTime: .startTime
+          finishTime: .finishTime
+          definitionName: .definition.name
+          requestedFor: .requestedFor.displayName
+          link: ._links.web.href
+        relations:
+          project: .__project.id | gsub(" "; "")
+- kind: pipeline-stage
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          .__project.id + "-" + (.__buildId | tostring) + "-" + (.id |
+          tostring) | gsub(" "; "")
+        title: .name
+        blueprint: '"pipeline-stage"'
+        properties:
+          state: .state
+          result: .result
+          startTime: .startTime
+          finishTime: .finishTime
+          stageType: .type
+        relations:
+          project: .__project.id | gsub(" "; "")
+          build: (.__project.id + "-" + (.__buildId | tostring)) | gsub(" "; "")
+- kind: pipeline-run
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          .__project.id + "-" + (.__pipeline.id | tostring) + "-" + (.id |
+          tostring) | gsub(" "; "")
+        blueprint: '"pipeline-run"'
+        properties:
+          state: .state
+          result: .result
+          createdDate: .createdDate
+          finishedDate: .finishedDate
+          pipelineName: .pipeline.name
+        relations:
+          project: .__project.id | gsub(" "; "")
 ```
 
 </details>
@@ -858,6 +916,96 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 
+<details>
+<summary> Build response data</summary>
+
+```json showLineNumbers
+{
+  "_links": {
+    "self": {
+      "href": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_apis/build/builds/123"
+    },
+    "web": {
+      "href": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_build/results?buildId=123"
+    }
+  },
+  "id": 123,
+  "buildNumber": "20231114.1",
+  "status": "completed",
+  "result": "succeeded",
+  "queueTime": "2023-11-14T07:00:00.000Z",
+  "startTime": "2023-11-14T07:00:15.000Z",
+  "finishTime": "2023-11-14T07:05:30.000Z",
+  "definition": {
+    "id": 7,
+    "name": "health-catalist",
+    "path": "\\"
+  },
+  "requestedFor": {
+    "displayName": "Jaden Kodjo Miles",
+    "id": "40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+    "uniqueName": "doe@gmail.com"
+  },
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Pipeline-stage response data</summary>
+
+```json showLineNumbers
+{
+  "id": 1,
+  "name": "Build",
+  "type": "build",
+  "state": "completed",
+  "result": "succeeded",
+  "startTime": "2023-11-14T07:00:15.000Z",
+  "finishTime": "2023-11-14T07:02:45.000Z",
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  },
+  "__buildId": 123
+}
+```
+
+</details>
+
+<details>
+<summary> Pipeline-run response data</summary>
+
+```json showLineNumbers
+{
+  "id": 456,
+  "state": "completed",
+  "result": "succeeded",
+  "createdDate": "2023-11-14T07:00:00.000Z",
+  "finishedDate": "2023-11-14T07:05:30.000Z",
+  "pipeline": {
+    "id": 7,
+    "name": "health-catalist"
+  },
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  },
+  "__pipeline": {
+    "id": 7
+  }
+}
+```
+
+</details>
+
+
+
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -975,6 +1123,81 @@ The combination of the sample payload and the Ocean configuration generates the 
 ```
 
 </details>
+
+
+
+<details>
+<summary> Build entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "fd029361-7854-4cdd-8ace-bb033fca399c-123",
+  "title": "20231114.1",
+  "blueprint": "build",
+  "properties": {
+    "status": "completed",
+    "result": "succeeded",
+    "queueTime": "2023-11-14T07:00:00.000Z",
+    "startTime": "2023-11-14T07:00:15.000Z",
+    "finishTime": "2023-11-14T07:05:30.000Z",
+    "definitionName": "health-catalist",
+    "requestedFor": "Jaden Kodjo Miles",
+    "link": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_build/results?buildId=123"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Pipeline-stage entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "fd029361-7854-4cdd-8ace-bb033fca399c-123-1",
+  "title": "Build",
+  "blueprint": "pipeline-stage",
+  "properties": {
+    "state": "completed",
+    "result": "succeeded",
+    "startTime": "2023-11-14T07:00:15.000Z",
+    "finishTime": "2023-11-14T07:02:45.000Z",
+    "stageType": "build"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "build": "fd029361-7854-4cdd-8ace-bb033fca399c-123"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Pipeline-run entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "fd029361-7854-4cdd-8ace-bb033fca399c-7-456",
+  "blueprint": "pipeline-run",
+  "properties": {
+    "state": "completed",
+    "result": "succeeded",
+    "createdDate": "2023-11-14T07:00:00.000Z",
+    "finishedDate": "2023-11-14T07:05:30.000Z",
+    "pipelineName": "health-catalist"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
 
 
 

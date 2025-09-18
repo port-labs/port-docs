@@ -5,6 +5,22 @@ description: Learn how to leverage Port's AI capabilities to enhance incident ma
 
 # Generate incident updates with AI
 
+<center>
+<div className="video-container">
+  <iframe 
+    style={{borderRadius:'4px'}}
+    width="568"
+    height="320"
+    src="https://www.youtube.com/embed/w0AMrc0-O_k" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+</center>
+<br/>
+
 When you are busy fixing an incident, you do not have time to write updates. Yes, others still need to know what is going on. In this guide, we will learn how to build an AI agent that generates incident updates and sends Slack notifications with relevant technical context.
 
 <img src='/img/guides/incidentUpdateWithAIArchitecture.png' border="1px" width="100%" />

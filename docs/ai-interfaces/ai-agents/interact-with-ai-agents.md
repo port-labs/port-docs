@@ -153,8 +153,8 @@ const eventSource = new EventSource(apiUrl);
 eventSource.addEventListener('done', (event) => {
   const data = JSON.parse(event.data);
   
-  if (data.quotaUsage) {
-    const { remainingRequests, remainingTokens, remainingTimeMs } = data.quotaUsage;
+  if (data.rateLimitUsage) {
+    const { remainingRequests, remainingTokens, remainingTimeMs } = data.rateLimitUsage;
     
     // Check if quota is running low
     if (remainingRequests < 10 || remainingTokens < 10000) {
@@ -214,11 +214,19 @@ data: Your final answer from the agent.
 
 event: done
 data: {
-  "maxRequests": 200,
-  "remainingRequests": 193,
-  "maxTokens": 200000,
-  "remainingTokens": 179910,
-  "remainingTimeMs": 903
+  "rateLimitUsage": {
+    "maxRequests": 200,
+    "remainingRequests": 193,
+    "maxTokens": 200000,
+    "remainingTokens": 179910,
+    "remainingTimeMs": 903
+  },
+  "monthlyQuotaUsage": {
+    "monthlyLimit": 20,
+    "remainingQuota": 19,
+    "month": "2025-09",
+    "remainingTimeMs": 1766899073
+  }
 }
 ```
 
@@ -283,12 +291,18 @@ Signals that the agent has finished processing and the response stream is comple
 
 ```json showLineNumbers
 {
-  "quotaUsage": {
+  "rateLimitUsage": {
     "maxRequests": 200,
     "remainingRequests": 193,
     "maxTokens": 200000,
     "remainingTokens": 179910,
     "remainingTimeMs": 903
+  },
+  "monthlyQuotaUsage": {
+    "monthlyLimit": 20,
+    "remainingQuota": 19,
+    "month": "2025-09",
+    "remainingTimeMs": 1766899073
   }
 }
 ```
@@ -395,17 +409,38 @@ We limit this data storage strictly to these purposes. You can contact us to opt
 
 ## Limits
 
-Port applies limits to AI agent interactions to ensure fair usage across all customers:
+Port applies two different types of limits to AI agent interactions to ensure fair usage across all customers:
 
-- **Query limit**: ~40 queries per hour.
-- **Token usage limit**: 800,000 tokens per hour.
+### Rate limits
+- **Query limit**: ~40 queries per hour
+- **Token usage limit**: 800,000 tokens per hour
+- These limits reset hourly
 
-You can view your quota limits are available in the API response.
+### Monthly quota
+- **Default quota**: 20 AI invocations per month
+- Each invocation of Port AI counts as one request against your quota
+- Quota resets monthly
+
+
 
 :::caution Usage limits
 Usage limits may change without prior notice. Once a limit is reached, you will need to wait until it resets.  
 If you attempt to interact with an agent after reaching a limit, you will receive an error message indicating that the limit has been exceeded.
 The query limit is estimated and depends on the actual token usage.
+:::
+
+### Monitor your usage
+
+You can monitor your current usage in several ways:
+
+#### Rate limits
+- Check the final `done` event in streaming responses for remaining requests, tokens, and reset time
+
+#### Monthly quota
+You can monitor your current monthly quota usage by making a GET request to the `/v1/quota/ai-invocations` endpoint
+
+:::tip Proactive quota monitoring
+Check your monthly quota before making multiple AI agent requests to avoid hitting limits. When `remainingQuota` is low, consider implementing rate limiting or queuing requests until the monthly quota resets. Note that you may also encounter hourly rate limits, which are separate from this monthly quota.
 :::
 
 ## Common errors
@@ -513,7 +548,38 @@ Port applies the following limits to AI agent interactions:
 - **Query limit**: ~40 queries per hour
 - **Token usage limit**: 800,000 tokens per hour
 
-You can monitor your current usage in the final `done` event showing your remaining requests, tokens, and reset time.
+You can monitor your current usage in several ways:
+- Check the final `done` event in streaming responses for remaining requests, tokens, and reset time (hourly rate limits)
+- Make a GET request to `/v1/quota/ai-invocations` to see your monthly quota status
+
+Note that Port has both hourly rate limits and monthly quotas. For detailed information, see the [Limits](#limits) section above.
+
+</details>
+
+<details>
+<summary><b>What happens when I reach a limit and what can I do? (Click to expand)</b></summary>
+
+**What happens when you reach a limit:**
+- You are temporarily blocked from making new AI agent requests
+- You will receive an error message indicating which limit has been exceeded
+- Access resumes automatically when the limit resets
+
+**What you can do:**
+
+**For rate limits (hourly):**
+- Wait for the limits to reset (they reset every hour)
+- Monitor the `remainingTimeMs` field to know exactly when you can make requests again
+- The error message will indicate it's a rate limit issue
+
+**For monthly quota:**
+- Wait for the monthly quota to reset at the beginning of the next month
+- Contact our support team to learn more about our plans and quota upgrades available for your organization
+- The error message will indicate it's a quota limit issue
+
+**General recommendations:**
+- Implement rate limiting in your applications to avoid hitting limits
+- Monitor your usage proactively using the monitoring methods described above
+- Consider batching requests or optimizing your AI agent interactions for efficiency
 
 </details>
 
