@@ -577,7 +577,7 @@
   },
   "/guides/all/visualize-and-manage-azure-devops-deployments": {
     "creationDate": "2025-07-17T07:45:59.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/visualize-and-manage-statuspage-incidents": {
     "creationDate": "2025-06-12T12:40:41.000Z",
@@ -633,26 +633,34 @@
   },
   "/guides/all/manage-and-visualize-aws-autoscaling-groups": {
     "creationDate": "2025-07-03T16:38:52.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/track-leaked-github-secrets-in-port": {
     "creationDate": "2025-07-03T21:28:25.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/track-and-show-mtbf-for-services": {
     "creationDate": "2025-07-09T10:26:40.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/manage-your-kubernetes-deployment": {
     "creationDate": "2025-07-08T20:46:21.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/pull-github-metrics-and-build-visualizations": {
     "creationDate": "2025-07-10T16:18:26.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/visualize-and-manage-github-deployments": {
     "creationDate": "2025-07-15T10:26:09.000Z",
+    "isNew": false
+  },
+  "/guides/all/create-roi-dashboard": {
+    "creationDate": "2025-07-30T10:18:26.000Z",
+    "isNew": true
+  },
+  "/guides/all/send-slack-message-to-user": {
+    "creationDate": "2025-08-06T15:34:35.000Z",
     "isNew": true
   },
   "/guides/all/map-git-users-to-port-accounts": {
@@ -669,7 +677,7 @@
   },
   "/guides/all/map-slack-users-to-port-accounts": {
     "creationDate": "2025-07-17T09:29:06.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/map-servicenow-users-to-port-accounts": {
     "creationDate": "2025-07-22T22:56:01.000Z",
@@ -685,6 +693,10 @@
   },
   "/guides/all/trigger-github-copilot-from-port": {
     "creationDate": "2025-08-05T22:21:00.000Z",
+    "isNew": true
+  },
+  "/guides/all/trigger-gemini-assistant-from-port": {
+    "creationDate": "2025-09-01T20:20:02.000Z",
     "isNew": true
   },
   "/guides/all/generate-zendesk-ticket-summaries-with-ai": {
@@ -709,6 +721,18 @@
   },
   "/guides/all/owasp-top-10-scorecard": {
     "creationDate": "2025-08-13T09:54:16.000Z",
+    "isNew": true
+  },
+  "/guides/all/enforce-ai-coding-security-standards": {
+    "creationDate": "2025-08-27T20:00:16.000Z",
+    "isNew": true
+  },
+  "/guides/all/heal-unhealthy-k8s-pods": {
+    "creationDate": "2025-09-12T13:14:43.000Z",
+    "isNew": true
+  },
+  "/guides/all/manage-ai-instructions": {
+    "creationDate": "2025-09-05T11:51:33.000Z",
     "isNew": true
   }
 }
