@@ -50,6 +50,19 @@ Below is a breakdown of the supported installation methods for Port integrations
 | **Self-hosted (Real-time)** | Managed entirely in your infrastructure. | 🟩⬜⬜⬜  | ✅<br/>(custom interval) | ✅ <br/>(Integration-dependent) | You provision, monitor, and maintain the integration. | Best for high-security or custom networking needs.|
 | **Scheduled (CI)**| Managed in your CI/CD environment. | 🟩🟩⬜⬜ | ✅ (custom interval) | ❌| Minimal infrastructure. You manage the CI/CD environment and triggers. | Best when real-time isn’t needed and you want full sync control. |
 
+
+:::caution Integration Service Account Limitation
+Service accounts (machine tokens) are currently not supported for Ocean integrations. This is a known limitation that affects:
+
+- **Audit/event logging functionality** - Service account tokens may not properly log events.
+- **Token validation** - Machine user tokens cannot be properly validated by the system.
+- **Some integration features** - May experience reduced functionality.
+
+**Current workaround**: Use personal or organizational credentials until this limitation is resolved.
+
+**Status**: This is being tracked as a feature request and will be addressed in a future release. For production environments requiring service account support, consider using Port-hosted integrations where available.
+:::
+
 ## Customize your integrations
 
 Now that you've installed an integration, let's see how you can customize it:
@@ -96,16 +109,12 @@ By default, each entity has the following meta-properties: `identifier`, `title`
 
 | Field        | Type     | Description                                                                                                                                                                                                                                                            |
 | ------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier` | `String` | Unique identifier. <br /> Note that while the identifier is unique, it can be changed after creation.                                                                                                                                                                  |
+| `identifier` | `String` | Unique identifier. (Maximum 1000 characters) <br /> Note that while the identifier is unique, it can be changed after creation.                                                                                                                                                 |
 | `title`      | `String` | Entity name that will be shown in the UI.                                                                                                                                                                                                                              |
 | `team`       | `Array`  | **Optional Field.** An array of the associated [teams](/sso-rbac/users-and-teams/manage-users-teams).                                                                               |
 | `blueprint`  | `String` | The name of the [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint) that this entity is based on.                                                                                                                                                |
 | `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the blueprint definition**, and each value matches the `type` of the property.                                                                                                      |
 | `relations`  | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints) that is defined on the blueprint. |
-
-:::tip Entity identifier limit
-Entity identifiers are limited to a maximum of 1000 characters.
-:::
 
 ## Monitoring and sync status
 
