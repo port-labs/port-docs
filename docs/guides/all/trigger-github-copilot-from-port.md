@@ -123,6 +123,50 @@ When installing Port's GitHub app, the pull request and repository blueprints ar
 
 5. Click `Create` to save the blueprint.
 
+### Update GitHub integration mapping
+
+Update the GitHub integration configuration to include the new `githubIssue` blueprint in your mapping. This ensures that GitHub issues are properly synced to Port with all the required properties and relationships.
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+
+2. Find your GitHub integration and click on it.
+
+3. Go to the `Mapping` tab.
+
+4. Add the following YAML block to map issues to the `githubIssue` blueprint:
+
+    <details>
+    <summary><b>GitHub integration mapping (Click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+    - kind: issue
+    selector:
+      query: .pull_request == null
+    port:
+      entity:
+        mappings:
+          identifier: .repository.name + (.id|tostring)
+          title: .title
+          blueprint: '"githubIssue"'
+          properties:
+            creator: .user.login
+            assignees: '[.assignees[].login]'
+            labels: '[.labels[].name]'
+            status: .state
+            createdAt: .created_at
+            closedAt: .closed_at
+            updatedAt: .updated_at
+            description: .body
+            issueNumber: .number
+            link: .html_url
+          relations:
+            repository: .user.login + "/" + .repo
+
+    ```
+    </details>
+
+5. Click `Save & Resync` to apply the mapping.
+
 
 ### Auto-assign issues to request creator
 
