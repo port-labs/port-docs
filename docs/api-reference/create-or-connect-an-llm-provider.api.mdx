@@ -1,0 +1,71 @@
+---
+id: create-or-connect-an-llm-provider
+title: "Create or connect an LLM provider"
+description: "This route allows you to create or connect an LLM provider."
+sidebar_label: "Create or connect an LLM provider"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWd1z2jgQ/1c8mns7HCCTvPCWtvfAXHrNNLl7SbmOsBZQI1s+SaYlHv/vtysbsMFAaKa9pkceCCPvl3Z/+4VzJsBGRqZO6oQN2N1M2sDozEHAldKfbbDQWeB0EBngeKhNEOkkgcgFPAmur98GqdFzKcCcsQ5zfGrZ4J5dDdmowwz8k4F1r7RYsEHOkM9B4ugrT1MlI046u58sKc6ZjWYQc/80WbyboJicuUUKaJQef0KFJF86RQc8cTOjUxnhGepPwTgJlniX1tD3its6I5MpUkKSxWTdmntUdMisiZzW6FfampJ5Kn+HxS2gI9wfPIY2DbFMriGZuhkb9Iui9IA0ILzWTX70EBdCkhO4uqnpmnBlAbn1HIzBy9jDxsVagGqlq5sQKZ4JCC0F0IUX4Xnv/LJ32b8gU5rydlIetAQSPlakbkU41loBT5BSwIRnChHgTAbkn333f97jznGG1L20gtAKG4citRuoSJpw+VUorVj/ZxCdpi683MZjeXwC31Hg44+ZgfAZEGwI+KZAJCdYnZkInkguIFV6EWM/GYpnw3xD+4b0UxK85CQYgzA6evgq/C95j4J+FIG1iK+hOAr/1hNfLbmPzJ2pLIeofYRoKXcODI15f9/z8HGUnxeh//Jr+OGDyPvFLwylTTNuhOFSDQUmgJzINifV6f4CY1v1byVeq2/23X11t9Ow9JOk6qgoSEbKDcYX0Wj9oL8e/jfUI6kkwOImYRaoJPEZweZcSYH7yMdqGSGI1A2rdPnCnurElu4+7/XpX3PjeVNeL3hfUZY3edqmsj+6+qH9QmiT9+ch/iOmxM5ms69vSLUSqI3z1Wx3vBulbvcm9h8Pnj+/QS95Ijr1yB+yR9bzOdFUgIqDsTrQOUbF6NsNwJ0jevD3no332PaCuv5kQr1zDm9PUfluUUEb/U+p4sq1VaOJNjHHJ4zGm9BJTPA1y6tFa5XJUnGswIqlVeDuEW/po23oHKg9GyL1A1uNQYc4ifei1/sRBjescrq9zsdYlfm0pQ/5xuywAbRmV/vF86LVX6X2p7jr8uSup7vLm+NmGjlxPrb+epyGAdad97tKxeEyAaxvw2a+XFoyo5Bq5lxqB90uzlBnNF+fSc2orW4/zeyaYOQ7emakW9ySm0tPjoGbxiRRDmbrvecqQ0uNfOTVxuN3oxlwSk+6CYXu/fq1y29feJwqaC4Tjd2gNutvTai1oDQ6/LqH76u2q3pa1sz60uFPyPiJ9netfqq5QecEVzdDNGu+HJdY/6xHBlBkYu5hWbni9aEXUr5u1zKg9gbqua+5yuA4+OK6qeLSo93HO6+wc8/mfSRsogdjPiOA4dM8H3MLfxpVFHRcbreEKSFt5SQP0A57wPDv2nfxNCNDPJzm3EhiRTE0k1WgIJmliNfl5cM7Mn7Nu5X4hN2Sg4bN1O2lHdWS5+bd7R1tm9XrPkIJnhr+mWo9fqKdCCQfDA8ef5YzxROckqkYsFIm/f0LGQ8DFw==
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create or connect an LLM provider"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/llm-providers"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create or connect an LLM provider.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean"},"in":"query","name":"validate_connection","required":false}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"anyOf":[{"type":"object","title":"anthropic","properties":{"provider":{"type":"string","enum":["anthropic"]},"config":{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["claude-sonnet-4-20250514"],"properties":{"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"enabled":{"type":"boolean","default":true}},"required":["provider","config"],"additionalProperties":false},{"type":"object","title":"openai","properties":{"provider":{"type":"string","enum":["openai"]},"config":{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"enabled":{"type":"boolean","default":true}},"required":["provider","config"],"additionalProperties":false},{"type":"object","title":"azure-openai","properties":{"provider":{"type":"string","enum":["azure-openai"]},"config":{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1},"resourceName":{"type":"string","minLength":1},"deploymentId":{"type":"string","minLength":1}},"required":["apiKeySecretName","resourceName","deploymentId"],"additionalProperties":false},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"enabled":{"type":"boolean","default":true}},"required":["provider","config"],"additionalProperties":false},{"type":"object","title":"bedrock","properties":{"provider":{"type":"string","enum":["bedrock"]},"config":{"type":"object","properties":{"accessKeyIdSecretName":{"type":"string","minLength":1},"secretAccessKeySecretName":{"type":"string","minLength":1},"region":{"type":"string","minLength":1,"pattern":"^[a-z]{2}-[a-z]+-\\d{1}$"},"guardrailIdentifier":{"type":"string"},"guardrailVersion":{"type":"string"}},"required":["accessKeyIdSecretName","secretAccessKeySecretName","region"],"additionalProperties":false},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["claude-sonnet-4-20250514"],"properties":{"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"enabled":{"type":"boolean","default":true}},"required":["provider","config"],"additionalProperties":false}]}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"201":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"enabled":{"type":"boolean"},"config":{"anyOf":[{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1},"resourceName":{"type":"string","minLength":1},"deploymentId":{"type":"string","minLength":1}},"required":["apiKeySecretName","resourceName","deploymentId"],"additionalProperties":false},{"type":"object","properties":{"accessKeyIdSecretName":{"type":"string","minLength":1},"secretAccessKeySecretName":{"type":"string","minLength":1},"region":{"type":"string","minLength":1,"pattern":"^[a-z]{2}-[a-z]+-\\d{1}$"},"guardrailIdentifier":{"type":"string"},"guardrailVersion":{"type":"string"}},"required":["accessKeyIdSecretName","secretAccessKeySecretName","region"],"additionalProperties":false},{"anyOf":[{"not":{}},{"type":"object","properties":{},"additionalProperties":false}]}]},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"effectiveModels":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","enabled","effectiveModels"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"400":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

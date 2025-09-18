@@ -1,0 +1,71 @@
+---
+id: change-a-specific-provider-configuration
+title: "Change a specific provider configuration"
+description: "This route allows you to change the configuration of a specific LLM provider."
+sidebar_label: "Change a specific provider configuration"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWd9z4jYQ/lc8mj60Uxwgk7zwRq59yDTXy+RyfcnRjrAXrItsuZLMHfH4f++ubIPBBpIec01v4CEYWbv69tP+kpKzEEygRWqFStiI3UfCeFplFjwupfpsvKXKPKu8IOLJHDwbgReoZCbmmeYk46mZxz2TQiBmIvBubt56qVYLEYI+Yz1m+dyw0QMbX7NJj2n4OwNjr1S4ZKOcoSILiaVHnqZSBE5j/5MhKDkzQQQxpye7TAHBqeknCCxqxRVS0FaAqdQgHqclWb6b4XJtCSuspIFxYiMUFkFLC0/Fb7B8D4EG+zuPobGusVokc5SIRXIDydxGbDQsitIeoSEkC1vyaC8PQ0EmcXnbWGvGpYGitxvkuxQSJOwVIxw/ZRq8Y+EkmEZlOoBnTg8hlWoZo+9ch1/NwtbqW9r/PUdXEGoVPLbpCQIwBjFchy/iyLjJ41r6hfzORRlU+yYiUm4taEoEfz5w/2mSnxe+e/jZ//gxzIfFDwy1zTOuQ82FvA6RJIx70G3VzXl/gDad67c2p5ObfbavbDuwURNcSS1Aa8xM5nBOiVUIsnNeE+48tf4ljgWSZyH4mLcSsP6Ffz44vxxcDi8I1KbeUuLg8pDwqYSmb0+VksAT554znknMmlZnQATu9c/d2L4diK973TsiEJqQco2Og25uXKVoVZlaN04VFAlYsvQSV0pcqLEFlyLkFv4KiNHA1c2mV6zyQkvxKuYgyWJyH4SXcIEDnNKpv/7ZKFLTdRZR2rJJjQojNVqDqkvuBhLHiKu6JlWJKTf1fDCgr82q/0tJondXzSSXPk5tVo/dzCImt2uH5FeGHZ/G3V5V9J7VU7y66vy9Afq++oJTF/DfdwG9ZjwnihJQcXCvDhSVyam3+D/3FrMZFfEFvD3tyjfbFcSoAXuocGy7stFM6ZjjG0Z9lm8FBvha5GrZmWWyNHypwkqkU+FWRmr0VzVHbdc5kHu2VKpHtmqDDkmS7MXraNwwy6nuPB9jVubzjjrkCrPFAtAZXd2G50UnX+Xqz6Pr4kTX8+m6PHnX8+lycGykQjp5Zc46Oo2NWH8x7EsZ+3W6MP28fixc/6IX9bEz0xIFImtTM+r3sfk8o4PJmVCM+pH228ysJ0xcK5RpYZfvifCS0ylwvdGClR3t+pA4zhCzFk+8OrO6c2QEnPIa2USbeLe+of31C49TCVs3rK0evrEPGz3QustZVcBVeXElZH+h2pxbNM9rlbRIZspZW9233SI93viW7iMXdafJhmcDQpYqY2PuXLQi4015n924uq53avN+21W+RlA0bq2Pf1le7puFL7afSi5cSDhXyCsPe2CLIU7c8DH8PVrVJ3SNCG2lmXk+5QY+aFkUNFxeY5DrhcJUTDqP7rFH9JJdFxs4mhEo53ULrgWJdqvZydOPd1Wk/eTtsrJ22WTZXLOGtjLPtdqVyxKG8vWbciX/npSsxVsJiiKrlKAzRGr3zp00gvz2wz3dIVT/tiDPxkHNP1MFx78OqXKGO4d3YzmT6ASZy1msVEmffwCek+JV
+sidebar_class_name: "put api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Change a specific provider configuration"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/v1/llm-providers/{provider}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to change the configuration of a specific LLM provider.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean"},"in":"query","name":"validate_connection","required":false},{"schema":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"in":"path","name":"provider","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"config":{"anyOf":[{"type":"object","title":"Anthropic","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","title":"OpenAI","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","title":"Azure OpenAI","properties":{"apiKeySecretName":{"type":"string","minLength":1},"resourceName":{"type":"string","minLength":1},"deploymentId":{"type":"string","minLength":1}},"required":["apiKeySecretName","resourceName","deploymentId"],"additionalProperties":false},{"type":"object","title":"Bedrock","properties":{"accessKeyIdSecretName":{"type":"string","minLength":1},"secretAccessKeySecretName":{"type":"string","minLength":1},"region":{"type":"string","minLength":1,"pattern":"^[a-z]{2}-[a-z]+-\\d{1}$"},"guardrailIdentifier":{"type":"string"},"guardrailVersion":{"type":"string"}},"required":["accessKeyIdSecretName","secretAccessKeySecretName","region"],"additionalProperties":false}]},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"enabled":{"type":"boolean","default":true}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"enabled":{"type":"boolean"},"config":{"anyOf":[{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1},"resourceName":{"type":"string","minLength":1},"deploymentId":{"type":"string","minLength":1}},"required":["apiKeySecretName","resourceName","deploymentId"],"additionalProperties":false},{"type":"object","properties":{"accessKeyIdSecretName":{"type":"string","minLength":1},"secretAccessKeySecretName":{"type":"string","minLength":1},"region":{"type":"string","minLength":1,"pattern":"^[a-z]{2}-[a-z]+-\\d{1}$"},"guardrailIdentifier":{"type":"string"},"guardrailVersion":{"type":"string"}},"required":["accessKeyIdSecretName","secretAccessKeySecretName","region"],"additionalProperties":false},{"anyOf":[{"not":{}},{"type":"object","properties":{},"additionalProperties":false}]}]},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"effectiveModels":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","enabled","effectiveModels"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"400":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

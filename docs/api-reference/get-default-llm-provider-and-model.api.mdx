@@ -1,0 +1,63 @@
+---
+id: get-default-llm-provider-and-model
+title: "Get default LLM provider and model"
+description: "This route returns the default LLM provider and model."
+sidebar_label: "Get default LLM provider and model"
+hide_title: true
+hide_table_of_contents: true
+api: eJzNVE1PGzEQ/Ssrn0k2QeTCLVURQqUSaukp4jBZT7IGr23scdSwyn/vzGYhhK4aVb30tF77vfl48+xWaUxVNIGMd+pS3dcmFdFnwiIi5ehSQTUWGleQLRW3t1+LEP3GaIwFOF00XqMdqzNFsE7qcqHmN+rhTEVMwbuEvNWq88lEPseJPvcRv/VIDlF5R+hIsBCCNRUItnxMQmhVqmpsQFa0Dcgh/PIRK2IiVxQwktmn80/vMEvvLYJTu64mTnia/9rfO2SiaNyakehyI10y3oHhDXjJEUeHX0c1BzMVr5eoo6+eJL6PpB64hE6tP8VdBxrNRAoLWeOIO3dIo4vR+eR8NplNL7ooVUQg1HMairTysQE+UZoxIzINqgPl0/Z3Cp/moP82YE8ZDNhp/ZxNRC09ven52j/7A7Q2Mlywd++0X4FN+JHuRcF+dqeYwp39H27DGP2AhcQEmBKscfBMI4GxaSjtcOPtblCvffbTcnXlUO2ZqdbYdQdU80+5mZbWNqPX4aWyfwISYxLGDW9xtlblyIZWNVFIl2UJwYzF7WPjuZ2h05wOgAcJVeVoaPtd5N4rukSIR7ePaV9wy3kdNPI/z1xxNC/dwHjbyIRrBPGYdGTcynd0Q1bwd5yvmN/dMFTK3jtiOp6I4MEnaqCbeB/9GunEc6fOjt3VHrz0D+/nvlfCn1QGC6YzUSdf289koTZTBh5NpSulnwurWXM3AmzbJST8Ee1uJ9vPGSNf1AUvNxANLEWWhTwlvWoyyCeWmLWtKgzigw3YvBf/w92Qqb155vrqniX/BQcbJ78=
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get default LLM provider and model"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/llm-providers/defaults"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route returns the default LLM provider and model.
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"model":{"type":"string","enum":["gpt-5","claude-sonnet-4-20250514"]},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","model"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
