@@ -53,6 +53,9 @@ import PortReleaseDeploymentAppConfig from './example-release-deployment/\_azure
 import PipelineDeploymentBlueprint from './example-pipeline-deployment/\_azuredevops_exporter_example_pipeline_deployment_blueprint.mdx'
 import PortPipelineDeploymentAppConfig from './example-pipeline-deployment/\_azuredevops_exporter_example_pipeline_deployment_port_app_config.mdx'
 
+import TestRunBlueprint from './example-test-run/\_azuredevops_exporter_example_test_run_blueprint.mdx'
+import PortTestRunAppConfig from './example-test-run/\_azuredevops_exporter_example_test_run_port_app_config.mdx'
+
 
 # Examples
 
@@ -182,6 +185,29 @@ You can use the following Port blueprint definitions and integration configurati
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your pipeline runs.
+
+## Mapping test runs
+
+:::caution Performance impact
+Enabling `includeResults` or `codeCoverage` on the `test-run` kind may significantly slow down your integration. These configs make additional API calls for each test run, which can be very resource-intensive. Consider disabling them to improve performance.
+:::
+
+The following example demonstrates how to ingest Azure DevOps test runs to Port. Test runs track test execution results and can include detailed test results and code coverage data.
+
+<ProjectBlueprint/>
+
+<TestRunBlueprint/>
+
+<PortTestRunAppConfig/>
+
+:::tip To Learn more
+
+- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure DevOps objects to Port entities.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/test/runs/list?view=azure-devops-rest-7.1&tabs=HTTP#testrun) for the Azure DevOps test-run object structure.
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your test runs.
 
 ## Mapping users and teams
 

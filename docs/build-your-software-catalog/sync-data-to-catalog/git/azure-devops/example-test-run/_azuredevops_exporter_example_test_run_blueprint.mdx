@@ -1,0 +1,87 @@
+<details>
+<summary>Test Run blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureDevopsTestRun",
+  "title": "Azure DevOps Test Run",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name"
+      },
+      "state": {
+        "type": "string",
+        "title": "State"
+      },
+      "isAutomated": {
+        "type": "boolean",
+        "title": "Is Automated",
+        "description": "Whether the test run is automated"
+      },
+      "totalTests": {
+        "type": "number",
+        "title": "Total Tests",
+        "description": "Total number of tests in the run"
+      },
+      "incompleteTests": {
+        "type": "number",
+        "title": "Incomplete Tests",
+        "description": "Number of incomplete tests"
+      },
+      "notApplicableTests": {
+        "type": "number",
+        "title": "Not Applicable Tests",
+        "description": "Number of not applicable tests"
+      },
+      "startedDate": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Started Date"
+      },
+      "completedDate": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Completed Date"
+      },
+      "totalTests": {
+        "type": "number",
+        "title": "Total Tests"
+      },
+      "passedTests": {
+        "type": "number",
+        "title": "Passed Tests"
+      },
+      "unanalyzedTests": {
+        "type": "number",
+        "title": "Unanalyzed Tests",
+        "description": "Number of unanalyzed tests"
+      },
+      "revision": {
+        "type": "number",
+        "title": "Revision",
+        "description": "Revision number of the test run"
+      }
+    },
+    "required": [
+      "name",
+      "state"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "project",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
