@@ -76,11 +76,20 @@ Note the blank line after `data: ...` which separates events.
 ### Example Event Sequence
 
 ```text
-event: plan
-data: { "plan": "...", "toolCalls": [...] }
+event: tool_call
+data: { "id": "call_0", "name": "get_entities", "arguments": "{\"blueprint\":\"service\"}" }
+
+event: tool_result
+data: { "id": "call_0", "content": "Found 15 services in your catalog..." }
+
+event: tool_call
+data: { "id": "call_1", "name": "run_action", "arguments": "{\"actionIdentifier\":\"create_incident\"}" }
+
+event: tool_result
+data: { "id": "call_1", "content": "Action run created successfully with ID: run_12345" }
 
 event: execution
-data: Your final answer from Port AI.
+data: I found 15 services in your catalog and created an incident report as requested.
 
 event: done
 data: {
@@ -103,34 +112,43 @@ data: {
 ## Event Types
 
 <details>
-<summary><b><code>checkIfActionRequested</code> (Click to expand)</b></summary>
+<summary><b><code>tool_call</code> (Click to expand)</b></summary>
 
-Indicates which self-service action, if any, Port AI has decided to run.
+Indicates that Port AI is about to execute a tool. This event provides details about the tool being called and its arguments. For large arguments, the data may be sent in multiple chunks.
 
 ```json
 {
-  "actionIdentifier": "action_id"
+  "id": "call_0",
+  "name": "get_entities", 
+  "arguments": "{\"blueprint\":\"service\",\"limit\":10}",
+  "lastChunk": true
 }
 ```
-- Can also be `{"actionIdentifier": null}` if no action is requested.
+
+**Fields:**
+- `id`: Unique identifier for this tool call
+- `name`: Name of the tool being executed (only included in the first chunk)
+- `arguments`: JSON string containing the tool arguments (may be chunked for large payloads)
+- `lastChunk`: Boolean indicating if this is the final chunk for this tool call (optional, only present on the last chunk)
 </details>
 
 <details>
-<summary><b><code>plan</code> (Click to expand)</b></summary>
+<summary><b><code>tool_result</code> (Click to expand)</b></summary>
 
-Details Port AI's reasoning and intended steps (tools to be called, etc.).
+Contains the result of a tool execution. For large results, the data may be sent in multiple chunks.
 
 ```json
 {
-  "plan": "Detailed plan...",
-  "toolCalls": [
-    {
-      "name": "tool_name",
-      "arguments": {}
-    }
-  ]
+  "id": "call_0",
+  "content": "Found 15 services in your catalog: api-gateway, user-service, payment-service...",
+  "lastChunk": true
 }
 ```
+
+**Fields:**
+- `id`: Unique identifier matching the corresponding tool call
+- `content`: The result content from the tool execution (may be chunked for large responses)
+- `lastChunk`: Boolean indicating if this is the final chunk for this tool result (optional, only present on the last chunk)
 </details>
 
 <details>
