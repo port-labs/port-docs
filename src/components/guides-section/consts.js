@@ -1456,6 +1456,20 @@ export const availableGuides = [
         link: "/guides/all/enforce-ai-coding-security-standards",
     },
     {
+        title: "Find internal documentation with AI",
+        description: "Find internal documentation using AI by storing documentation as entities in your Port catalog",
+        tags: ["SDLC","AI"],
+        logos: ["AI"],
+        link: "/guides/all/find-internal-documentation-with-ai",
+    },
+    {
+        title: "Heal unhealthy k8s pods",
+        description: "Detect unhealthy Kubernetes pods and automatically trigger remediation actions using Port AI",
+        tags: ["K8s for devs", "AI", "Kubernetes", "Actions", "Automations"],
+        logos: ["AI", "Kubernetes"],
+        link: "/guides/all/heal-unhealthy-k8s-pods",
+    },
+    {
         title: "Manage AI instructions with Port",
         description: "Learn how to centralize AI instructions in Port and automatically sync them to GitHub repositories",
         tags: ["SDLC", "GitHub", "AI",  "Automations"],

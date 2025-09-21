@@ -1,0 +1,29 @@
+<details>
+<summary><b>EC2 instance mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::EC2::Instance
+    selector:
+      query: 'true'
+      includeActions:
+        # Optional: Include up to 3 additional actions for more properties
+        # Choose based on which properties you need most
+        # - GetInstanceStatusAction
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.InstanceId
+          title: .Properties.InstanceId
+          blueprint: '"ec2Instance"'
+          properties:
+            instanceArn: .Properties.InstanceArn
+            instanceId: .Properties.InstanceId
+            instanceType: .Properties.InstanceType
+            availabilityZone: .Properties.AvailabilityZone
+            tags: .Properties.Tags
+          relations:
+            account: .__ExtraContext.AccountId
+```
+
+</details>

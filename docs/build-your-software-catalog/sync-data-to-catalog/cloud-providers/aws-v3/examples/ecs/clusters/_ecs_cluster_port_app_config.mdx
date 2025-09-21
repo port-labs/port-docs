@@ -1,0 +1,30 @@
+<details>
+<summary><b>ECS cluster mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::ECS::Cluster
+    selector:
+      query: 'true'
+      # includeActions: No optional actions available for ECS clusters
+      # All properties are included by default via DescribeClustersAction
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.ClusterArn
+          title: .Properties.ClusterName
+          blueprint: '"ecsCluster"'
+          properties:
+            status: .Properties.Status
+            runningTasksCount: .Properties.RunningTasksCount
+            activeServicesCount: .Properties.ActiveServicesCount
+            pendingTasksCount: .Properties.PendingTasksCount
+            registeredContainerInstancesCount: .Properties.RegisteredContainerInstancesCount
+            capacityProviders: .Properties.CapacityProviders
+            clusterArn: .Properties.ClusterArn
+            tags: .Properties.Tags
+          relations:
+            account: .__ExtraContext.AccountId
+```
+
+</details>
