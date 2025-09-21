@@ -240,7 +240,7 @@ Here are some request examples that will create the Scorecard of Ownership on th
 
 After creating the Scorecards, you will see a new tab in the profile Entity page of each of your Blueprint's Entities, showing the various scorecards levels.
 
-For example, we can [create the entity below](../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities)
+For example, we can [create the entity below](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entities):
 
 ```json showLineNumbers
 {
@@ -255,13 +255,13 @@ For example, we can [create the entity below](../build-your-software-catalog/syn
 }
 ```
 
-And then look at the [specific page](https://app.getport.io/MicroserviceEntity?identifier=cart-service&activeTab=3) of this entity, on the scorecards tab
+And then look at the [specific page](https://app.getport.io/MicroserviceEntity?identifier=cart-service&activeTab=3) of this entity, on the scorecards tab.
 
-![Developer Portal Scorecards Tab](../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
+ <img src="/img/software-catalog/scorecard/tutorial/ScorecardsTab.png" width='100%' border='1px' />
 
 We can see that the `hasSlackChannel` rule passed because we provided one to that entity, while the `hasTeam` failed because we didn't provide any team.
 
-Therefore the level of the entity is `Bronze` because it passed all the rules in the `Bronze` level (hasSlackChannel)
+Therefore the level of the entity is `Bronze` because it passed all the rules in the `Bronze` level (hasSlackChannel).
 
 **Update scorecards**
 
@@ -272,18 +272,23 @@ To update a scorecard you can use 2 different URLs:
 
 The request body will include the existing body of the Scorecard, after the desired updates to the existing Scorecard have been applied.
 
+:::note
+When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties.
+:::
+
 **Delete scorecards**
 
 :::danger
 A Scorecard cannot be restored after deletion!
 :::
 
--   Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`
--   Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delete
+-   Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`.
+-   Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delete.
 
-:::note
-When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties
+:::info Using entities API
+Scorecards can be managed either with the dedicated **Scorecards API** mentioned above, or by using the standard **Entity API** endpoints: [Create](/api-reference/create-an-entity), [Update](/api-reference/update-an-entity), [Delete](/api-reference/delete-an-entity).
 :::
+
 
 </TabItem>
 
@@ -291,7 +296,7 @@ When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/
 
 **Create scorecards**
 
-In order to create a scorecard from the [Terraform provider](../../build-your-software-catalog/custom-integration/iac/terraform/) , you will need to use the `port_scorecard` resource.
+In order to create a scorecard from the [Terraform provider](/build-your-software-catalog/custom-integration/iac/terraform/) , you will need to use the `port_scorecard` resource.
 
 Here is an example of how to create an Ownership scorecard with the Terraform provider:
 
