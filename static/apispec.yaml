@@ -33314,6 +33314,8 @@ paths:
             name: Authorization
             required: false
             description: Your API token. To get it, go to your [Port account](https://app.port.io/), click the `...` button, then click the `Generate API token` button and copy the generated token. 
+        security:
+          - bearer: []
         responses:
           "200":
             description: Default Response
@@ -33714,6 +33716,8 @@ paths:
       description: This route returns the monthly quota usage for AI invocations.<br></br><br></br> To learn more about quota limitations, see the [documentation](/ai-interfaces/ai-agents/interact-with-ai-agents/#monitor-your-usage).
       tags:
         - AI
+      security:
+        - bearer: []
       responses:
         "200":
           description: Default Response
@@ -33771,6 +33775,8 @@ paths:
       description: This route returns the default LLM provider and model.
       tags:
         - AI
+      security:
+        - bearer: []
       responses:
         "200":
           description: Default Response
@@ -33840,6 +33846,8 @@ paths:
       description: This route allows you to change the default LLM provider and model.
       tags:
         - AI
+      security:
+        - bearer: []
       requestBody:
         content:
           application/json:
@@ -33934,6 +33942,8 @@ paths:
       description: This route allows you to create or connect an LLM provider.
       tags:
         - AI
+      security:
+        - bearer: []
       requestBody:
         content:
           application/json:
@@ -34319,6 +34329,8 @@ paths:
       description: This route allows you to get the configured LLM providers.
       tags:
         - AI
+      security:
+        - bearer: []
       responses:
         "200":
           description: Default Response
@@ -34495,6 +34507,8 @@ paths:
       description: This route allows you to get the configured LLM providers.
       tags:
         - AI
+      security:
+        - bearer: []
       parameters:
         - schema:
             type: string
@@ -34700,6 +34714,8 @@ paths:
       description: This route allows you to change the configuration of a specific LLM provider.
       tags:
         - AI
+      security:
+        - bearer: []
       requestBody:
         content:
           application/json:
@@ -35024,6 +35040,8 @@ paths:
       description: This route allows you to delete a specific LLM provider configuration.
       tags:
         - AI
+      security:
+        - bearer: []
       parameters:
         - schema:
             type: string
