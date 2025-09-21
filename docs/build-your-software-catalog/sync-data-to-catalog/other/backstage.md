@@ -100,7 +100,7 @@ Note the parameters specific to this integration, they are last in the table.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 <ScheduledCiInstallation integration="Backstage" />
 
