@@ -1,0 +1,72 @@
+<details>
+<summary><b>ECS cluster blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "ecsCluster",
+  "description": "This blueprint represents an AWS ECS cluster in our software catalog",
+  "title": "ECS cluster",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Status"
+      },
+      "runningTasksCount": {
+        "type": "number",
+        "title": "Running tasks count"
+      },
+      "activeServicesCount": {
+        "type": "number",
+        "title": "Active services count"
+      },
+      "pendingTasksCount": {
+        "type": "number",
+        "title": "Pending tasks count"
+      },
+      "registeredContainerInstancesCount": {
+        "type": "number",
+        "title": "Registered container instances count"
+      },
+      "capacityProviders": {
+        "type": "array",
+        "title": "Capacity providers"
+      },
+      "clusterArn": {
+        "type": "string",
+        "title": "Cluster ARN"
+      },
+      "tags": {
+        "type": "array",
+        "title": "Tags",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Key": {
+              "type": "string"
+            },
+            "Value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

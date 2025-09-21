@@ -1,0 +1,30 @@
+<details>
+<summary><b>S3 bucket mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::S3::Bucket
+    selector:
+      query: 'true'
+      includeActions:
+        # Optional: Include up to 3 additional actions for more properties
+        # Choose based on which properties you need most
+        # - GetBucketEncryptionAction
+        # - GetBucketPublicAccessBlockAction
+        # - GetBucketOwnershipControlsAction
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.Arn
+          title: .Properties.BucketName
+          blueprint: '"s3Bucket"'
+          properties:
+            arn: .Properties.Arn
+            region: .Properties.LocationConstraint
+            creationDate: .Properties.CreationDate
+            tags: .Properties.Tags
+          relations:
+            account: .__ExtraContext.AccountId
+```
+
+</details>
