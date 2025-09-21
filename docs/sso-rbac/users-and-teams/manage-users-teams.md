@@ -434,13 +434,6 @@ Disabled service accounts can no longer generate new API tokens or use existing 
 Support user access is enabled by default.  
 You can define how long this access will be valid: **1 week**, **1 month**, **1 year**, **Permanent access (default)**.
 
-### Support user capabilities
-
-Support users can be created with the following restrictions:
-
-- **Read-only access** - can be created as `read-only` users.
-- **Admin/edit access** - can be created as `admin` users, their actions will appear in your organization's audit log. This requires both Port manager approval and customer approval via the support user permission process.
-
 :::info Emergency access
 
 In critical situations, Port can request emergency access to your organization even if support user permissions are disabled. This requires:
