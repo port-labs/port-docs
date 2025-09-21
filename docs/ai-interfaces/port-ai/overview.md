@@ -19,7 +19,7 @@ Port AI is the foundational AI system that enables intelligent interaction with 
 Port AI serves as the base interface that:
 
 - **Accepts prompts**: Receives natural language queries and requests
-- **Uses MCP tools**: Leverages tools from the [Port MCP server](/ai-interfaces/port-mcp-server/overview-and-installation) to access your catalog data  
+- **Uses developer MCP tools**: Uses developer MCP tools from the [Port MCP server](/ai-interfaces/port-mcp-server/overview-and-installation) to access your catalog data. Port AI currently supports developer tools (for querying and running actions) but not administrative tools (such as creating blueprints or managing scorecards)  
 - **Runs autonomous processes**: Intelligently determines which tools to use and how to combine them
 - **Returns responses**: Provides comprehensive answers and can execute actions based on your requirements
 
@@ -34,9 +34,37 @@ When you interact with Port AI:
 3. **Tools are executed** - Port AI uses MCP server tools to query your catalog, analyze data, or prepare actions
 4. **You receive a response** - Get comprehensive answers, insights, or action execution results
 
-## Tool Execution Modes
+## Port AI Tools
 
-Port AI supports two execution modes for tools and actions:
+Port AI leverages tools from the [Port MCP server](/ai-interfaces/port-mcp-server/overview-and-installation) to interact with your software catalog and execute actions. These tools enable Port AI to access your data, analyze information, and perform tasks across different AI interfaces.
+
+### Available Tools
+
+Port AI uses **developer tools** from the MCP server, which include:
+
+**Data Query Tools:**
+- Access blueprints and entities in your catalog
+- Search and filter information across your software inventory  
+- Retrieve scorecard data and compliance metrics
+- Query relationships between services and components
+
+**Action Execution Tools:**
+- Run your configured self-service actions
+- Execute workflows like deployments, incident creation, or resource provisioning
+- Trigger automated processes based on your organization's defined actions
+
+**Examples of Port AI tool usage:**
+- *"Show me all microservices owned by the Backend team"* → Uses data query tools to search entities
+- *"Create a new incident report for the payment service"* → Uses action execution tools to run incident creation action
+- *"What's the security score for our production services?"* → Uses data query tools to access scorecard information
+
+:::info Developer vs Administrative Tools
+Port AI currently supports **developer tools** only, which focus on querying data and running actions. Administrative tools (such as creating blueprints or managing scorecards) are not available through Port AI interfaces.
+:::
+
+### Tool Execution Modes
+
+For **action execution tools** specifically, Port AI supports two execution modes:
 
 <Tabs groupId="execution-modes" queryString>
 <TabItem value="automatic" label="Automatic Execution">
@@ -61,6 +89,10 @@ This approach provides an additional safety layer, ensuring you can verify all p
 </TabItem>
 </Tabs>
 
+:::info Execution modes scope
+Execution modes apply only to self-service actions. Data query tools execute immediately as they only retrieve information without making changes.
+:::
+
 ## Available Interfaces
 
 Port AI can be accessed through several interfaces, each designed for different use cases:
@@ -72,7 +104,7 @@ The **Port AI Assistant** provides a dedicated, out-of-the-box user experience t
 The [AI Chat Widget](/ai-interfaces/ai-chat-widget) is a customizable interface that platform engineers can embed in dashboards. It allows configuration of:
 - Custom prompts
 - Conversation starters  
-- Available tools
+- Available [Port AI tools](#port-ai-tools)
 - Dashboard placement and styling
 
 ### API Access

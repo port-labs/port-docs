@@ -12,7 +12,7 @@ import TabItem from "@theme/TabItem"
 Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
 :::
 
-The AI Chat Widget provides a customizable interface for interacting with [Port AI](/ai-interfaces/port-ai/overview) directly within your dashboards. Platform engineers can configure the widget's prompts, conversation starters, and available tools to create tailored AI chat experiences for developers.
+The AI Chat Widget provides a customizable interface for interacting with [Port AI](/ai-interfaces/port-ai/overview) directly within your dashboards. Platform engineers can configure the widget's prompts, conversation starters, and available developer tools to create tailored AI chat experiences for developers.
 
 ## What is the AI Chat Widget?
 
@@ -20,7 +20,7 @@ The AI Chat Widget is a dashboard component that:
 
 - **Provides chat interface**: Renders an interactive chat experience for Port AI
 - **Displays conversation starters**: Shows predefined prompts to help users get started
-- **Uses configured tools**: Operates with the specific Port AI tools you select
+- **Uses configured tools**: Operates with the specific [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) you select
 - **Customizable placement**: Can be embedded in any dashboard layout
 - **Respects permissions**: Only accesses data based on user permissions
 
@@ -43,7 +43,7 @@ Define predefined prompts that appear as clickable options when users first inte
 - "Find microservices with high bug counts"
 
 ### Tool Selection
-Choose which Port AI tools the widget can access, allowing you to:
+Choose which [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) the widget can access. Available tools include data query tools for retrieving information from your catalog and action execution tools for running your self-service actions. This allows you to:
 - Limit functionality to specific use cases
 - Control what data the widget can query
 - Ensure appropriate permissions and access levels
@@ -59,7 +59,7 @@ Follow these steps to add an AI Chat Widget to your dashboard:
 4. Configure your widget settings:
    - **Custom Prompt**: Set the system prompt for AI behavior
    - **Conversation Starters**: Add predefined prompts for users
-   - **Tools**: Select which Port AI tools to enable
+   - **Tools**: Select which [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) to enable
    - **Title**: Set a descriptive name for the widget
 5. Position the widget in your dashboard grid
 6. Save your dashboard configuration
@@ -90,7 +90,7 @@ This transparency helps users understand how Port AI is processing their request
 
 ## Tool Execution Modes
 
-The AI Chat Widget supports only manual execution mode for actions and tools. Learn more about [tool execution modes in Port AI](/ai-interfaces/port-ai/overview#tool-execution-modes).
+The AI Chat Widget supports only manual execution mode for self-service actions. Data query tools execute immediately as they only retrieve information. Learn more about [Port AI tools and execution modes](/ai-interfaces/port-ai/overview#port-ai-tools).
 
 ## Example Use Cases
 
@@ -245,7 +245,7 @@ For detailed instructions, see [Setting Up the Widget](#setting-up-the-widget).
 You can customize three key aspects:
 - **Custom Prompts**: Guide AI behavior and set tone
 - **Conversation Starters**: Provide predefined prompts for users
-- **Tool Selection**: Control which Port AI tools the widget can access
+- **Tool Selection**: Control which [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) the widget can access
 
 Learn more about [Widget Configuration](#widget-configuration).
 </details>
@@ -265,9 +265,9 @@ See detailed examples in [Example Use Cases](#example-use-cases).
 <details>
 <summary><b>Can the AI Chat Widget run actions automatically? (Click to expand)</b></summary>
 
-No, the AI Chat Widget supports only manual execution mode for actions and tools. When the AI suggests an action, you'll receive a link to review and approve it before execution.
+No, the AI Chat Widget supports only manual execution mode for self-service actions. When the AI suggests running an action, you'll receive a link to review and approve it before execution. Data query operations execute immediately since they only retrieve information.
 
-Learn more about [Tool Execution Modes](#tool-execution-modes).
+Learn more about [Port AI tools and execution modes](/ai-interfaces/port-ai/overview#port-ai-tools).
 </details>
 
 <details>
@@ -292,7 +292,7 @@ Each widget can be customized independently and placed on different dashboards.
 <details>
 <summary><b>What tools can the AI Chat Widget access? (Click to expand)</b></summary>
 
-You can select which Port AI tools the widget can use during configuration. This allows you to:
+You can select which [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) the widget can use during configuration. Available tools include data query tools for retrieving information from your catalog and action execution tools for running your self-service actions. This allows you to:
 - Limit functionality to specific use cases
 - Control what data the widget can query
 - Ensure appropriate permissions and access levels

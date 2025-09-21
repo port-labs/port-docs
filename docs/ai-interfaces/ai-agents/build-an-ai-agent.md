@@ -46,10 +46,7 @@ For inspiration, check our [AI agents guides](/guides?tags=AI).
 
 ### Step 2: Configure data access tools
 
-Configure which data tools your agent can access. Configure access to Port data through [MCP tools](/ai-interfaces/port-mcp-server/overview-and-installation). For example:
-- `list_blueprints` - Gives access to all blueprints in your catalog
-- `search_entities` - Allows searching and querying entities
-- `get_scorecards` - Provides access to scorecard data
+Configure which data tools your agent can access. Configure access to Port data through [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools). Available tools include data query tools for retrieving information from your catalog, as well as running self-service actions.
 
 
 
@@ -61,7 +58,7 @@ Actions tools are created dynamically based on your Port self-service actions. W
 2. Add it to your agent's configuration as an available tool with a syntax like `run_{action_identifier}`.
 3. Decide whether the agent can run the action automatically or requires approval.
 
-For details on manual approval vs automatic execution patterns, see [Port AI action handling](/ai-interfaces/port-ai/overview#tool-execution-modes).
+For details on manual approval vs automatic execution patterns, see [Port AI tools and execution modes](/ai-interfaces/port-ai/overview#port-ai-tools).
 
 ### Step 4: Define the prompt
 
@@ -130,8 +127,8 @@ Make sure you have [access to the AI agents feature](/ai-interfaces/ai-agents/ov
 <summary><b>How do I configure which tools my agent can access? (Click to expand)</b></summary>
 
 Configure tools in two categories:
-- **Data access tools**: Add MCP tools like `list_blueprints`, `search_entities`, `get_scorecards` 
-- **Action tools**: Add actions using syntax like `run_{action_identifier}` from your self-service actions
+- **Data access tools**: Add [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) for retrieving information from your catalog
+- **Action tools**: Add action execution tools for running your self-service actions
 
 For comprehensive tool details, see [Port MCP Server documentation](/ai-interfaces/port-mcp-server/overview-and-installation).
 </details>
@@ -139,13 +136,13 @@ For comprehensive tool details, see [Port MCP Server documentation](/ai-interfac
 <details>
 <summary><b>My agent can't access the data I need - what's wrong? (Click to expand)</b></summary>
 
-Check that you've configured the correct data access tools for your agent. Ensure you've added tools like `list_blueprints` or `search_entities` to give your agent access to Port data. AS Port AI agents act based on their permissions, ensure the right access to your resources.
+Check that you've configured the correct data access tools for your agent. Ensure you've added the appropriate [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) to give your agent access to Port data. As Port AI agents act based on their permissions, ensure the right access to your resources.
 </details>
 
 <details>
 <summary><b>How can I make sure the agent doesn't run actions without approval? (Click to expand)</b></summary>
 
-When configuring actions for your agent, set the approval mode to "manual" instead of "automatic". This ensures the agent creates draft actions that require your review before execution. For details, see [Port AI action handling](/ai-interfaces/port-ai/overview#tool-execution-modes).
+When configuring actions for your agent, set the approval mode to "manual" instead of "automatic". This ensures the agent creates draft actions that require your review before execution. For details, see [Port AI tools and execution modes](/ai-interfaces/port-ai/overview#port-ai-tools).
 </details>
 
 <details>
