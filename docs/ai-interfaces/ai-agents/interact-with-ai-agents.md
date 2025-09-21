@@ -205,7 +205,11 @@ For information on data handling and security, see [AI Security and Data Control
 
 ## Limits
 
-AI agents use the same rate limits and quotas as Port AI. For detailed information on limits, monitoring, and quota management, see [Port AI API Interaction](/ai-interfaces/port-ai/api-interaction#rate-limits-and-quotas).
+AI agents use the same rate limits and quotas as Port AI. 
+
+*Note: These limits apply when using Port's managed AI infrastructure. [Bring your own LLM provider](/ai-interfaces/port-ai/llm-providers-management/overview) to use your provider's limits instead.*
+
+For detailed information on limits, monitoring, and quota management, see [Port AI API Interaction](/ai-interfaces/port-ai/api-interaction#rate-limits-and-quotas).
 
 ## Troubleshooting & FAQ
 

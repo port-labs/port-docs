@@ -121,6 +121,12 @@ For comprehensive information about LLM provider management, see [LLM Provider M
 
 Port AI operates with specific limits to ensure optimal performance for all users:
 
+:::info LLM Provider Limits
+These limits apply when using Port's managed AI infrastructure. When you [configure your own LLM provider](/ai-interfaces/port-ai/llm-providers-management/overview), these Port-specific limits no longer apply, and usage will be governed by your provider's own limits and pricing.
+
+Port acts as a bridge to leading LLM providers and doesn't host LLM models internally.
+:::
+
 ### Rate Limits (Hourly)
 - **Request limit**: 1,000 requests per hour
 - **Token usage limit**: 800,000 tokens per hour
@@ -260,6 +266,8 @@ All customizations operate within Port's secure framework and governance control
 <summary><b>Are there usage limits for Port AI? (Click to expand)</b></summary>
 
 Yes, Port AI has usage limits to ensure fair usage across all customers:
+
+*Note: These limits apply when using Port's managed AI infrastructure. [Bring your own LLM provider](/ai-interfaces/port-ai/llm-providers-management/overview) to use your provider's limits instead.*
 
 **Rate Limits (Hourly):**
 - Request limit: 1,000 requests per hour

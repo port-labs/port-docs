@@ -63,7 +63,11 @@ Yes, you can contact us to opt out of the 30-day interaction data storage. Howev
 
 ### What are the current rate limits for AI features?
 
-Port AI operates with specific rate limits and monthly quotas to ensure fair usage across all customers. For detailed information about current limits, quotas, and monitoring your usage, see the [Limits and Usage section](/ai-interfaces/port-ai/overview#limits-and-usage) in the Port AI Overview.
+Port AI operates with specific rate limits and monthly quotas to ensure fair usage across all customers. 
+
+*Note: These limits apply when using Port's managed AI infrastructure. [Bring your own LLM provider](/ai-interfaces/port-ai/llm-providers-management/overview) to use your provider's limits instead.*
+
+For detailed information about current limits, quotas, and monitoring your usage, see the [Limits and Usage section](/ai-interfaces/port-ai/overview#limits-and-usage) in the Port AI Overview.
 
 ### How can I monitor my current usage?
 

@@ -213,6 +213,12 @@ eventSource.addEventListener('done', (event) => {
 
 Port AI operates with specific limits to ensure optimal performance for all users:
 
+:::info LLM Provider Limits
+These limits apply when using Port's managed AI infrastructure. When you [configure your own LLM provider](/ai-interfaces/port-ai/llm-providers-management/overview), these Port-specific limits no longer apply, and usage will be governed by your provider's own limits and pricing.
+
+Port acts as a bridge to leading LLM providers and doesn't host LLM models internally.
+:::
+
 ### Rate Limits (Hourly)
 - **Request limit**: 1,000 requests per hour
 - **Token usage limit**: 800,000 tokens per hour
