@@ -66,17 +66,44 @@ Before configuring LLM providers, ensure you have:
 
 ## Step 1: Store API Keys in Secrets
 
-Before configuring providers, store your API keys in Port's secrets system:
+Before configuring providers, store your API keys in Port's secrets system. The secret names you choose are flexible - you'll reference them in your provider configuration.
 
 1. Click on the `...` button in the top right corner of your Port application
 2. Click on **Credentials**
 3. Click on the `Secrets` tab
-4. Click on `+ Secret` and add your provider API keys:
-   - `openai-api-key` - Your OpenAI API key
-   - `anthropic-api-key` - Your Anthropic API key  
-   - `azure-openai-api-key` - Your Azure OpenAI API key
-   - `aws-access-key-id` - Your AWS access key ID
-   - `aws-secret-access-key` - Your AWS secret access key
+4. Click on `+ Secret` and add the required secrets for your chosen provider(s):
+
+<Tabs groupId="provider-secrets" queryString>
+<TabItem value="openai" label="OpenAI">
+
+**Required Secret:**
+- API Key secret (e.g., `openai-api-key`) - Your OpenAI API key
+
+</TabItem>
+<TabItem value="anthropic" label="Anthropic">
+
+**Required Secret:**
+- API Key secret (e.g., `anthropic-api-key`) - Your Anthropic API key
+
+</TabItem>
+<TabItem value="azure" label="Azure OpenAI">
+
+**Required Secret:**
+- API Key secret (e.g., `azure-openai-api-key`) - Your Azure OpenAI API key
+
+</TabItem>
+<TabItem value="bedrock" label="AWS Bedrock">
+
+**Required Secrets:**
+- Access Key ID secret (e.g., `aws-bedrock-access-key-id`) - Your AWS access key ID
+- Secret Access Key secret (e.g., `aws-bedrock-secret-access-key`) - Your AWS secret access key
+
+</TabItem>
+</Tabs>
+
+:::tip Secret naming flexibility
+You can choose any names for your secrets. The examples above are suggestions - use names that make sense for your organization. You'll reference these exact names in your provider configuration.
+:::
 
 :::info One-time view
 After creating a secret, you will be able to view its value only once. Afterwards, you will be able to delete the secret or edit its value, but not to view it.
@@ -142,8 +169,8 @@ curl -X POST "https://api.getport.io/v1/llm-providers" \
   -d '{
     "provider": "bedrock",
     "config": {
-      "accessKeyIdSecretName": "aws-access-key-id",
-      "secretAccessKeySecretName": "aws-secret-access-key",
+      "accessKeyIdSecretName": "aws-bedrock-access-key-id",
+      "secretAccessKeySecretName": "aws-bedrock-secret-access-key",
       "region": "us-east-1",
       "guardrailIdentifier": "optional-guardrail-id",
       "guardrailVersion": "1"
