@@ -36,7 +36,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-self-hosted" label="Self-hosted (Recommended)" default>
+<TabItem value="real-time-self-hosted" label="Self-hosted" default>
 
 <IntegrationVersion integration="jira-server" />
 
