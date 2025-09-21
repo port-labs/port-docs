@@ -19,7 +19,7 @@ Port AI strictly respects your organization's existing RBAC (Role-Based Access C
 
 ### What if Port AI shows me data I didn't expect to have access to?
 
-If Port AI displays information you didn't expect to see, this typically indicates that your organization's RBAC permissions are broader than intended, not that AI bypassed security controls. Port AI only shows data you already have access to through Port's RBAC system.
+Port AI only shows data you already have access to through Port's RBAC system. If you see information you didn't expect, it usually means your organization's permissions are broader than intended, not that AI bypassed security controls.
 
 In this case, we recommend reviewing and tightening your RBAC settings to ensure permissions align with your intended access policies.
 
@@ -143,17 +143,17 @@ You can opt out of the 30-day interaction data storage by contacting our support
 
 ### What are normal response times for AI features?
 
-AI features typically respond within 20-40 seconds, depending on:
+AI features typically start streaming responses within 5 seconds and complete within 30 seconds, depending on:
 - Complexity of the query or request
 - Amount of data being analyzed
 - Current system load
 - Which AI interface is being used
 
-This is expected behavior for AI processing. If responses consistently take longer than 40 seconds, consider reaching out to support.
+During the closed beta, response times may occasionally be longer as we optimize performance. This is expected behavior and will improve over time.
 
 ### What should I do if AI responses seem slow?
 
-Response times between 20-40 seconds are normal and expected for AI processing. If you experience consistently longer response times:
+Response times up to 30 seconds are normal and expected for AI processing during the closed beta. If you experience consistently longer response times:
 - Check the AI invocation details for any errors
 - Verify your usage hasn't hit rate limits
 - Contact support if problems persist
