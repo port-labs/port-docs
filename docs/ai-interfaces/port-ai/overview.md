@@ -131,6 +131,8 @@ Port AI operates with specific limits to ensure optimal performance for all user
 - Each interaction with Port AI counts as one request against your quota
 - Quota resets monthly
 
+Both types of limits are on the **organization level**, and count on the each org separately. There is currently no way to limit the usage on a user-basis.
+
 :::tip Managing Usage
 Monitor your usage through API response headers and the quota endpoint (`/v1/quota/ai-invocations`). When approaching limits, consider implementing rate limiting in your applications or optimizing your AI interactions for efficiency.
 :::
