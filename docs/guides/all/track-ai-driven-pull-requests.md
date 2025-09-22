@@ -136,15 +136,7 @@ This blueprint will represent all known coding agents in your system.
           "calculationSpec": {
             "func": "count",
             "calculationBy": "entities"
-          },
-          "pathFilter": [
-            {
-              "fromBlueprint": "githubPullRequest",
-              "path": [
-                "ai_coding_agent"
-              ]
-            }
-          ]
+          }
         },
         "total_open_p_rs": {
           "title": "Total open PRs",
@@ -164,15 +156,7 @@ This blueprint will represent all known coding agents in your system.
           "calculationSpec": {
             "func": "count",
             "calculationBy": "entities"
-          },
-          "pathFilter": [
-            {
-              "fromBlueprint": "githubPullRequest",
-              "path": [
-                "ai_coding_agent"
-              ]
-            }
-          ]
+          }
         }
       },
       "relations": {}
@@ -709,7 +693,6 @@ Built with Port to bring clarity to your AI-driven SDLC.
 7. In the top right corner of the table, click on `Manage Properties` and add the following properties:
     - **Title**: The title of the pull request.
     - **Link**: The URL to the pull request.
-    - **PR Urgency**: The urgency level of the PR.
     - **Repository**: The repository where the PR was created.
     - **AI Coding Agent**: The AI agent involved in the PR.
 8. Click on the **Group by** option and select **Work Status** to group PRs by their current status.

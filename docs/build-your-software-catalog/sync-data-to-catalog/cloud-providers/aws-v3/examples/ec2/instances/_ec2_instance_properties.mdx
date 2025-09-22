@@ -1,0 +1,60 @@
+<details>
+<summary><b>EC2 instance properties (Click to expand)</b></summary>
+
+| Property | JQ Path | Type | Action Required |
+|----------|---------|------|-----------------|
+| Instance ARN | `.Properties.InstanceArn` | string | DescribeInstancesAction (default) |
+| Instance ID | `.Properties.InstanceId` | string | DescribeInstancesAction (default) |
+| Instance Type | `.Properties.InstanceType` | string | DescribeInstancesAction (default) |
+| Availability Zone | `.Properties.AvailabilityZone` | string | DescribeInstancesAction (default) |
+| Tags | `.Properties.Tags` | array | DescribeInstancesAction (default) |
+| AMI Launch Index | `.Properties.AmiLaunchIndex` | number | DescribeInstancesAction (default) |
+| Architecture | `.Properties.Architecture` | string | DescribeInstancesAction (default) |
+| Block Device Mappings | `.Properties.BlockDeviceMappings` | array | DescribeInstancesAction (default) |
+| Boot Mode | `.Properties.BootMode` | string | DescribeInstancesAction (default) |
+| Capacity Reservation Specification | `.Properties.CapacityReservationSpecification` | object | DescribeInstancesAction (default) |
+| Client Token | `.Properties.ClientToken` | string | DescribeInstancesAction (default) |
+| CPU Options | `.Properties.CpuOptions` | object | DescribeInstancesAction (default) |
+| Current Instance Boot Mode | `.Properties.CurrentInstanceBootMode` | string | DescribeInstancesAction (default) |
+| EBS Optimized | `.Properties.EbsOptimized` | boolean | DescribeInstancesAction (default) |
+| Enclave Options | `.Properties.EnclaveOptions` | object | DescribeInstancesAction (default) |
+| ENA Support | `.Properties.EnaSupport` | boolean | DescribeInstancesAction (default) |
+| Events | `.Properties.Events` | array | DescribeInstancesAction (default) |
+| Hibernation Options | `.Properties.HibernationOptions` | object | DescribeInstancesAction (default) |
+| Hypervisor | `.Properties.Hypervisor` | string | DescribeInstancesAction (default) |
+| Image ID | `.Properties.ImageId` | string | DescribeInstancesAction (default) |
+| Instance Status | `.Properties.InstanceStatus` | object | GetInstanceStatusAction (optional) |
+| Instance State | `.Properties.InstanceState` | object | DescribeInstancesAction (default) |
+| Key Name | `.Properties.KeyName` | string | DescribeInstancesAction (default) |
+| Launch Time | `.Properties.LaunchTime` | datetime | DescribeInstancesAction (default) |
+| Maintenance Options | `.Properties.MaintenanceOptions` | object | DescribeInstancesAction (default) |
+| Metadata Options | `.Properties.MetadataOptions` | object | DescribeInstancesAction (default) |
+| Monitoring | `.Properties.Monitoring` | object | DescribeInstancesAction (default) |
+| Network Interfaces | `.Properties.NetworkInterfaces` | array | DescribeInstancesAction (default) |
+| Network Performance Options | `.Properties.NetworkPerformanceOptions` | object | DescribeInstancesAction (default) |
+| Operator | `.Properties.Operator` | object | DescribeInstancesAction (default) |
+| Placement | `.Properties.Placement` | object | DescribeInstancesAction (default) |
+| Platform | `.Properties.Platform` | string | DescribeInstancesAction (default) |
+| Platform Details | `.Properties.PlatformDetails` | string | DescribeInstancesAction (default) |
+| Private DNS Name | `.Properties.PrivateDnsName` | string | DescribeInstancesAction (default) |
+| Private DNS Name Options | `.Properties.PrivateDnsNameOptions` | object | DescribeInstancesAction (default) |
+| Private IP Address | `.Properties.PrivateIpAddress` | string | DescribeInstancesAction (default) |
+| Product Codes | `.Properties.ProductCodes` | array | DescribeInstancesAction (default) |
+| Public DNS Name | `.Properties.PublicDnsName` | string | DescribeInstancesAction (default) |
+| Public IP Address | `.Properties.PublicIpAddress` | string | DescribeInstancesAction (default) |
+| Reason | `.Properties.Reason` | string | DescribeInstancesAction (default) |
+| Root Device Name | `.Properties.RootDeviceName` | string | DescribeInstancesAction (default) |
+| Root Device Type | `.Properties.RootDeviceType` | string | DescribeInstancesAction (default) |
+| Security Groups | `.Properties.SecurityGroups` | array | DescribeInstancesAction (default) |
+| Source Dest Check | `.Properties.SourceDestCheck` | boolean | DescribeInstancesAction (default) |
+| State | `.Properties.State` | object | DescribeInstancesAction (default) |
+| State Reason | `.Properties.StateReason` | object | DescribeInstancesAction (default) |
+| State Transition Reason | `.Properties.StateTransitionReason` | string | DescribeInstancesAction (default) |
+| Subnet ID | `.Properties.SubnetId` | string | DescribeInstancesAction (default) |
+| System Status | `.Properties.SystemStatus` | object | DescribeInstancesAction (default) |
+| Usage Operation | `.Properties.UsageOperation` | string | DescribeInstancesAction (default) |
+| Usage Operation Update Time | `.Properties.UsageOperationUpdateTime` | datetime | DescribeInstancesAction (default) |
+| Virtualization Type | `.Properties.VirtualizationType` | string | DescribeInstancesAction (default) |
+| VPC ID | `.Properties.VpcId` | string | DescribeInstancesAction (default) |
+
+</details>

@@ -1,0 +1,71 @@
+---
+id: create-or-connect-an-llm-provider
+title: "Create or connect an LLM provider"
+description: "This route allows you to create or connect an LLM provider."
+sidebar_label: "Create or connect an LLM provider"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWV9z2jgQ/yoezb0dDpBJXvKWtvfAXHrNNLl7SbmOsBdQkS2fJNMSj7/77coGZDAQmmmv6fGSeKTd1Wr3t/9QwWIwkRaZFSplV+x+KkygVW4h4FKqzyZYqDywKog0cFxUOohUmkJkA54GNzdvg0yruYhBn7EOs3xi2NUDux6wYYcZiHIt7AJXCjYCrkHj57DELQ3/5GDsKxXjbsFQpIXU0ifPMikiTup0PxnSqWAmmkLC3W66eDd28uwiA9RXjT6hLnS0sJIWeGqnWmUiwjVULQNtBRjiXSpK3zW3sVqkE6SENE9I8TX3sOyQWmMx8ehXpzUl80z8Dos7QBvZP3gCbSckIr2BdGKn7KpflpUFhIbYnbrJjxbicSzICFzeemeNuTSA3GoOWuNlzGHlEhWDbKXzVYgkz2MIDfnWhhfhee/8snfZvyBVmvJ2Uh7UBFI+knTcinCklASeImUMY55LRIDVOZB99t3/edud4xTxrbSC0Aobhzy1G6hImnLxVSitWf9nEJ1kNrzcxmO1fALfUeDjj7mG8BkQbAj4pkAkIxiV6wieSB5DJtUiwXoyiJ8N843TN6SfguAlB8EIYq2i2Vfhf8l7FPSjCIxBfA3io/BvHPH1kvvI2JmIqonaR4iacmtBUwf49wMPH4fFeRm6j1/DDx/iol/+wlDaJOc61lzIQYwBIMaizUg+3V+gTev5W4HXapt9d1/d7dQs/SShOixLkpFxjf5FNBrX6K+b/43jkVQQYHGS0As8JHURweZcihhHlY/1nEIQ8RWrz3KJPVOpqcx93uvTv+Yw9Ka6XvC+pqxu8rRJZb931az9QqiTs+ch/iO6xM5msfcnJC8FKm1dNtvt70aq2z2J/ceN58+v0EvuiE418oeskX48p4oSUHnQVwcqx7AcfrsGuHNEDf7evfEe3V5Q1R+PqXbO4e3JK9/NK6ij+5U1vrZt2WisdMJxh1F7E1qBAb5mebVozTJ5Fh8rsGZpFbi7xVvaaBs6B3LPhkg1Y6s26BAn8V70ej9C44ZZTrXn+QSzMp+01CFXmC0WgNboar94Ubbaqzr9Kea6PJnr6eZy6tipQk7sj427HqdmgHXn/a6USbgMAOPKsJ4vh5ZcS6SaWpuZq24Xe6gz6q/PhGJUVrd3c7Mm8F5O7sjMlSWX7yerq1eN2Xruuc5RUy0eeT3xuNloCpzCk25Crnu/fnb57QtPMgnNYaIxG3i9/laH6jmlUeHXNXxftl3l0ypn+kOHWyHlx8rdtf6p5haNE1zfDlCt+bJdYv2zHilAnkm4g2VtiteH3qpc3vYiwHuBeu4LWOUcC19sN5NcOLQ7fxc1dh7YvI+ETfSgz6cEMNwtihE38KeWZUnL1XRLmIqFqY3kANphM3T/rnkXV3NSxMFpzrUgVvf61lmCgmRWIl5Xlw/vSfk171bgE3YrDmo2M7uXdugFz+27u3uaNuvnPkIJrmr+mXI9/kU9EUjOGQ48bq1gkqfYJVMyYJVMV0BzsqIfBjMXBvWHN5FiS+tpuBkf1UXor9fpNlmKokI+esKzdg67OWrTLqnJ/fSrxr8ESUek
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create or connect an LLM provider"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/llm-providers"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create or connect an LLM provider.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean"},"in":"query","name":"validate_connection","required":false}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"anyOf":[{"type":"object","title":"anthropic","properties":{"provider":{"type":"string","enum":["anthropic"]},"config":{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["claude-sonnet-4-20250514"],"properties":{"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"enabled":{"type":"boolean","default":true}},"required":["provider","config"],"additionalProperties":false},{"type":"object","title":"openai","properties":{"provider":{"type":"string","enum":["openai"]},"config":{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"enabled":{"type":"boolean","default":true}},"required":["provider","config"],"additionalProperties":false},{"type":"object","title":"azure-openai","properties":{"provider":{"type":"string","enum":["azure-openai"]},"config":{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1},"resourceName":{"type":"string","minLength":1},"deploymentId":{"type":"string","minLength":1}},"required":["apiKeySecretName","resourceName","deploymentId"],"additionalProperties":false},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"enabled":{"type":"boolean","default":true}},"required":["provider","config"],"additionalProperties":false},{"type":"object","title":"bedrock","properties":{"provider":{"type":"string","enum":["bedrock"]},"config":{"type":"object","properties":{"accessKeyIdSecretName":{"type":"string","minLength":1},"secretAccessKeySecretName":{"type":"string","minLength":1},"region":{"type":"string","minLength":1,"pattern":"^[a-z]{2}-[a-z]+-\\d{1}$"},"guardrailIdentifier":{"type":"string"},"guardrailVersion":{"type":"string"}},"required":["accessKeyIdSecretName","secretAccessKeySecretName","region"],"additionalProperties":false},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["claude-sonnet-4-20250514"],"properties":{"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"enabled":{"type":"boolean","default":true}},"required":["provider","config"],"additionalProperties":false}]}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"201":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"enabled":{"type":"boolean"},"config":{"anyOf":[{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1},"resourceName":{"type":"string","minLength":1},"deploymentId":{"type":"string","minLength":1}},"required":["apiKeySecretName","resourceName","deploymentId"],"additionalProperties":false},{"type":"object","properties":{"accessKeyIdSecretName":{"type":"string","minLength":1},"secretAccessKeySecretName":{"type":"string","minLength":1},"region":{"type":"string","minLength":1,"pattern":"^[a-z]{2}-[a-z]+-\\d{1}$"},"guardrailIdentifier":{"type":"string"},"guardrailVersion":{"type":"string"}},"required":["accessKeyIdSecretName","secretAccessKeySecretName","region"],"additionalProperties":false},{"anyOf":[{"not":{}},{"type":"object","properties":{},"additionalProperties":false}]}]},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"effectiveModels":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","enabled","effectiveModels"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"400":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
