@@ -5,6 +5,7 @@ sidebar_position: 1
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
+import SupportUserPermissions from "/docs/generalTemplates/_support_user_permissions.md"
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -424,3 +425,19 @@ Port service accounts are treated like any other users and extend the same RBAC 
 Service accounts can easily be disabled at any time. To disable a service account, update it's `status` property to `Disabled`.
 Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`.
 
+## Support user permissions
+
+<SupportUserPermissions/>
+
+### Access duration
+
+Support user access is enabled by default.  
+You can define how long this access will be valid: **1 week**, **1 month**, **1 year**, **Permanent access (default)**.
+
+:::info Emergency access
+
+In critical situations, Port can request emergency access to your organization even if support user permissions are disabled. This requires:
+
+1. **Organization approval** - the organization admin must approve the emergency access request.
+2. **Port approval** - Internal Port approval process.
+:::
