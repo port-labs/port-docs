@@ -594,6 +594,22 @@ resources:
 
 </details>
 
+:::tip Deep links to Checkmarx One dashboard
+If you need to ingest deep links back to the Checkmarx One dashboard, you can construct them using jq expressions in your mapping configuration. Combine your Checkmarx One UI base URL with relevant path parameters from the data returned by the API.
+
+For example, to create a dashboard link for a project:
+```yaml
+dashboardUrl: '"https://your-region.ast.checkmarx.net/projects/" + .id'
+```
+
+Or for a specific scan result:
+```yaml
+scanUrl: '"https://your-region.ast.checkmarx.net/projects/" + .projectId + "/scans/" + "?id=" + .id'
+```
+
+Replace `your-region` with your actual Checkmarx One region (e.g., `eu`, `us`, `deu`, etc.) and adjust the path structure based on your Checkmarx One dashboard URL format.
+:::
+
 <MetricsAndSyncStatus />
 
 ## Examples
