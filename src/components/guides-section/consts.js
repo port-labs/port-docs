@@ -1475,6 +1475,13 @@ export const availableGuides = [
         tags: ["SDLC", "GitHub", "AI",  "Automations"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/manage-ai-instructions",
+    },
+    {
+        title: "Migrate repositories from Bitbucket to GitHub",
+        description: "Learn how to migrate repositories from Bitbucket to GitHub using Port's self-service actions",
+        tags: ["SDLC", "Actions", "BitBucket", "GitHub"],
+        logos: ["BitBucket", "GitHub"],
+        link: "/guides/all/migrate-project-from-bibucket-to-github",
     }
 ]
 
