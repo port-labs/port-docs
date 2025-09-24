@@ -129,7 +129,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)" default>
+<TabItem value="real-time-self-hosted" label="Self-hosted" default>
 
 <IntegrationVersion integration="argocd" />
 
@@ -257,13 +257,11 @@ Note the parameters specific to this integration, they are last in the table.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the ArgoCD integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
-:::
+
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">

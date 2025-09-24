@@ -395,8 +395,10 @@ Now let us test the complete workflow to ensure everything works correctly.
 
 <h3> Verify execution tracking </h3>
 
-1. Open the [Software Catalog](https://app.getport.io/catalog).  
+1. Open the [software catalog](https://app.getport.io/catalog).  
 2. Check the **Gemini Assistant Execution** entity for the new record.
+
+<img src="/img/guides/gemini-assistant-entity.png" border="1px" width="100%" />
 
 
 ## Related guides
