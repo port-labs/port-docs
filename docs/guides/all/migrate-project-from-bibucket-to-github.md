@@ -1,8 +1,6 @@
-Migrating From Bitbucket to GitHub
+# Migrate repositories from Bitbucket to GitHub using Port self-service actions
 
-# Outline
-
-## 1. Introduction
+## Introduction
 
 Migrating repositories from Bitbucket Server to GitHub Enterprise can streamline development workflows, centralize code management, and take advantage of GitHub’s extensive ecosystem. By using [Port](https://port.io/)’s self-service action (SSA), this process can be made as easy as possible. In this guide, we will be walking through the process of setting up our Port environment to make migration processes easy. Here is an outline of the steps we will be taking:
 
@@ -17,7 +15,7 @@ Port ensures all the relevant repository data—like URLs, readmes, codeowner fi
 
 ---
 
-## 2. Prerequisites
+## Prerequisites
 
 You should have the following in place for this migration:
 
@@ -25,63 +23,68 @@ You should have the following in place for this migration:
 - A Bitbucket account with the specified project and set of repositories you want to migrate to GitHub
 - A GitHub organization where you have owner permissions or permissions to create a repository
 
-## 3. Setting Up the GitHub and Bitbucket Integrations on Port
+## Setting up the GitHub and Bitbucket integrations on Port
 
-### 3.1 GitHub Integration
+### GitHub Integration
 
 1. Set up the Port’s GitHub integration by following [Port’s setup guide for GitHub](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup). 
 2. Create a blueprint for a GitHub service so Port can catalog your GitHub repositories:
-    1. Go to the **Builder Page** on your Port dashboard and select **Data Model** on the left side bar
+    1. Go to the [Builder](https://app.getport.io/settings/data-model) page on your Port dashboard and select **Data Model** on the left side bar
     2. Click on **+ Blueprint** to create a blueprint
     3. Click on the **Edit JSON** button to enter JSON mode and paste the blueprint definition below
     
-    ```json
-    {
-      "identifier": "githubService",
-      "title": "GitHub Service",
-      "icon": "Github",
-      "schema": {
-        "properties": {
-          "url": {
-            "title": "URL",
-            "format": "url",
-            "type": "string",
-            "icon": "Link"
-          },
-          "readme": {
-            "title": "README",
-            "type": "string",
-            "format": "markdown",
-            "icon": "Book"
-          },
-          "language": {
-            "title": "Language",
-            "type": "string",
-            "icon": "DefaultProperty"
-          },
-          "codeowners": {
-            "type": "string",
-            "title": "Codeowners",
-            "description": "Codeowners file",
-            "icon": "Team",
-            "format": "markdown"
-          },
-          "jenkinsfile": {
-            "type": "string",
-            "title": "Jenkins Configuration",
-            "description": "Jenkins",
-            "icon": "CICD",
-            "format": "markdown"
-          }
-        },
-        "required": []
+<details>
+<summary><b>GitHub Service blueprint (click to expand)</b></summary>
+
+```json showLineNumbers title="GitHub Service blueprint"
+{
+  "identifier": "githubService",
+  "title": "GitHub Service",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "URL",
+        "format": "url",
+        "type": "string",
+        "icon": "Link"
       },
-      "mirrorProperties": {},
-      "calculationProperties": {},
-      "aggregationProperties": {},
-      "relations": {}
-    }
-    ```
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown",
+        "icon": "Book"
+      },
+      "language": {
+        "title": "Language",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "codeowners": {
+        "type": "string",
+        "title": "Codeowners",
+        "description": "Codeowners file",
+        "icon": "Team",
+        "format": "markdown"
+      },
+      "jenkinsfile": {
+        "type": "string",
+        "title": "Jenkins Configuration",
+        "description": "Jenkins",
+        "icon": "CICD",
+        "format": "markdown"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
     
     d. Click on **Save**
     
@@ -89,29 +92,34 @@ You should have the following in place for this migration:
     
     Next, we define a mapping configuration to ingest GitHub repositories, associating them to the `githubService` blueprint in Port.
     
-    1. From the **Builder Page**, select **Data sources**
+    1. From the [Builder](https://app.getport.io/settings/data-model) page, select [data sources](https://app.getport.io/settings/data-sources)
     2. Scroll till you locate the GitHub integration you installed and click on it
     3. Under the **Mapping** field, paste the following mapping configuration
     
-    ```yaml
-    createMissingRelatedEntities: true
-    resources:
-      - kind: repository
-        selector:
-          query: 'true'
-        port:
-          entity:
-            mappings:
-              identifier: .name
-              title: .name
-              blueprint: '"githubService"'
-              properties:
-                readme: file://README.md
-                url: .html_url
-                language: .language
-                codeowners: file://.github/CODEOWNERS
-                jenkinsfile: file://Jenkinsfile
-    ```
+<details>
+<summary><b>GitHub mapping configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers title="GitHub mapping configuration"
+createMissingRelatedEntities: true
+resources:
+  - kind: repository
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubService"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            language: .language
+            codeowners: file://.github/CODEOWNERS
+            jenkinsfile: file://Jenkinsfile
+```
+
+</details>
     
     d. Click on the **Save & Resync** button at the bottom right corner
     
@@ -119,80 +127,84 @@ You should have the following in place for this migration:
 
 ---
 
-### 3.2 Bitbucket Integration
+### Bitbucket Integration
 
 1. Set up the Port’s Bitbucket integration by following [Port’s setup guide for Bitbucket](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud/). 
 2. Create a blueprint for a Bitbucket service so Port can catalog your Bitbucket repositories:
-    1. Go to the **Builder Page** on your Port dashboard and select **Data Model** on the left side bar
+    1. Go to the [Builder](https://app.getport.io/settings/data-model) page on your Port dashboard and select **Data Model** on the left side bar
     2. Click on **+ Blueprint** to create a blueprint
     3. Click on the **Edit JSON** button to enter JSON mode and paste the blueprint definition below
     
-    ```json
-    {
-      "identifier": "bitbucketService",
-      "title": "Bitbucket Service",
-      "icon": "Service",
-      "schema": {
-        "properties": {
-          "url": {
-            "title": "URL",
-            "format": "url",
-            "type": "string",
-            "icon": "Link"
-          },
-          "readme": {
-            "title": "README",
-            "type": "string",
-            "format": "markdown",
-            "icon": "Book"
-          },
-          "language": {
-            "title": "Language",
-            "type": "string",
-            "icon": "DefaultProperty"
-          },
-          "codeowners": {
-            "type": "string",
-            "title": "Codeowners",
-            "description": "Codeowners file",
-            "icon": "Team",
-            "format": "markdown"
-          },
-          "jenkinsfile": {
-            "type": "string",
-            "title": "Jenkins Configuration",
-            "description": "Jenkins",
-            "icon": "CICD",
-            "format": "markdown"
-          }
-        },
-        "required": []
+<details>
+<summary><b>Bitbucket Service blueprint (click to expand)</b></summary>
+
+```json showLineNumbers title="Bitbucket Service blueprint"
+{
+  "identifier": "bitbucketService",
+  "title": "Bitbucket Service",
+  "icon": "Service",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "URL",
+        "format": "url",
+        "type": "string",
+        "icon": "Link"
       },
-      "mirrorProperties": {
-        "github_service_name": {
-          "title": "githubServiceName",
-          "path": "githubService.$title"
-        }
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown",
+        "icon": "Book"
       },
-      "calculationProperties": {},
-      "aggregationProperties": {},
-      "relations": {
-        "githubService": {
-          "title": "Github Repo URL",
-          "target": "githubService",
-          "required": false,
-          "many": false
-        },
-        "project": {
-          "title": "Project",
-          "target": "bitbucketProject",
-          "required": false,
-          "many": false
-        }
+      "language": {
+        "title": "Language",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "codeowners": {
+        "type": "string",
+        "title": "Codeowners",
+        "description": "Codeowners file",
+        "icon": "Team",
+        "format": "markdown"
+      },
+      "jenkinsfile": {
+        "type": "string",
+        "title": "Jenkins Configuration",
+        "description": "Jenkins",
+        "icon": "CICD",
+        "format": "markdown"
       }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "github_service_name": {
+      "title": "githubServiceName",
+      "path": "githubService.$title"
     }
-    
-    ```
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "githubService": {
+      "title": "Github Repo URL",
+      "target": "githubService",
+      "required": false,
+      "many": false
+    },
+    "project": {
+      "title": "Project",
+      "target": "bitbucketProject",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
     
     d. Click on **Save**
     
@@ -201,37 +213,42 @@ You should have the following in place for this migration:
     
     Next, we define a mapping configuration to ingest Bitbucket repositories, associating them to the `bitbucketService` blueprint in Port.
     
-    1. From the **Builder Page**, select **Data sources**
+    1. From the [Builder](https://app.getport.io/settings/data-model) page, select [data sources](https://app.getport.io/settings/data-sources)
     2. Scroll till you locate the Bitbucket integration you installed and click on it
     3. Under the **Mapping** field, paste the following mapping configuration
     
-    ```yaml
-    branch: main
-    resources:
-      - kind: repository
-        selector:
-          query: 'true'
-        port:
-          entity:
-            mappings:
-              identifier: .name
-              title: .name
-              blueprint: '"bitbucketService"'
-              properties:
-                readme: file://README.md
-                url: ".links.html.href"
-                language: .language
-                jenkinsfile: file://Jenkinsfile
-                codeowners: file://.bitbucket/CODEOWNERS
-              relations:
-                githubService:
-                  combinator: '"and"'
-                  rules:
-                    - property: '"$title"'
-                      operator: '"="'
-                      value: .name
-    
-    ```
+<details>
+<summary><b>Bitbucket mapping configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers title="Bitbucket mapping configuration"
+branch: main
+resources:
+  - kind: repository
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"bitbucketService"'
+          properties:
+            readme: file://README.md
+            url: ".links.html.href"
+            language: .language
+            jenkinsfile: file://Jenkinsfile
+            codeowners: file://.bitbucket/CODEOWNERS
+          relations:
+            githubService:
+              combinator: '"and"'
+              rules:
+                - property: '"$title"'
+                  operator: '"="'
+                  value: .name
+
+```
+
+</details>
     
     d. Click on the **Save & Resync** button at the bottom right corner
     
@@ -239,7 +256,7 @@ You should have the following in place for this migration:
 
 ---
 
-## 4. Scorecards (in the Blueprints)
+## Scorecards (in the blueprints)
 
 The **scorecards** for tracking migration status will be **included** in the two blueprints (`githubService` and `bitbucketService`). They’re **descriptive** only—there’s no automated step that triggers or blocks action based on the scorecards. However, they help teams quickly see which repositories:
 
@@ -249,7 +266,7 @@ The **scorecards** for tracking migration status will be **included** in the two
 
 The migration process will automatically update relevant fields in Port, keeping these scorecards in sync with the actual state of your repositories.
 
-### 4.1 `githubService` scorecard
+### `githubService` scorecard
 
 1. From the **Builder** page, select the **Data model** page on the left sidebar
 2. Locate your previously-created GitHub blueprint (you can use the search input for this)
@@ -332,7 +349,7 @@ The migration process will automatically update relevant fields in Port, keeping
 
 ---
 
-### 4.2 `bitbucketService` scorecard
+### `bitbucketService` scorecard
 
 1. From the **Builder** page, select the **Data model** page on the left sidebar
 2. Locate your previously-created Bitbucket blueprint (you can use the search input for this)
@@ -439,7 +456,7 @@ With your GitHub and Bitbucket integrations set up and your blueprints ready, th
 
 ---
 
-## 5. Configure the Self-Service Action (SSA)
+## Configure the self-service action (SSA)
 
 A **Self-Service Action (SSA)** in Port is how you define a user-facing action (in this case, “Migrate Service From Bitbucket To GitHub”). To set this up, follow the steps below:
 
@@ -452,7 +469,10 @@ A **Self-Service Action (SSA)** in Port is how you define a user-facing action (
 
 The following JSON outlines the structure and parameters for this action:
 
-```json
+<details>
+<summary><b>Self-service action configuration (click to expand)</b></summary>
+
+```json showLineNumbers title="Self-service action configuration"
 {
   "identifier": "migrate_service_from_bitbucket_to_git_hub",
   "title": "Migrate Service From Bitbucket To GitHub",
@@ -518,7 +538,9 @@ The following JSON outlines the structure and parameters for this action:
 }
 ```
 
-### Key Points to Customize
+</details>
+
+### Key points to customize
 
 - **`org`**: Replace `"YOUR-ORG"` with **your GitHub organization**.
 - **`repo`**: Replace `"YOUR-REPOSITORY"` with the repository where your workflow file resides.
@@ -528,13 +550,16 @@ Once you save this JSON in Port, you’ll have a new action in the UI that you c
 
 ---
 
-## 6. Create the GitHub Actions Workflow
+## Create the GitHub Actions workflow
 
 This YAML file (named `migrate-to-github.yml` in the example) lives in your designated GitHub repository (the same one referenced in the SSA JSON above). It handles the actual migration steps—cloning from Bitbucket, creating the repo in GitHub, and pushing the code.
 
 Create a file in your repository, `.github/workflows/migrate-to-github.yml`
 
-```yaml
+<details>
+<summary><b>GitHub Actions workflow (click to expand)</b></summary>
+
+```yaml showLineNumbers title="migrate-to-github.yml"
 # This workflow is used to migrate a Bitbucket repository to GitHub repository
 # The repository is cloned from Bitbucket and pushed to GitHub even when the repository does not exist on GitHub
 # The workflow is triggered when a new repository is created in Bitbucket
@@ -739,7 +764,9 @@ jobs:
 
 ```
 
-### Required Action Secrets
+</details>
+
+### Required action secrets
 
 You’ll need to set up the following **secrets** in your GitHub repository (under **Settings → Secrets and variables → Actions**):
 
@@ -754,11 +781,11 @@ Additionally, you’ll need these secrets to inform Port’s run status:
 
 ---
 
-## 7. Trigger and Migration Flow
+## Trigger and migration flow
 
 With everything in place:
 
-1. **Open Port**, navigate to your **Self-Service Actions**.
+1. **Open Port**, navigate to your [Self-Service Actions](https://app.getport.io/organization/self-serve).
 2. Select the **Migrate Service From Bitbucket To GitHub** action you configured.
 3. **Choose one or more repositories** from the dropdown (these come from your `bitbucketService` blueprint).
 4. Click **Execute**.
@@ -768,7 +795,7 @@ With everything in place:
 
 ---
 
-## 8. Known Issues & Troubleshooting
+## Known issues & troubleshooting
 
 1. **Insufficient GitHub PAT Scopes**
     - Ensure your `GH_TOKEN` has permissions to create new repos in the target organization. If you see errors related to “permission denied,” check the token’s scopes (e.g., `repo` for private repos, `admin:org` if needed).
@@ -779,7 +806,7 @@ With everything in place:
 
 ---
 
-## 9. Wrapping Up
+## Wrapping up
 
 At this point, you have:
 
