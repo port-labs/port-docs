@@ -591,7 +591,6 @@ resources:
         relations:
           scan: .scan_id
 ```
-
 </details>
 
 :::tip Deep links to Checkmarx One dashboard
