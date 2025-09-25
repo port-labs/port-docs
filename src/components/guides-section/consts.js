@@ -1449,6 +1449,13 @@ export const availableGuides = [
         link: "/guides/all/owasp-top-10-scorecard",
     },
     {
+        title: "PCI DSS code security scorecard",
+        description: "Continuously track compliance with PCI DSS requirements using code scans and vulnerability data",
+        tags: ["Security", "Scorecards", "Snyk", "PCI DSS"],
+        logos: ["Snyk"],
+        link: "/guides/all/setup-pci-dss-code-compliance",
+    },
+    {
         title: "Enforce AI coding security standards",
         description: "Learn how to enforce AI coding security standards in your organization",
         tags: ["SDLC", "AI", "GitHub", "Scorecards"],
