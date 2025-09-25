@@ -127,7 +127,7 @@ For example, if you want to give the agent access to Kubernetes information, you
 ```
 
 ### MCP mode
-When using [MCP server backend mode](/ai-interfaces/ai-agents/interact-with-ai-agents#mcp-server-backend-mode-in-widgets), no manual additional blueprint configuration is required. MCP auto-discovers and manages access to blueprints, entities, and actions. This simplifies setup and ensures the agent always has the latest catalog context.
+When using [MCP server backend mode](/ai-interfaces/ai-agents/interact-with-ai-agents), no manual additional blueprint configuration is required. MCP auto-discovers and manages access to blueprints, entities, and actions. This simplifies setup and ensures the agent always has the latest catalog context.
 
 
 ## Interact with the Service Explorer
@@ -154,7 +154,7 @@ Once the widget is set up, you can ask questions directly in the chat field.
 </TabItem>
 <TabItem value="slack" label="Slack Integration">
 
-The Slack integration provides a natural way to interact with the Service Explorer agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-interfaces/ai-agents/slack-app)**.
+The Slack integration provides a natural way to interact with the Service Explorer agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-interfaces/slack-app)**.
 
 You can interact with the Service Explorer agent in two ways:
 1. **Direct message** the Port AI Assistant.
