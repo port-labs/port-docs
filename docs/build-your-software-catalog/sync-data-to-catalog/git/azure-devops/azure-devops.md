@@ -163,64 +163,6 @@ resources:
               value: '[.reviewers[].uniqueName]'
           azure_devops_reviewers: '[.reviewers[].id]'
           azure_devops_creator: .createdBy.id
-- kind: build
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .__project.id + "-" + (.id | tostring) | gsub(" "; "")
-        title: .buildNumber
-        blueprint: '"build"'
-        properties:
-          status: .status
-          result: .result
-          queueTime: .queueTime
-          startTime: .startTime
-          finishTime: .finishTime
-          definitionName: .definition.name
-          requestedFor: .requestedFor.displayName
-          link: ._links.web.href
-        relations:
-          project: .__project.id | gsub(" "; "")
-- kind: pipeline-stage
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: >-
-          .__project.id + "-" + (.__buildId | tostring) + "-" + (.id |
-          tostring) | gsub(" "; "")
-        title: .name
-        blueprint: '"pipeline-stage"'
-        properties:
-          state: .state
-          result: .result
-          startTime: .startTime
-          finishTime: .finishTime
-          stageType: .type
-        relations:
-          project: .__project.id | gsub(" "; "")
-          build: (.__project.id + "-" + (.__buildId | tostring)) | gsub(" "; "")
-- kind: pipeline-run
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: >-
-          .__project.id + "-" + (.__pipeline.id | tostring) + "-" + (.id |
-          tostring) | gsub(" "; "")
-        blueprint: '"pipeline-run"'
-        properties:
-          state: .state
-          result: .result
-          createdDate: .createdDate
-          finishedDate: .finishedDate
-          pipelineName: .pipeline.name
-        relations:
-          project: .__project.id | gsub(" "; "")
 ```
 
 </details>
@@ -1006,6 +948,31 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 
+<details>
+<summary> Iteration response data</summary>
+
+```json showLineNumbers
+{
+  "id": "Sprint 1",
+  "name": "Sprint 1",
+  "path": "\\Port Integration\\Sprint 1",
+  "attributes": {
+    "startDate": "2023-11-01T00:00:00.000Z",
+    "finishDate": "2023-11-15T00:00:00.000Z",
+    "timeFrame": "past"
+  },
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  }
+}
+```
+
+</details>
+
+
+
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1189,6 +1156,30 @@ The combination of the sample payload and the Ocean configuration generates the 
     "createdDate": "2023-11-14T07:00:00.000Z",
     "finishedDate": "2023-11-14T07:05:30.000Z",
     "pipelineName": "health-catalist"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
+
+
+
+<details>
+<summary> Iteration entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "Sprint 1",
+  "title": "Sprint 1",
+  "blueprint": "iteration",
+  "properties": {
+    "name": "Sprint 1",
+    "path": "\\Port Integration\\Sprint 1",
+    "timeFrame": "past"
   },
   "relations": {
     "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
