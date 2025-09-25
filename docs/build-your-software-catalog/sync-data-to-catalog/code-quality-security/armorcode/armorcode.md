@@ -95,7 +95,7 @@ Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readth
 :::
 
 <details>
-  <summary>ArgoCD Application</summary>
+<summary><b>ArgoCD Application (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 apiVersion: argoproj.io/v1alpha1
