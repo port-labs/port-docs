@@ -168,7 +168,7 @@ This table summarizes the available parameters for the installation.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the ArmorCode integration once and then exit, this is useful for **scheduled** ingestion of data.
 
