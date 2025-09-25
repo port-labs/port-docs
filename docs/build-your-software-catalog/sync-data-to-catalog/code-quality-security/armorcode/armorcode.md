@@ -23,9 +23,9 @@ This integration allows you to:
 
 The resources that can be ingested from ArmorCode into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-- [`Products`](https://docs.armorcode.com/api/products) - ArmorCode products representing applications or services
-- [`Sub-Products`](https://docs.armorcode.com/api/sub-products) - Repositories or components within products
-- [`Findings`](https://docs.armorcode.com/api/findings) - Security vulnerabilities and issues detected by ArmorCode
+- [`Products`](https://docs.armorcode.com/api/products) - ArmorCode products representing applications or services.
+- [`Sub-Products`](https://docs.armorcode.com/api/sub-products) - Repositories or components within products.
+- [`Findings`](https://docs.armorcode.com/api/findings) - Security vulnerabilities and issues detected by ArmorCode.
 
 ## Setup
 
