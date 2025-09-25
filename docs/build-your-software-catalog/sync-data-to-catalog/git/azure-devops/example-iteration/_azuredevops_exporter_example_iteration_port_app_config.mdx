@@ -32,7 +32,10 @@ resources:
           properties:
             name: .name
             path: .path
+            startDate: (.attributes.startDate // 0)
+            finishDate: (.attributes.finishDate // 0)
             timeFrame: .attributes.timeFrame
+            link: .url
           relations:
             project: .__project.id | gsub(" "; "")
 
