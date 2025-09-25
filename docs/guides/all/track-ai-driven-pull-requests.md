@@ -8,6 +8,22 @@ import TabItem from "@theme/TabItem"
 
 # Track AI-driven pull requests
 
+<center>
+<div className="video-container">
+  <iframe 
+    style={{borderRadius:'4px'}}
+    width="568"
+    height="320"
+    src="https://www.youtube.com/embed/YARZKjSs9Wc" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+</center>
+<br/>
+
 As engineering teams integrate AI coding agents like GitHub Copilot, Claude, and Devin into their workflows, they face the challenge of managing an increased volume of pull requests. Tracking and reviewing these AI-generated contributions can be overwhelming without a centralized system. Port's AI control center addresses this issue by identifying pull requests originating from coding agents and displaying them in real-time, allowing you to efficiently monitor and act upon them.
 
 <img src="/img/guides/ai-driven-pr-dashboard.png" border="1px" width="100%" />
@@ -120,15 +136,7 @@ This blueprint will represent all known coding agents in your system.
           "calculationSpec": {
             "func": "count",
             "calculationBy": "entities"
-          },
-          "pathFilter": [
-            {
-              "fromBlueprint": "githubPullRequest",
-              "path": [
-                "ai_coding_agent"
-              ]
-            }
-          ]
+          }
         },
         "total_open_p_rs": {
           "title": "Total open PRs",
@@ -148,15 +156,7 @@ This blueprint will represent all known coding agents in your system.
           "calculationSpec": {
             "func": "count",
             "calculationBy": "entities"
-          },
-          "pathFilter": [
-            {
-              "fromBlueprint": "githubPullRequest",
-              "path": [
-                "ai_coding_agent"
-              ]
-            }
-          ]
+          }
         }
       },
       "relations": {}
@@ -693,7 +693,6 @@ Built with Port to bring clarity to your AI-driven SDLC.
 7. In the top right corner of the table, click on `Manage Properties` and add the following properties:
     - **Title**: The title of the pull request.
     - **Link**: The URL to the pull request.
-    - **PR Urgency**: The urgency level of the PR.
     - **Repository**: The repository where the PR was created.
     - **AI Coding Agent**: The AI agent involved in the PR.
 8. Click on the **Group by** option and select **Work Status** to group PRs by their current status.

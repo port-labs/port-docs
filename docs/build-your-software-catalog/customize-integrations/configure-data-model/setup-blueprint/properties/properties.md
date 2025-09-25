@@ -27,7 +27,7 @@ You can create, delete, or edit properties via the builder page or directly from
 
 1. Go to your [Builder page](https://app.getport.io/settings).
 2. Expand the blueprint you want to edit by double-clicking on it.
-3. Click on the `+ New property` button in the bottom of the tab:
+3. Click on the `+ New property` button:
 
 <img src='/img/software-catalog/customize-integrations/createNewProperty.png' width='35%' border='1px' />
 <br/><br/>
@@ -50,7 +50,7 @@ Each catalog page in your software catalog contains a table with all entities cr
     <br/>
     **Note** that [meta-properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties) are not editable, so you will not see a `...` icon next to them.
 
-4. To create a new property in the blueprint, click on the `+ Property` button in the bottom of the dropdown.
+4. To create a new property in the blueprint, click on the `+ Property` button at the bottom of the dropdown.
 
 :::tip Hiding properties
 You can also hide properties from the table by clicking on the toggle on the right side of the property name. 
@@ -75,9 +75,10 @@ The different components that make up a basic property definition are listed in 
 
 | Field         | Description                                                                                                                                                                        |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`       | Property title                                                                                                                                                                     |
+| `title`       | Property title.                                                                                                                                                                    |
+| `identifier`  | Property identifer. (Maximum 30 characters)                                                                                                                                        |
 | `type`        | **Mandatory field.** The data type of the property.                                                                                                                                |
-| `icon`        | Icon for the property <br /><br />See the [full icon list](../setup-blueprint.md#full-icon-list).                                                                                  |
+| `icon`        | Icon for the property. <br /><br />See the [full icon list](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/#full-icon-list).                                                                                 |
 | `description` | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property. |
 | `default`     | Default value for this property in case an entity is created without explicitly providing a value.                                                                                 |
 

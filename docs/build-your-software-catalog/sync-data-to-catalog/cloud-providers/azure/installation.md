@@ -10,6 +10,7 @@ import DockerParameters from "./\_azure_docker_params.mdx"
 import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import AzureAppRegistration from "./\_azure_app_registration_guide.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Installation
 
@@ -42,6 +43,8 @@ This way of deployment supports scheduled resyncs of resources from Azure to Por
 <AzureAppRegistration/>
 
 <h2> Installation </h2>
+
+<IntegrationVersion integration="azure" />
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using Helm.
 
@@ -318,6 +321,65 @@ Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readth
 3. Apply the `azure-integration.yaml` manifest to your Kubernetes cluster.
 ```bash
 kubectl apply -f azure-integration.yaml
+```
+
+</TabItem>
+
+<TabItem value="gitlab" label="GitLab">
+
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+
+| Parameter                                     | Description                                                                                                                           | Required |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__PORT__CLIENT_ID`                      | Your port client id.                                                                                                                  | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret.                                                                                                              | ✅       |
+| `OCEAN__PORT__BASE_URL`                       | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US.                                              | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_ID` | The client ID of the Azure App Registration.                                                                                          | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_SECRET` | The client secret of the Azure App Registration.                                                                                  | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__AZURE_TENANT_ID` | The tenant ID of the Azure App Registration.                                                                                          | ✅       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, when set to false the integration will not create default blueprints and the port App config mapping.                   | ❌       |
+| `OCEAN__SEND_RAW_DATA_EXAMPLES`               | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true.  | ❌       |
+| `OCEAN__EVENT_LISTENER`                       | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                             | ❌       |
+
+<br/>
+
+Here is an example for `.gitlab-ci.yml` pipeline file:
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+
+variables:
+  INTEGRATION_TYPE: azure
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+        docker run -i --rm --platform=linux/amd64 \
+          -e OCEAN__PORT__CLIENT_ID=$PORT_CLIENT_ID \
+          -e OCEAN__PORT__CLIENT_SECRET=$PORT_CLIENT_SECRET \
+          -e OCEAN__PORT__BASE_URL="https://api.port.io" \
+          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+          -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
+          -e OCEAN__EVENT_LISTENER='{"type": "ONCE"}' \
+          -e OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_ID="Enter value here" \
+          -e OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_SECRET="Enter value here" \
+          -e OCEAN__INTEGRATION__CONFIG__AZURE_TENANT_ID="Enter value here" \
+          $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
 ```
 
 </TabItem>
