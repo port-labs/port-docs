@@ -1037,8 +1037,7 @@ Here is an example of the payload structure from Azure DevOps:
   "__project": {
     "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
     "name": "Port Integration"
-  },
-  "__iterationKind": "sprint"
+  }
 }
 ```
 
@@ -1253,7 +1252,6 @@ The combination of the sample payload and the Ocean configuration generates the 
   "properties": {
     "name": "Sprint 1",
     "path": "\\Port Integration\\Sprint 1",
-    "iterationKind": "sprint",
     "timeFrame": "past"
   },
   "relations": {
