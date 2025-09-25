@@ -868,7 +868,7 @@ This section includes a sample response data from ArmorCode. In addition, it inc
 Here is an example of the payload structure from ArmorCode:
 
 <details>
-<summary>Product response data</summary>
+<summary><b>Product response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
