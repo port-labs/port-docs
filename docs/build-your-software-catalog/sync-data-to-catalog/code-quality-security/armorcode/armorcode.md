@@ -15,9 +15,9 @@ Port's ArmorCode integration allows you to model ArmorCode resources in your sof
 
 This integration allows you to:
 
-- Track security vulnerabilities and findings from ArmorCode in Port
-- Map products, sub-products, and their security findings
-- Monitor security posture across your software catalog
+- Track security vulnerabilities and findings from ArmorCode in Port.
+- Map products, sub-products, and their security findings.
+- Monitor security posture across your software catalog.
 
 ### Supported Resources
 
