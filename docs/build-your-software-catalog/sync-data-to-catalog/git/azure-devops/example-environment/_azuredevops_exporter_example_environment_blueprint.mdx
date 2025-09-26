@@ -1,0 +1,45 @@
+<details>
+<summary><b>Environment blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+  {
+    "identifier": "azureDevopsEnvironment",
+    "title": "Azure DevOps Environment",
+    "icon": "AzureDevops",
+    "schema": {
+      "properties": {
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "icon": "DefaultProperty",
+          "description": "The description of the environment"
+        },
+        "createdOn": {
+          "title": "Created On",
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the environment was created"
+        },
+        "lastModifiedOn": {
+          "title": "Last Modified On",
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the environment was last modified"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "project": {
+        "title": "Project",
+        "target": "project",
+        "required": true,
+        "many": false
+      }
+    }
+  }
+```
+</details>

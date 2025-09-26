@@ -1,0 +1,60 @@
+<details>
+<summary><b>Pipeline Deployment blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+  {
+    "identifier": "azureDevopsPipelineDeployment",
+    "title": "Azure DevOps Pipeline Deployment",
+    "icon": "AzureDevops",
+    "schema": {
+      "properties": {
+        "planType": {
+          "title": "Plan Type",
+          "type": "string",
+          "icon": "DefaultProperty",
+          "description": "The type of deployment plan"
+        },
+        "stageName": {
+          "title": "Stage Name",
+          "type": "string",
+          "description": "The name of the deployment stage"
+        },
+        "jobName": {
+          "title": "Job Name",
+          "type": "string",
+          "description": "The name of the deployment job"
+        },
+        "result": {
+          "title": "Result",
+          "type": "string",
+          "description": "The result of the deployment"
+        },
+        "startTime": {
+          "title": "Start Time",
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the deployment started"
+        },
+        "finishTime": {
+          "title": "Finish Time",
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the deployment finished"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "environment": {
+        "title": "Environment",
+        "target": "azureDevopsEnvironment",
+        "required": true,
+        "many": false
+      }
+    }
+  }
+```
+</details>
