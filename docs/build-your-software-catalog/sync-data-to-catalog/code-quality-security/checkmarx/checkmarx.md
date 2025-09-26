@@ -10,21 +10,15 @@ import FindCredentials from "/docs/build-your-software-catalog/custom-integratio
 import DockerParameters from "./_checkmarx_docker_parameters.mdx"
 
 # Checkmarx One
-
-Port's Checkmarx One integration allows you to model Checkmarx One resources in your software catalog and ingest data into them.
-
-## Overview
-
-This integration allows you to:
-
-- Map and organize your desired Checkmarx One resources and their metadata in Port (see supported resources below).
+This integration allows you to model Checkmarx One resources in your software catalog and ingest data into them.  
+It lets you map and organize the desired Checkmarx One resources and their metadata in Port (see supported resources below).
 
 ### Supported Resources
 
 The resources that can be ingested from Checkmarx One into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-- [`Project`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/j4vd1fubv8m4z-retrieve-list-of-projects)
-- [`Scan`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/1wnhzwk5inwup-retrieve-list-of-scans)
+- [`Project`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/j4vd1fubv8m4z-retrieve-list-of-projects) - Project information and metadata
+- [`Scan`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/1wnhzwk5inwup-retrieve-list-of-scans) - Security scan execution details and status
 - [`SAST`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - Static Application Security Testing results
 - [`SCA`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - Software Composition Analysis results
 - [`KICS`](https://checkmarx.stoplight.io/docs/checkmarx-one-api-reference-guide/branches/main/whqbw17zn6rg1-retrieve-scan-results-all-scanners) - Infrastructure as Code Security results
@@ -106,7 +100,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 Using this installation option means that the integration will be able to update Port in real time using polling.
 
@@ -132,8 +126,9 @@ To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-checkmarx-one-integration` in your git repository with the content:
 
-:::note
+:::note Configuration Placeholders
 Remember to replace the placeholders for `checkmarxTenant` and checkmarxApiKey.
+:::
 
 ```yaml showLineNumbers
 initializePortResources: true
@@ -154,14 +149,16 @@ integration:
 <br/>
 
 2. Install the `my-ocean-checkmarx-one-integration` ArgoCD Application by creating the following `my-ocean-checkmarx-one-integration.yaml` manifest:
-:::note
+
+:::note ArgoCD Application Placeholders
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+:::
 
 Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 :::
 
 <details>
-  <summary>ArgoCD Application</summary>
+  <summary><b>ArgoCD Application (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 apiVersion: argoproj.io/v1alpha1
@@ -241,12 +238,12 @@ Note the parameters specific to this integration, they are last in the table.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Checkmarx One integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning Real-time updates
-If you want the integration to update Port in real time using polling you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+If you want the integration to update Port in real time using polling you should use the [Self-hosted](?installation-methods=real-time-self-hosted#setup) installation option.
 :::
 
 <Tabs groupId="cicd-method" queryString="cicd-method">
@@ -288,7 +285,7 @@ jobs:
 
 <TabItem value="jenkins" label="Jenkins">
 
-:::tip
+:::tip Jenkins Docker Requirements
 Your Jenkins agent should be able to run docker commands.
 :::
 
@@ -351,7 +348,7 @@ pipeline {
 
 <TabItem value="azure" label="Azure Devops">
 
-:::tip
+:::tip Azure DevOps Docker Requirements
 Your Azure DevOps agent should be able to run docker commands.
 :::
 
@@ -418,7 +415,7 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 This is the default mapping configuration for this integration:
 
 <details>
-<summary><b>Default mapping configuration (Click to expand)</b></summary>
+<summary><b>Default mapping configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -613,12 +610,10 @@ Replace `your-region` with your actual Checkmarx One region (e.g., `eu`, `us`, `
 
 ## Examples
 
-Examples of blueprints:
-
-### Project
+Below are examples for different blueprints:
 
 <details>
-<summary>Project blueprint</summary>
+<summary><b>Project blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -670,10 +665,8 @@ Examples of blueprints:
 
 </details>
 
-### Scan
-
 <details>
-<summary>Scan blueprint</summary>
+<summary><b>Scan blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -751,10 +744,8 @@ Examples of blueprints:
 
 </details>
 
-### SAST
-
 <details>
-<summary>SAST blueprint</summary>
+<summary><b>SAST blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -858,10 +849,8 @@ Examples of blueprints:
 
 </details>
 
-### SCA
-
 <details>
-<summary>SCA blueprint</summary>
+<summary><b>SCA blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -955,10 +944,9 @@ Examples of blueprints:
 
 </details>
 
-### KICS
 
 <details>
-<summary>KICS blueprint</summary>
+<summary><b>KICS blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1071,10 +1059,8 @@ Examples of blueprints:
 
 </details>
 
-### Container Security
-
 <details>
-<summary>Container Security blueprint</summary>
+<summary><b>Container Security blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1168,10 +1154,8 @@ Examples of blueprints:
 
 </details>
 
-### API Security
-
 <details>
-<summary>API Security blueprint</summary>
+<summary><b>API Security blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1408,7 +1392,7 @@ In this example you are going to create a webhook integration between [Checkmarx
 Create the following blueprint definitions:
 
 <details>
-<summary>Checkmarx Scan blueprint</summary>
+<summary><b>Checkmarx Scan blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1469,7 +1453,7 @@ Create the following blueprint definitions:
 Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
-<summary>Checkmarx One webhook configuration</summary>
+<summary><b>Checkmarx One webhook configuration (click to expand)</b></summary>
 
 1. **Basic details** tab - fill the following details:
    1. Title : `Checkmarx One mapper`;
@@ -1560,7 +1544,7 @@ This section includes a sample webhook event sent from Checkmarx One when a scan
 Here is an example of the payload structure sent to the webhook URL when a Checkmarx One scan is completed:
 
 <details>
-<summary> Webhook event payload</summary>
+<summary><b>Webhook event payload (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
