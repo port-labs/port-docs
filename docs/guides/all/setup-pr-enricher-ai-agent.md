@@ -449,7 +449,7 @@ To get the most out of your PR Enricher agent:
 
 You can further enhance the PR Enricher setup by:
 
-- **Adding more data sources** like PagerDuty for incident context or [additional Git providers](/ai-interfaces/ai-agents/build-an-ai-agent#step-2-configure-data-access) for broader repository visibility.
-- **Configuring automated actions** such as [reviewer assignment, PR labeling, or creating follow-up Jira tickets](/ai-interfaces/ai-agents/interact-with-ai-agents#actions-and-automations).
+- **Adding more data sources** like PagerDuty for incident context or [additional Git providers](/ai-interfaces/ai-agents/build-an-ai-agent#step-2-configure-data-access-tools) for broader repository visibility.
+- **Configuring automated actions** such as [reviewer assignment, PR labeling, or creating follow-up Jira tickets](/ai-interfaces/ai-agents/interact-with-ai-agents#interaction-methods).
 - **Customizing risk assessment criteria** to align with your organization's specific guidelines and [monitoring usage patterns](/ai-interfaces/ai-agents/interact-with-ai-agents#ai-interaction-details).
 
