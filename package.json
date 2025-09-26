@@ -17,7 +17,7 @@
     "generate-guide-metadata": "node scripts/generate-guide-metadata.js"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.8.1",
+    "@docusaurus/core": "^3.9.0",
     "@docusaurus/faster": "^3.8.1",
     "@docusaurus/plugin-client-redirects": "^3.8.1",
     "@docusaurus/plugin-google-tag-manager": "^3.8.1",
