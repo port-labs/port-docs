@@ -56,6 +56,8 @@ import PortPipelineDeploymentAppConfig from './example-pipeline-deployment/\_azu
 import TestRunBlueprint from './example-test-run/\_azuredevops_exporter_example_test_run_blueprint.mdx'
 import PortTestRunAppConfig from './example-test-run/\_azuredevops_exporter_example_test_run_port_app_config.mdx'
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 
 # Examples
 
@@ -187,6 +189,42 @@ You can use the following Port blueprint definitions and integration configurati
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your pipeline runs.
 
 ## Mapping test runs
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include Results" value="includeResults">
+
+The `includeResults` selector allows you to enable fetching detailed test results for each test run. It is set to `true` by default.
+
+Allowed values:
+- `true`: Enable test results for each test run.
+- `false`: Disable test results for each test run.
+
+```yaml
+  - kind: test-run
+    selector:
+      query: 'true'
+      includeResults: true
+```
+</TabItem>
+
+<TabItem label="Code Coverage" value="codeCoverage">
+
+The `codeCoverage` selector allows you to include code coverage data from AzureDevOps Test Runs. It extracts coverage information from pipeline artifacts.
+
+**Configuration options:**
+
+- `flags`: Value of flags determine the level of code coverage details to be fetched. `flags` values can be `null`, `1` for Modules, `2` for Functions, `4` for BlockData (https://learn.microsoft.com/en-us/rest/api/azure/devops/test/code-coverage/get-test-run-code-coverage?view=azure-devops-rest-7.1&tabs=HTTP#testruncoverage).
+
+```yaml
+  - kind: test-run
+    selector:
+      query: 'true'
+      codeCoverage:
+        - flags: null
+```
+
+</TabItem>
+</Tabs>
 
 :::caution Performance impact
 Enabling `includeResults` or `codeCoverage` on the `test-run` kind may significantly slow down your integration. These configs make additional API calls for each test run, which can be very resource-intensive. Consider disabling them to improve performance.
