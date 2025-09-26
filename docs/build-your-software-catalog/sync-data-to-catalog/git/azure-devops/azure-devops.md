@@ -715,7 +715,7 @@ This section includes a sample response data from Azure DevOps. In addition, it 
 Here is an example of the payload structure from Azure DevOps:
 
 <details>
-<summary> Project response data</summary>
+<summary><b>Project response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -750,7 +750,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Repository response data</summary>
+<summary><b>Repository response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -779,7 +779,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Work-item response data</summary>
+<summary><b>Work-item response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -859,7 +859,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline response data</summary>
+<summary><b>Pipeline response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -882,7 +882,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pull request response data</summary>
+<summary><b>Pull request response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -971,7 +971,7 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 <details>
-<summary> Build response data</summary>
+<summary><b>Build response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1010,7 +1010,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline-stage response data</summary>
+<summary><b>Pipeline-stage response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1032,7 +1032,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline-run response data</summary>
+<summary><b>Pipeline-run response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1065,7 +1065,7 @@ Here is an example of the payload structure from Azure DevOps:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Project entity in Port</summary>
+<summary><b>Project entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1085,7 +1085,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Repository entity in Port </summary>
+<summary><b>Repository entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1106,7 +1106,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Work-item entity in Port </summary>
+<summary><b>Work-item entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1134,7 +1134,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline entity in Port </summary>
+<summary><b>Pipeline entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1155,7 +1155,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pull request entity in Port </summary>
+<summary><b>Pull request entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1181,7 +1181,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 <details>
-<summary> Build entity in Port </summary>
+<summary><b>Build entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1207,7 +1207,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline-stage entity in Port </summary>
+<summary><b>Pipeline-stage entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1231,7 +1231,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline-run entity in Port </summary>
+<summary><b>Pipeline-run entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
