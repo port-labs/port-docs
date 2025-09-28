@@ -175,6 +175,21 @@ Port AI respects your organization's security controls:
 
 For detailed security information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
+## Technical Limitations
+
+:::tip MCP Tools Limitations
+Port AI uses the Port MCP Tools, which have their own limitations. For detailed information about MCP tool constraints, refer to the [Port MCP Server documentation](/ai-interfaces/port-mcp-server/overview-and-installation).
+:::
+
+Port AI operates within several technical constraints to ensure optimal performance and security:
+
+- **Tool calls per interaction**: One AI interaction can include up to 15 tool calls
+- **LLM final response**: Limited to 2000 tokens per response
+- **Tool scope**: Currently supports only developer tools (querying data and running actions), not administrative tools (creating blueprints, managing scorecards)
+- **User-based permissions**: All interactions respect your individual user permissions - Port AI cannot access data you don't have permission to view
+- **Sequential automation permissions**: Sequential automations run with Admin privileges, which may differ from your user permissions
+
+
 ## AI Invocations
 
 Every interaction with Port AI creates a detailed AI invocation record in Port, providing comprehensive tracking and analysis capabilities. AI invocations act as execution logs that capture the complete lifecycle of each interaction.
@@ -394,27 +409,16 @@ Remember that AI systems are constantly improving but aren't infallible.
 <details>
 <summary><b>Are there any technical limitations to Port AI capabilities? (Click to expand)</b></summary>
 
-Port AI can search, group, and index entities in your Port instance. However, there are some technical limitations to be aware of:
+Yes, Port AI operates within several technical constraints related to search capabilities, data processing, tool usage, and permissions. These limitations are designed to ensure optimal performance and security.
 
-- **Search capabilities**: 
-  - Search API returns up to 25 entities.
-  - Similarity search returns up to 10 entities.
-  - Similarity search indexes the first 8K tokens of identifier, title, and string properties above 50 characters (ignoring content beyond 8K tokens).
+For comprehensive information about all technical limitations, including search limits, processing constraints, tool restrictions, and permission boundaries, see the [Technical Limitations section](#technical-limitations) above.
 
-- **Data processing limits**:
-  - 1 interaction for the plan, and up to 5 interactions for the execution (tools/final answer).
-  - LLM output is limited to 2000 tokens per interaction.
-  - Entities grouping tool can return count by property, scorecard, or relation (with additional filters supported like in the search tool).
-  - Entities grouping can return up to 50 groups.
-  - Entities search returns up to 10 related entities for each entity.
-  - Entities search returns only the scorecard level (e.g., you can't ask about specific rules).
+Key areas where limitations apply:
+- **Search and data retrieval**: Entity count limits and indexing constraints
+- **Processing capabilities**: Interaction limits and token restrictions  
+- **Tool and action usage**: Scope limitations and blueprint requirements
+- **Permissions and context**: User-based access controls and relation constraints
 
-- **Context requirements**:
-  - To select an action, all the blueprints of the entity selection fields must be included in the accessible blueprints.
-  - The response can only be based on relations that can be achieved from the allowed blueprints.
-
-- **Permission model**:
-  - Interaction with Port AI is based on your user permissions.
-  - Sequential automations run as Admin.
+Understanding these limitations helps you design more effective queries and interactions with Port AI.
 
 </details>
