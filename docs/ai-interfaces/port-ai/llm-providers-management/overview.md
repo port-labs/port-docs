@@ -9,14 +9,19 @@ title: Overview
 Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
 :::
 
+:::warning Limited Availability
+The ability to configure your own LLM providers has limited availability. Please reach out to the Port support team for additional information and access.
+:::
+
+
 Manage and configure the Large Language Model (LLM) providers that power all AI interactions in Port. This feature gives you control over which AI models are used across Port AI Assistant, AI Agents, and other AI-powered features.
 
 ## LLM Approach Overview
 
 Port offers two approaches for AI model usage:
 
-### Port's Managed AI Infrastructure
-Port provides state-of-the-art LLMs through our secured cloud infrastructure:
+### Port's Managed AI Infrastructure (Default)
+Port provides state-of-the-art LLMs through our secured cloud infrastructure by default:
 - **No data training**: We never train models on your data
 - **Enterprise security**: Your data is processed securely and not stored
 - **Automatic updates**: Always access to the latest model versions
@@ -27,7 +32,6 @@ Port provides state-of-the-art LLMs through our secured cloud infrastructure:
 ### Bring Your Own LLM
 For organizations requiring additional control, Port also supports configuring your own LLM providers:
 - **Data privacy**: Keep AI processing within your own infrastructure
-- **Cost optimization**: Use your existing LLM provider contracts and pricing
 - **Compliance**: Meet specific regulatory or organizational requirements
 
 ## Supported LLMs and Providers
