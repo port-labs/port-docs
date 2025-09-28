@@ -40,18 +40,7 @@ Port AI leverages tools from the [Port MCP server](/ai-interfaces/port-mcp-serve
 
 ### Available Tools
 
-Port AI uses **developer tools** from the MCP server, which include:
-
-**Data Query Tools:**
-- Access blueprints and entities in your catalog
-- Search and filter information across your software inventory  
-- Retrieve scorecard data and compliance metrics
-- Query relationships between services and components
-
-**Action Execution Tools:**
-- Run your configured self-service actions
-- Execute workflows like deployments, incident creation, or resource provisioning
-- Trigger automated processes based on your organization's defined actions
+Port AI uses **developer tools** from the MCP server, which includes the ability to query data from your software catalog, analyze scorecards, and execute self-service actions.
 
 **Examples of Port AI tool usage:**
 - *"Show me all microservices owned by the Backend team"* → Uses data query tools to search entities
@@ -172,7 +161,7 @@ Port acts as a bridge to leading LLM providers and doesn't host LLM models inter
 Both types of limits are on the **organization level**, and count on the each org separately. There is currently no way to limit the usage on a user-basis.
 
 :::tip Managing Usage
-Monitor your usage through API response headers and the quota endpoint (`/v1/quota/ai-invocations`). When approaching limits, consider implementing rate limiting in your applications or optimizing your AI interactions for efficiency.
+Monitor your usage through API response headers and the [quota endpoint](/api-reference/get-monthly-ai-invocations-quota-usage). When approaching limits, consider implementing rate limiting in your applications or optimizing your AI interactions for efficiency.
 :::
 
 ## Security and Permissions
@@ -311,7 +300,7 @@ Yes, Port AI has usage limits to ensure fair usage across all customers:
 - Each interaction with Port AI counts as one request
 - Quota resets monthly
 
-You can monitor your usage through API response headers and the quota endpoint (`/v1/quota/ai-invocations`). When you reach a limit, access resumes automatically when the limit resets.
+You can monitor your usage through API response headers and the [quota endpoint](/api-reference/get-monthly-ai-invocations-quota-usage). When you reach a limit, access resumes automatically when the limit resets.
 </details>
 
 <details>

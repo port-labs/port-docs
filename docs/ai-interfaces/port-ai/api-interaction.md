@@ -59,6 +59,7 @@ curl 'https://api.port.io/v1/ai/invoke' \
       "environment": "production",
       "triggered_by": "automated_check"
     }
+  }
 ```
 
 ## Streaming Response Format
@@ -261,11 +262,31 @@ You can monitor your current usage in several ways:
 - Check the final `done` event in streaming responses for remaining requests, tokens, and reset time
 
 #### Monthly quota
-You can monitor your current monthly quota usage by making a GET request to the `/v1/quota/ai-invocations` endpoint
+You can monitor your current monthly quota usage using the [Get monthly AI invocations quota usage](/api-reference/get-monthly-ai-invocations-quota-usage) API endpoint
 
 :::tip Proactive quota monitoring
 Check your monthly quota before making multiple Port AI requests to avoid hitting limits. When `remainingQuota` is low, consider implementing rate limiting or queuing requests until the monthly quota resets. Note that you may also encounter hourly rate limits, which are separate from this monthly quota.
 :::
+
+
+## Selecting Model
+
+Port AI allows you to specify which LLM provider and model to use for specific API requests, giving you fine-grained control over AI processing on a per-request basis.
+
+### How LLM Providers Work
+
+Port AI supports multiple LLM providers and models. You can either use Port's managed AI infrastructure (default) or configure your own LLM providers for additional control over data privacy, costs, and compliance. 
+
+Learn more about [LLM Provider Management](/ai-interfaces/port-ai/llm-providers-management/overview) and see the [supported models and providers](/ai-interfaces/port-ai/llm-providers-management/overview#supported-llms-and-providers).
+
+### Specifying Provider and Model
+
+When making API requests, you can include `provider` and `model` parameters (if none specified, your organization's default will be used). See the [Invoke an agent](/api-reference/invoke-an-agent) API reference for detailed example.
+
+### Default Behavior
+
+If no provider is specified in your API request, the system uses your organization's configured defaults, or falls back to Port's system defaults if none are configured.
+
 
 ## Integration Patterns
 

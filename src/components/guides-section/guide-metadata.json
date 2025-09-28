@@ -665,15 +665,15 @@
   },
   "/guides/all/map-git-users-to-port-accounts": {
     "creationDate": "2025-07-24T03:43:52.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/map-hibob-users-to-port-accounts": {
     "creationDate": "2025-07-23T00:06:38.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/map-jira-users-to-port-accounts": {
     "creationDate": "2025-07-23T12:56:39.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/map-slack-users-to-port-accounts": {
     "creationDate": "2025-07-17T09:29:06.000Z",
@@ -681,11 +681,11 @@
   },
   "/guides/all/map-servicenow-users-to-port-accounts": {
     "creationDate": "2025-07-22T22:56:01.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/generate-incident-updates-with-ai": {
     "creationDate": "2025-07-25T14:04:47.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/map-prs-to-services-in-monorepo": {
     "creationDate": "2025-08-11T13:17:54.000Z",
@@ -705,7 +705,7 @@
   },
   "/guides/all/automatically-resolve-tickets-with-coding-agents": {
     "creationDate": "2025-07-29T09:10:24.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/self-heal-scorecards-with-ai": {
     "creationDate": "2025-08-01T22:17:33.000Z",
@@ -725,6 +725,10 @@
   },
   "/guides/all/enforce-ai-coding-security-standards": {
     "creationDate": "2025-08-27T20:00:16.000Z",
+    "isNew": true
+  },
+  "/guides/all/find-internal-documentation-with-ai": {
+    "creationDate": "2025-09-06T12:51:58.000Z",
     "isNew": true
   },
   "/guides/all/heal-unhealthy-k8s-pods": {

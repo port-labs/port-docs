@@ -26,11 +26,11 @@ Managing LLM provider settings requires organization administrator permissions. 
 **Administrators** can perform all LLM provider management operations:
 
 **Configuration Operations**
-- `GET /llm-providers/defaults` - View current default provider settings
-- `PUT /llm-providers/defaults` - Update organization default providers
-- `POST /llm-providers` - Create and configure new LLM provider connections
-- `PUT /llm-providers/{provider}` - Update existing provider configurations
-- `DELETE /llm-providers/{provider}` - Delete provider configurations
+- [Get default LLM provider and model](/api-reference/get-default-llm-provider-and-model) - View current default provider settings
+- [Change default LLM provider and model](/api-reference/change-default-llm-provider-and-model) - Update organization default providers
+- [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) - Create and configure new LLM provider connections
+- [Get a specific provider configuration](/api-reference/get-a-specific-provider-configuration) - View existing provider configurations
+- [Delete a specific provider configuration](/api-reference/delete-a-specific-provider-configuration) - Delete provider configurations
 
 **Management Capabilities**
 - Set organization-wide default providers and models
@@ -44,8 +44,8 @@ Managing LLM provider settings requires organization administrator permissions. 
 **Organization members** have read-only access to LLM provider information:
 
 **Read-Only Operations**
-- `GET /llm-providers/defaults` - View current default provider settings
-- `GET /llm-providers` - View available providers and their status
+- [Get default LLM provider and model](/api-reference/get-default-llm-provider-and-model) - View current default provider settings
+- [Get configured LLM providers](/api-reference/get-configured-llm-providers) - View available providers and their status
 - See which models are currently configured as defaults
 
 **No Management Access**
@@ -113,110 +113,15 @@ For more details on managing secrets, see the [Port Secrets documentation](/sso-
 
 ## Step 2: Configure LLM Providers
 
-Use the LLM Provider API to configure your providers:
-
-<Tabs groupId="provider-setup" queryString>
-<TabItem value="openai" label="OpenAI">
-
-```bash
-curl -X POST "https://api.getport.io/v1/llm-providers" \
-  -H "Authorization: Bearer <your-token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "provider": "openai",
-    "config": {
-      "apiKeySecretName": "openai-api-key"
-    }'
-```
-
-</TabItem>
-<TabItem value="anthropic" label="Anthropic">
-
-```bash
-curl -X POST "https://api.getport.io/v1/llm-providers" \
-  -H "Authorization: Bearer <your-token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "provider": "anthropic",
-    "config": {
-      "apiKeySecretName": "anthropic-api-key"
-    }'
-```
-
-</TabItem>
-<TabItem value="azure" label="Azure OpenAI">
-
-```bash
-curl -X POST "https://api.getport.io/v1/llm-providers" \
-  -H "Authorization: Bearer <your-token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "provider": "azure-openai",
-    "config": {
-      "apiKeySecretName": "azure-openai-api-key",
-      "resourceName": "your-azure-resource",
-      "deploymentId": "gpt-5-deployment"
-    }'
-```
-
-</TabItem>
-<TabItem value="bedrock" label="AWS Bedrock">
-
-```bash
-curl -X POST "https://api.getport.io/v1/llm-providers" \
-  -H "Authorization: Bearer <your-token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "provider": "bedrock",
-    "config": {
-      "accessKeyIdSecretName": "aws-bedrock-access-key-id",
-      "secretAccessKeySecretName": "aws-bedrock-secret-access-key",
-      "region": "us-east-1",
-      "guardrailIdentifier": "optional-guardrail-id",
-      "guardrailVersion": "1"
-    }'
-```
-
-</TabItem>
-</Tabs>
+Use the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API to configure your providers. The interactive API reference provides detailed examples and allows you to test the configuration for each provider type (OpenAI, Anthropic, Azure OpenAI, AWS Bedrock).
 
 ## Step 3: Validate Configuration
 
-Test your provider configuration with connection validation:
-
-```bash
-curl -X POST "https://api.getport.io/v1/llm-providers?validate_connection=true" \
-  -H "Authorization: Bearer <your-token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "provider": "openai",
-    "config": {
-      "apiKeySecretName": "openai-api-key"
-    }'
-```
+Test your provider configuration with connection validation using the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API with the `validate_connection=true` parameter. The interactive API reference shows how to test your configuration before saving it.
 
 ## Getting Your Current Configuration
 
-Retrieve your organization's current LLM provider defaults:
-
-```http
-GET /llm-providers/defaults
-```
-
-**Example Response:**
-```json
-{
-  "ok": true,
-  "result": {
-    "provider": "openai",
-    "model": "gpt-5",
-    "createdAt": "2025-01-01T00:00:00.000Z",
-    "createdBy": "user-123",
-    "updatedAt": "2025-01-02T00:00:00.000Z",
-    "updatedBy": "user-456"
-  }
-}
-```
+Retrieve your organization's current LLM provider defaults using the [Get default LLM provider and model](/api-reference/get-default-llm-provider-and-model) API. The interactive API reference shows the response format and allows you to test the endpoint.
 
 ### System Defaults
 
@@ -226,34 +131,7 @@ When no organization-specific defaults are configured, Port uses these system de
 
 ## Changing Default Providers
 
-Update your organization's default LLM provider and model:
-
-```http
-PUT /llm-providers/defaults
-```
-
-**Request Body:**
-```json
-{
-  "provider": "anthropic",
-  "model": "claude-sonnet-4-20250514"
-}
-```
-
-**Example Response:**
-```json
-{
-  "ok": true,
-  "result": {
-    "provider": "anthropic",
-    "model": "claude-sonnet-4-20250514",
-    "createdAt": "2025-01-01T00:00:00.000Z",
-    "createdBy": "user-123",
-    "updatedAt": "2025-01-02T12:00:00.000Z",
-    "updatedBy": "user-456"
-  }
-}
-```
+Update your organization's default LLM provider and model using the [Change default LLM provider and model](/api-reference/change-default-llm-provider-and-model) API. The interactive API reference provides the request format and response examples.
 
 ## Validation Flow
 

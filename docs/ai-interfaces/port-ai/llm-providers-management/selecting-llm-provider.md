@@ -17,18 +17,7 @@ LLM providers integrate seamlessly with Port AI. You can specify the provider an
 
 ### Port AI API with Custom Provider
 
-Specify a custom provider and model when making Port AI API requests:
-
-```bash
-curl -X POST "https://api.getport.io/v1/ai/chat" \
-  -H "Authorization: Bearer <your-token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "userPrompt": "Analyze the current infrastructure setup",
-    "provider": "anthropic",
-    "model": "claude-sonnet-4-20250514"
-  }'
-```
+Specify a custom provider and model when making Port AI API requests. See the [Selecting Model](/ai-interfaces/port-ai/api-interaction#selecting-model) section for detailed examples of how to include provider and model parameters in your requests.
 
 ## Default Provider Selection
 
@@ -112,7 +101,7 @@ Yes! You can specify different providers and models for each API request. This a
 <details>
 <summary>How do I know which providers and models are available to me?</summary>
 
-Use the `GET /llm-providers` endpoint to see all configured providers for your organization, or check with your organization administrator about available options.
+Use the [Get configured LLM providers](/api-reference/get-configured-llm-providers) API to see all configured providers for your organization, or check with your organization administrator about available options.
 
 </details>
 
