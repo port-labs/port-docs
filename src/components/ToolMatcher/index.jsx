@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 
 export default function ToolMatcher({ initialPatterns = [] }) {
   const [patternsInput, setPatternsInput] = useState(
-    initialPatterns.length > 0 ? JSON.stringify(initialPatterns, null, 2) : '["^(list|get|search)_.*"]'
+    initialPatterns.length > 0 ? JSON.stringify(initialPatterns, null, 2) : '["(list|get|search)_.*"]'
   );
   const [matchedToolNames, setMatchedToolNames] = useState(new Set());
   const [error, setError] = useState('');
@@ -40,11 +40,10 @@ export default function ToolMatcher({ initialPatterns = [] }) {
 
       const matchedNames = new Set();
       mcpTools.forEach(tool => {
-        if (tool.disabled) return;
-        
         const isMatched = patternArray.some(pattern => {
           try {
-            const regex = new RegExp(pattern);
+            // Always match from the beginning of the tool name
+            const regex = new RegExp(`^${pattern}`);
             return regex.test(tool.name);
           } catch (e) {
             return false;
@@ -67,7 +66,7 @@ export default function ToolMatcher({ initialPatterns = [] }) {
     setPatternsInput(e.target.value);
   };
 
-  const availableTools = mcpTools.filter(tool => !tool.disabled);
+  const availableTools = mcpTools;
 
   return (
     <div className={styles.toolMatcher}>
@@ -78,11 +77,11 @@ export default function ToolMatcher({ initialPatterns = [] }) {
             id="patterns"
             value={patternsInput}
             onChange={handleInputChange}
-            placeholder='["^(list|get|search)_.*", "run_.*github.*"]'
+            placeholder='["(list|get|search)_.*", "run_.*github.*"]'
             rows="4"
           />
           <div className={styles.inputHint}>
-            Enter an array of regex patterns in JSON format
+            Enter an array of regex patterns in JSON format. Patterns automatically match from the beginning of tool names (^ is added automatically).
           </div>
         </div>
       </div>

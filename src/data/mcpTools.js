@@ -1,135 +1,167 @@
 // MCP Tools available in Port MCP Server
-// Based on developer tools (Port AI only supports developer tools, not builder/admin tools)
+// Complete list of all available tools with role-based access
 
 export const mcpTools = [
-  // Query and analysis tools
+  // Blueprint tools
   {
-    name: 'get_blueprints',
-    description: 'Retrieve a list of all blueprints from Port',
-    category: 'Query'
+    name: 'create_blueprint',
+    description: 'Create blueprints (basic building blocks in Port)',
+    apiReference: '/api-reference/create-a-blueprint',
+    roles: ['builder']
+  },
+  {
+    name: 'list_blueprints',
+    description: 'Retrieve all blueprints in organization',
+    apiReference: '/api-reference/get-all-blueprints',
+    roles: ['developer', 'builder']
   },
   {
     name: 'get_blueprint',
-    description: 'Retrieve information about a specific blueprint by its identifier',
-    category: 'Query'
+    description: 'Get specific blueprint by identifier',
+    apiReference: '/api-reference/get-a-blueprint',
+    roles: ['developer', 'builder']
+  },
+  {
+    name: 'update_blueprint',
+    description: 'Update existing blueprint configuration',
+    apiReference: '/api-reference/update-a-blueprint',
+    roles: ['builder']
+  },
+  {
+    name: 'delete_blueprint',
+    description: 'Delete blueprint and all its entities',
+    apiReference: '/api-reference/delete-a-blueprint',
+    roles: ['builder']
+  },
+
+  // Entity tools
+  {
+    name: 'create_entity',
+    description: 'Create new entity for blueprint',
+    apiReference: '/api-reference/create-an-entity',
+    roles: ['builder']
   },
   {
     name: 'get_entities',
-    description: 'Retrieve all entities for a given blueprint',
-    category: 'Query'
+    description: 'Search and retrieve entities with filtering/sorting',
+    apiReference: '/api-reference/get-all-entities-of-a-blueprint',
+    roles: ['developer', 'builder']
   },
   {
     name: 'get_entity',
-    description: 'Retrieve information about a specific entity',
-    category: 'Query'
-  },
-  {
-    name: 'get_scorecards',
-    description: 'Retrieve all scorecards from Port',
-    category: 'Query'
-  },
-  {
-    name: 'get_scorecard',
-    description: 'Retrieve information about a specific scorecard by its identifier',
-    category: 'Query'
-  },
-  {
-    name: 'describe_user_details',
-    description: 'Get information about your Port account, organization, and user profile details',
-    category: 'Query'
-  },
-  {
-    name: 'search_port_docs_sources',
-    description: 'Search through Port documentation sources for relevant information',
-    category: 'Query'
-  },
-  {
-    name: 'ask_port_docs',
-    description: 'Ask questions about Port documentation and get contextual answers',
-    category: 'Query'
-  },
-  
-  // Action execution tools (dynamic based on your actions)
-  {
-    name: 'run_create_service',
-    description: 'Example: Create a new service (actual actions depend on your Port configuration)',
-    category: 'Action'
-  },
-  {
-    name: 'run_deploy_to_production',
-    description: 'Example: Deploy service to production (actual actions depend on your Port configuration)',
-    category: 'Action'
-  },
-  {
-    name: 'run_create_incident',
-    description: 'Example: Create an incident report (actual actions depend on your Port configuration)',
-    category: 'Action'
-  },
-  {
-    name: 'run_github_create_issue',
-    description: 'Example: Create GitHub issue (actual actions depend on your Port configuration)',
-    category: 'Action'
-  },
-  {
-    name: 'run_jira_create_ticket',
-    description: 'Example: Create Jira ticket (actual actions depend on your Port configuration)',
-    category: 'Action'
-  },
-  {
-    name: 'run_zendesk_create_ticket',
-    description: 'Example: Create Zendesk ticket (actual actions depend on your Port configuration)',
-    category: 'Action'
-  },
-  {
-    name: 'run_slack_notify_team',
-    description: 'Example: Send Slack notification (actual actions depend on your Port configuration)',
-    category: 'Action'
-  },
-  {
-    name: 'run_update_service_docs',
-    description: 'Example: Update service documentation (actual actions depend on your Port configuration)',
-    category: 'Action'
-  },
-  
-  // AI agent tools
-  {
-    name: 'invoke_ai_agent',
-    description: 'Invoke a Port AI agent with a specific prompt',
-    category: 'AI'
-  },
-  
-  // Additional common patterns for entity operations (these would be available if builder tools were enabled)
-  {
-    name: 'list_entities',
-    description: 'List entities (alternative naming pattern)',
-    category: 'Query'
-  },
-  {
-    name: 'search_entities',
-    description: 'Search entities with filters',
-    category: 'Query'
-  },
-  {
-    name: 'track_entity_changes',
-    description: 'Track changes to entities',
-    category: 'Query'
-  },
-  {
-    name: 'create_entity',
-    description: 'Create a new entity (builder tool - not available in Port AI)',
-    category: 'Management',
-    disabled: true
+    description: 'Get specific entity by identifiers',
+    apiReference: '/api-reference/get-an-entity',
+    roles: ['developer', 'builder']
   },
   {
     name: 'update_entity',
-    description: 'Update an existing entity (builder tool - not available in Port AI)',
-    category: 'Management',
-    disabled: true
+    description: 'Update existing entity fields',
+    apiReference: '/api-reference/update-an-entity',
+    roles: ['builder']
   },
   {
     name: 'delete_entity',
-    description: 'Delete an entity (builder tool - not available in Port AI)',
-    category: 'Management',
-    disabled: true
+    description: 'Delete entity with optional dependents',
+    apiReference: '/api-reference/delete-an-entity',
+    roles: ['builder']
+  },
+
+  // Scorecard tools
+  {
+    name: 'create_scorecard',
+    description: 'Create new scorecard for blueprint',
+    apiReference: '/api-reference/create-a-scorecard',
+    roles: ['builder']
+  },
+  {
+    name: 'get_scorecards',
+    description: 'Retrieve all scorecards (compacted)',
+    apiReference: '/api-reference/get-all-scorecards',
+    roles: ['developer', 'builder']
+  },
+  {
+    name: 'get_scorecard',
+    description: 'Get specific scorecard by ID',
+    apiReference: '/api-reference/get-a-scorecard',
+    roles: ['developer', 'builder']
+  },
+  {
+    name: 'update_scorecard',
+    description: 'Update existing scorecard',
+    apiReference: '/api-reference/change-scorecards',
+    roles: ['builder']
+  },
+  {
+    name: 'delete_scorecard',
+    description: 'Delete scorecard by identifiers',
+    apiReference: '/api-reference/delete-a-scorecard',
+    roles: ['builder']
+  },
+
+  // Action tools
+  {
+    name: 'create_action',
+    description: 'Create new action',
+    roles: ['builder']
+  },
+  {
+    name: 'list_actions',
+    description: 'Get all actions (compacted)',
+    roles: ['developer', 'builder']
+  },
+  {
+    name: 'get_action',
+    description: 'Get specific action details and input schema',
+    roles: ['developer', 'builder']
+  },
+  {
+    name: 'update_action',
+    description: 'Update existing action',
+    roles: ['builder']
+  },
+  {
+    name: 'delete_action',
+    description: 'Delete action by identifier',
+    roles: ['builder']
+  },
+  {
+    name: 'track_action_run',
+    description: 'Track action execution status',
+    roles: ['developer', 'builder']
+  },
+  {
+    name: 'run_*',
+    description: 'Execute any action you have permission to run in Port',
+    apiReference: '/api-reference/execute-a-self-service-action',
+    roles: ['developer', 'builder'],
+    isDynamic: true
+  },
+  {
+    name: 'get_action_permissions',
+    description: 'Get permissions/approval config for actions',
+    roles: ['developer', 'builder']
+  },
+  {
+    name: 'update_action_permissions',
+    description: 'Update action permissions configuration',
+    roles: ['builder']
+  },
+
+  // Documentation and user tools
+  {
+    name: 'ask_port_docs',
+    description: 'Ask questions about Port documentation and get contextual answers',
+    roles: ['developer', 'builder']
+  },
+  {
+    name: 'search_port_docs_sources',
+    description: 'Search Port documentation sources for relevant information',
+    roles: ['developer', 'builder']
+  },
+  {
+    name: 'describe_user_details',
+    description: 'Get user info, organization, teams, etc.',
+    apiReference: '/api-reference/get-organization-details',
+    roles: ['developer', 'builder']
   }
 ];
