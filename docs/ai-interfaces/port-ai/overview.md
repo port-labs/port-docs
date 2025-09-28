@@ -82,6 +82,14 @@ This approach provides an additional safety layer, ensuring you can verify all p
 Execution modes apply only to self-service actions. Data query tools execute immediately as they only retrieve information without making changes.
 :::
 
+### Tool Selection
+
+Port AI allows you to control which specific tools from the [Port MCP server](/ai-interfaces/port-mcp-server/overview-and-installation) are available for each interaction.
+
+This provides fine-grained control over what actions Port AI can perform - for example, you can restrict it to read-only operations for simple Q&A, or allow only specific  actions for automated workflows.
+
+For detailed information about tool selection patterns, API usage examples, and best practices, see [Tool Selection in API Interaction](/ai-interfaces/port-ai/api-interaction#tool-selection).
+
 ## Available Interfaces
 
 Port AI can be accessed through several interfaces, each designed for different use cases:

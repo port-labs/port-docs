@@ -54,6 +54,7 @@ curl 'https://api.port.io/v1/ai/invoke' \
   -H 'Content-Type: application/json' \
   --data-raw '{
     "prompt":"What services are failing health checks?",
+    "tools": ["^(list|get|search)_.*"],
     "labels": {
       "source": "monitoring_system",
       "environment": "production",
@@ -287,6 +288,139 @@ When making API requests, you can include `provider` and `model` parameters (if 
 
 If no provider is specified in your API request, the system uses your organization's configured defaults, or falls back to Port's system defaults if none are configured.
 
+## Tool Selection
+
+Port AI allows you to control which specific tools from the [Port MCP server](/ai-interfaces/port-mcp-server/overview-and-installation) are available for each API interaction. This provides fine-grained control over what actions Port AI can perform, enabling you to create secure, purpose-specific AI interactions.
+
+### How Tool Selection Works
+
+Include a `tools` parameter in your API request with an array of regex patterns. Port AI will only use tools whose names match at least one of these patterns.
+
+**Basic format:**
+```json
+{
+  "prompt": "Your question or request",
+  "tools": ["regex_pattern_1", "regex_pattern_2"]
+}
+```
+
+### Common Tool Selection Patterns
+
+<details>
+<summary><b>Read-only Operations (Click to expand)</b></summary>
+
+Perfect for monitoring dashboards and reporting systems where no modifications should be made.
+
+```json
+["^(list|get|search|track|describe)_.*"]
+```
+
+**What this matches:**
+- `get_entities`, `get_blueprint`, `get_scorecard`
+- `list_entities`, `search_entities`
+- `describe_user_details`
+- `search_port_docs_sources`, `ask_port_docs`
+
+</details>
+
+<details>
+<summary><b>Action Execution Only (Click to expand)</b></summary>
+
+Allows only action execution tools while blocking data query operations.
+
+```json
+["^run_.*"]
+```
+
+**What this matches:**
+- `run_create_service`, `run_deploy_to_production`
+- `run_github_create_issue`, `run_jira_create_ticket`
+- `run_slack_notify_team`
+
+</details>
+
+<details>
+<summary><b>Specific Integration Actions (Click to expand)</b></summary>
+
+Target specific third-party service integrations.
+
+```json
+["run_.*github.*", "run_.*jira.*", "run_.*zendesk.*"]
+```
+
+**What this matches:**
+- `run_github_create_issue`, `run_github_merge_pr`
+- `run_jira_create_ticket`, `run_jira_update_status`
+- `run_zendesk_create_ticket`
+
+</details>
+
+<details>
+<summary><b>Safe Entity Operations (Click to expand)</b></summary>
+
+Enables entity operations while preventing accidental deletions.
+
+```json
+["(?!delete_)\\w+_entity$", "get_.*", "list_.*"]
+```
+
+**What this matches:**
+- `get_entity`, `list_entities`, `create_entity`, `update_entity`
+- **Excludes:** `delete_entity`
+
+</details>
+
+<details>
+<summary><b>Documentation and Help Tools (Click to expand)</b></summary>
+
+Focus on documentation search and help functionality.
+
+```json
+[".*docs.*", "search_.*", "ask_.*", "describe_.*"]
+```
+
+**What this matches:**
+- `search_port_docs_sources`, `ask_port_docs`
+- `describe_user_details`
+
+</details>
+
+<details>
+<summary><b>Blueprint and Scorecard Analysis (Click to expand)</b></summary>
+
+Focus on catalog structure and quality metrics without action execution.
+
+```json
+[".*blueprint.*", ".*scorecard.*", "^(get|list)_.*"]
+```
+
+**What this matches:**
+- `get_blueprints`, `get_blueprint`
+- `get_scorecards`, `get_scorecard`
+- All get/list operations
+
+</details>
+
+### Interactive Tool Matcher
+
+Test your regex patterns to see which MCP tools would be available to Port AI. Enter your patterns in JSON array format (e.g., `["^(list|get)_.*", "run_.*github.*"]`) and see the matching tools in real-time.
+
+import ToolMatcher from '@site/src/components/ToolMatcher';
+
+<ToolMatcher />
+
+:::info Action Tools Note
+Action tools (starting with `run_*`) depend on your Port configuration. The examples shown represent common action patterns, but your actual available actions may differ based on the self-service actions configured in your Port instance.
+:::
+
+### Best Practices
+
+:::tip Security and Control
+- **Principle of least privilege**: Only include tools necessary for the specific use case
+- **Test patterns**: Use the interactive matcher above to verify your regex patterns
+- **Automated systems**: Use highly restrictive patterns for automated workflows
+- **User-facing interfaces**: Consider broader patterns for interactive use cases
+:::
 
 ## Integration Patterns
 
@@ -304,6 +438,7 @@ curl 'https://api.port.io/v1/ai/invoke' \
   -H 'Content-Type: application/json' \
   --data-raw '{
     "prompt": "What services are failing health checks?",
+    "tools": ["^(list|get|search)_.*"],
     "labels": {
       "source": "monitoring_system",
       "check_type": "health_analysis"
@@ -331,6 +466,7 @@ async function checkServiceHealth(serviceName) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       prompt: `Analyze the health of service ${serviceName}`,
+      tools: ['^(list|get|search)_.*'],
       labels: {
         source: 'monitoring_dashboard',
         service: serviceName,
@@ -385,6 +521,7 @@ Automatically trigger Port AI based on catalog events using Port's automation sy
     },
     "body": {
       "prompt": "Infrastructure component {{ .event.diff.after.title }} is unhealthy. Analyze the issue and suggest remediation steps based on current state and recent changes.",
+      "tools": ["^(list|get|search)_.*", "run_.*incident.*", "run_.*notification.*"],
       "labels": {
         "source": "automation",
         "entity_type": "{{ .event.diff.after.blueprint }}",
@@ -424,6 +561,7 @@ Create actions that invoke Port AI for on-demand analysis:
     },
     "body": {
       "prompt": "Analyze the health of service {{ .entity.title }}. Check metrics, recent deployments, incidents, and provide actionable recommendations.",
+      "tools": ["^(list|get|search)_.*", "run_.*incident.*"],
       "labels": {
         "source": "self_service",
         "service_name": "{{ .entity.identifier }}",
