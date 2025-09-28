@@ -39,15 +39,15 @@ AI Agents are distinguished by three key characteristics that make them ideal fo
 ## When to Use AI Agents vs Port AI
 
 Choose **AI Agents** when you need:
-- **Machine-to-machine communication** for automated workflows
-- **Domain-specific expertise** (e.g., incident response, security analysis)
-- **Autonomous operations** that run without human intervention
-- **Reusable logic** that can be embedded in multiple systems
+- **Machine-to-machine communication** for automated workflows.
+- **Domain-specific expertise** (e.g., incident response, security analysis).
+- **Autonomous operations** that run without human intervention.
+- **Reusable logic** that can be embedded in multiple systems.
 
 Choose **[Port AI](/ai-interfaces/port-ai/overview)** when you need:
-- **Human interaction** and conversational interfaces
-- **General-purpose queries** across your entire catalog
-- **Ad-hoc exploration** and discovery
+- **Human interaction** and conversational interfaces.
+- **General-purpose queries** across your entire catalog.
+- **Ad-hoc exploration** and discovery.
 
 ## Agent-Specific Use Cases
 
@@ -59,15 +59,15 @@ AI Agents excel at machine-to-machine scenarios that require domain expertise an
 This agent automatically monitors and heals Kubernetes infrastructure by detecting failures, analyzing resource constraints, and triggering remediation workflows through monitoring system integrations.
 
 **Tools this agent would have:**
-- Kubernetes cluster monitoring and diagnostics
-- Resource utilization analysis tools
-- Pod restart and scaling automation
-- Alert correlation and notification systems
+- Kubernetes cluster monitoring and diagnostics.
+- Resource utilization analysis tools.
+- Pod restart and scaling automation.
+- Alert correlation and notification systems.
 
 **Example scenarios:**
-- Automatically detects pod failures and restart issues
-- Analyzes resource constraints and suggests scaling actions
-- Integrates with monitoring systems to trigger remediation workflows
+- Automatically detects pod failures and restart issues.
+- Analyzes resource constraints and suggests scaling actions.
+- Integrates with monitoring systems to trigger remediation workflows.
 
 </TabItem>
 <TabItem value="incident-response" label="Incident Response Agent">
@@ -75,15 +75,15 @@ This agent automatically monitors and heals Kubernetes infrastructure by detecti
 This agent streamlines incident management by monitoring service health, creating automated incident reports, and reducing alert noise through intelligent correlation while keeping stakeholders informed throughout outages.
 
 **Tools this agent would have:**
-- Service health monitoring and alerting
-- Incident creation and management tools
-- Multi-system alert correlation engines
-- Stakeholder notification and communication systems
+- Service health monitoring and alerting.
+- Incident creation and management tools.
+- Multi-system alert correlation engines.
+- Stakeholder notification and communication systems.
 
 **Example scenarios:**
-- Monitors service health and automatically creates incident reports
-- Correlates alerts across multiple systems to reduce noise
-- Provides automated status updates to stakeholders during outages
+- Monitors service health and automatically creates incident reports.
+- Correlates alerts across multiple systems to reduce noise.
+- Provides automated status updates to stakeholders during outages.
 
 </TabItem>
 <TabItem value="security-compliance" label="Security Compliance Agent">
@@ -91,15 +91,15 @@ This agent streamlines incident management by monitoring service health, creatin
 This agent continuously maintains security posture by scanning for vulnerabilities and misconfigurations, creating prioritized remediation tickets, and preventing vulnerable code from reaching production through CI/CD integration.
 
 **Tools this agent would have:**
-- Vulnerability scanning and assessment tools
-- Security misconfiguration detection systems
-- Automated ticket creation and prioritization
-- CI/CD pipeline integration and gates
+- Vulnerability scanning and assessment tools.
+- Security misconfiguration detection systems.
+- Automated ticket creation and prioritization.
+- CI/CD pipeline integration and gates.
 
 **Example scenarios:**
-- Continuously scans for security vulnerabilities and misconfigurations
-- Automatically creates remediation tickets with context and priority
-- Integrates with CI/CD pipelines to prevent deployment of vulnerable code
+- Continuously scans for security vulnerabilities and misconfigurations.
+- Automatically creates remediation tickets with context and priority.
+- Integrates with CI/CD pipelines to prevent deployment of vulnerable code.
 
 </TabItem>
 </Tabs>
@@ -111,9 +111,9 @@ AI Agents are currently in closed beta. You must be approved before you can buil
 :::
 
 AI Agents are designed for organizations that need autonomous, domain-specific AI capabilities. Before applying, ensure you have:
-- Experience with [Port AI](/ai-interfaces/port-ai/overview) and its capabilities
-- Understanding of your specific automation and machine-to-machine communication needs
-- Familiarity with [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls)
+- Experience with [Port AI](/ai-interfaces/port-ai/overview) and its capabilities.
+- Understanding of your specific automation and machine-to-machine communication needs.
+- Familiarity with [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
 **Application Process:**
 1. **Apply for access** - Submit your application via [this form](https://forms.gle/krhMY7c9JM8MyJJf7)
@@ -124,18 +124,18 @@ AI Agents are designed for organizations that need autonomous, domain-specific A
 ## Agent Configuration
 
 [Build and customize](/ai-interfaces/ai-agents/build-an-ai-agent) your AI agents for specific domains:
-- Define agent instructions, goals, and expertise areas
-- Set allowed tools and configure autonomy levels for actions
-- Test agent behavior and validate responses
-- Integrate agents into workflow automations and external systems
+- Define agent instructions, goals, and expertise areas.
+- Set allowed tools and configure autonomy levels for actions.
+- Test agent behavior and validate responses.
+- Integrate agents into workflow automations and external systems.
 
 ## Security and Governance
 
 AI Agents inherit all security and governance controls from [Port AI](/ai-interfaces/port-ai/overview). They operate within the same secure framework with additional controls for autonomous operation:
 
-- **RBAC compliance**: Agents respect all data access permissions and policies
-- **Audit trail**: All agent interactions are logged as AI invocations for monitoring
-- **Data governance**: Same data handling policies as [Port AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls)
+- **RBAC compliance**: Agents respect all data access permissions and policies.
+- **Audit trail**: All agent interactions are logged as AI invocations for monitoring.
+- **Data governance**: Same data handling policies as [Port AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
 For comprehensive security information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
@@ -143,10 +143,10 @@ For comprehensive security information, see [AI Security and Data Controls](/ai-
 
 Start with focused, high-value use cases that demonstrate clear ROI:
 
-1. **Begin with monitoring and alerting** - Implement agents that enhance existing observability
-2. **Add workflow automation** - Build agents that streamline repetitive processes  
-3. **Expand to complex orchestration** - Develop agents that manage multi-system workflows
-4. **Scale across domains** - Deploy specialized agents for different organizational areas
+1. **Begin with monitoring and alerting** - Implement agents that enhance existing observability.
+2. **Add workflow automation** - Build agents that streamline repetitive processes.
+3. **Expand to complex orchestration** - Develop agents that manage multi-system workflows.
+4. **Scale across domains** - Deploy specialized agents for different organizational areas.
 
 ## Access to the feature
 

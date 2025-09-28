@@ -18,8 +18,8 @@ Port AI can be accessed programmatically through Port's API, enabling integratio
 
 Port AI provides streaming API endpoints for real-time interaction:
 
-- **Port AI Assistant**: `/v1/ai/invoke` - General-purpose AI interactions
-- **AI Agents**: `/v1/agent/<AGENT_IDENTIFIER>/invoke` - Domain-specific agent interactions
+- **Port AI Assistant**: `/v1/ai/invoke` - General-purpose AI interactions.
+- **AI Agents**: `/v1/agent/<AGENT_IDENTIFIER>/invoke` - Domain-specific agent interactions.
 
 All interactions use streaming responses as Server-Sent Events (SSE) to provide real-time updates during execution. The response will be in `text/event-stream` format.
 
@@ -128,10 +128,10 @@ Indicates that Port AI is about to execute a tool. This event provides details a
 ```
 
 **Fields:**
-- `id`: Unique identifier for this tool call
-- `name`: Name of the tool being executed (only included in the first chunk)
-- `arguments`: JSON string containing the tool arguments (may be chunked for large payloads)
-- `lastChunk`: Boolean indicating if this is the final chunk for this tool call (optional, only present on the last chunk)
+- `id`: Unique identifier for this tool call.
+- `name`: Name of the tool being executed (only included in the first chunk).
+- `arguments`: JSON string containing the tool arguments (may be chunked for large payloads).
+- `lastChunk`: Boolean indicating if this is the final chunk for this tool call (optional, only present on the last chunk).
 </details>
 
 <details>
@@ -148,9 +148,9 @@ Contains the result of a tool execution. For large results, the data may be sent
 ```
 
 **Fields:**
-- `id`: Unique identifier matching the corresponding tool call
-- `content`: The result content from the tool execution (may be chunked for large responses)
-- `lastChunk`: Boolean indicating if this is the final chunk for this tool result (optional, only present on the last chunk)
+- `id`: Unique identifier matching the corresponding tool call.
+- `content`: The result content from the tool execution (may be chunked for large responses).
+- `lastChunk`: Boolean indicating if this is the final chunk for this tool result (optional, only present on the last chunk).
 </details>
 
 <details>
@@ -183,11 +183,11 @@ Signals that Port AI has finished processing and the response stream is complete
 ```
 
 **Quota Usage Fields:**
-- `maxRequests`: Maximum number of requests allowed in the current rolling window
-- `remainingRequests`: Number of requests remaining in the current window
-- `maxTokens`: Maximum number of tokens allowed in the current rolling window  
-- `remainingTokens`: Number of tokens remaining in the current window
-- `remainingTimeMs`: Time in milliseconds until the rolling window resets
+- `maxRequests`: Maximum number of requests allowed in the current rolling window.
+- `remainingRequests`: Number of requests remaining in the current window.
+- `maxTokens`: Maximum number of tokens allowed in the current rolling window.
+- `remainingTokens`: Number of tokens remaining in the current window.
+- `remainingTimeMs`: Time in milliseconds until the rolling window resets.
 </details>
 
 ## Processing Quota Information
@@ -240,14 +240,14 @@ Port acts as a bridge to leading LLM providers and doesn't host LLM models inter
 :::
 
 ### Rate Limits (Hourly)
-- **Request limit**: 1,000 requests per hour
-- **Token usage limit**: 800,000 tokens per hour
-- These limits reset hourly
+- **Request limit**: 1,000 requests per hour.
+- **Token usage limit**: 800,000 tokens per hour.
+- These limits reset hourly.
 
 ### Monthly Quota
-- **Default quota**: 20 AI invocations per month
-- Each interaction with Port AI counts as one request against your quota
-- Quota resets monthly
+- **Default quota**: 20 AI invocations per month.
+- Each interaction with Port AI counts as one request against your quota.
+- Quota resets monthly.
 
 :::caution Usage limits
 Usage limits may change without prior notice. Once a limit is reached, you will need to wait until it resets.  
@@ -260,7 +260,7 @@ The query limit is estimated and depends on the actual token usage.
 You can monitor your current usage in several ways:
 
 #### Rate limits
-- Check the final `done` event in streaming responses for remaining requests, tokens, and reset time
+- Check the final `done` event in streaming responses for remaining requests, tokens, and reset time.
 
 #### Monthly quota
 You can monitor your current monthly quota usage using the [Get monthly AI invocations quota usage](/api-reference/get-monthly-ai-invocations-quota-usage) API endpoint
@@ -316,10 +316,10 @@ Perfect for monitoring dashboards and reporting systems where no modifications s
 ```
 
 **What this matches:**
-- `get_entities`, `get_blueprint`, `get_scorecard`
-- `list_entities`, `search_entities`
-- `describe_user_details`
-- `search_port_docs_sources`, `ask_port_docs`
+- `get_entities`, `get_blueprint`, `get_scorecard`.
+- `list_entities`, `search_entities`.
+- `describe_user_details`.
+- `search_port_docs_sources`, `ask_port_docs`.
 
 </details>
 
@@ -333,9 +333,9 @@ Allows only action execution tools while blocking data query operations.
 ```
 
 **What this matches:**
-- `run_create_service`, `run_deploy_to_production`
-- `run_github_create_issue`, `run_jira_create_ticket`
-- `run_slack_notify_team`
+- `run_create_service`, `run_deploy_to_production`.
+- `run_github_create_issue`, `run_jira_create_ticket`.
+- `run_slack_notify_team`.
 
 </details>
 
@@ -349,9 +349,9 @@ Target specific third-party service integrations.
 ```
 
 **What this matches:**
-- `run_github_create_issue`, `run_github_merge_pr`
-- `run_jira_create_ticket`, `run_jira_update_status`
-- `run_zendesk_create_ticket`
+- `run_github_create_issue`, `run_github_merge_pr`.
+- `run_jira_create_ticket`, `run_jira_update_status`.
+- `run_zendesk_create_ticket`.
 
 </details>
 
@@ -365,8 +365,8 @@ Enables entity operations while preventing accidental deletions.
 ```
 
 **What this matches:**
-- `get_entity`, `list_entities`, `create_entity`, `update_entity`
-- **Excludes:** `delete_entity`
+- `get_entity`, `list_entities`, `create_entity`, `update_entity`.
+- **Excludes:** `delete_entity`.
 
 </details>
 
@@ -380,8 +380,8 @@ Focus on documentation search and help functionality.
 ```
 
 **What this matches:**
-- `search_port_docs_sources`, `ask_port_docs`
-- `describe_user_details`
+- `search_port_docs_sources`, `ask_port_docs`.
+- `describe_user_details`.
 
 </details>
 
@@ -395,9 +395,9 @@ Focus on catalog structure and quality metrics without action execution.
 ```
 
 **What this matches:**
-- `get_blueprints`, `get_blueprint`
-- `get_scorecards`, `get_scorecard`
-- All get/list operations
+- `get_blueprints`, `get_blueprint`.
+- `get_scorecards`, `get_scorecard`.
+- All get/list operations.
 
 </details>
 
@@ -416,10 +416,10 @@ Action tools (starting with `run_*`) depend on your Port configuration. The exam
 ### Best Practices
 
 :::tip Security and Control
-- **Principle of least privilege**: Only include tools necessary for the specific use case
-- **Test patterns**: Use the interactive matcher above to verify your regex patterns
-- **Automated systems**: Use highly restrictive patterns for automated workflows
-- **User-facing interfaces**: Consider broader patterns for interactive use cases
+- **Principle of least privilege**: Only include tools necessary for the specific use case.
+- **Test patterns**: Use the interactive matcher above to verify your regex patterns.
+- **Automated systems**: Use highly restrictive patterns for automated workflows.
+- **User-facing interfaces**: Consider broader patterns for interactive use cases.
 :::
 
 ## Integration Patterns
@@ -626,10 +626,10 @@ async function handlePortAIRequest(prompt) {
 
 When integrating Port AI via API:
 
-- **Authentication**: Always use secure API token storage and rotation
-- **Data privacy**: Port AI respects your organization's RBAC and data access policies
-- **Audit trail**: All API interactions are logged and trackable
-- **Rate limiting**: Implement client-side rate limiting to avoid hitting API limits
+- **Authentication**: Always use secure API token storage and rotation.
+- **Data privacy**: Port AI respects your organization's RBAC and data access policies.
+- **Audit trail**: All API interactions are logged and trackable.
+- **Rate limiting**: Implement client-side rate limiting to avoid hitting API limits.
 
 For comprehensive security information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 

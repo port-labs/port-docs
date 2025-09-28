@@ -90,10 +90,10 @@ Use the **Slack App** to make AI insights available to your entire team in your 
 <summary>What are the available Port AI interfaces? (Click to expand)</summary>
 
 Port offers four main AI interfaces:
-- **Port AI Assistant**: Chat interface for quick questions and insights
-- **AI Agents**: Customizable workflows for automations (closed beta)
-- **MCP Server**: IDE integration for development workflows
-- **Slack App**: Team collaboration interface (closed beta)
+- **Port AI Assistant**: Chat interface for quick questions and insights.
+- **AI Agents**: Customizable workflows for automations (closed beta).
+- **MCP Server**: IDE integration for development workflows.
+- **Slack App**: Team collaboration interface (closed beta).
 </details>
 
 <details>
@@ -119,10 +119,10 @@ For team collaboration, try the **Slack App** to bring AI insights into your com
 <details>
 <summary>What's the current availability status of Port's AI features? (Click to expand)</summary>
 
-- **Port AI Assistant**: Open beta - available to all users
-- **MCP Server**: Open beta - available to all users  
-- **AI Agents**: Closed beta - requires application and approval
-- **Slack App**: Closed beta - requires application and approval
+- **Port AI Assistant**: Open beta - available to all users.
+- **MCP Server**: Open beta - available to all users.
+- **AI Agents**: Closed beta - requires application and approval.
+- **Slack App**: Closed beta - requires application and approval.
 </details>
 
 <details>

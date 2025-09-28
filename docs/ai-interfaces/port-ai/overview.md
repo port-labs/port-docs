@@ -18,10 +18,10 @@ Port AI is the foundational AI system that enables intelligent interaction with 
 
 Port AI serves as the base interface that:
 
-- **Accepts prompts**: Receives natural language queries and requests
-- **Uses developer MCP tools**: Uses developer MCP tools from the [Port MCP server](/ai-interfaces/port-mcp-server/overview-and-installation) to access your catalog data. Port AI currently supports developer tools (for querying and running actions) but not administrative tools (such as creating blueprints or managing scorecards)  
-- **Runs autonomous processes**: Intelligently determines which tools to use and how to combine them
-- **Returns responses**: Provides comprehensive answers and can execute actions based on your requirements
+- **Accepts prompts**: Receives natural language queries and requests.
+- **Uses developer MCP tools**: Uses developer MCP tools from the [Port MCP server](/ai-interfaces/port-mcp-server/overview-and-installation) to access your catalog data. Port AI currently supports developer tools (for querying and running actions) but not administrative tools (such as creating blueprints or managing scorecards).
+- **Runs autonomous processes**: Intelligently determines which tools to use and how to combine them.
+- **Returns responses**: Provides comprehensive answers and can execute actions based on your requirements.
 
 Port AI acts as an [MCP client](https://modelcontextprotocol.io/docs/learn/client-concepts) that connects to Port's remote MCP server, giving it access to your entire software catalog, blueprints, entities, and configured actions.
 
@@ -43,9 +43,9 @@ Port AI leverages tools from the [Port MCP server](/ai-interfaces/port-mcp-serve
 Port AI uses **developer tools** from the MCP server, which includes the ability to query data from your software catalog, analyze scorecards, and execute self-service actions.
 
 **Examples of Port AI tool usage:**
-- *"Show me all microservices owned by the Backend team"* → Uses data query tools to search entities
-- *"Create a new incident report for the payment service"* → Uses action execution tools to run incident creation action
-- *"What's the security score for our production services?"* → Uses data query tools to access scorecard information
+- *"Show me all microservices owned by the Backend team"* → Uses data query tools to search entities.
+- *"Create a new incident report for the payment service"* → Uses action execution tools to run incident creation action.
+- *"What's the security score for our production services?"* → Uses data query tools to access scorecard information.
 
 :::info Developer vs Administrative Tools
 Port AI currently supports **developer tools** only, which focus on querying data and running actions. Administrative tools (such as creating blueprints or managing scorecards) are not available through Port AI interfaces.
@@ -99,19 +99,19 @@ The **Port AI Assistant** provides a dedicated, out-of-the-box user experience t
 
 ### AI Chat Widget  
 The [AI Chat Widget](/ai-interfaces/ai-chat-widget) is a customizable interface that platform engineers can embed in dashboards. It allows configuration of:
-- Custom prompts
-- Conversation starters  
-- Available [Port AI tools](#port-ai-tools)
-- Dashboard placement and styling
+- Custom prompts.
+- Conversation starters.
+- Available [Port AI tools](#port-ai-tools).
+- Dashboard placement and styling.
 
 ### API Access
 Port AI can be accessed programmatically through Port's API, enabling integration into custom applications and workflows. This provides the most flexible way to incorporate Port AI capabilities into your existing tools and processes. 
 
 You can also connect Port AI to external agents and workflows you build, allowing you to:
-- Integrate Port AI into your custom applications
-- Build external automation workflows that leverage Port data
-- Connect third-party systems to your Port catalog through AI
-- Create specialized interfaces tailored to your organization's needs
+- Integrate Port AI into your custom applications.
+- Build external automation workflows that leverage Port data.
+- Connect third-party systems to your Port catalog through AI.
+- Create specialized interfaces tailored to your organization's needs.
 
 ## Common Use Cases
 
@@ -120,19 +120,19 @@ Port AI excels at helping platform engineers and developers with:
 **Information Discovery:**
 - "Who is the owner of service X?"
 - "How many services do we have in production?"
-- "Show me all microservices owned by the Backend team"
+- "Show me all microservices owned by the Backend team".
 - "What are the dependencies of the OrderProcessing service?"
 
 **Quality and Compliance Analysis:**
 - "Which services are failing our security requirements scorecard?"
 - "What's preventing the InventoryService from reaching Gold level?"
-- "Show me the bug count vs. test coverage for all Java microservices"
+- "Show me the bug count vs. test coverage for all Java microservices".
 
 **Running Actions:**
 - "Can you help me deploy service X to production?"
-- "Create a new incident report for the payment service outage"
-- "Set up a new microservice using our standard template"
-- "Notify the reviewers of pull request #1234"
+- "Create a new incident report for the payment service outage".
+- "Set up a new microservice using our standard template".
+- "Notify the reviewers of pull request #1234".
 
 ## LLM Models and Providers
 
@@ -157,14 +157,14 @@ Port acts as a bridge to leading LLM providers and doesn't host LLM models inter
 :::
 
 ### Rate Limits (Hourly)
-- **Request limit**: 1,000 requests per hour
-- **Token usage limit**: 800,000 tokens per hour
-- These limits reset hourly
+- **Request limit**: 1,000 requests per hour.
+- **Token usage limit**: 800,000 tokens per hour.
+- These limits reset hourly.
 
 ### Monthly Quota
-- **Default quota**: 20 AI invocations per month
-- Each interaction with Port AI counts as one request against your quota
-- Quota resets monthly
+- **Default quota**: 20 AI invocations per month.
+- Each interaction with Port AI counts as one request against your quota.
+- Quota resets monthly.
 
 Both types of limits are on the **organization level**, and count on the each org separately. There is currently no way to limit the usage on a user-basis.
 
@@ -176,10 +176,10 @@ Monitor your usage through API response headers and the [quota endpoint](/api-re
 
 Port AI respects your organization's security controls:
 
-- **RBAC compliance**: Port AI only accesses data you have permissions to view
-- **Data governance**: All interactions respect your configured data access policies  
-- **Audit trail**: AI interactions are logged and trackable
-- **Secure processing**: All data processing happens within Port's secure infrastructure
+- **RBAC compliance**: Port AI only accesses data you have permissions to view.
+- **Data governance**: All interactions respect your configured data access policies.
+- **Audit trail**: AI interactions are logged and trackable.
+- **Secure processing**: All data processing happens within Port's secure infrastructure.
 
 For detailed security information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
@@ -191,11 +191,11 @@ Port AI uses the Port MCP Tools, which have their own limitations. For detailed 
 
 Port AI operates within several technical constraints to ensure optimal performance and security:
 
-- **Tool calls per interaction**: One AI interaction can include up to 15 tool calls
-- **LLM final response**: Limited to 2000 tokens per response
-- **Tool scope**: Currently supports only developer tools (querying data and running actions), not administrative tools (creating blueprints, managing scorecards)
-- **User-based permissions**: All interactions respect your individual user permissions - Port AI cannot access data you don't have permission to view
-- **Sequential automation permissions**: Sequential automations run with Admin privileges, which may differ from your user permissions
+- **Tool calls per interaction**: One AI interaction can include up to 15 tool calls.
+- **LLM final response**: Limited to 2000 tokens per response.
+- **Tool scope**: Currently supports only developer tools (querying data and running actions), not administrative tools (creating blueprints, managing scorecards).
+- **User-based permissions**: All interactions respect your individual user permissions - Port AI cannot access data you don't have permission to view.
+- **Sequential automation permissions**: Sequential automations run with Admin privileges, which may differ from your user permissions.
 
 
 ## AI Invocations
@@ -206,13 +206,13 @@ Every interaction with Port AI creates a detailed AI invocation record in Port, 
 
 Each AI invocation record includes:
 
-- **Who asked**: User identity and context for the interaction
-- **What they asked**: The original prompt or question submitted
-- **AI response**: The complete response provided by Port AI
-- **Tools used**: Detailed log of which tools were executed and their results
-- **Execution plan**: How Port AI decided to tackle the request and intended steps
-- **Timing information**: Request timestamps and response duration
-- **Token usage**: Input and output token consumption for the interaction
+- **Who asked**: User identity and context for the interaction.
+- **What they asked**: The original prompt or question submitted.
+- **AI response**: The complete response provided by Port AI.
+- **Tools used**: Detailed log of which tools were executed and their results.
+- **Execution plan**: How Port AI decided to tackle the request and intended steps.
+- **Timing information**: Request timestamps and response duration.
+- **Token usage**: Input and output token consumption for the interaction.
 
 ### Accessing AI Invocations
 
@@ -222,12 +222,12 @@ AI invocations are stored as entities in your Port catalog using the `_ai_invoca
 
 AI invocation records help you:
 
-- **Monitor usage patterns**: Understand how Port AI is being used across your organization
-- **Debug interactions**: Analyze what tools were used and why certain responses were generated
-- **Audit compliance**: Maintain detailed logs of all AI interactions for governance
-- **Optimize performance**: Identify inefficient queries or improve prompt strategies
-- **Track usage**: Monitor usage and interaction frequency
-- **Improve accuracy**: Provide feedback and identify areas for improvement
+- **Monitor usage patterns**: Understand how Port AI is being used across your organization.
+- **Debug interactions**: Analyze what tools were used and why certain responses were generated.
+- **Audit compliance**: Maintain detailed logs of all AI interactions for governance.
+- **Optimize performance**: Identify inefficient queries or improve prompt strategies.
+- **Track usage**: Monitor usage and interaction frequency.
+- **Improve accuracy**: Provide feedback and identify areas for improvement.
 
 ### AI Invocation Details
 
@@ -245,17 +245,17 @@ This section displays the actual steps Port AI took and the tools it used to com
 
 This information can be particularly helpful for debugging when answers don't meet expectations, such as when Port AI:
 
-- Used an incorrect field name
-- Chose an inappropriate property  
-- Made other logical errors
+- Used an incorrect field name.
+- Chose an inappropriate property.
+- Made other logical errors.
 
 <img src='/img/ai-agents/AIAgentsTools.png' width='80%' border='1px' />
 
 #### Execution Details
 
 Each invocation record also includes:
-- **Request timestamp**: When the interaction was initiated
-- **User context**: Who made the request and from what interface
+- **Request timestamp**: When the interaction was initiated.
+- **User context**: Who made the request and from what interface.
 
 ## Frequently Asked Questions
 
@@ -332,10 +332,8 @@ You can monitor your usage through API response headers and the [quota endpoint]
 Port AI uses advanced language models depending on the interface and configuration:
 
 **Port's Managed Infrastructure (Default):**
-- **GPT models**: For reliable performance and broad 
-compatibility
-- **Claude Sonnet**: For enhanced reasoning and 
-analysis capabilities
+- **GPT models**: For reliable performance and broad compatibility
+- **Claude Sonnet**: For enhanced reasoning and analysis capabilities
 
 **Bring Your Own LLM:**
 - Configure your own providers: OpenAI, Anthropic, Azure OpenAI, AWS Bedrock

@@ -18,11 +18,11 @@ The AI Chat Widget provides a customizable interface for interacting with [Port 
 
 The AI Chat Widget is a dashboard component that:
 
-- **Provides chat interface**: Renders an interactive chat experience for Port AI
-- **Displays conversation starters**: Shows predefined prompts to help users get started
-- **Uses configured tools**: Operates with the specific [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) you select
-- **Customizable placement**: Can be embedded in any dashboard layout
-- **Respects permissions**: Only accesses data based on user permissions
+- **Provides chat interface**: Renders an interactive chat experience for Port AI.
+- **Displays conversation starters**: Shows predefined prompts to help users get started.
+- **Uses configured tools**: Operates with the specific [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) you select.
+- **Customizable placement**: Can be embedded in any dashboard layout.
+- **Respects permissions**: Only accesses data based on user permissions.
 
 ## Widget Configuration
 
@@ -30,24 +30,24 @@ When setting up an AI Chat Widget, you can customize three key aspects:
 
 ### Custom Prompts
 Configure the system prompt that guides how Port AI responds within the widget. This allows you to:
-- Set the tone and style of responses
-- Focus on specific domain knowledge 
-- Provide context about your organization or use case
-- Guide the AI's behavior for your specific audience
+- Set the tone and style of responses.
+- Focus on specific domain knowledge.
+- Provide context about your organization or use case.
+- Guide the AI's behavior for your specific audience.
 
 ### Conversation Starters
 Define predefined prompts that appear as clickable options when users first interact with the widget. Examples include:
-- "Show me services failing security checks"
+- "Show me services failing security checks".
 - "What's the status of my team's deployments?"
-- "Help me understand our incident response process"
-- "Find microservices with high bug counts"
+- "Help me understand our incident response process".
+- "Find microservices with high bug counts".
 
 ### Tool Selection
 Choose which [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) the widget can access. Available tools include data query tools for retrieving information from your catalog and action execution tools for running your self-service actions. This allows you to:
-- Limit functionality to specific use cases
-- Control what data the widget can query
-- Ensure appropriate permissions and access levels
-- Focus the AI's capabilities on relevant areas
+- Limit functionality to specific use cases.
+- Control what data the widget can query.
+- Ensure appropriate permissions and access levels.
+- Focus the AI's capabilities on relevant areas.
 
 ## Setting Up the Widget
 
@@ -76,10 +76,10 @@ When users first interact with the widget, they'll see the conversation starters
 
 ### Chat Interface  
 Users can type their own questions and requests directly into the chat interface. The widget will:
-- Process requests using the configured prompt and tools
-- Display responses in a conversational format
-- Show visual indicators when tools are being used
-- Provide links to relevant Port pages and actions
+- Process requests using the configured prompt and tools.
+- Display responses in a conversational format.
+- Show visual indicators when tools are being used.
+- Provide links to relevant Port pages and actions.
 
 ### Tool Transparency
 The widget interface provides enhanced capabilities and visual indicators showing which tools are being used:
@@ -115,14 +115,14 @@ Your goal is to help developers plan their day. Focus on Jira issues, Pull reque
 
 **Conversation Starters:**
 - "What should I work on today?"
-- "Show me my urgent Jira tickets"
-- "Help me prioritize my pull requests"
-- "What's blocking my team today?"
+- "Show me my urgent Jira tickets".
+- "Help me prioritize my pull requests".
+- "What's blocking my team today?".
 
 **Recommended Tools:**
-- Jira integration tools
-- Git/PR management tools
-- Team and assignment queries
+- Jira integration tools.
+- Git/PR management tools.
+- Team and assignment queries.
 
 </details>
 
