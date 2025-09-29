@@ -152,7 +152,7 @@ Slack integration will stop working completely during the migration. No backward
 **Timeline:**
 
 - **October 1:** Slack integration stops working  
-- **Q1 2025:** New integration planned (subject to change)
+- **Q1 2026:** New integration planned (subject to change)
 
 **Immediate Action Required:**
 
