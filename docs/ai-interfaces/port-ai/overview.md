@@ -88,16 +88,6 @@ Port AI allows you to control which specific tools from the [Port MCP server](/a
 
 This provides fine-grained control over what actions Port AI can perform - for example, you can restrict it to read-only operations for simple Q&A, or allow only specific actions for automated workflows.
 
-:::info Permission-Based Tool Filtering
-Selected tools will be available based on your regex patterns **but won't include tools that are not within your permission scope**. This means:
-
-- If you request an action to **create a Jira ticket** but this action is not available to you as a user, it won't be available to Port AI.
-- Members trying to use builder tools like "Create_blueprint" will not have access to these tools through Port AI if they lack the necessary permissions.
-- Tool availability is determined by the intersection of your regex selection AND your user permissions.
-
-Port AI respects your individual user permissions and cannot access tools or perform actions that you don't have permission to use.
-:::
-
 For detailed information about tool selection patterns, API usage examples, and best practices, see [Tool Selection in API Interaction](/ai-interfaces/port-ai/api-interaction#tool-selection).
 
 ## Available Interfaces
