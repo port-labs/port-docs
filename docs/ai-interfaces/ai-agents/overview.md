@@ -11,84 +11,142 @@ import AIAgentRegistration from "/src/components/AIAgentRegistration"
 
 # AI agents overview
 
-<ClosedBetaFeatureNotice id="ai-form" />
+:::info Closed Beta
+Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
+:::
 
-## What are Port AI agents?
+:::info Built on Port AI
+AI Agents are specialized implementations built on top of [Port AI](/ai-interfaces/port-ai/overview), designed for specific domains and machine-to-machine communication. For general AI capabilities and human interaction, see [Port AI](/ai-interfaces/port-ai/overview).
+:::
 
-Port AI agents are customizable building blocks that enhance your developer portal with intelligent assistance.  
-These agents help your developers find information faster and complete tasks more efficiently across your development ecosystem.
+## What are Port AI Agents?
+
+Port AI Agents are pre-configured, domain-specific entities built on [Port AI](/ai-interfaces/port-ai/overview) that enable intelligent machine-to-machine communication. Unlike general AI assistants designed for human interaction, AI Agents are purpose-built for specific domains (like incident management, deployment orchestration, or security monitoring) and excel at autonomous operations within defined boundaries.
 
 <img src="/img/ai-agents/AIAgentIncidentManagerAgentPage.png" width="80%" border="1px" />
 <img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border="1px" />
 
 
-## What can AI agents do?
+## Agent Characteristics
 
-AI agents serve two primary functions:
+AI Agents are distinguished by three key characteristics that make them ideal for machine-to-machine workflows:
 
-1. **Answer questions** about your development environment, services, and processes using natural language. Developers can ask questions and get immediate, contextual answers.
+1. **Domain Ownership** - Each agent is specifically designed for a particular domain or function 
+(incident management, security monitoring, deployment orchestration).
+2. **Autonomous Operation** - Agents operate independently within defined boundaries  , making them perfect for automated workflows, background monitoring and alerting, and system-to-system communication where human intervention isn't required.
+3. **Reusability Across Systems** - Agents can be integrated into multiple systems and workflows, like API-driven integration, third-party system integrations, etc.
 
-2. **Assist with actions** by helping developers complete common tasks faster. Agents can suggest and pre-fill forms, guide developers through workflows, and provide relevant context for decision-making. You can decide whether they can run an action or require human approval.
+## When to Use AI Agents vs Port AI
 
-## Enhanced capabilities with MCP server backend
+Choose **AI Agents** when you need:
+- **Machine-to-machine communication** for automated workflows.
+- **Domain-specific expertise** (e.g., incident response, security analysis).
+- **Autonomous operations** that run without human intervention.
+- **Reusable logic** that can be embedded in multiple systems.
 
-:::tip New capability
-Port AI agents now support an enhanced **MCP server backend mode** that provides significantly expanded capabilities. This is a new feature that enhances your existing agents - you can enable it for any agent to unlock these advanced capabilities.
+Choose **[Port AI](/ai-interfaces/port-ai/overview)** when you need:
+- **Human interaction** and conversational interfaces.
+- **General-purpose queries** across your entire catalog.
+- **Ad-hoc exploration** and discovery.
+
+## Agent-Specific Use Cases
+
+AI Agents excel at machine-to-machine scenarios that require domain expertise and autonomous operation:
+
+<Tabs groupId="agent-examples" queryString>
+<TabItem value="kubernetes-healing" label="Kubernetes Healing Agent">
+
+This agent automatically monitors and heals Kubernetes infrastructure by detecting failures, analyzing resource constraints, and triggering remediation workflows through monitoring system integrations.
+
+**Tools this agent would have:**
+- Kubernetes cluster monitoring and diagnostics.
+- Resource utilization analysis tools.
+- Pod restart and scaling automation.
+- Alert correlation and notification systems.
+
+**Example scenarios:**
+- Automatically detects pod failures and restart issues.
+- Analyzes resource constraints and suggests scaling actions.
+- Integrates with monitoring systems to trigger remediation workflows.
+
+</TabItem>
+<TabItem value="incident-response" label="Incident Response Agent">
+
+This agent streamlines incident management by monitoring service health, creating automated incident reports, and reducing alert noise through intelligent correlation while keeping stakeholders informed throughout outages.
+
+**Tools this agent would have:**
+- Service health monitoring and alerting.
+- Incident creation and management tools.
+- Multi-system alert correlation engines.
+- Stakeholder notification and communication systems.
+
+**Example scenarios:**
+- Monitors service health and automatically creates incident reports.
+- Correlates alerts across multiple systems to reduce noise.
+- Provides automated status updates to stakeholders during outages.
+
+</TabItem>
+<TabItem value="security-compliance" label="Security Compliance Agent">
+
+This agent continuously maintains security posture by scanning for vulnerabilities and misconfigurations, creating prioritized remediation tickets, and preventing vulnerable code from reaching production through CI/CD integration.
+
+**Tools this agent would have:**
+- Vulnerability scanning and assessment tools.
+- Security misconfiguration detection systems.
+- Automated ticket creation and prioritization.
+- CI/CD pipeline integration and gates.
+
+**Example scenarios:**
+- Continuously scans for security vulnerabilities and misconfigurations.
+- Automatically creates remediation tickets with context and priority.
+- Integrates with CI/CD pipelines to prevent deployment of vulnerable code.
+
+</TabItem>
+</Tabs>
+
+## Getting Started with AI Agents
+
+:::warning Closed Beta Access Required
+AI Agents are currently in closed beta. You must be approved before you can build or use agents in your organization.
 :::
 
-When using the MCP server backend mode, your AI agents gain:
+AI Agents are designed for organizations that need autonomous, domain-specific AI capabilities. Before applying, ensure you have:
+- Experience with [Port AI](/ai-interfaces/port-ai/overview) and its capabilities.
+- Understanding of your specific automation and machine-to-machine communication needs.
+- Familiarity with [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
-- **Expanded data access**: Intelligently queries your entire catalog without blueprint restrictions
-- **Enhanced reasoning**: Powered by Claude models for improved analysis and decision-making  
-- **Broader tool access**: Uses all read-only tools available in the MCP server for comprehensive insights
-- **Smarter action selection**: Still respects your configured allowed actions while providing better context
+**Application Process:**
+1. **Apply for access** - Submit your application via [this form](https://forms.gle/krhMY7c9JM8MyJJf7)
+2. **Access the feature** - If accepted, you will be able to [activate AI agents](/ai-interfaces/ai-agents/overview#access-to-the-feature) in your Port organization
+3. **Build your agents** - [Create custom agents](/ai-interfaces/ai-agents/build-an-ai-agent) for your specific domains
+4. **Integrate agents** - Connect your agents to external systems and workflows via API
 
-Your existing agents can immediately benefit from these enhancements by enabling the MCP server backend mode when [interacting with them](/ai-interfaces/ai-agents/interact-with-ai-agents) through widgets and API calls.
+## Agent Configuration
 
-### Example use cases
+[Build and customize](/ai-interfaces/ai-agents/build-an-ai-agent) your AI agents for specific domains:
+- Define agent instructions, goals, and expertise areas.
+- Set allowed tools and configure autonomy levels for actions.
+- Test agent behavior and validate responses.
+- Integrate agents into workflow automations and external systems.
 
-**Questions your agents can answer:**
-- "Which services are failing security checks?".
-- "When was the last successful deployment of the payment service?".
-- "Who is the owner for this component?".
+## Security and Governance
 
-**Actions your agents can help with:**
-- "Can you help me deploy service X to production?".
-- "Please notify the reviewers of PR #1234".
+AI Agents inherit all security and governance controls from [Port AI](/ai-interfaces/port-ai/overview). They operate within the same secure framework with additional controls for autonomous operation:
 
-## Getting started with AI agents
+- **RBAC compliance**: Agents respect all data access permissions and policies.
+- **Audit trail**: All agent interactions are logged as AI invocations for monitoring.
+- **Data governance**: Same data handling policies as [Port AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
-To start working with AI agents, follow these steps:
+For comprehensive security information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
-1. **Apply for access** - Submit your application via [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
-2. **Access the feature** - If accepted, you will be able to [activate the AI agents](/ai-interfaces/ai-agents/overview#access-to-the-feature) in your Port organization.
-3. **Build your agents** - [Create custom agents](/ai-interfaces/ai-agents/build-an-ai-agent) to meet your developers' needs.
-4. **Interact with your agents** - Engage with your agents by following our [interaction guide](/ai-interfaces/ai-agents/interact-with-ai-agents).
+## Implementation Strategy
 
-## Customization and control
+Start with focused, high-value use cases that demonstrate clear ROI:
 
-[Build and customize](/ai-interfaces/ai-agents/build-an-ai-agent) your AI agents:
-- Define which data sources your agents can access.
-- Determine what actions your agents can assist with.
-- Set permissions for who can use specific agents.
-- Configure how agents integrate with your workflows.
-- Choose between standard and MCP server backend modes when [interacting with agents](/ai-interfaces/ai-agents/interact-with-ai-agents).
-
-## Security and data handling
-
-AI agents are designed with security as a priority:
-- Agents only have access to the data you explicitly provide.
-- Your data remains within Port's secure infrastructure.
-- LLM processing happens within our cloud infrastructure.
-- Your data is not used for model training.
-
-We store data from your interactions with AI agents for up to 30 days. We use this data to ensure agents function correctly and to identify and prevent problematic or inappropriate AI behavior. 
-We limit this data storage strictly to these purposes. You can contact us to opt-out of this data storage.
-
-## Start simple & expand as needed
-
-Begin with focused use cases that deliver immediate value, such as helping developers find service information or streamlining incident management.  
-As your team builds confidence in the agents, you can expand their capabilities to cover more complex scenarios and workflows.
+1. **Begin with monitoring and alerting** - Implement agents that enhance existing observability.
+2. **Add workflow automation** - Build agents that streamline repetitive processes.
+3. **Expand to complex orchestration** - Develop agents that manage multi-system workflows.
+4. **Scale across domains** - Deploy specialized agents for different organizational areas.
 
 ## Access to the feature
 
@@ -99,11 +157,12 @@ Currently, AI agents are in closed beta access, and you must get approved for th
 Your organization now has the system blueprints required for the feature to work.
 
 ## Data Model
-The data model of AI agents includes two main blueprints:
 
-1. **AI agents** - The agents themselves that you can interact with. You can build new ones and customize them as you wish. Learn more in our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide.
+AI Agents use the same data model as [Port AI](/ai-interfaces/port-ai/overview) with additional agent-specific blueprints:
 
-2. **AI invocations** - Each interaction made with an AI agent is recorded as an invocation. This acts as a log of everything going through your AI agents so you can monitor and improve them over time. Learn more in our [Interact with AI agents](/ai-interfaces/ai-agents/interact-with-ai-agents) guide.
+1. **AI agents** - The agent configurations and domain specifications that define each agent's capabilities and boundaries. Learn more in our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide.
+
+2. **[AI invocations](/ai-interfaces/port-ai/overview#ai-invocations)** - Each agent interaction is recorded as an invocation, providing comprehensive audit trails for autonomous operations. These records include execution context, decisions made, and outcomes for monitoring and debugging agent behavior.
 
 ## Relevant guides
 
@@ -119,64 +178,68 @@ Explore these guides to see AI agents in action and learn how to implement them 
 - [Add RCA context to AI agents](/guides/all/add-rca-context-to-ai-agents)
 - [Enrich security vulnerability using AI](/guides/all/enrich-security-vulnerability-using-ai)
 
-## Frequently asked questions
+## Frequently Asked Questions
 
 <details>
-<summary>What are the main use cases Port AI will support? (Click to expand)</summary>
+<summary><b>What's the difference between AI Agents and Port AI Assistant? (Click to expand)</b></summary>
 
-Port AI supports two primary interaction types:
+**AI Agents** are designed for:
+- Machine-to-machine communication and agentic workflows
+- Domain-specific expertise (incident management, security, deployment)
+- Integration with external systems via API
+- Autonomous operations that run without human intervention
 
-1. **Ask Me Anything (Information Queries)**
-    - Natural language queries about your development ecosystem
-    - Examples: "Who owns service X?", "What's the deployment frequency of team Y?"
-    - Focused on surfacing information from connected data sources
-2. **Run an Action (Form Generation)**
-    - Assist with running or pre-filling self-service actions
-    - Examples: "Create a bug report", "Set up a new service"
-    - Important: you can decide whether the agent can run the action automatically
+**[Port AI](/ai-interfaces/port-ai/overview)** is designed for:
+- Human interaction and conversational interfaces
+- General-purpose queries across your entire catalog
+- Ad-hoc exploration and interactive troubleshooting
+- Direct user engagement through chat interfaces
+
+Both are built on the same [Port AI](/ai-interfaces/port-ai/overview) foundation.
 </details>
 
 <details>
-<summary>How do users interact with Port AI? (Click to expand)</summary>
+<summary><b>How do AI Agents integrate with external systems? (Click to expand)</b></summary>
 
-- Primary interface is through our [Slack app](/ai-interfaces/ai-agents/slack-app).
-- Full [API availability](/api-reference/port-api/).
+AI Agents are designed for machine-to-machine communication and can be integrated through:
+- **API**: Direct integration with your existing tools and workflows
+- **Workflow orchestration**: Embedding agents into Port workflow automations
+
+All integrations maintain the same security and governance controls as [Port AI](/ai-interfaces/port-ai/overview).
 </details>
 
 <details>
-<summary>Can customers customize the AI agents? (Click to expand)</summary>
+<summary><b>Can AI Agents operate autonomously without human approval? (Click to expand)</b></summary>
 
-Yes - you can create custom AI agents within Port. Customization includes:
-- Creating new agents using Port's blueprint system.
-- Configuring agent knowledge base and access to tools.
-- Adjusting prompts and agent behaviors.
-- Setting permissions and usage boundaries.
+Yes, AI Agents can be configured for autonomous operation within defined boundaries. However, you have full control over:
+- Which actions agents can execute automatically
+- Which actions require human approval
+- Data access permissions and scope
+- Integration points and external system access
 
-All agents operate within Port's secure framework and governance controls.
+Autonomous operation is designed for well-defined, low-risk scenarios like monitoring, alerting, and status updates.
 </details>
 
 <details>
-<summary>How is customer data handled? (Click to expand)</summary>
+<summary><b>How are AI Agents different from general automation tools? (Click to expand)</b></summary>
 
-All data processing occurs within our cloud infrastructure, and no data used for model training. We ensure complete logical separation between different customers' data. 
+AI Agents provide intelligent, context-aware automation rather than simple rule-based triggers:
+- **Intelligent decision-making**: Agents analyze context and make informed decisions
+- **Natural language understanding**: Process unstructured data and complex scenarios
+- **Adaptive responses**: Learn from your Port catalog data to provide relevant actions
+- **Domain expertise**: Pre-configured with knowledge specific to their area of focus
 
-We store data from your interactions with AI agents for up to 30 days. We use this data to ensure agents function correctly and to identify and prevent problematic or inappropriate AI behavior. 
-We limit this data storage strictly to these purposes. You can contact us to opt-out of this data storage.
+Traditional automation requires predefined rules, while AI Agents can adapt to new situations within their domain.
 </details>
 
 <details>
-<summary>Which LLM models are you using? (Click to expand)</summary>
+<summary><b>What security controls apply to autonomous AI Agents? (Click to expand)</b></summary>
 
-We use different models depending on the backend mode:
+AI Agents inherit all [Port AI security controls](/ai-interfaces/port-ai/security-and-data-controls) with additional safeguards for autonomous operation:
+- **Bounded autonomy**: Agents operate only within explicitly defined parameters
+- **Action approval workflows**: Critical actions can require human approval
+- **Comprehensive audit trails**: All autonomous operations are logged and trackable
+- **Permission inheritance**: Agents respect all RBAC and data access policies
 
-- **Standard backend**: OpenAI's GPT models for reliable performance and broad compatibility
-- **MCP server backend**: Claude models for enhanced reasoning and analysis capabilities
-
-We aim to use the best models that will yield the best results while keeping your data safe. Model selection may evolve as we continue to optimize agent performance.
-</details>
-
-<details>
-<summary>How can we audit and control AI usage? (Click to expand)</summary>
-
-Each interaction of the agent is saved and can be viewed in the audit logs, ensuring transparency and accountability. You have control over who can interact with and see the agents through our granular permission controls, along with an admin dashboard for monitoring usage, export capabilities for audit logs, and available rate limiting and usage controls.
+All autonomous operations maintain the same security standards as human-initiated actions.
 </details> 
