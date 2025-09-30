@@ -268,6 +268,10 @@ export const liveEvents = {
     \n\n **release:** \
     \n - created \
     \n - edited",
+  CheckmarxOne:
+    "\n- scan_completed_successfully \
+    \n- scan_failed \
+    \n- scan_partial",
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
