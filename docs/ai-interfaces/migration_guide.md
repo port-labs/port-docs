@@ -86,7 +86,7 @@ POST /agent/invoke
 }
 
 // Update to (specific agent - you choose which one)
-POST /agent/{agent_identifier}/invoke?stream=true&useMCP=true
+POST /agent/{agent_identifier}/invoke?stream=true&use_mcp=true
 {
   "query": "your question",
 }
@@ -132,7 +132,7 @@ The new API uses streaming responses for real-time results. Full [API reference]
 #### Phase 1 - Now
 
 - Automations are assumed to use specific agents using the `/agent/{agent_identifier}/invoke` endpoint  
-- Add `useMCP=true` and `stream=true` to all automation configurations  
+- Add `use_mcp=true` and `stream=true` to all automation configurations  
 - Test automations with new parameters
 
 #### Phase 2 - By October 15
@@ -169,7 +169,7 @@ Slack integration will stop working completely during the migration. No backward
 This is the simplest migration path with minimal manual work required.
 :::
 
-Edit your AI agent widgets to toggle on the `useMCP` flag. Test to ensure it works as expected.
+Edit your AI agent widgets to toggle on the `use_mcp` flag. Test to ensure it works as expected.
 
 By October 15th, the remaining widgets will be automatically migrated to this flag, so the behavior will change to use the new MCP behind the scenes, including the usage of the Anthropic Sonnet 4 model.
 
@@ -383,7 +383,7 @@ If you reach these limits, reach out to us to make sure you have the right limit
 - [ ] Identify all AI agent usage points (API, Automations, Slack, UI)  
 - [ ] Stop using Slack integration  
 - [ ] Plan your migration plan  
-- [ ] Update API calls with `stream=true` and `useMCP=true`  
+- [ ] Update API calls with `stream=true` and `use_mcp=true`  
 - [ ] Update automation & AI widgets parameters  
 - [ ] Test integrations with new parameters  
 - [ ] Migrate to the new schema
