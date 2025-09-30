@@ -204,9 +204,164 @@ Schemas will be automatically migrated. Existing agents might break if not updat
 
 ### Action Required
 
-1. Review the new schema requirements in your Port environment (schemas will be shared by Oct 1st)  
-2. Update your AI agent entities during Phase 1  
-3. Test functionality before automatic migration
+1. **By October 8th:** Manually update your AI agent entities to the new schema format for testing and adjustment
+2. **October 8-15:** Test functionality with the new schema to ensure everything works correctly
+3. **October 15th+:** Automatic migration will occur - agents not manually updated may break
+
+### New AI Agent Schema
+
+:::warning Manual Schema Update Required
+Starting **October 8th**, you must manually update your AI blueprints schemas to the new format for testing and adjustment.
+
+Starting **October 15th**, schemas will be automatically migrated, but existing agents might break if not manually updated during the testing period.
+:::
+
+<details>
+<summary><b>View the new AI agent schema (Click to expand)</b></summary>
+
+```json
+{
+  "identifier": "_ai_agent",
+  "title": "AI Agent",
+  "icon": "Details",
+  "ownership": {
+    "type": "Direct",
+    "title": "Owning Teams"
+  },
+  "schema": {
+    "properties": {
+      "description": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "title": "Description",
+        "description": "Brief explanation of what this agent does"
+      },
+      "status": {
+        "icon": "DefaultProperty",
+        "title": "Status",
+        "description": "Is the agent active (available to be run manually, or allowed to operate autonomously)",
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive"
+        ],
+        "enumColors": {
+          "active": "green",
+          "inactive": "red"
+        },
+        "default": "active"
+      },
+      "tools": {
+        "items": {
+          "type": "string"
+        },
+        "icon": "DefaultProperty",
+        "type": "array",
+        "title": "Tools",
+        "description": "An array of tools that the agent is allowed to execute. Docs: https://docs.port.io/ai-interfaces/port-ai/api-interaction#tool-selection",
+        "default": [
+          "^(list|get|search|track|describe)_.*"
+        ]
+      },
+      "prompt": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "maxLength": 2500,
+        "title": "Prompt",
+        "format": "markdown",
+        "description": "The system prompt for the agent. Where the agent is manually invoked, a user prompt will be provided in the invocation"
+      },
+      "execution_mode": {
+        "title": "Execution Mode",
+        "type": "string",
+        "enum": [
+          "Automatic",
+          "Approval Required"
+        ],
+        "default": "Approval Required",
+        "description": "The execution mode for actions - Automatic or requiring approval"
+      },
+      "conversation_starters": {
+        "items": {
+          "type": "string"
+        },
+        "icon": "Chat",
+        "type": "array",
+        "title": "Conversation Starters",
+        "description": "Predefined conversation starter messages to help users interact with this agent"
+      },
+      "provider": {
+        "type": "string",
+        "title": "Provider",
+        "description": "The provider of the agent"
+      },
+      "model": {
+        "type": "string",
+        "title": "Model",
+        "description": "The model of the agent"
+      },
+      "labels": {
+        "type": "object",
+        "title": "Labels",
+        "description": "Free labels to identify specific attributes on the agent"
+      }
+    },
+    "required": [
+      "tools",
+      "status",
+      "prompt"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {
+    "total_invocations": {
+      "title": "Total Invocations",
+      "type": "number",
+      "description": "The number of invocations for this agent",
+      "target": "_ai_invocations",
+      "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+      }
+    },
+    "average_input_tokens": {
+      "title": "Average input tokens",
+      "type": "number",
+      "description": "The average input tokens for this agent invocations",
+      "target": "_ai_invocations",
+      "calculationSpec": {
+        "func": "median",
+        "property": "prompt_tokens",
+        "calculationBy": "property"
+      }
+    },
+    "average_output_tokens": {
+      "title": "Average output tokens",
+      "type": "number",
+      "description": "The average output tokens for this agent invocations",
+      "target": "_ai_invocations",
+      "calculationSpec": {
+        "func": "median",
+        "property": "completion_tokens",
+        "calculationBy": "property"
+      }
+    }
+  },
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+
+<summary><b>View the new AI Invocation schema (Click to expand)</b></summary>
+
+```json
+TBD
+```
+</details>
 
 ## Updated Quotas & Rate Limits
 
