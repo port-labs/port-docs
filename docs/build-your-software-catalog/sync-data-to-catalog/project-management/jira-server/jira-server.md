@@ -198,7 +198,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__PORT__CLIENT_ID`         | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                |                               | ✅        |
 | `OCEAN__PORT__CLIENT_SECRET`     | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                           |                               | ✅        |
 | `OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST` | The URL of your Jira Server                                                                                                                                                                                                                                                     | `https://jira.yourdomain.com` | ✅        |
-| `OCEAN__INTEGRATION__SECRETS__TOKEN` | Personal Access Token for your Jira Server. **Either token or username/password must be provided.**                                                                                                                                                                                                     |                               | ❌        |
+| `OCEAN__INTEGRATION__CONFIG__TOKEN` | Personal Access Token for your Jira Server. **Either token or username/password must be provided.**                                                                                                                                                                                                     |                               | ❌        |
 | `OCEAN__INTEGRATION__SECRETS__USERNAME` | Username for Jira Server authentication. **Required if token is not provided.**                                                                                                                                                                                             | `admin`              | ❌        |
 | `OCEAN__INTEGRATION__SECRETS__PASSWORD` | Password for Jira Server authentication. **Required if token is not provided.**                                                                                                                                                                                                     |                               | ❌        |
 
@@ -236,7 +236,7 @@ jobs:
           config: |
             jira_server_host: ${{ secrets.OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST }}
           secrets: |
-            token: ${{ secrets.OCEAN__INTEGRATION__SECRETS__TOKEN }}
+            token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }}
 ```
 
   </TabItem>
@@ -253,7 +253,7 @@ Make sure to configure the following [Jenkins Credentials](https://www.jenkins.i
 | `OCEAN__PORT__CLIENT_ID`         | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                |                               | ✅        |
 | `OCEAN__PORT__CLIENT_SECRET`     | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                            |                               | ✅        |
 | `OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST` | The URL of your Jira Server                                                                                                                                                                                                                                                     | `https://jira.yourdomain.com` | ✅        |
-| `OCEAN__INTEGRATION__SECRETS__TOKEN` | Personal Access Token for your Jira Server. **Either token or username/password must be provided.**                                                                                                                                                                                                     |                               | ❌        |
+| `OCEAN__INTEGRATION__CONFIG__TOKEN` | Personal Access Token for your Jira Server. **Either token or username/password must be provided.**                                                                                                                                                                                                     |                               | ❌        |
 | `OCEAN__INTEGRATION__SECRETS__USERNAME` | Username for Jira Server authentication. **Required if token is not provided.**                                                                                                                                                                                             | `admin`              | ❌        |
 | `OCEAN__INTEGRATION__SECRETS__PASSWORD` | Password for Jira Server authentication. **Required if token is not provided.**                                                                                                                                                                                                     |                               | ❌        |
 
@@ -271,7 +271,7 @@ pipeline {
                 script {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST', variable: 'OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__SECRETS__TOKEN', variable: 'OCEAN__INTEGRATION__SECRETS__TOKEN'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
@@ -285,7 +285,7 @@ pipeline {
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST=$OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST \
-                                -e OCEAN__INTEGRATION__SECRETS__TOKEN=$OCEAN__INTEGRATION__SECRETS__TOKEN \
+                                -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -312,7 +312,7 @@ Make sure to configure the following variables using [Azure DevOps variable grou
 | `OCEAN__PORT__CLIENT_ID`         | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                |                               | ✅        |
 | `OCEAN__PORT__CLIENT_SECRET`     | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                            |                               | ✅        |
 | `OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST` | The URL of your Jira Server                                                                                                                                                                                                                                                     | `https://jira.yourdomain.com` | ✅        |
-| `OCEAN__INTEGRATION__SECRETS__TOKEN` | Personal Access Token for your Jira Server. **Either token or username/password must be provided.**                                                                                                                                                                                                     |                               | ❌        |
+| `OCEAN__INTEGRATION__CONFIG__TOKEN` | Personal Access Token for your Jira Server. **Either token or username/password must be provided.**                                                                                                                                                                                                     |                               | ❌        |
 | `OCEAN__INTEGRATION__SECRETS__USERNAME` | Username for Jira Server authentication. **Required if token is not provided.**                                                                                                                                                                                             | `admin`              | ❌        |
 | `OCEAN__INTEGRATION__SECRETS__PASSWORD` | Password for Jira Server authentication. **Required if token is not provided.**                                                                                                                                                                                                     |                               | ❌        |
 
@@ -343,7 +343,7 @@ steps:
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
         -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST=$(OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST) \
-        -e OCEAN__INTEGRATION__SECRETS__TOKEN=$(OCEAN__INTEGRATION__SECRETS__TOKEN) \
+        -e OCEAN__INTEGRATION__CONFIG__TOKEN=$(OCEAN__INTEGRATION__CONFIG__TOKEN) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
         -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -364,7 +364,7 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | `OCEAN__PORT__CLIENT_ID`         | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                |                               | ✅        |
 | `OCEAN__PORT__CLIENT_SECRET`     | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                            |                               | ✅        |
 | `OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST` | The URL of your Jira Server                                                                                                                                                                                                                                                     | `https://jira.yourdomain.com` | ✅        |
-| `OCEAN__INTEGRATION__SECRETS__TOKEN` | Personal Access Token for your Jira Server. **Either token or username/password must be provided.**                                                                                                                                                                                                     |                               | ❌        |
+| `OCEAN__INTEGRATION__CONFIG__TOKEN` | Personal Access Token for your Jira Server. **Either token or username/password must be provided.**                                                                                                                                                                                                     |                               | ❌        |
 | `OCEAN__INTEGRATION__SECRETS__USERNAME` | Username for Jira Server authentication. **Required if token is not provided.**                                                                                                                                                                                             | `admin`              | ❌        |
 | `OCEAN__INTEGRATION__SECRETS__PASSWORD` | Password for Jira Server authentication. **Required if token is not provided.**                                                                                                                                                                                                     |                               | ❌        |
 
@@ -398,7 +398,7 @@ ingest_data:
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
         -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST=$OCEAN__INTEGRATION__CONFIG__JIRA_SERVER_HOST \
-        -e OCEAN__INTEGRATION__SECRETS__TOKEN=$OCEAN__INTEGRATION__SECRETS__TOKEN \
+        -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
         -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
