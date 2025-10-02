@@ -1,0 +1,62 @@
+<details>
+<summary><b>DB instance blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "rdsInstance",
+  "description": "This blueprint represents an AWS RDS DB instance in our software catalog",
+  "title": "DB instance",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "dbInstanceArn": {
+        "type": "string",
+        "title": "DB Instance ARN"
+      },
+      "dbInstanceIdentifier": {
+        "type": "string",
+        "title": "DB Instance Identifier"
+      },
+      "dbInstanceStatus": {
+        "type": "string",
+        "title": "DB Instance Status"
+      },
+      "engine": {
+        "type": "string",
+        "title": "Engine"
+      },
+      "tags": {
+        "type": "array",
+        "title": "Tags",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Key": {
+              "type": "string"
+            },
+            "Value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+
