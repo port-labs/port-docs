@@ -107,21 +107,107 @@ Migrate directly to the new AI assistant:
 
 ```javascript showLineNumbers
 // Migrate to
-POST /ai/invoke
+POST /v1/ai/invoke
 {
-  "query": "your question",
-  "userSystemPrompt": "optional custom instructions",
-  "tools": ["optional", "tool", "list"]
+  "userPrompt": "what services do we have?",
+  "labels": {
+    "source": "test"
+  },
+  "systemPrompt": "you are a devops guru at the company, your task is to help developers with software infrastructure stuff",
+  "executionMode": "Manual Approval",
+  "tools": ["^(list|get|search|track|describe)_.*"]
 }
 ```
 
+### Request Parameters
+
+The `/v1/ai/invoke` endpoint accepts the following parameters:
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `userPrompt` | string | ✅ | The user's question or request in natural language |
+| `systemPrompt` | string | ❌ | Custom instructions that provide context about your organization, terminology, or specific requirements for the AI to consider in each request |
+| `executionMode` | string | ❌ | Controls how action execution tools behave. Options: `"Automatic"` or `"Manual Approval"` (default: `"Manual Approval"`) |
+| `tools` | array | ❌ | Array of regex patterns to control which [Port MCP tools](/ai-interfaces/port-ai/api-interaction#tool-selection) are available. Default: `["^(list|get|search|track|describe)_.*"]` |
+| `labels` | object | ❌ | Free-form labels for tracking and filtering AI invocations (e.g., `{"source": "monitoring", "environment": "production"}`) |
+
+### Execution Modes
+
+The `executionMode` parameter controls how Port AI handles action execution tools:
+
+- **`"Manual Approval"`** (default): Port AI creates draft actions that require your review before execution
+- **`"Automatic"`**: Port AI executes actions immediately based on your request
+
+:::info Tool Selection
+The `tools` parameter uses regex patterns to control which MCP tools are available. For example:
+- `["^(list|get|search|track|describe)_.*"]` - Read-only operations only
+- `["^run_.*"]` - Action execution only  
+- `["run_.*github.*", "run_.*jira.*"]` - Specific integration actions
+
+Learn more about [tool selection patterns](/ai-interfaces/port-ai/api-interaction#tool-selection).
+:::
+
 This endpoint doesn't require pre-configured agents, automatically uses streaming and MCP, and provides out-of-the-box intelligence.
+
+<details>
+<summary><b>Migration Examples (Click to expand)</b></summary>
+
+Here are practical examples of migrating from the old `/agent/invoke` endpoint to the new `/v1/ai/invoke` endpoint:
+
+**Example 1: Basic Query Migration**
+```javascript showLineNumbers
+// Old endpoint
+POST /agent/invoke
+{
+  "query": "What services are failing health checks?",
+  "agent_id": "monitoring_agent"
+}
+
+// New endpoint
+POST /v1/ai/invoke
+{
+  "userPrompt": "What services are failing health checks?",
+  "systemPrompt": "You are a monitoring specialist. Focus on health metrics and provide actionable insights.",
+  "executionMode": "Manual Approval",
+  "tools": ["^(list|get|search)_.*"],
+  "labels": {
+    "source": "monitoring_dashboard",
+    "environment": "production"
+  }
+}
+```
+
+**Example 2: Action Execution Migration**
+```javascript showLineNumbers
+// Old endpoint
+POST /agent/invoke
+{
+  "query": "Create an incident for the payment service",
+  "agent_id": "incident_agent"
+}
+
+// New endpoint
+POST /v1/ai/invoke
+{
+  "userPrompt": "Create an incident for the payment service",
+  "systemPrompt": "You are an incident response specialist. Always include severity levels and impact assessment.",
+  "executionMode": "Automatic",
+  "tools": ["^(list|get|search)_.*", "run_.*incident.*"],
+  "labels": {
+    "source": "automation",
+    "service": "payment",
+    "trigger": "health_check_failure"
+  }
+}
+```
+
+</details>
 
 </TabItem>
 </Tabs>
 
 :::info API Reference
-The new API uses streaming responses for real-time results. Full [API reference](/ai-interfaces/port-ai/api-interaction) and implementation details will be shared by Oct 1st.
+The new API uses streaming responses for real-time results. See the [API interaction documentation](/ai-interfaces/port-ai/api-interaction) for complete details on request/response formats, streaming events, and error handling.
 :::
 
 ### ⚙️ Workflow Automations
