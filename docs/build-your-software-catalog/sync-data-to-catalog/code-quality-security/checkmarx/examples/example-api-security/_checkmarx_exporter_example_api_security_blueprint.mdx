@@ -1,0 +1,126 @@
+<details>
+<summary><b>API Security blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "checkmarxApiSec",
+  "title": "Checkmarx API Security",
+  "icon": "Checkmarx",
+  "schema": {
+    "properties": {
+      "riskId": {
+        "type": "string",
+        "title": "Risk ID",
+        "description": "The unique identifier for the API security risk."
+      },
+      "apiId": {
+        "type": "string",
+        "title": "API ID",
+        "description": "The identifier of the API associated with the risk."
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "critical"
+        ],
+        "description": "The severity level of the API security risk."
+      },
+      "name": {
+        "type": "string",
+        "title": "Name",
+        "description": "The name of the API security risk."
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "new",
+          "recurrent",
+          "fixed"
+        ],
+        "description": "The status of the API security risk."
+      },
+      "httpMethod": {
+        "type": "string",
+        "title": "HTTP Method",
+        "description": "The HTTP method associated with the API risk (e.g., GET, POST)."
+      },
+      "url": {
+        "type": "string",
+        "title": "URL",
+        "description": "The URL endpoint associated with the API risk."
+      },
+      "origin": {
+        "type": "string",
+        "title": "Origin",
+        "description": "The origin or source of the API risk."
+      },
+      "documented": {
+        "type": "boolean",
+        "title": "Documented",
+        "description": "Indicates whether the API is documented."
+      },
+      "authenticated": {
+        "type": "boolean",
+        "title": "Authenticated",
+        "description": "Indicates whether the API requires authentication."
+      },
+      "discoveryDate": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Discovery Date",
+        "description": "The date and time when the API risk was discovered."
+      },
+      "scanId": {
+        "type": "string",
+        "title": "Scan ID",
+        "description": "The identifier of the scan in which the risk was found."
+      },
+      "sastRiskId": {
+        "type": "string",
+        "title": "SAST Risk ID",
+        "description": "The identifier of the related SAST risk, if available."
+      },
+      "projectId": {
+        "type": "string",
+        "title": "Project ID",
+        "description": "The identifier of the project associated with the API risk."
+      },
+      "state": {
+        "type": "string",
+        "title": "State",
+        "enum": [
+          "to_verify",
+          "confirmed",
+          "urgent",
+          "not_exploitable",
+          "proposed_not_exploitable",
+          "false_positive"
+        ],
+        "description": "The state of the API security risk."
+      }
+    },
+    "required": [
+      "riskId",
+      "apiId",
+      "name",
+      "status",
+      "state"
+    ]
+  },
+  "relations": {
+    "scan": {
+      "title": "Scan",
+      "target": "checkmarxScan",
+      "many": false,
+      "required": false
+    }
+  }
+}
+```
+
+</details>

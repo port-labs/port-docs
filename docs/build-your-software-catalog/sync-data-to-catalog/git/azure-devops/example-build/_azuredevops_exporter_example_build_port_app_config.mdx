@@ -1,0 +1,46 @@
+<details>
+
+<summary>Integration mapping</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: 'true'
+      defaultTeam: 'false'
+    port:
+      entity:
+        mappings:
+          identifier: .id | gsub(" "; "")
+          blueprint: '"project"'
+          title: .name
+          properties:
+            state: .state
+            revision: .revision
+            visibility: .visibility
+            defaultTeam: .defaultTeam.name
+            link: .url | gsub("_apis/projects/"; "")
+  - kind: build
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .__project.id + "-" + (.id | tostring) | gsub(" "; "")
+          title: .buildNumber
+          blueprint: '"build"'
+          properties:
+            status: .status
+            result: .result
+            queueTime: .queueTime
+            startTime: .startTime
+            finishTime: .finishTime
+            definitionName: .definition.name
+            requestedFor: .requestedFor.displayName
+            link: ._links.web.href
+          relations:
+            project: .__project.id | gsub(" "; "")
+
+```
+
+</details>

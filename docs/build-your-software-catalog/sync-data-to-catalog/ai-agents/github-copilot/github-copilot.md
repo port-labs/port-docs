@@ -38,7 +38,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-Time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 <IntegrationVersion integration="github-copilot" />
 
@@ -169,7 +169,7 @@ This table summarizes the available parameters for the installation.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Github Copilot integration once and then exit, this is useful for **scheduled** ingestion of data.
 
@@ -180,8 +180,8 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 
 | Parameter                   | Description                                                                                                                                                                                                                                                                              | Example | Required |
 |-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|----------|
-| `port_client_id`            | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅        |
-| `port_client_secret`        | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅        |
+| `port_client_id`            | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                              |         | ✅        |
+| `port_client_secret`        | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                          |         | ✅        |
 | `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |         | ✅        |
 | `config -> githubToken`  | Github [token](https://github.com/settings/tokens/new) used to query Github api                                                                                                                                         |         | ✅        |
 | `initialize_port_resources` | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |         | ❌        |

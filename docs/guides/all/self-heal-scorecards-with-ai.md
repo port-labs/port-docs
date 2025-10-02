@@ -27,6 +27,7 @@ This guide assumes the following:
 - [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account
 - You have access to [create and configure AI agents](https://docs.port.io/ai-agents/overview#getting-started-with-ai-agents) in Port.
 - You have completed the setup in the [Trigger GitHub Copilot from Port guide](https://docs.port.io/guides/all/trigger-github-copilot-from-port), ensuring that Copilot will be automatically assigned to any GitHub issues created through this guide.
+- You have completed the setup in the [Track AI-driven pull requests guide](https://docs.port.io/guides/all/track-ai-driven-pull-requests/), ensuring that AI-driven pull requests are tracked and can be assigned to Copilot.
 
 
 :::tip Flexibility with Coding Agents
