@@ -657,11 +657,11 @@
   },
   "/guides/all/create-roi-dashboard": {
     "creationDate": "2025-07-30T10:18:26.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/send-slack-message-to-user": {
     "creationDate": "2025-08-06T15:34:35.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/map-git-users-to-port-accounts": {
     "creationDate": "2025-07-24T03:43:52.000Z",
@@ -693,7 +693,7 @@
   },
   "/guides/all/trigger-github-copilot-from-port": {
     "creationDate": "2025-08-05T22:21:00.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/trigger-gemini-assistant-from-port": {
     "creationDate": "2025-09-01T20:20:02.000Z",
@@ -709,7 +709,7 @@
   },
   "/guides/all/self-heal-scorecards-with-ai": {
     "creationDate": "2025-08-01T22:17:33.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/track-ai-driven-pull-requests": {
     "creationDate": "2025-08-12T09:49:22.000Z",

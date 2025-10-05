@@ -95,7 +95,7 @@ For detailed information about tool selection patterns, API usage examples, and 
 Port AI can be accessed through several interfaces, each designed for different use cases:
 
 ### Port AI Assistant
-The **Port AI Assistant** provides a dedicated, out-of-the-box user experience that requires no configuration. It offers a complete chat interface optimized for interacting with your Port data. *(Coming soon - comprehensive documentation)*
+The **[Port AI Assistant](/ai-interfaces/port-ai-assistant)** provides a dedicated, out-of-the-box user experience that requires no configuration. Available through a floating button, it offers instant access to AI-powered insights about your catalog, actions, and Port documentation - with zero setup required.
 
 ### AI Chat Widget  
 The [AI Chat Widget](/ai-interfaces/ai-chat-widget) is a customizable interface that platform engineers can embed in dashboards. It allows configuration of:
@@ -277,7 +277,7 @@ Port AI supports two primary interaction types:
 <summary><b>How can I interact with Port AI? (Click to expand)</b></summary>
 
 You can interact with Port AI through multiple interfaces:
-- **Port AI Assistant** - Dedicated chat interface *(documentation coming soon)*
+- **[Port AI Assistant](/ai-interfaces/port-ai-assistant)** - Out-of-the-box chat interface via floating button (no configuration required).
 - [AI Chat Widget](/ai-interfaces/ai-chat-widget) - Customizable dashboard widgets
 - API integration - For custom applications and external workflows
 - [AI Agents](/ai-interfaces/ai-agents/overview) - Specialized implementations built on Port AI
