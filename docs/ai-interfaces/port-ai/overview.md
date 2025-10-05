@@ -357,6 +357,11 @@ Port AI is designed with security and privacy as priorities:
 Every Port AI interaction creates a detailed invocation record that includes who asked what, the AI's response, which tools were used, and complete execution logs. These records are stored as entities in your Port catalog for monitoring, debugging, and audit purposes.
 
 For comprehensive security and data governance information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
+
+**Detailed Information:**
+- [Data Privacy & Retention](/ai-interfaces/port-ai/security-and-data-controls#data-privacy--retention) - What data we store and why.
+- [LLM Provider Data Processing](/ai-interfaces/port-ai/security-and-data-controls#how-is-my-data-processed-by-llm-providers) - How your data is processed by AI models.
+- [Opt-out Options](/ai-interfaces/port-ai/security-and-data-controls#can-i-opt-out-of-data-storage) - How to opt out of data storage.
 </details>
 
 <details>
@@ -372,6 +377,11 @@ Yes, Port AI provides comprehensive audit and control capabilities:
 - All interactions respect your configured RBAC and data access policies
 
 For detailed security and governance information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
+
+**Detailed Information:**
+- [Admin Controls & Organization Policies](/ai-interfaces/port-ai/security-and-data-controls#admin-controls--organization-policies) - What controls administrators have.
+- [AI Usage Visibility](/ai-interfaces/port-ai/security-and-data-controls#what-visibility-do-customers-have-into-ai-usage) - Comprehensive visibility into AI usage.
+- [User Access Controls](/ai-interfaces/port-ai/security-and-data-controls#can-we-control-which-users-have-access-to-ai-features) - How to control user access.
 </details>
 
 <details>
