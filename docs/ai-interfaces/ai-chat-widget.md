@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: AI Chat Widget
+sidebar_class_name: hidden
 ---
 
 import Tabs from "@theme/Tabs"
