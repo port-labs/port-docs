@@ -7,7 +7,6 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md'
-import AIAgentRegistration from "/src/components/AIAgentRegistration"
 
 # AI agents overview
 
@@ -23,8 +22,7 @@ AI Agents are specialized implementations built on top of [Port AI](/ai-interfac
 
 Port AI Agents are pre-configured, domain-specific entities built on [Port AI](/ai-interfaces/port-ai/overview) that enable intelligent machine-to-machine communication. Unlike general AI assistants designed for human interaction, AI Agents are purpose-built for specific domains (like incident management, deployment orchestration, or security monitoring) and excel at autonomous operations within defined boundaries.
 
-<img src="/img/ai-agents/AIAgentIncidentManagerAgentPage.png" width="80%" border="1px" />
-<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border="1px" />
+<img src="/img/ai-agents/AIAgentsListView.png" width="80%" border="1px" />
 
 
 ## Agent Characteristics
@@ -106,20 +104,12 @@ This agent continuously maintains security posture by scanning for vulnerabiliti
 
 ## Getting Started with AI Agents
 
-:::warning Closed Beta Access Required
-AI Agents are currently in closed beta. You must be approved before you can build or use agents in your organization.
-:::
-
 AI Agents are designed for organizations that need autonomous, domain-specific AI capabilities. Before applying, ensure you have:
 - Experience with [Port AI](/ai-interfaces/port-ai/overview) and its capabilities.
 - Understanding of your specific automation and machine-to-machine communication needs.
 - Familiarity with [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
-**Application Process:**
-1. **Apply for access** - Submit your application via [this form](https://forms.gle/krhMY7c9JM8MyJJf7)
-2. **Access the feature** - If accepted, you will be able to [activate AI agents](/ai-interfaces/ai-agents/overview#access-to-the-feature) in your Port organization
-3. **Build your agents** - [Create custom agents](/ai-interfaces/ai-agents/build-an-ai-agent) for your specific domains
-4. **Integrate agents** - Connect your agents to external systems and workflows via API
+Start by [creating custom agents](/ai-interfaces/ai-agents/build-an-ai-agent) for your specific domains, and Connect your agents to external systems and workflows.
 
 ## Agent Configuration
 
@@ -147,14 +137,6 @@ Start with focused, high-value use cases that demonstrate clear ROI:
 2. **Add workflow automation** - Build agents that streamline repetitive processes.
 3. **Expand to complex orchestration** - Develop agents that manage multi-system workflows.
 4. **Scale across domains** - Deploy specialized agents for different organizational areas.
-
-## Access to the feature
-
-Currently, AI agents are in closed beta access, and you must get approved for the feature first. Once approved, you can enable the feature in your Port organization using the interactive tool below:
-
-<AIAgentRegistration />
-
-Your organization now has the system blueprints required for the feature to work.
 
 ## Data Model
 
@@ -242,4 +224,9 @@ AI Agents inherit all [Port AI security controls](/ai-interfaces/port-ai/securit
 - **Permission inheritance**: Agents respect all RBAC and data access policies
 
 All autonomous operations maintain the same security standards as human-initiated actions.
+
+**Detailed Information:**
+- [Human Oversight & Autonomy](/ai-interfaces/port-ai/security-and-data-controls#human-oversight--autonomy) - How AI features operate with human oversight.
+- [Admin Controls](/ai-interfaces/port-ai/security-and-data-controls#what-controls-do-administrators-have-over-ai-usage) - Administrative controls over AI usage.
+- [Data Access & Permissions](/ai-interfaces/port-ai/security-and-data-controls#data-access--permissions) - How AI respects your access controls.
 </details> 
