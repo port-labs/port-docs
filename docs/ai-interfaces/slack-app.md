@@ -11,6 +11,8 @@ Port's AI offerings are currently in closed beta and will be gradually rolled ou
 
 Port's Slack app brings your developer portal experience into your team's daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates.
 
+<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border="1px" />
+
 ## Use-cases
 
 ### Manage notifications
