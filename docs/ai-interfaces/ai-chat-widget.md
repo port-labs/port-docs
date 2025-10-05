@@ -306,6 +306,11 @@ Learn more about tool selection in [Widget Configuration](#widget-configuration)
 The AI Chat Widget inherits all security controls from Port AI, including user permissions, data governance, and audit trails. Port is committed to developing AI responsibly with high standards of data privacy and security.
 
 For comprehensive information, see [Security Considerations](#security-considerations).
+
+**Detailed Information:**
+- [Data Access & Permissions](/ai-interfaces/port-ai/security-and-data-controls#data-access--permissions) - How AI respects your organization's access controls.
+- [RBAC Compliance](/ai-interfaces/port-ai/security-and-data-controls#how-does-port-ai-respect-my-organizations-access-controls) - Role-based access control details.
+- [Data Privacy & Retention](/ai-interfaces/port-ai/security-and-data-controls#data-privacy--retention) - How your data is handled and stored.
 </details>
 
 The AI Chat Widget provides a powerful way to bring [Port AI](/ai-interfaces/port-ai/overview) capabilities directly into your team's daily workflows through customized dashboard experiences.
