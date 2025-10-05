@@ -22,7 +22,7 @@ AI Agents are specialized implementations built on top of [Port AI](/ai-interfac
 
 Port AI Agents are pre-configured, domain-specific entities built on [Port AI](/ai-interfaces/port-ai/overview) that enable intelligent machine-to-machine communication. Unlike general AI assistants designed for human interaction, AI Agents are purpose-built for specific domains (like incident management, deployment orchestration, or security monitoring) and excel at autonomous operations within defined boundaries.
 
-<img src="/img/ai-agents/AIAgentsListView.png" width="80%" border="1px" />
+<img src="/img/ai-agents/AIAgentsList.png" width="80%" border="1px" />
 
 
 ## Agent Characteristics
