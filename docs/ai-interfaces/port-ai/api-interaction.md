@@ -643,3 +643,8 @@ When integrating Port AI via API:
 
 For comprehensive security information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
+**Detailed Security Information:**
+- [Security and Permissions](/ai-interfaces/port-ai/security-and-data-controls#security-and-permissions) - How Port AI respects your security controls.
+- [Compliance & Security Standards](/ai-interfaces/port-ai/security-and-data-controls#compliance--security-standards) - Integration with compliance requirements.
+- [Data Access & Permissions](/ai-interfaces/port-ai/security-and-data-controls#data-access--permissions) - How AI respects your organization's access controls.
+
