@@ -31,6 +31,34 @@ AI agents are designed for specific domains and use cases. When interacting with
 ## Interaction methods
 
 <Tabs groupId="interaction-methods" queryString>
+<TabItem value="widget" label="AI Chat Widget">
+
+You can add AI agents directly to your dashboards as interactive widgets, providing easy access to their capabilities right where you need them.
+
+Follow these steps to add an AI agent widget:
+
+1. Go to a dashboard.
+2. Click on `+ Widget`.
+3. Select the `AI Chat` widget.
+4. Configure your widget settings:
+   - **Agent**: Select the specific AI agent to use
+   - **Title**: Set a descriptive name for the widget
+   - **Description**: Add a description for the widget
+5. Save your dashboard configuration.
+6. Start asking questions through the chat interface.
+
+<img src='/img/ai-agents/AIAgentWidgetMenu.png' width='80%' border='1px' />
+<img src='/img/ai-agents/AIAgentsTaskManagerWidget.png' width='80%' border='1px' />
+
+The widget provides a chat interface where you can ask questions and receive responses from the **selected agent** without leaving your dashboard.
+
+The widget will inherit all the agent's configuration including the prompts, conversation starters, tool access, etc.
+
+Conversation starters appear in the initial state, helping users understand what they can ask the agent. Users can either click a starter to begin a new chat or type their own question.
+<img src='/img/ai-agents/AIAgentsWidgetConversationStarters.png' width='80%' border='1px' />
+
+
+</TabItem>
 <TabItem value="api-integration" label="API integration">
 
 AI agents can be integrated into your applications and workflows through Port's API. Agents use the same streaming API patterns as Port AI.
