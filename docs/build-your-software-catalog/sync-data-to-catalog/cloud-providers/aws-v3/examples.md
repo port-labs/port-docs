@@ -16,6 +16,9 @@ import Ec2InstanceProperties from './examples/ec2/instances/_ec2_instance_proper
 import OrganizationsAccountBlueprint from './examples/organizations/accounts/_organizations_accounts_blueprint.mdx'
 import OrganizationsAccountConfig from './examples/organizations/accounts/_organizations_accounts_port_app_config.mdx'
 import OrganizationsAccountProperties from './examples/organizations/accounts/_organizations_accounts_properties.mdx'
+import AwsLambdaFunctionBlueprint from './examples/aws_lambda/function/_aws_lambda_function_blueprint.mdx'
+import AwsLambdaFunctionConfig from './examples/aws_lambda/function/_aws_lambda_function_port_app_config.mdx'
+import AwsLambdaFunctionProperties from './examples/aws_lambda/function/_aws_lambda_function_properties.mdx'
 
 # Examples
 
@@ -106,6 +109,24 @@ You can reference any of the following EC2 instance properties in your mapping c
 <Ec2InstanceProperties/>
 
 For more details about EC2 instance properties, refer to the [AWS EC2 API documentation](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html).
+
+## AWS Lambda
+
+### Lambda Functions
+
+The following example demonstrates how to ingest your AWS Lambda functions to Port.
+
+You can use the following Port blueprint definitions and integration configuration:
+
+<AwsLambdaFunctionBlueprint/>
+
+<AwsLambdaFunctionConfig/>
+
+You can reference any of the following Lambda function properties in your mapping configuration:
+
+<AwsLambdaFunctionProperties/>
+
+For more details about Lambda function properties, refer to the [AWS Lambda API documentation](https://docs.aws.amazon.com/lambda/latest/APIReference/API_GetFunction.html).
 
 :::info More resource types coming soon
 We're actively working on adding support for additional AWS resource types to provide comprehensive coverage of your AWS infrastructure.
