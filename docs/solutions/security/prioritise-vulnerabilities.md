@@ -72,21 +72,33 @@ Port transforms vulnerability data into actionable intelligence by anchoring it 
 - Integrate with tools like **Trivy, Wiz, Dependabot, Orca, Snyk**, etc., to ingest vulnerabilities into Port with service links.
 - Leverage **API ingestion** for custom tools or vulnerability sources, using Port's REST API to create/update vulnerability entities linked to services.
 
+![Vulnerability catalog](/img/guides/security-solution/vuln-catalog.png)
+
 ### 2. Business context enrichment
 
 - Vulnerabilities are enriched with metadata like **service ownership, environment (prod, staging), business criticality, data sensitivity, compliance implications**, and recent change status.
 - This enables answering: *Which vulnerabilities threaten our revenue-critical production systems?*
+
+![Vulnerability busines context](/img/guides/security-solution/vuln-context.png)
+-
+![Vulnerability user context](/img/guides/security-solution/vuln-context-teams.png)
 
 ### 3. Real-time dashboards & scorecards
 
 - Build dashboards to track vulnerabilities by severity, status, team, or service using Port's UI and widget capabilities.
 - Track maturity with **scorecards**, showing metrics like mean time to remediation (MTTR), percentage of services with owners, or open critical vulnerabilities over time, using Port's scorecard feature.
 
+![Vulnerability stats](/img/guides/security-solution/vuln-stats.png)
+-
+![Vulnerability trends](/img/guides/security-solution/vuln-trends.png)
+
 ### 4. Automation & context-aware workflows
 
 - Define automations to **escalate high-priority issues**, such as when a vulnerability in a customer-facing prod service becomes critical.
 - Build self-service actions to create tickets in Jira, Slack alerts, or trigger remediation workflows—only where business risk justifies action.
 - Use Port's API and mapping layers to tailor behavior—e.g., API-driven rules, triage pipelines, or dynamic SLAs.
+
+![Vulnerability rules](/img/guides/security-solution/vuln-rules.png)
 
 ### 5. API-driven integration & extensibility
 

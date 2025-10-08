@@ -42,6 +42,7 @@ These metrics fail because they don’t provide:
 - **Actionability** – Who should fix the problem and by when?
 - **Business relevance** – What’s the potential revenue or compliance impact?
 
+
 :::info Effective metrics answer questions
 **Effective metrics answer questions, not just display numbers.**
 :::
@@ -56,12 +57,18 @@ Every metric can be tied to:
 - **Compliance scope** → SOX, PCI, HIPAA, GDPR.
 - **Customer impact** → Which customer tiers or SLAs are affected.
 
+![Compliance 1](/img/guides/security-solution/compliance-1.png)
+
+![Compliance 2](/img/guides/security-solution/compliance-2.png)
+
 This alignment ensures **metrics and dashboards are directly actionable**, not just observational.
 
 ## CISO dashboards with metrics that matter
 
 Security leaders need dashboards that **tell a story** about progress and risk.  
 Port enables this with **flexible visualizations**, linking data sources to executive-friendly KPIs.
+
+![Incidents](/img/guides/security-solution/incidents-1.png)
 
 ### 1. Business risk metrics
 
@@ -74,6 +81,10 @@ These metrics focus on *business impact*, not just technical severity:
 | **Risk-adjusted vulnerability trends** | Track whether overall risk is increasing or decreasing | Line chart showing risk score trends over time by service criticality |
 | **Compliance gap analysis** | Understand gaps that affect revenue or compliance requirements | Scorecard tracking services mapped to regulatory frameworks |
 
+![MTTR](/img/guides/security-solution/mttr.png)
+
+![Incidents](/img/guides/security-solution/incidents-2.png)
+
 ### 2. Security Culture and Adoption Metrics
 
 Security is a cultural challenge as much as a technical one:
@@ -85,6 +96,8 @@ Security is a cultural challenge as much as a technical one:
 | **Time to complete security reviews** | Measure SDLC integration of security | Relations between services and review actions |
 | **Security champion engagement** | Monitor champion program health | Blueprint for champions tied to team entities |
 
+![Secuyrity metrics](/img/guides/security-solution/sec-met-2.png)
+
 ### 3. Operational efficiency metrics
 
 Showcase security team performance and tool effectiveness:
@@ -95,6 +108,9 @@ Showcase security team performance and tool effectiveness:
 | **False positive rates by tool** | Identify underperforming tools | Table comparing scanner findings vs verified issues |
 | **Incident detection & response time** | Track how quickly incidents are resolved | SLA tracking via actions + incident blueprint |
 | **Automated remediation success rates** | Prove automation ROI | Trend chart of automation success vs manual fixes |
+
+
+![Security metrics](/img/guides/security-solution/sec-met-1.png)
 
 :::tip Focus on trends, not snapshots
 Single-point metrics can mislead.  
@@ -183,6 +199,8 @@ This metrics program directly complements the **vulnerability prioritization** a
 - Dashboards bridge **strategic and operational views**, using the same data pipelines.
 
 By connecting metrics and prioritization in one platform, Port eliminates silos and provides a **single source of truth** for security performance.
+
+![Incidents](/img/guides/security-solution/incidents-3.png)
 
 ## Summary
 

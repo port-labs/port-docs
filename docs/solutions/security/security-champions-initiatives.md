@@ -70,6 +70,8 @@ Track practices that prevent vulnerabilities from reaching production:
 - **Data protection** – Sensitive data handled according to policy.
 - **Security testing** – Security tests included in CI/CD pipelines.
 
+![Application Security](/img/guides/security-solution/owasp-scorecard.png)
+
 ### Infrastructure security scorecard
 Ensure infrastructure is deployed and maintained securely:
 - **Network security** – Proper segmentation and firewall rules.
