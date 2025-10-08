@@ -1060,6 +1060,31 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 
+<details>
+<summary><b>Iteration response data (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "id": "Sprint 1",
+  "name": "Sprint 1",
+  "path": "\\Port Integration\\Sprint 1",
+  "attributes": {
+    "startDate": "2023-11-01T00:00:00.000Z",
+    "finishDate": "2023-11-15T00:00:00.000Z",
+    "timeFrame": "past"
+  },
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  }
+}
+```
+
+</details>
+
+
+
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1243,6 +1268,30 @@ The combination of the sample payload and the Ocean configuration generates the 
     "createdDate": "2023-11-14T07:00:00.000Z",
     "finishedDate": "2023-11-14T07:05:30.000Z",
     "pipelineName": "health-catalist"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
+
+
+
+<details>
+<summary> Iteration entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "Sprint 1",
+  "title": "Sprint 1",
+  "blueprint": "iteration",
+  "properties": {
+    "name": "Sprint 1",
+    "path": "\\Port Integration\\Sprint 1",
+    "timeFrame": "past"
   },
   "relations": {
     "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
