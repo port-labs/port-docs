@@ -4,6 +4,10 @@ sidebar_position: 3
 
 # Event-Based Updates
 
+:::warning Already Deprecated
+This exporter is already deprecated. Please use the [AWS hosted by Port option](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).
+:::
+
 Our AWS integration allows you to trigger a sync of your AWS resources with Port based on real-time events (in addition to the standard scheduled sync).
 As a result, your software catalog will be updated shortly after a resource is created, updated or deleted.
 
