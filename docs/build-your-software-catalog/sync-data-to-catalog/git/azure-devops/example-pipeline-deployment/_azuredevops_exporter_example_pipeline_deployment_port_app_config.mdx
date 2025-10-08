@@ -1,0 +1,26 @@
+<details>
+<summary><b>Integration mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: pipeline-deployment
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .requestIdentifier | tostring
+          blueprint: '"azureDevopsPipelineDeployment"'
+          properties:
+            planType: .planType
+            stageName: .stageName
+            jobName: .jobName
+            result: .result
+            startTime: .startTime
+            finishTime: .finishTime
+          relations:
+            environment: .environment.id | tostring
+```
+
+</details>
