@@ -4,8 +4,8 @@ displayed_sidebar: null
 description: Learn how to create an EC2 instance in Port with this step-by-step guide, enabling scalable cloud infrastructure setup.
 ---
 
-import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
-import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '/docs/guides/templates/github/\_github_dedicated_workflows_repository_hint.mdx'
+import GithubActionModificationHint from '/docs/guides/templates/github/\_github_action_modification_required_hint.mdx'
 
 # Create An AWS EC2 Instance
 
@@ -16,6 +16,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](/actions-and-automations/setup-backend/github-workflow/github-workflow.md) to create an EC2 Instance in AWS using Terraform templates.
 
 ## Prerequisites
+
 1. A GitHub repository to contain your action resources i.e. the github workflow file.
 
 2. An AWS Account or IAM user with permission to create access keys. [Learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
@@ -25,11 +26,12 @@ In the following guide, you are going to create a self-service action in Port th
 4. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
 
 5. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
-    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-    * `TF_USER_AWS_KEY` - An aws access key with the right iam permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
-    * `TF_USER_AWS_SECRET` - An aws access key secret with permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
-    * `TF_USER_AWS_REGION` - The aws region where you would like to provision your ec2 instance.
+
+   - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+   - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+   - `TF_USER_AWS_KEY` - An aws access key with the right iam permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+   - `TF_USER_AWS_SECRET` - An aws access key secret with permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+   - `TF_USER_AWS_REGION` - The aws region where you would like to provision your ec2 instance.
 
 6. Create a <PortTooltip id="blueprint">blueprint</PortTooltip> in Port for the EC2 Instance.
 
@@ -48,14 +50,7 @@ In the following guide, you are going to create a self-service action in Port th
         "type": "string",
         "title": "Instance State",
         "description": "The state of the EC2 instance (e.g., running, stopped).",
-        "enum": [
-          "pending",
-          "running",
-          "shutting-down",
-          "terminated",
-          "stopping",
-          "stopped"
-        ],
+        "enum": ["pending", "running", "shutting-down", "terminated", "stopping", "stopped"],
         "enumColors": {
           "pending": "yellow",
           "running": "green",
@@ -119,6 +114,7 @@ In the following guide, you are going to create a self-service action in Port th
   "relations": {}
 }
 ```
+
 </details>
 
 ## GitHub Workflow
@@ -145,7 +141,7 @@ data "aws_ami" "ubuntu" {
         name   = "virtualization-type"
         values = ["hvm"]
     }
-    
+
     owners = ["099720109477"] # Canonical
 }
 
@@ -164,6 +160,7 @@ resource "aws_instance" "app_server" {
 }
 
 ```
+
 </details>
 
 <details>
@@ -186,6 +183,7 @@ variable "ec2_instance_type" {
   type = string
 }
 ```
+
 </details>
 
 <details>
@@ -258,16 +256,16 @@ output "tags" {
   value       = aws_instance.app_server.tags
 }
 ```
-</details>
 
+</details>
 
 3. Create a `Github Workflow` file under `.github/workflows/create-an-ec2-instance.yaml` with the following content:
 
 <details>
 <summary><b>GitHub workflow</b></summary>
 
-:::tip 
-  Replace `<TERRAFORM-TEMPLATE-DIR>` with the directory created to host your terraform templates.
+:::tip Replace placeholders
+Replace `<TERRAFORM-TEMPLATE-DIR>` with the directory created to host your terraform templates.
 :::
 
 ```yml showLineNumbers title="create-an-ec2-instance.yaml"
@@ -302,13 +300,13 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Log starting of EC2 Instance creation 
+      - name: Log starting of EC2 Instance creation
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_context).rund_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
               About to create ec2 instance ${{ github.event.inputs.ec2_name }} .. ⛴️
 
@@ -323,7 +321,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
-          
+
       - name: Terraform Apply
         id:   apply
         env:
@@ -335,7 +333,7 @@ jobs:
           cd <TERRAFORM-TEMPLATE-DIR>
           terraform init
           terraform validate
-          terraform plan 
+          terraform plan
           terraform apply -auto-approve
 
       - name: Set Outputs
@@ -364,7 +362,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_context).rund_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
               EC2 Instance created successfully ✅
 
@@ -375,9 +373,9 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_context).rund_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: "Upserting created EC2 Instance to Port ... "
-          
+
       - name: UPSERT EC2 Instance Entity
         uses: port-labs/port-github-action@v1
         with:
@@ -403,7 +401,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_context).rund_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
 
       - name: Log After Upserting Entity
         uses: port-labs/port-github-action@v1
@@ -412,19 +410,19 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_context).rund_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: "Entity upserting was successful ✅"
 ```
+
 </details>
 
 ## Port Configuration
 
 1. Create the Port action on the `ec2Instance` blueprint:
-    - Head to the [self-service](https://app.getport.io/self-serve) page.
-    - Click on the `+ New Action` button.
-    - Click on the `{...} Edit JSON` button.
-    - Copy and paste the following JSON configuration into the editor:
-
+   - Head to the [self-service](https://app.getport.io/self-serve) page.
+   - Click on the `+ New Action` button.
+   - Click on the `{...} Edit JSON` button.
+   - Copy and paste the following JSON configuration into the editor:
 
 <details>
   <summary> <b> Port Action: Create An EC2 Instance </b> </summary>
@@ -460,24 +458,11 @@ jobs:
           "icon": "EC2",
           "type": "string",
           "default": "t2.micro",
-          "enum": [
-            "t2.micro",
-            "t2.medium",
-            "t2.large",
-            "t2.xlarge",
-            "t2.2xlarge"
-          ]
+          "enum": ["t2.micro", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"]
         }
       },
-      "required": [
-        "ec2_name",
-        "pem_key_name"
-      ],
-      "order": [
-        "ec2_name",
-        "ec2_instance_type",
-        "pem_key_name"
-      ]
+      "required": ["ec2_name", "pem_key_name"],
+      "order": ["ec2_name", "ec2_instance_type", "pem_key_name"]
     },
     "blueprintIdentifier": "ec2Instance"
   },
@@ -502,6 +487,7 @@ jobs:
   "requiredApproval": false
 }
 ```
+
 </details>
 
 ## Let's test it!
@@ -509,5 +495,5 @@ jobs:
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click on the `Create An EC2 Instance` action
 3. Fill the pop-up form with details of the EC2 Instance you wish to create
-5. Click on `Execute`
-6. Wait for the EC2 Instance to be created in AWS
+4. Click on `Execute`
+5. Wait for the EC2 Instance to be created in AWS

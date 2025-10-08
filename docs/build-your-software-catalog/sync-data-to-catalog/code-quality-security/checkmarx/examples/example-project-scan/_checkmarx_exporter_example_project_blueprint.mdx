@@ -1,0 +1,52 @@
+<details>
+<summary><b>Project blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "checkmarxProject",
+  "title": "Checkmarx Project",
+  "icon": "Checkmarx",
+  "schema": {
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Project Name"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Updated At"
+      },
+      "tags": {
+        "type": "object",
+        "title": "Tags"
+      },
+      "repoUrl": {
+        "type": "string",
+        "title": "Repository URL"
+      },
+      "mainBranch": {
+        "type": "string",
+        "title": "Main Branch"
+      },
+      "origin": {
+        "type": "string",
+        "title": "Origin"
+      },
+      "criticality": {
+        "type": "string",
+        "title": "Criticality"
+      }
+    },
+    "required": ["name"]
+  },
+  "relations": {}
+}
+```
+
+</details>

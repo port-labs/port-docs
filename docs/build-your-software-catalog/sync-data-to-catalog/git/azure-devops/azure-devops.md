@@ -163,7 +163,118 @@ resources:
               value: '[.reviewers[].uniqueName]'
           azure_devops_reviewers: '[.reviewers[].id]'
           azure_devops_creator: .createdBy.id
-```
+- kind: build
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .__project.id + "-" + (.id | tostring) | gsub(" "; "")
+        title: .buildNumber
+        blueprint: '"build"'
+        properties:
+          status: .status
+          result: .result
+          queueTime: .queueTime
+          startTime: .startTime
+          finishTime: .finishTime
+          definitionName: .definition.name
+          requestedFor: .requestedFor.displayName
+          link: ._links.web.href
+        relations:
+          project: .__project.id | gsub(" "; "")
+- kind: pipeline-stage
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          .__project.id + "-" + (.__buildId | tostring) + "-" + (.id |
+          tostring) | gsub(" "; "")
+        title: .name
+        blueprint: '"pipeline-stage"'
+        properties:
+          state: .state
+          result: .result
+          startTime: .startTime
+          finishTime: .finishTime
+          stageType: .type
+        relations:
+          project: .__project.id | gsub(" "; "")
+          build: (.__project.id + "-" + (.__buildId | tostring)) | gsub(" "; "")
+- kind: pipeline-run
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          .__project.id + "-" + (.__pipeline.id | tostring) + "-" + (.id |
+          tostring) | gsub(" "; "")
+        blueprint: '"pipeline-run"'
+        properties:
+          state: .state
+          result: .result
+          createdDate: .createdDate
+          finishedDate: .finishedDate
+          pipelineName: .pipeline.name
+        relations:
+          project: .__project.id | gsub(" "; "")
+- kind: environment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name | tostring
+        blueprint: '"azureDevopsEnvironment"'
+        properties:
+          description: .description
+          createdOn: .createdOn
+          lastModifiedOn: .lastModifiedOn
+        relations:
+          project: .project.id
+- kind: release-deployment
+  selector:
+    query: 'true'
+    includeRelease: true
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .release.name + "-" + (.id | tostring) | gsub(" "; "")
+        blueprint: '"azureDevopsReleaseDeployment"'
+        properties:
+          status: .deploymentStatus
+          url: .url
+          reason: .reason
+          startedOn: .startedOn
+          completedOn: .completedOn
+          requestedBy: .requestedBy.displayName
+          operationStatus: .operationStatus
+          environment: .releaseEnvironment.name
+        relations:
+          release: .release.id | tostring
+- kind: pipeline-deployment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .requestIdentifier | tostring
+        blueprint: '"azureDevopsPipelineDeployment"'
+        properties:
+          planType: .planType
+          stageName: .stageName
+          jobName: .jobName
+          result: .result
+          startTime: .startTime
+          finishTime: .finishTime
+        relations:
+          environment: .environment.id | tostring
 
 </details>
 
@@ -603,7 +714,7 @@ This section includes a sample response data from Azure DevOps. In addition, it 
 Here is an example of the payload structure from Azure DevOps:
 
 <details>
-<summary> Project response data</summary>
+<summary><b>Project response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -638,7 +749,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Repository response data</summary>
+<summary><b>Repository response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -667,7 +778,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Work-item response data</summary>
+<summary><b>Work-item response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -747,7 +858,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline response data</summary>
+<summary><b>Pipeline response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -770,7 +881,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pull request response data</summary>
+<summary><b>Pull request response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -859,7 +970,7 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 <details>
-<summary> Build response data</summary>
+<summary><b>Build response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -898,7 +1009,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline-stage response data</summary>
+<summary><b>Pipeline-stage response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -920,7 +1031,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline-run response data</summary>
+<summary><b>Pipeline-run response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -978,7 +1089,7 @@ Here is an example of the payload structure from Azure DevOps:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Project entity in Port</summary>
+<summary><b>Project entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -998,7 +1109,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Repository entity in Port </summary>
+<summary><b>Repository entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1019,7 +1130,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Work-item entity in Port </summary>
+<summary><b>Work-item entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1047,7 +1158,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline entity in Port </summary>
+<summary><b>Pipeline entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1068,7 +1179,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pull request entity in Port </summary>
+<summary><b>Pull request entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1094,7 +1205,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 <details>
-<summary> Build entity in Port </summary>
+<summary><b>Build entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1120,7 +1231,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline-stage entity in Port </summary>
+<summary><b>Pipeline-stage entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1144,7 +1255,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline-run entity in Port </summary>
+<summary><b>Pipeline-run entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
