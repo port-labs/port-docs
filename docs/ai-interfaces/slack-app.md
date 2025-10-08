@@ -1,6 +1,17 @@
-# Slack application
+---
+sidebar_position: 6
+title: Slack App
+---
+
+# Slack Application
+
+:::info Closed Beta
+Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
+:::
 
 Port's Slack app brings your developer portal experience into your team's daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates.
+
+<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border="1px" />
 
 ## Use-cases
 
@@ -14,9 +25,9 @@ This can be used to communicate important notifications to people in your organi
 - A new GitHub issue has been created.
 - A GitLab merge request has been merged.
 
-### Interact with AI agents
+### Interact with AI capabilities
 
-Another powerful use-case of the Slack app is to interact with the AI agents in your portal directly from Slack.
+Another powerful use-case of the Slack app is to interact with Port's AI capabilities directly from Slack.
 
 This can be used to get quick answers to questions about your resources, such as:
 
@@ -31,7 +42,7 @@ This can be used to get quick answers to questions about your resources, such as
 - To install the Slack app, you will first need to apply for access to Port's AI program by filling out [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
 
 - To interact with AI agents, you need to have at least one agent deployed in your portal.  
-  See the [Build an AI agent](https://docs.port.dev/ai-interfaces/ai-agents/build-an-ai-agent) page to learn more.
+  See the [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) page to learn more.
 
 ## Installation
 
@@ -102,16 +113,6 @@ The following snippet defines an automation that sends a Slack message to a spec
 
 You can customize messages with blocks following the [Slack formatting guidelines](https://slack.com/help/articles/202288908-Format-your-messages). 
 
-<!-- You can also insert the Slack channel dynamically:
-
-- Save the Slack channel ID for services/teams.
-- Mirror it into the _user blueprint.
-- Reference it in the automation
-
-[[need to add example and see it works]]
-
-You can also set under which name & icon the message will be sent (add example) -->
-
 ## Interact with Port from Slack
 
 ### New user authentication flow
@@ -154,7 +155,7 @@ On paid Slack workspaces, you can also interact with Port through Slack's AI ass
 4. Once added, you can access Port from anywhere in Slack through a side panel, without leaving your current conversation.
    <img src='/img/ai-agents/SlackAppAgentInteraction.png' alt='Interacting with Port through Slack side panel' width='60%'/>
 
-This provides a more seamless way to interact with your Port AI agents while working in Slack.
+This provides a more seamless way to interact with your Port AI capabilities while working in Slack.
 
 ## Advanced configuration
 
