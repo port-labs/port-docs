@@ -262,8 +262,7 @@ The following example demonstrates how to ingest Azure DevOps test runs to Port.
 
 <PortTestRunAppConfig/>
 
-- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/test/runs/list?view=azure-devops-rest-7.1&tabs=HTTP#testrun) for the Azure DevOps test-run object structure.
-:::
+Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/test/runs/list?view=azure-devops-rest-7.1&tabs=HTTP#testrun) for the Azure DevOps test-run object structure.
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your test runs.
 
