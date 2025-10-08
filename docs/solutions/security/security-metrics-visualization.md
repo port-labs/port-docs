@@ -61,6 +61,8 @@ Every metric can be tied to:
 
 ![Compliance 2](/img/guides/security-solution/compliance-2.png)
 
+![Compliance 3](/img/guides/security-solution/control-coverage.png)
+
 This alignment ensures **metrics and dashboards are directly actionable**, not just observational.
 
 ## CISO dashboards with metrics that matter
