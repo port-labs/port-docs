@@ -949,7 +949,7 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 <details>
-<summary> Iteration response data</summary>
+<summary><b>Iteration response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
