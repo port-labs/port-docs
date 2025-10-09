@@ -819,7 +819,7 @@ resources:
 </details>
 
 <details>
-<summary><b>Integration configuration <(click to expand)</b></summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
