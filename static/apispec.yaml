@@ -1352,6 +1352,7 @@ components:
                                 - webhook
                                 - scorecard
                                 - action
+                                - integration
                           - type: string
                             enum:
                               - blueprint
@@ -1360,6 +1361,7 @@ components:
                               - webhook
                               - scorecard
                               - action
+                              - integration
                         description: Fetch all audit logs related to the specified resource type/s.
                       includes:
                         type: array
@@ -3749,6 +3751,7 @@ components:
                                       - webhook
                                       - scorecard
                                       - action
+                                      - integration
                                 - type: string
                                   enum:
                                     - blueprint
@@ -3757,6 +3760,7 @@ components:
                                     - webhook
                                     - scorecard
                                     - action
+                                    - integration
                               description: Fetch all audit logs related to the specified resource type/s.
                             includes:
                               type: array
@@ -27781,6 +27785,7 @@ paths:
                     - webhook
                     - scorecard
                     - action
+                    - integration
               - type: string
                 enum:
                   - blueprint
@@ -27789,6 +27794,7 @@ paths:
                   - webhook
                   - scorecard
                   - action
+                  - integration
           in: query
           name: resources
           required: false
