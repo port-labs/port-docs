@@ -8928,8 +8928,8 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  /v1/blueprints/{blueprint_identifier}/bulk/entities:
-    delete:
+  /v1/blueprints/{blueprint_identifier}/bulk/entities/delete:
+    post:
       summary: Delete multiple entities
       tags:
         - Entities
@@ -26511,18 +26511,24 @@ paths:
                   properties:
                     secret:
                       type: string
+                      nullable: true
                     signatureHeaderName:
                       type: string
+                      nullable: true
                     signatureAlgorithm:
-                      type: string
-                      enum:
-                        - sha1
-                        - sha256
-                        - plain
+                      anyOf:
+                        - type: string
+                          enum:
+                            - sha1
+                            - sha256
+                            - plain
+                        - type: "null"
                     signaturePrefix:
                       type: string
+                      nullable: true
                     requestIdentifierPath:
                       type: string
+                      nullable: true
                   additionalProperties: false
                   description: The security configuration of the webhook, used to tell Port how to
                     verify the hashed signature sent with incoming
@@ -27005,18 +27011,24 @@ paths:
                   properties:
                     secret:
                       type: string
+                      nullable: true
                     signatureHeaderName:
                       type: string
+                      nullable: true
                     signatureAlgorithm:
-                      type: string
-                      enum:
-                        - sha1
-                        - sha256
-                        - plain
+                      anyOf:
+                        - type: string
+                          enum:
+                            - sha1
+                            - sha256
+                            - plain
+                        - type: "null"
                     signaturePrefix:
                       type: string
+                      nullable: true
                     requestIdentifierPath:
                       type: string
+                      nullable: true
                   additionalProperties: false
                   description: The security configuration of the webhook, used to tell Port how to
                     verify the hashed signature sent with incoming
@@ -27446,18 +27458,24 @@ paths:
                   properties:
                     secret:
                       type: string
+                      nullable: true
                     signatureHeaderName:
                       type: string
+                      nullable: true
                     signatureAlgorithm:
-                      type: string
-                      enum:
-                        - sha1
-                        - sha256
-                        - plain
+                      anyOf:
+                        - type: string
+                          enum:
+                            - sha1
+                            - sha256
+                            - plain
+                        - type: "null"
                     signaturePrefix:
                       type: string
+                      nullable: true
                     requestIdentifierPath:
                       type: string
+                      nullable: true
                   additionalProperties: false
                   description: The security configuration of the webhook, used to tell Port how to
                     verify the hashed signature sent with incoming
