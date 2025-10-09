@@ -16,18 +16,12 @@ Sync your Azure environment to Port at scale using Azure Resource Graph and Ocea
 - **Customizable Mapping**: Take full control over which resource types are ingested and how they are mapped to your software catalog.
 
 ## Overview
-#AI! replace this overview with a better one. The integration I'm building here is not incremental and it does not run as a Github action, instead it is built with Ocean framework - ocean.port.io. 
-This solution:
-- Is written in Python using the Azure SDK for Python.
-- Runs as a GitHub workflow at configurable periodic intervals.
-- Provides two sync modes:
-  - **Incremental**: Syncs recent changes (default: every 15 minutes).
-  - **Full**: Complete sync of all resources (recommended for initial setup).
-- Prioritizes Azure resources with detailed tracking.
-- Supports flexible data mapping through Port webhooks.
-- Can be deployed via:
-  - GitHub Actions for automated periodic sync.
-  - Local installation for development and testing.
+
+This integration is built on Port's open-source [Ocean framework](https://ocean.port.io), providing a robust solution for syncing your Azure resources to Port. It is written in Python and utilizes the Azure SDK to query the Azure Resource Graph API.
+
+The integration performs a full synchronization of your Azure resources on each run, ensuring that your software catalog accurately reflects the current state of your environment. With flexible data mapping capabilities, you can customize how the ingested data is structured and related within Port.
+
+You can deploy the integration in any environment that supports Python, including Kubernetes, Docker, or a local machine, giving you full control over its execution and scheduling.
 
 ## Supported resources
 
