@@ -9,7 +9,7 @@ import AzureAppRegistration from "./\_azure_app_registration_guide.mdx"
 
 # Azure resource graph
 
-Azure resource graph integration ingests Azure resources into Port using Resource Graph Queries, enabling high-volume resource ingestion over large subscription. #AI! make this more better and more comprehensible
+The Azure Resource Graph integration uses Azure Resource Graph queries to efficiently ingest resources into Port. This method is ideal for syncing a high volume of resources across multiple subscriptions.
 
 - **No infrastructure required** - runs directly via GitHub Actions or locally
 - **Multi-subscription support** - sync resources across all your Azure subscriptions from a single deployment
