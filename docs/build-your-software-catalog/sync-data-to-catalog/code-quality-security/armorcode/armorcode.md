@@ -570,7 +570,7 @@ resources:
 ### Sub-Product
 
 <details>
-<summary>Sub-Product blueprint</summary>
+<summary>Sub-Product blueprint (click to expand)</summary>
 
 ```json showLineNumbers
 {
@@ -620,7 +620,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary>Integration configuration (click to expand)</summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -649,7 +649,7 @@ resources:
 ### Finding
 
 <details>
-<summary>Finding blueprint</summary>
+<summary>Finding blueprint (click to expand)</summary>
 
 ```json showLineNumbers
 {
@@ -819,7 +819,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary>Integration configuration (click to expand)</summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -885,7 +885,7 @@ Here is an example of the payload structure from ArmorCode:
 </details>
 
 <details>
-<summary>Sub-Product response data</summary>
+<summary>Sub-Product response data (click to expand)</summary>
 
 ```json showLineNumbers
 {
@@ -903,7 +903,7 @@ Here is an example of the payload structure from ArmorCode:
 </details>
 
 <details>
-<summary>Finding response data</summary>
+<summary>Finding response data (click to expand)</summary>
 
 ```json showLineNumbers
 {
