@@ -221,6 +221,60 @@ resources:
           pipelineName: .pipeline.name
         relations:
           project: .__project.id | gsub(" "; "")
+- kind: environment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name | tostring
+        blueprint: '"azureDevopsEnvironment"'
+        properties:
+          description: .description
+          createdOn: .createdOn
+          lastModifiedOn: .lastModifiedOn
+        relations:
+          project: .project.id
+- kind: release-deployment
+  selector:
+    query: 'true'
+    includeRelease: true
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .release.name + "-" + (.id | tostring) | gsub(" "; "")
+        blueprint: '"azureDevopsReleaseDeployment"'
+        properties:
+          status: .deploymentStatus
+          url: .url
+          reason: .reason
+          startedOn: .startedOn
+          completedOn: .completedOn
+          requestedBy: .requestedBy.displayName
+          operationStatus: .operationStatus
+          environment: .releaseEnvironment.name
+        relations:
+          release: .release.id | tostring
+- kind: pipeline-deployment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .requestIdentifier | tostring
+        blueprint: '"azureDevopsPipelineDeployment"'
+        properties:
+          planType: .planType
+          stageName: .stageName
+          jobName: .jobName
+          result: .result
+          startTime: .startTime
+          finishTime: .finishTime
+        relations:
+          environment: .environment.id | tostring
 ```
 
 </details>
@@ -661,7 +715,7 @@ This section includes a sample response data from Azure DevOps. In addition, it 
 Here is an example of the payload structure from Azure DevOps:
 
 <details>
-<summary> Project response data</summary>
+<summary><b>Project response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -696,7 +750,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Repository response data</summary>
+<summary><b>Repository response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -725,7 +779,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Work-item response data</summary>
+<summary><b>Work-item response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -805,7 +859,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline response data</summary>
+<summary><b>Pipeline response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -828,7 +882,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pull request response data</summary>
+<summary><b>Pull request response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -917,7 +971,7 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 <details>
-<summary> Build response data</summary>
+<summary><b>Build response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -956,7 +1010,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline-stage response data</summary>
+<summary><b>Pipeline-stage response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -978,7 +1032,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline-run response data</summary>
+<summary><b>Pipeline-run response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1006,12 +1060,37 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 
+<details>
+<summary><b>Iteration response data (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "id": "Sprint 1",
+  "name": "Sprint 1",
+  "path": "\\Port Integration\\Sprint 1",
+  "attributes": {
+    "startDate": "2023-11-01T00:00:00.000Z",
+    "finishDate": "2023-11-15T00:00:00.000Z",
+    "timeFrame": "past"
+  },
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  }
+}
+```
+
+</details>
+
+
+
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Project entity in Port</summary>
+<summary><b>Project entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1031,7 +1110,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Repository entity in Port </summary>
+<summary><b>Repository entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1052,7 +1131,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Work-item entity in Port </summary>
+<summary><b>Work-item entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1080,7 +1159,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline entity in Port </summary>
+<summary><b>Pipeline entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1101,7 +1180,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pull request entity in Port </summary>
+<summary><b>Pull request entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1127,7 +1206,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 <details>
-<summary> Build entity in Port </summary>
+<summary><b>Build entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1153,7 +1232,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline-stage entity in Port </summary>
+<summary><b>Pipeline-stage entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1177,7 +1256,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline-run entity in Port </summary>
+<summary><b>Pipeline-run entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1189,6 +1268,30 @@ The combination of the sample payload and the Ocean configuration generates the 
     "createdDate": "2023-11-14T07:00:00.000Z",
     "finishedDate": "2023-11-14T07:05:30.000Z",
     "pipelineName": "health-catalist"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
+
+
+
+<details>
+<summary> Iteration entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "Sprint 1",
+  "title": "Sprint 1",
+  "blueprint": "iteration",
+  "properties": {
+    "name": "Sprint 1",
+    "path": "\\Port Integration\\Sprint 1",
+    "timeFrame": "past"
   },
   "relations": {
     "project": "fd029361-7854-4cdd-8ace-bb033fca399c"

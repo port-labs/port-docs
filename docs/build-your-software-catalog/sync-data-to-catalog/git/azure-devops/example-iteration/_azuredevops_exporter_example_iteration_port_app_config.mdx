@@ -19,24 +19,22 @@ resources:
             visibility: .visibility
             defaultTeam: .defaultTeam.name
             link: .url | gsub("_apis/projects/"; "")
-  - kind: build
+  - kind: iteration
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
-          identifier: .__project.id + "-" + (.id | tostring) | gsub(" "; "")
-          title: .buildNumber
-          blueprint: '"build"'
+          identifier: .id | gsub(" "; "")
+          title: .name
+          blueprint: '"iteration"'
           properties:
-            status: .status
-            result: .result
-            queueTime: .queueTime
-            startTime: .startTime
-            finishTime: .finishTime
-            definitionName: .definition.name
-            requestedFor: .requestedFor.displayName
-            link: ._links.web.href
+            name: .name
+            path: .path
+            startDate: (.attributes.startDate // 0)
+            finishDate: (.attributes.finishDate // 0)
+            timeFrame: .attributes.timeFrame
+            link: .url
           relations:
             project: .__project.id | gsub(" "; "")
 
