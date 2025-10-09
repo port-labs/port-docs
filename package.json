@@ -47,7 +47,7 @@
     "@docusaurus/types": "^3.9.1",
     "husky": "^9.1.7",
     "pretty-quick": "^4.2.2",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.3"
   },
   "resolutions": {
     "js-yaml": "4.0.0^"
