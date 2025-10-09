@@ -29,10 +29,11 @@ This solution:
   - GitHub Actions for automated periodic sync.
   - Local installation for development and testing.
 
+## Supported resources
 
-:::tip Source code
-The source code is available in the [port-labs/incremental-sync](https://github.com/port-labs/incremental-sync) repository.
-:::
+The integration currently supports the following Azure resource types from the resource graph:
+- `Resources`: Complete bucket information including properties, tags, and metadata.
+- `Resource containers`: Cluster details, services, and task definitions.
 
 ### Azure setup
 
