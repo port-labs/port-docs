@@ -31,9 +31,10 @@ This solution:
 
 ## Supported resources
 
-The integration currently supports the following Azure resource types from the resource graph:
-- `Resources`: Complete bucket information including properties, tags, and metadata.
-- `Resource containers`: Cluster details, services, and task definitions.
+The integration syncs data from two main Azure Resource Graph tables:
+
+- `Resources`: This table includes a wide array of Azure resources, such as virtual machines, storage accounts, network interfaces, and more. The integration syncs their properties, tags, and metadata.
+- `ResourceContainers`: This table contains management groups, subscriptions, and resource groups, providing the hierarchical context for your Azure resources.
 
 ### Azure setup
 
