@@ -1,0 +1,44 @@
+<details>
+<summary><b>SQS queue mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::SQS::Queue
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .QueueUrl
+          title: .QueueName
+          blueprint: sqsQueue
+          properties:
+            queueName: .QueueName
+            queueUrl: .QueueUrl
+            queueArn: .QueueArn
+            fifoQueue: .FifoQueue
+            visibilityTimeout: .VisibilityTimeout
+            approximateNumberOfMessages: .ApproximateNumberOfMessages
+            approximateNumberOfMessagesNotVisible: .ApproximateNumberOfMessagesNotVisible
+            approximateNumberOfMessagesDelayed: .ApproximateNumberOfMessagesDelayed
+            createdTimestamp: .CreatedTimestamp
+            lastModifiedTimestamp: .LastModifiedTimestamp
+            maximumMessageSize: .MaximumMessageSize
+            messageRetentionPeriod: .MessageRetentionPeriod
+            delaySeconds: .DelaySeconds
+            receiveMessageWaitTimeSeconds: .ReceiveMessageWaitTimeSeconds
+            policy: .Policy
+            redrivePolicy: .RedrivePolicy
+            redriveAllowPolicy: .RedriveAllowPolicy
+            kmsMasterKeyId: .KmsMasterKeyId
+            kmsDataKeyReusePeriodSeconds: .KmsDataKeyReusePeriodSeconds
+            sqsManagedSseEnabled: .SqsManagedSseEnabled
+            contentBasedDeduplication: .ContentBasedDeduplication
+            deduplicationScope: .DeduplicationScope
+            fifoThroughputLimit: .FifoThroughputLimit
+            tags: .Tags
+          relations:
+            awsAccount: .awsAccount
+```
+
+</details>

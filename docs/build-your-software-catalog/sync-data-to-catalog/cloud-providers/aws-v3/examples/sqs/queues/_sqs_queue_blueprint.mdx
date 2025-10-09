@@ -1,0 +1,50 @@
+<details>
+<summary><b>SQS queue blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "sqsQueue",
+  "title": "SQS Queue",
+  "icon": "AWS",
+  "description": "This blueprint represents an AWS SQS queue in our software catalog",
+  "schema": {
+    "properties": {
+      "queueName": {
+        "type": "string",
+        "title": "Queue Name"
+      },
+      "queueUrl": {
+        "type": "string",
+        "title": "Queue URL",
+        "format": "url"
+      },
+      "queueArn": {
+        "type": "string",
+        "title": "Queue ARN"
+      },
+      "fifoQueue": {
+        "type": "boolean",
+        "title": "FIFO Queue"
+      },
+      "visibilityTimeout": {
+        "type": "number",
+        "title": "Visibility Timeout (seconds)"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "awsAccount": {
+      "title": "AWS Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
