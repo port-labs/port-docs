@@ -504,7 +504,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Product
 
 <details>
-<summary>Product blueprint</summary>
+<summary><b>Product blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
