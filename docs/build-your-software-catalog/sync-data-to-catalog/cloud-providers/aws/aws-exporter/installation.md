@@ -8,6 +8,10 @@ import TabItem from "@theme/TabItem"
 
 # Installation
 
+:::warning Already Deprecated
+This exporter is already deprecated. Please use the [AWS hosted by Port option](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).
+:::
+
 :::tip First Time Installation
 For your first deployment of the AWS exporter, we recommend starting with the Helm/scheduled installation method to perform the initial data sync. Once the initial data sync is complete, you can switch to the Terraform deployment method for real-time data sync.
 :::

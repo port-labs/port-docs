@@ -6,7 +6,11 @@ import Image from "@theme/IdealImage";
 
 # Examples
 
-Use the index on the right side of the page to find an example for the resource/s you’re looking to export.
+:::warning Already Deprecated
+This exporter is already deprecated. Please use the [AWS hosted by Port option](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).
+:::
+
+Use the index on the right side of the page to find an example for the resource/s you're looking to export.
 
 ## ECS clusters and ECS services
 
