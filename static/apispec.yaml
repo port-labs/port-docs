@@ -1352,6 +1352,7 @@ components:
                                 - webhook
                                 - scorecard
                                 - action
+                                - integration
                           - type: string
                             enum:
                               - blueprint
@@ -1360,6 +1361,7 @@ components:
                               - webhook
                               - scorecard
                               - action
+                              - integration
                         description: Fetch all audit logs related to the specified resource type/s.
                       includes:
                         type: array
@@ -3749,6 +3751,7 @@ components:
                                       - webhook
                                       - scorecard
                                       - action
+                                      - integration
                                 - type: string
                                   enum:
                                     - blueprint
@@ -3757,6 +3760,7 @@ components:
                                     - webhook
                                     - scorecard
                                     - action
+                                    - integration
                               description: Fetch all audit logs related to the specified resource type/s.
                             includes:
                               type: array
@@ -27728,11 +27732,15 @@ paths:
       summary: Get audit logs
       tags:
         - Audit
-      description: This route allows you to fetch audit logs from your Port account.
+      description: |
+        This route allows you to fetch audit logs from your Port account.
         Your audit logs can also be viewed via [Port's
         UI](https://app.getport.io/settings/AuditLog).<br/><br/>This route will
         perform a logical `AND` between all query parameters below, and return
-        all logs that match the criteria.
+        all logs that match the criteria.<br></br>
+        :::warning Beta integration value 
+        The `integration` value in the `resources` parameter is **experimental**. Its behavior may change in future versions of the API.
+        :::
       parameters:
         - schema:
             type: string
@@ -27799,6 +27807,7 @@ paths:
                     - webhook
                     - scorecard
                     - action
+                    - integration
               - type: string
                 enum:
                   - blueprint
@@ -27807,12 +27816,14 @@ paths:
                   - webhook
                   - scorecard
                   - action
+                  - integration
           in: query
           name: resources
           required: false
           style: form
           explode: true
-          description: Fetch all audit logs related to the specified resource type/s.
+          description: |
+            **Possible values**: [`blueprint`, `entity`, `run`, `webhook`, `scorecard`, `action`, `integration`] <br> Fetch all audit logs related to the specified resource type/s. 
         - schema:
             type: array
             items:
