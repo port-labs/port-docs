@@ -351,6 +351,29 @@ By default, this selector is set to `false`, which means the integration will on
 ```
 </TabItem>
 
+<TabItem label="Include Inherited and Invited Members" value="includeInheritedMembers">
+
+You can also specify the `includeInheritedMembers` selector to control the inclusion of inherited and invited members in the member data.
+By default, this parameter is set to `false`, and the integration will sync only direct members without inherited members and/or invited members.
+
+```yaml
+  - kind: group-with-members
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeInheritedMembers: true
+```
+
+```yaml
+  - kind: members
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeInheritedMembers: true
+```
+
+</TabItem>
+
 </Tabs>
 
 :::tip Learn more
