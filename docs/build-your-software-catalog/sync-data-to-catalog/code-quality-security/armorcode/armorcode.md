@@ -1,48 +1,45 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
-import AdvancedConfig from '../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
+import Prerequisites from "../../templates/_ocean_helm_prerequisites_block.mdx"
+import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
-import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
-# Aikido
+# ArmorCode
 
-Port's Aikido integration allows you to model Aikido resources in your software catalog and ingest data into them.
+Port's ArmorCode integration allows you to model ArmorCode resources in your software catalog and ingest data into them.
 
 ## Overview
 
 This integration allows you to:
 
-- Track security vulnerabilities from Aikido in Port
-- Map repositories and their security findings
-- Maintain real-time synchronization between Aikido and Port
+- Track security vulnerabilities and findings from ArmorCode in Port.
+- Map products, sub-products, and their security findings.
+- Monitor security posture across your software catalog.
 
 ### Supported Resources
 
-The resources that can be ingested from Aikido into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+The resources that can be ingested from ArmorCode into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-- [`Repositories`](https://apidocs.aikido.dev/reference/listcoderepos)
-- [`Issues`](https://apidocs.aikido.dev/reference/exportissues)
+- [`Products`](https://docs.armorcode.com/api/products) - ArmorCode products representing applications or services.
+- [`Sub-Products`](https://docs.armorcode.com/api/sub-products) - Repositories or components within products.
+- [`Findings`](https://docs.armorcode.com/api/findings) - Security vulnerabilities and issues detected by ArmorCode.
 
 ## Setup
 
-Choose one of the following installation methods:  
-Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
+Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation integration="Aikido" />
+<OceanSaasInstallation integration="ArmorCode" />
 
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="aikido" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -56,43 +53,41 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm">
 
-<OceanRealtimeInstallation integration="Aikido" />
-
+<OceanRealtimeInstallation integration="ArmorCode" />
 
 <PortApiRegionTip/>
 
 </TabItem>
+
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-aikido-integration` in your git repository with the content:
+1. Create a `values.yaml` file in `argocd/my-ocean-armorcode-integration` in your git repository with the content:
 
 :::note Default behaviour
-Remember to replace the placeholder for `AIKIDO_CLIENT_ID`,`AIKIDO_CLIENT_SECRET`, `AIKIDO_API_URL`, `WEBHOOK_SECRET`.
+Remember to replace the placeholder for `ARMORCODE_API_TOKEN`, `ARMORCODE_API_URL`.
 :::
 
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
 integration:
-  identifier: my-ocean-aikido-integration
-  type: aikido
+  identifier: my-ocean-armorcode-integration
+  type: armorcode
   eventListener:
     type: POLLING
   config:
   // highlight-start
-    aikidoApiUrl: AIKIDO_API_URL
+    armorcodeApiUrl: ARMORCODE_API_URL
   // highlight-end
   secrets:
   // highlight-start
-    aikidoClientId: AIKIDO_CLIENT_ID
-    aikidoClientSecret: AIKIDO_CLIENT_SECRET
-    webhookSecret: WEBHOOK_SECRET
+    armorcodeApiToken: ARMORCODE_API_TOKEN
   // highlight-end
 ```
 <br/>
 
-2. Install the `my-ocean-aikido-integration` ArgoCD Application by creating the following `my-ocean-aikido-integration.yaml` manifest:
+2. Install the `my-ocean-armorcode-integration` ArgoCD Application by creating the following `my-ocean-armorcode-integration.yaml` manifest:
 :::note Configuration variable replacement
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
@@ -100,17 +95,17 @@ Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readth
 :::
 
 <details>
-  <summary>ArgoCD Application</summary>
+<summary><b>ArgoCD Application (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: my-ocean-aikido-integration
+  name: my-ocean-armorcode-integration
   namespace: argocd
 spec:
   destination:
-    namespace: my-ocean-aikido-integration
+    namespace: my-ocean-armorcode-integration
     server: https://kubernetes.default.svc
   project: default
   sources:
@@ -119,7 +114,7 @@ spec:
     targetRevision: 0.8.5
     helm:
       valueFiles:
-      - $values/argocd/my-ocean-aikido-integration/values.yaml
+      - $values/argocd/my-ocean-armorcode-integration/values.yaml
       // highlight-start
       parameters:
         - name: port.clientId
@@ -147,13 +142,12 @@ spec:
 
 1. Apply your application manifest with `kubectl`:
 ```bash
-kubectl apply -f my-ocean-aikido-integration.yaml
+kubectl apply -f my-ocean-armorcode-integration.yaml
 ```
 </TabItem>
 </Tabs>
 
 This table summarizes the available parameters for the installation.
-
 
 | Parameter                           | Description                                                                                                                         | Required |
 |-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------|
@@ -163,14 +157,10 @@ This table summarizes the available parameters for the installation.
 | `integration.identifier`            | Change the identifier to describe your integration                                                                                  | ✅        |
 | `integration.type`                  | The integration type                                                                                                                | ✅        |
 | `integration.eventListener.type`    | The event listener type                                                                                                             | ✅        |
-| `integration.secrets.aikidoClientId`         | The Aikido Client ID                                                                                                                  | ✅        |
-| `integration.secrets.aikidoClientSecret` | The Aikido Client Secret                                                           | ❌        |
-| `integration.config.apiUrl`         | The Aikido API URL. If not specified, the default will be https://app.aikido.dev                                                        | ❌        |
-| `baseUrl`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Aikido                  | ✅        |
-| `integration.secret.webhookSecret`  | This is a password you create, that Aikido uses to sign webhook events to Port                                                        | ❌        |
+| `integration.secrets.armorcodeApiToken` | The ArmorCode API Token                                                                                                            | ✅        |
+| `integration.config.armorcodeApiUrl` | The ArmorCode API URL. If not specified, the default will be https://api.armorcode.com                                              | ❌        |
 | `scheduledResyncInterval`           | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
-
 
 <br/>
 
@@ -180,9 +170,11 @@ This table summarizes the available parameters for the installation.
 
 <TabItem value="one-time-ci" label="CI">
 
-This workflow/pipeline will run the Aikido integration once and then exit, this is useful for **scheduled** ingestion of data.
+This workflow/pipeline will run the ArmorCode integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
+:::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
    <TabItem value="github" label="GitHub">
@@ -191,24 +183,21 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID`           | The Aikido Client ID                                                                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET` | The Aikido API Client Secret | ✅  |
-| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET` | Aikido webhook secret used to verify the webhook request                                       | ❌      |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL`         | The Aikido API URL. If not specified, the default will be https://app.aikido.dev                                                                                      | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN` | The ArmorCode API Token                                                                                                                                          | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL`   | The ArmorCode API URL. If not specified, the default will be https://api.armorcode.com                                                                          | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
 | `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
 | `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                          | ✅       |
-| `OCEAN__BASE_URL`                     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Aikido                                                                          | ❌       |
 
 <br/>
 
-Here is an example for `aikido-integration.yml` workflow file:
+Here is an example for `armorcode-integration.yml` workflow file:
 
 ```yaml showLineNumbers
-name: Aikido Exporter Workflow
+name: ArmorCode Exporter Workflow
 
 on:
   workflow_dispatch:
@@ -223,15 +212,13 @@ jobs:
     steps:
       - uses: port-labs/ocean-sail@v1
         with:
-          type: 'aikido'
+          type: 'armorcode'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           port_base_url: https://api.getport.io
           config: |
-            aikido_client_id: ${{ secrets.OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID }}
-            aikido_client_secret: ${{ secrets.OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET }}
-            aikido_api_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL }}
-            webhook_secret: ${{ secrets.OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET }}
+            armorcode_api_token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN }}
+            armorcode_api_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL }}
 ```
 
 </TabItem>
@@ -241,23 +228,20 @@ jobs:
 Your Jenkins agent should be able to run docker commands.
 :::
 
-
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
 
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID`           | The Aikido Client ID                                                                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET` | The Aikido API Client Secret | ✅  |
-| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET` | Aikido webhook secret used to verify the webhook request                                       | ❌      |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL`         | The Aikido API URL. If not specified, the default will be https://app.aikido.dev                                                                                      | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN` | The ArmorCode API Token                                                                                                                                          | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL`   | The ArmorCode API URL. If not specified, the default will be https://api.armorcode.com                                                                          | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
 | `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
 | `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                          | ✅       |
-| `OCEAN__BASE_URL`                     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Aikido                                                                          | ❌       |
+| `OCEAN__BASE_URL`                     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in ArmorCode                                                                          | ❌       |
 
 <br/>
 
@@ -268,30 +252,26 @@ pipeline {
     agent any
 
     stages {
-        stage('Run Aikido Integration') {
+        stage('Run ArmorCode Integration') {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID', variable: 'OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET', variable: 'OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL', variable: 'OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET', variable: 'OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL', variable: 'OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
                         sh('''
                             #Set Docker image and run the container
-                            integration_type="aikido"
+                            integration_type="armorcode"
                             version="latest"
                             image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID=$OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID \
-                                -e OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET=$OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET \
-                                -e OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL=$OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL \
-                                -e OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET=$OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET \
+                                -e OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN=$OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN \
+                                -e OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL=$OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -314,25 +294,22 @@ pipeline {
 Your Azure Devops agent should be able to run docker commands.
 :::
 
-
 Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:
 
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID`           | The Aikido Client ID                                                                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET` | The Aikido API Client Secret | ✅  |
-| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET` | Aikido webhook secret used to verify the webhook request                                       | ❌      |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL`         | The Aikido API URL. If not specified, the default will be https://app.aikido.dev                                                                                      | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN` | The ArmorCode API Token                                                                                                                                          | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL`   | The ArmorCode API URL. If not specified, the default will be https://api.armorcode.com                                                                          | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
 | `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
 | `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                          | ✅       |
-| `OCEAN__BASE_URL`                     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Aikido                                                                          | ❌       |
+
 <br/>
 
-Here is an example for `aikido-integration.yml` pipeline file:
+Here is an example for `armorcode-integration.yml` pipeline file:
 
 ```yaml showLineNumbers
 trigger:
@@ -344,12 +321,11 @@ pool:
 variables:
   - group: port-ocean-credentials # OCEAN__PORT__CLIENT_ID, OCEAN__PORT__CLIENT_SECRET, OCEAN__INTEGRATION__CONFIG__TOKEN
 
-
 steps:
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     # Set Docker image and run the container
-    integration_type="aikido"
+    integration_type="armorcode"
     version="latest"
 
     image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
@@ -358,17 +334,15 @@ steps:
     -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
     -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
     -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
-    -e OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID=$OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID \
-    -e OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET=$OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET \
-    -e OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL=$OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL \
-    -e OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET=$OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET \
+    -e OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN=$OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN \
+    -e OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL=$OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL \
     -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
     -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
     -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
     $image_name
 
     exit $?
-  displayName: 'Ingest Aikido Data into Port'
+  displayName: 'Ingest ArmorCode Data into Port'
 
 ```
 
@@ -379,21 +353,16 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID`           | The Aikido Client ID                                                                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET` | The Aikido API Client Secret | ✅  |
-| `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET` | Aikido webhook secret used to verify the webhook request                                       | ❌      |
-| `OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL`         | The Aikido API URL. If not specified, the default will be https://app.aikido.dev                                                                                      | ❌       |
+| `OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN` | The ArmorCode API Token                                                                                                                                          | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL`   | The ArmorCode API URL. If not specified, the default will be https://api.armorcode.com                                                                          | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
 | `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
 | `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                          | ✅       |
-| `OCEAN__BASE_URL`                     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Aikido                                                                          | ❌       |
-
 
 <br/>
-
 
 Here is an example for `.gitlab-ci.yml` pipeline file:
 
@@ -406,7 +375,7 @@ default:
     - docker info
     
 variables:
-  INTEGRATION_TYPE: aikido
+  INTEGRATION_TYPE: armorcode
   VERSION: latest
 
 stages:
@@ -421,10 +390,8 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID=$OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_ID \
-        -e OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET=$OCEAN__INTEGRATION__CONFIG__AIKIDO_CLIENT_SECRET \
-        -e OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL=$OCEAN__INTEGRATION__CONFIG__AIKIDO_API_URL \
-        -e OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET=$OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET \
+        -e OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN=$OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_TOKEN \
+        -e OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL=$OCEAN__INTEGRATION__CONFIG__ARMORCODE_API_URL \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
         -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -452,239 +419,200 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
 
-### Webhook Configuration
-
-To enable real-time data synchronization from Aikido to Port, you must configure webhooks in Aikido following [this guide](https://apidocs.aikido.dev/reference/webhooks). This setup allows Port to receive immediate notifications whenever relevant changes occur in Aikido.
-When setting up the webhook, the URL should follow the format:
-
-`<base_url>/integration/webhook`
-
-:::important IMPORTANT
-For security and event authenticity, we strongly recommend setting an HMAC secret in the Aikido dashboard. Once configured, make sure to set the corresponding value in your Port environment using the variable `OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET` . This ensures Port can securely verify incoming webhook events from Aikido.
-:::
-
-
 ### Default mapping configuration
 
 This is the default mapping configuration for this integration:
 
 <details>
-<summary><b>Default mapping configuration (Click to expand)</b></summary>
+<summary><b>Default mapping configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 deleteDependentEntities: true
 createMissingRelatedEntities: true
 enableMergeEntity: true
 resources:
-  - kind: repositories
+  - kind: product
     selector:
       query: 'true'
     port:
       entity:
         mappings:
-          blueprint: '"aikidoRepository"'
+          blueprint: '"armorcodeProduct"'
           identifier: .id | tostring
           title: .name
           properties:
             name: .name
-            provider: .provider
-            externalRepoId: .external_repo_id
-            active: .active
-            url: .url
-            branch: .branch
-            lastScannedAt: .last_scanned_at
-  - kind: issues
+            description: .description
+            businessOwner: .business_owner
+            securityOwner: .security_owner
+  - kind: sub-product
     selector:
       query: 'true'
     port:
       entity:
         mappings:
-          blueprint: '"aikidoIssue"'
+          blueprint: '"armorcodeSubProduct"'
           identifier: .id | tostring
-          title: .rule | tostring
+          title: .name
           properties:
-            status: .status
-            severity: .severity
-            severityScore: .severity_score
-            affectedFile: .affected_file
-            attackSurface: .attack_surface
-            type: .type
-            rule: .rule
-            codeRepoId: .code_repo_id
-            codeRepoName: .code_repo_name
+            name: .name
+            repoLink: .repo_link
+            programmingLanguage: .programming_language
+            technologies: .technologies
           relations:
-            aikidoRepository: .code_repo_id
+            product: .product_id
+  - kind: finding
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          blueprint: '"armorcodeFinding"'
+          identifier: .id | tostring
+          title: .title
+          properties:
+            source: .source
+            description: .description
+            mitigation: .mitigation
+            severity: .severity
+            findingCategory: .finding_category
+            status: .status
+            productStatus: .product_status
+            subProductStatuses: .sub_product_statuses
+            title: .title
+            toolSeverity: .tool_severity
+            createdAt: .created_at
+            lastUpdated: .last_updated
+            cwe: .cwe
+            cve: .cve
+            link: .link
+            riskScore: .risk_score
+            findingScore: .finding_score
+          relations:
+            product: .product_id
+            subProduct: .sub_product_id
 ```
 
 </details>
 
 <MetricsAndSyncStatus/>
 
-
 ## Examples
 
 Examples of blueprints and the relevant integration configurations:
 
-### Repository
+### Product
 
 <details>
-<summary>Repository blueprint</summary>
+<summary><b>Product blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-    "identifier": "aikidoRepository",
-    "title": "Aikido Repository",
-    "icon": "Aikido",
-    "schema": {
-        "properties": {
-            "name": {
-                "type": "string",
-                "title": "Repository Name"
-            },
-            "provider": {
-                "type": "string",
-                "title": "Provider",
-                "enum": ["github", "gitlab", "gitlab-server", "bitbucket", "azure_devops", "selfscan"]
-            },
-            "externalRepoId": {
-                "type": "string",
-                "title": "External Repository ID"
-            },
-            "active": {
-                "type": "boolean",
-                "title": "Active"
-            },
-            "url": {
-                "type": "string",
-                "title": "Repository URL"
-            },
-            "branch": {
-                "type": "string",
-                "title": "Default Branch"
-            },
-            "lastScannedAt": {
-                "type": "number",
-                "title": "Last Scanned At"
-            }
-        },
-        "required": ["name", "provider", "externalRepoId"]
+  "identifier": "armorcodeProduct",
+  "title": "Armorcode Product",
+  "icon": "Package",
+  "schema": {
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "businessOwner": {
+        "type": "string",
+        "title": "Business Owner"
+      },
+      "securityOwner": {
+        "type": "string",
+        "title": "Security Owner"
+      }
     },
-    "relations": {
-        "aikidoIssue": {
-            "title": "Issues",
-            "target": "aikidoIssue",
-            "required": false,
-            "many": true
-        }
-    }
+    "required": [
+      "name"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
 }
 ```
 
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
 resources:
-  - kind: repositories
+  - kind: products
     selector:
       query: 'true'
     port:
       entity:
         mappings:
-          blueprint: '"aikidoRepository"'
+          blueprint: '"armorcodeProduct"'
           identifier: .id | tostring
           title: .name
           properties:
             name: .name
-            provider: .provider
-            externalRepoId: .external_repo_id
-            active: .active
-            url: .url
-            branch: .branch
-            lastScannedAt: .last_scanned_at
+            description: .description
+            businessOwner: .business_owner
+            securityOwner: .security_owner
 ```
+
 </details>
 
-### Issue
+### Sub-Product
 
 <details>
-<summary>Issue blueprint</summary>
+<summary><b>Sub-Product blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-  "identifier": "aikidoIssue",
-  "title": "Aikido Issue",
-  "icon": "Aikido",
+  "identifier": "armorcodeSubProduct",
+  "title": "Armorcode Sub-Product",
+  "icon": "Git",
   "schema": {
-      "properties": {
-          "groupId": {
-              "type": "number",
-              "title": "Group ID"
-          },
-          "attackSurface": {
-              "type": "string",
-              "title": "Attack Surface",
-              "enum": ["backend", "frontend", "infrastructure", "container"]
-          },
-          "status": {
-              "type": "string",
-              "title": "Status",
-              "enum": ["open", "closed", "ignored", "snoozed"],
-              "enumColors": {
-                  "open": "red",
-                  "closed": "green",
-                  "ignored": "yellow",
-                  "snoozed": "blue"
-              }
-          },
-          "severity": {
-              "type": "string",
-              "title": "Severity",
-              "enum": ["critical", "high", "medium", "low"]
-          },
-          "severityScore": {
-              "type": "number",
-              "title": "Severity Score"
-          },
-          "type": {
-              "type": "string",
-              "title": "Issue Type",
-              "enum": ["open_source", "leaked_secret", "cloud", "iac", "sast", "mobile", "surface_monitoring", "malware", "eol", "scm_security", "license"]
-          },
-          "rule": {
-              "type": "string",
-              "title": "Rule Name"
-          },
-          "affectedFile": {
-              "type": "string",
-              "title": "Affected File"
-          },
-          "codeRepoName": {
-              "type": "string",
-              "title": "Code Repository Name"
-          },
-          "codeRepoId": {
-              "type": "number",
-              "title": "Code Repository ID"
-          },
-          "closedAt": {
-              "type": "number",
-              "title": "Closed At"
-          }
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name"
       },
-      "required": ["status", "severity", "type", "rule"]
-  },
-  "relations": {
-      "aikidoRepository": {
-          "title": "Repository",
-          "target": "aikidoRepository",
-          "required": false,
-          "many": false
+      "repoLink": {
+        "type": "string",
+        "title": "Repository Link",
+        "format": "url"
+      },
+      "programmingLanguage": {
+        "type": "string",
+        "title": "Language"
+      },
+      "technologies": {
+        "type": "array",
+        "title": "Technologies",
+        "items": {
+          "type": "string"
+        }
       }
+    },
+    "required": [
+      "name"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "product": {
+      "title": "Product",
+      "target": "armorcodeProduct",
+      "required": false,
+      "many": false
+    }
   }
 }
 ```
@@ -692,104 +620,314 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
 resources:
-  - kind: issues
+  - kind: sub_products
     selector:
       query: 'true'
     port:
       entity:
         mappings:
-          blueprint: '"aikidoIssue"'
+          blueprint: '"armorcodeSubProduct"'
           identifier: .id | tostring
-          title: .rule | tostring
+          title: .name
           properties:
-            status: .status
-            severity: .severity
-            severityScore: .severity_score
-            affectedFile: .affected_file
-            attackSurface: .attack_surface
-            type: .type
-            rule: .rule
-            codeRepoId: .code_repo_id
-            codeRepoName: .code_repo_name
+            name: .name
+            repoLink: .repo_link
+            programmingLanguage: .programming_language
+            technologies: .technologies
           relations:
-            aikidoRepository: .code_repo_id
+            product: .product_id
+```
+
+</details>
+
+### Finding
+
+<details>
+<summary><b>Finding blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "armorcodeFinding",
+  "title": "ArmorCode Finding",
+  "icon": "Bug",
+  "schema": {
+    "properties": {
+      "source": {
+        "title": "Source",
+        "type": "string",
+        "description": "The security tool that generated this finding"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string",
+        "description": "Detailed description of the security finding"
+      },
+      "mitigation": {
+        "title": "Mitigation",
+        "type": "string",
+        "description": "Recommended mitigation steps for this finding"
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": [
+          "CRITICAL",
+          "HIGH",
+          "MEDIUM",
+          "LOW",
+          "INFORMATIONAL",
+          "UNKNOWN"
+        ],
+        "enumColors": {
+          "CRITICAL": "red",
+          "HIGH": "orange",
+          "MEDIUM": "yellow",
+          "LOW": "darkGray",
+          "INFORMATIONAL": "silver",
+          "UNKNOWN": "lightGray"
+        }
+      },
+      "findingCategory": {
+        "title": "Finding Category",
+        "type": "string",
+        "description": "Category classification of the finding"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "OPEN",
+          "CLOSED",
+          "ACTIVE",
+          "IN_PROGRESS",
+          "RESOLVED",
+          "TRIAGE",
+          "CONTROLLED",
+          "SUPPRESS",
+          "MITIGATED"
+        ],
+        "enumColors": {
+          "OPEN": "paleBlue",
+          "ACTIVE": "olive",
+          "CLOSED": "lightGray",
+          "RESOLVED": "green",
+          "IN_PROGRESS": "orange",
+          "TRIAGE": "yellow",
+          "CONTROLLED": "purple",
+          "SUPPRESS": "darkGray",
+          "MITIGATED": "lime"
+        }
+      },
+      "productStatus": {
+        "title": "Product Status",
+        "type": "string",
+        "description": "Status of the product containing this finding"
+      },
+      "subProductStatuses": {
+        "title": "Sub-Product Status",
+        "type": "string",
+        "description": "Status of the sub-product containing this finding"
+      },
+      "title": {
+        "title": "Title",
+        "type": "string",
+        "description": "Brief title describing the finding"
+      },
+      "toolSeverity": {
+        "title": "Tool Severity",
+        "type": "string",
+        "description": "Original severity as reported by the security tool"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "description": "When the finding was first created"
+      },
+      "lastUpdated": {
+        "title": "Last Updated",
+        "type": "string",
+        "format": "date-time",
+        "description": "When the finding was last updated"
+      },
+      "cwe": {
+        "title": "CWE",
+        "type": "array",
+        "description": "Common Weakness Enumeration identifiers",
+        "items": {
+          "type": "string"
+        }
+      },
+      "cve": {
+        "title": "CVE",
+        "type": "array",
+        "description": "Common Vulnerabilities and Exposures identifiers",
+        "items": {
+          "type": "string"
+        }
+      },
+      "link": {
+        "title": "Link to Finding",
+        "type": "string",
+        "format": "url",
+        "description": "Direct link to the finding in ArmorCode"
+      },
+      "riskScore": {
+        "title": "Risk Score",
+        "type": "number",
+        "description": "Calculated risk score for the finding"
+      },
+      "findingScore": {
+        "title": "Finding Score",
+        "type": "number",
+        "description": "ArmorCode finding score"
+      }
+    },
+    "required": [
+      "title",
+      "status",
+      "severity",
+      "source",
+      "findingCategory"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "product": {
+      "title": "Product",
+      "target": "armorcodeProduct",
+      "required": true,
+      "many": false
+    },
+    "subProduct": {
+      "title": "Sub-Product",
+      "target": "armorcodeSubProduct",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Integration configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: findings
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          blueprint: '"armorcodeFinding"'
+          identifier: .id | tostring
+          title: .title
+          properties:
+            source: .source
+            description: .description
+            mitigation: .mitigation
+            severity: .severity
+            findingCategory: .finding_category
+            status: .status
+            productStatus: .product_status
+            subProductStatuses: .sub_product_statuses
+            title: .title
+            toolSeverity: .tool_severity
+            createdAt: .created_at
+            lastUpdated: .last_updated
+            cwe: .cwe
+            cve: .cve
+            link: .link
+            riskScore: .risk_score
+            findingScore: .finding_score
+          relations:
+            product: .product_id
+            subProduct: .sub_product_id
 ```
 
 </details>
 
 ## Let's Test It
 
-This section includes a sample response data from Aikido. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+This section includes a sample response data from ArmorCode. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
 
 ### Payload
 
-Here is an example of the payload structure from Aikido:
+Here is an example of the payload structure from ArmorCode:
 
 <details>
-<summary>Repository response data</summary>
+<summary><b>Product response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
   "id": 1,
-  "name": "Compression service",
-  "provider": "github",
-  "external_repo_id": "R_kgDOI5RlKA",
-  "active": true,
-  "url": "https://api.github.com/repos/aikidemo/compression-service",
-  "branch": "main",
-  "last_scanned_at": 1720083163
+  "name": "E-commerce Platform",
+  "description": "Main e-commerce application for online retail",
+  "business_owner": "John Smith",
+  "security_owner": "Sarah Johnson",
+  "created_at": "2024-01-15T10:30:00Z",
+  "updated_at": "2024-01-20T14:45:00Z"
 }
 ```
 
 </details>
 
 <details>
-<summary>Issue response data</summary>
+<summary><b>Sub-Product response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-    "id": 1,
-    "group_id": 1,
-    "attack_surface": "backend",
-    "status": "open",
-    "severity": 90,
-    "severity_score": "critical",
-    "type": "open_source",
-    "rule": "SQL injection",
-    "rule_id": "aik_cloud_aws_001",
-    "affected_package": "minimist",
-    "affected_file": "index.php",
-    "first_detected_at": 1700489005,
-    "code_repo_name": "test-service",
-    "code_repo_id": 1,
-    "container_repo_id": 1,
-    "container_repo_name": "aikido/test-service",
-    "sla_days": 5,
-    "sla_remediate_by": 1700924603,
-    "ignored_at": null,
-    "ignored_by": "user",
-    "closed_at": null,
-    "start_line": 68,
-    "end_line": 70,
-    "snooze_until": null,
-    "cwe_classes": [
-      "CWE-89"
-    ],
-    "installed_version": "4.2.0",
-    "patched_versions": [
-      "4.2.1",
-      "5.0.0"
-    ],
-    "license": null,
-    "programming_language": "PHP"
+  "id": 101,
+  "name": "payment-service",
+  "repo_link": "https://github.com/company/payment-service",
+  "programming_language": "Java",
+  "technologies": ["Spring Boot", "PostgreSQL", "Redis"],
+  "product_id": 1,
+  "created_at": "2024-01-15T10:30:00Z",
+  "updated_at": "2024-01-20T14:45:00Z"
 }
 ```
 
 </details>
 
+<details>
+<summary><b>Finding response data (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "id": 1001,
+  "title": "SQL Injection Vulnerability",
+  "source": "SAST",
+  "description": "Potential SQL injection vulnerability detected in user input validation",
+  "mitigation": "Use parameterized queries and input validation",
+  "severity": "HIGH",
+  "finding_category": "Code Security",
+  "status": "OPEN",
+  "product_status": "ACTIVE",
+  "sub_product_statuses": "ACTIVE",
+  "tool_severity": "HIGH",
+  "created_at": "2024-01-15T10:30:00Z",
+  "last_updated": "2024-01-20T14:45:00Z",
+  "cwe": ["CWE-89"],
+  "cve": ["CVE-2023-1234"],
+  "link": "https://app.armorcode.com/findings/1001",
+  "risk_score": 8.5,
+  "finding_score": 7.2,
+  "product_id": 1,
+  "sub_product_id": 101
+}
+```
+
+</details> 
