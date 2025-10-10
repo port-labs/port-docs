@@ -1,0 +1,57 @@
+<details>
+<summary><b>EKS cluster blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "eksCluster",
+  "description": "This blueprint represents an AWS EKS cluster in our software catalog",
+  "title": "EKS cluster",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Status"
+      },
+      "version": {
+        "type": "string",
+        "title": "Version"
+      },
+      "endpoint": {
+        "type": "string",
+        "title": "Endpoint"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "tags": {
+        "type": "array",
+        "title": "Tags",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Key": { "type": "string", "title": "Key" },
+            "Value": { "type": "string", "title": "Value" }
+          }
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
