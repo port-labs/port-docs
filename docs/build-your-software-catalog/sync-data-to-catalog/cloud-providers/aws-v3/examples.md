@@ -16,6 +16,9 @@ import Ec2InstanceProperties from './examples/ec2/instances/_ec2_instance_proper
 import OrganizationsAccountBlueprint from './examples/organizations/accounts/_organizations_accounts_blueprint.mdx'
 import OrganizationsAccountConfig from './examples/organizations/accounts/_organizations_accounts_port_app_config.mdx'
 import OrganizationsAccountProperties from './examples/organizations/accounts/_organizations_accounts_properties.mdx'
+import SqsQueueBlueprint from './examples/sqs/queues/_sqs_queue_blueprint.mdx'
+import SqsQueueConfig from './examples/sqs/queues/_sqs_queue_port_app_config.mdx'
+import SqsQueueProperties from './examples/sqs/queues/_sqs_queue_properties.mdx'
 
 # Examples
 
@@ -106,6 +109,24 @@ You can reference any of the following EC2 instance properties in your mapping c
 <Ec2InstanceProperties/>
 
 For more details about EC2 instance properties, refer to the [AWS EC2 API documentation](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html).
+
+## Amazon SQS
+
+### SQS queues
+
+The following example demonstrates how to ingest your AWS SQS queues to Port.
+
+You can use the following Port blueprint definitions and integration configuration:
+
+<SqsQueueBlueprint/>
+
+<SqsQueueConfig/>
+
+You can reference any of the following SQS queue properties in your mapping configuration:
+
+<SqsQueueProperties/>
+
+For more details about SQS queue properties, refer to the [AWS SQS API documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueAttributes.html).
 
 :::info More resource types coming soon
 We're actively working on adding support for additional AWS resource types to provide comprehensive coverage of your AWS infrastructure.
