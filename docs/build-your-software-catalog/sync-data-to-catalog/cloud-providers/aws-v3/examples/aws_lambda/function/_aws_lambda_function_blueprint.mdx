@@ -1,0 +1,63 @@
+```json
+{
+  "identifier": "aws_lambda_function",
+  "title": "AWS Lambda Function",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "function_name": {
+        "type": "string",
+        "title": "Function Name",
+        "description": "The name of the Lambda function"
+      },
+      "function_arn": {
+        "type": "string",
+        "title": "Function ARN",
+        "description": "The Amazon Resource Name (ARN) of the Lambda function"
+      },
+      "runtime": {
+        "type": "string",
+        "title": "Runtime",
+        "description": "The runtime environment for the Lambda function"
+      },
+      "handler": {
+        "type": "string",
+        "title": "Handler",
+        "description": "The function that Lambda calls to begin execution"
+      },
+      "memory_size": {
+        "type": "number",
+        "title": "Memory Size (MB)",
+        "description": "The amount of memory available to the function at runtime"
+      },
+      "timeout": {
+        "type": "number",
+        "title": "Timeout (seconds)",
+        "description": "The amount of time that Lambda allows a function to run before stopping it"
+      },
+      "state": {
+        "type": "string",
+        "title": "State",
+        "description": "The current state of the Lambda function"
+      },
+      "last_modified": {
+        "type": "string",
+        "title": "Last Modified",
+        "description": "The date and time that the function was last updated"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "A description of the function"
+      },
+      "role": {
+        "type": "string",
+        "title": "Execution Role",
+        "description": "The Amazon Resource Name (ARN) of the function's execution role"
+      }
+    },
+    "required": ["function_name", "function_arn"]
+  }
+}
+```
+
