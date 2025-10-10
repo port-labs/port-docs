@@ -1,0 +1,31 @@
+<details>
+<summary><b>DB instance mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::RDS::DBInstance
+    selector:
+      query: 'true'
+      includeActions:
+        # Optional: Include up to 3 additional actions for more properties
+        # Choose based on which properties you need most
+        # - ListTagsForResourceAction
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.DBInstanceIdentifier
+          title: .Properties.DBInstanceIdentifier
+          blueprint: '"rdsInstance"'
+          properties:
+            dbInstanceArn: .Properties.DBInstanceArn
+            dbInstanceIdentifier: .Properties.DBInstanceIdentifier
+            dbInstanceStatus: .Properties.DBInstanceStatus
+            engine: .Properties.Engine
+            tags: .Properties.Tags
+          relations:
+            account: .__ExtraContext.AccountId
+```
+
+</details>
+
+
