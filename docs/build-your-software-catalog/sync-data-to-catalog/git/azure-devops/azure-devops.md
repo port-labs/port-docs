@@ -163,6 +163,118 @@ resources:
               value: '[.reviewers[].uniqueName]'
           azure_devops_reviewers: '[.reviewers[].id]'
           azure_devops_creator: .createdBy.id
+- kind: build
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .__project.id + "-" + (.id | tostring) | gsub(" "; "")
+        title: .buildNumber
+        blueprint: '"build"'
+        properties:
+          status: .status
+          result: .result
+          queueTime: .queueTime
+          startTime: .startTime
+          finishTime: .finishTime
+          definitionName: .definition.name
+          requestedFor: .requestedFor.displayName
+          link: ._links.web.href
+        relations:
+          project: .__project.id | gsub(" "; "")
+- kind: pipeline-stage
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          .__project.id + "-" + (.__buildId | tostring) + "-" + (.id |
+          tostring) | gsub(" "; "")
+        title: .name
+        blueprint: '"pipeline-stage"'
+        properties:
+          state: .state
+          result: .result
+          startTime: .startTime
+          finishTime: .finishTime
+          stageType: .type
+        relations:
+          project: .__project.id | gsub(" "; "")
+          build: (.__project.id + "-" + (.__buildId | tostring)) | gsub(" "; "")
+- kind: pipeline-run
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          .__project.id + "-" + (.__pipeline.id | tostring) + "-" + (.id |
+          tostring) | gsub(" "; "")
+        blueprint: '"pipeline-run"'
+        properties:
+          state: .state
+          result: .result
+          createdDate: .createdDate
+          finishedDate: .finishedDate
+          pipelineName: .pipeline.name
+        relations:
+          project: .__project.id | gsub(" "; "")
+- kind: environment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name | tostring
+        blueprint: '"azureDevopsEnvironment"'
+        properties:
+          description: .description
+          createdOn: .createdOn
+          lastModifiedOn: .lastModifiedOn
+        relations:
+          project: .project.id
+- kind: release-deployment
+  selector:
+    query: 'true'
+    includeRelease: true
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .release.name + "-" + (.id | tostring) | gsub(" "; "")
+        blueprint: '"azureDevopsReleaseDeployment"'
+        properties:
+          status: .deploymentStatus
+          url: .url
+          reason: .reason
+          startedOn: .startedOn
+          completedOn: .completedOn
+          requestedBy: .requestedBy.displayName
+          operationStatus: .operationStatus
+          environment: .releaseEnvironment.name
+        relations:
+          release: .release.id | tostring
+- kind: pipeline-deployment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .requestIdentifier | tostring
+        blueprint: '"azureDevopsPipelineDeployment"'
+        properties:
+          planType: .planType
+          stageName: .stageName
+          jobName: .jobName
+          result: .result
+          startTime: .startTime
+          finishTime: .finishTime
+        relations:
+          environment: .environment.id | tostring
 ```
 
 </details>
@@ -603,7 +715,7 @@ This section includes a sample response data from Azure DevOps. In addition, it 
 Here is an example of the payload structure from Azure DevOps:
 
 <details>
-<summary> Project response data</summary>
+<summary><b>Project response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -638,7 +750,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Repository response data</summary>
+<summary><b>Repository response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -667,7 +779,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Work-item response data</summary>
+<summary><b>Work-item response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -747,7 +859,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline response data</summary>
+<summary><b>Pipeline response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -770,7 +882,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pull request response data</summary>
+<summary><b>Pull request response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -858,12 +970,127 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 
+<details>
+<summary><b>Build response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "_links": {
+    "self": {
+      "href": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_apis/build/builds/123"
+    },
+    "web": {
+      "href": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_build/results?buildId=123"
+    }
+  },
+  "id": 123,
+  "buildNumber": "20231114.1",
+  "status": "completed",
+  "result": "succeeded",
+  "queueTime": "2023-11-14T07:00:00.000Z",
+  "startTime": "2023-11-14T07:00:15.000Z",
+  "finishTime": "2023-11-14T07:05:30.000Z",
+  "definition": {
+    "id": 7,
+    "name": "health-catalist",
+    "path": "\\"
+  },
+  "requestedFor": {
+    "displayName": "Jaden Kodjo Miles",
+    "id": "40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+    "uniqueName": "doe@gmail.com"
+  },
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Pipeline-stage response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "id": 1,
+  "name": "Build",
+  "type": "build",
+  "state": "completed",
+  "result": "succeeded",
+  "startTime": "2023-11-14T07:00:15.000Z",
+  "finishTime": "2023-11-14T07:02:45.000Z",
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  },
+  "__buildId": 123
+}
+```
+
+</details>
+
+<details>
+<summary><b>Pipeline-run response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "id": 456,
+  "state": "completed",
+  "result": "succeeded",
+  "createdDate": "2023-11-14T07:00:00.000Z",
+  "finishedDate": "2023-11-14T07:05:30.000Z",
+  "pipeline": {
+    "id": 7,
+    "name": "health-catalist"
+  },
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  },
+  "__pipeline": {
+    "id": 7
+  }
+}
+```
+
+</details>
+
+
+
+
+<details>
+<summary><b>Iteration response data (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "id": "Sprint 1",
+  "name": "Sprint 1",
+  "path": "\\Port Integration\\Sprint 1",
+  "attributes": {
+    "startDate": "2023-11-01T00:00:00.000Z",
+    "finishDate": "2023-11-15T00:00:00.000Z",
+    "timeFrame": "past"
+  },
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  }
+}
+```
+
+</details>
+
+
+
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Project entity in Port</summary>
+<summary><b>Project entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -883,7 +1110,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Repository entity in Port </summary>
+<summary><b>Repository entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -904,7 +1131,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Work-item entity in Port </summary>
+<summary><b>Work-item entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -932,7 +1159,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline entity in Port </summary>
+<summary><b>Pipeline entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -953,7 +1180,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pull request entity in Port </summary>
+<summary><b>Pull request entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -975,6 +1202,105 @@ The combination of the sample payload and the Ocean configuration generates the 
 ```
 
 </details>
+
+
+
+<details>
+<summary><b>Build entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "fd029361-7854-4cdd-8ace-bb033fca399c-123",
+  "title": "20231114.1",
+  "blueprint": "build",
+  "properties": {
+    "status": "completed",
+    "result": "succeeded",
+    "queueTime": "2023-11-14T07:00:00.000Z",
+    "startTime": "2023-11-14T07:00:15.000Z",
+    "finishTime": "2023-11-14T07:05:30.000Z",
+    "definitionName": "health-catalist",
+    "requestedFor": "Jaden Kodjo Miles",
+    "link": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_build/results?buildId=123"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Pipeline-stage entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "fd029361-7854-4cdd-8ace-bb033fca399c-123-1",
+  "title": "Build",
+  "blueprint": "pipeline-stage",
+  "properties": {
+    "state": "completed",
+    "result": "succeeded",
+    "startTime": "2023-11-14T07:00:15.000Z",
+    "finishTime": "2023-11-14T07:02:45.000Z",
+    "stageType": "build"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "build": "fd029361-7854-4cdd-8ace-bb033fca399c-123"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Pipeline-run entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "fd029361-7854-4cdd-8ace-bb033fca399c-7-456",
+  "blueprint": "pipeline-run",
+  "properties": {
+    "state": "completed",
+    "result": "succeeded",
+    "createdDate": "2023-11-14T07:00:00.000Z",
+    "finishedDate": "2023-11-14T07:05:30.000Z",
+    "pipelineName": "health-catalist"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
+
+
+
+<details>
+<summary> Iteration entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "Sprint 1",
+  "title": "Sprint 1",
+  "blueprint": "iteration",
+  "properties": {
+    "name": "Sprint 1",
+    "path": "\\Port Integration\\Sprint 1",
+    "timeFrame": "past"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
 
 
 

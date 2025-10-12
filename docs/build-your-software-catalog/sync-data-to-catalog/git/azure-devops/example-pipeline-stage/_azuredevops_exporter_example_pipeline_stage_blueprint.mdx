@@ -1,0 +1,56 @@
+<details>
+<summary><b>Pipeline-stage blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "pipeline-stage",
+  "title": "Pipeline Stage",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "state": {
+        "type": "string",
+        "title": "State"
+      },
+      "result": {
+        "type": "string",
+        "title": "Result"
+      },
+      "startTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Start Time"
+      },
+      "finishTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Finish Time"
+      },
+      "stageType": {
+        "type": "string",
+        "title": "Stage Type"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "project",
+      "required": true,
+      "many": false
+    },
+    "build": {
+      "title": "Build",
+      "target": "build",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

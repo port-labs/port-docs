@@ -52,13 +52,13 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation/>
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 <IntegrationVersion integration="amplication" />
 
@@ -193,7 +193,7 @@ The integration uses polling to pull the configuration from Port every minute an
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Amplication integration once and then exit, this is useful for **scheduled** ingestion of data.
 
