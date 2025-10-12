@@ -81,7 +81,23 @@ For more information take a look at the Requests [proxy configuration documentat
 
 ### SSL Environment Configuration
 
-#### `REQUESTS_CA_BUNDLE`
+###  Certificate Configuration
+
+#### Self-signed certificate
+
+Use the following Helm values:
+- Set `selfSignedCertificate.enabled` to `true`.
+- Put your PEM-encoded CA content in `selfSignedCertificate.certificate`.
+
+#### Multiple certificates
+
+Use the following Helm values:
+- Keep your certificate via `selfSignedCertificate` as above.
+- Add other certificates by supplying files via `extraVolumes` and mounting them with `extraVolumeMounts` into the container.
+
+:::note
+Each certificate must be provided in a separate PEM file. Files containing multiple certificates are not supported.
+:::
 
 `REQUESTS_CA_BUNDLE` is an environment variable used to specify a custom Certificate Authority (CA) bundle for verifying SSL/TLS certificates in HTTPS requests.
 
