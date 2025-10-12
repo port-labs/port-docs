@@ -4,8 +4,8 @@ sidebar_position: 3
 
 # Event-Based Updates
 
-:::warning Already Deprecated
-This exporter is already deprecated. Please use the [AWS hosted by Port option](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).
+:::warning Deprecated exporter
+This exporter is deprecated. Please use the [AWS hosted by Port option](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) instead.
 :::
 
 Our AWS integration allows you to trigger a sync of your AWS resources with Port based on real-time events (in addition to the standard scheduled sync).

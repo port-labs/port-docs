@@ -2,8 +2,8 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Connect ECR repository to a service
 
-:::warning Already Deprecated
-This exporter is already deprecated. Please use the [AWS hosted by Port option](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).
+:::warning Deprecated exporter
+This exporter is deprecated. Please use the [AWS hosted by Port option](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) instead.
 :::
 
 This guide aims to show how to connect an ECR `repository` to an existing service in Port.

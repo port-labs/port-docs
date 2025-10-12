@@ -8,8 +8,8 @@ import TabItem from "@theme/TabItem"
 
 # Installation
 
-:::warning Already Deprecated
-This exporter is already deprecated. Please use the [AWS hosted by Port option](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).
+:::warning Deprecated exporter
+This exporter is deprecated. Please use the [AWS hosted by Port option](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) instead.
 :::
 
 :::tip First Time Installation
