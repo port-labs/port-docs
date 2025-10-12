@@ -424,106 +424,120 @@ Starting **October 15th**, schemas will be automatically migrated, but existing 
 
 ```json
 {
-	"identifier": "_ai_invocations",
-	"description": "For each agent request a match feedback entity will be created",
-	"title": "AI Invocation",
-	"icon": "Star",
-	"schema": {
-		"properties": {
-			"status": {
-				"icon": "DefaultProperty",
-				"title": "Status",
-				"type": "string",
-				"description": "The agent invocation status",
-				"enum": ["In Progress", "Completed", "Failed"],
-				"enumColors": {
-					"In Progress": "blue",
-					"Completed": "green",
-					"Failed": "red"
-				}
-			},
-			"asked_at": {
-				"type": "string",
-				"title": "Asked At",
-				"icon": "Calendar",
-				"description": "When the agent was invoked",
-				"format": "date-time"
-			},
-			"replied_at": {
-				"type": "string",
-				"title": "Replied At",
-				"icon": "Calendar",
-				"description": "When the agent replied",
-				"format": "date-time"
-			},
-			"prompt": {
-				"type": "string",
-				"title": "Prompt",
-				"description": "The prompt sent to the agent, including both the user and the agent prompt",
-				"format": "markdown"
-			},
-			"error": {
-				"type": "string",
-				"description": "Detailed description of an error in case of failed execution",
-				"title": "Error"
-			},
-			"response": {
-				"type": "string",
-				"description": "The final agent response",
-				"title": "Response",
-				"format": "markdown"
-			},
-			"execution_logs": {
-				"type": "string",
-				"description": "The reasoning and tools execution logs",
-				"format": "markdown",
-				"title": "Execution Logs"
-			},
-			"labels": {
-				"type": "object",
-				"description": "Free labels to identify specific attributes on the invocation",
-				"title": "Labels"
-			},
-			"quota": {
-				"type": "object",
-				"description": "The quota usage",
-				"title": "Quota"
-			},
-			"provider": {
-				"type": "string",
-				"title": "Provider",
-				"description": "The LLM provider used for the invocation"
-			},
-			"model": {
-				"type": "string",
-				"title": "Model",
-				"description": "The LLM model used for the invocation"
-			}
-		},
-		"required": ["asked_at", "status"]
-	},
-	"mirrorProperties": {
-		"agent_title": {
-			"title": "agent title",
-			"path": "agent.$title"
-		}
-	},
-	"calculationProperties": {},
-	"aggregationProperties": {},
-	"relations": {
-		"agent": {
-			"title": "Agent",
-			"description": "The agent that was invoked",
-			"target": "_ai_agent",
-			"required": false,
-			"many": false
-		}
-	},
-	"ownership": {
-		"type": "Inherited",
-		"title": "Owning Teams",
-		"path": "agent"
-	}
+  "identifier": "_ai_invocations",
+  "description": "For each agent request a match feedback entity will be created",
+  "title": "AI Invocation",
+  "icon": "Star",
+  "ownership": {
+    "type": "Inherited",
+    "title": "Owning Teams",
+    "path": "agent"
+  },
+  "schema": {
+    "properties": {
+      "status": {
+        "icon": "DefaultProperty",
+        "title": "Status",
+        "type": "string",
+        "description": "The agent invocation status",
+        "enum": [
+          "In Progress",
+          "Completed",
+          "Failed"
+        ],
+        "enumColors": {
+          "In Progress": "blue",
+          "Completed": "green",
+          "Failed": "red"
+        }
+      },
+      "asked_at": {
+        "type": "string",
+        "title": "Asked At",
+        "icon": "Calendar",
+        "description": "When the agent was invoked",
+        "format": "date-time"
+      },
+      "replied_at": {
+        "type": "string",
+        "title": "Replied At",
+        "icon": "Calendar",
+        "description": "When the agent replied",
+        "format": "date-time"
+      },
+      "prompt": {
+        "type": "string",
+        "title": "Prompt",
+        "description": "The prompt sent to the agent, including both the user and the agent prompt",
+        "format": "markdown"
+      },
+      "error": {
+        "type": "string",
+        "description": "Detailed description of an error in case of failed execution",
+        "title": "Error"
+      },
+      "response": {
+        "type": "string",
+        "description": "The final agent response",
+        "title": "Response",
+        "format": "markdown"
+      },
+      "execution_logs": {
+        "type": "string",
+        "description": "The reasoning and tools execution logs",
+        "format": "markdown",
+        "title": "Execution Logs"
+      },
+      "labels": {
+        "type": "object",
+        "description": "Free labels to identify specific attributes on the invocation",
+        "title": "Labels"
+      },
+      "quota": {
+        "type": "object",
+        "description": "The quota usage",
+        "title": "Quota"
+      },
+      "provider": {
+        "type": "string",
+        "title": "Provider",
+        "description": "The LLM provider used for the invocation"
+      },
+      "model": {
+        "type": "string",
+        "title": "Model",
+        "description": "The LLM model used for the invocation"
+      }
+    },
+    "required": [
+      "asked_at",
+      "status"
+    ]
+  },
+  "mirrorProperties": {
+    "agent_title": {
+      "title": "agent title",
+      "path": "agent.$title"
+    }
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "agent": {
+      "title": "Agent",
+      "description": "The agent that was invoked",
+      "target": "_ai_agent",
+      "required": false,
+      "many": false
+    },
+    "asked_by": {
+      "title": "Asked By",
+      "description": "Who invoked the agent",
+      "target": "_user",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 </details>
