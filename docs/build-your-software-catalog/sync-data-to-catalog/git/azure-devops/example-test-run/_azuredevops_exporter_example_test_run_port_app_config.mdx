@@ -1,0 +1,50 @@
+<details>
+<summary><b>Integration mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: 'true'
+      defaultTeam: 'false'
+    port:
+      entity:
+        mappings:
+          identifier: .id | gsub(" "; "")
+          blueprint: '"project"'
+          title: .name
+          properties:
+            state: .state
+            revision: .revision
+            visibility: .visibility
+            defaultTeam: .defaultTeam.name
+            link: .url | gsub("_apis/projects/"; "")
+  - kind: test-run
+    selector:
+      query: 'true'
+      includeResults: true  # Set to false to disable fetching detailed test results for each test run
+      codeCoverage: 
+          - flags: null  # Value of flags determine the level of code coverage details to be fetched. `flags` values can be null, 1 for Modules, 2 for Functions, 4 for BlockData 
+            # (https://learn.microsoft.com/en-us/rest/api/azure/devops/test/code-coverage/get-test-run-code-coverage?view=azure-devops-rest-7.1&tabs=HTTP#testruncoverage).
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"azureDevopsTestRun"'
+          properties:
+            name: .name
+            state: .state
+            isAutomated: .isAutomated
+            totalTests: .totalTests
+            incompleteTests: .incompleteTests
+            notApplicableTests: .notApplicableTests
+            passedTests: .passedTests
+            unanalyzedTests: .unanalyzedTests
+            revision: .revision
+          relations:
+            project: .project.id
+
+```
+
+</details>

@@ -26,7 +26,7 @@ Let's walk through the process of creating an agent that can assist your develop
 To create a new agent, head to the AI Agents catalog page (this page will be created for you when you [activate the feature](/ai-interfaces/ai-agents/overview#access-to-the-feature)).
 
 Click on the "New AI Agent" button and fill the form with the agent details.
-<img src='/img/ai-agents/AIAgentsList.png' width='80%' border='1px' />
+<img src="/img/ai-agents/AIAgentsList.png" width="80%" border="1px" />
 <img src='/img/ai-agents/AIAgentsAddAgentModal.png' width='80%' border='1px' />
 
 We recommend following the steps below.
@@ -47,8 +47,6 @@ For inspiration, check our [AI agents guides](/guides?tags=AI).
 ### Step 2: Configure data access tools
 
 Configure which data tools your agent can access. Configure access to Port data through [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools). Available tools include data query tools for retrieving information from your catalog, as well as running self-service actions.
-
-
 
 
 ### Step 3: Configure actions access

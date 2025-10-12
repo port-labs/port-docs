@@ -59,6 +59,18 @@ Your data is not used for model training by these providers. We ensure complete 
 
 Yes, you can contact us to opt out of the 30-day interaction data storage. However, opting out may impact our ability to provide support and troubleshoot issues with AI features.
 
+### Does Port still retain AI interaction data when using bring-your-own LLM?
+
+Yes, even when bringing your own LLM provider, Port may still retain your AI interaction data for up to 30 days. This data retention supports:
+
+- Monitoring and troubleshooting AI functionality.
+- Error analysis and system optimization.
+- Improving the overall AI experience.
+
+This data retention is used to monitor and troubleshoot Port's AI services behavior, prompt engineering, and data processing logic—regardless of which LLM provider you choose. This data is not used for model training.
+
+You can request to opt out of this data retention if required by contacting our support team.
+
 ## Rate Limits & Usage Controls
 
 ### What are the current rate limits for AI features?
