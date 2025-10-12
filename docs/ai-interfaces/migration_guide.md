@@ -410,28 +410,6 @@ Starting **October 15th**, schemas will be automatically migrated, but existing 
         "func": "count",
         "calculationBy": "entities"
       }
-    },
-    "average_input_tokens": {
-      "title": "Average input tokens",
-      "type": "number",
-      "description": "The average input tokens for this agent invocations",
-      "target": "_ai_invocations",
-      "calculationSpec": {
-        "func": "median",
-        "property": "prompt_tokens",
-        "calculationBy": "property"
-      }
-    },
-    "average_output_tokens": {
-      "title": "Average output tokens",
-      "type": "number",
-      "description": "The average output tokens for this agent invocations",
-      "target": "_ai_invocations",
-      "calculationSpec": {
-        "func": "median",
-        "property": "completion_tokens",
-        "calculationBy": "property"
-      }
     }
   },
   "relations": {}
