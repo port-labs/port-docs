@@ -105,7 +105,7 @@ Use the following Helm values:
 - Keep your certificate via `selfSignedCertificate` as above.
 - Add other certificates by supplying files via `extraVolumes` and mounting them with `extraVolumeMounts` into the container.
 
-:::note
+:::info Certificate file requirement
 Each certificate must be provided in a separate PEM file. Files containing multiple certificates are not supported.
 :::
 
