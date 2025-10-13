@@ -57,6 +57,17 @@ Every metric can be tied to:
 - **Compliance scope** → SOX, PCI, HIPAA, GDPR.
 - **Customer impact** → Which customer tiers or SLAs are affected.
 
+:::tip Focus on trends that matter
+ Every metric is sliceable by **Services, Teams, Vulnerabilities, Compliance scopes, and Customer tiers**, so prioritization follows business value, not just technical counts.
+:::
+
+The dashboards snippets below make Port’s business-context model concrete:
+- The **compliance rings** (ISO 27001, SOC 2, PCI, GDPR/HIPAA) tie metrics to **scope**, and can be filtered by **service** criticality and environment.
+- **Control Domain coverage** plus control **effectiveness/testing** map to **teams**—who owns what, where capacity is spent, and how well practices are adopted.
+- The **incident metrics** (priority mix, timeline completeness/management, MTTR, escalations) connect **vulnerabilities** to **customer impact**
+- Severity drives priority, MTTR expresses SLA risk by tier, and escalations expose leadership-level exposure.
+
+
 <img src='/img/guides/security-solution/compliance-1.png' alt='compliance' width='80%' border='1px' />
 
 <img src='/img/guides/security-solution/compliance-2.png' alt='compliance' width='80%' border='1px' />
@@ -69,6 +80,14 @@ This alignment ensures **metrics and dashboards are directly actionable**, not j
 
 Security leaders need dashboards that **tell a story** about progress and risk.  
 Port enables this with **flexible visualizations**, linking data sources to executive-friendly KPIs.
+
+This is a CISO-at-a-glance view: **exposure**, **discipline**, and **trajectory**.
+
+- **Exposure:** *Incidents by priority* shows the mix (17 total across critical/high/medium) so you know risk, not just count.
+- **Discipline:** *Incident Timeline Completeness* and *Timeline Management* are **Gold** for all 17—clean comms, postmortems, and SLA hygiene.
+- **Trajectory:** *Incidents over time* highlights the early-October spike to spot surges and capacity pinch points.
+
+Together, these tie outcomes to action—where risk sits, how well response runs, and whether things are trending up or down—so funding and focus land where they matter.
 
 <img src='/img/guides/security-solution/incidents-1.png' alt='Incidents' width='80%' border='1px' />
 
@@ -83,10 +102,20 @@ These metrics focus on *business impact*, not just technical severity:
 | **Risk-adjusted vulnerability trends** | Track whether overall risk is increasing or decreasing | Line chart showing risk score trends over time by service criticality |
 | **Compliance gap analysis** | Understand gaps that affect revenue or compliance requirements | Scorecard tracking services mapped to regulatory frameworks |
 
+The dashboard views below express Business risk, distilled:
+- **17 incidents** total
+- **5 escalated** to leadership
+- **3 in progress** within normal capacity.
+- **MTTR: 30 minutes**, the main lever to cut customer impact.
+- Assurance shows **7 audits** completed, **15 evidences** collected, and **5 pending review**
+- The **audit gap assessment (7 items)** flags remaining weaknesses.
 
-<img src='/img/guides/security-solution/mttr.png' alt='MTTR - mean time to remediate' width='80%' border='1px' />
+Together, these metrics reveal where risk concentrates (escalations and gaps), how severe it is (MTTR), and how prepared you are (audit/evidence flow) so spend targets the highest exposure.
 
-<img src='/img/guides/security-solution/incidents-2.png' alt='security incidents' width='80%' border='1px' />
+
+<img src='/img/guides/security-solution/mttr.png' alt='MTTR - mean time to remediate' width='100%' border='1px' />
+
+<img src='/img/guides/security-solution/incidents-2.png' alt='security incidents' width='100%' border='1px' />
 
 ### 2. Security Culture and Adoption Metrics
 
@@ -99,7 +128,13 @@ Security is a cultural challenge as much as a technical one:
 | **Time to complete security reviews** | Measure SDLC integration of security | Relations between services and review actions |
 | **Security champion engagement** | Monitor champion program health | Blueprint for champions tied to team entities |
 
-<img src='/img/guides/security-solution/sec-met-2.png' alt='Security metrics' width='80%' border='1px' />
+The below dashboard snippet shows **security culture and adoption** in three beats:
+
+- **Control Implementation Status (25, Gold)** shows broad buy-in—controls are deployed and owned across the org.
+- **Security Program Maturity (25, mostly Bronze with some Silver)** signals teams are adopting standards but depth and repeatability are still maturing.
+- **Risk Management Effectiveness (15, mixed tiers)** reflects how consistently people use the process day-to-day—many basics are followed, some groups performing at Silver, with pockets to lift. Net adoption is wide, culture is forming, and the next move is raising consistency from Bronze/Basic to Silver/Gold.
+
+<img src='/img/guides/security-solution/sec-met-2.png' alt='Security metrics' width='100%' border='1px' />
 
 ### 3. Operational efficiency metrics
 
@@ -112,7 +147,9 @@ Showcase security team performance and tool effectiveness:
 | **Incident detection & response time** | Track how quickly incidents are resolved | SLA tracking via actions + incident blueprint |
 | **Automated remediation success rates** | Prove automation ROI | Trend chart of automation success vs manual fixes |
 
-<img src='/img/guides/security-solution/sec-met-1.png' alt='Security metrics' width='80%' border='1px' />
+The below view captures operational efficiency by showing how well and how consistently your program runs: **Control Effectiveness** and **Control Testing Coverage** both at **25 (Gold)** signal that all 25 controls meet a high maturity bar and are being validated on schedule, minimizing rework and audit risk. The **Control Domain coverage (Monthly)** trend then shows execution throughput by domain—e.g., late-September surges in network security, data protection, and IAM—making it easy to spot where effort is concentrated, where capacity may be over/under-allocated, and how evenly the team is maintaining control coverage over time.
+
+<img src='/img/guides/security-solution/sec-met-1.png' alt='Security metrics' width='100%' border='1px' />
 
 :::tip Focus on trends, not snapshots
 Single-point metrics can mislead.  
@@ -201,6 +238,14 @@ This metrics program directly complements the **vulnerability prioritization** a
 - Dashboards bridge **strategic and operational views**, using the same data pipelines.
 
 By connecting metrics and prioritization in one platform, Port eliminates silos and provides a **single source of truth** for security performance.
+This dashboard below supports risk-based vulnerability prioritization by showing **what matters, how sure we are, and how soon it’s due**:
+
+- The evidence Category groups 15 findings by business domain (operational, security, technical, etc.) to gauge impact.
+- Evidence Reliability weights each item by confidence (highly-reliable > reliable > N/A) to cut noise.
+- Audit trends/timeline surface time-pressure from pen-test and certification spikes
+- Available controls/Control Type reveal coverage gaps (e.g., thin detective/corrective controls) that raise residual risk.
+
+In practice, vulnerability catalog items can be ranked with a compact rubric — `Priority = Business Impact × Evidence Reliability × Audit Urgency × Control Gap`. For instance, highly-reliable security/technical pen-test findings during the October surge with weak non-preventive control coverage move to the top.
 
 <img src='/img/guides/security-solution/incidents-3.png' alt='security incidents' width='80%' border='1px' />
 

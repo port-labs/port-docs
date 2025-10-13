@@ -70,6 +70,16 @@ Track practices that prevent vulnerabilities from reaching production:
 - **Data protection** – Sensitive data handled according to policy.
 - **Security testing** – Security tests included in CI/CD pipelines.
 
+Port’s **Scorecards** make Application security success concrete. Scorecards can turn the OWASP Top-10 into tiered, measurable targets—**Basic → Bronze → Silver → Gold**. This helps teams see exactly what “good” looks like and how far they’ve progressed.
+
+- **Risk-aligned tiers:** Bronze (exploit blockers), Silver (crypto/logging integrity), Gold (design & config hardening) map effort to impact.
+- **Clear pass criteria:** Each OWASP control has an explicit check; green checks show what’s met (e.g., A01, A07, A03, A10 at Bronze; A08, A02, A09 at Silver; A06, A04, A05 at Gold).
+- **Instant posture view:** The horizontal progress bar shows portfolio maturity at a glance—no hunting through scans.
+- **Ownership built-in:** Scorecards can be filtered by service/team, turning standards into accountable goals.
+- **Automation hooks:** Fail a control → open ticket/notify/optionally gate deploys; pass → record evidence for audits.
+- **Continuous improvement:** Teams climb tiers over time, moving from break-fix to secure-by-design, tracked in one place.
+
+<img src="/img/guides/owasp/chart.png" width="80%" border="1px" alt="OWASP Top 10 Chart showing Gold, Silver and Basic tier distribution" />
 <img src='/img/guides/security-solution/owasp-scorecard.png' alt='Application security' width='80%' border='1px' />
 
 ### Infrastructure security scorecard

@@ -9,8 +9,6 @@ Manual security processes don't scale. Every day, security teams face an overwhe
 
 The traditional model—where every security decision must flow through a central security team—creates bottlenecks that slow development while paradoxically making organizations less secure. When security processes are friction-heavy and opaque, teams find workarounds that bypass security entirely.
 
-<!-- TODO: Add security actions workflow image -->
-<!-- ![Security Actions Workflow](/img/solutions/security/security_actions_workflow.png) -->
 
 ## Why manual security processes create risk
 
@@ -82,18 +80,29 @@ Automate the 80% of routine security decisions so your security team can focus o
 
 ### Vulnerability management automation
 
+:::tip stream
 Streamline the vulnerability management lifecycle from detection to remediation:
+:::
 
-#### Automated vulnerability processing
-- [Create Jira issues from Dependabot alerts](/guides/all/create-jira-issue-from-dependabot/) with full context and ownership information
-- [Automatically escalate Snyk vulnerabilities](/guides/all/create-jira-issue-from-snyk-vulnerability/) based on business criticality and exploit availability
-- Route vulnerabilities to appropriate teams based on service ownership and technology stack
+Port makes vulnerability management run itself with **context-aware automations**: recipes auto-create and route work, escalate past SLA, link vulns to incidents, update control status from fresh evidence, notify on control failures, and calculate a **business-aware risk score**—all from one place.
 
-#### Intelligent vulnerability enrichment
-- [Enrich security vulnerabilities using AI](/guides/all/enrich-security-vulnerability-using-ai/) to provide context and remediation guidance
-- Automatically research exploit availability and attack complexity
-- Correlate vulnerabilities with recent code changes and deployment history
-- Provide automated impact assessment based on service architecture
+#### **Automated vulnerability processing**
+  - Create Jira issues from Dependabot (and other scanners) with full catalog context and owners.
+  - Auto-escalate Snyk (and peers) based on **service criticality** and **exploit availability**.
+  - Route to the right team from **service ownership/tech stack**; notify on-call automatically.
+  - Link new security incidents to open vulnerabilities in affected services.
+  - Raise priority when items breach the **remediation SLA**.
+
+#### **Intelligent vulnerability enrichment**
+
+  - Use AI to add remediation guidance and business context to each finding.
+  - Auto-research exploit availability and attack complexity to adjust risk.
+  - Correlate with recent **code changes** and **deploy history** for likely owners and rollback paths.
+  - Generate impact assessments from **service architecture** (data class, dependencies, customer tier).
+
+#### **Control-aware signals (closing the loop)**
+  - Auto-update **control status** when new evidence lands; notify when a control test fails.
+  - Keep score with an auto-calculated **Vulnerability Risk Score** that blends CVSS, exploitability, and business impact.
 
 <img src='/img/guides/security-solution/auto-1.png' alt='Security actions automations' width='80%' border='1px' />
 
@@ -113,12 +122,22 @@ Reduce manual compliance checks through intelligent automation:
 
 ### Incident response automation
 
-Accelerate security incident response through intelligent automation:
+Port turns signals into action for incident response—when CVSS changes, a vuln is assigned, or severity spikes, automations **update priority**, **notify owners**, and **escalate**—all pre-loaded with service context from your catalog.
 
-#### Automated incident correlation
-- Correlate security alerts with service dependencies and recent changes
-- Automatically create incident response channels with relevant stakeholders
-- Provide responders with contextual information including architecture diagrams, ownership details, and recent deployment history
+### Automated incident correlation
+
+- Correlate security alerts with **service dependencies**, owners, and **recent code/deploy changes**.
+- Auto-create incident channels (Slack/Teams) and add the **right stakeholders**.
+- Hand responders context on arrival: **architecture maps**, ownership, recent deployments, and affected customer tiers.
+- Link related vulns → incidents automatically; keep them in sync as status changes.
+
+### Response workflow automation
+
+- **Auto-update priority** when CVSS (or exploit intel) changes; re-sort queues instantly.
+- **Auto-notify on assignment** via webhook/Chat to the owning team based on catalog ownership and escalation policy.
+- **Auto-escalate critical incidents** the moment severity flips to critical; page on-call and raise visibility.
+- Pre-fill an **incident report** with known metadata (service, env, commit, deploy, owners).
+- Integrate with your IM tooling (PagerDuty, Opsgenie, Jira/ServiceNow) to keep the workflow consistent end-to-end.
 
 <img src='/img/guides/security-solution/auto-2.png' alt='security solution automation' width='80%' border='1px' />
 
