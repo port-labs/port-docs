@@ -38,7 +38,7 @@ jobs:
           config: |
             githubHost: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_HOST }}
             githubToken: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN }}
-            githubOrganization: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION }}
+            githubOrganizations: ${{ secrets.OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATIONS }}  # JSON array format
 ```
 
   </TabItem>
@@ -66,7 +66,7 @@ pipeline {
                 script {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_URL', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_URL'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATIONS', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATIONS'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
@@ -82,7 +82,7 @@ pipeline {
                                 -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__GITHUB_URL=$OCEAN__INTEGRATION__CONFIG__GITHUB_URL \
                                 -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN \
-                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION \
+                                -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATIONS=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATIONS \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -129,7 +129,7 @@ steps:
           -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
           -e OCEAN__INTEGRATION__CONFIG__GITHUB_HOST=$(OCEAN__INTEGRATION__CONFIG__GITHUB_HOST) \
           -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$(OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN) \
-          -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$(OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION) \
+          -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATIONS=$(OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATIONS) \
           -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
           -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
           -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -174,7 +174,7 @@ ingest_data:
         -e OCEAN__SEND_RAW_DATA_EXAMPLES=true  \
         -e OCEAN__INTEGRATION__CONFIG__GITHUB_URL=$OCEAN__INTEGRATION__CONFIG__GITHUB_URL \
         -e OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN=$OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN \
-        -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION \
+        -e OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATIONS=$OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATIONS \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
         -e OCEAN__PORT__BASE_URL='https://api.getport.io' \

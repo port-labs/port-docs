@@ -63,7 +63,7 @@ Install the Helm chart:
     eventListener:
       type: "POLLING"
     config:
-      githubOrganization: "<GITHUB_ORGANIZATION>"
+      githubOrganizations: ["<GITHUB_ORGANIZATION>"]  # GitHub App supports only 1 org
       githubHost: "<GITHUB_HOST>" # e.g https://api.github.com
       githubAppId: "<GITHUB_APP_ID>" # app client id also works
     secrets:
@@ -94,7 +94,7 @@ Install the Helm chart:
     eventListener:
       type: "POLLING"
     config:
-      githubOrganization: "<GITHUB_ORGANIZATION>"
+      githubOrganizations: ["<GITHUB_ORG_1>", "<GITHUB_ORG_2>"]  # From v.2.0.0-beta, classic PAT supports multiple orgs. Leave empty to sync all orgs
       githubHost: "<GITHUB_HOST>" # e.g https://api.github.com
     secrets:
       githubToken: "<GITHUB_PAT>"
@@ -129,7 +129,9 @@ To install the integration using ArgoCD:
 1. Create a `values.yaml` file in `argocd/my-ocean-github-integration` in your git repository with the content:
 
 :::note
-Be sure to replace the `<GITHUB_TOKEN>` and `<GITHUB_ORGANIZATION>` placeholders with your actual values. If you are using a self-hosted GitHub instance, update the `githubHost` value to point to your instance.
+Be sure to replace the `<GITHUB_TOKEN>` and organization placeholders with your actual values. If you are using a self-hosted GitHub instance, update the `githubHost` value to point to your instance.
+
+For multi-organization support, use a **classic PAT token** and specify multiple organizations in the array.
 :::
 
 ```yaml showLineNumbers
@@ -143,7 +145,7 @@ integration:
     type: POLLING
   config:
     githubHost: https://api.github.com # Or your self-hosted GitHub URL
-    githubOrganization: "<GITHUB_ORGANIZATION>" # your github organization, e.g port-labs
+    githubOrganizations: ["<GITHUB_ORG_1>", "<GITHUB_ORG_2>"]  # From v.2.0.0, classic PAT supports multiple orgs
   secrets:
     githubToken: "<GITHUB_TOKEN>"
 

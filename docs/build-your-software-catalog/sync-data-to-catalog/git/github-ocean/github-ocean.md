@@ -18,6 +18,27 @@ Here's what you can do with the GitHub integration:
 - Map and organize your desired GitHub resources and their metadata in Port (see supported resources below).
 - Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Manage Port entities using GitOps.
+- **Sync data from multiple GitHub organizations** using a single integration instance.
+
+### Multi-organization support
+
+The GitHub integration supports syncing data from multiple GitHub organizations starting from **version 2.0.0-beta**. You can configure which organizations to sync using the `githubOrganizations` configuration parameter.
+
+:::info Authentication requirements
+- **Classic PAT**: Supports multiple organizations. Fine-grained PAT tokens do not support multi-organization authentication.
+- **GitHub App**: Only supports a **single organization** (minimum 1, maximum 1). You must specify exactly one organization in the `githubOrganizations` array.
+:::
+
+:::caution Performance impact
+Syncing multiple organizations will increase the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption. Consider syncing only the organizations you need.
+:::
+
+**Configuration options:**
+- **With classic PAT**: Specify a list of organizations: `githubOrganizations: ["org1", "org2", "org3"]`
+- **With classic PAT**: Leave empty to sync all organizations the PAT user is a member of: `githubOrganizations: []`
+- **With GitHub App**: Specify exactly one organization: `githubOrganizations: ["my-org"]`
+
+When using multi-organization support, the `organization` resource kind is automatically synced, allowing you to model your GitHub organizations in Port.
 
 ### Supported resources
 
@@ -136,9 +157,38 @@ resources:
 
 Using Port's GitHub integration, you can automatically ingest GitHub resources into Port based on real-time events.
 
-The app allows you to ingest a variety of objects resources provided by the GitHub API, including repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
+The app allows you to ingest a variety of objects resources provided by the GitHub API, including organizations, repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
 
 The GitHub integration uses a YAML configuration file to describe the ETL process to load data into the developer portal. This approach provides a flexible and powerful way to model your Git data without being overly opinionated or complex.
+
+### Ingest organizations
+
+The GitHub integration can automatically sync organization-level data when using multi-organization support (available from **v2.0.0-beta**).
+
+Here's an example configuration for the `organization` kind:
+
+```yaml showLineNumbers
+resources:
+  - kind: organization
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .name
+          blueprint: '"githubOrganization"'
+          properties:
+            url: .html_url
+            description: .description
+            createdAt: .created_at
+            blog: .blog
+            location: .location
+```
+
+:::tip Organization as parent entity
+Organizations can serve as parent entities for repositories, teams, and other GitHub resources, helping you model your organizational structure in Port.
+:::
 
 ### Ingest files from your repositories
 
@@ -149,6 +199,10 @@ For example, say you want to manage your `package.json` files in Port. One optio
 
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
+:::warning Breaking change in v2.0.0-beta
+Starting from version 2.0.0-beta, the `file` kind requires an `organization` field to be specified. This is a breaking change from previous versions.
+:::
+
 ```yaml showLineNumbers
 resources:
   - kind: file
@@ -157,6 +211,7 @@ resources:
       files:
           # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
+          organization: my-org  # Organization name is required from v2.0.0-beta
             # The `repos` key can be used to filter the repositories and branch where files should be fetched
           repos:
             - name: MyRepo
@@ -679,6 +734,7 @@ resources:
       query: 'true'
       files:
         - path: '**/package.json'
+          organization: my-org  # Organization name is required from v2.0.0-beta
         # Note that in this case we are fetching from a specific repository
           repos:
             - name: MyRepo
@@ -736,7 +792,11 @@ resources:
       query: 'true'
       files:
         - path: values.yaml
+          organization: my-org  # Organization name is required from v2.0.0-beta
           skipParsing: true
+          repos:
+            - name: MyRepo
+              branch: main
     port:
       entity:
         mappings:

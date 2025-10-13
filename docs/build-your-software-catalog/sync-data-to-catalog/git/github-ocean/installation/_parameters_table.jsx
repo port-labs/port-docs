@@ -42,9 +42,9 @@ export default function ParametersTable({ showingApp }) {
           <td>✅</td>
         </tr>
         <tr>
-          <td><code>integration.config.githubOrganization</code></td>
-          <td>The GitHub organization to sync data from.</td>
-          <td>✅</td>
+          <td><code>integration.config.githubOrganizations</code></td>
+          <td>Array of GitHub organization names to sync data from. For multi-org support, use a classic PAT token. GitHub App supports only 1 organization. Leave empty with classic PAT to sync all accessible organizations.</td>
+          <td>❌</td>
         </tr>
         <tr>
           <td><code>integration.config.githubHost</code></td>

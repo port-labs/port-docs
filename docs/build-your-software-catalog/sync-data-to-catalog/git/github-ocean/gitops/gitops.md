@@ -125,6 +125,10 @@ To edit a mapping configuration:
 
 For example, say you want to ingest a `package.json` file form your repository. You can add the following to your GitHub integration mapping:
 
+:::warning Breaking change in v2.0.0-beta
+Starting from version 2.0.0-beta, the `file` kind requires an `organization` field to be specified for multi-organization support.
+:::
+
 ```yaml
 resources:
   ...
@@ -133,13 +137,17 @@ resources:
       query: 'true'
       files:
         - path: package.json
+          organization: my-org  # Required from v2.0.0-beta
+          repos:
+            - name: my-repo
+              branch: main
     port:
       entity:
         mappings:
-          identifier: .file.name
+          identifier: .path
           blueprint: '"file"'
           properties:
-            content: .file.content
+            content: .content
 ```
 
 The `selector.files.path` key also supports glob patterns, so you can ingest multiple files by matching against a pattern and create an entity in Port for each one, for example:
@@ -150,6 +158,10 @@ The `selector.files.path` key also supports glob patterns, so you can ingest mul
     query: 'true'
     files:
       - path: 'resources/*.yml'
+        organization: my-org  # Required from v2.0.0-beta
+        repos:
+          - name: my-repo
+            branch: main
 ```
 
 ### Advantages
