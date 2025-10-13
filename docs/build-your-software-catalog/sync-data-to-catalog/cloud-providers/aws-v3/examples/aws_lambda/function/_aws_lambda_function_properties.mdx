@@ -1,40 +1,44 @@
-| Property | Type | Description |
-|----------|------|-------------|
-| `Architectures` | `list[str]` | The instruction set architecture that the function supports |
-| `CodeSha256` | `str` | The SHA256 hash of the function's deployment package |
-| `CodeSize` | `int` | The size of the function's deployment package, in bytes |
-| `DeadLetterConfig` | `dict[str, Any]` | The dead letter queue configuration |
-| `Description` | `str` | A description of the function |
-| `Environment` | `dict[str, Any]` | The environment variables for the Lambda function |
-| `EphemeralStorage` | `dict[str, Any]` | The size of the function's /tmp directory in MB |
-| `FileSystemConfigs` | `list[dict[str, Any]]` | Connection settings for an Amazon EFS file system |
-| `FunctionArn` | `str` | The function's Amazon Resource Name (ARN) |
-| `FunctionName` | `str` | The name of the function |
-| `Handler` | `str` | The function that Lambda calls to begin execution |
-| `ImageConfigResponse` | `dict[str, Any]` | Configuration values that override the container image Dockerfile settings |
-| `KmsKeyArn` | `str` | The KMS key that's used to encrypt the function's environment variables |
-| `LastModified` | `str` | The date and time that the function was last updated |
-| `LastUpdateStatus` | `str` | The status of the last update that was performed on the function |
-| `LastUpdateStatusReason` | `str` | The reason for the last update that was performed on the function |
-| `LastUpdateStatusReasonCode` | `str` | The reason code for the last update that was performed on the function |
-| `Layers` | `list[dict[str, Any]]` | The function's layers |
-| `LoggingConfig` | `dict[str, Any]` | The function's logging configuration |
-| `MasterArn` | `str` | For Lambda@Edge functions, the ARN of the master function |
-| `MemorySize` | `int` | The amount of memory available to the function at runtime |
-| `PackageType` | `str` | The type of deployment package |
-| `RevisionId` | `str` | The latest updated revision of the function or alias |
-| `Role` | `str` | The function's execution role |
-| `Runtime` | `str` | The runtime environment for the Lambda function |
-| `RuntimeVersionConfig` | `dict[str, Any]` | The runtime version configuration |
-| `SigningJobArn` | `str` | The ARN of the signing job |
-| `SigningProfileVersionArn` | `str` | The ARN of the signing profile version |
-| `SnapStart` | `dict[str, Any]` | Set `ApplyOn` to `PublishedVersions` to create a snapshot of the initialized execution environment when you publish a function version |
-| `State` | `str` | The current state of the function |
-| `StateReason` | `str` | The reason for the function's current state |
-| `StateReasonCode` | `str` | The reason code for the function's current state |
-| `Tags` | `list[dict[str, Any]]` | The function's tags |
-| `Timeout` | `int` | The amount of time that Lambda allows a function to run before stopping it |
-| `TracingConfig` | `dict[str, Any]` | The function's AWS X-Ray tracing configuration |
-| `Version` | `str` | The version of the Lambda function |
-| `VpcConfig` | `dict[str, Any]` | The function's networking configuration |
+<details>
+<summary><b>Lambda function properties (click to expand)</b></summary>
 
+| Property | JQ Path | Type | Action Required |
+|----------|---------|------|-----------------|
+| Architectures | `.Properties.Architectures` | array | ListFunctionsAction (default) |
+| Code SHA256 | `.Properties.CodeSha256` | string | ListFunctionsAction (default) |
+| Code Size | `.Properties.CodeSize` | number | ListFunctionsAction (default) |
+| Dead Letter Config | `.Properties.DeadLetterConfig` | object | ListFunctionsAction (default) |
+| Description | `.Properties.Description` | string | ListFunctionsAction (default) |
+| Environment | `.Properties.Environment` | object | ListFunctionsAction (default) |
+| Ephemeral Storage | `.Properties.EphemeralStorage` | object | ListFunctionsAction (default) |
+| File System Configs | `.Properties.FileSystemConfigs` | array | ListFunctionsAction (default) |
+| Function ARN | `.Properties.FunctionArn` | string | ListFunctionsAction (default) |
+| Function Name | `.Properties.FunctionName` | string | ListFunctionsAction (default) |
+| Handler | `.Properties.Handler` | string | ListFunctionsAction (default) |
+| Image Config Response | `.Properties.ImageConfigResponse` | object | ListFunctionsAction (default) |
+| KMS Key ARN | `.Properties.KmsKeyArn` | string | ListFunctionsAction (default) |
+| Last Modified | `.Properties.LastModified` | string | ListFunctionsAction (default) |
+| Last Update Status | `.Properties.LastUpdateStatus` | string | ListFunctionsAction (default) |
+| Last Update Status Reason | `.Properties.LastUpdateStatusReason` | string | ListFunctionsAction (default) |
+| Last Update Status Reason Code | `.Properties.LastUpdateStatusReasonCode` | string | ListFunctionsAction (default) |
+| Layers | `.Properties.Layers` | array | ListFunctionsAction (default) |
+| Logging Config | `.Properties.LoggingConfig` | object | ListFunctionsAction (default) |
+| Master ARN | `.Properties.MasterArn` | string | ListFunctionsAction (default) |
+| Memory Size | `.Properties.MemorySize` | number | ListFunctionsAction (default) |
+| Package Type | `.Properties.PackageType` | string | ListFunctionsAction (default) |
+| Revision ID | `.Properties.RevisionId` | string | ListFunctionsAction (default) |
+| Role | `.Properties.Role` | string | ListFunctionsAction (default) |
+| Runtime | `.Properties.Runtime` | string | ListFunctionsAction (default) |
+| Runtime Version Config | `.Properties.RuntimeVersionConfig` | object | ListFunctionsAction (default) |
+| Signing Job ARN | `.Properties.SigningJobArn` | string | ListFunctionsAction (default) |
+| Signing Profile Version ARN | `.Properties.SigningProfileVersionArn` | string | ListFunctionsAction (default) |
+| Snap Start | `.Properties.SnapStart` | object | ListFunctionsAction (default) |
+| State | `.Properties.State` | string | ListFunctionsAction (default) |
+| State Reason | `.Properties.StateReason` | string | ListFunctionsAction (default) |
+| State Reason Code | `.Properties.StateReasonCode` | string | ListFunctionsAction (default) |
+| Tags | `.Properties.Tags` | array | ListTagsAction (optional) |
+| Timeout | `.Properties.Timeout` | number | ListFunctionsAction (default) |
+| Tracing Config | `.Properties.TracingConfig` | object | ListFunctionsAction (default) |
+| Version | `.Properties.Version` | string | ListFunctionsAction (default) |
+| VPC Config | `.Properties.VpcConfig` | object | ListFunctionsAction (default) |
+
+</details>
