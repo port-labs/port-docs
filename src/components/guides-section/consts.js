@@ -1479,7 +1479,7 @@ export const availableGuides = [
     {
         title: "Streamline IaC with AI",
         description: "Use Port AI agents to automate IaC provisioning and management",
-        tags: ["IaC for devs", "AI", "Actions", "Automations"],
+        tags: ["IaC for devs", "Github Copilot", "AI", "Actions"],
         logos: ["AI", "AWS"],
         link: "/guides/all/streamline-iac-with-ai",
     },

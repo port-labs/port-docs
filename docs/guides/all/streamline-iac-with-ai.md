@@ -1,15 +1,17 @@
 ---
 displayed_sidebar: null
-description: Use Port AI agents with GitHub Copilot to streamline Infrastructure as Code (IaC) by automatically provisioning cloud resources like S3 buckets
+description: Use Port AI agents with AI coding assistants to streamline Infrastructure as Code (IaC) by automatically provisioning cloud resources like S3 buckets
 ---
 
 # Streamline IaC with AI
 
-Creating new infrastructure should be fast, consistent, and policy-driven. Instead of manually writing Terraform for every new S3 bucket, you can let an AI coding agent generate the Terraform files, open a PR against your IaC repo, and surface the change for review — all from Port.
+Creating new infrastructure should be fast, consistent, and policy-driven. Instead of manually writing Terraform for every new cloud resource such as S3 bucket, you can let an AI coding agent safely generate the Terraform files, open a pull request against your IaC repository, and surface the change for review — all within Port. The entire process remains governed, compliant, and aligned with your organization’s engineering standards, ensuring that every new resource is created securely and according to best practices
 
-This guide demonstrates how to create a self-service action that allows developers to request new S3 buckets through Port, which then automatically creates a GitHub issue that gets assigned to GitHub Copilot for Terraform code generation and PR creation.
+
+This guide demonstrates how to create a self-service action that allows developers to request new cloud resource through Port, which then automatically triggers a coding assistant for Terraform code generation and PR creation.
 
 <img src='/img/guides/ai-iac-workflow.jpg' border="1px" width="100%" />
+
 
 ## Prerequisites
 
@@ -116,6 +118,7 @@ However, the `S3` blueprint is not created automatically so we will need to crea
 
 5. Click `Create` to save the blueprint
 
+
 ### Update integration mapping
 
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal
@@ -177,9 +180,44 @@ resources:
 5. Click `Save & Resync` to apply the mapping
 
 
+## Create AI agent
+
+Next, you'll create an AI agent that analyzes cloud resource requests and dispatches the coding agent to process the request.
+
+1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal
+2. Click on `+ AI Agent`
+3. Toggle `Json mode` on
+4. Copy and paste the following JSON schema:
+
+<details>
+<summary><b>Terraform IaC Creator AI agent (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "terraform_ai_agent",
+  "title": "Terraform IaC Creator",
+  "icon": "Details",
+  "team": [],
+  "properties": {
+    "description": "An AI-powered agent that generates Terraform files to provision cloud resources such as S3 buckets directly from Port.",
+    "status": "active",
+    "prompt": "You are a **Terraform Infrastructure AI Agent**. Your role is to generate **technical requirements** for new cloud resources using Terraform — not to write Terraform code directly.\n\n### 🎯 Objective\nWhen a user requests a new cloud resource (e.g., AWS S3 bucket, EC2 instance), analyze the request and create a detailed **GitHub issue** describing what Terraform configuration should be created.\n\n### 🧩 Inputs\nUse available input data such as:\n- Resource type (e.g., S3 bucket, EC2 instance)\n- Resource name or identifier\n- Configuration options (e.g., encryption, tags, versioning, lifecycle rules, instance type, VPC ID)\n\n### 🧠 Task\nGenerate a **GitHub issue** with:\n\n#### 🏷️ Title:\n`Provision New <Resource Type>: <resource_name>`\n\n#### 📝 Description (in Markdown):\n1. **Resource Details** – Describe the resource, configuration fields, and intended purpose.\n2. **Terraform Specification Requirements** – Outline what the Terraform configuration must include:\n   - Correct resource definition (e.g., `aws_s3_bucket`, `aws_instance`, etc.)\n   - Secure defaults:\n     * Encryption enabled where supported\n     * Public access blocked for resources that support ACLs or network exposure\n     * Versioning/lifecycle rules where applicable\n     * IAM policies following least privilege\n     * Tags including `created_by = \"port-ai\"` and `managed_by = \"terraform\"`\n   - Outputs that expose essential identifiers (e.g., ARN, domain name, instance ID)\n3. **Suggested File Path** – Suggest a logical file location (e.g., `terraform/aws/<resource>.tf` or `modules/<type>` if modules exist).\n4. **Acceptance Criteria** – Define success conditions:\n   - Terraform configuration passes `terraform validate`\n   - Required tags are applied\n   - Sensitive data is not exposed in outputs\n\n#### 🏷️ Labels\nAlways include: `iac`, `terraform`, `aws`, and `auto_assign`.\n\n### ⚙️ Action\nAlways call the `create_github_issue` self-service action to create the GitHub issue with the generated **title**, **description**, and **labels**.\n\n### 🧭 Guidelines\n- Do **not** generate Terraform code directly.\n- Focus on clarity, correctness, and compliance with engineering best practices.\n- Use Markdown formatting for readability.\n- Keep each issue focused on a single resource.\n- Always include the `auto_assign` label for issue tracking.",
+    "execution_mode": "Automatic",
+    "tools": [
+      "^(list|get|search|track|describe)_.*"
+    ]
+  },
+  "relations": {}
+}
+```
+</details>
+
+5. Click `Create` to save the agent.
+
+
 ## Create self-service action
 
-Next, you'll create a self-service action that allows developers to request new S3 buckets. This action will collect the necessary information and create a GitHub issue for the AI agent to process.
+Now, you'll create a self-service action that allows developers to request new cloud resources. This action will invoke an AI agent to analyze the request.
 
 1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal
 2. Click on `+ New Action`
@@ -187,14 +225,14 @@ Next, you'll create a self-service action that allows developers to request new 
 4. Copy and paste the following JSON configuration:
 
 <details>
-<summary><b>Create S3 bucket request action (Click to expand)</b></summary>
+<summary><b>Provision cloud resource action (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-  "identifier": "create_s_3_bucket",
-  "title": "Create S3 Bucket",
-  "icon": "S3",
-  "description": "Request a new S3 bucket to be provisioned via Terraform",
+  "identifier": "provision_cloud_resource",
+  "title": "Provision Cloud Resource",
+  "icon": "AWS",
+  "description": "Request a new cloud resource such as s3 bucket to be provisioned via Terraform",
   "trigger": {
     "type": "self-service",
     "operation": "CREATE",
@@ -203,13 +241,13 @@ Next, you'll create a self-service action that allows developers to request new 
         "prompt": {
           "type": "string",
           "title": "Description",
-          "description": "Describe the S3 bucket you want to create. Include details like bucket name, region, encryption requirements, versioning, lifecycle rules, tags, and any other specific requirements",
+          "description": "Describe the resource you want to create. Include details like name, region, encryption requirements, versioning, lifecycle rules, tags, and any other specific requirements",
           "format": "markdown"
         },
         "terraform_repository": {
-          "type": "string",
-          "description": "The repository entity that contains your terraform configuration",
           "title": "Terraform Repository",
+          "icon": "DefaultProperty",
+          "type": "string",
           "blueprint": "service",
           "format": "entity"
         }
@@ -226,7 +264,7 @@ Next, you'll create a self-service action that allows developers to request new 
   },
   "invocationMethod": {
     "type": "WEBHOOK",
-    "url": "https://api.getport.io/v1/actions/create_github_issue/runs",
+    "url": "https://api.getport.io/v1/agent/terraform_ai_agent/invoke",
     "agent": false,
     "synchronized": true,
     "method": "POST",
@@ -235,16 +273,9 @@ Next, you'll create a self-service action that allows developers to request new 
       "Content-Type": "application/json"
     },
     "body": {
-      "entity": "{{ .inputs.terraform_repository.identifier }}",
-      "properties": {
-        "title": "Create an S3 bucket",
-        "body": "## S3 Bucket Request\n\n**Terraform Repository:** {{ .inputs.terraform_repository.identifier }}\n\nYou are an expert Terraform author. A user requested a new S3 bucket. Here is the requested configuration:\n\n{{ .inputs.prompt }}\n\nGenerate a set of Terraform files to CREATE an AWS S3 bucket that matches these constraints and engineering best practices:\n\n1) Create a resource \"aws_s3_bucket\" with the provided or suitable name.\n2) Ensure server-side encryption is enabled per the `encryption` field.\n3) Ensure `public_access_block` is enabled (block public ACLs and block public policies) if requested.\n4) Enable versioning when `versioning` is true.\n5) If `lifecycle_rules` are present, translate them into bucket lifecycle rules.\n6) Add required tags from `tags` and ensure tags include `created_by = \"port-ai\"` and `managed_by = \"terraform\"`.\n7) Output the bucket ARN and bucket domain name as Terraform outputs.\n\nFile layout rules:\n- Do not modify unrelated files.\n- If the repo contains a `modules/s3` module, prefer creating a new file that uses that module. If not, create a new file named `s3_<bucket-name>.tf` (sanitize the name to remove invalid chars).\n- Provide a short PR title and description explaining what was created and why.",
-        "labels": [
-          "infrastructure",
-          "terraform",
-          "auto_assign"
-        ],
-        "assign_to_copilot": true
+      "prompt": "You are an expert Terraform author. A user has requested the creation of a new cloud resource using Infrastructure as Code.\n\nRepository: {{ .inputs.terraform_repository.identifier }}\nUser Request: {{ .inputs.prompt }}\n",
+      "labels": {
+        "source": "provision_cloud_resource_action"
       }
     }
   },
@@ -258,12 +289,12 @@ Next, you'll create a self-service action that allows developers to request new 
 
 ## Test your workflow
 
-Now it's time to test your complete S3 bucket provisioning workflow:
+Now it's time to test your complete cloud resource provisioning workflow:
 
-1. Click on the `Request S3 Bucket` action in the [self-service](https://app.getport.io/self-serve) page of your portal
-2. Fill out the `prompt` field with your S3 bucket requirements, for example:
+1. Click on the `Provision Cloud Resource` action in the [self-service](https://app.getport.io/self-serve) page of your portal
+2. Fill out the `prompt` field with your resource requirements, for example:
    ```
-   Create an S3 bucket named "my-kafka-log-east-1-bucket" in the us-east-1 region for development environment.
+   Create an S3 bucket named "my-kafka-log-east-1-bucket" for development environment.
    
    Requirements:
    - Enable server-side encryption with AWS KMS
@@ -271,16 +302,17 @@ Now it's time to test your complete S3 bucket provisioning workflow:
    - Block all public access
    - Add tags: Environment=dev, Project=kafka-logs, Owner=platform-team
    ```
-3. Select the repository containing your terraform configuration.
+3. Select the repository containing your terraform configuration
 4. Click **Execute**
 
 The workflow will then:
 
-1. Create a GitHub issue in your `terraform` repository with the S3 bucket requirements
-2. Automatically assign the issue to GitHub Copilot (handled by the prerequisites setup)
-3. Copilot generates Terraform code based on the detailed prompt
-4. Open a pull request with the generated Terraform files
-5. Link the PR back to the original issue for traceability
+1. **AI Agent analyzes** your request and generates a detailed GitHub issue with technical requirements
+2. **Issue is automatically assigned to GitHub Copilot** (handled by the prerequisites setup)
+3. **Copilot generates Terraform code** based on the detailed technical requirements
+4. **Pull request is opened** with the generated Terraform files
+5. **PR is linked back** to the original issue for traceability
+
 
 
 ## Related guides
