@@ -233,8 +233,12 @@ values={[
 
 <TabItem value="visible">
 
-The `visible` property is used to dynamically hide/show inputs in the form.
+The `visible` property is used to dynamically hide/show elements in the form.
 The `visible` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
+
+<h4>Input-level visibility</h4>
+
+You can apply `visible` to individual inputs to control their display:
 
 In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
 
@@ -314,6 +318,59 @@ action = Action(
 
 ```
 
+</TabItem>
+
+</Tabs>
+
+<h4>Step-level visibility</h4>
+
+You can also apply `visible` to entire steps to control their display:
+
+In this example, the `AWS Configuration` and `Azure Configuration` steps are conditionally shown based on the values selected in the first step's cloud provider input:
+
+<Tabs
+defaultValue="api"
+values={[
+{label: 'API', value: 'api'}
+]}>
+
+<TabItem value="api">
+
+```json showLineNumbers
+  {
+    "userInputs": {
+      "properties": {
+        "enum": {
+          "icon": "DefaultProperty",
+          "title": "Cloud provider",
+          "type": "array",
+          "items": {
+            "enum": [ "aws", "azure" ],
+            "enumColors": { "aws": "red", "azure": "blue" },
+            "type": "string"
+          }
+        }
+      },
+      "required": [],
+      "steps": [
+        {
+          "title": "Cloud selection",
+          "order": [ "enum" ]
+        },
+        {
+          "title": "AWS configuration",
+          "order": [],
+          "visible": { "jqQuery": ".form.enum | index(\"aws\") != null" }
+        },
+        {
+          "title": "Azure configuration",
+          "order": [],
+          "visible": { "jqQuery": ".form.enum | index(\"azure\") != null" }
+        }
+      ]
+    }
+  }
+```
 </TabItem>
 
 </Tabs>
