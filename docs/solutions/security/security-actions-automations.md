@@ -95,7 +95,7 @@ Streamline the vulnerability management lifecycle from detection to remediation:
 - Correlate vulnerabilities with recent code changes and deployment history
 - Provide automated impact assessment based on service architecture
 
-![Actions Automations 1](/img/guides/security-solution/auto-1.png)
+<img src='/img/guides/security-solution/auto-1.png' alt='Security actions automations' width='80%' border='1px' />
 
 ### Automated compliance and standards enforcement
 
@@ -120,7 +120,7 @@ Accelerate security incident response through intelligent automation:
 - Automatically create incident response channels with relevant stakeholders
 - Provide responders with contextual information including architecture diagrams, ownership details, and recent deployment history
 
-![Actions Automations 2](/img/guides/security-solution/auto-2.png)
+<img src='/img/guides/security-solution/auto-2.png' alt='security solution automation' width='80%' border='1px' />
 
 #### Response workflow automation
 - Automatically notify relevant teams based on service ownership and escalation policies
@@ -138,15 +138,14 @@ Leverage AI to augment human security decision-making:
 - Predict which services are most likely to have security issues based on historical data
 - Provide personalized security recommendations based on technology stack and risk profile
 
-![Actions Automations 3](/img/guides/security-solution/auto-3.png)
+<img src='/img/guides/security-solution/auto-3.png' width='80%' border='1px' />
 
 #### Automated security testing
 - Trigger security scans based on code changes and deployment patterns
 - Integrate security testing into CI/CD pipelines with intelligent fail/pass decisions
 - Generate security test cases based on application architecture and attack patterns
 
-![Actions Automations 4](/img/guides/security-solution/auto-4.png)
-
+<img src='/img/guides/security-solution/auto-4.png' alt='Security actions and automations' width='80%' border='1px' />
 ### Dynamic risk assessment
 
 Adjust security controls based on real-time risk assessment:

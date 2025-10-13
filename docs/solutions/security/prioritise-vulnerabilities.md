@@ -28,8 +28,7 @@ The result: Security teams fix the **right vulnerabilities** faster, while devel
 
 Port integrates with your existing security stack, automatically ingesting vulnerability data, enriching it with business context, and prioritizing it for action.
 
-<!-- TO-Do -->
-<!-- Mermaid graph -->
+
 
 :::tip Transform vulnerability management
 **Port transforms vulnerability management from chaos to clarity — helping security teams focus on what truly matters to the business.**
@@ -72,25 +71,24 @@ Port transforms vulnerability data into actionable intelligence by anchoring it 
 - Integrate with tools like **Trivy, Wiz, Dependabot, Orca, Snyk**, etc., to ingest vulnerabilities into Port with service links.
 - Leverage **API ingestion** for custom tools or vulnerability sources, using Port's REST API to create/update vulnerability entities linked to services.
 
-![Vulnerability catalog](/img/guides/security-solution/vuln-catalog.png)
+<img src='/img/guides/security-solution/vuln-catalog.png' alt='Vulnerability catalog' width='80%' border='1px' />
 
 ### 2. Business context enrichment
 
 - Vulnerabilities are enriched with metadata like **service ownership, environment (prod, staging), business criticality, data sensitivity, compliance implications**, and recent change status.
 - This enables answering: *Which vulnerabilities threaten our revenue-critical production systems?*
 
-![Vulnerability busines context](/img/guides/security-solution/vuln-context.png)
--
-![Vulnerability user context](/img/guides/security-solution/vuln-context-teams.png)
+<img src='/img/guides/security-solution/vuln-context.png' alt='Vulnerability context - users' width='80%' border='1px' />
+<img src='/img/guides/security-solution/vuln-context-teams.png' alt='Vulnerability context - users' width='80%' border='1px' />
 
 ### 3. Real-time dashboards & scorecards
 
 - Build dashboards to track vulnerabilities by severity, status, team, or service using Port's UI and widget capabilities.
 - Track maturity with **scorecards**, showing metrics like mean time to remediation (MTTR), percentage of services with owners, or open critical vulnerabilities over time, using Port's scorecard feature.
 
-![Vulnerability stats](/img/guides/security-solution/vuln-stats.png)
--
-![Vulnerability trends](/img/guides/security-solution/vuln-trends.png)
+<img src='/img/guides/security-solution/vuln-stats.png' alt='Vulnerability stats' width='80%' border='1px' />
+
+<img src='/img/guides/security-solution/vuln-trends.png' alt='Vulnerability trends' width='80%' border='1px' />
 
 ### 4. Automation & context-aware workflows
 
@@ -98,7 +96,7 @@ Port transforms vulnerability data into actionable intelligence by anchoring it 
 - Build self-service actions to create tickets in Jira, Slack alerts, or trigger remediation workflows—only where business risk justifies action.
 - Use Port's API and mapping layers to tailor behavior—e.g., API-driven rules, triage pipelines, or dynamic SLAs.
 
-![Vulnerability rules](/img/guides/security-solution/vuln-rules.png)
+<img src='/img/guides/security-solution/vuln-rules.png' alt='Vulnerability rules' width='80%' border='1px' />
 
 ### 5. API-driven integration & extensibility
 
