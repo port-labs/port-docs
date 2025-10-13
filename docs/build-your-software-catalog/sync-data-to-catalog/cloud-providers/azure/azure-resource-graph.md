@@ -15,7 +15,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 Sync your Azure environment to Port at scale using Azure Resource Graph and Ocean framework. This integration is designed for high-volume data ingestion across multiple subscriptions, offering several key advantages:
 
 - **Centralized Syncing**: Ingest resources from all your Azure subscriptions with a single deployment.
-- **High-Speed Ingestion**: Leverage Azure Resource Graph to query and sync up to 1000 subscriptions simultaneously for maximum performance.
+- **High-Speed Ingestion**: Leverage Azure Resource Graph to query and sync up to 1000 subscriptions simultaneously for maximum performance. #AI? is 1000 the maximum subscriptions than can be synced using Azure resource graph?
 - **Customizable Mapping**: Take full control over which resource types are ingested and how they are mapped to your software catalog.
 
 ## Overview
