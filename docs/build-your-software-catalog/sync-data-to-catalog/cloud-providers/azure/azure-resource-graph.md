@@ -697,6 +697,7 @@ resources:
 
 ## Frequently asked questions
 
+#AI! improve this faq section
 ### Why use resource group filtering?
 
 - Individual resources often lack the relevant tags
