@@ -18,6 +18,7 @@ Sync your Azure environment to Port at scale using Azure Resource Graph and Ocea
 - **High-Speed Ingestion**: Leverage Azure Resource Graph to query and sync up to 5000 subscriptions simultaneously for maximum performance.
 - **Customizable Mapping**: Take full control over which resource types are ingested and how they are mapped to your software catalog.
 
+#AI? can this overview section be improved?
 ## Overview
 
 This integration is built on Port's open-source [Ocean framework](https://ocean.port.io), providing a robust solution for syncing your Azure resources to Port. It is written in Python and utilizes the Azure SDK to query the Azure Resource Graph API.
