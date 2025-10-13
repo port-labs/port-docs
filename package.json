@@ -28,7 +28,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mdx-js/react": "^3.1.1",
-    "@mui/material": "^7.3.2",
+    "@mui/material": "^7.3.4",
     "@stackql/docusaurus-plugin-hubspot": "^1.0.1",
     "clsx": "^2.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
@@ -37,9 +37,9 @@
     "docusaurus-theme-openapi-docs": "^4.5.1",
     "prettier": "^3.6.2",
     "prism-react-renderer": "^2.4.1",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-tooltip": "^5.29.1"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-tooltip": "^5.30.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.9.1",
