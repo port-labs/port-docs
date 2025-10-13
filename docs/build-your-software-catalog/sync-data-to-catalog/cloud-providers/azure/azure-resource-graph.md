@@ -519,7 +519,7 @@ ghcr.io/port-labs/port-ocean-azure-rg:latest
 
 ### Resource type filtering
 
-You can filter the resources fetched from Azure Resource Graph by using the `resource_types` selector in your mapping. This allows you to specify exactly which resource types to sync, giving you granular control over the query used to ingest data into your software catalog. #AI! improve this
+The integration allows you to filter which resources are ingested from Azure Resource Graph by specifying the `resource_types` in the mapping configuration. By providing a list of resource types, you can control precisely which data is synced, helping to streamline the ingestion process and keep your software catalog focused on the resources that matter most.
 
 <details>
   <summary><b>Blueprint (click to expand)</b></summary>
