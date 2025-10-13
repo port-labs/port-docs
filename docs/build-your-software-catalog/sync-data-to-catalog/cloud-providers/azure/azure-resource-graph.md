@@ -579,7 +579,7 @@ You can alter the resources fetched from Azure resource graph by configuring the
 </details>
 
 ### Resource group tag filtering
-The integration supports powerful filtering of Azure resources based on tags applied to their parent resource groups. The format allows you to specify both include and exclude conditions in a single configuration. #AI! improve this
+The integration provides advanced filtering capabilities for Azure resources by leveraging tags from their parent resource groups. This allows you to define both inclusion and exclusion rules within a single configuration, offering precise control over which resources are synchronized.
 
 <details>
   <summary><b>Blueprints (click to expand)</b></summary>
