@@ -6,53 +6,53 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Image from "@theme/IdealImage";
 
-# Live Events Setup
+# Live events setup
 
 Port's AWS integration supports real-time event processing, allowing for accurate real-time representation of your AWS infrastructure inside Port. This guide explains how to set up live events for your AWS resources.
 
 :::info Current Limitations
 Live events are currently only available for:
-- **Single account installations** (not multi-account)
-- **Default Terraform installation** with support for 3 resource types by default:
-  - EC2 Instances
-  - S3 Buckets  
-  - CloudFormation Stacks
+- **Single account installations** (not multi-account).
+- **Default Terraform installation** with support for three resource types by default:
+  - EC2 Instances.
+  - S3 Buckets.
+  - CloudFormation Stacks.
 :::
 
 ## Prerequisites
 
 Before setting up live events, ensure you have:
 
-1. **AWS Integration Installed**: Complete the [AWS integration installation](./installation.md) first
-2. **API Gateway Setup**: The integration requires an API Gateway endpoint (automatically created with Terraform installation)
-3. **Port API Key**: Your Port API key for authentication
-4. **AWS Permissions**: Ability to create EventBridge rules in your AWS account
+- **AWS Integration Installed**: Complete the [AWS integration installation](./installation.md).
+- **API Gateway Setup**: The integration requires an API Gateway endpoint (automatically created with Terraform installation).
+- **Port API Key**: Your Port API key for authentication.
+- **AWS Permissions**: Ability to create EventBridge rules in your AWS account.
 
 :::tip Terraform vs Manual Installation
 - **Terraform users**: Use the provided Terraform module for automated setup
 - **Manual installation users**: Follow the AWS console setup steps
 :::
 
-## How Live Events Work
+## How live events work
 
-<Image img={require("../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/live-events-diagram.svg")} />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/live-events-diagram.svg' width='50%' border='1px' />
 
 Live events work by:
 
-1. **AWS Services** generate events when resources change
-2. **CloudTrail** captures these events
-3. **EventBridge Rules** filter and route specific events
-4. **API Gateway** receives the events and forwards them to Port
-5. **Port Integration** processes the events and updates your software catalog
+1. **AWS Services** generate events when resources change.
+2. **CloudTrail** captures these events.
+3. **EventBridge Rules** filter and route specific events.
+4. **API Gateway** receives the events and forwards them to Port.
+5. **Port Integration** processes the events and updates your software catalog.
 
-## Setup Methods
+## Setup methods
 
 <Tabs>
 <TabItem value="terraform" label="Terraform (Recommended)" default>
 
 If you installed the AWS integration using Terraform, use the provided module to set up live events.
 
-### Supported Resource Types
+<h3>Supported resource types</h3>
 
 The default Terraform module supports live events for these resource types:
 
@@ -60,11 +60,11 @@ The default Terraform module supports live events for these resource types:
 - **S3 Buckets** (`AWS::S3::Bucket`) 
 - **CloudFormation Stacks** (`AWS::CloudFormation::Stack`)
 
-### Adding Custom Resource Types
+<h3>Adding custom resource types</h3>
 
 To add live events for additional resource types (like SSM Parameters), use the `aws_event_rule` module:
 
-```hcl
+```hcl showLineNumbers
 module "aws_event_rule" {
   source = "port-labs/integration-factory/ocean//modules/aws_helpers/event"
   
@@ -89,7 +89,7 @@ module "aws_event_rule" {
 }
 ```
 
-### Configuration Parameters
+<h3>Configuration parameters</h3>
 
 | Parameter | Description | Example |
 |-----------|-------------|---------|
@@ -105,13 +105,13 @@ module "aws_event_rule" {
 
 If you installed the AWS integration manually, follow these steps to create EventBridge rules in the AWS console.
 
-### Step 1: Create a Rule
+<h3>Step 1: Create a rule</h3>
 
 1. Go to **EventBridge** → **Rules** → **Create rule**
 2. **Rule name**: Give it a descriptive name (e.g., `port-live-updates-ssm`)
 3. Click **Next**
 
-### Step 2: Define the Event Pattern
+<h3>Step 2: Define the event pattern</h3>
 
 1. **Event source**: Select "AWS events or services"
 2. **Event service**: Select the relevant AWS service (e.g., "Systems Manager")
@@ -119,7 +119,7 @@ If you installed the AWS integration manually, follow these steps to create Even
 4. **Event Type Specification**: Select "Specific detail type(s)" and choose the event type (e.g., "Parameter Store Change")
 5. Click **Next**
 
-### Step 3: Configure the Target
+<h3>Step 3: Configure the target</h3>
 
 1. **Target type**: Select "AWS Service"
 2. **Target**: Select "API Gateway"
@@ -128,7 +128,7 @@ If you installed the AWS integration manually, follow these steps to create Even
 5. **Deployment stage**: Select "production"
 6. **Integration target**: Enter `/integration/webhook` (HTTP POST)
 
-### Step 4: Add Required Headers
+<h3>Step 4: Add required headers</h3>
 
 Add these required headers:
 
@@ -137,12 +137,12 @@ Add these required headers:
 | `Content-Type` | `application/json` |
 | `x-port-aws-ocean-api-key` | `<your-api-key>` (replace with actual key) |
 
-### Step 5: Transform the Event Data
+<h3>Step 5: Transform the Event Data</h3>
 
 Port expects a simplified payload. Use Input Transformer to map the raw AWS event:
 
 **Input Path (mapping):**
-```json
+```json showLineNumbers
 {
   "accountId": "$.account",
   "awsRegion": "$.region", 
@@ -152,7 +152,7 @@ Port expects a simplified payload. Use Input Transformer to map the raw AWS even
 ```
 
 **Template (output):**
-```json
+```json showLineNumbers
 {
   "resource_type": "AWS::SSM::Parameter",
   "accountId": "<accountId>",
@@ -169,7 +169,7 @@ Replace `"AWS::SSM::Parameter"` with the appropriate AWS resource type:
 - CloudFormation Stacks: `"AWS::CloudFormation::Stack"`
 :::
 
-### Step 6: Review & Create
+<h3>Step 6: Review & Create</h3>
 
 1. Click **Next** → **Next** → **Create rule**
 2. AWS will now forward matching events to Port automatically
@@ -177,9 +177,9 @@ Replace `"AWS::SSM::Parameter"` with the appropriate AWS resource type:
 </TabItem>
 </Tabs>
 
-## Testing Your Setup
+## Testing your setup
 
-### Verify Existing Rules
+### Verify existing rules
 
 If you have other live event rules (e.g., S3 Bucket sync), verify they're working:
 
@@ -187,7 +187,7 @@ If you have other live event rules (e.g., S3 Bucket sync), verify they're workin
 2. Check that your rules are **Enabled**
 3. Look for any recent invocations in the **Metrics** tab
 
-### Test Live Events
+### Test live events
 
 1. **Trigger a test event**:
    - Modify/create a resource (e.g., create an SSM Parameter)
@@ -198,7 +198,7 @@ If you have other live event rules (e.g., S3 Bucket sync), verify they're workin
    - Check your software catalog for real-time updates
    - Look for the resource changes in Port's interface
 
-### Example Test for SSM Parameters
+### Example test for SSM parameters
 
 1. Go to **Systems Manager** → **Parameter Store**
 2. Create a new parameter:
@@ -209,7 +209,7 @@ If you have other live event rules (e.g., S3 Bucket sync), verify they're workin
 
 ## Troubleshooting
 
-### Common Issues
+### Common issues
 
 **Events not appearing in Port:**
 - Verify the EventBridge rule is enabled
