@@ -18,14 +18,13 @@ Sync your Azure environment to Port at scale using Azure Resource Graph and Ocea
 - **High-Speed Ingestion**: Leverage Azure Resource Graph to query and sync up to 5000 subscriptions simultaneously for maximum performance.
 - **Customizable Mapping**: Take full control over which resource types are ingested and how they are mapped to your software catalog.
 
-#AI? can this overview section be improved?
 ## Overview
 
-This integration is built on Port's open-source [Ocean framework](https://ocean.port.io), providing a robust solution for syncing your Azure resources to Port. It is written in Python and utilizes the Azure SDK to query the Azure Resource Graph API.
+This integration provides a robust solution for syncing your Azure resources to Port by leveraging our open-source [Ocean framework](https://ocean.port.io). It uses the Azure SDK to efficiently query the Azure Resource Graph API, ensuring high-performance data ingestion even in large-scale environments.
 
-The integration performs a full synchronization of your Azure resources on each run, ensuring that your software catalog accurately reflects the current state of your environment. With flexible data mapping capabilities, you can customize how the ingested data is structured and related within Port.
+On each run, the integration performs a full synchronization, so your software catalog always reflects the current state of your Azure resources. You can use declarative YAML mapping to transform raw data and model it according to your software catalog's structure.
 
-You can deploy the integration in any environment that supports Python, including Kubernetes, Docker, or a local machine, giving you full control over its execution and scheduling.
+The integration is packaged as a Docker container and can be deployed in any environment that supports it, such as Kubernetes or your CI/CD pipeline. This gives you full control over its execution schedule and operational management.
 
 ## Supported resources
 
