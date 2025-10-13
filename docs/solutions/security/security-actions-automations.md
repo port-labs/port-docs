@@ -116,9 +116,9 @@ Reduce manual compliance checks through intelligent automation:
 - Monitor security configurations and alert on drift from established baselines
 
 #### Self-healing security configurations
-- Automatically remediate common security misconfigurations
-- Restore security settings when they're accidentally disabled
-- Apply security patches during maintenance windows with appropriate testing
+- Automatically create incident response channels with relevant stakeholders.
+- Provide responders with contextual information including architecture diagrams, ownership details, and recent deployment history.
+- Apply security patches during maintenance windows with appropriate testing.
 
 ### Incident response automation
 

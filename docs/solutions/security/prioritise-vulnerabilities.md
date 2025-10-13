@@ -65,7 +65,7 @@ Many organizations fall into common traps. Here's how they go wrong—and how Po
 
 Port transforms vulnerability data into actionable intelligence by anchoring it directly to business context:
 
-### 1. Unified context via software catalog
+### Unified context via software catalog
 
 - Use **blueprints, relations, and entities** to represent services, ownership, criticality, environments, and compliance scope.
 - Integrate with tools like **Trivy, Wiz, Dependabot, Orca, Snyk**, etc., to ingest vulnerabilities into Port with service links.
@@ -84,7 +84,7 @@ The catalog view below shows Port’s business-first approach in action: finding
 
 <img src='/img/guides/security-solution/vuln-catalog.png' alt='Vulnerability catalog' width='80%' border='1px' />
 
-### 2. Business context enrichment
+### Business context enrichment
 
 - Vulnerabilities are enriched with metadata like **service ownership, environment (prod, staging), business criticality, data sensitivity, compliance implications**, and recent change status.
 - This enables answering: *Which vulnerabilities threaten our revenue-critical production systems?*
@@ -101,7 +101,7 @@ Below dashboard views show how port enriches vulnerabilities with business conte
 <img src='/img/guides/security-solution/vuln-context.png' alt='Vulnerability context - users' width='80%' border='1px' />
 <img src='/img/guides/security-solution/vuln-context-teams.png' alt='Vulnerability context - users' width='80%' border='1px' />
 
-### 3. Real-time dashboards & scorecards
+### Real-time dashboards & scorecards
 
 - Build dashboards to track vulnerabilities by severity, status, team, or service using Port's UI and widget capabilities.
 - Track maturity with **scorecards**, showing metrics like mean time to remediation (MTTR), percentage of services with owners, or open critical vulnerabilities over time, using Port's scorecard feature.
@@ -120,7 +120,7 @@ Port turns your live security data into **real-time dashboards and executive sco
 
 <img src='/img/guides/security-solution/vuln-trends.png' alt='Vulnerability trends' width='80%' border='1px' />
 
-### 4. Automation & context-aware workflows
+### Automation & context-aware workflows
 
 - Define automations to **escalate high-priority issues**, such as when a vulnerability in a customer-facing prod service becomes critical.
 - Build self-service actions to create tickets in Jira, Slack alerts, or trigger remediation workflows—only where business risk justifies action.
@@ -140,7 +140,7 @@ Port turns security policy into **automation that reacts to context**: scorecard
 
 <img src='/img/guides/security-solution/vuln-rules.png' alt='Vulnerability rules' width='80%' border='1px' />
 
-### 5. API-driven integration & extensibility
+### API-driven integration & extensibility
 
 - Port's **REST API** supports managing blueprints, entities, scorecards, and actions programmatically.
 - Automate service metadata updates from CI/CD, incident systems, or IaC pipelines, keeping business context fresh.

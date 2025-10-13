@@ -42,7 +42,6 @@ These metrics fail because they don’t provide:
 - **Actionability** – Who should fix the problem and by when?
 - **Business relevance** – What’s the potential revenue or compliance impact?
 
-
 :::info Effective metrics answer questions
 **Effective metrics answer questions, not just display numbers.**
 :::
