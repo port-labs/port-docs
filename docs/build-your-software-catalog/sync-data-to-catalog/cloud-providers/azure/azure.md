@@ -62,7 +62,6 @@ Use the Azure exporter when you need comprehensive resource scanning and can set
 
 - Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.
 - Check out the [Azure Multi Subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md) guide for setting up synchronization of Azure resources.
-- Learn about [Azure Incremental Sync](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md) for lightweight, efficient change-based synchronization.
 
 ## Configuration
 
