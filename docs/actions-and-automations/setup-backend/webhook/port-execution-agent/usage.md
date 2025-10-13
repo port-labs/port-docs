@@ -22,7 +22,6 @@ For example:
 ```json showLineNumbers
 { "type": "WEBHOOK", "agent": true, "url": "URL_TO_API_INSIDE_YOUR_NETWORK" }
 ```
-
 :::
 
 Well Done! **Port Agent** is now running in your environment and will trigger any webhook that you've configured (for self-service actions, or changes in the software catalog).
@@ -56,7 +55,7 @@ env:
     VAR_NAME: VAR_VALUE
 ```
 
-###  Proxy configuration
+### Proxy configuration
 
 #### `HTTP_PROXY`, `HTTPS_PROXY` & `ALL_PROXY`
 `HTTP_PROXY`, `HTTPS_PROXY`, and `ALL_PROXY` are environment variables used to specify a proxy server for handling HTTP, HTTPS, or all types of requests, respectively. The values assigned to these settings should be the URL of the proxy server.
@@ -81,7 +80,13 @@ For more information take a look at the Requests [proxy configuration documentat
 
 ### SSL Environment Configuration
 
-#### `REQUESTS_CA_BUNDLE`
+### Certificate Configuration
+
+#### Self-signed certificate
+
+Use the following Helm values:
+- Set `selfSignedCertificate.enabled` to `true`.
+- Put your PEM-encoded CA content in `selfSignedCertificate.certificate`.
 
 `REQUESTS_CA_BUNDLE` is an environment variable used to specify a custom Certificate Authority (CA) bundle for verifying SSL/TLS certificates in HTTPS requests.
 
@@ -94,6 +99,15 @@ REQUESTS_CA_BUNDLE=/path/to/cacert.pem
 
 This configuration directs the `requests` library to use the specified CA bundle for SSL/TLS certificate verification, overriding default system settings. It's useful for trusting self-signed certificates or certificates from a private CA.
 
+#### Multiple certificates
+
+Use the following Helm values:
+- Keep your certificate via `selfSignedCertificate` as above.
+- Add other certificates by supplying files via `extraVolumes` and mounting them with `extraVolumeMounts` into the container.
+
+:::info Certificate file requirement
+Each certificate must be provided in a separate PEM file. Files containing multiple certificates are not supported.
+:::
 
 ## Next Steps
 
