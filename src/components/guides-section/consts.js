@@ -1475,7 +1475,14 @@ export const availableGuides = [
         tags: ["SDLC", "GitHub", "AI",  "Automations"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/manage-ai-instructions",
-    }
+    },
+    {
+        title: "Streamline IaC with AI",
+        description: "Use Port AI agents to automate IaC provisioning and management",
+        tags: ["IaC for devs", "AI", "Actions", "Automations"],
+        logos: ["AI", "AWS"],
+        link: "/guides/all/streamline-iac-with-ai",
+    },
 ]
 
 // Enhance guides with metadata (isNew property)
