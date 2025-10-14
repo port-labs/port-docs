@@ -132,7 +132,7 @@ Now that you have the Azure App Registration details, you can install the Azure 
 
 You should have the following information ready:
 
-- Port API credentials, you can check out the [Port API documentation](#port-credentials).
+- Port API credentials:
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
@@ -171,7 +171,7 @@ The Azure exporter is deployed using Azure DevOps pipline, which supports schedu
 
 <h2> Prerequisites </h2>
 
-- [Port API credentials](#port-credentials)
+- [Port API credentials](./#port-credentials)
 - Access to an Azure DevOps project with permission to configure pipelines and secrets.
 - Azure App Registration Credentials
 
@@ -181,7 +181,7 @@ Now that you have the Azure App Registration details, you can set up the Azure e
 
 Make sure to configure the following [secret variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash) in a variable group:
 
-- Port API credentials, you can check out the [Port API documentation](#port-credentials).
+- Port API credentials:
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
@@ -260,7 +260,7 @@ steps:
 
 The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of resources from Azure to Port.
 
-- [Port API credentials](#port-credentials)
+- [Port API credentials](./#port-credentials)
 - Azure App Registration Credentials
 
 <h2> Installation </h2>
@@ -269,7 +269,7 @@ Now that you have the Azure App Registration details, you can set up the Azure e
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-- Port API credentials, you can check out the [Port API documentation](#port-credentials).
+- Port API credentials:
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
@@ -318,7 +318,7 @@ Here is an example for `azure-rg-integration.yml` workflow file:
 
 <h2> Prerequisites </h2>
 
-- [Port API credentials](#port-credentials)
+- [Port API credentials](./#port-credentials)
 - [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) >= 2.0.0
 - Azure App Registration Credentials
 
@@ -404,7 +404,7 @@ kubectl apply -f azure-rg-integration.yaml
 
 <h2> Prerequisites </h2>
 
-- [Port API credentials](#port-credentials)
+- [Port API credentials](./#port-credentials)
 - Azure App Registration Credentials
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
@@ -470,7 +470,7 @@ ingest_data:
 <TabItem value="on-prem" label="On-Prem (Once)">
 
 <h2> Prerequisites </h2>
-- [Port API credentials](#port-credentials)
+- [Port API credentials](./#port-credentials)
 - [Docker](https://docs.docker.com/get-docker/)
 - Azure App Registration Credentials
 
@@ -480,7 +480,7 @@ Now that you have the Azure App Registration details, you can install the Azure 
 
 You should have the following information ready:
 
-- Port API credentials, you can check out the [Port API documentation](#port-credentials).
+- Port API credentials:
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
