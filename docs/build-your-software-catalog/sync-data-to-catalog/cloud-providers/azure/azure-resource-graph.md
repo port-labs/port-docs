@@ -260,7 +260,7 @@ steps:
 The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of resources from Azure to Port.
 
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
-- [Azure App Registration Credentials](/build-your-software-catalog/sync-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
+- [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
 <h2> Installation </h2>
 
