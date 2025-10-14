@@ -1,6 +1,5 @@
 ---
 description: 
-globs: **/*.md
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
- 
