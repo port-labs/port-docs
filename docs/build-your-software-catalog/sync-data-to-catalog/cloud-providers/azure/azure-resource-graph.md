@@ -402,6 +402,11 @@ kubectl apply -f azure-rg-integration.yaml
 
 <TabItem value="gitlab" label="GitLab">
 
+<h2> Prerequisites </h2>
+
+- [Port API credentials](#port-credentials)
+- Azure App Registration Credentials
+
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
 | Parameter                                     | Description                                                                                                                           | Required |
