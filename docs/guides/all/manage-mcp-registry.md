@@ -322,7 +322,7 @@ curl -X POST 'https://ingest.getport.io/YOUR_WEBHOOK_ID' \
 
 
 :::tip Viewing MCP servers
-**Browse the catalog**: Navigate to the MCP Servers page to see all registered servers (or [create a custom table view](/build-your-software-catalog/customize-integrations/configure-data-model/custom-table-views/create-custom-table-views) to show different perspectives of your MCP server registry).
+**Browse the catalog**: Navigate to the MCP Servers page to see all registered servers (or [create a custom table view](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/#table) to show different perspectives of your MCP server registry).
 :::
 
 
