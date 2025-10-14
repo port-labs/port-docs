@@ -717,11 +717,10 @@ You can filter Azure resources using tags from their parent resource groups. Thi
 
 ## Frequently asked questions
 
-#Ai! make this section more succint
 ### Why should I filter resources by their resource group tags?
 
-Filtering resources based on their parent resource group's tags is a powerful feature that simplifies resource management and synchronization. Here's why it's beneficial:
+Filtering resources by their parent resource group's tags simplifies management and synchronization for several reasons:
 
-- **Simplified Tagging Strategy**: Instead of tagging every individual resource, you can apply tags at the resource group level. This is often more manageable and ensures that all resources within a group share a common context (e.g., environment, application, or owner).
-- **Consistent Classification**: Resource groups usually have a more consistent tagging strategy compared to individual resources. By filtering at this level, you can reliably include or exclude entire sets of related resources.
-- **Improved Efficiency**: By filtering at the query level, you reduce the amount of data synced from Azure. This not only speeds up the ingestion process but also minimizes the volume of data processed, leading to a more efficient and focused software catalog.
+- **Simplified Tagging**: Apply tags at the resource group level instead of to individual resources. This is more manageable and ensures resources share a common context.
+- **Consistent Classification**: Resource group tags are often more consistent than individual resource tags, allowing for reliable filtering of related resources.
+- **Improved Efficiency**: Filtering reduces the amount of data synced from Azure, speeding up ingestion and creating a more focused software catalog.
