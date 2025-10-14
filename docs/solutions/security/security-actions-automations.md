@@ -86,21 +86,21 @@ Streamline the vulnerability management lifecycle from detection to remediation:
 
 Port makes vulnerability management run itself with **context-aware automations**: recipes auto-create and route work, escalate past SLA, link vulns to incidents, update control status from fresh evidence, notify on control failures, and calculate a **business-aware risk score**—all from one place.
 
-#### **Automated vulnerability processing**
+#### Automated vulnerability processing
   - Create Jira issues from Dependabot (and other scanners) with full catalog context and owners.
   - Auto-escalate Snyk (and peers) based on **service criticality** and **exploit availability**.
   - Route to the right team from **service ownership/tech stack**; notify on-call automatically.
   - Link new security incidents to open vulnerabilities in affected services.
   - Raise priority when items breach the **remediation SLA**.
 
-#### **Intelligent vulnerability enrichment**
+#### Intelligent vulnerability enrichment
 
   - Use AI to add remediation guidance and business context to each finding.
   - Auto-research exploit availability and attack complexity to adjust risk.
   - Correlate with recent **code changes** and **deploy history** for likely owners and rollback paths.
   - Generate impact assessments from **service architecture** (data class, dependencies, customer tier).
 
-#### **Control-aware signals (closing the loop)**
+#### Control-aware signals (closing the loop)
   - Auto-update **control status** when new evidence lands; notify when a control test fails.
   - Keep score with an auto-calculated **Vulnerability Risk Score** that blends CVSS, exploitability, and business impact.
 
