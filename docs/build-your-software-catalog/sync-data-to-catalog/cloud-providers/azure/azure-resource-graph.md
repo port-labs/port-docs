@@ -591,7 +591,7 @@ You can use the following Port blueprint definitions and integration configurati
   ```
 </details>
 
-:::info resource type filter
+:::note resource type filter
 You can filter resources from Azure Resource Graph by specifying `resource_types` in the mapping configuration. This provides precise control over synced data, streamlining ingestion and keeping your catalog focused on relevant resources.
 :::
 
@@ -715,7 +715,7 @@ resources:
   ```
 </details>
 
-:::info resource group tags
+:::note resource group tags
 You can filter Azure resources using tags from their parent resource groups. This allows you to define both inclusion and exclusion rules in a single configuration, giving you precise control over which resources are synchronized.
 :::
 
