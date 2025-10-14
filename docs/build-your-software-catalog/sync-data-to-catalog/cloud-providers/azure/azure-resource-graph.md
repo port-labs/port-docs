@@ -10,7 +10,7 @@ import DockerParameters from "./\_azure_docker_params.mdx"
 import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Azure Resource Graph
+# Azure Resource Graph (Beta)
 
 Sync your Azure environment to Port at scale using Azure Resource Graph and Ocean framework. This integration is designed for high-volume data ingestion across multiple subscriptions, offering several key advantages:
 
