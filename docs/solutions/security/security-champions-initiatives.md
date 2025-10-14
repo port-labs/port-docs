@@ -94,8 +94,7 @@ Measure preparedness and response capabilities:
 - **Backup and recovery** – Recovery processes tested regularly.
 - **Compliance tracking** – Audit trails maintained and up-to-date.
 
-:::tip
-**Start small and iterate:**  
+:::tip Start small and iterate
 Focus scorecards on practices that teams directly control to ensure quick wins and early adoption.
 :::
 

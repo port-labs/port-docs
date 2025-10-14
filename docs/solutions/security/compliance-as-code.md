@@ -71,8 +71,8 @@ With Port:
   - *Audit Evidence* – proof items such as logs, screenshots, or test reports.
 - Link services to their controls using **relations**.
 - Tag services with key metadata:
-  - Regulatory scope (SOC 2, PCI, HIPAA, GDPR),
-  - Data sensitivity (PII, payment data, internal-only),
+  - Regulatory scope (SOC 2, PCI, HIPAA, GDPR).
+  - Data sensitivity (PII, payment data, internal-only).
   - Criticality (customer-facing, revenue-generating, internal).
 
 This creates a **single source of truth** for compliance across the organization.

@@ -18,13 +18,13 @@ Port turns vulnerability management from a chaotic, reactive process into a busi
 Modern security teams face an impossible task: thousands of vulnerabilities discovered daily across code, infrastructure, cloud, and open source dependencies. Without business context, every issue appears urgent, leading to **alert fatigue**, wasted resources, and dangerous blind spots.
 
 :::tip Transform vulnerability management
-**Port transforms vulnerability management from chaos to clarity — helping security teams focus on what truly matters to the business.**
+Port transforms vulnerability management from chaos to clarity — helping security teams focus on what truly matters to the business.
 :::
 
 Port solves this by **anchoring vulnerability management to business context**.  
-Instead of starting with raw scanner data, Port starts with what matters most: your services, their owners, their environments, and their business impact.  
-This context powers:
+Instead of starting with raw scanner data, Port starts with what matters most; your services, their owners, their environments, and their business impact.
 
+This context powers:
 - **Unified visibility** – All vulnerabilities from all scanners in a single platform.  
 - **Risk-based prioritization** – Focus on vulnerabilities that truly impact production and revenue.  
 - **Automated workflows** – Route issues to the right teams with the right urgency.  
@@ -36,10 +36,6 @@ The result: Security teams fix the **right vulnerabilities** faster, while devel
 
 Port integrates with your existing security stack, automatically ingesting vulnerability data, enriching it with business context, and prioritizing it for action.
 
-
-:::tip Transform vulnerability management
-**Port transforms vulnerability management from chaos to clarity — helping security teams focus on what truly matters to the business.**
-:::
 
 ## Introduction
 
@@ -78,7 +74,9 @@ Port transforms vulnerability data into actionable intelligence by anchoring it 
 - Integrate with tools like **Trivy, Wiz, Dependabot, Orca, Snyk**, etc., to ingest vulnerabilities into Port with service links.
 - Leverage **API ingestion** for custom tools or vulnerability sources, using Port's REST API to create/update vulnerability entities linked to services.
 
-The catalog view below shows Port’s business-first approach in action: findings from many sources (Dependabot, Veracode, Trivy, Snyk, Semgrep, pen-tests, manual review) are normalized into one table and **linked to services in the software catalog** (e.g., *User Authentication Service*, *Customer Portal*). Catalog context—service criticality, data class, environment, ownership, dependencies—feeds the **Business Impact** label and rolls up into a single **Business Risk Score** that orders the queue (Log4j RCE at 100 down to a hard-coded key at 30). Duplicates are collapsed, policy choices are explicit via **Accepted Risk** (e.g., legacy Windows 2012 R2 = True), and every row carries the metadata needed to route to the right team and meet SLAs/compliance scope. Net: Port prioritizes what matters to the business, not just raw CVEs, by unifying vulnerability data with rich catalog context into one actionable triage view.
+The catalog view below shows Port’s business-first approach in action: findings from many sources (Dependabot, Veracode, Trivy, Snyk, Semgrep, pen-tests, manual review) are normalized into one table and **linked to services in the software catalog** (e.g., *User Authentication Service*, *Customer Portal*). Catalog context—service criticality, data class, environment, ownership, dependencies—feeds the **Business Impact** label and rolls up into a single **Business Risk Score** that orders the queue (Log4j RCE at 100 down to a hard-coded key at 30).
+
+Duplicates are collapsed, policy choices are explicit via **Accepted Risk** (e.g., legacy Windows 2012 R2 = True), and every row carries the metadata needed to route to the right team and meet SLAs/compliance scope. Net: Port prioritizes what matters to the business, not just raw CVEs, by unifying vulnerability data with rich catalog context into one actionable triage view.
 
 - **One view, all sources:** Dependabot, Veracode, Trivy, Snyk, Semgrep, pen-tests, manual reviews—normalized into a single table.
 - **Catalog context applied:** Each finding is tied to the service in Port’s software catalog (criticality, data class, environment, ownership, dependencies).
