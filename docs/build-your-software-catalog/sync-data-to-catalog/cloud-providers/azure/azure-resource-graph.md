@@ -92,13 +92,12 @@ resources:
 
 ## Setup
 
-### Port setup
+To set up the Azure Resource Graph exporter, you'll need to configure both Port credentials and Azure app registration.
 
-#### Port credentials
-
+<h3>Port credentials</h3>
 <CredentialsGuide />
 
-### Azure setup
+<h3>Azure setup</h3>
 
 This integration requires the standard [Azure app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate%2Cexpose-a-web-api) setup.
 
@@ -120,9 +119,9 @@ The Azure resource graph exporter is deployed using helm on kubernetes.
 This way of deployment supports scheduled resyncs of resources from Azure to Port.
 
 <h2> Prerequisites </h2>
-- [Port API credentials](#port-credentials)
+- [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0
-- Azure App Registration Credentials
+- [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
 <h2> Installation </h2>
 
@@ -132,7 +131,7 @@ Now that you have the Azure App Registration details, you can install the Azure 
 
 You should have the following information ready:
 
-- Port API credentials, you can check out the [Port API documentation](#port-credentials).
+- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup).
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
@@ -171,9 +170,9 @@ The Azure exporter is deployed using Azure DevOps pipline, which supports schedu
 
 <h2> Prerequisites </h2>
 
-- [Port API credentials](#port-credentials)
+- [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - Access to an Azure DevOps project with permission to configure pipelines and secrets.
-- Azure App Registration Credentials
+- [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
 <h2> Installation </h2>
 
@@ -260,8 +259,8 @@ steps:
 
 The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of resources from Azure to Port.
 
-- [Port API credentials](#port-credentials)
-- Azure App Registration Credentials
+- [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
+- [Azure App Registration Credentials](/build-your-software-catalog/sync-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
 <h2> Installation </h2>
 
@@ -269,7 +268,7 @@ Now that you have the Azure App Registration details, you can set up the Azure e
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-- Port API credentials, you can check out the [Port API documentation](#port-credentials).
+- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup).
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
@@ -318,9 +317,9 @@ Here is an example for `azure-rg-integration.yml` workflow file:
 
 <h2> Prerequisites </h2>
 
-- [Port API credentials](#port-credentials)
+- [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) >= 2.0.0
-- Azure App Registration Credentials
+- [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
 <h2> Installation </h2>
 
@@ -404,8 +403,8 @@ kubectl apply -f azure-rg-integration.yaml
 
 <h2> Prerequisites </h2>
 
-- [Port API credentials](#port-credentials)
-- Azure App Registration Credentials
+- [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
+- [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -470,9 +469,9 @@ ingest_data:
 <TabItem value="on-prem" label="On-Prem (Once)">
 
 <h2> Prerequisites </h2>
-- [Port API credentials](#port-credentials)
+- [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [Docker](https://docs.docker.com/get-docker/)
-- Azure App Registration Credentials
+- [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
 <h2> Installation </h2>
 
@@ -480,7 +479,7 @@ Now that you have the Azure App Registration details, you can install the Azure 
 
 You should have the following information ready:
 
-- Port API credentials, you can check out the [Port API documentation](#port-credentials).
+- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup).
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
