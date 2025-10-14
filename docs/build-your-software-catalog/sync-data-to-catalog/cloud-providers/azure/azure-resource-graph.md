@@ -109,7 +109,7 @@ This way of deployment supports scheduled resyncs of resources from Azure to Por
 
 <h2> Installation </h2>
 
-<IntegrationVersion integration="azure" />
+<IntegrationVersion integration="azure-resource-graph" />
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using Helm.
 
@@ -164,7 +164,7 @@ The Azure exporter is deployed using Azure DevOps pipline, which supports schedu
 
 Now that you have the Azure App Registration details, you can set up the Azure exporter using an Azure DevOps pipeline.
 
-Make sure to configure the following [seceret variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash) in a variable group:
+Make sure to configure the following [secret variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash) in a variable group:
 
 - Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 	- `PORT_CLIENT_ID`
