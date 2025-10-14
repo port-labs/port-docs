@@ -180,7 +180,7 @@ Now that you have the Azure App Registration details, you can set up the Azure e
 
 Make sure to configure the following [secret variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash) in a variable group:
 
-- Port API credentials, you can check out the [Port API documentation](#port-credentials).
+- Port API credentials:
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
@@ -268,7 +268,7 @@ Now that you have the Azure App Registration details, you can set up the Azure e
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup).
+- Port API credentials:
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
