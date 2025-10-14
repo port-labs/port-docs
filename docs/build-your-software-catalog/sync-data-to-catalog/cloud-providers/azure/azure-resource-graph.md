@@ -10,7 +10,7 @@ import DockerParameters from "./\_azure_docker_params.mdx"
 import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Azure resource graph
+# Azure Resource Graph
 
 Sync your Azure environment to Port at scale using Azure Resource Graph and Ocean framework. This integration is designed for high-volume data ingestion across multiple subscriptions, offering several key advantages:
 
@@ -90,7 +90,26 @@ resources:
   ```
 </details>
 
-## installation
+## Setup
+
+### Port setup
+
+#### Port credentials
+
+<CredentialsGuide />
+
+### Azure setup
+
+This integration requires the standard [Azure app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate%2Cexpose-a-web-api) setup.
+
+Keep the following credentials handy after setup:
+- `AZURE_CLIENT_ID`: The client ID of the Azure service principal
+- `AZURE_CLIENT_SECRET`: The client secret of the Azure service principal
+- `AZURE_TENANT_ID`: The tenant ID of the Azure service principal
+
+<AzureAppRegistration/>
+
+## Installation
 
 <Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="helm">
 
@@ -101,11 +120,9 @@ The Azure resource graph exporter is deployed using helm on kubernetes.
 This way of deployment supports scheduled resyncs of resources from Azure to Port.
 
 <h2> Prerequisites </h2>
-- [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+- [Port API credentials](#port-credentials)
 - [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0
-- [Azure App Registration Credentials](See below)
-
-<AzureAppRegistration/>
+- Azure App Registration Credentials
 
 <h2> Installation </h2>
 
@@ -115,7 +132,7 @@ Now that you have the Azure App Registration details, you can install the Azure 
 
 You should have the following information ready:
 
-- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+- Port API credentials, you can check out the [Port API documentation](#port-credentials).
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
@@ -154,11 +171,9 @@ The Azure exporter is deployed using Azure DevOps pipline, which supports schedu
 
 <h2> Prerequisites </h2>
 
-- [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+- [Port API credentials](#port-credentials)
 - Access to an Azure DevOps project with permission to configure pipelines and secrets.
-- Azure App Registration Credentials (See below)
-
-<AzureAppRegistration/>
+- Azure App Registration Credentials
 
 <h2> Installation </h2>
 
@@ -166,7 +181,7 @@ Now that you have the Azure App Registration details, you can set up the Azure e
 
 Make sure to configure the following [secret variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash) in a variable group:
 
-- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+- Port API credentials, you can check out the [Port API documentation](#port-credentials).
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
@@ -235,7 +250,6 @@ steps:
       targetType: 'inline'
       script: |
         rm -f .sail-env
-
 ```
 
 </details>
@@ -246,11 +260,8 @@ steps:
 
 The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of resources from Azure to Port.
 
-- [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-- Azure App Registration Credentials (See below)
-
-<AzureAppRegistration/>
-
+- [Port API credentials](#port-credentials)
+- Azure App Registration Credentials
 
 <h2> Installation </h2>
 
@@ -258,7 +269,7 @@ Now that you have the Azure App Registration details, you can set up the Azure e
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+- Port API credentials, you can check out the [Port API documentation](#port-credentials).
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
@@ -307,28 +318,26 @@ Here is an example for `azure-rg-integration.yml` workflow file:
 
 <h2> Prerequisites </h2>
 
-- [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+- [Port API credentials](#port-credentials)
 - [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) >= 2.0.0
-- Azure App Registration Credentials (See below)
-
-<AzureAppRegistration/>
+- Azure App Registration Credentials
 
 <h2> Installation </h2>
 
-1. Create a `values.yaml` file in `argocd/azure-integration` in your git repository with the content:
+1. Create a `values.yaml` file in `argocd/azure-rg-integration` in your git repository with the content:
 
 ```yaml showLineNumbers
-initializePortResources: true
-scheduledResyncInterval: 120
-integration:
-  identifier: azure-rg-integration
-  type: azure-rg
-  eventListener:
-    type: POLLING
-	config:
-    azureClientId: <AZURE_CLIENT_ID>
-		azureClientSecret: <AZURE_CLIENT_SECRET>
-		azureTenantId: <AZURE_TENANT_ID>
+  initializePortResources: true
+  scheduledResyncInterval: 120
+  integration:
+    identifier: azure-rg-integration
+    type: azure-rg
+    eventListener:
+      type: POLLING
+	  config:
+      azureClientId: <AZURE_CLIENT_ID>
+		  azureClientSecret: <AZURE_CLIENT_SECRET>
+		  azureTenantId: <AZURE_TENANT_ID>
 ```
 
 2. Install the `azure-rg-integration` ArgoCD Application by creating the following `azure-rg-integration.yaml` manifest:
@@ -384,6 +393,7 @@ Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readth
 <PortApiRegionTip/>
 
 3. Apply the `azure-rg-integration.yaml` manifest to your Kubernetes cluster.
+
 ```bash
 kubectl apply -f azure-rg-integration.yaml
 ```
@@ -404,7 +414,6 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | `OCEAN__INTEGRATION__CONFIG__AZURE_TENANT_ID` | The tenant ID of the Azure App Registration.                                                                                          | ✅       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, when set to false the integration will not create default blueprints and the port App config mapping.                   | ❌       |
 | `OCEAN__SEND_RAW_DATA_EXAMPLES`               | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true.  | ❌       |
-| `OCEAN__EVENT_LISTENER`                       | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                             | ❌       |
 
 <br/>
 
@@ -456,11 +465,9 @@ ingest_data:
 <TabItem value="on-prem" label="On-Prem (Once)">
 
 <h2> Prerequisites </h2>
-- [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+- [Port API credentials](#port-credentials)
 - [Docker](https://docs.docker.com/get-docker/)
-- [Azure App Registration Credentials](?installation-methods=on-premise#azure-app-registration)
-
-<AzureAppRegistration/>
+- Azure App Registration Credentials
 
 <h2> Installation </h2>
 
@@ -468,7 +475,7 @@ Now that you have the Azure App Registration details, you can install the Azure 
 
 You should have the following information ready:
 
-- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+- Port API credentials, you can check out the [Port API documentation](#port-credentials).
 	- `PORT_CLIENT_ID`
 	- `PORT_CLIENT_SECRET`
 - Azure Credentials:
@@ -517,9 +524,11 @@ ghcr.io/port-labs/port-ocean-azure-rg:latest
 
 ## Examples
 
-### Resource type filtering
+### Mapping Azure Cloud resources
 
-The integration allows you to filter which resources are ingested from Azure Resource Graph by specifying the `resource_types` in the mapping configuration. By providing a list of resource types, you can control precisely which data is synced, helping to streamline the ingestion process and keep your software catalog focused on the resources that matter most.
+The following example demonstrates how to ingest your Azure Subscriptions to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
 
 <details>
   <summary><b>Blueprint (click to expand)</b></summary>
@@ -578,8 +587,15 @@ The integration allows you to filter which resources are ingested from Azure Res
   ```
 </details>
 
-### Resource group tag filtering
-The integration provides advanced filtering capabilities for Azure resources by leveraging tags from their parent resource groups. This allows you to define both inclusion and exclusion rules within a single configuration, offering precise control over which resources are synchronized.
+#### Configuration options
+
+The integration allows you to filter which resources are ingested from Azure Resource Graph by specifying the `resource_types` in the mapping configuration. By providing a list of resource types, you can control precisely which data is synced, helping to streamline the ingestion process and keep your software catalog focused on the resources that matter most. #Ai! make this more succint
+
+### Mapping cloud resources and resource groups
+
+The following example demonstrates how to ingest your Azure Subscriptions to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
 
 <details>
   <summary><b>Blueprints (click to expand)</b></summary>
@@ -694,6 +710,10 @@ resources:
               ("/subscriptions/" + .subscriptionId + "/resourceGroups/"  + .resourceGroup) | gsub(" ";"_")
   ```
 </details>
+
+#### Configuration options
+
+The integration provides advanced filtering capabilities for Azure resources by leveraging tags from their parent resource groups. This allows you to define both inclusion and exclusion rules within a single configuration, offering precise control over which resources are synchronized.
 
 ## Frequently asked questions
 
