@@ -7,7 +7,11 @@ import TabItem from "@theme/TabItem"
 import CredentialsGuide from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 import AzureAppRegistration from "./\_azure_app_registration_guide.mdx"
 
-# Azure multi subscriptions
+# Azure multi subscriptions (Deprecated)
+
+:::warning Deprecation Notice
+This integration is deprecated and will be discontinued soon, please use [Azure Resource Graph](./azure-resource-graph.md) integration instead.
+:::
 
 The Azure multi-subscription sync solution provides a way to periodically sync resources from multiple Azure subscriptions into Port with these key advantages:
 
