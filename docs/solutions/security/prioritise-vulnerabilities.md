@@ -9,9 +9,17 @@ sidebar_position: 2
 **Port transforms vulnerability management from chaos to clarity — helping security teams focus on what truly matters to the business.**
 :::
 
+
 ## Executive summary
 
+
+Port turns vulnerability management from a chaotic, reactive process into a business-first security capability. By unifying all types of vulnerabilities, enriching them with business context, and enabling API and automation-driven prioritization, Port ensures you fix what matters—fast, strategically, and sustainably.
+
 Modern security teams face an impossible task: thousands of vulnerabilities discovered daily across code, infrastructure, cloud, and open source dependencies. Without business context, every issue appears urgent, leading to **alert fatigue**, wasted resources, and dangerous blind spots.
+
+:::tip Transform vulnerability management
+**Port transforms vulnerability management from chaos to clarity — helping security teams focus on what truly matters to the business.**
+:::
 
 Port solves this by **anchoring vulnerability management to business context**.  
 Instead of starting with raw scanner data, Port starts with what matters most: your services, their owners, their environments, and their business impact.  
@@ -27,7 +35,6 @@ The result: Security teams fix the **right vulnerabilities** faster, while devel
 ## How it works: vulnerability ingestion flow
 
 Port integrates with your existing security stack, automatically ingesting vulnerability data, enriching it with business context, and prioritizing it for action.
-
 
 
 :::tip Transform vulnerability management
@@ -147,19 +154,19 @@ Port turns security policy into **automation that reacts to context**: scorecard
 
 ## Putting it into practice: a practical workflow
 
-1. **Set up your software catalog** with service metadata (ownership, criticality, compliance, environments) and vulnerability blueprints (e.g., Trivy, Wiz).
-2. **Ingest vulnerabilities** via native integrations or API into Port, linking them to the relevant service entities.
-3. **Create dashboards** to visualize the active threat landscape in context (e.g., “Critical findings in production, by service owner”).
-4. **Define priority scoring** combining severity with business context—for instance:
-   - Production service = +100
-   - High revenue impact = +50
-   - Customer data involved = +30
-   - Known-exploited = +70
-5. **Automate workflows**:
+- **Set up your software catalog** with service metadata (ownership, criticality, compliance, environments) and vulnerability blueprints (e.g., Trivy, Wiz).
+- **Ingest vulnerabilities** via native integrations or API into Port, linking them to the relevant service entities.
+- **Create dashboards** to visualize the active threat landscape in context (e.g., “Critical findings in production, by service owner”).
+- **Define priority scoring** combining severity with business context—for instance:
+   - Production service = +100.
+   - High revenue impact = +50.
+   - Customer data involved = +30.
+   - Known-exploited = +70.
+- **Automate workflows**:
    - Immediately notify owners when score exceeds threshold.
    - Escalate top-10 findings to leadership daily.
    - Create tickets and set different SLA windows based on business tier.
-6. **Track progress with scorecards**:
+- **Track progress with scorecards**:
    - Average remediation time for production-ranked vulnerabilities.
    - % of services with defined ownership.
    - Trend of high-risk vulnerabilities over time.
@@ -168,16 +175,9 @@ Port turns security policy into **automation that reacts to context**: scorecard
 
 By using Port's business-context-driven approach to vulnerability prioritization, organizations achieve:
 
-- **50%+ reduction** in wasted remediation time
-- **Faster MTTR on truly critical issues**
-- **Improved developer experience** with context-aware, actionable findings
-- **Better alignment** between security, product, and engineering teams
-- **Higher trust and accountability**, backed by dashboards and scorecards
+- **50%+ reduction** in wasted remediation time.
+- **Faster MTTR on truly critical issues**.
+- **Improved developer experience** with context-aware, actionable findings.
+- **Better alignment** between security, product, and engineering teams.
+- **Higher trust and accountability**, backed by dashboards and scorecards.
 
-## Summary
-
-Port turns vulnerability management from a chaotic, reactive process into a business-first security capability. By unifying all types of vulnerabilities, enriching them with business context, and enabling API and automation-driven prioritization, Port ensures you fix what matters—fast, strategically, and sustainably.
-
-:::tip Transform vulnerability management
-**Port transforms vulnerability management from chaos to clarity — helping security teams focus on what truly matters to the business.**
-:::

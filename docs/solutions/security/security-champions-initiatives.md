@@ -9,29 +9,25 @@ sidebar_position: 4
 **Port empowers organizations to scale security culture by making secure development measurable, actionable, and rewarding.**
 :::
 
-:::tip Turn security into shared responsibility
-**Port helps you turn security from a siloed function into a shared, measurable responsibility across your entire organization.**
-:::
-
 ## Introduction
 
 The most successful security programs are **not built by security teams alone**—they are built by empowering every developer to take part in protecting the business.  
 
 Traditional approaches rely on:
-- Mandatory training sessions,
-- Security checklists,
+- Mandatory training sessions.
+- Security checklists.
 - Penalty-driven compliance.
 
 These often create friction between security and engineering teams and fail to build sustainable engagement.
 
 The reality: most developers **want** to build secure software but are overwhelmed by:
-- Conflicting security requirements,
-- Unclear guidance,
+- Conflicting security requirements.
+- Unclear guidance.
 - Tools that slow them down.
 
 The solution is to **make security the easy and rewarding choice** through:
-- Clear standards and expectations,
-- Automated guardrails,
+- Clear standards and expectations.
+- Automated guardrails.
 - Recognition and motivation for security-positive behaviors.
 
 Port provides the foundation to scale these efforts by connecting **people, processes, and technology** in one platform.
@@ -117,8 +113,8 @@ Examples:
 - **Branch protection compliance** – Ensure all production repos enforce branch protection rules.
 
 These campaigns can be **tracked in Port** through:
-- Dashboards that visualize campaign progress,
-- Automated alerts when thresholds are reached,
+- Dashboards that visualize campaign progress.
+- Automated alerts when thresholds are reached.
 - Scorecard metrics tied to completion targets.
 
 ### Recognition and gamification
@@ -127,7 +123,7 @@ Recognizing and rewarding improvements encourages ongoing participation.
 
 Examples:
 - **Leaderboards** – Rank teams by their improvement scores.
-- **Achievement badges** – Reward milestones like "90% scorecard compliance."
+- **Achievement badges** – Reward milestones like "90% scorecard compliance.
 - **Improvement showcases** – Share success stories at company all-hands.
 - **Cross-team learning sessions** – High-performing teams teach others.
 
@@ -167,8 +163,8 @@ Champions should have **specific, measurable responsibilities**:
 - Report vulnerabilities and guide remediation.
 
 Success is tracked through:
-- Team scorecard performance,
-- Remediation timelines,
+- Team scorecard performance.
+- Remediation timelines.
 - Training engagement rates.
 
 ### Step 3: implement scorecards
@@ -220,9 +216,9 @@ Organizations using Port to power their champions program have achieved:
 
 Security champions bridge the gap between **security strategy** and **engineering execution**.  
 With Port, you can:
-- Define clear expectations through scorecards,
-- Drive progress with initiatives and campaigns,
-- Automate guardrails to make security seamless,
+- Define clear expectations through scorecards.
+- Drive progress with initiatives and campaigns.
+- Automate guardrails to make security seamless.
 - Measure cultural change with actionable metrics.
 
 

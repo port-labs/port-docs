@@ -9,16 +9,19 @@ sidebar_position: 3
 **Port transforms security metrics from vanity numbers into actionable insights, helping CISOs, security teams, and developers align on what truly matters.**
 :::
 
-:::tip Unify security strategy and execution
-**From prioritizing vulnerabilities to visualizing progress, Port unifies security strategy and execution in one powerful platform.**
-:::
 
 ## Executive summary
 
+Port enables you to **move beyond vanity metrics** and create security dashboards that:
+- Connect vulnerability data to business impact.
+- Show trends, not just snapshots.
+- Align executives, security teams, and developers around shared goals.
+- Drive measurable, continuous improvement.
+
 Most security dashboards today are filled with **vanity metrics**—impressive to look at, but meaningless for driving action.  
 Executives see:
-- Raw vulnerability counts without business context,
-- Generic compliance percentages,
+- Raw vulnerability counts without business context.
+- Generic compliance percentages.
 - Inflated attack numbers from bots and scanners.
 
 These metrics create **false confidence** and fail to answer the questions that truly matter:
@@ -77,11 +80,10 @@ This alignment ensures **metrics and dashboards are directly actionable**, not j
 
 ## CISO dashboards with metrics that matter
 
-Security leaders need dashboards that **tell a story** about progress and risk.  
-Port enables this with **flexible visualizations**, linking data sources to executive-friendly KPIs.
+- Security leaders need dashboards that **tell a story** about progress and risk.  
+- Port enables this with **flexible visualizations**, linking data sources to executive-friendly KPIs.
 
-This is a CISO-at-a-glance view: **exposure**, **discipline**, and **trajectory**.
-
+The below snippet from port dashboard is a CISO-at-a-glance view: **exposure**, **discipline**, and **trajectory**.
 - **Exposure:** *Incidents by priority* shows the mix (17 total across critical/high/medium) so you know risk, not just count.
 - **Discipline:** *Incident Timeline Completeness* and *Timeline Management* are **Gold** for all 17—clean comms, postmortems, and SLA hygiene.
 - **Trajectory:** *Incidents over time* highlights the early-October spike to spot surges and capacity pinch points.
@@ -89,6 +91,7 @@ This is a CISO-at-a-glance view: **exposure**, **discipline**, and **trajectory*
 Together, these tie outcomes to action—where risk sits, how well response runs, and whether things are trending up or down—so funding and focus land where they matter.
 
 <img src='/img/guides/security-solution/incidents-1.png' alt='Incidents' width='80%' border='1px' />
+
 
 ### 1. Business risk metrics
 
@@ -102,11 +105,11 @@ These metrics focus on *business impact*, not just technical severity:
 | **Compliance gap analysis** | Understand gaps that affect revenue or compliance requirements | Scorecard tracking services mapped to regulatory frameworks |
 
 The dashboard views below express Business risk, distilled:
-- **17 incidents** total
-- **5 escalated** to leadership
+- **17 incidents** total.
+- **5 escalated** to leadership.
 - **3 in progress** within normal capacity.
 - **MTTR: 30 minutes**, the main lever to cut customer impact.
-- Assurance shows **7 audits** completed, **15 evidences** collected, and **5 pending review**
+- Assurance shows **7 audits** completed, **15 evidences** collected, and **5 pending review**.
 - The **audit gap assessment (7 items)** flags remaining weaknesses.
 
 Together, these metrics reveal where risk concentrates (escalations and gaps), how severe it is (MTTR), and how prepared you are (audit/evidence flow) so spend targets the highest exposure.
@@ -237,7 +240,8 @@ This metrics program directly complements the **vulnerability prioritization** a
 - Dashboards bridge **strategic and operational views**, using the same data pipelines.
 
 By connecting metrics and prioritization in one platform, Port eliminates silos and provides a **single source of truth** for security performance.
-This dashboard below supports risk-based vulnerability prioritization by showing **what matters, how sure we are, and how soon it’s due**:
+
+Port's dashboard snippet below supports risk-based vulnerability prioritization by showing **what matters, how sure we are, and how soon it’s due**:
 
 - The evidence Category groups 15 findings by business domain (operational, security, technical, etc.) to gauge impact.
 - Evidence Reliability weights each item by confidence (highly-reliable > reliable > N/A) to cut noise.
@@ -247,11 +251,3 @@ This dashboard below supports risk-based vulnerability prioritization by showing
 In practice, vulnerability catalog items can be ranked with a compact rubric — `Priority = Business Impact × Evidence Reliability × Audit Urgency × Control Gap`. For instance, highly-reliable security/technical pen-test findings during the October surge with weak non-preventive control coverage move to the top.
 
 <img src='/img/guides/security-solution/incidents-3.png' alt='security incidents' width='80%' border='1px' />
-
-## Summary
-
-Port enables you to **move beyond vanity metrics** and create security dashboards that:
-- Connect vulnerability data to business impact.
-- Show trends, not just snapshots.
-- Align executives, security teams, and developers around shared goals.
-- Drive measurable, continuous improvement.
