@@ -589,7 +589,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 #### Configuration options
 
-The integration allows you to filter which resources are ingested from Azure Resource Graph by specifying the `resource_types` in the mapping configuration. By providing a list of resource types, you can control precisely which data is synced, helping to streamline the ingestion process and keep your software catalog focused on the resources that matter most. #Ai! make this more succint
+You can filter resources from Azure Resource Graph by specifying `resource_types` in the mapping configuration. This provides precise control over synced data, streamlining ingestion and keeping your catalog focused on relevant resources.
 
 ### Mapping cloud resources and resource groups
 
