@@ -1475,6 +1475,13 @@ export const availableGuides = [
         tags: ["SDLC", "GitHub", "AI",  "Automations"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/manage-ai-instructions",
+    },
+    {
+        title: "Manage MCP Server Registry",
+        description: "Build a centralized MCP server registry with governance, discovery, and automated metadata extraction",
+        tags: ["AI", "Actions", "Automations", "RBAC"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/manage-mcp-registry",
     }
 ]
 
