@@ -717,6 +717,7 @@ You can filter Azure resources using tags from their parent resource groups. Thi
 
 ## Frequently asked questions
 
+#Ai! make this section more succint
 ### Why should I filter resources by their resource group tags?
 
 Filtering resources based on their parent resource group's tags is a powerful feature that simplifies resource management and synchronization. Here's why it's beneficial:
