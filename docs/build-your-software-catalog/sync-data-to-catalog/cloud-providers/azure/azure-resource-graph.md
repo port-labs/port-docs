@@ -713,7 +713,7 @@ resources:
 
 #### Configuration options
 
-The integration provides advanced filtering capabilities for Azure resources by leveraging tags from their parent resource groups. This allows you to define both inclusion and exclusion rules within a single configuration, offering precise control over which resources are synchronized. #AI! make this more succint
+You can filter Azure resources using tags from their parent resource groups. This allows you to define both inclusion and exclusion rules in a single configuration, giving you precise control over which resources are synchronized.
 
 ## Frequently asked questions
 
