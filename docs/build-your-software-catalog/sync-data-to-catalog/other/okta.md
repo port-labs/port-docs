@@ -21,7 +21,7 @@ This integration allows you to:
 - Watch for Okta object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Track user and group relationships for better access management visibility.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Okta into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -567,7 +567,7 @@ resources:
 
 </details>
 
-## Webhook Configuration
+## Webhook configuration
 
 The Okta integration supports real-time updates through webhooks. When using the self-hosted installation method, the integration will automatically:
 
@@ -575,7 +575,8 @@ The Okta integration supports real-time updates through webhooks. When using the
 2. Configure the webhook to send user and group change events
 3. Process incoming webhook events to update Port entities in real-time
 
-:::info Webhook Events
+### Webhook events
+
 The integration listens for the following Okta events:
 - `user.lifecycle.create`
 - `user.lifecycle.activate`
@@ -589,7 +590,6 @@ The integration listens for the following Okta events:
 - `group.lifecycle.create`
 - `group.lifecycle.delete`
 - `group.lifecycle.update`
-:::
 
 ## Limitations
 
