@@ -58,8 +58,8 @@ import OrganizationAppConfig from './example-organization/\_github_exporter_exam
 
 ## Map organizations and repositories
 
-:::info Available from v2.0.0-beta
-The `organization` kind is available from version `v2.0.0-beta` onwards.
+:::info Available from v3.0.0-beta
+The `organization` kind is available from version `v3.0.0-beta` onwards.
 :::
 
 The following example demonstrates how to ingest your GitHub organizations and their repositories to Port.  

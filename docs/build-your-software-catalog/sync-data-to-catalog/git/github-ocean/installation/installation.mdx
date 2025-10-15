@@ -28,30 +28,27 @@ This page outlines the following steps:
 
 ### Multi-organization support
 
-Starting from **version 2.0.0-beta**, the GitHub integration supports syncing data from multiple GitHub organizations.
+Starting from **version 3.0.0-beta**, the GitHub integration supports syncing data from multiple GitHub organizations.
 
-:::warning Breaking change in v2.0.0-beta
-The configuration parameter has changed from `githubOrganization` (singular) to `githubOrganizations` (plural, array format). You must update your configuration when upgrading to v2.0.0-beta.
+:::warning Breaking change in v3.0.0-beta
+The configuration parameters have changed to support different authentication types:
 
-**Before:**
+**For Classic PAT (multiple organizations):**
 ```yaml
-githubOrganization: "my-org"
+githubMultiOrganizations: ["org1", "org2", "org3"]  # Array format
 ```
 
-**After (v2.0.0-beta):**
+**For GitHub App or Fine-grained PAT (single organization):**
 ```yaml
-githubOrganizations: ["my-org"]  # Now an array
+githubOrganization: "my-org"  # String format
 ```
-:::
 
-:::info Authentication requirements
-- **Classic PAT**: Supports multiple organizations
-- **Fine-grained PAT**: Does NOT support multi-organization
-- **GitHub App**: Supports exactly **one organization** only
-:::
+**Authentication requirements:**
+- **Classic PAT**: Supports multiple organizations using `githubMultiOrganizations`
+- **Fine-grained PAT**: Supports exactly **one organization** using `githubOrganization`
+- **GitHub App**: Supports exactly **one organization** using `githubOrganization`
 
-:::caution Performance impact
-Syncing multiple organizations increases API calls and may slow down the integration. Consider syncing only the organizations you need.
+**Performance consideration:** Syncing multiple organizations increases API calls and may slow down the integration. Consider syncing only the organizations you need.
 :::
 
 ### Create access token
@@ -105,7 +102,7 @@ A GitHub App provides automatic access token rotation and is a good alternative 
 To set it up, see the [GitHub App installation guide](./github-app.mdx).
 
 :::caution Single organization limitation
-GitHub App authentication supports **exactly one organization** only. You must specify one organization in the `githubOrganizations` configuration parameter.
+GitHub App authentication supports **exactly one organization** only. You must specify one organization using the `githubOrganization` configuration parameter.
 :::
 
 </TabItem>

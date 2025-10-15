@@ -12,28 +12,17 @@ The new Ocean-powered GitHub integration comes with several key improvements:
 
 ## Major changes
 
-### Multi-organization support (v2.0.0-beta)
+### Multi-organization support (v3.0.0-beta)
 
-The GitHub integration now supports ingesting data from multiple GitHub organizations starting from **version 2.0.0-beta**. This is configured using the `githubOrganizations` parameter:
+The GitHub integration now supports ingesting data from multiple GitHub organizations starting from **version 3.0.0-beta**. This is configured using the `githubOrganization` and `githubMultiOrganizations` parameters:
 
 ```yaml showLineNumbers
 integration:
   config:
-    githubOrganizations: ["org1", "org2", "org3"]  # Classic PAT only
+    githubMultiOrganizations: ["org1", "org2", "org3"]  # Classic PAT only
+    # OR
+    githubOrganization: "my-org"  # GitHub App or Fine-grained PAT only
 ```
-
-:::warning Authentication limitations
-- **Classic PAT**: Supports multiple organizations. Fine-grained PAT tokens do not support multi-organization authentication.
-- **GitHub App**: Only supports a **single organization** (minimum 1, maximum 1). You must specify exactly one organization in the `githubOrganizations` array.
-:::
-
-:::caution Performance impact
-Syncing multiple organizations will increase the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption. Consider syncing only the organizations you need.
-:::
-
-**Configuration by authentication type:**
-- **Classic PAT**: If `githubOrganizations` is not provided, the integration will sync all organizations the PAT user is a member of.
-- **GitHub App**: Must specify exactly one organization: `githubOrganizations: ["my-org"]`
 
 ### Authentication model
 
@@ -57,7 +46,7 @@ integration:
 If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is [documented here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation/github-app). 
 
 :::caution Single organization limitation
-GitHub App authentication only supports **one organization** at a time. You must specify exactly one organization in the `githubOrganizations` array.
+GitHub App authentication only supports **one organization** at a time. You must specify exactly one organization using `githubOrganization`.
 :::
 
 Below is a sample Helm value for this configuration:
@@ -65,7 +54,7 @@ Below is a sample Helm value for this configuration:
 integration:
   config:
     githubAppId: "<GITHUB_APP_ID>" # app client id also works
-    githubOrganizations: ["my-org"]  # Required: exactly one organization
+    githubOrganization: "my-org"  # Required for single organization support regardlass of token type
   secrets:
     githubAppPrivateKey: "<BASE_64_ENCODED_PRIVATEKEY>"
 ```
@@ -103,8 +92,8 @@ A key change is how we denote custom attributes. We now add a double underscore 
 
 ### Files & GitOps
 
-:::warning Breaking change in v2.0.0-beta
-Starting from version 2.0.0-beta, the `file` kind requires an `organization` field to be specified. This is a breaking change for multi-organization support.
+:::warning Breaking change in v3.0.0-beta
+Starting from version 3.0.0-beta, the `file` kind requires an `organization` field to be specified. This is a breaking change for multi-organization support.
 :::
 
 <details>
@@ -146,7 +135,7 @@ resources:
       files:
           # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
-          organization: my-org # ✅ NEW REQUIRED FIELD for multi-organization support from v.2.0.0-beta
+          organization: my-org # ✅ NEW REQUIRED FIELD for multi-organization support from v.3.0.0-beta
             # The `repos` key can be used to filter the repositories and branch where files should be fetched
           repos:
             - name: MyRepo # ✅  new key:value pairs rather than a string.
@@ -409,8 +398,8 @@ resources:
 
 ### Folders
 
-:::warning Breaking change in v2.0.0-beta
-Starting from version 2.0.0-beta, the `folder` kind requires an `organization` field to be specified. This is a breaking change for multi-organization support.
+:::warning Breaking change in v3.0.0-beta
+Starting from version 3.0.0-beta, the `folder` kind requires an `organization` field to be specified. This is a breaking change for multi-organization support.
 :::
 
 For the `folder` kind, the `folder.name` attribute is no longer part of the response. Instead, you can easily derive the folder name from the `folder.path` using a JQ expression, as shown in the example below:
@@ -451,7 +440,7 @@ resources:
       query: "true"
       folders: 
         - path: apps/*
-          organization: my-org # ✅ NEW REQUIRED FIELD for multi-organization support from v.2.0.0-beta
+          organization: my-org # ✅ NEW REQUIRED FIELD for multi-organization support from v.3.0.0-beta
           repos:
             - name: backend-service # ✅  new, now has a 'name' key
               branch: main # ✅  new, optional branch name
@@ -560,9 +549,9 @@ This section provides a high-level summary of the key breaking changes for mappi
 
 | Area | Old Value | New Value | Notes |
 |---|---|---|---|
-| **Multi-Organization** | N/A | `githubOrganizations` configuration | **[BREAKING in v2.0.0-beta]** New configuration to support multiple organizations. **Classic PAT supports multiple orgs; GitHub App supports exactly 1 org**. Syncing multiple organizations increases API calls and may slow down the integration. |
-| **File Organization** | N/A | `organization: "my-org"` | **[BREAKING in v2.0.0-beta]** File patterns now require an `organization` field. |
-| **Folder Organization** | N/A | `organization: "my-org"` | **[BREAKING in v2.0.0-beta]** Folder selectors now require an `organization` field. |
+| **Multi-Organization** | N/A | `githubOrganization` and `githubMultiOrganizations` configuration | New configuration to support multiple organizations. **Classic PAT supports multiple orgs using `githubMultiOrganizations`; GitHub App and Fine-grained PAT support exactly 1 org using `githubOrganization`**. Syncing multiple organizations increases API calls and may slow down the integration. |
+| **File Organization** | N/A | `organization: "my-org"` | **[BREAKING in v3.0.0-beta]** File patterns now require an `organization` field. |
+| **Folder Organization** | N/A | `organization: "my-org"` | **[BREAKING in v3.0.0-beta]** Folder selectors now require an `organization` field. |
 | **Authentication** | GitHub App Installation | PAT or Self-Created GitHub App | The integration can be authenticated using a Personal Access Token (PAT) or a self-created GitHub App. **Multi-org requires classic PAT**. |
 | **Webhooks** | App Webhook | Automatic Setup by Integration | The integration now manages its own webhooks for live events. This requires `webhook` permissions and `liveEvents.baseUrl` to be set. |
 | **Workflow Runs** | 10 per repository | 100 per workflow | The number of ingested workflow runs has been increased. |

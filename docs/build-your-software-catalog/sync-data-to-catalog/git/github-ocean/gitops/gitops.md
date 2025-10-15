@@ -125,8 +125,8 @@ To edit a mapping configuration:
 
 For example, say you want to ingest a `package.json` file form your repository. You can add the following to your GitHub integration mapping:
 
-:::warning Breaking change in v2.0.0-beta
-Starting from version 2.0.0-beta, the `file` kind requires an `organization` field to be specified for multi-organization support.
+:::warning Breaking change in v3.0.0-beta
+Starting from version 3.0.0-beta, the `file` kind requires an `organization` field to be specified for multi-organization support.
 :::
 
 ```yaml
@@ -137,7 +137,7 @@ resources:
       query: 'true'
       files:
         - path: package.json
-          organization: my-org  # Required from v2.0.0-beta
+          organization: my-org  # Required from v3.0.0-beta
           repos:
             - name: my-repo
               branch: main
@@ -158,7 +158,7 @@ The `selector.files.path` key also supports glob patterns, so you can ingest mul
     query: 'true'
     files:
       - path: 'resources/*.yml'
-        organization: my-org  # Required from v2.0.0-beta
+        organization: my-org  # Required from v3.0.0-beta
         repos:
           - name: my-repo
             branch: main
