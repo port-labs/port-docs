@@ -66,7 +66,8 @@ pipeline {
                 script {
                     withCredentials([
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_URL', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_URL'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION'),                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__GITHUB_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
