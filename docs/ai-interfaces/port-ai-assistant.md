@@ -23,6 +23,20 @@ The Port AI Assistant is an out-of-the-box chat interface that:
 
 Built on [Port AI](/ai-interfaces/port-ai/overview), the assistant operates using [Port AI's developer tools](/ai-interfaces/port-ai/overview#port-ai-tools) in safe mode - meaning all actions run in **approval mode** (you get a link to review and execute) and uses read-only tools for data queries. The assistant also has access to Port's documentation through a dedicated MCP tool.
 
+## How to Use the Port AI Assistant
+
+The Port AI Assistant is available through a floating chat button in the Port interface. Simply click the button at the bottom-right corner to open the chat interface and start asking questions.
+
+<img src='/img/ai-agents/AIChatInitialState.png' width='70%' border='1px' />
+
+Once you ask a question, the assistant analyzes your request and uses the appropriate tools to provide a comprehensive response.
+
+<img src='/img/ai-agents/AIChatAskQuestion.png' width='40%' border='1px' />
+
+After processing your request, you'll receive a detailed answer along with any relevant actions or next steps.
+
+<img src='/img/ai-agents/AIChatFinalResponse.png' width='40%' border='1px' />
+
 ## Example Questions
 
 The Port AI Assistant can help with a wide variety of questions out of the box:
@@ -95,10 +109,11 @@ The Port AI Assistant can help with a wide variety of questions out of the box:
 
 The Port AI Assistant respects your organization's security controls:
 
-- **RBAC compliance**: Only accesses data you have permissions to view
-- **Safe operation**: Read-only tools for data queries
-- **Action approval**: All actions require your explicit approval before execution
-- **Audit trail**: All interactions are logged as [AI invocations](/ai-interfaces/port-ai/overview#ai-invocations)
+- **RBAC compliance**: Only accesses data you have permissions to view.
+- **Safe operation**: Read-only tools for data queries.
+- **Action approval**: All actions require your explicit approval before execution.
+- **Audit trail**: All interactions are logged as [AI invocations](/ai-interfaces/port-ai/overview#ai-invocations).
+- **Access control**: Access to the Port AI Assistant is controlled through the `_ai_invocation` blueprint permissions. Learn more about [controlling access to Port AI](/ai-interfaces/port-ai/overview#controlling-access-to-port-ai).
 
 For comprehensive security information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 

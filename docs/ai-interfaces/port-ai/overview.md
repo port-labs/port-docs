@@ -183,6 +183,24 @@ Port AI respects your organization's security controls:
 
 For detailed security information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
+### Controlling Access to Port AI
+
+Access to Port AI is controlled through the `_ai_invocation` blueprint's permissions. Users who have permission to **register** new AI invocation entities will be able to access and use Port AI interfaces, including the Port AI Assistant.
+
+To configure who can access Port AI:
+
+1. Navigate to your **Data Model** in Port
+2. Search for the `_ai_invocation` blueprint
+3. Go to the **Permissions** tab
+4. Under the **Entities** section, configure the **Register** permission
+5. Only users with the "register" permission will have access to Port AI
+
+<img src='/img/ai-agents/AIInvocationPermissions.png' width='85%' border='1px' />
+
+:::tip User access control
+By controlling who can register AI invocations, you can manage which users in your organization have access to Port AI features. This includes access to the Port AI Assistant, AI Chat Widgets, and API-based interactions.
+:::
+
 ## Technical Limitations
 
 :::tip MCP Tools Limitations
