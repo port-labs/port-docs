@@ -29,7 +29,7 @@ To create a scorecard from the UI:
 4. In the **Basic Details** tab, specify the scorecard's basic details:
 
     - `Title` - The scorecard's title.
-    - `Identifier` - The scorecard's identifier.
+    - `Identifier` - The scorecard's unique identifier (must be unique among all scorecards).
     - `Blueprint` - Set to the blueprint you selected.
     - `Filter` - Filter which entities the scorecard applies to.
 
