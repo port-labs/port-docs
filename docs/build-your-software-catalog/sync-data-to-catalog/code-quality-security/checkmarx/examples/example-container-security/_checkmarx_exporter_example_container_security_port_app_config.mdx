@@ -52,7 +52,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .id
+          identifier: .__scan_id + "/" + .id
           title: .id
           blueprint: '"checkmarxContainerSecurity"'
           properties:

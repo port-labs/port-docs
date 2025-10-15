@@ -44,7 +44,23 @@ import PortPipelineStageAppConfig from './example-pipeline-stage/\_azuredevops_e
 import PipelineRunBlueprint from './example-pipeline-run/\_azuredevops_exporter_example_pipeline_run_blueprint.mdx'
 import PortPipelineRunAppConfig from './example-pipeline-run/\_azuredevops_exporter_example_pipeline_run_port_app_config.mdx'
 
+import IterationBlueprint from './example-iteration/\_azuredevops_exporter_example_iteration_blueprint.mdx'
+import PortIterationAppConfig from './example-iteration/\_azuredevops_exporter_example_iteration_port_app_config.mdx'
 
+import EnvironmentBlueprint from './example-environment/\_azuredevops_exporter_example_environment_blueprint.mdx'
+import PortEnvironmentAppConfig from './example-environment/\_azuredevops_exporter_example_environment_port_app_config.mdx'
+
+import ReleaseDeploymentBlueprint from './example-release-deployment/\_azuredevops_exporter_example_release_deployment_blueprint.mdx'
+import PortReleaseDeploymentAppConfig from './example-release-deployment/\_azuredevops_exporter_example_release_deployment_port_app_config.mdx'
+
+import PipelineDeploymentBlueprint from './example-pipeline-deployment/\_azuredevops_exporter_example_pipeline_deployment_blueprint.mdx'
+import PortPipelineDeploymentAppConfig from './example-pipeline-deployment/\_azuredevops_exporter_example_pipeline_deployment_port_app_config.mdx'
+
+import TestRunBlueprint from './example-test-run/\_azuredevops_exporter_example_test_run_blueprint.mdx'
+import PortTestRunAppConfig from './example-test-run/\_azuredevops_exporter_example_test_run_port_app_config.mdx'
+
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 
 # Examples
 
@@ -174,6 +190,82 @@ You can use the following Port blueprint definitions and integration configurati
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your pipeline runs.
+
+## Mapping iterations
+
+The following example demonstrates how to ingest your Azure DevOps iterations (sprints, releases, milestones) to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<ProjectBlueprint/>
+
+<IterationBlueprint/>
+
+<PortIterationAppConfig/>
+
+:::tip To Learn more
+
+- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure DevOps objects to Port entities.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/work/iterations/list?view=azure-devops-rest-7.1&tabs=HTTP#teamsettingsiteration) for the Azure DevOps iteration object structure.
+
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your iterations.
+
+## Mapping test runs
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include Results" value="includeResults">
+
+The `includeResults` selector allows you to enable fetching detailed test results for each test run. It is set to `true` by default.
+
+Allowed values:
+- `true`: Enable test results for each test run.
+- `false`: Disable test results for each test run.
+
+```yaml
+  - kind: test-run
+    selector:
+      query: 'true'
+      includeResults: true
+```
+</TabItem>
+
+<TabItem label="Code Coverage" value="codeCoverage">
+
+The `codeCoverage` selector allows you to include code coverage data from AzureDevOps Test Runs. It extracts coverage information from pipeline artifacts.
+
+**Configuration options:**
+
+- `flags`: Value of flags determine the level of code coverage details to be fetched. `flags` values can be `null`, `1` for Modules, `2` for Functions, `4` for BlockData (https://learn.microsoft.com/en-us/rest/api/azure/devops/test/code-coverage/get-test-run-code-coverage?view=azure-devops-rest-7.1&tabs=HTTP#testruncoverage).
+
+```yaml
+  - kind: test-run
+    selector:
+      query: 'true'
+      codeCoverage:
+        - flags: null
+```
+
+</TabItem>
+</Tabs>
+
+:::caution Performance impact
+Enabling `includeResults` or `codeCoverage` on the `test-run` kind may significantly slow down your integration. These configs make additional API calls for each test run, which can be very resource-intensive. Consider disabling them to improve performance.
+:::
+
+The following example demonstrates how to ingest Azure DevOps test runs to Port. Test runs track test execution results and can include detailed test results and code coverage data.
+
+<ProjectBlueprint/>
+
+<TestRunBlueprint/>
+
+<PortTestRunAppConfig/>
+
+Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/test/runs/list?view=azure-devops-rest-7.1&tabs=HTTP#testrun) for the Azure DevOps test-run object structure.
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your test runs.
+
 
 ## Mapping users and teams
 
@@ -322,6 +414,30 @@ The following example shows how to ingest your Azure Devops repositories and the
 <RepositoryBlueprint/>
 
 <PortMonoRepoAppConfig/>
+
+## Mapping environments
+
+The following example demonstrates how to ingest Azure DevOps environments to Port. Environments represent deployment targets in Azure DevOps and are used to track deployments across different stages.
+
+<EnvironmentBlueprint/>
+
+<PortEnvironmentAppConfig/>
+
+## Mapping release deployments
+
+The following example demonstrates how to ingest Azure DevOps release deployments to Port. Release deployments track the deployment of releases to specific environments, providing visibility into your Classic Release pipeline deployments.
+
+<ReleaseDeploymentBlueprint/>
+
+<PortReleaseDeploymentAppConfig/>
+
+## Mapping pipeline deployments
+
+The following example demonstrates how to ingest Azure DevOps pipeline deployments to Port. Pipeline deployments track deployments from YAML pipelines to environments, providing visibility into your modern CI/CD pipeline deployments.
+
+<PipelineDeploymentBlueprint/>
+
+<PortPipelineDeploymentAppConfig/>
 
 ## Mapping supported resources
 
