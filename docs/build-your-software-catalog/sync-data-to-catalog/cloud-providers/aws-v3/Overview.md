@@ -32,6 +32,7 @@ The integration currently supports the following AWS resource types:
 - `S3 Buckets`: Complete bucket information including properties, tags, and metadata.
 - `ECS Clusters`: Cluster details, services, and task definitions.
 - `EC2 Instances`: Instance information, security groups, and networking details.
+- `SQS Queues`: Queue information including attributes, policies, and configuration details.
 
 :::info More Resource Types Coming Soon
 We're actively working on adding support for additional AWS resource types to provide comprehensive coverage of your AWS infrastructure.
