@@ -11164,6 +11164,7 @@ paths:
                               description: The properties of the blueprint.
                               propertyNames:
                                 pattern: ^[A-Za-z0-9@_=\\-]+$
+                                maxLength: 100
                               additionalProperties:
                                 type: object
                                 properties:
@@ -11256,6 +11257,7 @@ paths:
                           default: {}
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
+                            maxLength: 100
                           additionalProperties:
                             type: object
                             additionalProperties: false
@@ -11385,6 +11387,7 @@ paths:
                             of the blueprint.
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
+                            maxLength: 100
                           additionalProperties:
                             type: object
                             properties:
@@ -11408,6 +11411,7 @@ paths:
                           default: {}
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
+                            maxLength: 100
                           additionalProperties:
                             type: object
                             properties:
@@ -11568,6 +11572,7 @@ paths:
                             of the blueprint.
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
+                            maxLength: 100
                           additionalProperties:
                             type: object
                             properties:
@@ -11774,6 +11779,7 @@ paths:
                       description: The properties of the blueprint.
                       propertyNames:
                         pattern: ^[A-Za-z0-9@_=\\-]+$
+                        maxLength: 100
                       additionalProperties:
                         type: object
                         properties:
@@ -11865,6 +11871,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     additionalProperties: false
@@ -11994,6 +12001,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -12017,6 +12025,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -12175,6 +12184,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -12345,6 +12355,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -12437,6 +12448,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -12566,6 +12578,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -12589,6 +12602,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -12748,6 +12762,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -13010,6 +13025,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -13102,6 +13118,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -13231,6 +13248,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -13254,6 +13272,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -13413,6 +13432,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -13619,6 +13639,7 @@ paths:
                       description: The properties of the blueprint.
                       propertyNames:
                         pattern: ^[A-Za-z0-9@_=\\-]+$
+                        maxLength: 100
                       additionalProperties:
                         type: object
                         properties:
@@ -13710,6 +13731,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     additionalProperties: false
@@ -13839,6 +13861,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -13862,6 +13885,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -14020,6 +14044,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -14187,6 +14212,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -14279,6 +14305,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -14408,6 +14435,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -14431,6 +14459,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -14590,6 +14619,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -14828,6 +14858,7 @@ paths:
                       type: object
                       propertyNames:
                         pattern: ^[A-Za-z0-9@_=\\-]+$
+                        maxLength: 100
                       additionalProperties:
                         type: object
                         properties:
@@ -14917,6 +14948,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     additionalProperties: false
@@ -15046,6 +15078,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -15069,6 +15102,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -15227,6 +15261,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -15390,6 +15425,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -15482,6 +15518,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -15611,6 +15648,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -15634,6 +15672,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -15793,6 +15832,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -16070,6 +16110,7 @@ paths:
                 newPropertyName:
                   type: string
                   pattern: ^[A-Za-z0-9@_=\\-]+$
+                  maxLength: 100
                   description: The new identifier of the property.
               additionalProperties: false
       parameters:
@@ -16183,6 +16224,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -16275,6 +16317,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -16404,6 +16447,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -16427,6 +16471,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -16586,6 +16631,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -16752,6 +16798,7 @@ paths:
                 newMirrorName:
                   type: string
                   pattern: ^[A-Za-z0-9@_=\\-]+$
+                  maxLength: 100
                   description: The new identifier of the mirror property.
               additionalProperties: false
       parameters:
@@ -16865,6 +16912,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -16957,6 +17005,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -17086,6 +17135,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -17109,6 +17159,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -17268,6 +17319,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -17434,6 +17486,7 @@ paths:
                 newRelationIdentifier:
                   type: string
                   pattern: ^[A-Za-z0-9@_=\\-]+$
+                  maxLength: 100
                   description: The new identifier of the relation.
               additionalProperties: false
       parameters:
@@ -17549,6 +17602,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -17641,6 +17695,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -17770,6 +17825,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -17793,6 +17849,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -17952,6 +18009,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -18560,6 +18618,19 @@ paths:
                                           identifiers.
                                         items:
                                           type: string
+                                      visible:
+                                        oneOf:
+                                          - $ref: "#/components/schemas/def-0"
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves
+                                              to `true` or `false`, determining
+                                              the visibility of the step.
+                                            title: jqQuery
+                                          - type: boolean
+                                            description: A boolean value determining the visibility of the step.
+                                            title: boolean
+                                        title: Visible
+                                        description: The visibility of the step. Resolves to a boolean value (`true` =
+                                          visible).
                                     required:
                                       - title
                                     additionalProperties: false
@@ -19383,6 +19454,19 @@ paths:
                                           identifiers.
                                         items:
                                           type: string
+                                      visible:
+                                        oneOf:
+                                          - $ref: "#/components/schemas/def-0"
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves
+                                              to `true` or `false`, determining
+                                              the visibility of the step.
+                                            title: jqQuery
+                                          - type: boolean
+                                            description: A boolean value determining the visibility of the step.
+                                            title: boolean
+                                        title: Visible
+                                        description: The visibility of the step. Resolves to a boolean value (`true` =
+                                          visible).
                                     required:
                                       - title
                                     additionalProperties: false
@@ -20487,6 +20571,19 @@ paths:
                                           identifiers.
                                         items:
                                           type: string
+                                      visible:
+                                        oneOf:
+                                          - $ref: "#/components/schemas/def-0"
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves
+                                              to `true` or `false`, determining
+                                              the visibility of the step.
+                                            title: jqQuery
+                                          - type: boolean
+                                            description: A boolean value determining the visibility of the step.
+                                            title: boolean
+                                        title: Visible
+                                        description: The visibility of the step. Resolves to a boolean value (`true` =
+                                          visible).
                                     required:
                                       - title
                                     additionalProperties: false
@@ -21310,6 +21407,19 @@ paths:
                                           identifiers.
                                         items:
                                           type: string
+                                      visible:
+                                        oneOf:
+                                          - $ref: "#/components/schemas/def-0"
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves
+                                              to `true` or `false`, determining
+                                              the visibility of the step.
+                                            title: jqQuery
+                                          - type: boolean
+                                            description: A boolean value determining the visibility of the step.
+                                            title: boolean
+                                        title: Visible
+                                        description: The visibility of the step. Resolves to a boolean value (`true` =
+                                          visible).
                                     required:
                                       - title
                                     additionalProperties: false
@@ -24654,6 +24764,27 @@ paths:
                     portalTitle:
                       type: string
                       maxLength: 30
+                announcement:
+                  type: object
+                  required:
+                    - content
+                  properties:
+                    enabled:
+                      type: boolean
+                    content:
+                      type: string
+                      maxLength: 300
+                      minLength: 1
+                    link:
+                      type:
+                        - string
+                        - "null"
+                      maxLength: 300
+                    color:
+                      type: string
+                      enum:
+                        - blue
+                        - red
               additionalProperties: false
               required:
                 - name
@@ -24948,7 +25079,7 @@ paths:
               properties:
                 secretName:
                   type: string
-                  maxLength: 50
+                  maxLength: 100
                   minLength: 1
                   pattern: ^[A-Za-z0-9-_]*$
                   description: The name of the new secret.
@@ -29978,6 +30109,7 @@ paths:
                 identifier:
                   type: string
                   pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  maxLength: 100
                   description: A unique identifier for the scorecard.
                 title:
                   type: string
@@ -30199,6 +30331,7 @@ paths:
                       identifier:
                         type: string
                         pattern: ^[A-Za-z0-9@_=\\-]+$
+                        maxLength: 100
                         description: The identifier of the rule.
                       title:
                         type: string
@@ -30468,7 +30601,7 @@ paths:
                         identifier:
                           type: string
                           pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
-                          maxLength: 20
+                          maxLength: 100
                         title:
                           type: string
                         description:
@@ -30692,7 +30825,7 @@ paths:
                         identifier:
                           type: string
                           pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
-                          maxLength: 20
+                          maxLength: 100
                         title:
                           type: string
                         description:
@@ -31015,6 +31148,7 @@ paths:
                   identifier:
                     type: string
                     pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                    maxLength: 100
                     description: A unique identifier for the scorecard.
                   title:
                     type: string
@@ -31237,6 +31371,7 @@ paths:
                         identifier:
                           type: string
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                           description: The identifier of the rule.
                         title:
                           type: string
@@ -31650,6 +31785,7 @@ paths:
                 identifier:
                   type: string
                   pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  maxLength: 100
                   description: A unique identifier for the scorecard.
                 title:
                   type: string
@@ -31871,6 +32007,7 @@ paths:
                       identifier:
                         type: string
                         pattern: ^[A-Za-z0-9@_=\\-]+$
+                        maxLength: 100
                         description: The identifier of the rule.
                       title:
                         type: string
