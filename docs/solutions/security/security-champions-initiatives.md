@@ -9,29 +9,25 @@ sidebar_position: 4
 **Port empowers organizations to scale security culture by making secure development measurable, actionable, and rewarding.**
 :::
 
-:::tip Turn security into shared responsibility
-**Port helps you turn security from a siloed function into a shared, measurable responsibility across your entire organization.**
-:::
-
 ## Introduction
 
 The most successful security programs are **not built by security teams alone**—they are built by empowering every developer to take part in protecting the business.  
 
 Traditional approaches rely on:
-- Mandatory training sessions,
-- Security checklists,
+- Mandatory training sessions.
+- Security checklists.
 - Penalty-driven compliance.
 
 These often create friction between security and engineering teams and fail to build sustainable engagement.
 
 The reality: most developers **want** to build secure software but are overwhelmed by:
-- Conflicting security requirements,
-- Unclear guidance,
+- Conflicting security requirements.
+- Unclear guidance.
 - Tools that slow them down.
 
 The solution is to **make security the easy and rewarding choice** through:
-- Clear standards and expectations,
-- Automated guardrails,
+- Clear standards and expectations.
+- Automated guardrails.
 - Recognition and motivation for security-positive behaviors.
 
 Port provides the foundation to scale these efforts by connecting **people, processes, and technology** in one platform.
@@ -70,6 +66,18 @@ Track practices that prevent vulnerabilities from reaching production:
 - **Data protection** – Sensitive data handled according to policy.
 - **Security testing** – Security tests included in CI/CD pipelines.
 
+Port’s **Scorecards** make Application security success concrete. Scorecards can turn the OWASP Top-10 into tiered, measurable targets—**Basic → Bronze → Silver → Gold**. This helps teams see exactly what “good” looks like and how far they’ve progressed.
+
+- **Risk-aligned tiers:** Bronze (exploit blockers), Silver (crypto/logging integrity), Gold (design & config hardening) map effort to impact.
+- **Clear pass criteria:** Each OWASP control has an explicit check; green checks show what’s met (e.g., A01, A07, A03, A10 at Bronze; A08, A02, A09 at Silver; A06, A04, A05 at Gold).
+- **Instant posture view:** The horizontal progress bar shows portfolio maturity at a glance—no hunting through scans.
+- **Ownership built-in:** Scorecards can be filtered by service/team, turning standards into accountable goals.
+- **Automation hooks:** Fail a control → open ticket/notify/optionally gate deploys; pass → record evidence for audits.
+- **Continuous improvement:** Teams climb tiers over time, moving from break-fix to secure-by-design, tracked in one place.
+
+<img src="/img/guides/owasp/chart.png" width="80%" border="1px" alt="OWASP Top 10 Chart showing Gold, Silver and Basic tier distribution" />
+<img src='/img/guides/security-solution/owasp-scorecard.png' alt='Application security' width='80%' border='1px' />
+
 ### Infrastructure security scorecard
 Ensure infrastructure is deployed and maintained securely:
 - **Network security** – Proper segmentation and firewall rules.
@@ -86,8 +94,7 @@ Measure preparedness and response capabilities:
 - **Backup and recovery** – Recovery processes tested regularly.
 - **Compliance tracking** – Audit trails maintained and up-to-date.
 
-:::tip
-**Start small and iterate:**  
+:::tip Start small and iterate
 Focus scorecards on practices that teams directly control to ensure quick wins and early adoption.
 :::
 
@@ -105,8 +112,8 @@ Examples:
 - **Branch protection compliance** – Ensure all production repos enforce branch protection rules.
 
 These campaigns can be **tracked in Port** through:
-- Dashboards that visualize campaign progress,
-- Automated alerts when thresholds are reached,
+- Dashboards that visualize campaign progress.
+- Automated alerts when thresholds are reached.
 - Scorecard metrics tied to completion targets.
 
 ### Recognition and gamification
@@ -115,7 +122,7 @@ Recognizing and rewarding improvements encourages ongoing participation.
 
 Examples:
 - **Leaderboards** – Rank teams by their improvement scores.
-- **Achievement badges** – Reward milestones like "90% scorecard compliance."
+- **Achievement badges** – Reward milestones like "90% scorecard compliance.
 - **Improvement showcases** – Share success stories at company all-hands.
 - **Cross-team learning sessions** – High-performing teams teach others.
 
@@ -155,8 +162,8 @@ Champions should have **specific, measurable responsibilities**:
 - Report vulnerabilities and guide remediation.
 
 Success is tracked through:
-- Team scorecard performance,
-- Remediation timelines,
+- Team scorecard performance.
+- Remediation timelines.
 - Training engagement rates.
 
 ### Step 3: implement scorecards
@@ -208,9 +215,9 @@ Organizations using Port to power their champions program have achieved:
 
 Security champions bridge the gap between **security strategy** and **engineering execution**.  
 With Port, you can:
-- Define clear expectations through scorecards,
-- Drive progress with initiatives and campaigns,
-- Automate guardrails to make security seamless,
+- Define clear expectations through scorecards.
+- Drive progress with initiatives and campaigns.
+- Automate guardrails to make security seamless.
 - Measure cultural change with actionable metrics.
 
 

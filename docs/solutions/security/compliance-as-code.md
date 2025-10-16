@@ -12,8 +12,8 @@ sidebar_position: 5
 ## Introduction
 
 Compliance is critical, but most organizations still rely on outdated, manual methods:
-- **Spreadsheets** to track controls and audit status,
-- **Email threads** to gather evidence,
+- **Spreadsheets** to track controls and audit status.
+- **Email threads** to gather evidence.
 - **Periodic checklists** disconnected from production systems.
 
 This creates **painful audits**, stale evidence, and gaps between what's documented and what's actually happening in production.  
@@ -71,8 +71,8 @@ With Port:
   - *Audit Evidence* – proof items such as logs, screenshots, or test reports.
 - Link services to their controls using **relations**.
 - Tag services with key metadata:
-  - Regulatory scope (SOC 2, PCI, HIPAA, GDPR),
-  - Data sensitivity (PII, payment data, internal-only),
+  - Regulatory scope (SOC 2, PCI, HIPAA, GDPR).
+  - Data sensitivity (PII, payment data, internal-only).
   - Criticality (customer-facing, revenue-generating, internal).
 
 This creates a **single source of truth** for compliance across the organization.
@@ -115,13 +115,13 @@ Scorecards turn abstract frameworks into **measurable, trackable outcomes**.
 | Logging & Monitoring | Centralized logging enabled for services | Cloud logging integrations |
 
 Each control:
-- Is a **scorecard item** with pass/fail logic,
-- Is linked to services and teams,
+- Is a **scorecard item** with pass/fail logic.
+- Is linked to services and teams.
 - Updates automatically when integrated systems change.
 
 Dashboards then show:
-- Compliance by control area,
-- Overall readiness by service or business unit,
+- Compliance by control area.
+- Overall readiness by service or business unit.
 - Historical progress over time.
 
 ## Step 4: automate compliance workflows
