@@ -314,8 +314,10 @@ The workflow will then:
 2. **Issue is automatically assigned to GitHub Copilot** (handled by the prerequisites setup)
 3. **Copilot generates Terraform code** based on the detailed technical requirements
 4. **Pull request is opened** with the generated Terraform files
-5. **PR is linked back** to the original issue for traceability
 
+<img src='/img/guides/streamline-iac-test-pr.png' border="1px" width="60%" />
+
+<img src='/img/guides/streamline-iac-terraform-files-pr.png' border="1px" width="60%" />
 
 
 ## Related guides
