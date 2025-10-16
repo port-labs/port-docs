@@ -22,7 +22,7 @@ The object input type can be used to store any key/value based data, for example
 - HTTP responses
 - Dictionaries/Hash maps
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **Open terraform PR to add S3 bucket** action whose `policy` input is an object input. 🎬
+In the [live demo](https://showcase.port.io/self-serve) self-service hub page, we can see the **Open terraform PR to add S3 bucket** action whose `policy` input is an object input. 🎬
 
 ## API definition
 

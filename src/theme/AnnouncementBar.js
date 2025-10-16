@@ -8,7 +8,7 @@ export default function SearchBarWrapper(props) {
       {/* <AnnouncementBar {...props} /> */}
       <Typography position={'relative'} fontSize={'small'} fontFamily='DM Sans' color='#FFFFFF' fontWeight='500'>Check out Port for yourself&nbsp;</Typography>
       <a href="http://app.getport.io" target='_blank'><button className='navbar-signup-button'>Sign up</button></a>
-      <a href="http://demo.getport.io" target='_blank'><button className='navbar-live-demo-button'>Live demo</button></a>
+      <a href="http://showcase.port.io" target='_blank'><button className='navbar-live-demo-button'>Live demo</button></a>
     </div>
   );
 }

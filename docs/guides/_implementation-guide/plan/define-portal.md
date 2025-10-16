@@ -23,7 +23,7 @@ This process includes the following steps:
    - **Step 1:** Fill in the blank - "Developers will be able to...".  
     *For example* - "Developers will be able to track the health of their services".
         :::tip User-story examples
-        Feel free to use the examples provided in the roadmap planner and Port's [live demo](https://demo.getport.io) for inspiration.
+        Feel free to use the examples provided in the roadmap planner and Port's [live demo](https://showcase.port.io) for inspiration.
         :::
    
    - **Step 2:** Think how it is done today - use the available options in the roadmap planner, or add a custom one.

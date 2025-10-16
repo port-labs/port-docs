@@ -21,7 +21,7 @@ The user input type can be used to reference any user that exists in Port, for e
 - The current on-call
 - The lead maintainer
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **change on-call** action whose `On-Call` input is a user input. 🎬
+In the [live demo](https://showcase.port.io/self-serve) self-service hub page, we can see the **change on-call** action whose `On-Call` input is a user input. 🎬
 
 ## API definition
 

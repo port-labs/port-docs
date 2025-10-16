@@ -21,7 +21,7 @@ The team input type can be used to reference any team that exists in Port, for e
 - The current on-call
 - The lead maintainers
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Owning Team` input is a user input. 🎬
+In the [live demo](https://showcase.port.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Owning Team` input is a user input. 🎬
 
 ## API definition
 

@@ -45,7 +45,7 @@ please refer to our [DORA Metrics guide](https://docs.port.io/guides/all/create-
 
 ## Working agreements
 
-The following working agreements and PR checks have been implemented in our [demo environment](https://demo.getport.io/scorecard_overviewl):
+The following working agreements and PR checks have been implemented in our [demo environment](https://showcase.port.io/scorecard_overviewl):
 
 - [**PR Description Cannot be Empty**](#pr-description-cannot-be-empty): Ensures that every PR has a description.
 - [**PR Has Linked Issue**](#pr-has-linked-issue): Verifies that each PR is linked to an issue.

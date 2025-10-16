@@ -23,7 +23,7 @@ This input type can be used to store any true/false gate, for example:
 - Does service handle PII
 - Is environment public
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **Delete Repo** action whose `Confirm` input is a toggle input. 🎬
+In the [live demo](https://showcase.port.io/self-serve) self-service hub page, we can see the **Delete Repo** action whose `Confirm` input is a toggle input. 🎬
 
 ## API definition
 

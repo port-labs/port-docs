@@ -11,7 +11,7 @@ Create a wide range of personalized, controlled actions that developers can use 
 Self-service actions drive developer productivity by providing a consistent and repeatable way to perform common tasks, all with guardrails like manual approvals or consumption policies to comply with organizational standards.
 
 :::tip Live demo
-For real-world examples of self-service actions, check out our [live demo](https://demo.getport.io/self-serve).
+For real-world examples of self-service actions, check out our [live demo](https://showcase.port.io/self-serve).
 :::
 
 For more information and instructions for creating self-service actions, click [here](/actions-and-automations/create-self-service-experiences).

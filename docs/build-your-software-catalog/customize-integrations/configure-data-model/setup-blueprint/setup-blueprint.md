@@ -41,7 +41,7 @@ Blueprints can be used to represent any asset in your software catalog, some com
 - Pods
 - VMs
 
-Check out our [**live demo**](https://demo.getport.io/settings) to see an example of a fleshed-out builder with a variety of blueprints.
+Check out our [**live demo**](https://showcase.port.io/settings) to see an example of a fleshed-out builder with a variety of blueprints.
 
 ## Configure blueprints in Port
 

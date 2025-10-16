@@ -21,7 +21,7 @@ The entity input type can be used to reference any existing entity from the soft
 - Clusters
 - Configurations
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Domain` input is an entity input. 🎬
+In the [live demo](https://showcase.port.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Domain` input is an entity input. 🎬
 
 ## Sorting entities
 

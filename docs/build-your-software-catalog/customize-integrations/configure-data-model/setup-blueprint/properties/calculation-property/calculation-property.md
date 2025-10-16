@@ -34,7 +34,7 @@ Calculation properties are evaluated dynamically for each entity. Defining compl
 It is recommended to use calculation properties only when necessary and prefer simple calculations over complex ones.
 :::
 
-In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Slack Notifications` calculation property. 🎬
+In this [live demo](https://showcase.port.io/service_catalog) example, we can see the `Slack Notifications` calculation property. 🎬
 
 ## Definition
 
