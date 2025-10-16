@@ -24,6 +24,10 @@ import GroupMembersConfig from './example-groups/_gitlab_integration_example_gro
 import PipelineBlueprint from './example-pipelines/_gitlab_integration_example_pipeline_blueprint.mdx'
 import JobBlueprint from './example-jobs/_gitlab_integration_example_job_blueprint.mdx'
 import PipelineJobConfig from './example-pipelines/_gitlab_integration_example_pipeline_job_config.mdx'
+import ReleaseBlueprint from './example-releases/_gitlab_integration_example_release_blueprint.mdx'
+import ReleaseConfig from './example-releases/_gitlab_integration_example_release_config.mdx'
+import TagBlueprint from './example-tags/_gitlab_integration_example_tag_blueprint.mdx'
+import TagConfig from './example-tags/_gitlab_integration_example_tag_config.mdx'
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -389,6 +393,52 @@ You can use the following Port blueprint definitions and integration configurati
 - Click [Here](https://docs.gitlab.com/api/projects/#list-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines) for the GitLab pipeline object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs) for the GitLab job object structure.
+
+:::
+
+## Mapping releases
+
+The following example demonstrates how to ingest your GitLab releases to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<details>
+<summary>Release blueprint</summary>
+<ReleaseBlueprint />
+</details>
+
+<details>
+<summary>Integration Mapping</summary>
+<ReleaseConfig />
+</details>
+
+:::tip Learn more
+
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
+- Click [Here](https://docs.gitlab.com/api/releases/) for the GitLab release object structure.
+
+:::
+
+## Mapping tags
+
+The following example demonstrates how to ingest your GitLab tags to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<details>
+<summary>Tag blueprint</summary>
+<TagBlueprint />
+</details>
+
+<details>
+<summary>Integration Mapping</summary>
+<TagConfig />
+</details>
+
+:::tip Learn more
+
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
+- Click [Here](https://docs.gitlab.com/api/tags/) for the GitLab tag object structure.
 
 :::
 
