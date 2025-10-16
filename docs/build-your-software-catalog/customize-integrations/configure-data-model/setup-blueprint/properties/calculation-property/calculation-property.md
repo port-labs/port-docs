@@ -402,6 +402,60 @@ Parameter contains special characters (for example: `-`) or starts with a digit 
 
 :::
 
+## Performance
+When defined on blueprints with many entities, calculation properties might have negative performance impact, causing long entities table loading time.
+If you are facing long loading time for entities table of a blueprint with calculation properties, we recommend to replace the calculation property with a regular property by calculating the needed value on the entity creation itself if possible.
+
+### Replacing calculation property with a regular property
+We will demonstrate with an example:<br/>
+Lets say we have a `Deployment` blueprint with a string property called `name` and a calculation property called `URL` that based on the name property.
+```json showLineNumbers
+{
+  "identifier": "deployment",
+  "title": "Deployment",
+  "properties":{
+      "name":{
+          "type": "string"
+      },
+  },
+  "calculationProperties": {
+      "URL": {
+          "type": "string",
+          "calculation": "'https://' + .properties.name + '.port.io'",
+      }
+  }
+}
+```
+We can avoid this calculation property by create a new string property called `URL_temp` (we will change it's name after we are sure it replaced our calculation property successfully). Then we can take the calculation property jq expression and put it directly in the [mapping](/build-your-software-catalog/customize-integrations/configure-mapping) section when we map our entities on creation.
+
+  ```yaml showLineNumbers
+  resources:
+    - kind: repository
+      selector:
+        query: "true"
+      port:
+        entity:
+          mappings:
+            identifier: ".name"
+            title: ".name"
+            blueprint: '"deployment"'
+            properties:
+            # highlight-start
+              name: ".name"
+              url_temp: "'https://' + .name + '.port.io'"
+            # highlight-end
+  ```
+
+After doing so, our new `url_temp` will have the same value as our pervious calculation property when the entity is created.
+
+### Existing Entities
+While our new property fits our case for new entities, we still have existing entities we need the URL value which still based on our calculation property.
+We have two ways to do it:
+1. Resync our all entities so the mapping change we did will take affect on all existing entities as well
+2. Create a [Port migration](/build-your-software-catalog/customize-integrations/configure-data-model/migrate-data/) on our blueprint so we can insert the url values to the new property for existing entities.
+
+After doing all the needed steps and when we are sure we were able to replace the calculation property, we can remove the old `URL` property and change the identifier of the `URL_temp` to be `URL`.<br/>
+If you are not comfortable yet with deleting the old property, you can first exclude it from the entities table using the [excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page#excluded-properties) and see if there is any performance improvement.
 ## Examples
 
 Refer to the calculation property [examples](./examples.md) page.
