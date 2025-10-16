@@ -393,6 +393,10 @@ Map the milestone information from your data source to the `milestone` property.
 
 ### PR Changed X Files or Less
 
+:::warning GitHub API Limitation
+This feature is only available with live-events and not during ingestion due to GitHub API limitations. The `changed_files` property is not available through the GitHub REST API for historical pull requests.
+:::
+
 <h4> Scorecard Definition </h4>
 
 This agreement has multiple levels based on the number of files changed.
@@ -568,6 +572,10 @@ Ensure that `createdAt` and `mergedAt` properties are correctly mapped from your
 :::
 
 ### PR Batch Size Calculation
+
+:::warning GitHub API Limitation
+This feature is only available with live-events and not during ingestion due to GitHub API limitations. The `additions`, `deletions`, `commits`, and `changed_files` properties required for batch size calculation are not available through the GitHub REST API for historical pull requests.
+:::
 
 <h4> Scorecard Definition </h4>
 
