@@ -23,6 +23,7 @@ Below is the structure of a single `scorecard` blueprint:
 
 | Name | Type | Description |
 |------|------|-------------|
+| `identifier` | String | The unique identifier of the `Scorecard` (Maximum 100 characters). The identifier is used for API calls, programmatic access and distinguishing between different scorecards. |
 | `Blueprint` | String (format: blueprints) | The target blueprint whose entities will be evaluated. |
 | [`Levels`](#levels) | Array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold). |
 | [`Filter`](#filter-elements) | Object | Optional query to filter which entities should be evaluated. |
@@ -262,6 +263,7 @@ Conditions are small boolean checks that help when determining the final status 
 The `Rule` blueprint contains the following properties:
 | Name | Type | Description |
 |------|------|-------------|
+| `Identifier` | String | The unique identifier of the `Rule` (Maximum 100 characters). |
 | `Level` | String (enum) | The required level for this rule (must be one of the scorecard's defined levels). |
 | `Query` | Object | The evaluation criteria for entities. |
 | `Rule description` | String | Optional explanation of the rule's logic. |
