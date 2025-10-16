@@ -282,7 +282,7 @@ Learn more about [LLM Provider Management](/ai-interfaces/port-ai/llm-providers-
 
 ### Specifying Provider and Model
 
-When making API requests, you can include `provider` and `model` parameters (if none specified, your organization's default will be used). See the [Invoke an agent](/api-reference/invoke-an-agent) API reference for detailed example.
+When making API requests, you can include `provider` and `model` parameters (if none specified, your organization's default will be used). See the [Invoke an agent](/api-reference/invoke-a-specific-agent) API reference for detailed example.
 
 ### Default Behavior
 
