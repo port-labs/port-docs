@@ -402,7 +402,7 @@ Parameter contains special characters (for example: `-`) or starts with a digit 
 
 :::
 
-## Performance impact of calculation properties
+## Performance impact
 
 When defined on blueprints with many entities, calculation properties might have negative performance impact, causing long entities table loading time.  
 
