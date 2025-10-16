@@ -16,7 +16,7 @@ Calculation properties allow you to use existing properties defined on blueprint
 - Create math equations or modifications. For example, calculate required disk storage by specifying page size, and number of pages needed.
 - Merge complex properties, including deep-merge and overriding.
 
-## 💡 Common calculation usage
+## Common calculation usage
 
 Calculation properties make it easier to define properties that are based on values from other properties, with the added ability to transform the data, for example:
 
@@ -402,13 +402,18 @@ Parameter contains special characters (for example: `-`) or starts with a digit 
 
 :::
 
-## Performance
-When defined on blueprints with many entities, calculation properties might have negative performance impact, causing long entities table loading time.
-If you are facing long loading time for entities table of a blueprint with calculation properties, we recommend to replace the calculation property with a regular property by calculating the needed value on the entity creation itself if possible.
+## Performance impact of calculation properties
 
-### Replacing calculation property with a regular property
-We will demonstrate with an example:<br/>
-Lets say we have a `Deployment` blueprint with a string property called `name` and a calculation property called `URL` that based on the name property.
+When defined on blueprints with many entities, calculation properties might have negative performance impact, causing long entities table loading time.  
+
+If you are facing long loading time for entities table of a blueprint with calculation properties, we recommend replacing the calculation property with a regular property by calculating the needed value on the entity creation itself if possible.
+
+### Replacing calculation property
+
+Let's demonstrate this with an example:  
+
+Suppose we have a `Deployment` blueprint with a string property called `name` and a calculation property called `URL` that is based on the name property.
+
 ```json showLineNumbers
 {
   "identifier": "deployment",
@@ -426,7 +431,8 @@ Lets say we have a `Deployment` blueprint with a string property called `name` a
   }
 }
 ```
-We can avoid this calculation property by create a new string property called `URL_temp` (we will change it's name after we are sure it replaced our calculation property successfully). Then we can take the calculation property jq expression and put it directly in the [mapping](/build-your-software-catalog/customize-integrations/configure-mapping) section when we map our entities on creation.
+
+We can avoid this calculation property by create a new string property called `url_temp` (This name is temporary and will be updated once we confirm it has successfully replaced the calculation property). Then we can take the calculation property jq expression and put it directly in the [mapping](/build-your-software-catalog/customize-integrations/configure-mapping) section when we map our entities on creation.
 
   ```yaml showLineNumbers
   resources:
@@ -446,16 +452,21 @@ We can avoid this calculation property by create a new string property called `U
             # highlight-end
   ```
 
-After doing so, our new `url_temp` will have the same value as our pervious calculation property when the entity is created.
+Once done, `url_temp` will match the `URL` calculation property when the entity is created.
 
-### Existing Entities
-While our new property fits our case for new entities, we still have existing entities we need the URL value which still based on our calculation property.
-We have two ways to do it:
-1. Resync our all entities so the mapping change we did will take affect on all existing entities as well
-2. Create a [Port migration](/build-your-software-catalog/customize-integrations/configure-data-model/migrate-data/) on our blueprint so we can insert the url values to the new property for existing entities.
+### Handling existing entities
 
-After doing all the needed steps and when we are sure we were able to replace the calculation property, we can remove the old `URL` property and change the identifier of the `URL_temp` to be `URL`.<br/>
-If you are not comfortable yet with deleting the old property, you can first exclude it from the entities table using the [excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page#excluded-properties) and see if there is any performance improvement.
+While the new property works for newly created entities, existing entities still rely on the calculation property for their URL value.  
+
+You can handle this in two ways:
+
+1. **Resync all entities** so the mapping change we applied also affects existing entities.
+2. **Create a** [**Port migration**](/build-your-software-catalog/customize-integrations/configure-data-model/migrate-data/) on the blueprint, to populate the new property with URL values for existing entities.
+
+After completing these steps and verifying that the calculation property has been successfully replaced, we can remove the old `URL` property and rename the identifier of the `url_temp` to be `URL`.  
+
+If you prefer not to delete the old property right away, you can first exclude it from the entities table using the [excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page#excluded-properties) and see if there is any performance improvement.
+
 ## Examples
 
 Refer to the calculation property [examples](./examples.md) page.
