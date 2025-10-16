@@ -1,0 +1,63 @@
+---
+id: get-configured-llm-providers
+title: "Get configured LLM providers"
+description: "This route allows you to get the configured LLM providers."
+sidebar_label: "Get configured LLM providers"
+hide_title: true
+hide_table_of_contents: true
+api: eJztV8tu2zoQ/RWBuLtGsR00G+980aIwmrZBH3eTugAtjiTWlKjyodYR9O93hvJDcRS7QYCiKLpJaPHMg2eGM8OGCbCJkZWTumRT9jGXNjLaO4i4Uvq7jdbaR05HGbjI5RAlukxl5g2I6OrqTVQZXUsBxp6zM+Z4Ztn0hs3mbHHGLCTeSLfGLw1bAjdgcLloccuArXRpAdENuxiP6d9dP15Ayr1y0fsNErWjZQelIyyvKiUTTtjRV0sCDbNJDgWnlVtXgCr08iskDgXRxwqMk505vephllor4CVrg09osLfHjeFrFJcOCnta75aJHtI6I8sMkVD6gohBfMklfuC3yGC8/1m6HJXJBNdLEEYnK9KvjWOLlsT5UoEY9rsLSGClXL9LA9vHPeWVfA3rD5AYcG95AUMeF7K8gjJzOZtO2sDONy8N+XBzXx4jyoWQFA6urnu2Uq4stGd/vkMhfbQ3CfwkXECl9LrAfJ6LJx/3wPqB9ieTkSRgLVqci0cxYgN4tpV+JJuZ7K71MSB6yp0DQwXjyw2PbxfNRRuHxbP482fRTNp/6IpknhthuFRzgZTIVA7d0j7uPyxog/bvhWKQm2Nn353tdFj297nUVJjak7Fqj+vE2osIXYMxWKl+oqYVWoAaxPVJyCoXX1KBVtwLiLEel+Di5/HF+OJyfDl5Tke9q7eTOGn+4bpHKR4aBJs646E9cfAjvv06J562jV0gTdE/WcObv1H5ZVFBHw1wB2LmhqpRqk3BcYcJxMRO4gXfi/y7HqwyvhKPVbgRGVR4UJF2Y8h+bLifOidqz6FOvWK7+eikKMpe/h4THZY5PVzoCyzLPBtoRKEzO+wAg9dr+ODNMF+d9dN0BXdcrlGS4ZDNQlPD7sZG9WSkVBHvRuzQV0xNK2oK3ihE5c5Vdjoa4VBwTgPjudSM+sT9XW/3gN54/oFY7ojcDun7EThMGmi3DG2bzTw6auRtiBONxhTYHDjlGx1ElqkO4tIpwl+jvWh2PUdovW2pbHI+Jp4rbV3BQ6A32l/hE+Oh50W41r10avbJ88Q3S3dSBz/cqFJchswJ5DWbQNyweoLAu6FAAnM8AO02zZJb+GRU29Lnbx4MvXlwWXMj6QqGZ8/ZliiK3QpZRTpxPqgo4jVXvuP74BZQoHbZ8erlR0pCT071Q7QKIdoseuM/zg893Yex61ygv72x4q5I03QJgAfb4rutByU2R9yiic0Fpvj/2+sBhg==
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get configured LLM providers"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/llm-providers"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to get the configured LLM providers.
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"array","items":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"enabled":{"type":"boolean"},"config":{"anyOf":[{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1},"resourceName":{"type":"string","minLength":1},"deploymentId":{"type":"string","minLength":1}},"required":["apiKeySecretName","resourceName","deploymentId"],"additionalProperties":false},{"type":"object","properties":{"accessKeyIdSecretName":{"type":"string","minLength":1},"secretAccessKeySecretName":{"type":"string","minLength":1},"region":{"type":"string","minLength":1,"pattern":"^[a-z]{2}-[a-z]+-\\d{1}$"},"guardrailIdentifier":{"type":"string"},"guardrailVersion":{"type":"string"}},"required":["accessKeyIdSecretName","secretAccessKeySecretName","region"],"additionalProperties":false},{"anyOf":[{"not":{}},{"type":"object","properties":{},"additionalProperties":false}]}]},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"effectiveModels":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","enabled","effectiveModels"],"additionalProperties":false}}},"required":["ok","result"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

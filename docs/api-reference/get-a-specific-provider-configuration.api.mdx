@@ -1,0 +1,71 @@
+---
+id: get-a-specific-provider-configuration
+title: "Get a specific provider configuration"
+description: "This route allows you to get the configured LLM providers."
+sidebar_label: "Get a specific provider configuration"
+hide_title: true
+hide_table_of_contents: true
+api: eJztV1+P2zYM/yqGsIcNiy/J4e4lbyk6FMGu26Ht9nLNAMVmbDWypUqyt5zh7z5Sdhwn8SU93FB0w14SWSJF8sc/IisWg42M0E6onM3Yh1TYwKjCQcClVH/aYKuKwKkgARe4FIJI5WuRFAbi4O7ubaCNKkUMxl6xEXM8sWz2wOYLthwxC1FhhNviTsVWwA0YXC5rPNLc8AwcsvlDG6WQcTarmNtqQC2sMyJP8EbIi4xuVBpyLnCDP6LocP+Zu9QoLSJcryA2KtrgSivj2LIeMUEmae5S3MxRIn21CuOOgc+FQEPYzJkCSC8DVqvcgiVdricT+jvE5zWseSFd8K6lxGsQEQe5I1qutRQRJ9rxJ0sMA8ap1SeIHKmJmoNxohGnNj2alVISeM5qrxMKvMzfGfbPw4hUK0k4DenXBIS3Pt/+uvYOPa8p1+Jn2L6HyID7xXvlVONM5HeQJ+i52bSu+756OOVHz/E4FgQ7l/c9WWsuLdSj/75CPkxUYSL4QvIYtFTbDON2Eb/Y3CPpR7e/GIwoAmtR4iJ+FiLWE8933M9EMxFN+p4jpELmsIpRYfjjgYePy+q6Dv3ix/Djx7ia1t9RiiQFN7HhQi5ihESsxVCW9ul+x8o4KP/EFYPYnLO9s+2yW/b5nCsqQPVFX9Xn78TajxSqBGOwUtnLNS1TMchBuj4IiXbhLRViyYsYQqy7ObjwJryeXN9Obqc3ZOrhvQ3HRfFP1z0Kcf8QtG/HBcPP6Pb1lHjZMb4C6zXqJ0p4+79XvppXUEcD3EE8d0PVaK1MxvGExUgTOoEJvmd5tR2sMoWOn3thyzJ44VFF6vVXO4xOQ+dC7Tm6Um1Y1wZd4iTem8nNt9C4YZVTw3U+w6rMk4F3yD/MDh+AwewaNryqB/FqpH8JXLffRp/774DLq+NShZwMRyI2asaLGRuX07GUWdgNRONqt6z9g2zK3bhTGIkMqXPazsZj7KauqNO+EorRA3t6Wtg9QW+uek+AN5jupqsOhKZF20898wJ1NuLRu4y1g1EKnBK19oPSWnl24STR36O8YH6/QNJy14uw6dWEINfKuox7n7e3v8HZkAdWQ4S9TdTNhN2suJN6EGLVPqBeOHU2Jjv4y4215MJHk0exap3zwMopEh64B79nXa1CVFO0iiirasUt/GZkXdP25wIMTbC4LLkRVNC8D2Nh2wfAh8YZ275/18baD8FTyu6clpPHSi4L+sLlBl3Ym1h999Q6jXRojqnJ067HeJKcFDRd0L756QPlRkG49MNl48OlXfRmuEOljuOoUYF+e73hIUtVNcFY1x19c/QkR2vijpowWmLm/Q0bKMs6
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a specific provider configuration"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/llm-providers/{provider}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to get the configured LLM providers.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"in":"path","name":"provider","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"enabled":{"type":"boolean"},"config":{"anyOf":[{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1},"resourceName":{"type":"string","minLength":1},"deploymentId":{"type":"string","minLength":1}},"required":["apiKeySecretName","resourceName","deploymentId"],"additionalProperties":false},{"type":"object","properties":{"accessKeyIdSecretName":{"type":"string","minLength":1},"secretAccessKeySecretName":{"type":"string","minLength":1},"region":{"type":"string","minLength":1,"pattern":"^[a-z]{2}-[a-z]+-\\d{1}$"},"guardrailIdentifier":{"type":"string"},"guardrailVersion":{"type":"string"}},"required":["accessKeyIdSecretName","secretAccessKeySecretName","region"],"additionalProperties":false},{"anyOf":[{"not":{}},{"type":"object","properties":{},"additionalProperties":false}]}]},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"effectiveModels":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","enabled","effectiveModels"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"404":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

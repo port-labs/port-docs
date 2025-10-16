@@ -410,7 +410,7 @@ We will create two automations to orchestrate the AI-enhanced incident managemen
 4. Click `Create` to save the automation.
 
 :::caution Slack token setup
-You will need to add your Slack bot token as a secret in Port. Head to our [guide on how to install the Slack app](https://docs.port.io/ai-interfaces/ai-agents/slack-app#installation).
+You will need to add your Slack bot token as a secret in Port. Head to our [guide on how to install the Slack app](https://docs.port.io/ai-interfaces/slack-app#installation).
 :::
 
 Below is an example notification sent to Slack:

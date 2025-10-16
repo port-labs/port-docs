@@ -242,7 +242,15 @@ To add these secrets to your portal:
               "icon": "DefaultProperty",
               "type": "array",
               "title": "Issue Labels",
-              "description": "Labels to add to the issue, following format: [\"label1\",\"label2\"]"
+              "description": "Labels to add to the issue, following format: [\"label1\",\"label2\"]",
+              "default": []
+            },
+            "assign_to_copilot": {
+              "icon": "DefaultProperty",
+              "type": "boolean",
+              "title": "Auto-assign to Copilot",
+              "description": "Automatically assign this issue to GitHub Copilot for AI-powered coding assistance",
+              "default": false
             },
             "body": {
               "title": "Issue Body",
@@ -259,6 +267,7 @@ To add these secrets to your portal:
           "order": [
             "title",
             "body",
+            "assign_to_copilot",
             "labels"
           ]
         },
@@ -279,7 +288,7 @@ To add these secrets to your portal:
         "body": {
           "title": "{{ .inputs.title }}",
           "body": "{{ .inputs.body }}",
-          "labels": "{{ .inputs.labels }}"
+          "labels": "{{ if .inputs.assign_to_copilot then (.inputs.labels + [\"auto_assign\"]) else .inputs.labels end }}"
         }
       },
       "requiredApproval": false
@@ -684,7 +693,7 @@ Now let us test the complete workflow to ensure everything works correctly.
 ### Run the self-service action
 
 1. Run the self-service action to create a new GitHub issue.
-2. Make sure to add the `auto_assign` label to the issue.
+2. Toggle the `auto_assign_to_copilot` on to assign the issue to copilot.
 3. Go to the issue in GitHub and verify that Copilot is assigned.
 4. Check that a pull request (PR) is opened for the issue.
 

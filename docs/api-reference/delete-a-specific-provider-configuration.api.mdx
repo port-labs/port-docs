@@ -1,0 +1,71 @@
+---
+id: delete-a-specific-provider-configuration
+title: "Delete a specific provider configuration"
+description: "This route allows you to delete a specific LLM provider configuration."
+sidebar_label: "Delete a specific provider configuration"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVDtv2zAQ/isCpxZwLLtIF20GkiGoCwRpOgUeaOlsMaZF5ki6dQT+997pYSuNUmTo0KGLfeK9vvvuUYsCXI7KemUqkYn7UrkETfCQSK3ND5ccTUi8SQrQwI+Js5CrjcqT5fJrYtEcVAGY5KbaqG1AyXGmYiK83DqRPYjFjVhNhIM8oPJHeqnFGiQCkriKpLIS5Z5Co2uULi9hL0VWC3+0QIicR1VtKSJUYc8RjYVKKnqQzwHh4vxZ+RKNVTnJayjQ5DuxihOhuC4rfUnvFaXirw42vSA8BYVQiMxjAAaE4KypHDgG8Wl2yX8vSbqCjQzaJ3edJYWh+j1Unm2ltVrlDRHpo2OHkarM+hFyT44ExQJ61aYzu4HN2hgNshIxDmE+sBHBlEWhOIfUt4MQG6kdxMgul/8CdGobosHX/STNHpyTWxjVFeCl0m4s7XjhdRyhqc/+Hro+z2b/6XovXQ0cXxryFO1l4AJ5xzKRHuap1vuLfslcWvdiFHwK8NAve0BNDqX31mVpKq2aWoN+qgzVNKYN7mwwuCrfmPOW1v62nHggty9wPK/+IhBsVM9N10R3HUqQfA1icy02pnFXXrP9LeVLFrc3ZMqw27GYT2fMujXO72XT9i761asrOX4hxeTloNXnsfqLJ7hlwMNPn1otVTNfDal116sHcZiT4Ytu0Xd2uo9EcklFsmVdr6WD76hj5OenAMjnnMSDRCXXzBa1tFCO5aIblj/U+eGum76PyVtg+x5W3MCD1IG/SNxRRwdXPPKZ73rIGFr1Is/B+oHjq3XlGTqN8dX18vr+mhcmMDXDAdo1A9QJnGAU1++T1aLgXx7mUZe6bsczxpN9q3rTo6uyt2aaVrSOvwCE1a7f
+sidebar_class_name: "delete api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete a specific provider configuration"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/llm-providers/{provider}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to delete a specific LLM provider configuration.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock"]},"in":"path","name":"provider","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"204":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"}},"required":["ok"],"additionalProperties":false}}}},"404":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

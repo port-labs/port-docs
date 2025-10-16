@@ -181,6 +181,10 @@ Port offers three types of line charts:
 
 This chart type displays the values of one or more properties of a **single entity** over time.  
 
+It reflects the state of the catalog **at the chosen time**. Past values are not recalculated if entities are later changed or deleted. This includes calculation and aggregation properties, which are stored as they were computed at that time.
+
+Unlike other chart types, this chart preserves **past values**, while others always reflect the current state of the catalog and recalculate when data changes.
+
 When creating this type of line chart:
 
 1. Choose the **blueprint** you want to visualize.
@@ -218,6 +222,8 @@ For example, here is a line chart displaying a service's resource usage over the
 
 This chart type displays the aggregated values of one or more properties across **all entities** of a specific blueprint.  
 Each property will be displayed as a separate line in the chart.
+
+This chart type reflects the **current state** of the catalog and recalculate when data changes.
 
 When creating this type of line chart:
 
@@ -277,6 +283,8 @@ For example, here is a line chart displaying the maximum cost of all services ov
 
 This chart type displays either the total count of entities or the average number of entities from a specific blueprint over time.  
 If you choose to break down the chart by a property, each line will represent a distinct value of that property.
+
+This chart type reflects the **current state** of the catalog and recalculate when data changes.
 
 When creating this type of line chart:
 
