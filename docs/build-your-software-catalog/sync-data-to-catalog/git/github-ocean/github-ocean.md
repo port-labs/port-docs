@@ -198,8 +198,8 @@ For example, say you want to manage your `package.json` files in Port. One optio
 
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
-:::warning Breaking change in v3.0.0-beta
-Starting from version 3.0.0-beta, the `file` kind requires an `organization` field to be specified. This is a breaking change from previous versions.
+:::info Organization field in file selectors
+The `organization` field is optional if `githubOrganization` is set globally. It is required when no global organization is provided (e.g., Classic PAT syncing multiple orgs).
 :::
 
 ```yaml showLineNumbers
@@ -210,7 +210,7 @@ resources:
       files:
           # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
-          organization: my-org  # Organization name is required from v3.0.0-beta
+          organization: my-org  # Optional if githubOrganization is set; required if no global org
             # The `repos` key can be used to filter the repositories and branch where files should be fetched
           repos:
             - name: MyRepo
@@ -734,7 +734,7 @@ resources:
       query: 'true'
       files:
         - path: '**/package.json'
-          organization: my-org  # Organization name is required from v3.0.0-beta
+          organization: my-org  # Optional if githubOrganization is set; required if no global org
         # Note that in this case we are fetching from a specific repository
           repos:
             - name: MyRepo
@@ -754,9 +754,6 @@ resources:
             version: .item.value
           relations: {}
 ```
-
-The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file. In this case, we are parsing the `dependencies` array from the `package.json` file.  
-Once the array is parsed, we can use the `item` key to refer to each item in the array.
 
 #### Multi-document YAML files
 
@@ -792,7 +789,7 @@ resources:
       query: 'true'
       files:
         - path: values.yaml
-          organization: my-org  # Organization name is required from v3.0.0-beta
+          organization: my-org  # Optional if githubOrganization is set; required if no global org
           skipParsing: true
           repos:
             - name: MyRepo

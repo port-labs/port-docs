@@ -30,25 +30,11 @@ This page outlines the following steps:
 
 Starting from **version 3.0.0-beta**, the GitHub integration supports syncing data from multiple GitHub organizations.
 
-:::warning Breaking change in v3.0.0-beta
-The configuration parameters have changed to support different authentication types:
-
-**For Classic PAT (multiple organizations):**
-```yaml
-githubMultiOrganizations: ["org1", "org2", "org3"]  # Array format
-```
-
-**For GitHub App or Fine-grained PAT (single organization):**
-```yaml
-githubOrganization: "my-org"  # String format
-```
-
-**Authentication requirements:**
-- **Classic PAT**: Supports multiple organizations using `githubMultiOrganizations`
-- **Fine-grained PAT**: Supports exactly **one organization** using `githubOrganization`
-- **GitHub App**: Supports exactly **one organization** using `githubOrganization`
-
-**Performance consideration:** Syncing multiple organizations increases API calls and may slow down the integration. Consider syncing only the organizations you need.
+:::info Multi-organization configuration
+- Classic PAT: optional `githubMultiOrganizations: ["org1", "org2", "org3"]`. If omitted, all accessible orgs are synced.
+- GitHub App and fine-grained PAT: use a single `githubOrganization`.
+- Do not set both `githubOrganization` and `githubMultiOrganizations` at the same time.
+- Performance: syncing multiple organizations increases API calls and may slow down the integration.
 :::
 
 ### Create access token
