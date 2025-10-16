@@ -1,0 +1,24 @@
+```yaml showLineNumbers
+resources:
+  - kind: release
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .__project.path_with_namespace + "/" + .tag_name | gsub(" "; "")
+          title: .name
+          blueprint: '"gitlabRelease"'
+          properties:
+            tagName: .tag_name
+            name: .name
+            description: .description
+            createdAt: .created_at
+            releasedAt: .released_at
+            author: .author.name
+            commitSha: .commit.id
+            upcomingRelease: .upcoming_release
+          relations:
+            service: .__project.path_with_namespace | gsub(" "; "")
+            gitlabMember: .author.username
+```
