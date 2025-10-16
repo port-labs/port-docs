@@ -138,8 +138,11 @@ This blueprint will define the data model for platform requests.
 This action will be used by the AI agent to create new platform requests.
 
 1.  Go to the [actions](https://app.getport.io/actions) page.
+
 2.  Click `+ New Action`.
+
 3.  Toggle `Json mode` on.
+
 4.  Copy and paste the following JSON schema:
 
     <details>
@@ -389,15 +392,7 @@ Finally, let's create the AI agent that will interact with users.
       "properties": {
         "description": "Platform Bot responsible for helping developers create platform requests and check their status. Assists with infrastructure, CI/CD, resource scaling, and research requests.",
         "status": "active",
-        "allowed_blueprints": [
-          "platform_request",
-          "_user",
-          "_team"
-        ],
-        "allowed_actions": [
-          "create_platform_request"
-        ],
-        "prompt": "You are the Platform Team assistant. Help developers:\n1. Create platform requests by understanding their needs and pre-filling forms\n2. Check status of existing requests\n3. Provide guidance on request types",
+        "prompt": "You are the Platform Team assistant. Help developers:\n1. Create platform requests by understanding their needs and pre-filling forms\n2. Check status of existing requests\n3. Provide guidance on request types\n\nWhen a developer wants to create a new platform request, call the \"create_platform_request\" action with the appropriate details.",
         "execution_mode": "Automatic",
         "conversation_starters": [
           "I need help scaling our payment service resources",
@@ -405,12 +400,20 @@ Finally, let's create the AI agent that will interact with users.
           "What platform requests are currently open?",
           "Show me my pending platform requests",
           "I need research help for implementing Redis caching"
+        ],
+        "tools": [
+          "^(list|get|search|track|describe)_.*",
+          "run_create_platform_request"
         ]
       },
       "relations": {}
     }
     ```
     </details>
+
+    :::tip MCP Enhanced Capabilities
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, such as platform requests, users, and teams. Additionally, we explicitly add `run_create_platform_request` to the tools, which instructs the AI agent to call this specific action to create new platform requests.
+    :::
 
 5.  Click `Create`.
 
