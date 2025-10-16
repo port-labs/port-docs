@@ -19,7 +19,7 @@ Below is the structure of a single scorecard:
 | Field                        | Type     | Description                                                                                                                                         |
 |------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `title`                      | `String` | Scorecard name that will be shown in the UI                                                                                                         |
-| `identifier`                 | `String` | The unique identifier of the `Scorecard`. The identifier is used for API calls, programmatic access and distinguishing between different scorecards |
+| `identifier`                 | `String` | The unique identifier of the `Scorecard` (Maximum 100 characters). The identifier is used for API calls, programmatic access and distinguishing between different scorecards |
 | [`filter`](#filter-elements) | `Object` | Optional set of [conditions](#conditions) to filter entities that will be evaluated by the scorecard                                                |
 | [`levels`](#levels)          | `Array`  | The levels that we define for the scorecard, for example `Basic`, `Bronze`, `Silver`, `Gold`                                                        |
 | [`rules`](#rule-elements)    | `Object` | The rules that we create for each scorecard to determine its level                                                                                  |
@@ -165,7 +165,7 @@ A scorecard rule is a single evaluation consisting of multiple checks, each rule
 |---------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `title`       | `String` | `Rule` name that will be shown in the UI                                                                                                                      |
 | `description` | `String` | Description that will be shown in the UI when the rule is expanded. Value that contains markdown is also supported and will be displayed in a markdown format |
-| `identifier`  | `String` | The unique identifier of the `Rule`                                                                                                                           |
+| `identifier`  | `String` | The unique identifier of the `Rule` (Maximum 100 characters)                                                                                                                          |
 | `level`       | `String` | One of the levels defined in the scorecard [levels key](#levels)                                                                                              |
 | `query`       | `Object` | The query is built from a [`combinator`](#combinator) (or / and) and an array of [`conditions`](#conditions)                                                  |
 
