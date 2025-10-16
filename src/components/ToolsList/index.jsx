@@ -17,6 +17,9 @@ export default function ToolsList({ role = 'developer', showApiLinks = true }) {
             {tool.isDynamic && (
               <span className={styles.dynamicBadge}>Dynamic</span>
             )}
+            {tool.isInternal && (
+              <span className={styles.internalBadge}>Internal</span>
+            )}
           </div>
           <div className={styles.toolDescription}>
             {tool.description}
