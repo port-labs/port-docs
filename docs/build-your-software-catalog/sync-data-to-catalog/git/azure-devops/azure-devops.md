@@ -1082,8 +1082,46 @@ Here is an example of the payload structure from Azure DevOps:
 
 </details>
 
+<details>
+<summary><b>Branch response data (click to expand)</b></summary>
 
+```json showLineNumbers
+{
+  "name": "refs/heads/feature/new-feature",
+  "objectId": "ffe9cba521f00d7f60e322845072238635edb451",
+  "creator": {
+    "displayName": "Normal Paulk",
+    "url": "https://vssps.dev.azure.com/fabrikam/_apis/Identities/ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
+    "_links": {
+      "avatar": {
+        "href": "https://dev.azure.com/fabrikam/_apis/GraphProfile/MemberAvatars/aad.YmFjMGYyZDctNDA3ZC03OGRhLTlhMjUtNmJhZjUwMWFjY2U5"
+      }
+    },
+    "id": "ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
+    "uniqueName": "dev@mailserver.com",
+    "imageUrl": "https://dev.azure.com/fabrikam/_api/_common/identityImage?id=ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
+    "descriptor": "aad.YmFjMGYyZDctNDA3ZC03OGRhLTlhMjUtNmJhZjUwMWFjY2U5"
+  },
+  "url": "https://dev.azure.com/fabrikam/7484f783-66a3-4f27-b7cd-6b08b0b077ed/_apis/git/repositories/d3d1760b-311c-4175-a726-20dfc6a7f885/refs?filter=heads%2Ffeature%2Fnew-feature",
+  "__repository": {
+    "id": "d3d1760b-311c-4175-a726-20dfc6a7f885",
+    "name": "my-repository",
+    "url": "https://dev.azure.com/fabrikam/7484f783-66a3-4f27-b7cd-6b08b0b077ed/_apis/git/repositories/d3d1760b-311c-4175-a726-20dfc6a7f885",
+    "webUrl": "https://dev.azure.com/fabrikam/7484f783-66a3-4f27-b7cd-6b08b0b077ed/_git/my-repository",
+    "project": {
+      "id": "7484f783-66a3-4f27-b7cd-6b08b0b077ed",
+      "name": "My Project",
+      "url": "https://dev.azure.com/fabrikam/_apis/projects/7484f783-66a3-4f27-b7cd-6b08b0b077ed",
+      "state": "wellFormed",
+      "revision": 12,
+      "visibility": "public",
+      "lastUpdateTime": "2025-05-04T09:34:21.397Z"
+    }
+  }
+}
+```
 
+</details>
 
 ### Mapping Result
 
@@ -1301,8 +1339,26 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
+<details>
+<summary><b>Branch entity in Port (Click to expand)</b></summary>
 
+```json showLineNumbers
+{
+  "identifier": "7b3d6f8480e87f728ebce5378322c6a77d3fv19d",
+  "title": "refs/heads/feature/new-feature",
+  "blueprint": "branch",
+  "properties": {
+    "repositoryName": "my-repository",
+    "projectName": "My Project",
+    "link": "https://dev.azure.com/fabrikam/7484f783-66a3-4f27-b7cd-6b08b0b077ed/_git/my-repository?version=GBrefs/heads/feature/new-feature"
+  },
+  "relations": {
+    "repository": "myproject/my-repository"
+  }
+}
+```
 
+</details>
 
 ## Relevant Guides
 For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=AzureDevops).

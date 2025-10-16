@@ -47,6 +47,9 @@ import PortPipelineRunAppConfig from './example-pipeline-run/\_azuredevops_expor
 import IterationBlueprint from './example-iteration/\_azuredevops_exporter_example_iteration_blueprint.mdx'
 import PortIterationAppConfig from './example-iteration/\_azuredevops_exporter_example_iteration_port_app_config.mdx'
 
+import BranchBlueprint from './example-branch/\_azuredevops_exporter_example_branch_blueprint.mdx'
+import PortBranchAppConfig from './example-branch/\_azuredevops_exporter_example_branch_port_app_config.mdx'
+
 import EnvironmentBlueprint from './example-environment/\_azuredevops_exporter_example_environment_blueprint.mdx'
 import PortEnvironmentAppConfig from './example-environment/\_azuredevops_exporter_example_environment_port_app_config.mdx'
 
@@ -211,6 +214,27 @@ You can use the following Port blueprint definitions and integration configurati
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your iterations.
+
+## Mapping branches
+
+The following example demonstrates how to ingest your Azure DevOps branches to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<RepositoryBlueprint/>
+
+<BranchBlueprint/>
+
+<PortBranchAppConfig/>
+
+:::tip To Learn more
+
+- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure DevOps objects to Port entities.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/refs/list?view=azure-devops-rest-7.1#gitref) for the Azure DevOps refs object structure.
+
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your branches.
 
 ## Mapping test runs
 <Tabs groupId="config" queryString="parameter">
