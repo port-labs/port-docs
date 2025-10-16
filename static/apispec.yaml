@@ -35199,7 +35199,7 @@ paths:
       summary: General-purpose AI interactions
       tags:
         - AI
-      description: 
+      description: This is a general-purpose endpoint that is not tied to any specific agent. Its purpose is to allow you to send requests directly to Port AI, enabling interactions and executions without being bound to a predefined agent context.
       security:
         - bearer: []
       requestBody:
