@@ -1475,6 +1475,13 @@ export const availableGuides = [
         tags: ["SDLC", "GitHub", "AI",  "Automations"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/manage-ai-instructions",
+    },
+    {
+        title: "Auto-enhance PR descriptions with AI",
+        description: "Automatically generate comprehensive, template-compliant PR descriptions using Claude Code",
+        tags: ["SDLC", "GitHub", "Claude Code", "AI", "Automations"],
+        logos: ["AI", "GitHub", "Claude Code"],
+        link: "/guides/all/auto-enhance-pr-descriptions-with-ai",
     }
 ]
 
