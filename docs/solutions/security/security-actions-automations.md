@@ -90,7 +90,7 @@ Streamline the vulnerability management lifecycle from detection to remediation:
 - Route vulnerabilities to appropriate teams based on service ownership and technology stack
 
 #### Intelligent vulnerability enrichment
-- [Enrich security vulnerabilities using AI](/guides/all/enrich-security-vulnerability-using-ai/) to provide context and remediation guidance
+- [Remediate vulnerabilities with AI](/guides/all/remediate-vulnerability-with-ai/) to provide context and remediation guidance
 - Automatically research exploit availability and attack complexity
 - Correlate vulnerabilities with recent code changes and deployment history
 - Provide automated impact assessment based on service architecture
