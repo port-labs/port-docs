@@ -10,6 +10,9 @@ import S3BucketProperties from './examples/s3/buckets/_s3_bucket_properties.mdx'
 import EcsClusterBlueprint from './examples/ecs/clusters/_ecs_cluster_blueprint.mdx'
 import EcsClusterConfig from './examples/ecs/clusters/_ecs_cluster_port_app_config.mdx'
 import EcsClusterProperties from './examples/ecs/clusters/_ecs_cluster_properties.mdx'
+import EcsServiceBlueprint from './examples/ecs/services/_ecs_service_blueprint.mdx'
+import EcsServiceConfig from './examples/ecs/services/_ecs_service_port_app_config.mdx'
+import EcsServiceProperties from './examples/ecs/services/_ecs_service_properties.mdx'
 import Ec2InstanceBlueprint from './examples/ec2/instances/_ec2_instance_blueprint.mdx'
 import Ec2InstanceConfig from './examples/ec2/instances/_ec2_instance_port_app_config.mdx'
 import Ec2InstanceProperties from './examples/ec2/instances/_ec2_instance_properties.mdx'
@@ -88,6 +91,22 @@ You can reference any of the following ECS cluster properties in your mapping co
 <EcsClusterProperties/>
 
 For more details about ECS cluster properties, refer to the [AWS ECS API documentation](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeClusters.html).
+
+### ECS services
+
+The following example demonstrates how to ingest your AWS ECS services to Port.
+
+You can use the following Port blueprint definitions and integration configuration:
+
+<EcsServiceBlueprint/>
+
+<EcsServiceConfig/>
+
+You can reference any of the following ECS service properties in your mapping configuration:
+
+<EcsServiceProperties/>
+
+For more details about ECS service properties, refer to the [AWS ECS API documentation](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeServices.html).
 
 ## Amazon EC2
 
