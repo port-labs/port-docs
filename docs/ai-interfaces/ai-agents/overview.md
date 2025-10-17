@@ -158,7 +158,7 @@ Explore these guides to see AI agents in action and learn how to implement them 
 - [Setup task manager AI agent](/guides/all/setup-task-manager-ai-agent)
 - [Setup incident manager AI agent](/guides/all/setup-incident-manager-ai-agent)
 - [Add RCA context to AI agents](/guides/all/add-rca-context-to-ai-agents)
-- [Enrich security vulnerability using AI](/guides/all/enrich-security-vulnerability-using-ai)
+- [Remediate vulnerabilities with AI](/guides/all/remediate-vulnerability-with-ai)
 
 ## Frequently Asked Questions
 
