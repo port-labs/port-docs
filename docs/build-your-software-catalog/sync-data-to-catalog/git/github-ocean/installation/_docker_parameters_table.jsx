@@ -45,9 +45,14 @@ export default function DockerParametersTable({ showingApp }) {
           <td>❌</td>
         </tr>
         <tr>
-          <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION</code></td>
-          <td>The GitHub organization the integration was installed in.</td>
-          <td>✅</td>
+        <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION</code></td>
+        <td>Single GitHub organization name to sync data from (for GitHub App or Fine-grained PAT). Required for single-org authentication.</td>
+        <td>❌</td>
+        </tr>
+        <tr>
+          <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_MULTI_ORGANIZATIONS</code></td>
+          <td>JSON array of GitHub organization names to sync data from (e.g., <code>["org1","org2"]</code>). From v3.0.0-beta, classic PAT supports multiple orgs. Leave empty with classic PAT to sync all accessible organizations.</td>
+          <td>❌</td>
         </tr>
         <tr>
           <td><code>OCEAN__INTEGRATION__IDENTIFIER</code></td>

@@ -18,6 +18,22 @@ Here's what you can do with the GitHub integration:
 - Map and organize your desired GitHub resources and their metadata in Port (see supported resources below).
 - Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Manage Port entities using GitOps.
+- **Sync data from multiple GitHub organizations** using a single integration instance.
+
+### Multi-organization support
+
+The GitHub integration supports syncing data from multiple GitHub organizations starting from **version 3.0.0-beta**. You can configure which organizations to sync using the `githubOrganization` and `githubMultiOrganizations` configuration parameters.
+
+:::caution Authentication and configuration requirements:
+- **With classic PAT**:
+  - Specify a list of organizations: `githubMultiOrganizations: ["org1", "org2", "org3"]`
+  - Leave empty to sync all organizations the PAT user is a member of: `githubMultiOrganizations: []`
+- **With GitHub App**: Specify exactly one organization: `githubOrganization: "my-org"`
+- **With Fine-grained PAT**: Specify exactly one organization: `githubOrganization: "my-org"`
+
+**Performance consideration:** Syncing multiple organizations will increase the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption. Consider syncing only the organizations you need.
+:::
+
 
 ### Supported resources
 
@@ -78,6 +94,28 @@ repositoryType: 'all'
 deleteDependentEntities: true
 createMissingRelatedEntities: true
 resources:
+  - kind: organization
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '''githubOrganization'''
+          properties:
+            login: .login
+            id: .id
+            nodeId: .node_id
+            url: .url
+            reposUrl: .repos_url
+            eventsUrl: .events_url
+            hooksUrl: .hooks_url
+            issuesUrl: .issues_url
+            membersUrl: .members_url
+            publicMembersUrl: .public_members_url
+            avatarUrl: .avatar_url
+            description: if .description then .description else "" end
   - kind: repository
     selector:
       query: 'true'
@@ -94,6 +132,8 @@ resources:
             readme: file://README.md
             url: .html_url
             language: if .language then .language else "" end
+          relations:
+            organization: .owner.login
   - kind: pull-request
     selector:
       query: 'true'
@@ -136,9 +176,18 @@ resources:
 
 Using Port's GitHub integration, you can automatically ingest GitHub resources into Port based on real-time events.
 
-The app allows you to ingest a variety of objects resources provided by the GitHub API, including repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
+The app allows you to ingest a variety of objects resources provided by the GitHub API, including organizations, repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
 
 The GitHub integration uses a YAML configuration file to describe the ETL process to load data into the developer portal. This approach provides a flexible and powerful way to model your Git data without being overly opinionated or complex.
+
+### Ingest organizations
+
+The GitHub integration can automatically sync organization-level data when using multi-organization support (available from **v3.0.0-beta**).
+
+
+:::tip Organization as parent entity
+Organizations can serve as parent entities for repositories, teams, and other GitHub resources, helping you model your organizational structure in Port.
+:::
 
 ### Ingest files from your repositories
 
@@ -149,6 +198,10 @@ For example, say you want to manage your `package.json` files in Port. One optio
 
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
+:::info Organization field in file selectors
+The `organization` field is optional if `githubOrganization` is set globally. It is required when no global organization is provided (e.g., Classic PAT syncing multiple orgs).
+:::
+
 ```yaml showLineNumbers
 resources:
   - kind: file
@@ -157,6 +210,7 @@ resources:
       files:
           # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
+          organization: my-org  # Optional if githubOrganization is set; required if no global org
             # The `repos` key can be used to filter the repositories and branch where files should be fetched
           repos:
             - name: MyRepo
@@ -650,6 +704,7 @@ In any case, the structure of the available data looks like this:
     "network_count": 33404,
     "subscribers_count": 1
   },
+  "organization": "Test-Org",
   "branch": "main",
   "path": "build/package.json",
   "name": "package.json",
@@ -679,6 +734,7 @@ resources:
       query: 'true'
       files:
         - path: '**/package.json'
+          organization: my-org  # Optional if githubOrganization is set; required if no global org
         # Note that in this case we are fetching from a specific repository
           repos:
             - name: MyRepo
@@ -698,9 +754,6 @@ resources:
             version: .item.value
           relations: {}
 ```
-
-The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file. In this case, we are parsing the `dependencies` array from the `package.json` file.  
-Once the array is parsed, we can use the `item` key to refer to each item in the array.
 
 #### Multi-document YAML files
 
@@ -736,7 +789,11 @@ resources:
       query: 'true'
       files:
         - path: values.yaml
+          organization: my-org  # Optional if githubOrganization is set; required if no global org
           skipParsing: true
+          repos:
+            - name: MyRepo
+              branch: main
     port:
       entity:
         mappings:
