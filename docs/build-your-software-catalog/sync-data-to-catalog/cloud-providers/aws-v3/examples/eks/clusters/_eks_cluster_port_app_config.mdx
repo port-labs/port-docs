@@ -1,0 +1,28 @@
+<details>
+<summary><b>EKS cluster mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::EKS::Cluster
+    selector:
+      query: 'true'
+      # includeActions: No optional actions available for EKS clusters
+      # All properties are included by default via DescribeClusterAction
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.Arn
+          title: .Properties.Name
+          blueprint: '"eksCluster"'
+          properties:
+            status: .Properties.Status
+            version: .Properties.Version
+            endpoint: .Properties.Endpoint
+            arn: .Properties.Arn
+            tags: (.Properties.Tags | to_entries | map({Key: .key, Value: .value}))
+          relations:
+            account: .__ExtraContext.AccountId
+```
+
+</details>
+
