@@ -135,7 +135,7 @@ Once the widget is set up, you can:
 </TabItem>
 <TabItem value="slack" label="Slack Integration">
 
-The Slack integration provides a natural way to interact with the Incident Manager agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-interfaces/ai-agents/slack-app)**.
+The Slack integration provides a natural way to interact with the Incident Manager agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-interfaces/slack-app)**.
 
 You can interact with the Incident Manager agent in two ways:
 1. **Direct message** the Port AI Assistant.
@@ -185,7 +185,7 @@ To get the most out of your Incident Manager agent:
 ## Possible enhancements
 
 You can further enhance the Incident Manager setup by:
-- **Integration expansion**: [Add more data sources](/ai-interfaces/ai-agents/build-an-ai-agent#step-2-configure-data-access) like Opsgenie or ServiceNow.
-- **Automated notifications**: [Configure the agent](/ai-interfaces/ai-agents/interact-with-ai-agents#actions-and-automations) to proactively notify about incident updates or escalations.
-- **Custom conversation starters**: Add organization-specific queries to the [conversation starters](/ai-interfaces/ai-agents/build-an-ai-agent#step-5-add-conversation-starters).
+- **Integration expansion**: [Add more data sources](/ai-interfaces/ai-agents/build-an-ai-agent#step-2-configure-data-access-tools) like Opsgenie or ServiceNow.
+- **Automated notifications**: [Configure the agent](/ai-interfaces/ai-agents/interact-with-ai-agents#interaction-methods) to proactively notify about incident updates or escalations.
+- **Custom conversation starters**: Add organization-specific queries to the [conversation starters](/ai-interfaces/ai-agents/build-an-ai-agent#step-5-activate-your-agent).
 - **Monitor and improve**: [Check how your developers are interacting](/ai-interfaces/ai-agents/interact-with-ai-agents#ai-interaction-details) with the agent and improve it according to feedback.

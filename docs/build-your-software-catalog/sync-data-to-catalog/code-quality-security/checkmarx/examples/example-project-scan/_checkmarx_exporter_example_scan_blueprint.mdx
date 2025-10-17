@@ -1,0 +1,78 @@
+<details>
+<summary><b>Scan blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "checkmarxScan",
+  "title": "Checkmarx Scan",
+  "icon": "Checkmarx",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "Queued",
+          "Running",
+          "Completed",
+          "Failed",
+          "Partial",
+          "Canceled"
+        ],
+        "description": "The status of the scan. Possible values: Queued, Running, Completed, Failed, Partial, Canceled."
+      },
+      "branch": {
+        "type": "string",
+        "title": "Branch",
+        "description": "The branch of the repository that was scanned."
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At",
+        "description": "The date and time when the scan was created."
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Updated At",
+        "description": "The date and time when the scan was last updated."
+      },
+      "projectId": {
+        "type": "string",
+        "title": "Project ID",
+        "description": "The identifier of the project to which this scan belongs."
+      },
+      "userAgent": {
+        "type": "string",
+        "title": "User Agent",
+        "description": "The user agent used to initiate the scan."
+      },
+      "configs": {
+        "type": "object",
+        "title": "Configurations",
+        "description": "Configuration details for the scan."
+      },
+      "statusDetails": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        },
+        "title": "Status Details",
+        "description": "Detailed status information for the scan."
+      }
+    },
+    "required": ["status", "projectId"]
+  },
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "checkmarxProject",
+      "many": false,
+      "required": true
+    }
+  }
+}
+```
+
+</details>
