@@ -32,6 +32,7 @@ The following advanced configuration parameters are available:
 {label: "Bulk Sync", value: "bulkSync"},
 {label: "Event listener type", value: "eventListenerType"},
 {label: "CRDs to discover", value: "crdsToDiscover"},
+{label: "JQ Configuration", value: "jqConfiguration"},
 ]} >
 
 <TabItem value="resyncInterval">
@@ -133,6 +134,85 @@ For more information how to use the `crdsToDiscover` parameter, please refer to 
 
 </TabItem>
 
+<TabItem value="jqConfiguration">
+
+The K8s exporter supports configuration options to control access to environment variables within JQ queries used in resource mappings.
+
+### `allowAllEnvironmentVariablesInJQ`
+
+The `allowAllEnvironmentVariablesInJQ` parameter controls whether all environment variables are accessible in JQ queries.
+
+- **Default value**: `true` (all environment variables are accessible)
+- **Security implications**: When set to `true`, JQ queries in your resource mappings can access any environment variable available to the exporter pod, including sensitive information like API keys, passwords, and other secrets.
+
+:::warning Security Risk
+Setting `allowAllEnvironmentVariablesInJQ` to `true` can expose sensitive environment variables to JQ queries. This includes:
+- Port credentials (`PORT_CLIENT_ID`, `PORT_CLIENT_SECRET`)
+- Kubernetes service account tokens
+- Any other environment variables injected into the pod
+- Secrets mounted as environment variables
+
+Only enable this setting if you trust all JQ queries in your resource mappings and understand the security implications.
+:::
+
+### `allowedEnvironmentVariablesInJQ`
+
+The `allowedEnvironmentVariablesInJQ` parameter specifies which environment variables are allowed in JQ queries when `allowAllEnvironmentVariablesInJQ` is set to `false`. This parameter accepts a comma-separated list that can include:
+- Specific environment variable names (e.g., `CLUSTER_NAME`)
+- JQ expressions/patterns for matching multiple variables (e.g., `CLUSTER_*` to match all cluster-related environment variables)
+
+- **Default value**: `""` (empty - no environment variables allowed when `allowAllEnvironmentVariablesInJQ` is `false`)
+- **Use case**: Restrict access to only specific, safe environment variables in JQ queries for enhanced security. Use patterns to allow groups of related environment variables.
+
+:::tip Recommended Security Practice
+For production environments, set `allowAllEnvironmentVariablesInJQ` to `false` and explicitly list only the environment variables your JQ queries need in `allowedEnvironmentVariablesInJQ`.
+:::
+
+#### Configuration Examples
+
+#### Example 1: Allow all environment variables (default, less secure)
+
+```bash
+--set allowAllEnvironmentVariablesInJQ=true
+```
+
+#### Example 2: Restrict to specific environment variables (recommended)
+
+```bash
+--set allowAllEnvironmentVariablesInJQ=false \
+--set allowedEnvironmentVariablesInJQ="CLUSTER_NAME,NAMESPACE,REGION"
+```
+
+#### Example 3: Using values.yaml file
+
+```yaml
+allowAllEnvironmentVariablesInJQ: false
+allowedEnvironmentVariablesInJQ: "CLUSTER_NAME,NAMESPACE,REGION"
+```
+
+#### Example 4: Using patterns to allow groups of variables
+
+```bash
+--set allowAllEnvironmentVariablesInJQ=false \
+--set allowedEnvironmentVariablesInJQ="CLUSTER_*,NAMESPACE,REGION_*"
+```
+
+This configuration allows:
+- All environment variables starting with `CLUSTER_` (e.g., `CLUSTER_NAME`, `CLUSTER_ID`)
+- Specific variable: `NAMESPACE`
+- All environment variables starting with `REGION_` (e.g., `REGION_US`, `REGION_EU`)
+
+#### Example 5: Using patterns in values.yaml
+
+```yaml
+allowAllEnvironmentVariablesInJQ: false
+allowedEnvironmentVariablesInJQ: "CLUSTER_*,NAMESPACE_*,REGION_*"
+```
+
+This configuration allows all environment variables that start with `CLUSTER_`, `NAMESPACE_`, or `REGION_`.
+
+</TabItem>
+
 </Tabs>
 
 ## Security Configuration
@@ -155,12 +235,12 @@ By using the `--set` flag, you can override specific exporter configuration para
 ```bash showLineNumbers
 helm upgrade --install k8s-exporter port-labs/port-k8s-exporter \
     --create-namespace --namespace port-k8s-exporter \
-	--set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
-	--set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
-	--set stateKey="k8s-exporter"  \
+    --set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
+    --set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
+    --set stateKey="k8s-exporter"  \
     # highlight-next-line
-	--set eventListenerType="KAFKA"  \
-	--set extraEnv=[{"name":"CLUSTER_NAME","value":"my-cluster"}] 
+    --set eventListenerType="KAFKA"  \
+    --set extraEnv=[{"name":"CLUSTER_NAME","value":"my-cluster"}] 
 ```
 
 For example, to set the parameters from the [security configuration](#security-configuration) section:
@@ -174,7 +254,6 @@ For example, to set the parameters from the [security configuration](#security-c
 
 - A complete list of configuration parameters available when using the helm chart is available [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter#chart);
 - An example skeleton `values.yml` file is available [here](https://github.com/port-labs/helm-charts/blob/main/charts/port-k8s-exporter/values.yaml).
-
 
 ## Extra environment variables
 To pass extra environment variables to the exporter's runtime, you can use the Helm chart provided with the installation. You can do this in one of two ways:
