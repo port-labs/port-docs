@@ -1319,7 +1319,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 <details>
-<summary> Iteration entity in Port </summary>
+<summary><b> Iteration entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
