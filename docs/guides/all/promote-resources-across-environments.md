@@ -250,6 +250,15 @@ Below are examples of CI/CD workflows that automatically export data from your d
 
 These workflows export resource definitions (such as blueprints, scorecards, and actions) from one of your Port environments using Port's API, and save them as JSON files in the dedicated repository under the appropriate environment folder.
 
+**What these workflows do:**
+
+- **Authenticate** with Port using your API credentials
+- **Export** resource definitions (blueprints, scorecards, actions) from your Port environment
+- **Save** the exported JSON files to your Git repository in organized folders (`development/blueprints/`, `development/scorecards/`, `development/actions/`)
+- **Commit** the changes back to your repository for version control
+
+This creates a backup of your Port configuration and enables you to track changes over time. The exported files are saved in a structure that matches what the promotion workflows expect to find.
+
 **Prerequisites**
 
 Generate API credentials for your Port development environment and store them as CI/CD variables:
@@ -288,7 +297,6 @@ on:
 env:
   PORT_API_URL: "https://api.getport.io/v1"
   EXPORT_DIR: "development"
-  TIMESTAMP: ${{ github.run_number }}-${{ github.run_id }}
 
 jobs:
   export-port-data:
@@ -328,10 +336,12 @@ jobs:
           echo "access_token=$access_token" >> $GITHUB_ENV
           echo "✅ Successfully obtained access token"
           
-      - name: Create export directory
+      - name: Create export directories
         run: |
-          mkdir -p $EXPORT_DIR/$TIMESTAMP
-          echo "Created export directory: $EXPORT_DIR/$TIMESTAMP"
+          mkdir -p $EXPORT_DIR/blueprints
+          mkdir -p $EXPORT_DIR/scorecards
+          mkdir -p $EXPORT_DIR/actions
+          echo "Created export directories for resource types"
           
       - name: Export Blueprints
         if: ${{ github.event.inputs.export_type == 'blueprints' || github.event.inputs.export_type == 'all' }}
@@ -344,7 +354,7 @@ jobs:
             -H "Content-Type: application/json")
           
           if [ $? -eq 0 ] && [ -n "$blueprints_response" ]; then
-            echo "$blueprints_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/blueprints.json"
+            echo "$blueprints_response" | jq '.' > "$EXPORT_DIR/blueprints/blueprints.json"
             
             # Count blueprints
             blueprint_count=$(echo "$blueprints_response" | jq '.blueprints | length')
@@ -360,7 +370,7 @@ jobs:
                 -H "Content-Type: application/json")
               
               if [ $? -eq 0 ] && [ -n "$blueprint_detail" ]; then
-                echo "$blueprint_detail" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/blueprint-$blueprint_id.json"
+                echo "$blueprint_detail" | jq '.' > "$EXPORT_DIR/blueprints/$blueprint_id.json"
                 echo "✅ Exported detailed definition for blueprint: $blueprint_id"
               fi
             fi
@@ -379,7 +389,7 @@ jobs:
             -H "Content-Type: application/json")
           
           if [ $? -eq 0 ] && [ -n "$scorecards_response" ]; then
-            echo "$scorecards_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/scorecards.json"
+            echo "$scorecards_response" | jq '.' > "$EXPORT_DIR/scorecards/scorecards.json"
             
             scorecard_count=$(echo "$scorecards_response" | jq '.scorecards | length')
             echo "✅ Exported $scorecard_count scorecards"
@@ -398,7 +408,7 @@ jobs:
             -H "Content-Type: application/json")
           
           if [ $? -eq 0 ] && [ -n "$actions_response" ]; then
-            echo "$actions_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/actions.json"
+            echo "$actions_response" | jq '.' > "$EXPORT_DIR/actions/actions.json"
             
             action_count=$(echo "$actions_response" | jq '.actions | length')
             echo "✅ Exported $action_count actions"
@@ -419,7 +429,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "ℹ️ No changes to commit"
           else
-            git commit -m "Export Port data - $TIMESTAMP
+            git commit -m "Export Port data
 
             - Export type: ${{ github.event.inputs.export_type }}
             - Blueprint filter: ${{ github.event.inputs.blueprint_filter || 'None' }}
@@ -454,7 +464,6 @@ stages:
 variables:
   PORT_API_URL: "https://api.getport.io/v1"
   EXPORT_DIR: "development"
-  TIMESTAMP: "${CI_PIPELINE_ID}-${CI_JOB_ID}"
 
 export-port-data:
   stage: export
@@ -485,8 +494,10 @@ export-port-data:
       
       echo "access_token=$access_token" >> $GITHUB_ENV
       echo "✅ Successfully obtained access token"
-    - mkdir -p $EXPORT_DIR/$TIMESTAMP
-    - echo "Created export directory: $EXPORT_DIR/$TIMESTAMP"
+    - mkdir -p $EXPORT_DIR/blueprints
+    - mkdir -p $EXPORT_DIR/scorecards
+    - mkdir -p $EXPORT_DIR/actions
+    - echo "Created export directories for resource types"
     - |
       if [ "$EXPORT_TYPE" = "blueprints" ] || [ "$EXPORT_TYPE" = "all" ]; then
         echo "📋 Exporting blueprints..."
@@ -496,7 +507,7 @@ export-port-data:
           -H "Content-Type: application/json")
         
         if [ $? -eq 0 ] && [ -n "$blueprints_response" ]; then
-          echo "$blueprints_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/blueprints.json"
+          echo "$blueprints_response" | jq '.' > "$EXPORT_DIR/blueprints/blueprints.json"
           
           blueprint_count=$(echo "$blueprints_response" | jq '.blueprints | length')
           echo "✅ Exported $blueprint_count blueprints"
@@ -510,7 +521,7 @@ export-port-data:
               -H "Content-Type: application/json")
             
             if [ $? -eq 0 ] && [ -n "$blueprint_detail" ]; then
-              echo "$blueprint_detail" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/blueprint-$blueprint_id.json"
+              echo "$blueprint_detail" | jq '.' > "$EXPORT_DIR/blueprints/$blueprint_id.json"
               echo "✅ Exported detailed definition for blueprint: $blueprint_id"
             fi
           fi
@@ -528,7 +539,7 @@ export-port-data:
           -H "Content-Type: application/json")
         
         if [ $? -eq 0 ] && [ -n "$scorecards_response" ]; then
-          echo "$scorecards_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/scorecards.json"
+          echo "$scorecards_response" | jq '.' > "$EXPORT_DIR/scorecards/scorecards.json"
           
           scorecard_count=$(echo "$scorecards_response" | jq '.scorecards | length')
           echo "✅ Exported $scorecard_count scorecards"
@@ -546,7 +557,7 @@ export-port-data:
           -H "Content-Type: application/json")
         
         if [ $? -eq 0 ] && [ -n "$actions_response" ]; then
-          echo "$actions_response" | jq '.' > "$EXPORT_DIR/$TIMESTAMP/actions.json"
+          echo "$actions_response" | jq '.' > "$EXPORT_DIR/actions/actions.json"
           
           action_count=$(echo "$actions_response" | jq '.actions | length')
           echo "✅ Exported $action_count actions"
@@ -561,7 +572,7 @@ export-port-data:
       if git diff --staged --quiet; then
         echo "ℹ️ No changes to commit"
       else
-        git commit -m "Export Port data - $TIMESTAMP
+        git commit -m "Export Port data
 
         - Export type: $EXPORT_TYPE
         - Blueprint filter: ${BLUEPRINT_FILTER:-None}
@@ -591,7 +602,6 @@ trigger: none
 variables:
   PORT_API_URL: 'https://api.getport.io/v1'
   EXPORT_DIR: 'development'
-  TIMESTAMP: '$(Build.BuildId)-$(Build.BuildNumber)'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -646,9 +656,11 @@ stages:
       displayName: 'Get Port Access Token'
     
     - script: |
-        mkdir -p $(EXPORT_DIR)/$(TIMESTAMP)
-        echo "Created export directory: $(EXPORT_DIR)/$(TIMESTAMP)"
-      displayName: 'Create export directory'
+        mkdir -p $(EXPORT_DIR)/blueprints
+        mkdir -p $(EXPORT_DIR)/scorecards
+        mkdir -p $(EXPORT_DIR)/actions
+        echo "Created export directories for resource types"
+      displayName: 'Create export directories'
     
     - script: |
         if [ "$(exportType)" = "blueprints" ] || [ "$(exportType)" = "all" ]; then
@@ -659,7 +671,7 @@ stages:
             -H "Content-Type: application/json")
           
           if [ $? -eq 0 ] && [ -n "$blueprints_response" ]; then
-            echo "$blueprints_response" | jq '.' > "$(EXPORT_DIR)/$(TIMESTAMP)/blueprints.json"
+            echo "$blueprints_response" | jq '.' > "$(EXPORT_DIR)/blueprints/blueprints.json"
             
             blueprint_count=$(echo "$blueprints_response" | jq '.blueprints | length')
             echo "✅ Exported $blueprint_count blueprints"
@@ -673,7 +685,7 @@ stages:
                 -H "Content-Type: application/json")
               
               if [ $? -eq 0 ] && [ -n "$blueprint_detail" ]; then
-                echo "$blueprint_detail" | jq '.' > "$(EXPORT_DIR)/$(TIMESTAMP)/blueprint-$blueprint_id.json"
+                echo "$blueprint_detail" | jq '.' > "$(EXPORT_DIR)/blueprints/$blueprint_id.json"
                 echo "✅ Exported detailed definition for blueprint: $blueprint_id"
               fi
             fi
@@ -693,7 +705,7 @@ stages:
             -H "Content-Type: application/json")
           
           if [ $? -eq 0 ] && [ -n "$scorecards_response" ]; then
-            echo "$scorecards_response" | jq '.' > "$(EXPORT_DIR)/$(TIMESTAMP)/scorecards.json"
+            echo "$scorecards_response" | jq '.' > "$(EXPORT_DIR)/scorecards/scorecards.json"
             
             scorecard_count=$(echo "$scorecards_response" | jq '.scorecards | length')
             echo "✅ Exported $scorecard_count scorecards"
@@ -713,7 +725,7 @@ stages:
             -H "Content-Type: application/json")
           
           if [ $? -eq 0 ] && [ -n "$actions_response" ]; then
-            echo "$actions_response" | jq '.' > "$(EXPORT_DIR)/$(TIMESTAMP)/actions.json"
+            echo "$actions_response" | jq '.' > "$(EXPORT_DIR)/actions/actions.json"
             
             action_count=$(echo "$actions_response" | jq '.actions | length')
             echo "✅ Exported $action_count actions"
@@ -735,7 +747,7 @@ stages:
         if git diff --staged --quiet; then
           echo "ℹ️ No changes to commit"
         else
-          git commit -m "Export Port data - $(TIMESTAMP)
+          git commit -m "Export Port data
 
           - Export type: $(exportType)
           - Blueprint filter: $(blueprintFilter)
@@ -763,6 +775,15 @@ stages:
 #### Promote resources using a CI/CD workflow
 
 Below are examples of CI/CD workflows that automate the promotion of resources from a development environment to a production environment.
+
+**What these workflows do:**
+
+- **Validate** JSON files in your development folder to ensure they're properly formatted
+- **Copy** resource definitions from the development folder to the production folder in your repository
+- **Apply** the resource definitions to your production Port environment using the Port API
+- **Commit** the promoted resources back to your repository for audit trail
+
+This automates the promotion process and ensures consistency between your development and production environments.
 
 **Prerequisites**
 
