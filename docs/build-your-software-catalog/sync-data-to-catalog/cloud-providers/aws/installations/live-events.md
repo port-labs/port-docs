@@ -10,7 +10,7 @@ import Image from "@theme/IdealImage";
 
 Port's AWS integration supports real-time event processing, allowing for accurate representation of your AWS infrastructure inside Port. This guide explains how to set up live events for your AWS resources.
 
-:::info Current Limitations
+:::info Supported account type
 Live events are currently only available for **Single account installations** (not multi-account).
 :::
 
@@ -18,25 +18,24 @@ Live events are currently only available for **Single account installations** (n
 
 Before setting up live events, ensure you have:
 
-- **AWS integration installed**: Complete the [AWS integration installation](./installation.md).
-- **API Gateway setup**: The integration requires an API Gateway endpoint (automatically created with Terraform installation).
-- **Port API key**: Your Port API key for authentication.
-- **AWS permissions**: Ability to create EventBridge rules in your AWS account.
+- Complete the [AWS integration installation](./installation.md).
+- Your Port API key for authentication.
+- Permissions to create EventBridge rules on your AWS account.
 
 :::tip Terraform vs Manual Installation
 - **Terraform users**: Use the provided Terraform module for automated setup.
 - **Manual installation users**: Follow the AWS console setup steps.
 :::
 
-## How live events work
+## Live-events flow
 
-The live events flow follows these steps:
+The live events flow is comprised of the following steps:
 
 1. **AWS Services** generate events when resources change.
 2. **CloudTrail** captures these events.
 3. **EventBridge Rules** filter and route specific events.
 4. **API Gateway** receives the events and forwards them to Port.
-5. **Port Integration** processes the events and updates your software catalog.
+5. Your **Port Integration** processes the events and updates your software catalog.
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/live-events-diagram.svg' width='50%' border='1px' />
 <br></br>
@@ -56,7 +55,7 @@ The default Terraform module supports live events for these resource types:
 - **S3 Buckets** (`AWS::S3::Bucket`) 
 - **CloudFormation Stacks** (`AWS::CloudFormation::Stack`)
 
-<h3>Adding custom resource types</h3>
+<h3>Add custom resource types</h3>
 
 To add live events for additional resource types (like SSM Parameters), use the `aws_event_rule` module:
 
@@ -106,7 +105,7 @@ module "aws_event_rule" {
 </TabItem>
 <TabItem value="manual" label="Manual AWS Console Setup">
 
-If you installed the AWS integration manually, follow these steps to create EventBridge rules in the AWS console.
+If you installed the AWS integration manually, follow these steps to create EventBridge rules in the AWS console:
 
 <h3>Step 1: Create a rule</h3>
 
@@ -194,7 +193,7 @@ To add live events for additional AWS services, follow these steps:
 
 :::info Default Terraform installation
 
-with support for three resource types by default:
+The default setup comes preconfigured with support for three AWS resource types:
   - `EC2 Instances`.
   - `S3 Buckets`.
   - `CloudFormation Stacks`.
