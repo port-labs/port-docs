@@ -5,7 +5,7 @@ sidebar_label: Security & Compliance
 sidebar_class_name: custom-sidebar-item sidebar-menu-security
 ---
 
-# Security & Compliance
+# Security & compliance
 
 Port is an internal developer portal platform and as such we place the utmost importance on data security, privacy and compliance, so that you can trust that your security needs are met.
 
