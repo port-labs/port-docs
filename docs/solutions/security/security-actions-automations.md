@@ -94,7 +94,7 @@ Port makes vulnerability management run itself with **context-aware automations*
   - Raise priority when items breach the **remediation SLA**.
 
 #### Intelligent vulnerability enrichment
-  - [Enrich security vulnerabilities using AI](/guides/all/enrich-security-vulnerability-using-ai/) to provide context and remediation guidance.
+  - [Enrich security vulnerabilities using AI](/guides/all/remediate-vulnerability-with-ai/) to provide context and remediation guidance.
   - Use AI to add remediation guidance and business context to each finding.
   - Auto-research exploit availability and attack complexity to adjust risk.
   - Correlate with recent **code changes** and **deploy history** for likely owners and rollback paths.
