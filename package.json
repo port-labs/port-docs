@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.9.1",
-    "@docusaurus/tsconfig": "^3.9.1",
+    "@docusaurus/tsconfig": "^3.9.2",
     "@docusaurus/types": "^3.9.1",
     "husky": "^9.1.7",
     "pretty-quick": "^4.2.2",
