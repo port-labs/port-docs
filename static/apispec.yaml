@@ -32931,59 +32931,6 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  /v1/agent/invoke/{invocation_identifier}:
-    get:
-      summary: Get an invocation's result
-      tags:
-        - AI
-      description: This route allows you to get a specific invocation
-        result.<br/><br/>To learn more about AI agents, check out the
-        [documentation](https://docs.port.io/ai-agents/overview).
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: invocation_identifier
-          required: true
-          description: A unique identifier for the agent invocation.
-      security:
-        - bearer:
-            - read:entities
-      responses:
-        "401":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-        "404":
-          description: A resource with the provided identifier was not found
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: A resource with the provided identifier was not found
   /v1/agent/{agentIdentifier}/invoke:
     post:
       summary: Invoke a specific agent
@@ -33007,126 +32954,26 @@ paths:
                 labels:
                   type: object
                   description: Optional meta-data about the invocation.
+                provider:
+                  type: string
+                  enum:
+                  - openai
+                  - azure-openai
+                  - anthropic
+                  - bedrock
+                  - port
+                model:
+                  type: string
+                  enum:
+                  - gpt-5
+                  - claude-sonnet-4-20250514
       parameters:
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: stream
-          required: false
-          description: If `true`, the response will show as a stream of information
-            instead of a JSON response.
         - schema:
             type: string
           in: path
           name: agentIdentifier
           required: true
           description: The identifier of the agent you want to operate on.
-      security:
-        - bearer:
-            - read:entities
-      responses:
-        "401":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-        "404":
-          description: A resource with the provided identifier was not found
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: A resource with the provided identifier was not found
-        "413":
-          description: Request body is too large (limit is 1MiB)
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-                description: Request body is too large (limit is 1MiB)
-        "422":
-          description: The json provided does not match the route's schema
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: The json provided does not match the route's schema
-  /v1/agent/invoke:
-    post:
-      summary: Invoke an agent
-      tags:
-        - AI
-      description: This route allows you to create an invocation without choosing a
-        specific agent.<br/><br/>To learn more about AI agents, check out the
-        [documentation](https://docs.port.io/ai-agents/overview).
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                context:
-                  type: object
-                  description: An object used to dynamically inject values into the prompt.
-                prompt:
-                  type: string
-                  description: The user's message or query to be processed by the AI agent.
-                labels:
-                  type: object
-                  description: Optional meta-data about the invocation.
-      parameters:
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: stream
-          required: false
-          description: If `true`, the response will show as a stream of information
-            instead of a JSON response.
       security:
         - bearer:
             - read:entities
@@ -33940,7 +33787,7 @@ paths:
       summary: Get default LLM provider and model
       description: This route returns the default LLM provider and model.
       tags:
-        - AI
+        - LLM management
       security:
         - bearer: []
       responses:
@@ -34011,7 +33858,7 @@ paths:
       summary: Change default LLM provider and model
       description: This route allows you to change the default LLM provider and model.
       tags:
-        - AI
+        - LLM management
       security:
         - bearer: []
       requestBody:
@@ -34107,7 +33954,7 @@ paths:
       summary: Create or connect an LLM provider
       description: This route allows you to create or connect an LLM provider.
       tags:
-        - AI
+        - LLM management
       security:
         - bearer: []
       requestBody:
@@ -34494,7 +34341,7 @@ paths:
       summary: Get configured LLM providers
       description: This route allows you to get the configured LLM providers.
       tags:
-        - AI
+        - LLM management
       security:
         - bearer: []
       responses:
@@ -34672,7 +34519,7 @@ paths:
       summary: Get a specific provider configuration
       description: This route allows you to get the configured LLM providers.
       tags:
-        - AI
+        - LLM management
       security:
         - bearer: []
       parameters:
@@ -34879,7 +34726,7 @@ paths:
       summary: Change a specific provider configuration
       description: This route allows you to change the configuration of a specific LLM provider.
       tags:
-        - AI
+        - LLM management
       security:
         - bearer: []
       requestBody:
@@ -35205,7 +35052,7 @@ paths:
       summary: Delete a specific provider configuration
       description: This route allows you to delete a specific LLM provider configuration.
       tags:
-        - AI
+        - LLM management
       security:
         - bearer: []
       parameters:
@@ -35233,6 +35080,206 @@ paths:
                   - ok
                 additionalProperties: false
         "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/invoke/{invocation_identifier}:
+    get:
+      summary: Get an invocation's result
+      tags:
+        - AI
+      description: This route allows you to get a specific invocation
+        result.<br/><br/>To learn more about AI agents, check out the
+        [documentation](https://docs.port.io/ai-agents/overview).
+      security:
+        - bearer: []
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: invocation_identifier
+          required: true
+          description: A unique identifier for the invocation.
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        enum:
+                          - In Progress
+                          - Completed
+                          - Failed
+                      message:
+                        type: string
+                      error:
+                        type: string
+                        enum:
+                          - internal_error
+                          - no_agent_available
+                          - no_agent_match
+                      invocationIdentifier:
+                        type: string
+                      selectedAgent:
+                        type: string
+                    required:
+                      - status
+                    additionalProperties: false
+                required:
+                  - ok
+                  - result
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/invoke:
+    post:
+      summary: General-purpose AI interactions
+      tags:
+        - AI
+      description: This is a general-purpose endpoint that is not tied to any specific agent. Its purpose is to allow you to send requests directly to Port AI, enabling interactions and executions without being bound to a predefined agent context.
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userPrompt:
+                  type: string
+                  description: The user's message or query to be processed by Port AI.
+                labels:
+                  type: object
+                  description: Optional meta-data about the invocation.
+                  additionalProperties:
+                    type: string
+                provider:
+                  type: string
+                  description: The AI provider to use for this invocation. If not specified, the default provider will be used.
+                  enum:
+                    - openai
+                    - azure-openai
+                    - anthropic
+                    - bedrock
+                    - port
+                model:
+                  type: string
+                  enum:
+                    - gpt-5
+                    - claude-sonnet-4-20250514
+                systemPrompt:
+                  type: string
+                  description: A set of instructions that guides an AI's behavior and responses by providing its role, persona, and operational rules at the beginning of an interaction.
+                  default: ""
+                executionMode:
+                  type: string
+                  description: The execution mode for the invocation. Whether to automatically execute self-service actions. 
+                  enum:
+                    - Automatic
+                    - Approval Required
+                  default: Approval Required
+                tools:
+                  type: array
+                  description: List of Regex values to match against the tools names. To learn more about the available tools, refer to the [documentation](https://docs.port.io/ai-interfaces/port-ai/overview?execution-modes=manual#available-tools).
+                  items:
+                    type: string
+              required:
+                - userPrompt
+                - tools
+              additionalProperties: false
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: invocation_identifier
+          required: false
+          description: A unique identifier for the invocation.
+      responses:
+        "400":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "403":
           description: Default Response
           content:
             application/json:

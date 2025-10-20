@@ -241,7 +241,7 @@
   },
   "/guides/all/interact-with-pagerduty-incidents": {
     "creationDate": "2025-08-15T14:28:30.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/create-pagerduty-service": {
     "creationDate": "2024-03-13T22:03:50.000Z",
@@ -427,7 +427,7 @@
     "creationDate": "2025-03-24T01:23:10.000Z",
     "isNew": false
   },
-  "/guides/all/enrich-security-vulnerability-using-ai": {
+  "/guides/all/remediate-vulnerability-with-ai": {
     "creationDate": "2025-03-27T01:07:45.000Z",
     "isNew": false
   },
@@ -657,11 +657,11 @@
   },
   "/guides/all/create-roi-dashboard": {
     "creationDate": "2025-07-30T10:18:26.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/send-slack-message-to-user": {
     "creationDate": "2025-08-06T15:34:35.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/map-git-users-to-port-accounts": {
     "creationDate": "2025-07-24T03:43:52.000Z",
@@ -689,11 +689,11 @@
   },
   "/guides/all/map-prs-to-services-in-monorepo": {
     "creationDate": "2025-08-11T13:17:54.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/trigger-github-copilot-from-port": {
     "creationDate": "2025-08-05T22:21:00.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/trigger-gemini-assistant-from-port": {
     "creationDate": "2025-09-01T20:20:02.000Z",
@@ -701,7 +701,7 @@
   },
   "/guides/all/generate-zendesk-ticket-summaries-with-ai": {
     "creationDate": "2025-08-12T11:54:00.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/automatically-resolve-tickets-with-coding-agents": {
     "creationDate": "2025-07-29T09:10:24.000Z",
@@ -709,19 +709,19 @@
   },
   "/guides/all/self-heal-scorecards-with-ai": {
     "creationDate": "2025-08-01T22:17:33.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/track-ai-driven-pull-requests": {
     "creationDate": "2025-08-12T09:49:22.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/trigger-claude-code-from-port": {
     "creationDate": "2025-08-20T09:44:14.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/owasp-top-10-scorecard": {
     "creationDate": "2025-08-13T09:54:16.000Z",
-    "isNew": true
+    "isNew": false
   },
   "/guides/all/enforce-ai-coding-security-standards": {
     "creationDate": "2025-08-27T20:00:16.000Z",

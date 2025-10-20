@@ -624,21 +624,21 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/get-an-invocations-result",
-          label: "Get an invocation's result",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
           id: "api-reference/invoke-a-specific-agent",
           label: "Invoke a specific agent",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api-reference/invoke-an-agent",
-          label: "Invoke an agent",
+          id: "api-reference/general-purpose-ai-interactions",
+          label: "General-purpose AI interactions",
           className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-invocations-result",
+          label: "Get an invocation's result",
+          className: "api-method get",
         },
         {
           type: "doc",
@@ -646,6 +646,12 @@ const sidebar: SidebarsConfig = {
           label: "Get monthly AI invocations quota usage",
           className: "api-method get",
         },
+      ],
+    },
+    {
+      type: "category",
+      label: "LLM management",
+      items: [
         {
           type: "doc",
           id: "api-reference/get-default-llm-provider-and-model",
@@ -660,15 +666,15 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/get-configured-llm-providers",
-          label: "Get configured LLM providers",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
           id: "api-reference/create-or-connect-an-llm-provider",
           label: "Create or connect an LLM provider",
           className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-configured-llm-providers",
+          label: "Get configured LLM providers",
+          className: "api-method get",
         },
         {
           type: "doc",
