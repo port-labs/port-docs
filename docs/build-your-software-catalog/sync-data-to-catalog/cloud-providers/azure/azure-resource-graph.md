@@ -12,7 +12,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Azure Resource Graph (Beta)
 
-:::warning GA Notice
+:::warning Availability Notice
 This integration is in closed beta. Please contact us to request access.
 :::
 
