@@ -12,6 +12,10 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Azure Resource Graph (Beta)
 
+:::warning GA Notice
+This integration is in closed beta. Please contact us to request access.
+:::
+
 Sync your Azure environment to Port at scale using Azure Resource Graph and Ocean framework. This integration is designed for high-volume data ingestion across multiple subscriptions, offering several key advantages:
 
 - **Centralized Syncing**: Ingest resources from all your Azure subscriptions with a single deployment.
