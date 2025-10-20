@@ -1,0 +1,23 @@
+<details>
+<summary><b>Organizations Account mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Organizations::Account
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.Id
+          title: .Properties.AccountName
+          blueprint: '"awsOrganizationAccount"'
+          properties:
+            arn: .Properties.Arn
+            email: .Properties.Email
+            status: .Properties.Status
+            joinedTimestamp: .Properties.JoinedTimestamp
+            joinedMethod: .Properties.JoinedMethod
+```
+
+</details>

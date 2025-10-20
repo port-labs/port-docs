@@ -41,7 +41,7 @@ Blueprints can be used to represent any asset in your software catalog, some com
 - Pods
 - VMs
 
-Check out our [**live demo**](https://demo.getport.io/settings) to see an example of a fleshed-out builder with a variety of blueprints.
+Check out our [**live demo**](https://showcase.port.io/settings) to see an example of a fleshed-out builder with a variety of blueprints.
 
 ## Configure blueprints in Port
 
@@ -313,7 +313,7 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 
 | Field                   | Description                                                                                                               | Notes                                                                                                                   |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `identifier`            | The identifier is used for API calls, programmatic access and distinguishing between different blueprints.                | **Required**  |
+| `identifier`            | The identifier is used for API calls, programmatic access and distinguishing between different blueprints.                | **Required**. (Maximum 30 characters)   |
 | `title`                 | Human-readable name for the blueprint.                                                                                    |**Required**                                                                     |
 | `description`           | The value is visible as a tooltip to users when hovering over the info icon in the UI.   |                                    |
 | `icon`                  | Icon for the blueprint and entities of the blueprint.                                                                     | See the full icon list [below](#full-icon-list).                                                                        |

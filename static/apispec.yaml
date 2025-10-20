@@ -1352,6 +1352,7 @@ components:
                                 - webhook
                                 - scorecard
                                 - action
+                                - integration
                           - type: string
                             enum:
                               - blueprint
@@ -1360,6 +1361,7 @@ components:
                               - webhook
                               - scorecard
                               - action
+                              - integration
                         description: Fetch all audit logs related to the specified resource type/s.
                       includes:
                         type: array
@@ -3749,6 +3751,7 @@ components:
                                       - webhook
                                       - scorecard
                                       - action
+                                      - integration
                                 - type: string
                                   enum:
                                     - blueprint
@@ -3757,6 +3760,7 @@ components:
                                     - webhook
                                     - scorecard
                                     - action
+                                    - integration
                               description: Fetch all audit logs related to the specified resource type/s.
                             includes:
                               type: array
@@ -7482,11 +7486,6 @@ paths:
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
-        # - schema:
-        #     type: boolean
-        #   in: query
-        #   name: compact
-        #   required: false
         - schema:
             type: boolean
             default: false
@@ -8485,11 +8484,6 @@ paths:
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
-        # - schema:
-        #     type: boolean
-        #   in: query
-        #   name: compact
-        #   required: false
         - schema:
             type: boolean
             default: false
@@ -8938,8 +8932,8 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  /v1/blueprints/{blueprint_identifier}/bulk/entities:
-    delete:
+  /v1/blueprints/{blueprint_identifier}/bulk/entities/delete:
+    post:
       summary: Delete multiple entities
       tags:
         - Entities
@@ -9509,11 +9503,6 @@ paths:
             JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
-        # - schema:
-        #     type: boolean
-        #   in: query
-        #   name: compact
-        #   required: false
         - schema:
             type: boolean
             default: false
@@ -11175,6 +11164,7 @@ paths:
                               description: The properties of the blueprint.
                               propertyNames:
                                 pattern: ^[A-Za-z0-9@_=\\-]+$
+                                maxLength: 100
                               additionalProperties:
                                 type: object
                                 properties:
@@ -11267,6 +11257,7 @@ paths:
                           default: {}
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
+                            maxLength: 100
                           additionalProperties:
                             type: object
                             additionalProperties: false
@@ -11396,6 +11387,7 @@ paths:
                             of the blueprint.
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
+                            maxLength: 100
                           additionalProperties:
                             type: object
                             properties:
@@ -11419,6 +11411,7 @@ paths:
                           default: {}
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
+                            maxLength: 100
                           additionalProperties:
                             type: object
                             properties:
@@ -11579,6 +11572,7 @@ paths:
                             of the blueprint.
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
+                            maxLength: 100
                           additionalProperties:
                             type: object
                             properties:
@@ -11785,6 +11779,7 @@ paths:
                       description: The properties of the blueprint.
                       propertyNames:
                         pattern: ^[A-Za-z0-9@_=\\-]+$
+                        maxLength: 100
                       additionalProperties:
                         type: object
                         properties:
@@ -11876,6 +11871,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     additionalProperties: false
@@ -12005,6 +12001,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -12028,6 +12025,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -12186,6 +12184,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -12356,6 +12355,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -12448,6 +12448,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -12577,6 +12578,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -12600,6 +12602,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -12759,6 +12762,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -13021,6 +13025,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -13113,6 +13118,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -13242,6 +13248,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -13265,6 +13272,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -13424,6 +13432,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -13630,6 +13639,7 @@ paths:
                       description: The properties of the blueprint.
                       propertyNames:
                         pattern: ^[A-Za-z0-9@_=\\-]+$
+                        maxLength: 100
                       additionalProperties:
                         type: object
                         properties:
@@ -13721,6 +13731,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     additionalProperties: false
@@ -13850,6 +13861,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -13873,6 +13885,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -14031,6 +14044,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -14198,6 +14212,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -14290,6 +14305,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -14419,6 +14435,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -14442,6 +14459,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -14601,6 +14619,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -14839,6 +14858,7 @@ paths:
                       type: object
                       propertyNames:
                         pattern: ^[A-Za-z0-9@_=\\-]+$
+                        maxLength: 100
                       additionalProperties:
                         type: object
                         properties:
@@ -14928,6 +14948,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     additionalProperties: false
@@ -15057,6 +15078,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -15080,6 +15102,7 @@ paths:
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -15238,6 +15261,7 @@ paths:
                     of the blueprint.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
+                    maxLength: 100
                   additionalProperties:
                     type: object
                     properties:
@@ -15401,6 +15425,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -15493,6 +15518,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -15622,6 +15648,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -15645,6 +15672,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -15804,6 +15832,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -16081,6 +16110,7 @@ paths:
                 newPropertyName:
                   type: string
                   pattern: ^[A-Za-z0-9@_=\\-]+$
+                  maxLength: 100
                   description: The new identifier of the property.
               additionalProperties: false
       parameters:
@@ -16194,6 +16224,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -16286,6 +16317,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -16415,6 +16447,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -16438,6 +16471,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -16597,6 +16631,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -16763,6 +16798,7 @@ paths:
                 newMirrorName:
                   type: string
                   pattern: ^[A-Za-z0-9@_=\\-]+$
+                  maxLength: 100
                   description: The new identifier of the mirror property.
               additionalProperties: false
       parameters:
@@ -16876,6 +16912,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -16968,6 +17005,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -17097,6 +17135,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -17120,6 +17159,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -17279,6 +17319,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -17445,6 +17486,7 @@ paths:
                 newRelationIdentifier:
                   type: string
                   pattern: ^[A-Za-z0-9@_=\\-]+$
+                  maxLength: 100
                   description: The new identifier of the relation.
               additionalProperties: false
       parameters:
@@ -17560,6 +17602,7 @@ paths:
                             description: The properties of the blueprint.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
+                              maxLength: 100
                             additionalProperties:
                               type: object
                               properties:
@@ -17652,6 +17695,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           additionalProperties: false
@@ -17781,6 +17825,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -17804,6 +17849,7 @@ paths:
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -17963,6 +18009,7 @@ paths:
                           of the blueprint.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                         additionalProperties:
                           type: object
                           properties:
@@ -18571,6 +18618,19 @@ paths:
                                           identifiers.
                                         items:
                                           type: string
+                                      visible:
+                                        oneOf:
+                                          - $ref: "#/components/schemas/def-0"
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves
+                                              to `true` or `false`, determining
+                                              the visibility of the step.
+                                            title: jqQuery
+                                          - type: boolean
+                                            description: A boolean value determining the visibility of the step.
+                                            title: boolean
+                                        title: Visible
+                                        description: The visibility of the step. Resolves to a boolean value (`true` =
+                                          visible).
                                     required:
                                       - title
                                     additionalProperties: false
@@ -19394,6 +19454,19 @@ paths:
                                           identifiers.
                                         items:
                                           type: string
+                                      visible:
+                                        oneOf:
+                                          - $ref: "#/components/schemas/def-0"
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves
+                                              to `true` or `false`, determining
+                                              the visibility of the step.
+                                            title: jqQuery
+                                          - type: boolean
+                                            description: A boolean value determining the visibility of the step.
+                                            title: boolean
+                                        title: Visible
+                                        description: The visibility of the step. Resolves to a boolean value (`true` =
+                                          visible).
                                     required:
                                       - title
                                     additionalProperties: false
@@ -20498,6 +20571,19 @@ paths:
                                           identifiers.
                                         items:
                                           type: string
+                                      visible:
+                                        oneOf:
+                                          - $ref: "#/components/schemas/def-0"
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves
+                                              to `true` or `false`, determining
+                                              the visibility of the step.
+                                            title: jqQuery
+                                          - type: boolean
+                                            description: A boolean value determining the visibility of the step.
+                                            title: boolean
+                                        title: Visible
+                                        description: The visibility of the step. Resolves to a boolean value (`true` =
+                                          visible).
                                     required:
                                       - title
                                     additionalProperties: false
@@ -21321,6 +21407,19 @@ paths:
                                           identifiers.
                                         items:
                                           type: string
+                                      visible:
+                                        oneOf:
+                                          - $ref: "#/components/schemas/def-0"
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves
+                                              to `true` or `false`, determining
+                                              the visibility of the step.
+                                            title: jqQuery
+                                          - type: boolean
+                                            description: A boolean value determining the visibility of the step.
+                                            title: boolean
+                                        title: Visible
+                                        description: The visibility of the step. Resolves to a boolean value (`true` =
+                                          visible).
                                     required:
                                       - title
                                     additionalProperties: false
@@ -24177,12 +24276,6 @@ paths:
         learn more about pages, checkout the
         [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page).
       parameters:
-        # - schema:
-        #     type: boolean
-        #     default: false
-        #   in: query
-        #   name: compact
-        #   required: true
       security:
         - bearer: []
       responses:
@@ -24671,6 +24764,27 @@ paths:
                     portalTitle:
                       type: string
                       maxLength: 30
+                announcement:
+                  type: object
+                  required:
+                    - content
+                  properties:
+                    enabled:
+                      type: boolean
+                    content:
+                      type: string
+                      maxLength: 300
+                      minLength: 1
+                    link:
+                      type:
+                        - string
+                        - "null"
+                      maxLength: 300
+                    color:
+                      type: string
+                      enum:
+                        - blue
+                        - red
               additionalProperties: false
               required:
                 - name
@@ -24792,13 +24906,13 @@ paths:
                     portalTitle:
                       type: string
                       maxLength: 30
-                    supportUserPermission:
-                      type: string
-                      enum:
-                        - OPT_OUT
-                        - READ_ONLY
-                        - FULL_PERMISSIONS
-                      description: Permission level for Port support users accessing this organization
+                    # supportUserPermission:
+                    #   type: string
+                    #   enum:
+                    #     - OPT_OUT
+                    #     - READ_ONLY
+                    #     - FULL_PERMISSIONS
+                    #   description: Permission level for Port support users accessing this organization
                 isOnboarded:
                   type: boolean
                 toolSelectionProvisioning:
@@ -24965,7 +25079,7 @@ paths:
               properties:
                 secretName:
                   type: string
-                  maxLength: 50
+                  maxLength: 100
                   minLength: 1
                   pattern: ^[A-Za-z0-9-_]*$
                   description: The name of the new secret.
@@ -26532,18 +26646,24 @@ paths:
                   properties:
                     secret:
                       type: string
+                      nullable: true
                     signatureHeaderName:
                       type: string
+                      nullable: true
                     signatureAlgorithm:
-                      type: string
-                      enum:
-                        - sha1
-                        - sha256
-                        - plain
+                      anyOf:
+                        - type: string
+                          enum:
+                            - sha1
+                            - sha256
+                            - plain
+                        - type: "null"
                     signaturePrefix:
                       type: string
+                      nullable: true
                     requestIdentifierPath:
                       type: string
+                      nullable: true
                   additionalProperties: false
                   description: The security configuration of the webhook, used to tell Port how to
                     verify the hashed signature sent with incoming
@@ -27026,18 +27146,24 @@ paths:
                   properties:
                     secret:
                       type: string
+                      nullable: true
                     signatureHeaderName:
                       type: string
+                      nullable: true
                     signatureAlgorithm:
-                      type: string
-                      enum:
-                        - sha1
-                        - sha256
-                        - plain
+                      anyOf:
+                        - type: string
+                          enum:
+                            - sha1
+                            - sha256
+                            - plain
+                        - type: "null"
                     signaturePrefix:
                       type: string
+                      nullable: true
                     requestIdentifierPath:
                       type: string
+                      nullable: true
                   additionalProperties: false
                   description: The security configuration of the webhook, used to tell Port how to
                     verify the hashed signature sent with incoming
@@ -27467,18 +27593,24 @@ paths:
                   properties:
                     secret:
                       type: string
+                      nullable: true
                     signatureHeaderName:
                       type: string
+                      nullable: true
                     signatureAlgorithm:
-                      type: string
-                      enum:
-                        - sha1
-                        - sha256
-                        - plain
+                      anyOf:
+                        - type: string
+                          enum:
+                            - sha1
+                            - sha256
+                            - plain
+                        - type: "null"
                     signaturePrefix:
                       type: string
+                      nullable: true
                     requestIdentifierPath:
                       type: string
+                      nullable: true
                   additionalProperties: false
                   description: The security configuration of the webhook, used to tell Port how to
                     verify the hashed signature sent with incoming
@@ -27731,11 +27863,15 @@ paths:
       summary: Get audit logs
       tags:
         - Audit
-      description: This route allows you to fetch audit logs from your Port account.
+      description: |
+        This route allows you to fetch audit logs from your Port account.
         Your audit logs can also be viewed via [Port's
         UI](https://app.getport.io/settings/AuditLog).<br/><br/>This route will
         perform a logical `AND` between all query parameters below, and return
-        all logs that match the criteria.
+        all logs that match the criteria.<br></br>
+        :::warning Beta integration value 
+        The `integration` value in the `resources` parameter is **experimental**. Its behavior may change in future versions of the API.
+        :::
       parameters:
         - schema:
             type: string
@@ -27802,6 +27938,7 @@ paths:
                     - webhook
                     - scorecard
                     - action
+                    - integration
               - type: string
                 enum:
                   - blueprint
@@ -27810,12 +27947,14 @@ paths:
                   - webhook
                   - scorecard
                   - action
+                  - integration
           in: query
           name: resources
           required: false
           style: form
           explode: true
-          description: Fetch all audit logs related to the specified resource type/s.
+          description: |
+            **Possible values**: [`blueprint`, `entity`, `run`, `webhook`, `scorecard`, `action`, `integration`] <br> Fetch all audit logs related to the specified resource type/s. 
         - schema:
             type: array
             items:
@@ -29970,6 +30109,7 @@ paths:
                 identifier:
                   type: string
                   pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  maxLength: 100
                   description: A unique identifier for the scorecard.
                 title:
                   type: string
@@ -30191,6 +30331,7 @@ paths:
                       identifier:
                         type: string
                         pattern: ^[A-Za-z0-9@_=\\-]+$
+                        maxLength: 100
                         description: The identifier of the rule.
                       title:
                         type: string
@@ -30460,7 +30601,7 @@ paths:
                         identifier:
                           type: string
                           pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
-                          maxLength: 20
+                          maxLength: 100
                         title:
                           type: string
                         description:
@@ -30684,7 +30825,7 @@ paths:
                         identifier:
                           type: string
                           pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
-                          maxLength: 20
+                          maxLength: 100
                         title:
                           type: string
                         description:
@@ -31007,6 +31148,7 @@ paths:
                   identifier:
                     type: string
                     pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                    maxLength: 100
                     description: A unique identifier for the scorecard.
                   title:
                     type: string
@@ -31229,6 +31371,7 @@ paths:
                         identifier:
                           type: string
                           pattern: ^[A-Za-z0-9@_=\\-]+$
+                          maxLength: 100
                           description: The identifier of the rule.
                         title:
                           type: string
@@ -31642,6 +31785,7 @@ paths:
                 identifier:
                   type: string
                   pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/=-]+$
+                  maxLength: 100
                   description: A unique identifier for the scorecard.
                 title:
                   type: string
@@ -31863,6 +32007,7 @@ paths:
                       identifier:
                         type: string
                         pattern: ^[A-Za-z0-9@_=\\-]+$
+                        maxLength: 100
                         description: The identifier of the rule.
                       title:
                         type: string
@@ -32786,59 +32931,6 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  /v1/agent/invoke/{invocation_identifier}:
-    get:
-      summary: Get an invocation's result
-      tags:
-        - AI
-      description: This route allows you to get a specific invocation
-        result.<br/><br/>To learn more about AI agents, check out the
-        [documentation](https://docs.port.io/ai-agents/overview).
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: invocation_identifier
-          required: true
-          description: A unique identifier for the agent invocation.
-      security:
-        - bearer:
-            - read:entities
-      responses:
-        "401":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-        "404":
-          description: A resource with the provided identifier was not found
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: A resource with the provided identifier was not found
   /v1/agent/{agentIdentifier}/invoke:
     post:
       summary: Invoke a specific agent
@@ -32862,126 +32954,26 @@ paths:
                 labels:
                   type: object
                   description: Optional meta-data about the invocation.
+                provider:
+                  type: string
+                  enum:
+                  - openai
+                  - azure-openai
+                  - anthropic
+                  - bedrock
+                  - port
+                model:
+                  type: string
+                  enum:
+                  - gpt-5
+                  - claude-sonnet-4-20250514
       parameters:
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: stream
-          required: false
-          description: If `true`, the response will show as a stream of information
-            instead of a JSON response.
         - schema:
             type: string
           in: path
           name: agentIdentifier
           required: true
           description: The identifier of the agent you want to operate on.
-      security:
-        - bearer:
-            - read:entities
-      responses:
-        "401":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-        "404":
-          description: A resource with the provided identifier was not found
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: A resource with the provided identifier was not found
-        "413":
-          description: Request body is too large (limit is 1MiB)
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-                description: Request body is too large (limit is 1MiB)
-        "422":
-          description: The json provided does not match the route's schema
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: The json provided does not match the route's schema
-  /v1/agent/invoke:
-    post:
-      summary: Invoke an agent
-      tags:
-        - AI
-      description: This route allows you to create an invocation without choosing a
-        specific agent.<br/><br/>To learn more about AI agents, check out the
-        [documentation](https://docs.port.io/ai-agents/overview).
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                context:
-                  type: object
-                  description: An object used to dynamically inject values into the prompt.
-                prompt:
-                  type: string
-                  description: The user's message or query to be processed by the AI agent.
-                labels:
-                  type: object
-                  description: Optional meta-data about the invocation.
-      parameters:
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: stream
-          required: false
-          description: If `true`, the response will show as a stream of information
-            instead of a JSON response.
       security:
         - bearer:
             - read:entities
@@ -33335,6 +33327,8 @@ paths:
             name: Authorization
             required: false
             description: Your API token. To get it, go to your [Port account](https://app.port.io/), click the `...` button, then click the `Generate API token` button and copy the generated token. 
+        security:
+          - bearer: []
         responses:
           "200":
             description: Default Response
@@ -33729,3 +33723,1599 @@ paths:
                     - ok
                     - error
                   additionalProperties: false
+  /v1/quota/ai-invocations:
+    get:
+      summary: Get monthly AI invocations quota usage
+      description: This route returns the monthly quota usage for AI invocations.<br></br><br></br> To learn more about quota limitations, see the [documentation](/ai-interfaces/ai-agents/interact-with-ai-agents/#monitor-your-usage).
+      tags:
+        - AI
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  monthlyQuotaUsage:
+                    type: object
+                    properties:
+                      monthlyLimit:
+                        type: number
+                      remainingQuota:
+                        type: number
+                      month:
+                        type: string
+                      remainingTimeMs:
+                        type: number
+                    required:
+                      - monthlyLimit
+                      - remainingQuota
+                      - month
+                      - remainingTimeMs
+                    additionalProperties: false
+                required:
+                  - ok
+                  - monthlyQuotaUsage
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/llm-providers/defaults:
+    get:
+      summary: Get default LLM provider and model
+      description: This route returns the default LLM provider and model.
+      tags:
+        - LLM management
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: object
+                    properties:
+                      provider:
+                        type: string
+                        enum:
+                          - openai
+                          - azure-openai
+                          - anthropic
+                          - bedrock
+                          - port
+                      model:
+                        type: string
+                        enum:
+                          - gpt-5
+                          - claude-sonnet-4-20250514
+                      createdAt:
+                        type: string
+                        format: date-time
+                      createdBy:
+                        type: string
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      updatedBy:
+                        type: string
+                    required:
+                      - provider
+                      - model
+                    additionalProperties: false
+                required:
+                  - ok
+                  - result
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+    put:
+      summary: Change default LLM provider and model
+      description: This route allows you to change the default LLM provider and model.
+      tags:
+        - LLM management
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                provider:
+                  type: string
+                  enum:
+                    - openai
+                    - azure-openai
+                    - anthropic
+                    - bedrock
+                    - port
+                model:
+                  type: string
+                  enum:
+                    - gpt-5
+                    - claude-sonnet-4-20250514
+              required:
+                - provider
+                - model
+              additionalProperties: false
+        required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: object
+                    properties:
+                      provider:
+                        type: string
+                        enum:
+                          - openai
+                          - azure-openai
+                          - anthropic
+                          - bedrock
+                          - port
+                      model:
+                        type: string
+                        enum:
+                          - gpt-5
+                          - claude-sonnet-4-20250514
+                      createdAt:
+                        type: string
+                        format: date-time
+                      createdBy:
+                        type: string
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      updatedBy:
+                        type: string
+                    required:
+                      - provider
+                      - model
+                    additionalProperties: false
+                required:
+                  - ok
+                  - result
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/llm-providers:
+    post:
+      summary: Create or connect an LLM provider
+      description: This route allows you to create or connect an LLM provider.
+      tags:
+        - LLM management
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - type: object
+                  title: anthropic
+                  properties:
+                    provider:
+                      type: string
+                      enum:
+                        - anthropic
+                    config:
+                      type: object
+                      properties:
+                        apiKeySecretName:
+                          type: string
+                          minLength: 1
+                      required:
+                        - apiKeySecretName
+                      additionalProperties: false
+                    overrides:
+                      type: object
+                      properties:
+                        models:
+                          type: object
+                          required:
+                            - claude-sonnet-4-20250514
+                          properties:
+                            claude-sonnet-4-20250514:
+                              type: object
+                              properties:
+                                enabled:
+                                  type: boolean
+                                  default: true
+                              additionalProperties: false
+                          additionalProperties: false
+                      additionalProperties: false
+                    enabled:
+                      type: boolean
+                      default: true
+                  required:
+                    - provider
+                    - config
+                  additionalProperties: false
+                - type: object
+                  title: openai
+                  properties:
+                    provider:
+                      type: string
+                      enum:
+                        - openai
+                    config:
+                      type: object
+                      properties:
+                        apiKeySecretName:
+                          type: string
+                          minLength: 1
+                      required:
+                        - apiKeySecretName
+                      additionalProperties: false
+                    overrides:
+                      type: object
+                      properties:
+                        models:
+                          type: object
+                          required:
+                            - gpt-5
+                          properties:
+                            gpt-5:
+                              type: object
+                              properties:
+                                enabled:
+                                  type: boolean
+                                  default: true
+                              additionalProperties: false
+                          additionalProperties: false
+                      additionalProperties: false
+                    enabled:
+                      type: boolean
+                      default: true
+                  required:
+                    - provider
+                    - config
+                  additionalProperties: false
+                - type: object
+                  title: azure-openai
+                  properties:
+                    provider:
+                      type: string
+                      enum:
+                        - azure-openai
+                    config:
+                      type: object
+                      properties:
+                        apiKeySecretName:
+                          type: string
+                          minLength: 1
+                        resourceName:
+                          type: string
+                          minLength: 1
+                        deploymentId:
+                          type: string
+                          minLength: 1
+                      required:
+                        - apiKeySecretName
+                        - resourceName
+                        - deploymentId
+                      additionalProperties: false
+                    overrides:
+                      type: object
+                      properties:
+                        models:
+                          type: object
+                          required:
+                            - gpt-5
+                          properties:
+                            gpt-5:
+                              type: object
+                              properties:
+                                enabled:
+                                  type: boolean
+                                  default: true
+                              additionalProperties: false
+                          additionalProperties: false
+                      additionalProperties: false
+                    enabled:
+                      type: boolean
+                      default: true
+                  required:
+                    - provider
+                    - config
+                  additionalProperties: false
+                - type: object
+                  title: bedrock
+                  properties:
+                    provider:
+                      type: string
+                      enum:
+                        - bedrock
+                    config:
+                      type: object
+                      properties:
+                        accessKeyIdSecretName:
+                          type: string
+                          minLength: 1
+                        secretAccessKeySecretName:
+                          type: string
+                          minLength: 1
+                        region:
+                          type: string
+                          minLength: 1
+                          pattern: ^[a-z]{2}-[a-z]+-\d{1}$
+                        guardrailIdentifier:
+                          type: string
+                        guardrailVersion:
+                          type: string
+                      required:
+                        - accessKeyIdSecretName
+                        - secretAccessKeySecretName
+                        - region
+                      additionalProperties: false
+                    overrides:
+                      type: object
+                      properties:
+                        models:
+                          type: object
+                          required:
+                            - claude-sonnet-4-20250514
+                          properties:
+                            claude-sonnet-4-20250514:
+                              type: object
+                              properties:
+                                enabled:
+                                  type: boolean
+                                  default: true
+                              additionalProperties: false
+                          additionalProperties: false
+                      additionalProperties: false
+                    enabled:
+                      type: boolean
+                      default: true
+                  required:
+                    - provider
+                    - config
+                  additionalProperties: false
+      parameters:
+        - schema:
+            type: boolean
+          in: query
+          name: validate_connection
+          required: false
+      responses:
+        "201":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: object
+                    properties:
+                      provider:
+                        type: string
+                        enum:
+                          - openai
+                          - azure-openai
+                          - anthropic
+                          - bedrock
+                          - port
+                      enabled:
+                        type: boolean
+                      config:
+                        anyOf:
+                          - type: object
+                            properties:
+                              apiKeySecretName:
+                                type: string
+                                minLength: 1
+                            required:
+                              - apiKeySecretName
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              apiKeySecretName:
+                                type: string
+                                minLength: 1
+                            required:
+                              - apiKeySecretName
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              apiKeySecretName:
+                                type: string
+                                minLength: 1
+                              resourceName:
+                                type: string
+                                minLength: 1
+                              deploymentId:
+                                type: string
+                                minLength: 1
+                            required:
+                              - apiKeySecretName
+                              - resourceName
+                              - deploymentId
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              accessKeyIdSecretName:
+                                type: string
+                                minLength: 1
+                              secretAccessKeySecretName:
+                                type: string
+                                minLength: 1
+                              region:
+                                type: string
+                                minLength: 1
+                                pattern: ^[a-z]{2}-[a-z]+-\d{1}$
+                              guardrailIdentifier:
+                                type: string
+                              guardrailVersion:
+                                type: string
+                            required:
+                              - accessKeyIdSecretName
+                              - secretAccessKeySecretName
+                              - region
+                            additionalProperties: false
+                          - anyOf:
+                              - not: {}
+                              - type: object
+                                properties: {}
+                                additionalProperties: false
+                      overrides:
+                        type: object
+                        properties:
+                          models:
+                            type: object
+                            required:
+                              - gpt-5
+                              - claude-sonnet-4-20250514
+                            properties:
+                              gpt-5:
+                                type: object
+                                properties:
+                                  enabled:
+                                    type: boolean
+                                    default: true
+                                additionalProperties: false
+                              claude-sonnet-4-20250514:
+                                type: object
+                                properties:
+                                  enabled:
+                                    type: boolean
+                                    default: true
+                                additionalProperties: false
+                            additionalProperties: false
+                        additionalProperties: false
+                      effectiveModels:
+                        type: object
+                        required:
+                          - gpt-5
+                          - claude-sonnet-4-20250514
+                        properties:
+                          gpt-5:
+                            type: object
+                            properties:
+                              enabled:
+                                type: boolean
+                                default: true
+                            additionalProperties: false
+                          claude-sonnet-4-20250514:
+                            type: object
+                            properties:
+                              enabled:
+                                type: boolean
+                                default: true
+                            additionalProperties: false
+                        additionalProperties: false
+                      createdAt:
+                        type: string
+                        format: date-time
+                      createdBy:
+                        type: string
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      updatedBy:
+                        type: string
+                    required:
+                      - provider
+                      - enabled
+                      - effectiveModels
+                    additionalProperties: false
+                required:
+                  - ok
+                  - result
+                additionalProperties: false
+        "400":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+    get:
+      summary: Get configured LLM providers
+      description: This route allows you to get the configured LLM providers.
+      tags:
+        - LLM management
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        provider:
+                          type: string
+                          enum:
+                            - openai
+                            - azure-openai
+                            - anthropic
+                            - bedrock
+                            - port
+                        enabled:
+                          type: boolean
+                        config:
+                          anyOf:
+                            - type: object
+                              properties:
+                                apiKeySecretName:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - apiKeySecretName
+                              additionalProperties: false
+                            - type: object
+                              properties:
+                                apiKeySecretName:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - apiKeySecretName
+                              additionalProperties: false
+                            - type: object
+                              properties:
+                                apiKeySecretName:
+                                  type: string
+                                  minLength: 1
+                                resourceName:
+                                  type: string
+                                  minLength: 1
+                                deploymentId:
+                                  type: string
+                                  minLength: 1
+                              required:
+                                - apiKeySecretName
+                                - resourceName
+                                - deploymentId
+                              additionalProperties: false
+                            - type: object
+                              properties:
+                                accessKeyIdSecretName:
+                                  type: string
+                                  minLength: 1
+                                secretAccessKeySecretName:
+                                  type: string
+                                  minLength: 1
+                                region:
+                                  type: string
+                                  minLength: 1
+                                  pattern: ^[a-z]{2}-[a-z]+-\d{1}$
+                                guardrailIdentifier:
+                                  type: string
+                                guardrailVersion:
+                                  type: string
+                              required:
+                                - accessKeyIdSecretName
+                                - secretAccessKeySecretName
+                                - region
+                              additionalProperties: false
+                            - anyOf:
+                                - not: {}
+                                - type: object
+                                  properties: {}
+                                  additionalProperties: false
+                        overrides:
+                          type: object
+                          properties:
+                            models:
+                              type: object
+                              required:
+                                - gpt-5
+                                - claude-sonnet-4-20250514
+                              properties:
+                                gpt-5:
+                                  type: object
+                                  properties:
+                                    enabled:
+                                      type: boolean
+                                      default: true
+                                  additionalProperties: false
+                                claude-sonnet-4-20250514:
+                                  type: object
+                                  properties:
+                                    enabled:
+                                      type: boolean
+                                      default: true
+                                  additionalProperties: false
+                              additionalProperties: false
+                          additionalProperties: false
+                        effectiveModels:
+                          type: object
+                          required:
+                            - gpt-5
+                            - claude-sonnet-4-20250514
+                          properties:
+                            gpt-5:
+                              type: object
+                              properties:
+                                enabled:
+                                  type: boolean
+                                  default: true
+                              additionalProperties: false
+                            claude-sonnet-4-20250514:
+                              type: object
+                              properties:
+                                enabled:
+                                  type: boolean
+                                  default: true
+                              additionalProperties: false
+                          additionalProperties: false
+                        createdAt:
+                          type: string
+                          format: date-time
+                        createdBy:
+                          type: string
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        updatedBy:
+                          type: string
+                      required:
+                        - provider
+                        - enabled
+                        - effectiveModels
+                      additionalProperties: false
+                required:
+                  - ok
+                  - result
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/llm-providers/{provider}:
+    get:
+      summary: Get a specific provider configuration
+      description: This route allows you to get the configured LLM providers.
+      tags:
+        - LLM management
+      security:
+        - bearer: []
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - openai
+              - azure-openai
+              - anthropic
+              - bedrock
+              - port
+          in: path
+          name: provider
+          required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: object
+                    properties:
+                      provider:
+                        type: string
+                        enum:
+                          - openai
+                          - azure-openai
+                          - anthropic
+                          - bedrock
+                          - port
+                      enabled:
+                        type: boolean
+                      config:
+                        anyOf:
+                          - type: object
+                            properties:
+                              apiKeySecretName:
+                                type: string
+                                minLength: 1
+                            required:
+                              - apiKeySecretName
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              apiKeySecretName:
+                                type: string
+                                minLength: 1
+                            required:
+                              - apiKeySecretName
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              apiKeySecretName:
+                                type: string
+                                minLength: 1
+                              resourceName:
+                                type: string
+                                minLength: 1
+                              deploymentId:
+                                type: string
+                                minLength: 1
+                            required:
+                              - apiKeySecretName
+                              - resourceName
+                              - deploymentId
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              accessKeyIdSecretName:
+                                type: string
+                                minLength: 1
+                              secretAccessKeySecretName:
+                                type: string
+                                minLength: 1
+                              region:
+                                type: string
+                                minLength: 1
+                                pattern: ^[a-z]{2}-[a-z]+-\d{1}$
+                              guardrailIdentifier:
+                                type: string
+                              guardrailVersion:
+                                type: string
+                            required:
+                              - accessKeyIdSecretName
+                              - secretAccessKeySecretName
+                              - region
+                            additionalProperties: false
+                          - anyOf:
+                              - not: {}
+                              - type: object
+                                properties: {}
+                                additionalProperties: false
+                      overrides:
+                        type: object
+                        properties:
+                          models:
+                            type: object
+                            required:
+                              - gpt-5
+                              - claude-sonnet-4-20250514
+                            properties:
+                              gpt-5:
+                                type: object
+                                properties:
+                                  enabled:
+                                    type: boolean
+                                    default: true
+                                additionalProperties: false
+                              claude-sonnet-4-20250514:
+                                type: object
+                                properties:
+                                  enabled:
+                                    type: boolean
+                                    default: true
+                                additionalProperties: false
+                            additionalProperties: false
+                        additionalProperties: false
+                      effectiveModels:
+                        type: object
+                        required:
+                          - gpt-5
+                          - claude-sonnet-4-20250514
+                        properties:
+                          gpt-5:
+                            type: object
+                            properties:
+                              enabled:
+                                type: boolean
+                                default: true
+                            additionalProperties: false
+                          claude-sonnet-4-20250514:
+                            type: object
+                            properties:
+                              enabled:
+                                type: boolean
+                                default: true
+                            additionalProperties: false
+                        additionalProperties: false
+                      createdAt:
+                        type: string
+                        format: date-time
+                      createdBy:
+                        type: string
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      updatedBy:
+                        type: string
+                    required:
+                      - provider
+                      - enabled
+                      - effectiveModels
+                    additionalProperties: false
+                required:
+                  - ok
+                  - result
+                additionalProperties: false
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+    put:
+      summary: Change a specific provider configuration
+      description: This route allows you to change the configuration of a specific LLM provider.
+      tags:
+        - LLM management
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                config:
+                  anyOf:
+                    - type: object
+                      title: Anthropic
+                      properties:
+                        apiKeySecretName:
+                          type: string
+                          minLength: 1
+                      required:
+                        - apiKeySecretName
+                      additionalProperties: false
+                    - type: object
+                      title: OpenAI
+                      properties:
+                        apiKeySecretName:
+                          type: string
+                          minLength: 1
+                      required:
+                        - apiKeySecretName
+                      additionalProperties: false
+                    - type: object
+                      title: Azure OpenAI
+                      properties:
+                        apiKeySecretName:
+                          type: string
+                          minLength: 1
+                        resourceName:
+                          type: string
+                          minLength: 1
+                        deploymentId:
+                          type: string
+                          minLength: 1
+                      required:
+                        - apiKeySecretName
+                        - resourceName
+                        - deploymentId
+                      additionalProperties: false
+                    - type: object
+                      title: Bedrock
+                      properties:
+                        accessKeyIdSecretName:
+                          type: string
+                          minLength: 1
+                        secretAccessKeySecretName:
+                          type: string
+                          minLength: 1
+                        region:
+                          type: string
+                          minLength: 1
+                          pattern: ^[a-z]{2}-[a-z]+-\d{1}$
+                        guardrailIdentifier:
+                          type: string
+                        guardrailVersion:
+                          type: string
+                      required:
+                        - accessKeyIdSecretName
+                        - secretAccessKeySecretName
+                        - region
+                      additionalProperties: false
+                overrides:
+                  type: object
+                  properties:
+                    models:
+                      type: object
+                      required:
+                        - gpt-5
+                        - claude-sonnet-4-20250514
+                      properties:
+                        gpt-5:
+                          type: object
+                          properties:
+                            enabled:
+                              type: boolean
+                              default: true
+                          additionalProperties: false
+                        claude-sonnet-4-20250514:
+                          type: object
+                          properties:
+                            enabled:
+                              type: boolean
+                              default: true
+                          additionalProperties: false
+                      additionalProperties: false
+                  additionalProperties: false
+                enabled:
+                  type: boolean
+                  default: true
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: boolean
+          in: query
+          name: validate_connection
+          required: false
+        - schema:
+            type: string
+            enum:
+              - openai
+              - azure-openai
+              - anthropic
+              - bedrock
+              - port
+          in: path
+          name: provider
+          required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: object
+                    properties:
+                      provider:
+                        type: string
+                        enum:
+                          - openai
+                          - azure-openai
+                          - anthropic
+                          - bedrock
+                          - port
+                      enabled:
+                        type: boolean
+                      config:
+                        anyOf:
+                          - type: object
+                            properties:
+                              apiKeySecretName:
+                                type: string
+                                minLength: 1
+                            required:
+                              - apiKeySecretName
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              apiKeySecretName:
+                                type: string
+                                minLength: 1
+                            required:
+                              - apiKeySecretName
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              apiKeySecretName:
+                                type: string
+                                minLength: 1
+                              resourceName:
+                                type: string
+                                minLength: 1
+                              deploymentId:
+                                type: string
+                                minLength: 1
+                            required:
+                              - apiKeySecretName
+                              - resourceName
+                              - deploymentId
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              accessKeyIdSecretName:
+                                type: string
+                                minLength: 1
+                              secretAccessKeySecretName:
+                                type: string
+                                minLength: 1
+                              region:
+                                type: string
+                                minLength: 1
+                                pattern: ^[a-z]{2}-[a-z]+-\d{1}$
+                              guardrailIdentifier:
+                                type: string
+                              guardrailVersion:
+                                type: string
+                            required:
+                              - accessKeyIdSecretName
+                              - secretAccessKeySecretName
+                              - region
+                            additionalProperties: false
+                          - anyOf:
+                              - not: {}
+                              - type: object
+                                properties: {}
+                                additionalProperties: false
+                      overrides:
+                        type: object
+                        properties:
+                          models:
+                            type: object
+                            required:
+                              - gpt-5
+                              - claude-sonnet-4-20250514
+                            properties:
+                              gpt-5:
+                                type: object
+                                properties:
+                                  enabled:
+                                    type: boolean
+                                    default: true
+                                additionalProperties: false
+                              claude-sonnet-4-20250514:
+                                type: object
+                                properties:
+                                  enabled:
+                                    type: boolean
+                                    default: true
+                                additionalProperties: false
+                            additionalProperties: false
+                        additionalProperties: false
+                      effectiveModels:
+                        type: object
+                        required:
+                          - gpt-5
+                          - claude-sonnet-4-20250514
+                        properties:
+                          gpt-5:
+                            type: object
+                            properties:
+                              enabled:
+                                type: boolean
+                                default: true
+                            additionalProperties: false
+                          claude-sonnet-4-20250514:
+                            type: object
+                            properties:
+                              enabled:
+                                type: boolean
+                                default: true
+                            additionalProperties: false
+                        additionalProperties: false
+                      createdAt:
+                        type: string
+                        format: date-time
+                      createdBy:
+                        type: string
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      updatedBy:
+                        type: string
+                    required:
+                      - provider
+                      - enabled
+                      - effectiveModels
+                    additionalProperties: false
+                required:
+                  - ok
+                  - result
+                additionalProperties: false
+        "400":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+    delete:
+      summary: Delete a specific provider configuration
+      description: This route allows you to delete a specific LLM provider configuration.
+      tags:
+        - LLM management
+      security:
+        - bearer: []
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - openai
+              - azure-openai
+              - anthropic
+              - bedrock
+          in: path
+          name: provider
+          required: true
+      responses:
+        "204":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                required:
+                  - ok
+                additionalProperties: false
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/invoke/{invocation_identifier}:
+    get:
+      summary: Get an invocation's result
+      tags:
+        - AI
+      description: This route allows you to get a specific invocation
+        result.<br/><br/>To learn more about AI agents, check out the
+        [documentation](https://docs.port.io/ai-agents/overview).
+      security:
+        - bearer: []
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: invocation_identifier
+          required: true
+          description: A unique identifier for the invocation.
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  result:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        enum:
+                          - In Progress
+                          - Completed
+                          - Failed
+                      message:
+                        type: string
+                      error:
+                        type: string
+                        enum:
+                          - internal_error
+                          - no_agent_available
+                          - no_agent_match
+                      invocationIdentifier:
+                        type: string
+                      selectedAgent:
+                        type: string
+                    required:
+                      - status
+                    additionalProperties: false
+                required:
+                  - ok
+                  - result
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/invoke:
+    post:
+      summary: General-purpose AI interactions
+      tags:
+        - AI
+      description: This is a general-purpose endpoint that is not tied to any specific agent. Its purpose is to allow you to send requests directly to Port AI, enabling interactions and executions without being bound to a predefined agent context.
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userPrompt:
+                  type: string
+                  description: The user's message or query to be processed by Port AI.
+                labels:
+                  type: object
+                  description: Optional meta-data about the invocation.
+                  additionalProperties:
+                    type: string
+                provider:
+                  type: string
+                  description: The AI provider to use for this invocation. If not specified, the default provider will be used.
+                  enum:
+                    - openai
+                    - azure-openai
+                    - anthropic
+                    - bedrock
+                    - port
+                model:
+                  type: string
+                  enum:
+                    - gpt-5
+                    - claude-sonnet-4-20250514
+                systemPrompt:
+                  type: string
+                  description: A set of instructions that guides an AI's behavior and responses by providing its role, persona, and operational rules at the beginning of an interaction.
+                  default: ""
+                executionMode:
+                  type: string
+                  description: The execution mode for the invocation. Whether to automatically execute self-service actions. 
+                  enum:
+                    - Automatic
+                    - Approval Required
+                  default: Approval Required
+                tools:
+                  type: array
+                  description: List of Regex values to match against the tools names. To learn more about the available tools, refer to the [documentation](https://docs.port.io/ai-interfaces/port-ai/overview?execution-modes=manual#available-tools).
+                  items:
+                    type: string
+              required:
+                - userPrompt
+                - tools
+              additionalProperties: false
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: invocation_identifier
+          required: false
+          description: A unique identifier for the invocation.
+      responses:
+        "400":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "403":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false

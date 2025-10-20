@@ -5,48 +5,33 @@ title: Interact with AI agents
 
 # Interact with AI agents
 
-import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md'
+:::info Closed Beta
+Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
+:::
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-<ClosedBetaFeatureNotice id="ai-form" />
+:::info Built on Port AI
+AI Agents are specialized implementations built on top of [Port AI](/ai-interfaces/port-ai/overview), designed for machine-to-machine communication and autonomous operations within defined domains.
+:::
 
 ## Getting started
 
-Once you've built your AI agents, it's time to interact with them. Port provides several ways to communicate with your AI agents.
+Once you've built your AI agents, you can integrate them into your workflows and systems. AI agents are designed for machine-to-machine communication and can be triggered programmatically through Port's API or automatically through workflow automations.
 
-## Backend mode selection
+## How AI Agents Work
 
-When interacting with AI agents, you can choose between two backend modes that determine the agent's capabilities:
+AI Agents are domain-specific entities built on [Port AI](/ai-interfaces/port-ai/overview) with configured tools and prompts. For details on agent architecture and configuration, see [AI agents overview](/ai-interfaces/ai-agents/overview) and [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent).
 
-- **Standard backend**: Uses the agent's configured blueprint access and OpenAI GPT models
-- **MCP server backend**: Provides enhanced capabilities with intelligent catalog access and Claude models
+## Interaction approaches
 
-:::tip Backend mode is interaction-level
-The backend mode is controlled when you interact with agents (through widgets, API calls, etc.), not in the agent configuration itself. This means any agent can benefit from MCP server backend capabilities when you choose to use them.
-:::
-
-## Interaction options
-
-You have two main approaches when interacting with AI agents in Port:
-
-<Tabs groupId="interaction-approach" queryString>
-<TabItem value="specific-agent" label="Specific agent">
-
-Choose a specific agent when you have a structured scenario, such as triggering an agent from an automation or using an AI widget. This approach works best when you know exactly which agent has the expertise needed for your task, or when the interaction method requires you to select a specific agent.
-
-</TabItem>
-<TabItem value="agent-router" label="Agent router">
-
-The agent router is used when you prefer a more conversational interaction, or when the interaction method doesn't allow for selecting a specific agent directly. The router intelligently determines which agent is best suited to handle your request based on its content and context. This is the default for interactions via Slack, unless a specific agent is targeted. For API and action-based interactions, you can choose to direct your request to the agent router.
-
-</TabItem>
-</Tabs>
+AI agents are designed for specific domains and use cases. When interacting with agents, you target the specific agent that has the expertise and tools needed for your task. This approach works best for structured scenarios like automation triggers and API integrations where you know which domain-specific capabilities you need.
 
 ## Interaction methods
 
 <Tabs groupId="interaction-methods" queryString>
-<TabItem value="widget" label="Widget">
+<TabItem value="widget" label="AI Chat Widget">
 
 You can add AI agents directly to your dashboards as interactive widgets, providing easy access to their capabilities right where you need them.
 
@@ -54,301 +39,178 @@ Follow these steps to add an AI agent widget:
 
 1. Go to a dashboard.
 2. Click on `+ Widget`.
-3. Select the `AI Agent`.
-4. Choose the agent and position it in the widget grid.
+3. Select the `AI Chat` widget.
+4. Configure your widget settings:
+   - **Agent**: Select the specific AI agent to use
+   - **Title**: Set a descriptive name for the widget
+   - **Description**: Add a description for the widget
+5. Save your dashboard configuration.
+6. Start asking questions through the chat interface.
 
 <img src='/img/ai-agents/AIAgentWidgetMenu.png' width='80%' border='1px' />
+<img src='/img/ai-agents/AIAgentsTaskManagerWidget.png' width='80%' border='1px' />
 
-The widget provides a chat interface where you can ask questions and receive responses from the **specific agent you configured** without leaving your dashboard.
+The widget provides a chat interface where you can ask questions and receive responses from the **selected agent** without leaving your dashboard.
 
-### MCP server backend mode in widgets
+The widget will inherit all the agent's configuration including the prompts, conversation starters, tool access, etc.
 
-When adding an AI agent widget to your dashboard, you can configure whether to use the MCP server backend mode. During widget configuration, you'll see a "Use MCP" toggle option:
+Conversation starters appear in the initial state, helping users understand what they can ask the agent. Users can either click a starter to begin a new chat or type their own question.
+<img src='/img/ai-agents/AIAgentsWidgetConversationStarters.png' width='80%' border='1px' />
 
-<img src='/img/ai-agents/AIAgentsMCPWidgetConfig.png' width='70%' border='1px' />
-
-When MCP server backend mode is enabled, the widget interface provides enhanced capabilities and visual indicators showing which tools are being used:
-
-<img src='/img/ai-agents/AIAgentsMCPWidgetUI.png' width='80%' border='1px' />
-
-This gives you transparency into the enhanced processing and shows you exactly which MCP server tools the agent is leveraging to answer your questions.
-
-</TabItem>
-<TabItem value="slack-integration" label="Slack Integration">
-
-The Slack integration provides the most natural way to interact with Port's AI agents. This method abstracts all technical details, allowing for free-flowing conversations. By default, messages sent to the Port Slack app (either via direct message or by mentioning it in a channel) are handled by the **agent router**.
-
-You can interact with agents in two ways:
-
-1. **Direct messaging** the [Port Slack app](/ai-interfaces/ai-agents/slack-app). This will use the agent router.
-2. **Mentioning** the app in any channel it's invited to. This will also use the agent router.
-
-When you send a message, the app will:
-1. Open a thread.
-2. Respond with the agent's answer.
-
-<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border='1px' />
-<br/><br/>
-
-**Tips for effective Slack interactions**
-
-- To target a **specific agent** instead of using the router, include the agent's nickname at the beginning of your message (e.g., "@Port DevAgent what are our production services?").
-- Send follow-up messages in the same thread and mention the app again to continue the conversation.
-- Keep conversations focused on the same topic for best results.
-- Limit threads to five consecutive messages for optimal performance.
-- For best results, start new threads for new topics or questions.
-
-:::info MCP server backend mode in Slack
-Currently, Slack interactions use the agent's default backend mode configuration. The ability to choose or override the backend mode per interaction is not yet available in Slack, but will be added in future updates.
-:::
-
-</TabItem>
-<TabItem value="actions-automations" label="Actions and automations">
-
-You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows. When configuring an action or automation, you can choose to invoke a **specific agent** or send the request to the **agent router**.
-
-For example, when a new incident is created in Port, you can trigger an agent that:
-- Triages the incident.
-- Summarizes relevant information.
-- Sends a notification to Slack.
-
-<img src='/img/ai-agents/AIAgentsAutomationExample.png' width='80%' border='1px' />
 
 </TabItem>
 <TabItem value="api-integration" label="API integration">
 
-Port is an API-first platform, allowing you to integrate AI agents into your custom workflows. You can interact with agents in two main ways: by **streaming responses** as Server-Sent Events (SSE) for real-time updates, or by **polling for a complete response**.
+AI agents can be integrated into your applications and workflows through Port's API. Agents use the same streaming API patterns as Port AI.
 
-<Tabs groupId="api-interaction-methods" queryString>
-<TabItem value="streaming" label="Streaming (Recommended)" default>
-
-**Streaming Responses (Recommended)**
-
-Streaming allows you to receive parts of the agent's response as they are generated, providing a more interactive experience. This is achieved by adding the `stream=true` query parameter to the invoke API call (see [Invoke a specific agent API](/api-reference/invoke-a-specific-agent) or [Invoke an agent API](/api-reference/invoke-an-agent)). The response will be in `text/event-stream` format.
-
-**Interaction Process (Streaming):**
-
-1.  Invoke the agent with the `stream=true` parameter.
-2.  The API will start sending Server-Sent Events.
-3.  Your client should process these events as they arrive. Each event provides a piece of information about the agent's progress or the final response.
-
-**cURL Example for Streaming:**
-
-The following example shows how to invoke a specific agent, but the router agent be similarly used as well.
-
+**Agent-specific endpoint:**
 ```bash
-curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true' \\
-  -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
-  -H 'Content-Type: application/json' \\
-  --data-raw '{"prompt":"What is my next task?"}'
+curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true' \
+  -H 'Authorization: Bearer <YOUR_API_TOKEN>' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"prompt":"Analyze the health of our production services"}'
 ```
 
-**Processing Quota Information:**
+For comprehensive details on API interaction, streaming responses, event types, quota management, and integration patterns, see [Port AI API Interaction](/ai-interfaces/port-ai/api-interaction).
 
-When processing the streaming response, you'll receive quota usage information in the final `done` event. Here's a JavaScript example of how to handle this:
+</TabItem>
+<TabItem value="actions-automations" label="Actions and automations">
 
-```javascript showLineNumbers
-const eventSource = new EventSource(apiUrl);
+You can trigger AI agents through Port's actions and automations, enabling integration of AI capabilities into your existing workflows. This is the primary method for creating autonomous, machine-to-machine AI systems.
 
-eventSource.addEventListener('done', (event) => {
-  const data = JSON.parse(event.data);
-  
-  if (data.rateLimitUsage) {
-    const { remainingRequests, remainingTokens, remainingTimeMs } = data.rateLimitUsage;
-    
-    // Check if quota is running low
-    if (remainingRequests < 10 || remainingTokens < 10000) {
-      console.warn('Quota running low, consider rate limiting');
-      // Implement rate limiting logic
-    }
-    
-    // Schedule next request after quota reset if needed
-    if (remainingRequests === 0) {
-      setTimeout(() => {
-        // Safe to make next request
-      }, remainingTimeMs);
-    }
-  }
-  
-  eventSource.close();
-});
-```
+### Automation Workflows
 
-**Using MCP Server Backend Mode via API:**
-
-You can override the agent's default backend mode by adding the `use_mcp` parameter:
-
-```bash
-# Force MCP server backend mode
-curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true&use_mcp=true' \\
-  -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
-  -H 'Content-Type: application/json' \\
-  --data-raw '{"prompt":"What is my next task?"}'
-
-# Force standard backend mode  
-curl 'https://api.port.io/v1/agent/<AGENT_IDENTIFIER>/invoke?stream=true&use_mcp=false' \\
-  -H 'Authorization: Bearer <YOUR_API_TOKEN>' \\
-  -H 'Content-Type: application/json' \\
-  --data-raw '{"prompt":"What is my next task?"}'
-```
-
-**Streaming Response Details (Server-Sent Events):**
-
-The API will respond with `Content-Type: text/event-stream; charset=utf-8`.
-
-Each event in the stream has the following format:
-```text
-event: <event_name>
-data: <json_payload_or_string>
-
-```
-Note the blank line after `data: ...` which separates events.
-
-Here's an example sequence of events:
-```text
-event: plan
-data: { "plan": "...", "toolCalls": [...] }
-
-event: execution
-data: Your final answer from the agent.
-
-event: done
-data: {
-  "rateLimitUsage": {
-    "maxRequests": 200,
-    "remainingRequests": 193,
-    "maxTokens": 200000,
-    "remainingTokens": 179910,
-    "remainingTimeMs": 903
-  },
-  "monthlyQuotaUsage": {
-    "monthlyLimit": 20,
-    "remainingQuota": 19,
-    "month": "2025-09",
-    "remainingTimeMs": 1766899073
-  }
-}
-```
-
-**Possible Event Types:**
+Automations allow you to automatically trigger AI agents based on events in your Port catalog. This enables reactive AI systems that respond to changes in your infrastructure or applications.
 
 <details>
-<summary><b><code>agentSelection</code> (Click to expand)</b></summary>
+<summary><b>Example: Automatic Incident Response (Click to expand)</b></summary>
 
-Provides the result from the agent router.
-
-```json
-{
-  "type": "SELECTED_AGENT",
-  "identifier": "agent_id",
-  "thought_process": "Why this agent was selected..."
-}
-```
-    *   `type` can also be `"NO_AGENT_MATCH"` if no suitable agent is found.
-</details>
-
-<details>
-<summary><b><code>checkIfActionRequested</code> (Click to expand)</b></summary>
-
-Indicates which self-service action, if any, the agent has decided to run.
-
-```json
-{
-  "actionIdentifier": "action_id"
-}
-```
-    *   Can also be `{"actionIdentifier": null}` if no action is requested.
-</details>
-
-<details>
-<summary><b><code>plan</code> (Click to expand)</b></summary>
-
-Details the agent's reasoning and intended steps (tools to be called, etc.).
-
-```json
-{
-  "plan": "Detailed plan...",
-  "toolCalls": [
-    {
-      "name": "tool_name",
-      "arguments": {}
-    }
-  ]
-}
-```
-</details>
-
-<details>
-<summary><b><code>execution</code> (Click to expand)</b></summary>
-
-The final textual answer or a chunk of the answer from the agent for the user. For longer responses, multiple `execution` events might be sent.
-</details>
-
-<details>
-<summary><b><code>done</code> (Click to expand)</b></summary>
-
-Signals that the agent has finished processing and the response stream is complete. This event also includes quota usage information for managing your API limits.
+When a new incident is created, automatically trigger an agent that:
+- Analyzes the incident context
+- Gathers relevant information from related services
+- Creates initial response documentation
+- Notifies appropriate teams
 
 ```json showLineNumbers
 {
-  "rateLimitUsage": {
-    "maxRequests": 200,
-    "remainingRequests": 193,
-    "maxTokens": 200000,
-    "remainingTokens": 179910,
-    "remainingTimeMs": 903
+  "identifier": "incident_response_automation",
+  "title": "Automatic Incident Response",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_CREATED",
+      "blueprintIdentifier": "incident"
+    }
   },
-  "monthlyQuotaUsage": {
-    "monthlyLimit": 20,
-    "remainingQuota": 19,
-    "month": "2025-09",
-    "remainingTimeMs": 1766899073
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/agent/incident_response_agent/invoke",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "prompt": "New incident created: {{ .entity.title }}. Severity: {{ .entity.properties.severity }}. Please analyze and provide initial response recommendations.",
+      "labels": {
+        "source": "automation",
+        "incident_id": "{{ .entity.identifier }}",
+        "trigger_type": "incident_created"
+      }
+    }
   }
 }
 ```
-
-**Quota Usage Fields:**
-- `maxRequests`: Maximum number of requests allowed in the current rolling window
-- `remainingRequests`: Number of requests remaining in the current window
-- `maxTokens`: Maximum number of tokens allowed in the current rolling window  
-- `remainingTokens`: Number of tokens remaining in the current window
-- `remainingTimeMs`: Time in milliseconds until the rolling window resets
-
-:::tip Managing quota usage
-Use the quota information in the `done` event to implement client-side rate limiting and avoid hitting API limits. When `remainingRequests` or `remainingTokens` are low, consider adding delays between requests or queuing them for later execution.
-:::
 </details>
 
-</TabItem>
-<TabItem value="polling" label="Polling">
+<details>
+<summary><b>Example: Infrastructure Healing (Click to expand)</b></summary>
 
-**Polling for Responses**
+Monitor infrastructure health and automatically trigger healing agents when issues are detected:
 
-If you prefer to get the entire response at once after processing is complete, or if your client doesn't support streaming, you can use the polling method.
+```json showLineNumbers
+{
+  "identifier": "k8s_healing_automation",
+  "title": "Kubernetes Workload Healing",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_UPDATED",
+      "blueprintIdentifier": "k8s_workload"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.before.properties.isHealthy == \"Healthy\"",
+        ".diff.after.properties.isHealthy == \"Unhealthy\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/agent/k8s_healing_agent/invoke",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "prompt": "Workload {{ .event.diff.after.title }} is unhealthy. Current state: {{ .event.diff.after.properties.replicas }} replicas, {{ .event.diff.after.properties.readyReplicas }} ready. Please analyze and fix.",
+      "labels": {
+        "source": "automation",
+        "workload_name": "{{ .event.diff.after.identifier }}",
+        "namespace": "{{ .event.diff.after.properties.namespace }}"
+      }
+    }
+  }
+}
+```
+</details>
 
-1.  Invoke the agent (see [Invoke a specific agent API](/api-reference/invoke-a-specific-agent)) or agent router (see [Invoke an agent API](/api-reference/invoke-an-agent)) with your request (without `stream=true`).
-2.  Receive an `invocationId` in the response.
-3.  Periodically poll the AI invocation endpoint (see [Get an invocation's result API](/api-reference/get-an-invocations-result)) using the `invocationId` until the `status` field indicates completion (e.g., `Completed` or `Failed`).
-4.  The final response will be available in the polled data once completed.
+### Self-Service Actions
 
-<img src='/img/ai-agents/AIAgentTriggerFlowDiagram.png' width='70%' border='1px' />
+You can create self-service actions that invoke AI agents, allowing users to trigger intelligent workflows on-demand.
 
-</TabItem>
-</Tabs>
+<details>
+<summary><b>Example: Service Analysis Action (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "analyze_service_health",
+  "title": "Analyze Service Health",
+  "description": "Get AI-powered analysis of service health and recommendations",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "blueprintIdentifier": "service"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/agent/service_health_agent/invoke",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "prompt": "Analyze the health of service {{ .entity.title }}. Check metrics, recent deployments, and incidents.",
+      "labels": {
+        "source": "self_service",
+        "service_name": "{{ .entity.identifier }}",
+        "requested_by": "{{ .trigger.by.user.email }}"
+      }
+    }
+  }
+}
+```
+</details>
+
+For comprehensive examples, see our [AI guides](/guides?tags=AI).
 
 </TabItem>
 </Tabs>
 
 ## Discovering Available Agents
 
-:::info AI Agents as Entities
-AI agents are standard Port entities belonging to the `_ai_agent` blueprint. This means you can query, manage, and interact with them using the same API endpoints and methods you use for any other entity in your software catalog.
-:::
-
-You can discover available AI agents in your Port environment in a couple of ways:
-
-1.  **AI Agents Catalog Page**: Navigate to the AI Agents catalog page in Port. This page lists all the agents that have been created in your organization. For more details on creating agents, refer to the [Build an AI agent guide](/ai-interfaces/ai-agents/build-an-ai-agent).
-2.  **Via API**: Programmatically retrieve a list of all AI agents using the Port API. AI agents are entities of the `_ai_agent` blueprint. You can use the [Get all entities of a blueprint API endpoint](https://docs.port.io/api-reference/get-all-entities-of-a-blueprint) to fetch them, specifying `_ai_agent` as the blueprint identifier.
+You can discover available AI agents through the AI Agents catalog page or programmatically via the API using the `_ai_agent` blueprint.
 
 <details>
 <summary>cURL Example</summary>
@@ -363,229 +225,43 @@ curl -L 'https://api.port.io/v1/blueprints/_ai_agent/entities' \
 
 ## AI interaction details
 
-Every AI agent interaction creates an entity in Port, allowing you to track and analyze the interaction. This information helps you understand how the agent processed your request and identify opportunities for improvement.
+Every AI agent interaction creates an entity in Port, providing tracking and analysis capabilities. For comprehensive details on AI invocations, execution plans, and tools used, see [Port AI Overview](/ai-interfaces/port-ai/overview#ai-invocations).
 
-### Plan
+### Data & security considerations
 
-The plan shows how the agent decided to tackle your request and the steps it intended to take. This provides insight into the agent's reasoning process.
-
-<img src='/img/ai-agents/AIAgentsPlan.png' width='80%' border='1px' />
-
-
-### Tools used
-
-This section displays the actual steps the agent took and the APIs it used to complete your request. The tools shown depend on the backend mode used:
-
-**Standard Backend Mode:**
-- Shows traditional agent tools based on configured blueprint access
-- Limited to predefined search and query capabilities
-
-**MCP Server Backend Mode:**
-- Shows enhanced MCP server tools for comprehensive data access
-- Includes all read-only tools available in the MCP server
-- Provides more detailed tool execution information
-
-This information can be particularly helpful for debugging when answers don't meet expectations, such as when an agent:
-
-- Used an incorrect field name.
-- Chose an inappropriate property.
-- Made other logical errors.
-
-<img src='/img/ai-agents/AIAgentsTools.png' width='80%' border='1px' />
-
-
-### Tokens
-
-Each interaction records both input and output tokens, helping you understand your LLM usage. This information can be valuable for:
-
-- Identifying which agents consume more of your token allocation.
-- Optimizing prompts for efficiency.
-- Managing costs effectively.
-
-### Data handling
-
-We store data from your interactions with AI agents for up to 30 days. We use this data to ensure agents function correctly and to identify and prevent problematic or inappropriate AI behavior. 
-We limit this data storage strictly to these purposes. You can contact us to opt-out of this data storage.
+For information on data handling and security, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
 ## Limits
 
-Port applies two different types of limits to AI agent interactions to ensure fair usage across all customers:
+AI agents use the same rate limits and quotas as Port AI. 
 
-### Rate limits
-- **Query limit**: ~40 queries per hour
-- **Token usage limit**: 800,000 tokens per hour
-- These limits reset hourly
+*Note: These limits apply when using Port's managed AI infrastructure. [Bring your own LLM provider](/ai-interfaces/port-ai/llm-providers-management/overview) to use your provider's limits instead.*
 
-### Monthly quota
-- **Default quota**: 20 AI invocations per month
-- Each invocation of Port AI counts as one request against your quota
-- Quota resets monthly
-
-
-
-:::caution Usage limits
-Usage limits may change without prior notice. Once a limit is reached, you will need to wait until it resets.  
-If you attempt to interact with an agent after reaching a limit, you will receive an error message indicating that the limit has been exceeded.
-The query limit is estimated and depends on the actual token usage.
-:::
-
-### Monitor your usage
-
-You can monitor your current usage in several ways:
-
-#### Rate limits
-- Check the final `done` event in streaming responses for remaining requests, tokens, and reset time
-
-#### Monthly quota
-You can monitor your current monthly quota usage by making a GET request to the `/v1/quota/ai-invocations` endpoint
-
-:::tip Proactive quota monitoring
-Check your monthly quota before making multiple AI agent requests to avoid hitting limits. When `remainingQuota` is low, consider implementing rate limiting or queuing requests until the monthly quota resets. Note that you may also encounter hourly rate limits, which are separate from this monthly quota.
-:::
-
-## Common errors
-
-Here are some common errors you might encounter when working with AI agents and how to resolve them:
-
-<details>
-<summary><b>Missing Blueprints Error (Click to expand)</b></summary>
-
-**Error message:**  
-`{"missingBlueprints":["{{blueprint name}}","{{blueprint name}}"]}`
-
-**What it means:**  
-This error occurs when an AI agent tries to execute a self-service action that requires selecting entities from specific blueprints, but the agent doesn't have access to those blueprints.
-
-**How to fix:**  
-
-For **Standard Backend Mode:**
-- Add the missing blueprints listed in the error message to the agent's configuration.
-
-For **MCP Server Backend Mode:**
-- This error is less common since MCP mode has broader data access
-- If you encounter this error, it likely relates to action execution requirements
-- Ensure the action's entity selection fields are properly configured
-- Consider switching to MCP server backend mode for enhanced blueprint access
-</details>
-
-## Security considerations
-
-AI agent interactions in Port are designed with security and privacy as a priority.
-
-For more information on security and data handling, see our [AI agents overview](/ai-interfaces/ai-agents/overview#security-and-data-handling). 
+For detailed information on limits, monitoring, and quota management, see [Port AI API Interaction](/ai-interfaces/port-ai/api-interaction#rate-limits-and-quotas).
 
 ## Troubleshooting & FAQ
 
 <details>
-<summary><b>The agent is taking long to respond (Click to expand)</b></summary>
+<summary><b>How can I integrate agents into my workflows? (Click to expand)</b></summary>
 
-Depending on the agent definition and task, as well as load on the system, it may take a few seconds for the agent to respond. Response times between 20 to 40 seconds are acceptable and expected. 
+AI agents are designed for machine-to-machine communication and can be integrated through:
+- **API integration**: Direct HTTP calls to agent endpoints
+- **Workflow automations**: Automatic triggering based on Port catalog events
+- **Self-service actions**: User-initiated agent workflows
 
-If responses consistently take longer than this, consider:
-- Checking the details of the invocation.
-- Reaching out to our Support if you feel something is not right.
+For examples, see our [automation guides](/guides?tags=AI).
 </details>
 
 <details>
-<summary><b>How can I interact with the agent? (Click to expand)</b></summary>
+<summary><b>What happens if an agent can't answer my question? (Click to expand)</b></summary>
 
-Currently, you can interact with Port AI agents through:
-- The AI agent widget in the dashboards.
-- Slack integration.
-- API integration.
-
-We're working on adding direct interaction through the Port UI in the future.
+If the agent doesn't have the knowledge or capabilities to answer your question, you'll receive a response mentioning that it can't assist you with your specific query. Consider using a different agent that's specialized for your domain or task.
 </details>
 
 <details>
-<summary><b>What can I ask the agent? (Click to expand)</b></summary>
+<summary><b>How do I improve agent performance? (Click to expand)</b></summary>
 
-Each agent has optional conversation starters to help you understand what it can help with. The questions you can ask depend on which agents were built in your organization.
+For comprehensive guidance on improving AI performance, debugging issues, and analyzing invocation details, see [Port AI Overview](/ai-interfaces/port-ai/overview). The troubleshooting approaches for Port AI apply to AI agents as well.
 
-For information on building agents with specific capabilities, see our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide.
+For agent-specific improvements, see [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) for prompt engineering and tool configuration guidance.
 </details>
-
-<details>
-<summary><b>What happens if there is no agent that can answer my question? (Click to expand)</b></summary>
-
-If no agent in your organization has the knowledge or capabilities to answer your question, you'll receive a response mentioning that the agent can't assist you with your query.
-</details>
-
-<details>
-<summary><b>The agent is getting it wrong and has incorrect answers (Click to expand)</b></summary>
-
-AI agents can make mistakes. If you're receiving incorrect answers:
-
-1. Analyze the tools and plan the agent used (visible in the invocation details).
-2. Consider improving the agent's prompt to better guide its responses.
-3. Try rephrasing your question or breaking it into smaller, more specific queries.
-4. Reach out to our support for additional assistance if problems persist.
-
-Remember that AI agents are constantly learning and improving, but they're not infallible.
-</details>
-
-<details>
-<summary><b>My agent isn't responding in Slack (Click to expand)</b></summary>
-
-Ensure that:
-- The [Port Slack app](/ai-interfaces/ai-agents/slack-app) is properly installed in your workspace.
-- The app has been invited to the channel where you're mentioning it.
-- You're correctly mentioning the app (@Port).
-- You've completed the authentication flow with the app.
-- You haven't exceeded your daily usage limits.
-</details>
-
-<details>
-<summary><b>How can I provide feedback on agent responses? (Click to expand)</b></summary>
-
-The AI invocation entity contains the `feedback` property where you can mark is as `Negative` or `Positive`. We're working on adding a more convenient way to rate conversation from Slack and from the UI.
-</details>
-
-<details>
-<summary><b>What are the usage limits and how can I know them? (Click to expand)</b></summary>
-
-Port applies the following limits to AI agent interactions:
-- **Query limit**: ~40 queries per hour
-- **Token usage limit**: 800,000 tokens per hour
-
-You can monitor your current usage in several ways:
-- Check the final `done` event in streaming responses for remaining requests, tokens, and reset time (hourly rate limits)
-- Make a GET request to `/v1/quota/ai-invocations` to see your monthly quota status
-
-Note that Port has both hourly rate limits and monthly quotas. For detailed information, see the [Limits](#limits) section above.
-
-</details>
-
-<details>
-<summary><b>What happens when I reach a limit and what can I do? (Click to expand)</b></summary>
-
-**What happens when you reach a limit:**
-- You are temporarily blocked from making new AI agent requests
-- You will receive an error message indicating which limit has been exceeded
-- Access resumes automatically when the limit resets
-
-**What you can do:**
-
-**For rate limits (hourly):**
-- Wait for the limits to reset (they reset every hour)
-- Monitor the `remainingTimeMs` field to know exactly when you can make requests again
-- The error message will indicate it's a rate limit issue
-
-**For monthly quota:**
-- Wait for the monthly quota to reset at the beginning of the next month
-- Contact our support team to learn more about our plans and quota upgrades available for your organization
-- The error message will indicate it's a quota limit issue
-
-**General recommendations:**
-- Implement rate limiting in your applications to avoid hitting limits
-- Monitor your usage proactively using the monitoring methods described above
-- Consider batching requests or optimizing your AI agent interactions for efficiency
-
-</details>
-
-<details>
-<summary><b>How is my data with AI agents handled? (Click to expand)</b></summary>
-
-We store data from your interactions with AI agents for up to 30 days. We use this data to ensure agents function correctly and to identify and prevent problematic or inappropriate AI behavior. 
-We limit this data storage strictly to these purposes. You can contact us to opt-out of this data storage.
-</details> 

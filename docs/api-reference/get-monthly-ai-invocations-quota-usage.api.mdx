@@ -1,0 +1,63 @@
+---
+id: get-monthly-ai-invocations-quota-usage
+title: "Get monthly AI invocations quota usage"
+description: "This route returns the monthly quota usage for AI invocations.<br></br><br></br> To learn more about quota limitations, see the [documentation](/ai-interfaces/ai-agents/interact-with-ai-agents/#monitor-your-usage)."
+sidebar_label: "Get monthly AI invocations quota usage"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVE1vEzEQ/SuWuYCUZFskLhVCigSqKkAqkJ6qHLybSdbtrr0ZjwNhlf/OjHfTfHRRr4hL4rXffL15M61eQCjQNmS901d6Vtqg0EcChUARXVBUgqq9o7LaqnX0ZFQMZgVq6VFNb5R1G18YMQ+T9zl+eJ/Jz/6gZl5VYNCxCwRlcnbde6lsbakzHKkAkALdL3wRa3Ddw/x1ZuzYOgJcmgKCfHFoRyFLl6ag8U9L5fhw/4pTteRxvPURxynTNxM90mRWQV/d6+mNno90gCKipS3ftDrn/AD5ON/xE0JoOCVgdKvfXlzI3ylHH2FpYkXqe49k7wXzw+EFa5qmsh0h2UMQg1aHooTayIm2DbALnz9AQWzYoG8AyXbh/OMRJveemXN6N9I9/d+Etzsp6WVXvckXIfkI7WKdc607qbM21lm3Sl4HIcnH0UsgZPyJ8czW8DUMWCfQOlqEhdB+ks6z4PtQzx1zQ8xiYYVNU90eVbg0VYDzKMzfEFkvORE37/6NTgOix0HKawhnnT+8LYCMrcJQ2OHC290gdV30l+lK6VDp2VKvIFVnRCk621xmabq7uX3aDFpGDjeAIU1cxIrBJVETrrLMNHbSeKSJ9VzM0GsMB8DR9P4Qsjs+9zP8RACbfYYtx3Wmlu9p5HzR/k758LWV/pZgFr1YrVv6ZG6pEvwtx1PT2xuGStqdHi4nF0J34wPVJvW7934N9LQjT3fi8crUo1N9tQc1/ceLt+sHwS/KmoqHWxhMLW571dzrzSUD1/0qOFMO97tkvgXWtrkJcIfVbifX6wgoG5yPG4PW5NI4XuKjfV9Fao8sAu5+UUAjOt2YKnbyOJtd0dWTpq8/zSSReLL9WFGPSVH9Qbzvn9z2yPe51LoU5FfUPWjStp1eubA9vnv6q0Vf4h4ttM55MP8APQO7Ew==
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get monthly AI invocations quota usage"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/quota/ai-invocations"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route returns the monthly quota usage for AI invocations.<br></br><br></br> To learn more about quota limitations, see the [documentation](/ai-interfaces/ai-agents/interact-with-ai-agents/#monitor-your-usage).
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"monthlyQuotaUsage":{"type":"object","properties":{"monthlyLimit":{"type":"number"},"remainingQuota":{"type":"number"},"month":{"type":"string"},"remainingTimeMs":{"type":"number"}},"required":["monthlyLimit","remainingQuota","month","remainingTimeMs"],"additionalProperties":false}},"required":["ok","monthlyQuotaUsage"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

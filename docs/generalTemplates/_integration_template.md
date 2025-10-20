@@ -48,7 +48,7 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -65,7 +65,7 @@ Note the parameters specific to this integration, they are last in the table.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the X integration once and then exit, this is useful for **scheduled** ingestion of data.
 

@@ -28,7 +28,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)" default>
+<TabItem value="real-time-self-hosted" label="Self-hosted" default>
 
 <IntegrationVersion integration="kafka" />
 
@@ -148,7 +148,7 @@ This table summarizes the available parameters for the installation.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Kafka integration once and then exit, this is useful for **scheduled** ingestion of data.
 
