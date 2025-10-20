@@ -39,10 +39,7 @@ import TabItem from "@theme/TabItem"
 The following example demonstrates how to ingest your GitLab groups, subgroups and projects to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Group blueprint</summary>
 <GroupBlueprint/>
-</details>
 
 <ProjectGroupBlueprint/>
 
@@ -72,20 +69,11 @@ For more information, see the [troubleshooting](/build-your-software-catalog/syn
 The following example demonstrates how to ingest your GitLab projects, their README.md file contents and merge requests to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
 
-<details>
-<summary>Merge request blueprint</summary>
 <MergeRequestBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <MergeRequestConfig />
-</details>
 
 ### Merge request configuration options
 
@@ -150,20 +138,11 @@ By default, if not specified, it is set to `90` days.
 The following example demonstrates how to ingest your GitLab projects and their issues to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
 
-<details>
-<summary>Issue blueprint</summary>
 <IssueBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <IssueConfig />
-</details>
 
 
 :::tip Learn more
@@ -181,15 +160,9 @@ You can use the following Port blueprint definitions and integration configurati
 The following example shows how to ingest dependencies from a `package.json` file in your GitLab repository into Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Package blueprint</summary>
 <PackageBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <PackageConfig />
-</details>
 
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#ingest-files-from-your-repositories)
@@ -201,11 +174,7 @@ For more information about ingesting files and file contents, click [here](/buil
 The following example demonstrates how to ingest your GitLab projects and their monorepo folders to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
-
 
 <MonoRepoAppConfig/>
 
@@ -254,20 +223,11 @@ You can also specify a different path for each monorepo repository, for example:
 The following example demonstrates how to ingest your GitLab projects and their folders to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
 
-<details>
-<summary>Folder blueprint</summary>
 <FolderBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <FolderConfig />
-</details>
 
 :::tip Folder mapping patterns
 You can specify different paths for different repositories:
@@ -303,15 +263,9 @@ Primary email addresses are not available for GitLab "Free plan" users.
 The following example demonstrates how to ingest your GitLab members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Member blueprint</summary>
 <MemberBlueprint />
-</details>
 
-<details>
-<summary> Integration configuration</summary>
 <MemberConfig />
-</details>
 
 
 
@@ -320,15 +274,9 @@ You can use the following Port blueprint definitions and integration configurati
 The following example demonstrates how to ingest your GitLab groups and their members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Group with members blueprint</summary>
 <GroupMembersBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <GroupMembersConfig />
-</details>
 
 <Tabs groupId="config" queryString="parameter">
 
@@ -371,20 +319,11 @@ By default, this selector is set to `false`, which means the integration will on
 The following example demonstrates how to ingest your GitLab projects, their pipelines and jobs runs to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Pipeline blueprint</summary>
 <PipelineBlueprint />
-</details>
 
-<details>
-<summary>Job blueprint</summary>
 <JobBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <PipelineJobConfig />
-</details>
 
 :::tip Learn more
 
@@ -401,15 +340,9 @@ You can use the following Port blueprint definitions and integration configurati
 The following example demonstrates how to ingest your GitLab releases to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Release blueprint</summary>
 <ReleaseBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <ReleaseConfig />
-</details>
 
 :::tip Learn more
 
@@ -424,15 +357,9 @@ You can use the following Port blueprint definitions and integration configurati
 The following example demonstrates how to ingest your GitLab tags to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Tag blueprint</summary>
 <TagBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <TagConfig />
-</details>
 
 :::tip Learn more
 

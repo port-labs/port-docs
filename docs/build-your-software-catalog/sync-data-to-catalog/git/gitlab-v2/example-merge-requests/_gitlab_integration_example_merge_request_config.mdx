@@ -1,3 +1,5 @@
+<details>
+<summary> Integration configuration</summary>
 ```yaml showLineNumbers
 resources:
   - kind: project
@@ -45,3 +47,4 @@ resources:
           relations:
             project: .references.full | gsub("!.+"; "")
 ```
+</details>
