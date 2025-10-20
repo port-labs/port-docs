@@ -17,10 +17,13 @@ The new Ocean-powered GitHub integration comes with several key improvements:
 The GitHub integration now supports ingesting data from multiple GitHub organizations starting from **version 3.0.0-beta**. Configure one organization using `githubOrganization`, or list multiple organizations in your Port mapping under `organizations`:
 
 ```yaml showLineNumbers
-# port-app-config.yml (Port mapping)
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
 organizations:
   - org1
   - org2
+# ... rest of your mapping (repositoryType, resources, etc.) ...
 ```
 
 ### Authentication model
