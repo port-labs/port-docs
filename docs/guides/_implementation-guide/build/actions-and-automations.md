@@ -31,7 +31,7 @@ Some common examples of self-service actions include:
 - Requesting a cloud resource.
 - Reporting an incident.  
 
-Check out Port's [live demo](https://demo.getport.io/self-serve) for more real-world examples.
+Check out Port's [live demo](https://showcase.port.io/self-serve) for more real-world examples.
 
 ## Set up automations
 
@@ -51,7 +51,7 @@ Some common examples of automations include:
 - Send notifications to relevant users when a new service is created/updated.
 - Trigger an incident when a service degrades.
 
-Check out Port's [live demo](https://demo.getport.io/settings/automations) for more real-world examples.
+Check out Port's [live demo](https://showcase.port.io/settings/automations) for more real-world examples.
 
 ## Next step - launch
 
