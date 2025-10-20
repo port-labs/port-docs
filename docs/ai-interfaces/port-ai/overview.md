@@ -95,7 +95,7 @@ For detailed information about tool selection patterns, API usage examples, and 
 Port AI can be accessed through several interfaces, each designed for different use cases:
 
 ### Port AI Assistant
-The **Port AI Assistant** provides a dedicated, out-of-the-box user experience that requires no configuration. It offers a complete chat interface optimized for interacting with your Port data. *(Coming soon - comprehensive documentation)*
+The **[Port AI Assistant](/ai-interfaces/port-ai-assistant)** provides a dedicated, out-of-the-box user experience that requires no configuration. Available through a floating button, it offers instant access to AI-powered insights about your catalog, actions, and Port documentation - with zero setup required.
 
 ### AI Chat Widget  
 The [AI Chat Widget](/ai-interfaces/ai-chat-widget) is a customizable interface that platform engineers can embed in dashboards. It allows configuration of:
@@ -182,6 +182,24 @@ Port AI respects your organization's security controls:
 - **Secure processing**: All data processing happens within Port's secure infrastructure.
 
 For detailed security information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
+
+### Controlling Access to Port AI
+
+Access to Port AI is controlled through the `_ai_invocation` blueprint's permissions. Users who have permission to **register** new AI invocation entities will be able to access and use Port AI interfaces, including the Port AI Assistant.
+
+To configure who can access Port AI:
+
+1. Navigate to your **Data Model** in Port
+2. Search for the `_ai_invocation` blueprint
+3. Go to the **Permissions** tab
+4. Under the **Entities** section, configure the **Register** permission
+5. Only users with the "register" permission will have access to Port AI
+
+<img src='/img/ai-agents/AIInvocationPermissions.png' width='85%' border='1px' />
+
+:::tip User access control
+By controlling who can register AI invocations, you can manage which users in your organization have access to Port AI features. This includes access to the Port AI Assistant, AI Chat Widgets, and API-based interactions.
+:::
 
 ## Technical Limitations
 
@@ -277,7 +295,7 @@ Port AI supports two primary interaction types:
 <summary><b>How can I interact with Port AI? (Click to expand)</b></summary>
 
 You can interact with Port AI through multiple interfaces:
-- **Port AI Assistant** - Dedicated chat interface *(documentation coming soon)*
+- **[Port AI Assistant](/ai-interfaces/port-ai-assistant)** - Out-of-the-box chat interface via floating button (no configuration required).
 - [AI Chat Widget](/ai-interfaces/ai-chat-widget) - Customizable dashboard widgets
 - API integration - For custom applications and external workflows
 - [AI Agents](/ai-interfaces/ai-agents/overview) - Specialized implementations built on Port AI

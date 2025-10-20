@@ -11,13 +11,13 @@ export const mcpTools = [
   },
   {
     name: 'list_blueprints',
-    description: 'Retrieve all blueprints in organization',
+    description: 'Retrieve all blueprints in your organization. Blueprints are the building blocks that define your data model. The response is compacted, use get_blueprint with specific blueprint for full details, if needed.',
     apiReference: '/api-reference/get-all-blueprints',
     roles: ['developer', 'builder']
   },
   {
     name: 'get_blueprint',
-    description: 'Get specific blueprint by identifier',
+    description: 'Get a specific blueprint by its identifier. Returns the complete blueprint configuration.',
     apiReference: '/api-reference/get-a-blueprint',
     roles: ['developer', 'builder']
   },
@@ -42,20 +42,20 @@ export const mcpTools = [
     roles: ['builder']
   },
   {
-    name: 'get_entities',
-    description: 'Search and retrieve entities with filtering/sorting',
+    name: 'list_entities',
+    description: 'Search and retrieve entities for a blueprint with advanced filtering, sorting, and pagination options',
     apiReference: '/api-reference/get-all-entities-of-a-blueprint',
     roles: ['developer', 'builder']
   },
   {
-    name: 'get_entity',
-    description: 'Get specific entity by identifiers',
+    name: 'get_entities_by_identifiers',
+    description: 'Get specific entities by their identifiers within a blueprint',
     apiReference: '/api-reference/get-an-entity',
     roles: ['developer', 'builder']
   },
   {
     name: 'update_entity',
-    description: 'Update existing entity fields',
+    description: 'Update an existing entity. Only the fields provided will be updated.',
     apiReference: '/api-reference/update-an-entity',
     roles: ['builder']
   },
@@ -75,13 +75,13 @@ export const mcpTools = [
   },
   {
     name: 'get_scorecards',
-    description: 'Retrieve all scorecards (compacted)',
+    description: 'Retrieve all scorecards. The response is compacted, use get_scorecard with specific scorecard for full details, if needed.',
     apiReference: '/api-reference/get-all-scorecards',
     roles: ['developer', 'builder']
   },
   {
     name: 'get_scorecard',
-    description: 'Get specific scorecard by ID',
+    description: 'Get specific scorecard by identifier',
     apiReference: '/api-reference/get-a-scorecard',
     roles: ['developer', 'builder']
   },
@@ -106,7 +106,7 @@ export const mcpTools = [
   },
   {
     name: 'list_actions',
-    description: 'Get all actions (compacted)',
+    description: 'Get all actions. The response is compacted, use get_action with specific action for full details, if needed.',
     roles: ['developer', 'builder']
   },
   {
@@ -131,10 +131,18 @@ export const mcpTools = [
   },
   {
     name: 'run_*',
-    description: 'Execute any action you have permission to run in Port',
+    description: 'Execute any action you have permission to run in Port. Dynamically generated for each action available in your organization.',
     apiReference: '/api-reference/execute-a-self-service-action',
     roles: ['developer', 'builder'],
     isDynamic: true
+  },
+  {
+    name: 'run_action',
+    description: 'Run any action dynamically by providing the action identifier and inputs. Used internally by the MCP server and not directly exposed to clients.',
+    apiReference: '/api-reference/execute-a-self-service-action',
+    roles: ['developer','builder'],
+    isDynamic: true,
+    isInternal: true
   },
   {
     name: 'get_action_permissions',
@@ -150,17 +158,17 @@ export const mcpTools = [
   // Documentation and user tools
   {
     name: 'ask_port_docs',
-    description: 'Ask questions about Port documentation and get contextual answers',
+    description: 'Ask a question about Port documentation',
     roles: ['developer', 'builder']
   },
   {
     name: 'search_port_docs_sources',
-    description: 'Search Port documentation sources for relevant information',
+    description: 'Search for relevant Port documentation sources based on a query',
     roles: ['developer', 'builder']
   },
   {
     name: 'describe_user_details',
-    description: 'Get user info, organization, teams, etc.',
+    description: 'Describe the user, which organization he is connected to and what teams he is a member of and more information regarding the user. Can be useful for questions that relate to the user or when looking up for related entities to the user',
     apiReference: '/api-reference/get-organization-details',
     roles: ['developer', 'builder']
   }
