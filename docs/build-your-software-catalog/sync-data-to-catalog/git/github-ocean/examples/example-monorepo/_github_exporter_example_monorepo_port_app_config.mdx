@@ -9,7 +9,7 @@ resources:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
       folders: # Specify the repositories and folders to include under this relative path.
         - path: apps/* # Relative path to the folders within the repositories.
-          organization: my-org  # Optional if githubOrganization is set; required if no global org
+          organization: my-org  # Optional if githubOrganization is set; required if not set
           repos: # List of repositories to include folders from.
             - name: backend-service
               branch: main

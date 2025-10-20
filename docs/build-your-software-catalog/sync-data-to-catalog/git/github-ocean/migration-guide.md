@@ -14,14 +14,13 @@ The new Ocean-powered GitHub integration comes with several key improvements:
 
 ### Multi-organization support (v3.0.0-beta)
 
-The GitHub integration now supports ingesting data from multiple GitHub organizations starting from **version 3.0.0-beta**. This is configured using the `githubOrganization` and `githubMultiOrganizations` parameters:
+The GitHub integration now supports ingesting data from multiple GitHub organizations starting from **version 3.0.0-beta**. Configure one organization using `githubOrganization`, or list multiple organizations in your Port mapping under `organizations`:
 
 ```yaml showLineNumbers
-integration:
-  config:
-    githubMultiOrganizations: ["org1", "org2", "org3"]  # Classic PAT only
-    # OR
-    githubOrganization: "my-org"  # GitHub App or Fine-grained PAT only
+# port-app-config.yml (Port mapping)
+organizations:
+  - org1
+  - org2
 ```
 
 ### Authentication model
@@ -92,9 +91,9 @@ A key change is how we denote custom attributes. We now add a double underscore 
 
 ### Files & GitOps
 
-:::info Organization field in file selectors
-The `organization` field is optional if `githubOrganization` is set globally. It is required when no global organization is provided (e.g., Classic PAT syncing multiple orgs).
-:::
+::::info Organization field in file selectors
+The `organization` field is optional when `githubOrganization` is set in the deployment config. It is required when `githubOrganization` is not provided.
+::::
 
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
@@ -135,7 +134,7 @@ resources:
       files:
           # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
-          organization: my-org # Optional if githubOrganization is set; required if no global org
+          organization: my-org # Optional if githubOrganization is set; required if not set
             # The `repos` key can be used to filter the repositories and branch where files should be fetched
           repos:
             - name: MyRepo # ✅  new key:value pairs rather than a string.
@@ -288,7 +287,6 @@ resources:
             labels: "[.labels[].name]"
             status: ".state"
             createdAt: ".created_at"
-            link: ".html_url"
           relations:
             repository: ".repo" # ❌  changed
 ```
@@ -398,9 +396,9 @@ resources:
 
 ### Folders
 
-:::info Organization field in folder selectors
-The `organization` field is optional if `githubOrganization` is set globally. It is required when no global organization is provided (e.g., Classic PAT syncing multiple orgs).
-:::
+::::info Organization field in folder selectors
+The `organization` field is optional when `githubOrganization` is set in the deployment config. It is required when no deployment-level organization is provided (e.g., Classic PAT with multiple organizations defined in your Port mapping).
+::::
 
 For the `folder` kind, the `folder.name` attribute is no longer part of the response. Instead, you can easily derive the folder name from the `folder.path` using a JQ expression, as shown in the example below:
 
@@ -440,7 +438,7 @@ resources:
       query: "true"
       folders: 
         - path: apps/*
-          organization: my-org # Optional if githubOrganization is set; required if no global org
+          organization: my-org # Optional if githubOrganization is set; required if not set
           repos:
             - name: backend-service # ✅  new, now has a 'name' key
               branch: main # ✅  new, optional branch name
@@ -549,9 +547,9 @@ This section provides a high-level summary of the key changes for mappings.
 
 | Area | Old Value | New Value | Notes |
 |---|---|---|---|
-| **Multi-Organization** | N/A | `githubOrganization` and `githubMultiOrganizations` configuration | New configuration to support multiple organizations. **Classic PAT supports multiple orgs using `githubMultiOrganizations`; GitHub App and Fine-grained PAT support exactly 1 org using `githubOrganization`**. Syncing multiple organizations increases API calls and may slow down the integration. |
-| **File Organization** | N/A | `organization: "my-org"` | Optional if `githubOrganization` is set; required when no global org (e.g., Classic PAT multi-org). |
-| **Folder Organization** | N/A | `organization: "my-org"` | Optional if `githubOrganization` is set; required when no global org (e.g., Classic PAT multi-org). |
+| **Multi-Organization** | N/A | `githubOrganization` is not optional | **Classic PAT supports multiple orgs using the `organization` parameter in Port mapping; GitHub App and Fine-grained PAT do not support multi organization and there required the `githubOrganization` configuration**. Syncing multiple organizations increases API calls and may slow down the integration. |
+| **File Organization** | N/A | `organization: "my-org"` | Optional if `githubOrganization` is set; required when not (e.g., Classic PAT multi-org). |
+| **Folder Organization** | N/A | `organization: "my-org"` | Optional if `githubOrganization` is set; required when not set(e.g., Classic PAT multi-org). |
 | **Authentication** | GitHub App Installation | PAT or Self-Created GitHub App | The integration can be authenticated using a Personal Access Token (PAT) or a self-created GitHub App. **Multi-org requires classic PAT**. |
 | **Webhooks** | App Webhook | Automatic Setup by Integration | The integration now manages its own webhooks for live events. This requires `webhook` permissions and `liveEvents.baseUrl` to be set. |
 | **Workflow Runs** | 10 per repository | 100 per workflow | The number of ingested workflow runs has been increased. |

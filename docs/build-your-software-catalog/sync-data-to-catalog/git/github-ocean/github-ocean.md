@@ -22,12 +22,26 @@ Here's what you can do with the GitHub integration:
 
 ### Multi-organization support
 
-The GitHub integration supports syncing data from multiple GitHub organizations starting from **version 3.0.0-beta**. You can configure which organizations to sync using the `githubOrganization` and `githubMultiOrganizations` configuration parameters.
+The GitHub integration supports syncing data from multiple GitHub organizations starting from **version 3.0.0-beta**. You can configure which organizations to sync using a single-org `githubOrganization`, or by listing organizations in your Port mapping (`organizations`).
+
+<details>
+<summary><b>Mapping multi organizations (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+organizations:
+  - org1
+  - org2
+# ... rest of your mapping (repositoryType, resources, etc.) ...
+```
+</details>
+
 
 :::caution Authentication and configuration requirements:
 - **With classic PAT**:
-  - Specify a list of organizations: `githubMultiOrganizations: ["org1", "org2", "org3"]`
-  - Leave empty to sync all organizations the PAT user is a member of: `githubMultiOrganizations: []`
+  - Specify organizations in PortMapping: `organizations: ["org1", "org2", "org3"]`
 - **With GitHub App**: Specify exactly one organization: `githubOrganization: "my-org"`
 - **With Fine-grained PAT**: Specify exactly one organization: `githubOrganization: "my-org"`
 
@@ -182,11 +196,11 @@ The GitHub integration uses a YAML configuration file to describe the ETL proces
 
 ### Ingest organizations
 
-The GitHub integration can automatically sync organization-level data when using multi-organization support (available from **v3.0.0-beta**).
+The GitHub integration automatically syncs organization-level data (available from **v3.0.0-beta**).
 
 
 :::tip Organization as parent entity
-Organizations can serve as parent entities for repositories, teams, and other GitHub resources, helping you model your organizational structure in Port.
+Organizations serve as parent entities for repositories, teams, and other GitHub resources, helping you model your organizational structure in Port.
 :::
 
 ### Ingest files from your repositories
@@ -199,7 +213,7 @@ For example, say you want to manage your `package.json` files in Port. One optio
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
 :::info Organization field in file selectors
-The `organization` field is optional if `githubOrganization` is set globally. It is required when no global organization is provided (e.g., Classic PAT syncing multiple orgs).
+The `organization` field is optional when `githubOrganization` is set in the deployment config. It is required when no deployment-level organization is provided (e.g., Classic PAT with multiple organizations defined in your Port mapping).
 :::
 
 ```yaml showLineNumbers
@@ -210,7 +224,7 @@ resources:
       files:
           # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
-          organization: my-org  # Optional if githubOrganization is set; required if no global org
+          organization: my-org  # Optional if githubOrganization is set; required if not set
             # The `repos` key can be used to filter the repositories and branch where files should be fetched
           repos:
             - name: MyRepo
@@ -734,7 +748,7 @@ resources:
       query: 'true'
       files:
         - path: '**/package.json'
-          organization: my-org  # Optional if githubOrganization is set; required if no global org
+          organization: my-org  # Optional if githubOrganization is set; required if not set
         # Note that in this case we are fetching from a specific repository
           repos:
             - name: MyRepo
@@ -789,7 +803,7 @@ resources:
       query: 'true'
       files:
         - path: values.yaml
-          organization: my-org  # Optional if githubOrganization is set; required if no global org
+          organization: my-org  # Optional if githubOrganization is set; required if not set
           skipParsing: true
           repos:
             - name: MyRepo
