@@ -31,10 +31,10 @@ This page outlines the following steps:
 Starting from **version 3.0.0-beta**, the GitHub integration supports syncing data from multiple GitHub organizations.
 
 :::info Multi-organization configuration
-- GitHub App and fine-grained PAT: use `githubOrganization`.
-- Do not set `githubOrganization` if you intend syncing multi organizations, instead optionally list the organizations you want in your Port mapping or leave empty to sync all organizations the Classic Personal Access Token user is a member of.
+- GitHub App and fine-grained PAT: use `githubOrganization` (single organization).
+- Classic PAT: to sync multiple organizations, list them in your Port mapping under `organizations`.
+- Precedence: if `githubOrganization` is set in the deployment config and `organizations` are listed in Port mapping, the integration syncs only the `githubOrganization` (single‑org behavior).
 - Performance: syncing multiple organizations increases API calls and may slow down the integration.
-- Classic PAT: Multi organization is only support for Classic Personal Access Tokens
 :::
 
 ### Create access token

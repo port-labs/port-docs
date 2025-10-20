@@ -45,6 +45,8 @@ organizations:
 - **With GitHub App**: Specify exactly one organization: `githubOrganization: "my-org"`
 - **With Fine-grained PAT**: Specify exactly one organization: `githubOrganization: "my-org"`
 
+**Precedence:** If `githubOrganization` is set in the deployment config and `organizations` are also listed in Port mapping, the integration prioritizes single‑organization behavior and syncs only the `githubOrganization`.
+
 **Performance consideration:** Syncing multiple organizations will increase the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption. Consider syncing only the organizations you need.
 :::
 

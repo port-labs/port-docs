@@ -26,6 +26,8 @@ organizations:
 # ... rest of your mapping (repositoryType, resources, etc.) ...
 ```
 
+**Precedence:** If `githubOrganization` is set in the deployment config and `organizations` are listed in Port mapping, the integration syncs only the `githubOrganization` (single‑org behavior).
+
 ### Authentication model
 
 #### Personal access token (PAT)
