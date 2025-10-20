@@ -7,10 +7,6 @@ import TabItem from "@theme/TabItem";
 
 # Installation
 
-:::warning Beta Feature
-AWS Hosted by Port is currently in **beta mode** and is not yet available for all Port users. Contact Port's support team to get access to this integration.
-:::
-
 AWS Hosted by Port is available through [Port's Ocean SaaS framework](https://ocean.getport.io/integrations-library/).  
 
 The installation process is simple - you only need to create IAM roles in your AWS accounts to grant the integration access to read your resources. The integration handles everything else automatically.
