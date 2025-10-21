@@ -6,7 +6,7 @@ sidebar_label: Port overview
 sidebar_class_name: custom-sidebar-item sidebar-menu-port-overview
 ---
 
-import KapaCallout from '@site/src/components/KapaCallout/KapaCallout';
+import EmbeddedChat from '@site/src/components/EmbeddedChat/EmbeddedChat';
 import ProductPillars from '@site/src/components/ProductPillars/ProductPillars';
 
 # Port overview
@@ -26,7 +26,7 @@ import ProductPillars from '@site/src/components/ProductPillars/ProductPillars';
 </div>
 </center>
 
-<KapaCallout />
+<EmbeddedChat />
 
 ## What is Port?
 
