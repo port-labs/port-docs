@@ -1,9 +1,9 @@
 {
-    "label": "Resource self-service",
+    "label": "Resource Management",
     "collapsible": true,
     "collapsed": true,
     "position": 1,
     "customProps": {
-      "description": "Resource Self-Service"
+      "description": "Resource Management"
     }
   }

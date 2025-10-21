@@ -3,11 +3,11 @@ title: "Overview"
 sidebar_position: 1
 ---
 
-# Resource self-service
+# Resource Management
 
-## Why enable resource self-service using a developer portal?
+## Why enable resource management using a developer portal?
 
-Resource self-service is much more than just giving developers access to cloud consoles and hoping for the best. It's a discipline that requires balancing developer velocity with governance, security, and cost control—where developers need instant access to the resources they need while platform teams maintain standards, compliance, and operational excellence. The challenge is providing this access without creating a ticket-driven bottleneck or sacrificing organizational guardrails.
+Resource management is much more than just giving developers access to cloud consoles and hoping for the best. It's a discipline that requires balancing developer velocity with governance, security, and cost control—where developers need instant access to the resources they need while platform teams maintain standards, compliance, and operational excellence. The challenge is providing this access without creating a ticket-driven bottleneck or sacrificing organizational guardrails.
 
 Imagine you're a developer who just joined a new team and needs to spin up a development environment to work on a critical feature. It's Monday morning, and you need:
 - A new database instance for your microservice
