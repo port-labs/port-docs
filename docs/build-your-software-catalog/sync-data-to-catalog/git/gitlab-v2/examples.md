@@ -24,6 +24,10 @@ import GroupMembersConfig from './example-groups/_gitlab_integration_example_gro
 import PipelineBlueprint from './example-pipelines/_gitlab_integration_example_pipeline_blueprint.mdx'
 import JobBlueprint from './example-jobs/_gitlab_integration_example_job_blueprint.mdx'
 import PipelineJobConfig from './example-pipelines/_gitlab_integration_example_pipeline_job_config.mdx'
+import ReleaseBlueprint from './example-releases/_gitlab_integration_example_release_blueprint.mdx'
+import ReleaseConfig from './example-releases/_gitlab_integration_example_release_config.mdx'
+import TagBlueprint from './example-tags/_gitlab_integration_example_tag_blueprint.mdx'
+import TagConfig from './example-tags/_gitlab_integration_example_tag_config.mdx'
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -35,10 +39,7 @@ import TabItem from "@theme/TabItem"
 The following example demonstrates how to ingest your GitLab groups, subgroups and projects to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Group blueprint</summary>
 <GroupBlueprint/>
-</details>
 
 <ProjectGroupBlueprint/>
 
@@ -68,20 +69,11 @@ For more information, see the [troubleshooting](/build-your-software-catalog/syn
 The following example demonstrates how to ingest your GitLab projects, their README.md file contents and merge requests to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
 
-<details>
-<summary>Merge request blueprint</summary>
 <MergeRequestBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <MergeRequestConfig />
-</details>
 
 ### Merge request configuration options
 
@@ -146,20 +138,11 @@ By default, if not specified, it is set to `90` days.
 The following example demonstrates how to ingest your GitLab projects and their issues to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
 
-<details>
-<summary>Issue blueprint</summary>
 <IssueBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <IssueConfig />
-</details>
 
 
 :::tip Learn more
@@ -177,15 +160,9 @@ You can use the following Port blueprint definitions and integration configurati
 The following example shows how to ingest dependencies from a `package.json` file in your GitLab repository into Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Package blueprint</summary>
 <PackageBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <PackageConfig />
-</details>
 
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#ingest-files-from-your-repositories)
@@ -197,11 +174,7 @@ For more information about ingesting files and file contents, click [here](/buil
 The following example demonstrates how to ingest your GitLab projects and their monorepo folders to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
-
 
 <MonoRepoAppConfig/>
 
@@ -250,20 +223,11 @@ You can also specify a different path for each monorepo repository, for example:
 The following example demonstrates how to ingest your GitLab projects and their folders to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
 
-<details>
-<summary>Folder blueprint</summary>
 <FolderBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <FolderConfig />
-</details>
 
 :::tip Folder mapping patterns
 You can specify different paths for different repositories:
@@ -299,15 +263,9 @@ Primary email addresses are not available for GitLab "Free plan" users.
 The following example demonstrates how to ingest your GitLab members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Member blueprint</summary>
 <MemberBlueprint />
-</details>
 
-<details>
-<summary> Integration configuration</summary>
 <MemberConfig />
-</details>
 
 
 
@@ -316,15 +274,9 @@ You can use the following Port blueprint definitions and integration configurati
 The following example demonstrates how to ingest your GitLab groups and their members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Group with members blueprint</summary>
 <GroupMembersBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <GroupMembersConfig />
-</details>
 
 <Tabs groupId="config" queryString="parameter">
 
@@ -367,20 +319,11 @@ By default, this selector is set to `false`, which means the integration will on
 The following example demonstrates how to ingest your GitLab projects, their pipelines and jobs runs to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Pipeline blueprint</summary>
 <PipelineBlueprint />
-</details>
 
-<details>
-<summary>Job blueprint</summary>
 <JobBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <PipelineJobConfig />
-</details>
 
 :::tip Learn more
 
@@ -389,6 +332,40 @@ You can use the following Port blueprint definitions and integration configurati
 - Click [Here](https://docs.gitlab.com/api/projects/#list-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines) for the GitLab pipeline object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs) for the GitLab job object structure.
+
+:::
+
+## Mapping releases
+
+The following example demonstrates how to ingest your GitLab releases to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<ReleaseBlueprint />
+
+<ReleaseConfig />
+
+:::tip Learn more
+
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
+- Click [Here](https://docs.gitlab.com/api/releases/) for the GitLab release object structure.
+
+:::
+
+## Mapping tags
+
+The following example demonstrates how to ingest your GitLab tags to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<TagBlueprint />
+
+<TagConfig />
+
+:::tip Learn more
+
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
+- Click [Here](https://docs.gitlab.com/api/tags/) for the GitLab tag object structure.
 
 :::
 
