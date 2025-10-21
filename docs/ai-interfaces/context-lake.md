@@ -15,23 +15,23 @@ Port's Context Lake is your unified engineering knowledge layer—connecting dat
 
 The context lake transforms scattered data across your engineering tools into unified organizational knowledge. It is built from four core components:
 
-### Software catalog - Your data
+### Software catalog - your data
 
 The [software catalog](/build-your-software-catalog) is where you define YOUR organization's data model using blueprints (services, environments, teams, deployments, incidents, etc.) and populate it with entities from all your tools. This catalog becomes your organizational semantic layer—teaching Port what "service," "deployment," or "incident" means specifically in your context, providing the schema and structure that gives meaning to your data.
 
-### Access controls - Data governance
+### Access controls - data governance
 
 [RBAC and permissions](/sso-rbac/rbac-overview) ensure that the right people and systems see the right data. Teams, roles, and policies control who can view, edit, or act on catalog data, maintaining security while enabling collaboration and providing governed access to your organizational knowledge.
 
-### Scorecards - Your standards
+### Scorecards - your standards
 
 [Scorecards](/scorecards/overview) define and track your engineering standards, KPIs, and quality metrics. They encode organizational expectations—production readiness requirements, security compliance rules, operational best practices—as measurable criteria within the Context Lake, providing the organizational standards and quality signals that inform decisions.
 
-### Interface layer - How you access it
+### Interface layer - how you access it
 
 Context Lake data becomes actionable through multiple interfaces: **[AI Interfaces](/ai-interfaces/overview)** where AI agents and assistants query through [Port MCP Server](/ai-interfaces/port-mcp-server/overview-and-installation) to understand your organization, **[API](/api-reference/port-api)** for programmatic access, and **[Interface Designer](/customize-pages-dashboards-and-plugins/dashboards/)** with dashboards and visualizations that surface insights to your teams—providing multiple ways to query, visualize, and act on your organizational context.
 
-## Why Context Lake matters
+## Why the context lake matters
 
 <Tabs groupId="context-lake-value" queryString>
 <TabItem value="ai-agents" label="For AI agents">
