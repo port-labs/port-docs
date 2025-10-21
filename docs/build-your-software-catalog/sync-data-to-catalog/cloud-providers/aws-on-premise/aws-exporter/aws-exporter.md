@@ -11,7 +11,7 @@ import Image from "@theme/IdealImage";
 :::warning Deprecated
 This exporter is deprecated, Port will discontinue support for organizations using it by Q2 2025.
 
-To integrate Port with AWS, use the [Ocean AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).
+To integrate Port with AWS, use the [Ocean AWS On-Premise integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-on-premise/).
 :::
 
 Port's AWS integration provides the ability to export your AWS resources to Port, according to your configuration.
@@ -38,7 +38,7 @@ The open source AWS exporter allows you to perform extract, transform, load (ETL
 
 The exporter is deployed using an [AWS serverless application](https://aws.amazon.com/serverless/sam/) that is installed on the account.
 
-[The serverless application](#exporter-aws-serverless-application) requires a [JSON configuration file](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/#exporter-configjson-file) to describe the ETL process to load data into the developer portal, and an [IAM policy](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/#iam-policy) with the necessary permissions to list and read the configured resources.
+[The serverless application](#exporter-aws-serverless-application) requires a [JSON configuration file](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-on-premise/aws-exporter/#exporter-configjson-file) to describe the ETL process to load data into the developer portal, and an [IAM policy](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-on-premise/aws-exporter/#iam-policy) with the necessary permissions to list and read the configured resources.
 
 The exporter makes use of [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the AWS objects.
 

@@ -8,7 +8,7 @@ This guide aims to show how to connect an ECR `repository` to an existing servic
 This guide assumes you have:
 
 - A Port account and that you have completed the [onboarding process](/getting-started/overview). We will use the `Service` blueprint created during the onboarding process.
-- [AWS exporter installed and configured](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/aws-exporter.md) in your environment.
+- [AWS exporter installed and configured](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-on-premise/aws-exporter/aws-exporter.md) in your environment.
 
 :::
 
@@ -66,7 +66,7 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 <br/><br/>
 
-With the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant ECR Repository to each of our services. This is done by adding some mapping logic. Update the [`config.json`](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/aws-exporter.md#exporter-configjson-file) file from the AWS exporter to:
+With the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant ECR Repository to each of our services. This is done by adding some mapping logic. Update the [`config.json`](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-on-premise/aws-exporter/aws-exporter.md#exporter-configjson-file) file from the AWS exporter to:
 
 <details>
 <summary><b>`config.json` (Click to expand)</b></summary>
@@ -129,5 +129,5 @@ By following these steps, you can seamlessly connect an ECR repository with an e
 
 Relevant guides and examples:
 
-- [Port's AWS integration for ECR Repositories](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples#ecr-repositories)
+- [Port's AWS On-Premise integration for ECR Repositories](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-on-premise/aws-exporter/examples#ecr-repositories)
 - [Python script to ingest ECR Repositories and Images into Port](https://github.com/port-labs/example-ecr-images)
