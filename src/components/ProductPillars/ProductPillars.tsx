@@ -31,43 +31,43 @@ const ProductPillars: React.FC = () => {
     {
       title: 'Software Catalog',
       description: 'Make Port your own by defining a data model that fits your organization, then use your software catalog as a single source of truth for your software development assets.',
-      demoUrl: 'https://demo.getport.io/service_catalog',
+      demoUrl: 'https://showcase.port.io/service_catalog',
       icon: 'lists',
     },
     {
       title: 'Self-Service',
       description: 'Drive developer productivity and reduce drift by providing developers with pre-configured self-service actions like scaffolding a service or provisioning a cloud resource.',
-      demoUrl: 'https://demo.getport.io/self-serve',
+      demoUrl: 'https://showcase.port.io/self-serve',
       icon: 'bolt',
     },
     {
       title: 'Workflow Automation',
       description: 'Set up automations to automatically respond to events in your software catalog such as TTL=0 or service degradation, and peform actions like sending a notification or reporting an issue.',
-      demoUrl: 'https://demo.getport.io/settings/automations',
+      demoUrl: 'https://showcase.port.io/settings/automations',
       icon: 'play_circle',
     },
     {
       title: 'Scorecards',
       description: 'Define and track standards and KPIs for your resources to measure quality, production readiness, productivity, or any other metric you need.',
-      demoUrl: 'https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=1',
+      demoUrl: 'https://showcase.port.io/serviceEntity?identifier=authentication&activeTab=1',
       icon: 'military_tech',
     },
     {
       title: 'R&D Insights & Reports',
       description: 'Shine a light on all things engineering, from standards compliance to DORA metrics & AppSec. Make informed decisions based on trends and usage patterns to improve development, optimize performance, and reduce cost.',
-      demoUrl: 'https://demo.getport.io/dora_metrics',
+      demoUrl: 'https://showcase.port.io/dora_metrics',
       icon: 'insights',
     },
     {
       title: 'Dashboards & visualizations',
       description: 'Create custom dashboards and widgets to track and visualize data about your assets. View trends and gain insights into your development activities, performance, and progress.',
-      demoUrl: 'https://demo.getport.io/engineering_overview',
+      demoUrl: 'https://showcase.port.io/engineering_overview',
       icon: 'dashboard',
     },
     {
       title: 'Role-based access control',
       description: 'Control access to different parts of your portal based on user roles and permissions. Ensure that only authorized users have access to the information they need to do their jobs.',
-      demoUrl: 'https://demo.getport.io/settings/users',
+      demoUrl: 'https://showcase.port.io/settings/users',
       icon: 'shield_person',
     }
   ];
