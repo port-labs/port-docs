@@ -22,7 +22,7 @@ Here's what you can do with the GitHub integration:
 
 ### Multi-organization support
 
-The GitHub integration supports syncing data from multiple GitHub organizations starting from **version 3.0.0-beta**. You can configure which organizations to sync using a single-org `githubOrganization`, or by listing organizations in your Port mapping (`organizations`).
+The GitHub integration supports syncing data from multiple GitHub organizations starting from **version 3.0.0-beta**. You can configure which organizations to sync using a single-org `githubOrganization`, or by listing organizations in your port mapping (`organizations`).
 
 <details>
 <summary><b>Mapping multi organizations (Click to expand)</b></summary>
@@ -41,11 +41,10 @@ organizations:
 
 :::caution Authentication and configuration requirements:
 - **With classic PAT**:
-  - Specify organizations in PortMapping: `organizations: ["org1", "org2", "org3"]`
-- **With GitHub App**: Specify exactly one organization: `githubOrganization: "my-org"`
-- **With Fine-grained PAT**: Specify exactly one organization: `githubOrganization: "my-org"`
+  - Specify organizations in port mapping: `organizations: ["org1", "org2", "org3"]`
+- **With GitHub App or Fine-grained PAT**: Specify exactly one organization by setting the `githubOrganization` in the environment variables: `githubOrganization: "my-org"`
 
-**Precedence:** If `githubOrganization` is set in the deployment config and `organizations` are also listed in Port mapping, the integration prioritizes single‑organization behavior and syncs only the `githubOrganization`.
+**Precedence:** If `githubOrganization` is set in the environment variables or config and `organizations` are also listed in port mapping, the integration prioritizes single‑organization behavior and syncs only the `githubOrganization`.
 
 **Performance consideration:** Syncing multiple organizations will increase the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption. Consider syncing only the organizations you need.
 :::
@@ -215,7 +214,7 @@ For example, say you want to manage your `package.json` files in Port. One optio
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
 :::info Organization field in file selectors
-The `organization` field is optional when `githubOrganization` is set in the deployment config. It is required when no deployment-level organization is provided (e.g., Classic PAT with multiple organizations defined in your Port mapping).
+The `organization` field is optional when `githubOrganization` is set in the environment variables and required when it is not provided (e.g., Classic PAT with multiple organizations defined in your port mapping).
 :::
 
 <details>

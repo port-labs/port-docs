@@ -10,11 +10,10 @@ The new Ocean-powered GitHub integration comes with several key improvements:
 - **Enhanced performance** - Faster resyncs thanks to improved API efficiency, making your data available sooner.
 - **Better selectors** - More granular control over what you sync with improved selectors for `pull requests`, `issues`, `dependabot alerts`, `codescanning alerts`, `files`, and `folders`.
 
-## Major changes
 
-### Multi-organization support (v3.0.0-beta)
+### Multi-organization support
 
-The GitHub integration now supports ingesting data from multiple GitHub organizations starting from **version 3.0.0-beta**. Configure one organization using `githubOrganization`, or list multiple organizations in your Port mapping under `organizations`:
+The GitHub integration supports ingesting data from multiple GitHub organizations starting from **version 3.0.0-beta**. Configure one organization using `githubOrganization`, in your environment variables or list multiple organizations in your port mapping under `organizations`:
 
 ```yaml showLineNumbers
 deleteDependentEntities: true
@@ -26,7 +25,7 @@ organizations:
 # ... rest of your mapping (repositoryType, resources, etc.) ...
 ```
 
-**Precedence:** If `githubOrganization` is set in the deployment config and `organizations` are listed in Port mapping, the integration syncs only the `githubOrganization` (single‑org behavior).
+**Precedence:** If `githubOrganization` is set in the environment variables or config and `organizations` are listed in port mapping, the integration syncs only the `githubOrganization` (single‑org behavior).
 
 ### Authentication model
 
@@ -97,7 +96,7 @@ A key change is how we denote custom attributes. We now add a double underscore 
 ### Files & GitOps
 
 ::::info Organization field in file selectors
-The `organization` field is optional when `githubOrganization` is set in the deployment config. It is required when `githubOrganization` is not provided.
+The `organization` field is optional when `githubOrganization` is set in the environment variables and it is required when not provided there.
 ::::
 
 <details>
@@ -402,7 +401,7 @@ resources:
 ### Folders
 
 ::::info Organization field in folder selectors
-The `organization` field is optional when `githubOrganization` is set in the deployment config. It is required when no deployment-level organization is provided (e.g., Classic PAT with multiple organizations defined in your Port mapping).
+The `organization` field is optional when `githubOrganization` is set in the environment variables and is required when not provided (e.g., Classic PAT with multiple organizations defined in your port mapping).
 ::::
 
 For the `folder` kind, the `folder.name` attribute is no longer part of the response. Instead, you can easily derive the folder name from the `folder.path` using a JQ expression, as shown in the example below:
@@ -552,7 +551,7 @@ This section provides a high-level summary of the key changes for mappings.
 
 | Area | Old Value | New Value | Notes |
 |---|---|---|---|
-| **Multi-Organization** | N/A | `githubOrganization` is not optional | **Classic PAT supports multiple orgs using the `organization` parameter in Port mapping; GitHub App and Fine-grained PAT do not support multi organization and there required the `githubOrganization` configuration**. Syncing multiple organizations increases API calls and may slow down the integration. |
+| **Multi-Organization** | N/A | `githubOrganization` is not optional | **Classic PAT supports multiple orgs using the `organization` parameter in port mapping; GitHub App and Fine-grained PAT do not support multi organization and there required the `githubOrganization` configuration**. Syncing multiple organizations increases API calls and may slow down the integration. |
 | **File Organization** | N/A | `organization: "my-org"` | Optional if `githubOrganization` is set; required when not (e.g., Classic PAT multi-org). |
 | **Folder Organization** | N/A | `organization: "my-org"` | Optional if `githubOrganization` is set; required when not set(e.g., Classic PAT multi-org). |
 | **Authentication** | GitHub App Installation | PAT or Self-Created GitHub App | The integration can be authenticated using a Personal Access Token (PAT) or a self-created GitHub App. **Multi-org requires classic PAT**. |
