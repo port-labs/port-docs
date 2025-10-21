@@ -30,7 +30,7 @@ const ProductPillars: React.FC = () => {
   const pillars = [
     {
       title: 'Software catalog',
-      description: 'Bring data from across your ecosystem to build a unified SDLC view. Make Port your own by defining a data model that fits your organization, then use your software catalog as a single source of truth for your software development assets.',
+      description: 'Build a unified SDLC view by modeling data from across your ecosystem. Define a data model that fits your organization to reduce cognitive load and maintain a single, consistent source of truth.',
       demoUrl: 'https://showcase.port.io/service_catalog',
       icon: 'lists',
     },
@@ -41,8 +41,14 @@ const ProductPillars: React.FC = () => {
       icon: 'bolt',
     },
     {
+      title: 'AI agents',
+      description: 'Build your own agents to reduce manual engineering work. Define their goals, access and tools to boost performance and stay in control.',
+      demoUrl: 'https://showcase.port.io/organization/home',
+      icon: 'stars_2',
+    },
+    {
       title: 'Workflow orchestrator',
-      description: 'Build any flow using automations to automatically respond to events in your software catalog such as TTL=0 or service degradation. Infuse AI into any workflow to accelerate delivery and eliminate manual effort.',
+      description: 'Build any flow using automation. Automatically respond to events in your software catalog such as TTL=0 or service degradation. Infuse AI into any workflow to accelerate delivery and eliminate manual effort.',
       demoUrl: 'https://showcase.port.io/settings/automations',
       icon: 'play_circle',
     },
@@ -54,15 +60,15 @@ const ProductPillars: React.FC = () => {
     },
     {
       title: 'Interface designer',
-      description: 'Different roles require different views. Customize each stakeholder\'s experience to match their daily work. View trends and gain insights into your development activities, performance, and progress.',
+      description: 'Build custom interfaces to track asset data, visualize trends, and analyze development performance. Customize each stakeholder’s experience to match their daily work.',
       demoUrl: 'https://showcase.port.io/engineering_overview',
-      icon: 'dashboard',
+      icon: 'design_services',
     },
     {
       title: 'Access controls',
       description: 'Define granular access control for everything in Port. Ensure that only authorized users have access to the information they need to do their jobs.',
       demoUrl: 'https://showcase.port.io/settings/users',
-      icon: 'shield_person',
+      icon: 'manage_accounts',
     }
   ];
 
