@@ -2,7 +2,7 @@ import guideMetadata from './guide-metadata.json';
 
 export const tagsCategoryMap = {
     "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog", "Approval workflow"],
-    "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "RBAC"],
+    "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "Access Controls"],
     Technologies: [
         "GitHub",
         "Github Copilot",
@@ -132,7 +132,7 @@ export const availableGuides = [
     {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
-        tags: ["Cloud access management", "Actions", "RBAC"],
+        tags: ["Cloud access management", "Actions", "Access Controls"],
         logos: ["AWS" ],
         // category: "Getting started",
         link: "/guides/all/iam-permissions-guide",
@@ -232,7 +232,7 @@ export const availableGuides = [
     {
         title: "Connect CODEOWNERS with Service, Team & User",
         description: "Create a logical connection between your GitHub CODEOWNERS and their corresponding services, teams, and users",
-        tags: ["RBAC", "GitHub"],
+        tags: ["Access Controls", "GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/connect-github-codeowners-with-service-team-and-user",
@@ -1099,7 +1099,7 @@ export const availableGuides = [
     {
         title: "Automate admin role assignment",
         description: "Set up automated user role assignment when they are added to Admins group.",
-        tags: ["Security", "Automations", "RBAC"],
+        tags: ["Security", "Automations", "Access Controls"],
         logos: ["Automations"],
         link: "/guides/all/automate-user-role-update",
     },
