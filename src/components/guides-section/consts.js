@@ -929,11 +929,11 @@ export const availableGuides = [
         link: "/guides/all/manage-firehydrant-incidents",
     },
     {
-        title: "Enrich security vulnerabilities using AI",
-        description: "Use Port AI agents with Claude Code to enrich security vulnerabilities and trigger automated fixes",
+        title: "Remediate vulnerabilities with AI",
+        description: "Use Port AI agents with Claude Code to remediate security vulnerabilities and trigger automated fixes",
         tags: ["Security", "Claude Code", "GitHub", "AI"],
         logos: ["AI", "Snyk", "Wiz"],
-        link: "/guides/all/enrich-security-vulnerability-using-ai",
+        link: "/guides/all/remediate-vulnerability-with-ai",
     },
     {
         title: "Monitor integrations",

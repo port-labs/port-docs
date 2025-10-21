@@ -7,7 +7,7 @@ sidebar_class_name: custom-sidebar-item sidebar-menu-customization
 
 # Customization & accessibility
 
-Port offers various customization options to help you tailor the developer portal to your organization's branding and style.
+Port offers various customization options to help you tailor the developer portal to your organization's branding and style as well as communicate important information to your users.
 
 ## Portal customization
 
@@ -36,6 +36,28 @@ To change them:
 
 - The title is limited to 30 characters.
 - The logo URL must be a valid public link (e.g. `https://example.com/logo.png`).
+
+### Add an announcement banner
+
+Organization admins can configure an **announcement banner** that appears at the top of the portal for all users. The banner can be enabled or disabled at any time.  
+
+Users can dismiss the banner and it will remain hidden until the admin updates the announcement.
+
+To add the banner:
+
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
+
+2. Click on `Organization settings` in the sidebar.
+
+3. Open the `Announcment` tab, and toggle `Enable announcement` to turn it on.
+
+4. Fill in the banner details:
+    - **Announcement:** The text that will appear in the banner. (Maximum 300 characters)
+    - **Color:** Choose a color for your banner. Currently, the available colors are **blue** and **red**.
+    - **Link (optional):** Add a URL to make the banner clickable and direct users to the provided link. (Maximum 300 characters)
+
+5. Click `Save`.
+
 
 ### Dark mode
 

@@ -1,0 +1,282 @@
+---
+alwaysApply: true
+---
+# AWS v3 Documentation Generation Rules
+
+You are an expert documentation agent for Port's AWS v3 integration examples. Follow these rules exactly when generating AWS resource documentation.
+
+## Quick Start Process
+
+1. **Access Ocean Repository Files** (MANDATORY):
+   - Model file: `curl -s "https://raw.githubusercontent.com/port-labs/ocean/refs/heads/main/integrations/aws-v3/aws/core/exporters/{service}/{resource}/models.py"`
+   - Actions file: `curl -s "https://raw.githubusercontent.com/port-labs/ocean/refs/heads/main/integrations/aws-v3/aws/core/exporters/{service}/{resource}/actions.py"`
+
+2. **Extract Information**:
+   - Properties from `{Resource}Properties` class
+   - Default vs optional actions from `ActionMap` class
+
+3. **Generate 3 Files**:
+   - `_{service}_{resource}_blueprint.mdx` (3-5 basic properties)
+   - `_{service}_{resource}_port_app_config.mdx` (mapping configuration)
+   - `_{service}_{resource}_properties.mdx` (complete properties table)
+
+4. **Update examples.md** following service-based organization
+
+## Required Information Checklist
+
+```
+□ AWS CloudFormation Resource Kind (e.g., AWS::ECS::Cluster)
+□ Ocean model file path (e.g., ocean/integrations/aws-v3/aws/core/exporters/ecs/cluster/models.py)
+□ Ocean actions file path (e.g., ocean/integrations/aws-v3/aws/core/exporters/ecs/cluster/actions.py)
+□ Resource description (one sentence)
+□ Identifier property (ARN/ID/Name)
+□ Title property (human-readable name)
+□ 3-5 basic properties for blueprint
+□ Complete properties list from Ocean model
+□ Default actions list from ActionMap
+□ Optional actions list from ActionMap
+□ AWS API documentation URL
+```
+
+**Response for missing info:** "Required information missing: [list items]. Provide all details to generate documentation."
+
+## Ocean Repository Integration
+
+**Critical Requirements:**
+- **MANDATORY**: Use `run_terminal_cmd` with curl for direct file access
+- **Extract ALL properties** from the `{Resource}Properties` class
+- **Extract default and optional actions** from the `ActionMap` class
+- **Use exact property names** and types from the model
+- **Map JQ paths** using the `alias` field from Pydantic model
+- **Include ALL available properties** in the complete properties reference table
+
+**URL Pattern:**
+```
+curl -s "https://raw.githubusercontent.com/port-labs/ocean/refs/heads/main/integrations/aws-v3/aws/core/exporters/{service}/{resource}/models.py"
+curl -s "https://raw.githubusercontent.com/port-labs/ocean/refs/heads/main/integrations/aws-v3/aws/core/exporters/{service}/{resource}/actions.py"
+```
+
+## Action Requirements
+
+**Action Types:**
+- **Default actions**: Always included automatically (no limit)
+- **Optional actions**: Must be explicitly requested via `includeActions` (maximum 3 per resource kind)
+
+**Action Mapping Rules:**
+- **{ActionName} (default)**: Property available without additional action
+- **{ActionName} (optional)**: Property requires this specific action to be included
+
+**Action Selection Strategy:**
+- Choose based on property importance
+- Focus on properties users commonly need
+- Respect the 3-action limit per resource kind
+
+## Property Mapping & Selection
+
+**Type Mapping:**
+- `str` → `"string"`, `int` → `"number"`, `bool` → `"boolean"`
+- `List[str]` → `{"type": "array", "items": {"type": "string"}}`
+- `List[Dict[str, Any]]` → `{"type": "array", "items": {"type": "object"}}`
+- `Optional[Dict[str, Any]]` → `"object"`
+- **Tags**: Always use array format with Key/Value objects
+- **Optional fields**: Treat as required type (remove Optional wrapper)
+
+**Basic Properties Selection (exactly 3-5):**
+1. **arn** (if available) - Always include unique identifier
+2. **Primary identifier** (name/id) - Always include human-readable identifier
+3. **tags** (if available) - Always include for AWS resources
+4. **status/state** (if available) - Key operational property
+5. **One additional operational property** - Choose from capacity/configuration, region, or runtime metrics
+
+**Mapping Rules:**
+- **Blueprint properties**: Use camelCase from the model field names
+- **JQ paths**: Use the `alias` field from Pydantic Field definitions
+
+## File Structure & Naming
+
+**Generate exactly this structure:**
+```
+examples/{service-name}/{resource-type}/
+├── _{service-name}_{resource_type}_blueprint.mdx
+├── _{service-name}_{resource_type}_port_app_config.mdx
+└── _{service-name}_{resource_type}_properties.mdx
+```
+
+**Naming Rules:**
+- Service directory: `{service-name}` (lowercase, e.g., `ecs`, `s3`, `lambda`)
+- Resource directory: `{resource-type}` (lowercase, e.g., `clusters`, `buckets`, `functions`)
+- Blueprint identifier: `camelCase` (e.g., `ecsCluster`, `s3Bucket`)
+
+**Service Name Mapping Examples:**
+- `AWS::ECS::Cluster` → `ecs/clusters/`
+- `AWS::S3::Bucket` → `s3/buckets/`
+- `AWS::Lambda::Function` → `lambda/functions/`
+- `AWS::EC2::Instance` → `ec2/instances/`
+- `AWS::RDS::DBInstance` → `rds/instances/`
+
+## Generation Templates
+
+### Blueprint Template
+```mdx
+<details>
+<summary><b>{RESOURCE_NAME} blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "{CAMEL_CASE_IDENTIFIER}",
+  "description": "This blueprint represents an AWS {RESOURCE_NAME} in our software catalog",
+  "title": "{RESOURCE_NAME}",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      // EXACTLY 3-5 PROPERTIES ONLY - USE PROVIDED BASIC PROPERTIES
+      // FORMAT: "propertyName": {"type": "string", "title": "Property Name"}
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+```
+
+### Config Template
+```mdx
+<details>
+<summary><b>{RESOURCE_NAME} mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: {AWS_CLOUDFORMATION_KIND}
+    selector:
+      query: 'true'
+      includeActions:
+        # Optional: Include up to 3 additional actions for more properties
+        # Choose based on which properties you need most
+        # - {ActionName1}
+        # - {ActionName2}
+        # - {ActionName3}
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.{IDENTIFIER_PROPERTY}
+          title: .Properties.{TITLE_PROPERTY}
+          blueprint: '"{CAMEL_CASE_IDENTIFIER}"'
+          properties:
+            // MAP SAME 3-5 PROPERTIES AS BLUEPRINT
+            // FORMAT: propertyName: .Properties.PropertyName
+          relations:
+            account: .__ExtraContext.AccountId
+```
+
+</details>
+```
+
+### Properties Template
+```mdx
+<details>
+<summary><b>{RESOURCE_NAME} properties (Click to expand)</b></summary>
+
+| Property | JQ Path | Type | Action Required |
+|----------|---------|------|-----------------|
+{COMPLETE_PROPERTIES_TABLE}
+
+</details>
+```
+
+### examples.md Section Template
+```markdown
+import {PASCAL_CASE_NAME}Blueprint from './{service-name}/{resource-type}/_{service-name}_{resource_type}_blueprint.mdx';
+import {PASCAL_CASE_NAME}Config from './{service-name}/{resource-type}/_{service-name}_{resource_type}_port_app_config.mdx';
+import {PASCAL_CASE_NAME}Properties from './{service-name}/{resource-type}/_{service-name}_{resource_type}_properties.mdx';
+
+## Amazon {SERVICE_NAME}
+
+### {RESOURCE_NAME}s
+
+The following example demonstrates how to ingest your AWS {RESOURCE_NAME}s to Port.
+
+You can use the following Port blueprint definitions and integration configuration:
+
+<{PASCAL_CASE_NAME}Blueprint/>
+
+<{PASCAL_CASE_NAME}Config/>
+
+You can reference any of the following {RESOURCE_NAME} properties in your mapping configuration:
+
+<{PASCAL_CASE_NAME}Properties/>
+
+For more details about {RESOURCE_NAME} properties, refer to the [AWS {SERVICE} API documentation]({AWS_API_URL}).
+```
+
+## Service-Based Organization Rules
+
+**Organization Logic:**
+1. **If the service already exists** (e.g., Amazon ECS), add the new resource under the existing service section
+2. **If the service doesn't exist** (e.g., Amazon Lambda), create a new service section
+
+**Placement Rules:**
+- **New service**: Add after the last existing service section
+- **New resource in existing service**: Add after the last resource in that service
+
+## Quality Validation
+
+**Verify before output:**
+```
+□ Ocean model and actions files read via curl
+□ Property count matches Ocean model exactly
+□ File names match naming convention
+□ Blueprint has 3-5 properties only  
+□ Config maps same properties as blueprint
+□ Account relation present in both files
+□ Complete properties table includes everything
+□ All placeholder values replaced
+□ No syntax errors
+□ AWS API link valid
+□ Service-based organization followed in examples.md
+```
+
+## Agent Output Format
+
+**Required Output Structure:**
+1. **Ocean Repository Evidence** (show curl access):
+   - Property count from Ocean model: X properties
+   - Sample properties from model: [list 3-5 actual property names]
+   - Default actions from ActionMap: [list default actions]
+   - Optional actions from ActionMap: [list optional actions]
+   - Model file URL: [Raw GitHub URL accessed via curl]
+   - Actions file URL: [Raw GitHub URL accessed via curl]
+
+2. **Complete File Contents** (provide full content for each file)
+
+3. **examples.md Addition** (import statements + new section)
+
+4. **Validation Status:** `✅ All requirements verified including Ocean model and actions reading`
+
+## Error Handling
+
+**Missing information:** Stop. List missing items. Do not generate partial content.
+
+**Invalid property count:** Use exactly 3-5 basic properties. No exceptions.
+
+**Template modifications:** Templates cannot be modified. Work within constraints.
+
+## Success Criteria
+
+Generated documentation is successful when:
+- All files can be copied directly into project
+- Naming conventions followed exactly
+- Property selection meets rules
+- Quality validation passes 100%
+- Service-based organization maintained in examples.md

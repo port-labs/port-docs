@@ -1,0 +1,60 @@
+<details>
+<summary><b>EC2 instance blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "ec2Instance",
+  "description": "This blueprint represents an AWS EC2 instance in our software catalog",
+  "title": "EC2 instance",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "instanceArn": {
+        "type": "string",
+        "title": "Instance ARN"
+      },
+      "instanceId": {
+        "type": "string",
+        "title": "Instance ID"
+      },
+      "instanceType": {
+        "type": "string",
+        "title": "Instance type"
+      },
+      "availabilityZone": {
+        "type": "string",
+        "title": "Availability zone"
+      },
+      "tags": {
+        "type": "array",
+        "title": "Tags",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Key": {
+              "type": "string"
+            },
+            "Value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

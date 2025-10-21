@@ -65,7 +65,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-Time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 <IntegrationVersion integration="bitbucket-server" />
 
@@ -92,7 +92,7 @@ To install the integration using ArgoCD:
 1. Create a `values.yaml` file in `argocd/my-ocean-bitbucket-server-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholder for `BITBUCKET_USERNAME`, `BITBUCKET_PASSWORD`, `BITBUCKET_BASE_URL`, `BITBUCKET_WEBHOOK_SECRET`, `BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER`.
+Remember to replace the placeholder for `BITBUCKET_USERNAME`, `BITBUCKET_PASSWORD`, `BITBUCKET_BASE_URL`, `BITBUCKET_WEBHOOK_SECRET`, `BITBUCKET_IS_VERSION8_POINT7_OR_OLDER`.
 :::
 
 ```yaml showLineNumbers
@@ -107,7 +107,7 @@ integration:
   // highlight-start
     bitbucketBaseUrl: BITBUCKET_BASE_URL
     bitbucketUsername: BITBUCKET_USERNAME
-    bitbucketIsVersion8Point7OrOlder: BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER
+    bitbucketIsVersion8Point7OrOlder: BITBUCKET_IS_VERSION8_POINT7_OR_OLDER
   // highlight-end
   secrets:
   // highlight-start
@@ -184,23 +184,23 @@ kubectl apply -f my-ocean-bitbucket-server-integration.yaml
 
 This table summarizes the available parameters for the installation.
 
-| Parameter                        | Description                                                                                                                         | Required |
-|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------|
-| `port.clientId`                  | Your port client id                                                                                                                 | ✅        |
-| `port.clientSecret`              | Your port client secret                                                                                                             | ✅        |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                             | ✅        |
-| `integration.identifier`         | Change the identifier to describe your integration                                                                                  | ✅        |
-| `integration.type`               | The integration type                                                                                                                | ✅        |
-| `integration.eventListener.type` | The event listener type                                                                                                             | ✅        |
-| `integration.config.bitbucketUsername` | Bitbucket username |                                  | ✅        |
-| `integration.secrets.bitbucketPassword` | Bitbucket password |                                  | ✅        |
-| `integration.secrets.bitbucketWebhookSecret` | Bitbucket webhook secret used to verify the webhook request |                       | ❌        |
-| `integration.config.bitbucketBaseUrl` | Bitbucket base url| ✅        |
-| `integration.config.bitbucketIsVersion8Point7OrOlder` | Bitbucket is version 8.7 or older | ❌        |
-| `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
-| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
-| `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
-| `liveEvents.baseUrl`                       | The base url of the instance where the Bitbucket (Self-Hosted) integration is hosted, used for real-time updates. (e.g.`https://mybitbucket-self-hosted-ocean-integration.com`)                 | ❌        |
+| Parameter                                             | Description                                                                                                                                                                     | Required |
+|-------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                                       | Your port client id                                                                                                                                                             | ✅        |
+| `port.clientSecret`                                   | Your port client secret                                                                                                                                                         | ✅        |
+| `port.baseUrl`                                        | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                         | ✅        |
+| `integration.identifier`                              | Change the identifier to describe your integration                                                                                                                              | ✅        |
+| `integration.type`                                    | The integration type                                                                                                                                                            | ✅        |
+| `integration.eventListener.type`                      | The event listener type                                                                                                                                                         | ✅        |
+| `integration.config.bitbucketUsername`                | Bitbucket username                                                                                                                                                              | ✅        |
+| `integration.secrets.bitbucketPassword`               | Bitbucket password                                                                                                                                                              | ✅        |
+| `integration.secrets.bitbucketWebhookSecret`          | Bitbucket webhook secret used to verify the webhook request                                                                                                                     | ❌        |
+| `integration.config.bitbucketBaseUrl`                 | Bitbucket base url                                                                                                                                                              | ✅        |
+| `integration.config.bitbucketIsVersion8Point7OrOlder` | Bitbucket is version 8.7 or older                                                                                                                                               | ❌        |
+| `scheduledResyncInterval`                             | The number of minutes between each resync                                                                                                                                       | ❌        |
+| `initializePortResources`                             | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                                                   | ❌        |
+| `sendRawDataExamples`                                 | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                             | ❌        |
+| `liveEvents.baseUrl`                                  | The base url of the instance where the Bitbucket (Self-Hosted) integration is hosted, used for real-time updates. (e.g.`https://mybitbucket-self-hosted-ocean-integration.com`) | ❌        |
 
 
 **Note:** You should set the `integration.config.bitbucketIsVersion8Point7OrOlder` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
@@ -212,7 +212,7 @@ This table summarizes the available parameters for the installation.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Bitbucket (Self-Hosted) integration once and then exit, this is useful for **scheduled** ingestion of data.
 
@@ -223,21 +223,21 @@ This workflow/pipeline will run the Bitbucket (Self-Hosted) integration once and
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                   | Description                                                                                                                                                                                                                                                                              | Example | Required |
-|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|----------|
-| `port_client_id`            | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅        |
-| `port_client_secret`        | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅        |
-| `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |         | ✅        |
-| `config -> bitbucket_username`  | Bitbucket username |         | ✅        |
-| `config -> bitbucket_password`  | Bitbucket password |         | ✅        |
-| `config -> bitbucket_base_url`  | Bitbucket base url |         | ✅        |
-| `config -> bitbucket_webhook_secret`  | Bitbucket webhook secret used to verify the webhook request |         | ❌        |
-| `config -> bitbucket_is_version_8_point_7_or_older`  | Bitbucket is version 8.7 or older |         | ❌        |
-| `initialize_port_resources` | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |         | ❌        |
-| `identifier`                | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌        |
-| `version`                   | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌        |`
-| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      | true    |          | ❌       |
-| `liveEvents.baseUrl`               | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Bitbucket (Self-Hosted)                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
+| Parameter                                         | Description                                                                                                                                                                                                                                                                              | Example                          | Required |
+|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
+| `port_client_id`                                  | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                  |                                  | ✅        |
+| `port_client_secret`                              | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                              |                                  | ✅        |
+| `port_base_url`                                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |                                  | ✅        |
+| `config -> bitbucket_username`                    | Bitbucket username                                                                                                                                                                                                                                                                       |                                  | ✅        |
+| `config -> bitbucket_password`                    | Bitbucket password                                                                                                                                                                                                                                                                       |                                  | ✅        |
+| `config -> bitbucket_base_url`                    | Bitbucket base url                                                                                                                                                                                                                                                                       |                                  | ✅        |
+| `config -> bitbucket_webhook_secret`              | Bitbucket webhook secret used to verify the webhook request                                                                                                                                                                                                                              |                                  | ❌        |
+| `config -> bitbucket_is_version8_point7_or_older` | Bitbucket is version 8.7 or older                                                                                                                                                                                                                                                        |                                  | ❌        |
+| `initialize_port_resources`                       | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |                                  | ❌        |
+| `identifier`                                      | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |                                  | ❌        |
+| `version`                                         | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest                           | ❌        |`
+| `sendRawDataExamples`                             | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      | true                             | ❌        |
+| `liveEvents.baseUrl`                              | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Bitbucket (Self-Hosted)                                                                                                                                                    | https://my-ocean-integration.com | ❌        |
 <br/>
 
 :::tip Ocean Sail Github Action
@@ -274,10 +274,10 @@ jobs:
             bitbucket_password: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_PASSWORD }}
             bitbucket_base_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_BASE_URL }}
             bitbucket_webhook_secret: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_WEBHOOK_SECRET }}
-            bitbucket_is_version_8_point_7_or_older: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER }}
+            bitbucket_is_version8_point7_or_older: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER }}
 ```
 
-**Note:** You should set the `bitbucket_is_version_8_point_7_or_older` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
+**Note:** You should set the `bitbucket_is_version8_point7_or_older` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
@@ -308,7 +308,7 @@ pipeline {
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_PASSWORD', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_PASSWORD'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_BASE_URL', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_BASE_URL'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_WEBHOOK_SECRET', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_WEBHOOK_SECRET'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                     ]) {
@@ -325,7 +325,7 @@ pipeline {
                                 -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_PASSWORD=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_PASSWORD \
                                 -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_BASE_URL=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_BASE_URL \
                                 -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_WEBHOOK_SECRET=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_WEBHOOK_SECRET \
-                                -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER \
+                                -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -341,7 +341,7 @@ pipeline {
 }
 ```
 
-**Note:** You should set the `OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
+**Note:** You should set the `OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
 
   </TabItem>
   <TabItem value="azure" label="Azure Devops">
@@ -379,7 +379,7 @@ steps:
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_PASSWORD=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_PASSWORD) \
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_BASE_URL=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_BASE_URL) \
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_WEBHOOK_SECRET=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_WEBHOOK_SECRET) \
-        -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER) \
+        -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
         -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -389,7 +389,7 @@ steps:
     displayName: "Ingest Data into Port"
 ```
 
-**Note:** You should set the `OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
+**Note:** You should set the `OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
 
   </TabItem>
   <TabItem value="gitlab" label="GitLab">
@@ -432,7 +432,7 @@ ingest_data:
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_PASSWORD=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_PASSWORD \
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_BASE_URL=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_BASE_URL \
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_WEBHOOK_SECRET=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_WEBHOOK_SECRET \
-        -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER \
+        -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
         -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -442,7 +442,7 @@ ingest_data:
     - if: '$CI_COMMIT_BRANCH == "main"'
 ```
 
-**Note:** You should set the `OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION_8_POINT_7_OR_OLDER` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
+**Note:** You should set the `OCEAN__INTEGRATION__CONFIG__BITBUCKET_IS_VERSION8_POINT7_OR_OLDER` parameter to `true` if you are using Bitbucket (Self-Hosted) version 8.7 or older. This is because webhook events are setup differently in Bitbucket (Self-Hosted) 8.7 and above.
 
 </TabItem>
 
@@ -1608,7 +1608,7 @@ In addition, provide the following environment variables:
 - `BITBUCKET_PROJECTS_FILTER` - An optional comma separated list of Bitbucket projects to filter. If not provided, all projects will be fetched.
 - `WEBHOOK_SECRET` - An optional secret to use when creating a webhook in Port. If not provided, `bitbucket_webhook_secret` will be used.
 - `PORT_API_URL` - An optional variable that defaults to the EU Port API `https://api.getport.io/v1`. For US organizations use `https://api.us.getport.io/v1` instead.
-- `IS_VERSION_8_7_OR_OLDER` - An optional variable that specifies whether the Bitbucket version is older than 8.7. This setting determines if webhooks should be created at the repository level (for older versions `<=8.7`) or at the project level (for newer versions `>=8.8`).
+- `BITBUCKET_IS_VERSION8_POINT7_OR_OLDER` - An optional variable that specifies whether the Bitbucket version is older than 8.7. This setting determines if webhooks should be created at the repository level (for older versions `<=8.7`) or at the project level (for newer versions `>=8.8`).
 - `PULL_REQUEST_STATE` - An optional variable to specify the state of Bitbucket pull requests to be ingested. Accepted values are `"ALL"`, `"OPEN"`, `"MERGED"`, or `"DECLINED"`. If not specified, the default value is `OPEN`.
 
 :::tip Webhook Configuration

@@ -1,0 +1,57 @@
+<details>
+<summary><b>S3 bucket blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "s3Bucket",
+  "description": "This blueprint represents an AWS S3 bucket in our software catalog",
+  "title": "S3 bucket",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      },
+      "creationDate": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Creation date"
+      },
+      "tags": {
+        "type": "array",
+        "title": "Tags",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Key": {
+              "type": "string"
+            },
+            "Value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

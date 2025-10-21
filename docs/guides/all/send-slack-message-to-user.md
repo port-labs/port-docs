@@ -26,7 +26,7 @@ In this guide, we will use the email addresses from Port integrations (such as G
 ## Prerequisites
 
 - A Port account with **admin** permissions.
-- Port's [Slack app](/ai-interfaces/ai-agents/slack-app) installed in your workspace.
+- Port's [Slack app](/ai-interfaces/slack-app) installed in your workspace.
 - Access to the Slack app bot token (automatically created as a system secret).
 
 :::tip Slack app setup
