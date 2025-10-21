@@ -87,7 +87,7 @@ When configuring the integration **using Port**, the YAML configuration is globa
 The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
 
 <details>
-<summary>Possible values:</summary>
+<summary><b>Possible values (Click to expand)</b></summary>
 
 *   `all` (default): All repositories accessible to the provided token.
 *   `public`: Public repositories.
@@ -218,6 +218,8 @@ The following configuration fetches all `package.json` files from "MyRepo" and "
 The `organization` field is optional when `githubOrganization` is set in the deployment config. It is required when no deployment-level organization is provided (e.g., Classic PAT with multiple organizations defined in your Port mapping).
 :::
 
+<details>
+<summary><b>Package file mapping example (click to expand)</b></summary>
 ```yaml showLineNumbers
 resources:
   - kind: file
@@ -244,6 +246,8 @@ resources:
             project_version: .content.version
             license: .content.license
 ```
+</details>
+
 
 :::tip Test your mapping
 After adding the `file` kind to your mapping configuration, click on the `Resync` button. When you open the mapping configuration again, you will see real examples of files fetched from your GitHub organization.  
@@ -743,6 +747,8 @@ For example, say you want to track/manage a project's dependencies in Port. One 
 
 The following configuration fetches a `package.json` file from a specific repository, and creates an entity for each of the dependencies in the file, based on the `package` blueprint:
 
+<details>
+<summary><b>File mapping example for mulitiple entities (click to expand)</b></summary>
 ```yaml showLineNumbers
 resources:
   - kind: file
@@ -770,6 +776,7 @@ resources:
             version: .item.value
           relations: {}
 ```
+</details>
 
 #### Multi-document YAML files
 
@@ -798,6 +805,8 @@ When `skipParsing` is set to `true`, the file content will be kept in its origin
 
 Here's an example that ingests the raw content of a `values.yaml` file into the `content` property of a `file` entity:
 
+<details>
+<summary><b>File mapping example for ingesting raw content (click to expand)</b></summary>
 ```yaml
 resources:
   - kind: file
@@ -819,6 +828,7 @@ resources:
           properties:
             content: .content
 ```
+</details>
 
 #### Limitations
 
