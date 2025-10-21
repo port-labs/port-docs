@@ -31,7 +31,7 @@ const ProductPillars: React.FC = () => {
     {
       title: 'Context Lake',
       description: 'Unify data from your entire engineering ecosystem into a single source of truth. Connect your tools, services, and infrastructure to provide AI agents and developers with the organizational context they need.',
-      demoUrl: 'https://demo.port.io/',
+      demoUrl: 'https://showcase.port.io/',
       icon: 'storage',
     },
     {
