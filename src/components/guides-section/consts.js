@@ -1456,13 +1456,6 @@ export const availableGuides = [
         link: "/guides/all/enforce-ai-coding-security-standards",
     },
     {
-        title: "Promote resources across environments",
-        description: "Learn how to promote resources from dev to prod from your portal",
-        tags: ["SDLC", "Git"],
-        logos: ["Git"],
-        link: "/guides/all/promote-resources-across-environments",
-    },
-    {
         title: "Manage AI instructions with Port",
         description: "Learn how to centralize AI instructions in Port and automatically sync them to GitHub repositories",
         tags: ["SDLC", "GitHub", "AI",  "Automations"],

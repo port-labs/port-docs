@@ -1,11 +1,6 @@
----
-displayed_sidebar: null
-description: Build an OWASP Top 10 security scorecard in Port using vulnerability data from Snyk.
----
+# Manage Port across environments
 
 import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
-
-# Promote resources across environments
 
 Managing multiple environments (such as `development`, `staging`, and `production`) is a fundamental practice in modern software delivery. Each environment serves a distinct purpose, and promoting resources across these environments must be done in a controlled, repeatable way.
 
@@ -147,7 +142,7 @@ The following steps outline the recommended process for managing your resources 
 
 :::info Sync changes between UI and IaC
 
-After `import`ing, any changes made to the UI will not be automatically reflected in your IaC configuration.  
+After `import`ing, changes made to the UI will **not** be automatically reflected in your IaC configuration.  
 To sync changes, you can:
 - Refrain from using the UI to change resources that are configured with IaC, and only use IaC to make changes.
 - Remember to always update the relevant IaC files after making changes via the UI.
