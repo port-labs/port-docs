@@ -7,7 +7,7 @@ sidebar_label: Context Lake
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Context Lake
+# Context lake
 
 Port's Context Lake is your unified engineering knowledge layer—connecting data from across your entire toolchain into a single, semantically-rich source of truth. It's not a separate feature, but rather the powerful result of Port's core capabilities working together to provide organizational context that AI agents, developers, and workflows can understand and act upon.
 
