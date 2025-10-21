@@ -129,7 +129,7 @@ For example, say you want to ingest a `package.json` file form your repository. 
 Optional if `githubOrganization` is set; required only when not set.
 :::
 
-```yaml
+```yaml showLineNumbers
 resources:
   ...
   - kind: file
@@ -152,7 +152,7 @@ resources:
 
 The `selector.files.path` key also supports glob patterns, so you can ingest multiple files by matching against a pattern and create an entity in Port for each one, for example:
 
-```yaml
+```yaml showLineNumbers
 - kind: file
   selector:
     query: 'true'

@@ -806,7 +806,7 @@ Here's an example that ingests the raw content of a `values.yaml` file into the 
 
 <details>
 <summary><b>File mapping example for ingesting raw content (click to expand)</b></summary>
-```yaml
+```yaml showLineNumbers
 resources:
   - kind: file
     selector:
