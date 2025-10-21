@@ -6,7 +6,7 @@ import CenterRoundedImage from "/src/components/CenterRoundedImage/index.jsx";
 
 # Multi account support
 
-This guide will provide you with the necessary tools for enabling our Ocean AWS On-Premise Integration to digest multiple account's data.
+This guide will provide you with the necessary tools for enabling our Ocean AWS on-premise Integration to digest multiple account's data.
 
 ## Prerequisites
 
