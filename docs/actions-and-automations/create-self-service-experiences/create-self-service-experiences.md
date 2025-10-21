@@ -14,7 +14,9 @@ import ExecuteActionLocations from '/docs/actions-and-automations/create-self-se
 </center>
 <br/>
 
-Drive developer productivity by allowing developers and AI agents to use self-service actions like scaffolding a service or provisioning a cloud resource. Self-service actions drive consistency and repeatability and ensure that routines are intuitive and clear, all with guardrails like manual approvals or consumption policies to comply with organizational standards.
+Actions are executable pieces of logic that either developers or AI agents can run. They drive developer productivity by enabling them to use actions like scaffolding a service or provisioning a cloud resource.  
+
+Actions drive consistency and repeatability and ensure that routines are intuitive and clear, all with guardrails like manual approvals or consumption policies to comply with organizational standards.
 
 Port's action model is designed to be flexible and can be used to cover a wide range of use-cases:
 
