@@ -68,7 +68,7 @@ Define your organizational semantics once—service definitions, environment typ
 </TabItem>
 </Tabs>
 
-## Context Lake in action
+## Context lake in action
 
 <Tabs groupId="context-lake-examples" queryString>
 <TabItem value="ownership" label="AI agent understanding ownership">
