@@ -14,7 +14,9 @@ import ExecuteActionLocations from '/docs/actions-and-automations/create-self-se
 </center>
 <br/>
 
-Drive developer productivity by allowing developers to use self-service actions like scaffolding a service or provisioning a cloud resource. Developer self-service drives consistency and repeatability and ensures that their routines are intuitive and clear, all with guardrails like manual approvals or consumption policies to comply with organizational standards.
+Actions are executable pieces of logic that either developers or AI agents can run. They drive developer productivity by enabling them to use actions like scaffolding a service or provisioning a cloud resource.  
+
+Actions drive consistency and repeatability and ensure that routines are intuitive and clear, all with guardrails like manual approvals or consumption policies to comply with organizational standards.
 
 Port's action model is designed to be flexible and can be used to cover a wide range of use-cases:
 
@@ -24,7 +26,7 @@ Port's action model is designed to be flexible and can be used to cover a wide r
 4. **Stateful** - every invoked action affects the software catalog by adding/modifying/deleting one or more entities.
 5. **Secure by design** - does not require keys to sensitive infrastructure by using an event-based model. All actions are audited and can include guardrails like manual approval and TTL.
 
-## 💡 Common self-service actions
+## Common self-service actions
 
 - [**Scaffold** a new service](https://docs.port.io/guides/all/scaffold-a-new-service/).
 - [**Create** a cloud resource](https://docs.port.io/guides/all/create-cloud-resource-using-iac).
@@ -37,7 +39,7 @@ In our [live demo](https://showcase.port.io/self-serve), you can see examples fo
 
 ## How does it work?
 
-1. A user **executes an action** from Port's UI interface.
+1. A user or AI agent **executes an action** from Port's UI interface or through API calls.
 2. A pre-defined **payload** containing any desired metadata about the action and its inputs is **sent** to your infrastructure.
 3. A **job is triggered** and the user gets a **continuous indication** about its progress.
 4. Once the action is running, you can use Port's API to **update Port on its status** and provide information such as **logs and links to the resulting handlers**.
