@@ -9,6 +9,14 @@ Port's AI interfaces provide intelligent assistance across your entire software 
 
 We're committed to developing AI responsibly, maintaining high standards of data privacy and security. **[Learn more about our security & data controls →](/ai-interfaces/port-ai/security-and-data-controls)**
 
+## What makes Port's AI different
+
+Port's AI interfaces are powered by its [Context Lake](/ai-interfaces/context-lake) - your unified engineering knowledge layer that connects data from across your entire toolchain. Port's AI understands YOUR organization: your service ownership, deployment patterns, team structures, quality standards, and operational context.
+
+This organizational intelligence enables AI to provide accurate answers about who owns what, make decisions within your governance guardrails, and take actions that align with your engineering standards.
+
+**[Learn more about Context Lake →](/ai-interfaces/context-lake)**
+
 ## Port's AI Offerings
 
 :::info Closed Beta
