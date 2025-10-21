@@ -29,6 +29,12 @@ const Pillar: React.FC<PillarProps> = ({ title, description, demoUrl, demoLabel 
 const ProductPillars: React.FC = () => {
   const pillars = [
     {
+      title: 'Context Lake',
+      description: 'Unify data from your entire engineering ecosystem into a single source of truth. Connect your tools, services, and infrastructure to provide AI agents and developers with the organizational context they need.',
+      demoUrl: 'https://demo.port.io/',
+      icon: 'storage',
+    },
+    {
       title: 'Software Catalog',
       description: 'Make Port your own by defining a data model that fits your organization, then use your software catalog as a single source of truth for your software development assets.',
       demoUrl: 'https://showcase.port.io/service_catalog',
