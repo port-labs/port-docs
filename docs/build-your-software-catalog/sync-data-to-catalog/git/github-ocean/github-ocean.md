@@ -18,6 +18,37 @@ Here's what you can do with the GitHub integration:
 - Map and organize your desired GitHub resources and their metadata in Port (see supported resources below).
 - Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Manage Port entities using GitOps.
+- **Sync data from multiple GitHub organizations** using a single integration instance.
+
+### Multi-organization support
+
+The GitHub integration supports syncing data from multiple GitHub organizations starting from **version 3.0.0-beta**. You can configure which organizations to sync using a single-org `githubOrganization`, or by listing organizations in your port mapping (`organizations`).
+
+<details>
+<summary><b>Mapping multi organizations (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+organizations:
+  - org1
+  - org2
+# ... rest of your mapping (repositoryType, resources, etc.) ...
+```
+</details>
+
+
+:::caution Authentication and configuration requirements:
+- **With classic PAT**:
+  - Specify organizations in port mapping: `organizations: ["org1", "org2", "org3"]`
+- **With GitHub App or Fine-grained PAT**: Specify exactly one organization by setting the `githubOrganization` in the environment variables: `githubOrganization: "my-org"`
+
+**Precedence:** If `githubOrganization` is set in the environment variables or config and `organizations` are also listed in port mapping, the integration prioritizes single‑organization behavior and syncs only the `githubOrganization`.
+
+**Performance consideration:** Syncing multiple organizations will increase the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption. Consider syncing only the organizations you need.
+:::
+
 
 ### Supported resources
 
@@ -55,7 +86,7 @@ When configuring the integration **using Port**, the YAML configuration is globa
 The `repositoryType` parameter filters which repositories are ingested. It corresponds to the `type` parameter in GitHub's [List organization repositories](https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-organization-repositories) API.
 
 <details>
-<summary>Possible values:</summary>
+<summary><b>Possible values (Click to expand)</b></summary>
 
 *   `all` (default): All repositories accessible to the provided token.
 *   `public`: Public repositories.
@@ -78,6 +109,28 @@ repositoryType: 'all'
 deleteDependentEntities: true
 createMissingRelatedEntities: true
 resources:
+  - kind: organization
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '''githubOrganization'''
+          properties:
+            login: .login
+            id: .id
+            nodeId: .node_id
+            url: .url
+            reposUrl: .repos_url
+            eventsUrl: .events_url
+            hooksUrl: .hooks_url
+            issuesUrl: .issues_url
+            membersUrl: .members_url
+            publicMembersUrl: .public_members_url
+            avatarUrl: .avatar_url
+            description: if .description then .description else "" end
   - kind: repository
     selector:
       query: 'true'
@@ -94,6 +147,8 @@ resources:
             readme: file://README.md
             url: .html_url
             language: if .language then .language else "" end
+          relations:
+            organization: .owner.login
   - kind: pull-request
     selector:
       query: 'true'
@@ -136,9 +191,18 @@ resources:
 
 Using Port's GitHub integration, you can automatically ingest GitHub resources into Port based on real-time events.
 
-The app allows you to ingest a variety of objects resources provided by the GitHub API, including repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
+The app allows you to ingest a variety of objects resources provided by the GitHub API, including organizations, repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
 
 The GitHub integration uses a YAML configuration file to describe the ETL process to load data into the developer portal. This approach provides a flexible and powerful way to model your Git data without being overly opinionated or complex.
+
+### Ingest organizations
+
+The GitHub integration automatically syncs organization-level data (available from **v3.0.0-beta**).
+
+
+:::tip Organization as parent entity
+Organizations serve as parent entities for repositories, teams, and other GitHub resources, helping you model your organizational structure in Port.
+:::
 
 ### Ingest files from your repositories
 
@@ -149,6 +213,12 @@ For example, say you want to manage your `package.json` files in Port. One optio
 
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
+:::info Organization field in file selectors
+The `organization` field is optional when `githubOrganization` is set in the environment variables and required when it is not provided (e.g., Classic PAT with multiple organizations defined in your port mapping).
+:::
+
+<details>
+<summary><b>Package file mapping example (click to expand)</b></summary>
 ```yaml showLineNumbers
 resources:
   - kind: file
@@ -157,6 +227,7 @@ resources:
       files:
           # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
+          organization: my-org  # Optional if githubOrganization is set; required if not set
             # The `repos` key can be used to filter the repositories and branch where files should be fetched
           repos:
             - name: MyRepo
@@ -174,6 +245,8 @@ resources:
             project_version: .content.version
             license: .content.license
 ```
+</details>
+
 
 :::tip Test your mapping
 After adding the `file` kind to your mapping configuration, click on the `Resync` button. When you open the mapping configuration again, you will see real examples of files fetched from your GitHub organization.  
@@ -650,6 +723,7 @@ In any case, the structure of the available data looks like this:
     "network_count": 33404,
     "subscribers_count": 1
   },
+  "organization": "Test-Org",
   "branch": "main",
   "path": "build/package.json",
   "name": "package.json",
@@ -672,6 +746,8 @@ For example, say you want to track/manage a project's dependencies in Port. One 
 
 The following configuration fetches a `package.json` file from a specific repository, and creates an entity for each of the dependencies in the file, based on the `package` blueprint:
 
+<details>
+<summary><b>File mapping example for mulitiple entities (click to expand)</b></summary>
 ```yaml showLineNumbers
 resources:
   - kind: file
@@ -679,6 +755,7 @@ resources:
       query: 'true'
       files:
         - path: '**/package.json'
+          organization: my-org  # Optional if githubOrganization is set; required if not set
         # Note that in this case we are fetching from a specific repository
           repos:
             - name: MyRepo
@@ -698,9 +775,7 @@ resources:
             version: .item.value
           relations: {}
 ```
-
-The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file. In this case, we are parsing the `dependencies` array from the `package.json` file.  
-Once the array is parsed, we can use the `item` key to refer to each item in the array.
+</details>
 
 #### Multi-document YAML files
 
@@ -729,14 +804,20 @@ When `skipParsing` is set to `true`, the file content will be kept in its origin
 
 Here's an example that ingests the raw content of a `values.yaml` file into the `content` property of a `file` entity:
 
-```yaml
+<details>
+<summary><b>File mapping example for ingesting raw content (click to expand)</b></summary>
+```yaml showLineNumbers
 resources:
   - kind: file
     selector:
       query: 'true'
       files:
         - path: values.yaml
+          organization: my-org  # Optional if githubOrganization is set; required if not set
           skipParsing: true
+          repos:
+            - name: MyRepo
+              branch: main
     port:
       entity:
         mappings:
@@ -746,6 +827,7 @@ resources:
           properties:
             content: .content
 ```
+</details>
 
 #### Limitations
 

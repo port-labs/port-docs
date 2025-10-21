@@ -1,0 +1,49 @@
+<details>
+<summary><b>Tag blueprint (click to expand)</b></summary>
+```json showLineNumbers
+{
+    "identifier": "gitlabTag",
+    "title": "GitLab Tag",
+    "icon": "GitVersion",
+    "schema": {
+      "properties": {
+        "tagName": {
+          "title": "Tag Name",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "protected": {
+          "title": "Protected",
+          "type": "boolean"
+        },
+        "createdAt": {
+          "title": "Created At",
+          "type": "string",
+          "format": "date-time"
+        },
+        "commitSha": {
+          "title": "Commit SHA",
+          "type": "string"
+        },
+        "commitTitle": {
+          "title": "Commit Title",
+          "type": "string"
+        }
+      }
+    },
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "service": {
+        "title": "Service",
+        "target": "service",
+        "required": false,
+        "many": false
+      }
+    }
+}
+```
+</details>
