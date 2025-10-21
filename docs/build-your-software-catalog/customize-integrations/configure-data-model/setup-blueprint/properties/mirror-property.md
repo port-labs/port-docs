@@ -32,7 +32,7 @@ Mirror properties make it possible to enrich the data visible on an entity by ma
 - Show the environment type of a running service.
 - Show the cloud provider of a K8s cluster.
 
-In this [live demo](https://demo.getport.io/serviceEntity?identifier=admin) example, we can see the `Average Monthly Incidents` property which is a mirror property of the related `PagerDuty Service` blueprint. 🎬
+In this [live demo](https://showcase.port.io/serviceEntity?identifier=admin) example, we can see the `Average Monthly Incidents` property which is a mirror property of the related `PagerDuty Service` blueprint. 🎬
 
 ## API definition
 

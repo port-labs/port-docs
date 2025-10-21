@@ -400,7 +400,7 @@ The widget also supports a wide variety of HTML tags, allowing you to create ric
 **Note:** For external video URLs from providers such as YouTube, use the [iframe visualization widget](/customize-pages-dashboards-and-plugins/dashboards/#iframe-visualization).
 
 :::tip Practical example
-A practical example of using HTML in a markdown widget can be found in Port's [live demo](https://demo.getport.io/organization/home), in the `Catalog quick access` widget. 
+A practical example of using HTML in a markdown widget can be found in Port's [live demo](https://showcase.port.io/organization/home), in the `Catalog quick access` widget. 
 :::
 
 #### Markdown widget properties
@@ -415,7 +415,7 @@ A practical example of using HTML in a markdown widget can be found in Port's [l
 
 When linking to other pages in your portal, you can use `/` as the URL base, instead of using full URLs.  
 
-For example, you can use `<a href="/plan_my_day">` instead of `<a href="https://demo.getport.io/plan_my_day">`.
+For example, you can use `<a href="/plan_my_day">` instead of `<a href="https://showcase.port.io/plan_my_day">`.
 
 ### Iframe visualization
 
