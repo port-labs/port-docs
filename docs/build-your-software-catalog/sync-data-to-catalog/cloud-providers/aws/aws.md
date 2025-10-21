@@ -7,9 +7,9 @@ import TabItem from "@theme/TabItem";
 import Image from "@theme/IdealImage";
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
 
-# AWS
+# AWS On-Premise
 
-Port's AWS integration allows you to import your AWS resources into Port, according to your configuration.  
+Port's AWS On-Premise integration allows you to import your AWS resources into Port, according to your configuration.  
 After the initial import of data, the integration will also listen to live events from AWS to update data in Port in real time.
 
 The integration with AWS supports real-time event processing, which allows for an accurate **real-time** representation of your AWS infrastructure inside Port.
@@ -18,7 +18,7 @@ The integration with AWS supports real-time event processing, which allows for a
 Port's AWS integration is open source, view the source code [**here**](https://github.com/port-labs/ocean/tree/main/integrations/aws).
 :::
 
-## 💡 AWS integration common use cases
+## 💡 AWS On-Premise integration common use cases
 
 Easily fill your software catalog with data directly from your AWS Organization, for example:
 
@@ -34,7 +34,7 @@ The AWS integration allows you to perform extract, transform, load (ETL) on data
 
 ## Getting started
 
-Continue to the [installation](./installations/installation.md) guide to learn how to install the AWS integration.
+Continue to the [installation](./installations/installation.md) guide to learn how to install the AWS On-Premise integration.
 
 ## Multiple accounts support
 
@@ -48,7 +48,7 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 
 ### Default mapping configuration
 
-This is the default mapping configuration you get after installing the AWS integration.
+This is the default mapping configuration you get after installing the AWS On-Premise integration.
 
 <details>
 <summary><b>Default mapping configuration (Click to expand)</b></summary>
