@@ -3,11 +3,11 @@ title: Overview
 sidebar_position: 1
 ---
 
-# Incident management
+# Self-healing incidents
 
 ## Why manage incidents using a developer portal?
 
-Incident management is much more than just selecting a tool for paging and rotating on-call shifts. It is a discipline that requires almost parallel investigation, communication and reflection - where with little notice, developers are tasked with understanding a problem, identifying a root cause, keeping all internal and external stakeholders aware of what's going on, understanding the impact, resolving the issue and identifying lessons for the future. Quite a tall order. Making this harder is the spread of tools they need to engage with through each step of the process.
+Self-healing incident management is much more than just selecting a tool for paging and rotating on-call shifts. It is a discipline that requires almost parallel investigation, communication and reflection - where with little notice, developers are tasked with understanding a problem, identifying a root cause, keeping all internal and external stakeholders aware of what's going on, understanding the impact, resolving the issue and identifying lessons for the future. Quite a tall order. Making this harder is the spread of tools they need to engage with through each step of the process.
 
 Imagine you're going to bed on the first night of your first on-call shift at a new company. Predictably, you receive a phone call from an unknown number an some notoriously unfriendly and robotic sounding voice-to-text programme starts reading you an alert description, one syllable at a time.
 

@@ -3,7 +3,7 @@ title: Overview
 sidebar_position: 1
 ---
 
-# Engineering 360
+# Engineering Intelligence
 
 ## Why measure engineering effectiveness?
 
@@ -11,7 +11,7 @@ Engineering leadership and platform engineers face a critical question: Where sh
 
 ## The journey
 
-Engineering360 is about avoiding the trap of perfectionism when it comes to analysis, and instead optimizing towards immediate measurement, insights and improvement regardless of the maturity of your Development Platform. 
+Engineering Intelligence is about avoiding the trap of perfectionism when it comes to analysis, and instead optimizing towards immediate measurement, insights and improvement regardless of the maturity of your Development Platform. 
 In the paragraphs below, we will explore a tried and tested formula for initiating a culture of continuous improvement, in multiple cycles of measurement and improvement.
 
 ### Surveys
