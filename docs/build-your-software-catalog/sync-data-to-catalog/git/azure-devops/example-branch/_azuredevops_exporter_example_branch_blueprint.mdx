@@ -1,0 +1,47 @@
+<details>
+<summary><b>Branch blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "branch",
+  "title": "Branch",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "repositoryName": {
+        "title": "Repository Name",
+        "type": "string",
+        "icon": "AzureDevops",
+        "description": "The name of the repository that contains this branch"
+      },
+      "projectName": {
+        "title": "Project Name",
+        "type": "string",
+        "icon": "AzureDevops",
+        "description": "The name of the project that contains this branch"
+      },
+      "link": {
+        "title": "Link",
+        "type": "string",
+        "format": "url",
+        "icon": "Link",
+        "description": "Link to the branch in Azure DevOps"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "Repository",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

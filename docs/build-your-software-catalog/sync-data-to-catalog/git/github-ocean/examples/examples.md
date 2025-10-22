@@ -50,9 +50,36 @@ import DependabotAlertBlueprint from './example-repository-alerts/\_github_expor
 import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
 import PortRepositoryDependabotAlertMappingAppConfig from './example-repository-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
 
+import OrganizationBlueprint from './example-organization/\_github_exporter_example_organization_blueprint.mdx'
+import OrganizationAppConfig from './example-organization/\_github_exporter_example_organization_port_app_config.mdx'
+
 
 # Resource mapping examples
 
+## Map organizations and repositories
+
+:::info Available from v3.0.0-beta
+The `organization` kind is available from version `v3.0.0-beta` onwards.
+:::
+
+The following example demonstrates how to ingest your GitHub organizations and their repositories to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<OrganizationBlueprint/>
+
+<RepositoryBlueprint/>
+
+<OrganizationAppConfig/>
+
+:::tip learn more
+
+- Port leverages the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
+- Click [Here](https://docs.github.com/en/rest/orgs/orgs#get-an-organization) for the GitHub organization object structure.
+- Click [Here](https://docs.github.com/en/rest/repos/repos#get-a-repository) for the GitHub repository object structure.
+
+:::
+
+After creating the blueprints and committing the `port-app-config.yml` file, you will see new entities in Port matching your organizations and their repositories. The repositories will have a relation to their parent organization.
 
 ## Map repositories and pull requests
 

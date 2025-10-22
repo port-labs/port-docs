@@ -139,7 +139,11 @@ export const liveEvents = {
     \n\n**Jobs:** \
     \n- build \
     \n\n**Pipelines:** \
-    \n- pipeline ",
+    \n- pipeline \
+    \n\n**Releases:** \
+    \n- release \
+    \n\n**Tags:** \
+    \n- tag_push ",
   Linear:
     "\n- Issue \
     \n- IssueLabel",
