@@ -49,7 +49,7 @@ const ProductPillars: React.FC = () => {
     {
       title: 'Scorecards',
       description: 'Define and track standards and KPIs for your resources to measure quality, production readiness, productivity, or any other metric you need.',
-      demoUrl: 'https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=1',
+      demoUrl: 'https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=2',
       icon: 'military_tech',
     },
     {

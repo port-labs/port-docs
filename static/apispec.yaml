@@ -12372,7 +12372,7 @@ paths:
                             type: object
                             description: |
                               The properties of the blueprint.
-                              Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
@@ -13050,7 +13050,7 @@ paths:
                             type: object
                             description: |
                               The properties of the blueprint.
-                              Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
@@ -13670,7 +13670,7 @@ paths:
                       type: object
                       description: |
                         The properties of the blueprint.
-                        Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                       propertyNames:
                         pattern: ^[A-Za-z0-9@_=\\-]+$
                         maxLength: 100
@@ -13763,7 +13763,7 @@ paths:
                     The [calculation
                     properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
                     of the blueprint.
-                    Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                    Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -13896,7 +13896,7 @@ paths:
                     The [mirror
                     properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
                     of the blueprint.
-                    Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                    Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
                     maxLength: 100
@@ -13917,9 +13917,10 @@ paths:
                       - path
                 aggregationProperties:
                   type: object
-                  description: The [aggregation
-                    properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
+                  description: |
+                    The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
                     of the blueprint.
+                    Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -14077,9 +14078,10 @@ paths:
                       - calculationSpec
                 relations:
                   type: object
-                  description: The
-                    [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
+                  description: |
+                    The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
                     of the blueprint.
+                    Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
                     maxLength: 100
@@ -14249,23 +14251,17 @@ paths:
                             type: object
                           description: |
                             The properties of the blueprint.
-                            Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
-                            propertyNames:
+                            Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                          propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
-                            additionalProperties:
-                              type: object
-                              properties:
-                                title:
-                                  type: string
-                                  description: The title of the property.
-                                description:
-                                  type: string
-                                  description: The description of the property.
-                                icon:
-                                  type: string
-                                  description: The icon of the property.
-                                type:
+                          additionalProperties:
+                            type: object
+                            properties:
+                              title:
+                                type: string
+                                description: The title of the property.
+                              type:
                                   enum:
                                     - string
                                     - number
@@ -14275,7 +14271,7 @@ paths:
                                   description: The
                                     [type](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties)
                                     of the property.
-                                format:
+                              format:
                                   enum:
                                     - date-time
                                     - url
@@ -14292,7 +14288,7 @@ paths:
                                     - proto
                                   description: The type's
                                     [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
-                                spec:
+                              spec:
                                   enum:
                                     - open-api
                                     - embedded-url
@@ -14300,7 +14296,7 @@ paths:
                                   description: The
                                     [spec](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties)
                                     of the property.
-                                specAuthentication:
+                              specAuthentication:
                                   type: object
                                   description: When using the `spec` property with `embedded-url`, the
                                     authentication spec of the property.
@@ -14472,9 +14468,10 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: The [mirror
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
+                        description: |
+                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
                           of the blueprint.
+                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -14495,9 +14492,10 @@ paths:
                             - path
                       aggregationProperties:
                         type: object
-                        description: The [aggregation
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
+                        description: |
+                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
                           of the blueprint.
+                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -14656,9 +14654,10 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: The
-                          [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
+                        description: |
+                          The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
                           of the blueprint.
+                          Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -14987,7 +14986,7 @@ paths:
                   description: |
                     The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
                     of the blueprint.
-                    Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                    Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -15120,7 +15119,7 @@ paths:
                     The [mirror
                     properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
                     of the blueprint.
-                    Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                    Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
                     maxLength: 100
@@ -15141,9 +15140,10 @@ paths:
                       - path
                 aggregationProperties:
                   type: object
-                  description: The [aggregation
-                    properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
+                  description: |
+                    The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
                     of the blueprint.
+                    Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -15301,9 +15301,10 @@ paths:
                       - calculationSpec
                 relations:
                   type: object
-                  description: The
-                    [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
+                  description: |
+                    The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
                     of the blueprint.
+                    Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
                     maxLength: 100
@@ -15469,11 +15470,11 @@ paths:
                             type: object
                           description: |
                             The properties of the blueprint.
-                            Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
-                            propertyNames:
+                            Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                          propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
-                            additionalProperties:
+                          additionalProperties:
                               type: object
                               properties:
                                 title:
@@ -15692,9 +15693,10 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: The [mirror
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
+                        description: |
+                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
                           of the blueprint.
+                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -15715,9 +15717,10 @@ paths:
                             - path
                       aggregationProperties:
                         type: object
-                        description: The [aggregation
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
+                        description: |
+                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
                           of the blueprint.
+                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -15876,9 +15879,10 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: The
-                          [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
+                        description: |
+                          The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
                           of the blueprint.
+                          Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -16272,11 +16276,11 @@ paths:
                             type: object
                           description: |
                             The properties of the blueprint.
-                            Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
-                            propertyNames:
+                            Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                          propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
-                            additionalProperties:
+                          additionalProperties:
                               type: object
                               properties:
                                 title:
@@ -16495,9 +16499,10 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: The [mirror
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
+                        description: |
+                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
                           of the blueprint.
+                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -16518,9 +16523,10 @@ paths:
                             - path
                       aggregationProperties:
                         type: object
-                        description: The [aggregation
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
+                        description: |
+                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
                           of the blueprint.
+                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -16679,9 +16685,10 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: The
-                          [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
+                        description: |
+                          The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
                           of the blueprint.
+                          Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -16964,11 +16971,11 @@ paths:
                             type: object
                           description: |
                             The properties of the blueprint.
-                            Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
-                            propertyNames:
+                            Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                          propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
-                            additionalProperties:
+                          additionalProperties:
                               type: object
                               properties:
                                 title:
@@ -17054,8 +17061,8 @@ paths:
                           - properties
                       calculationProperties:
                         type: object
-                        description: The [calculation
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
+                        description: |
+                          The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
                           of the blueprint.
                           Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         default: {}
@@ -17186,9 +17193,10 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: The [mirror
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
+                        description: |
+                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
                           of the blueprint.
+                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -17209,9 +17217,10 @@ paths:
                             - path
                       aggregationProperties:
                         type: object
-                        description: The [aggregation
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
+                        description: |
+                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
                           of the blueprint.
+                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -17370,9 +17379,10 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: The
-                          [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
+                        description: |
+                          The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
                           of the blueprint.
+                          Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -17657,7 +17667,7 @@ paths:
                             type: object
                             description: |
                               The properties of the blueprint.
-                              Each property name identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
@@ -17880,9 +17890,10 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: The [mirror
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
+                        description: |
+                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
                           of the blueprint.
+                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -17903,9 +17914,10 @@ paths:
                             - path
                       aggregationProperties:
                         type: object
-                        description: The [aggregation
-                          properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
+                        description: |
+                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
                           of the blueprint.
+                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -18064,9 +18076,10 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: The
-                          [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
+                        description: |
+                          The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
                           of the blueprint.
+                          Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
