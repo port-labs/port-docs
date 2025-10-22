@@ -24,10 +24,7 @@ Common use cases:
 
 The following example demonstrates how to define and export your GitLab projects and their **README.md** file contents to Port:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint/>
-</details>
 
 As we can see one of the properties is of type markdown, this means that we need to map the **README.md** file contents into Port.
 
