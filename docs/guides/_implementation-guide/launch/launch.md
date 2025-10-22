@@ -27,10 +27,10 @@ This page will help you prepare for a successful launch by organizing your porta
 
 Create feedback components in your portal:
   - A **self-service action** to report issues and request features.  
-    An implementation of this action can be found in Port's [live demo](https://demo.getport.io/self-serve?action=leave_a_feedback_the_portal).
+    An implementation of this action can be found in Port's [live demo](https://showcase.port.io/self-serve?action=leave_a_feedback_the_portal).
 
   - A **dashboard** for the platform engineering team to track and handle feedback.  
-    An example of such a dashboard can be found in Port's [live demo](https://demo.getport.io/feedback_dashboard).
+    An example of such a dashboard can be found in Port's [live demo](https://showcase.port.io/feedback_dashboard).
 
 ### Plan for ongoing maintenance and updates
 

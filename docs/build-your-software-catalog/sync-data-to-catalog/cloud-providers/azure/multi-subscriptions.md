@@ -9,6 +9,10 @@ import AzureAppRegistration from "./\_azure_app_registration_guide.mdx"
 
 # Azure multi subscriptions
 
+:::warning Deprecation Notice
+This integration is deprecated and will be discontinued soon, please use [Azure Resource Graph](./azure-resource-graph.md) integration instead.
+:::
+
 The Azure multi-subscription sync solution provides a way to periodically sync resources from multiple Azure subscriptions into Port with these key advantages:
 
 - **No infrastructure required** - runs directly via GitHub Actions or locally
