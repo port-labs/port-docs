@@ -1,0 +1,21 @@
+<details>
+<summary><b>Integration configuration (click to expand)</b></summary>
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: user
+  selector:
+    query: "true"
+  port:
+    entity:
+      mappings:
+        identifier: .user.id
+        title: .user.fullName
+        blueprint: '"jenkinsUser"'
+        properties:
+          url: .user.absoluteUrl
+          lastUpdateTime: if .lastChange then (.lastChange/1000) else now end | strftime("%Y-%m-%dT%H:%M:%SZ")
+
+```
+</details>

@@ -1,0 +1,83 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
+<details>
+<summary><b>Integration configuration (click to expand)</b></summary>
+```yaml showLineNumbers
+  createMissingRelatedEntities: true
+  deleteDependentEntities: true
+  resources:
+    - kind: build
+      selector:
+        query: "true"
+        maxBuildsPerJob: 100
+        daysSince: 1
+        jobFilter: []
+      port:
+        entity:
+          mappings:
+            identifier: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1]
+            title: .displayName
+            blueprint: '"jenkinsBuild"'
+            properties:
+              buildStatus: .result
+              buildUrl: .url
+              buildDuration: .duration
+              timestamp: '.timestamp / 1000 | todate'
+            relations:
+              parentJob: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1] | gsub("-[0-9]+$"; "")
+              previousBuild: >-
+                if .previousBuild then (.previousBuild.url | split("://")[1] |
+                sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
+                gsub("/"; "-") | .[:-1]) else null end
+```
+</details>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include Max Builds Per Job" value="includeMaxBuildsPerJob">
+
+The `maxBuildsPerJob` selector is an optional parameter that allows you to limit the number of builds to fetch for each job.
+By default, this selector is set to `100` which means the last 100 builds of each job will be fetched.
+
+```yaml
+  - kind: build
+    selector:
+      query: 'true'
+      # highlight-next-line
+      maxBuildsPerJob: 100
+```
+
+</TabItem>
+
+<TabItem label="Include Days Since" value="includeDaysSince">
+
+The `daysSince` selector is an optional parameter that allows you to limit the number of days to look back from the current time to fetch dependency data.
+By default, this selector is set to `1` day which means the last day of builds will be fetched.
+
+```yaml
+  - kind: build
+    selector:
+      query: 'true'
+      # highlight-next-line
+      daysSince: 1
+```
+
+</TabItem>
+
+<TabItem label="Include Job Filter" value="includeJobFilter">
+
+The `jobFilter` selector is an optional parameter that allows you to filter the jobs to fetch data from.
+By default, this selector is set to `[]` which means all jobs will be fetched.
+
+```yaml
+  - kind: build
+    selector:
+      query: 'true'
+      # highlight-next-line
+      jobFilter: []
+```
+
+</TabItem>
+
+</Tabs>
