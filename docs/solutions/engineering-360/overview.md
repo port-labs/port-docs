@@ -3,7 +3,7 @@ title: Overview
 sidebar_position: 1
 ---
 
-# Engineering 360
+# Engineering intelligence
 
 ## Why measure engineering effectiveness?
 
@@ -11,7 +11,7 @@ Engineering leadership and platform engineers face a critical question: Where sh
 
 ## The journey
 
-Engineering360 is about avoiding the trap of perfectionism when it comes to analysis, and instead optimizing towards immediate measurement, insights and improvement regardless of the maturity of your Development Platform. 
+Engineering intelligence is about avoiding the trap of perfectionism when it comes to analysis, and instead optimizing towards immediate measurement, insights and improvement regardless of the maturity of your Development Platform. 
 In the paragraphs below, we will explore a tried and tested formula for initiating a culture of continuous improvement, in multiple cycles of measurement and improvement.
 
 ### Surveys
@@ -52,6 +52,10 @@ A team using Port was able to correlate service complexity (measured by number o
 Another customer was able to identify Tribes with a materially faster time to 10th PR metrics and chose to follow up with a secondment of engineering managers to those teams to learn.
 :::
 
-Port's flexible data model and managed relations create unique opportunities for measuring sophisticated engineering metrics. Unlike traditional tools that are limited to predefined metrics or siloed data sources, Port can normalize and connect data from across your entire engineering ecosystem. This enables tracking of custom metrics that matter specifically to your organization - whether that's measuring cross-team dependencies, tracking technical debt across multiple repositories, or analyzing the impact of architectural decisions on delivery speed. The managed relations between entities allow for multi-dimensional analysis, helping you understand not just what's happening, but where and why. For example, you could analyze deployment frequency not just by team, but by service type, technology stack, or business domain. This deeper insight helps engineering leaders make more informed decisions about where to focus improvement efforts.
+Port's flexible data model and managed relations create unique opportunities for measuring sophisticated engineering metrics. Unlike traditional tools that are limited to predefined metrics or siloed data sources, Port can normalize and connect data from across your entire engineering ecosystem.  
+
+This enables tracking of custom metrics that matter specifically to your organization - whether that's measuring cross-team dependencies, tracking technical debt across multiple repositories, or analyzing the impact of architectural decisions on delivery speed.  
+
+The managed relations between entities allow for multi-dimensional analysis, helping you understand not just what's happening, but where and why. For example, you could analyze deployment frequency not just by team, but by service type, technology stack, or business domain. This deeper insight helps engineering leaders make more informed decisions about where to focus improvement efforts.
 
 You will learn more about [measuring arbitrary engineering metrics](/solutions/engineering-360/more-engineering-metrics) later in this solution.
