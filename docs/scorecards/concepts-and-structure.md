@@ -23,7 +23,7 @@ Below is the structure of a single `scorecard` blueprint:
 
 | Name | Type | Description |
 |------|------|-------------|
-| `identifier` | String | The unique identifier of the `Scorecard` (Maximum 100 characters). The identifier is used for API calls, programmatic access and distinguishing between different scorecards. |
+| `identifier` | String | The unique identifier of the scorecard (Maximum 100 characters). |
 | `Blueprint` | String (format: blueprints) | The target blueprint whose entities will be evaluated. |
 | [`Levels`](#levels) | Array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold). |
 | [`Filter`](#filter-elements) | Object | Optional query to filter which entities should be evaluated. |
@@ -35,7 +35,29 @@ Relations: The scorecard blueprint doesn't have any relations by default.
 
 A scorecard contains and groups multiple rules that are relevant to its specific category, for example a scorecard for _service maturity_ can contain 3 rules, while the _production readiness_ scorecard can contain 2 completely different rules.
 
-## Levels
+### Constraints and restrictions
+
+1. The scorecard blueprints are **protected** and their core structure **cannot be modified**:
+   - Default properties cannot be changed or deleted.
+   - Required relations cannot be modified.
+   - The blueprints themselves cannot be deleted.
+
+2. You can **extend** the blueprints with:
+   - New properties.
+   - New non-required relations.
+   - Additional configurations that do not affect the core functionality.
+
+3. Rule results are **automatically generated and managed** by Port:
+   - They cannot be created, deleted, or modified directly.
+   - You can update the custom properties you created for the rule results.
+   - Rule results are not searchable in the global search.
+   - They are updated automatically when rules are evaluated.
+
+:::warning Delayed rule results
+When adding scorecards, and the rules within them, to blueprints that contain a large number of entities, it may take some time for the `rule results` to appear in your catalog.
+:::
+
+### Levels
 
 Levels are the different stages that an entity can be in, according to the rules that it passes.  
 By default, the levels are: `Basic`, `Bronze`, `Silver`, `Gold`.
@@ -167,13 +189,68 @@ If the entity didn't pass any rule, it will be at the `Basic` level, and thus ca
 
 </Tabs>
 
-## Rule elements
+**Total level calculation**
+
+A Scorecard is built from several rules, and each one of them has a `level` property.
+
+Each scorecard has a set of levels, for example:
+
+```json showLineNumbers
+{
+  "levels": [
+    {
+      "color": "paleBlue",
+      "title": "Basic"
+    },
+    {
+      "color": "bronze",
+      "title": "Bronze"
+    },
+    {
+      "color": "silver",
+      "title": "Silver"
+    },
+    {
+      "color": "gold",
+      "title": "Gold"
+    }
+  ]
+}
+```
+
+An entity **always** starts at the `Basic` level of the scorecard, and it can progress to higher levels by passing the rules of each level.
+
+Once an entity passes all the rules for a certain level, its level changes accordingly, for example:
+
+1. An entity starts at level `Basic`.
+2. It has two rules with level `Bronze`.
+3. Once the entity passes those two rules, its level would be `Bronze`.
+4. It has four rules with level `Silver`.
+5. Once the entity passes those four rules (and the rules from `Bronze` level), its level would be `Silver`.
+
+:::note multiple rules scenario
+In the example listed above, let's assume the entity passes just one of the two `Bronze` rules, but it passes all of
+the `Silver` rules. The `level` of the scorecard will still be `Basic`, because not all `Bronze` rules have been
+satisfied.
+:::
+
+### Rule elements
 
 Rules enable you to generate checks inside a scorecard only for entities and properties.
 
 A scorecard rule is a single evaluation consisting of multiple checks, each rule has a level which directly translates to how important it is for the check to pass (the more basic the check, the lower its level).
 
-### Combinator
+#### Conditions
+
+Conditions are small boolean checks that help when determining the final status of a `query` according to the specified [`combinator`](#combinator):
+
+| Field      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` (see all [available operators](#available-operators) below).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or any other standard entity property such as `slack_channel` including [mirror properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) and [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/calculation-property.md). |
+| `value`    | Value to compare to (not required in `isEmpty` and `isNotEmpty` operators).  |
+
+##### Combinator
 
 <CombinatorIntro />
 
@@ -228,17 +305,7 @@ A scorecard rule is a single evaluation consisting of multiple checks, each rule
 
 </Tabs>
 
-### Conditions
-
-Conditions are small boolean checks that help when determining the final status of a `query` according to the specified [`combinator`](#combinator):
-
-| Field      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` (see all available operators below)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or any other standard entity property such as `slack_channel` including [Mirror Properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) and [Calculation Properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) |
-| `value`    | Value to compare to (not required in isEmpty and isNotEmpty operators)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-
-#### Available operators
+##### Available operators
 
 | Operator            | Supported Types                                  | Description                                                            |
 |---------------------|--------------------------------------------------|------------------------------------------------------------------------|
@@ -258,12 +325,12 @@ Conditions are small boolean checks that help when determining the final status 
 | `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is an empty string, array, or object.         |
 | `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is not an empty string, array, or object.     |
 
-### Rule blueprint
+## Rule blueprint structure 
 
 The `Rule` blueprint contains the following properties:
 | Name | Type | Description |
 |------|------|-------------|
-| `Identifier` | String | The unique identifier of the `Rule` (Maximum 100 characters). |
+| `Identifier` | String | The unique identifier of the rule (Maximum 100 characters). |
 | `Level` | String (enum) | The required level for this rule (must be one of the scorecard's defined levels). |
 | `Query` | Object | The evaluation criteria for entities. |
 | `Rule description` | String | Optional explanation of the rule's logic. |
@@ -276,7 +343,7 @@ Relations:
 |:----:|:----------------:|:---------:|:-----:|:-----------:|
 | Scorecard | Scorecard | true | false | The scorecard this rule belongs to |
 
-### Rule result blueprint
+## Rule result blueprint structure
 
 The `Rule result` blueprint contains the following properties:
 | Name | Type | Description |
@@ -300,51 +367,6 @@ Relations:
 When a new scorecard is created, Port automatically creates a relation in the Rule Result blueprint to the scorecard's target blueprint. For example, if you create a scorecard for the "service" blueprint, a new relation named "service" will be added to the Rule Result blueprint.
 :::
 
-## Scorecard total level calculation
-
-A Scorecard is built from several rules, and each one of them has a `level` property.
-
-Each scorecard has a set of levels, for example
-
-```json
-{
-  "levels": [
-    {
-      "color": "paleBlue",
-      "title": "Basic"
-    },
-    {
-      "color": "bronze",
-      "title": "Bronze"
-    },
-    {
-      "color": "silver",
-      "title": "Silver"
-    },
-    {
-      "color": "gold",
-      "title": "Gold"
-    }
-  ]
-}
-```
-
-An entity **always** starts at the **`Basic`** level of the scorecard, and it can progress to higher levels by passing the rules of each level.
-
-Once an entity passes all the rules for a certain level, its level changes accordingly, for example:
-
-1. An entity starts at level `Basic`.
-2. It has two rules with level `Bronze`.
-3. Once the entity passes those two rules, its level would be `Bronze`.
-4. It has four rules with level `Silver`.
-5. Once the entity passes those four rules (and the rules from `Bronze` level), its level would be `Silver`.
-
-:::note multiple rules scenario
-In the example listed above, let's assume the entity passes just one of the two `Bronze` rules, but it passes all of
-the `Silver` rules. The `level` of the scorecard will still be `Basic`, because not all `Bronze` rules have been
-satisfied.
-:::
-
 ## Filter elements
 
 Filters allow you to apply scorecard checks only for entities that meet certain criteria.
@@ -358,25 +380,7 @@ A scorecard filter is used to make sure only relevant entities are evaluated, on
 | [`combinator`](#combinator) | Defines the logical operation to apply to the query rules.|
 | [`conditions`](#conditions) | An array of boolean conditions to filter entities with.   |
 
-## Important Notes
-
-1. The scorecard blueprints are protected and their core structure cannot be modified:
-   - Default properties cannot be changed or deleted.
-   - Required relations cannot be modified.
-   - The blueprints themselves cannot be deleted.
-
-2. You can extend the blueprints with:
-   - New properties.
-   - New non-required relations.
-   - Additional configurations that don't affect the core functionality.
-
-3. Rule Results are automatically generated and managed by Port:
-   - They cannot be created, deleted, or modified directly.
-   - You can update the custom properties you created for the rule results.
-   - Rule results are not searchable in the global search.
-   - They are updated automatically when rules are evaluated.
-
-## Validation Rules
+## Validation rules
 
 The system enforces several validation rules to maintain data integrity:
 
