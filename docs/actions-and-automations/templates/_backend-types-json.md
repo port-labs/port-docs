@@ -22,7 +22,7 @@ Depending on the backend type you choose, the available fields will be different
 
 </TabItem>
 
-<TabItem value="github" label="Github">
+<TabItem value="github-app" label="Github app">
 
 `invocationMethod.type` should be set to `GITHUB`.
 
@@ -32,6 +32,19 @@ Depending on the backend type you choose, the available fields will be different
 | `repo`                 | `string`  | The GitHub *repository* name.                                                                                                                                  | `port-docs`                              |
 | `workflow`             | `string`  | Defines the GitHub *workflow ID* to run (You can also pass the workflow file name as a string).                                                                | `workflow.yml`                           |  |
 | `reportWorkflowStatus` | `boolean` | A flag to control whether to automatically update the Port `run` object status (SUCCESS/FAILURE) at the end of the workflow (default: `true`).                | `true` or `false` |
+| `workflowInputs` | `object` | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs. |  |
+
+</TabItem>
+
+<TabItem value="github-ocean" label="Github Ocean">
+
+`invocationMethod.type` should be set to `GITHUB`.
+
+| Field  | Type | Description  | Example values  |
+| ------ | ---- | ------------ | --------------- |
+| `repo` | `string`  | The GitHub *repository* name.  | `port-docs`     |
+| `workflow`  | `string`  | Defines the GitHub *workflow ID* to run (You can also pass the workflow file name as a string). | `workflow.yml` |  |
+| `reportWorkflowStatus` | `boolean` | A flag to control whether to automatically update the Port `run` object status (SUCCESS/FAILURE) at the end of the workflow (default: `true`).  | `true` or `false` |
 | `workflowInputs` | `object` | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs. |  |
 
 </TabItem>
