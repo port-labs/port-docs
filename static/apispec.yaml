@@ -14249,19 +14249,25 @@ paths:
                         properties:
                           properties:
                             type: object
-                          description: |
-                            The properties of the blueprint.
-                            Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
-                          propertyNames:
+                            description: |
+                              The properties of the blueprint.
+                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                            propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
-                          additionalProperties:
-                            type: object
-                            properties:
-                              title:
-                                type: string
-                                description: The title of the property.
-                              type:
+                            additionalProperties:
+                              type: object
+                              properties:
+                                title:
+                                  type: string
+                                  description: The title of the property.
+                                description:
+                                  type: string
+                                  description: The description of the property.
+                                icon:
+                                  type: string
+                                  description: The icon of the property.
+                                type:
                                   enum:
                                     - string
                                     - number
@@ -14271,7 +14277,7 @@ paths:
                                   description: The
                                     [type](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties)
                                     of the property.
-                              format:
+                                format:
                                   enum:
                                     - date-time
                                     - url
@@ -14288,7 +14294,7 @@ paths:
                                     - proto
                                   description: The type's
                                     [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).
-                              spec:
+                                spec:
                                   enum:
                                     - open-api
                                     - embedded-url
@@ -14296,7 +14302,7 @@ paths:
                                   description: The
                                     [spec](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties)
                                     of the property.
-                              specAuthentication:
+                                specAuthentication:
                                   type: object
                                   description: When using the `spec` property with `embedded-url`, the
                                     authentication spec of the property.
@@ -16274,13 +16280,13 @@ paths:
                         properties:
                           properties:
                             type: object
-                          description: |
-                            The properties of the blueprint.
-                            Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
-                          propertyNames:
+                            description: |
+                              The properties of the blueprint.
+                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                            propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
-                          additionalProperties:
+                            additionalProperties:
                               type: object
                               properties:
                                 title:
@@ -16969,13 +16975,13 @@ paths:
                         properties:
                           properties:
                             type: object
-                          description: |
-                            The properties of the blueprint.
-                            Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
-                          propertyNames:
+                            description: |
+                              The properties of the blueprint.
+                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                            propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
-                          additionalProperties:
+                            additionalProperties:
                               type: object
                               properties:
                                 title:
@@ -24999,6 +25005,25 @@ paths:
                   additionalProperties: false
                   required:
                     - status
+                announcement:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                    content:
+                      type: string
+                      maxLength: 300
+                      minLength: 1
+                    link:
+                      type:
+                        - string
+                        - "null"
+                      maxLength: 300
+                    color:
+                      type: string
+                      enum:
+                        - blue
+                        - red
               additionalProperties: false
               required:
                 - name
@@ -28027,6 +28052,7 @@ paths:
           style: form
           explode: true
           description: |
+            Fetch all audit logs related to the specified resource type/s. 
             **Possible values**: [`blueprint`, `entity`, `run`, `webhook`, `scorecard`, `action`, `integration`] <br> Fetch all audit logs related to the specified resource type/s. 
         - schema:
             type: array
