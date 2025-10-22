@@ -67,32 +67,27 @@ For example:
      "title": "Task Manager",
      "icon": "Details",
      "properties": {
-       "description": "Task Manager responsible for answering questions about Jira issues, repositories (including READMEs), pull requests, services, and teams.",
-       "status": "active",
-       "allowed_blueprints": [
-         "jiraIssue",
-         "jiraProject",
-         "jiraUser",
-         "githubTeam",
-         "githubPullRequest",
-         "githubRepository",
-         "githubUser",
-         "_team",
-         "_user",
-         "service"
-       ],
-       "prompt":"You are an agent responsible for answering questions about Jira issues, Pull Requests, Repositories, and teams.\n### Guidelines \n - Provide clear information about active issues (can be also referred as open issues ) with statuses: To Do and In Progress \n - Provide clear information about completed issues (can be also referred as close issues ) with statuses: Closed and Done \n - Identify pull requests that require attention (open pull requests)  \n - Provide clear information about repositories like their related service, README, team (in case \"owning team\" is empty, provide the \"Team\" related to the \"gitHub Teams\" property), last contributer, etc. \n - Identify connections between repositories, pull requests and issues to services",
-       "execution_mode": "Approval Required",
-       "allowed_actions": [ "_createJiraIssue" ],
-       "conversation_starters": [
-         "Which tasks are assigned to me",
-         "How many tasks are currently in progress",
-         "Which PRs should I review?"
-       ]
-     }
+      "description": "Task Manager responsible for answering questions about Jira issues, repositories (including READMEs), pull requests, services, and teams.",
+      "status": "active",
+      "prompt":"You are an agent responsible for answering questions about Jira issues, Pull Requests, Repositories, and teams.\n### Guidelines \n - Provide clear information about active issues (can be also referred as open issues ) with statuses: To Do and In Progress \n - Provide clear information about completed issues (can be also referred as close issues ) with statuses: Closed and Done \n - Identify pull requests that require attention (open pull requests)  \n - Provide clear information about repositories like their related service, README, team (in case \"owning team\" is empty, provide the \"Team\" related to the \"gitHub Teams\" property), last contributer, etc. \n - Identify connections between repositories, pull requests and issues to services\n\nWhen needed, you can create new Jira issues by calling the appropriate action.",
+      "execution_mode": "Approval Required",
+      "conversation_starters": [
+        "Which tasks are assigned to me",
+        "How many tasks are currently in progress",
+        "Which PRs should I review?"
+      ],
+      "tools": [
+        "^(list|get|search|track|describe)_.*",
+        "run__createJiraIssue"
+      ]
+    }
    }
    ```
    </details>
+
+   :::tip MCP Enhanced Capabilities
+   The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, such as Jira issues, GitHub pull requests, repositories, and teams. Additionally, we explicitly add `run__createJiraIssue` to the tools, which instructs the AI agent to call this specific action when needed to create new Jira issues.
+   :::
 
 5. Click on `Create` to save the agent.
 
