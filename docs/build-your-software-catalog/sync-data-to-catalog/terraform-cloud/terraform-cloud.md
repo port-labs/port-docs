@@ -58,7 +58,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 <IntegrationVersion integration="terraform-cloud" />
 
@@ -189,13 +189,11 @@ The integration uses polling to pull the configuration from Port every minute an
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Terraform Cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
-:::
+
 
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
