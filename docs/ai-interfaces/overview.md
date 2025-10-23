@@ -5,7 +5,7 @@ title: Overview
 
 # AI Interfaces Overview
 
-Port's AI interfaces provide intelligent assistance across your entire software development lifecycle. Our AI capabilities are currently in **open beta**, with AI Agents in **closed beta**.
+Port's AI interfaces provide intelligent assistance across your entire software development lifecycle. Our AI capabilities are currently in **open beta**, with Slack App in **closed beta**.
 
 We're committed to developing AI responsibly, maintaining high standards of data privacy and security. **[Learn more about our security & data controls →](/ai-interfaces/port-ai/security-and-data-controls)**
 
@@ -19,9 +19,9 @@ This organizational intelligence enables AI to provide accurate answers about wh
 
 ## Port's AI Offerings
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 
 ### Port AI
@@ -50,7 +50,7 @@ Perfect for immediate insights without dedicated customizations. No agents, no c
 
 
 ### AI Agents
-Customize and orchestrate complicated workflows inside Port. Build intelligent agents that can be used as part of automations and engineering workflows. **Currently in closed beta.**
+Customize and orchestrate complicated workflows inside Port. Build intelligent agents that can be used as part of automations and engineering workflows.
 
 **Use AI Agents to:**
 * Automate incident response workflows
@@ -82,7 +82,7 @@ The MCP Server provides AI machine interface capabilities that are compatible wi
 **[Set up MCP Server →](/ai-interfaces/port-mcp-server/overview-and-installation)**
 
 ### Slack App
-Interact with Port's AI capabilities directly from Slack. Ask questions, run actions, and get insights without leaving your team communication platform. **Currently in closed beta.**
+Interact with Port's AI capabilities directly from Slack. Ask questions, run actions, and get insights without leaving your team communication platform. **Currently in closed beta** - we are not accepting new applications at the moment and will update once it moves to open beta.
 
 **[Learn about the Slack App →](/ai-interfaces/slack-app)**
 
@@ -107,7 +107,7 @@ Use the **Slack App** to make AI insights available to your entire team in your 
 
 Port offers four main AI interfaces:
 - **Port AI Assistant**: Chat interface for quick questions and insights.
-- **AI Agents**: Customizable workflows for automations (closed beta).
+- **AI Agents**: Customizable workflows for automations.
 - **MCP Server**: IDE integration for development workflows.
 - **Slack App**: Team collaboration interface (closed beta).
 </details>
@@ -127,7 +127,7 @@ For most users, start with **Port AI Assistant** - it provides immediate value w
 
 If you're a developer who works primarily in an IDE, consider starting with the **MCP Server** for seamless integration with your development workflow. **[Set up MCP Server →](/ai-interfaces/port-mcp-server/overview-and-installation)**
 
-For custom workflows or automation, explore **AI Agents** (requires closed beta access). **[Learn about AI Agents →](/ai-interfaces/ai-agents/overview)**
+For custom workflows or automation, explore **AI Agents**. **[Learn about AI Agents →](/ai-interfaces/ai-agents/overview)**
 
 For team collaboration, try the **Slack App** to bring AI insights into your communication platform (closed beta). **[Explore Slack App →](/ai-interfaces/slack-app)**
 </details>
@@ -135,10 +135,10 @@ For team collaboration, try the **Slack App** to bring AI insights into your com
 <details>
 <summary>What's the current availability status of Port's AI features? (Click to expand)</summary>
 
-- **Port AI Assistant**: Closed beta - gradually rolling out to users.
+- **Port AI Assistant**: Open beta - available to all users.
 - **MCP Server**: Open beta - available to all users.
-- **AI Agents**: Closed beta - requires application and approval.
-- **Slack App**: Closed beta - requires application and approval.
+- **AI Agents**: Open beta - available to all users.
+- **Slack App**: Closed beta - not accepting new applications at the moment.
 </details>
 
 <details>
