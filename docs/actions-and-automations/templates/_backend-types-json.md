@@ -36,10 +36,10 @@ Depending on the backend type you choose, the available fields will be different
 
 </TabItem>
 
-<TabItem value="github-ocean" label="Github Ocean">
+<TabItem value="github-ocean" label="GitHub Ocean">
 
 `invocationMethod.type` should be set to `INTEGRATION_ACTION`.
-You can choose which integration to use using the `installationId` field.
+You can specify which integration to use using the `invocationMethod.installationId` field.
 
 | Field  | Type | Description  | Example values  |
 | ------ | ---- | ------------ | --------------- |
