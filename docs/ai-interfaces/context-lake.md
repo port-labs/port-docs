@@ -9,6 +9,10 @@ import TabItem from "@theme/TabItem"
 
 # Context lake
 
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
+
 Port's Context Lake is your unified engineering knowledge layer—connecting data from across your entire toolchain into a single, semantically-rich source of truth. It's not a separate feature, but rather the powerful result of Port's core capabilities working together to provide organizational context that AI agents, developers, and workflows can understand and act upon.
 
 ## What comprises the context lake
