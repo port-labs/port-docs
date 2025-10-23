@@ -455,7 +455,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Build
 
 :::note Build Limit
-The integration fetches up to 100 builds per Jenkins job, allowing you to view the 100 latest builds in Port for each job.
+By default, the integration fetches up to 100 builds per Jenkins job. This limit is configurable using the `maxBuildsPerJob` selector. See the configuration options below for more details.
 :::
 
 <JenkinsBuildBlueprint/>
