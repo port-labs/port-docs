@@ -37,6 +37,8 @@ A scorecard contains and groups multiple rules that are relevant to its specific
 
 ### Constraints and restrictions
 
+#### Core limitations
+
 1. The scorecard blueprints are **protected** and their core structure **cannot be modified**:
    - Default properties cannot be changed or deleted.
    - Required relations cannot be modified.
@@ -53,9 +55,24 @@ A scorecard contains and groups multiple rules that are relevant to its specific
    - Rule results are not searchable in the global search.
    - They are updated automatically when rules are evaluated.
 
-:::warning Delayed rule results
-When adding scorecards, and the rules within them, to blueprints that contain a large number of entities, it may take some time for the `rule results` to appear in your catalog.
-:::
+#### Validation rules
+
+The system enforces several validation rules to maintain data integrity:
+
+1. Rule levels must match one of the levels defined in their parent scorecard.
+2. Scorecard blueprint built-in relations cannot be renamed or modified.
+3. Rule results maintain immutable core properties while allowing updates to custom properties.
+
+#### Delayed rule results
+
+When adding scorecards (and the rules within them) to blueprints that contain a large number of entities, it may take some time for the `rule results` to appear in your catalog.
+
+This delay occurs because Port creates a complete scorecard structure for each individual entity in the target blueprint. For each entity, Port generates:
+- A scorecard blueprint instance.
+- Rule blueprint instances for each rule in the scorecard.
+- Rule result blueprint instances for each rule evaluation.
+
+The more entities you have in the blueprint, the more scorecard structures need to be created, which takes additional time to process.
 
 ### Levels
 
@@ -191,32 +208,7 @@ If the entity didn't pass any rule, it will be at the `Basic` level, and thus ca
 
 **Total level calculation**
 
-A Scorecard is built from several rules, and each one of them has a `level` property.
-
-Each scorecard has a set of levels, for example:
-
-```json showLineNumbers
-{
-  "levels": [
-    {
-      "color": "paleBlue",
-      "title": "Basic"
-    },
-    {
-      "color": "bronze",
-      "title": "Bronze"
-    },
-    {
-      "color": "silver",
-      "title": "Silver"
-    },
-    {
-      "color": "gold",
-      "title": "Gold"
-    }
-  ]
-}
-```
+A Scorecard is built from several rules, and each one of them has a `level` property. Each scorecard has a set of levels (as shown in the examples above).
 
 An entity **always** starts at the `Basic` level of the scorecard, and it can progress to higher levels by passing the rules of each level.
 
@@ -325,7 +317,7 @@ Conditions are small boolean checks that help when determining the final status 
 | `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is an empty string, array, or object.         |
 | `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is not an empty string, array, or object.     |
 
-## Rule blueprint structure 
+## `Rule` structure 
 
 The `Rule` blueprint contains the following properties:
 | Name | Type | Description |
@@ -343,9 +335,10 @@ Relations:
 |:----:|:----------------:|:---------:|:-----:|:-----------:|
 | Scorecard | Scorecard | true | false | The scorecard this rule belongs to |
 
-## Rule result blueprint structure
+## Rule result structure
 
 The `Rule result` blueprint contains the following properties:
+
 | Name | Type | Description |
 |------|------|-------------|
 | `Result` | String (enum) | Whether the entity passed the rule ("Passed" or "Not passed"). |
@@ -379,14 +372,6 @@ A scorecard filter is used to make sure only relevant entities are evaluated, on
 |-----------------------------|-----------------------------------------------------------|
 | [`combinator`](#combinator) | Defines the logical operation to apply to the query rules.|
 | [`conditions`](#conditions) | An array of boolean conditions to filter entities with.   |
-
-## Validation rules
-
-The system enforces several validation rules to maintain data integrity:
-
-1. Rule levels must match one of the levels defined in their parent scorecard.
-2. Scorecard blueprint built-in relations cannot be renamed or modified.
-3. Rule results maintain immutable core properties while allowing updates to custom properties.
 
 ## Scorecard UI indications
 
