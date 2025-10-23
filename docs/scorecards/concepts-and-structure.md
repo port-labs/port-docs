@@ -67,12 +67,7 @@ The system enforces several validation rules to maintain data integrity:
 
 When adding scorecards (and the rules within them) to blueprints that contain a large number of entities, it may take some time for the `rule results` to appear in your catalog.
 
-This delay occurs because Port creates a complete scorecard structure for each individual entity in the target blueprint. For each entity, Port generates:
-- A scorecard blueprint instance.
-- Rule blueprint instances for each rule in the scorecard.
-- Rule result blueprint instances for each rule evaluation.
-
-The more entities you have in the blueprint, the more scorecard structures need to be created, which takes additional time to process.
+This delay occurs because Port needs to create rule result blueprint instances for each entity and rule combination. The more entities you have in the blueprint, the more rule results need to be created, which increases the processing time.
 
 ### Levels
 
