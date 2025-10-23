@@ -1478,6 +1478,13 @@ export const availableGuides = [
         tags: ["Autonomous Ticket Resolution", "GitHub", "AI",  "Automations"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/manage-ai-instructions",
+    },
+    {
+        title: "Auto-remediate insecure cloud resources with AI",
+        description: "Learn how to use Port's AI capabilities to detect insecure cloud resources and automatically use a coding agent like Claude Code to fix it",
+        tags: ["Cloud access management", "AI", "GitHub", "Claude Code"],
+        logos: ["AI", "Claude Code"],
+        link: "/guides/all/auto-remediate-insecure-cloud-resources-with-ai",
     }
 ]
 
