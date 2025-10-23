@@ -1486,6 +1486,13 @@ export const availableGuides = [
         logos: ["AI", "AWS"],
         link: "/guides/all/streamline-iac-with-ai",
     },
+    {
+        title: "Auto-remediate insecure cloud resources with AI",
+        description: "Learn how to use Port's AI capabilities to detect insecure cloud resources and automatically use a coding agent like Claude Code to fix it",
+        tags: ["Cloud access management", "AI", "GitHub", "Claude Code"],
+        logos: ["AI", "Claude Code"],
+        link: "/guides/all/auto-remediate-insecure-cloud-resources-with-ai",
+    }
 ]
 
 // Enhance guides with metadata (isNew property)
