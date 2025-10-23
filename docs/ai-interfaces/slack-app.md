@@ -6,7 +6,7 @@ title: Slack App
 # Slack Application
 
 :::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
+The Slack App is currently in closed beta. We are not accepting new applications at the moment and will update once it moves to open beta.
 :::
 
 Port's Slack app brings your developer portal experience into your team's daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates.

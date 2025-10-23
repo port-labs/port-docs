@@ -9,6 +9,10 @@ import TabItem from "@theme/TabItem"
 
 # Context lake
 
+:::info Open Beta
+Context Lake is currently in open beta and available to all organizations. To get access to AI features powered by Context Lake, please fill out [this form](https://forms.gle/XtTR9R9pzo8tMYDT8) with your organization details.
+:::
+
 Port's Context Lake is your unified engineering knowledge layer—connecting data from across your entire toolchain into a single, semantically-rich source of truth. It's not a separate feature, but rather the powerful result of Port's core capabilities working together to provide organizational context that AI agents, developers, and workflows can understand and act upon.
 
 ## What comprises the context lake

@@ -5,8 +5,8 @@ title: Selecting LLM Provider
 
 # Selecting LLM Provider
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
+:::info Open Beta
+Port AI is currently in open beta and available to all organizations. To get access, please fill out [this form](https://forms.gle/XtTR9R9pzo8tMYDT8) with your organization details.
 :::
 
 When interacting with [Port AI](/ai-interfaces/port-ai/api-interaction) through the API, you can select which provider and model to use for specific requests. This gives you fine-grained control over AI processing on a per-request basis.
