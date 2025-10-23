@@ -5,9 +5,9 @@ title: AI Security and Data Controls
 
 # AI Security and Data Controls
 
-:::info Open Beta
-Port AI is currently in open beta and available to all organizations. To get access, please fill out [this form](https://forms.gle/XtTR9R9pzo8tMYDT8) with your organization details.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 Port is committed to developing AI responsibly, maintaining high standards of data privacy and security across all our AI interfaces. This page addresses common questions about security, data handling, permissions, and controls for Port's AI capabilities.
 

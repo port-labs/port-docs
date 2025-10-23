@@ -19,9 +19,9 @@ This organizational intelligence enables AI to provide accurate answers about wh
 
 ## Port's AI Offerings
 
-:::info Open Beta
-Port's AI interfaces are currently in open beta and available to all organizations. To get access, please fill out [this form](https://forms.gle/XtTR9R9pzo8tMYDT8) with your organization details.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 
 ### Port AI

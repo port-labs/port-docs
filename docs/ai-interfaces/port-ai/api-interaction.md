@@ -8,9 +8,9 @@ import TabItem from "@theme/TabItem"
 
 # Port AI API Interaction
 
-:::info Open Beta
-Port AI is currently in open beta and available to all organizations. To get access, please fill out [this form](https://forms.gle/XtTR9R9pzo8tMYDT8) with your organization details.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 Port AI can be accessed programmatically through Port's API, enabling integration into custom applications and workflows. This provides the most flexible way to incorporate Port AI capabilities into your existing tools and processes.
 

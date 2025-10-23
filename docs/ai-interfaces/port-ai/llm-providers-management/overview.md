@@ -5,9 +5,9 @@ title: Overview
 
 # LLM Provider Management
 
-:::info Open Beta
-Port AI is currently in open beta and available to all organizations. To get access, please fill out [this form](https://forms.gle/XtTR9R9pzo8tMYDT8) with your organization details.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 :::warning Limited Availability
 The ability to configure your own LLM providers has limited availability. Please reach out to the Port support team for additional information and access.
