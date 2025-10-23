@@ -3,11 +3,11 @@ sidebar_position: 7
 title: Slack App
 ---
 
+import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md'
+
 # Slack Application
 
-:::info Closed Beta
-The Slack App is currently in closed beta. We are not accepting new applications at the moment and will update once it moves to open beta.
-:::
+<ClosedBetaFeatureNotice id="slack-app" />
 
 Port's Slack app brings your developer portal experience into your team's daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates.
 
