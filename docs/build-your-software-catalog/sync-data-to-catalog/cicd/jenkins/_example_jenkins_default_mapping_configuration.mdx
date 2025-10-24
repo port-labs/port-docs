@@ -20,6 +20,8 @@ resources:
             jobStatus: '{"notbuilt": "created", "blue": "passing", "red": "failing"}[.color]'
             timestamp: .time
             parentJob: .__parentJob
+  
+ 
   - kind: build
     selector:
       query: 'true'
