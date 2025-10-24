@@ -32,7 +32,6 @@ To prevent overwhelming your Ocean instance with potentially thousands of stages
             "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
             gsub("/"; "-")
 # Additional stage configurations follow the same pattern.
-# Make sure to replace the jobUrl with your own Jenkins job URLs for each configuration.
 - kind: stage
   selector:
     query: 'true'
