@@ -582,8 +582,8 @@ This automation automatically assigns coding agents to tickets once they're appr
     "condition": {
       "type": "JQ",
       "expressions": [
-        ".diff.before.properties.current_stage != \"Ready for AI Coding Agent\"",
-        ".diff.after.properties.current_stage == \"Ready for AI Coding Agent\""
+        ".diff.before.scorecards.ai_readiness_stage.level != \"Ready for coding agent\"",
+        ".diff.after.scorecards.ai_readiness_stage.level == \"Ready for coding agent\""
       ],
       "combinator": "and"
     }
