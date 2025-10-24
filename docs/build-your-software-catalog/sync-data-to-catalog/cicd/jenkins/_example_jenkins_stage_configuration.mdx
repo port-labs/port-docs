@@ -55,6 +55,7 @@ To prevent overwhelming your Ocean instance with potentially thousands of stages
             ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
             "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
             gsub("/"; "-")
+
 - kind: stage
   selector:
     query: 'true'
