@@ -8,7 +8,7 @@ To view and test the integration's mapping against examples of the third-party A
 ## Cluster
 
 <details>
-<summary>Cluster blueprint</summary>
+<summary><b>Cluster blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
   {
@@ -60,7 +60,7 @@ To view and test the integration's mapping against examples of the third-party A
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -88,7 +88,7 @@ resources:
 ## Namespace
 
 <details>
-<summary>Namespace blueprint</summary>
+<summary><b>Namespace blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
   {
@@ -117,7 +117,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -143,7 +143,7 @@ resources:
 ## Project
 
 <details>
-<summary> Project blueprint</summary>
+<summary><b>Project blueprint (click to expand)</b></summary>
 
 ```json showlineNumbers
   {
@@ -177,7 +177,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -202,7 +202,7 @@ resources:
 ## Application
 
 <details>
-<summary> Application blueprint</summary>
+<summary><b>Application blueprint (click to expand)</b></summary>
 
 ```json showlineNumbers
   {
@@ -321,7 +321,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -358,7 +358,7 @@ resources:
 ## Deployment history
 
 <details>
-<summary> Deployment history blueprint</summary>
+<summary><b>Deployment history blueprint (click to expand)</b></summary>
 
 ```json showlineNumbers
   {
@@ -414,7 +414,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -446,7 +446,7 @@ resources:
 ## Kubernetes Resource
 
 <details>
-<summary> Images blueprint</summary>
+<summary><b>Images blueprint (click to expand)</b></summary>
 
 ```json showlineNumbers
  {
@@ -468,7 +468,7 @@ resources:
 </details>
 
 <details>
-<summary> Kubernetes resource blueprint</summary>
+<summary><b>Kubernetes resource blueprint (click to expand)</b></summary>
 
 ```json showlineNumbers
   {
@@ -534,7 +534,7 @@ resources:
 
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -552,11 +552,13 @@ resources:
           properties:
             kind: .kind
             namespace: .namespace
-            version: .resourceVersion
-            annotations: .liveState | fromjson | .metadata.annotations
-            labels: .liveState | fromjson | .metadata.labels
+            version: if .kind == "Deployment" then .resourceVersion else null end
+            annotations: (.liveState // .targetState) | fromjson | .metadata.annotations
+            labels: (.liveState // .targetState) | fromjson | .metadata.labels
           relations:
             application: .__application.metadata.uid
-            image: 'if .kind == "Deployment" then .liveState | fromjson | .spec.template.spec.containers[0].image else null end'
+            image: >-
+              if .kind == "Deployment" then (.liveState // .targetState) |
+              fromjson | .spec.template.spec.containers[0].image else null end
 ```
 </details>
