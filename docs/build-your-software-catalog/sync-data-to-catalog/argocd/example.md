@@ -145,7 +145,7 @@ resources:
 <details>
 <summary><b>Project blueprint (click to expand)</b></summary>
 
-```json showlineNumbers
+```json showLineNumbers
   {
     "identifier": "argocdProject",
     "description": "This blueprint represents an ArgoCD Project",
