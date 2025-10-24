@@ -42,6 +42,7 @@ resources:
               if .previousBuild then (.previousBuild.url | split("://")[1] |
               sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
               gsub("/"; "-") | .[:-1]) else null end
+
   - kind: user
     selector:
       query: 'true'
