@@ -1482,9 +1482,22 @@ export const availableGuides = [
     {
         title: "Auto-enhance PR descriptions with AI",
         description: "Automatically generate comprehensive, template-compliant PR descriptions using Claude Code",
-        tags: ["SDLC", "GitHub", "Claude Code", "AI", "Automations"],
+        tags: ["SDLC", "GitHub", "AI", "Automations"],
         logos: ["AI", "GitHub", "Claude Code"],
         link: "/guides/all/auto-enhance-pr-descriptions-with-ai",
+    }
+      ,{title: "Streamline IaC with AI",
+        description: "Use Port AI agents to automate IaC provisioning and management",
+        tags: ["IaC for devs", "Github Copilot", "AI", "Actions"],
+        logos: ["AI", "AWS"],
+        link: "/guides/all/streamline-iac-with-ai",
+    },
+    {
+        title: "Auto-remediate insecure cloud resources with AI",
+        description: "Learn how to use Port's AI capabilities to detect insecure cloud resources and automatically use a coding agent like Claude Code to fix it",
+        tags: ["Cloud access management", "AI", "GitHub", "Claude Code"],
+        logos: ["AI", "Claude Code"],
+        link: "/guides/all/auto-remediate-insecure-cloud-resources-with-ai",
     }
 ]
 
