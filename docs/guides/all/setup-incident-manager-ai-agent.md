@@ -63,31 +63,28 @@ For example, Opsgenie or Firehydrant.
      "title": "Incident Manager",
      "icon": "Details",
      "properties": {
-       "description": "Incident Manager responsible for answering questions about PagerDuty incidents, services, MTTR, escalation policies, schedules, and on-call rotations.",
-       "status": "active",
-       "allowed_blueprints": [
-         "pagerdutyService",
-         "pagerdutyIncident",
-         "pagerdutyEscalationPolicy",
-         "pagerdutySchedule",
-         "pagerdutyOncall",
-         "pagerdutyUser",
-         "_user",
-         "_team",
-         "service"
-       ],
-       "prompt":"You are an agent responsible for answering questions about PagerDuty incidents, services, escalation policies, schedules, and on-call rotations. ### Guidelines \n - Provide clear information about incidents \n - Identify who is on-call for services (both primary and secondary on-call) \n - Report on incident statistics and resolution times",
-       "execution_mode": "Approval Required",
-       "allowed_actions": [ "_triggerPagerdutyIncident", "_acknowledgePagerdutyIncident" ],
-       "conversation_starters": [
-         "Who is on call for the payment service?",
-         "What are the active incidents right now?",
-         "What is our average incident resolution time?"
-       ]
-     }
+      "description": "Incident Manager responsible for answering questions about PagerDuty incidents, services, MTTR, escalation policies, schedules, and on-call rotations.",
+      "status": "active",
+      "prompt":"You are an agent responsible for answering questions about PagerDuty incidents, services, escalation policies, schedules, and on-call rotations. ### Guidelines \n - Provide clear information about incidents \n - Identify who is on-call for services (both primary and secondary on-call) \n - Report on incident statistics and resolution times\n\nWhen needed, you can trigger or acknowledge PagerDuty incidents by calling the appropriate actions.",
+      "execution_mode": "Approval Required",
+      "conversation_starters": [
+        "Who is on call for the payment service?",
+        "What are the active incidents right now?",
+        "What is our average incident resolution time?"
+      ],
+      "tools": [
+        "^(list|get|search|track|describe)_.*",
+        "run__triggerPagerdutyIncident",
+        "run__acknowledgePagerdutyIncident"
+      ]
+    }
    }
    ```
    </details>
+
+   :::tip MCP Enhanced Capabilities
+   The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, such as PagerDuty incidents, services, schedules, and on-call rotations. Additionally, we explicitly add `run__triggerPagerdutyIncident` and `run__acknowledgePagerdutyIncident` to the tools, which instructs the AI agent to call these specific actions when needed to manage incidents.
+   :::
 
 5. Click on `Create` to save the agent.
 

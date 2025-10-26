@@ -5,9 +5,9 @@ title: AI Security and Data Controls
 
 # AI Security and Data Controls
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 Port is committed to developing AI responsibly, maintaining high standards of data privacy and security across all our AI interfaces. This page addresses common questions about security, data handling, permissions, and controls for Port's AI capabilities.
 
