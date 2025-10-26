@@ -13264,8 +13264,10 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
+                        description: |
+                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
                           of the blueprint.
+                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -15459,13 +15461,13 @@ paths:
                         properties:
                           properties:
                             type: object
-                          description: |
-                            The properties of the blueprint.
-                            Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
-                          propertyNames:
+                            description: |
+                              The properties of the blueprint.
+                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                            propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
-                          additionalProperties:
+                            additionalProperties:
                               type: object
                               properties:
                                 title:
@@ -23068,6 +23070,13 @@ paths:
                           - array
                           - object
                         items: {}
+                      pendingExecution:
+                        type: boolean
+                      claimedUntil:
+                        type: string
+                        format: date-time
+                      installationId:
+                        type: string
                       createdBy:
                         type: string
                       impersonatedBy:
@@ -23341,6 +23350,13 @@ paths:
                           - array
                           - object
                         items: {}
+                      pendingExecution:
+                        type: boolean
+                      claimedUntil:
+                        type: string
+                        format: date-time
+                      installationId:
+                        type: string
                       createdBy:
                         type: string
                       impersonatedBy:
@@ -23932,6 +23948,13 @@ paths:
                             - array
                             - object
                           items: {}
+                        pendingExecution:
+                          type: boolean
+                        claimedUntil:
+                          type: string
+                          format: date-time
+                        installationId:
+                          type: string
                         createdBy:
                           type: string
                         impersonatedBy:
@@ -24337,6 +24360,12 @@ paths:
         learn more about pages, checkout the
         [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page).
       parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: compact
+          required: true
       security:
         - bearer: []
       responses:
