@@ -142,8 +142,8 @@ The K8s exporter supports configuration options to control access to environment
 
 The `allowAllEnvironmentVariablesInJQ` parameter controls whether all environment variables are accessible in JQ queries.
 
-- **Default value**: `true` (all environment variables are accessible)
-- **Security implications**: When set to `true`, JQ queries in your resource mappings can access any environment variable available to the exporter pod, including sensitive information like API keys, passwords, and other secrets.
+- **Default value**: `true` (all environment variables are accessible within JQ queries)
+- **Security implications**: When set to `true`, JQ queries in your resource mappings can access any environment variable available to the exporter pod, including sensitive information like API keys, passwords, and other secrets (if those are mapped to the exporter pod as environment variables).
 
 :::warning Security Risk
 Setting `allowAllEnvironmentVariablesInJQ` to `true` can expose sensitive environment variables to JQ queries. This includes:
@@ -152,64 +152,37 @@ Setting `allowAllEnvironmentVariablesInJQ` to `true` can expose sensitive enviro
 - Any other environment variables injected into the pod
 - Secrets mounted as environment variables
 
-Only enable this setting if you trust all JQ queries in your resource mappings and understand the security implications.
+Due to the potential security implication, if you have a need to limit the exposure of environment variables in the exporter's JQ, please set this parameter to `false` and explicitly specify the variables that need to be accessed using JQ through the `allowedEnvironmentVariablesInJQ` parameter.
 :::
 
 ### `allowedEnvironmentVariablesInJQ`
 
-The `allowedEnvironmentVariablesInJQ` parameter specifies which environment variables are allowed in JQ queries when `allowAllEnvironmentVariablesInJQ` is set to `false`. This parameter accepts a comma-separated list that can include:
-- Specific environment variable names (e.g., `CLUSTER_NAME`)
-- JQ expressions/patterns for matching multiple variables (e.g., `CLUSTER_*` to match all cluster-related environment variables)
+The `allowedEnvironmentVariablesInJQ` parameter specifies which environment variables are allowed in JQ queries when `allowAllEnvironmentVariablesInJQ` is set to `false`. This parameter accepts a list of JQ expressions that evaluate to environment variable names or patterns.
 
-- **Default value**: `""` (empty - no environment variables allowed when `allowAllEnvironmentVariablesInJQ` is `false`)
-- **Use case**: Restrict access to only specific, safe environment variables in JQ queries for enhanced security. Use patterns to allow groups of related environment variables.
+Each entry in the list is a JQ expression that should return:
+- A specific environment variable name (e.g., `"CLUSTER_NAME"`)
+- A pattern for matching multiple variables (e.g., `"^CLUSTER_"` to match all cluster-related environment variables)
+- An array of environment variable names or patterns
 
-:::tip Recommended Security Practice
-For production environments, set `allowAllEnvironmentVariablesInJQ` to `false` and explicitly list only the environment variables your JQ queries need in `allowedEnvironmentVariablesInJQ`.
-:::
+- **Default value**: `^PORT_, CLUSTER_NAME`
+- **Use case**: Restrict access to only specific, safe environment variables in JQ queries for enhanced security. Use JQ expressions to dynamically determine which environment variables should be accessible.
 
-#### Configuration Examples
-
-#### Example 1: Allow all environment variables (default, less secure)
-
-```bash
---set allowAllEnvironmentVariablesInJQ=true
-```
-
-#### Example 2: Restrict to specific environment variables (recommended)
-
-```bash
---set allowAllEnvironmentVariablesInJQ=false \
---set allowedEnvironmentVariablesInJQ="CLUSTER_NAME,NAMESPACE,REGION"
-```
-
-#### Example 3: Using values.yaml file
+#### Configuration Example
 
 ```yaml
 allowAllEnvironmentVariablesInJQ: false
-allowedEnvironmentVariablesInJQ: "CLUSTER_NAME,NAMESPACE,REGION"
-```
-
-#### Example 4: Using patterns to allow groups of variables
-
-```bash
---set allowAllEnvironmentVariablesInJQ=false \
---set allowedEnvironmentVariablesInJQ="CLUSTER_*,NAMESPACE,REGION_*"
+allowedEnvironmentVariablesInJQ:
+  - ^CLUSTER_
+  - AWS_REGION
+  - AWS_ACCOUNT_ID
+resources:
+  - kind: v1/namespaces
+...
 ```
 
 This configuration allows:
 - All environment variables starting with `CLUSTER_` (e.g., `CLUSTER_NAME`, `CLUSTER_ID`)
-- Specific variable: `NAMESPACE`
-- All environment variables starting with `REGION_` (e.g., `REGION_US`, `REGION_EU`)
-
-#### Example 5: Using patterns in values.yaml
-
-```yaml
-allowAllEnvironmentVariablesInJQ: false
-allowedEnvironmentVariablesInJQ: "CLUSTER_*,NAMESPACE_*,REGION_*"
-```
-
-This configuration allows all environment variables that start with `CLUSTER_`, `NAMESPACE_`, or `REGION_`.
+- Specific variables: `AWS_REGION` & `AWS_ACCOUNT_ID`
 
 </TabItem>
 
