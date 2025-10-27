@@ -5,7 +5,6 @@ description: Learn how to query DORA metrics using Port's MCP server with natura
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import MCPInstallation from "/src/components/MCPInstallation/MCPInstallation.jsx"
 
 # Query DORA metrics using Port MCP
 
@@ -44,6 +43,8 @@ Both approaches work together - you can start with dynamic calculations to explo
 ## Set up Port MCP server
 
 The Port MCP server enables you to interact with your Port data using natural language queries directly from your IDE or AI tools.
+
+import MCPInstallation from '/docs/generalTemplates/_mcp-installation.md'
 
 <MCPInstallation />
 
