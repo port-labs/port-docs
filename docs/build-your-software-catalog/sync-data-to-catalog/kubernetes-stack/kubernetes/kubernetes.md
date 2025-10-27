@@ -72,9 +72,9 @@ To install the integration using Helm:
 
 1. Go to the Kubernetes [data sources page](https://app.getport.io/settings/data-sources?section=EXPORTERS&provider=Kubernetes) in your portal.
 
-2. A `helm` command will be displayed, with default values already filled out (e.g. your Port client ID, client secret, etc).  
-   Copy the command then run it in your terminal to install the integration.
-    <img src="/img/sync-data-to-catalog/kubernetesIntegrationPage.png" width="80%" border='1px' />
+    <img src="/img/sync-data-to-catalog/kubernetesIntegrationPage.png" width="70%" border='1px' />
+
+2. A `helm` command will be displayed, with default values already filled out (e.g. your Port client ID, client secret). Copy the command then run it in your terminal to install the integration.
 
 </TabItem>
 
