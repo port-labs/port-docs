@@ -1,3 +1,6 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 ## Installing Port MCP
 
 Installing Port's MCP is simple. Follow the instructions for your preferred tool, or learn about the archived local MCP server.
@@ -87,7 +90,7 @@ If you encounter errors:
 :::
 
 :::warning VSCode action tool issue
-In some versions of VS Code, the MCP server might not start or return an error in the chat because of a configuration issue with the action related tools. To deal with it, [deselect](./available-tools#select-which-tools-to-use)  the tools `create_action`, `update_action`, and `delete_action`.
+In some versions of VS Code, the MCP server might not start or return an error in the chat because of a configuration issue with the action related tools. To deal with it, [deselect](/ai-interfaces/port-mcp-server/available-tools#select-which-tools-to-use)  the tools `create_action`, `update_action`, and `delete_action`.
 This is relevant for cases where you see an error like this one:
 ```
 Failed to validate tool mcp_port_create_action: Error: tool parameters array type must have items. Please open a Github issue for the MCP server or extension which provides this tool
