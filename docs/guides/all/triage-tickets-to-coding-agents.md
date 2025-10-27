@@ -165,7 +165,7 @@ First, we need to create a Jira ticket blueprint that includes properties for tr
 
 ### Create AI readiness scorecard
 
-Next, we'll create a scorecard that evaluates whether tickets are ready for coding agents based on completeness criteria.
+Next, we will create a scorecard that evaluates whether tickets are ready for coding agents based on completeness criteria.
 
 1. Open the newly created `Ticket`
 2. Click on `+ Scorecard`
