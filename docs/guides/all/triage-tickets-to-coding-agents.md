@@ -37,9 +37,9 @@ We will configure the necessary blueprints and scorecards to support our AI tria
 
 First, we need to create a Jira ticket blueprint that includes properties for tracking AI readiness and triage status.
 
-1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal
-2. Click on `+ Blueprint`
-3. Click on the `{...} Edit JSON` button
+1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
+2. Click on `+ Blueprint`.
+3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration:
 
 <details>
