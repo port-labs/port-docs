@@ -8,9 +8,9 @@ import TabItem from "@theme/TabItem"
 
 # Port AI
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 Port AI is the foundational AI system that enables intelligent interaction with your Port data through natural language. As an MCP (Model Context Protocol) client, Port AI accepts prompts and tools, runs autonomous processes to query your software catalog, and returns comprehensive responses.
 
