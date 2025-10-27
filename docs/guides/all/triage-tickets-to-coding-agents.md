@@ -224,7 +224,7 @@ Next, we will create a scorecard that evaluates whether tickets are ready for co
 
 ## Create self-service actions
 
-We'll create three self-service actions to handle the triage workflow: improving tickets with AI suggestions, approving suggestions, and requesting refinements.
+We will create three self-service actions to handle the triage workflow: improving tickets with AI suggestions, approving suggestions, and requesting refinements.
 
 ### Create AI improvement action
 
