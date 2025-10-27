@@ -1494,7 +1494,7 @@ export const availableGuides = [
         link: "/guides/all/auto-remediate-insecure-cloud-resources-with-ai",
     },
     {
-        title: "Triage tickets to coding agents",
+        title: "Improve specifications with Port AI",
         description: "Learn how to implement an AI-powered triage system that automatically evaluates tickets, enriches them with missing context, and ensures only well-defined tasks reach your coding agents",
         tags: ["Autonomous Ticket Resolution", "AI", "Claude Code", "Jira"],
         logos: ["AI", "Claude Code", "Jira"],

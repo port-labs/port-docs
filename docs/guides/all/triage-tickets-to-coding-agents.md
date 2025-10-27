@@ -3,13 +3,16 @@ displayed_sidebar: null
 description: Learn how to implement an AI-powered triage system that automatically evaluates Jira tickets, enriches them with missing context, and ensures only well-defined tasks reach your coding agents.
 ---
 
-# Triage tickets to coding agents
+import MCPCapabilitiesHint from '/docs/guides/templates/ai/_mcp_capabilities_hint.mdx'
+
+
+# Improve specifications with Port AI
 
 Coding agents often fail or produce suboptimal results when given incomplete or poorly defined tasks. Developers waste time and resources on unsuccessful runs caused by missing context, unclear success criteria, or insufficient requirements.
 
 This guide demonstrates how to implement an AI-powered triage system in Port that automatically evaluates incoming Jira tickets, enriches them with missing details, and ensures only well-defined tasks reach your coding agents.
 
-<img src="/img/guides/ai-triage-workflow.png" alt="Workflow diagram" border="1px" width="100%" />
+<img src="/img/guides/ai-triage-workflow.png" alt="Workflow diagram goes here" border="1px" width="100%" />
 
 ## Common use cases
 
@@ -33,9 +36,71 @@ While this guide uses Jira for ticket management, you can adapt it for other pro
 
 We will configure the necessary blueprints and scorecards to support our AI triage workflow.
 
-### Create Jira ticket blueprint
+### Create Feature blueprint
 
-First, we need to create a Jira ticket blueprint that includes properties for tracking AI readiness and triage status.
+To implement the AI triage system, we need a blueprint to store different features (tickets) from your project management tool. This blueprint will track the AI readiness status, triage stages, and enrichment suggestions for each feature.
+
+:::info If you already have Jira integration installed
+Port's Jira integration creates a `jiraIssue` blueprint by default. You can extend this existing blueprint by adding the following properties to enable AI triage functionality:
+
+1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
+2. Select the `Jira Issue` blueprint.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration under the `properties` schema:
+
+<details>
+<summary><b>Extended Jira ticket blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "Detailed description of the issue",
+        "format": "markdown"
+      },
+      "current_stage": {
+        "icon": "DefaultProperty",
+        "title": "Triage Stage",
+        "description": "Current triage stage of the issue",
+        "type": "string",
+        "default": "Not started",
+        "enum": [
+          "Awaiting approval",
+          "Not started",
+          "Draft",
+          "Approved"
+        ],
+        "enumColors": {
+          "Awaiting approval": "yellow",
+          "Not started": "lightGray",
+          "Draft": "orange",
+          "Approved": "green"
+        }
+      },
+      "confidence_score": {
+        "type": "number",
+        "title": "Confidence Score",
+        "description": "AI's assessment of readiness for coding agent (0-100)",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "ai_suggested_description": {
+        "type": "string",
+        "title": "AI Suggested Description",
+        "description": "AI-generated suggestions for improving the ticket",
+        "format": "markdown"
+      },
+      "prioritized": {
+        "type": "boolean",
+        "title": "Prioritized"
+      }
+```
+</details>
+
+The rest of this guide will reference `jira_ticket` as the blueprint identifier.
+:::
+
+If you don't have Jira integration or want to create a custom blueprint, follow these steps:
 
 1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
 2. Click on `+ Blueprint`.
@@ -48,7 +113,7 @@ First, we need to create a Jira ticket blueprint that includes properties for tr
 ```json showLineNumbers
 {
   "identifier": "jira_ticket",
-  "title": "Ticket",
+  "title": "Feature",
   "icon": "Jira",
   "schema": {
     "properties": {
@@ -161,15 +226,20 @@ First, we need to create a Jira ticket blueprint that includes properties for tr
 ```
 </details>
 
-5. Click `Create` to save the blueprint
+5. Click `Create` to save the blueprint.
 
 ### Create AI readiness scorecard
 
-Next, we will create a scorecard that evaluates whether tickets are ready for coding agents based on completeness criteria.
+Next, we will create a scorecard that evaluates whether tickets are ready for coding agents based on completeness criteria. This ensures that only well-defined and complete tasks reach your AI coding assistants, preventing wasted compute resources and failed runs.
 
-1. Open the newly created `Ticket`
-2. Click on `+ Scorecard`
-3. Click on the `{...} Edit JSON` button
+The scorecard evaluates tickets based on three key readiness criteria:
+- Whether the ticket has been prioritized for development.
+- Current stage status (must be approved).
+- Assignment status (requires an assignee).
+
+1. Open the newly created `Feature` blueprint.
+2. Click on `+ Scorecard`.
+3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration:
 
 <details>
@@ -222,6 +292,9 @@ Next, we will create a scorecard that evaluates whether tickets are ready for co
 
 5. Click `Create` to save the scorecard
 
+<img src="/img/guides/ai-triage-scorecard-entity.png" border="1px" width="70%"/>
+
+
 ## Create self-service actions
 
 We will create three self-service actions to handle the triage workflow: improving tickets with AI suggestions, approving suggestions, and requesting refinements.
@@ -230,9 +303,9 @@ We will create three self-service actions to handle the triage workflow: improvi
 
 This action allows the AI agent to suggest improvements to ticket descriptions.
 
-1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal
-2. Click on `+ New Action`
-3. Click on the `{...} Edit JSON` button
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
+2. Click on `+ New Action`.
+3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration:
 
 <details>
@@ -315,15 +388,15 @@ This action allows the AI agent to suggest improvements to ticket descriptions.
 ```
 </details>
 
-5. Click `Save` to create the action
+5. Click `Save` to create the action.
 
 ### Create approval action
 
 This action allows human reviewers to approve or reject AI suggestions.
 
-1. Go back to the [self-service](https://app.getport.io/self-serve) page of your portal
-2. Click on `+ New Action`
-3. Click on the `{...} Edit JSON` button
+1. Go back to the [self-service](https://app.getport.io/self-serve) page of your portal.
+2. Click on `+ New Action`.
+3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration:
 
 <details>
@@ -385,15 +458,15 @@ This action allows human reviewers to approve or reject AI suggestions.
 ```
 </details>
 
-5. Click `Save` to create the action
+5. Click `Save` to create the action.
 
 ### Create retry action
 
 This action allows users to provide feedback and request AI to refine its suggestions.
 
-1. Go back to the [self-service](https://app.getport.io/self-serve) page of your portal
-2. Click on `+ New Action`
-3. Click on the `{...} Edit JSON` button
+1. Go back to the [self-service](https://app.getport.io/self-serve) page of your portal.
+2. Click on `+ New Action`.
+3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration:
 
 <details>
@@ -455,15 +528,15 @@ This action allows users to provide feedback and request AI to refine its sugges
 ```
 </details>
 
-5. Click `Save` to create the action
+5. Click `Save` to create the action.
 
 ## Create AI agent
 
-Now we'll create the AI agent that evaluates tickets and suggests improvements.
+Now we will create the AI agent that evaluates tickets and suggests improvements.
 
-1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal
-2. Click on `+ AI Agent`
-3. Toggle `Json mode` on
+1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
+2. Click on `+ AI Agent`.
+3. Toggle `Json mode` on.
 4. Copy and paste the following JSON schema:
 
 <details>
@@ -490,25 +563,23 @@ Now we'll create the AI agent that evaluates tickets and suggests improvements.
 ```
 </details>
 
-5. Click `Create` to save the agent
+5. Click `Create` to save the agent.
 
-:::tip MCP Enhanced Capabilities
-The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for ticket evaluation. Additionally, we explicitly add `run_ask_ai_to_improve_on_ticket` to the tools, which instructs the AI agent to call this specific action to update tickets with AI suggestions.
-:::
+<MCPCapabilitiesHint/>
 
 ## Set up automations
 
 We'll create two automations to orchestrate the AI triage workflow:
 
-1. Trigger the AI agent when new tickets are created or synced
-2. Automatically assign coding agents to approved tickets
+1. Trigger the AI agent when new tickets are created or synced.
+2. Automatically assign coding agents to approved tickets.
 
 ### Create ticket sync trigger automation
 
 This automation triggers the AI triage agent whenever a new Jira ticket is created or synced to the Catalog.
 
-1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal
-2. Click on `+ Automation`
+1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal.
+2. Click on `+ Automation`.
 3. Copy and paste the following JSON schema:
 
 <details>
@@ -555,14 +626,14 @@ This automation triggers the AI triage agent whenever a new Jira ticket is creat
 ```
 </details>
 
-4. Click `Create` to save the automation
+4. Click `Create` to save the automation.
 
 ### Create coding agent assignment automation
 
 This automation automatically assigns coding agents to tickets once they're approved and ready.
 
-1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal
-2. Click on `+ Automation`
+1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
+2. Click on `+ Automation`.
 3. Copy and paste the following JSON schema:
 
 <details>
@@ -590,7 +661,7 @@ This automation automatically assigns coding agents to tickets once they're appr
   },
   "invocationMethod": {
     "type": "WEBHOOK",
-    "url": "https://api.us.getport.io/v1/actions/run_claude_code_demo/runs",
+    "url": "https://api.getport.io/v1/actions/run_claude_code_demo/runs",
     "agent": false,
     "synchronized": true,
     "method": "POST",
@@ -614,11 +685,11 @@ This automation automatically assigns coding agents to tickets once they're appr
 Replace the **service** with the name of the Github repository. Also, replace the webhook URL and payload structure in the automation to match your preferred coding agent's API. You can integrate with Claude Code, GitHub Copilot, Devin, or any other AI coding assistant that accepts webhook triggers. 
 :::
 
-4. Click `Create` to save the automation
+4. Click `Create` to save the automation.
 
 ## Test the workflow
 
-Now let's test the complete AI triage workflow to ensure everything works correctly.
+Now let us test the complete AI triage workflow to ensure everything works correctly.
 
 ### Create a test ticket
 
