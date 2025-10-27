@@ -5,12 +5,13 @@ description: Learn how to query DORA metrics using Port's MCP server with natura
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import MCPInstallation from "/src/components/MCPInstallation/MCPInstallation.jsx"
 
 # Query DORA metrics using Port MCP
 
 This guide demonstrates how to use Port's Model Context Protocol (MCP) server to query DORA metrics using natural language commands directly from your IDE or AI-powered tools. By leveraging the MCP server, you can access deployment frequency, lead time, change failure rate, and mean time to recovery data without leaving your development environment.
 
-<img src="/img/guides/query-dora-mcp-demo.png" width="100%" border="1px" />
+<img src="/img/guides/MCPDoraDemo.png" width="100%" border="1px" />
 
 
 ## Common use cases
@@ -25,13 +26,18 @@ This guide demonstrates how to use Port's Model Context Protocol (MCP) server to
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with DORA metrics configured and data available.
-- [DORA metrics set up](/guides/all/create-and-track-dora-metrics-in-your-portal) in your Port instance with deployment and incident data.
+- A Port account with deployment and incident data available.
 - Cursor IDE installed (we'll focus on Cursor, but you can also use VSCode, Claude, or other MCP-compatible tools).
 - Basic understanding of DORA metrics concepts.
 
-:::info About DORA metrics in Port
-If you haven't set up DORA metrics in Port yet, complete the [Create & track DORA metrics in your portal](/guides/all/create-and-track-dora-metrics-in-your-portal) guide first. This will ensure you have the necessary deployment and incident data to query.
+:::info Two approaches to DORA metrics with MCP
+Port's MCP server enables DORA insights in two complementary ways:
+
+1. **With DORA Metrics Experience**: If you have [DORA metrics set up](/guides/all/create-and-track-dora-metrics-in-your-portal), the MCP provides deterministic results over time, customized dashboards, and team-specific views. This gives you consistent, aggregated metrics that align with your organization's definitions.
+
+2. **Dynamic DORA Calculations**: Even without the formal DORA metrics setup, the MCP server can analyze your deployment and incident data on-the-fly to calculate DORA metrics. This approach provides quick insights for data you might not have aggregated yet in a proper way, letting you explore different definitions and time periods flexibly.
+
+Both approaches work together - you can start with dynamic calculations to explore your data, then implement the DORA experience for consistent tracking and dashboards.
 :::
 
 
@@ -39,65 +45,7 @@ If you haven't set up DORA metrics in Port yet, complete the [Create & track DOR
 
 The Port MCP server enables you to interact with your Port data using natural language queries directly from your IDE or AI tools.
 
-### Install MCP server in Cursor
-
-1. **Open Cursor settings**
-   
-   Go to Cursor settings, click on **Tools & Integrations**, and add a new MCP server.
-
-   <img src="/img/ai-agents/MCPInstallCursorStep1.png" width="80%" border="1px" />
-
-2. **Configure the MCP server**
-   
-   Add the appropriate configuration for your Port region:
-
-   <Tabs>
-   <TabItem value="eu" label="EU Region">
-   ```json showLineNumbers
-   {
-     "mcpServers": {
-       "port-eu": {
-         "url": "https://mcp.port.io/v1"
-       }
-     }
-   }
-   ```
-   </TabItem>
-   <TabItem value="us" label="US Region">
-   ```json showLineNumbers
-   {
-     "mcpServers": {
-       "port-us": {
-         "url": "https://mcp.us.port.io/v1"
-       }
-     }
-   }
-   ```
-   </TabItem>
-   </Tabs>
-
-   <img src="/img/ai-agents/MCPInstallCursorStep2.png" width="80%" border="1px" />
-
-3. **Authenticate with Port**
-   
-   Click on **"Needs login"** and complete the authentication flow in the window that opens.
-
-   <img src="/img/ai-agents/MCPInstallCursorStep3.png" width="80%" border="1px" />
-
-4. **Verify connection**
-   
-   After successful authentication, you'll see the list of available tools from the MCP server.
-
-   <img src="/img/ai-agents/MCPInstallCursorStep4.png" width="80%" border="1px" />
-
-:::tip Alternative setup options
-While this guide focuses on Cursor, you can also set up the MCP server with:
-- **VSCode**: Using the GitHub Copilot extension with MCP support
-- **Claude**: Through custom connectors
-- **Local installation**: Using Docker or Python package managers
-
-For detailed instructions on other setup methods, see the [Port MCP server installation guide](/ai-interfaces/port-mcp-server/overview-and-installation).
-:::
+<MCPInstallation />
 
 
 ## Open the chat and start querying
@@ -120,13 +68,13 @@ Here are practical examples of questions you can ask to get insights from your D
 
 *This query helps you understand how quickly the Alpha team recovers from incidents, which is crucial for assessing team reliability and incident response capabilities.*
 
-<img src="/img/guides/dora-mcp-alpha-mttr.png" width="100%" border="1px" />
+<img src="/img/guides/MCPDoraAlphaMTTR.png" width="100%" border="1px" />
 
 **Query:** "Which team has the lowest change lead time?"
 
 *Identify the most efficient team in terms of getting code from commit to production, which can help share best practices across teams.*
 
-<img src="/img/guides/dora-mcp-lowest-lead-time.png" width="100%" border="1px" />
+<img src="/img/guides/MCPDoraLowestLeadTime.png" width="100%" border="1px" />
 
 #### Deployment analysis
 
@@ -134,7 +82,7 @@ Here are practical examples of questions you can ask to get insights from your D
 
 *Get a comprehensive view of deployment activity across all teams to understand deployment frequency patterns.*
 
-<img src="/img/guides/dora-mcp-deployments-by-team.png" width="100%" border="1px" />
+<img src="/img/guides/MCPDoraDeploymentsByTeam.png" width="100%" border="1px" />
 
 **Query:** "Show me the deployment frequency for the Platform team over the last month"
 
@@ -193,22 +141,22 @@ Here are practical examples of questions you can ask to get insights from your D
 
 ## Understanding the responses
 
-When you query DORA metrics through the MCP server, you'll receive structured responses that may include:
+The MCP server responses rely on Port's data model, using the [available MCP tools](/ai-interfaces/port-mcp-server/available-tools) to access and analyze your data. You can:
 
-### Metrics data
-- Numerical values with appropriate units (hours, percentages, counts)
-- Time-based breakdowns (daily, weekly, monthly)
-- Team or service-specific data
+### Get detailed insights and take action
+- Ask your LLM to explain the results and provide context
+- Request actionable recommendations like "how can we improve the lead time?"
+- Take follow-up actions directly through the MCP server
 
-### Visualizations
-- The MCP server can help generate insights from Port's dashboard data
-- Links to relevant Port dashboard pages for deeper analysis
-- Comparative data across teams or time periods
+### Dive deeper into results
+- Drill down into specific metrics with follow-up questions
+- Cross-reference DORA metrics with other Port data like service health or scorecards
+- Explore different time periods or team comparisons
 
-### Context and recommendations
-- Interpretation of what the metrics indicate about team performance
-- Suggestions for improvement based on the data
-- References to relevant Port documentation or best practices
+### Request custom visualizations
+- Ask to show results in a graph or chart format
+- Request to create a custom web application to visualize the data (Claude Artifacts is excellent for this)
+- Generate executive-ready dashboards and reports
 
 :::tip Getting better results
 To get the most accurate and useful responses:
@@ -221,10 +169,11 @@ To get the most accurate and useful responses:
 
 ## Next steps
 
-Now that you can query DORA metrics using Port MCP, consider these additional use cases:
+Now that you can query DORA metrics using Port MCP, consider these recommendations:
 
-- **Automate reporting**: Create scripts or automations that regularly query DORA metrics for executive reports
-- **Integrate with workflows**: Use DORA insights in your CI/CD pipeline decisions
+- **Enrich and deepen your DORA data model**: Enhance your Port data model with additional deployment and incident sources for faster results and comprehensive dashboards implementation
+- **Find areas for improvement**: Use the insights gained to identify specific teams, services, or processes that need attention
+- **Automate reporting**: Use the MCP server in an automated way to produce executive reports or weekly team performance summaries
 - **Set up alerts**: Configure Port automations to notify teams when DORA metrics cross certain thresholds
 - **Expand analysis**: Combine DORA metrics with other Port data like service health, scorecards, and dependencies
 
