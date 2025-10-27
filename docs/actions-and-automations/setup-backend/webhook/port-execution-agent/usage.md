@@ -80,36 +80,56 @@ For more information take a look at the Requests [proxy configuration documentat
 
 ### SSL Environment Configuration
 
-### Certificate Configuration
+### Self-signed Certificate Configuration
 
-#### Self-signed certificate
+#### Option 1: Provide certificate in Helm values
 
-Use the following Helm values:
-- Set `selfSignedCertificate.enabled` to `true`.
-- Put your PEM-encoded CA content in `selfSignedCertificate.certificate`.
-
-The certificate should be mounted to `/usr/local/share/ca-certificates/`.
-
-`REQUESTS_CA_BUNDLE` is an environment variable used to specify a custom Certificate Authority (CA) bundle for verifying SSL/TLS certificates in HTTPS requests.
-
-Set `REQUESTS_CA_BUNDLE` to the file path of your CA bundle, which should contain one or more CA certificates in PEM format.
-
-For example:
-```sh
-REQUESTS_CA_BUNDLE=/path/to/cacert.pem
+```yaml
+selfSignedCertificate:
+  enabled: true
+  certificate: |
+    -----BEGIN CERTIFICATE-----
+    <YOUR_CERTIFICATE_CONTENT>
+    -----END CERTIFICATE-----
+  secret:
+    useExistingSecret: false
 ```
 
-This configuration directs the `requests` library to use the specified CA bundle for SSL/TLS certificate verification, overriding default system settings. It's useful for trusting self-signed certificates or certificates from a private CA.
+#### Option 2: Use existing Kubernetes secret
+
+```yaml
+selfSignedCertificate:
+  enabled: true
+  secret:
+    name: <SECRET_NAME>
+    key: <CERTIFICATE_KEY>
+    useExistingSecret: true
+```
+
+The Helm chart automatically:
+- Mounts the certificate to `/usr/local/share/ca-certificates/cert.crt`
+- Sets `SSL_CERT_FILE` and `REQUESTS_CA_BUNDLE` environment variables
+- Configures Python libraries (requests, httpx) to trust the certificate
 
 #### Multiple certificates
 
-Use the following Helm values:
-- Keep your certificate via `selfSignedCertificate` as above.
-- Add other certificates by supplying files via `extraVolumes` and mounting them with `extraVolumeMounts` into the container at `/usr/local/share/ca-certificates/<your-cert-name>.crt`.
+When multiple certificates are required, one certificate must be provided via `selfSignedCertificate` as described above. Additional certificates can be mounted using `extraVolumes` and `extraVolumeMounts`:
 
-:::info Certificate file requirements
-- Each certificate must be provided in a separate PEM file. Files containing multiple certificates are not supported.
-- Certificates must be mounted to `/usr/local/share/ca-certificates/` with a `.crt` file extension.
+```yaml
+extraVolumes:
+  - name: additional-certs
+    secret:
+      secretName: <ADDITIONAL_CERT_SECRET_NAME>
+extraVolumeMounts:
+  - name: additional-certs
+    mountPath: /usr/local/share/ca-certificates/<CERT_NAME>.crt
+    subPath: <CERT_NAME>.crt
+    readOnly: true
+```
+
+:::info Certificate requirements
+- Each certificate must be provided in PEM format as a separate file
+- Certificates must be mounted to `/usr/local/share/ca-certificates/` with a `.crt` file extension
 :::
 
 ## Next Steps
