@@ -109,35 +109,42 @@ Here are practical examples of questions you can ask to get insights from your D
 
 *Track improvement or degradation in a team's delivery speed over time.*
 
-#### Cross-metric analysis
-
-**Query:** "Which services have both high deployment frequency and low change failure rate?"
-
-*Identify well-performing services that maintain high velocity with good quality.*
-
-**Query:** "Show me teams with MTTR above 4 hours in the last month"
-
-*Identify teams that might need help with incident response processes.*
-
 ### Advanced querying techniques
 
-#### Filtering and time ranges
+<Tabs>
+<TabItem value="filters" label="Filters">
 
-- **"Show me DORA metrics for services tagged as 'critical' in the last 30 days"**
-- **"What's the deployment frequency for microservices owned by the API team since January?"**
-- **"Compare MTTR between production and staging environments"**
+**Time ranges and filtering:**
+- "Show me DORA metrics for services tagged as 'critical' in the last 30 days"
+- "What's the deployment frequency for microservices owned by the API team since January?"
+- "Compare MTTR between production and staging environments"
 
-#### Trend analysis
+</TabItem>
+<TabItem value="trends" label="Trends">
 
-- **"How has our overall change failure rate changed over the last 6 months?"**
-- **"Show me the deployment frequency trend for the E-commerce team quarter over quarter"**
-- **"Has the Platform team's lead time improved since implementing the new CI/CD pipeline?"**
+**Trend analysis over time:**
+- "How has our overall change failure rate changed over the last 6 months?"
+- "Show me the deployment frequency trend for the E-commerce team quarter over quarter"
+- "Has the Platform team's lead time improved since implementing the new CI/CD pipeline?"
 
-#### Benchmarking
+</TabItem>
+<TabItem value="benchmarks" label="Benchmarks">
 
-- **"How do our DORA metrics compare to industry benchmarks?"**
-- **"Which teams are performing above/below the organization average for each DORA metric?"**
-- **"Show me services that meet the 'Elite' DORA performance criteria"**
+**Performance comparisons:**
+- "How do our DORA metrics compare to industry benchmarks?"
+- "Which teams are performing above/below the organization average for each DORA metric?"
+- "Show me services that meet the 'Elite' DORA performance criteria"
+
+</TabItem>
+<TabItem value="cross-metrics" label="Cross-Metrics">
+
+**Multi-metric analysis:**
+- "Which services have both high deployment frequency and low change failure rate?"
+- "Show me teams with MTTR above 4 hours in the last month"
+- "Identify teams that might need help with incident response processes"
+
+</TabItem>
+</Tabs>
 
 
 ## Understanding the responses
@@ -158,6 +165,8 @@ The MCP server responses rely on Port's data model, using the [available MCP too
 - Ask to show results in a graph or chart format
 - Request to create a custom web application to visualize the data (Claude Artifacts is excellent for this)
 - Generate executive-ready dashboards and reports
+
+<img src="/img/guides/MCPDoraCustomVisualization.png" width="100%" border="1px" />
 
 :::tip Getting better results
 To get the most accurate and useful responses:
