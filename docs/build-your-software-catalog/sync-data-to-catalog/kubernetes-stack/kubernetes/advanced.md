@@ -138,7 +138,7 @@ For more information how to use the `crdsToDiscover` parameter, please refer to 
 
 The K8s exporter supports configuration options to control access to environment variables within JQ queries used in resource mappings.
 
-### `allowAllEnvironmentVariablesInJQ`
+<h3> `allowAllEnvironmentVariablesInJQ` </h3>
 
 The `allowAllEnvironmentVariablesInJQ` parameter controls whether all environment variables are accessible in JQ queries.
 
@@ -148,26 +148,26 @@ The `allowAllEnvironmentVariablesInJQ` parameter controls whether all environmen
 :::warning Security Risk
 Setting `allowAllEnvironmentVariablesInJQ` to `true` can expose sensitive environment variables to JQ queries. This includes:
 - Port credentials (`PORT_CLIENT_ID`, `PORT_CLIENT_SECRET`)
-- Kubernetes service account tokens
-- Any other environment variables injected into the pod
-- Secrets mounted as environment variables
+- Kubernetes service account tokens.
+- Any other environment variables injected into the pod.
+- Secrets mounted as environment variables.
 
 Due to the potential security implication, if you have a need to limit the exposure of environment variables in the exporter's JQ, please set this parameter to `false` and explicitly specify the variables that need to be accessed using JQ through the `allowedEnvironmentVariablesInJQ` parameter.
 :::
 
-### `allowedEnvironmentVariablesInJQ`
+<h3> `allowedEnvironmentVariablesInJQ` </h3>
 
 The `allowedEnvironmentVariablesInJQ` parameter specifies which environment variables are allowed in JQ queries when `allowAllEnvironmentVariablesInJQ` is set to `false`. This parameter accepts a list of JQ expressions that evaluate to environment variable names or patterns.
 
 Each entry in the list is a JQ expression that should return:
 - A specific environment variable name (e.g., `"CLUSTER_NAME"`)
 - A pattern for matching multiple variables (e.g., `"^CLUSTER_"` to match all cluster-related environment variables)
-- An array of environment variable names or patterns
+- An array of environment variable names or patterns.
 
 - **Default value**: `^PORT_, CLUSTER_NAME`
 - **Use case**: Restrict access to only specific, safe environment variables in JQ queries for enhanced security. Use JQ expressions to dynamically determine which environment variables should be accessible.
 
-#### Configuration Example
+<h3> Configuration Example </h3>
 
 ```yaml
 allowAllEnvironmentVariablesInJQ: false
