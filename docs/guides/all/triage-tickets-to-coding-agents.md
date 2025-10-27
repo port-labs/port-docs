@@ -20,10 +20,10 @@ This guide demonstrates how to implement an AI-powered triage system in Port tha
 ## Prerequisites
 
 This guide assumes the following:
-- You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview)
-- [Port's Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) is installed in your account
-- You have access to [create and configure AI agents](https://docs.port.io/ai-interfaces/ai-agents/overview#getting-started-with-ai-agents) in Port
-- You have a coding agent setup (like [Claude Code](https://docs.port.io/guides/all/trigger-claude-code-from-port), [GitHub Copilot](https://docs.port.io/guides/all/trigger-github-copilot-from-port), or similar) that can be triggered via webhook
+- You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
+- [Port's Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) is installed in your account.
+- You have access to [create and configure AI agents](https://docs.port.io/ai-interfaces/ai-agents/overview#getting-started-with-ai-agents) in Port.
+- You have a coding agent setup (like [Claude Code](https://docs.port.io/guides/all/trigger-claude-code-from-port), [GitHub Copilot](https://docs.port.io/guides/all/trigger-github-copilot-from-port), or similar) that can be triggered via webhook.
 
 :::tip Alternative integrations and coding agents
 While this guide uses Jira for ticket management, you can adapt it for other project management tools like Linear, Asana, or Azure DevOps. Additionally, you can integrate with various coding agents including Claude Code, GitHub Copilot, Devin, or any other AI coding assistant that accepts webhook triggers.
