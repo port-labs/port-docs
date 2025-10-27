@@ -698,7 +698,7 @@ resources:
   - kind: resource
     selector:
       query: 'true'
-      resource_group_tags:
+      resourceGroupTags:
         included:
           environment: staging
         exluded:
