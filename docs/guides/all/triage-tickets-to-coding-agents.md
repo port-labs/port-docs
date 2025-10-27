@@ -13,9 +13,9 @@ This guide demonstrates how to implement an AI-powered triage system in Port tha
 
 ## Common use cases
 
-- **Prevent coding agent failures** by ensuring tickets have sufficient context before assignment
-- **Streamline human review process** with clear approval workflows for AI suggestions
-- **Reduce development bottlenecks** by catching poorly defined tasks early in the process
+- **Prevent coding agent failures** by ensuring tickets have sufficient context before assignment.
+- **Streamline human review process** with clear approval workflows for AI suggestions.
+- **Reduce development bottlenecks** by catching poorly defined tasks early in the process.
 
 ## Prerequisites
 
