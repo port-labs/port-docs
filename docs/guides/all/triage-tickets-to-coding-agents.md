@@ -333,7 +333,7 @@ This action allows human reviewers to approve or reject AI suggestions.
 {
   "identifier": "approve_ai_suggested_ticket_descripted",
   "title": "Approve AI Suggestions",
-  "description": "Approves the suggested ticket description from the triage agent and proceed to the next step",
+  "description": "Approves the suggested ticket description from the triage agent and proceeds to the next step",
   "trigger": {
     "type": "self-service",
     "operation": "DAY-2",
