@@ -41,13 +41,15 @@ The following table lists the configuration parameters of the `port-agent` chart
 | `image.tag`                                          | Image tag                                                                                  | `""`                                       |
 | `replicaCount`                                       | Number of port-agent replicas                                                              | `1`                                        |
 | `imagePullSecrets`                                   | Image pull secrets                                                                         | `[]`                                       |
+| `extraLabels`                                        | Additional labels to be added to all resources                                             | `{}`                                       |
 | `nameOverride`                                       | Chart name override                                                                        | `""`                                       |
 | `fullnameOverride`                                   | Fully qualified app name override                                                          | `""`                                       |
 | `secret.annotations`                                 | Annotations for Secret object                                                              | `{}`                                       |
 | `secret.name`                                        | Secret object name                                                                         | `""`                                       |
 | `secret.useExistingSecret`                           | Enable this if you wish to create your own secret with credentials                         | `false`                                    |
 | `podServiceAccount.name`                             | Service account to attach to the pod                                                       | `null`                                     |
-| `env.normal.STREAMER_NAME`                           | Streamer name, available: [`KAFKA`]                                                        | `"KafkaToWebhookStreamer"`                 |
+| `env.normal.STREAMER_NAME`                           | Streamer name, available: [`KAFKA`]                                                        | `"KAFKA"`                                  |
+| `env.normal.GITLAB_URL`                              | GitLab base URL                                                                            | `"https://gitlab.com/"`                    |
 | `env.normal.PORT_ORG_ID`                             | Your Port org id - **Required**                                                            | `""`                                       |
 | `env.normal.PORT_API_BASE_URL`                       | Port API base url                                                                          | `"https://api.getport.io"`                 |
 | `env.normal.KAFKA_CONSUMER_GROUP_ID`                 | Kafka consumer group id - **Required if using any Kafka streamer**                         | `""`                                       |
@@ -62,7 +64,8 @@ The following table lists the configuration parameters of the `port-agent` chart
 | `containerSecurityContext`                           | Security context applied to the container                                                  | `{}`                                       |
 | `extraVolumes`                                       | Additional volumes to be added to the pod                                                  | `[]`                                       |
 | `extraVolumeMounts`                                  | Additional volume mounts to be added to the container                                      | `[]`                                       |
-| `resources`                                          | Container resource requests & limits                                                       | `{}`                                       |
+| `rolloutStrategy`                                    | Deployment rollout strategy (Recreate or RollingUpdate)                                    | `"Recreate"`                               |
+| `resources`                                          | Container resource requests & limits                                                       | `{"requests": {"memory": "128Mi", "cpu": "100m"}, "limits": {"memory": "256Mi", "cpu": "200m"}}` |
 | `nodeSelector`                                       | NodeSelector applied to the pod                                                            | `{}`                                       |
 | `tolerations`                                        | Tolerations applied to the pod                                                             | `[]`                                       |
 | `affinity`                                           | Affinity applied to the pod                                                                | `{}`                                       |
