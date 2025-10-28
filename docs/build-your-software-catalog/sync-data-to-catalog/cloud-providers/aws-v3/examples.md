@@ -28,7 +28,7 @@ These examples demonstrate how to create blueprints and configure mappings to in
 
 ## AWS Account
 
-### AccountInfo
+### Account Info
 
 The following example demonstrates how to ingest your AWS Account information to Port.
 
