@@ -36,10 +36,6 @@ When a new invocation is detected, the agent will pull it from your Kafka topic 
 For a complete list of all available configuration parameters and their descriptions, see the [Port Agent Helm chart README](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
 :::
 
-:::note
-Ensure your Kafka topic has enough partitions when increasing `replicaCount` beyond 1. Each replica acts as a consumer in the consumer group.
-:::
-
 ## Self-signed certificate configuration
 
 For self-hosted 3rd-party applications with self-signed certificates, the agent can be configured to trust custom CA certificates. The `selfSignedCertificate` parameters control this behavior.
