@@ -8,10 +8,8 @@ import Image from "@theme/IdealImage";
 
 # AWS Exporter
 
-:::warning Deprecated
-This exporter is deprecated, Port will discontinue support for organizations using it by Q2 2025.
-
-To integrate Port with AWS, use the [Ocean AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).
+:::warning Deprecated exporter
+This exporter is deprecated. Please use the [AWS hosted by Port option](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) instead.
 :::
 
 Port's AWS integration provides the ability to export your AWS resources to Port, according to your configuration.
