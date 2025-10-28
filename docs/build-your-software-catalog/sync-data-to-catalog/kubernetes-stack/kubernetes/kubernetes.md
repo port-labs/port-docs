@@ -36,7 +36,7 @@ This integration allows you to:
 - Use relations to create a complete, easily digestible map of your K8s cluster inside Port;
 - Map your Kubernetes resources from common CRDs such as ArgoCD, Istio and more;
 
-### Supported Resources
+### Supported resources
 
 The default resources ingested by the integration are:
 - [`Namespaces`](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)
