@@ -12,7 +12,7 @@ Coding agents often fail or produce suboptimal results when given incomplete or 
 
 This guide demonstrates how to implement an AI-powered triage system in Port that automatically evaluates incoming Jira tickets, enriches them with missing details, and ensures only well-defined tasks reach your coding agents.
 
-<img src="/img/guides/ai-triage-workflow.png" alt="Workflow diagram goes here" border="1px" width="100%" />
+<img src="/img/guides/improve-feature-spec-with-ai-workflow.jpg" alt="Workflow diagram" border="1px" width="100%" />
 
 ## Common use cases
 
