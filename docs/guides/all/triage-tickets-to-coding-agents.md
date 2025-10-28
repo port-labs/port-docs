@@ -702,23 +702,23 @@ Now let us test the complete AI triage workflow to ensure everything works corre
 
 1. Go to your Port catalog and find the synced Jira ticket
 2. Check that the AI agent has analyzed the ticket and provided:
-   - A confidence score
-   - A suggested improved description (if the original was incomplete)
-   - An appropriate current stage
-
+   - A confidence score.
+   - A suggested improved description (if the original was incomplete).
+   - An appropriate current stage.
+    <br></br>
     <img src="/img/guides/ai-triage-sample-ai-description.png" border="1px" width="80%" />
 
 ### Test human review process
 
-1. If the AI suggested improvements, use the `Approve AI Suggestions` action to review and approve the changes
-2. If you want to request refinements, use the `Retry AI Suggestions `action to provide feedback
+1. If the AI suggested improvements, use the `Approve AI Suggestions` action to review and approve the changes.
+2. If you want to request refinements, use the `Retry AI Suggestions `action to provide feedback.
 
     <img src="/img/guides/ai-triage-test-workflow.png" border="1px" width="80%" />
 
 ### Verify coding agent assignment
 
-1. Once a ticket is approved and marked as `Ready for coding agent`, check that your coding agent is automatically triggered
-2. Verify that the coding agent receives the enriched ticket description with all necessary context
+1. Once a ticket is approved and marked as `Ready for coding agent`, check that your coding agent is automatically triggered.
+2. Verify that the coding agent receives the enriched ticket description with all necessary context.
 
     <img src="/img/guides/ai-triage-pr-creation.png" border="1px" width="80%" />
 
