@@ -198,6 +198,179 @@ resources:
         relations:
           resource_group: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
             | .[:5] |join("/")
+- kind: Microsoft.ServiceBus/namespaces
+  selector:
+    query: 'true'
+    apiVersion: '2022-10-01-preview'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureServiceBusNamespace"'
+        properties:
+          location: .location
+          type: .type
+          sku: .sku
+          provisioningState: .properties.provisioningState
+          status: .properties.status
+          createdAt: .properties.createdAt
+          updatedAt: .properties.updatedAt
+          serviceBusEndpoint: .properties.serviceBusEndpoint
+          metricId: .properties.metricId
+          tags: .tags
+        relations:
+          resource_group: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:5] |join("/")
+- kind: Microsoft.ServiceBus/namespaces/queues
+  selector:
+    query: 'true'
+    apiVersion: '2022-10-01-preview'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureServiceBusQueue"'
+        properties:
+          type: .type
+          createdAt: .properties.createdAt
+          updatedAt: .properties.updatedAt
+          accessedAt: .properties.accessedAt
+          sizeInBytes: .properties.sizeInBytes
+          messageCount: .properties.messageCount
+          lockDuration: .properties.lockDuration
+          maxSizeInMegabytes: .properties.maxSizeInMegabytes
+          maxDeliveryCount: .properties.maxDeliveryCount
+          enableBatchedOperations: .properties.enableBatchedOperations
+          status: .properties.status
+          enablePartitioning: .properties.enablePartitioning
+          enableExpress: .properties.enableExpress
+          requiresDuplicateDetection: .properties.requiresDuplicateDetection
+          requiresSession: .properties.requiresSession
+          defaultMessageTimeToLive: .properties.defaultMessageTimeToLive
+          deadLetteringOnMessageExpiration: .properties.deadLetteringOnMessageExpiration
+          supportOrdering: .properties.supportOrdering
+        relations:
+          namespace: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:7] |join("/")
+- kind: Microsoft.ServiceBus/namespaces/topics
+  selector:
+    query: 'true'
+    apiVersion: '2022-10-01-preview'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureServiceBusTopic"'
+        properties:
+          type: .type
+          createdAt: .properties.createdAt
+          updatedAt: .properties.updatedAt
+          accessedAt: .properties.accessedAt
+          sizeInBytes: .properties.sizeInBytes
+          subscriptionCount: .properties.subscriptionCount
+          maxSizeInMegabytes: .properties.maxSizeInMegabytes
+          enableBatchedOperations: .properties.enableBatchedOperations
+          status: .properties.status
+          enablePartitioning: .properties.enablePartitioning
+          supportOrdering: .properties.supportOrdering
+          requiresDuplicateDetection: .properties.requiresDuplicateDetection
+          defaultMessageTimeToLive: .properties.defaultMessageTimeToLive
+        relations:
+          namespace: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:7] |join("/")
+- kind: Microsoft.ServiceBus/namespaces/topics/subscriptions
+  selector:
+    query: 'true'
+    apiVersion: '2022-10-01-preview'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureServiceBusSubscription"'
+        properties:
+          type: .type
+          createdAt: .properties.createdAt
+          updatedAt: .properties.updatedAt
+          accessedAt: .properties.accessedAt
+          messageCount: .properties.messageCount
+          maxDeliveryCount: .properties.maxDeliveryCount
+          lockDuration: .properties.lockDuration
+          enableBatchedOperations: .properties.enableBatchedOperations
+          status: .properties.status
+          requiresSession: .properties.requiresSession
+          defaultMessageTimeToLive: .properties.defaultMessageTimeToLive
+        relations:
+          topic: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:9] |join("/")
+- kind: Microsoft.Insights/components
+  selector:
+    query: 'true'
+    apiVersion: '2020-02-02'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureApplicationInsights"'
+        properties:
+          location: .location
+          type: .type
+          kind: .kind
+          applicationType: .properties.Application_Type
+          applicationId: .properties.AppId
+          instrumentationKey: .properties.InstrumentationKey
+          connectionString: .properties.ConnectionString
+          provisioningState: .properties.provisioningState
+          flowType: .properties.Flow_Type
+          requestSource: .properties.Request_Source
+          retentionInDays: .properties.RetentionInDays
+          samplingPercentage: .properties.SamplingPercentage
+          publicNetworkAccessForIngestion: .properties.publicNetworkAccessForIngestion
+          publicNetworkAccessForQuery: .properties.publicNetworkAccessForQuery
+          tags: .tags
+        relations:
+          resource_group: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:5] |join("/")
+- kind: Microsoft.KeyVault/vaults
+  selector:
+    query: 'true'
+    apiVersion: '2023-07-01'
+  port:
+    entity:
+      mappings:
+        identifier: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+          | join("/")
+        title: .name
+        blueprint: '"azureKeyVault"'
+        properties:
+          location: .location
+          type: .type
+          tenantId: .properties.tenantId
+          sku: .properties.sku
+          vaultUri: .properties.vaultUri
+          provisioningState: .properties.provisioningState
+          enabledForDeployment: .properties.enabledForDeployment
+          enabledForDiskEncryption: .properties.enabledForDiskEncryption
+          enabledForTemplateDeployment: .properties.enabledForTemplateDeployment
+          enableSoftDelete: .properties.enableSoftDelete
+          softDeleteRetentionInDays: .properties.softDeleteRetentionInDays
+          enableRbacAuthorization: .properties.enableRbacAuthorization
+          enablePurgeProtection: .properties.enablePurgeProtection
+          publicNetworkAccess: .properties.publicNetworkAccess
+          networkAcls: .properties.networkAcls
+          tags: .tags
+        relations:
+          resource_group: .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+            | .[:5] |join("/")
 ```
 
 </details>
