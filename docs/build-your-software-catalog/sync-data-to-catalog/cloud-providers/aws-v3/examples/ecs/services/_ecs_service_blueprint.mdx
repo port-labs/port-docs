@@ -1,0 +1,61 @@
+<details>
+<summary><b>ECS service blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "ecsService",
+  "description": "This blueprint represents an AWS ECS service in our software catalog",
+  "title": "ECS service",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "serviceArn": {
+        "type": "string",
+        "title": "Service ARN"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status"
+      },
+      "desiredCount": {
+        "type": "number",
+        "title": "Desired count"
+      },
+      "runningCount": {
+        "type": "number",
+        "title": "Running count"
+      },
+      "tags": {
+        "type": "array",
+        "title": "Tags",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Key": {
+              "type": "string"
+            },
+            "Value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
