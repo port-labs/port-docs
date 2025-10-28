@@ -1,0 +1,38 @@
+<details>
+<summary><b>Lambda instance mapping configuration (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "resources": [
+    {
+      "kind": "aws_lambda/function",
+      "port": {
+        "entity": {
+          "mappings": [
+            {
+              "identifier": ".FunctionName",
+              "title": ".FunctionName",
+              "blueprint": "aws_lambda_function",
+              "properties": {
+                "function_name": ".FunctionName",
+                "function_arn": ".FunctionArn",
+                "runtime": ".Runtime",
+                "handler": ".Handler",
+                "memory_size": ".MemorySize",
+                "timeout": ".Timeout",
+                "state": ".State",
+                "last_modified": ".LastModified",
+                "description": ".Description",
+                "role": ".Role"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+</details>
+
