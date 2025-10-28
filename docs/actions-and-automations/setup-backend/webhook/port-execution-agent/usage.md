@@ -32,48 +32,9 @@ When a new invocation is detected, the agent will pull it from your Kafka topic 
 
 ## Configuration
 
-The following table lists the configuration parameters of the `port-agent` chart and default values.
-
-| Parameter                                            | Description                                                                                | Default                                    |
-|------------------------------------------------------|--------------------------------------------------------------------------------------------|--------------------------------------------|
-| `image.repository`                                   | Image repository                                                                           | `ghcr.io/port-labs/port-agent`             |
-| `image.pullPolicy`                                   | Image pull policy                                                                          | `IfNotPresent`                             |
-| `image.tag`                                          | Image tag                                                                                  | `""`                                       |
-| `replicaCount`                                       | Number of port-agent replicas                                                              | `1`                                        |
-| `imagePullSecrets`                                   | Image pull secrets                                                                         | `[]`                                       |
-| `extraLabels`                                        | Additional labels to be added to all resources                                             | `{}`                                       |
-| `nameOverride`                                       | Chart name override                                                                        | `""`                                       |
-| `fullnameOverride`                                   | Fully qualified app name override                                                          | `""`                                       |
-| `secret.annotations`                                 | Annotations for Secret object                                                              | `{}`                                       |
-| `secret.name`                                        | Secret object name                                                                         | `""`                                       |
-| `secret.useExistingSecret`                           | Enable this if you wish to create your own secret with credentials                         | `false`                                    |
-| `podServiceAccount.name`                             | Service account to attach to the pod                                                       | `null`                                     |
-| `env.normal.STREAMER_NAME`                           | Streamer name, available: [`KAFKA`]                                                        | `"KAFKA"`                                  |
-| `env.normal.GITLAB_URL`                              | GitLab base URL                                                                            | `"https://gitlab.com/"`                    |
-| `env.normal.PORT_ORG_ID`                             | Your Port org id - **Required**                                                            | `""`                                       |
-| `env.normal.PORT_API_BASE_URL`                       | Port API base url                                                                          | `"https://api.getport.io"`                 |
-| `env.normal.KAFKA_CONSUMER_GROUP_ID`                 | Kafka consumer group id - **Required if using any Kafka streamer**                         | `""`                                       |
-| `env.normal.KAFKA_CONSUMER_SECURITY_PROTOCOL`        | Kafka consumer security protocol                                                           | `"SASL_SSL"`                               |
-| `env.normal.KAFKA_CONSUMER_AUTHENTICATION_MECHANISM` | Kafka consumer authentication mechanism                                                    | `"SCRAM-SHA-512"`                          |
-| `env.normal.KAFKA_CONSUMER_AUTO_OFFSET_RESET`        | Kafka consumer auto offset reset                                                           | `"largest"`                                |
-| `env.secret.PORT_CLIENT_ID`                          | Port API client id                                                                         | `""`                                       |
-| `env.secret.PORT_CLIENT_SECRET`                      | Port API client secret                                                                     | `""`                                       |
-| `controlThePayloadConfig`                            | Override the default control the payload configuration file with custom json configuration | `""`                                       |
-| `podAnnotations`                                     | Annotations to be added to the pod                                                         | `{}`                                       |
-| `podSecurityContext`                                 | Security context applied to the pod                                                        | `{}`                                       |
-| `containerSecurityContext`                           | Security context applied to the container                                                  | `{}`                                       |
-| `extraVolumes`                                       | Additional volumes to be added to the pod                                                  | `[]`                                       |
-| `extraVolumeMounts`                                  | Additional volume mounts to be added to the container                                      | `[]`                                       |
-| `rolloutStrategy`                                    | Deployment rollout strategy (Recreate or RollingUpdate)                                    | `"Recreate"`                               |
-| `resources`                                          | Container resource requests & limits                                                       | `{"requests": {"memory": "128Mi", "cpu": "100m"}, "limits": {"memory": "256Mi", "cpu": "200m"}}` |
-| `nodeSelector`                                       | NodeSelector applied to the pod                                                            | `{}`                                       |
-| `tolerations`                                        | Tolerations applied to the pod                                                             | `[]`                                       |
-| `affinity`                                           | Affinity applied to the pod                                                                | `{}`                                       |
-| `selfSignedCertificate.enabled`                      | Enable self-signed certificate trust for the agent                                         | `false`                                    |
-| `selfSignedCertificate.certificate`                  | The value of the self-signed certificate                                                   | `""`                                       |
-| `selfSignedCertificate.secret.useExistingSecret`     | Enable this if you wish to use your own secret with the self-signed certificate            | `false`                                    |
-| `selfSignedCertificate.secret.key`                   | The key in the existing self-signed certificate secret                                     | `crt`                                      |
-| `selfSignedCertificate.secret.name`                  | The name of an existing secret containing the self-signed certificate                      | `""`                                       |
+:::info Advanced configuration
+For a complete list of all available configuration parameters and their descriptions, see the [Port Agent Helm chart README](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
+:::
 
 :::note
 Ensure your Kafka topic has enough partitions when increasing `replicaCount` beyond 1. Each replica acts as a consumer in the consumer group.
@@ -85,7 +46,7 @@ For self-hosted 3rd-party applications with self-signed certificates, the agent 
 
 ### Option 1: Provide certificate in Helm values
 
-Use this option to provide the certificate content directly in your Helm values file or via the `--set-file` flag. The Helm chart will create and manage a Kubernetes secret containing the certificate.
+Use this option to provide the certificate content directly in your Helm values file or via the `--set-file` flag.
 
 **How to use:**
 1. Set `selfSignedCertificate.enabled` to `true`
@@ -211,11 +172,6 @@ helm upgrade --install my-port-agent port-labs/port-agent \
     --set replicaCount=2 \
     --set resources.limits.memory="512Mi"
 ```
-
-## All configuration parameters
-
-- A complete list of configuration parameters is available in the [Port Agent Helm chart repository](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent);
-- An example `values.yaml` file with all available parameters is available [here](https://github.com/port-labs/helm-charts/blob/main/charts/port-agent/values.yaml).
 
 ## Extra environment variables
 
