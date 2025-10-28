@@ -183,9 +183,13 @@ The description will be displayed at the top of the page, under the page title:
 
 <img src='/img/software-catalog/pages/catalogPageDescription.png' width='80%' border='1px' />
 
-### Initial filters
+### Performance
+In some cases, an entities table may be very large, resulting in long loading times. There are few tips and best practices we can use to speed things up and improve the page loading times.
 
-In some cases, an entities table may be very large, resulting in long loading times. To prevent this, you can define filters that resolve when Port queries the data (rather than after querying).  
+#### Initial filters
+
+The most effective way for reducing loading times. You can define filters that resolve when Port queries the data (rather than after querying like the table filters). This will reduce the number of entities displayed in table which will improve loading times.
+
 To define such a filter, use the `Initial filters` field when creating a page:
 
 <img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' border='1px' />
@@ -204,16 +208,22 @@ You can define any [supported rule](/search-and-query/#rules) in JSON format. He
 ]
 ```
 
-#### Dynamic filters
+##### Dynamic filters
 
 You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when creating a catalog page.
 
-### Excluded properties
+#### Excluded properties
 
-Another way to reduce loading times is to exclude undesired properties from an entities table when querying the data. When using this option, the new table will not contain columns for the excluded properties.  
+Another way to reduce loading times is to exclude undesired properties from an entities table when querying the data. When using this option, the new table will not contain columns for the excluded properties. We recommend excluding properties with no actual benefit when showed in the table - big object property, long array properties, etc.
+
 To do this, use the `Excluded properties` field when creating a page:
 
 <img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%'  border='1px' />
+
+#### Calculation properties
+While calculation properties have powerful functionality, in some cases they can have negative performance impact. If possible and needed, we recommend excluding them from the table or replace them entirely with regular properties.
+
+Learn more about [calculation properties performance](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/#performance-impact).
 
 ## Customization
 
