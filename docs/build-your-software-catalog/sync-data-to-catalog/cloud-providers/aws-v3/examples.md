@@ -10,6 +10,9 @@ import S3BucketProperties from './examples/s3/buckets/_s3_bucket_properties.mdx'
 import EcsClusterBlueprint from './examples/ecs/clusters/_ecs_cluster_blueprint.mdx'
 import EcsClusterConfig from './examples/ecs/clusters/_ecs_cluster_port_app_config.mdx'
 import EcsClusterProperties from './examples/ecs/clusters/_ecs_cluster_properties.mdx'
+import EksClusterBlueprint from './examples/eks/clusters/_eks_cluster_blueprint.mdx'
+import EksClusterConfig from './examples/eks/clusters/_eks_cluster_port_app_config.mdx'
+import EksClusterProperties from './examples/eks/clusters/_eks_cluster_properties.mdx'
 import Ec2InstanceBlueprint from './examples/ec2/instances/_ec2_instance_blueprint.mdx'
 import Ec2InstanceConfig from './examples/ec2/instances/_ec2_instance_port_app_config.mdx'
 import Ec2InstanceProperties from './examples/ec2/instances/_ec2_instance_properties.mdx'
@@ -88,6 +91,24 @@ You can reference any of the following ECS cluster properties in your mapping co
 <EcsClusterProperties/>
 
 For more details about ECS cluster properties, refer to the [AWS ECS API documentation](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeClusters.html).
+
+## Amazon EKS
+
+### EKS clusters
+
+The following example demonstrates how to ingest your AWS EKS clusters to Port.
+
+You can use the following Port blueprint definitions and integration configuration:
+
+<EksClusterBlueprint/>
+
+<EksClusterConfig/>
+
+You can reference any of the following EKS cluster properties in your mapping configuration:
+
+<EksClusterProperties/>
+
+For more details about EKS cluster properties, refer to the [AWS EKS API documentation](https://docs.aws.amazon.com/eks/latest/APIReference/API_DescribeCluster.html).
 
 ## Amazon EC2
 
