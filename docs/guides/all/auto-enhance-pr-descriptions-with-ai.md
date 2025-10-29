@@ -5,20 +5,16 @@ description: Automatically enhance PR descriptions with AI-generated, template-c
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import CodingAgents from '@site/src/components/CodingAgents/CodingAgents'
 
 # Auto-enhance PR descriptions with AI
 
-This guide demonstrates how to automatically enhance GitHub pull request descriptions using Port's AI agents and coding assistants. When a PR is created with a minimal or empty description, a Port AI agent intelligently gathers context from your software catalog and triggers a coding agent to generate a comprehensive, template-compliant description.
+This guide demonstrates how to automatically enhance GitHub pull request descriptions using Port's AI agents and coding assistants. When a PR is created with a minimal or empty description, a Port AI agent intelligently gathers **business context and organizational knowledge** from your software catalog that coding agents can't access on their own - like Jira requirements, service architecture, team ownership, and PR templates. Port then passes this enriched context to a coding agent to generate a comprehensive, context-aware PR description.
 
-This guide supports multiple coding agents:
+<CodingAgents />
+<br />
 
-- **Claude Code**: AI-powered coding with Anthropic's Claude [setup guide](/guides/all/trigger-claude-code-from-port)
-- **GitHub Copilot**: GitHub's native AI assistant [setup guide](/guides/all/trigger-github-copilot-from-port)
-- **Google Gemini**: Google's AI coding assistant [setup guide](/guides/all/trigger-gemini-assistant-from-port)
-
-:::tip Choose your coding agent
-Complete the setup guide for one coding agent before proceeding with this guide. The AI agent we will set up later will use the coding agent action you've configured in the setup guide.
-:::
+<img src="/img/ai-agents/improvePRDescriptionRM.png" border="1px" width="100%" />
 
 ## Common use cases
 
@@ -32,13 +28,11 @@ Complete the setup guide for one coding agent before proceeding with this guide.
 
 Before starting this guide, ensure you have:
 
-- A Port account with the [onboarding process](https://docs.port.io/getting-started/overview) completed.
+- A Port account with the [onboarding process](https://docs.port.io/getting-started/overview) completed
 - [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) installed in your account
 - Access to [create and configure AI agents](/ai-interfaces/ai-agents/overview) in Port
-- Completed one of these coding agent setup guides:
-  - [Trigger Claude Code from Port](/guides/all/trigger-claude-code-from-port) 
-  - [Trigger GitHub Copilot from Port](/guides/all/trigger-github-copilot-from-port)
-  - [Trigger Gemini Assistant from Port](/guides/all/trigger-gemini-assistant-from-port)
+- Completed one of the above coding agents guides
+
 
 ## Set up data model
 
@@ -97,7 +91,7 @@ This blueprint will store your organization's pull request templates.
 
 ### Update pull request blueprint
 
-Now we'll add a relation from the pull request blueprint to the PR template blueprint.
+Now we'll add a relation from the pull request blueprint to the PR template blueprint.This relation will allow us to link PRs to their templates and have a broader context lake through the related tickets, issues, etc linked to the PR.
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page.
 
@@ -202,17 +196,20 @@ Update the GitHub pull request mapping to connect PRs to their templates and opt
               //highlight-start
               prTemplate: .head.repo.name + "-pr-template"
               //highlight-end
-              jiraIssue: .title | match("[A-Z]+-[0-9]+") .string  # Optional: extracts Jira key from PR title
+              jiraIssue: .title | match("[A-Z]+-[0-9]+") .string
     ```
 
     :::tip Business context integration
-    The `jiraIssue` relation is optional and extracts Jira issue keys from PR titles (e.g., "JIRA-1234: Add caching layer"). This enables the automation to pull business requirements and acceptance criteria from Jira issues. If you're using Linear or don't want business context, you can omit this relation.
+    The `jiraIssue` relation is optional and extracts Jira issue keys from PR titles (e.g., "JIRA-1234: Add caching layer"). This enables the automation to pull business requirements and acceptance criteria from Jira issues.  
+     
+    This is very helpful since it gives us a full picture of project, issues and tasks related to the pull request, enriching the context of the description with the **what** and **why** of the changes.
     
-    To set this up:
-    - Install [Port's Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
-    - Ensure your team follows a convention of including Jira keys in PR titles
-    - See the [Connect GitHub PR with Jira Issue guide](/guides/all/connect-github-pr-with-jira-issue) for more details
-    :::
+    This business context is invisible to coding agents but crucial for reviewers. It explains *why* the code changes matter and *what* business problem they solve.
+    
+    - If you haven't already installed [Port's Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/), you can do so now.
+    - Follow a convention of including Jira keys in PR titles (e.g., "PROJ-1234: Add user authentication")
+    - See the [Connect GitHub PR with Jira Issue guide](/guides/all/connect-github-pr-with-jira-issue) for detailed setup
+        :::
 
     </details>
 
@@ -242,7 +239,7 @@ Now we'll create an AI agent that monitors for new PRs, intelligently gathers co
       "properties": {
         "description": "Analyzes pull requests and enhances descriptions with template-compliant, context-rich content",
         "status": "active",
-        "prompt": "You are a PR enhancement assistant. When a new PR is created:\n\n1. Check if the PR description is empty, minimal (< 50 chars), or just an untouched template\n2. If enhancement is needed, use Port AI tools to gather:\n   - The PR template for this repository\n   - Any linked Jira/Linear issues from the PR title\n   - Service/application context and architecture information\n3. Call the appropriate coding agent action with a comprehensive prompt that includes:\n   - All gathered context (template, business context, service info)\n   - Instructions to analyze the code changes\n   - Generate a description following the PR template\n   - Include business context and architectural insights\n   - Provide review guidance\n\nBe intelligent about which coding agent action to call based on what's available in the tools list.",
+        "prompt": "You are a PR enhancement assistant that enriches PR descriptions with business context from Port's software catalog.\n\nWhen a new PR is created:\n\n1. Check if the PR description is empty, minimal (< 50 chars), or just an untouched template\n\n2. If enhancement is needed, use Port AI tools to gather BUSINESS CONTEXT that coding agents can't access:\n   - The PR template from the catalog (organizational standards)\n   - Linked Jira/Linear issues with user stories and acceptance criteria (business requirements)\n   - Service/application information: purpose, team ownership, dependencies (organizational knowledge)\n   - Related architectural decisions or documentation (context)\n\n3. Call the appropriate coding agent action with a comprehensive prompt that includes:\n   - All the business context you gathered from Port\n   - Clear instructions: 'Analyze the code changes in this PR and combine them with the following business context from our software catalog...'\n   - Request a description that explains BOTH what changed technically AND why it matters to the business\n   - Follow the PR template structure\n   - Emphasize that reviewers need both technical and business understanding\n\nBe intelligent about which coding agent action to call based on what's available in the tools list. use claude code preferably to prevent openining a new issue with descriptions which needs manual copying into the pr that needs modification in it's description, use claude code so that you can work on the same PR.",
         "execution_mode": "Automatic",
         "conversation_starters": [],
         "tools": [
@@ -331,17 +328,26 @@ Now create an automation that triggers the AI agent whenever a new PR is created
 
 ## How it works
 
-This Port-native approach provides a simple, maintainable solution:
+This Port-native approach combines organizational knowledge with code analysis:
 
 1. **PR Created** → When a new PR is synced to Port, the automation triggers.
 2. **AI Agent Analyzes** → The agent checks if the description needs enhancement.
-3. **Context Gathering** → Uses Port AI to intelligently gather context in one call:
-   - PR template from your catalog or repository.
-   - Linked Jira/Linear issues (extracted from PR title).
-   - Service architecture and team information.
-4. **Triggers Coding Agent** → Calls your configured coding agent action with comprehensive context.
-5. **Description Enhanced** → Coding agent analyzes code changes and updates the PR description.
+3. **Port Gathers Business Context** → Uses Port AI to intelligently gather context that coding agents can't access:
+   - **PR template** from your catalog (organizational standards)
+   - **Business requirements** from linked Jira/Linear issues (user stories, acceptance criteria)
+   - **Service context** including architecture, dependencies, and ownership
+   - **Team information** and related projects from your software catalog
+4. **Triggers Coding Agent with Context** → Calls your configured coding agent action with Port's enriched context.
+5. **Coding Agent Analyzes Code** → The coding agent examines the actual code changes in the PR.
+6. **Description Enhanced** → Combines Port's business context with code analysis to create a comprehensive, context-aware PR description.
 
+:::tip Port's unique value
+**What Port provides:** Business requirements, organizational context, service architecture, team ownership - information that exists in your software catalog but isn't visible to coding agents working directly with code repositories.
+
+**What the coding agent provides:** Technical code analysis, implementation details, file changes - information derived from examining the actual code diff.
+
+**Together:** A PR description that explains both *what* changed in the code AND *why* it matters to the business.
+:::
 
 
 <Tabs groupId="coding-agent" defaultValue="claude" values={[
@@ -352,32 +358,33 @@ This Port-native approach provides a simple, maintainable solution:
 
 <TabItem value="claude">
 
-
 If you completed the [Trigger Claude Code from Port guide](/guides/all/trigger-claude-code-from-port), the agent will:
 
-1. Call the `trigger_claude_code` action with a prompt containing the PR context.
+1. **Port gathers context**: Fetches PR template, linked Jira requirements, service architecture, and team information from your catalog.
 
-2. Claude Code checks out the PR branch and analyzes the code changes.
+2. **Triggers Claude Code**: Calls the `trigger_claude_code` action with a prompt containing all the business context from Port.
 
-3. Uses Port AI context (template, Jira, services) to generate comprehensive description.
+3. **Claude analyzes code**: Checks out the PR branch, examines file changes, and understands technical implementation.
 
-4. Updates the PR description directly via GitHub API.
+4. **Creates enriched description**: Combines Port's business context with code analysis to generate a comprehensive description.
+
+5. **Updates PR**: Posts the enhanced description directly via GitHub API.
 
 </TabItem>
 
 <TabItem value="copilot">
 
-
-
 If you completed the [Trigger GitHub Copilot from Port guide](/guides/all/trigger-github-copilot-from-port), the agent will:
 
-1. Call the `assign_to_copilot` action to create a GitHub issue with PR context.
+1. **Port gathers context**: Fetches PR template, linked Jira requirements, service architecture, and team information from your catalog.
 
-2. Issue is automatically assigned to GitHub Copilot (via `auto_assign` label).
+2. **Creates GitHub issue**: Calls the `assign_to_copilot` action to create an issue containing all the business context from Port.
 
-3. Copilot analyzes the code changes using Port AI context.
+3. **Copilot assignment**: Issue is automatically assigned to GitHub Copilot (via `auto_assign` label).
 
-4. Updates the PR description through its native capabilities.
+4. **Copilot analyzes**: Examines the code changes in the PR and reads the business context from the issue.
+
+5. **Creates enriched description**: Combines Port's business context with code analysis and updates the PR description.
 
 </TabItem>
 
@@ -385,22 +392,29 @@ If you completed the [Trigger GitHub Copilot from Port guide](/guides/all/trigge
 
 If you completed the [Trigger Gemini Assistant from Port guide](/guides/all/trigger-gemini-assistant-from-port), the agent will:
 
-1. Call the `trigger_gemini_assistant` action with a prompt containing the PR context.
+1. **Port gathers context**: Fetches PR template, linked Jira requirements, service architecture, and team information from your catalog.
 
-2. Gemini Assistant checks out the PR branch and analyzes the code changes.
+2. **Triggers Gemini**: Calls the `trigger_gemini_assistant` action with a prompt containing all the business context from Port.
 
-3. Uses Port AI context (template, Jira, services) to generate comprehensive description.
+3. **Gemini analyzes code**: Checks out the PR branch, examines file changes, and understands technical implementation.
 
-4. Updates the PR description directly via GitHub API.
+4. **Creates enriched description**: Combines Port's business context with code analysis to generate a comprehensive description.
+
+5. **Updates PR**: Posts the enhanced description directly via GitHub API.
 
 </TabItem>
 
 </Tabs>
 
+<h3>Pull Request Context Lake</h3>
+
+When a PR is created, it is linked to its template, Jira issues, and other related entities in your software catalog. This creates a context lake that can be used to enrich the PR description.
+
+<img src="/img/ai-agents/PRContextLake.png" border="1px" width="100%" />
+
 ## Test the setup
 
-Now let's test the complete setup to verify everything works correctly.
-
+Now let's test the complete setup and see how Port enriches PR descriptions with business context.
 
 1. In a repository integrated with Port, create a new pull request with a minimal description (e.g., "WIP").
 
@@ -410,21 +424,52 @@ Now let's test the complete setup to verify everything works correctly.
 
 4. Check the agent's conversation history to see its analysis and actions.
 
-5. Refresh your GitHub PR - the description should now be enhanced.
+5. Refresh your GitHub PR - the description should now be enhanced with both business context and technical details.
 
-<h3> Before Enhancement</h3>
+<h3>Before Enhancement</h3>
+
+The PR starts with just an empty template - no business context, no explanation of what the code does or why it matters.
 
 <img src="/img/ai-agents/RAWPRTemplate.png" border="1px" width="80%" />
 
-<h3> During Enhancement</h3>
+<h3>During Enhancement: Port Gathers Business Context</h3>
+
+Port's AI agent analyzes the PR and gathers organizational context that the coding agent can't access directly. Notice how Port identifies:
+
+- **Repository Context**: Understanding that this is the `port-product-experiments` repository for internal tools (not an e-commerce backend as the PR title might suggest)
+- **Missing Context Issues**: Identifying what business information is needed
+- **Template Compliance**: Noting that the PR doesn't follow the established template
+- **Enhancement Requirements**: Specifying what context should be added based on organizational knowledge
+
+This business context is what makes the final description meaningful - it's not just about the code changes, but about how they fit into Port's product strategy and internal tooling.
+
 <img src="/img/ai-agents/AIInvocationOnDescriptionFillWIP.png" border="1px" width="80%" />
 
+<h3>After Enhancement: Business Context + Code Analysis</h3>
 
-<h3> After Enhancement</h3>
+The enhanced PR description now combines:
+
+**From Port (Business Context):**
+- Clear explanation of the business purpose: "enabling the creation of new product entries in the product catalog"
+- Organizational context: "experimental e-commerce application within Port's product team experimentation repository"
+- How it fits with existing tools: "complementing the existing GET /products endpoints"
+- Why this matters: "part of an experimental e-commerce backend built with FastAPI, designed to demonstrate API development patterns"
+
+**From the Coding Agent (Technical Analysis):**
+- Technical implementation details of the endpoint
+- Code structure and patterns used
+- File changes and specific functions added
+- Validation and model information
+
+Together, this creates a complete picture for reviewers who need to understand both the business rationale AND the technical implementation.
 
 <img src="/img/ai-agents/PRTemplateEnhanced.png" border="1px" width="80%" />
 
 <img src="/img/ai-agents/PRTemplateEnhanced2.png" border="1px" width="80%" />
+
+:::tip Notice the difference
+Without Port, a coding agent would only see the code changes and might incorrectly assume this is a production e-commerce feature. Port's catalog knowledge adds the crucial context that this is an internal experimentation tool, changing how reviewers approach the PR.
+:::
 
 
 
