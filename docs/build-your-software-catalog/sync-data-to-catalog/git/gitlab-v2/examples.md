@@ -164,8 +164,9 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PackageConfig />
 
-The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
-For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#ingest-files-from-your-repositories)
+The integration mapping example above demonstrates both a JSON file (`package.json`) and a YAML file (`config.yml`) configuration.
+The example will parse the file in your repository and extract the dependencies into Port entities.  
+For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#ingest-files-from-your-repositories).
 
 
 

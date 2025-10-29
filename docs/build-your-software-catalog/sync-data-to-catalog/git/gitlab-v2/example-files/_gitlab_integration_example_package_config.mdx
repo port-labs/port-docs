@@ -1,6 +1,6 @@
 <details>
 <summary><b>Integration mapping (click to expand)</b></summary>
-```yaml showLineNumbers
+```yaml showLineNumbers title="Integration mapping JSON file"
 resources:
   - kind: file
     selector:
@@ -22,5 +22,26 @@ resources:
           properties:
             package: .item.key
             version: .item.value
+```
+
+```yaml showLineNumbers title="Integration mapping YAML file"
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        path: config.yml
+        repos:
+          - getport-labs/my-project
+    port:
+      entity:
+        mappings:
+        # Note that when parsing a YAML file, you should specify the index the parsed document.
+          identifier: .file.content.[0].identifier
+          title: .file.content.[0].title
+          blueprint: .file.content.[0].blueprint
+          properties:
+            slack_channel_name: .file.content.[0].properties.slack_channel_name
+            description: .file.content.[0].properties.description
 ```
 </details>
