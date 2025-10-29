@@ -46,7 +46,7 @@ Follow the steps below to create the blueprint:
 4. Copy and paste the JSON schema from below:
 
     <details>
-    <summary>`Root Cause Analysis` blueprint</summary>
+    <summary><b>`Root Cause Analysis` blueprint (click to expand)</b></summary>
 
     The entities of this blueprint will represent different RCA documents from past incidents.
 
@@ -123,7 +123,7 @@ Follow the steps below to create the blueprint:
     "relations": {}
     }
     ```
-    </details>
+  </details>
 
 5. Click `Create` to save the blueprint.
 
@@ -151,7 +151,7 @@ Let's create our first RCA entity using the Port UI:
 
 3. Toggle JSON mode and copy and paste the following JSON:
     <details>
-    <summary>Database Connection Pool Exhaustion incident</summary>
+    <summary><b>Database Connection Pool Exhaustion incident (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -191,7 +191,7 @@ Let us add another RCA entity:
 2. Toggle JSON mode and copy and paste the following JSON:
 
     <details>
-    <summary>Memory Leak incident</summary>
+    <summary><b>Memory Leak incident (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -219,7 +219,7 @@ Let us add another RCA entity:
         "title": "Memory Leak in User Service Authentication Module"
     }
     ```
-    </details>
+  </details>
 
 3. Click `Create` to save the RCA entity.
 
@@ -341,7 +341,7 @@ else:
 **Example integration scenarios:**
 
 <details>
-<summary>GitHub Actions workflow</summary>
+<summary><b>GitHub Actions workflow (click to expand)</b></summary>
 
 ```yaml title=".github/workflows/create-rca.yml"
 name: Create RCA from Issue
@@ -390,11 +390,10 @@ jobs:
           print(f'RCA created: {response.status_code}')
           "
 ```
-
 </details>
 
 <details>
-<summary>Standalone Python script for bulk import</summary>
+<summary><b>Standalone Python script for bulk import (click to expand)</b></summary>
 
 ```python title="bulk_import_rcas.py"
 #!/usr/bin/env python3
@@ -466,7 +465,6 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-
 </details>
 
 </TabItem>
@@ -621,21 +619,21 @@ While the agent can automatically access RCA documents, updating the prompt help
 5. Replace the existing content with the following:
 
     <details>
-    <summary>Enhanced agent prompt</summary>
+    <summary><b>Enhanced agent prompt(click to expand)</b></summary>
     
-    ```markdown showLineNumbers"
-        You are an agent responsible for answering questions about PagerDuty incidents, services, escalation policies, schedules, and on-call rotations. 
-        You also have access to historical Root Cause Analysis (RCA) documents from past incidents.
-
-        ### Guidelines
-        - Provide clear information about incidents
-        - Identify who is on-call for services (both primary and secondary on-call)  
-        - Report on incident statistics and resolution times
-        - When relevant, reference past RCA documents to provide context and suggest solutions
-        - Use RCA lessons learned to help prevent similar incidents
-        - Suggest preventive measures based on historical incident patterns
+        ```markdown showLineNumbers"
+            You are an agent responsible for answering questions about PagerDuty incidents, services, escalation policies, schedules, and on-call rotations. 
+            You also have access to historical Root Cause Analysis (RCA) documents from past incidents.
+    
+            ### Guidelines
+            - Provide clear information about incidents
+            - Identify who is on-call for services (both primary and secondary on-call)  
+            - Report on incident statistics and resolution times
+            - When relevant, reference past RCA documents to provide context and suggest solutions
+            - Use RCA lessons learned to help prevent similar incidents
+            - Suggest preventive measures based on historical incident patterns
         ```
-    </details>
+   </details>
 
 6. Click `Save` to save the changes.
 
@@ -646,19 +644,18 @@ While the agent can automatically access RCA documents, updating the prompt help
 2. Replace the existing content with the following:
 
     <details>
-<details>
-<summary><b>Conversation starters (click to expand)</b></summary>
+     <summary><b>Conversation starters (click to expand)</b></summary>
 
-    ```json showLineNumbers
-    [
-      "Who is on call for the payment service?",
-      "What are the active incidents right now?", 
-      "What is our average incident resolution time?",
-      "Have we seen database connection issues before?",
-      "What can we learn from past payment service incidents?",
-      "Show me RCAs for incidents similar to the current one"
-    ]
-    ```
+        ```json showLineNumbers
+        [
+          "Who is on call for the payment service?",
+          "What are the active incidents right now?", 
+          "What is our average incident resolution time?",
+          "Have we seen database connection issues before?",
+          "What can we learn from past payment service incidents?",
+          "Show me RCAs for incidents similar to the current one"
+        ]
+        ```
     </details>
 
 
