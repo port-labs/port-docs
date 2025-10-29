@@ -39,17 +39,7 @@ In addition to the methods mentioned above, `admins` can find action runs using 
 
 ## Who can view action runs
 
-Visibility of action runs depends on the user’s role and the configuration of the action itself.
-
-When an action is created or edited, a toggle called **“Let anyone in this organization view this action’s runs”** controls run visibility:
-
-- **When enabled (default):** Everyone in the organization can view the action’s runs.  
-- **When disabled:**  
-  - **Admins** can view all runs.  
-  - **Approvers** can view runs they are assigned to approve.  
-  - **Regular members** can view only the runs they created.
-
-This ensures that sensitive operational data is visible only to the right users, while still allowing open visibility when needed.
+Run visibility is controlled by the action’s permissions. See [Configure visibility for action runs](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/set-self-service-actions-rbac#configure-visibility-for-action-runs) for details.
 
 
 ## Fetch an action run
