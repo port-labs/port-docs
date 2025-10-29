@@ -219,7 +219,7 @@ Let us add another RCA entity:
         "title": "Memory Leak in User Service Authentication Module"
     }
     ```
-  </details>
+    </details>
 
 3. Click `Create` to save the RCA entity.
 
@@ -619,7 +619,7 @@ While the agent can automatically access RCA documents, updating the prompt help
 5. Replace the existing content with the following:
 
     <details>
-    <summary><b>Enhanced agent prompt(click to expand)</b></summary>
+    <summary><b>Enhanced agent prompt (click to expand)</b></summary>
     
         ```markdown showLineNumbers"
             You are an agent responsible for answering questions about PagerDuty incidents, services, escalation policies, schedules, and on-call rotations. 
