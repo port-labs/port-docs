@@ -3,11 +3,11 @@ sidebar_position: 2
 title: Port AI Assistant
 ---
 
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
 # Port AI Assistant
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
-:::
+<BetaFeatureNotice id="ai-form" />
 
 The Port AI Assistant is the fastest way to start using AI with Port - no configuration required. Available through a floating chat button, it provides instant, intelligent answers about your software catalog, actions, and Port's capabilities.
 

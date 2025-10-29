@@ -5,10 +5,9 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 One of Port's core offerings is the ability to automate and simplify the processes and routines of your developers.  
 This is done using two powerful tools:
 
-## 1. Self-service actions
+## 1. Actions
 
-Create a wide range of personalized, controlled actions that developers can use to scaffold a service, provision a cloud resource, or any other logic that serves your organization.  
-Self-service actions drive developer productivity by providing a consistent and repeatable way to perform common tasks, all with guardrails like manual approvals or consumption policies to comply with organizational standards.
+Actions are executable pieces of logic that developers or AI agents can run. You can create a wide range of personalized, controlled actions to scaffold a service, provision a cloud resource, or any other logic that serves your organization. Actions drive developer productivity by providing a consistent and repeatable way to perform common tasks, all with guardrails like manual approvals or consumption policies to comply with organizational standards.
 
 :::tip Live demo
 For real-world examples of self-service actions, check out our [live demo](https://showcase.port.io/self-serve).
