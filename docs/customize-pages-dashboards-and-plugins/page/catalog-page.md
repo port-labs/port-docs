@@ -187,6 +187,8 @@ The description will be displayed at the top of the page, under the page title:
 
 Large entity tables can result in long loading times. Use the following tips and best practices to improve performance.
 
+The [initial filters](#initial-filters) and [excluded properties](#excluded-properties) are defined when creating the page, while [calculation properties](#calculation-properties) are configured as part of the blueprint definition.
+
 ### Initial filters
 
 Initial filters are the most effective way to reduce loading times. You can define filters that resolve when Port queries the data (rather than after querying, like table filters), reducing the number of entities displayed in the table.
