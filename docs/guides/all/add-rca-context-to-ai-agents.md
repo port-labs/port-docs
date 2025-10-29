@@ -50,80 +50,80 @@ Follow the steps below to create the blueprint:
 
     The entities of this blueprint will represent different RCA documents from past incidents.
 
-    ```json showLineNumbers
-    {
-    "identifier": "rootCauseAnalysis",
-    "title": "Root Cause Analysis",
-    "icon": "Bug",
-    "description": "Historical Root Cause Analysis documents from past incidents, including resolutions, lessons learned, and preventive measures",
-    "schema": {
-        "properties": {
-        "summary": {
-            "type": "string",
-            "title": "Summary",
-            "description": "Brief summary of the incident"
-        },
-        "incidentDate": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Incident Date",
-            "description": "When the incident occurred"
-        },
-        "severity": {
-            "type": "string",
-            "title": "Severity",
-            "enum": ["Critical", "High", "Medium", "Low"],
-            "enumColors": {
-            "Critical": "red",
-            "High": "orange", 
-            "Medium": "yellow",
-            "Low": "green"
+        ```json showLineNumbers
+        {
+        "identifier": "rootCauseAnalysis",
+        "title": "Root Cause Analysis",
+        "icon": "Bug",
+        "description": "Historical Root Cause Analysis documents from past incidents, including resolutions, lessons learned, and preventive measures",
+        "schema": {
+            "properties": {
+            "summary": {
+                "type": "string",
+                "title": "Summary",
+                "description": "Brief summary of the incident"
+            },
+            "incidentDate": {
+                "type": "string",
+                "format": "date-time",
+                "title": "Incident Date",
+                "description": "When the incident occurred"
+            },
+            "severity": {
+                "type": "string",
+                "title": "Severity",
+                "enum": ["Critical", "High", "Medium", "Low"],
+                "enumColors": {
+                "Critical": "red",
+                "High": "orange", 
+                "Medium": "yellow",
+                "Low": "green"
+                }
+            },
+            "affectedServices": {
+                "type": "array",
+                "title": "Affected Services",
+                "description": "Services impacted by this incident"
+            },
+            "rootCause": {
+                "type": "string",
+                "format": "markdown",
+                "title": "Root Cause",
+                "description": "Detailed analysis of what caused the incident"
+            },
+            "resolution": {
+                "type": "string",
+                "format": "markdown", 
+                "title": "Resolution",
+                "description": "How the incident was resolved"
+            },
+            "preventiveMeasures": {
+                "type": "string",
+                "format": "markdown",
+                "title": "Preventive Measures",
+                "description": "Actions taken to prevent similar incidents"
+            },
+            "lessonsLearned": {
+                "type": "string",
+                "format": "markdown",
+                "title": "Lessons Learned",
+                "description": "Key takeaways and learnings from this incident"
+            },
+            "tags": {
+                "type": "array",
+                "title": "Tags",
+                "description": "Tags for categorizing and searching RCAs"
             }
+            },
+            "required": ["summary", "incidentDate", "severity", "rootCause", "resolution"]
         },
-        "affectedServices": {
-            "type": "array",
-            "title": "Affected Services",
-            "description": "Services impacted by this incident"
-        },
-        "rootCause": {
-            "type": "string",
-            "format": "markdown",
-            "title": "Root Cause",
-            "description": "Detailed analysis of what caused the incident"
-        },
-        "resolution": {
-            "type": "string",
-            "format": "markdown", 
-            "title": "Resolution",
-            "description": "How the incident was resolved"
-        },
-        "preventiveMeasures": {
-            "type": "string",
-            "format": "markdown",
-            "title": "Preventive Measures",
-            "description": "Actions taken to prevent similar incidents"
-        },
-        "lessonsLearned": {
-            "type": "string",
-            "format": "markdown",
-            "title": "Lessons Learned",
-            "description": "Key takeaways and learnings from this incident"
-        },
-        "tags": {
-            "type": "array",
-            "title": "Tags",
-            "description": "Tags for categorizing and searching RCAs"
+        "mirrorProperties": {},
+        "calculationProperties": {},
+        "aggregationProperties": {},
+        "relations": {}
         }
-        },
-        "required": ["summary", "incidentDate", "severity", "rootCause", "resolution"]
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {}
-    }
-    ```
-  </details>
+        ```
+    </details>
 
 5. Click `Create` to save the blueprint.
 
