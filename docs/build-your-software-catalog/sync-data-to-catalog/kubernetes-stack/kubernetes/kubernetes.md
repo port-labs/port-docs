@@ -81,7 +81,7 @@ To install the integration using Helm:
 <TabItem value="argo" label="ArgoCD">
 
 1. Install the `my-port-k8s-exporter` ArgoCD Application by creating the following `my-port-k8s-exporter.yaml` manifest:
-    :::note
+    :::note Configuration requirements
     Remember to replace the placeholders for `LATEST_HELM_RELEASE` `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
     
     You can find the latest version `port-k8s-exporter` chart in our [Releases](https://github.com/port-labs/helm-charts/releases?q=port-k8s-exporter&expanded=true) page.
@@ -90,7 +90,7 @@ To install the integration using Helm:
     :::
 
     <details>
-      <summary>ArgoCD Application</summary>
+      <summary><b>ArgoCD Application (click to expand)</b></summary>
     
     ```yaml showLineNumbers
     apiVersion: argoproj.io/v1alpha1
