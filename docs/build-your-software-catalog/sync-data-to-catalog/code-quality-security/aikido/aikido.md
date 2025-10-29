@@ -20,7 +20,7 @@ This integration allows you to:
 - Map repositories and their security findings
 - Maintain real-time synchronization between Aikido and Port
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Aikido into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 

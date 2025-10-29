@@ -29,7 +29,7 @@ The GCP Integration is relying on GCP's Asset Inventory API. That means:
 
 ## Mapping the resource to Port
 
-After you've found the resource in the [Cloud Asset Supported Resources](https://cloud.google.com/asset-inventory/docs/supported-asset-types), you can map it to Port by following these steps:
+After you've found the resource in the [Cloud Asset Supported resources](https://cloud.google.com/asset-inventory/docs/supported-asset-types), you can map it to Port by following these steps:
 
 ### Blueprint
 
