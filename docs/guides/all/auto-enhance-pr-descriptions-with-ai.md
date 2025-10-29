@@ -349,6 +349,10 @@ This Port-native approach combines organizational knowledge with code analysis:
 **Together:** A PR description that explains both *what* changed in the code AND *why* it matters to the business.
 :::
 
+## Example workflow
+
+Here's what happens when a PR is created in your repository:
+
 
 <Tabs groupId="coding-agent" defaultValue="claude" values={[
 {label: "Claude Code", value: "claude"},
@@ -430,7 +434,7 @@ Now let's test the complete setup and see how Port enriches PR descriptions with
 
 The PR starts with just an empty template - no business context, no explanation of what the code does or why it matters.
 
-<img src="/img/ai-agents/RAWPRTemplate.png" border="1px" width="80%" />
+<img src="/img/ai-agents/PRDescriptionRAWPRTemplate.png" border="1px" width="80%" />
 
 <h3>During Enhancement: Port Gathers Business Context</h3>
 
