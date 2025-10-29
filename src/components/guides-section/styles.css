@@ -605,3 +605,45 @@ html[data-theme="dark"] .guide-tags-title {
     gap: 8px;
     flex-wrap: wrap;
 }
+
+/* Show More button for Technologies section */
+
+.guide-tags-show-more-button {
+    height: 24px;
+    border-radius: 8px;
+    padding: 0px 8px;
+    align-items: center;
+    display: flex;
+    gap: 4px;
+    border: 1px dashed var(--Border-Medium, #D3D3D3);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+html[data-theme="dark"] .guide-tags-show-more-button {
+    border: 1px dashed var(--Border-Medium, #444);
+}
+
+.guide-tags-show-more-button:hover {
+    border: 1px dashed var(--Colorful-High-Grey, #5D5D5D);
+    background: var(--Colorful-Low-Grey, rgba(199, 199, 199, 0.15));
+}
+
+html[data-theme="dark"] .guide-tags-show-more-button:hover {
+    border: 1px dashed var(--Colorful-High-Grey, #E9E9E9);
+}
+
+.guide-tags-show-more-text {
+    color: var(--Text-Medium, rgba(0, 0, 0, 0.60)) !important;
+    font-feature-settings: 'liga' off, 'clig' off !important;
+    font-family: "DM Sans" !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: normal !important;
+}
+
+html[data-theme="dark"] .guide-tags-show-more-text {
+    color: var(--Text-Medium, rgba(255, 255, 255, 0.60)) !important;
+}

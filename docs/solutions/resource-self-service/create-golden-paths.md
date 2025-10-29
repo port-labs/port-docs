@@ -88,6 +88,7 @@ RESTful self-service actions directly create resources in your cloud provider or
 - [Create and Attach an EBS Volume](/guides/all/add-ec2-volume/): Provision a new EBS instance and attach to an EC2 Instance using Terraform in a GitLab pipeline.
 - [Create Azure Storage Account with Terraform from Jenkins](/guides/all/deploy-azure-resource/): Create an Azure Storage Account using Terraform in a Jenkins Pipeline.
 - [Manage Kubernetes Namespaces](/guides/all/manage-kubernetes-namespaces/): Enable developers to create and manage Kubernetes namespaces without manual intervention. Implemented with GitLab pipelines and Slack notifications.
+- [Streamline IaC with AI](/guides/all/streamline-iac-with-ai): Use Port AI agents to automate IaC provisioning and management.
 
 <img src="/img/self-service-actions/setup-backend/gitlab-pipeline/testAddingDisk.png" alt="Autoscaling Dashboard Example" width="60%" style={{border: "1px solid #ddd", borderRadius: "4px", marginBottom: "1.5rem"}} />
 

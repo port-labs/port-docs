@@ -1,11 +1,11 @@
 ---
 id: get-actions-automations
 title: "Get actions/automations"
-description: "This route allows you to fetch one or more self-service actions"
+description: "This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).<br/><br/>:::info Version parameter<br/>Set the `version` parameter to `v2` for the latest version of the API.:::"
 sidebar_label: "Get actions/automations"
 hide_title: true
 hide_table_of_contents: true
-api: eJztV11v2zYU/SuE9rIGttUUfTKGAcZiZMG21HBdYEUSxLR0bXORSZWknLqG//sOKcmSY8vNknTYsL3IJnl5eO/luR9cB5bPTNC9CnqRFUqa4KYVxGQiLVI3DrrBaC4M0yqzxHiSqHvDVipjVrEp2WjOlCSmNFsoTcxQMm0b0ksRQTgHvJZcxiEkeGbVgvs5JqQD0WygtIVgpDJpOz9MdPij/4zmxCIcxu4FPinpqdILALFEzQQW2Lh3eTZmE7L3RNKpxT5lpFcs5ZovyJI2WISuLYbDmSabaS8GjFwrP1/XyM65ZRjAIutO1wIogteVUiwhDhxnKoAmcAlrgGuxaE7RHXMigLuWV7GKsgVJ69dvvp9bm5puGGLadFJ4oSNUWIC1AdaugYWvOtey0uNadrtdIafqWr4nD8/GS1gM0XHlAHdB4+WbMYPrvEzCLRnLCkmmpn62N7joeMBrGbSCyn1gxDowMGLBg+46sKuUQAWuNV9BDr5ZmNq8sVrIWbDZYMlRxl8G5CTQ3DZv162IYb+YCtJY0vQpE5rioDvliaEWMFaJE3ZXjXX6nCYqxoTVGe1TkliFFprSmvyg0F/HLuXCnLX3XNotdTvBpvVyRk6SjFJI2L/Bzu1ZmLqfK7MNtrBOaW+wMPNnGgwdZbZwKeKs97H9BuOz/q/9UR9/fhr2e/hz0+QThdD1yryEI662aMwpGJqGKIo0gertei5qAxzRTDIiExpkg7SdiTYObheM+W7CjYjaMVkuEvNqj0/73GFDSmjpppRMVj7KDmW/BpdPlEIukUGD39JskuDi4KwDftv1zDt3ui51cWqcnNRIcHLSYRdTNnZOHbdyXbfoOwnQp9oJ5eZR3KD4HifqRmO6QgQrDhsHhNmM9K1H3LPveQztX44uRh9vc16eYaGY+DA4253IKewmRhe/9Ye3g+G7QX+Ihf7vg4uhX+hdYlTg/dy7PHeEH364rIG7UYXs5P16LtwYFKX9tERgf/2CHfW9aFgUqWI/rs9T9HiKO0DT2qW/bAbcMez2EUn/cQxbnmKwfNPIp6Kifd2T71OKnCamrHzbYgh3ZYY6bICgRDLF/8fWzmCDfslQlKFfWPmiOUGPAGOhOPJQ3OVlW+UENZkUA/JOffv61P3s6nhGU54lFteWS8KqSEnrmAJZnqYJ+h9/238Yt6HuwFS7DGlFDq/u3Bebjd26OyCtlT5wo61gQcbwGR2+7cqxVw63xIFFPI6FU4cng9rp+XEbt/Xt67f7VvaQsQz6P+TJe2HzjgvaL0GWuFbwwGXDpHJpLZPxP9oV1a7jTnnIyad5YpP7Fq3aXEGTYEbWd292jkG4PC07ycBxUy/Lfi7TCdbLoslTUdZMnwb2VzNTCdRo/t65OfdsSfYqdaTiF6oFZy+Dilp8KbsAH8BzBAZ25Xlkqvx2YX0z4B8ECCwX8kVcd4PTzmt3L6kydsH9TRfo52QPdT7BAy+vK+L8/5r577xmCkpa+mzDNOHCt1ue5esiVoriwqunL5pp6+bXa3SE9EEnm42bzkuOi6FYGD5JmmrMLtNe5pHSYMgdwuzw02rJ8TzAmo/q5+v75MfGUcUbnkvP0P1f+j446qX6A+qJrvl2D4SjmtefMMc1z+UfvAqewYNv1ywfNfhhW/9XjG7umJ/oh2/S6h41v+rCK5Vv3ABlZ+JK+5Xr34vK7xJpvq0XRZTW3bXX1zmUbaNz3h/lj8z5bs9x53uO4o9DL5fkqob9sBnJVXBf592DW9brvKNBGdha6pcadxQmltLOR3gKbv4Eb5d4pQ==
+api: eJztV/9v6jYQ/1es7Je9Ckhb9Sc0TUIDddW2PkTptKeqKiY5iNcQ59lOeAzxv+/OTkgohNf1y7Rp+yVg3/l89/Hnzue1Z/hce907rxcYIRPt3be8EHSgREpjr+uNI6GZkpkBxuNYLjVbyYwZyWZggojJBJhUbCEVMA3xrK1B5SJAZWeQ8ST0UYFnRi64mxIJ2VBsKJVBvUBmiel8N1X+9/YzjoAFuBdbCvykoGZSLRhnsZwLnGeT3nV/wqZglgAJOcU+Z6BWLOWKL8CA0ihET1u0N1NgMuXUai7t+GMibhgOMBxDeyuBRgSvuyRZDBzN2Dj5FOFostZiQQTBIyMVsnYXyiBbQGKs+P7byJhUd30fp3UnRQQ6QvqFrTbaatds+R9qPnS7XZHMJPsVA0RhFa6V3oDbbpI78aSS02FN8vMJQxytTswNaMMKTSZndrY3vOrgHl7Lq4BEZqw9jQEtuNdde2aVAlKCK8VXqIcwLXRtXhslkrm32aCIqGOPBfUStEbLbJAPIkQwxEyAQpGCz5lQEHrdGY81tNDGKiZlOnOUw5c0liFOGJXBPjWBVdZ8XUbiNvIPcM937F3yxGwp3PE2rbcLchpnkKKG+Rvi3O6FU8tI6m3S+XV224CFjl4ZMPqYZAsqFf3ep/Y5jvuDnwfjAf75YTTo4Z/7Jkwk5rB15i2AuNtaY+SgrxtSKlCANG/Xa1IbjWNiQxKA9jXWhbSdiTZu3C4Y882UaxG0QzBcxPrDHp/2ucNGEENOUzKJVzbDDlXBBsinUmJZSbwG3NJsGuPBIVgHcNtF5iPtrkpfyI2TkxoJTk467GrGJgTqpOV83VrfqYW25k7BhQdhg+N7nKgHjdOVRWTF4eDQwnwO6sFa3IvvdQwdXI+vxp8eHC/7KCgmbof93QlHYZoYX/0yGD0MRx+HgxEKBr8Nr0ZW0LvGUWHvx971JRF+dHtdM06jyjLpW7lTbkyKMn7IMbG/fsBEfavqF/dVsR6Pz1L0eIk7QNPaob9tBdwJ7OEZRf95DMvPcJCfN/KpuM2+juRNCgF5ostbb3sRIlyZhg4bYlJiMcX/z703vQ32TRqCDFuHlb00p9guYLDoONahsMvL9ooUFegUB2BBvTg9o59dH/sw41ls8NicJkYVyMQQU1CXp2mMnZA97d81LagDmCqqkEY48/KRvrhYmy3cHigl1YETbXkL0JrP4fBpV8Dekd3SDkbEw1CQOzwe1nZ3221o6cXpxX6UPaxYGhtBrJNLYVzzhd7nSJawduEhlzVLJJW1LAn/0VBUq46D8pSTL0Ni47DFVi2S6Ik3B2O7NxPhwM/PyrbSI26qvOznMhWjvLw0eSrKO9OWgX1ppiuFGs1vCGaHbEn2qnSk4ieoJWcvQxeV+KPsAmwCR5gYuMrVkZm0y4WxzYB9GWBiUcoXed31zjqndC6p1GbB7UkX1i/BHOp8vCcoryvi/P+q+e+9agpqGvhi/DTmwrZdlu3rImeKS4ZXT2Fsqg3Nr9fYGcKtijcbmnZXD+VSKDSfxk13zS7j3uax0hDII6bb4SdWzvGZgDKb3a/398WPjqOONzybXuH7v/SdcBSl+kPqhdC830PhqOf1p8xxz53+k9fBK3jwfk3z0YCftvd/JejmzvmFOLxLy3s0/Kobr1y+pwHeQFO64u+ojy86ACqkblkvCCCtw7XX35GVbcNzORi7x2a023s82t6j+EPWS1Gyqtl+2pQ4F+hL6B5csl67zgavgW2kVtS4ogix1CaM8Em4+ROtsnrl
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -36,16 +36,7 @@ import Heading from "@theme/Heading";
 
 
 
-This route allows you to fetch one or more self-service actions
-and/or automations in your Port account.<br/><br/>The call will perform
-a logical `AND` between all query parameters below, and return all
-actions and automations that match the criteria.<br/><br/>To learn more
-about actions and automations, check out the
-[documentation](https://docs.port.io/actions-and-automations/).
-:::info Version parameter value
-Set the `version` parameter to `v2` for the latest version of the API.
-:::
-
+This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).<br/><br/>:::info Version parameter<br/>Set the `version` parameter to `v2` for the latest version of the API.:::
 
 <Heading
   id={"request"}
