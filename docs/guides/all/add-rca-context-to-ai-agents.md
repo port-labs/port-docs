@@ -46,82 +46,83 @@ Follow the steps below to create the blueprint:
 4. Copy and paste the JSON schema from below:
 
     <details>
-    <summary>`Root Cause Analysis` blueprint</summary>
+    <summary><b>`Root Cause Analysis` blueprint (click to expand)</b></summary>
 
     The entities of this blueprint will represent different RCA documents from past incidents.
 
-    ```json showLineNumbers
-    {
-    "identifier": "rootCauseAnalysis",
-    "title": "Root Cause Analysis",
-    "icon": "Bug",
-    "schema": {
-        "properties": {
-        "summary": {
-            "type": "string",
-            "title": "Summary",
-            "description": "Brief summary of the incident"
-        },
-        "incidentDate": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Incident Date",
-            "description": "When the incident occurred"
-        },
-        "severity": {
-            "type": "string",
-            "title": "Severity",
-            "enum": ["Critical", "High", "Medium", "Low"],
-            "enumColors": {
-            "Critical": "red",
-            "High": "orange", 
-            "Medium": "yellow",
-            "Low": "green"
+        ```json showLineNumbers
+        {
+        "identifier": "rootCauseAnalysis",
+        "title": "Root Cause Analysis",
+        "icon": "Bug",
+        "description": "Historical Root Cause Analysis documents from past incidents, including resolutions, lessons learned, and preventive measures",
+        "schema": {
+            "properties": {
+            "summary": {
+                "type": "string",
+                "title": "Summary",
+                "description": "Brief summary of the incident"
+            },
+            "incidentDate": {
+                "type": "string",
+                "format": "date-time",
+                "title": "Incident Date",
+                "description": "When the incident occurred"
+            },
+            "severity": {
+                "type": "string",
+                "title": "Severity",
+                "enum": ["Critical", "High", "Medium", "Low"],
+                "enumColors": {
+                "Critical": "red",
+                "High": "orange", 
+                "Medium": "yellow",
+                "Low": "green"
+                }
+            },
+            "affectedServices": {
+                "type": "array",
+                "title": "Affected Services",
+                "description": "Services impacted by this incident"
+            },
+            "rootCause": {
+                "type": "string",
+                "format": "markdown",
+                "title": "Root Cause",
+                "description": "Detailed analysis of what caused the incident"
+            },
+            "resolution": {
+                "type": "string",
+                "format": "markdown", 
+                "title": "Resolution",
+                "description": "How the incident was resolved"
+            },
+            "preventiveMeasures": {
+                "type": "string",
+                "format": "markdown",
+                "title": "Preventive Measures",
+                "description": "Actions taken to prevent similar incidents"
+            },
+            "lessonsLearned": {
+                "type": "string",
+                "format": "markdown",
+                "title": "Lessons Learned",
+                "description": "Key takeaways and learnings from this incident"
+            },
+            "tags": {
+                "type": "array",
+                "title": "Tags",
+                "description": "Tags for categorizing and searching RCAs"
             }
+            },
+            "required": ["summary", "incidentDate", "severity", "rootCause", "resolution"]
         },
-        "affectedServices": {
-            "type": "array",
-            "title": "Affected Services",
-            "description": "Services impacted by this incident"
-        },
-        "rootCause": {
-            "type": "string",
-            "format": "markdown",
-            "title": "Root Cause",
-            "description": "Detailed analysis of what caused the incident"
-        },
-        "resolution": {
-            "type": "string",
-            "format": "markdown", 
-            "title": "Resolution",
-            "description": "How the incident was resolved"
-        },
-        "preventiveMeasures": {
-            "type": "string",
-            "format": "markdown",
-            "title": "Preventive Measures",
-            "description": "Actions taken to prevent similar incidents"
-        },
-        "lessonsLearned": {
-            "type": "string",
-            "format": "markdown",
-            "title": "Lessons Learned",
-            "description": "Key takeaways and learnings from this incident"
-        },
-        "tags": {
-            "type": "array",
-            "title": "Tags",
-            "description": "Tags for categorizing and searching RCAs"
+        "mirrorProperties": {},
+        "calculationProperties": {},
+        "aggregationProperties": {},
+        "relations": {}
         }
-        },
-        "required": ["summary", "incidentDate", "severity", "rootCause", "resolution"]
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {}
-    }
-    ```
+        ```
     </details>
 
 5. Click `Create` to save the blueprint.
@@ -150,7 +151,7 @@ Let's create our first RCA entity using the Port UI:
 
 3. Toggle JSON mode and copy and paste the following JSON:
     <details>
-    <summary>Database Connection Pool Exhaustion incident</summary>
+    <summary><b>Database Connection Pool Exhaustion incident (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -190,7 +191,7 @@ Let us add another RCA entity:
 2. Toggle JSON mode and copy and paste the following JSON:
 
     <details>
-    <summary>Memory Leak incident</summary>
+    <summary><b>Memory Leak incident (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -340,7 +341,7 @@ else:
 **Example integration scenarios:**
 
 <details>
-<summary>GitHub Actions workflow</summary>
+<summary><b>GitHub Actions workflow (click to expand)</b></summary>
 
 ```yaml title=".github/workflows/create-rca.yml"
 name: Create RCA from Issue
@@ -389,11 +390,10 @@ jobs:
           print(f'RCA created: {response.status_code}')
           "
 ```
-
 </details>
 
 <details>
-<summary>Standalone Python script for bulk import</summary>
+<summary><b>Standalone Python script for bulk import (click to expand)</b></summary>
 
 ```python title="bulk_import_rcas.py"
 #!/usr/bin/env python3
@@ -465,7 +465,6 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-
 </details>
 
 </TabItem>
@@ -598,9 +597,16 @@ For a more comprehensive knowledge base, consider adding 5-10 RCA documents cove
 
 ## Update AI agent configuration
 
-Now we'll modify the Incident Manager AI agent to include access to our RCA documents.
+The Incident Manager AI agent uses the MCP tools pattern (`^(list|get|search|track|describe)_.*`), which automatically provides access to all blueprints in your catalog - including the RCA blueprint you just created. This means the agent can already search and reference RCA documents without any configuration changes.
 
-<h3> Add RCA blueprint to allowed blueprints</h3>
+:::tip Automatic blueprint discovery
+With the MCP tools pattern, AI agents automatically discover new blueprints you create. You don't need to manually add `"rootCauseAnalysis"` to any configuration - the agent already has access to query and reference these documents.
+:::
+
+
+<h3> Update the agent prompt (Optional)</h3>
+
+While the agent can automatically access RCA documents, updating the prompt helps guide it on when and how to use this information effectively.
 
 1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page.
 
@@ -608,77 +614,52 @@ Now we'll modify the Incident Manager AI agent to include access to our RCA docu
 
 3. Click on `Edit`.
 
-4. In the `allowed_blueprints` array, add `"rootCauseAnalysis"`:
+4. Click on `Edit property` on the `Prompt` field.
 
-    ```json showLineNumbers
-        "allowed_blueprints": [
-        "pagerdutyService",
-        "pagerdutyIncident", 
-        "pagerdutyEscalationPolicy",
-        "pagerdutySchedule",
-        "pagerdutyOncall",
-        "pagerdutyUser",
-        "_user",
-        "_team",
-        "service",
-        "rootCauseAnalysis" //highlight
-        ]
-    ```
-
-5. Click `Save` to save the changes.
-
-
-<h3> Update the agent prompt</h3>
-
-Enhance the prompt to include instructions about using RCA context:
-
-1. Click on `Edit property` on the `Prompt` field.
-
-2. Replace the existing content with the following:
+5. Replace the existing content with the following:
 
     <details>
-    <summary>Enhanced agent prompt</summary>
+    <summary><b>Enhanced agent prompt (click to expand)</b></summary>
     
-    ```markdown showLineNumbers"
-        You are an agent responsible for answering questions about PagerDuty incidents, services, escalation policies, schedules, and on-call rotations. 
-        You also have access to historical Root Cause Analysis (RCA) documents from past incidents.
-
-        ## Guidelines
-        - Provide clear information about incidents
-        - Identify who is on-call for services (both primary and secondary on-call)  
-        - Report on incident statistics and resolution times
-        - When relevant, reference past RCA documents to provide context and suggest solutions
-        - Use RCA lessons learned to help prevent similar incidents
-        - Suggest preventive measures based on historical incident patterns
+        ```markdown showLineNumbers"
+            You are an agent responsible for answering questions about PagerDuty incidents, services, escalation policies, schedules, and on-call rotations. 
+            You also have access to historical Root Cause Analysis (RCA) documents from past incidents.
+    
+            ### Guidelines
+            - Provide clear information about incidents
+            - Identify who is on-call for services (both primary and secondary on-call)  
+            - Report on incident statistics and resolution times
+            - When relevant, reference past RCA documents to provide context and suggest solutions
+            - Use RCA lessons learned to help prevent similar incidents
+            - Suggest preventive measures based on historical incident patterns
         ```
-    </details>
+   </details>
 
-3. Click `Save` to save the changes.
+6. Click `Save` to save the changes.
 
-<h3> Add RCA-focused conversation starters</h3>
+<h3> Add RCA-focused conversation starters (Optional)</h3>
 
 1. Click on `Edit property` on the `Conversation starters` field.
 
 2. Replace the existing content with the following:
 
     <details>
-    <summary>Conversation starters</summary>
+     <summary><b>Conversation starters (click to expand)</b></summary>
 
-    ```json showLineNumbers
+        ```json showLineNumbers
         [
-        "Who is on call for the payment service?",
-        "What are the active incidents right now?", 
-        "What is our average incident resolution time?",
-        "Have we seen database connection issues before?",
-        "What can we learn from past payment service incidents?",
-        "Show me RCAs for incidents similar to the current one"
+          "Who is on call for the payment service?",
+          "What are the active incidents right now?", 
+          "What is our average incident resolution time?",
+          "Have we seen database connection issues before?",
+          "What can we learn from past payment service incidents?",
+          "Show me RCAs for incidents similar to the current one"
         ]
-   ```
+        ```
     </details>
 
-3. Click `Save property` to save the changes.
 
-4. Click on `Update` to save the changes to the agent.
+3. Click on `Update` to save the changes to the agent.
 
 :::info Using RCA Context
 You can now use these RCA context in your agent's responses:
