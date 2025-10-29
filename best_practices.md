@@ -1,14 +1,6 @@
-# Contributing to Port's documentation
+# Port documentation style guide
 
-Here you can find resources and guidelines on how to contribute to Port's documentation and how to correctly write and fix documentation content.
-
-## How to contribute
-
-The best way to suggest edits for an existing page is by using the "Edit this page" button at the bottom of most docs, this button will take you to the GitHub interface to make and propose changes.
-
-If you want to add a new documentation page, please fork the repository and after adding the new docs, create a PR which will be reviewed by our team.
-
-Contributions are very welcome. If you need help planning your contribution, feel free to ask us by opening an issue in this repository or by writing in our [community Slack](https://join.slack.com/t/getport/shared_invite/zt-1v5z1z1v-3~1Q1Q1).
+This document details guidelines for contributing to Port's documentation, and demonstrates how to correctly write and review documentation content.
 
 ## Styling guidelines
 

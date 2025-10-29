@@ -8,7 +8,7 @@ description: Learn how to use Port's AI capabilities to detect scorecard degrada
 Scorecards in Port help you evaluate the maturity, production readiness, and engineering quality of entities in your software catalog. 
 However, when scorecard statistics degrade, manual intervention is often required to identify and fix the issues. 
 
-This guide demonstrates how to create an AI-powered system that automatically detects scorecard degradation and trigger Github Copilot for automated code fixes.
+This guide demonstrates how to create an AI-powered system that automatically detects service scorecard degradation and trigger Github Copilot for automated code fixes.
 
 <img src="/img/guides/self-healing-scorecard-architecture.png" border="1px" width="100%" />
 
@@ -102,8 +102,8 @@ This blueprint will track tasks created by the AI agent for scorecard remediatio
           "required": false,
           "many": false
         },
-        "repository": {
-          "target": "githubRepository",
+        "service": {
+          "target": "service",
           "required": true,
           "many": false
         }
@@ -227,7 +227,7 @@ We will create self-service actions that the AI agent can use for scorecard reme
             "labels"
           ]
         },
-        "blueprintIdentifier": "githubRepository"
+        "blueprintIdentifier": "service"
       },
       "invocationMethod": {
         "type": "WEBHOOK",
@@ -248,7 +248,7 @@ We will create self-service actions that the AI agent can use for scorecard reme
             "source": "ai_agent"
           },
           "relations": {
-            "repository": "{{ .entity.identifier }}"
+            "service": "{{ .entity.identifier }}"
           }
         }
       },
@@ -278,27 +278,25 @@ Next, we will create an AI agent that analyzes scorecard degradation and creates
     {
       "identifier": "self_healing_scorecard",
       "title": "Self Healing Scorecard",
-      "icon": "Details",
-      "team": [],
+      "icon": "AI",
       "properties": {
-        "description": "Analyzes scorecard rule failures and creates tasks for remediation",
+        "description": "Analyzes scorecard rule failures and creates Jira tickets and GitHub issues for remediation",
         "status": "active",
-        "allowed_blueprints": [
-          "githubIssue",
-          "githubRepository",
-          "aiAgentTask",
-          "githubPullRequest"
-        ],
-        "allowed_actions": [
-          "create_ai_agent_task"
-        ],
         "prompt": "You are a **Self-Healing Scorecards AI Agent**. Your role is to **analyze scorecard degradation** and create **comprehensive remediation workflows**.\n\n## Context\n\nWhen a scorecard's statistics decrease (indicating degraded performance), you need to:\n\n1. Analyze which specific rule(s) failed and caused the degradation\n2. Create a task that will be used to generate a GitHub issue for remediation\n\n⚠️ IMPORTANT:\nYou must only address rules that have changed from SUCCESS to FAILURE in the current diff.\nDo not include or attempt to fix any unrelated or previously failing rules. This avoids unnecessary scope expansion and ensures Copilot-generated PRs remain focused and minimal.\n\n## 🔍 Analysis Process\n\n### ✅ Step 1: Identify Failed Rules\n\n* Examine the scorecard rule results to identify which rule(s) transitioned from **SUCCESS → FAILURE**\n* Compare the current state with the previous state to determine the diff and understand what changed\n* Only include rules that newly failed in this diff\n\n### 🧠 Step 2: Root Cause Analysis\n\nFor each newly failed rule:\n\n* Determine what specific condition is not being met\n* Identify what entity properties or relationships are missing or incorrect\n* Specify what actions would resolve the issue\n\n### 📝 Step 3: Create Task for Remediation\n\nGenerate a task entity by calling the \"create_ai_agent_task\" self service action with:\n\n* **Title**:\n  `\"Fix Scorecard Degradation: [What Specific Rule Changed]\"`\n\n* **Description** (include):\n  * Identify the failed rule with specific failure reasons\n  * Impact assessment\n  * Specific code or configuration changes needed\n  * Files that need to be modified\n  * Examples of correct implementations\n  * Links to relevant entities and scorecards\n\n* **Labels**:\nAdd  relevant labels (e.g., bug, enhancement, infra, docs) including a MANDATORY \"auto_assign\" label in all creations. This will be used to track issues created by Port's AI agent.\n\n## 📏 Guidelines\n\n* Be **specific** about what needs to be fixed\n* Provide **actionable**, implementable steps\n* Include **relevant links and context**\n* Prioritize issues based on **impact**\n* Ensure each task contain **sufficient detail** for human or AI resolution\n* Use **markdown formatting** for better readability\n* Only generate tasks for rules that degraded in this specific diff",
-        "execution_mode": "Automatic"
+        "execution_mode": "Automatic",
+        "tools": [
+          "^(list|get|search|track|describe)_.*",
+          "run_create_ai_agent_task"
+        ]
       },
       "relations": {}
     }
     ```
     </details>
+
+    :::tip MCP Enhanced Capabilities
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for scorecard analysis. Additionally, we explicitly add `run_create_ai_agent_task` to the tools, which instructs the AI agent to call this specific action to create remediation tasks for scorecard degradation.
+    :::
 
 5. Click `Create` to save the agent.
 
@@ -324,15 +322,15 @@ This automation continuously monitors scorecard statistics and triggers the AI a
 
     ```json showLineNumbers
     {
-      "identifier": "repository_scorecard_update",
-      "title": "Repository Scorecard Update",
-      "description": "Trigger this automation when the scorecard associated with a repository is degraded",
-      "icon": "Github",
+      "identifier": "service_scorecard_update",
+      "title": "Service Scorecard Update",
+      "description": "Trigger this automation when the scorecard associated with a service is degraded",
+      "icon": "Service",
       "trigger": {
         "type": "automation",
         "event": {
           "type": "ENTITY_UPDATED",
-          "blueprintIdentifier": "githubRepository"
+          "blueprintIdentifier": "service"
         },
         "condition": {
           "type": "JQ",
@@ -416,7 +414,7 @@ This automation bridges the gap between Port's AI agent analysis and GitHub's de
             "body": "{{.event.diff.after.response.entity.properties.description}} *IMPORTANT NOTE FOR COPILOT*: When creating a pull request to fix this issue, you MUST ALWAYS include the Port Task Identifier in the PR description or body for tracking purposes. Here is the Port Task Identifier for this issue: {{ .event.diff.after.response.entity.identifier }}",
             "labels": "{{.event.diff.after.response.entity.properties.labels}}"
           },
-          "entity": "{{ .event.diff.after.response.entity.relations.repository }}"
+          "entity": "{{ .event.diff.after.response.entity.relations.service.repository }}"
         }
       },
       "publish": true

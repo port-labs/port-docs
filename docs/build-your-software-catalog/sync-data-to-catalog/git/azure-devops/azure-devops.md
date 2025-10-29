@@ -16,7 +16,7 @@ This integration allows you to:
 - Manage Port entities using GitOps.
 
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Azure DevOps into Port are listed below.
 
