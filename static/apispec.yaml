@@ -338,6 +338,7 @@ components:
                   - propertySchema
                 additionalProperties: false
               - type: object
+                title: Path Filter Rule
                 anyOf:
                   - type: object
                     properties:
@@ -716,6 +717,7 @@ components:
                   - propertySchema
                 additionalProperties: false
               - type: object
+                title: Path Filter Rule
                 anyOf:
                   - type: object
                     properties:
@@ -1362,7 +1364,10 @@ components:
                               - scorecard
                               - action
                               - integration
-                        description: Fetch all audit logs related to the specified resource type/s.
+                        description: "Fetch all audit logs related to the specified resource
+                          type/s.<br/>**Possible values**: [`blueprint`,
+                          `entity`, `run`, `webhook`, `scorecard`, `action`,
+                          `integration`]"
                       includes:
                         type: array
                         style: form
@@ -1669,6 +1674,8 @@ components:
                         enum:
                           - v1
                           - v2
+                        description: Specifies the API version to use. Please use `v2` for the latest
+                          version of the API.
                       action:
                         type: string
                       source:
@@ -2488,6 +2495,7 @@ components:
                                       - propertySchema
                                     additionalProperties: false
                                   - type: object
+                                    title: Path Filter Rule
                                     anyOf:
                                       - type: object
                                         properties:
@@ -2848,6 +2856,7 @@ components:
                                       - propertySchema
                                     additionalProperties: false
                                   - type: object
+                                    title: Path Filter Rule
                                     anyOf:
                                       - type: object
                                         properties:
@@ -3761,7 +3770,10 @@ components:
                                     - scorecard
                                     - action
                                     - integration
-                              description: Fetch all audit logs related to the specified resource type/s.
+                              description: "Fetch all audit logs related to the specified resource
+                                type/s.<br/>**Possible values**: [`blueprint`,
+                                `entity`, `run`, `webhook`, `scorecard`,
+                                `action`, `integration`]"
                             includes:
                               type: array
                               style: form
@@ -4069,6 +4081,8 @@ components:
                               enum:
                                 - v1
                                 - v2
+                              description: Specifies the API version to use. Please use `v2` for the latest
+                                version of the API.
                             action:
                               type: string
                             source:
@@ -4888,6 +4902,7 @@ components:
                                             - propertySchema
                                           additionalProperties: false
                                         - type: object
+                                          title: Path Filter Rule
                                           anyOf:
                                             - type: object
                                               properties:
@@ -5248,6 +5263,7 @@ components:
                                             - propertySchema
                                           additionalProperties: false
                                         - type: object
+                                          title: Path Filter Rule
                                           anyOf:
                                             - type: object
                                               properties:
@@ -6132,7 +6148,7 @@ components:
                   - propertySchema
                 additionalProperties: false
               - type: object
-                title: Path filter rule
+                title: Path Filter Rule
                 anyOf:
                   - type: object
                     properties:
@@ -6585,6 +6601,7 @@ paths:
                                       - propertySchema
                                     additionalProperties: false
                                   - type: object
+                                    title: Path Filter Rule
                                     anyOf:
                                       - type: object
                                         properties:
@@ -7470,9 +7487,9 @@ paths:
           style: form
           explode: true
           description: 'An array of values from the [entity
-            JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure).
+            JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure).
             Only these values will be returned in the response.<br/>For example:
-            `{ "properties.propertyIdentifier","identifier"}`'
+            `{ "properties.propertyIdentifier","identifier"}`.'
         - schema:
             type: array
             items:
@@ -7483,7 +7500,7 @@ paths:
           style: form
           explode: true
           description: 'An array of values from the [entity
-            JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
+            JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
         - schema:
@@ -8468,9 +8485,9 @@ paths:
           style: form
           explode: true
           description: 'An array of values from the [entity
-            JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure).
+            JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure).
             Only these values will be returned in the response.<br/>For example:
-            `{ "properties.propertyIdentifier","identifier"}`'
+            `{ "properties.propertyIdentifier","identifier"}`.'
         - schema:
             type: array
             items:
@@ -8481,7 +8498,7 @@ paths:
           style: form
           explode: true
           description: 'An array of values from the [entity
-            JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
+            JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
         - schema:
@@ -9407,7 +9424,7 @@ paths:
                           - propertySchema
                         additionalProperties: false
                       - type: object
-                        title: Path filter rule
+                        title: Path Filter Rule
                         anyOf:
                           - type: object
                             properties:
@@ -9487,9 +9504,9 @@ paths:
           style: form
           explode: true
           description: 'An array of values from the [entity
-            JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure).
+            JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure).
             Only these values will be returned in the response.<br/>For example:
-            `{ "properties.propertyIdentifier","identifier"}`'
+            `{ "properties.propertyIdentifier","identifier"}`.'
         - schema:
             type: array
             items:
@@ -9500,7 +9517,7 @@ paths:
           style: form
           explode: true
           description: 'An array of values from the [entity
-            JSON](${DOCS_URL}/build-your-software-catalog/sync-data-to-catalog/#json-structure)
+            JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure)
             to be ommitted from the response.<br/>For example: `{
             "properties.propertyIdentifier","identifier"}`'
         - schema:
@@ -11132,6 +11149,7 @@ paths:
                                     lead to the desired blueprint.
                                 title:
                                   type: string
+                                  maxLength: 100
                                   description: The title of the ownership property. The default value is `Owning
                                     teams`.
                               additionalProperties: false
@@ -11149,6 +11167,7 @@ paths:
                                     - Direct
                                 title:
                                   type: string
+                                  maxLength: 100
                                   description: The title of the ownership property. The default value is `Owning
                                     teams`.
                               additionalProperties: false
@@ -11161,9 +11180,10 @@ paths:
                           properties:
                             properties:
                               type: object
-                              description: |
-                                The properties of the blueprint.
-                                Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                              description: "The properties of the blueprint.<br></br> Each property identifier
+                                can be `<= 100 characters` long, values must
+                                match the following pattern:
+                                `^[A-Za-z0-9@_=\\\\-]+$`."
                               propertyNames:
                                 pattern: ^[A-Za-z0-9@_=\\-]+$
                                 maxLength: 100
@@ -11172,6 +11192,7 @@ paths:
                                 properties:
                                   title:
                                     type: string
+                                    maxLength: 100
                                     description: The title of the property.
                                   description:
                                     type: string
@@ -11253,10 +11274,14 @@ paths:
                             - properties
                         calculationProperties:
                           type: object
-                          description: |
-                            The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                            of the blueprint.
-                            Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                          description: "The [calculation
+                            properties](https://docs.port.io/build-your-softwar\
+                            e-catalog/customize-integrations/configure-data-mod\
+                            el/setup-blueprint/properties/calculation-property/)
+                            of the blueprint. <br></br> Each calculation
+                            property identifier can be `<= 100 characters` long,
+                            values must match the following pattern:
+                            `^[A-Za-z0-9@_=\\\\-]+$`."
                           default: {}
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -11267,6 +11292,7 @@ paths:
                             properties:
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the property.
                               description:
                                 type: string
@@ -11385,10 +11411,13 @@ paths:
                               - type
                         mirrorProperties:
                           type: object
-                          description: |
-                            The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                            of the blueprint.
-                            Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                          description: "The [mirror
+                            properties](https://docs.port.io/build-your-software-c\
+                            atalog/customize-integrations/configure-data-model/\
+                            setup-blueprint/properties/mirror-property/) of the
+                            blueprint. <br></br> Each mirror property identifier
+                            can be `<= 100 characters` long, values must match
+                            the following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
                             maxLength: 100
@@ -11403,16 +11432,21 @@ paths:
                                   last identifier is the property identifier.
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the property.
                             additionalProperties: false
                             required:
                               - path
                         aggregationProperties:
                           type: object
-                          description: |
-                            The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                            of the blueprint.
-                            Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                          description: "The [aggregation
+                            properties](https://docs.port.io/build-your-softwar\
+                            e-catalog/customize-integrations/configure-data-mod\
+                            el/setup-blueprint/properties/aggregation-property/)
+                            of the blueprint. <br></br> Each aggregation
+                            property identifier can be `<= 100 characters` long,
+                            values must match the following pattern:
+                            `^[A-Za-z0-9@_=\\\\-]+$`."
                           default: {}
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -11422,6 +11456,7 @@ paths:
                             properties:
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the property.
                               description:
                                 type: string
@@ -11572,11 +11607,13 @@ paths:
                               - calculationSpec
                         relations:
                           type: object
-                          description: |
-                            The
-                            [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                            of the blueprint.
-                            Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                          description: "The
+                            [relations](https://docs.port.io/build-your-software-catalog/c\
+                            ustomize-integrations/configure-data-model/relate-b\
+                            lueprints/) of the blueprint. <br></br> Each
+                            relation identifier can be `<= 100 characters` long,
+                            values must match the following pattern:
+                            `^[A-Za-z0-9@_=\\\\-]+$`."
                           propertyNames:
                             pattern: ^[A-Za-z0-9@_=\\-]+$
                             maxLength: 100
@@ -11585,6 +11622,7 @@ paths:
                             properties:
                               title:
                                 type: string
+                                maxLength: 100
                               target:
                                 type: string
                               required:
@@ -11754,6 +11792,7 @@ paths:
                             lead to the desired blueprint.
                         title:
                           type: string
+                          maxLength: 100
                           description: The title of the ownership property. The default value is `Owning
                             teams`.
                       additionalProperties: false
@@ -11771,6 +11810,7 @@ paths:
                             - Direct
                         title:
                           type: string
+                          maxLength: 100
                           description: The title of the ownership property. The default value is `Owning
                             teams`.
                       additionalProperties: false
@@ -11783,9 +11823,9 @@ paths:
                   properties:
                     properties:
                       type: object
-                      description: |
-                        The properties of the blueprint.
-                        Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                      description: "The properties of the blueprint.<br></br> Each property identifier
+                        can be `<= 100 characters` long, values must match the
+                        following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                       propertyNames:
                         pattern: ^[A-Za-z0-9@_=\\-]+$
                         maxLength: 100
@@ -11794,6 +11834,7 @@ paths:
                         properties:
                           title:
                             type: string
+                            maxLength: 100
                             description: The title of the property.
                           description:
                             type: string
@@ -11874,10 +11915,13 @@ paths:
                     - properties
                 calculationProperties:
                   type: object
-                  description: |
-                    The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                    of the blueprint.
-                    Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The [calculation
+                    properties](https://docs.port.io/build-your-software-catalo\
+                    g/customize-integrations/configure-data-model/setup-bluepri\
+                    nt/properties/calculation-property/) of the blueprint.
+                    <br></br> Each calculation property identifier can be `<=
+                    100 characters` long, values must match the following
+                    pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -11888,6 +11932,7 @@ paths:
                     properties:
                       title:
                         type: string
+                        maxLength: 100
                         description: The title of the property.
                       description:
                         type: string
@@ -12006,10 +12051,13 @@ paths:
                       - type
                 mirrorProperties:
                   type: object
-                  description: |
-                    The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                    of the blueprint.
-                    Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The [mirror
+                    properties](https://docs.port.io/build-your-software-catalo\
+                    g/customize-integrations/configure-data-model/setup-bluepri\
+                    nt/properties/mirror-property/) of the blueprint. <br></br>
+                    Each mirror property identifier can be `<= 100 characters`
+                    long, values must match the following pattern:
+                    `^[A-Za-z0-9@_=\\\\-]+$`."
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
                     maxLength: 100
@@ -12024,16 +12072,20 @@ paths:
                           identifier is the property identifier.
                       title:
                         type: string
+                        maxLength: 100
                         description: The title of the property.
                     additionalProperties: false
                     required:
                       - path
                 aggregationProperties:
                   type: object
-                  description: |
-                    The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                    of the blueprint.
-                    Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The [aggregation
+                    properties](https://docs.port.io/build-your-software-catalo\
+                    g/customize-integrations/configure-data-model/setup-bluepri\
+                    nt/properties/aggregation-property/) of the blueprint.
+                    <br></br> Each aggregation property identifier can be `<=
+                    100 characters` long, values must match the following
+                    pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -12043,6 +12095,7 @@ paths:
                     properties:
                       title:
                         type: string
+                        maxLength: 100
                         description: The title of the property.
                       description:
                         type: string
@@ -12191,10 +12244,12 @@ paths:
                       - calculationSpec
                 relations:
                   type: object
-                  description: |
-                    The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                    of the blueprint.
-                    Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The
+                    [relations](https://docs.port.io/build-your-software-catalog/c\
+                    ustomize-integrations/configure-data-model/relate-blueprint\
+                    s/) of the blueprint. <br></br> Each relation identifier can
+                    be `<= 100 characters` long, values must match the following
+                    pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
                     maxLength: 100
@@ -12203,6 +12258,7 @@ paths:
                     properties:
                       title:
                         type: string
+                        maxLength: 100
                       target:
                         type: string
                       required:
@@ -12336,6 +12392,7 @@ paths:
                                   lead to the desired blueprint.
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -12353,6 +12410,7 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -12365,9 +12423,9 @@ paths:
                         properties:
                           properties:
                             type: object
-                            description: |
-                              The properties of the blueprint.
-                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                            description: "The properties of the blueprint.<br></br> Each property identifier
+                              can be `<= 100 characters` long, values must match
+                              the following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
@@ -12376,6 +12434,7 @@ paths:
                               properties:
                                 title:
                                   type: string
+                                  maxLength: 100
                                   description: The title of the property.
                                 description:
                                   type: string
@@ -12457,10 +12516,14 @@ paths:
                           - properties
                       calculationProperties:
                         type: object
-                        description: |
-                          The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                          of the blueprint.
-                          Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [calculation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/calculation-property/) of
+                          the blueprint. <br></br> Each calculation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -12471,6 +12534,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -12589,10 +12653,13 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: |
-                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                          of the blueprint.
-                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [mirror
+                          properties](https://docs.port.io/build-your-software-c\
+                          atalog/customize-integrations/configure-data-model/se\
+                          tup-blueprint/properties/mirror-property/) of the
+                          blueprint. <br></br> Each mirror property identifier
+                          can be `<= 100 characters` long, values must match the
+                          following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -12607,16 +12674,21 @@ paths:
                                 last identifier is the property identifier.
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                           additionalProperties: false
                           required:
                             - path
                       aggregationProperties:
                         type: object
-                        description: |
-                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                          of the blueprint.
-                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [aggregation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/aggregation-property/) of
+                          the blueprint. <br></br> Each aggregation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -12626,6 +12698,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -12775,9 +12848,13 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: The
-                          [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                          of the blueprint.
+                        description: "The
+                          [relations](https://docs.port.io/build-your-software-catalog/c\
+                          ustomize-integrations/configure-data-model/relate-blu\
+                          eprints/) of the blueprint. <br></br> Each relation
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -12786,6 +12863,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                             target:
                               type: string
                             required:
@@ -13011,6 +13089,7 @@ paths:
                                   lead to the desired blueprint.
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -13028,6 +13107,7 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -13040,9 +13120,9 @@ paths:
                         properties:
                           properties:
                             type: object
-                            description: |
-                              The properties of the blueprint.
-                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                            description: "The properties of the blueprint.<br></br> Each property identifier
+                              can be `<= 100 characters` long, values must match
+                              the following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
@@ -13051,6 +13131,7 @@ paths:
                               properties:
                                 title:
                                   type: string
+                                  maxLength: 100
                                   description: The title of the property.
                                 description:
                                   type: string
@@ -13132,10 +13213,14 @@ paths:
                           - properties
                       calculationProperties:
                         type: object
-                        description: |
-                          The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                          of the blueprint.
-                          Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [calculation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/calculation-property/) of
+                          the blueprint. <br></br> Each calculation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -13146,6 +13231,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -13264,8 +13350,13 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                          of the blueprint.
+                        description: "The [mirror
+                          properties](https://docs.port.io/build-your-software-c\
+                          atalog/customize-integrations/configure-data-model/se\
+                          tup-blueprint/properties/mirror-property/) of the
+                          blueprint. <br></br> Each mirror property identifier
+                          can be `<= 100 characters` long, values must match the
+                          following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -13280,16 +13371,21 @@ paths:
                                 last identifier is the property identifier.
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                           additionalProperties: false
                           required:
                             - path
                       aggregationProperties:
                         type: object
-                        description: |
-                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                          of the blueprint.
-                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [aggregation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/aggregation-property/) of
+                          the blueprint. <br></br> Each aggregation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -13299,6 +13395,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -13448,9 +13545,13 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: The
-                          [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                          of the blueprint.
+                        description: "The
+                          [relations](https://docs.port.io/build-your-software-catalog/c\
+                          ustomize-integrations/configure-data-model/relate-blu\
+                          eprints/) of the blueprint. <br></br> Each relation
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -13459,6 +13560,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                             target:
                               type: string
                             required:
@@ -13628,6 +13730,7 @@ paths:
                             lead to the desired blueprint.
                         title:
                           type: string
+                          maxLength: 100
                           description: The title of the ownership property. The default value is `Owning
                             teams`.
                       additionalProperties: false
@@ -13645,6 +13748,7 @@ paths:
                             - Direct
                         title:
                           type: string
+                          maxLength: 100
                           description: The title of the ownership property. The default value is `Owning
                             teams`.
                       additionalProperties: false
@@ -13657,9 +13761,9 @@ paths:
                   properties:
                     properties:
                       type: object
-                      description: |
-                        The properties of the blueprint.
-                        Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                      description: "The properties of the blueprint.<br></br> Each property identifier
+                        can be `<= 100 characters` long, values must match the
+                        following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                       propertyNames:
                         pattern: ^[A-Za-z0-9@_=\\-]+$
                         maxLength: 100
@@ -13668,6 +13772,7 @@ paths:
                         properties:
                           title:
                             type: string
+                            maxLength: 100
                             description: The title of the property.
                           description:
                             type: string
@@ -13748,10 +13853,13 @@ paths:
                     - properties
                 calculationProperties:
                   type: object
-                  description: |
-                    The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                    of the blueprint.
-                    Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The [calculation
+                    properties](https://docs.port.io/build-your-software-catalo\
+                    g/customize-integrations/configure-data-model/setup-bluepri\
+                    nt/properties/calculation-property/) of the blueprint.
+                    <br></br> Each calculation property identifier can be `<=
+                    100 characters` long, values must match the following
+                    pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -13762,6 +13870,7 @@ paths:
                     properties:
                       title:
                         type: string
+                        maxLength: 100
                         description: The title of the property.
                       description:
                         type: string
@@ -13880,10 +13989,13 @@ paths:
                       - type
                 mirrorProperties:
                   type: object
-                  description: |
-                    The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                    of the blueprint.
-                    Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The [mirror
+                    properties](https://docs.port.io/build-your-software-catalo\
+                    g/customize-integrations/configure-data-model/setup-bluepri\
+                    nt/properties/mirror-property/) of the blueprint. <br></br>
+                    Each mirror property identifier can be `<= 100 characters`
+                    long, values must match the following pattern:
+                    `^[A-Za-z0-9@_=\\\\-]+$`."
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
                     maxLength: 100
@@ -13898,16 +14010,20 @@ paths:
                           identifier is the property identifier.
                       title:
                         type: string
+                        maxLength: 100
                         description: The title of the property.
                     additionalProperties: false
                     required:
                       - path
                 aggregationProperties:
                   type: object
-                  description: |
-                    The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                    of the blueprint.
-                    Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The [aggregation
+                    properties](https://docs.port.io/build-your-software-catalo\
+                    g/customize-integrations/configure-data-model/setup-bluepri\
+                    nt/properties/aggregation-property/) of the blueprint.
+                    <br></br> Each aggregation property identifier can be `<=
+                    100 characters` long, values must match the following
+                    pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -13917,6 +14033,7 @@ paths:
                     properties:
                       title:
                         type: string
+                        maxLength: 100
                         description: The title of the property.
                       description:
                         type: string
@@ -14065,10 +14182,12 @@ paths:
                       - calculationSpec
                 relations:
                   type: object
-                  description: |
-                    The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                    of the blueprint.
-                    Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The
+                    [relations](https://docs.port.io/build-your-software-catalog/c\
+                    ustomize-integrations/configure-data-model/relate-blueprint\
+                    s/) of the blueprint. <br></br> Each relation identifier can
+                    be `<= 100 characters` long, values must match the following
+                    pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
                     maxLength: 100
@@ -14077,6 +14196,7 @@ paths:
                     properties:
                       title:
                         type: string
+                        maxLength: 100
                       target:
                         type: string
                       required:
@@ -14207,6 +14327,7 @@ paths:
                                   lead to the desired blueprint.
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -14224,6 +14345,7 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -14236,9 +14358,9 @@ paths:
                         properties:
                           properties:
                             type: object
-                            description: |
-                              The properties of the blueprint.
-                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                            description: "The properties of the blueprint.<br></br> Each property identifier
+                              can be `<= 100 characters` long, values must match
+                              the following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
@@ -14247,6 +14369,7 @@ paths:
                               properties:
                                 title:
                                   type: string
+                                  maxLength: 100
                                   description: The title of the property.
                                 description:
                                   type: string
@@ -14328,10 +14451,14 @@ paths:
                           - properties
                       calculationProperties:
                         type: object
-                        description: |
-                          The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                          of the blueprint.
-                          Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [calculation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/calculation-property/) of
+                          the blueprint. <br></br> Each calculation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -14342,6 +14469,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -14460,10 +14588,13 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: |
-                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                          of the blueprint.
-                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [mirror
+                          properties](https://docs.port.io/build-your-software-c\
+                          atalog/customize-integrations/configure-data-model/se\
+                          tup-blueprint/properties/mirror-property/) of the
+                          blueprint. <br></br> Each mirror property identifier
+                          can be `<= 100 characters` long, values must match the
+                          following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -14478,16 +14609,21 @@ paths:
                                 last identifier is the property identifier.
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                           additionalProperties: false
                           required:
                             - path
                       aggregationProperties:
                         type: object
-                        description: |
-                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                          of the blueprint.
-                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [aggregation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/aggregation-property/) of
+                          the blueprint. <br></br> Each aggregation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -14497,6 +14633,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -14646,10 +14783,13 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: |
-                          The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                          of the blueprint.
-                          Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The
+                          [relations](https://docs.port.io/build-your-software-catalog/c\
+                          ustomize-integrations/configure-data-model/relate-blu\
+                          eprints/) of the blueprint. <br></br> Each relation
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -14658,6 +14798,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                             target:
                               type: string
                             required:
@@ -14862,6 +15003,7 @@ paths:
                             lead to the desired blueprint.
                         title:
                           type: string
+                          maxLength: 100
                           description: The title of the ownership property. The default value is `Owning
                             teams`.
                       additionalProperties: false
@@ -14879,6 +15021,7 @@ paths:
                             - Direct
                         title:
                           type: string
+                          maxLength: 100
                           description: The title of the ownership property. The default value is `Owning
                             teams`.
                       additionalProperties: false
@@ -14897,6 +15040,7 @@ paths:
                         properties:
                           title:
                             type: string
+                            maxLength: 100
                             description: The title of the property.
                           description:
                             type: string
@@ -14975,10 +15119,13 @@ paths:
                     - properties
                 calculationProperties:
                   type: object
-                  description: |
-                    The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                    of the blueprint.
-                    Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The [calculation
+                    properties](https://docs.port.io/build-your-software-catalo\
+                    g/customize-integrations/configure-data-model/setup-bluepri\
+                    nt/properties/calculation-property/) of the blueprint.
+                    <br></br> Each calculation property identifier can be `<=
+                    100 characters` long, values must match the following
+                    pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -14989,6 +15136,7 @@ paths:
                     properties:
                       title:
                         type: string
+                        maxLength: 100
                         description: The title of the property.
                       description:
                         type: string
@@ -15107,10 +15255,13 @@ paths:
                       - type
                 mirrorProperties:
                   type: object
-                  description: |
-                    The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                    of the blueprint.
-                    Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The [mirror
+                    properties](https://docs.port.io/build-your-software-catalo\
+                    g/customize-integrations/configure-data-model/setup-bluepri\
+                    nt/properties/mirror-property/) of the blueprint. <br></br>
+                    Each mirror property identifier can be `<= 100 characters`
+                    long, values must match the following pattern:
+                    `^[A-Za-z0-9@_=\\\\-]+$`."
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
                     maxLength: 100
@@ -15125,16 +15276,20 @@ paths:
                           identifier is the property identifier.
                       title:
                         type: string
+                        maxLength: 100
                         description: The title of the property.
                     additionalProperties: false
                     required:
                       - path
                 aggregationProperties:
                   type: object
-                  description: |
-                    The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                    of the blueprint.
-                    Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The [aggregation
+                    properties](https://docs.port.io/build-your-software-catalo\
+                    g/customize-integrations/configure-data-model/setup-bluepri\
+                    nt/properties/aggregation-property/) of the blueprint.
+                    <br></br> Each aggregation property identifier can be `<=
+                    100 characters` long, values must match the following
+                    pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                   default: {}
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -15144,6 +15299,7 @@ paths:
                     properties:
                       title:
                         type: string
+                        maxLength: 100
                         description: The title of the property.
                       description:
                         type: string
@@ -15292,10 +15448,12 @@ paths:
                       - calculationSpec
                 relations:
                   type: object
-                  description: |
-                    The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                    of the blueprint.
-                    Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                  description: "The
+                    [relations](https://docs.port.io/build-your-software-catalog/c\
+                    ustomize-integrations/configure-data-model/relate-blueprint\
+                    s/) of the blueprint. <br></br> Each relation identifier can
+                    be `<= 100 characters` long, values must match the following
+                    pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                   propertyNames:
                     pattern: ^[A-Za-z0-9@_=\\-]+$
                     maxLength: 100
@@ -15304,6 +15462,7 @@ paths:
                     properties:
                       title:
                         type: string
+                        maxLength: 100
                       target:
                         type: string
                       required:
@@ -15430,6 +15589,7 @@ paths:
                                   lead to the desired blueprint.
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -15447,6 +15607,7 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -15459,17 +15620,18 @@ paths:
                         properties:
                           properties:
                             type: object
-                          description: |
-                            The properties of the blueprint.
-                            Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
-                          propertyNames:
+                            description: "The properties of the blueprint.<br></br> Each property identifier
+                              can be `<= 100 characters` long, values must match
+                              the following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
+                            propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
-                          additionalProperties:
+                            additionalProperties:
                               type: object
                               properties:
                                 title:
                                   type: string
+                                  maxLength: 100
                                   description: The title of the property.
                                 description:
                                   type: string
@@ -15551,10 +15713,14 @@ paths:
                           - properties
                       calculationProperties:
                         type: object
-                        description: |
-                          The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                          of the blueprint.
-                          Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [calculation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/calculation-property/) of
+                          the blueprint. <br></br> Each calculation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -15565,6 +15731,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -15683,10 +15850,13 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: |
-                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                          of the blueprint.
-                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [mirror
+                          properties](https://docs.port.io/build-your-software-c\
+                          atalog/customize-integrations/configure-data-model/se\
+                          tup-blueprint/properties/mirror-property/) of the
+                          blueprint. <br></br> Each mirror property identifier
+                          can be `<= 100 characters` long, values must match the
+                          following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -15701,16 +15871,21 @@ paths:
                                 last identifier is the property identifier.
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                           additionalProperties: false
                           required:
                             - path
                       aggregationProperties:
                         type: object
-                        description: |
-                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                          of the blueprint.
-                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [aggregation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/aggregation-property/) of
+                          the blueprint. <br></br> Each aggregation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -15720,6 +15895,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -15869,10 +16045,13 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: |
-                          The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                          of the blueprint.
-                          Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The
+                          [relations](https://docs.port.io/build-your-software-catalog/c\
+                          ustomize-integrations/configure-data-model/relate-blu\
+                          eprints/) of the blueprint. <br></br> Each relation
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -15881,6 +16060,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                             target:
                               type: string
                             required:
@@ -16235,6 +16415,7 @@ paths:
                                   lead to the desired blueprint.
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -16252,6 +16433,7 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -16264,9 +16446,9 @@ paths:
                         properties:
                           properties:
                             type: object
-                            description: |
-                              The properties of the blueprint.
-                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                            description: "The properties of the blueprint.<br></br> Each property identifier
+                              can be `<= 100 characters` long, values must match
+                              the following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
@@ -16275,6 +16457,7 @@ paths:
                               properties:
                                 title:
                                   type: string
+                                  maxLength: 100
                                   description: The title of the property.
                                 description:
                                   type: string
@@ -16356,10 +16539,14 @@ paths:
                           - properties
                       calculationProperties:
                         type: object
-                        description: |
-                          The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                          of the blueprint.
-                          Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [calculation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/calculation-property/) of
+                          the blueprint. <br></br> Each calculation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -16370,6 +16557,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -16488,10 +16676,13 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: |
-                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                          of the blueprint.
-                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [mirror
+                          properties](https://docs.port.io/build-your-software-c\
+                          atalog/customize-integrations/configure-data-model/se\
+                          tup-blueprint/properties/mirror-property/) of the
+                          blueprint. <br></br> Each mirror property identifier
+                          can be `<= 100 characters` long, values must match the
+                          following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -16506,16 +16697,21 @@ paths:
                                 last identifier is the property identifier.
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                           additionalProperties: false
                           required:
                             - path
                       aggregationProperties:
                         type: object
-                        description: |
-                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                          of the blueprint.
-                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [aggregation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/aggregation-property/) of
+                          the blueprint. <br></br> Each aggregation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -16525,6 +16721,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -16674,10 +16871,13 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: |
-                          The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                          of the blueprint.
-                          Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The
+                          [relations](https://docs.port.io/build-your-software-catalog/c\
+                          ustomize-integrations/configure-data-model/relate-blu\
+                          eprints/) of the blueprint. <br></br> Each relation
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -16686,6 +16886,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                             target:
                               type: string
                             required:
@@ -16929,6 +17130,7 @@ paths:
                                   lead to the desired blueprint.
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -16946,6 +17148,7 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -16958,9 +17161,9 @@ paths:
                         properties:
                           properties:
                             type: object
-                            description: |
-                              The properties of the blueprint.
-                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                            description: "The properties of the blueprint.<br></br> Each property identifier
+                              can be `<= 100 characters` long, values must match
+                              the following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
@@ -16969,6 +17172,7 @@ paths:
                               properties:
                                 title:
                                   type: string
+                                  maxLength: 100
                                   description: The title of the property.
                                 description:
                                   type: string
@@ -17050,10 +17254,14 @@ paths:
                           - properties
                       calculationProperties:
                         type: object
-                        description: |
-                          The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                          of the blueprint.
-                          Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [calculation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/calculation-property/) of
+                          the blueprint. <br></br> Each calculation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -17064,6 +17272,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -17182,10 +17391,13 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: |
-                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                          of the blueprint.
-                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [mirror
+                          properties](https://docs.port.io/build-your-software-c\
+                          atalog/customize-integrations/configure-data-model/se\
+                          tup-blueprint/properties/mirror-property/) of the
+                          blueprint. <br></br> Each mirror property identifier
+                          can be `<= 100 characters` long, values must match the
+                          following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -17200,16 +17412,21 @@ paths:
                                 last identifier is the property identifier.
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                           additionalProperties: false
                           required:
                             - path
                       aggregationProperties:
                         type: object
-                        description: |
-                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                          of the blueprint.
-                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [aggregation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/aggregation-property/) of
+                          the blueprint. <br></br> Each aggregation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -17219,6 +17436,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -17368,10 +17586,13 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: |
-                          The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                          of the blueprint.
-                          Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The
+                          [relations](https://docs.port.io/build-your-software-catalog/c\
+                          ustomize-integrations/configure-data-model/relate-blu\
+                          eprints/) of the blueprint. <br></br> Each relation
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -17380,6 +17601,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                             target:
                               type: string
                             required:
@@ -17625,6 +17847,7 @@ paths:
                                   lead to the desired blueprint.
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -17642,6 +17865,7 @@ paths:
                                   - Direct
                               title:
                                 type: string
+                                maxLength: 100
                                 description: The title of the ownership property. The default value is `Owning
                                   teams`.
                             additionalProperties: false
@@ -17654,9 +17878,9 @@ paths:
                         properties:
                           properties:
                             type: object
-                            description: |
-                              The properties of the blueprint.
-                              Each property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                            description: "The properties of the blueprint.<br></br> Each property identifier
+                              can be `<= 100 characters` long, values must match
+                              the following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                             propertyNames:
                               pattern: ^[A-Za-z0-9@_=\\-]+$
                               maxLength: 100
@@ -17665,6 +17889,7 @@ paths:
                               properties:
                                 title:
                                   type: string
+                                  maxLength: 100
                                   description: The title of the property.
                                 description:
                                   type: string
@@ -17746,10 +17971,14 @@ paths:
                           - properties
                       calculationProperties:
                         type: object
-                        description: |
-                          The [calculation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/)
-                          of the blueprint.
-                          Each calculation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [calculation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/calculation-property/) of
+                          the blueprint. <br></br> Each calculation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -17760,6 +17989,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -17878,10 +18108,13 @@ paths:
                             - type
                       mirrorProperties:
                         type: object
-                        description: |
-                          The [mirror properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/)
-                          of the blueprint.
-                          Each mirror property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [mirror
+                          properties](https://docs.port.io/build-your-software-c\
+                          atalog/customize-integrations/configure-data-model/se\
+                          tup-blueprint/properties/mirror-property/) of the
+                          blueprint. <br></br> Each mirror property identifier
+                          can be `<= 100 characters` long, values must match the
+                          following pattern: `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -17896,16 +18129,21 @@ paths:
                                 last identifier is the property identifier.
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                           additionalProperties: false
                           required:
                             - path
                       aggregationProperties:
                         type: object
-                        description: |
-                          The [aggregation properties](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/)
-                          of the blueprint.
-                          Each aggregation property identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The [aggregation
+                          properties](https://docs.port.io/build-your-software-\
+                          catalog/customize-integrations/configure-data-model/s\
+                          etup-blueprint/properties/aggregation-property/) of
+                          the blueprint. <br></br> Each aggregation property
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         default: {}
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
@@ -17915,6 +18153,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                               description: The title of the property.
                             description:
                               type: string
@@ -18064,10 +18303,13 @@ paths:
                             - calculationSpec
                       relations:
                         type: object
-                        description: |
-                          The [relations](${DOCS_URL}/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
-                          of the blueprint.
-                          Each relation identifier can be `<= 100 characters` long, values must match the following pattern: `^[A-Za-z0-9@_=\\-]+$`.
+                        description: "The
+                          [relations](https://docs.port.io/build-your-software-catalog/c\
+                          ustomize-integrations/configure-data-model/relate-blu\
+                          eprints/) of the blueprint. <br></br> Each relation
+                          identifier can be `<= 100 characters` long, values
+                          must match the following pattern:
+                          `^[A-Za-z0-9@_=\\\\-]+$`."
                         propertyNames:
                           pattern: ^[A-Za-z0-9@_=\\-]+$
                           maxLength: 100
@@ -18076,6 +18318,7 @@ paths:
                           properties:
                             title:
                               type: string
+                              maxLength: 100
                             target:
                               type: string
                             required:
@@ -19028,6 +19271,7 @@ paths:
                                       - propertySchema
                                     additionalProperties: false
                                   - type: object
+                                    title: Path Filter Rule
                                     anyOf:
                                       - type: object
                                         properties:
@@ -20035,16 +20279,14 @@ paths:
       summary: Get actions/automations
       tags:
         - Actions
-      description: |
-        This route allows you to fetch one or more self-service actions
+      description: "This route allows you to fetch one or more self-service actions
         and/or automations in your Port account.<br/><br/>The call will perform
         a logical `AND` between all query parameters below, and return all
         actions and automations that match the criteria.<br/><br/>To learn more
         about actions and automations, check out the
-        [documentation](https://docs.port.io/actions-and-automations/).
-        :::info Version parameter value
-        Set the `version` parameter to `v2` for the latest version of the API.
-        :::
+        [documentation](https://docs.port.io/actions-and-automations/).<br/><br\
+        />:::info Version parameter<br/>Set the `version` parameter to `v2` for
+        the latest version of the API.:::"
       parameters:
         - schema:
             type: array
@@ -20133,7 +20375,8 @@ paths:
           in: query
           name: version
           required: false
-          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
+          description: Specifies the API version to use. Please use `v2` for the latest
+            version of the API.
       security:
         - bearer:
             - read:actions
@@ -20981,6 +21224,7 @@ paths:
                                       - propertySchema
                                     additionalProperties: false
                                   - type: object
+                                    title: Path Filter Rule
                                     anyOf:
                                       - type: object
                                         properties:
@@ -22853,15 +23097,11 @@ paths:
       summary: Update an action run
       tags:
         - Action Runs
-      description: |
-        This route allows you to update an action run's details. This can
+      description: This route allows you to update an action run's details. This can
         be used to update the run's status & label, and add links to it (e.g.
         external logs of the job runner).<br/><br/>To learn more about action
         runs, check out the
         [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
-        :::info Version parameter value
-        Set the `version` parameter to `v2` for the latest version of the API.
-        :::
       requestBody:
         content:
           application/json:
@@ -22908,7 +23148,8 @@ paths:
           in: query
           name: version
           required: false
-          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
+          description: Specifies the API version to use. Please use `v2` for the latest
+            version of the API.
         - schema:
             type: string
           in: path
@@ -23068,6 +23309,13 @@ paths:
                           - array
                           - object
                         items: {}
+                      pendingExecution:
+                        type: boolean
+                      claimedUntil:
+                        type: string
+                        format: date-time
+                      installationId:
+                        type: string
                       createdBy:
                         type: string
                       impersonatedBy:
@@ -23164,13 +23412,11 @@ paths:
       summary: Get an action run's details
       tags:
         - Action Runs
-      description: |
-        This route allows you to fetch the details of an action
+      description: "This route allows you to fetch the details of an action
         run.<br/><br/>To learn more about action runs, check out the
-        [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
-        :::info Version parameter value
-        Set the `version` parameter to `v2` for the latest version of the API.
-        :::
+        [documentation](https://docs.port.io/create-self-service-experiences/re\
+        flect-action-progress/).<br/><br/>:::info Version parameter<br/>Set the
+        `version` parameter to `v2` for the latest version of the API.:::"
       parameters:
         - schema:
             type: string
@@ -23180,7 +23426,8 @@ paths:
           in: query
           name: version
           required: false
-          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
+          description: Specifies the API version to use. Please use `v2` for the latest
+            version of the API.
         - schema:
             type: string
           in: path
@@ -23341,6 +23588,13 @@ paths:
                           - array
                           - object
                         items: {}
+                      pendingExecution:
+                        type: boolean
+                      claimedUntil:
+                        type: string
+                        format: date-time
+                      installationId:
+                        type: string
                       createdBy:
                         type: string
                       impersonatedBy:
@@ -23438,7 +23692,8 @@ paths:
           in: query
           name: version
           required: false
-          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
+          description: Specifies the API version to use. Please use `v2` for the latest
+            version of the API.
         - schema:
             type: string
           in: path
@@ -23695,15 +23950,13 @@ paths:
       summary: Get all action runs
       tags:
         - Action Runs
-      description: |
-        This route allows you to fetch all action runs in your Port
+      description: "This route allows you to fetch all action runs in your Port
         account. The route will perform a logical `AND` between all query
         parameters below, and return all action runs that match the
         criteria.<br/><br/>To learn more about action runs, check out the
-        [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
-        :::info Version parameter value
-        Set the `version` parameter to `v2` for the latest version of the API.
-        :::
+        [documentation](https://docs.port.io/create-self-service-experiences/re\
+        flect-action-progress/).<br/><br/>:::info Version parameter<br/>Set the
+        `version` parameter to `v2` for the latest version of the API.:::"
       parameters:
         - schema:
             type: string
@@ -23759,7 +24012,8 @@ paths:
           in: query
           name: version
           required: false
-          description: Specifies the API version to use. Please use `v2` for the latest version of the API.
+          description: Specifies the API version to use. Please use `v2` for the latest
+            version of the API.
         - schema:
             type: string
           in: query
@@ -23932,6 +24186,13 @@ paths:
                             - array
                             - object
                           items: {}
+                        pendingExecution:
+                          type: boolean
+                        claimedUntil:
+                          type: string
+                          format: date-time
+                        installationId:
+                          type: string
                         createdBy:
                           type: string
                         impersonatedBy:
@@ -24331,12 +24592,16 @@ paths:
       summary: Get all pages in your portal
       tags:
         - Pages
-      description: >
-        **The Pages API is currently in beta, in its current form it lacks certain validations and protections and it could render your portal unusable if used incorrectly.<br/><br/> Please refer to the [Pages overview](/api-reference/pages) before using this endpoint.<br/><br/>**
-        This route allows you to get all pages in your portal.<br/><br/>To
+      description: This route allows you to get all pages in your portal.<br/><br/>To
         learn more about pages, checkout the
         [documentation](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page).
       parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: compact
+          required: true
       security:
         - bearer: []
       responses:
@@ -26695,14 +26960,14 @@ paths:
                               type: object
                               description: An object containing the properties of the entity and their values.
                                 For more information and examples, check out the
-                                [documentation](${DOCS_URL}/build-your-software-catalog/custom-integration/webhook/).
+                                [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
                               propertyNames:
                                 type: string
                             relations:
                               type: object
                               description: An object containing the relations of the entity and their values.
                                 For more information and examples, check out the
-                                [documentation](${DOCS_URL}/build-your-software-catalog/custom-integration/webhook/).
+                                [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
                               propertyNames:
                                 type: string
                           additionalProperties: false
@@ -27195,14 +27460,14 @@ paths:
                               type: object
                               description: An object containing the properties of the entity and their values.
                                 For more information and examples, check out the
-                                [documentation](${DOCS_URL}/build-your-software-catalog/custom-integration/webhook/).
+                                [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
                               propertyNames:
                                 type: string
                             relations:
                               type: object
                               description: An object containing the relations of the entity and their values.
                                 For more information and examples, check out the
-                                [documentation](${DOCS_URL}/build-your-software-catalog/custom-integration/webhook/).
+                                [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
                               propertyNames:
                                 type: string
                           additionalProperties: false
@@ -27642,14 +27907,14 @@ paths:
                               type: object
                               description: An object containing the properties of the entity and their values.
                                 For more information and examples, check out the
-                                [documentation](${DOCS_URL}/build-your-software-catalog/custom-integration/webhook/).
+                                [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
                               propertyNames:
                                 type: string
                             relations:
                               type: object
                               description: An object containing the relations of the entity and their values.
                                 For more information and examples, check out the
-                                [documentation](${DOCS_URL}/build-your-software-catalog/custom-integration/webhook/).
+                                [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
                               propertyNames:
                                 type: string
                           additionalProperties: false
@@ -27943,15 +28208,14 @@ paths:
       summary: Get audit logs
       tags:
         - Audit
-      description: |
-        This route allows you to fetch audit logs from your Port account.
+      description: "This route allows you to fetch audit logs from your Port account.
         Your audit logs can also be viewed via [Port's
         UI](https://app.getport.io/settings/AuditLog).<br/><br/>This route will
         perform a logical `AND` between all query parameters below, and return
-        all logs that match the criteria.<br></br>
-        :::warning Beta integration value 
-        The `integration` value in the `resources` parameter is **experimental**. Its behavior may change in future versions of the API.
-        :::
+        all logs that match the criteria.<br/><br/>:::warning Beta integration
+        value<br/>The `integration` value in the `resources` parameter is
+        **experimental**. Its behavior may change in future versions of the
+        API.<br/>:::"
       parameters:
         - schema:
             type: string
@@ -28033,9 +28297,9 @@ paths:
           required: false
           style: form
           explode: true
-          description: |
-            Fetch all audit logs related to the specified resource type/s. 
-            **Possible values**: [`blueprint`, `entity`, `run`, `webhook`, `scorecard`, `action`, `integration`] <br> Fetch all audit logs related to the specified resource type/s. 
+          description: "Fetch all audit logs related to the specified resource
+            type/s.<br/>**Possible values**: [`blueprint`, `entity`, `run`,
+            `webhook`, `scorecard`, `action`, `integration`]"
         - schema:
             type: array
             items:
@@ -33012,122 +33276,6 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  /v1/agent/{agentIdentifier}/invoke:
-    post:
-      summary: Invoke a specific agent
-      tags:
-        - AI
-      description: This route allows you to create an agent's invocation.<br/><br/>To
-        learn more about AI agents, check out the
-        [documentation](https://docs.port.io/ai-agents/overview).
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                context:
-                  type: object
-                  description: An object used to dynamically inject values into the prompt.
-                prompt:
-                  type: string
-                  description: The user's message or query to be processed by the AI agent.
-                labels:
-                  type: object
-                  description: Optional meta-data about the invocation.
-                provider:
-                  type: string
-                  enum:
-                  - openai
-                  - azure-openai
-                  - anthropic
-                  - bedrock
-                  - port
-                model:
-                  type: string
-                  enum:
-                  - gpt-5
-                  - claude-sonnet-4-20250514
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: agentIdentifier
-          required: true
-          description: The identifier of the agent you want to operate on.
-      security:
-        - bearer:
-            - read:entities
-      responses:
-        "401":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-        "404":
-          description: A resource with the provided identifier was not found
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: A resource with the provided identifier was not found
-        "413":
-          description: Request body is too large (limit is 1MiB)
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                additionalProperties: false
-                description: Request body is too large (limit is 1MiB)
-        "422":
-          description: The json provided does not match the route's schema
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: The json provided does not match the route's schema
   /v1/actions/{action_identifier}/permissions:
     get:
       summary: Get an action's permissions
@@ -33375,6 +33523,122 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
+  /v1/agent/{agentIdentifier}/invoke:
+    post:
+      summary: Invoke a specific agent
+      tags:
+        - AI
+      description: This route allows you to create an agent's invocation.<br/><br/>To
+        learn more about AI agents, check out the
+        [documentation](https://docs.port.io/ai-agents/overview).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  type: object
+                  description: An object used to dynamically inject values into the prompt.
+                prompt:
+                  type: string
+                  description: The user's message or query to be processed by the AI agent.
+                labels:
+                  type: object
+                  description: Optional meta-data about the invocation.
+                provider:
+                  type: string
+                  enum:
+                  - openai
+                  - azure-openai
+                  - anthropic
+                  - bedrock
+                  - port
+                model:
+                  type: string
+                  enum:
+                  - gpt-5
+                  - claude-sonnet-4-20250514
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: agentIdentifier
+          required: true
+          description: The identifier of the agent you want to operate on.
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "401":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: A resource with the provided identifier was not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: A resource with the provided identifier was not found
+        "413":
+          description: Request body is too large (limit is 1MiB)
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+                description: Request body is too large (limit is 1MiB)
+        "422":
+          description: The json provided does not match the route's schema
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    const: false
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                  - message
+                additionalProperties: false
+                description: The json provided does not match the route's schema             
   /v1/integration/{integrationInternalId}/syncMetrics:
       get:
         summary: Get an integration's metrics and sync status
