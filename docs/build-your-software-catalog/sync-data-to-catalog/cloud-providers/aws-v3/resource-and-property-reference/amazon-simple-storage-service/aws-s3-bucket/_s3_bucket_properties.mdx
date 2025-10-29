@@ -1,0 +1,15 @@
+<details>
+<summary><b>S3 bucket properties (Click to expand)</b></summary>
+
+| Property | JQ Path | Type | Action Required | Availability |
+|----------|---------|------|-----------------|--------------|
+| Bucket Name | `.Properties.BucketName` | string | ListBucketsAction | Default |
+| ARN | `.Properties.Arn` | string | ListBucketsAction | Default |
+| Creation Date | `.Properties.CreationDate` | datetime | ListBucketsAction | Default |
+| Region | `.Properties.LocationConstraint` | string | GetBucketLocationAction | Default |
+| Tags | `.Properties.Tags` | array | GetBucketTaggingAction | Default |
+| Bucket Encryption | `.Properties.BucketEncryption` | object | GetBucketEncryptionAction | Optional |
+| Public Access Block Configuration | `.Properties.PublicAccessBlockConfiguration` | object | GetBucketPublicAccessBlockAction | Optional |
+| Ownership Controls | `.Properties.OwnershipControls` | object | GetBucketOwnershipControlsAction | Optional |
+
+</details>
