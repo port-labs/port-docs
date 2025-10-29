@@ -646,7 +646,8 @@ While the agent can automatically access RCA documents, updating the prompt help
 2. Replace the existing content with the following:
 
     <details>
-    <summary>Conversation starters</summary>
+<details>
+<summary><b>Conversation starters (click to expand)</b></summary>
 
     ```json showLineNumbers
     [
