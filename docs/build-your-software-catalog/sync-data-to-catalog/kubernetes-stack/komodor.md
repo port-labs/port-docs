@@ -17,7 +17,7 @@ Port's Komodor integration allows you to model [Komodor](https://komodor.com/) r
 
 This integration allows you to map, organize, and sync your desired Komodor resources and their metadata in Port.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Komodor into Port are listed below:
 

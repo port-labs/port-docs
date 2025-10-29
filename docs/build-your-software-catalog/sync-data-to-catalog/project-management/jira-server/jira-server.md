@@ -20,7 +20,7 @@ This integration allows you to:
 - Watch for Jira Server object changes (create/update/delete) via scheduled resync, and automatically apply the changes to your software catalog.
 - Define self-service actions that can create/delete Jira Server objects or perform any other logic on Jira Server resources.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Jira Server into Port are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
