@@ -37,6 +37,21 @@ In addition to the methods mentioned above, `admins` can find action runs using 
 - Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired entity, then select the `Runs` tab.  
    This page will display all action runs that have been executed for the selected Entity.
 
+## Who can view action runs
+
+Visibility of action runs depends on the user’s role and the configuration of the action itself.
+
+When an action is created or edited, a toggle called **“Let anyone in this organization view this action’s runs”** controls run visibility:
+
+- **When enabled (default):** Everyone in the organization can view the action’s runs.  
+- **When disabled:**  
+  - **Admins** can view all runs.  
+  - **Approvers** can view runs they are assigned to approve.  
+  - **Regular members** can view only the runs they created.
+
+This ensures that sensitive operational data is visible only to the right users, while still allowing open visibility when needed.
+
+
 ## Fetch an action run
 
 Once an `actionRun` is created, it will have a unique `runId`. Using this id, you can interact with the action run using Port's API. 
