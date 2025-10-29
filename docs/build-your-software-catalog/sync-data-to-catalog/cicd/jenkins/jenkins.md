@@ -36,7 +36,7 @@ This integration allows you to:
 - Map and organize your desired Jenkins resources and their metadata in Port (see supported resources below).
 - Watch for Jenkins object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-### Supported Resources
+### Supported resources
 
 - `job` - (`<your-jenkins-host>/api/json`)
 - `build` - (`<your-jenkins-host>/api/json`)
