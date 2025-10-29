@@ -185,7 +185,7 @@ The description will be displayed at the top of the page, under the page title:
 
 ## Performance
 
-Large entities tables can result in long loading times. Use the following tips and best practices to improve performance.
+Large entity tables can result in long loading times. Use the following tips and best practices to improve performance.
 
 ### Initial filters
 
