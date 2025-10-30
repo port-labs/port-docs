@@ -2,7 +2,6 @@
 
 import Ec2InstanceBlueprint from './aws-ec2-instance/_ec2_instance_blueprint.mdx'
 import Ec2InstanceConfig from './aws-ec2-instance/_ec2_instance_port_app_config.mdx'
-import Ec2InstanceProperties from './aws-ec2-instance/_ec2_instance_properties.mdx'
 
 
 

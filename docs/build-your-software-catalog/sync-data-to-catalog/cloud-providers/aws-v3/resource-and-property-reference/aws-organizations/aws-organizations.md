@@ -2,7 +2,6 @@
 
 import OrganizationsAccountBlueprint from './aws-organizations-account/_organizations_accounts_blueprint.mdx'
 import OrganizationsAccountConfig from './aws-organizations-account/_organizations_accounts_port_app_config.mdx'
-import OrganizationsAccountProperties from './aws-organizations-account/_organizations_accounts_properties.mdx'
 
 
 

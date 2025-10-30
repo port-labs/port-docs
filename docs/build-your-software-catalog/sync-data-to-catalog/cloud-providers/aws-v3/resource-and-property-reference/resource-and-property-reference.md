@@ -24,6 +24,9 @@ Refer to the sidebar or the list below to navigate to individual resource refere
 - [Amazon Simple Storage Service](./amazon-simple-storage-service/amazon-simple-storage-service.md)
 - [Amazon Elastic Compute Cloud](./amazon-elastic-compute-cloud/amazon-elastic-compute-cloud.md)
 - [Amazon Elastic Container Service](./amazon-elastic-container-service/amazon-elastic-container-service.md)
+- [Amazon Elastic Kubernetes Service](./amazon-elastic-kubernetes-service/amazon-elastic-kubernetes-service.md)
+- [Amazon Relational Database Service](./amazon-relational-database-service/amazon-relational-database-service.md)
+- [AWS Lambda](./aws-lambda/aws-lambda.md)
 - [AWS Organizations](./aws-organizations/aws-organizations.md)
 
 

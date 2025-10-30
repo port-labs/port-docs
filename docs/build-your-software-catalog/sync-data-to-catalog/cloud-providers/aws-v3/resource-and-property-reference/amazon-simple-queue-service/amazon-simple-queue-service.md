@@ -2,7 +2,6 @@
 
 import SqsQueueBlueprint from './aws-sqs-queue/_sqs_queue_blueprint.mdx'
 import SqsQueueConfig from './aws-sqs-queue/_sqs_queue_port_app_config.mdx'
-import SqsQueueProperties from './aws-sqs-queue/_sqs_queue_properties.mdx'
 
 
 
