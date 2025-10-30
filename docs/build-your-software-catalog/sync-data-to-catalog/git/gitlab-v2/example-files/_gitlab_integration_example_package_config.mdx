@@ -1,16 +1,6 @@
-import Tabs from "@theme/Tabs"
-import TabItem from "@theme/TabItem"
-
 <details>
 <summary><b>Integration mapping (click to expand)</b></summary>
-
-<Tabs groupId="integration-mapping" defaultValue="json" values={[
-  { label: "JSON", value: "json" },
-  { label: "YAML", value: "yaml" }
-]}>
-
-<TabItem value="json">
-```yaml showLineNumbers title="Integration mapping JSON file"
+```yaml showLineNumbers
 resources:
   - kind: file
     selector:
@@ -21,7 +11,7 @@ resources:
           # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
           - group/my-project
     port:
-      itemsToParse: .file.content.dependencies | to_entries 
+      itemsToParse: .file.content.dependencies | to_entries
       entity:
         mappings:
           identifier: >-
@@ -33,34 +23,4 @@ resources:
             package: .item.key
             version: .item.value
 ```
-</TabItem>
-<TabItem value="yaml">
-```yaml showLineNumbers title="Integration mapping YAML file"
-resources:
-  - kind: file
-    selector:
-      query: 'true'
-      files:
-        path: config.yml
-        repos:
-          # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
-          - group/my-project
-    port:
-      # Note that when parsing a YAML file, you should specify the index the parsed document.
-      # highlight-start
-      itemsToParse: .file.content.[0].dependencies | to_entries 
-      # highlight-end
-      entity:
-        mappings:
-          identifier: >-
-            .item.key + "_" + if (.item.value | startswith("^")) then
-            .item.value[1:] else .item.value end
-          title: .item.key + "@" + .item.value
-          blueprint: '"package"'
-          properties:
-            package: .item.key
-            version: .item.value
-```
-</TabItem>
-</Tabs>
 </details>

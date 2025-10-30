@@ -28,13 +28,18 @@ import ReleaseBlueprint from './example-releases/_gitlab_integration_example_rel
 import ReleaseConfig from './example-releases/_gitlab_integration_example_release_config.mdx'
 import TagBlueprint from './example-tags/_gitlab_integration_example_tag_blueprint.mdx'
 import TagConfig from './example-tags/_gitlab_integration_example_tag_config.mdx'
+import TeamBlueprint from './example-files/_gitlab_integration_example_team_blueprint.mdx'
+import YamlConfig from './example-files/_gitlab_integration_example_yaml_config.mdx'
+import TeamsYamlFileExample from './example-files/_gitlab_integration_example_team_yaml_file_example.mdx'
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 # Examples
 
-## Mapping groups
+## Mapping examples
+
+### Groups
 
 The following example demonstrates how to ingest your GitLab groups, subgroups and projects to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -56,7 +61,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 
 
-## Mapping projects, README.md and merge requests
+### Projects, README.md and merge requests
 
 :::caution Merge request access requirement
 Merge requests are fetched at the **group level**. Ensure your integration token has access to the parent GitLab group that contains your projects. Project-level access alone is not sufficient for merge request visibility.
@@ -75,7 +80,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 <MergeRequestConfig />
 
-### Merge request configuration options
+#### Merge request configuration options
 
 <Tabs groupId="config" queryString="parameter">
 
@@ -133,7 +138,7 @@ By default, if not specified, it is set to `90` days.
 
 
 
-## Mapping projects and issues
+### Projects and issues
 
 The following example demonstrates how to ingest your GitLab projects and their issues to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -155,7 +160,9 @@ You can use the following Port blueprint definitions and integration configurati
 
 
 
-## Mapping files and file contents
+### Files and file contents
+
+Below are two examples for mapping files and contents:
 
 The following example shows how to ingest dependencies from a `package.json` file in your GitLab repository into Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -164,13 +171,23 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PackageConfig />
 
-The integration mapping example above demonstrates both a JSON file (`package.json`) and a YAML file (`config.yml`) configuration.
-The example will parse the file in your repository and extract the dependencies into Port entities.  
+The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
+
+___
+
+The following example shows how to ingest teams from a YAML file in your GitLab repository into Port.  
+
+<TeamBlueprint/>
+
+<YamlConfig/>
+
+<TeamsYamlFileExample/>
+
+The example will parse the YAML file in your repository and extract the teams into Port entities. 
+
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#ingest-files-from-your-repositories).
 
-
-
-## Mapping projects and monorepos
+### Projects and monorepos
 
 The following example demonstrates how to ingest your GitLab projects and their monorepo folders to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -219,7 +236,7 @@ You can also specify a different path for each monorepo repository, for example:
 
 
 
-## Mapping projects and folders
+### Projects and folders
 
 The following example demonstrates how to ingest your GitLab projects and their folders to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -248,9 +265,9 @@ resources:
 ```
 :::
 
-## Mapping members and group with members
+### Mapping members and group with members
 
-### Prerequisites
+#### Prerequisites
 
 - When using **GitLab Self Hosted**, an admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
 - When using **GitLab Enterprise**, accounts can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
@@ -259,7 +276,7 @@ resources:
 Primary email addresses are not available for GitLab "Free plan" users.
 :::
 
-### Mapping members
+#### Mapping members
 
 The following example demonstrates how to ingest your GitLab members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -270,7 +287,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 
 
-### Mapping groups with members
+#### Mapping groups with members
 
 The following example demonstrates how to ingest your GitLab groups and their members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -315,7 +332,7 @@ By default, this selector is set to `false`, which means the integration will on
 :::
 
 
-## Mapping projects, pipelines and jobs
+### Projects, pipelines and jobs
 
 The following example demonstrates how to ingest your GitLab projects, their pipelines and jobs runs to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -336,7 +353,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 :::
 
-## Mapping releases
+### Releases
 
 The following example demonstrates how to ingest your GitLab releases to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -353,7 +370,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 :::
 
-## Mapping tags
+## Tags
 
 The following example demonstrates how to ingest your GitLab tags to Port.  
 You can use the following Port blueprint definitions and integration configuration:
