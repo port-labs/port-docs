@@ -2,7 +2,6 @@
 
 import S3BucketBlueprint from './aws-s3-bucket/_s3_bucket_blueprint.mdx'
 import S3BucketConfig from './aws-s3-bucket/_s3_bucket_port_app_config.mdx'
-import S3BucketProperties from './aws-s3-bucket/_s3_bucket_properties.mdx'
 
 
 
