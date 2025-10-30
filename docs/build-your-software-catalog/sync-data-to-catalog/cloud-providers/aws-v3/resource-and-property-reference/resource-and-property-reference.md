@@ -2,7 +2,7 @@
 
 Welcome to the reference guide for AWS resource and property types, as supported by AWS CloudFormation and used in Port integrations.
 
-## Overview of Supported Resource Types
+## Supported Resource Types
 
 Explore detailed documentation for each AWS resource and property type available for integration. For each type, you'll find information about supported actions, key properties, required permissions, and usage best practices.
 
@@ -31,6 +31,10 @@ Refer to the sidebar or the list below to navigate to individual resource refere
 
 **Actions** define the set of API operations performed to discover and fetch resources within your AWS environment. These actions are mapped directly to AWS API calls—for example, `DescribeInstances` for EC2 or `ListBuckets` for S3—which determine the resource data that Port can ingest and keep up to date.
 
+:::caution Ensure required AWS permissions are granted
+Each action requires specific AWS IAM permissions. Your integration’s AWS credentials must have these permissions; otherwise, the action will not succeed and its data will not be available in Port.
+:::
+
 ### How Actions Map to AWS Operations
 
 Each Port-supported resource type comes with a set of actions that align with AWS's official API operations. For instance:
@@ -40,16 +44,14 @@ Each Port-supported resource type comes with a set of actions that align with AW
 
 These mappings ensure that only the properties available from the selected AWS actions are ingested into your Port catalog.
 
-### How to Enable and Customize Actions
+### Enabling and Customizing Actions
 
-Port allows you to tailor the discovery and ingestion of AWS resource data by configuring which actions are enabled for each resource type. Actions determine what properties are collected and what AWS permissions are needed.
+With Port, you have full control over which AWS resource properties are discovered and ingested into your catalog by specifying the actions to use for each resource type. Actions define what data you collect and the AWS permissions required.
 
-- **Default Actions**: These actions are automatically enabled and provide basic resource discovery (such as listing all S3 buckets or EC2 instances).
-- **Optional Actions**: Enable these to enrich your catalog with additional resource properties, such as tags, encryption settings, or advanced metadata. Optional actions must be explicitly specified in your integration configuration.
+- **Default Actions**: These are enabled automatically, ensuring basic discovery such as listing all S3 buckets or EC2 instances without additional configuration.
+- **Optional Actions**: Enable these to collect more detailed properties for your AWS resources. You must explicitly add optional actions in your integration configuration for Port to use them.
 
-:::tip Enabling optional actions for more data
-To collect extra properties from AWS resources, add the relevant optional actions to your Port integration configuration. For instance, if you want to ingest the status of EC2 instances, include `DescribeInstanceStatusAction` in the configuration.
-:::
+To collect additional properties from AWS resources, add the optional actions you need to the `includeActions` field of your configuration. For example, to include status details from EC2 instances by enabling the `DescribeInstanceStatusAction`, add the following:
 
 ```yaml
 - kind: AWS::EC2::Instance
@@ -59,14 +61,11 @@ To collect extra properties from AWS resources, add the relevant optional action
       - DescribeInstanceStatusAction
 ```
 
-:::caution Ensure required AWS permissions are granted
-Each action requires specific AWS IAM permissions. Your integration’s AWS credentials must have these permissions; otherwise, the action will not succeed and its data will not be available in Port.
+In this configuration, Port will enrich your catalog by fetching all properties provided by the [DescribeInstanceStatus API](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceStatus.html) for every EC2 instance.
+
+:::caution Action limit
+You can include a **maximum of 3 optional actions per resource kind** (excluding default actions). To use more than 3 actions, you can configure multiple resource kinds in your integration.
 :::
 
-### Summary
-
-- **Actions in Port = AWS API Calls**: The available and enabled actions directly control what data about AWS resources Port can ingest.
-- **Configurable per Resource**: Optional actions let you tailor the integration based on the level of detail required.
-- **Permissions matter**: Ensure AWS IAM users or roles associated with your integration grant all permissions required by your chosen actions.
 
 Refer to the individual resource documentation pages for a table of actions, their AWS mapping, and necessary IAM permissions.
