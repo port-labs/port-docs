@@ -37,7 +37,7 @@ The live events flow is comprised of the following steps:
 4. **API Gateway** receives the events and forwards them to Port.
 5. Your **Port Integration** processes the events and updates your software catalog.
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/live-events-diagram.svg' width='50%' border='1px' />
+    <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/live-events-diagram.svg' width='50%' border='1px' style={{'backgroundColor': 'white'}} />
 <br></br>
 
 ## Setup methods

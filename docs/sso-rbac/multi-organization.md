@@ -38,8 +38,12 @@ In order to switch to a different organization:
 2. Click on the logo in the top left corner of the page.
 3. Click on the organization you want to switch to.
 
-:::info Login behavior
-Note that when users log in, they automatically access their **last visited** organization.
+:::caution Login behavior and organization switching
+When users log in, they automatically access their **last visited** organization.
+
+If you have active sessions in multiple tabs or browsers, switching organizations in one session will switch all other active sessions to that same organization.
+
+We recommend you verify the active organization before making changes.
 :::
 
 ## Automatic user access
