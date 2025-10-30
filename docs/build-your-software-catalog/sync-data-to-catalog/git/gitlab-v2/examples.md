@@ -370,7 +370,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 :::
 
-## Tags
+### Tags
 
 The following example demonstrates how to ingest your GitLab tags to Port.  
 You can use the following Port blueprint definitions and integration configuration:
