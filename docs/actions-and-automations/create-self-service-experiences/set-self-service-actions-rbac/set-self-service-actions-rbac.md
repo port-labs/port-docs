@@ -116,15 +116,14 @@ Add the `requiredApproval` field to your action:
 
 ## Configure visibility for action runs
 
-When creating or editing a self-service action, you can also control who can **view its runs**.
+When creating or editing a self-service action, you can also control who can **view its runs**, using the relevant toggle in the `Permissions` tab.
 
-A new toggle — **“Let anyone in this organization view this action’s runs”** — defines visibility for runs associated with the action.
 
 - **When enabled (default):** All organization members can view the action’s runs.
 - **When disabled:**  
   - **Admins** can view all runs.  
   - **Approvers** can view runs they are assigned to approve.  
-  - **Regular members** can only view their own runs.
+  - **Members** can only view their own runs.
 
 This ensures that sensitive operational data remains accessible only to authorized users, while maintaining flexibility and transparency where needed.
 
@@ -135,8 +134,6 @@ This ensures that sensitive operational data remains accessible only to authoriz
 ]}>
 
 <TabItem value="ui">
-
-Scroll down the `Permissions` tab and set `Enforce manual approval` to `Yes`. This will introduce some new options:
 
 <img src='/img/self-service-actions/rbac/viewRunAccess.png' width='70%' border='1px' />
 
