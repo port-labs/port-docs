@@ -1,10 +1,10 @@
 # AWS Resource and Property Reference
 
-Welcome to the reference guide for AWS resource and property types, as supported by AWS CloudFormation and used in Port integrations.
+Welcome to the reference guide for AWS resource, actions and properties, as supported by AWS CloudFormation and used in Port integrations.
 
 ## Supported Resource Types
 
-Explore detailed documentation for each AWS resource and property type available for integration. For each type, you'll find information about supported actions, key properties, required permissions, and usage best practices.
+Explore detailed documentation for each AWS resource and action available for integration. For each resource type, you'll find information about supported actions, required permissions, and usage best practices.
 
 Resource type identifiers follow a standardized format, allowing you to easily recognize and reference each AWS entity:
 
@@ -27,8 +27,16 @@ Refer to the sidebar or the list below to navigate to individual resource refere
 - [Amazon Elastic Kubernetes Service](./amazon-elastic-kubernetes-service/amazon-elastic-kubernetes-service.md)
 - [Amazon Relational Database Service](./amazon-relational-database-service/amazon-relational-database-service.md)
 - [AWS Lambda](./aws-lambda/aws-lambda.md)
+- [AWS Account](./aws-account/aws-account.md)
 - [AWS Organizations](./aws-organizations/aws-organizations.md)
 
+:::info More Resource Types Coming Soon
+We're continuously expanding support for additional AWS resource types to ensure comprehensive coverage of your AWS infrastructure.
+
+If you need support for a specific AWS resource or action that isn’t yet available, please consider opening a feature request or reach out to us through chat, Slack, or our [Support Portal](http://support.port.io/).
+
+Your feedback helps us prioritize what to build next.
+:::
 
 ## Actions
 

@@ -22,17 +22,6 @@ Easily fill your software catalog with data directly from your AWS Organization,
 - Use relations to create complete, easily digestible views of your AWS infrastructure inside Port.
 - Enjoy a fully managed experience with no infrastructure to maintain or updates to apply.
 
-## Supported resources
-
-The integration currently supports the following AWS resource types:
-- `S3 Buckets`: Complete bucket information including properties, tags, and metadata.
-- `ECS Clusters`: Cluster details, services, and task definitions.
-- `EC2 Instances`: Instance information, security groups, and networking details.
-- `SQS Queues`: Queue information including attributes, policies, and configuration details.
-
-:::info More Resource Types Coming Soon
-We're actively working on adding support for additional AWS resource types to provide comprehensive coverage of your AWS infrastructure.
-:::
 
 ## Key advantages
 
@@ -53,6 +42,9 @@ For detailed information about the IAM role architecture and security model, see
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+::::info Property naming conventions
+The AWS Hosted by Port integration returns all resource properties in **PascalCase** (for example: `Arn`, `BucketName`, `CreationDate`). When writing mappings and JQ expressions, reference properties using PascalCasing as shown in the examples below.
+::::
 
 ### Default mapping configuration
 
@@ -138,6 +130,6 @@ resources:
 
 <MetricsAndSyncStatus/>
 
-## Advanced
+## Resource and Property Reference
 
-Refer to the [Advanced configuration](./advanced.md) page for advanced use cases and examples.
+Refer to the [Resource and Property Reference](./resource-and-property-reference/resource-and-property-reference.md) page for details on available AWS resources, their properties, and mapping examples.
