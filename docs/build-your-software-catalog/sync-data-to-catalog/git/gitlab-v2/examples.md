@@ -179,9 +179,9 @@ The following example shows how to ingest teams from a YAML file in your GitLab 
 
 <TeamBlueprint/>
 
-<YamlConfig/>
-
 <TeamsYamlFileExample/>
+
+<YamlConfig/>
 
 The example will parse the YAML file in your repository and extract the teams into Port entities. 
 
