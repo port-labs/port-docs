@@ -1,0 +1,24 @@
+<details>
+<summary><b>Integration Mapping (click to expand)</b></summary>
+```yaml showLineNumbers
+resources:
+  - kind: tag
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .__project.path_with_namespace + "/" + .name | gsub(" "; "")
+          title: .name
+          blueprint: '"gitlabTag"'
+          properties:
+            tagName: .name
+            message: .message
+            protected: .protected
+            createdAt: .created_at
+            commitSha: .commit.id
+            commitTitle: .commit.title
+          relations:
+            service: .__project.path_with_namespace | gsub(" "; "")
+```
+</details>
