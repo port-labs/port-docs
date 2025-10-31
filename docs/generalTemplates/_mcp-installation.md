@@ -13,7 +13,7 @@ To connect Cursor to Port's remote MCP, follow these steps:
 
    Go to Cursor settings, click on **Tools & Integrations**, and add a new MCP server.
 
-   ![Go to Cursor Settings](/img/ai-agents/MCPInstallCursorStep1.png)
+   <img src="/img/ai-agents/MCPInstallCursorStep1.png" border="1px" width="100%" />
 
 2. **Configure the MCP server**
 
@@ -48,19 +48,19 @@ To connect Cursor to Port's remote MCP, follow these steps:
 </TabItem>
 </Tabs>
 
-   ![Add configuration](/img/ai-agents/MCPInstallCursorStep2.png)
+   <img src="/img/ai-agents/MCPInstallCursorStep2.png" border="1px" width="100%" />
 
 3. **Authenticate with Port**
 
    Click on **"Needs login"** and complete the authentication flow in the window that opens.
 
-   ![Login to Port](/img/ai-agents/MCPInstallCursorStep3.png)
+   <img src="/img/ai-agents/MCPInstallCursorStep3.png" border="1px" width="100%" />
 
 4. **Verify connection**
 
    After successful authentication, you'll see the list of available tools from the MCP server.
 
-   ![See tools](/img/ai-agents/MCPInstallCursorStep4.png)
+   <img src="/img/ai-agents/MCPInstallCursorStep4.png" border="1px" width="100%" />
 
 :::warning Authentication window behavior
 In some cases, after clicking "Accept" in the authentication popup, the window won't get closed but the connection is established successfully. You can safely close the window.
@@ -164,7 +164,7 @@ Failed to validate tool mcp_port_create_action: Error: tool parameters array typ
 2. Click on the tools icon in the chat interface
 3. You should now see Port tools available for use
 
-![VS Code MCP Setup](/img/ai-agents/MCPVSCodeSetup.gif)
+<img src="/img/ai-agents/MCPVSCodeSetup.gif" border="1px" width="100%" />
 
 </TabItem>
 <TabItem value="claude" label="Claude">

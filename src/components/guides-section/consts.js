@@ -1499,6 +1499,13 @@ export const availableGuides = [
         tags: ["Autonomous Ticket Resolution", "AI", "Claude Code", "Jira"],
         logos: ["AI", "Claude Code", "Jira"],
         link: "/guides/all/triage-tickets-to-coding-agents",
+    },
+    {
+        title: "Query DORA metrics using Port MCP",
+        description: "Query DORA metrics using natural language commands directly from your IDE with Port's MCP server",
+        tags: ["Engineering Intelligence", "AI"],
+        logos: ["AI"],
+        link: "/guides/all/query-dora-metrics-using-port-mcp",
     }
 ]
 

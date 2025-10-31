@@ -5,6 +5,7 @@ title: Overview & Installation
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import MCPInstallation from '/docs/generalTemplates/_mcp-installation.md'
 
 # Port MCP server
 
@@ -75,7 +76,7 @@ Effortlessly query your software catalog and get immediate answers. This elimina
 *   Ask: "Show me all the microservices owned by the Backend team."
 *   Ask: "What are the dependencies of the 'OrderProcessing' service?"
 
-![Querying the service catalog from an IDE](/img/ai-agents/MCPCopilotAskServices.png)
+<img src="/img/ai-agents/MCPCopilotAskServices.png" width="100%" border="1px" />
 
 ### Vibe-build in Port
 
@@ -86,7 +87,7 @@ Leverage Claude's capabilities to manage and build your entire Port software cat
 *   Ask: "I want a new production readiness scorecard to track the code quality and service alerts"
 *   Ask: "Create a new self-service action in Port to scaffold a new service"
 
-![Claude building a self-service action](/img/ai-agents/MCPClaudeBuildSSA.png)
+<img src="/img/ai-agents/MCPClaudeBuildSSA.png" width="100%" border="1px" />
 
 ### Analyze scorecards and quality
 
@@ -96,11 +97,11 @@ Gain insights into service health, compliance, and quality by leveraging Port's 
 *   Ask: "What's preventing the 'InventoryService' from reaching Gold level in the 'Production Readiness' scorecard?"
 *   Ask: "Show me the bug count vs. test coverage for all Java microservices."
 
-![Asking about bug counts and test coverage correlation](/img/ai-agents/MCPClaudeInsightsBugs.png)
+<img src="/img/ai-agents/MCPClaudeInsightsBugs.png" width="100%" border="1px" />
 
 *   Ask: "Which of our services are missing critical monitoring dashboards?"
 
-![Identifying services lacking proper monitoring](/img/ai-agents/MCPClaudeMonitoringServices.png)
+<img src="/img/ai-agents/MCPClaudeMonitoringServices.png" width="100%" border="1px" />
 
 ### Streamline development and operations
 
@@ -110,14 +111,11 @@ Receive assistance with common development and operational tasks, directly withi
 *   Ask: "Guide me through creating a new component blueprint with 'name', 'description', and 'owner' properties."
 *   Ask: "Help me add a rule to the 'Tier1Services' scorecard that requires an on-call schedule to be defined."
 
-![Getting instructions for new service setup](/img/ai-agents/MCPClaudeServiceSetup.png)
+<img src="/img/ai-agents/MCPClaudeServiceSetup.png" width="100%" border="1px" />
 
 ### Find your own use cases
 
 You can use Port's MCP to find the use cases that will be valuable to you. Try using this prompt: "think of creative prompts I can use to showcase the power of Port's MCP, based on the data available in Port"
-
-
-import MCPInstallation from '/docs/generalTemplates/_mcp-installation.md'
 
 <MCPInstallation />
 
