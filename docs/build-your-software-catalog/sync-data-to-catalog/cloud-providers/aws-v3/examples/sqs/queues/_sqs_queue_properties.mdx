@@ -1,0 +1,31 @@
+<details>
+<summary><b>SQS queue properties (Click to expand)</b></summary>
+
+| Property | Type | Description | Action Required |
+|----------|------|-------------|-----------------|
+| `QueueName` | string | The name of the SQS queue | Default |
+| `QueueUrl` | string | The URL of the SQS queue | Default |
+| `QueueArn` | string | The Amazon Resource Name (ARN) of the SQS queue | Default |
+| `ApproximateNumberOfMessages` | number | The approximate number of messages available for retrieval from the queue | Default |
+| `ApproximateNumberOfMessagesNotVisible` | number | The approximate number of messages in the queue that are delayed and not available for reading immediately | Default |
+| `ApproximateNumberOfMessagesDelayed` | number | The approximate number of messages in the queue that are delayed and not available for reading immediately | Default |
+| `CreatedTimestamp` | string | The time when the queue was created (Unix timestamp) | Default |
+| `LastModifiedTimestamp` | string | The time when the queue was last changed (Unix timestamp) | Default |
+| `VisibilityTimeout` | number | The visibility timeout for the queue in seconds | Default |
+| `MaximumMessageSize` | number | The limit of how many bytes a message can contain before Amazon SQS rejects it | Default |
+| `MessageRetentionPeriod` | number | The number of seconds for which Amazon SQS retains a message | Default |
+| `DelaySeconds` | number | The default delay for a message in the queue in seconds | Default |
+| `ReceiveMessageWaitTimeSeconds` | number | The length of time, in seconds, for which a ReceiveMessage action waits for a message to arrive | Default |
+| `Policy` | string | The queue's policy | Default |
+| `RedrivePolicy` | string | The string that includes the parameters for the dead-letter queue functionality | Default |
+| `RedriveAllowPolicy` | string | The string that includes the parameters for the permissions for the dead-letter queue redrive permission | Default |
+| `KmsMasterKeyId` | string | The ID of an AWS-managed customer master key (CMK) for Amazon SQS or a custom CMK | Default |
+| `KmsDataKeyReusePeriodSeconds` | number | The length of time, in seconds, for which Amazon SQS can reuse a data key to encrypt or decrypt messages before calling AWS KMS again | Default |
+| `SqsManagedSseEnabled` | boolean | Returns true if the queue is using SSE-SQS encryption using SQS owned encryption keys | Default |
+| `FifoQueue` | boolean | Returns true if the queue is a FIFO queue | Default |
+| `ContentBasedDeduplication` | boolean | Returns true if content-based deduplication is enabled for the queue | Default |
+| `DeduplicationScope` | string | Specifies whether message deduplication occurs at the message group or queue level | Default |
+| `FifoThroughputLimit` | string | Specifies whether the FIFO queue throughput quota applies to the entire queue or per message group | Default |
+| `Tags` | object | The tags that have been assigned to the queue | GetQueueTagsAction |
+
+</details>
