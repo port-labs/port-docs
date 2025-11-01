@@ -1,0 +1,86 @@
+<details>
+
+<summary> Service Bus Topic blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureServiceBusTopic",
+  "title": "Service Bus Topic",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "type": {
+        "title": "Type",
+        "type": "string"
+      },
+      "subscriptionCount": {
+        "title": "Subscription Count",
+        "type": "number"
+      },
+      "sizeInBytes": {
+        "title": "Size in Bytes",
+        "type": "number"
+      },
+      "maxSizeInMegabytes": {
+        "title": "Max Size in MB",
+        "type": "number"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string"
+      },
+      "enablePartitioning": {
+        "title": "Enable Partitioning",
+        "type": "boolean"
+      },
+      "enableBatchedOperations": {
+        "title": "Enable Batched Operations",
+        "type": "boolean"
+      },
+      "requiresDuplicateDetection": {
+        "title": "Requires Duplicate Detection",
+        "type": "boolean"
+      },
+      "supportOrdering": {
+        "title": "Support Ordering",
+        "type": "boolean"
+      },
+      "defaultMessageTimeToLive": {
+        "title": "Default Message TTL",
+        "type": "string"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "updatedAt": {
+        "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "accessedAt": {
+        "title": "Accessed At",
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "namespace": {
+      "title": "Namespace",
+      "target": "azureServiceBusNamespace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+

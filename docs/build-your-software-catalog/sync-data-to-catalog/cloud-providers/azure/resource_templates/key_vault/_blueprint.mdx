@@ -1,0 +1,100 @@
+<details>
+
+<summary> Key Vault blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureKeyVault",
+  "title": "Key Vault",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string",
+        "icon": "Home"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string",
+        "icon": "Microservice"
+      },
+      "tenantId": {
+        "title": "Tenant ID",
+        "type": "string"
+      },
+      "sku": {
+        "title": "SKU",
+        "type": "object",
+        "icon": "Settings"
+      },
+      "vaultUri": {
+        "title": "Vault URI",
+        "type": "string",
+        "format": "url",
+        "icon": "Link"
+      },
+      "provisioningState": {
+        "title": "Provisioning State",
+        "type": "string"
+      },
+      "enabledForDeployment": {
+        "title": "Enabled For Deployment",
+        "type": "boolean"
+      },
+      "enabledForDiskEncryption": {
+        "title": "Enabled For Disk Encryption",
+        "type": "boolean"
+      },
+      "enabledForTemplateDeployment": {
+        "title": "Enabled For Template Deployment",
+        "type": "boolean"
+      },
+      "enableSoftDelete": {
+        "title": "Enable Soft Delete",
+        "type": "boolean"
+      },
+      "softDeleteRetentionInDays": {
+        "title": "Soft Delete Retention In Days",
+        "type": "number"
+      },
+      "enableRbacAuthorization": {
+        "title": "Enable RBAC Authorization",
+        "type": "boolean"
+      },
+      "enablePurgeProtection": {
+        "title": "Enable Purge Protection",
+        "type": "boolean"
+      },
+      "publicNetworkAccess": {
+        "title": "Public Network Access",
+        "type": "string"
+      },
+      "networkAcls": {
+        "title": "Network ACLs",
+        "type": "object"
+      },
+      "tags": {
+        "title": "Tags",
+        "type": "object"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "resource_group": {
+      "title": "Resource Group",
+      "target": "azureResourceGroup",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+

@@ -1,0 +1,86 @@
+<details>
+
+<summary> Application Insights blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureApplicationInsights",
+  "title": "Application Insights",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string",
+        "icon": "Home"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string",
+        "icon": "Microservice"
+      },
+      "kind": {
+        "title": "Kind",
+        "type": "string"
+      },
+      "applicationType": {
+        "title": "Application Type",
+        "type": "string"
+      },
+      "applicationId": {
+        "title": "Application ID",
+        "type": "string"
+      },
+      "instrumentationKey": {
+        "title": "Instrumentation Key",
+        "type": "string",
+        "icon": "Lock"
+      },
+      "connectionString": {
+        "title": "Connection String",
+        "type": "string"
+      },
+      "provisioningState": {
+        "title": "Provisioning State",
+        "type": "string"
+      },
+      "retentionInDays": {
+        "title": "Retention In Days",
+        "type": "number"
+      },
+      "samplingPercentage": {
+        "title": "Sampling Percentage",
+        "type": "number"
+      },
+      "publicNetworkAccessForIngestion": {
+        "title": "Public Network Access For Ingestion",
+        "type": "string"
+      },
+      "publicNetworkAccessForQuery": {
+        "title": "Public Network Access For Query",
+        "type": "string"
+      },
+      "tags": {
+        "title": "Tags",
+        "type": "object"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "resource_group": {
+      "title": "Resource Group",
+      "target": "azureResourceGroup",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+
