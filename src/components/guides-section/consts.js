@@ -1480,6 +1480,14 @@ export const availableGuides = [
         link: "/guides/all/manage-ai-instructions",
     },
     {
+        title: "Manage MCP Server Registry",
+        description: "Build a centralized MCP server registry with governance, discovery, and automated metadata extraction",
+        tags: ["AI", "Actions", "Automations", "RBAC"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/manage-mcp-registry",
+      
+    },
+    {
         title: "Streamline IaC with AI",
         description: "Use Port AI agents to automate IaC provisioning and management",
         tags: ["IaC for devs", "Github Copilot", "AI", "Actions"],
