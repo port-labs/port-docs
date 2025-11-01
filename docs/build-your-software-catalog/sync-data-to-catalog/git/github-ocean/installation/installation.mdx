@@ -32,10 +32,38 @@ Starting from **version 3.0.0-beta**, the GitHub integration supports syncing da
 
 :::info Multi-organization configuration
 - GitHub App and fine-grained PAT: use `githubOrganization` (single organization).
-- Classic PAT: to sync multiple organizations, list them in your port mapping under `organizations`.
+- Classic PAT:
+  - To sync multiple organizations, list them in your port mapping under `organizations`.
+  - If `organizations` are not specified, the integration will sync all organizations the classic PAT is scoped to.
 - Precedence: if `githubOrganization` is set in the environment variables or config and `organizations` are listed in port mapping, the integration syncs only the `githubOrganization` (single‑org behavior).
 - Performance: syncing multiple organizations increases API calls and may slow down the integration.
 :::
+
+#### Cleanup after restricting organizations
+
+If you initially synced multiple organizations (e.g., on a first‑time install before your mapping was ready) and later restrict organizations in your mapping, set `entityDeletionThreshold: 1` temporarily and resync to ensure previously ingested, now‑unwanted entities are deleted. Revert the threshold afterwards (default ≈ 0.9) or remove completely.
+
+<details>
+<summary><b>Entity deletion threshold (click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+entityDeletionThreshold: 1
+resources:
+  - kind: organization
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '''githubOrganization'''
+          properties:
+            login: .login
+            id: .id
+```
+</details>
 
 ### Create access token
 
