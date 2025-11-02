@@ -784,7 +784,3 @@ You'll need to set up the following secrets in your GitHub repository (under **S
 5. Monitor the action execution in Port's logs.
 
 6. Verify that repositories are successfully migrated to your GitHub organization.
-
-## Conclusion
-
-You've successfully set up an automated migration workflow from Bitbucket to GitHub using Port's self-service actions and GitHub Actions workflows.
