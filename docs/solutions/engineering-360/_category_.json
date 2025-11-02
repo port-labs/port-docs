@@ -1,9 +1,9 @@
 {
-    "label": "Engineering 360",
+    "label": "Engineering intelligence",
     "collapsible": true,
     "collapsed": true,
     "position": 3,
     "customProps": {
-      "description": "Engineering 360"
+      "description": "Engineering intelligence"
     }
   }

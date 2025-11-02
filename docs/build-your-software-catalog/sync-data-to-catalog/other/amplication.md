@@ -23,7 +23,7 @@ This integration allows you to:
 - Leverage code generation to accelerate development and maintain consistency.
 - Poll Amplication for templates, resources, and outdated version alerts to keep you in sync with your Amplication resources.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Amplication into Port are listed below:
 
