@@ -84,7 +84,7 @@ export function Step3Installation() {
 
     return `docker run -d --name ocean-http-integration \\
 ${envVars.join(' \\\n')} \\
-  ghcr.io/port-labs/port-ocean-generic-http:latest`;
+  ghcr.io/port-labs/port-ocean-generic-http:0.1.5-dev`;
   };
 
   const generateHelmCommand = () => {
@@ -96,25 +96,22 @@ ${envVars.join(' \\\n')} \\
       `--set scheduledResyncInterval=60`,
       `--set integration.identifier="generic-http"`,
       `--set integration.type="generic-http"`,
+      `--set integration.version="0.1.5-dev"`,
       `--set integration.eventListener.type="POLLING"`,
       `--set integration.config.baseUrl="${baseUrl || 'https://api.example.com'}"`,
       `--set integration.config.authType="${authType}"`,
     ];
 
-    if (authType !== 'none') {
-      let authValue = '';
-      if (authType === 'bearer_token') {
-        authValue = apiToken || '<YOUR_API_TOKEN>';
-      } else if (authType === 'api_key') {
-        authValue = apiKey || '<YOUR_API_KEY>';
-      } else if (authType === 'basic') {
-        authValue = `${username || '<USERNAME>'}:${password || '<PASSWORD>'}`;
+    if (authType === 'bearer_token') {
+      setFlags.push(`--set integration.config.apiToken="${apiToken || '<YOUR_API_TOKEN>'}"`);
+    } else if (authType === 'api_key') {
+      setFlags.push(`--set integration.config.apiKey="${apiKey || '<YOUR_API_KEY>'}"`);
+      if (apiKeyHeader !== 'X-API-Key') {
+        setFlags.push(`--set integration.config.apiKeyHeader="${apiKeyHeader}"`);
       }
-      setFlags.push(`--set integration.secrets.authValue="${authValue}"`);
-    }
-
-    if (apiKeyHeader !== 'X-API-Key' && authType === 'api_key') {
-      setFlags.push(`--set integration.config.apiKeyHeader="${apiKeyHeader}"`);
+    } else if (authType === 'basic') {
+      setFlags.push(`--set integration.config.username="${username || '<USERNAME>'}"`);
+      setFlags.push(`--set integration.config.password="${password || '<PASSWORD>'}"`);
     }
 
     if (paginationType !== 'none') {
@@ -239,7 +236,7 @@ ${setFlags.map(flag => `  ${flag}`).join(' \\\n')}`;
               mappings: {
                 identifier: identifierField ? `.${identifierField} | tostring` : '.id | tostring',
                 title: titleField ? `.${titleField}` : '.name',
-                blueprint: `"${blueprintId || 'myBlueprint'}"`,
+                blueprint: `'"${blueprintId || 'myBlueprint'}"'`,
                 properties: properties
               }
             }
@@ -253,7 +250,7 @@ ${mapping.resources.map(resource =>
 `resources:
   - kind: ${resource.kind}
     selector:
-      query: ${resource.selector.query}${resource.selector.data_path ? `
+      query: '${resource.selector.query}'${resource.selector.data_path ? `
       data_path: ${resource.selector.data_path}` : ''}
     port:
       entity:
@@ -266,35 +263,21 @@ ${Object.entries(resource.port.entity.mappings.properties).map(([k, v]) => `    
 ).join('\n')}`;
   };
 
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text);
-  };
-
   return (
     <div className={styles.builderSection}>
       <div className={styles.installationSection}>
         <h3>Install the Integration</h3>
         <Tabs groupId="deploy" queryString="deploy">
           <TabItem value="helm" label="Helm" default>
-            <div className={styles.codeWrapper}>
-              <button onClick={() => copyToClipboard(generateHelmCommand())} className={styles.copyBtn}>
-                Copy to clipboard
-              </button>
-              <CodeBlock language="bash" showLineNumbers>
-                {generateHelmCommand()}
-              </CodeBlock>
-            </div>
+            <CodeBlock language="bash" showLineNumbers>
+              {generateHelmCommand()}
+            </CodeBlock>
           </TabItem>
           
           <TabItem value="docker" label="Docker">
-            <div className={styles.codeWrapper}>
-              <button onClick={() => copyToClipboard(generateDockerCommand())} className={styles.copyBtn}>
-                Copy to clipboard
-              </button>
-              <CodeBlock language="bash" showLineNumbers>
-                {generateDockerCommand()}
-              </CodeBlock>
-            </div>
+            <CodeBlock language="bash" showLineNumbers>
+              {generateDockerCommand()}
+            </CodeBlock>
           </TabItem>
         </Tabs>
 

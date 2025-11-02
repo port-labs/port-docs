@@ -79,7 +79,7 @@ export function IntegrationBuilder() {
 
     return `docker run -d --name ocean-http-integration \\
 ${envVars.join(' \\\n')} \\
-  ghcr.io/port-labs/port-ocean-generic-http:latest`;
+  ghcr.io/port-labs/port-ocean-generic-http:0.1.5-dev`;
   };
 
   const generateHelmValues = () => {
@@ -97,13 +97,22 @@ ${envVars.join(' \\\n')} \\
       config.apiKeyHeader = apiKeyHeader;
     }
 
-    let authValue = '';
+    // Build auth config
+    let authConfig = '';
     if (authType === 'bearer_token') {
-      authValue = apiToken || '<YOUR_API_TOKEN>';
+      authConfig = `
+    apiToken: ${apiToken || '<YOUR_API_TOKEN>'}`;
     } else if (authType === 'api_key') {
-      authValue = apiKey || '<YOUR_API_KEY>';
+      authConfig = `
+    apiKey: ${apiKey || '<YOUR_API_KEY>'}`;
+      if (apiKeyHeader !== 'X-API-Key') {
+        authConfig += `
+    apiKeyHeader: ${apiKeyHeader}`;
+      }
     } else if (authType === 'basic') {
-      authValue = `${username || '<USERNAME>'}:${password || '<PASSWORD>'}`;
+      authConfig = `
+    username: ${username || '<USERNAME>'}
+    password: ${password || '<PASSWORD>'}`;
     }
 
     return `initializePortResources: true
@@ -111,16 +120,14 @@ scheduledResyncInterval: 60
 integration:
   identifier: generic-http
   type: generic-http
+  version: 0.1.5-dev
   eventListener:
     type: POLLING
   config:
     baseUrl: ${config.baseUrl}
-    authType: ${config.authType}${config.paginationType ? `
+    authType: ${config.authType}${authConfig}${config.paginationType ? `
     paginationType: ${config.paginationType}
-    pageSize: ${config.pageSize}` : ''}${config.apiKeyHeader ? `
-    apiKeyHeader: ${config.apiKeyHeader}` : ''}${authType !== 'none' ? `
-  secrets:
-    authValue: ${authValue}` : ''}
+    pageSize: ${config.pageSize}` : ''}
 port:
   clientId: <PORT_CLIENT_ID>
   clientSecret: <PORT_CLIENT_SECRET>`;

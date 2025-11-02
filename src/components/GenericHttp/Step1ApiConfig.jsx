@@ -134,7 +134,7 @@ export function Step1ApiConfig() {
                     onChange={(e) => setPaginationParam(e.target.value)}
                     className={styles.input}
                   />
-                  <span className={styles.hint}>Query parameter name for pagination (e.g., "cursor", "page", "offset")</span>
+                  <span className={styles.hint}>Default: "offset" for offset, "page" for page, "cursor" for cursor</span>
                 </label>
 
                 <label className={styles.label}>
@@ -146,7 +146,7 @@ export function Step1ApiConfig() {
                     onChange={(e) => setSizeParam(e.target.value)}
                     className={styles.input}
                   />
-                  <span className={styles.hint}>Query parameter name for page size (e.g., "limit", "size", "per_page")</span>
+                  <span className={styles.hint}>Default: "limit" for offset/cursor, "size" for page</span>
                 </label>
 
                 {paginationType === 'page' && (
@@ -159,7 +159,7 @@ export function Step1ApiConfig() {
                       onChange={(e) => setStartPage(e.target.value)}
                       className={styles.input}
                     />
-                    <span className={styles.hint}>Starting page number (0 or 1, default: 1)</span>
+                    <span className={styles.hint}>Default: 1 (some APIs start at 0)</span>
                   </label>
                 )}
 
@@ -168,12 +168,12 @@ export function Step1ApiConfig() {
                     <strong>Cursor Path</strong>
                     <input
                       type="text"
-                      placeholder="meta.after_cursor, links.next"
+                      placeholder="meta.after_cursor, pagination.next_cursor"
                       value={cursorPath}
                       onChange={(e) => setCursorPath(e.target.value)}
                       className={styles.input}
                     />
-                    <span className={styles.hint}>Dot-notation path to extract cursor from response (e.g., "meta.after_cursor")</span>
+                    <span className={styles.hint}>Dot-notation path to extract cursor from response (e.g., "meta.after_cursor", "links.next")</span>
                   </label>
                 )}
 
@@ -181,12 +181,12 @@ export function Step1ApiConfig() {
                   <strong>Has More Path</strong>
                   <input
                     type="text"
-                    placeholder="meta.has_more, pagination.hasMore"
+                    placeholder="pagination.has_more, meta.hasMore"
                     value={hasMorePath}
                     onChange={(e) => setHasMorePath(e.target.value)}
                     className={styles.input}
                   />
-                  <span className={styles.hint}>Dot-notation path to check if more pages exist (e.g., "meta.has_more")</span>
+                  <span className={styles.hint}>Dot-notation path to check if more pages exist (e.g., "pagination.has_more", "meta.hasMore")</span>
                 </label>
               </>
             )}

@@ -79,13 +79,13 @@ Where is the actual data in your API's response?
 }
 ```
 
-You'll use a JQ `data_path` in your mapping to tell the integration where to find the array of items.
+You'll use a [JQ](https://jqlang.org/manual/) `data_path` expression in your mapping to tell the integration where to find the array of items (e.g., `.data`, `.users.items`).
 
 ---
 
 ## How It Works
 
-The Generic HTTP integration uses a **two-step setup** similar to other Ocean integrations you've used:
+The Generic HTTP integration uses a [**two-step setup**](/build-your-software-catalog/sync-data-to-catalog/) similar to other Ocean integrations you've used:
 
 ### Step 1: Installation (Global Configuration)
 

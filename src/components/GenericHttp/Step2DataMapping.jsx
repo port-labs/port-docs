@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import pluralize from 'pluralize';
 import { useIntegrationBuilder } from './IntegrationBuilderContext';
 import styles from './styles.module.css';
 
@@ -13,6 +14,61 @@ export function Step2DataMapping() {
     identifierField, setIdentifierField,
     titleField, setTitleField,
   } = useIntegrationBuilder();
+
+  // Auto-generate blueprint ID and title from endpoint path
+  useEffect(() => {
+    if (endpoint) {
+      // Extract last meaningful segment from path (e.g., /api/v1/users -> users)
+      const segments = endpoint.split('/').filter(s => s && !s.match(/^(api|v\d+)$/i));
+      const lastSegment = segments[segments.length - 1] || 'resource';
+      // Convert to singular using pluralize library (handles edge cases like companies -> company)
+      const singular = pluralize.singular(lastSegment);
+      const generatedId = singular.toLowerCase().replace(/[^a-z0-9]/g, '_');
+      
+      // Generate title with capital first letter
+      const generatedTitle = singular.charAt(0).toUpperCase() + singular.slice(1).toLowerCase();
+      
+      setBlueprintId(generatedId);
+      setBlueprintTitle(generatedTitle);
+    }
+  }, [endpoint, setBlueprintId, setBlueprintTitle]);
+
+  // Auto-select first array when JSON is pasted
+  useEffect(() => {
+    if (responseJson && dataPath === null) {
+      try {
+        const json = JSON.parse(responseJson);
+        
+        // Check if root is an array
+        if (Array.isArray(json)) {
+          setDataPath('');
+          return;
+        }
+        
+        // Find first array in the object
+        const findFirstArray = (obj, path = '') => {
+          for (const [key, value] of Object.entries(obj)) {
+            const currentPath = path ? `${path}.${key}` : `.${key}`;
+            if (Array.isArray(value)) {
+              return currentPath;
+            }
+            if (value && typeof value === 'object' && !Array.isArray(value)) {
+              const found = findFirstArray(value, currentPath);
+              if (found) return found;
+            }
+          }
+          return null;
+        };
+        
+        const firstArrayPath = findFirstArray(json);
+        if (firstArrayPath) {
+          setDataPath(firstArrayPath);
+        }
+      } catch {
+        // Invalid JSON, do nothing
+      }
+    }
+  }, [responseJson, dataPath, setDataPath]);
 
   const parseFields = () => {
     if (dataPath === null || !responseJson) {
@@ -244,8 +300,12 @@ export function Step2DataMapping() {
                           <button
                             className={`${styles.roleButton} ${identifierField === field.key ? styles.active : ''}`}
                             onClick={() => {
-                              setIdentifierField(field.key);
-                              setSelectedFields(prev => ({ ...prev, [field.key]: true }));
+                              if (identifierField === field.key) {
+                                setIdentifierField('');
+                              } else {
+                                setIdentifierField(field.key);
+                                setSelectedFields(prev => ({ ...prev, [field.key]: true }));
+                              }
                             }}
                             title="Use as unique identifier (required)"
                           >
@@ -254,8 +314,12 @@ export function Step2DataMapping() {
                           <button
                             className={`${styles.roleButton} ${titleField === field.key ? styles.active : ''}`}
                             onClick={() => {
-                              setTitleField(field.key);
-                              setSelectedFields(prev => ({ ...prev, [field.key]: true }));
+                              if (titleField === field.key) {
+                                setTitleField('');
+                              } else {
+                                setTitleField(field.key);
+                                setSelectedFields(prev => ({ ...prev, [field.key]: true }));
+                              }
                             }}
                             title="Use as display title (optional)"
                           >
