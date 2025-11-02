@@ -43,7 +43,7 @@ You can specify which integration to use using the `invocationMethod.installatio
 
 | Field  | Type | Description  | Example values  |
 | ------ | ---- | ------------ | --------------- |
-| `org`  | `string`  | The GitHub *organization* name. |
+| `org`  | `string`  | The GitHub *organization* name. If the *organization* was specified when installing the integration, the field will be prefilled automatically. Otherwise, specify the organization where the workflow resides. | `port-labs` |
 | `repo` | `string`  | The GitHub *repository* name.  | `port-docs`     |
 | `workflow`  | `string`  | Defines the GitHub *workflow ID* to run (You can also pass the workflow file name as a string). | `workflow.yml` |  |
 | `reportWorkflowStatus` | `boolean` | A flag to control whether to automatically update the Port `run` object status (SUCCESS/FAILURE) at the end of the workflow (default: `true`).  | `true` or `false` |
