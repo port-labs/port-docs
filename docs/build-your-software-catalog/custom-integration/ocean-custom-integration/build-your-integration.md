@@ -5,7 +5,7 @@ description: Interactive guide to configure and install your integration
 ---
 
 import PortApiRegionTip from "/docs/generalTemplates/_port_api_available_regions.md"
-import { IntegrationBuilderProvider, Step1ApiConfig, Step2DataMapping, Step3Installation } from '@site/src/components/GenericHttp';
+import { IntegrationBuilderProvider, Step1ApiConfig, Step2DataMapping, Step3Installation } from '@site/src/components/OceanCustom';
 
 # Build Your Integration
 

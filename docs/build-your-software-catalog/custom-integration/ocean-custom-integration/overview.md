@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: Overview
-description: Understanding the Generic HTTP Integration
+description: Understanding the Ocean Custom Integration
 ---
 
 # Overview
@@ -85,7 +85,7 @@ You'll use a [JQ](https://jqlang.org/manual/) `data_path` expression in your map
 
 ## How It Works
 
-The Generic HTTP integration uses a [**two-step setup**](/build-your-software-catalog/sync-data-to-catalog/) similar to other Ocean integrations you've used:
+The Ocean Custom integration uses a [**two-step setup**](/build-your-software-catalog/sync-data-to-catalog/) similar to other Ocean integrations you've used:
 
 ### Step 1: Installation (Global Configuration)
 
@@ -104,14 +104,14 @@ Think of this as setting up the "connection" to your API - these settings are us
 
 ```bash
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm install generic-http port-labs/port-ocean \
+helm install ocean-custom port-labs/port-ocean \
   --set port.clientId="<PORT_CLIENT_ID>" \
   --set port.clientSecret="<PORT_CLIENT_SECRET>" \
   --set port.baseUrl="https://api.getport.io" \
   --set initializePortResources=true \
   --set scheduledResyncInterval=60 \
-  --set integration.identifier="generic-http" \
-  --set integration.type="generic-http" \
+  --set integration.identifier="ocean-custom" \
+  --set integration.type="custom" \
   --set integration.eventListener.type="POLLING" \
   --set integration.config.baseUrl="https://api.yourcompany.com" \
   --set integration.config.authType="bearer_token" \
@@ -334,5 +334,5 @@ Head to [Build Your Integration](./build-your-integration) for a step-by-step gu
 
 ## More Resources
 
-For all configuration options, code examples, and advanced use cases, check out the [Generic HTTP integration repository on GitHub](https://github.com/port-labs/ocean/tree/main/integrations/generic-http).
+For all configuration options, code examples, and advanced use cases, check out the [Ocean Custom integration repository on GitHub](https://github.com/port-labs/ocean/tree/main/integrations/custom).
 

@@ -46,8 +46,8 @@ export function Step3Installation() {
       `  -e OCEAN__PORT__CLIENT_SECRET="<PORT_CLIENT_SECRET>"`,
       `  -e OCEAN__PORT__BASE_URL="https://api.getport.io"`,
       `  -e OCEAN__EVENT_LISTENER__TYPE="POLLING"`,
-      `  -e OCEAN__INTEGRATION__IDENTIFIER="generic-http"`,
-      `  -e OCEAN__INTEGRATION__TYPE="generic-http"`,
+      `  -e OCEAN__INTEGRATION__IDENTIFIER="ocean-custom"`,
+      `  -e OCEAN__INTEGRATION__TYPE="custom"`,
       `  -e OCEAN__INTEGRATION__CONFIG__BASE_URL="${baseUrl || 'https://api.example.com'}"`,
     ];
 
@@ -84,7 +84,7 @@ export function Step3Installation() {
 
     return `docker run -d --name ocean-http-integration \\
 ${envVars.join(' \\\n')} \\
-  ghcr.io/port-labs/port-ocean-generic-http:0.1.5-dev`;
+  ghcr.io/port-labs/port-ocean-custom:latest`;
   };
 
   const generateHelmCommand = () => {
@@ -94,9 +94,8 @@ ${envVars.join(' \\\n')} \\
       `--set port.baseUrl="https://api.getport.io"`,
       `--set initializePortResources=true`,
       `--set scheduledResyncInterval=60`,
-      `--set integration.identifier="generic-http"`,
-      `--set integration.type="generic-http"`,
-      `--set integration.version="0.1.5-dev"`,
+      `--set integration.identifier="ocean-custom"`,
+      `--set integration.type="custom"`,
       `--set integration.eventListener.type="POLLING"`,
       `--set integration.config.baseUrl="${baseUrl || 'https://api.example.com'}"`,
       `--set integration.config.authType="${authType}"`,
@@ -130,7 +129,7 @@ ${envVars.join(' \\\n')} \\
     if (maxConcurrentRequests !== '10') setFlags.push(`--set integration.config.maxConcurrentRequests="${maxConcurrentRequests}"`);
 
     return `helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm install generic-http port-labs/port-ocean \\
+helm install ocean-custom port-labs/port-ocean \\
 ${setFlags.map(flag => `  ${flag}`).join(' \\\n')}`;
   };
 

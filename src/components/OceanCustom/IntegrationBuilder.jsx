@@ -51,8 +51,8 @@ export function IntegrationBuilder() {
       `  -e OCEAN__PORT__CLIENT_SECRET="<PORT_CLIENT_SECRET>"`,
       `  -e OCEAN__PORT__BASE_URL="https://api.getport.io"`,
       `  -e OCEAN__EVENT_LISTENER__TYPE="ONCE"`,
-      `  -e OCEAN__INTEGRATION__IDENTIFIER="generic-http"`,
-      `  -e OCEAN__INTEGRATION__TYPE="generic-http"`,
+      `  -e OCEAN__INTEGRATION__IDENTIFIER="ocean-custom"`,
+      `  -e OCEAN__INTEGRATION__TYPE="custom"`,
       `  -e OCEAN__INTEGRATION__CONFIG__BASE_URL="${baseUrl || 'https://api.example.com'}"`,
     ];
 
@@ -79,7 +79,7 @@ export function IntegrationBuilder() {
 
     return `docker run -d --name ocean-http-integration \\
 ${envVars.join(' \\\n')} \\
-  ghcr.io/port-labs/port-ocean-generic-http:0.1.5-dev`;
+  ghcr.io/port-labs/port-ocean-custom:latest`;
   };
 
   const generateHelmValues = () => {
@@ -118,9 +118,8 @@ ${envVars.join(' \\\n')} \\
     return `initializePortResources: true
 scheduledResyncInterval: 60
 integration:
-  identifier: generic-http
-  type: generic-http
-  version: 0.1.5-dev
+  identifier: ocean-custom
+  type: custom
   eventListener:
     type: POLLING
   config:
@@ -583,7 +582,7 @@ ${Object.entries(resource.port.entity.mappings.properties).map(([k, v]) => `    
               <p style={{ marginTop: '1rem' }}>Then install:</p>
               <CodeBlock language="bash" showLineNumbers>
                 {`helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm install generic-http port-labs/port-ocean -f values.yaml`}
+helm install ocean-custom port-labs/port-ocean -f values.yaml`}
               </CodeBlock>
             </TabItem>
           </Tabs>
