@@ -10,7 +10,7 @@ This integration allows Port customers to connect to any custom API, internal sy
 
 ---
 
-## When to Use This Integration?
+## When to use this integration?
 
 This integration is ideal when:
 
@@ -83,11 +83,11 @@ You'll use a [JQ](https://jqlang.org/manual/) `data_path` expression in your map
 
 ---
 
-## How It Works
+## How it works
 
 The Ocean Custom integration uses a [**two-step setup**](/build-your-software-catalog/sync-data-to-catalog/) similar to other Ocean integrations you've used:
 
-### Step 1: Installation (Global Configuration)
+### Step 1: Installation (Global configuration)
 
 During installation, you configure the **connection settings** that apply to all API calls:
 
@@ -120,13 +120,13 @@ helm install ocean-custom port-labs/port-ocean \
   --set integration.config.pageSize=100
 ```
 
-### Step 2: Resource Mapping
+### Step 2: Resource mapping
 
 After installation, you define **which endpoints to sync** in your `port-app-config.yml` file (or using the integration's configuration in Port).
 
 This is where you map each API endpoint to Port entities - similar to how you've mapped GitHub repositories or Jira issues in other integrations.
 
-#### 🆕 Endpoint-as-Kind Feature
+#### 🆕 Endpoint-as-kind feature
 
 The `kind` field is now the **endpoint path itself**! This provides better visibility in Port's UI, allowing you to:
 
@@ -134,7 +134,7 @@ The `kind` field is now the **endpoint path itself**! This provides better visib
 - ✅ Debug mapping issues per endpoint
 - ✅ Monitor data ingestion per API call
 
-#### Example: Mapping Two Endpoints
+#### Example: Mapping two endpoints
 
 ```yaml
 resources:
@@ -178,7 +178,7 @@ resources:
             created: .created_date
 ```
 
-#### What Each Field Does
+#### What each field does
 
 - **`kind`**: The API endpoint path (combined with your base URL)
 - **`selector.query`**: JQ filter to include/exclude entities (use `'true'` to sync all)
@@ -189,7 +189,7 @@ resources:
 
 ---
 
-## Advanced Configurations
+## Advanced configurations
 
 Once you have the basics working, these features handle more complex scenarios.
 
@@ -199,7 +199,7 @@ Fetch data from dynamic endpoints that depend on other resources.
 
 **Use case:** Get all tickets, then fetch comments for each ticket.
 
-#### How It Works
+#### How it works
 
 **Step 1 - Define parent endpoint:**
 ```yaml
@@ -245,7 +245,7 @@ The integration will:
 
 For APIs that split data across multiple pages, configure how the integration fetches all pages.
 
-#### Pagination Types
+#### Pagination types
 
 **Offset-based** (like SQL):
 ```
@@ -265,7 +265,7 @@ GET /api/users?cursor=abc123&limit=100
 GET /api/users?cursor=xyz789&limit=100
 ```
 
-#### Custom Parameter Names
+#### Custom parameter names
 
 APIs often use different parameter names. You can configure:
 
@@ -287,7 +287,7 @@ paginationParam: starting_after
 sizeParam: limit
 ```
 
-#### Cursor Path Configuration
+#### Cursor path configuration
 
 For cursor-based pagination, tell the integration where to find the next cursor in responses:
 
@@ -308,11 +308,11 @@ cursorPath: meta.after_cursor
 hasMorePath: meta.has_more
 ```
 
-### Rate Limiting
+### Rate limiting
 
 Control how the integration interacts with your API to prevent overwhelming it or hitting rate limits.
 
-#### Request Timeout
+#### Request timeout
 
 How long to wait for each API call to complete.
 
@@ -326,13 +326,13 @@ timeout: 30  # seconds (default: 30)
 
 ---
 
-## Ready to Build?
+## Ready to build?
 
-Head to [Build Your Integration](./build-your-integration) for a step-by-step guide with an interactive configuration builder.
+Head to [Build your integration](./build-your-integration) for a step-by-step guide with an interactive configuration builder.
 
 ---
 
-## More Resources
+## More resources
 
 For all configuration options, code examples, and advanced use cases, check out the [Ocean Custom integration repository on GitHub](https://github.com/port-labs/ocean/tree/main/integrations/custom).
 

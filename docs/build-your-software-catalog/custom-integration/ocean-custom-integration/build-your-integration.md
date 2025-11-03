@@ -1,13 +1,13 @@
 ---
 sidebar_position: 2
-title: Build Your Integration
+title: Build your integration
 description: Interactive guide to configure and install your integration
 ---
 
 import PortApiRegionTip from "/docs/generalTemplates/_port_api_available_regions.md"
 import { IntegrationBuilderProvider, Step1ApiConfig, Step2DataMapping, Step3Installation } from '@site/src/components/OceanCustom';
 
-# Build Your Integration
+# Build your integration
 
 This interactive guide will help you generate everything you need to connect your API to Port.
 
@@ -20,7 +20,7 @@ This interactive guide will help you generate everything you need to connect you
 
 ---
 
-## Step 1: Configure Your API
+## Step 1: Configure your API
 
 Set up the connection details for your API. These settings apply globally to all endpoints you'll sync from this API.
 
@@ -36,7 +36,7 @@ Think of this as setting up the "connection" - these settings will be used for e
 
 ---
 
-## Step 2: Choose What Data to Sync
+## Step 2: Choose what data to sync
 
 Now that your API connection is configured, let's define what data to sync. This step helps you map a specific API endpoint to a Port blueprint.
 
@@ -53,7 +53,7 @@ The builder will automatically detect field types (string, number, boolean, emai
 
 ---
 
-## Step 3: Install and Create in Port
+## Step 3: Install and create in Port
 
 You're all set! Based on your configuration, we've generated everything you need:
 

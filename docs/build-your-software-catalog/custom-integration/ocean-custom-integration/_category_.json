@@ -1,11 +1,8 @@
 {
   "position": 1,
-  "label": "Ocean Custom Integration",
+  "label": "Ocean custom integration",
   "collapsible": true,
-  "collapsed": true,
-  "link": {
-    "type": "generated-index"
-  }
+  "collapsed": true
 }
 
 
