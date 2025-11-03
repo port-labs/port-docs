@@ -206,21 +206,22 @@ If you don't have Jira integration or want to create a custom blueprint, follow 
           "current_stage"
         ]
       },
-      "mirrorProperties": {
-        "success_criteria": {
-          "title": "Success Checklist",
-          "path": "jira_project.success_criteria_definition"
-        }
-      },
+      "mirrorProperties": {},
       "calculationProperties": {},
       "aggregationProperties": {},
       "relations": {
-        "jira_project": {
+        "jiraProject": {
           "title": "Jira Project",
           "target": "jiraProject",
           "required": true,
           "many": false
-        }
+        },
+        "service": {
+          "title": "Service",
+          "target": "service",
+          "required": false,
+          "many": false
+        } 
       }
     }
     ```
@@ -516,7 +517,7 @@ This action allows users to provide feedback and request AI to refine its sugges
           "Content-Type": "application/json"
         },
         "body": {
-          "prompt": "The Project Manager has requested changes to the AI-suggested description.\n\nFeedback:\n{{ .inputs.notes }}\n\nTicket Details:\n- Jira Ticket ID: {{ .entity.identifier }}\n- Current Description: {{ .entity.properties.description }}\n- AI Suggested Description: {{ .entity.properties.ai_suggested_description }}\n- Success Criteria: {{ .entity.properties.success_criteria }}",
+          "prompt": "The Project Manager has requested changes to the AI-suggested description.\n\nFeedback:\n{{ .inputs.notes }}\n\nTicket Details:\n- Jira Ticket ID: {{ .entity.identifier }}\n- Current Description: {{ .entity.properties.description }}\n- AI Suggested Description: {{ .entity.properties.ai_suggested_description }}\n- Related Entities in the Catalog (for context): {{ .entity.relations }}",
           "labels": {
             "source": "request_changes_to_jira_task_action",
             "jira_ticket_id": "{{ .entity.identifier }}"
@@ -551,7 +552,7 @@ Now we will create the AI agent that evaluates tickets and suggests improvements
       "properties": {
         "description": "An agent that evaluate whether a ticket has sufficient context and well-defined requirements for successful execution by a coding agent",
         "status": "active",
-        "prompt": "Your task is to evaluate, score, and update each ticket to determine whether it's ready for execution by a coding agent, and if not, produce a clear and complete version that would satisfy the criteria.\n\n### Steps\n\n1. **Evaluate Context:** Compare the ticket description to the project's success criteria or to a template embedded in the ticket's description. If the ticket description contains a template/PRD structure, treat that template as canonical: fill each template section with specific, actionable content (do not replace or remove headings unless improving clarity). If no template is present, generate a concise, well-structured Markdown description meeting the success criteria.\n2. **Identify Gaps:** Determine what specs, context, or acceptance criteria are missing.\n3. **Score (0–100):** Rate the ticket's completeness and clarity.\n4. **Assign Stage**: Determine the appropriate current stage for the ticket using either \"Awaiting approval\" or \"Approved\".\n\n## Response Rules\n\n1. ALWAYS respond by calling the `ask_ai_to_improve_on_ticket` self-service action with:\n\n   ```json\n   {\n     \"actionIdentifier\": \"ask_ai_to_improve_on_ticket\",\n     \"properties\": {\n       \"ticket\": \"<provided entity identifier>\",\n       \"current_stage\": \"<determined stage>\",\n       \"confidence_score\": <number 0-100>\n       \"ai_suggested_description\": \"<markdown-formatted with filled template or empty if already perfect>\"\n     }\n   }\n   ```\n\n### Rules\n\n* Always include `confidence_score` and `current_stage`.\n* If score < 90 → generate a complete, well-structured description in Markdown that fills all missing context, acceptance criteria, and technical details.\n* If score ≥ 90 → leave `ai_suggested_description` with empty string (ticket appears complete).\n* Be concise, actionable, and technically accurate — focus on what makes the ticket immediately executable by a coding agent.\n* Avoid repetition or irrelevant content",
+        "prompt": "Your task is to evaluate and improve Jira tickets before coding agent execution.\n\n### Steps\n1. **Gather Context:** If the ticket is linked to other entities (e.g. service, repo, or project), retrieve them using available tools (get_entities_by_identifiers, list_blueprints, etc.) and extract relevant info such as README, owners, dependencies, or architecture notes. Use this data to enrich your reasoning.\n2. **Evaluate Description:** Compare the ticket description with the project’s success criteria or a template inside the description. If the ticket description contains a template/PRD structure, treat that template as canonical: fill each template section with specific, actionable content.\n3. **Identify Gaps:** Point out missing or unclear specs. If you cannot find relevant details in the ticket or linked entities, explicitly write what’s missing under the section— e.g.,  \n   - “Couldn’t find database or cloud or email configuration details.”  \n   - “No documentation on API endpoints.”  \nNote that the goal is to make it clear what the PM or engineer needs to add to make the ticket complete\n4. **Score (0–100):** Rate the ticket’s completeness and clarity.\n5. **Assign Stage:** Use “Awaiting approval” if AI edits are proposed, “Approved” if the ticket is already \n\n## Response Rules\n\n1. ALWAYS respond by calling the `ask_ai_to_improve_on_ticket` self-service action with:\n\n   ```json\n   {\n     \"actionIdentifier\": \"ask_ai_to_improve_on_ticket\",\n     \"properties\": {\n       \"ticket\": \"<provided entity identifier>\",\n       \"current_stage\": \"<determined stage>\",\n       \"confidence_score\": <number 0-100>\n       \"ai_suggested_description\": \"<markdown-formatted with filled template or empty if already perfect>\"\n     }\n   }\n   ```\n\n### Rules\n* Always include `confidence_score` and `current_stage`.\n* If score < 90 → rewrite ticket with enriched context and clearly flagged missing data.\n* If score ≥ 90 → leave `ai_suggested_description` with empty string (ticket appears complete).\n* Be concise, data-grounded, and specific about what info was found vs. missing under the respective section in the template.",
         "execution_mode": "Automatic",
         "tools": [
           "^(list|get|search|track|describe)_.*",
@@ -614,7 +615,7 @@ This automation triggers the AI triage agent whenever a new Jira ticket is creat
           "Content-Type": "application/json"
         },
         "body": {
-          "prompt": "Here is the created Jira ticket:\n Jira Ticket identifier: {{.event.diff.after.identifier}}\n\nJira Ticket Title:{{.event.diff.after.title}}\n\nFull Jira Ticket Entity: {{.event.diff.after.properties}}\n",
+          "prompt": "Here is the Jira ticket information:\n\nJira Ticket ID: {{.event.diff.after.identifier}}\nJira Ticket Title: {{.event.diff.after.title}}\n\nRelated Entities in the Catalog (for context): {{.event.diff.after.relations}}\n\nFull Jira Ticket Properties:\n{{.event.diff.after.properties}}",
           "labels": {
             "source": "auto_enhance_jira_task_automation",
             "jira_ticket_id": "{{ .event.diff.after.identifier }}"
