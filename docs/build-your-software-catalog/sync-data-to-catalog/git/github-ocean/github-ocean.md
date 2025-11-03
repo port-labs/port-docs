@@ -835,7 +835,7 @@ resources:
 Port's Github integration allows you to ingest repositories using the [Github repository search API](https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories). This feature provides granular control over ingested repositories, making the integration more capable and flexible.
 
 <details>
-  <summary>Example mapping</summary>
+  <summary><b>Example mapping (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -886,11 +886,11 @@ resources:
 
 </details>
 
-Repository search is supported on all resource kinds except `team`, `user`, `file`, and `folder`. To learn more about repository search, see the [GitHub documentation](https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories).
+The repository search feature supports all resource kinds except `team`, `user`, `file`, and `folder`. To learn more about repository search, see the [GitHub documentation](https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories).
 
 #### Benefits
 
-- **Granular filtering**: Precisely control which repositories are ingested.
+- **Granular filtering**: Precisely control which repositories are ingested..
 
 #### Limitations
 
