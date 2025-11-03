@@ -1,5 +1,19 @@
 # Port documentation style guide
 
+___
+
+**Header capitalization rules:** Use sentence case for headers with only the first word capitalized.
+
+❌ "## Sync Approaches And Methods"  
+✅ "## Sync approaches and methods"
+
+Note: Well-known product names such as Lambda, Kubernetes, ArgoCD, etc. should follow their standard capitalization rules and styling.
+
+❌ "aws"  
+✅ "AWS"
+
+___
+
 This document details guidelines for contributing to Port's documentation, and demonstrates how to correctly write and review documentation content.
 
 <b>Pattern 1: Always standardize collapsible details with bold titles and "(click to expand)" for consistency and usability across docs.</b>
@@ -205,18 +219,6 @@ Example code after:
 <!-- Example: https://github.com/port-labs/port-docs/pull/2721#discussion_r2312491246 -->
 
 </details>
-
-___
-
-**Header capitalization rules:** Use sentence case for headers with only the first word capitalized.
-
-❌ "## Sync Approaches And Methods"  
-✅ "## Sync approaches and methods"
-
-Note: Well-known product names such as Lambda, Kubernetes, ArgoCD, etc. should follow their standard capitalization rules and styling.
-
-❌ "aws"  
-✅ "AWS"
 
 ___
 
