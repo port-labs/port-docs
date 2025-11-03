@@ -5,9 +5,9 @@ title: Overview
 
 # LLM Provider Management
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 :::warning Limited Availability
 The ability to configure your own LLM providers has limited availability. Please reach out to the Port support team for additional information and access.

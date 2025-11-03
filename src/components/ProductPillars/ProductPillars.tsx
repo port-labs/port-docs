@@ -61,7 +61,7 @@ const ProductPillars: React.FC = () => {
     {
       title: 'Scorecards',
       description: 'Define software standards and know they are met. Ensure quality, security, compliance, and velocity for all software catalog components.',
-      demoUrl: 'https://showcase.port.io/serviceEntity?identifier=authentication&activeTab=1',
+      demoUrl: 'https://showcase.port.io/serviceEntity?identifier=authentication&activeTab=2',
       icon: 'military_tech',
     },
     {

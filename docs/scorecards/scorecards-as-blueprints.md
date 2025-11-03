@@ -9,8 +9,8 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-:::info Limited availability feature
-This feature is available to select organizations as we finalize optimization work. We're working to make it broadly available soon. To request early access, please contact your account team.
+:::info Feature rollout
+This feature is being rolled out gradually and will be broadly available soon.
 :::
 
 Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip>.   
