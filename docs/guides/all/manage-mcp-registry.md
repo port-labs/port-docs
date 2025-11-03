@@ -279,25 +279,172 @@ Create an MCP Tool Specification blueprint to catalog individual tools provided 
 5. Click `Create` to save the blueprint.
 
 
-## Ingest MCP servers and tools to the catalog
+## Ingest MCP server using a self-service action
 
-Now that we have our data model setup, let's explore how to populate MCP servers and automatically extract their tools using GitHub Workflows.
+Now that we have our data model setup, let's explore how to populate MCP servers using a self-service action.
 
-You can automatically extract MCP server tools and metadata using a GitHub workflow with an MCP client. This method connects directly to the MCP server, lists its tools, and creates Port entities.
 
-<h3>Overview</h3>
+1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
 
-1. Create an MCP server entity in Port using the self-service action (detailed in the next section).
+2. Click on `+ New Action`.
 
-2. Run a GitHub workflow that connects to the MCP server using its command.
+3. Click on the `{...} Edit JSON` button.
 
-3. Extract tool specifications and create `mcpToolSpecification` entities.
+4. Copy and paste the following JSON configuration:
 
-4. Link tools to the MCP server via relations.
+        <details>
+        <summary><b>Request MCP Server action (Click to expand)</b></summary>
 
-<h3>Setup</h3>
+        ```json showLineNumbers
+        {
+          "identifier": "request_mcp_server",
+          "title": "Request New MCP Server",
+          "icon": "Microservice",
+          "description": "Request approval for a new MCP server to be added to the organization's approved registry",
+          "trigger": {
+            "type": "self-service",
+            "operation": "CREATE",
+            "userInputs": {
+              "properties": {
+                "server_name": {
+                  "title": "Server Name",
+                  "type": "string",
+                  "icon": "DefaultProperty",
+                  "description": "Name of the MCP server (e.g., 'Filesystem MCP', 'PostgreSQL MCP')"
+                },
+                "type": {
+                  "title": "Server Type",
+                  "type": "string",
+                  "icon": "DefaultProperty",
+                  "enum": ["internal", "external"],
+                  "enumColors": {
+                    "internal": "blue",
+                    "external": "purple"
+                  },
+                  "description": "Is this an internally-built or external third-party MCP server?"
+                },
+                "repository_url": {
+                  "title": "Repository URL",
+                  "type": "string",
+                  "format": "url",
+                  "icon": "DefaultProperty",
+                  "description": "Link to the source code repository"
+                },
+                "description": {
+                  "title": "Description",
+                  "type": "string",
+                  "format": "markdown",
+                  "icon": "DefaultProperty",
+                  "description": "What does this MCP server do? Why should it be approved?"
+                },
+                "labels": {
+                  "title": "Labels",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "icon": "DefaultProperty",
+                  "description": "Tags representing labels (e.g., database, filesystem, testing)"
+                },
+                "command": {
+                  "title": "Server Command",
+                  "type": "string",
+                  "icon": "DefaultProperty",
+                  "description": "Command to run the MCP server (e.g., 'npx -y @modelcontextprotocol/server-filesystem')"
+                },
+                "endpoint": {
+                  "title": "Endpoint",
+                  "type": "string",
+                  "format": "url",
+                  "icon": "DefaultProperty",
+                  "description": "Endpoint URL for the MCP server (optional)"
+                },
+                "business_justification": {
+                  "title": "Business Justification",
+                  "type": "string",
+                  "format": "markdown",
+                  "icon": "DefaultProperty",
+                  "description": "Explain the business need and expected benefits"
+                }
+              },
+              "required": [
+                "server_name",
+                "type",
+                "repository_url",
+                "description",
+                "labels"
+              ],
+              "order": [
+                "server_name",
+                "type",
+                "repository_url",
+                "description",
+                "labels",
+                "command",
+                "endpoint",
+                "business_justification"
+              ]
+            },
+            "blueprintIdentifier": "mcpRegistry"
+          },
+          "invocationMethod": {
+            "type": "UPSERT_ENTITY",
+            "blueprintIdentifier": "mcpRegistry",
+            "mapping": {
+                "identifier": "{{ .inputs.server_name | gsub(\" \"; \"-\") | ascii_downcase }}",
+                "title": "{{ .inputs.server_name }}",
+                "properties": {
+                  "type": "{{ .inputs.type }}",
+                  "status": "pending",
+                  "description": "{{ .inputs.description }}",
+                  "labels": "{{ .inputs.labels }}",
+                  "repository_url": "{{ .inputs.repository_url }}",
+                  "installation_instructions": "{{ .inputs.business_justification }}",
+                  "command": "{{ .inputs.command }}",
+                  "endpoint": "{{ .inputs.endpoint }}"
+                },
+                "relations": {
+                  "requestedBy": "{{ .trigger.by.user.email }}"
+                }
+            }
+          },
+          "requiredApproval": false
+        }
+        ```
 
-1. Create a Python script `extract_mcp_tools.py` in your repository:
+        </details>
+
+5. Click `Save` to create the action.
+
+
+This action creates a new MCP Server entity with `status: pending`, allowing your team to track and manage MCP server requests.
+
+<img src="/img/guides/mcpRequestImagePendingApproval.png" width="100%" border="1px" />
+
+Once the MCP server is approved, it will be added to the catalog and the status will be updated to `approved`.
+
+<img src="/img/guides/mcpRequestEntityApproved.png" width="100%" border="1px" />
+<img src="/img/guides/moreMcpDetailsInMCPRegistry.png" width="100%" border="1px" />
+
+
+
+## Ingest MCP servers tools into the catalog
+
+Now that we have our mcp server entities in the catalog, let's explore how to automatically extract the mcp tools from the mcp server using GitHub Workflows.
+
+<h3>Add GitHub secrets</h3>
+
+In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+- `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+
+
+<h3>Add MCP tools extraction script</h3>
+Create a Python script `extract_mcp_tools.py` in your repository:
+
+:::tip Reference implementation
+You can find this code in the [Port Product Experiments repository](https://github.com/port-labs/port-product-experiments/tree/main/scripts/mcp-tools-extractor).
+:::
 
     <details>
     <summary><b>Python MCP tool extractor (Click to expand)</b></summary>
@@ -470,7 +617,9 @@ You can automatically extract MCP server tools and metadata using a GitHub workf
 
     </details>
 
-2. Create a GitHub workflow `.github/workflows/extract_mcp_tools.yml`:
+<h3>Create GitHub workflow for MCP tools extraction</h3>
+
+Create the file `.github/workflows/extract_mcp_tools.yml` in the `.github/workflows` folder of your repository.
 
     <details>
     <summary><b>GitHub workflow for tool extraction (Click to expand)</b></summary>
@@ -504,7 +653,7 @@ You can automatically extract MCP server tools and metadata using a GitHub workf
               PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
               PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
             run: |
-              python extract_mcp_tools.py
+              python scripts/extract_mcp_tools.py
 
           - name: Report completion
             if: always()
@@ -514,323 +663,7 @@ You can automatically extract MCP server tools and metadata using a GitHub workf
 
     </details>
 
-3. Add GitHub secrets:
-   - `PORT_CLIENT_ID` - Your Port Client ID.
-   - `PORT_CLIENT_SECRET` - Your Port Client Secret.
-
-4. The workflow runs:
-   - **Automatically** every Sunday at midnight (syncs all MCP servers).
-   - **Manually** via GitHub Actions UI (syncs all MCP servers on demand).
-
-
-:::tip Viewing MCP servers
-**Browse the catalog**: Navigate to the MCP Servers page to see all registered servers (or [create a custom table view](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/#table) to show different perspectives of your MCP server registry).
-:::
-
-
-
-## Create request MCP server action
-
-1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
-
-2. Click on `+ New Action`.
-
-3. Click on the `{...} Edit JSON` button.
-
-4. Copy and paste the following JSON configuration:
-
-        <details>
-        <summary><b>Request MCP Server action (Click to expand)</b></summary>
-
-        ```json showLineNumbers
-        {
-          "identifier": "request_mcp_server",
-          "title": "Request New MCP Server",
-          "icon": "Microservice",
-          "description": "Request approval for a new MCP server to be added to the organization's approved registry",
-          "trigger": {
-            "type": "self-service",
-            "operation": "CREATE",
-            "userInputs": {
-              "properties": {
-                "server_name": {
-                  "title": "Server Name",
-                  "type": "string",
-                  "icon": "DefaultProperty",
-                  "description": "Name of the MCP server (e.g., 'Filesystem MCP', 'PostgreSQL MCP')"
-                },
-                "type": {
-                  "title": "Server Type",
-                  "type": "string",
-                  "icon": "DefaultProperty",
-                  "enum": ["internal", "external"],
-                  "enumColors": {
-                    "internal": "blue",
-                    "external": "purple"
-                  },
-                  "description": "Is this an internally-built or external third-party MCP server?"
-                },
-                "repository_url": {
-                  "title": "Repository URL",
-                  "type": "string",
-                  "format": "url",
-                  "icon": "DefaultProperty",
-                  "description": "Link to the source code repository"
-                },
-                "description": {
-                  "title": "Description",
-                  "type": "string",
-                  "format": "markdown",
-                  "icon": "DefaultProperty",
-                  "description": "What does this MCP server do? Why should it be approved?"
-                },
-                "labels": {
-                  "title": "Labels",
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "icon": "DefaultProperty",
-                  "description": "Tags representing labels (e.g., database, filesystem, testing)"
-                },
-                "command": {
-                  "title": "Server Command",
-                  "type": "string",
-                  "icon": "DefaultProperty",
-                  "description": "Command to run the MCP server (e.g., 'npx -y @modelcontextprotocol/server-filesystem')"
-                },
-                "endpoint": {
-                  "title": "Endpoint",
-                  "type": "string",
-                  "format": "url",
-                  "icon": "DefaultProperty",
-                  "description": "Endpoint URL for the MCP server (optional)"
-                },
-                "business_justification": {
-                  "title": "Business Justification",
-                  "type": "string",
-                  "format": "markdown",
-                  "icon": "DefaultProperty",
-                  "description": "Explain the business need and expected benefits"
-                }
-              },
-              "required": [
-                "server_name",
-                "type",
-                "repository_url",
-                "description",
-                "labels"
-              ],
-              "order": [
-                "server_name",
-                "type",
-                "repository_url",
-                "description",
-                "labels",
-                "command",
-                "endpoint",
-                "business_justification"
-              ]
-            },
-            "blueprintIdentifier": "mcpRegistry"
-          },
-          "invocationMethod": {
-            "type": "UPSERT_ENTITY",
-            "blueprintIdentifier": "mcpRegistry",
-            "mapping": {
-              "identifier": ".inputs.server_name | gsub(\" \"; \"-\") | ascii_downcase",
-              "title": ".inputs.server_name",
-              "properties": {
-                "type": ".inputs.type",
-                "status": "\"pending\"",
-                "description": ".inputs.description",
-                "labels": ".inputs.labels",
-                "repository_url": ".inputs.repository_url",
-                "installation_instructions": ".inputs.business_justification // \"\"",
-                "command": ".inputs.command // \"\"",
-                "endpoint": ".inputs.endpoint // \"\""
-              },
-              "relations": {
-                "requestedBy": ".trigger.by.user.id"
-              }
-            }
-          },
-          "requiredApproval": false,
-          "publish": true
-        }
-        ```
-
-        </details>
-
-5. Click `Save` to create the action.
-
-
-This action creates a new MCP Server entity with `status: pending`, allowing your team to track and manage MCP server requests.
-
-
-## Set up approval automations
-
-Create automations to streamline the MCP server approval process based on server type and organizational policies.
-
-
-<h3>Auto-approve internal servers</h3>
-
-1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal.
-
-2. Click on `+ Automation`.
-
-3. Copy and paste the following JSON configuration:
-
-        <details>
-        <summary><b>Auto-approve internal servers automation (Click to expand)</b></summary>
-
-        ```json showLineNumbers
-        {
-          "identifier": "auto_approve_internal_mcp",
-          "title": "Auto-approve Internal MCP Servers",
-          "description": "Automatically approve internally-built MCP servers",
-          "icon": "Microservice",
-          "trigger": {
-            "type": "automation",
-            "event": {
-              "type": "ENTITY_CREATED",
-              "blueprintIdentifier": "mcpRegistry"
-            },
-            "condition": {
-              "type": "JQ",
-              "expressions": [
-                ".diff.after.properties.type == \"internal\"",
-                ".diff.after.properties.status == \"pending\""
-              ],
-              "combinator": "and"
-            }
-          },
-          "invocationMethod": {
-            "type": "WEBHOOK",
-            "url": "https://api.getport.io/v1/blueprints/mcpRegistry/entities/{{ .event.diff.after.identifier }}",
-            "agent": false,
-            "synchronized": true,
-            "method": "PATCH",
-            "headers": {
-              "Content-Type": "application/json"
-            },
-            "body": {
-              "properties": {
-                "status": "approved"
-              }
-            }
-          },
-          "publish": true
-        }
-        ```
-
-        </details>
-
-4. Click `Create` to save the automation.
-
-
-<h3>Notify for external server review</h3>
-
-1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal.
-
-2. Click on `+ Automation`.
-
-3. Copy and paste the following JSON configuration:
-
-    <details>
-    <summary><b>Notify for external server review automation (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-    "identifier": "notify_external_mcp_review",
-    "title": "Notify Platform Team for External MCP Review",
-    "description": "Send Slack notification when external MCP server needs approval",
-    "icon": "Slack",
-    "trigger": {
-        "type": "automation",
-        "event": {
-        "type": "ENTITY_CREATED",
-        "blueprintIdentifier": "mcpRegistry"
-        },
-        "condition": {
-        "type": "JQ",
-        "expressions": [
-            ".diff.after.properties.type == \"external\"",
-            ".diff.after.properties.status == \"pending\""
-        ],
-        "combinator": "and"
-        }
-    },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK",
-        "agent": false,
-        "synchronized": false,
-        "method": "POST",
-        "headers": {
-        "Content-Type": "application/json"
-        },
-        "body": {
-        "text": "🔔 New External MCP Server Approval Request",
-        "blocks": [
-            {
-            "type": "header",
-            "text": {
-                "type": "plain_text",
-                "text": "🔔 MCP Server Approval Needed"
-            }
-            },
-            {
-            "type": "section",
-            "fields": [
-                {
-                "type": "mrkdwn",
-                "text": "*Server:*\n{{ .event.diff.after.title }}"
-                },
-                {
-                "type": "mrkdwn",
-                "text": "*Type:*\nExternal"
-                },
-                {
-                "type": "mrkdwn",
-                "text": "*Repository:*\n<{{ .event.diff.after.properties.repository_url }}|View Code>"
-                }
-            ]
-            },
-            {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": "*Description:*\n{{ .event.diff.after.properties.description }}"
-            }
-            },
-            {
-            "type": "actions",
-            "elements": [
-                {
-                "type": "button",
-                "text": {
-                    "type": "plain_text",
-                    "text": "Review in Port"
-                },
-                "url": "https://app.getport.io/mcpRegistry/{{ .event.diff.after.identifier }}"
-                }
-            ]
-            }
-        ]
-        }
-    },
-    "publish": true
-    }
-    ```
-
-    </details>
-
-4. Click `Create` to save the automation.
-
-:::tip Slack webhook
-Replace `YOUR/SLACK/WEBHOOK` with your actual [Slack webhook URL](https://api.slack.com/messaging/webhooks).
-:::
+The workflow runs automatically every Sunday at midnight (syncs all MCP servers) but can be adjusted to fit your organization's use case.
 
 
 ## AI agent integration
@@ -852,8 +685,6 @@ With your MCP server registry in Port, you can use [Port AI](/ai-interfaces/port
 - "Show me the installation instructions for the PostgreSQL MCP server"
 - "What are the setup steps for approved MCP servers?"
 - "How do I configure the Filesystem MCP server?"
-
-
 
 
 ## Related resources
