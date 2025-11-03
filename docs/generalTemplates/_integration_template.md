@@ -23,7 +23,7 @@ If there are any special capabilities of the integration such as gitops, multi-a
 - Manage Port entities using GitOps.
 -->
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from X into Port are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
