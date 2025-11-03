@@ -43,7 +43,7 @@ The AWS Integration relies on AWS's Cloud Control API. That means:
    - **If so**: Great! It's supported.
    - **If not**: Please contact us or contribute by [adding support](https://ocean.getport.io/develop-an-integration/) to [the integration](https://github.com/port-labs/ocean/tree/main/integrations/aws) yourself.
 
-For the full list of supported resources, refer to [AWS Cloud Control API Supported Resources](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html).
+For the full list of supported resources, refer to [AWS Cloud Control API Supported resources](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html).
 
 ## Resources supported by Cloud Control API but not supported in AWS Integration
 

@@ -30,7 +30,7 @@ Relations can be used to represent the logical connections between assets in you
 - The **run** history of a **CI job**.
 - The **Kubernetes clusters** that exist in a **cloud account**.
 
-In this [live demo](https://demo.getport.io/settings) example, we can see the DevPortal Builder page with all of the blueprints and their relations. 🎬
+In this [live demo](https://showcase.port.io/settings) example, we can see the DevPortal Builder page with all of the blueprints and their relations. 🎬
 
 ## Relation schema structure
 
@@ -55,7 +55,7 @@ A relation exists under the `relations` key in the [Blueprint JSON schema](../se
 
 | Field        | Description                                                                                            | Notes                                                                                                                                                                                                                                                                              |
 | ------------ | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `identifier` | Unique identifier                                                                                      | The identifier is used for API calls, programmatic access and distinguishing between different relations. <br></br> <br></br> The identifier is the key of the relation schema object, in the [schema structure](#relation-schema-structure) above, the identifier is `myRelation` |
+| `identifier` | Unique identifier (Maximum 100 characters)                                                                                     | The identifier is used for API calls, programmatic access and distinguishing between different relations. <br></br> <br></br> The identifier is the key of the relation schema object, in the [schema structure](#relation-schema-structure) above, the identifier is `myRelation` |
 | `title`      | Relation name that will be shown in the UI                                                             | Human-readable name for the relation                                                                                                                                                                                                                                               |
 | `target`     | Target blueprint identifier                                                                            | The target blueprint has to exist when defining the relation                                                                                                                                                                                                                       |
 | `required`   | Boolean flag to define whether the target must be provided when creating a new entity of the blueprint |
@@ -73,7 +73,7 @@ A single type relation is used to map a single target entity to the source.
 - Map a **package version** to the **package**.
 - Map a **K8s cluster** to the **cloud account** it is provisioned in.
 
-In this [live demo](https://demo.getport.io/githubWorkflowEntity?identifier=wish_list_build_185674921&activeTab=3) example, we can see a specific Deployment Workflow and its related Service. 🎬
+In this [live demo](https://showcase.port.io/githubWorkflowEntity?identifier=wish_list_build_185674921&activeTab=3) example, we can see a specific Deployment Workflow and its related Service. 🎬
 
 #### Single Relation Structure
 
@@ -132,7 +132,7 @@ A many type relation is used to map multiple target entities to the source.
 - Map the **cloud resources** used by a **service**.
 - Map the **services deployed** in a **developer environment**.
 
-In this [live demo](https://demo.getport.io/jiraIssueEntity?identifier=WISH-789&activeTab=1) example, we can see a specific Jira issue and its related Services. 🎬
+In this [live demo](https://showcase.port.io/jiraIssueEntity?identifier=WISH-789&activeTab=1) example, we can see a specific Jira issue and its related Services. 🎬
 
 #### Many Relation Structure
 
