@@ -19,7 +19,7 @@
             permission: .permission
             notification_setting: .notificationSetting
           relations:
-            team_member: '[.members.nodes[].login]'
+            team_member: '[.members.nodes[].login | gsub("\\["; "-") | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; "")]'
   - kind: team
     selector:
       query: 'true'
@@ -28,7 +28,7 @@
       itemsToParse: .members.nodes
       entity:
         mappings:
-          identifier: .login
+          identifier: .login | gsub("\\["; "-") | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; "")
           title: .login
           blueprint: '"githubTeamMember"'
           properties:

@@ -23,7 +23,7 @@ resources:
             url: .html_url
             defaultBranch: .default_branch
           relations:
-            admins: "[.__collaborators[] | select(.is_admin == true) | .login]"
+            admins: "[.__collaborators[] | select(.is_admin == true) | .login | gsub("\\["; "-") | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; "")]"
   - kind: user
     selector:
       query: "true"
@@ -31,7 +31,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .login
+          identifier: .login | gsub("\\["; "-") | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; "")
           title: if (.name != "" and .name) then .name else .login end
           blueprint: '"githubUser"'
           relations:
