@@ -25,6 +25,8 @@ Easily fill your software catalog with data directly from your AWS Organization,
 ## Supported resources
 
 The integration currently supports the following AWS resource types:
+- `AWS Organizations`: Organization structure and hierarchy information.
+- `AWS Accounts`: Account information including account ID, name, and metadata.
 - `S3 Buckets`: Complete bucket information including properties, tags, and metadata.
 - `ECS Clusters`: Cluster details, services, and task definitions.
 - `EC2 Instances`: Instance information, security groups, and networking details.
