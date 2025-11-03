@@ -1,0 +1,26 @@
+<details>
+<summary><b>Integration mapping (click to expand)</b></summary>
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        path: teams_file.yml
+        repos:
+          # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
+          - getport-labs/my-project
+    port:
+      entity:
+        mappings:
+          # Note that when parsing a YAML file, you should specify the index of the parsed document event when there is only one document.
+          #highlight-start
+          identifier: .file.content.[0].identifier
+          title: .file.content.[0].title
+          blueprint: .file.content.[0].blueprint
+          properties:
+            slack_channel_name: .file.content.[0].properties.slack_channel_name
+            description: .file.content.[0].properties.description
+            #highlight-end
+```
+</details>

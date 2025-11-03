@@ -19,7 +19,7 @@ This integration allows you to:
 - Map products, sub-products, and their security findings.
 - Monitor security posture across your software catalog.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from ArmorCode into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
