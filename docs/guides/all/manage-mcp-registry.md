@@ -11,6 +11,8 @@ import TabItem from '@theme/TabItem';
 This guide demonstrates how to build a centralized MCP (Model Context Protocol) server registry using Port, enabling your organization to govern, discover, and share approved MCP servers across development teams.
 
 
+<img src="/img/guides/MCPRegistryOverview.png" width="100%" border="1px" />
+
 ## Common use cases
 
 This guide addresses five key use cases for MCP server management:
@@ -435,15 +437,18 @@ Now that we have our mcp server entities in the catalog, let's explore how to au
 <h3>Add GitHub secrets</h3>
 
 In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+
+**Required for Port API:**
 - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
 - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
 
 
-<h3>Add MCP tools extraction script</h3>
-Create a Python script `extract_mcp_tools.py` in your repository:
+### Add MCP tools extraction script
+
+Create a Python script `scripts/extract_mcp_tools.py` in your repository:
 
 :::tip Reference implementation
-You can find this code in the [Port Product Experiments repository](https://github.com/port-labs/port-product-experiments/tree/main/scripts/mcp-tools-extractor).
+You can find latest update of this script in the [Port product experiments repository](https://github.com/port-labs/port-product-experiments/blob/main/scripts/extract_mcp_tools.py).
 :::
 
     <details>
@@ -474,34 +479,54 @@ You can find this code in the [Port Product Experiments repository](https://gith
         
         async def authenticate(self):
             """Authenticate with Port API and get access token"""
+            print(f"🔐 Authenticating with Port API at {self.base_url}...")
             async with httpx.AsyncClient() as client:
-                response = await client.post(
-                    f"{self.base_url}/auth/access_token",
-                    json={
-                        "clientId": self.client_id,
-                        "clientSecret": self.client_secret
-                    }
-                )
-                response.raise_for_status()
-                data = response.json()
-                self.access_token = data["accessToken"]
-                print("✅ Authenticated with Port API")
+                try:
+                    response = await client.post(
+                        f"{self.base_url}/auth/access_token",
+                        json={
+                            "clientId": self.client_id,
+                            "clientSecret": self.client_secret
+                        }
+                    )
+                    response.raise_for_status()
+                    data = response.json()
+                    self.access_token = data["accessToken"]
+                    print("✅ Successfully authenticated with Port API")
+                except httpx.HTTPError as e:
+                    print(f"❌ Authentication failed: {e}")
+                    raise
         
         async def get_all_mcp_servers(self) -> List[Dict[str, Any]]:
             """Fetch all MCP servers from Port"""
             if not self.access_token:
                 await self.authenticate()
             
+            print(f"📡 Fetching MCP servers from Port...")
+            print(f"   API endpoint: {self.base_url}/blueprints/mcpRegistry/entities")
+            
             async with httpx.AsyncClient() as client:
-                response = await client.get(
-                    f"{self.base_url}/blueprints/mcpRegistry/entities",
-                    headers={"Authorization": f"Bearer {self.access_token}"}
-                )
-                response.raise_for_status()
-                data = response.json()
-                servers = data.get("entities", [])
-                print(f"📋 Found {len(servers)} MCP servers in Port")
-                return servers
+                try:
+                    response = await client.get(
+                        f"{self.base_url}/blueprints/mcpRegistry/entities",
+                        headers={"Authorization": f"Bearer {self.access_token}"}
+                    )
+                    response.raise_for_status()
+                    data = response.json()
+                    servers = data.get("entities", [])
+                    print(f"✅ Successfully fetched {len(servers)} MCP servers from Port")
+                    
+                    if servers:
+                        print("\n📋 MCP Servers found:")
+                        for idx, server in enumerate(servers, 1):
+                            print(f"   {idx}. {server.get('title', 'Untitled')} (ID: {server.get('identifier')})")
+                    else:
+                        print("⚠️  No MCP servers found in Port catalog")
+                    
+                    return servers
+                except httpx.HTTPError as e:
+                    print(f"❌ Failed to fetch MCP servers: {e}")
+                    raise
         
         async def create_tool_entity(self, tool_data: Dict[str, Any], server_id: str):
             """Create or update a tool entity in Port"""
@@ -510,37 +535,147 @@ You can find this code in the [Port Product Experiments repository](https://gith
             
             # Add relation to MCP server
             tool_data["relations"] = {"mcpServer": server_id}
+            tool_identifier = tool_data.get("identifier", "unknown")
+            
+            print(f"      📤 Creating/updating tool '{tool_identifier}' in Port...")
             
             async with httpx.AsyncClient() as client:
-                response = await client.post(
-                    f"{self.base_url}/blueprints/mcpToolSpecification/entities?upsert=true&merge=true",
-                    headers={
-                        "Authorization": f"Bearer {self.access_token}",
-                        "Content-Type": "application/json"
-                    },
-                    json=tool_data
-                )
-                response.raise_for_status()
+                try:
+                    response = await client.post(
+                        f"{self.base_url}/blueprints/mcpToolSpecification/entities?upsert=true&merge=true",
+                        headers={
+                            "Authorization": f"Bearer {self.access_token}",
+                            "Content-Type": "application/json"
+                        },
+                        json=tool_data
+                    )
+                    response.raise_for_status()
+                    print(f"      ✅ Successfully synced tool '{tool_identifier}'")
+                except httpx.HTTPError as e:
+                    print(f"      ❌ Failed to sync tool '{tool_identifier}': {e}")
+                    raise
+        
+        async def update_server_tools(self, server_id: str, tool_names: List[str]):
+            """Update MCP server entity with list of available tools"""
+            if not self.access_token:
+                await self.authenticate()
+            
+            print(f"   📝 Updating MCP server with {len(tool_names)} tools...")
+            
+            async with httpx.AsyncClient() as client:
+                try:
+                    response = await client.patch(
+                        f"{self.base_url}/blueprints/mcpRegistry/entities/{server_id}",
+                        headers={
+                            "Authorization": f"Bearer {self.access_token}",
+                            "Content-Type": "application/json"
+                        },
+                        json={
+                            "properties": {
+                                "tools": tool_names
+                            }
+                        }
+                    )
+                    response.raise_for_status()
+                    print(f"   ✅ Updated MCP server entity with tools list")
+                except httpx.HTTPError as e:
+                    print(f"   ⚠️  Failed to update server tools: {e}")
+                    # Don't raise - this is not critical
 
-    async def extract_tools_from_mcp(command: str, args: List[str] = None) -> List[Dict[str, Any]]:
+    def parse_command(command_str: str) -> tuple[str, List[str]]:
+        """Parse command string into command and arguments"""
+        import shlex
+        
+        # Use shlex to properly parse shell commands
+        parts = shlex.split(command_str)
+        
+        if not parts:
+            raise ValueError("Empty command string")
+        
+        command = parts[0]
+        args = parts[1:] if len(parts) > 1 else []
+        
+        return command, args
+    
+    def replace_secret_placeholders(command_str: str) -> str:
+        """Replace YOUR__SECRET_NAME placeholders with actual environment variable values
+        
+        Supports two patterns:
+            1. YOUR__SECRET_NAME  -> replaces with os.getenv("SECRET_NAME")
+            2. <YOUR_SECRET_NAME> -> replaces with os.getenv("SECRET_NAME")
+        
+        Example:
+            Command: "uvx server --key YOUR__API_KEY"
+            Replaces YOUR__API_KEY with value from os.getenv("API_KEY")
+        """
+        import re
+        
+        # Pattern 1: YOUR__SECRET_NAME (double underscore)
+        pattern1 = r'YOUR__([A-Z_]+)'
+        matches1 = re.findall(pattern1, command_str)
+        
+        # Pattern 2: <YOUR_SECRET_NAME> (angle brackets, single underscore)
+        pattern2 = r'<YOUR_([A-Z_]+)>'
+        matches2 = re.findall(pattern2, command_str)
+        
+        all_matches = list(set(matches1 + matches2))
+        
+        if all_matches:
+            print(f"   🔑 Found secret placeholders: {all_matches}")
+        
+        for secret_name in all_matches:
+            secret_value = os.getenv(secret_name)
+            if secret_value:
+                # Replace both patterns
+                command_str = command_str.replace(f"YOUR__{secret_name}", secret_value)
+                command_str = command_str.replace(f"<YOUR_{secret_name}>", secret_value)
+                print(f"      ✅ Replaced placeholder with {secret_name} environment variable")
+            else:
+                print(f"      ⚠️  Warning: Environment variable {secret_name} not found")
+        
+        return command_str
+
+    async def extract_tools_from_mcp(command_str: str) -> List[Dict[str, Any]]:
         """Connect to MCP server and extract tools"""
+        print(f"   🔌 Connecting to MCP server...")
+        print(f"      📝 Original command: {command_str}")
+        
+        # Replace secret placeholders (YOUR__SECRET_NAME pattern)
+        command_str_with_secrets = replace_secret_placeholders(command_str)
+        print(f"      🔐 Command after secret replacement: {command_str_with_secrets[:100]}..." if len(command_str_with_secrets) > 100 else f"      🔐 Command after secret replacement: {command_str_with_secrets}")
+        
+        # Parse command into executable and arguments
+        try:
+            command, args = parse_command(command_str_with_secrets)
+            print(f"      ⚙️  Executable: {command}")
+            print(f"      📋 Arguments: {args[:3]}..." if len(args) > 3 else f"      📋 Arguments: {args}")
+        except Exception as e:
+            print(f"   ❌ Failed to parse command: {e}")
+            return []
+        
         server_params = StdioServerParameters(
             command=command,
-            args=args or [],
+            args=args,
             env=None
         )
         
         tools_data = []
         try:
             async with stdio_client(server_params) as (read, write):
+                print(f"   ✅ Connected to MCP server")
                 async with ClientSession(read, write) as session:
+                    print(f"   🔄 Initializing session...")
                     await session.initialize()
+                    print(f"   ✅ Session initialized")
                     
                     # List all tools from the MCP server
+                    print(f"   📋 Listing tools from MCP server...")
                     tools_result = await session.list_tools()
+                    print(f"   ✅ Found {len(tools_result.tools)} tools")
                     
                     for tool in tools_result.tools:
                         tool_identifier = f"{tool.name.lower().replace(' ', '_').replace('-', '_')}"
+                        print(f"      - {tool.name} (ID: {tool_identifier})")
                         tools_data.append({
                             "identifier": tool_identifier,
                             "title": tool.name,
@@ -554,61 +689,121 @@ You can find this code in the [Port Product Experiments repository](https://gith
                     return tools_data
                     
         except Exception as e:
-            print(f"⚠️  Error extracting tools: {e}")
+            print(f"   ❌ Error extracting tools: {type(e).__name__}: {str(e)}")
+            import traceback
+            print(f"   Stack trace:\n{traceback.format_exc()}")
             return []
 
     async def main():
+        print("=" * 60)
+        print("🚀 MCP Tool Extractor for Port")
+        print("=" * 60)
+        
         port_client_id = os.getenv("PORT_CLIENT_ID")
         port_client_secret = os.getenv("PORT_CLIENT_SECRET")
         
         if not port_client_id or not port_client_secret:
-            print("❌ Missing PORT_CLIENT_ID or PORT_CLIENT_SECRET")
+            print("❌ Missing required environment variables:")
+            if not port_client_id:
+                print("   - PORT_CLIENT_ID is not set")
+            if not port_client_secret:
+                print("   - PORT_CLIENT_SECRET is not set")
             sys.exit(1)
+        
+        print(f"✅ Environment variables loaded")
+        print(f"   Client ID: {port_client_id[:8]}...")
         
         try:
             # Initialize Port client
+            print(f"\n{'=' * 60}")
+            print("Step 1: Initializing Port API Client")
+            print("=" * 60)
             port_client = PortAPIClient(port_client_id, port_client_secret)
             
             # Get all MCP servers from Port
+            print(f"\n{'=' * 60}")
+            print("Step 2: Fetching MCP Servers from Port")
+            print("=" * 60)
             mcp_servers = await port_client.get_all_mcp_servers()
+            
+            if not mcp_servers:
+                print("\n⚠️  No MCP servers to process. Exiting.")
+                return
             
             total_tools_synced = 0
             servers_processed = 0
+            servers_skipped = 0
+            servers_failed = 0
             
             # Process each MCP server
-            for server in mcp_servers:
+            print(f"\n{'=' * 60}")
+            print("Step 3: Processing MCP Servers")
+            print("=" * 60)
+            
+            for idx, server in enumerate(mcp_servers, 1):
+                print(f"\n[{idx}/{len(mcp_servers)}] Processing MCP Server")
+                print("-" * 60)
+                
                 server_id = server.get("identifier")
                 server_title = server.get("title", server_id)
                 command = server.get("properties", {}).get("command")
                 
+                print(f"   📦 Server: {server_title}")
+                print(f"   🆔 Identifier: {server_id}")
+                print(f"   💻 Command: {command or 'Not specified'}")
+                
                 if not command:
-                    print(f"⏭️  Skipping {server_title}: no command specified")
+                    print(f"   ⏭️  Skipping: no command specified")
+                    servers_skipped += 1
                     continue
                 
-                print(f"\n🔄 Processing: {server_title}")
-                print(f"   Command: {command}")
-                
                 # Extract tools from this MCP server
-                tools = await extract_tools_from_mcp(command)
-                
-                if tools:
-                    print(f"   ✅ Extracted {len(tools)} tools")
+                try:
+                    tools = await extract_tools_from_mcp(command)
                     
-                    # Create tool entities in Port
-                    for tool in tools:
-                        await port_client.create_tool_entity(tool, server_id)
-                    
-                    total_tools_synced += len(tools)
-                    servers_processed += 1
-                else:
-                    print(f"   ⚠️  No tools found")
+                    if tools:
+                        print(f"\n   📤 Syncing {len(tools)} tools to Port...")
+                        
+                        # Create tool entities in Port
+                        for tool in tools:
+                            await port_client.create_tool_entity(tool, server_id)
+                        
+                        # Update MCP server entity with list of tool names
+                        tool_names = [tool["title"] for tool in tools]
+                        await port_client.update_server_tools(server_id, tool_names)
+                        
+                        total_tools_synced += len(tools)
+                        servers_processed += 1
+                        print(f"   ✅ Successfully processed server: {server_title}")
+                    else:
+                        print(f"   ⚠️  No tools found for server: {server_title}")
+                        servers_skipped += 1
+                except Exception as e:
+                    print(f"   ❌ Failed to process server: {server_title}")
+                    print(f"      Error: {type(e).__name__}: {str(e)}")
+                    servers_failed += 1
             
-            print(f"\n🎉 Sync complete!")
-            print(f"   Servers processed: {servers_processed}/{len(mcp_servers)}")
-            print(f"   Total tools synced: {total_tools_synced}")
+            # Final summary
+            print(f"\n{'=' * 60}")
+            print("🎉 Sync Complete - Summary")
+            print("=" * 60)
+            print(f"   Total servers found: {len(mcp_servers)}")
+            print(f"   ✅ Successfully processed: {servers_processed}")
+            print(f"   ⏭️  Skipped (no command): {servers_skipped}")
+            print(f"   ❌ Failed: {servers_failed}")
+            print(f"   📊 Total tools synced: {total_tools_synced}")
+            print("=" * 60)
+            
+            if servers_failed > 0:
+                sys.exit(1)
             
         except Exception as e:
-            print(f"❌ Failed to sync MCP tools: {e}")
+            print(f"\n{'=' * 60}")
+            print(f"❌ Fatal Error")
+            print("=" * 60)
+            print(f"   {type(e).__name__}: {str(e)}")
+            import traceback
+            print(f"\nStack trace:\n{traceback.format_exc()}")
             sys.exit(1)
 
     if __name__ == "__main__":
@@ -616,6 +811,20 @@ You can find this code in the [Port Product Experiments repository](https://gith
     ```
 
     </details>
+
+:::info Secret management pattern
+The script uses a secure pattern for handling MCP server credentials:
+
+**Use placeholder patterns in commands:**
+- **Pattern 1**: `YOUR__SECRET_NAME` (double underscore)
+- **Pattern 2**: `<YOUR_SECRET_NAME>` (angle brackets, single underscore)  
+- Example: `uvx mcp-server-port@latest --client-id <YOUR_PORT_CLIENT_ID> --client-secret <YOUR_PORT_CLIENT_SECRET> --region EU`
+
+**The workflow automatically:**
+1. Detects placeholder patterns in commands
+2. Replaces them with values from GitHub Secrets (e.g., `<YOUR_PORT_CLIENT_ID>` → value of `PORT_CLIENT_ID` secret)
+3. Executes the command with actual credentials
+:::
 
 <h3>Create GitHub workflow for MCP tools extraction</h3>
 
@@ -647,11 +856,15 @@ Create the file `.github/workflows/extract_mcp_tools.yml` in the `.github/workfl
           - name: Install dependencies
             run: |
               pip install mcp httpx
+              pip install uv  # Install uv which provides uvx
 
           - name: Sync tools from all MCP servers
             env:
+              # Port API credentials (required)
               PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
               PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+              # Add secrets for your MCP servers here (matching YOUR__* placeholders in commands)
+              # Example: If command uses YOUR__GITHUB_TOKEN, add: GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             run: |
               python scripts/extract_mcp_tools.py
 
@@ -663,7 +876,49 @@ Create the file `.github/workflows/extract_mcp_tools.yml` in the `.github/workfl
 
     </details>
 
+:::warning Important: Managing MCP server credentials
+For each MCP server that requires credentials, you must:
+
+1. **Add secrets to GitHub**: Store actual credential values in GitHub Secrets.
+2. **Update workflow env section**: Add the secret to the `env` block of the workflow.
+   Example: `PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}`
+3. **Use placeholder in command**: Reference using one of these patterns:
+   - Example: `--client-id <YOUR_PORT_CLIENT_ID>` or `--client-id YOUR__PORT_CLIENT_ID`
+
+**Limitation**: GitHub Actions requires secrets to be explicitly defined in the workflow file. You cannot dynamically pass all secrets, so each MCP server's credentials must be manually added to the workflow's `env` section.
+:::
+
 The workflow runs automatically every Sunday at midnight (syncs all MCP servers) but can be adjusted to fit your organization's use case.
+
+## Let's test it
+
+Trigger the workflow manually or set it to run automatically on a schedule.
+
+1. Go to the Actions page of your repository.
+
+2. Click on the `extract_mcp_tools` workflow.
+
+3. Click on the `Run workflow` button.
+
+4. Wait for the workflow to complete.
+
+5. Check the logs to see if the tools were synced successfully.
+
+    <img src="/img/guides/MCPToolsExtractorWorkflow.png" border="1px" width="100%" />
+
+<h3>Verify the tools in the catalog</h3>
+
+1. Go to the [MCP Registry](https://app.getport.io/mcpServers) page of your portal.
+
+2. Click on the `MCP Server` you want to inspect.
+
+3. Verify that the available MCP tools were synced successfully.
+
+    <img src="/img/guides/IngestedMCPToolsExtractorWorkflow.png" border="1px" width="100%" />
+
+    <img src="/img/guides/MCPToolsExtractorWorkflowDetails.png" border="1px" width="100%" />
+
+
 
 
 ## AI agent integration
@@ -685,6 +940,22 @@ With your MCP server registry in Port, you can use [Port AI](/ai-interfaces/port
 - "Show me the installation instructions for the PostgreSQL MCP server"
 - "What are the setup steps for approved MCP servers?"
 - "How do I configure the Filesystem MCP server?"
+
+<Tabs>
+<TabItem value="cursor" label="Cursor IDE">
+
+<img src="/img/guides/ApprovedMCPServersCursor.png" width="100%" border="1px" />
+
+</TabItem>
+
+<TabItem value="vscode" label="VS Code">
+
+<img src="/img/guides/ApprovedMCPServersVSCode.png" width="100%" border="1px" />
+
+</TabItem>
+</Tabs>
+
+
 
 
 ## Related resources
