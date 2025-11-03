@@ -1499,6 +1499,13 @@ export const availableGuides = [
         tags: ["Autonomous Ticket Resolution", "AI", "Claude Code", "Jira"],
         logos: ["AI", "Claude Code", "Jira"],
         link: "/guides/all/triage-tickets-to-coding-agents",
+    },
+    {
+        title: "Migrate repositories from Bitbucket to GitHub",
+        description: "Migrate repositories from Bitbucket to GitHub using Port self-service actions and GitHub Actions",
+        tags: [ "BitBucket", "GitHub", "Actions", "Scorecards"],
+        logos: ["BitBucket", "GitHub"],
+        link: "/guides/all/migrate-project-from-bibucket-to-github",
     }
 ]
 
