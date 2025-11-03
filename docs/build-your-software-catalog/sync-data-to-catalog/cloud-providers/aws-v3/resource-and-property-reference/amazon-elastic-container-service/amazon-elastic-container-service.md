@@ -44,7 +44,7 @@ The table below summarizes the available actions for ingesting Amazon ECS Servic
 |-----------------------------|---------------------------------------------------------------------------------------------------------|----------|--------------------------------------|
 | **DescribeServicesAction**  | Discover ECS services within your clusters and retrieve detailed configuration data. [Reference](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeServices.html) | Default  | `ecs:ListServices`, `ecs:DescribeServices` |
 
-:::info Optional properties note
+:::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.
 :::
 

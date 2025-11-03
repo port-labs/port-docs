@@ -1,4 +1,4 @@
-# Amazon Simple Queue Service
+# Amazon Simple Queue Service (SQS)
 
 import SqsQueueBlueprint from './aws-sqs-queue/_sqs_queue_blueprint.mdx'
 import SqsQueueConfig from './aws-sqs-queue/_sqs_queue_port_app_config.mdx'
@@ -20,7 +20,7 @@ The table below summarizes the available actions for ingesting Amazon SQS Queue 
 | **GetQueueAttributesAction**| Retrieve detailed configuration and operational data for each queue. [Reference](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueAttributes.html)                      | Default  | `sqs:GetQueueAttributes`|
 | **GetQueueTagsAction**      | Bring in custom tags assigned to your queues for advanced catalog filtering and grouping. [Reference](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ListQueueTags.html) | Optional | `sqs:ListQueueTags`     |
 
-:::info Optional properties note
+:::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.
 :::
 

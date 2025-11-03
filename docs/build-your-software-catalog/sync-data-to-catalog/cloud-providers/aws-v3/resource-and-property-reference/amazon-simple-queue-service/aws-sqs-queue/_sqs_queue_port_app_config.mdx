@@ -2,24 +2,25 @@
 <summary><b>SQS Queue Mapping Configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
-resources:
-  - kind: AWS::SQS::Queue
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .QueueUrl
-          title: .QueueName
-          blueprint: sqsQueue
-          properties:
-            queueName: .QueueName
-            queueUrl: .QueueUrl
-            queueArn: .QueueArn
-            fifoQueue: .FifoQueue
-            visibilityTimeout: .VisibilityTimeout
-          relations:
-            awsAccount: .awsAccount
+- kind: AWS::SQS::Queue
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Properties.QueueArn
+        title: .Properties.QueueUrl | split("/") | .[-1]
+        blueprint: '"sqsQueue"'
+        properties:
+          arn: .Properties.QueueArn
+          region: .__ExtraContext.Region
+          queueUrl: .Properties.QueueUrl
+          approximateNumberOfMessages: .Properties.ApproximateNumberOfMessages
+          visibilityTimeout: .Properties.VisibilityTimeout
+          messageRetentionPeriod: .Properties.MessageRetentionPeriod
+          sqsManagedSseEnabled: .Properties.SqsManagedSseEnabled
+        relations:
+          account: .__ExtraContext.AccountId
 ```
 
 </details>

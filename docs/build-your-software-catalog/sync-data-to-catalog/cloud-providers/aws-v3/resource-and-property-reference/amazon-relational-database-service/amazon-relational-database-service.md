@@ -18,7 +18,7 @@ The table below summarizes the available actions for ingesting Amazon RDS DB Ins
 | **DescribeDBInstancesAction**   | Discover DB instances and retrieve configuration details. [Reference](https://docs.aws.amazon.com/rds/latest/APIReference/API_DescribeDBInstances.html) | Default  | `rds:DescribeDBInstances` |
 | **ListTagsForResourceAction**   | Retrieve tags for each DB instance. [Reference](https://docs.aws.amazon.com/rds/latest/APIReference/API_ListTagsForResource.html)                         | Optional | `rds:ListTagsForResource` |
 
-::::info Optional properties note
+::::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.
 ::::
 

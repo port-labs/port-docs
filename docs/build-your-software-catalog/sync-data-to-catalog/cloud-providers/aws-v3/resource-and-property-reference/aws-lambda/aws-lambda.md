@@ -18,7 +18,7 @@ The table below summarizes the available actions for ingesting AWS Lambda Functi
 | **ListFunctionsAction**   | Discover all Lambda functions across your AWS account. [Reference](https://docs.aws.amazon.com/lambda/latest/APIReference/API_ListFunctions.html)       | Default  | `lambda:ListFunctions`  |
 | **ListTagsAction**        | Retrieve tags for each function. [Reference](https://docs.aws.amazon.com/lambda/latest/APIReference/API_ListTags.html)                                  | Optional | `lambda:ListTags`       |
 
-::::info Optional properties note
+::::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.
 ::::
 

@@ -6,29 +6,42 @@
   "identifier": "sqsQueue",
   "title": "SQS Queue",
   "icon": "AWS",
-  "description": "This blueprint represents an AWS SQS queue in our software catalog",
   "schema": {
     "properties": {
-      "queueName": {
+      "arn": {
         "type": "string",
-        "title": "Queue Name"
+        "title": "ARN",
+        "description": "The Amazon Resource Name (ARN) of the SQS queue"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region",
+        "description": "The AWS region where the SQS queue is located"
       },
       "queueUrl": {
         "type": "string",
         "title": "Queue URL",
-        "format": "url"
+        "description": "The URL of the SQS queue"
       },
-      "queueArn": {
-        "type": "string",
-        "title": "Queue ARN"
-      },
-      "fifoQueue": {
-        "type": "boolean",
-        "title": "FIFO Queue"
+      "approximateNumberOfMessages": {
+        "type": "number",
+        "title": "Approx Number of Messages",
+        "description": "The approximate number of messages available for retrieval from the queue"
       },
       "visibilityTimeout": {
         "type": "number",
-        "title": "Visibility Timeout (seconds)"
+        "title": "Visibility Timeout (seconds)",
+        "description": "The visibility timeout for the queue in seconds"
+      },
+      "messageRetentionPeriod": {
+        "type": "number",
+        "title": "Message Retention Period",
+        "description": "The length of time, in seconds, for which Amazon SQS retains a message"
+      },
+      "sqsManagedSseEnabled": {
+        "type": "boolean",
+        "title": "SQS Managed SSE Enabled",
+        "description": "Whether SQS managed server-side encryption is enabled"
       }
     },
     "required": []
@@ -37,10 +50,10 @@
   "calculationProperties": {},
   "aggregationProperties": {},
   "relations": {
-    "awsAccount": {
-      "title": "AWS Account",
+    "account": {
+      "title": "Account",
       "target": "awsAccount",
-      "required": true,
+      "required": false,
       "many": false
     }
   }

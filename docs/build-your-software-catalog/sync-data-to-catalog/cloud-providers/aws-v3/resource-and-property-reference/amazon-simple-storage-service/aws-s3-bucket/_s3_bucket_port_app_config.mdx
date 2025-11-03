@@ -6,12 +6,6 @@ resources:
   - kind: AWS::S3::Bucket
     selector:
       query: 'true'
-      includeActions:
-        # Optional: Include up to 3 additional actions for more properties
-        # Choose based on which properties you need most
-        # - GetBucketEncryptionAction
-        # - GetBucketPublicAccessBlockAction
-        # - GetBucketOwnershipControlsAction
     port:
       entity:
         mappings:

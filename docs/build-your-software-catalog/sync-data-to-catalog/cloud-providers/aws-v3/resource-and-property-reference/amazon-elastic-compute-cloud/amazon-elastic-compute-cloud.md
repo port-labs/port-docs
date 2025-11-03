@@ -18,7 +18,7 @@ The table below summarizes the available actions for ingesting Amazon EC2 Instan
 | **DescribeInstancesAction** | Discover EC2 instances and retrieve detailed configuration data. [Reference](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html) | Default  | `ec2:DescribeInstances`        |
 | **GetInstanceStatusAction** | Retrieve instance status information. [Reference](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceStatus.html)                     | Optional | `ec2:DescribeInstanceStatus`   |
 
-:::info Optional properties note
+:::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.
 :::
 

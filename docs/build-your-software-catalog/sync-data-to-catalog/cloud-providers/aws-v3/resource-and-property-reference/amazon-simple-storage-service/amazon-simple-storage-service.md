@@ -22,7 +22,7 @@ The table below summarizes the available actions for ingesting Amazon S3 Bucket 
 | **GetBucketPublicAccessBlockAction** | Retrieve public access block configuration.  [Reference](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetPublicAccessBlock.html)                    | Optional | `s3:GetBucketPublicAccessBlock`                         |
 | **GetBucketOwnershipControlsAction** | Retrieve bucket ownership controls.   [Reference](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketOwnershipControls.html)                           | Optional | `s3:GetBucketOwnershipControls`                         |
 
-:::info Optional properties note
+:::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.
 :::
 
