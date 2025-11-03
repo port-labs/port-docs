@@ -249,7 +249,7 @@ on:
         description: "Port action run ID to update"
 
 permissions:
-  contents: read
+  contents: write
   packages: write
         
 jobs:
@@ -275,7 +275,7 @@ jobs:
         uses: anthropics/claude-code-base-action@beta
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          allowed_tools: "Bash(git:*),Bash(gh:*),Bash(jq:*),Edit,GlobTool,GrepTool,BatchTool"
+          allowed_tools: "Bash,Edit,Write,GlobTool,GrepTool,BatchTool"
           system_prompt: |
             You are a senior backend engineer. Focus on security, performance, and maintainability.
             You will receive repository and a command. You will follow the commands, and open a PR if relevant.
@@ -347,7 +347,7 @@ jobs:
           blueprint: "claudeCodeExecution"
           properties: |-
             {
-              "prompt": "${{ inputs.command }}",
+              "prompt": ${{ toJSON(inputs.command) }},
               "status": "${{ steps.parse_results.outputs.conclusion == 'success' && 'success' || 'failed' }}",
               "executionTime": ${{ steps.parse_results.outputs.duration_ms }},
               "claudeResponse": ${{ toJSON(steps.parse_results.outputs.claude_response) }},

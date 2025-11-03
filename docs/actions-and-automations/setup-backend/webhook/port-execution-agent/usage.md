@@ -4,13 +4,7 @@ sidebar_position: 2
 
 # Usage
 
-When using the execution agent, in the `url` field you need to provide a URL to a service (for example, a REST API) that will accept the invocation event.
-
-- The service can be a private service running inside your private network;
-- Or, it can be a public accessible service from the public internet (**note** in this scenario, the execution agent needs corresponding outbound network rules that will allow it to contact the public service).
-
-:::note
-**IMPORTANT**: To make use of the **Port execution agent**, you need to configure:
+To make use of the **Port execution agent**, you need to configure:
 
 <!-- TODO: add back the URLs here for changelog destination -->
 
@@ -22,37 +16,177 @@ For example:
 ```json showLineNumbers
 { "type": "WEBHOOK", "agent": true, "url": "URL_TO_API_INSIDE_YOUR_NETWORK" }
 ```
-:::
 
-Well Done! **Port Agent** is now running in your environment and will trigger any webhook that you've configured (for self-service actions, or changes in the software catalog).
+When using the execution agent, in the `url` field you need to provide a URL to a service (for example, a REST API) that will accept the invocation event.
 
-When a new invocation is detected, the agent will pull it from your Kafka topic and forward it to the internal API in your private network.
+- The service can be a private service running inside your private network;
+- Or, it can be a public accessible service from the public internet (**note** in this scenario, the execution agent needs corresponding outbound network rules that will allow it to contact the public service).
+
+Once configured, the Port Agent will run in your environment and trigger webhooks for self-service actions or software catalog changes.
+
+When a new invocation is detected, the agent pulls it from your Kafka topic and forwards it to the internal API in your private network.
 
 ![Port Execution Agent Logs](/img/self-service-actions/port-execution-agent/portAgentLogs.png)
 
+:::info Advanced configuration
+For a complete list of all available configuration parameters and their descriptions, see the [Port Agent Helm chart README](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
+:::
 
-## Advanced configuration
-Some environments require special configuration when working with the Port agent. This includes working with self-signed certificates and/or proxies.
+## Self-signed certificate configuration
 
-Port's agent uses Python's [requests](https://requests.readthedocs.io/en/latest/) library. This allows passing advanced configuration using environment variables.
+For self-hosted 3rd-party applications with self-signed certificates, the agent can be configured to trust custom CA certificates. The `selfSignedCertificate` parameters control this behavior.
 
-To add an environment variable using the agent's Helm chart, either:
+### Option 1: Provide certificate in Helm values
 
-1. Using Helm's `--set` flag:
-```sh showLineNumbers
-helm upgrade --install <MY_INSTALLATION_NAME> port-labs/port-ocean \
-  # Standard installation flags
-  # ...
-  --set env.normal.VAR_NAME=VAR_VALUE 
+Use this option to provide the certificate content directly in your Helm values file or via the `--set-file` flag.
+
+**How to use:**
+1. Set `selfSignedCertificate.enabled` to `true`
+2. Provide the certificate content in `selfSignedCertificate.certificate`
+3. Keep `selfSignedCertificate.secret.useExistingSecret` as `false` (default)
+
+**Method A: Inline certificate in values.yaml**
+
+Configure in your `values.yaml`:
+```yaml
+selfSignedCertificate:
+  enabled: true
+  certificate: |
+    -----BEGIN CERTIFICATE-----
+    <YOUR_CERTIFICATE_CONTENT>
+    -----END CERTIFICATE-----
+  secret:
+    name: ""
+    key: crt
+    useExistingSecret: false
 ```
 
-2. The Helm `values.yaml` file:
+Install with:
+```bash
+helm install my-port-agent port-labs/port-agent \
+   --create-namespace --namespace port-agent \
+   -f values.yaml
+```
+
+**Method B: Reference certificate file using `--set-file`**
+
+Configure in your `custom_values.yaml`:
+```yaml
+selfSignedCertificate:
+  enabled: true
+  certificate: ""
+  secret:
+    name: ""
+    key: crt
+    useExistingSecret: false
+```
+
+Install with:
+```bash
+helm install my-port-agent port-labs/port-agent \
+   --create-namespace --namespace port-agent \
+   -f custom_values.yaml \
+   --set selfSignedCertificate.enabled=true \
+   --set-file selfSignedCertificate.certificate=/PATH/TO/CERTIFICATE.crt
+```
+
+### Option 2: Use existing Kubernetes secret
+
+Use this option to reference a pre-existing Kubernetes secret that you manage separately. The secret must contain the certificate data.
+
+**How to use:**
+1. Set `selfSignedCertificate.enabled` to `true`
+2. Set `selfSignedCertificate.secret.useExistingSecret` to `true`
+3. Specify the secret name in `selfSignedCertificate.secret.name`
+4. Specify the key within the secret in `selfSignedCertificate.secret.key` (defaults to `crt`)
+5. Leave `selfSignedCertificate.certificate` empty
+
+**Complete configuration:**
+```yaml
+selfSignedCertificate:
+  enabled: true
+  certificate: ""
+  secret:
+    name: my-ca-cert
+    key: ca.crt
+    useExistingSecret: true
+```
+
+### Automatic configuration
+
+When `selfSignedCertificate.enabled` is set to `true`, the Helm chart automatically:
+- Mounts the certificate to `/usr/local/share/ca-certificates/cert.crt`
+- Sets `SSL_CERT_FILE` and `REQUESTS_CA_BUNDLE` environment variables to point to the certificate
+
+### Multiple certificates
+
+For environments requiring multiple custom certificates, use the `extraVolumes` and `extraVolumeMounts` parameters alongside the built-in `selfSignedCertificate` feature. One certificate must be provided via `selfSignedCertificate`, and additional certificates can be mounted as extra volumes.
+
+**Configuration:**
+```yaml
+selfSignedCertificate:
+  enabled: true
+  secret:
+    name: primary-cert
+    key: ca.crt
+    useExistingSecret: true
+
+extraVolumes:
+  - name: additional-certs
+    secret:
+      secretName: secondary-certs
+extraVolumeMounts:
+  - name: additional-certs
+    mountPath: /usr/local/share/ca-certificates/cert2.crt
+    subPath: cert2.crt
+    readOnly: true
+```
+
+:::info Certificate requirements
+- Each certificate must be provided in PEM format as a separate file
+- Certificates must be mounted to `/usr/local/share/ca-certificates/` with a `.crt` file extension
+:::
+
+## Overriding configurations
+
+When installing the Port Agent, you can override default values in the `helm upgrade` command:
+
+By using the `--set` flag, you can override specific agent configuration parameters during agent installation/upgrade:
+
+```bash showLineNumbers
+helm upgrade --install my-port-agent port-labs/port-agent \
+    --create-namespace --namespace port-agent \
+    --set env.normal.PORT_ORG_ID="YOUR_ORG_ID" \
+    --set env.normal.KAFKA_CONSUMER_GROUP_ID="YOUR_CONSUMER_GROUP_ID" \
+    --set env.secret.PORT_CLIENT_ID="YOUR_CLIENT_ID" \
+    --set env.secret.PORT_CLIENT_SECRET="YOUR_CLIENT_SECRET" \
+    --set secret.useExistingSecret=false \
+    --set replicaCount=2 \
+    --set resources.limits.memory="512Mi"
+```
+
+## Extra environment variables
+
+To pass extra environment variables to the agent's runtime, you can use the `env.normal` section for non-sensitive variables.
+
+Using Helm's `--set` flag:
+```bash showLineNumbers
+helm upgrade --install my-port-agent port-labs/port-agent \
+  # Standard installation flags
+  # ...
+  --set env.normal.HTTP_PROXY=http://my-proxy.com:1111 \
+  --set env.normal.HTTPS_PROXY=http://my-proxy.com:2222
+```
+
+Using the `values.yaml` file:
 ```yaml showLineNumbers
 # The rest of the configuration
 # ...
 env:
   normal:
-    VAR_NAME: VAR_VALUE
+    HTTP_PROXY: "http://my-proxy.com:1111"
+    HTTPS_PROXY: "http://my-proxy.com:2222"
+    NO_PROXY: "127.0.0.1,localhost"
 ```
 
 ### Proxy configuration
@@ -69,45 +203,14 @@ ALL_PROXY=http://my-proxy.com:3333
 
 #### `NO_PROXY`
 
-`NO_PROXY` allows blacklisting certain addresses from being handled through a proxy. This variable accepts a comma-seperated list of hostnames or urls.
+`NO_PROXY` allows blacklisting certain addresses from being handled through a proxy. This variable accepts a comma-separated list of hostnames or URLs.
 
 For example:
 ```sh showLineNumbers
 NO_PROXY=http://127.0.0.1,google.com
 ```
 
-For more information take a look at the Requests [proxy configuration documentation](https://requests.readthedocs.io/en/latest/user/advanced/#proxies).
-
-### SSL Environment Configuration
-
-### Certificate Configuration
-
-#### Self-signed certificate
-
-Use the following Helm values:
-- Set `selfSignedCertificate.enabled` to `true`.
-- Put your PEM-encoded CA content in `selfSignedCertificate.certificate`.
-
-`REQUESTS_CA_BUNDLE` is an environment variable used to specify a custom Certificate Authority (CA) bundle for verifying SSL/TLS certificates in HTTPS requests.
-
-Set `REQUESTS_CA_BUNDLE` to the file path of your CA bundle, which should contain one or more CA certificates in PEM format.
-
-For example:
-```sh
-REQUESTS_CA_BUNDLE=/path/to/cacert.pem
-```
-
-This configuration directs the `requests` library to use the specified CA bundle for SSL/TLS certificate verification, overriding default system settings. It's useful for trusting self-signed certificates or certificates from a private CA.
-
-#### Multiple certificates
-
-Use the following Helm values:
-- Keep your certificate via `selfSignedCertificate` as above.
-- Add other certificates by supplying files via `extraVolumes` and mounting them with `extraVolumeMounts` into the container.
-
-:::info Certificate file requirement
-Each certificate must be provided in a separate PEM file. Files containing multiple certificates are not supported.
-:::
+For more information, see the Requests [proxy configuration documentation](https://requests.readthedocs.io/en/latest/user/advanced/#proxies).
 
 ## Next Steps
 

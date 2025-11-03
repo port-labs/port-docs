@@ -5,15 +5,23 @@ title: Overview
 
 # AI Interfaces Overview
 
-Port's AI interfaces provide intelligent assistance across your entire software development lifecycle. Our AI capabilities are currently in **open beta**, with AI Agents in **closed beta**.
+Port's AI interfaces provide intelligent assistance across your entire software development lifecycle. Our AI capabilities are currently in **open beta**, with Slack App in **closed beta**.
 
 We're committed to developing AI responsibly, maintaining high standards of data privacy and security. **[Learn more about our security & data controls →](/ai-interfaces/port-ai/security-and-data-controls)**
 
+## What makes Port's AI different
+
+Port's AI interfaces are powered by its [Context Lake](/ai-interfaces/context-lake) - your unified engineering knowledge layer that connects data from across your entire toolchain. Port's AI understands YOUR organization: your service ownership, deployment patterns, team structures, quality standards, and operational context.
+
+This organizational intelligence enables AI to provide accurate answers about who owns what, make decisions within your governance guardrails, and take actions that align with your engineering standards.
+
+**[Learn more about Context Lake →](/ai-interfaces/context-lake)**
+
 ## Port's AI Offerings
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 
 ### Port AI
@@ -22,19 +30,27 @@ The foundational AI infrastructure that powers all intelligent responses within 
 **[Learn more about Port AI →](/ai-interfaces/port-ai/overview)**
 
 ### Port AI Assistant
-The fastest way to get started with Port's AI capabilities. A chat interface that provides instant answers about your SDLC.
+The fastest way to get started with Port's AI capabilities. An out-of-the-box chat interface available through a floating button that requires zero configuration.
 
-**Use Port AI Assistant to ask:**
+**Use Port AI Assistant to:**
+* Ask questions about your software catalog and actions.
+* Get help with Port features and documentation.
+* Execute actions with approval mode safety.
+* Explore your data without complex queries.
+
+**Example questions:**
 * "Which services are failing security checks?"
-* "When was the last successful deployment of the payment service?"
+* "How do I deploy the auth service to production?"
+* "Give me a weekly summary of open bugs"
 * "Who owns this component?"
-* "What's the deployment frequency of team X?"
 
-Perfect for developers who need quick insights and contextual information about their development environment.
+Perfect for immediate insights without dedicated customizations. No agents, no configuration - just start asking questions.
+
+**[Learn more about Port AI Assistant →](/ai-interfaces/port-ai-assistant)**
 
 
 ### AI Agents
-Customize and orchestrate complicated workflows inside Port. Build intelligent agents that can be used as part of automations and engineering workflows. **Currently in closed beta.**
+Customize and orchestrate complicated workflows inside Port. Build intelligent agents that can be used as part of automations and engineering workflows.
 
 **Use AI Agents to:**
 * Automate incident response workflows
@@ -66,7 +82,7 @@ The MCP Server provides AI machine interface capabilities that are compatible wi
 **[Set up MCP Server →](/ai-interfaces/port-mcp-server/overview-and-installation)**
 
 ### Slack App
-Interact with Port's AI capabilities directly from Slack. Ask questions, run actions, and get insights without leaving your team communication platform. **Currently in closed beta.**
+Interact with Port's AI capabilities directly from Slack. Ask questions, run actions, and get insights without leaving your team communication platform. **Currently in closed beta** - we are not accepting new applications at the moment and will update once it moves to open beta.
 
 **[Learn about the Slack App →](/ai-interfaces/slack-app)**
 
@@ -91,7 +107,7 @@ Use the **Slack App** to make AI insights available to your entire team in your 
 
 Port offers four main AI interfaces:
 - **Port AI Assistant**: Chat interface for quick questions and insights.
-- **AI Agents**: Customizable workflows for automations (closed beta).
+- **AI Agents**: Customizable workflows for automations.
 - **MCP Server**: IDE integration for development workflows.
 - **Slack App**: Team collaboration interface (closed beta).
 </details>
@@ -99,19 +115,19 @@ Port offers four main AI interfaces:
 <details>
 <summary>What's the difference between Port AI Assistant and AI Agents? (Click to expand)</summary>
 
-**Port AI Assistant** is designed for immediate, ad-hoc questions and provides instant answers about your development environment. It's perfect for quick insights and exploratory queries.
+**Port AI Assistant** is designed for immediate use with zero configuration. It provides instant answers about your development environment through a floating chat button. It's perfect for quick insights, exploratory queries, and learning about Port. **[Learn more →](/ai-interfaces/port-ai-assistant)**
 
-**AI Agents** are pre-configured, customizable entities designed for specific workflows and automations. They're built for machine-to-machine interactions and complex, domain-specific processes.
+**AI Agents** are customizable entities designed for specific workflows and automations. They're built for machine-to-machine interactions and complex, domain-specific processes that require dedicated configuration. **[Learn more →](/ai-interfaces/ai-agents/overview)**
 </details>
 
 <details>
 <summary>Which AI interface should I start with? (Click to expand)</summary>
 
-For most users, start with **Port AI Assistant** - it provides immediate value with no setup required. You can ask questions and get insights right away. **[Get started with Port AI Assistant →](/ai-interfaces/port-ai/overview)**
+For most users, start with **Port AI Assistant** - it provides immediate value with no setup required. Available through a floating button, you can ask questions and get insights right away. **[Get started with Port AI Assistant →](/ai-interfaces/port-ai-assistant)**
 
 If you're a developer who works primarily in an IDE, consider starting with the **MCP Server** for seamless integration with your development workflow. **[Set up MCP Server →](/ai-interfaces/port-mcp-server/overview-and-installation)**
 
-For custom workflows or automation, explore **AI Agents** (requires closed beta access). **[Learn about AI Agents →](/ai-interfaces/ai-agents/overview)**
+For custom workflows or automation, explore **AI Agents**. **[Learn about AI Agents →](/ai-interfaces/ai-agents/overview)**
 
 For team collaboration, try the **Slack App** to bring AI insights into your communication platform (closed beta). **[Explore Slack App →](/ai-interfaces/slack-app)**
 </details>
@@ -121,8 +137,8 @@ For team collaboration, try the **Slack App** to bring AI insights into your com
 
 - **Port AI Assistant**: Open beta - available to all users.
 - **MCP Server**: Open beta - available to all users.
-- **AI Agents**: Closed beta - requires application and approval.
-- **Slack App**: Closed beta - requires application and approval.
+- **AI Agents**: Open beta - available to all users.
+- **Slack App**: Closed beta - not accepting new applications at the moment.
 </details>
 
 <details>
