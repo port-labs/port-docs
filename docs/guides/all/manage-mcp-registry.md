@@ -87,25 +87,35 @@ We'll create a blueprint to represent MCP registry in your organization's catalo
                 "format": "markdown",
                 "description": "What this MCP server does and when to use it"
               },
-              "capabilities": {
-                "title": "Capabilities",
+              "labels": {
+                "title": "Labels",
                 "type": "array",
                 "items": {
                   "type": "string"
                 },
-                "description": "Tags representing server capabilities (e.g., java, database, testing)"
+                "description": "Tags representing server labels (e.g., java, database, testing)"
               },
-              "installation_url": {
-                "title": "Installation URL",
+              "installation_instructions": {
+                "title": "Installation Instructions",
                 "type": "string",
-                "format": "url",
-                "description": "Link to installation documentation"
+                "format": "markdown",
+                "description": "Step-by-step installation and setup instructions for this MCP server"
               },
               "repository_url": {
                 "title": "Repository URL",
                 "type": "string",
                 "format": "url",
                 "description": "Source code repository location"
+              },
+              "endpoint": {
+                "title": "Endpoint",
+                "type": "string",
+                "description": "Endpoint URL for the MCP server (if applicable)"
+              },
+              "command": {
+                "title": "Command",
+                "type": "string",
+                "description": "Command to run the MCP server (e.g., 'npx -y @modelcontextprotocol/server-filesystem')"
               },
               "tools": {
                 "title": "Available Tools",
@@ -122,18 +132,6 @@ We'll create a blueprint to represent MCP registry in your organization's catalo
                   "type": "string"
                 },
                 "description": "List of MCP prompts provided by this server"
-              },
-              "approval_date": {
-                "title": "Approval Date",
-                "type": "string",
-                "format": "date-time",
-                "description": "When this server was approved for use"
-              },
-              "requested_by": {
-                "title": "Requested By",
-                "type": "string",
-                "format": "user",
-                "description": "User who requested this MCP server"
               }
             },
             "required": ["type", "status", "description"]
@@ -147,6 +145,12 @@ We'll create a blueprint to represent MCP registry in your organization's catalo
               "target": "_team",
               "required": false,
               "many": false
+            },
+            "requestedBy": {
+              "title": "Requested By",
+              "target": "_user",
+              "required": false,
+              "many": false
             }
           }
         }
@@ -156,169 +160,367 @@ We'll create a blueprint to represent MCP registry in your organization's catalo
 
 5. Click `Create` to save the blueprint.
 
+<h3>Create MCP Tool Specification blueprint</h3>
+
+Create an MCP Tool Specification blueprint to catalog individual tools provided by MCP servers with governance metadata. This blueprint works with the GitHub Workflow ingestion method to automatically extract and track tools.
+
+1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Click on `+ Blueprint`.
+
+3. Click on the `{...} Edit JSON` button.
+
+4. Copy and paste the following JSON configuration:
+
+        <details>
+        <summary><b>MCP Tool Specification blueprint (Click to expand)</b></summary>
+
+        ```json showLineNumbers
+        {
+          "identifier": "mcpToolSpecification",
+          "title": "MCP Tool Specification",
+          "icon": "Microservice",
+          "description": "Details of an MCP Tool Specification with AI Governance metadata",
+          "schema": {
+            "properties": {
+              "name": {
+                "type": "string",
+                "title": "Name",
+                "description": "The name of the MCP tool"
+              },
+              "description": {
+                "type": "string",
+                "title": "Description",
+                "description": "Description of what the tool does"
+              },
+              "parameters": {
+                "type": "object",
+                "title": "Parameters",
+                "description": "Tool parameters and their descriptions"
+              },
+              "ai_category": {
+                "type": "string",
+                "title": "AI Category",
+                "icon": "AI",
+                "description": "The AI category this tool belongs to",
+                "enum": [
+                  "generative_ai",
+                  "ml_prediction",
+                  "nlp",
+                  "computer_vision",
+                  "recommendation",
+                  "data_processing",
+                  "automation",
+                  "other"
+                ],
+                "enumColors": {
+                  "generative_ai": "purple",
+                  "ml_prediction": "blue",
+                  "nlp": "green",
+                  "computer_vision": "orange",
+                  "recommendation": "pink",
+                  "data_processing": "turquoise",
+                  "automation": "yellow",
+                  "other": "lightGray"
+                }
+              },
+              "risk_classification": {
+                "type": "string",
+                "title": "Risk Classification",
+                "icon": "Alert",
+                "description": "Risk level associated with this tool",
+                "enum": ["low", "medium", "high", "critical"],
+                "enumColors": {
+                  "low": "green",
+                  "medium": "yellow",
+                  "high": "orange",
+                  "critical": "red"
+                }
+              },
+              "data_access_level": {
+                "type": "string",
+                "title": "Data Access Level",
+                "icon": "Lock",
+                "description": "Level of data access this tool requires",
+                "enum": ["none", "read_only", "read_write", "admin"],
+                "enumColors": {
+                  "none": "green",
+                  "read_only": "yellow",
+                  "read_write": "orange",
+                  "admin": "red"
+                }
+              },
+              "last_governance_review": {
+                "type": "string",
+                "title": "Last Governance Review",
+                "format": "date-time",
+                "icon": "AuditLog",
+                "description": "When this tool was last reviewed for governance compliance"
+              }
+            },
+            "required": []
+          },
+          "mirrorProperties": {},
+          "calculationProperties": {},
+          "aggregationProperties": {},
+          "relations": {
+            "mcpServer": {
+              "title": "MCP Server",
+              "target": "mcpRegistry",
+              "required": false,
+              "many": false
+            }
+          }
+        }
+        ```
+
+        </details>
+
+5. Click `Create` to save the blueprint.
 
 
-## Ingest MCP servers to the catalog
-Now that we have our data model setup, let's explore how to populate and discover MCP servers in the catalog.
-You can add MCP servers to your Port catalog using three methods:
+## Ingest MCP servers and tools to the catalog
 
-<Tabs groupId="ingestion-method" defaultValue="ui" values={[
-{label: "Port UI", value: "ui"},
-{label: "Port API", value: "api"},
-{label: "Webhook", value: "webhook"}
-]}>
+Now that we have our data model setup, let's explore how to populate MCP servers and automatically extract their tools using GitHub Workflows.
 
-<TabItem value="ui">
-You can add MCP servers to your Port catalog using the Port UI by following these steps:
+You can automatically extract MCP server tools and metadata using a GitHub workflow with an MCP client. This method connects directly to the MCP server, lists its tools, and creates Port entities.
 
-1. Go to your [MCP Servers catalog page](https://app.getport.io/mcpServer).
+<h3>Overview</h3>
 
-2. Click `+ MCP Server` in the top right.
+1. Create an MCP server entity in Port using the self-service action (detailed in the next section).
 
-3. Fill in the form with server details:
+2. Run a GitHub workflow that connects to the MCP server using its command.
 
-   - **Title**: Name of the MCP server (e.g., "Filesystem MCP")
+3. Extract tool specifications and create `mcpToolSpecification` entities.
 
-   - **Type**: Select "internal" or "external".
+4. Link tools to the MCP server via relations.
 
-   - **Status**: Set initial status (typically "pending" for new requests).
+<h3>Setup</h3>
 
-   - **Description**: What the server does.
-
-   - **Capabilities**: Add relevant tags.
-
-   - **Repository URL**: Link to source code.
-
-   - **Installation URL**: Link to setup docs.
-
-4. Click `Create` to add the server.
-
-</TabItem>
-
-<TabItem value="api">
-
-Create MCP server entities programmatically using Port's REST API:
-
-```bash showLineNumbers
-curl -X POST 'https://api.getport.io/v1/blueprints/mcpServer/entities' \
-  -H 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "identifier": "filesystem-mcp",
-    "title": "Filesystem MCP Server",
-    "properties": {
-      "type": "external",
-      "status": "pending",
-      "description": "Provides secure, read-only access to local filesystem for AI assistants",
-      "capabilities": ["filesystem", "file-operations", "directory-listing"],
-      "repository_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
-      "installation_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem#readme",
-      "requested_by": "developer@company.com"
-    },
-    "relations": {}
-  }'
-```
-
-:::info Getting your access token
-Learn how to [get your Port API credentials](/build-your-software-catalog/custom-integration/api/#get-api-token) to authenticate API requests.
-:::
-
-</TabItem>
-
-<TabItem value="webhook">
-
-You can automatically ingest MCP servers from external sources using Port's webhook integration. This is useful for bulk imports or integrating with external systems.
-
-Follow these steps to set up the webhook integration:
-
-1. Go to the [Data Sources](https://app.getport.io/settings/data-sources) page.
-
-2. Click on `+ Data Source`.
-
-3. Select **Webhook** and click on **Custom integration**.
-
-4. Name it "MCP Server Registry Sync".
-
-5. Copy the webhook URL - you'll need this to send data to Port.
-
-6. Copy and paste the following mapping into the **Map the data from the external system into Port** field:
+1. Create a Python script `extract_mcp_tools.py` in your repository:
 
     <details>
-    <summary><b>MCP server webhook mapping (Click to expand)</b></summary>
+    <summary><b>Python MCP tool extractor (Click to expand)</b></summary>
 
-    ```json showLineNumbers
-    [
-        {
-            "blueprint": "mcpRegistry",
-            "filter": ".body.servers != null and (.body.servers | type == \"array\")",
-            "itemsToParse": ".body.servers",
-            "entity": {
-                "identifier": ".item.identifier",
-                "title": ".item.title",
-                "properties": {
-                    "type": ".item.type",
-                    "status": ".item.status // \"pending\"",
-                    "description": ".item.description",
-                    "capabilities": ".item.capabilities",
-                    "installation_url": ".item.installation_url",
-                    "repository_url": ".item.repository_url",
-                    "tools": ".item.tools // []",
-                    "prompts": ".item.prompts // []",
-                    "requested_by": ".item.requested_by"
-                },
-                "relations": {}
-            }
-        },
-        {
-            "blueprint": "mcpRegistry",
-            "filter": ".body.identifier != null and .body.servers == null",
-            "entity": {
-                "identifier": ".body.identifier",
-                "title": ".body.title",
-                "properties": {
-                    "type": ".body.type",
-                    "status": ".body.status // \"pending\"",
-                    "description": ".body.description",
-                    "capabilities": ".body.capabilities",
-                    "installation_url": ".body.installation_url",
-                    "repository_url": ".body.repository_url",
-                    "tools": ".body.tools // []",
-                    "prompts": ".body.prompts // []",
-                    "requested_by": ".body.requested_by"
-                },
-                "relations": {}
-            }
-        }
-    ]
+    ```python showLineNumbers
+    """
+    MCP Tool Extractor for Port
+    Automatically syncs tools from all MCP servers in Port catalog
+    """
+    import asyncio
+    import json
+    import os
+    import sys
+    from typing import List, Dict, Any
+    import httpx
+    from mcp import ClientSession, StdioServerParameters
+    from mcp.client.stdio import stdio_client
+
+    class PortAPIClient:
+        """Client for interacting with Port API"""
+        
+        def __init__(self, client_id: str, client_secret: str):
+            self.client_id = client_id
+            self.client_secret = client_secret
+            self.base_url = "https://api.getport.io/v1"
+            self.access_token = None
+        
+        async def authenticate(self):
+            """Authenticate with Port API and get access token"""
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    f"{self.base_url}/auth/access_token",
+                    json={
+                        "clientId": self.client_id,
+                        "clientSecret": self.client_secret
+                    }
+                )
+                response.raise_for_status()
+                data = response.json()
+                self.access_token = data["accessToken"]
+                print("✅ Authenticated with Port API")
+        
+        async def get_all_mcp_servers(self) -> List[Dict[str, Any]]:
+            """Fetch all MCP servers from Port"""
+            if not self.access_token:
+                await self.authenticate()
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    f"{self.base_url}/blueprints/mcpRegistry/entities",
+                    headers={"Authorization": f"Bearer {self.access_token}"}
+                )
+                response.raise_for_status()
+                data = response.json()
+                servers = data.get("entities", [])
+                print(f"📋 Found {len(servers)} MCP servers in Port")
+                return servers
+        
+        async def create_tool_entity(self, tool_data: Dict[str, Any], server_id: str):
+            """Create or update a tool entity in Port"""
+            if not self.access_token:
+                await self.authenticate()
+            
+            # Add relation to MCP server
+            tool_data["relations"] = {"mcpServer": server_id}
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    f"{self.base_url}/blueprints/mcpToolSpecification/entities?upsert=true&merge=true",
+                    headers={
+                        "Authorization": f"Bearer {self.access_token}",
+                        "Content-Type": "application/json"
+                    },
+                    json=tool_data
+                )
+                response.raise_for_status()
+
+    async def extract_tools_from_mcp(command: str, args: List[str] = None) -> List[Dict[str, Any]]:
+        """Connect to MCP server and extract tools"""
+        server_params = StdioServerParameters(
+            command=command,
+            args=args or [],
+            env=None
+        )
+        
+        tools_data = []
+        try:
+            async with stdio_client(server_params) as (read, write):
+                async with ClientSession(read, write) as session:
+                    await session.initialize()
+                    
+                    # List all tools from the MCP server
+                    tools_result = await session.list_tools()
+                    
+                    for tool in tools_result.tools:
+                        tool_identifier = f"{tool.name.lower().replace(' ', '_').replace('-', '_')}"
+                        tools_data.append({
+                            "identifier": tool_identifier,
+                            "title": tool.name,
+                            "properties": {
+                                "name": tool.name,
+                                "description": tool.description or "",
+                                "parameters": tool.inputSchema if hasattr(tool, 'inputSchema') else {}
+                            }
+                        })
+                    
+                    return tools_data
+                    
+        except Exception as e:
+            print(f"⚠️  Error extracting tools: {e}")
+            return []
+
+    async def main():
+        port_client_id = os.getenv("PORT_CLIENT_ID")
+        port_client_secret = os.getenv("PORT_CLIENT_SECRET")
+        
+        if not port_client_id or not port_client_secret:
+            print("❌ Missing PORT_CLIENT_ID or PORT_CLIENT_SECRET")
+            sys.exit(1)
+        
+        try:
+            # Initialize Port client
+            port_client = PortAPIClient(port_client_id, port_client_secret)
+            
+            # Get all MCP servers from Port
+            mcp_servers = await port_client.get_all_mcp_servers()
+            
+            total_tools_synced = 0
+            servers_processed = 0
+            
+            # Process each MCP server
+            for server in mcp_servers:
+                server_id = server.get("identifier")
+                server_title = server.get("title", server_id)
+                command = server.get("properties", {}).get("command")
+                
+                if not command:
+                    print(f"⏭️  Skipping {server_title}: no command specified")
+                    continue
+                
+                print(f"\n🔄 Processing: {server_title}")
+                print(f"   Command: {command}")
+                
+                # Extract tools from this MCP server
+                tools = await extract_tools_from_mcp(command)
+                
+                if tools:
+                    print(f"   ✅ Extracted {len(tools)} tools")
+                    
+                    # Create tool entities in Port
+                    for tool in tools:
+                        await port_client.create_tool_entity(tool, server_id)
+                    
+                    total_tools_synced += len(tools)
+                    servers_processed += 1
+                else:
+                    print(f"   ⚠️  No tools found")
+            
+            print(f"\n🎉 Sync complete!")
+            print(f"   Servers processed: {servers_processed}/{len(mcp_servers)}")
+            print(f"   Total tools synced: {total_tools_synced}")
+            
+        except Exception as e:
+            print(f"❌ Failed to sync MCP tools: {e}")
+            sys.exit(1)
+
+    if __name__ == "__main__":
+        asyncio.run(main())
     ```
+
     </details>
 
-7. Click on `Save`.
+2. Create a GitHub workflow `.github/workflows/extract_mcp_tools.yml`:
 
-Now you can send MCP server data to your webhook URL. Here are examples for both single and bulk imports:
+    <details>
+    <summary><b>GitHub workflow for tool extraction (Click to expand)</b></summary>
 
-**Single MCP server:**
-```bash showLineNumbers
-curl -X POST 'https://ingest.getport.io/YOUR_WEBHOOK_ID' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "identifier": "postgres-mcp",
-    "title": "PostgreSQL MCP Server",
-    "type": "external",
-    "status": "approved",
-    "description": "PostgreSQL database operations through MCP",
-    "capabilities": ["database", "postgresql", "sql"],
-    "repository_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
-    "installation_url": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres#readme",
-    "tools": ["query", "list_tables", "describe_table"],
-    "prompts": ["analyze-schema", "mcp-demo"],
-    "requested_by": "data-team@company.com"
-  }'
-```
+    ```yaml showLineNumbers
+    name: Sync All MCP Tools to Port
 
-</TabItem>
+    on:
+      workflow_dispatch:  # Allow manual trigger
+      schedule:
+        - cron: '0 0 * * 0'  # Weekly on Sunday at midnight
 
-</Tabs>
+    jobs:
+      sync-all-mcp-tools:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v4
+
+          - name: Set up Python
+            uses: actions/setup-python@v5
+            with:
+              python-version: '3.11'
+
+          - name: Install dependencies
+            run: |
+              pip install mcp httpx
+
+          - name: Sync tools from all MCP servers
+            env:
+              PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+              PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+            run: |
+              python extract_mcp_tools.py
+
+          - name: Report completion
+            if: always()
+            run: |
+              echo "✅ MCP tools sync workflow completed"
+    ```
+
+    </details>
+
+3. Add GitHub secrets:
+   - `PORT_CLIENT_ID` - Your Port Client ID.
+   - `PORT_CLIENT_SECRET` - Your Port Client Secret.
+
+4. The workflow runs:
+   - **Automatically** every Sunday at midnight (syncs all MCP servers).
+   - **Manually** via GitHub Actions UI (syncs all MCP servers on demand).
 
 
 :::tip Viewing MCP servers
@@ -375,13 +577,6 @@ curl -X POST 'https://ingest.getport.io/YOUR_WEBHOOK_ID' \
                   "icon": "DefaultProperty",
                   "description": "Link to the source code repository"
                 },
-                "installation_url": {
-                  "title": "Installation Documentation URL",
-                  "type": "string",
-                  "format": "url",
-                  "icon": "DefaultProperty",
-                  "description": "Link to installation and setup documentation"
-                },
                 "description": {
                   "title": "Description",
                   "type": "string",
@@ -389,14 +584,27 @@ curl -X POST 'https://ingest.getport.io/YOUR_WEBHOOK_ID' \
                   "icon": "DefaultProperty",
                   "description": "What does this MCP server do? Why should it be approved?"
                 },
-                "capabilities": {
-                  "title": "Capabilities",
+                "labels": {
+                  "title": "Labels",
                   "type": "array",
                   "items": {
                     "type": "string"
                   },
                   "icon": "DefaultProperty",
-                  "description": "Tags representing capabilities (e.g., database, filesystem, testing)"
+                  "description": "Tags representing labels (e.g., database, filesystem, testing)"
+                },
+                "command": {
+                  "title": "Server Command",
+                  "type": "string",
+                  "icon": "DefaultProperty",
+                  "description": "Command to run the MCP server (e.g., 'npx -y @modelcontextprotocol/server-filesystem')"
+                },
+                "endpoint": {
+                  "title": "Endpoint",
+                  "type": "string",
+                  "format": "url",
+                  "icon": "DefaultProperty",
+                  "description": "Endpoint URL for the MCP server (optional)"
                 },
                 "business_justification": {
                   "title": "Business Justification",
@@ -411,23 +619,24 @@ curl -X POST 'https://ingest.getport.io/YOUR_WEBHOOK_ID' \
                 "type",
                 "repository_url",
                 "description",
-                "capabilities"
+                "labels"
               ],
               "order": [
                 "server_name",
                 "type",
                 "repository_url",
-                "installation_url",
                 "description",
-                "capabilities",
+                "labels",
+                "command",
+                "endpoint",
                 "business_justification"
               ]
             },
-            "blueprintIdentifier": "mcpServer"
+            "blueprintIdentifier": "mcpRegistry"
           },
           "invocationMethod": {
             "type": "UPSERT_ENTITY",
-            "blueprintIdentifier": "mcpServer",
+            "blueprintIdentifier": "mcpRegistry",
             "mapping": {
               "identifier": ".inputs.server_name | gsub(\" \"; \"-\") | ascii_downcase",
               "title": ".inputs.server_name",
@@ -435,12 +644,15 @@ curl -X POST 'https://ingest.getport.io/YOUR_WEBHOOK_ID' \
                 "type": ".inputs.type",
                 "status": "\"pending\"",
                 "description": ".inputs.description",
-                "capabilities": ".inputs.capabilities",
+                "labels": ".inputs.labels",
                 "repository_url": ".inputs.repository_url",
-                "installation_url": ".inputs.installation_url // \"\"",
-                "requested_by": ".trigger.by.user.email"
+                "installation_instructions": ".inputs.business_justification // \"\"",
+                "command": ".inputs.command // \"\"",
+                "endpoint": ".inputs.endpoint // \"\""
               },
-              "relations": {}
+              "relations": {
+                "requestedBy": ".trigger.by.user.id"
+              }
             }
           },
           "requiredApproval": false,
@@ -453,7 +665,7 @@ curl -X POST 'https://ingest.getport.io/YOUR_WEBHOOK_ID' \
 5. Click `Save` to create the action.
 
 
-This action creates a new MCP Server entity with `status: pending`, triggering the approval workflow we'll set up in the next section.
+This action creates a new MCP Server entity with `status: pending`, allowing your team to track and manage MCP server requests.
 
 
 ## Set up approval automations
@@ -476,13 +688,13 @@ Create automations to streamline the MCP server approval process based on server
         {
           "identifier": "auto_approve_internal_mcp",
           "title": "Auto-approve Internal MCP Servers",
-          "description": "Automatically approve internally-built MCP servers and set approval date",
+          "description": "Automatically approve internally-built MCP servers",
           "icon": "Microservice",
           "trigger": {
             "type": "automation",
             "event": {
               "type": "ENTITY_CREATED",
-              "blueprintIdentifier": "mcpServer"
+              "blueprintIdentifier": "mcpRegistry"
             },
             "condition": {
               "type": "JQ",
@@ -495,7 +707,7 @@ Create automations to streamline the MCP server approval process based on server
           },
           "invocationMethod": {
             "type": "WEBHOOK",
-            "url": "https://api.getport.io/v1/blueprints/mcpServer/entities/{{ .event.diff.after.identifier }}",
+            "url": "https://api.getport.io/v1/blueprints/mcpRegistry/entities/{{ .event.diff.after.identifier }}",
             "agent": false,
             "synchronized": true,
             "method": "PATCH",
@@ -504,8 +716,7 @@ Create automations to streamline the MCP server approval process based on server
             },
             "body": {
               "properties": {
-                "status": "approved",
-                "approval_date": "{{ now | strftime(\"%Y-%m-%dT%H:%M:%SZ\") }}"
+                "status": "approved"
               }
             }
           },
@@ -539,7 +750,7 @@ Create automations to streamline the MCP server approval process based on server
         "type": "automation",
         "event": {
         "type": "ENTITY_CREATED",
-        "blueprintIdentifier": "mcpServer"
+        "blueprintIdentifier": "mcpRegistry"
         },
         "condition": {
         "type": "JQ",
@@ -582,10 +793,6 @@ Create automations to streamline the MCP server approval process based on server
                 },
                 {
                 "type": "mrkdwn",
-                "text": "*Requested By:*\n{{ .event.diff.after.properties.requested_by }}"
-                },
-                {
-                "type": "mrkdwn",
                 "text": "*Repository:*\n<{{ .event.diff.after.properties.repository_url }}|View Code>"
                 }
             ]
@@ -606,7 +813,7 @@ Create automations to streamline the MCP server approval process based on server
                     "type": "plain_text",
                     "text": "Review in Port"
                 },
-                "url": "https://app.getport.io/mcpServer/{{ .event.diff.after.identifier }}"
+                "url": "https://app.getport.io/mcpRegistry/{{ .event.diff.after.identifier }}"
                 }
             ]
             }
@@ -625,307 +832,6 @@ Create automations to streamline the MCP server approval process based on server
 Replace `YOUR/SLACK/WEBHOOK` with your actual [Slack webhook URL](https://api.slack.com/messaging/webhooks).
 :::
 
-## Python script for metadata extraction
-
-Automatically extract MCP server tools and prompts metadata using a Python script that integrates with Port's API.
-
-<h3>Overview</h3>
-
-The Python script will:
-1. Connect to an MCP server using the Model Context Protocol.
-
-2. Extract available tools and prompts.
-
-3. Update the Port entity with the extracted metadata.
-
-4. Add tool descriptions and schemas.
-
-<h3>Create the Python script</h3>
-
-Create a file named `extract_mcp_metadata.py` in your repository:
-
-<details>
-<summary><b>Python MCP extraction script (Click to expand)</b></summary>
-
-```python showLineNumbers
-"""
-MCP Server Metadata Extractor
-Connects to MCP servers, extracts tools and prompts, and updates Port entities
-"""
-
-import asyncio
-import json
-import os
-import sys
-import logging
-from typing import Dict, List, Any
-import httpx
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-
-class PortAPIClient:
-    """Client for interacting with Port API"""
-    
-    def __init__(self, client_id: str, client_secret: str):
-        self.client_id = client_id
-        self.client_secret = client_secret
-        self.base_url = "https://api.getport.io/v1"
-        self.access_token = None
-    
-    async def authenticate(self):
-        """Authenticate with Port API and get access token"""
-        async with httpx.AsyncClient() as client:
-            response = await client.post(
-                "https://api.getport.io/v1/auth/access_token",
-                json={
-                    "clientId": self.client_id,
-                    "clientSecret": self.client_secret
-                }
-            )
-            response.raise_for_status()
-            data = response.json()
-            self.access_token = data["accessToken"]
-            logger.info("Successfully authenticated with Port API")
-    
-    async def update_mcp_server_entity(
-        self,
-        entity_identifier: str,
-        tools: List[str],
-        prompts: List[str],
-        additional_properties: Dict[str, Any] = None
-    ):
-        """Update MCP Server entity in Port with extracted metadata"""
-        if not self.access_token:
-            await self.authenticate()
-        
-        properties = {
-            "tools": tools,
-            "prompts": prompts
-        }
-        
-        if additional_properties:
-            properties.update(additional_properties)
-        
-        async with httpx.AsyncClient() as client:
-            response = await client.patch(
-                f"{self.base_url}/blueprints/mcpServer/entities/{entity_identifier}",
-                headers={
-                    "Authorization": f"Bearer {self.access_token}",
-                    "Content-Type": "application/json"
-                },
-                json={"properties": properties}
-            )
-            response.raise_for_status()
-            logger.info(f"Successfully updated entity {entity_identifier}")
-            return response.json()
-
-
-class MCPServerInspector:
-    """Inspector for MCP servers to extract tools and prompts"""
-    
-    def __init__(self, server_command: str, server_args: List[str] = None):
-        self.server_command = server_command
-        self.server_args = server_args or []
-    
-    async def extract_metadata(self) -> Dict[str, Any]:
-        """Connect to MCP server and extract available tools and prompts"""
-        server_params = StdioServerParameters(
-            command=self.server_command,
-            args=self.server_args,
-            env=None
-        )
-        
-        try:
-            async with stdio_client(server_params) as (read, write):
-                async with ClientSession(read, write) as session:
-                    await session.initialize()
-                    
-                    # Extract tools
-                    tools_list = []
-                    try:
-                        tools_result = await session.list_tools()
-                        tools_list = [tool.name for tool in tools_result.tools]
-                        logger.info(f"Extracted {len(tools_list)} tools")
-                    except Exception as e:
-                        logger.warning(f"Could not extract tools: {e}")
-                    
-                    # Extract prompts
-                    prompts_list = []
-                    try:
-                        prompts_result = await session.list_prompts()
-                        prompts_list = [prompt.name for prompt in prompts_result.prompts]
-                        logger.info(f"Extracted {len(prompts_list)} prompts")
-                    except Exception as e:
-                        logger.warning(f"Could not extract prompts: {e}")
-                    
-                    return {
-                        "tools": tools_list,
-                        "prompts": prompts_list,
-                        "server_info": {
-                            "name": getattr(session, 'server_name', 'unknown'),
-                            "version": getattr(session, 'server_version', 'unknown')
-                        }
-                    }
-        except Exception as e:
-            logger.error(f"Failed to connect to MCP server: {e}")
-            raise
-
-
-async def main():
-    """Main execution function"""
-    # Get configuration from environment variables
-    port_client_id = os.getenv("PORT_CLIENT_ID")
-    port_client_secret = os.getenv("PORT_CLIENT_SECRET")
-    entity_identifier = os.getenv("MCP_ENTITY_IDENTIFIER")
-    server_command = os.getenv("MCP_SERVER_COMMAND")
-    server_args_str = os.getenv("MCP_SERVER_ARGS", "")
-    
-    if not all([port_client_id, port_client_secret, entity_identifier, server_command]):
-        logger.error("Missing required environment variables")
-        sys.exit(1)
-    
-    server_args = server_args_str.split() if server_args_str else []
-    
-    try:
-        # Extract metadata from MCP server
-        logger.info(f"Connecting to MCP server: {server_command}")
-        inspector = MCPServerInspector(server_command, server_args)
-        metadata = await inspector.extract_metadata()
-        
-        logger.info(f"Extracted metadata: {json.dumps(metadata, indent=2)}")
-        
-        # Update Port entity
-        logger.info(f"Updating Port entity: {entity_identifier}")
-        port_client = PortAPIClient(port_client_id, port_client_secret)
-        await port_client.update_mcp_server_entity(
-            entity_identifier,
-            tools=metadata["tools"],
-            prompts=metadata["prompts"]
-        )
-        
-        logger.info("✅ Successfully extracted and updated MCP server metadata")
-        
-    except Exception as e:
-        logger.error(f"❌ Failed to extract metadata: {e}")
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
-```
-
-</details>
-
-## Create GitHub Action workflow
-
-Create a workflow that runs the Python script to extract MCP metadata and update Port entities.
-
-Create `.github/workflows/extract_mcp_metadata.yml`:
-
-<details>
-<summary><b>GitHub Action workflow for MCP extraction (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-name: Extract MCP Server Metadata
-
-on:
-  workflow_dispatch:
-    inputs:
-      entity_identifier:
-        description: 'Port entity identifier for the MCP server'
-        required: true
-        type: string
-      server_command:
-        description: 'Command to run the MCP server (e.g., npx, node, python)'
-        required: true
-        type: string
-      server_args:
-        description: 'Arguments for the MCP server command'
-        required: false
-        type: string
-        default: ''
-      repository_url:
-        description: 'Git repository URL of the MCP server'
-        required: true
-        type: string
-
-jobs:
-  extract_metadata:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout extraction script
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install Python dependencies
-        run: |
-          pip install httpx mcp
-
-      - name: Checkout MCP server repository
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ github.event.inputs.repository_url }}
-          path: mcp-server-repo
-
-      - name: Set up Node.js (for Node-based MCP servers)
-        if: startsWith(github.event.inputs.server_command, 'node') || startsWith(github.event.inputs.server_command, 'npx')
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install MCP server dependencies
-        working-directory: mcp-server-repo
-        run: |
-          if [ -f "package.json" ]; then
-            npm install
-          elif [ -f "requirements.txt" ]; then
-            pip install -r requirements.txt
-          fi
-
-      - name: Extract MCP metadata
-        env:
-          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
-          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
-          MCP_ENTITY_IDENTIFIER: ${{ github.event.inputs.entity_identifier }}
-          MCP_SERVER_COMMAND: ${{ github.event.inputs.server_command }}
-          MCP_SERVER_ARGS: ${{ github.event.inputs.server_args }}
-        run: |
-          python extract_mcp_metadata.py
-
-      - name: Report success
-        if: success()
-        run: |
-          echo "✅ Successfully extracted and updated MCP server metadata for: ${{ github.event.inputs.entity_identifier }}"
-
-      - name: Report failure
-        if: failure()
-        run: |
-          echo "❌ Failed to extract MCP server metadata"
-          exit 1
-```
-
-</details>
-
-<h3>Add GitHub secrets</h3>
-
-In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add:
-
-- `PORT_CLIENT_ID` - Your Port Client ID
-- `PORT_CLIENT_SECRET` - Your Port Client Secret
-
-Learn more about [getting your Port API credentials](/build-your-software-catalog/custom-integration/api/#get-api-token).
-
-:::tip Running the workflow
-After creating an MCP server entity in Port, you can manually trigger this workflow to extract and populate the tools and prompts metadata automatically.
-:::
 
 ## AI agent integration
 
@@ -939,13 +845,13 @@ With your MCP server registry in Port, you can use [Port AI](/ai-interfaces/port
 
 **Tool-specific recommendations:**
 - "Which MCP servers can I use for Java development?"
-- "Find MCP servers with filesystem capabilities"
+- "Find MCP servers with filesystem labels"
 - "What MCP servers provide testing tools?"
 
 **Installation guidance:**
-- "How do I install the PostgreSQL MCP server?"
-- "Show me the setup instructions for approved MCP servers"
-- "What are the installation steps for the Filesystem MCP?"
+- "Show me the installation instructions for the PostgreSQL MCP server"
+- "What are the setup steps for approved MCP servers?"
+- "How do I configure the Filesystem MCP server?"
 
 
 
