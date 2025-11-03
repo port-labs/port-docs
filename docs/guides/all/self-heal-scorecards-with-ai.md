@@ -8,7 +8,7 @@ description: Learn how to use Port's AI capabilities to detect scorecard degrada
 Scorecards in Port help you evaluate the maturity, production readiness, and engineering quality of entities in your software catalog. 
 However, when scorecard statistics degrade, manual intervention is often required to identify and fix the issues. 
 
-This guide demonstrates how to create an AI-powered system that automatically detects scorecard degradation and trigger Github Copilot for automated code fixes.
+This guide demonstrates how to create an AI-powered system that automatically detects service scorecard degradation and trigger Github Copilot for automated code fixes.
 
 <img src="/img/guides/self-healing-scorecard-architecture.png" border="1px" width="100%" />
 
@@ -102,8 +102,8 @@ This blueprint will track tasks created by the AI agent for scorecard remediatio
           "required": false,
           "many": false
         },
-        "repository": {
-          "target": "githubRepository",
+        "service": {
+          "target": "service",
           "required": true,
           "many": false
         }
@@ -227,7 +227,7 @@ We will create self-service actions that the AI agent can use for scorecard reme
             "labels"
           ]
         },
-        "blueprintIdentifier": "githubRepository"
+        "blueprintIdentifier": "service"
       },
       "invocationMethod": {
         "type": "WEBHOOK",
@@ -248,7 +248,7 @@ We will create self-service actions that the AI agent can use for scorecard reme
             "source": "ai_agent"
           },
           "relations": {
-            "repository": "{{ .entity.identifier }}"
+            "service": "{{ .entity.identifier }}"
           }
         }
       },
@@ -322,15 +322,15 @@ This automation continuously monitors scorecard statistics and triggers the AI a
 
     ```json showLineNumbers
     {
-      "identifier": "repository_scorecard_update",
-      "title": "Repository Scorecard Update",
-      "description": "Trigger this automation when the scorecard associated with a repository is degraded",
-      "icon": "Github",
+      "identifier": "service_scorecard_update",
+      "title": "Service Scorecard Update",
+      "description": "Trigger this automation when the scorecard associated with a service is degraded",
+      "icon": "Service",
       "trigger": {
         "type": "automation",
         "event": {
           "type": "ENTITY_UPDATED",
-          "blueprintIdentifier": "githubRepository"
+          "blueprintIdentifier": "service"
         },
         "condition": {
           "type": "JQ",
@@ -414,7 +414,7 @@ This automation bridges the gap between Port's AI agent analysis and GitHub's de
             "body": "{{.event.diff.after.response.entity.properties.description}} *IMPORTANT NOTE FOR COPILOT*: When creating a pull request to fix this issue, you MUST ALWAYS include the Port Task Identifier in the PR description or body for tracking purposes. Here is the Port Task Identifier for this issue: {{ .event.diff.after.response.entity.identifier }}",
             "labels": "{{.event.diff.after.response.entity.properties.labels}}"
           },
-          "entity": "{{ .event.diff.after.response.entity.relations.repository }}"
+          "entity": "{{ .event.diff.after.response.entity.relations.service.repository }}"
         }
       },
       "publish": true

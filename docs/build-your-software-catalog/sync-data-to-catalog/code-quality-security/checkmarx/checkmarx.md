@@ -13,7 +13,7 @@ import DockerParameters from "./_checkmarx_docker_parameters.mdx"
 This integration allows you to model Checkmarx One resources in your software catalog and ingest data into them.  
 It lets you map and organize the desired Checkmarx One resources and their metadata in Port (see supported resources below).
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Checkmarx One into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 

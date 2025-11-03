@@ -25,7 +25,7 @@ This integration allows you to:
 - Map and organize your desired ArgoCD resources and their metadata in Port (see supported resources below).
 - Watch for ArgoCD object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from ArgoCD into Port are listed below.
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
