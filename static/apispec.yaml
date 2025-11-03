@@ -25908,6 +25908,10 @@ paths:
                 spec:
                   type: object
                   additionalProperties: true
+                actionsProcessingEnabled:
+                  type: boolean
+                  description: If `true`, This integration will be able to process actions runs
+                  default: false
                 config:
                   type:
                     - object
