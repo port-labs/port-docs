@@ -117,7 +117,7 @@ resources:
         mappings:
           identifier: .login
           title: .login
-          blueprint: '''githubOrganization'''
+          blueprint: '"githubOrganization"'
           properties:
             login: .login
             id: .id
