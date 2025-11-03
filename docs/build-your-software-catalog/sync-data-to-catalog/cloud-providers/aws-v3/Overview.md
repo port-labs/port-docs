@@ -9,10 +9,6 @@ import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to
 
 # Overview
 
-:::warning Beta Feature
-AWS Hosted by Port is currently in **beta mode** and is not yet available for all Port users. Contact Port's support team to get access to this integration.
-:::
-
 Port's AWS Hosted by Port integration allows you to import your AWS resources into Port with **zero maintenance required**. The integration is fully hosted and managed by Port, providing a seamless experience for discovering and managing your AWS infrastructure.
 
 The integration periodically syncs your AWS resources to ensure your Port catalog stays up-to-date with your AWS infrastructure.
@@ -42,7 +38,7 @@ We're actively working on adding support for additional AWS resource types to pr
 
 ## Key advantages
 
-AWS Hosted by Port provides several advantages over the [self-hosted AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/installations/installation.md):
+AWS Hosted by Port provides several advantages over the [AWS on-premise integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/installations/installation.md):
 
 - **Fully hosted**: No infrastructure to maintain, update, or monitor.
 - **Simplified installation**: Just deploy CloudFormation templates to create IAM roles.

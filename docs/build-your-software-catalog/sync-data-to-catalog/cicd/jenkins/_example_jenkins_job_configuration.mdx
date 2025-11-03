@@ -1,0 +1,23 @@
+<details>
+<summary><b>Integration configuration (click to expand)</b></summary>
+```yaml showLineNumbers
+  createMissingRelatedEntities: true
+  deleteDependentEntities: true
+  resources:
+    - kind: job
+      selector:
+        query: "true"
+      port:
+        entity:
+          mappings:
+            identifier: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1]
+            title: .fullName
+            blueprint: '"jenkinsJob"'
+            properties:
+              jobName: .name
+              url: .url
+              jobStatus: '{"notbuilt": "created", "blue": "passing", "red": "failing"}[.color]'
+              timestamp: .time
+              parentJob: .__parentJob
+```
+</details>
