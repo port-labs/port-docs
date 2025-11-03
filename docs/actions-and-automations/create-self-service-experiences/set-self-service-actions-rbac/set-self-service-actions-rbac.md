@@ -114,58 +114,6 @@ Add the `requiredApproval` field to your action:
 </TabItem>
 </Tabs>
 
-## Configure visibility for action runs
-
-When creating or editing a self-service action, you can also control who can **view its runs**, using the relevant toggle in the `Permissions` tab.
-
-
-- **When enabled (default):** All organization members can view the action’s runs.
-- **When disabled:**  
-  - **Admins** can view all runs.  
-  - **Approvers** can view runs they are assigned to approve.  
-  - **Members** can only view their own runs.
-
-This ensures that sensitive operational data remains accessible only to authorized users, while maintaining flexibility and transparency where needed.
-
-
-<Tabs groupId="config-method" queryString values={[
-{label: "UI", value: "ui"},
-{label: "API", value: "api"},
-]}>
-
-<TabItem value="ui">
-
-<img src='/img/self-service-actions/rbac/viewRunAccess.png' width='70%' border='1px' />
-
-</TabItem>
-
-<TabItem value="api">
-
-Add the `isViewRunAccess` field to your action:
-
-```json showLineNumbers
-[
-  {
-    ...
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "https://example.com"
-    },
-    "trigger": {
-      ...
-      "operation": "CREATE",
-    }
-    // highlight-next-line
-    "isViewRunAccess": true,
-    ...
-  }
-]
-```
-
-</TabItem>
-
-</Tabs>
-
 ### Define approval notifications
 
 By default manual approval notifications are sent via **Email** to users who have [approval permissions](#define-approvers).
