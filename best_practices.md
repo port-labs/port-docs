@@ -208,31 +208,15 @@ Example code after:
 
 ___
 
-<b>Pattern 8: Use sentence case for headers with only the first word capitalized, and ensure links follow capitalization rules based on their position in the sentence.</b>
+**Header capitalization rules:** Use sentence case for headers with only the first word capitalized.
 
-Example code before:
-
-```
-## Sync Approaches And Methods
-
-Check out our [Guide](docs/guide.md) for more information.
-```
-
-Example code after:
-
-```
-## Sync approaches and methods
-
-Check out our [guide](docs/guide.md) for more information.
-```
+❌ "## Sync Approaches And Methods"  
+✅ "## Sync approaches and methods"
 
 Note: Well-known product names such as Lambda, Kubernetes, ArgoCD, etc. should follow their standard capitalization rules and styling.
 
-<details><summary>Examples for relevant past discussions:</summary>
-
-<!-- Add links to relevant PR discussions here -->
-
-</details>
+❌ "aws"  
+✅ "AWS"
 
 ___
 
