@@ -830,7 +830,7 @@ resources:
 - Only JSON and YAML formats are automatically parsed.  
   Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
 
-### Ingesting repositories with search
+### Ingest repositories via search API
 
 Port's Github integration allows you to ingest repositories using the [Github repository search API](https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories). This feature provides granular control over ingested repositories, making the integration more capable and flexible.
 
