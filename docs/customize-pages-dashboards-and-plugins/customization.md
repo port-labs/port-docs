@@ -69,7 +69,9 @@ To change the theme of the portal to dark mode:
 
 ## Accessibility
 
-Port supports various hotkeys to help you navigate the portal using a keyboard.
+Port is fully compliant with WCAG 2.2 (Level A & AA), Section 508, and EN 301 549 standards, making the platform more accessible to developers of all abilities. This includes enhanced keyboard navigation, screen reader compatibility, improved color contrast, and detailed ARIA labeling.
+
+Various supported hotkeys are listed below to help you navigate the portal using a keyboard.
 
 ### Widget card navigation
 

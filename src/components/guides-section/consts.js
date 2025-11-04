@@ -5,7 +5,7 @@ export const tagsCategoryMap = {
     "Solutions": ["Security", "Autonomous Ticket Resolution", "Self Healing Incidents", "Engineering Intelligence"],
     "Use-cases": ["K8s for devs", "IaC for devs", "Cloud access management", "Feature flag management", /*"Cloud cost",*/ "Dev environments", "Dependency management", "API catalog", "Approval workflow"],
     "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "Access controls"],
-      
+
     Technologies: [
         "GitHub",
         "Github Copilot",
@@ -1505,6 +1505,13 @@ export const availableGuides = [
         tags: ["Autonomous Ticket Resolution", "AI", "Claude Code", "Jira"],
         logos: ["AI", "Claude Code", "Jira"],
         link: "/guides/all/triage-tickets-to-coding-agents",
+    },
+    {
+        title: "Migrate repositories from Bitbucket to GitHub",
+        description: "Migrate repositories from Bitbucket to GitHub using Port self-service actions and GitHub Actions",
+        tags: [ "BitBucket", "GitHub", "Actions", "Scorecards"],
+        logos: ["BitBucket", "GitHub"],
+        link: "/guides/all/migrate-project-from-bibucket-to-github",
     }
 ]
 

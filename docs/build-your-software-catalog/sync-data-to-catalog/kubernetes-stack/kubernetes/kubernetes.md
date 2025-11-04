@@ -68,16 +68,20 @@ Not sure which method is right for your use case? Check the available [installat
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="Kubernetes" />
+To install the integration using Helm:
 
-<PortApiRegionTip/>
+1. Go to the Kubernetes [data sources page](https://app.getport.io/settings/data-sources?section=EXPORTERS&provider=Kubernetes) in your portal.
+
+    <img src="/img/sync-data-to-catalog/kubernetesIntegrationPage.png" width="70%" border='1px' />
+
+2. A `helm` command will be displayed, with default values already filled out (e.g. your Port client ID, client secret). Copy the command then run it in your terminal to install the integration.
 
 </TabItem>
 
 <TabItem value="argo" label="ArgoCD">
 
 1. Install the `my-port-k8s-exporter` ArgoCD Application by creating the following `my-port-k8s-exporter.yaml` manifest:
-    :::note
+    :::note Configuration requirements
     Remember to replace the placeholders for `LATEST_HELM_RELEASE` `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
     
     You can find the latest version `port-k8s-exporter` chart in our [Releases](https://github.com/port-labs/helm-charts/releases?q=port-k8s-exporter&expanded=true) page.
@@ -86,7 +90,7 @@ Not sure which method is right for your use case? Check the available [installat
     :::
 
     <details>
-      <summary>ArgoCD Application</summary>
+      <summary><b>ArgoCD Application (click to expand)</b></summary>
     
     ```yaml showLineNumbers
     apiVersion: argoproj.io/v1alpha1
