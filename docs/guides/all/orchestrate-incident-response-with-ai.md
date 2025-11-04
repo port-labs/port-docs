@@ -41,8 +41,11 @@ We will configure the necessary blueprint to support our AI-powered incident orc
 The incident blueprint will store incident data from your incident management tool and track orchestration results.
 
 1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
+
 2. Click on `+ Blueprint`.
+
 3. Click on the `{...} Edit JSON` button.
+
 4. Copy and paste the following JSON configuration:
 
     <details>
@@ -202,8 +205,11 @@ The incident blueprint will store incident data from your incident management to
 Port's PagerDuty integration creates a `pagerdutyIncident` blueprint by default. You can extend this existing blueprint by adding the following properties to enable orchestration tracking:
 
 1. Go to the [builder](https://app.getport.io/settings/data-model) page of your portal.
+
 2. Select the `PagerDuty Incident` blueprint.
+
 3. Click on the `{...} Edit JSON` button.
+
 4. Add the following properties under the `properties` schema:
 
     <details>
@@ -240,18 +246,23 @@ We need to configure integrations with Slack, Zoom, and Jira to enable the orche
 ### Set up Slack App
 
 1. [Create a Slack app](https://api.slack.com/start/quickstart#creating) and install it on a workspace.
+
 2. [Add the following permissions](https://api.slack.com/quickstart#scopes) to the Slack app:
+
    - **Create channel** (Required):
      - `channels:manage`
      - `groups:write`
      - `im:write`
      - `mpim:write`
+
    - **Find a user with an email address** (Optional):
      - `users:read.email`
+
    - **Invite users to channel** (Optional):
      - `channels:write.invites`
      - `groups:write.invites`
      - `mpim:write.invites`
+     
    - **Send messages** (Required):
      - `chat:write`
      - `chat:write.public`
@@ -261,6 +272,7 @@ We need to configure integrations with Slack, Zoom, and Jira to enable the orche
     :::
 
 3. [Install the app in your Slack workspace](https://api.slack.com/quickstart#installing).
+
 4. Navigate back to the **OAuth & Permissions page**. You will see an access token under **OAuth Tokens for Your Workspace** that you will use in the `SLACK_BOT_TOKEN` Port secret.
 
     <img src='/img/self-service-actions/setup-backend/github-workflow/slack-app.png' width='70%' border="1px" />
@@ -270,12 +282,17 @@ We need to configure integrations with Slack, Zoom, and Jira to enable the orche
 Create a Server-to-Server OAuth app:
 
 1. Go to [Zoom Marketplace](https://marketplace.zoom.us/).
+
 2. Click **Develop → Build App** → select **Server-to-Server OAuth**.
+
 3. Fill in the app details and make note of:
+
    - **Account ID**
    - **Client ID**
    - **Client Secret**
+
 4. Under **Scopes**, add:
+
    - `meeting:write`
    - `meeting:read`
    - (optionally) `user:read`
@@ -285,7 +302,9 @@ Create a Server-to-Server OAuth app:
 ### Set up Jira API access
 
 1. Log in to your Jira instance.
+
 2. Generate an API token:
+
    - Go to [Atlassian Account Settings](https://id.atlassian.com/manage-profile/security/api-tokens)
    - Click **Create API token**
    - Copy the generated token (you will need this for the Port secret)
@@ -295,9 +314,13 @@ Create a Server-to-Server OAuth app:
 To add secrets to your portal:
 
 1. Click on the `...` button in the top right corner of your Port application.
+
 2. Click on **Credentials**.
+
 3. Click on the `Secrets` tab.
+
 4. Click on `+ Secret` and add the following secrets:
+
    - `SLACK_BOT_TOKEN` - Your Slack bot token from the OAuth & Permissions page
    - `ZOOM_ACCOUNT_ID` - Your Zoom account ID
    - `ZOOM_CLIENT_ID` - Your Zoom client ID
@@ -317,8 +340,11 @@ We will create self-service actions that the AI agent can invoke to orchestrate 
 This action creates a dedicated Slack channel for the incident.
 
 1. Go to the [self-service](https://app.getport.io/self-serve) page of your portal.
+
 2. Click on `+ New Action`.
+
 3. Click on the `{...} Edit JSON` button.
+
 4. Copy and paste the following JSON configuration:
 
     <details>
@@ -368,8 +394,11 @@ This action creates a dedicated Slack channel for the incident.
 This action obtains a Zoom access token and then triggers the meeting creation.
 
 1. Go back to the [self-service](https://app.getport.io/self-serve) page of your portal.
+
 2. Click on `+ New Action`.
+
 3. Click on the `{...} Edit JSON` button.
+
 4. Copy and paste the following JSON configuration:
 
     <details>
@@ -419,8 +448,11 @@ This action obtains a Zoom access token and then triggers the meeting creation.
 This action creates the actual Zoom meeting using the access token.
 
 1. Go back to the [self-service](https://app.getport.io/self-serve) page of your portal.
+
 2. Click on `+ New Action`.
+
 3. Click on the `{...} Edit JSON` button.
+
 4. Copy and paste the following JSON configuration:
 
     <details>
@@ -495,8 +527,11 @@ This action creates the actual Zoom meeting using the access token.
 This action creates a Jira ticket to track the incident.
 
 1. Go back to the [self-service](https://app.getport.io/self-serve) page of your portal.
+
 2. Click on `+ New Action`.
+
 3. Click on the `{...} Edit JSON` button.
+
 4. Copy and paste the following JSON configuration:
 
     <details>
@@ -608,8 +643,11 @@ This action creates a Jira ticket to track the incident.
 This action sends notification messages to Slack channels.
 
 1. Go back to the [self-service](https://app.getport.io/self-serve) page of your portal.
+
 2. Click on `+ New Action`.
+
 3. Click on the `{...} Edit JSON` button.
+
 4. Copy and paste the following JSON configuration:
 
     <details>
@@ -677,8 +715,11 @@ This action sends notification messages to Slack channels.
 Now we will create the AI agent that orchestrates the incident response setup.
 
 1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
+
 2. Click on `+ AI Agent`.
+
 3. Toggle `Json mode` on.
+
 4. Copy and paste the following JSON schema:
 
     <details>
@@ -715,18 +756,24 @@ Now we will create the AI agent that orchestrates the incident response setup.
 
 We will create automations to orchestrate the complete incident response workflow:
 
-1. Trigger the AI agent when incidents are created
-2. Update the incident with Slack channel ID after creation
-3. Create Zoom meeting after obtaining access token
-4. Update incident with Zoom meeting link
-5. Update incident with Jira ticket link
+1. Trigger the AI agent when incidents are created.
+
+2. Update the incident with Slack channel ID after creation.
+
+3. Create Zoom meeting after obtaining access token.
+
+4. Update incident with Zoom meeting link.
+
+5. Update incident with Jira ticket link.
 
 ### Trigger Incident Orchestrator Agent
 
 This automation invokes the Incident Orchestrator agent as soon as an incident is created.
 
 1. Go to the [automations](https://app.getport.io/settings/automations) page of your portal.
+
 2. Click on `+ Automation`.
+
 3. Copy and paste the following JSON schema:
 
     <details>
@@ -779,7 +826,9 @@ This automation invokes the Incident Orchestrator agent as soon as an incident i
 This automation updates the incident with the Slack channel ID after the channel has been created.
 
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
+
 2. Click on `+ Automation`.
+
 3. Copy and paste the following JSON schema:
 
     <details>
@@ -829,7 +878,9 @@ This automation updates the incident with the Slack channel ID after the channel
 This automation calls the Zoom API to create the meeting after obtaining the access token.
 
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
+
 2. Click on `+ Automation`.
+
 3. Copy and paste the following JSON schema:
 
     <details>
@@ -885,7 +936,9 @@ This automation calls the Zoom API to create the meeting after obtaining the acc
 This automation updates the incident with the created Zoom meeting link.
 
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
+
 2. Click on `+ Automation`.
+
 3. Copy and paste the following JSON schema:
 
     <details>
@@ -933,7 +986,9 @@ This automation updates the incident with the created Zoom meeting link.
 This automation updates the incident with the response of the created Jira ticket.
 
 1. Go back to the [automations](https://app.getport.io/settings/automations) page of your portal.
+
 2. Click on `+ Automation`.
+
 3. Copy and paste the following JSON schema:
 
     <details>
@@ -984,12 +1039,15 @@ Now let us test the complete incident orchestration workflow to ensure everythin
 ### Create a test incident
 
 1. Go to your PagerDuty instance and create a new incident, or use Port's API to create a test incident entity.
+
 2. Verify that the incident appears in your Port catalog.
 
 ### Verify AI agent orchestration
 
 1. Check the AI agent's execution logs in the [AI Invocation](https://app.getport.io/_ai_invocationsEntity) page.
+
 2. Verify that the agent has:
+
    - Analyzed the incident severity and context
    - Executed the appropriate actions based on urgency
    - Created a Slack channel (for high/medium/critical incidents)
@@ -1000,10 +1058,13 @@ Now let us test the complete incident orchestration workflow to ensure everythin
 ### Verify incident updates
 
 1. Go to your Port catalog and find the incident entity.
+
 2. Check that the incident has been updated with:
+
    - Slack channel ID
    - Zoom meeting link (if applicable)
    - Jira tracking ticket URL
+
 3. Verify the links are functional and accessible.
 
     <img src="/img/guides/incident-orchestration-port-entity.png" border="1px" width="80%" />
@@ -1011,7 +1072,9 @@ Now let us test the complete incident orchestration workflow to ensure everythin
 ### Test in Slack
 
 1. Go to your Slack workspace.
+
 2. Verify that:
+
    - A new channel was created with the incident identifier
    - Notification messages were posted to the channel
    - The channel contains relevant incident information
