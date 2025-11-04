@@ -448,7 +448,7 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 Create a Python script `scripts/extract_mcp_tools.py` in your repository:
 
 :::tip Reference implementation
-You can find latest update of this script in the [Port product experiments repository](https://github.com/port-labs/port-product-experiments/blob/main/scripts/extract_mcp_tools.py).
+You can find the most recent version of this script in the [Port product experiments repository](https://github.com/port-labs/port-product-experiments/blob/main/scripts/extract_mcp_tools.py).
 :::
 
     <details>
