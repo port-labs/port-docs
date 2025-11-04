@@ -1,0 +1,106 @@
+<details>
+
+<summary> Service Bus Queue blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureServiceBusQueue",
+  "title": "Service Bus Queue",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "type": {
+        "title": "Type",
+        "type": "string"
+      },
+      "messageCount": {
+        "title": "Message Count",
+        "type": "number"
+      },
+      "sizeInBytes": {
+        "title": "Size in Bytes",
+        "type": "number"
+      },
+      "maxSizeInMegabytes": {
+        "title": "Max Size in MB",
+        "type": "number"
+      },
+      "maxDeliveryCount": {
+        "title": "Max Delivery Count",
+        "type": "number"
+      },
+      "lockDuration": {
+        "title": "Lock Duration",
+        "type": "string"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string"
+      },
+      "enablePartitioning": {
+        "title": "Enable Partitioning",
+        "type": "boolean"
+      },
+      "enableExpress": {
+        "title": "Enable Express",
+        "type": "boolean"
+      },
+      "enableBatchedOperations": {
+        "title": "Enable Batched Operations",
+        "type": "boolean"
+      },
+      "requiresDuplicateDetection": {
+        "title": "Requires Duplicate Detection",
+        "type": "boolean"
+      },
+      "requiresSession": {
+        "title": "Requires Session",
+        "type": "boolean"
+      },
+      "supportOrdering": {
+        "title": "Support Ordering",
+        "type": "boolean"
+      },
+      "defaultMessageTimeToLive": {
+        "title": "Default Message TTL",
+        "type": "string"
+      },
+      "deadLetteringOnMessageExpiration": {
+        "title": "Dead Lettering On Message Expiration",
+        "type": "boolean"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "updatedAt": {
+        "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "accessedAt": {
+        "title": "Accessed At",
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "namespace": {
+      "title": "Namespace",
+      "target": "azureServiceBusNamespace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+
