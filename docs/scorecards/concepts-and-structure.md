@@ -13,8 +13,8 @@ import TabItem from "@theme/TabItem"
 
 In your [Builder](https://app.getport.io/settings/data-model) page scorecards are represented by three blueprints:
 - [`Scorecard`](#scorecard-structure) - Represents a collection of rules and levels for evaluating entities.
-- [`Rule`](#rule-blueprint) - Defines specific criteria for evaluation.
-- [`Rule Result`](#rule-result-blueprint) - Stores the evaluation results for each entity.
+- [`Rule`](#rule-structure) - Defines specific criteria for evaluation.
+- [`Rule Result`](#rule-result-structure) - Stores the evaluation results for each entity.
 
 ## Scorecard structure
 
@@ -68,6 +68,23 @@ The system enforces several validation rules to maintain data integrity:
 When creating scorecards, adding new rules, or modifying existing rules for blueprints that contain a large number of entities, it may take some time for the `rule results` to appear in your catalog.
 
 This delay occurs because Port needs to create or update rule result blueprint instances for each entity and rule combination. The more entities you have in the blueprint, the more rule results need to be created or updated, which increases the processing time.
+
+#### Rule result entity limits
+
+Port supports up to **5 million** rule result entities.
+
+To monitor how many rule result entities you have, you can:
+
+1. Use the following [API path](/api-reference/get-a-blueprints-entity-count): Query the `_rule_result` blueprint identifier.
+2. Create a [number chart](/customize-pages-dashboards-and-plugins/dashboards/#number-chart):
+   - Type: `count entities`.
+   - Function: `count`.
+   - Blueprint: `_rule_result`.
+   
+If you reach this limit, you can:
+- Contact [Port support](https://support.port.io) for assistance.
+- Review your scorecards to reduce the number of rules.
+- Reduce the number of entities in the blueprints that your scorecards are defined for.
 
 ### Levels
 
