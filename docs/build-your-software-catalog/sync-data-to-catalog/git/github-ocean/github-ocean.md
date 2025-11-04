@@ -842,7 +842,7 @@ resources:
   - kind: repository
     selector:
       query: "true"
-      repo_search:
+      repoSearch:
         query: "dev in:name archived:false"
     port:
       entity:
@@ -860,7 +860,7 @@ resources:
   - kind: pull-request
     selector:
       query: "true"
-      repo_search:
+      repoSearch:
         query: "dev in:name archived:false" # repo search is also supported in pull requests.
       state: open
     port:
