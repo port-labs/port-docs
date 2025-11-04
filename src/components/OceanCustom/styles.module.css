@@ -1,0 +1,940 @@
+/* Generic HTTP Integration Components Styles */
+
+.configBuilder,
+.tester,
+.blueprintGenerator,
+.configGenerator {
+  margin: 2rem 0;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.formSection {
+  margin-bottom: 2rem;
+}
+
+.formSection h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 2px var(--ifm-color-primary-lighter);
+}
+
+.textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  resize: vertical;
+}
+
+.radioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.75rem 0;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  transition: all 0.2s;
+}
+
+.radioLabel:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest);
+}
+
+.radioLabel input[type="radio"] {
+  cursor: pointer;
+}
+
+.outputSection {
+  margin-top: 2rem;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+  padding-top: 1.5rem;
+}
+
+.outputHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.outputHeader h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.copyButton {
+  padding: 0.5rem 1rem;
+  background: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.copyButton:hover {
+  background: var(--ifm-color-primary-dark);
+}
+
+.codeBlock {
+  background: var(--ifm-code-background);
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 0;
+}
+
+.codeBlock code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ifm-font-color-base);
+}
+
+/* Endpoint Tester Specific */
+
+.testerInput {
+  margin-bottom: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.inputGroup .input {
+  flex: 1;
+  margin: 0;
+}
+
+.testButton {
+  padding: 0.5rem 1.5rem;
+  background: var(--ifm-color-success);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.testButton:hover:not(:disabled) {
+  background: var(--ifm-color-success-dark);
+}
+
+.testButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  padding: 1rem;
+  background: var(--ifm-color-danger-lightest);
+  border-left: 4px solid var(--ifm-color-danger);
+  border-radius: 4px;
+  margin: 1rem 0;
+  color: var(--ifm-color-danger-darkest);
+}
+
+.dataPathDetector {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--ifm-color-success-lightest);
+  border-left: 4px solid var(--ifm-color-success);
+  border-radius: 4px;
+}
+
+.dataPathDetector h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.detectedPath {
+  padding: 0.5rem;
+  background: var(--ifm-code-background);
+  border-radius: 4px;
+  margin: 0.5rem 0;
+}
+
+.detectedPath code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+}
+
+.hint {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.placeholder {
+  padding: 2rem;
+  text-align: center;
+  color: var(--ifm-color-emphasis-600);
+  font-style: italic;
+}
+
+/* Blueprint Generator Specific */
+
+.inputSection {
+  margin-bottom: 2rem;
+}
+
+.fieldsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.fieldItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.fieldItem:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.fieldItem input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.fieldName {
+  font-weight: 600;
+  min-width: 120px;
+}
+
+.fieldType {
+  font-size: 0.85rem;
+  color: var(--ifm-color-primary);
+  min-width: 100px;
+}
+
+.fieldValue {
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+  font-family: 'Courier New', monospace;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Config Generator Specific */
+
+.label {
+  display: block;
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+.label .input {
+  margin-top: 0.25rem;
+}
+
+.propertyRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.propertyRow .input {
+  flex: 1;
+  margin: 0;
+}
+
+.removeButton {
+  padding: 0.5rem 0.75rem;
+  background: var(--ifm-color-danger);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.removeButton:hover:not(:disabled) {
+  background: var(--ifm-color-danger-dark);
+}
+
+.removeButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  background: var(--ifm-color-success);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+
+.addButton:hover {
+  background: var(--ifm-color-success-dark);
+}
+
+/* Integration Installer Specific */
+
+.integrationBuilder {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.builderSection {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.sectionHeader {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--ifm-color-primary);
+}
+
+.sectionHeader h2 {
+  margin: 0 0 0.5rem 0;
+  color: var(--ifm-color-primary);
+  font-size: 1.5rem;
+}
+
+.sectionHeader p {
+  margin: 0;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.95rem;
+}
+
+.installer {
+  margin: 2rem 0;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.configSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.advancedSection {
+  margin-top: 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.advancedSummary {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  user-select: none;
+  font-size: 0.95rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.advancedSummary:hover {
+  background: var(--ifm-color-emphasis-200);
+}
+
+.advancedSummary strong {
+  font-weight: 600;
+}
+
+.advancedContent {
+  padding: 1rem;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hint {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-top: 0.25rem;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+
+.checkbox input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox span {
+  font-size: 0.95rem;
+}
+
+.configSummary {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: var(--ifm-color-emphasis-100);
+  border-left: 3px solid var(--ifm-color-primary);
+  border-radius: 4px;
+}
+
+.configSummary p {
+  margin: 0 0 0.5rem 0;
+}
+
+.configSummary ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.configSummary li {
+  margin: 0.25rem 0;
+}
+
+.installSection {
+  margin-top: 2rem;
+}
+
+.codeHeader {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+/* Endpoint Configurator Specific */
+
+.endpointConfig {
+  margin: 2rem 0;
+}
+
+.step {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  background: var(--ifm-background-surface-color);
+}
+
+.step h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.jsonTreeContainer {
+  padding: 1rem;
+  background: var(--ifm-code-background);
+  border-radius: 4px;
+  max-height: 400px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.jsonTreeNode {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  border-radius: 4px;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.jsonTreeNode.arrayNode {
+  cursor: pointer;
+  background: var(--ifm-color-emphasis-100);
+  border: 2px dashed var(--ifm-color-primary-light);
+}
+
+.jsonTreeNode.arrayNode:hover {
+  background: var(--ifm-color-primary-lightest);
+  border-color: var(--ifm-color-primary);
+}
+
+.jsonTreeNode.selectedNode {
+  background: var(--ifm-color-success-lightest);
+  border: 2px solid var(--ifm-color-success);
+}
+
+.jsonKey {
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+  flex: 1;
+}
+
+.arrayBadge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-700);
+  border-radius: 3px;
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: 0.5rem;
+}
+
+.selectedBadge {
+  font-size: 1.1rem;
+  color: var(--ifm-color-success);
+  font-weight: 600;
+}
+
+.selectedPath {
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--ifm-color-emphasis-100);
+  border-left: 3px solid var(--ifm-color-primary);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.selectedPath code {
+  background: var(--ifm-code-background);
+  padding: 0.125rem 0.375rem;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.fieldMapping {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mappingHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.5rem;
+  font-weight: 600;
+  border-bottom: 2px solid var(--ifm-color-emphasis-300);
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: var(--ifm-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  align-items: center;
+}
+
+.fieldCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.fieldActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.roleButton {
+  padding: 0.25rem 0.75rem;
+  background: var(--ifm-color-emphasis-200);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.roleButton:hover {
+  background: var(--ifm-color-emphasis-300);
+}
+
+.roleButton.active {
+  background: var(--ifm-color-primary);
+  color: white;
+  border-color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+.outputBox {
+  margin: 1.5rem 0;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  padding: 1rem;
+  background: var(--ifm-background-color);
+}
+
+.outputBox h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Multi-Endpoint Configurator Specific */
+
+.multiEndpointConfig {
+  margin: 2rem 0;
+}
+
+.savedEndpoints {
+  margin-bottom: 2.5rem;
+  padding: 0;
+}
+
+.savedEndpoints h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+}
+
+.endpointsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.endpointCard {
+  padding: 1rem 1.25rem;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.endpointCard:hover {
+  border-color: var(--ifm-color-emphasis-400);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.endpointCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.endpointInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.endpointTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.endpointPath {
+  padding: 0.25rem 0.5rem;
+  background: var(--ifm-code-background);
+  border-radius: 3px;
+  font-size: 0.875rem;
+  font-family: 'Courier New', monospace;
+  color: var(--ifm-font-color-base);
+  font-weight: 500;
+}
+
+.arrow {
+  color: var(--ifm-color-emphasis-500);
+  font-weight: 400;
+}
+
+.blueprintName {
+  color: var(--ifm-font-color-base);
+  font-weight: 500;
+}
+
+.endpointActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.createInPortButton {
+  padding: 0.5rem 1rem;
+  background: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+.createInPortButton:hover {
+  background: var(--ifm-color-primary-dark);
+  color: white;
+  text-decoration: none;
+}
+
+.editButton,
+.deleteButton {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--ifm-font-color-base);
+  transition: all 0.2s;
+}
+
+.editButton:hover {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest);
+}
+
+.deleteButton:hover {
+  border-color: var(--ifm-color-danger);
+  color: var(--ifm-color-danger);
+  background: var(--ifm-color-danger-lightest);
+}
+
+.mappingDetails {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-surface-color);
+}
+
+.mappingSummary {
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: -1rem -1rem 0 -1rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+  font-size: 1rem;
+}
+
+.mappingSummary:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.mappingHint {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.codeWrapper {
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.codeWrapper pre {
+  margin: 0;
+  padding: 1rem;
+  background: var(--ifm-code-background);
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.codeWrapper code {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.copyBtn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  background: var(--ifm-button-background-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--ifm-font-color-base);
+  transition: all 0.2s;
+  z-index: 1;
+}
+
+.copyBtn:hover {
+  background: var(--ifm-color-emphasis-300);
+  border-color: var(--ifm-color-emphasis-500);
+}
+
+.installationSection h3 {
+  margin: 2rem 0 1rem 0;
+  font-size: 1.25rem;
+}
+
+.installationSection h3:first-child {
+  margin-top: 0;
+}
+
+.createInPortButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  z-index: 1;
+}
+
+.createInPortButton:hover {
+  background: var(--ifm-color-primary-dark);
+  color: white;
+  text-decoration: none;
+}
+
+.formHeader {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.formHeader h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+}
+
+.saveButtonContainer {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.saveEndpointButton {
+  padding: 0.625rem 1.25rem;
+  background: var(--ifm-color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.saveEndpointButton:hover {
+  background: var(--ifm-color-primary-dark);
+}
+
+.cancelButton {
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  transition: all 0.2s;
+}
+
+.cancelButton:hover {
+  border-color: var(--ifm-color-emphasis-500);
+  background: var(--ifm-color-emphasis-100);
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .radioGroup {
+    flex-direction: column;
+  }
+  
+  .inputGroup {
+    flex-direction: column;
+  }
+  
+  .outputHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .propertyRow {
+    flex-direction: column;
+  }
+  
+  .fieldItem {
+    flex-wrap: wrap;
+  }
+
+  .mappingHeader,
+  .fieldRow {
+    grid-template-columns: 1fr;
+  }
+
+  .fieldActions {
+    justify-content: flex-start;
+  }
+}
+
