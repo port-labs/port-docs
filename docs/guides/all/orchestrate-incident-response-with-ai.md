@@ -9,7 +9,7 @@ When incidents occur, engineers waste critical minutes manually coordinating res
 
 This guide demonstrates how to implement an AI-powered incident response system in Port where a single incident trigger activates an AI agent that intelligently orchestrates the entire setup. The AI agent has access to Port actions (create Slack channel, generate meeting link, create Jira ticket, notify teams) and automatically executes the right sequence based on the incident context.
 
-<img src="/img/guides/incident-orchestration-workflow.png" alt="Incident orchestration workflow to be updated" border="1px" width="100%" />
+<img src="/img/guides/incident-orchestration-workflow.jpg" alt="Incident orchestration workflow" border="1px" width="100%" />
 
 ## Common use cases
 
