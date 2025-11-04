@@ -5,7 +5,7 @@ description: Automatically enhance PR descriptions with AI-generated, template-c
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import CodingAgents from '@site/src/components/CodingAgents/CodingAgents'
+import CodingAgents from '/docs/guides/templates/ai/_coding_agents.mdx'
 
 # Auto-enhance PR descriptions with AI
 
