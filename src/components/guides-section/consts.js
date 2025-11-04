@@ -1501,6 +1501,13 @@ export const availableGuides = [
         link: "/guides/all/triage-tickets-to-coding-agents",
     },
     {
+        title: "Query DORA metrics using Port MCP",
+        description: "Query DORA metrics using natural language commands directly from your IDE with Port's MCP server",
+        tags: ["Engineering Intelligence", "AI"],
+        logos: ["AI"],
+        link: "/guides/all/query-dora-metrics-using-port-mcp",
+    },
+    {
         title: "Migrate repositories from Bitbucket to GitHub",
         description: "Migrate repositories from Bitbucket to GitHub using Port self-service actions and GitHub Actions",
         tags: [ "BitBucket", "GitHub", "Actions", "Scorecards"],
