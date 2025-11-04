@@ -1,0 +1,77 @@
+<details>
+
+<summary> Service Bus Namespace blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureServiceBusNamespace",
+  "title": "Service Bus Namespace",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string",
+        "icon": "Home"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string",
+        "icon": "Microservice"
+      },
+      "sku": {
+        "title": "SKU",
+        "type": "object",
+        "icon": "Settings"
+      },
+      "provisioningState": {
+        "title": "Provisioning State",
+        "type": "string"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "updatedAt": {
+        "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "serviceBusEndpoint": {
+        "title": "Service Bus Endpoint",
+        "type": "string",
+        "format": "url"
+      },
+      "metricId": {
+        "title": "Metric ID",
+        "type": "string"
+      },
+      "tags": {
+        "title": "Tags",
+        "type": "object"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "resource_group": {
+      "title": "Resource Group",
+      "target": "azureResourceGroup",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+
