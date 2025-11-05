@@ -64,13 +64,12 @@ With Port, you have full control over which AWS resource properties are discover
 
 To collect additional properties from AWS resources, add the optional actions you need to the `includeActions` field of your configuration. For example, to include status details from EC2 instances by enabling the `DescribeInstanceStatusAction`, add the following:
 
-```yaml
+```yaml showLineNumbers
 - kind: AWS::EC2::Instance
   selector:
     query: 'true'
     includeActions:
       - DescribeInstanceStatusAction
-```
 
 In this configuration, Port will enrich your catalog by fetching all properties provided by the [DescribeInstanceStatus API](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceStatus.html) for every EC2 instance.
 
