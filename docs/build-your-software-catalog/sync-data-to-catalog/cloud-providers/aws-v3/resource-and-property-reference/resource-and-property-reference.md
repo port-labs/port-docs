@@ -18,7 +18,7 @@ For example, an EC2 instance is identified as:
 AWS::EC2::Instance
 ```
 
-Refer to the sidebar or the list below to navigate to individual resource reference pages where you'll find actionable integration details, sample configurations, and official AWS documentation links.
+Refer to the sidebar or the list below to navigate to individual resource reference pages where you will find actionable integration details, sample configurations, and official AWS documentation links.
 
 - [Amazon Simple Queue Service](./amazon-simple-queue-service/amazon-simple-queue-service.md)
 - [Amazon Simple Storage Service](./amazon-simple-storage-service/amazon-simple-storage-service.md)
