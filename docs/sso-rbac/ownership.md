@@ -312,5 +312,117 @@ Here are some common examples:
   - View which users are assigned to one or more teams.  
   - Include a <PortTooltip id="action">**self-service action**</PortTooltip> to onboard users to teams.
 
+### Create a dashboard
 
+1. Navigate to the [Catalog](https://app.getport.io/organization/catalog) page of your portal.
+
+2. Click on the **`+ New`** button in the left sidebar.
+
+3. Select **New dashboard**.
+
+4. Name the dashboard **Ownership Management**.
+
+5. Input `Manage and onboard your users and teams` under **Description**.
+
+6. Select the `Users` icon.
+
+7. Click `Create`.
+
+We now have a blank dashboard where we can start adding widgets to visualize ownership insights.
+
+### Add widgets
+
+In the new dashboard, create the following widgets:
+
+<details>
+<summary><b>Users assignment (click to expand)</b></summary>
+
+1. Click `+ Widget` and select **Table**.
+
+2. Title: `Users assignment`.
+
+3. Choose **User** as the **Blueprint**.
+
+4. Click `Save`.
+   
+5. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
+
+6. Define the visible columns to include the user title, team, and third parties associated user.
+
+7. Click on the **save icon** in the top right corner of the widget to save the customized table.
+
+</details>
+
+<details>
+<summary><b>Users with no teams (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Pie chart**.
+
+2. Title: `Users with no teams`.
+
+3. Choose the **User** blueprint.
+
+4. Under `Breakdown by property`, select the **Ownership - Has Team** property
+
+5. Click **Save**.
+
+</details>
+
+<details>
+<summary><b>Teams assignment (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Table**.
+
+2. Title: `Teams assignment`.
+
+3. Choose the **Team** blueprint.
+
+4. Click **Save**.
+    
+5. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
+
+6. Define the visible columns to include the team's title, and third parties associated teams.
+   
+7. Click on the **save icon** in the top right corner of the widget to save the customized table.
+
+</details>
+
+
+
+<details>
+<summary><b>Services ownership (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Table**.
+
+2. Title the widget **Services ownership**.
+
+3. Choose the **Service** blueprint
+
+4. Click **Save** to add the widget to the dashboard.
+
+5. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
+
+6. Define the visible columns to include the service title and the owning teams.
+    
+7. Click on the **save icon** in the top right corner of the widget to save the customized table.
+
+</details>
+
+
+
+<details>
+<summary><b>Ownership management actions (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **Action Card**.
+
+2. Under `Actions`, select all the Ownership management actions we created:
+   - **Add team members**
+   - **Register your user** 
+   - **Own services**
+
+3. Title: `Ownership management`.
+
+5. Click **Save**.
+
+</details>
 
