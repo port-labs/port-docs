@@ -16,14 +16,14 @@ In your [Builder](https://app.getport.io/settings/data-model) page scorecards ar
 - [`Rule`](#rule-structure) - Defines specific criteria for evaluation.
 - [`Rule Result`](#rule-result-structure) - Stores the evaluation results for each entity.
 
-## Scorecard structure
+## `Scorecard` structure
 
 A single scorecard defines a category to group different checks, validations and evaluations.  
 Below is the structure of a single `scorecard` blueprint:
 
 | Name | Type | Description |
 |------|------|-------------|
-| `identifier` | String | The unique identifier of the scorecard (Maximum 100 characters). |
+| `Identifier` | String | The unique identifier of the scorecard (Maximum 100 characters). |
 | `Blueprint` | String (format: blueprints) | The target blueprint whose entities will be evaluated. |
 | [`Levels`](#levels) | Array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold). |
 | [`Filter`](#filter-elements) | Object | Optional query to filter which entities should be evaluated. |
@@ -329,7 +329,7 @@ Conditions are small boolean checks that help when determining the final status 
 | `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is an empty string, array, or object.         |
 | `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is not an empty string, array, or object.     |
 
-## `Rule` structure 
+## `Scorecard Rule` structure 
 
 The `Rule` blueprint contains the following properties:
 | Name | Type | Description |
@@ -347,7 +347,7 @@ Relations:
 |:----:|:----------------:|:---------:|:-----:|:-----------:|
 | Scorecard | Scorecard | true | false | The scorecard this rule belongs to |
 
-## Rule result structure
+## `Scorecard Rule Result` structure
 
 The `Rule result` blueprint contains the following properties:
 
@@ -387,17 +387,24 @@ A scorecard filter is used to make sure only relevant entities are evaluated, on
 
 ## Scorecard UI indications
 
-After configuring scorecards for the blueprint, each entity created from it will have a `Scorecards` tab in
-its [entity page](/customize-pages-dashboards-and-plugins/page/entity-page), detailing the different checks and their results:
+Scorecards are available in two contexts in Port's software catalog:
+
+1. **Entity's scorecards** - You can view an entity's scorecard evaluation at the `scorecards` tab on the entity's specific page, which shows how the entity performs against the scorecard rules.
+2. **Scorecards dashboards** - Each **scorecard** has its own entity page with a default dashboard and view that provides a comprehensive overview of the scorecard's performance across all entities.
+
+### Entity's scorecards
+
+Each entity with a configured scorecard will have a `scorecards` tab in its [entity page](/customize-pages-dashboards-and-plugins/page/entity-page), detailing the different checks and their results:
 
  <img src='/img/software-catalog/scorecard/tutorial/ScorecardsTab.png' width='100%' border='1px' />
+ <br></br><br></br>
 
 Additionally, the [catalog page](/customize-pages-dashboards-and-plugins/page/catalog-page) of each blueprint will automatically have a column for each scorecard rule.  
 For example, this `Microservice` blueprint has five rules configured, and we can see a column for each of them in the catalog:
 
  <img src='/img/software-catalog/scorecard/catalogPageScorecardColumns.png' width='100%' border='1px' />
 
-### Customizing views
+#### Customizing views
 
 You can use table operations (sort, edit, group-by, etc.) to create various helpful views of your scorecards.  
 For example, here are the scores of all `Microservice` in an organization grouped by team:
@@ -406,7 +413,7 @@ For example, here are the scores of all `Microservice` in an organization groupe
 
 Note that every column (scorecard metric) in the table has an aggregation in the bottom, hover over it to see the compliance of this metric across all entities in the table.
 
-### Rule result summaries
+#### Rule result summaries
 
 Scorecard rules are automatically added as columns in the relevant catalog page, and each such column is summarized on the bottom.  
 For example, these microservices have some rules defined in their scorecards, and we can see that:
@@ -416,6 +423,27 @@ For example, these microservices have some rules defined in their scorecards, an
 	out of eight microservices in total have a domain configured.
 
 <img src='/img/software-catalog/scorecard/catalogRuleSummaries.png' width='100%' border='1px' />
+ 
+### Scorecards dashboards
+
+By default, admins have a **Scorecard catalog** folder in their software catalog that contains three dashboards:
+
+- **Scorecards** - Displays your scorecards across all blueprints.
+- **Scorecards rules** - Displays the different scorecard rules across all scorecards.
+- **Scorecards rule results** - Displays the rule results for each scorecard rules.
+
+#### Scorecard specific entity page
+
+Each scorecard, rule, and rule result has its own [entity page](/customize-pages-dashboards-and-plugins/page/entity-page) with a default dashboard. For scorecards, the dashboard provides a comprehensive overview of the scorecard's performance across all entities.
+
+The scorecard entity page dashboard includes default widgets such as:
+
+- **% of rules passed** - A numerical display showing the overall percentage of rules that have passed for the scorecard.
+- **Rules passed** - A pie chart visualizing the breakdown of passed versus not passed rules.
+- **% of passed rules over time** - A line chart tracking the historical trend of the percentage of rules passed over time.
+- **Rule results summary** - A detailed table breaking down individual rule results, including level, rule name, entity, and result status.
+
+You can customize the dashboard by adding additional widgets or modifying existing ones to display other aggregations, calculations, and visualizations based on your requirements.
 
 ## Next steps
   
