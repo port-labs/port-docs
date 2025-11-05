@@ -4,7 +4,7 @@ Welcome to the reference guide for AWS resource, actions and properties, as supp
 
 ## Supported resource types
 
-Explore detailed documentation for each AWS resource and action available for integration. For each resource type, you'll find information about supported actions, required permissions, and usage best practices.
+Explore detailed documentation for each AWS resource and action available for integration. For each resource type, you will find information about supported actions, required permissions, and usage best practices.
 
 Resource type identifiers follow a standardized format, allowing you to easily recognize and reference each AWS entity:
 
