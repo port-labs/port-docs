@@ -38,7 +38,8 @@ Depending on the backend type you choose, the available fields will be different
 
 <TabItem value="github-ocean" label="GitHub Ocean">
 
-`invocationMethod.type` should be set to `INTEGRATION_ACTION`.
+The `invocationMethod.type` should be set to `INTEGRATION_ACTION`.  
+
 You can specify which integration to use using the `invocationMethod.installationId` field.
 
 | Field  | Type | Description  | Example values  |
@@ -48,6 +49,11 @@ You can specify which integration to use using the `invocationMethod.installatio
 | `workflow`  | `string`  | Defines the GitHub *workflow ID* to run (You can also pass the workflow file name as a string). | `workflow.yml` |  |
 | `reportWorkflowStatus` | `boolean` | A flag to control whether to automatically update the Port `run` object status (SUCCESS/FAILURE) at the end of the workflow (default: `true`).  | `true` or `false` |
 | `workflowInputs` | `object` | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs. |  |
+
+:::info Token requirements
+This invocation method works only with integrations that use Port machine tokens (organization-level tokens).  
+Personal tokens or service account tokens are not supported at the moment.
+:::
 
 </TabItem>
 
