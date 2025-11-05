@@ -1488,6 +1488,13 @@ export const availableGuides = [
       
     },
     {
+        title: "Auto-enhance PR descriptions with AI",
+        description: "Automatically generate comprehensive, template-compliant PR descriptions using Claude Code",
+        tags: ["SDLC", "GitHub", "AI", "Automations"],
+        logos: ["AI", "GitHub", "Claude Code"],
+        link: "/guides/all/auto-enhance-pr-descriptions-with-ai",
+    },
+    {
         title: "Streamline IaC with AI",
         description: "Use Port AI agents to automate IaC provisioning and management",
         tags: ["IaC for devs", "Github Copilot", "AI", "Actions"],
@@ -1507,6 +1514,13 @@ export const availableGuides = [
         tags: ["Autonomous Ticket Resolution", "AI", "Claude Code", "Jira"],
         logos: ["AI", "Claude Code", "Jira"],
         link: "/guides/all/triage-tickets-to-coding-agents",
+    },
+    {
+        title: "Query DORA metrics using Port MCP",
+        description: "Query DORA metrics using natural language commands directly from your IDE with Port's MCP server",
+        tags: ["Engineering Intelligence", "AI"],
+        logos: ["AI"],
+        link: "/guides/all/query-dora-metrics-using-port-mcp",
     },
     {
         title: "Migrate repositories from Bitbucket to GitHub",
