@@ -1,4 +1,4 @@
-# Amazon Simple Storage Service
+# Amazon Simple Storage Service (S3)
 
 import S3BucketBlueprint from './aws-s3-bucket/_s3_bucket_blueprint.mdx'
 import S3BucketConfig from './aws-s3-bucket/_s3_bucket_port_app_config.mdx'
@@ -9,7 +9,7 @@ import S3BucketConfig from './aws-s3-bucket/_s3_bucket_port_app_config.mdx'
 
 The following example demonstrates how to ingest your AWS S3 buckets to Port.
 
-#### S3 Bucket Supported Actions
+#### S3 Bucket supported actions
 
 The table below summarizes the available actions for ingesting Amazon S3 Bucket resources in Port:
 

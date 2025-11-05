@@ -9,7 +9,7 @@ import OrganizationsAccountConfig from './aws-organizations-account/_organizatio
 
 The following example demonstrates how to ingest your AWS Organizations accounts to Port.
 
-#### Organizations Account Supported Actions
+#### Organizations Account supported actions
 
 The table below summarizes the available actions for ingesting AWS Organizations Account resources in Port:
 

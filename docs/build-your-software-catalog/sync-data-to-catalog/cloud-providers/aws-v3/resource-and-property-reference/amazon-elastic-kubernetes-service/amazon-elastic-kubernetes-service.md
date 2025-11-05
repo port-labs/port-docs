@@ -1,4 +1,4 @@
-# Amazon Elastic Kubernetes Service
+# Amazon Elastic Kubernetes Service (EKS)
 
 import EksClusterBlueprint from './aws-eks-cluster/_eks_cluster_blueprint.mdx'
 import EksClusterConfig from './aws-eks-cluster/_eks_cluster_port_app_config.mdx'

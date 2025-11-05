@@ -1,4 +1,4 @@
-# Amazon Elastic Container Service
+# Amazon Elastic Container Service (ECS)
 
 import EcsClusterBlueprint from './aws-ecs-cluster/_ecs_cluster_blueprint.mdx'
 import EcsClusterConfig from './aws-ecs-cluster/_ecs_cluster_port_app_config.mdx'

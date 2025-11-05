@@ -1,4 +1,4 @@
-# Amazon Relational Database Service
+# Amazon Relational Database Service (RDS)
 
 import RdsDbInstanceBlueprint from './aws-rds-db-instance/_rds_db_instance_blueprint.mdx'
 import RdsDbInstanceConfig from './aws-rds-db-instance/_rds_db_instance_port_app_config.mdx'
