@@ -10,15 +10,15 @@ import SqsQueueConfig from './aws-sqs-queue/_sqs_queue_port_app_config.mdx'
 
 The following example demonstrates how to ingest your AWS SQS queues to Port.
 
-#### SQS Queue Supported Actions
+#### SQS Queue supported actions
 
 The table below summarizes the available actions for ingesting Amazon SQS Queue resources in Port:
 
 | Action                       | Description                                                                              | Type     | Required AWS Permission |
 |-----------------------------|------------------------------------------------------------------------------------------|----------|-------------------------|
-| **ListQueuesAction**        | Discover all SQS queues across your AWS account. [Reference](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ListQueues.html)                                         | Default  | `sqs:ListQueues`        |
-| **GetQueueAttributesAction**| Retrieve detailed configuration and operational data for each queue. [Reference](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueAttributes.html)                      | Default  | `sqs:GetQueueAttributes`|
-| **GetQueueTagsAction**      | Bring in custom tags assigned to your queues for advanced catalog filtering and grouping. [Reference](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ListQueueTags.html) | Optional | `sqs:ListQueueTags`     |
+| [ListQueuesAction](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ListQueues.html)        | Discover all SQS queues across your AWS account.                                         | Default  | `sqs:ListQueues`        |
+| [GetQueueAttributesAction](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueAttributes.html) | Retrieve detailed configuration and operational data for each queue.                      | Default  | `sqs:GetQueueAttributes`|
+| [GetQueueTagsAction](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ListQueueTags.html)      | Bring in custom tags assigned to your queues for advanced catalog filtering and grouping. | Optional | `sqs:ListQueueTags`     |
 
 :::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.

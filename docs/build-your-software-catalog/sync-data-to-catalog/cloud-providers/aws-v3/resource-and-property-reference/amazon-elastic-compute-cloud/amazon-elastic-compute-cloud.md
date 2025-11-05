@@ -9,14 +9,14 @@ import Ec2InstanceConfig from './aws-ec2-instance/_ec2_instance_port_app_config.
 
 The following example demonstrates how to ingest your AWS EC2 instances to Port.
 
-#### EC2 Instance Supported Actions
+#### EC2 Instance supported actions
 
 The table below summarizes the available actions for ingesting Amazon EC2 Instance resources in Port:
 
 | Action                       | Description                                                | Type     | Required AWS Permission        |
 |-----------------------------|------------------------------------------------------------|----------|--------------------------------|
-| **DescribeInstancesAction** | Discover EC2 instances and retrieve detailed configuration data. [Reference](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html) | Default  | `ec2:DescribeInstances`        |
-| **GetInstanceStatusAction** | Retrieve instance status information. [Reference](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceStatus.html)                     | Optional | `ec2:DescribeInstanceStatus`   |
+| [DescribeInstancesAction](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstances.html) | Discover EC2 instances and retrieve detailed configuration data. | Default  | `ec2:DescribeInstances`        |
+| [GetInstanceStatusAction](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceStatus.html) | Retrieve instance status information.                     | Optional | `ec2:DescribeInstanceStatus`   |
 
 :::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.

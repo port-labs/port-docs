@@ -1,8 +1,8 @@
-# AWS Resource and Property Reference
+# AWS resource and property reference
 
 Welcome to the reference guide for AWS resource, actions and properties, as supported by AWS CloudFormation and used in Port integrations.
 
-## Supported Resource Types
+## Supported resource types
 
 Explore detailed documentation for each AWS resource and action available for integration. For each resource type, you'll find information about supported actions, required permissions, and usage best practices.
 
@@ -78,5 +78,47 @@ In this configuration, Port will enrich your catalog by fetching all properties 
 You can include a **maximum of 3 optional actions per resource kind** (excluding default actions). To use more than 3 actions, you can configure multiple resource kinds in your integration.
 :::
 
+
+### Querying resources from specific regions
+
+The `regionPolicy` selector lets you control which AWS regions are queried by the integration. Use it to include or exclude regions per resource.
+
+- allow: List of regions explicitly permitted for querying
+- deny: List of regions explicitly excluded from querying
+
+#### How `regionPolicy` works
+
+1. If both lists are empty: all regions are allowed.
+2. If the region is in `deny`: it is excluded unless explicitly allowed.
+3. If the region is in `allow`: it is included for querying.
+4. If a region appears in both lists: it is excluded.
+5. If only `deny` is specified: only regions in the `deny` list are excluded.
+6. If only `allow` is specified: only regions in the `allow` list are included.
+
+#### Example configuration
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Lambda::Function
+    selector:
+      query: 'true'
+      regionPolicy:
+        allow: ["us-east-1", "eu-west-1"]
+        deny: ["us-west-2"]
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.Arn
+          title: .Properties.FunctionName
+          blueprint: '"lambda"'
+          properties:
+            region: .__Region
+            description: .Properties.Description
+            arn: .Properties.Arn
+          relations:
+            account: .__ExtraContext.AccountId
+```
+
+In this example, resources in `us-east-1` and `eu-west-1` are allowed, while `us-west-2` is denied.
 
 Refer to the individual resource documentation pages for a table of actions, their AWS mapping, and necessary IAM permissions.

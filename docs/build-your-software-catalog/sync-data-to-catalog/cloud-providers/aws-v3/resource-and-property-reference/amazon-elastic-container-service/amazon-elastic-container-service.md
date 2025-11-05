@@ -11,13 +11,13 @@ import EcsServiceConfig from './aws-ecs-service/_ecs_service_port_app_config.mdx
 
 The following example demonstrates how to ingest your AWS ECS clusters to Port.
 
-#### ECS Cluster Supported Actions
+#### ECS Cluster supported actions
 
 The table below summarizes the available actions for ingesting Amazon ECS Cluster resources in Port:
 
 | Action                   | Description                                                        | Type    | Required AWS Permission            |
 |--------------------------|--------------------------------------------------------------------|---------|------------------------------------|
-| **DescribeClustersAction** | Discover ECS clusters and retrieve detailed configuration data. [Reference](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeClusters.html) | Default | `ecs:ListClusters`, `ecs:DescribeClusters` |
+| [DescribeClustersAction](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeClusters.html) | Discover ECS clusters and retrieve detailed configuration data. | Default | `ecs:ListClusters`, `ecs:DescribeClusters` |
 
 :::info All properties available by default
 ECS clusters expose their key properties via the default DescribeClusters action.
@@ -36,13 +36,13 @@ You can use the following Port blueprint definitions and integration configurati
 
 The following example demonstrates how to ingest your AWS ECS services to Port.
 
-#### ECS Service Supported Actions
+#### ECS Service supported actions
 
 The table below summarizes the available actions for ingesting Amazon ECS Service resources in Port:
 
 | Action                      | Description                                                                                             | Type     | Required AWS Permission              |
 |-----------------------------|---------------------------------------------------------------------------------------------------------|----------|--------------------------------------|
-| **DescribeServicesAction**  | Discover ECS services within your clusters and retrieve detailed configuration data. [Reference](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeServices.html) | Default  | `ecs:ListServices`, `ecs:DescribeServices` |
+| [DescribeServicesAction](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DescribeServices.html)  | Discover ECS services within your clusters and retrieve detailed configuration data. | Default  | `ecs:ListServices`, `ecs:DescribeServices` |
 
 :::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.

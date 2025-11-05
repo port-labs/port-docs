@@ -15,9 +15,9 @@ The table below summarizes the available actions for ingesting AWS Organizations
 
 | Action                       | Description                                                      | Type     | Required AWS Permission           |
 |-----------------------------|------------------------------------------------------------------|----------|-----------------------------------|
-| **ListAccountsAction**      | Discover organization accounts and retrieve account metadata. [Reference](https://docs.aws.amazon.com/organizations/latest/APIReference/API_ListAccounts.html)    | Default  | `organizations:ListAccounts`      |
-| **ListTagsForResourceAction** | Retrieve tags for the specified account. [Reference](https://docs.aws.amazon.com/organizations/latest/APIReference/API_ListTagsForResource.html)                      | Optional | `organizations:ListTagsForResource`|
-| **ListParentsAction**       | Retrieve parent information for the specified account. [Reference](https://docs.aws.amazon.com/organizations/latest/APIReference/API_ListParents.html)         | Optional | `organizations:ListParents`       |
+| [ListAccountsAction](https://docs.aws.amazon.com/organizations/latest/APIReference/API_ListAccounts.html)      | Discover organization accounts and retrieve account metadata.    | Default  | `organizations:ListAccounts`      |
+| [ListTagsForResourceAction](https://docs.aws.amazon.com/organizations/latest/APIReference/API_ListTagsForResource.html) | Retrieve tags for the specified account.                      | Optional | `organizations:ListTagsForResource`|
+| [ListParentsAction](https://docs.aws.amazon.com/organizations/latest/APIReference/API_ListParents.html)       | Retrieve parent information for the specified account.         | Optional | `organizations:ListParents`       |
 
 :::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.

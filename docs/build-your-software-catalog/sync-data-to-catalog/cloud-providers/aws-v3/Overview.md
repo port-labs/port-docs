@@ -42,9 +42,9 @@ For detailed information about the IAM role architecture and security model, see
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
-::::info Property naming conventions
+:::info Property naming conventions
 The AWS Hosted by Port integration returns all resource properties in **PascalCase** (for example: `Arn`, `BucketName`, `CreationDate`). When writing mappings and JQ expressions, reference properties using PascalCasing as shown in the examples below.
-::::
+:::
 
 ### Default mapping configuration
 
@@ -130,6 +130,6 @@ resources:
 
 <MetricsAndSyncStatus/>
 
-## Resource and Property Reference
+## Resource and property reference
 
-Refer to the [Resource and Property Reference](./resource-and-property-reference/resource-and-property-reference.md) page for details on available AWS resources, their properties, and mapping examples.
+Refer to the [resource and property reference](./resource-and-property-reference/resource-and-property-reference.md) page for details on available AWS resources, their properties, and mapping examples.

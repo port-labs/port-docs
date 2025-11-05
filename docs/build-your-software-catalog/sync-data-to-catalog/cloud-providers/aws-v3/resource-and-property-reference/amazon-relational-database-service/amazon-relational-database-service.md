@@ -9,14 +9,14 @@ import RdsDbInstanceConfig from './aws-rds-db-instance/_rds_db_instance_port_app
 
 The following example demonstrates how to ingest your AWS RDS DB instances to Port.
 
-#### RDS DB Instance Supported Actions
+#### RDS DB Instance supported actions
 
 The table below summarizes the available actions for ingesting Amazon RDS DB Instance resources in Port:
 
 | Action                          | Description                                                                                                         | Type     | Required AWS Permission |
 |---------------------------------|---------------------------------------------------------------------------------------------------------------------|----------|-------------------------|
-| **DescribeDBInstancesAction**   | Discover DB instances and retrieve configuration details. [Reference](https://docs.aws.amazon.com/rds/latest/APIReference/API_DescribeDBInstances.html) | Default  | `rds:DescribeDBInstances` |
-| **ListTagsForResourceAction**   | Retrieve tags for each DB instance. [Reference](https://docs.aws.amazon.com/rds/latest/APIReference/API_ListTagsForResource.html)                         | Optional | `rds:ListTagsForResource` |
+| [DescribeDBInstancesAction](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_DescribeDBInstances.html)   | Discover DB instances and retrieve configuration details. | Default  | `rds:DescribeDBInstances` |
+| [ListTagsForResourceAction](https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_ListTagsForResource.html)   | Retrieve tags for each DB instance.                         | Optional | `rds:ListTagsForResource` |
 
 ::::info Optional Properties Note
 Properties of optional actions will not appear in the response unless you explicitly include the action that provides them in your configuration.

@@ -9,13 +9,13 @@ import EksClusterConfig from './aws-eks-cluster/_eks_cluster_port_app_config.mdx
 
 The following example demonstrates how to ingest your AWS EKS clusters to Port.
 
-#### EKS Cluster Supported Actions
+#### EKS Cluster supported actions
 
 The table below summarizes the available actions for ingesting Amazon EKS Cluster resources in Port:
 
 | Action                    | Description                                                                                                  | Type    | Required AWS Permission |
 |---------------------------|--------------------------------------------------------------------------------------------------------------|---------|-------------------------|
-| **DescribeClusterAction** | Retrieve detailed configuration data for each cluster. [Reference](https://docs.aws.amazon.com/eks/latest/APIReference/API_DescribeCluster.html) | Default | `eks:DescribeCluster` `eks:ListClusters`  |
+| [DescribeClusterAction](https://docs.aws.amazon.com/eks/latest/APIReference/API_DescribeCluster.html) | Retrieve detailed configuration data for each cluster. | Default | `eks:DescribeCluster` `eks:ListClusters`  |
 
 ::::info All properties available by default
 EKS clusters expose their key properties via the default DescribeCluster action.
