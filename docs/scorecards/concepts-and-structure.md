@@ -445,6 +445,20 @@ The scorecard entity page dashboard includes default widgets such as:
 
 You can customize the dashboard by adding additional widgets or modifying existing ones to display other aggregations, calculations, and visualizations based on your requirements.
 
+## Scorecard permission management
+
+Admins can control who can view and manage scorecards.
+
+**Permission examples:**
+
+Here are some common permission configurations:
+
+- Security scorecards can be edited only by the security team.
+- The Production Readiness scorecard can be edited by directors.
+- If the scorecard category is `production`, only SREs can edit it.
+
+For more information on configuring permissions, refer to the [documentation](/build-your-software-catalog/set-catalog-rbac/examples).
+
 ## Next steps
   
 Next, let’s look at how you can create and [manage scorecards](/scorecards/manage-scorecards) in Port, whether through the UI, API, or Terraform.
