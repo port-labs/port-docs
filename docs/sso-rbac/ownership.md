@@ -302,15 +302,27 @@ Here are some common examples:
 
 ## Visualize user & team data
 
-- **User entity pages**: View all related integration users and the Port teams they belong to.  
+Now that we have set up ownership in our catalog, let's see how we can visualize it in useful ways.
 
-- **Team entity pages**: View all related integration teams and the Port users they belong to.  
+### Default pages & filters
 
-- **Catalog pages & dashboards**: Use the *My Teams* or *My* filters to show only relevant data.  
+- By default, the following pages are available in your catalog:
 
-- **User management dashboard**:  
-  - View which users are assigned to one or more teams.  
-  - Include a <PortTooltip id="action">**self-service action**</PortTooltip> to onboard users to teams.
+  - **User entity page**: View all Port users and their related 3rd-party users and the Port teams they belong to.  
+
+  - **Team entity page**: View all Port teams and their related 3rd-party teams.
+
+- In any table or chart, you can use the `My Teams` or `My` filters to show only entities that belong to your teams or are owned by you.  
+
+### User management dashboard
+
+Now let's create a dedicated dashboard to manage users and ownership of entities in your catalog.  
+This dashboard will allow you to:
+  - View which users are assigned to which team/s.  
+  - View which users from 3rd-party tools are connected to which Port user/s.
+  - View which teams from 3rd-party tools are connected to which Port team/s.
+  - View which services are owned by which team/s.
+  - Execute several <PortTooltip id="action">**self-service actions**</PortTooltip> to onboard users to teams, register new users, and assign ownership of services to teams.
 
 ### Create a dashboard
 
