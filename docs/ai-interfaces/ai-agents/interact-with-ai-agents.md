@@ -53,6 +53,8 @@ The widget provides a chat interface where you can ask questions and receive res
 
 The widget will inherit all the agent's configuration including the prompts, conversation starters, tool access, etc.
 
+**Context Awareness**: The widget automatically understands the context of the page and entity where it's located. For example, when placed on a team entity page, you can ask questions like "What is this team's lead time for change?" or "How many open bugs does the team have?" without needing to specify the team name.
+
 Conversation starters appear in the initial state, helping users understand what they can ask the agent. Users can either click a starter to begin a new chat or type their own question.
 <img src='/img/ai-agents/AIAgentsWidgetConversationStarters.png' width='80%' border='1px' />
 
