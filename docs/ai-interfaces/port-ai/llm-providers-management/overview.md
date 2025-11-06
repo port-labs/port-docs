@@ -145,8 +145,8 @@ To configure your own LLM providers:
 2. **Select defaults** - Once providers are configured, you can view and select default providers and models through the UI (**Builder** → **Organization Settings** → **AI** tab) or via the [Change default LLM provider and model](/api-reference/change-default-llm-provider-and-model) API.
 
 :::info UI vs API
-- **Viewing and selecting defaults**: Available in both UI and API
-- **Adding new custom providers**: Requires the API
+- **Viewing and selecting defaults**: Available in both UI and API.
+- **Adding new custom providers**: Requires the API.
 :::
 
 This feature is designed for organizations with specific compliance, privacy, or integration requirements that cannot be met by Port's managed infrastructure.
