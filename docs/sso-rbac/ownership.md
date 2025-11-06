@@ -365,6 +365,8 @@ In the new dashboard, create the following widgets:
 
 </details>
 
+<img src='/img/software-catalog/pages/usersAssignmentWidget.png' width='100%' />
+
 <details>
 <summary><b>Users with no teams (click to expand)</b></summary>
 
@@ -379,6 +381,8 @@ In the new dashboard, create the following widgets:
 5. Click **Save**.
 
 </details>
+
+<img src='/img/software-catalog/pages/usersWithNoTeamsWidget.png' width='50%' />
 
 <details>
 <summary><b>Teams assignment (click to expand)</b></summary>
@@ -399,7 +403,7 @@ In the new dashboard, create the following widgets:
 
 </details>
 
-
+<img src='/img/software-catalog/pages/teamsAssignmentWidget.png' width='70%' />
 
 <details>
 <summary><b>Services ownership (click to expand)</b></summary>
@@ -420,7 +424,7 @@ In the new dashboard, create the following widgets:
 
 </details>
 
-
+<img src='/img/software-catalog/pages/servicesOwnershipWidget.png' width='50%' />
 
 <details>
 <summary><b>Ownership management actions (click to expand)</b></summary>
@@ -438,3 +442,4 @@ In the new dashboard, create the following widgets:
 
 </details>
 
+<img src='/img/software-catalog/pages/ownershipSSAWidget.png' width='50%' />
