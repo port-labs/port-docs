@@ -27,7 +27,7 @@ As a user with `account admin` permissions on a paid account, you can create new
 If you wish to grant `account admin` permissions to another user, please contact Port's support team.
 
 :::info Account admin permission
-`Account admin` is a permission that can be granted in addition to a user's existing role (`admin`, `moderator`, or `member`).
+You can grant the `Account admin` permission to users who have an `admin` role in at least one organization within the account.
 :::
 
 ## Switch organizations
