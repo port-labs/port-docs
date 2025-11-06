@@ -430,33 +430,32 @@ If you are implementing IP whitelisting at the network or firewall level, you wi
 
 <img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' style={{borderRadius:'6x'}} />
 
-#### Protected URL Authentication
+#### URL type
 
-When configuring an **Iframe widget** with a **Protected URL Type**, you can control **how the OAuth login flow is opened**.
+When configuring an **Iframe widget**, you can specify whether the URL is `public` or `protected`.
 
-A **use pop-up for authentication URL** toggle, lets you choose whether the login flow runs **inside the Iframe** or in a **separate popup window**.
+For the `protected` URL type, you can configure how the OAuth authentication flow is handled using the **"Use pop-up for authentication URL"** toggle:
 
-* **Default:** The toggle will be off, which means the login happens inside the Iframe.
-* **When ON:** The login opens in a popup window.
+- **Toggle off (default)**: The OAuth login flow runs inside the Iframe.
+- **Toggle on**: The OAuth login flow opens in a separate pop-up window.
 
-:::info Browser Pop-up Settings
-Make sure your **browser allows pop-ups** for the Port app’s domain.
-If pop-ups are blocked at the browser level, the authentication window will not open and the Iframe widget will fail to load.
+:::info Browser pop-up settings
+If you enable the pop-up option, ensure your browser allows pop-ups for the Port app’s domain. If pop-ups are blocked at the browser level, the authentication window will not open and the Iframe widget will fail to load.
 :::
 
 #### Widget properties
 
-| Field               | Type           | Description                                                                                                                                            | Default | Required |
-| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | -------- |
-| `Title`             | `String`       | Iframe widget title                                                                                                                                    | `null`  | `true`   |
-| `Icon`              | `String`       | Iframe widget Icon                                                                                                                                     | `null`  | `false`  |
-| `Description`       | `String`       | Iframe widget description                                                                                                                              | `null`  | `false`  |
-| `URL`               | `String`       | Iframe widget url                                                                                                                                      | `null`  | `false`  |
-| `URL type`          | `String`       | `public` or `protect`                                                                                                                                  | `null`  | `false`  |
-| `Authorization Url` | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| Field  | Type |Description | Default | Required |
+| ------- | -------------- | ---------------- | ------- | -------- |
+| `Title`   | `String`       | Iframe widget title   | `null`  | `true`   |
+| `Icon`              | `String`       | Iframe widget icon.  | `null`  | `false`  |
+| `Description`       | `String`       | Iframe widget description.      | `null`  | `false`  |
+| `URL`               | `String`       | Iframe widget url.           | `null`  | `false`  |
+| `URL type`          | `String`       | `public` or `protect`.     | `null`  | `false`  |
+| `Authorization Url` | `URL String`   | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
+| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
+| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
+| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
 
 ### Action card
 
