@@ -331,11 +331,14 @@ If the GitHub organization which will house your workflow is not the same as the
         env:
           //highlight-next-line
           ORG_NAME: <Your ORG name>
-          PORT_RUN_ID: ${{ fromJson(inputs.port_context).runId }}
     
         steps:
           - uses: actions/checkout@v4
-    
+          
+          - name: Extract runId from port_context
+            run: |
+              echo "PORT_RUN_ID=$(echo '${{ inputs.port_context }}' | jq -r .runId)" >> $GITHUB_ENV
+
           - name: Create a log message
             uses: port-labs/port-github-action@v1
             with:

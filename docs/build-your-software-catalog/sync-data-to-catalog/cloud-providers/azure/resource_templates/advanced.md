@@ -18,13 +18,25 @@ import WebAppBlueprint from './compute_resources/\_web_app_blueprint.mdx'
 import DatabaseAppConfig from './database_resources/\_port_app_config.mdx'
 import PostgresFlexibleServerBlueprint from './database_resources/\_postgres_flexible_server_blueprint.mdx'
 
+import ServiceBusNamespaceBlueprint from './service_bus/\_service_bus_namespace_blueprint.mdx'
+import ServiceBusQueueBlueprint from './service_bus/\_service_bus_queue_blueprint.mdx'
+import ServiceBusTopicBlueprint from './service_bus/\_service_bus_topic_blueprint.mdx'
+import ServiceBusSubscriptionBlueprint from './service_bus/\_service_bus_subscription_blueprint.mdx'
+import ServiceBusAppConfig from './service_bus/\_port_app_config.mdx'
 
-## Mapping Storage Resources
+import ApplicationInsightsBlueprint from './application_insights/\_blueprint.mdx'
+import ApplicationInsightsAppConfig from './application_insights/\_port_app_config.mdx'
+
+import KeyVaultBlueprint from './key_vault/\_blueprint.mdx'
+import KeyVaultAppConfig from './key_vault/\_port_app_config.mdx'
+
+
+## Mapping storage resources
 
 The following example demonstrates how to ingest your Azure Storage Accounts and Containers to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-:::note
+:::note Resource group requirement
 The Storage Account has a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
 :::
 
@@ -39,12 +51,12 @@ Here are the API references we used to create those blueprints and app config:
 - [Storage Account](https://docs.microsoft.com/en-us/rest/api/storagerp/storageaccounts/list)
 - [Storage Container](https://learn.microsoft.com/en-us/rest/api/storagerp/blob-containers/list?tabs=HTTP)
 
-## Mapping Compute Resources
+## Mapping compute resources
 
 The following example demonstrates how to ingest your Azure Resources to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-:::note
+:::note Resource group requirement
 The Resources below have a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
 :::
 
@@ -68,12 +80,12 @@ Here are the API references we used to create those blueprints and app config:
 - [Virtual Machine](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machines/list-all?tabs=HTTP)
 - [Web App](https://learn.microsoft.com/en-us/rest/api/appservice/web-apps/list)
 
-## Mapping Database Resources
+## Mapping database resources
 
 The following example demonstrates how to ingest your Azure Database Resources to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-:::note
+:::note Resource group requirement
 The Database Resources below have a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
 :::
 
@@ -84,6 +96,66 @@ The Database Resources below have a relation to the Resource Group, so creation 
 Here are the API references we used to create those blueprints and app config:
 
 - [Postgres Flexible Server](https://docs.microsoft.com/en-us/rest/api/azure-postgresql/flexibleservers)
+
+## Mapping service bus resources
+
+The following example demonstrates how to ingest your Azure Service Bus resources (Namespaces, Queues, Topics, and Subscriptions) to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+:::note Hierarchical relationships
+The Service Bus resources have a hierarchical relationship. The Namespace relates to the Resource Group, Queues and Topics relate to the Namespace, and Subscriptions relate to Topics. Creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
+:::
+
+<ServiceBusNamespaceBlueprint/>
+
+<ServiceBusQueueBlueprint/>
+
+<ServiceBusTopicBlueprint/>
+
+<ServiceBusSubscriptionBlueprint/>
+
+<ServiceBusAppConfig/>
+
+Here are the API references we used to create those blueprints and app config:
+
+- [Service Bus Namespace](https://learn.microsoft.com/en-us/rest/api/servicebus/stable/namespaces/list-by-subscription)
+- [Service Bus Queue](https://learn.microsoft.com/en-us/rest/api/servicebus/stable/queues/list-by-namespace)
+- [Service Bus Topic](https://learn.microsoft.com/en-us/rest/api/servicebus/stable/topics/list-by-namespace)
+- [Service Bus Subscription](https://learn.microsoft.com/en-us/rest/api/servicebus/stable/subscriptions/list-by-topic)
+
+## Mapping application insights
+
+The following example demonstrates how to ingest your Azure Application Insights components to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+:::note Resource group requirement
+Application Insights has a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
+:::
+
+<ApplicationInsightsBlueprint/>
+
+<ApplicationInsightsAppConfig/>
+
+Here are the API references we used to create those blueprints and app config:
+
+- [Application Insights](https://learn.microsoft.com/en-us/rest/api/application-insights/components/list)
+
+## Mapping key vault
+
+The following example demonstrates how to ingest your Azure Key Vaults to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+:::note Resource group requirement
+Key Vault has a relation to the Resource Group, so creation of the [Resource Group blueprint](#mapping-resource-groups) is required.
+:::
+
+<KeyVaultBlueprint/>
+
+<KeyVaultAppConfig/>
+
+Here are the API references we used to create those blueprints and app config:
+
+- [Key Vault](https://learn.microsoft.com/en-us/rest/api/keyvault/vaults/list-by-subscription)
 
 :::info Mapping extra resources
 The resources in this page are only few of the resources that the Azure Exporter supports.

@@ -32,6 +32,7 @@ The following advanced configuration parameters are available:
 {label: "Bulk Sync", value: "bulkSync"},
 {label: "Event listener type", value: "eventListenerType"},
 {label: "CRDs to discover", value: "crdsToDiscover"},
+{label: "JQ Configuration", value: "jqConfiguration"},
 ]} >
 
 <TabItem value="resyncInterval">
@@ -133,6 +134,58 @@ For more information how to use the `crdsToDiscover` parameter, please refer to 
 
 </TabItem>
 
+<TabItem value="jqConfiguration">
+
+The K8s exporter supports configuration options to control access to environment variables within JQ queries used in resource mappings.
+
+<h3> `allowAllEnvironmentVariablesInJQ` </h3>
+
+The `allowAllEnvironmentVariablesInJQ` parameter controls whether all environment variables are accessible in JQ queries.
+
+- **Default value**: `true` (all environment variables are accessible within JQ queries)
+- **Security implications**: When set to `true`, JQ queries in your resource mappings can access any environment variable available to the exporter pod, including sensitive information like API keys, passwords, and other secrets (if those are mapped to the exporter pod as environment variables).
+
+:::warning Security Risk
+Setting `allowAllEnvironmentVariablesInJQ` to `true` can expose sensitive environment variables to JQ queries. This includes:
+- Port credentials (`PORT_CLIENT_ID`, `PORT_CLIENT_SECRET`)
+- Kubernetes service account tokens.
+- Any other environment variables injected into the pod.
+- Secrets mounted as environment variables.
+
+Due to the potential security implication, if you have a need to limit the exposure of environment variables in the exporter's JQ, please set this parameter to `false` and explicitly specify the variables that need to be accessed using JQ through the `allowedEnvironmentVariablesInJQ` parameter.
+:::
+
+<h3> `allowedEnvironmentVariablesInJQ` </h3>
+
+The `allowedEnvironmentVariablesInJQ` parameter specifies which environment variables are allowed in JQ queries when `allowAllEnvironmentVariablesInJQ` is set to `false`. This parameter accepts a list of JQ expressions that evaluate to environment variable names or patterns.
+
+Each entry in the list is a JQ expression that should return:
+- A specific environment variable name (e.g., `"CLUSTER_NAME"`)
+- A pattern for matching multiple variables (e.g., `"^CLUSTER_"` to match all cluster-related environment variables)
+- An array of environment variable names or patterns.
+
+- **Default value**: `^PORT_, CLUSTER_NAME`
+- **Use case**: Restrict access to only specific, safe environment variables in JQ queries for enhanced security. Use JQ expressions to dynamically determine which environment variables should be accessible.
+
+<h3> Configuration Example </h3>
+
+```yaml
+allowAllEnvironmentVariablesInJQ: false
+allowedEnvironmentVariablesInJQ:
+  - ^CLUSTER_
+  - AWS_REGION
+  - AWS_ACCOUNT_ID
+resources:
+  - kind: v1/namespaces
+...
+```
+
+This configuration allows:
+- All environment variables starting with `CLUSTER_` (e.g., `CLUSTER_NAME`, `CLUSTER_ID`)
+- Specific variables: `AWS_REGION` & `AWS_ACCOUNT_ID`
+
+</TabItem>
+
 </Tabs>
 
 ## Security Configuration
@@ -155,12 +208,12 @@ By using the `--set` flag, you can override specific exporter configuration para
 ```bash showLineNumbers
 helm upgrade --install k8s-exporter port-labs/port-k8s-exporter \
     --create-namespace --namespace port-k8s-exporter \
-	--set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
-	--set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
-	--set stateKey="k8s-exporter"  \
+    --set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
+    --set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
+    --set stateKey="k8s-exporter"  \
     # highlight-next-line
-	--set eventListenerType="KAFKA"  \
-	--set extraEnv=[{"name":"CLUSTER_NAME","value":"my-cluster"}] 
+    --set eventListenerType="KAFKA"  \
+    --set extraEnv=[{"name":"CLUSTER_NAME","value":"my-cluster"}] 
 ```
 
 For example, to set the parameters from the [security configuration](#security-configuration) section:
@@ -174,7 +227,6 @@ For example, to set the parameters from the [security configuration](#security-c
 
 - A complete list of configuration parameters available when using the helm chart is available [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter#chart);
 - An example skeleton `values.yml` file is available [here](https://github.com/port-labs/helm-charts/blob/main/charts/port-k8s-exporter/values.yaml).
-
 
 ## Extra environment variables
 To pass extra environment variables to the exporter's runtime, you can use the Helm chart provided with the installation. You can do this in one of two ways:

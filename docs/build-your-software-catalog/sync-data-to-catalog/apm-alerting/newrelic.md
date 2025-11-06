@@ -23,7 +23,7 @@ This integration allows you to:
 - Map and organize your desired New Relic resources and their metadata in Port (see supported resources below).
 - Watch for New Relic object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from New Relic into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -38,13 +38,13 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation integration="NewRelic"/>
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 <IntegrationVersion integration="newrelic" />
 
@@ -200,7 +200,7 @@ The integration uses polling to pull the configuration from Port every minute an
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the New Relic integration once and then exit, this is useful for **scheduled** ingestion of data.
 

@@ -1,0 +1,71 @@
+---
+id: change-a-specific-provider-configuration
+title: "Change a specific provider configuration"
+description: "This route allows you to change the configuration of a specific LLM provider."
+sidebar_label: "Change a specific provider configuration"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWc1y2zYQfhUOpod2KlqSx77oJqc9eOo0HsfpxVE7ELkSEYMEC4BKZA7fvbsgKUESZdmNJ3Uzutg0gN39drF/WJcsBhNpkVuhMjZit4kwgVaFhYBLqT6bYKmKwKogSng2h8AmEEQqm4l5oTnRBGoW8MDkEImZiIKrq7dBrtVCxKBPWI9ZPjdsdMdoPeUZn0MKmWWTHjMQFVrYJe6WbApcg8bPSYVbGv4uwNgLFeNuyVCeJSL85HkuReQE9z8ZQlwyEyWQcvqyyxxQBzX9BJFF4QgkB20FmIYNwnZcsuW7mZO7TWGFlbQwzmyCxCLa4cJz8Rss30Okwf7OU/DkGqtFNkeKVGRXkM1twkbDqqr1ERpiMsQOPerL41iQSlxee7JmXBqoevtBvsshG1++ZoTjh0JD8FI4CaZRhY7gicdjyKVaksNdxl9thS3pW9z/vY0uINYqut81TxSBMYjhMn6WjYw7PG6pn2nfuaiD6rGDiJRbC5ryxZ93PHyYlKdV6D5+Dj9+jMth9QNDbvOC61hzIS9jNBKmB4rwbdb+uT9Am075O5fTaZvHdF/pduCiJihJLUBrTGDmcE5JVQyy85wPd57b8BzXIsmLGELMWxnY8Cw8HZyeD86HZwRqk29NcVA8ZHwqwfftqVISeObcc8YLiVnT6gLIgI/6535s3w7E1233XhAIHci5RsdBNzeuUuxUmZY3HhUUCViy9BIlZS7U2IJLEXMLf0Vk0ciVV98rVnlhh/Eq5iArUnIfhJdxgQuc0mm4/tMrUtN1FlEa62uLCiM1WYNqK/MGEmcRV3VNrjJTX+rpYEC/NpuDX2ojBjfNSXLpl6nN6r7bsojJ3doh+pViL2/G/V5V9Z7UU7y66vy9Afq++oJjF/DfdwE9P54zRQmoOnhXB4rK5Nhb/J97i9mMivgC3h5v5ZvdCmLUgD1UPLZd2WimdMpxh1GfFVqBAb4muVh2Zpkij5/LsCHpZLiVkbz+qrXRruscyD1bLNU9W7VBhyiJ9ux1NG6Y5VR3nk8xK/N5Rx1yhdliAeiMrm7Fy6rTXrX0p5nr7Giup5vr/OhdTzeXg2MTFdPLq3Da0WtsxPqLYV/KNGzThemX7Wfl+he9aJ+dhZZIkFibm1G/j83nCT1MToRi1I/s7hZmfcAbsr4ng9c2bUetKyPUHe36kTguELMWD7x5s7p3ZAKc8hrpRJd4s57Q/vqFp7mErQnrTg/v3cNGD7TuclYVcFVeXAl5vFBtnq3891pDLbKZcto287ZrNE8wvqZ55KLtNNnwZEDIcmVsyp2LNsZ4U4+9vQl3e1ObY3BX+byg8KbWLz9Tr+/NwhfbzyUXLiScK5SNh92xxRAPbvgY/j1a1Sd0jQR1pZNlOeUGPmhZVbRcjzHI9WJhGks6j+6xe/SSfYMNXC0IlPO6BdeCSLvZ7LXTjzdNpP0U7NOyddls6ctsoa3Uc61247KEod5+U0sKb4nJmnwnQVFk1RT0hsjto2cnXpBff7ilGULzbwvybFzU/DNVcPzpkCqnuHN4t1YyiU5QuJzFapauLSroHv0YvXcx2nx4c4ZNW2wHb60H/fTeL5skZVlHa1Ux744L2E/RWLY9TVczQdT/AFapK4k=
+sidebar_class_name: "put api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Change a specific provider configuration"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/v1/llm-providers/{provider}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to change the configuration of a specific LLM provider.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean"},"in":"query","name":"validate_connection","required":false},{"schema":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"in":"path","name":"provider","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"config":{"anyOf":[{"type":"object","title":"Anthropic","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","title":"OpenAI","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","title":"Azure OpenAI","properties":{"apiKeySecretName":{"type":"string","minLength":1},"resourceName":{"type":"string","minLength":1},"deploymentId":{"type":"string","minLength":1}},"required":["apiKeySecretName","resourceName","deploymentId"],"additionalProperties":false},{"type":"object","title":"Bedrock","properties":{"accessKeyIdSecretName":{"type":"string","minLength":1},"secretAccessKeySecretName":{"type":"string","minLength":1},"region":{"type":"string","minLength":1,"pattern":"^[a-z]{2}-[a-z]+-\\d{1}$"},"guardrailIdentifier":{"type":"string"},"guardrailVersion":{"type":"string"}},"required":["accessKeyIdSecretName","secretAccessKeySecretName","region"],"additionalProperties":false}]},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"enabled":{"type":"boolean","default":true}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"enabled":{"type":"boolean"},"config":{"anyOf":[{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1}},"required":["apiKeySecretName"],"additionalProperties":false},{"type":"object","properties":{"apiKeySecretName":{"type":"string","minLength":1},"resourceName":{"type":"string","minLength":1},"deploymentId":{"type":"string","minLength":1}},"required":["apiKeySecretName","resourceName","deploymentId"],"additionalProperties":false},{"type":"object","properties":{"accessKeyIdSecretName":{"type":"string","minLength":1},"secretAccessKeySecretName":{"type":"string","minLength":1},"region":{"type":"string","minLength":1,"pattern":"^[a-z]{2}-[a-z]+-\\d{1}$"},"guardrailIdentifier":{"type":"string"},"guardrailVersion":{"type":"string"}},"required":["accessKeyIdSecretName","secretAccessKeySecretName","region"],"additionalProperties":false},{"anyOf":[{"not":{}},{"type":"object","properties":{},"additionalProperties":false}]}]},"overrides":{"type":"object","properties":{"models":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},"effectiveModels":{"type":"object","required":["gpt-5","claude-sonnet-4-20250514"],"properties":{"gpt-5":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false},"claude-sonnet-4-20250514":{"type":"object","properties":{"enabled":{"type":"boolean","default":true}},"additionalProperties":false}},"additionalProperties":false},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","enabled","effectiveModels"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"400":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

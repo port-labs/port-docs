@@ -43,9 +43,10 @@ export default function ParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>integration.config.githubOrganization</code></td>
-          <td>The GitHub organization to sync data from.</td>
-          <td>✅</td>
+          <td>Single GitHub organization name to sync data from (for GitHub App or Fine-grained PAT). Required for single-org authentication.</td>
+          <td>❌</td>
         </tr>
+        {/* Multi-organization is configured in Port App Config (organizations) via the mapping, not integration.config */}
         <tr>
           <td><code>integration.config.githubHost</code></td>
           <td>The API endpoint for your GitHub instance. For GitHub Enterprise Cloud, this will be <code>https://api.&lt;SUBDOMAIN&gt;.ghe.com</code>. Defaults to <code>https://api.github.com</code> if not provided.</td>
