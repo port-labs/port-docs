@@ -1,4 +1,4 @@
-import guideMetadata from './guide-metadata.json';
+const guideMetadata = require('./guide-metadata.json');
 
 export const tagsCategoryMap = {
 
