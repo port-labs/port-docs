@@ -39,9 +39,9 @@ For organizations requiring additional control, Port also supports configuring y
 Port supports the following LLM providers and models:
 
 - **OpenAI**: `gpt-5`
-- **Anthropic**: `claude-sonnet-4-20250514`
+- **Anthropic**: `claude-sonnet-4-20250514`, `haiku-4.5`
 - **Azure OpenAI**: `gpt-5`
-- **AWS Bedrock**: `claude-sonnet-4-20250514`
+- **AWS Bedrock**: `claude-sonnet-4-20250514`, `haiku-4.5`
 
 Port AI leverages `gpt-5` and `claude-sonnet-4-20250514` by default when no custom provider is configured.
 
