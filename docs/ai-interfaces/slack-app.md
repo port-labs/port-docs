@@ -9,7 +9,7 @@ import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
 
 <BetaFeatureNotice id="ai-form" />
 
-Port's Slack app brings your developer portal experience into your team's daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates.
+Port's Slack app brings your developer portal experience into your team's daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates. The Slack app uses the [Port AI API](/ai-interfaces/port-ai/overview) to provide intelligent answers about your software catalog, similar to the [Port AI Assistant](/ai-interfaces/port-ai-assistant).
 
 <img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%' border="1px" />
 
@@ -27,7 +27,7 @@ This can be used to communicate important notifications to people in your organi
 
 ### Interact with AI capabilities
 
-Another powerful use-case of the Slack app is to interact with Port's AI capabilities directly from Slack.
+Another powerful use-case of the Slack app is to interact with Port's AI capabilities directly from Slack. The Slack app uses the **[Port AI API](/ai-interfaces/port-ai/overview)** (similar to the **[Port AI Assistant](/ai-interfaces/port-ai-assistant)**) to provide intelligent answers about your software catalog.
 
 This can be used to get quick answers to questions about your resources, such as:
 
@@ -38,9 +38,6 @@ This can be used to get quick answers to questions about your resources, such as
 ## Prerequisites
 
 - A Port account with **admin** permissions.
-
-- To interact with AI agents, you need to have at least one agent deployed in your portal.  
-  See the [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) page to learn more.
 
 ## Installation
 
@@ -130,7 +127,6 @@ Once the user is authenticated, they can:
 The Slack app responds to the `/port` slash command with these options:
 
 - `/port` (or `/port help`) - Shows general help and available actions.
-- `/port agents` - Lists all Port AI agents in your organization.
 
 To ask the app a question, simply mention `@Port` and ask away, for example:
 
