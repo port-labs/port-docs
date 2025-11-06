@@ -28212,14 +28212,7 @@ paths:
       summary: Get audit logs
       tags:
         - Audit
-      description: "This route allows you to fetch audit logs from your Port account.
-        Your audit logs can also be viewed via [Port's
-        UI](https://app.getport.io/settings/AuditLog).<br/><br/>This route will
-        perform a logical `AND` between all query parameters below, and return
-        all logs that match the criteria.<br/><br/>:::warning Beta integration
-        value<br/>The `integration` value in the `resources` parameter is
-        **experimental**. Its behavior may change in future versions of the
-        API.<br/>:::"
+      description: "This route allows you to fetch audit logs from your Port account. Your audit logs can also be viewed via [Port's UI](https://app.getport.io/settings/AuditLog).<br/><br/>This route will perform a logical `AND` between all query parameters below, and return all logs that match the criteria.<br/><br/>**Note:** Non-admin users have limited access to the audit logs API. They may:<br/>- Pass an `identifier` to access a specific audit log.<br/>- Pass an `entity` to retrieve audit logs of entities they have access to.<br/>Non-admin users **cannot** view audit logs of deleted entities.<br/><br/>:::warning Beta integration value<br/>The `integration` value in the `resources` parameter is **experimental**. Its behavior may change in future versions of the API.<br/>:::"
       parameters:
         - schema:
             type: string
