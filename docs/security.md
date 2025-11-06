@@ -9,7 +9,7 @@ sidebar_class_name: custom-sidebar-item sidebar-menu-security
 
 Port is an internal developer portal platform and as such we place the utmost importance on data security, privacy and compliance, so that you can trust that your security needs are met.
 
-The goal of this document is to provide you with transparency as to Port's security policies and practices. 
+The goal of this document is to provide you with transparency as to Port's security policies and practices.
 
 Port uses a variety of industry-standard technologies and services to secure your data from unauthorized access, disclosure, use, and loss. All Port employees are trained on security practices during company onboarding and on an annual basis.
 
@@ -79,7 +79,7 @@ Customer data is never transferred or stored on employee machines or devices.
 
 Data ingested into Port by its users is managed by them, and if not deleted by the user, will be retained indefinitely.
 
-Port's audit log which tracks any catalog, data model, action, automation and configuration changes has a data retention of 1 year by default.
+Port's audit log which tracks any catalog, data model, action, automation and configuration changes has a data retention of 3 months by default.
 
 Sign-in and account access logs are retained for 30 days.
 
