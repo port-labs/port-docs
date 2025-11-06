@@ -77,6 +77,49 @@ The MCP installation instructions are maintained in a reusable component that is
 - Update client instructions
 - Update disclaimers/warnings/admonitions
 
+### Update Feature Support Matrix
+
+The Feature Support Matrix table shows which capabilities are supported across Port's AI interfaces.
+
+**Location**: `docs/ai-interfaces/overview.md` - in the "Feature Support Matrix" section
+
+**Structure**:
+- **Rows**: Each Port AI interface (Port MCP Server, Port AI Invocation, Port AI Agents, Port AI Chat Widget, Port Slack App, Port AI Assistant)
+- **Columns**: Capabilities/features (Context Lake Query, Run Actions, Manage Blueprints, etc.)
+- **Indicators**: 
+  - ✅ = Supported
+  - ❌ = Not supported
+
+**Column Ordering Rules**:
+1. **First columns**: Features that have at least one ✅ (supported by at least one interface)
+2. **Last columns**: Features that have all ❌ (not supported by any interface)
+3. **Final column**: "Manage Data Mapping" should always be the last column (it has all ❌)
+
+**Current column order** (from first to last):
+1. Feature (row identifier)
+2. Context Lake Query
+3. Run Actions
+4. Manage Blueprints
+5. Manage Entities
+6. Manage Scorecards
+7. Manage Actions
+8. Reuse Prompts
+9. Invoke AI Agents
+10. Manage Pages & Widgets (all ❌)
+11. Manage Integrations (all ❌)
+12. Manage Data Mapping (all ❌ - must be last)
+
+**When updating**:
+- If a new feature is added that has all ❌, add it before "Manage Data Mapping" (which must remain last)
+- If a feature's support status changes from all ❌ to having at least one ✅, move it to the appropriate position in the first group
+- If a new AI interface is added, add it as a new row
+- If a new capability is added, determine its position based on whether it has any ✅ or all ❌
+
+**Format**:
+- Use markdown table format
+- Wrap the table in `<div style={{overflowX: 'auto'}}>` for horizontal scrolling on smaller screens
+- Use emojis ✅ and ❌ (not text symbols)
+
 ## Other Tasks
 
 For other tasks not listed above, ask for clarification from the user. Once understood, add a new section to the "Common Tasks" section of this file.

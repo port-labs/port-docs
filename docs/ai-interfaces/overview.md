@@ -100,6 +100,23 @@ Set up the **MCP Server** to bring Port's AI capabilities directly into your dev
 ### For Team Collaboration
 Use the **Slack App** to make AI insights available to your entire team in your communication platform.
 
+## Feature Support Matrix
+
+The following table shows which capabilities are supported across Port's AI interfaces:
+
+<div style={{overflowX: 'auto'}}>
+
+| Feature | Context Lake Query | Run Actions | Manage Blueprints | Manage Entities | Manage Scorecards | Manage Actions | Reuse Prompts | Invoke AI Agents | Manage Pages & Widgets | Manage Integrations | Manage Data Mapping |
+|--------------------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|
+| **Port MCP Server** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **Port AI Invocation** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Port AI Agents** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Port AI Chat Widget** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
+| **Port Slack App** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Port AI Assistant** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+
+</div>
+
 ## Frequently Asked Questions
 
 <details>
