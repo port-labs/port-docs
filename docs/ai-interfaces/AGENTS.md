@@ -58,7 +58,7 @@ import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature
 
 To add a new LLM model to the documentation:
 
-1. **Identify the model name and providers**: Determine the exact model identifier (e.g., `haiku-4.5`) and which providers support it (e.g., Anthropic, AWS Bedrock).
+1. **Identify the model name and providers**: Determine the exact model identifier (e.g., `gpt-5`) and which providers support it (e.g., Anthropic, AWS Bedrock).
 
 2. **Update the main documentation file**: Edit `docs/ai-interfaces/port-ai/llm-providers-management/overview.md`:
 
