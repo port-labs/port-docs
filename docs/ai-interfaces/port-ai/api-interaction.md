@@ -103,8 +103,8 @@ data: {
     "remainingTimeMs": 903
   },
   "monthlyQuotaUsage": {
-    "monthlyLimit": 20,
-    "remainingQuota": 19,
+    "monthlyLimit": 50,
+    "remainingQuota": 49,
     "month": "2025-09",
     "remainingTimeMs": 1766899073
   }
@@ -174,8 +174,8 @@ Signals that Port AI has finished processing and the response stream is complete
     "remainingTimeMs": 903
   },
   "monthlyQuotaUsage": {
-    "monthlyLimit": 20,
-    "remainingQuota": 19,
+    "monthlyLimit": 50,
+    "remainingQuota": 49,
     "month": "2025-09",
     "remainingTimeMs": 1766899073
   }
@@ -245,7 +245,7 @@ Port acts as a bridge to leading LLM providers and doesn't host LLM models inter
 - These limits reset hourly.
 
 ### Monthly Quota
-- **Default quota**: 20 AI invocations per month.
+- **Default quota**: 50 AI invocations per month.
 - Each interaction with Port AI counts as one request against your quota.
 - Quota resets monthly.
 

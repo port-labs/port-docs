@@ -120,6 +120,29 @@ The Feature Support Matrix table shows which capabilities are supported across P
 - Wrap the table in `<div style={{overflowX: 'auto'}}>` for horizontal scrolling on smaller screens
 - Use emojis ✅ and ❌ (not text symbols)
 
+### Update Monthly Limits
+
+When asked to update the monthly quota/limit for AI invocations:
+
+1. **Identify all locations**: Search for mentions of monthly limits/quota in the AI interfaces documentation:
+   - `docs/ai-interfaces/port-ai/api-interaction.md` - Contains rate limits section and example JSON responses
+   - `docs/ai-interfaces/port-ai/overview.md` - Contains limits section and FAQ entries
+
+2. **Update text descriptions**: Replace the quota number in all text descriptions (e.g., "20 AI invocations per month" → "50 AI invocations per month")
+
+3. **Update example JSON**: Update the `monthlyLimit` value in example JSON responses to match the new limit. Also update `remainingQuota` to be one less than the limit (e.g., if limit is 50, remainingQuota should be 49)
+
+4. **Files to check**:
+   - `docs/ai-interfaces/port-ai/api-interaction.md` - Lines with "Monthly Quota" section and JSON examples
+   - `docs/ai-interfaces/port-ai/overview.md` - Lines with "Monthly Quota" section and FAQ entries
+
+5. **Search pattern**: Look for patterns like:
+   - "20 AI invocations per month"
+   - `"monthlyLimit": 20`
+   - "Default quota: 20"
+
+**Note**: The API reference files in `docs/api-reference/` are auto-generated from OpenAPI specifications and will be updated automatically when the backend API is updated. You don't need to manually edit these files.
+
 ## Other Tasks
 
 For other tasks not listed above, ask for clarification from the user. Once understood, add a new section to the "Common Tasks" section of this file.
