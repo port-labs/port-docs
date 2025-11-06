@@ -33,7 +33,7 @@ Defining ownership in Port is composed of several steps:
 5. [Assign Users to Catalog Entities](#assign-users-to-catalog-entities) - define ownership of resources in your catalog to Port users.  
   For example, a PagerDuty incident can be owned by the current `on-call` user.
 
-## Sync Users
+## Sync users
 
 Users can be synced into Port either manually or automatically, depending on your integrations.
 
@@ -143,7 +143,7 @@ Users can be synced into Port either manually or automatically, depending on you
 - [ServiceNow](https://docs.port.io/guides/all/map-servicenow-users-to-port-accounts/)
 - [HiBob](https://docs.port.io/guides/all/map-hibob-users-to-port-accounts/)
 
-## Sync Teams
+## Sync teams
 
 Teams can also be synced into Port either manually or automatically, depending on your integrations and conventions.
 
@@ -192,7 +192,7 @@ Teams can also be synced into Port either manually or automatically, depending o
 
   Ideal when updating a team with new data — for example, connecting it to a Sentry team.
 
-## Assign Users to Teams
+## Assign users to teams
 
 In many cases, ownership is assigned to a team and not a specific user. By default, Port allows you to assign one or more owning teams to each entity in your catalog.
 
@@ -234,7 +234,7 @@ As a user, it's important to see all of the resources owned by you or your team/
 
 - When creating/inviting a new user from the UI, you can assign them to teams as part of the creation process.
 
-## Assign Teams to Catalog Entities
+## Assign teams to catalog entities
 
 ### Automatically
 
@@ -275,7 +275,7 @@ As a user, it's important to see all of the resources owned by you or your team/
 
 - When creating a new entity, assign its owning team(s) as part of the creation process.
 
-## Assign Users to Catalog Entities
+## Assign users to catalog entities
 
 In some cases, ownership needs to be assigned to a specific user and not a team. For example, a PagerDuty incident may be owned by the current on-call user, or a GitHub Pull Request may be owned by the creator.
 
@@ -342,7 +342,7 @@ This dashboard will allow you to:
 
 We now have a blank dashboard where we can start adding widgets to visualize ownership insights.
 
-### Add widgets
+#### Add widgets
 
 In the new dashboard, create the following widgets:
 
@@ -367,6 +367,9 @@ In the new dashboard, create the following widgets:
 
 <img src='/img/software-catalog/pages/usersAssignmentWidget.png' width='100%' />
 
+---
+<br/>
+
 <details>
 <summary><b>Users with no teams (click to expand)</b></summary>
 
@@ -383,6 +386,9 @@ In the new dashboard, create the following widgets:
 </details>
 
 <img src='/img/software-catalog/pages/usersWithNoTeamsWidget.png' width='50%' />
+
+---
+<br/>
 
 <details>
 <summary><b>Teams assignment (click to expand)</b></summary>
@@ -405,6 +411,9 @@ In the new dashboard, create the following widgets:
 
 <img src='/img/software-catalog/pages/teamsAssignmentWidget.png' width='70%' />
 
+---
+<br/>
+
 <details>
 <summary><b>Services ownership (click to expand)</b></summary>
 
@@ -425,6 +434,10 @@ In the new dashboard, create the following widgets:
 </details>
 
 <img src='/img/software-catalog/pages/servicesOwnershipWidget.png' width='50%' />
+
+---
+<br/>
+
 
 <details>
 <summary><b>Ownership management actions (click to expand)</b></summary>
