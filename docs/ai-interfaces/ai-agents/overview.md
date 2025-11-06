@@ -6,13 +6,11 @@ title: Overview
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md'
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
 
 # AI agents overview
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
-:::
+<BetaFeatureNotice id="ai-form" />
 
 :::info Built on Port AI
 AI Agents are specialized implementations built on top of [Port AI](/ai-interfaces/port-ai/overview), designed for specific domains and machine-to-machine communication. For general AI capabilities and human interaction, see [Port AI](/ai-interfaces/port-ai/overview).

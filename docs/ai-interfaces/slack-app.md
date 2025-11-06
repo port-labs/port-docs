@@ -3,11 +3,11 @@ sidebar_position: 7
 title: Slack App
 ---
 
-import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md'
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
 
 # Slack Application
 
-<ClosedBetaFeatureNotice id="slack-app" />
+<BetaFeatureNotice id="ai-form" />
 
 Port's Slack app brings your developer portal experience into your team's daily communication flow — allowing you to interact with Port directly from Slack and receive real-time notifications from Port right where your team collaborates.
 
@@ -39,8 +39,6 @@ This can be used to get quick answers to questions about your resources, such as
 
 - A Port account with **admin** permissions.
 
-- To install the Slack app, you will first need to apply for access to Port's AI program by filling out [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
-
 - To interact with AI agents, you need to have at least one agent deployed in your portal.  
   See the [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) page to learn more.
 
@@ -48,7 +46,7 @@ This can be used to get quick answers to questions about your resources, such as
 
 To install the Slack app, follow these steps:
 
-- Navigate to the [Slack app installation page](https://app.port.io/settings/slack-app). This page will be accessible only after being approved for the AI program (see prerequisites above).
+- Navigate to the [Slack app installation page](https://app.port.io/settings/slack-app).
 
 - Click on the "Add to Slack" button.
 
