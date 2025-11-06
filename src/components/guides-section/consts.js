@@ -1519,6 +1519,13 @@ export const availableGuides = [
         tags: [ "BitBucket", "GitHub", "Actions", "Scorecards"],
         logos: ["BitBucket", "GitHub"],
         link: "/guides/all/migrate-project-from-bibucket-to-github",
+    },
+    {
+        title: "Orchestrate incident response with AI",
+        description: "Orchestrate incident response with AI using Port's AI agents and automations",
+        tags: ["Self Healing Incidents", "AI", "Jira", "PagerDuty", "Slack"],
+        logos: ["Jira", "PagerDuty", "Slack"],
+        link: "/guides/all/orchestrate-incident-response-with-ai",
     }
 ]
 
