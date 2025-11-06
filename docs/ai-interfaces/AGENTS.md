@@ -64,6 +64,19 @@ To add a new LLM model to the documentation:
 
 3. **Note about API reference files**: The API reference files in `docs/api-reference/` (like `general-purpose-ai-interactions.api.mdx`, `invoke-a-specific-agent.api.mdx`, etc.) are auto-generated from OpenAPI specifications. These will be updated automatically when the backend API is updated. You don't need to manually edit these files.
 
+### Update MCP Installation Instructions
+
+The MCP installation instructions are maintained in a reusable component that is imported into the main documentation page.
+
+**Location**: `/docs/generalTemplates/_mcp-installation.md`
+
+**Usage**: This component is imported in `docs/ai-interfaces/port-mcp-server/overview-and-installation.md`.
+
+**What you could update**:
+- Add new client support
+- Update client instructions
+- Update disclaimers/warnings/admonitions
+
 ## Other Tasks
 
 For other tasks not listed above, ask for clarification from the user. Once understood, add a new section to the "Common Tasks" section of this file.
