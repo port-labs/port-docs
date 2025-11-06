@@ -428,7 +428,21 @@ Note that the iframe request is made directly from the end user’s browser, not
 If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
 :::
 
-![iFrame](/img/software-catalog/widgets/iframeWidget.png)
+<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' style={{borderRadius:'6x'}} />
+
+#### Protected URL Authentication
+
+When configuring an **Iframe widget** with a **Protected URL Type**, you can control **how the OAuth login flow is opened**.
+
+A **use pop-up for authentication URL** toggle, lets you choose whether the login flow runs **inside the Iframe** or in a **separate popup window**.
+
+* **Default:** The toggle will be off, which means the login happens inside the Iframe.
+* **When ON:** The login opens in a popup window.
+
+:::info Browser Pop-up Settings
+Make sure your **browser allows pop-ups** for the Port app’s domain.
+If pop-ups are blocked at the browser level, the authentication window will not open and the Iframe widget will fail to load.
+:::
 
 #### Widget properties
 
