@@ -8,7 +8,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 Port's Claude integration allows you to ingest Claude API usage metrics into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework.
 
-<img src="/img/ai-agents/claudeDashboard.png" border="1px" width="100%" />
+<!-- <img src="/img/ai-agents/claudeDashboard.png" border="1px" width="100%" /> -->
 
 
 ## Supported metrics
@@ -819,7 +819,7 @@ Simply provide your Anthropic API details, and the builder will generate everyth
 
 Once your Claude data is synced to Port, you can create dashboards to monitor API usage, track costs, analyze model performance, and measure user activity. This section shows you how to build insightful visualizations using Port's dashboard widgets.
 
-<img src="/img/ai-agents/claudeMetrics.png" border="1px" width="100%" />
+<!-- <img src="/img/ai-agents/claudeMetrics.png" border="1px" width="100%" /> -->
 
 ### Create a dashboard
 
