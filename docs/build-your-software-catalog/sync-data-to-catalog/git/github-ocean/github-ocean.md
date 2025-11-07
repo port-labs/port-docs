@@ -6,10 +6,9 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
-# GitHub Self-Hosted (Beta)
+# GitHub Ocean (Beta)
 
-Port's GitHub self-hosted integration allows you to model GitHub resources in your software catalog and ingest data into them.
-
+Port's GitHub integration allows you to model GitHub resources in your software catalog and ingest data into them.
 
 ## Overview
 
@@ -36,10 +35,11 @@ organizations:
   - org2
 # ... rest of your mapping (repositoryType, resources, etc.) ...
 ```
+
 </details>
 
-
 :::caution Authentication and configuration requirements:
+
 - **With classic PAT**:
   - Specify organizations in port mapping: `organizations: ["org1", "org2", "org3"]`
   - If `organizations` are not specified, the integration will sync all organizations the classic PAT is scoped to.
@@ -52,7 +52,6 @@ organizations:
 **Default mapping behavior:** First‑time installs may sync more than intended, since organizations aren’t scoped yet. Refer to [installation guide](./installation) on how to ensure a clean catalogue after you scope out required organization.
 :::
 
-
 ### Supported resources
 
 The resources that can be ingested from GitHub into Port are listed below.
@@ -60,11 +59,9 @@ It is possible to reference any field that appears in the API responses linked b
 
  <GitHubResources/>
 
-
 ## Setup
 
 To install the integration, see the [installation page](./installation).
-
 
 ## Configuration
 
@@ -91,15 +88,15 @@ The `repositoryType` parameter filters which repositories are ingested. It corre
 <details>
 <summary><b>Possible values (Click to expand)</b></summary>
 
-*   `all` (default): All repositories accessible to the provided token.
-*   `public`: Public repositories.
-*   `private`: Private repositories.
-*   `forks`: Only forked repositories.
-*   `sources`: Only non-forked repositories.
+- `all` (default): All repositories accessible to the provided token.
+- `public`: Public repositories.
+- `private`: Private repositories.
+- `forks`: Only forked repositories.
+- `sources`: Only non-forked repositories.
 </details>
 
 See the default mapping below for a usage example.
-          
+
 ### Default mapping configuration
 
 This is the default mapping configuration for this integration:
@@ -108,19 +105,19 @@ This is the default mapping configuration for this integration:
 <summary><b>Default mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
-repositoryType: 'all'
+repositoryType: "all"
 deleteDependentEntities: true
 createMissingRelatedEntities: true
 resources:
   - kind: organization
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
           identifier: .login
           title: .login
-          blueprint: '''githubOrganization'''
+          blueprint: '"githubOrganization"'
           properties:
             login: .login
             id: .id
@@ -136,7 +133,7 @@ resources:
             description: if .description then .description else "" end
   - kind: repository
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -154,7 +151,7 @@ resources:
             organization: .owner.login
   - kind: pull-request
     selector:
-      query: 'true'
+      query: "true"
       state: "open"
     port:
       entity:
@@ -174,19 +171,17 @@ resources:
             prNumber: ".id"
             link: ".html_url"
             leadTimeHours: >-
-                (.created_at as $createdAt | .merged_at as $mergedAt |
-                ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp |
-                ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") |
-                strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp |
-                if $mergedTimestamp == null then null else
-                (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
+              (.created_at as $createdAt | .merged_at as $mergedAt |
+              ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp |
+              ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") |
+              strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp |
+              if $mergedTimestamp == null then null else
+              (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
           relations:
             repository: .__repository
 ```
 
 </details>
-
-
 
 ## Capabilities
 
@@ -201,7 +196,6 @@ The GitHub integration uses a YAML configuration file to describe the ETL proces
 ### Ingest organizations
 
 The GitHub integration automatically syncs organization-level data (available from **v3.0.0-beta**).
-
 
 :::tip Organization as parent entity
 Organizations serve as parent entities for repositories, teams, and other GitHub resources, helping you model your organizational structure in Port.
@@ -250,14 +244,14 @@ resources:
 ```
 </details>
 
-
 :::tip Test your mapping
-After adding the `file` kind to your mapping configuration, click on the `Resync` button. When you open the mapping configuration again, you will see real examples of files fetched from your GitHub organization.  
+After adding the `file` kind to your mapping configuration, click on the `Resync` button. When you open the mapping configuration again, you will see real examples of files fetched from your GitHub organization.
 
-This will help you see what data is available to use in your `jq` expressions.   
+This will help you see what data is available to use in your `jq` expressions.  
 Click on the `Test mapping` button to test your mapping against the example data.
 
 In any case, the structure of the available data looks like this:
+
 <details>
 <summary><b>Available data example (click to expand)</b></summary>
 
@@ -737,6 +731,7 @@ In any case, the structure of the available data looks like this:
   }
 }
 ```
+
 </details>
 :::
 
@@ -786,7 +781,7 @@ For multi-document YAML files (a single file containing multiple YAML documents 
 
 You can use one of these methods to ingest multi-document YAML files:
 
-1. Use the `itemsToParse` key to create multiple entities from such a file (see example above). 
+1. Use the `itemsToParse` key to create multiple entities from such a file (see example above).
 2. Map the result to an `array` property.
 
 :::tip Mixed YAML types
@@ -795,13 +790,13 @@ If you have both single-document and multi-document YAML files in your repositor
 ```yaml
 itemsToParse: .content | if type== "object" then [.] else . end
 ```
-:::
 
+:::
 
 #### Ingest raw file content
 
 If you need to ingest the raw content of a file without parsing it, you can use the `skipParsing` key in your file selector.  
-This is useful when you want to store the file content as a string or YAML property.  
+This is useful when you want to store the file content as a string or YAML property.
 
 When `skipParsing` is set to `true`, the file content will be kept in its original string format instead of being parsed into a JSON/YAML object.
 
@@ -838,6 +833,74 @@ resources:
 - Only JSON and YAML formats are automatically parsed.  
   Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
 
+### Ingest repositories via search API
+
+Port's Github integration allows you to ingest repositories using the [Github repository search API](https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories). This feature provides granular control over ingested repositories, making the integration more capable and flexible.
+
+<details>
+  <summary><b>Example mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+      repoSearch:
+        query: "dev in:name archived:false"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            description: if .description then .description else "" end
+            visibility: if .private then "private" else "public" end
+            defaultBranch: .default_branch
+            readme: file://README.md
+            url: .html_url
+            language: if .language then .language else "" end
+  - kind: pull-request
+    selector:
+      query: "true"
+      repoSearch:
+        query: "dev in:name archived:false" # repo search is also supported in pull requests.
+      state: open
+    port:
+      entity:
+        mappings:
+          identifier: .head.repo.name + (.id|tostring)
+          title: .title
+          blueprint: '"githubPullRequest"'
+          properties:
+            creator: .user.login
+            assignees: "[.assignees[].login]"
+            reviewers: "[.requested_reviewers[].login]"
+            status: .state
+            closedAt: .closed_at
+            updatedAt: .updated_at
+            mergedAt: .merged_at
+            createdAt: .created_at
+            prNumber: .id
+            link: .html_url
+          relations:
+            repository: .__repository
+```
+
+</details>
+
+The repository search feature supports all resource kinds except `team`, `user`, `file`, and `folder`. To learn more about repository search, see the [GitHub documentation](https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories).
+
+#### Benefits
+
+- **Granular filtering**: Precisely control which repositories are ingested..
+
+#### Limitations
+
+The repository search feature is subject to the limitations of the GitHub Search API:
+
+- **Search results are limited to 1,000 items**: You can only ingest a maximum of 1,000 repositories per search query.
+- **Strict rate limits**: The API allows a maximum of 30 requests per minute.
 
 ## Examples
 
