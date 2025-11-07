@@ -51,6 +51,7 @@ Set up automations to create incidents, notify responders, and start workflows.
 Do you have bespoke logic or a more complex workflow around incident creation? Try this:
 
 - [Automate Incident Workflows](../../actions-and-automations/define-automations)
+- [Automate incident response with AI](../../guides/all/orchestrate-incident-response-with-ai)
 
 :::tip Review Your Automation Rules
 Automate what matters, but avoid alert fatigue. Regularly review your automation rules to ensure only actionable signals trigger incidents.

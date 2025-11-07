@@ -1,0 +1,28 @@
+<details>
+<summary><b>SQS Queue mapping configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+- kind: AWS::SQS::Queue
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .Properties.QueueArn
+        title: .Properties.QueueUrl | split("/") | .[-1]
+        blueprint: '"sqsQueue"'
+        properties:
+          arn: .Properties.QueueArn
+          region: .__ExtraContext.Region
+          queueUrl: .Properties.QueueUrl
+          approximateNumberOfMessages: .Properties.ApproximateNumberOfMessages
+          visibilityTimeout: .Properties.VisibilityTimeout
+          messageRetentionPeriod: .Properties.MessageRetentionPeriod
+          sqsManagedSseEnabled: .Properties.SqsManagedSseEnabled
+        relations:
+          account: .__ExtraContext.AccountId
+```
+
+</details>
+
+
