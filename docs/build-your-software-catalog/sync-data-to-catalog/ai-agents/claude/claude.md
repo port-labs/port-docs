@@ -8,7 +8,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 Port's Claude integration allows you to ingest Claude API usage metrics into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework.
 
-<!-- <img src="/img/ai-agents/claudeDashboard.png" border="1px" width="100%" /> -->
+<img src="/img/ai-agents/claudeDashboard.png" border="1px" width="100%" />
 
 
 ## Supported metrics
@@ -16,23 +16,25 @@ Port's Claude integration allows you to ingest Claude API usage metrics into you
 The Claude integration can ingest usage metrics from the Anthropic Admin API into Port:
 
 **Available for all Claude organizations:**
-- `claude_usage_record` - Organization-level usage metrics from `/v1/organizations/usage_report/messages` including token consumption (input/output/cache), request counts, and detailed breakdowns by workspace, user, and model.
+- `claude_usage_record` - Organization-level usage metrics from `/v1/organizations/usage_report/messages` including token consumption (input/output/cache), request counts, and detailed breakdowns by workspace, model, service tier, context window, and API key.
 - `claude_cost_record` - Cost tracking from `/v1/organizations/cost_report` for monitoring organizational spending.
+- `claude_workspace_usage` - Workspace-level usage metrics when grouping by `workspace_id`.
+- `claude_model_usage` - Model-level usage metrics when grouping by `model`.
 - `claude_code_analytics` - Claude Code usage metrics from `/v1/organizations/usage_report/claude_code` including sessions, lines of code edited, commits, and pull requests (requires Claude Code access).
 
-:::info Anthropic Admin API
-The integration uses the [Anthropic Admin API](https://docs.anthropic.com/en/api/administration-api) to retrieve organization usage and cost data. You'll need an API key with appropriate permissions to access usage metrics and billing information. The Admin API provides detailed usage data grouped by workspace, user, model, and more.
+:::info User-level metrics
+The Anthropic Admin API does not currently support grouping usage data by user (`user_id`). User-level analytics are not available through these endpoints. If you need user-level insights, consider using Claude Code analytics or other internal telemetry sources.
 :::
+
+
 
 
 ## Prerequisites
 
 To use this integration, you need:
 
-- An Anthropic Console API key with access to organization usage metrics.
+- An [Anthropic Admin API](https://docs.anthropic.com/en/api/administration-api)  generated from the Admin section of the Anthropic Console.
 - The API key should have permissions to read usage data and billing information.
-- Access to the Anthropic Console at https://console.anthropic.com.
-
 
 
 ## Installation
@@ -85,7 +87,7 @@ This table summarizes the available parameters for the installation.
 | `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
 | `integration.config.baseUrl`       | The base URL of the Anthropic API instance                                                                                                                                                                           | https://api.anthropic.com | ✅        |
 | `integration.config.authType`   | The authentication type for the API (use `bearer` for Anthropic)                                                                                                                                                                         | bearer                                  | ✅        |
-| `integration.secrets.token`   | Your Anthropic Console API key                                                                                                                                                                         | sk-ant-api03-...                                  | ✅        |
+| `integration.secrets.token`   | Your Anthropic Console API key                                                                                                                                                                         | sk-ant-api03-...xxxxxxxxx                                | ✅        |
 | `integration.config.paginationType` | How your API handles pagination (offset, page, cursor, or none)                                                                                                                                                                         | none                                  | ❌        |
 | `integration.eventListener.type`   | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | POLLING                                  | ✅        |
 | `integration.type`                 | The integration type (must be `custom` for Ocean Custom Integration)                                                                                                                                                                                                                                                                | custom                                  | ✅        |
@@ -296,15 +298,15 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Claude User Activity Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude Workspace Usage Blueprint (Click to expand)</b></summary>
 
-    User-level activity metrics:
+    Workspace-level usage metrics:
 
     ```json showLineNumbers
     {
-      "identifier": "claude_user_activity",
-      "description": "User-level Claude API usage and activity metrics",
-      "title": "Claude User Activity",
+      "identifier": "claude_workspace_usage",
+      "description": "Usage metrics broken down by workspace",
+      "title": "Claude Workspace Usage",
       "icon": "Anthropic",
       "schema": {
         "properties": {
@@ -317,17 +319,13 @@ Before the integration can sync data, you need to create the required blueprints
             "type": "string",
             "title": "Organization ID"
           },
-          "user_id": {
+          "workspace_id": {
             "type": "string",
-            "title": "User ID"
+            "title": "Workspace ID"
           },
-          "user_email": {
+          "workspace_name": {
             "type": "string",
-            "title": "User Email"
-          },
-          "is_active": {
-            "type": "boolean",
-            "title": "Active User"
+            "title": "Workspace Name"
           },
           "total_requests": {
             "type": "number",
@@ -360,23 +358,18 @@ Before the integration can sync data, you need to create the required blueprints
           "cost_usd": {
             "type": "number",
             "title": "Cost (USD)"
-          },
-          "model_breakdown": {
-            "type": "object",
-            "title": "Model Usage Breakdown"
           }
         },
         "required": [
           "record_date",
           "organization_id",
-          "user_id"
+          "workspace_id"
         ]
       },
       "mirrorProperties": {},
       "calculationProperties": {
         "success_rate": {
           "title": "Success Rate",
-          "description": "Percentage of successful requests by this user",
           "calculation": "if .properties.total_requests > 0 then (.properties.successful_requests / .properties.total_requests) * 100 else 0 end",
           "type": "number",
           "colorized": true,
@@ -391,22 +384,10 @@ Before the integration can sync data, you need to create the required blueprints
           "title": "Total Tokens",
           "calculation": ".properties.input_tokens + .properties.output_tokens",
           "type": "number"
-        },
-        "average_tokens_per_request": {
-          "title": "Avg Tokens/Request",
-          "calculation": "if .properties.total_requests > 0 then ((.properties.input_tokens + .properties.output_tokens) / .properties.total_requests) else 0 end",
-          "type": "number"
         }
       },
       "aggregationProperties": {},
-      "relations": {
-        "user": {
-          "title": "User",
-          "target": "_user",
-          "required": false,
-          "many": false
-        }
-      }
+      "relations": {}
     }
     ```
 
@@ -514,7 +495,7 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Claude Code Analytics Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude Code analytics Blueprint (Click to expand)</b></summary>
 
     Claude Code usage metrics for tracking development activity:
 
@@ -608,6 +589,13 @@ For more details on how the Ocean Custom Integration works, see the [How it work
 
 **To configure the mappings:**
 
+Before adding resources, configure the following static HTTP headers on the integration so every request includes them:
+
+- `anthropic-version: 2023-06-01`
+- `anthropic-beta: admin-1`
+
+You can set headers from the Ocean integration UI (Advanced settings → Headers) or by providing them via Helm/Docker values.
+
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources).
 
 2. Find your Claude integration in the list.
@@ -626,32 +614,36 @@ For more details on how the Ocean Custom Integration works, see the [How it work
       - kind: /v1/organizations/usage_report/messages
         selector:
           query: 'true'
-          method: POST
-          body: '{"start_date": ((now | floor) - (86400 * 30)) | strftime("%Y-%m-%d"), "end_date": (now | floor) | strftime("%Y-%m-%d"), "granularity": "day"}'
-          data_path: '.data'  
+          data_path: '.data[].results[]'
+          query_params:
+            starting_at: '((now | floor) - (86400 * 30)) | strftime("%Y-%m-%dT00:00:00Z")'
+            ending_at: '(now | floor) | strftime("%Y-%m-%dT00:00:00Z")'
+            bucket_width: "1d"
         port:
           entity:
             mappings:
-              identifier: .organization_id + "@" + .date
-              title: "Claude Usage - " + .date
+              identifier: '((.date // .starting_at // "unknown") | tostring) + "@org"'
+              title: '"Claude Usage - " + ((.date // .starting_at // "unknown") | tostring)'
               blueprint: '"claude_usage_record"'
               properties:
-                record_date: .date + "T00:00:00Z"
-                organization_id: .organization_id
-                organization_name: .organization_name
-                total_requests: .total_requests
-                successful_requests: .successful_requests
-                failed_requests: (.total_requests - .successful_requests)
-                total_input_tokens: .input_tokens
-                total_output_tokens: .output_tokens
-                total_cache_read_tokens: .cache_read_input_tokens
-                total_cache_write_tokens: .cache_creation_input_tokens
-                total_cost_usd: .cost_usd
-                model_breakdown: .model_breakdown
+                record_date: (.date // .starting_at // "")
+                organization_id: .organization_id // ""
+                organization_name: .organization_name // ""
+                total_requests: .requests // 0
+                successful_requests: .successful_requests // 0
+                failed_requests: (.failed_requests // 0)
+                total_input_tokens: .input_tokens // 0
+                total_output_tokens: .output_tokens // 0
+                total_cache_read_tokens: .cache_read_input_tokens // 0
+                total_cache_write_tokens: .cache_write_input_tokens // 0
+                total_cost_usd: .cost_usd // 0
+                model_breakdown: .model_breakdown // {}
     ```
 
-    :::tip Group by dimensions
-    The usage report API supports grouping by `workspace_id`, `user_id`, and `model_id`. You can create separate mappings for workspace-level and user-level metrics by including these dimensions in the request body.
+    :::info Response structure
+    The API returns data in buckets. Each bucket has `starting_at`, `ending_at`, and a `results[]` array. When using `data_path: '.data[].results[]'`, you'll iterate over all results from all buckets. The actual field names in the results may vary - adjust the property mappings based on your actual API response.
+    
+    **Pagination:** The API supports pagination via `has_more` and `next_page` fields. For large date ranges, you may need to handle pagination by using the `next_page` token in subsequent requests.
     :::
 
     </details>
@@ -666,61 +658,62 @@ For more details on how the Ocean Custom Integration works, see the [How it work
       - kind: /v1/organizations/cost_report
         selector:
           query: 'true'
-          method: POST
-          body: '{"start_date": ((now | floor) - (86400 * 30)) | strftime("%Y-%m-%d"), "end_date": (now | floor) | strftime("%Y-%m-%d"), "granularity": "day"}'
-          data_path: '.data'  
+          data_path: '.data[].results[]'
+          query_params:
+            starting_at: '((now | floor) - (86400 * 30)) | strftime("%Y-%m-%dT00:00:00Z")'
+            ending_at: '(now | floor) | strftime("%Y-%m-%dT00:00:00Z")'
+            bucket_width: "1d"  
         port:
           entity:
             mappings:
-              identifier: .organization_id + "@cost@" + .date
-              title: "Claude Cost - " + .date
+              identifier: '((.date // .starting_at // "unknown") | tostring) + "@org"'
+              title: '"Claude Cost - " + ((.date // .starting_at // "unknown") | tostring)'
               blueprint: '"claude_cost_record"'
               properties:
-                record_date: .date + "T00:00:00Z"
-                organization_id: .organization_id
-                organization_name: .organization_name
-                total_cost_usd: .cost_usd
-                cost_breakdown: .cost_breakdown
+                record_date: (.starting_at // .date)
+                organization_id: .organization_id // ""
+                organization_name: .organization_name // ""
+                total_cost_usd: .cost_usd // 0
+                cost_breakdown: .cost_breakdown // {}
     ```
 
     </details>
 
     <details>
-    <summary><b>User-level usage metrics mapping (Click to expand)</b></summary>
+    <summary><b>Workspace-level usage metrics mapping (Click to expand)</b></summary>
 
-    Track usage metrics at the user level by grouping the usage report by `user_id`:
+    Track usage metrics at the workspace level by grouping the usage report by `workspace_id`:
 
     ```yaml showLineNumbers
     resources:
       - kind: /v1/organizations/usage_report/messages
         selector:
           query: 'true'
-          method: POST
-          body: '{"start_date": ((now | floor) - (86400 * 30)) | strftime("%Y-%m-%d"), "end_date": (now | floor) | strftime("%Y-%m-%d"), "granularity": "day", "group_by": ["user_id"]}'
-          data_path: '.data'  
+          query_params:
+            starting_at: '((now | floor) - (86400 * 30)) | strftime("%Y-%m-%dT00:00:00Z")'
+            ending_at: '(now | floor) | strftime("%Y-%m-%dT00:00:00Z")'
+            bucket_width: "1d"
+            'group_by[]': "workspace_id"
+          data_path: '.data[].results[]'  
         port:
           entity:
             mappings:
-              identifier: .user_id + "@" + .date
-              title: .user_email + " - " + .date
-              blueprint: '"claude_user_activity"'
+              identifier: .workspace_id + "@" + ((.date // .starting_at // "unknown") | tostring)
+              title: (.workspace_name // .workspace_id) + " - " + ((.date // .starting_at // "unknown") | tostring)
+              blueprint: '"claude_workspace_usage"'
               properties:
-                record_date: .date + "T00:00:00Z"
-                organization_id: .organization_id
-                user_id: .user_id
-                user_email: .user_email
-                is_active: 'if .total_requests > 0 then true else false end'
-                total_requests: .total_requests
-                successful_requests: .successful_requests
-                failed_requests: (.total_requests - .successful_requests)
-                input_tokens: .input_tokens
-                output_tokens: .output_tokens
-                cache_read_tokens: .cache_read_input_tokens
-                cache_write_tokens: .cache_creation_input_tokens
-                cost_usd: .cost_usd
-                model_breakdown: .model_breakdown
-              relations:
-                user: .user_email
+                record_date: (.starting_at // .date)
+                organization_id: .organization_id // ""
+                workspace_id: .workspace_id
+                workspace_name: .workspace_name // ""
+                total_requests: .requests // 0
+                successful_requests: .successful_requests // 0
+                failed_requests: .failed_requests // 0
+                input_tokens: .input_tokens // 0
+                output_tokens: .output_tokens // 0
+                cache_read_tokens: .cache_read_input_tokens // 0
+                cache_write_tokens: .cache_write_input_tokens // 0
+                cost_usd: .cost_usd // 0
     ```
 
     </details>
@@ -735,28 +728,31 @@ For more details on how the Ocean Custom Integration works, see the [How it work
       - kind: /v1/organizations/usage_report/messages
         selector:
           query: 'true'
-          method: POST
-          body: '{"start_date": ((now | floor) - (86400 * 30)) | strftime("%Y-%m-%d"), "end_date": (now | floor) | strftime("%Y-%m-%d"), "granularity": "day", "group_by": ["model_id"]}'
-          data_path: '.data'  
+          query_params:
+            starting_at: '((now | floor) - (86400 * 30)) | strftime("%Y-%m-%dT00:00:00Z")'
+            ending_at: '(now | floor) | strftime("%Y-%m-%dT00:00:00Z")'
+            bucket_width: "1d"
+            'group_by[]': "model"
+          data_path: '.data[].results[]'  
         port:
           entity:
             mappings:
-              identifier: .model_id + "@" + .date
-              title: .model_name + " usage - " + .date
+              identifier: .model + "@" + ((.date // .starting_at // "unknown") | tostring)
+              title: .model + " usage - " + ((.date // .starting_at // "unknown") | tostring)
               blueprint: '"claude_model_usage"'
               properties:
-                record_date: .date + "T00:00:00Z"
-                organization_id: .organization_id
-                model_name: .model_name
-                model_id: .model_id
-                total_requests: .total_requests
-                successful_requests: .successful_requests
-                failed_requests: (.total_requests - .successful_requests)
-                input_tokens: .input_tokens
-                output_tokens: .output_tokens
-                cache_read_tokens: .cache_read_input_tokens
-                cache_write_tokens: .cache_creation_input_tokens
-                cost_usd: .cost_usd
+                record_date: (.starting_at // .date)
+                organization_id: .organization_id // ""
+                model_name: .model
+                model_id: .model
+                total_requests: .requests // 0
+                successful_requests: .successful_requests // 0
+                failed_requests: .failed_requests // 0
+                input_tokens: .input_tokens // 0
+                output_tokens: .output_tokens // 0
+                cache_read_tokens: .cache_read_input_tokens // 0
+                cache_write_tokens: .cache_write_input_tokens // 0
+                cost_usd: .cost_usd // 0
     ```
 
     </details>
@@ -775,25 +771,25 @@ For more details on how the Ocean Custom Integration works, see the [How it work
       - kind: /v1/organizations/usage_report/claude_code
         selector:
           query: 'true'
-          method: POST
-          body: '{"start_date": ((now | floor) - (86400 * 30)) | strftime("%Y-%m-%d"), "end_date": (now | floor) | strftime("%Y-%m-%d"), "granularity": "day"}'
-          data_path: '.data'  
+          data_path: '.data[]'
+          query_params:
+            starting_at: '((now | floor) - (86400 * 30)) | strftime("%Y-%m-%d")'  
         port:
           entity:
             mappings:
-              identifier: .organization_id + "@code@" + .date
-              title: "Claude Code Analytics - " + .date
+              identifier: .organization_id + "@code@" + (.date // .starting_at)
+              title: "Claude Code Analytics - " + (.date // .starting_at)
               blueprint: '"claude_code_analytics"'
               properties:
-                record_date: .date + "T00:00:00Z"
-                organization_id: .organization_id
-                organization_name: .organization_name
-                total_sessions: .sessions
-                total_lines_edited: .lines_of_code_edited
-                total_commits: .commits
-                total_pull_requests: .pull_requests
-                active_users: .active_users
-                breakdown: .breakdown
+                record_date: (.date // .starting_at)
+                organization_id: .organization_id // ""
+                organization_name: .organization_name // ""
+                total_sessions: .sessions // 0
+                total_lines_edited: .lines_of_code_edited // 0
+                total_commits: .commits // 0
+                total_pull_requests: .pull_requests // 0
+                active_users: .active_users // 0
+                breakdown: .breakdown // {}
     ```
 
     </details>
@@ -817,9 +813,9 @@ Simply provide your Anthropic API details, and the builder will generate everyth
 
 ## Visualize Claude metrics
 
-Once your Claude data is synced to Port, you can create dashboards to monitor API usage, track costs, analyze model performance, and measure user activity. This section shows you how to build insightful visualizations using Port's dashboard widgets.
+Once your Claude data is synced to Port, you can create dashboards to monitor API usage, track costs, analyze model performance, and measure workspace-level metrics. This section shows you how to build insightful visualizations using Port's dashboard widgets.
 
-<!-- <img src="/img/ai-agents/claudeMetrics.png" border="1px" width="100%" /> -->
+<img src="/img/ai-agents/claudeMetrics.png" border="1px" width="100%" />
 
 ### Create a dashboard
 
@@ -978,12 +974,6 @@ Create the following widgets to gain insights into your Claude API usage:
 
    - **Property**: `model_name`.
 
-   - **Chart type**: Select `Aggregate by property`.
-
-   - **Function**: `Sum`.
-
-   - **Aggregate property**: `total_requests`.
-
 3. Click **Save**.
 
 <h3>Request Success vs Failure Rate</h3>
@@ -1013,33 +1003,6 @@ Create the following widgets to gain insights into your Claude API usage:
    - **Measure time by**: `record_date`.
 
 3. Click **Save**.
-
-<h3>User Activity Breakdown</h3>
-
-1. Click on **`+ Widget`** and select **Table**.
-
-2. Fill in the following details:
-
-   - **Title**: `User Activity Breakdown`.
-   
-   - **Description**: `Detailed view of individual user API usage patterns`.
-
-   - **Icon**: `Table`.
-   
-   - **Blueprint**: `claude_user_activity`.
-   
-3. In the **Displayed properties** section, select the following columns:
-   - `$identifier`
-   - `$title`
-   - `user_email`
-   - `total_requests`
-   - `success_rate`
-   - `total_tokens`
-   - `cost_usd`
-   - `most_used_model`
-   - `record_date`
-
-4. Click **Save**.
 
 <h3>Claude Code Activity</h3>
 
