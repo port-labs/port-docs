@@ -8,20 +8,24 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 Port's Cursor integration allows you to ingest Cursor usage metrics into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework.
 
+<img src="/img/ai-agents/cursorDashboard.png" border="1px" width="100%" />
+
 
 ## Supported metrics
 
-The Cursor integration can ingest various usage and AI code tracking metrics into Port. The metrics are organized into the following categories:
+The Cursor integration can ingest usage metrics into Port. Available metrics depend on your Cursor subscription tier:
 
-**Daily Usage Metrics** - Daily sync and backfill from Cursor Admin API with aggregation per day (UTC):
-- `cursor_usage_record` - Organization-level daily metrics.
-- `cursor_user_usage_record` - User-level daily metrics.  
-- `cursor_team_usage_record` - Team-level daily metrics.
+**Available for all Cursor teams:**
+- `cursor_usage_record` - Organization-level daily usage metrics from `/teams/daily-usage-data`.
 
-**AI Code Tracking** - Individual commit records and aggregations from Cursor AI Code Tracking API:
-- `cursor_commit_record` - Individual commits with full metadata and AI assistance breakdown.
-- `cursor_daily_commit_record` - Daily aggregated commit statistics by user.
-- `cursor_ai_code_change_record` - Daily aggregated AI-generated code changes by user.
+**Requires Cursor Enterprise subscription:**
+- `cursor_commit_record` - Individual commits with AI assistance breakdown from `/analytics/ai-code/commits`.
+- `cursor_ai_code_change_record` - Daily AI-generated code changes from `/analytics/ai-code/changes`.
+
+:::info Cursor API availability
+The [Cursor API documentation](https://cursor.com/docs/api#available-apis) provides details on available endpoints. **Analytics APIs** (commit tracking and code changes) are only available for **Cursor Enterprise teams**. Standard Cursor teams can access usage metrics endpoints only.
+:::
+
 
 ## Prerequisites
 
@@ -49,7 +53,7 @@ Choose one of the following installation methods to deploy the Ocean Custom Inte
 1. Add Port's Helm repo and install the Ocean Custom Integration:
 
 :::note Replace placeholders
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, and `CURSOR_API_TOKEN`.
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, and `YOUR_CURSOR_API_KEY`.
 :::
 
 ```bash showLineNumbers
@@ -64,9 +68,10 @@ helm upgrade --install my-ocean-cursor-integration port-labs/port-ocean \
   --set integration.type="custom" \
   --set integration.eventListener.type="POLLING" \
   --set integration.config.baseUrl="https://api.cursor.com" \
-  --set integration.config.authType="basic_auth" \
+  --set integration.config.authType="basic" \
   --set integration.config.paginationType="none" \
-  --set integration.secrets.authValue="CURSOR_API_TOKEN"
+  --set integration.secrets.username="YOUR_CURSOR_API_KEY" \
+  --set integration.secrets.password=""
 ```
 
 <PortApiRegionTip/>
@@ -80,9 +85,10 @@ This table summarizes the available parameters for the installation.
 | `port.clientId`                    | Your Port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
 | `port.clientSecret`                | Your Port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
 | `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
-| `integration.secrets.authValue` | Cursor API token used to authenticate with the Cursor API                                                                                                                               |                                  | ✅        |
 | `integration.config.baseUrl`       | The base URL of the Cursor API instance                                                                                                                                                                           | https://api.cursor.com | ✅        |
-| `integration.config.authType`   | The authentication type for the API (use basic_auth for Cursor)                                                                                                                                                                         | basic_auth                                  | ✅        |
+| `integration.config.authType`   | The authentication type for the API (use `basic` for Cursor)                                                                                                                                                                         | basic                                  | ✅        |
+| `integration.secrets.username`   | Your Cursor API key (used as username in Basic Auth)                                                                                                                                                                         | key_65eb8f616d4fc4a8f3c310ffe00366635768d030916d019f1dd60a79db6dc839                                  | ✅        |
+| `integration.secrets.password`   | Password for Basic Auth (empty string for Cursor API)                                                                                                                                                                         | ""                                  | ✅        |
 | `integration.config.paginationType` | How your API handles pagination (offset, page, cursor, or none)                                                                                                                                                                         | none                                  | ❌        |
 | `integration.eventListener.type`   | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | POLLING                                  | ✅        |
 | `integration.type`                 | The integration type (must be `custom` for Ocean Custom Integration)                                                                                                                                                                                                                                                                | custom                                  | ✅        |
@@ -102,7 +108,7 @@ This table summarizes the available parameters for the installation.
 To run the integration using Docker for a one-time sync:
 
 :::note Replace placeholders
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, and `CURSOR_API_TOKEN`.
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, and `YOUR_CURSOR_API_KEY`.
 :::
 
 ```bash showLineNumbers
@@ -111,9 +117,10 @@ docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
   -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
   -e OCEAN__INTEGRATION__CONFIG__BASE_URL="https://api.cursor.com" \
-  -e OCEAN__INTEGRATION__CONFIG__AUTH_TYPE="basic_auth" \
+  -e OCEAN__INTEGRATION__CONFIG__AUTH_TYPE="basic" \
   -e OCEAN__INTEGRATION__CONFIG__PAGINATION_TYPE="none" \
-  -e OCEAN__INTEGRATION__SECRETS__AUTH_VALUE="CURSOR_API_TOKEN" \
+  -e OCEAN__INTEGRATION__SECRETS__USERNAME="YOUR_CURSOR_API_KEY" \
+  -e OCEAN__INTEGRATION__SECRETS__PASSWORD="" \
   -e OCEAN__PORT__CLIENT_ID="YOUR_PORT_CLIENT_ID" \
   -e OCEAN__PORT__CLIENT_SECRET="YOUR_PORT_CLIENT_SECRET" \
   -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
@@ -957,12 +964,13 @@ Before the integration can sync data, you need to create the required blueprints
 After installation, define which endpoints to sync in your integration configuration. Each resource maps an API endpoint to Port entities using [JQ expressions](https://stedolan.github.io/jq/manual/) to transform the data.
 
 **Key mapping components:**
-- **`kind`**: The API endpoint path (combined with your base URL)
-- **`selector.query`**: JQ filter to include/exclude entities (use `'true'` to sync all)
-- **`selector.data_path`**: JQ expression pointing to the array of items in the response
-- **`port.entity.mappings`**: How to map API fields to Port entity properties
+- **`kind`**: The API endpoint path (combined with your base URL).
+- **`selector.query`**: JQ filter to include/exclude entities (use `'true'` to sync all).
+- **`selector.data_path`**: JQ expression pointing to the array of items in the response.
+- **`port.entity.mappings`**: How to map API fields to Port entity properties.
 
 For more details on how the Ocean Custom Integration works, see the [How it works](https://docs.port.io/build-your-software-catalog/custom-integration/ocean-custom-integration/overview#how-it-works) section in the custom integration overview.
+
 
 **To configure the mappings:**
 
@@ -978,12 +986,11 @@ For more details on how the Ocean Custom Integration works, see the [How it work
     <summary><b>Organization usage metrics mapping (Click to expand)</b></summary>
 
     ```yaml showLineNumbers
-    resources:
       - kind: /teams/daily-usage-data
         selector:
           query: 'true'
           method: POST
-          body: '{"startDate": (now - (86400 * 30) | floor * 1000), "endDate": (now | floor * 1000)}'
+          body: '{"startDate": ((now | floor) - (86400 * 30)) * 1000, "endDate": (now | floor) * 1000}'
           data_path: '.data'  
         port:
           entity:
@@ -1022,109 +1029,54 @@ For more details on how the Ocean Custom Integration works, see the [How it work
     </details>
 
     <details>
-    <summary><b>User usage metrics mapping (Click to expand)</b></summary>
+    <summary><b>User-level usage events mapping (Click to expand)</b></summary>
 
-    Note: This uses the same `/teams/daily-usage-data` endpoint but extracts user-level data from the breakdown.
+    This endpoint provides individual usage events with detailed information about each AI interaction:
 
     ```yaml showLineNumbers
     resources:
-      - kind: /teams/daily-usage-data-users
+      - kind: /teams/filtered-usage-events
         selector:
           query: 'true'
           method: POST
-          body: '{"startDate": (now - (86400 * 30) | floor * 1000), "endDate": (now | floor * 1000)}'
-          data_path: '.data | .[] | .breakdown.users[]'
+          body: '{"startDate": ((now | floor) - (86400 * 30)) * 1000, "endDate": (now | floor) * 1000, "page": 1, "pageSize": 100}'
+          data_path: '.usageEvents'  
         port:
           entity:
             mappings:
-              identifier: .email + "@" + (.date // "unknown")
-              title: .email + " usage " + (.date // "unknown")
+              identifier: .id
+              title: .userEmail + " - " + .eventType + " (" + .createdAt + ")"
               blueprint: '"cursor_user_usage_record"'
               properties:
-                record_date: (.date // now) + "T00:00:00Z"
+                record_date: .createdAt
+                email: .userEmail
                 org: .org
-                email: .email
-                is_active: .is_active
-                total_accepts: .total_accepts
-                total_rejects: .total_rejects
-                total_tabs_shown: .total_tabs_shown
-                total_tabs_accepted: .total_tabs_accepted
-                total_lines_added: .total_lines_added
-                total_lines_deleted: .total_lines_deleted
-                accepted_lines_added: .accepted_lines_added
-                accepted_lines_deleted: .accepted_lines_deleted
-                composer_requests: .composer_requests
-                chat_requests: .chat_requests
-                agent_requests: .agent_requests
-                subscription_included_reqs: .subscription_included_reqs
-                api_key_reqs: .api_key_reqs
-                usage_based_reqs: .usage_based_reqs
-                bugbot_usages: .bugbot_usages
-                most_used_model: .most_used_model
-                input_tokens: .input_tokens
-                output_tokens: .output_tokens
-                cache_write_tokens: .cache_write_tokens
-                cache_read_tokens: .cache_read_tokens
-                total_cents: .total_cents
-                breakdown: .
-              relations:
-                user: .email
+                composer_requests: 'if .eventType == "composer" then 1 else 0 end'
+                chat_requests: 'if .eventType == "chat" then 1 else 0 end'
+                agent_requests: 'if .eventType == "agent" then 1 else 0 end'
+                total_accepts: .totalAccepts // 0
+                total_rejects: .totalRejects // 0
+                input_tokens: .inputTokens // 0
+                output_tokens: .outputTokens // 0
+                cache_write_tokens: .cacheWriteTokens // 0
+                cache_read_tokens: .cacheReadTokens // 0
+                total_cents: .totalCents // 0
+                most_used_model: .model
+                breakdown: '{eventType: .eventType, model: .model, eventId: .id, timestamp: .createdAt}'
     ```
+
+    :::info Pagination
+    This endpoint returns paginated results. The example shows page 1 with 100 results. For production use, you may want to implement pagination logic or increase the `pageSize` parameter (max 1000).
+    :::
 
     </details>
 
     <details>
-    <summary><b>Team usage metrics mapping (Click to expand)</b></summary>
+    <summary><b>Enterprise: Individual commit tracking (Click to expand)</b></summary>
 
-    Note: Team-level metrics require aggregation from user data with team mappings. This endpoint is similar to the daily usage data.
-
-    ```yaml showLineNumbers
-    resources:
-      - kind: /teams/daily-usage-data-teams
-        selector:
-          query: 'true'
-          method: POST
-          body: '{"startDate": (now - (86400 * 30) | floor * 1000), "endDate": (now | floor * 1000)}'
-          data_path: '.data'  
-        port:
-          entity:
-            mappings:
-              identifier: .org + "@team@" + .date
-              title: .org + " team usage " + .date
-              blueprint: '"cursor_team_usage_record"'
-              properties:
-                record_date: .date + "T00:00:00Z"
-                org: .org
-                team: .org
-                total_accepts: .totals.total_accepts
-                total_rejects: .totals.total_rejects
-                total_tabs_shown: .totals.total_tabs_shown
-                total_tabs_accepted: .totals.total_tabs_accepted
-                total_lines_added: .totals.total_lines_added
-                total_lines_deleted: .totals.total_lines_deleted
-                accepted_lines_added: .totals.accepted_lines_added
-                accepted_lines_deleted: .totals.accepted_lines_deleted
-                composer_requests: .totals.composer_requests
-                chat_requests: .totals.chat_requests
-                agent_requests: .totals.agent_requests
-                subscription_included_reqs: .totals.subscription_included_reqs
-                api_key_reqs: .totals.api_key_reqs
-                usage_based_reqs: .totals.usage_based_reqs
-                bugbot_usages: .totals.bugbot_usages
-                most_used_model: .totals.most_used_model
-                total_active_users: .totals.total_active_users
-                input_tokens: (.breakdown.users | map(.input_tokens) | add)
-                output_tokens: (.breakdown.users | map(.output_tokens) | add)
-                cache_write_tokens: (.breakdown.users | map(.cache_write_tokens) | add)
-                cache_read_tokens: (.breakdown.users | map(.cache_read_tokens) | add)
-                total_cents: .totals.total_cents
-                breakdown: .breakdown
-    ```
-
-    </details>
-
-    <details>
-    <summary><b>Individual commit records mapping (Click to expand)</b></summary>
+    :::warning Requires Cursor Enterprise
+    This endpoint requires a Cursor Enterprise subscription. You'll receive a `401` error if your API key doesn't have enterprise access.
+    :::
 
     ```yaml showLineNumbers
     resources:
@@ -1132,11 +1084,11 @@ For more details on how the Ocean Custom Integration works, see the [How it work
         selector:
           query: 'true'
           query_params:
-            startDate: "7d"
+            startDate: "30d"
             endDate: "0d"
             page: "1"
             pageSize: "100"
-          data_path: '.data'  
+          data_path: '.items'  
         port:
           entity:
             mappings:
@@ -1170,52 +1122,11 @@ For more details on how the Ocean Custom Integration works, see the [How it work
     </details>
 
     <details>
-    <summary><b>Daily commit aggregations mapping (Click to expand)</b></summary>
+    <summary><b>Enterprise: AI code changes tracking (Click to expand)</b></summary>
 
-    Note: This aggregates individual commit data from `/analytics/ai-code/commits` by user and date. You may need to process this aggregation in your data pipeline.
-
-    ```yaml showLineNumbers
-    resources:
-      - kind: /analytics/ai-code/commits-daily
-        selector:
-          query: 'true'
-          query_params:
-            startDate: "30d"
-            endDate: "0d"
-            page: "1"
-            pageSize: "1000"
-          data_path: '.data | group_by(.userEmail + (.commitTs | split("T")[0])) | .[] | {user_email: .[0].userEmail, date: (.[0].commitTs | split("T")[0]), org: .[0].org, commits: .}'
-        port:
-          entity:
-            mappings:
-              identifier: .user_email + "@" + .date
-              title: .user_email + " commits " + .date
-              blueprint: '"cursor_daily_commit_record"'
-              properties:
-                record_date: .date + "T00:00:00Z"
-                org: .org
-                user_email: .user_email
-                total_commits: (.commits | length)
-                total_lines_added: (.commits | map(.totalLinesAdded) | add)
-                total_lines_deleted: (.commits | map(.totalLinesDeleted) | add)
-                tab_lines_added: (.commits | map(.tabLinesAdded) | add)
-                tab_lines_deleted: (.commits | map(.tabLinesDeleted) | add)
-                composer_lines_added: (.commits | map(.composerLinesAdded) | add)
-                composer_lines_deleted: (.commits | map(.composerLinesDeleted) | add)
-                non_ai_lines_added: (.commits | map(.nonAiLinesAdded) | add)
-                non_ai_lines_deleted: (.commits | map(.nonAiLinesDeleted) | add)
-                primary_branch_commits: (.commits | map(select(.isPrimaryBranch == true)) | length)
-                total_unique_repos: (.commits | map(.repoName) | unique | length)
-                most_active_repo: (.commits | group_by(.repoName) | max_by(length) | .[0].repoName)
-                breakdown: .commits
-              relations:
-                user: .user_email
-    ```
-
-    </details>
-
-    <details>
-    <summary><b>AI code change records mapping (Click to expand)</b></summary>
+    :::warning Requires Cursor Enterprise
+    This endpoint requires a Cursor Enterprise subscription. You'll receive a `401` error if your API key doesn't have enterprise access.
+    :::
 
     ```yaml showLineNumbers
     resources:
@@ -1223,41 +1134,40 @@ For more details on how the Ocean Custom Integration works, see the [How it work
         selector:
           query: 'true'
           query_params:
-            startDate: "14d"
+            startDate: "30d"
             endDate: "0d"
             page: "1"
             pageSize: "100"
-          data_path: '.data'  
+          data_path: '.items'  
         port:
           entity:
             mappings:
-              identifier: .user_email + "@" + .date + "@changes"
-              title: .user_email + " code changes " + .date
+              identifier: .userEmail + "@" + .createdAt + "@changes"
+              title: .userEmail + " code changes " + .createdAt
               blueprint: '"cursor_ai_code_change_record"'
               properties:
-                record_date: .date + "T00:00:00Z"
+                record_date: .createdAt
                 org: .org
-                user_email: .user_email
-                total_changes: .totals.total_changes
-                total_lines_added: .totals.total_lines_added
-                total_lines_deleted: .totals.total_lines_deleted
-                tab_changes: .totals.tab_changes
-                composer_changes: .totals.composer_changes
-                tab_lines_added: .totals.tab_lines_added
-                tab_lines_deleted: .totals.tab_lines_deleted
-                composer_lines_added: .totals.composer_lines_added
-                composer_lines_deleted: .totals.composer_lines_deleted
-                most_used_model: .totals.most_used_model
-                unique_file_extensions: .totals.unique_file_extensions
-                breakdown: .breakdown
+                user_email: .userEmail
+                total_changes: .totalChanges
+                total_lines_added: .totalLinesAdded
+                total_lines_deleted: .totalLinesDeleted
+                tab_changes: .tabChanges
+                composer_changes: .composerChanges
+                tab_lines_added: .tabLinesAdded
+                tab_lines_deleted: .tabLinesDeleted
+                composer_lines_added: .composerLinesAdded
+                composer_lines_deleted: .composerLinesDeleted
+                most_used_model: .mostUsedModel
+                unique_file_extensions: .uniqueFileExtensions
+                breakdown: .metadata
               relations:
-                user: .user_email
+                user: .userEmail
     ```
 
     </details>
 
-5. Click `Save` to save the mapping.
-
+6. Click `Save` to save the mapping.
 
 
 
@@ -1278,14 +1188,22 @@ Simply provide your Cursor API details, and the builder will generate everything
 
 Once your Cursor data is synced to Port, you can create dashboards to monitor AI coding assistant usage, track adoption, analyze costs, and measure developer productivity. This section shows you how to build insightful visualizations using Port's dashboard widgets.
 
+<img src="/img/ai-agents/cursorMetrics.png" border="1px" width="100%" />
+
 ### Create a dashboard
 
 1. Navigate to your [software catalog](https://app.getport.io/organization/catalog).
+
 2. Click on the **`+ New`** button in the left sidebar.
+
 3. Select **New dashboard**.
+
 4. Name the dashboard **Cursor AI Insights**.
+
 5. Input `Monitor Cursor AI usage, adoption, and productivity metrics` under **Description**.
-6. Select the `AI` icon.
+
+6. Select the `Cursor` icon.
+
 7. Click `Create`.
 
 You now have a blank dashboard where you can add widgets to visualize your Cursor metrics.
@@ -1297,105 +1215,178 @@ Create the following widgets to gain insights into your Cursor usage:
 <h3> Total Active Users</h3>
 
 1. Click on **`+ Widget`** and select **Number Chart**.
+
 2. Fill in the following details:
-   - **Title**: `📊 Total Active Users`
-   - **Description**: `Number of active users using Cursor AI`
-   - **Icon**: `Users`
-   - **Blueprint**: `cursor_usage_record`
-   - **Chart type**: Select `Count entities`
+   - **Title**: `Total Active Users`.
+
+   - **Description**: `Number of active users using Cursor AI`.
+
+   - **Icon**: `Users`.
+
+   - **Blueprint**: `cursor_usage_record`.
+
+   - **Chart type**: Select `Count entities`.
+
 3. Click **Save**.
 
 <h3>Total AI Accepts</h3>
 
 1. Click on **`+ Widget`** and select **Number Chart**.
+
 2. Fill in the following details:
-   - **Title**: `✅ Total AI Accepts`
-   - **Description**: `Total number of AI suggestions accepted`
-   - **Icon**: `Check`
-   - **Blueprint**: `cursor_usage_record`
-   - **Chart type**: Select `Aggregate by property`
-   - **Property**: `total_accepts`
-   - **Function**: `Sum`
+
+   - **Title**: `Total AI Accepts`.
+
+   - **Description**: `Total number of AI suggestions accepted`.
+
+   - **Icon**: `Checklistc`.
+
+   - **Blueprint**: `cursor_usage_record`.
+
+   - **Chart type**: Select `Aggregate by property`.
+
+   - **Property**: `total_accepts`.
+
+   - **Function**: `Sum`.
+
 3. Click **Save**.
 
 <h3>Total Cost</h3>
 
 1. Click on **`+ Widget`** and select **Number Chart**.
+
 2. Fill in the following details:
-   - **Title**: `💰 Total Cost`
-   - **Description**: `Total cost of Cursor AI usage`
-   - **Icon**: `Dollar`
-   - **Blueprint**: `cursor_usage_record`
-   - **Chart type**: Select `Aggregate by property`
-   - **Property**: `total_cents`
-   - **Function**: `Sum`
+
+   - **Title**: `Total Cost`.
+
+   - **Description**: `Total cost of Cursor AI usage`.
+
+   - **Blueprint**: `cursor_usage_record`.
+
+   - **Chart type**: Select `Aggregate by property`.
+
+   - **Property**: `total_cents`.
+
+   - **Function**: `Sum`.
+
 3. Click **Save**.
 
 <h3>AI Suggestion Acceptance Rate Over Time</h3>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
+
 2. Fill in the following details:
-   - **Title**: `📈 AI Suggestion Acceptance Rate Over Time`
-   - **Description**: `Track how well users are accepting AI suggestions`
-   - **Icon**: `LineChart`
-   - **Blueprint**: `cursor_usage_record`
-   - **Chart type**: Select `Aggregate by property`
-   - **Property**: `acceptance_rate`
-   - **Function**: `Average`
-   - **Time interval**: `Week`
-   - **Time range**: `Last month`
-   - **Measure time by**: `$createdAt`
+
+   - **Title**: `AI Suggestion Acceptance Rate Over Time`.
+
+   - **Description**: `Track how well users are accepting AI suggestions`.
+
+   - **Icon**: `LineChart`.
+
+   - **Blueprint**: `cursor_usage_record`.
+
+   - **Chart type**: Select `Aggregate by property`.
+   
+   - **Property**: `Total Accepts`, `Total Rejects`, `Total Lines Added`, `Total Lines Deleted`.
+   
+   - **Function**: `Average`.
+   
+   - **Time interval**: `Week`.
+   
+   - **Time range**: `In the past 30 days`.
+   
+   - **Measure time by**: `$record_date`.
+
 3. Click **Save**.
 
 <h3>Daily Cost Trends</h3>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
+
 2. Fill in the following details:
-   - **Title**: `💰 Daily Cost Trends`
-   - **Description**: `Track AI usage costs over time`
-   - **Icon**: `LineChart`
-   - **Blueprint**: `cursor_usage_record`
-   - **Chart type**: Select `Aggregate by property`
-   - **Property**: `total_cents`
-   - **Function**: `Sum`
-   - **Time interval**: `Week`
-   - **Time range**: `Last month`
-   - **Measure time by**: `$createdAt`
+
+   - **Title**: `Daily Cost Trends`.
+
+   - **Description**: `Track AI usage costs over time`.
+   
+   - **Icon**: `LineChart`. 
+
+   - **Blueprint**: `cursor_usage_record`.
+
+   - **Chart type**: Select `Aggregate by property`.
+   
+   - **Property**: `total_cents`.
+   
+   - **Function**: `Sum`.
+
+   - **Time interval**: `Week`.
+   
+   - **Time range**: `In the past 30 days`.
+   
+   - **Measure time by**: `$record_date`.
+
 3. Click **Save**.
 
 <h3>AI Code Generation Trends</h3>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
+
 2. Fill in the following details:
-   - **Title**: `🤖 AI Code Generation Trends`
-   - **Description**: `Track TAB vs Composer usage for code changes`
-   - **Icon**: `LineChart`
-   - **Blueprint**: `cursor_ai_code_change_record`
-   - **Chart type**: Select `Count entities`
-   - **Time interval**: `Week`
-   - **Time range**: `Last month`
-   - **Measure time by**: `$createdAt`
+
+   - **Title**: `AI Code Generation Trends`.
+
+   - **Description**: `Track TAB vs Composer usage for code changes`.
+   
+   - **Icon**: `LineChart`.
+   
+   - **Blueprint**: `cursor_ai_code_change_record`.
+   
+   - **Chart type**: Select `Aggregate by property`.
+   
+   - **Property**: `tab_changes`, `composer_changes`.
+   
+   - **Function**: `Average`.
+   
+   - **Time interval**: `Week`.
+   
+   - **Time range**: `In the past 30 days`.
+   
+   - **Measure time by**: `$record_date`.
+
 3. Click **Save**.
 
 <h3>AI Model Usage Distribution</h3>
 
 1. Click on **`+ Widget`** and select **Pie Chart**.
+
 2. Fill in the following details:
-   - **Title**: `🧠 AI Model Usage Distribution`
-   - **Description**: `Which AI models are being used most frequently`
-   - **Icon**: `Pie`
-   - **Blueprint**: `cursor_usage_record`
-   - **Property**: `most_used_model`
+
+   - **Title**: `AI Model Usage Distribution`.
+
+   - **Description**: `Which AI models are being used most frequently`.
+   
+   - **Icon**: `Pie`.
+
+   - **Blueprint**: `cursor_usage_record`.
+
+   - **Property**: `most_used_model`.
+
 3. Click **Save**.
 
 <h3>User Activity Breakdown</h3>
 
 1. Click on **`+ Widget`** and select **Table**.
+
 2. Fill in the following details:
-   - **Title**: `👥 User Activity Breakdown`
-   - **Description**: `Detailed view of individual user productivity and AI usage patterns`
-   - **Icon**: `Table`
-   - **Blueprint**: `cursor_user_usage_record`
+
+   - **Title**: `User Activity Breakdown`.
+   
+   - **Description**: `Detailed view of individual user productivity and AI usage patterns`.
+
+   - **Icon**: `Table`.
+   
+   - **Blueprint**: `cursor_user_usage_record`.
+   
 3. In the **Displayed properties** section, select the following columns:
    - `$identifier`
    - `$title`
@@ -1410,31 +1401,27 @@ Create the following widgets to gain insights into your Cursor usage:
 <h3>Daily Commit Activity</h3>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
+
 2. Fill in the following details:
-   - **Title**: `📝 Daily Commit Activity`
-   - **Description**: `Track code commits with AI assistance breakdown`
-   - **Icon**: `LineChart`
-   - **Blueprint**: `cursor_daily_commit_record`
-   - **Chart type**: Select `Count entities`
-   - **Time interval**: `Week`
-   - **Time range**: `Last month`
-   - **Measure time by**: `$createdAt`
+
+   - **Title**: `Daily Commit Activity`.
+
+   - **Description**: `Track code commits with AI assistance breakdown`.
+   
+   - **Icon**: `LineChart`.
+   
+   - **Blueprint**: `cursor_daily_commit_record`.
+   
+   - **Chart type**: Select `Count entities`.
+
+   - **Function**: `count`.
+
+   - **Property**: `Total Commits`.
+   
+   - **Time interval**: `Week`.
+   
+   - **Time range**: `In the past 30 days`.
+   
+   - **Measure time by**: `$record_date`.
+
 3. Click **Save**.
-
-<h3>AI Assistance Effectiveness</h3>
-
-1. Click on **`+ Widget`** and select **Line Chart**.
-2. Fill in the following details:
-   - **Title**: `🎯 AI Assistance Effectiveness`
-   - **Description**: `Percentage of code changes assisted by AI over time`
-   - **Icon**: `LineChart`
-   - **Blueprint**: `cursor_daily_commit_record`
-   - **Chart type**: Select `Aggregate by property`
-   - **Property**: `ai_assistance_percentage_calc`
-   - **Function**: `Average`
-   - **Time interval**: `Week`
-   - **Time range**: `Last month`
-   - **Measure time by**: `$createdAt`
-3. Click **Save**.
-
-
