@@ -162,6 +162,10 @@ You must run the multi-account installation from your AWS Organizations **manage
 
 </Tabs>
 
+:::info Region policy
+Configure which AWS regions are queried using `regionPolicy`. See [Querying resources from specific regions](./resource-and-property-reference/resource-and-property-reference.md#querying-resources-from-specific-regions).
+:::
+
 ## Troubleshooting
 
 Common Installation Issue - CloudFormation Stack Creation Failures.
