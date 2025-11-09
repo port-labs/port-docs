@@ -6,13 +6,13 @@ sidebar_label: Advanced examples
 
 # Advanced examples
 
-The scorecards blueprint data model can be extended to meet your organization's specific needs. You can add custom properties to the scorecard blueprints, create automations and self-service actions that leverage these properties, and build dashboards and insights pages that provide visibility into your scorecard data. 
+Scorecards can track more than pass or fail compliance. By extending their data models and connecting them with automations, you can build SLA aware workflows and visual dashboards that help teams stay accountable and proactive. 
 
 This page demonstrates how to extend the scorecard data model and use those extensions to create powerful workflows and visualizations.
 
  <img src='/img/software-catalog/scorecard/MyActionItemsDashboard.png' width='90%' border='1px' />
 
-## Set up data model
+## Extend the data model
 
 The scorecard blueprints (`Scorecard`, `Scorecard rule`, and `Scorecard rule result`) can be extended with additional properties to support more advanced use cases.  
 
@@ -111,20 +111,6 @@ The following example shows an extended `Scorecard rule` blueprint with addition
         "icon": "Clock"
       },
       # highlight-end
-      "first_approver": {
-        "icon": "DefaultProperty",
-        "type": "string",
-        "title": "1st Approver",
-        "format": "user"
-      },
-      "final_approver": {
-        "type": "array",
-        "title": "Final Approver",
-        "items": {
-          "type": "string",
-          "format": "user"
-        }
-      },
       "is_fundamental": {
         "icon": "DefaultProperty",
         "type": "boolean",
@@ -279,7 +265,7 @@ The following example shows an extended `Scorecard rule` blueprint with addition
 
 ### Extended scorecard rule result blueprint
 
-The following example shows an extended `Scorecard rule result` blueprint with additional properties including `Due date`, `SLA due date`, and `Hours until SLA due date`:
+The following example shows an extended `Scorecard rule result` blueprint with additional properties including `Due date`, `SLA`, and `Hours until SLA due`:
 
 <details>
 <summary><b>Scorecard rule result blueprint (click to expand)</b></summary>
@@ -335,6 +321,11 @@ The following example shows an extended `Scorecard rule result` blueprint with a
         "title": "Due Date",
         "icon": "Clock",
         "format": "date-time"
+      },
+      "hours_until_sla_due": {
+        "type": "string",
+        "title": "Hours until SLA due",
+        "format": "timer"
       }
       # highlight-end
     },
@@ -356,14 +347,6 @@ The following example shows an extended `Scorecard rule result` blueprint with a
     "sla": {
       "path": "rule.sla"
     },
-    "first_approver": {
-      "title": "1st Approver",
-      "path": "rule.first_approver"
-    },
-    "final_approver": {
-      "title": "Final Approver",
-      "path": "rule.final_approver"
-    },
     "is_fundamental": {
       "title": "Is Fundamental?",
       "path": "rule.is_fundamental"
@@ -381,15 +364,6 @@ The following example shows an extended `Scorecard rule result` blueprint with a
       "type": "string",
       "format": "url"
     },
-    # highlight-start
-    "hours_until_sla_due": {
-      "title": "Hours until SLA due",
-      "icon": "Clock",
-      "description": "Number of hours remaining until the SLA due date",
-      "calculation": "((.properties.sla_due_date | fromdate) - (now | fromdate)) / 3600",
-      "type": "number"
-    }
-    # highlight-end
   },
   "aggregationProperties": {},
   "relations": {
@@ -404,13 +378,18 @@ The following example shows an extended `Scorecard rule result` blueprint with a
 ```
 </details>
 
-## Automations
+## Automate SLA tracking
 
-After expanding the scorecard data model with properties like `Due date` and `SLA` and `Hours until SLA due date`, you can create automations that respond to scorecard rule result changes. These automations can update properties, send notifications to teams, and trigger workflows to help ensure timely remediation of issues.
+With the data model extended, automations can enforce and monitor SLA timelines automatically.  
+
+Let’s look at two examples:
+
+1. [Set due dates automatically when rules fail](#set-action-item-due-date).
+2. [Send reminders when SLA deadlines approach](#send-reminder-for-upcoming-due-dates).
 
 ### Set action item due date
 
-When a scorecard rule fails (changes from "Passed" to "Not passed"), this automation sets the `SLA due date` on the rule result based on the SLA defined on the rule. This ensures that action items have a clear deadline for remediation based on the rule's SLA requirements.
+When a scorecard rule fails (changes from `Passed` to `Not passed`), this automation sets the `SLA due date` and `Hours until SLA due` properties on the rule result based on the SLA defined on the rule. This ensures that action items have a clear deadline for remediation based on the rule's SLA requirements, and enables timer-based reminders when the deadline approaches.
 
 The automation triggers when:
 - A rule result's `result` property changes from "Passed" to "Not passed".
@@ -421,6 +400,8 @@ The `SLA due date` value is calculated by:
 2. Converting it to seconds (multiplying by 24 * 60 * 60).
 3. Adding it to the `result last change` timestamp (when the rule failed).
 4. Converting the result to a date-time format.
+
+The `Hours until SLA due` property is set to 24 hours before the `SLA due date`, creating a timer property that expires when the reminder should be sent. This timer is used by the reminder automation (described in the next section) to trigger notifications when action items are approaching their SLA deadlines.
 
 <details>
 <summary><b>Action item due date automation definition (click to expand)</b></summary>
@@ -453,7 +434,8 @@ The `SLA due date` value is calculated by:
     "mapping": {
       "identifier": "{{ .event.context.entityIdentifier }}",
       "properties": {
-        "sla_due_date": "{{((.event.diff.before.properties.sla * 24 * 60 * 60) + ( .event.diff.after.properties.result_last_change | split(\".\")| .[0] | . + \"Z\" | fromdate)) | todate}}"
+        "sla_due_date": "{{((.event.diff.before.properties.sla * 24 * 60 * 60) + ( .event.diff.after.properties.result_last_change | split(\".\")| .[0] | . + \"Z\" | fromdate)) | todate}}",
+        "hours_until_sla_due": "{{(((.event.diff.before.properties.sla * 24 * 60 * 60) + ( .event.diff.after.properties.result_last_change | split(\".\")| .[0] | . + \"Z\" | fromdate)) - (24 * 60 * 60)) | todate}}"
       }
     }
   },
@@ -466,11 +448,7 @@ This automation creates a timer that counts down to the remediation deadline. Th
 
 ### Send reminder for upcoming due dates
 
-This automation sends reminders to developers when action items are approaching their due dates. It uses a calculation property that dynamically calculates when to send the reminder (e.g., 24 hours before the SLA due date).
-
-To implement this, you need to have a calculation property in your `Scorecard rule result` blueprint. The property calculates the time remaining until the SLA due date. The automation then triggers when this value reaches a threshold (e.g., 24 hours remaining).
-
-This calculation property computes the difference between the `SLA due date` and the current time, converting it to hours. The automation can then trigger when this value is between 0 and 24 (indicating the due date is within 24 hours).
+Once SLA due dates are set, you can add another automation to send reminders when deadlines approach. This uses the calculation property `Hour until SLA due` to detect when an item is within 24 hours of expiration.
 
 <details>
 <summary><b>Send reminder automation definition (click to expand)</b></summary>
@@ -486,7 +464,7 @@ This calculation property computes the difference between the `SLA due date` and
     "event": {
       "type": "TIMER_PROPERTY_EXPIRED",
       "blueprintIdentifier": "_rule_result",
-      "propertyIdentifier": "sla_due_date"
+      "propertyIdentifier": "hours_until_sla_due"
     },
     "condition": {
       "type": "JQ",
@@ -500,7 +478,7 @@ This calculation property computes the difference between the `SLA due date` and
     "agent": false,
     "synchronized": true,
     "body": {
-      "text": "⚠️ *Action Item SLA Due Date Reminder*\n\nThis is a reminder that an action item's SLA due date is approaching within 24 hours.\n\n*Action Item Information:*\n• *Rule Result Identifier:* {{ .event.context.entityIdentifier }}\n• *Blueprint:* {{ .event.context.blueprintIdentifier }}\n• *Property:* {{ .event.context.propertyIdentifier }}\n\n*Required Action:*\nPlease review and address this action item promptly to ensure SLA compliance. The action item requires remediation to meet the defined service level agreement.\n\nYou can view the complete action item details and related information in your Port catalog at: https://app.getport.io\n\nIf you have any questions or need assistance, please contact your team lead or the responsible party for this action item."
+        "text": "⚠️ *Action Item SLA Due Date Reminder*\n\nThis is a reminder that an action item's SLA due date is approaching within 24 hours.\n\n*Action Item Information:*\n• *Rule Result Identifier:* {{ .event.context.entityIdentifier }}\n• *Blueprint:* {{ .event.context.blueprintIdentifier }}\n\n*Required Action:*\nPlease review and address this action item promptly to ensure SLA compliance. The action item requires remediation to meet the defined service level agreement.\n\nYou can view the complete action item details and related information in your Port catalog at: https://app.getport.io{{ .event.diff.after.properties.entity_link }} you have any questions or need assistance, please contact your team lead or the responsible party for this action item."
     },
     "method": "POST",
     "headers": {}
@@ -510,26 +488,26 @@ This calculation property computes the difference between the `SLA due date` and
 ```
 </details>
 
-## Self-service actions
+## Handle SLA exceptions
 
-Self-service actions enable teams to manage their scorecard data and request exceptions when needed.
+Not all action items can be resolved before their SLA expires. With the following self-service action, teams can request extensions or exceptions directly from the catalog.
 
-### Ask for due date extension
+### Request a due date extension
 
 When an action item's due date is approaching and the issue cannot be resolved in time, teams can use this self-service action to request an extension from management. The action creates an exception request that goes through an approval workflow (director and VP approval).
 
 This action is particularly useful when:
-- The due date is almost here and the action item hasn't been addressed.
+- The due date is almost here and the action item has not been addressed yet.
 - External dependencies or resource constraints prevent timely remediation.
 - Additional time is needed to properly address the issue.
 
 <details>
-<summary><b>Due date extension automation definition (click to expand)</b></summary>
+<summary><b>Due date extension action definition (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-  "identifier": "ask_for_due_date_extension",
-  "title": "Ask for Due Date Extension",
+  "identifier": "request_a_due_date_extension",
+  "title": "Request a due date extension",
   "description": "Request an exception to extend the due date for an action item. This will require director and VP approval.",
   "trigger": {
     "type": "self-service",
@@ -625,7 +603,7 @@ This action is particularly useful when:
 ```
 </details>
 
-## My action items dashboard
+## Visualize and track action items
 
 This dashboard provides a centralized view of all action items that need attention. This dashboard is built on the `Scorecard rule result` blueprint and displays rule results that have failed, grouped by blueprint and rule.
 
@@ -666,10 +644,6 @@ Who can benefit from this dashboard?
    Then click `Save`.
 6. Click **Create** to save the dashboard.
 
-After creating the dashboard, **group by** `Blueprint` and `Rule` from the available options.
+After creating the dashboard, **group by** `Blueprint` and `Rule`.  
 
-This configuration creates a view where action items are organized by the target blueprint and the specific rule that failed, making it easy to identify which services have issues and what are they.
-
-The dashboard automatically filters to show only rule results where `result = "Not passed"`, ensuring that only actionable items are displayed. The grouping by blueprint and rule helps teams understand:
-- Which services have the most issues.
-- What types of rules are failing most frequently.
+This configuration creates a view where action items are organized by the target blueprint and the specific rule that failed, making it easy to identify which entities have issues and what they are.
