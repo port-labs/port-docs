@@ -11,8 +11,15 @@ import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configu
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import JenkinsBuildBlueprint from './\_example_jenkins_build_blueprint.mdx'
+import JenkinsBuildIntegration from './\_example_jenkins_build_configuration.mdx'
 import JenkinsBuildWebhookConfig from './\_example_jenkins_build_webhook_configuration.mdx'
 import JenkinsJobBlueprint from './\_example_jenkins_job_blueprint.mdx'
+import JenkinsJobIntegration from './\_example_jenkins_job_configuration.mdx'
+import JenkinsUserBlueprint from './\_example_jenkins_user_blueprint.mdx'
+import JenkinsUserIntegration from './\_example_jenkins_user_configuration.mdx'
+import JenkinsStageBlueprint from './\_example_jenkins_stage_blueprint.mdx'
+import JenkinsStageIntegration from './\_example_jenkins_stage_configuration.mdx'
+import JenkinsDefaultConfig from './\_example_jenkins_default_mapping_configuration.mdx'
 import JenkinsJobWebhookConfig from './\_example_jenkins_job_webhook_configuration.mdx'
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
@@ -29,7 +36,7 @@ This integration allows you to:
 - Map and organize your desired Jenkins resources and their metadata in Port (see supported resources below).
 - Watch for Jenkins object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-### Supported Resources
+### Supported resources
 
 - `job` - (`<your-jenkins-host>/api/json`)
 - `build` - (`<your-jenkins-host>/api/json`)
@@ -79,7 +86,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 <IntegrationVersion integration="jenkins" />
 
@@ -214,7 +221,7 @@ Note the parameters specific to this integration, they are last in the table.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Jenkins integration once and then exit, this is useful for **scheduled** ingestion of data.
 
@@ -430,60 +437,7 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 
 This is the default mapping configuration for this integration:
 
-<details>
-<summary><b>Default mapping configuration (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-- kind: job
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-") | .[:-1]
-        title: .fullName
-        blueprint: '"jenkinsJob"'
-        properties:
-          jobName: .name
-          url: .url
-          jobStatus: '{"notbuilt": "created", "blue": "passing", "red": "failing"}[.color]'
-          timestamp: .time
-          parentJob: .__parentJob
-- kind: build
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-") | .[:-1]
-        title: .displayName
-        blueprint: '"jenkinsBuild"'
-        properties:
-          buildStatus: .result
-          buildUrl: .url
-          buildDuration: .duration
-          timestamp: .timestamp / 1000 | todate
-        relations:
-          parentJob: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-") | .[:-1] | gsub("-[0-9]+$"; "")
-          previousBuild: .previousBuild.url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-") | .[:-1]
-- kind: user
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .user.id
-        title: .user.fullName
-        blueprint: '"jenkinsUser"'
-        properties:
-          url: .user.absoluteUrl
-          lastUpdateTime: if .lastChange then (.lastChange/1000) else now end | strftime("%Y-%m-%dT%H:%M:%SZ")
-```
-
-</details>
+<JenkinsDefaultConfig/>
 
 
 <MetricsAndSyncStatus/>
@@ -494,403 +448,31 @@ Examples of blueprints and the relevant integration configurations:
 
 ### Job
 
-<details>
-<summary>Job blueprint</summary>
+<JenkinsJobBlueprint/>
 
-```json showLineNumbers
-{
-  "identifier": "jenkinsJob",
-  "description": "This blueprint represents a job in Jenkins",
-  "title": "Jenkins Job",
-  "icon": "Jenkins",
-  "schema": {
-      "properties": {
-          "jobName": {
-              "type": "string",
-              "title": "Job Name"
-          },
-          "jobStatus": {
-              "type": "string",
-              "title": "Job Status",
-              "enum": [
-                  "created",
-                  "unknown",
-                  "passing",
-                  "failing"
-              ],
-              "enumColors": {
-                  "passing": "green",
-                  "created": "darkGray",
-                  "failing": "red",
-                  "unknown": "orange"
-              }
-          },
-          "timestamp": {
-              "type": "string",
-              "format": "date-time",
-              "title": "Timestamp",
-              "description": "Last updated timestamp of the job"
-          },
-          "url": {
-              "type": "string",
-              "title": "Project URL"
-          },
-          "parentJob": {
-              "type": "object",
-              "title": "Parent Job"
-          }
-      },
-      "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: job
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1]
-          title: .fullName
-          blueprint: '"jenkinsJob"'
-          properties:
-            jobName: .name
-            url: .url
-            jobStatus: '{"notbuilt": "created", "blue": "passing", "red": "failing"}[.color]'
-            timestamp: .time
-            parentJob: .__parentJob
-```
-
-</details>
+<JenkinsJobIntegration/>
 
 ### Build
 
 :::note Build Limit
-The integration fetches up to 100 builds per Jenkins job, allowing you to view the 100 latest builds in Port for each job.
+By default, the integration fetches up to 100 builds per Jenkins job. This limit is configurable using the `maxBuildsPerJob` selector. See the configuration options below for more details.
 :::
 
-<details>
-<summary>Build blueprint</summary>
+<JenkinsBuildBlueprint/>
 
-```yaml showLineNumbers
-{
-  "identifier": "jenkinsBuild",
-  "description": "This blueprint represents a build event from Jenkins",
-  "title": "Jenkins Build",
-  "icon": "Jenkins",
-  "schema": {
-      "properties": {
-          "buildStatus": {
-              "type": "string",
-              "title": "Build Status",
-              "enum": [
-                  "SUCCESS",
-                  "FAILURE",
-                  "UNSTABLE"
-              ],
-              "enumColors": {
-                  "SUCCESS": "green",
-                  "FAILURE": "red",
-                  "UNSTABLE": "yellow"
-              }
-          },
-          "buildUrl": {
-              "type": "string",
-              "title": "Build URL",
-              "description": "URL to the build"
-          },
-          "timestamp": {
-              "type": "string",
-              "format": "date-time",
-              "title": "Timestamp",
-              "description": "Last updated timestamp of the build"
-          },
-          "buildDuration": {
-              "type": "number",
-              "title": "Build Duration",
-              "description": "Duration of the build"
-          }
-      },
-      "required": []
-  },
-  "mirrorProperties": {
-      "previousBuildStatus": {
-          "title": "Previous Build Status",
-          "path": "previousBuild.buildStatus"
-      }
-  },
-  "calculationProperties": {},
-  "relations": {
-      "parentJob": {
-          "title": "Jenkins Job",
-          "target": "jenkinsJob",
-          "required": false,
-          "many": false
-      },
-      "previousBuild": {
-          "title": "Previous Build",
-          "target": "jenkinsBuild",
-          "required": false,
-          "many": false
-      }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: build
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1]
-          title: .displayName
-          blueprint: '"jenkinsBuild"'
-          properties:
-            buildStatus: .result
-            buildUrl: .url
-            buildDuration: .duration
-            timestamp: '.timestamp / 1000 | todate'
-          relations:
-            parentJob: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1] | gsub("-[0-9]+$"; "")
-            previousBuild: .previousBuild.url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1]
-```
-
-</details>
+<JenkinsBuildIntegration/>
 
 ### User
 
-<details>
-<summary>User blueprint</summary>
+<JenkinsUserBlueprint/>
 
-```json showLineNumbers
-{
-  "identifier": "jenkinsUser",
-  "description": "This blueprint represents a jenkins user",
-  "title": "Jenkins User",
-  "icon": "Jenkins",
-  "schema": {
-      "properties": {
-          "url": {
-              "type": "string",
-              "title": "URL",
-              "format": "url"
-          },
-          "lastUpdateTime": {
-              "type": "string",
-              "format": "date-time",
-              "title": "Last Update",
-              "description": "Last updated timestamp of the user"
-          }
-      },
-      "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: user
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .user.id
-        title: .user.fullName
-        blueprint: '"jenkinsUser"'
-        properties:
-          url: .user.absoluteUrl
-          lastUpdateTime: if .lastChange then (.lastChange/1000) else now end | strftime("%Y-%m-%dT%H:%M:%SZ")
-
-```
-
-</details>
+<JenkinsUserIntegration/>
 
 ### Stage
 
-<details>
-<summary>Stage blueprint</summary>
+<JenkinsStageBlueprint/>
 
-```json showLineNumbers
-{
-  "identifier": "jenkinsStage",
-  "description": "This blueprint represents a stage in a Jenkins build",
-  "title": "Jenkins Stage",
-  "icon": "Jenkins",
-  "schema": {
-    "properties": {
-      "status": {
-        "type": "string",
-        "title": "Stage Status",
-        "enum": [
-          "SUCCESS",
-          "FAILURE",
-          "UNSTABLE",
-          "ABORTED",
-          "IN_PROGRESS",
-          "NOT_BUILT",
-          "PAUSED_PENDING_INPUT"
-        ],
-        "enumColors": {
-          "SUCCESS": "green",
-          "FAILURE": "red",
-          "UNSTABLE": "yellow",
-          "ABORTED": "darkGray",
-          "IN_PROGRESS": "blue",
-          "NOT_BUILT": "lightGray",
-          "PAUSED_PENDING_INPUT": "orange"
-        }
-      },
-      "startTimeMillis": {
-        "type": "number",
-        "title": "Start Time (ms)",
-        "description": "Timestamp in milliseconds when the stage started"
-      },
-      "durationMillis": {
-        "type": "number",
-        "title": "Duration (ms)",
-        "description": "Duration of the stage in milliseconds"
-      },
-      "stageUrl": {
-        "type": "string",
-        "title": "Stage URL",
-        "description": "URL to the stage"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "parentBuild": {
-      "title": "Jenkins Build",
-      "target": "jenkinsBuild",
-      "required": true,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-:::note Control Stage Fetching
-To prevent overwhelming your Ocean instance with potentially thousands of stages from Jenkins, the integration requires you to specify a specific job. This ensures that Ocean only retrieves stages related to that job, keeping things focused and efficient.
-
-**Important**: The integration will also fetch stages from all nested jobs within the specified job.
-:::
-
-```yaml showLineNumbers
-- kind: stage
-  selector:
-    query: 'true'
-    # Example jobUrl - replace with your own Jenkins job URL
-    jobUrl: http://your-jenkins-server/job/your-project/job/your-job
-  port:
-    entity:
-      mappings:
-        identifier: >-
-          ._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") |
-          gsub("%252F"; "-") | gsub("/"; "-")
-        title: .name
-        blueprint: '"jenkinsStage"'
-        properties:
-          status: .status
-          startTimeMillis: .startTimeMillis
-          durationMillis: .durationMillis
-          stageUrl: env.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST  + ._links.self.href
-        relations:
-          parentBuild: >-
-            ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
-            "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
-            gsub("/"; "-")
-# Additional stage configurations follow the same pattern.
-# Make sure to replace the jobUrl with your own Jenkins job URLs for each configuration.
-- kind: stage
-  selector:
-    query: 'true'
-    # Example jobUrl - replace with your own Jenkins job URL
-    jobUrl: http://your-jenkins-server/job/your-project/job/another-job
-  port:
-    entity:
-      mappings:
-        identifier: >-
-          ._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") |
-          gsub("%252F"; "-") | gsub("/"; "-")
-        title: .name
-        blueprint: '"jenkinsStage"'
-        properties:
-          status: .status
-          startTimeMillis: .startTimeMillis
-          durationMillis: .durationMillis
-          stageUrl: env.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST  + ._links.self.href
-        relations:
-          parentBuild: >-
-            ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
-            "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
-            gsub("/"; "-")
-- kind: stage
-  selector:
-    query: 'true'
-    # Example jobUrl - replace with your own Jenkins job URL
-    jobUrl: http://your-jenkins-server/job/your-project/job/third-job
-  port:
-    entity:
-      mappings:
-        identifier: >-
-          ._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") |
-          gsub("%252F"; "-") | gsub("/"; "-")
-        title: .name
-        blueprint: '"jenkinsStage"'
-        properties:
-          status: .status
-          startTimeMillis: .startTimeMillis
-          durationMillis: .durationMillis
-          stageUrl: env.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST  + ._links.self.href
-        relations:
-          parentBuild: >-
-            ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
-            "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
-            gsub("/"; "-")
-```
-
-</details>
+<JenkinsStageIntegration/>
 
 ## Let's Test It
 
@@ -901,7 +483,7 @@ This section includes a sample response data from Jenkins. In addition, it inclu
 Here is an example of the payload structure from Jenkins:
 
 <details>
-<summary>Job response data</summary>
+<summary><b>Job response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -942,7 +524,7 @@ Here is an example of the payload structure from Jenkins:
 </details>
 
 <details>
-<summary>Build response data</summary>
+<summary><b>Build response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -961,7 +543,7 @@ Here is an example of the payload structure from Jenkins:
 </details>
 
 <details>
-<summary>User response data</summary>
+<summary><b>User response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -978,7 +560,7 @@ Here is an example of the payload structure from Jenkins:
 </details>
 
 <details>
-<summary>Stage response data</summary>
+<summary><b>Stage response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1004,7 +586,7 @@ Here is an example of the payload structure from Jenkins:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary>Job entity</summary>
+<summary><b>Job entity (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1029,7 +611,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary>Build entity</summary>
+<summary><b>Build entity (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1056,7 +638,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary>User entity</summary>
+<summary><b>User entity (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1079,7 +661,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary>Stage entity</summary>
+<summary><b>Stage entity (click to expand)</b></summary>
 
 ```json showLineNumbers
 {

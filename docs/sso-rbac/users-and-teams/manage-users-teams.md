@@ -44,7 +44,7 @@ Users in Port have one of 3 types of roles:
 | ---------------------------- |--------------------------------------- |
 | **Admin**                    | Can perform any operation in the portal |
 | **Moderator** of a blueprint | Can perform any operation on a specific blueprint and its entities. A user can be a moderator of multiple blueprints |
-| **Member** | Has raad-only permissions + permissions to execute self-service actions |
+| **Member** | Has read-only permissions + permissions to execute self-service actions |
 
 ### Software catalog permissions
 

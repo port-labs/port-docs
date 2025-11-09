@@ -17,6 +17,8 @@ resources:
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
             url: .html_url
             defaultBranch: .default_branch
+          relations:
+            organization: .__organization.login
   - kind: pull-request
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
@@ -28,9 +30,9 @@ resources:
           title: ".title"
           blueprint: '"githubPullRequest"'
           properties:
-            creator: ".user.login"
-            assignees: "[.assignees[].login]"
-            reviewers: "[.requested_reviewers[].login]"
+            creator: (.user.login | gsub("\\["; "-") | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; ""))
+            assignees: '[.assignees[].login | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; "")]'
+            reviewers: '[.requested_reviewers[].login | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; "")]'
             status: ".state" # merged, closed, opened
             closedAt: ".closed_at"
             updatedAt: ".updated_at"
