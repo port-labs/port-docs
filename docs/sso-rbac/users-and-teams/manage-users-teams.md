@@ -432,12 +432,8 @@ Disabled service accounts can no longer generate new API tokens or use existing 
 ### Access duration
 
 Support user access is enabled by default.  
-You can define how long this access will be valid: **1 week**, **1 month**, **1 year**, **Permanent access (default)**.
+You can define how long this access will be valid: **1 day**, **7 days**, **30 days**, or **indefinitely (default)**.
 
 :::info Emergency access
-
-In critical situations, Port can request emergency access to your organization even if support user permissions are disabled. This requires:
-
-1. **Organization approval** - the organization admin must approve the emergency access request.
-2. **Port approval** - Internal Port approval process.
+In critical situations, Port can grant emergency access to your organization even if support user permissions are disabled. Port will inform your organization after the fact.
 :::
