@@ -5,12 +5,11 @@ title: Interact with AI agents
 
 # Interact with AI agents
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
-:::
-
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 :::info Built on Port AI
 AI Agents are specialized implementations built on top of [Port AI](/ai-interfaces/port-ai/overview), designed for machine-to-machine communication and autonomous operations within defined domains.
@@ -53,6 +52,8 @@ Follow these steps to add an AI agent widget:
 The widget provides a chat interface where you can ask questions and receive responses from the **selected agent** without leaving your dashboard.
 
 The widget will inherit all the agent's configuration including the prompts, conversation starters, tool access, etc.
+
+**Context Awareness**: The widget automatically understands the context of the page and entity where it's located. For example, when placed on a team entity page, you can ask questions like "What is this team's lead time for change?" or "How many open bugs does the team have?" without needing to specify the team name.
 
 Conversation starters appear in the initial state, helping users understand what they can ask the agent. Users can either click a starter to begin a new chat or type their own question.
 <img src='/img/ai-agents/AIAgentsWidgetConversationStarters.png' width='80%' border='1px' />
