@@ -1,0 +1,43 @@
+<details>
+<summary><b>Integration mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: 'true'
+      defaultTeam: 'false'
+    port:
+      entity:
+        mappings:
+          identifier: .id | gsub(" "; "")
+          blueprint: '"project"'
+          title: .name
+          properties:
+            state: .state
+            revision: .revision
+            visibility: .visibility
+            defaultTeam: .defaultTeam.name
+            link: .url | gsub("_apis/projects/"; "")
+  - kind: iteration
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id | gsub(" "; "")
+          title: .name
+          blueprint: '"iteration"'
+          properties:
+            name: .name
+            path: .path
+            startDate: (.attributes.startDate // 0)
+            finishDate: (.attributes.finishDate // 0)
+            timeFrame: .attributes.timeFrame
+            link: .url
+          relations:
+            project: .__project.id | gsub(" "; "")
+
+```
+
+</details>

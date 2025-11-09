@@ -1,0 +1,51 @@
+<details>
+<summary><b>Collaborator blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "githubCollaborator",
+  "title": "Github Collaborator",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "login": {
+        "type": "string",
+        "title": "Login"
+      },
+      "url": {
+        "type": "string",
+        "title": "Url",
+        "format": "url"
+      },
+      "type": {
+        "type": "string",
+        "title": "Type"
+      },
+      "site_admin": {
+        "type": "boolean",
+        "title": "Site admin"
+      },
+      "role": {
+        "type": "string",
+        "title": "Role"
+      }
+    },
+    "required": [
+      "login"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "repository",
+      "target": "githubRepository",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

@@ -1,0 +1,70 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
+<details>
+
+<summary><b> Port port-app-config.yml (click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+resources:
+  - kind: repository
+    selector:
+      query: "true"
+      include: "collaborators"
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
+          relations:
+            admins: "[.__collaborators[] | select(.is_admin == true) | .login | gsub("\\["; "-") | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; "")]"
+  - kind: user
+    selector:
+      query: "true"
+      includeBots: "false"
+    port:
+      entity:
+        mappings:
+          identifier: .login | gsub("\\["; "-") | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; "")
+          title: if (.name != "" and .name) then .name else .login end
+          blueprint: '"githubUser"'
+          relations:
+            user: .email
+  - kind: user
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .email
+          title: .email
+          blueprint: '"user"'
+          properties:
+            email: .email
+```
+
+</details>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include Bot Users" value="includeBots">
+
+    The `includeBots` selector is used to include bot users in the sync process. By default, it is set to `false`.
+
+    ```yaml
+    - kind: user
+      selector:
+        query: 'true'
+        # highlight-next-line
+        includeBots: 'false'
+    ```
+
+</TabItem>
+
+</Tabs>

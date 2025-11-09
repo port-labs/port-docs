@@ -5,7 +5,7 @@ description: "This route allows you to get a specific invocation result.<br/><br
 sidebar_label: "Get an invocation's result"
 hide_title: true
 hide_table_of_contents: true
-api: eJzVVMFu2zAM/RVBl7VAFjdAT8YwIMCGotil6LpTEAyKzcRaHEulJGeZ4X8fKTu117oDttN2sWWLjyKf3mMjvdo5ma7k8lauZzIHl6G2XptKpvKh0E6gCR6EKktzdOJkgvBG7MALJZyFTG91JnRVm0wxSCC4UPr5uw0m7+PjwYgSFFbiYJDSbCibWN4KtYPKu5nICsj2gn/6AsQqN1k40E5Mtr4ovLcuTRL67ebWoJ9rkyj9tkMnpgasNRwv53ImrUJ1AA/I7TTSUeaDkmkj/ckCNeM86mon25nU3JtVviBURRj6Gjr4qnPKTW0B0jbCY9AIuUw9BnjOz1KESj8GEANGbA3GVmKJI2bmsiV+HWQBtT/FEjfEC51C5COoPOUUXoOTa44kIq2pHH1SC9dXC379evoH2CriWtz3kVRuZipPaThWWVvq7ujkm2PAmBOLxgLG0+jL7PlJYEfQrSodEEuAaHCSvwM4R+1N7LVjxlac95yHOlJ5rrkcVd6NTu+Oaxl6fXX9ssslS8oEzEActS8it1R9TZTnY96PyonKeOI/VPk/TcWA+j0pL9X2N0y0HbfkjMJQJZKsG81C6k9lUi+SKNSEhbqHpJk0QitZuVifvRWwJPDZnMrqszeJkqnd4IaAkQk+8x10tJ+t8EQjwT7BaTDoMlD9qH/E0mTv4YJsQ6g2enprIlz7kuPv6DyxvLulUC67Y3Axv+JLs8b5g4oy6LPf8DyrRm594/pJJp/dQjMI6/8ajz2vHr77xJaK+CMm4lU1vRpWsl5QYARHhlkRtEinhyNdZGHYJSvZNBvl4AuWbcu/aSIiTzha1gq12vCNkGxy7XidT+t7zOzFfW+dS/FnM/aVPs+iqlhRtSoDf9FyTxJ7bfi3awL2CuPqu9hlloH1oywvhgsr/MltNx8fmNLA/I61vY/a7hecfbLC56LvSuAn+2wS0jSdc9r2Kb7behXRtziQwZ237U/3wNMv
+api: eJzVVVtv2jAU/iuWX9ZKjLST9oKmSWiXCu0Fdd1ThZBJDsTFiV1f0nVR/vvOcQJhNJQ9bi/g2Of6nc+fa+7FxvHJPZ/O+GLEM3CplcZLXfIJv8ulY1YHD0wopZ8ce9aBec024JlgzkAq1zJlsqx0KsiJWXBB+fGHlU0+xp87zRQIW7JCWwyzwmhsOmNiA6V3I5bmkG4Zbfoc2H2m01DgSQy2uMi9N26SJLjtxkZbP5Y6EfJt653oCmwl4elyzEfcQRqs9M/YTM1XmBIsLhcNdmWEFQV4sC4eOkxaCD6puX82gH06b2W54c2IS2rbCJ9jwBJ98KtvbikzTIsdY+QRt/AYpIWMT7wNcAzdlIVSPgZgvQ9baxu77COOOZWHmBldOnBU0rurK/r7M9pnWAuEld12lpg+1aXHyGQrjFGyDZg8OHIY6FGvHiD16GisNmC9bNPp7YHNSmucVUlAtHM87+9wVMG9xHLEoQwFEWtWsrnVGwzocPeTLozCUWS4/iqkwsUC0xV4ikMdnAlYq+1rGSQiYUuhlq0lTk4vI0OWosIUYqXgcLMQPs1j1n4Qs36yQyU4UNg8ZNNNB/mRRXNIh/sdKDhakWWS4gs1P4BtLZSDYyecxB72c57k+/7fIMqJ6ZyZaQYeJ+OG0g43XjeDeLXZz8MVy/G5Rk+O4kXd0SWf8KS6RkFJiAlbSOrBy95EdbHVTj+CVei50yZh5E6asLOh0+B6g0UvVN8J+RbcnVzt0UC3b/Dci9A0YPFW/oql8U6nchAZejWRyWsd3aVXZD/HfGw6n6Epld2S43p8Rdgb7Xwh4vC76Dck5+WBLr1xnZDzI12rezr9X69Dh6uHnz4xSsjI3TiquqPCPa+uiX6St8KwpcszGVZ/nGKOKJJTXa+Egx9WNQ1to+RbeoJwWQkro/YQZzLpaJ11nHwF1ovbjuSX7G8fkRPt7bhUEpEqoQJ94XKLzDr1rjWkix2xqO7WdpqmYPxBlBdKQsTe37CbL3eEZCBYDym9jZTuFhR9sMJjrrcl0C9dr0GXum4vTNPs7dujkx5diz0Y1HnT/Ab87CdZ
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -28,7 +28,7 @@ import Heading from "@theme/Heading";
 
 <MethodEndpoint
   method={"get"}
-  path={"/v1/agent/invoke/{invocation_identifier}"}
+  path={"/v1/ai/invoke/{invocation_identifier}"}
   context={"endpoint"}
 >
   
@@ -47,7 +47,7 @@ This route allows you to get a specific invocation result.<br/><br/>To learn mor
 </Heading>
 
 <ParamsDetails
-  parameters={[{"schema":{"type":"string"},"in":"path","name":"invocation_identifier","required":true,"description":"A unique identifier for the agent invocation."}]}
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"invocation_identifier","required":true,"description":"A unique identifier for the invocation."}]}
 >
   
 </ParamsDetails>
@@ -62,7 +62,7 @@ This route allows you to get a specific invocation result.<br/><br/>To learn mor
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"401":{"description":"Default Response","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"A resource with the provided identifier was not found","content":{"application/json":{"schema":{"properties":{"ok":{"const":false},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error","message"],"additionalProperties":false,"description":"A resource with the provided identifier was not found"}}}}}}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"status":{"type":"string","enum":["In Progress","Completed","Failed"]},"message":{"type":"string"},"error":{"type":"string","enum":["internal_error","no_agent_available","no_agent_match"]},"invocationIdentifier":{"type":"string"},"selectedAgent":{"type":"string"}},"required":["status"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
 >
   
 </StatusCodes>

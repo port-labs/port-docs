@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 4
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
@@ -18,14 +18,12 @@ You can search for entities by their title, description, or any other [property]
 
 ## Search results
 
-The search bar will return two types of results:
+The search bar will return four types of results:
 
 - **Entities**: Entities whose properties (including title & identifier) match your search query. 
 - **Tech Docs**: Entities that have a `markdown` property whose content contains your search query. 
-
-:::info Supported results
-Note that the search bar does not return results for blueprints and actions, only entities.
-:::
+- **Actions**: Actions whose title or identifier match your search query.
+- **Blueprints**: Blueprints whose title or identifier match your search query.
 
 ## Port highlight search - chrome extension
 

@@ -624,21 +624,75 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/get-an-invocations-result",
-          label: "Get an invocation's result",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
           id: "api-reference/invoke-a-specific-agent",
           label: "Invoke a specific agent",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api-reference/invoke-an-agent",
-          label: "Invoke an agent",
+          id: "api-reference/general-purpose-ai-interactions",
+          label: "General-purpose AI interactions",
           className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-invocations-result",
+          label: "Get an invocation's result",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-monthly-ai-invocations-quota-usage",
+          label: "Get monthly AI invocations quota usage",
+          className: "api-method get",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "LLM management",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-default-llm-provider-and-model",
+          label: "Get default LLM provider and model",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/change-default-llm-provider-and-model",
+          label: "Change default LLM provider and model",
+          className: "api-method put",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-or-connect-an-llm-provider",
+          label: "Create or connect an LLM provider",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-configured-llm-providers",
+          label: "Get configured LLM providers",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-a-specific-provider-configuration",
+          label: "Get a specific provider configuration",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/change-a-specific-provider-configuration",
+          label: "Change a specific provider configuration",
+          className: "api-method put",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-a-specific-provider-configuration",
+          label: "Delete a specific provider configuration",
+          className: "api-method delete",
         },
       ],
     },

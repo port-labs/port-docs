@@ -1,6 +1,6 @@
 <details>
 
-<summary>Port config YAML</summary>
+<summary><b>Port config YAML (click to expand)</b></summary>
 
 ```yaml showLineNumbers
  - kind: file
@@ -8,6 +8,7 @@
       query: 'true'
       files:
         - path: '**/package.json'
+          organization: my-org  # Optional if githubOrganization is set; required if not set
           repos:
             - name: vscode
               branch: main

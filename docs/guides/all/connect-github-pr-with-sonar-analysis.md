@@ -423,4 +423,4 @@ Choose the approach that best fits your team's workflow and requirements. Title 
 More relevant guides and examples:
 
 - [Port's SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
-- [Integrate scorecards with Slack](https://docs.port.io/promote-scorecards/manage-using-3rd-party-apps/slack)
+- [Integrate scorecards with Slack](https://docs.port.io/scorecards/manage-using-3rd-party-apps/slack)

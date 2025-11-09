@@ -14,6 +14,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # Opsgenie
 
@@ -27,7 +28,7 @@ This integration allows you to:
 - Watch for Opsgenie object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Opsgenie into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -48,13 +49,15 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation/>
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
+
+<IntegrationVersion integration="opsgenie" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -185,13 +188,11 @@ This table summarizes the available parameters for the installation. The paramet
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Opsgenie integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
-:::
+
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">

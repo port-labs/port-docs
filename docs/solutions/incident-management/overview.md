@@ -3,7 +3,7 @@ title: Overview
 sidebar_position: 1
 ---
 
-# Incident management
+# Self-healing incidents
 
 ## Why manage incidents using a developer portal?
 
@@ -12,18 +12,18 @@ Incident management is much more than just selecting a tool for paging and rotat
 Imagine you're going to bed on the first night of your first on-call shift at a new company. Predictably, you receive a phone call from an unknown number an some notoriously unfriendly and robotic sounding voice-to-text programme starts reading you an alert description, one syllable at a time.
 
 Your palms sweat, you open your refurbished macbook pro and start logging into everything all at once:
-- Pagerduty to see and acknowledge the event
-- Slack to start an incident channel and open a bridge for all those investigating
-- Dynatrace to explore the telemetry
-- Statuspage to be ready to notify customers of impact
-- Github to review recent changes
-- ArgoCD to review app sync states
-- AWS to be ready to do further investigation around the infrastructure, or take actions to remediate
-- Notion to start taking notes I'll later use in a post-mortem
+- Pagerduty to see and acknowledge the event.
+- Slack to start an incident channel and open a bridge for all those investigating.
+- Dynatrace to explore the telemetry.
+- Statuspage to be ready to notify customers of impact.
+- Github to review recent changes.
+- ArgoCD to review app sync states.
+- AWS to be ready to do further investigation around the infrastructure, or take actions to remediate.
+- Notion to start taking notes I'll later use in a post-mortem.
 
 Regardless of whether it's your first on-call or hundredth, the story above highlights the fact that our fragmented toolchains and complex application architecture takes lots of time away from incident triage, investigation and remediation, towards manual tasks around communication and investigation of the incident itself.
 
-![Incident Management Solution Architecture](/img/solutions/incident-management/incident_management_solution_architecture.png)
+<img src="/img/solutions/incident-management/incident_management_solution_architecture.png" border='1px' />
 
 ## How can Port help?
 

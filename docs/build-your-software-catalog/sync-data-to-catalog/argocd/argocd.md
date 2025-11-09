@@ -11,6 +11,7 @@ import ArgoCDEventManifest from '/docs/build-your-software-catalog/custom-integr
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_metrics_and_sync_status.mdx"
+import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
 # ArgoCD
 
@@ -24,7 +25,7 @@ This integration allows you to:
 - Map and organize your desired ArgoCD resources and their metadata in Port (see supported resources below).
 - Watch for ArgoCD object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from ArgoCD into Port are listed below.
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
@@ -128,7 +129,9 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)" default>
+<TabItem value="real-time-self-hosted" label="Self-hosted" default>
+
+<IntegrationVersion integration="argocd" />
 
 Using this installation method means that the integration will be able to update Port in real time using webhooks.
 
@@ -254,13 +257,11 @@ Note the parameters specific to this integration, they are last in the table.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the ArgoCD integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
-:::
+
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">

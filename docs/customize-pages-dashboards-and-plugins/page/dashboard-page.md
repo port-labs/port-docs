@@ -5,6 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import DashboardFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_dashboard_filters.md"
 
 # Dashboard page
 
@@ -29,7 +30,6 @@ You can create as many dashboards as you'd like.
 To create a dashboard, click on `New` and select `New dashboard`:
 
 ![newDashboard](/img/software-catalog/pages/newDashboard.png)
-
 
 </TabItem>
 
@@ -661,7 +661,6 @@ export const microserviceDashboardPage = new port.Page(
 
 </Tabs>
 
-
 ### Description
 
 You can provide additional context to your developers by using the `Description` field when creating a dashboard page.  
@@ -696,3 +695,5 @@ To move a widget, drag it from the top-left corner to your desired position:
 To resize a widget, hover over one of its sides until the blue bar appears, then drag it to expand/shrink:
 
 <img src='/img/software-catalog/pages/widgetResizeExample.png' width='70%' />
+
+<DashboardFilters/>

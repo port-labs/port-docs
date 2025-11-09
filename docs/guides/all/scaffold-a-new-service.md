@@ -33,7 +33,7 @@ The action we will create in this guide will:
 
 ## Implementation
 
-###  Setup the action's frontend
+###  Set up the action's frontend
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button in the top-right corner (or in the middle if there are no actions yet):
@@ -253,7 +253,7 @@ The action's frontend is now ready 🥳
 
 <br/>
 
-### Setup the action's backend
+### Set up the action's backend
 
 Now we want to write the logic that our action will trigger.
 
@@ -331,11 +331,14 @@ If the GitHub organization which will house your workflow is not the same as the
         env:
           //highlight-next-line
           ORG_NAME: <Your ORG name>
-          PORT_RUN_ID: ${{ fromJson(inputs.port_context).runId }}
     
         steps:
           - uses: actions/checkout@v4
-    
+          
+          - name: Extract runId from port_context
+            run: |
+              echo "PORT_RUN_ID=$(echo '${{ inputs.port_context }}' | jq -r .runId)" >> $GITHUB_ENV
+
           - name: Create a log message
             uses: port-labs/port-github-action@v1
             with:

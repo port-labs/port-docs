@@ -153,29 +153,30 @@ For example, the following JSON will allow **every user**, regardless of their r
 }
 ```
 
-### Team inheritance
+### Inherited ownership
 
-Team inheritance allows you to utilize relations to automatically assign and manage entity ownership.
+Inherited ownership allows you to utilize relations to automatically assign and manage entity ownership.
 
-By using team inheritance, you can configure entities to automatically inherit their `team` from entities they are related to.
+By using inherited ownership, you can configure entities to automatically inherit their ownership from entities they are related to.
 
-Team inheritance can be configured by adding the `teamInheritance` key to the [blueprint structure](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#structure-table). The `teamInheritance` object has a `path` key that represents the relation path to the blueprint whose entity's teams we want to inherit.
+Inherited ownership can be configured by setting the `ownership` property in the [blueprint structure](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#structure-table) with `"type": "Inherited"`. The `path` key represents the relation path to the blueprint whose entity's teams we want to inherit.
 
 :::info Path
 
-- The `path` key works similarly to the `path` key in [mirror properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/#api-definition);
-- The `path` does not need to end with the `$team` meta-property since it is inferred;
-- Team inheritance can only be configured using a path of [`single`](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#single-relation-structure) type relations.
+- The `path` key is a dot-separated path of **relation identifiers** that lead to the desired blueprint.
+- The target blueprint must have `Direct` ownership configured.
+- Inherited ownership can only be configured using a path of [`single`](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#single-relation-structure) type relations.
 
 :::
 
-For example, the following JSON (added to the **blueprint definition**) will configure the `myBlueprint` blueprint's entities to inherit their teams from the `myExtraRelatedBlueprint` blueprint's entities:
+For example, the following JSON (added to the **blueprint definition**) will configure the `myBlueprint` blueprint's entities to inherit their ownership from the `myExtraRelatedBlueprint` blueprint's entities:
 
 ```json showLineNumbers
 {
   "identifier": "myBlueprint",
   // ...blueprint properties
-  "teamInheritance": {
+  "ownership": {
+    "type": "Inherited",
     "path": "myRelatedBlueprint.myExtraRelatedBlueprint"
   }
 }
@@ -184,7 +185,11 @@ For example, the following JSON (added to the **blueprint definition**) will con
 :::note
 In the example above, the relation chain is:
 myBlueprint -> myRelatedBlueprint -> myExtraRelatedBlueprint
+
+The `Owning teams` column will be visible in tables containing entities of the blueprint, but will not be editable.
 :::
+
+For more detailed information about ownership configuration, see the [ownership section](/sso-rbac/users-and-teams/manage-users-teams#ownership) in the RBAC documentation.
 
 ### Global VS granular permissions
 

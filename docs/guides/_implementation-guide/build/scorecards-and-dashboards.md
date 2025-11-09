@@ -6,7 +6,7 @@ sidebar_position: 3
 
 ## Define scorecards
 
-[Scorecards](https://docs.port.io/promote-scorecards/) are configured per blueprint, and enable you to define and track metrics/standards for your entities, based on their properties.  
+[Scorecards](https://docs.port.io/scorecards/overview) are configured per blueprint, and enable you to define and track metrics/standards for your entities, based on their properties.  
 You can define multiple tiers within a scorecard, with different criteria for each tier.
 
 Here is an example of a "Production readiness" scorecard that defines and measures criteria for a running service to be considered production-ready. As you can see, the service is compliant with one of two defined tiers:
@@ -35,9 +35,9 @@ Some examples include:
   - A dashboard for **R&D managers** to track the performance of APIs and services.
   - A dashboard for **security teams** to track access control and security policies.
   - Port's live demo contains many dashboards that you can use as inspiration, for example:
-    - The demo's [homepage](https://demo.getport.io/organization/home).
-    - A developer's ["Plan my day" dashboard](https://demo.getport.io/plan_my_day).
-    - A security ["Code alerts" dashboard](https://demo.getport.io/code_alerts).
+    - The demo's [homepage](https://showcase.port.io/organization/home).
+    - A developer's ["Plan my day" dashboard](https://showcase.port.io/plan_my_day).
+    - A security ["Code alerts" dashboard](https://showcase.port.io/code_alerts).
 
 Dashboards can be created/modified in 3 locations:
   - Your portal's homepage.

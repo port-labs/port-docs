@@ -25,6 +25,8 @@ Port provides a tailored experience for creating surveys and tracking responses 
 
 Alternatively, you can leverage third-party solutions for the survey front-end, and send results to Port for correlation with other catalog data.
 
+For a complete walkthrough of survey setup, including blueprints, questions, and response tracking, check out the [Create surveys in your portal guide](/guides/all/create-surveys/).
+
 - [Send Typeform Survey Results to Port](/guides/all/send-typeform-survey-results-to-port)
 
 

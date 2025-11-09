@@ -1,12 +1,10 @@
 ```python showLineNumbers title="humanitec_client.py"
 
 import httpx
-import asyncio
-from typing import Dict, Any, List
-import datetime
-import re
+from typing import Dict, Any, List, Optional
 from loguru import logger
 from .cache import InMemoryCache
+from .retryable_http_client import RetryableHTTPClient
 
 
 class CACHE_KEYS:
@@ -16,8 +14,13 @@ class CACHE_KEYS:
 
 
 class HumanitecClient:
-    def __init__(self, org_id, api_token, **kwargs) -> None:
-        self.client = kwargs.get("httpx_async_client", httpx.AsyncClient())
+    def __init__(self, org_id: str, api_token: str, **kwargs) -> None:
+        # Inject the retryable HTTP client
+        self.http_client = kwargs.get("http_client")
+        if not self.http_client:
+            timeout = kwargs.get("timeout", httpx.Timeout(20))
+            self.http_client = RetryableHTTPClient(timeout=timeout)
+        
         self.base_url = (
             f"{kwargs.get('base_url','https://api.humanitec.io')}/orgs/{org_id}/"
         )
@@ -36,23 +39,14 @@ class HumanitecClient:
         self,
         method: str,
         endpoint: str,
-        headers: Dict[str, str] | None = None,
-        json: Dict[str, Any] | List[Dict[str, Any]] | None = None,
+        headers: Optional[Dict[str, str]] = None,
+        json: Optional[Dict[str, Any] | List[Dict[str, Any]]] = None,
     ) -> Any:
+        """Send API request using the injected retryable HTTP client."""
         url = self.base_url + endpoint
-        try:
-            logger.debug(f"Requesting Humanitec data for endpoint: {endpoint}")
-            response = await self.client.request(
-                method, url, headers=headers, json=json
-            )
-            response.raise_for_status()
-            return response.json()
-        except httpx.HTTPStatusError as e:
-            logger.error(f"HTTP error occurred: {e.response.text}")
-            raise
-        except Exception as e:
-            logger.error(f"An error occurred: {str(e)}")
-            raise
+        logger.debug(f"Requesting Humanitec data for endpoint: {endpoint}")
+        response = await self.http_client.request(method, url, headers=headers, json=json)
+        return response.json()
 
     async def get_all_applications(self) -> List[Dict[str, Any]]:
         if cached_applications := await self.cache.get(CACHE_KEYS.APPLICATION):
@@ -285,4 +279,10 @@ class HumanitecClient:
         )
         logger.info(f"Received {len(users)} users in group {group_id}")
         return users
+
+    async def close(self):
+        """Close the HTTP client."""
+        if self.http_client:
+            await self.http_client.close()
+
 ```

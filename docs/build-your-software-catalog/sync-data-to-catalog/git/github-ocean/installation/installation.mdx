@@ -26,9 +26,20 @@ This page outlines the following steps:
 
 ## Setup
 
+### Multi-organization support
+
+Starting from **version 3.0.0-beta**, the GitHub integration supports syncing data from multiple GitHub organizations.
+
+:::info Multi-organization configuration
+- GitHub App and fine-grained PAT: use `githubOrganization` (single organization).
+- Classic PAT: to sync multiple organizations, list them in your port mapping under `organizations`.
+- Precedence: if `githubOrganization` is set in the environment variables or config and `organizations` are listed in port mapping, the integration syncs only the `githubOrganization` (single‑org behavior).
+- Performance: syncing multiple organizations increases API calls and may slow down the integration.
+:::
+
 ### Create access token
 
-To allow Port to fetch data from your GitHub Organization, you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and GitHub app installation tokens.
+To allow Port to fetch data from your GitHub Organization(s), you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and GitHub app installation tokens.
 
 <Tabs>
 <TabItem value="pat" label="Personal Access Token (PAT)">
@@ -36,7 +47,7 @@ To allow Port to fetch data from your GitHub Organization, you need to create an
 A Personal Access Token (PAT) is suitable if you're the only one managing the integration and don't need frequent credential rotation.  
 To create a personal access token see Github's [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
 
-- The token must belong to a user with access to the relevant Github resources (e.g., repositories, teams).
+- The token must belong to a user with access to the relevant Github resources (e.g., repositories, teams) across all organizations you want to sync.
 
 <details>
   <summary>Required permissions</summary>
@@ -44,16 +55,20 @@ To create a personal access token see Github's [managing your personal access to
   These are the necessary permissions if you're creating a fine-grained PAT.
   
   **Repository permissions:**
-  - **Actions**: Readonly
-  - **Content**: Readonly
+  - **Content**: Readonly (For reading files)
   - **Metadata**: Readonly
+  - **Administration:** Readonly (for syncing repository teams and collaborators)
   - **Pull Requests**: Readonly
+  - **Issues**: Readonly
+  - **Actions**: Readonly
   - **Code scanning alerts**: Readonly
   - **Dependabot alerts**: Readonly
   - **Deployments**: Readonly
   - **Environments**: Readonly
   
   **Organization permissions:**
+  - **Members**: Readonly(for syncing users and teams)
+  - **Administration**: Readonly(for syncing external identities)
   - **Webhooks**: Read and Write (for managing webhook)
 
 
@@ -71,6 +86,10 @@ You can reconfigure the permission at any time, giving it access to new reposito
 
 A GitHub App provides automatic access token rotation and is a good alternative to PATs.  
 To set it up, see the [GitHub App installation guide](./github-app.mdx).
+
+:::caution Single organization limitation
+GitHub App authentication supports **exactly one organization** only. You must specify one organization using the `githubOrganization` configuration parameter.
+:::
 
 </TabItem>
 </Tabs>

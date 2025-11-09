@@ -1,6 +1,6 @@
 ---
 displayed_sidebar: null
-description: Set up a Service Explorer AI agent to help developers discover services, understand ownership, and access documentation for quick onboarding
+description: Set up a Service Explorer AI agent with MCP to help developers discover services, understand ownership, and access documentation for quick onboarding
 ---
 
 import Tabs from "@theme/Tabs"
@@ -8,11 +8,19 @@ import TabItem from "@theme/TabItem"
 
 # Set up the Service Explorer AI agent
 
-## Overview
 
-This guide will walk you through setting up a "Service Explorer" AI agent in Port. This agent helps developers discover services, understand ownership, and access documentation for quick onboarding. By the end of this guide, your developers will be able to get information about your services via Port's AI chat.
+This guide demonstrates how to set up a "Service Explorer" AI agent in Port with enhanced capabilities powered by MCP. This agent helps developers discover services, understand ownership, and access documentation for quick onboarding.
 
-<img src="/img/ai-agents/AIAgentsServiceExplorerWidgetExample.png" width="100%" border="1px" />
+With the **MCP backend server**, the Service Explorer becomes even more powerful:  
+- It can **auto-discover all blueprints, entities, and actions** in your service catalog.  
+- It provides **transparency and visibility** into what the AI agent is doing behind the scenes.  
+- It reduces manual configuration, since blueprint access is automatically managed.  
+
+By the end of this guide, your developers will be able to get information about your services via Port's AI chat.
+
+<img src="/img/guides/service-explorer-agent-demo-1.png" width="100%" border="1px" />
+<img src="/img/guides/service-explorer-agent-demo-2.png" width="100%" border="1px" />
+
 
 ## Common use cases
 
@@ -33,7 +41,7 @@ This guide assumes you have:
     - [Kubernetes](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/) tools for deployment information.
     - Monitoring tools (e.g., [New Relic](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic/)) for service health.
 
-## Set up
+## Set up data model
 
 To create a Service Explorer AI agent in Port, we'll need to configure two main components as described in our [Build an AI agent](/ai-interfaces/ai-agents/build-an-ai-agent) guide:
 - The data sources it will use to answer questions.
@@ -42,8 +50,11 @@ To create a Service Explorer AI agent in Port, we'll need to configure two main 
 ### Create the agent configuration
 
 1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
+
 2. Click on `+ AI Agent`.
+
 3. Toggle `Json mode` on.
+
 4. Copy and paste the following JSON schema:
 
    <details>
@@ -55,63 +66,30 @@ To create a Service Explorer AI agent in Port, we'll need to configure two main 
      "title": "Service Explorer",
      "icon": "Service",
      "properties": {
-       "description": "Helps developers discover services, understand ownership, and access documentation for quick onboarding",
-       "status": "active",
-       "allowed_blueprints": [
-         "service",
-         "githubRepository",
-         "_team",
-         "_user",
-         "githubTeam",
-         "githubUser"
-       ],
-       "prompt": "You are an agent responsible for helping developers understand the service landscape, ownership, and onboarding information.\n\n### Guidelines\n- Provide clear information about service ownership (teams and individuals)\n- Explain what services do based on their README and description\n- Identify service dependencies and relationships\n- Share service quality metrics and scorecard compliance\n- Help new developers understand which team owns which services\n- When asked about a service, always include: owner, team, description, and key technical details\n- If a service has a README, prioritize information from there\n- Mention service tier/criticality when relevant",
-       "execution_mode": "Approval Required",
-       "conversation_starters": [
-         "Who owns the oauth service?",
-         "What is the payments service about?",
-         "Which services does the platform team own?",
-         "Show me all services that don't have a README",
-         "Which services are failing their production readiness scorecard?"
-       ]
-     }
+      "description": "Helps developers discover services, understand ownership, and access documentation for quick onboarding",
+      "status": "active",
+      "prompt": "You are an agent responsible for helping developers understand the service landscape, ownership, and onboarding information.\n\n### Guidelines\n- Provide clear information about service ownership (teams and individuals)\n- Explain what services do based on their README and description\n- Identify service dependencies and relationships\n- Share service quality metrics and scorecard compliance\n- Help new developers understand which team owns which services\n- When asked about a service, always include: owner, team, description, and key technical details\n- If a service has a README, prioritize information from there\n- Mention service tier/criticality when relevant",
+      "execution_mode": "Approval Required",
+      "conversation_starters": [
+        "Who owns the oauth service?",
+        "What is the payments service about?",
+        "Which services does the platform team own?",
+        "Show me all services that don't have a README",
+        "Which services are failing their production readiness scorecard?"
+      ],
+      "tools": [
+        "^(list|get|search|track|describe)_.*"
+      ]
+    }
    }
    ```
    </details>
 
+   :::tip MCP Enhanced Capabilities
+   The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities across your entire software catalog, including services, repositories, teams, users, incidents, deployments, monitoring data, and more. This automatic discovery means you don't need to manually configure which blueprints the agent can access - it intelligently finds and uses relevant data to answer questions about your services.
+   :::
+
 5. Click on `Create` to save the agent.
-
-## Blueprint Configuration
-
-### Minimum Configuration
-The guide's configuration provides a good starting point. The minimum configuration for the Service Explorer agent requires the `service` and `githubRepository` blueprints. This provides the agent with basic information about your services and their corresponding code repositories.
-
-### Enhancing the Agent with More Blueprints
-To make the Service Explorer more powerful, you can add more blueprints to the `allowed_blueprints` array in the agent's configuration. The more context you provide, the more detailed and accurate the agent's responses will be.
-
-Here are some examples of how you can enhance the agent by adding more blueprints:
-
-- **PagerDuty** (`pagerdutyService`, `pagerdutyIncident`): Adds incident history, on-call information, and service health.
-- **Kubernetes** (`workload`, `argocdApplication`): Shows deployment status, pod health, and runtime information.
-- **Monitoring** (`newRelicService`, `newRelicAlert`): Provides performance metrics and alert status.
-- **Feature Flags** (`launchDarklyFeatureFlag`): Shows which features are enabled for each service.
-- **Documentation** (`jiraProject`, `jiraIssue`): Links to project documentation and known issues.
-
-### Customizing Blueprint Access
-You can modify the `allowed_blueprints` array at any time to add or remove blueprints.
-
-For example, if you want to give the agent access to Kubernetes information, you would add `"workload"` and `"argocdApplication"` to the array:
-```json
-"allowed_blueprints": [
-  "service",
-  "githubRepository",
-  // ... other blueprints
-  "workload",
-  "argocdApplication"
-]
-```
-
-Keep in mind that there is a trade-off between context richness and response time. The more blueprints the agent has access to, the longer it may take to generate a response. It's best to start with a minimal set of blueprints and add more as needed.
 
 ## Interact with the Service Explorer
 
@@ -123,10 +101,15 @@ You can interact with the Service Explorer AI agent in [several ways](/ai-interf
 The Service Explorer AI agent can be accessed through an **AI Agent widget** in your Port dashboard. Follow the steps below to set it up:
 
 1. Go to the [homepage](https://app.getport.io/organization/home) of your portal.
+
 2. Click on `+ Widget`.
+
 3. Choose `AI agent`.
+
 4. Type **Service Explorer** for `Title`.
+
 5. Select **Service Explorer** from the `Agent` dropdown.
+
 6. Click on `Save`.
 
 Once the widget is set up, you can ask questions directly in the chat field.
@@ -136,7 +119,7 @@ Once the widget is set up, you can ask questions directly in the chat field.
 </TabItem>
 <TabItem value="slack" label="Slack Integration">
 
-The Slack integration provides a natural way to interact with the Service Explorer agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-interfaces/ai-agents/slack-app)**.
+The Slack integration provides a natural way to interact with the Service Explorer agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-interfaces/slack-app)**.
 
 You can interact with the Service Explorer agent in two ways:
 1. **Direct message** the Port AI Assistant.
@@ -173,7 +156,7 @@ Here are some questions you can ask the Service Explorer agent:
 
 You can further enhance the Service Explorer setup by:
 
-- **Adding more service context**: Include additional blueprints like `workload`, `newRelicService`, or `argocdApplication`.
-- **Enriching with incidents**: Add the `pagerdutyIncident` blueprint to see the incident history for each service.
-- **Including deployments**: Add deployment-related blueprints for release information.
-- **Adding custom metadata**: Add organization-specific properties to the service blueprint to provide more context.
+- **Enrich your catalog**: Add more integrations (PagerDuty, Kubernetes, monitoring tools) to your Port catalog. The agent will automatically discover and use this data thanks to the MCP tools pattern.
+- **Custom metadata**: Add organization-specific properties to the service blueprint for richer answers that reflect your team's needs.
+- **Refine the prompt**: Customize the agent's prompt to emphasize specific aspects of service ownership or documentation standards unique to your organization.
+- **Monitor interactions**: Check the [AI interaction details](/ai-interfaces/ai-agents/interact-with-ai-agents#ai-interaction-details) to see how developers are using the agent and improve it based on their questions and feedback.

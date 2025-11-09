@@ -1,5 +1,5 @@
 {
-  "label": "SSO & RBAC",
+  "label": "Access control & ownership",
   "position": 10,
   "className": "custom-sidebar-item sidebar-menu-sso-and-rbac"
 }
