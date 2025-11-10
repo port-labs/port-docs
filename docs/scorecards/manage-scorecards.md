@@ -18,7 +18,19 @@ Port offers a variety of ways to create, edit and delete scorecards:
 
 <TabItem value="UI">
 
-To create a scorecard from the UI:
+To create a scorecard from the UI, you can use either one of the following methods:
+
+**Method 1: From the Scorecards page**
+
+1. Navigate to the [Software Catalog](https://app.getport.io/catalog) page.
+
+2. Go to the [Scorecards page](https://app.getport.io/_scorecards).
+
+3. Click the `+ Scorecard` button in the top right corner of the page.
+
+4. Follow the same steps as described in Method 2 below.
+
+**Method 2: From the Data model page**
 
 1. Go to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
 

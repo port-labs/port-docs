@@ -8,7 +8,10 @@ sidebar_label: Advanced examples
 
 Scorecards can track more than pass or fail compliance. By extending their data models and connecting them with automations, you can build SLA aware workflows and visual dashboards that help teams stay accountable and proactive. 
 
-This page demonstrates how to extend the scorecard data model and use those extensions to create powerful workflows and visualizations.
+This page demonstrates real-world use cases that combine scorecards, [automations](/actions-and-automations/define-automations/), and [self-service actions](/actions-and-automations/create-self-service-experiences/).  
+
+You will learn how to extend the scorecard data model, use automations to automatically manage SLA due dates, and create self-service actions and dashboards that turn scorecards into a proactive, data-driven workflow system.
+
 
  <img src='/img/software-catalog/scorecard/MyActionItemsDashboard.png' width='90%' border='1px' />
 
@@ -16,7 +19,7 @@ This page demonstrates how to extend the scorecard data model and use those exte
 
 The scorecard blueprints (`Scorecard`, `Scorecard rule`, and `Scorecard rule result`) can be extended with additional properties to support more advanced use cases.  
 
-For example, you can add properties like:
+In this example, we are going to add the following properties:
 
 - **Due date** - Track when a rule or rule result needs to be addressed. This property can be automatically updated by automations based on business logic.
 - **SLA (Service Level Agreement)** - Define the expected time to remediate issues identified by a rule, enabling SLA tracking and compliance monitoring.
@@ -384,8 +387,8 @@ With the data model extended, automations can enforce and monitor SLA timelines 
 
 Let’s look at two examples:
 
-1. [Set due dates automatically when rules fail](#set-action-item-due-date).
-2. [Send reminders when SLA deadlines approach](#send-reminder-for-upcoming-due-dates).
+1. [Set action item due date](#set-action-item-due-date).
+2. [Send reminder for upcoming due dates](#send-reminder-for-upcoming-due-dates).
 
 ### Set action item due date
 

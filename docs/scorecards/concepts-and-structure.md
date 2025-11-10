@@ -428,9 +428,9 @@ For example, these microservices have some rules defined in their scorecards, an
 
 By default, admins have a **Scorecard catalog** folder in their software catalog that contains three dashboards:
 
-- **Scorecards** - Displays your scorecards across all blueprints.
-- **Scorecards rules** - Displays the different scorecard rules across all scorecards.
-- **Scorecards rule results** - Displays the rule results for each scorecard rules.
+- [**Scorecards**](https://app.getport.io/_scorecards) - Displays your scorecards across all blueprints.
+- [**Scorecards rules**](https://app.getport.io/_rules) - Displays the different scorecard rules across all scorecards.
+- [**Scorecards rule results**](https://app.getport.io/_rule_results) - Displays the rule results for each scorecard rules.
 
 #### Scorecard specific entity page
 
