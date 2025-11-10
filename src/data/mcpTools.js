@@ -54,6 +54,12 @@ export const mcpTools = [
     roles: ['developer', 'builder']
   },
   {
+    name: 'count_entities',
+    description: 'Count entities matching specified filters without retrieving entity data. Returns only the count number for efficient queries like "how many services are in production?"',
+    apiReference: '/api-reference/get-all-entities-of-a-blueprint',
+    roles: ['developer', 'builder']
+  },
+  {
     name: 'update_entity',
     description: 'Update an existing entity. Only the fields provided will be updated.',
     apiReference: '/api-reference/update-an-entity',
@@ -157,13 +163,8 @@ export const mcpTools = [
 
   // Documentation and user tools
   {
-    name: 'ask_port_docs',
-    description: 'Ask a question about Port documentation',
-    roles: ['developer', 'builder']
-  },
-  {
-    name: 'search_port_docs_sources',
-    description: 'Search for relevant Port documentation sources based on a query',
+    name: 'search_port_sources',
+    description: 'Search the official Port documentation and return the most relevant sections from it for a user query. Each returned section includes the url and its actual content in markdown. Use this tool for all queries that require Port knowledge.',
     roles: ['developer', 'builder']
   },
   {
