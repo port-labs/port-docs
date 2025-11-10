@@ -121,6 +121,39 @@ resources:
   ```
 </details>
 
+### The `graphQuery` selector
+
+The `graphQuery` selector is a powerful feature that allows you to specify a custom query to fetch the exact Azure resources you need. It uses the [**Kusto Query Language (KQL)**](https://learn.microsoft.com/en-us/azure/governance/resource-graph/concepts/query-language).
+
+With `graphQuery`, you can:
+- **Filter resources** based on their properties, tags, or any other attribute.
+- **Select specific properties** to reduce the amount of data ingested.
+- **Join different resource tables** to enrich the data.
+- **Perform aggregations** and other advanced operations.
+
+:::tip Optimizing your `graphQuery`
+It is highly recommended to optimize your `graphQuery` to fetch only the data you need. A well-crafted query can significantly improve the performance of the integration and ensure that your software catalog is not cluttered with unnecessary information.
+
+For example, instead of fetching all resources and then filtering them in the mapping, you can use the `where` clause in your query to filter the resources at the source.
+:::
+
+Here is an example of a broad query versus an optimized query:
+
+**Broad Query:**
+```kusto
+resources
+| project id, type, name, location, tags, subscriptionId, resourceGroup
+```
+
+**Optimized Query:**
+```kusto
+resources
+| where type in~ ('microsoft.compute/virtualmachines', 'microsoft.storage/storageaccounts') and tags.environment == 'production'
+| project id, type, name, location, tags, subscriptionId, resourceGroup
+```
+
+The optimized query fetches only virtual machines and storage accounts that have the `environment` tag set to `production`, which is much more efficient.
+
 ## Setup
 
 To set up the Azure Resource Graph exporter, you'll need to configure both Port credentials and Azure app registration.
