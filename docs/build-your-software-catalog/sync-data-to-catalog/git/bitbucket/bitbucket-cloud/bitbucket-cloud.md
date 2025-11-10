@@ -353,7 +353,9 @@ The following limitations apply to the file mapping feature in the Bitbucket int
 
 ## Permissions
 
-Port's Bitbucket integration requires the following scopes:
+Port's Bitbucket integration requires the following permissions:
+
+### Workspace Tokens and App Passwords
 
 - `workspace`: `read`
 - `project`: `read`
@@ -361,10 +363,19 @@ Port's Bitbucket integration requires the following scopes:
 - `pullrequest`: `read`
 - `webhooks`: `read` and `write`
 
-These scopes apply to all authentication methods:
-- **Workspace tokens** (recommended for Premium accounts)
-- **User-scoped tokens** (required for `file` kind, works in free environments)
-- **App passwords** (deprecated - migrate to user-scoped tokens)
+### User-Scoped Tokens
+
+When creating a user-scoped token, select the following scopes:
+
+**Read permissions:**
+- `read:repository:bitbucket`
+- `read:project:bitbucket`
+- `read:pullrequest:bitbucket`
+- `read:webhook:bitbucket`
+- `read:workspace:bitbucket`
+
+**Write permissions:**
+- `write:webhook:bitbucket`
 
 :::tip Default permissions
 You will be prompted to add these permissions while creating a new workspace token, user-scoped token, or app password.

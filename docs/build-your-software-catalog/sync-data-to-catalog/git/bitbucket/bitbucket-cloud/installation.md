@@ -51,6 +51,9 @@ The integration supports three authentication methods:
    - Works in free Bitbucket environments
    - Requires user's email address for authentication
    - [Create a user-scoped token](https://support.atlassian.com/bitbucket-cloud/docs/using-api-tokens/)
+   - **Required scopes:**
+     - Read: `read:repository:bitbucket`, `read:project:bitbucket`, `read:pullrequest:bitbucket`, `read:webhook:bitbucket`, `read:workspace:bitbucket`
+     - Write: `write:webhook:bitbucket`
 
 - **App Password** (Deprecated)
    - ⚠️ Being phased out by Bitbucket - migrate to user-scoped tokens
