@@ -23,7 +23,7 @@ This integration allows you to:
 - Leverage code generation to accelerate development and maintain consistency.
 - Poll Amplication for templates, resources, and outdated version alerts to keep you in sync with your Amplication resources.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Amplication into Port are listed below:
 
@@ -52,7 +52,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation/>
 

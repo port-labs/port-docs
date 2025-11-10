@@ -25,7 +25,7 @@ This integration allows you to:
 - Map and organize your desired Octopus Deploy resources and their metadata in Port (see supported resources below).
 - Watch for Octopus Deploy object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-### Supported Resources
+### Supported resources
 
 Some of the resources that can be ingested from Octopus Deploy into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -45,7 +45,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation integration="Octopus"/>
 

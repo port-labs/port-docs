@@ -17,7 +17,7 @@ This integration allows you to:
 - Map and organize your desired Backstage resources and their metadata in Port (see supported resources below).
 - Watch for Backstage object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Backstage into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -61,6 +61,12 @@ Choose one of the following installation methods:
 Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
+
+<OceanSaasInstallation integration="Backstage" />
+
+</TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
 

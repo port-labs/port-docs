@@ -7,9 +7,6 @@ import TabItem from "@theme/TabItem";
 
 # Installation
 
-:::warning Beta Feature
-AWS Hosted by Port is currently in **beta mode** and is not yet available for all Port users. Contact Port's support team to get access to this integration.
-:::
 
 AWS Hosted by Port is available through [Port's Ocean SaaS framework](https://ocean.getport.io/integrations-library/).  
 
@@ -164,6 +161,10 @@ You must run the multi-account installation from your AWS Organizations **manage
 </TabItem>
 
 </Tabs>
+
+:::info Region policy
+Configure which AWS regions are queried using `regionPolicy`. See [Querying resources from specific regions](./resource-and-property-reference/resource-and-property-reference.md#querying-resources-from-specific-regions).
+:::
 
 ## Troubleshooting
 

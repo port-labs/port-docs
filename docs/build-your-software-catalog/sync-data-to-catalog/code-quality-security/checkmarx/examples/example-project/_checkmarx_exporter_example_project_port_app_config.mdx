@@ -1,0 +1,29 @@
+<details>
+
+<summary><b>Integration Mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: project
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          blueprint: '"checkmarxProject"'
+          identifier: .id
+          title: .name
+          properties:
+            name: .name
+            createdAt: .createdAt
+            updatedAt: .updatedAt
+            tags: (.tags // {})
+            repoUrl: .repoUrl
+            mainBranch: .mainBranch
+            origin: .origin
+            criticality: .criticality
+```
+
+</details>
