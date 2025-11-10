@@ -30669,6 +30669,13 @@ paths:
                   description: An optional set of
                     [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                     to filter entities that will be evaluated by the scorecard.
+                properties:
+                  type: object
+                  propertyNames:
+                    pattern: ^[A-Za-z0-9@_=\\-]+$
+                  description: An object containing the additional properties of the scorecard, in
+                    `"key":"value"` pairs where the `key` is the property's
+                    identifier, and the `value` is its value.
                 rules:
                   type: array
                   description: The
@@ -31709,6 +31716,13 @@ paths:
                       [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                       to filter entities that will be evaluated by the
                       scorecard.
+                  properties:
+                    type: object
+                    propertyNames:
+                      pattern: ^[A-Za-z0-9@_=\\-]+$
+                    description: An object containing the additional properties of the scorecard, in
+                      `"key":"value"` pairs where the `key` is the property's
+                      identifier, and the `value` is its value.
                   rules:
                     type: array
                     description: The
@@ -32345,6 +32359,13 @@ paths:
                   description: An optional set of
                     [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                     to filter entities that will be evaluated by the scorecard.
+                properties:
+                  type: object
+                  propertyNames:
+                    pattern: ^[A-Za-z0-9@_=\\-]+$
+                  description: An object containing the additional properties of the scorecard, in
+                    `"key":"value"` pairs where the `key` is the property's
+                    identifier, and the `value` is its value.
                 rules:
                   type: array
                   description: The
