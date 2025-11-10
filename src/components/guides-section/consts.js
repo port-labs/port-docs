@@ -1526,6 +1526,13 @@ export const availableGuides = [
         tags: ["Self Healing Incidents", "AI", "Jira", "PagerDuty", "Slack"],
         logos: ["Jira", "PagerDuty", "Slack"],
         link: "/guides/all/orchestrate-incident-response-with-ai",
+    },
+    {
+        title: "Use Port as a context lake for n8n vulnerability management",
+        description: "Use Port as a context lake for n8n workflows to enrich vulnerability management with service metadata, ownership, and dependencies",
+        tags: ["Security", "n8n", "Webhook", "AI"],
+        logos: ["n8n", "Webhook", "AI"],
+        link: "/guides/all/port-as-context-lake-for-n8n-vulnerability-management",
     }
 ]
 
