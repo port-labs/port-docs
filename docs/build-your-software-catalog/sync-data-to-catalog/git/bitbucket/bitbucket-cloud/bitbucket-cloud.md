@@ -123,6 +123,10 @@ The YAML configuration mapping will also be added to the [data sources](https://
 
 ### Ingest files from your repositories
 
+:::info User-Scoped Token Required
+The `file` kind requires a **user-scoped token** for authentication to access Bitbucket's file/code search API. While existing app passwords also work, **new app passwords cannot be created as of September 9, 2025**. Workspace tokens do not support file ingestion.
+:::
+
 Port allows you to fetch `JSON` and `YAML` files from your repositories, and create entities from them in your software catalog. This is done using the `file` kind in your Bitbucket mapping configuration. Changes to the files are tracked through repository `push` events and periodic resyncs.
 
 For example, say you want to manage your `package.json` files in Port. One option is to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
@@ -131,6 +135,9 @@ The following configuration fetches all `package.json` files from "MyRepo" and "
 
 ```yaml showLineNumbers
 resources:
+  # IMPORTANT: The 'file' kind requires user-scoped token (or existing app password)
+  # Workspace tokens do not support file ingestion
+  # New app passwords cannot be created - use user-scoped token instead
   - kind: file
     selector:
       query: 'true'
@@ -259,6 +266,9 @@ The following configuration fetches a `package.json` file from a specific reposi
 
 ```yaml showLineNumbers
 resources:
+  # IMPORTANT: The 'file' kind requires user-scoped token (or existing app password)
+  # Workspace tokens do not support file ingestion
+  # New app passwords cannot be created - use user-scoped token instead
   - kind: file
     selector:
       query: 'true'
@@ -343,16 +353,21 @@ The following limitations apply to the file mapping feature in the Bitbucket int
 
 ## Permissions
 
-Port's Bitbucket integration requires the following scopes to be enabled on either a workspace token or app password:
+Port's Bitbucket integration requires the following scopes:
 
-- `workspace`: `read`;
-- `project`: `read`;
-- `repository`: `read`;
-- `pullrequest`: `read`;
-- `webhooks`.
+- `workspace`: `read`
+- `project`: `read`
+- `repository`: `read`
+- `pullrequest`: `read`
+- `webhooks`: `read` and `write`
+
+These scopes apply to all authentication methods:
+- **Workspace tokens** (recommended for Premium accounts)
+- **User-scoped tokens** (required for `file` kind, works in free environments)
+- **App passwords** (deprecated - migrate to user-scoped tokens)
 
 :::tip Default permissions
-You will be prompted to add these permissions while creating a new workspace token or app password.
+You will be prompted to add these permissions while creating a new workspace token, user-scoped token, or app password.
 :::
 
 <MetricsAndSyncStatus/>
