@@ -60,4 +60,16 @@ When creating a custom connector in Claude, you can specify exactly which tools 
 Refer to the [Claude custom connector documentation](https://support.anthropic.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp) for detailed instructions.
 
 </TabItem>
+<TabItem value="windsurf" label="Windsurf">
+
+In Windsurf, you can customize which tools are available through the UI after connecting to Port MCP. Once connected, you can select specific tools through Windsurf's MCP settings interface.
+
+To manage tools in Windsurf:
+1. Go to **Settings** > **Tools** > **Windsurf Settings**
+2. Find your Port MCP server configuration
+3. Select or deselect specific tools as needed
+
+If you need to limit tools programmatically, you can edit the `mcp_config.json` file directly, though the UI method is recommended for easier management.
+
+</TabItem>
 </Tabs>

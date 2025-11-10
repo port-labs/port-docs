@@ -10,7 +10,7 @@ If you encounter issues while setting up or using the Port MCP Server, expand th
 <details>
 <summary>How can I connect to the MCP? (Click to expand)</summary>
 
-Refer back to the [setup instructions](./overview-and-installation#installing-port-mcp) for your specific application (Cursor, VSCode, or Claude). Make sure you're using the correct regional URL for your Port organization.
+Refer back to the [setup instructions](./overview-and-installation#installing-port-mcp) for your specific application (Cursor, VSCode, Windsurf, or Claude). Make sure you're using the correct regional URL for your Port organization.
 
 </details>
 
@@ -38,7 +38,7 @@ This is completely normal behavior and doesn't indicate a problem with Port MCP 
 
 :::tip Getting Help
 If you continue to experience issues, please reach out to Port support with:
-- Your IDE/application version
+- Your IDE/application version (e.g., Windsurf version, Cursor version)
 - The specific error messages you're seeing
 - Your Port region (EU/US)
 - Steps you've already tried

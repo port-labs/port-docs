@@ -167,6 +167,139 @@ Failed to validate tool mcp_port_create_action: Error: tool parameters array typ
 <img src="/img/ai-agents/MCPVSCodeSetup.gif" border="1px" width="100%" />
 
 </TabItem>
+<TabItem value="windsurf" label="Windsurf">
+To connect Windsurf to Port's remote MCP server, follow these steps:
+
+:::tip Prerequisites
+Windsurf supports remote MCP servers via HTTP transport. Ensure you have Node.js installed if using the command-based configuration method (Method 2).
+:::
+
+**Step 1: Locate Windsurf MCP Configuration File**
+
+The MCP configuration file is typically located at:
+- **macOS/Linux**: `~/.codeium/windsurf/mcp_config.json`
+- **Windows**: `%USERPROFILE%\.codeium\windsurf\mcp_config.json`
+
+If the file doesn't exist, create it with an empty JSON object: `{}`
+
+**Step 2: Configure Port MCP Server**
+
+You can use one of two methods to connect to Port's remote MCP server:
+
+**Method 1: URL-based Configuration (Recommended)**
+
+Add the Port MCP server configuration using the appropriate URL for your region:
+
+<Tabs>
+<TabItem value="eu" label="EU">
+
+```json showLineNumbers
+{
+  "mcpServers": {
+    "port-windsurf-eu": {
+      "url": "https://mcp.port.io/v1"
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="us" label="US">
+
+```json showLineNumbers
+{
+  "mcpServers": {
+    "port-windsurf-us": {
+      "url": "https://mcp.us.port.io/v1"
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+**Method 2: Command-based Configuration (Alternative)**
+
+If URL-based configuration doesn't work, you can use the `mcp-remote` package similar to VSCode:
+
+<Tabs>
+<TabItem value="eu" label="EU">
+
+```json showLineNumbers
+{
+  "mcpServers": {
+    "port-windsurf-eu": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.port.io/v1"
+      ]
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value="us" label="US">
+
+```json showLineNumbers
+{
+  "mcpServers": {
+    "port-windsurf-us": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.us.port.io/v1"
+      ]
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+**Step 3: Restart Windsurf**
+
+After saving the configuration file:
+1. Completely quit Windsurf (don't just close the window)
+2. Wait 5 seconds
+3. Reopen Windsurf
+4. Wait 20 seconds for initialization
+
+**Step 4: Authenticate with Port**
+
+When you first use Port tools in Windsurf, you'll be prompted to authenticate:
+1. Click on the authentication prompt or "Needs login" indicator
+2. Complete the OAuth flow in the browser window that opens
+3. After successful authentication, Port tools should be available
+
+**Step 5: Verify Connection**
+
+1. Start a new chat session in Windsurf
+2. Look for Port MCP tools in the available tools list
+3. Try asking a question like "List all blueprints in Port" to verify the connection
+
+:::warning Configuration File Location
+If you can't find the `mcp_config.json` file, check Windsurf's settings:
+- Go to **Settings** > **Tools** > **Windsurf Settings**
+- Look for MCP server configuration options
+- You may need to use "View Raw Config" to edit the configuration file directly
+:::
+
+:::tip Troubleshooting
+If the connection doesn't work:
+- Ensure the JSON syntax is correct (no missing commas, proper quotes)
+- Try Method 2 if Method 1 doesn't work
+- Check Windsurf's logs for error messages
+- Verify your Port region (EU/US) matches the URL you're using
+- See the [troubleshooting guide](/ai-interfaces/port-mcp-server/troubleshooting) for more help
+:::
+
+</TabItem>
 <TabItem value="claude" label="Claude">
 To connect Claude to Port's remote MCP, you need to create a custom connector. This process does not require a client ID. For detailed instructions, refer to the [official Anthropic documentation on custom connectors](https://support.anthropic.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp).
 
