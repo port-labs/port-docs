@@ -24,6 +24,7 @@ The AI Chat Widget is a dashboard component that:
 - **Uses configured tools**: Operates with the specific [Port AI tools](/ai-interfaces/port-ai/overview#port-ai-tools) you select.
 - **Customizable placement**: Can be embedded in any dashboard layout.
 - **Respects permissions**: Only accesses data based on user permissions.
+- **Context-aware**: Automatically understands the page and entity context where it's located, allowing you to ask questions about the specific entity or page without explicitly mentioning it.
 
 ## Widget Configuration
 
@@ -81,6 +82,17 @@ Users can type their own questions and requests directly into the chat interface
 - Display responses in a conversational format.
 - Show visual indicators when tools are being used.
 - Provide links to relevant Port pages and actions.
+
+### Context Awareness
+
+The AI Chat Widget automatically understands the context of the page and entity where it's located. This means you can ask questions about the specific entity or page without needing to explicitly mention it.
+
+**Examples:**
+- On a **team entity page**: "What is this team's lead time for change?" or "How many open bugs does the team have?"
+- On a **service entity page**: "What's the deployment status?" or "Show me recent incidents"
+- On a **dashboard**: Questions will be answered in the context of the dashboard's scope
+
+The widget uses this context to provide more relevant and accurate responses, making it easier to get information about the specific entity or page you're viewing.
 
 ### Tool Transparency
 The widget interface provides enhanced capabilities and visual indicators showing which tools are being used:
@@ -312,6 +324,19 @@ For comprehensive information, see [Security Considerations](#security-considera
 - [Data Access & Permissions](/ai-interfaces/port-ai/security-and-data-controls#data-access--permissions) - How AI respects your organization's access controls.
 - [RBAC Compliance](/ai-interfaces/port-ai/security-and-data-controls#how-does-port-ai-respect-my-organizations-access-controls) - Role-based access control details.
 - [Data Privacy & Retention](/ai-interfaces/port-ai/security-and-data-controls#data-privacy--retention) - How your data is handled and stored.
+</details>
+
+<details>
+<summary><b>Does the widget understand the context of the page it's on? (Click to expand)</b></summary>
+
+Yes! The AI Chat Widget automatically understands the context of the page and entity where it's located. This means you can ask questions about the specific entity or page without needing to explicitly mention it.
+
+**Examples:**
+- On a **team entity page**: "What is this team's lead time for change?" or "How many open bugs does the team have?"
+- On a **service entity page**: "What's the deployment status?" or "Show me recent incidents"
+- On a **dashboard**: Questions will be answered in the context of the dashboard's scope
+
+The widget uses this context to provide more relevant and accurate responses. Learn more in [Context Awareness](#context-awareness).
 </details>
 
 The AI Chat Widget provides a powerful way to bring [Port AI](/ai-interfaces/port-ai/overview) capabilities directly into your team's daily workflows through customized dashboard experiences.
