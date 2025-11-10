@@ -6,14 +6,9 @@ sidebar_label: Advanced examples
 
 # Advanced examples
 
-Scorecards can track more than pass or fail compliance. By extending their data models and connecting them with automations, you can build SLA aware workflows and visual dashboards that help teams stay accountable and proactive. 
+Scorecards can track more than pass or fail compliance. By extending their data models and connecting them with [automations](/actions-and-automations/define-automations/), you can build SLA aware workflows and visual dashboards that help teams stay accountable and proactive. 
 
-This page demonstrates real-world use cases that combine scorecards, [automations](/actions-and-automations/define-automations/), and [self-service actions](/actions-and-automations/create-self-service-experiences/).  
-
-You will learn how to extend the scorecard data model, use automations to automatically manage SLA due dates, and create self-service actions and dashboards that turn scorecards into a proactive, data-driven workflow system.
-
-
- <img src='/img/software-catalog/scorecard/MyActionItemsDashboard.png' width='90%' border='1px' />
+This page demonstrates real-world examples of how to do that. From extending the scorecard data model to automating SLA management and adding [self-service actions](/actions-and-automations/create-self-service-experiences/) that make scorecards truly actionable.
 
 ## Extend the data model
 
@@ -25,243 +20,72 @@ In this example, we are going to add the following properties:
 - **SLA (Service Level Agreement)** - Define the expected time to remediate issues identified by a rule, enabling SLA tracking and compliance monitoring.
 - **Hours until SLA due** - A calculation property that dynamically calculates the time remaining until the SLA due date, useful for triggering reminders and tracking approaching deadlines.
 
+**To create a new property:**
+
+1. Navigate to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Expand the blueprint you want to edit, for example the scorecard rule blueprint.
+
+3. Click on the `+ New property` button.
+
+4. Choose the relevant type.
+
+5. Fill in the form with the desired property details.
+
+6. Click `Create`.
+
 ### Extended scorecard rule blueprint
 
 The following example shows an extended `Scorecard rule` blueprint with additional properties including `Due date` and `SLA`:
 
 <details>
-<summary><b>Scorecard rule blueprint (click to expand)</b></summary>
+<summary><b>Due date property definition (click to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "_rule",
-  "description": "This blueprint represents a specific scorecard rule",
-  "title": "Scorecard Rule",
-  "icon": "Star",
-  "schema": {
+For the `Due date` property, fill in the form with following details:
+
+- **Type**: Date & time.
+- **Title**: Due date.
+
+You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
+Copy and paste the following JSON snippet under the `properties` section.
+
+```json showLineNumebrs
+
+"schema": {
     "properties": {
-      "level": {
-        "icon": "Columns",
-        "type": "string",
-        "title": "Level",
-        "description": "The level that this rule is required to pass",
-        "enum": [
-          "F",
-          "C",
-          "B",
-          "A",
-          "Basic",
-          "Maturing",
-          "Bronze",
-          "Silver",
-          "Gold"
-        ],
-        "enumColors": {
-          "F": "red",
-          "C": "yellow",
-          "B": "orange",
-          "A": "green",
-          "Basic": "paleBlue",
-          "Maturing": "purple",
-          "Bronze": "bronze",
-          "Silver": "silver",
-          "Gold": "gold"
-        }
-      },
-      "rule_description": {
-        "icon": "DefaultBlueprint",
-        "type": "string",
-        "title": "Rule description",
-        "description": "Short description of the rule's logic"
-      },
-      "query": {
-        "icon": "Search",
-        "title": "Query",
-        "type": "object",
-        "description": "Query definition of the rule. Entities matched will be marked as \"passed\"",
-        "properties": {
-          "combinator": {
+        "due_date": {
+            "title": "Due date",
+            "icon": "Flag",
             "type": "string",
-            "enum": [
-              "and",
-              "or"
-            ]
-          },
-          "conditions": {
-            "type": "array",
-            "minItems": 1
-          }
-        },
-        "default": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "operator": "isNotEmpty",
-              "property": "$team"
+            "format": "date-time"
+      }
+    }
+}
+```
+</details>
+
+<details>
+<summary><b>SLA property definition (click to expand)</b></summary>
+
+For the `SLA` property, fill in the from with following details:
+
+- **Type**: Number.
+- **Title**: SLA.
+- **Description**: Days to remidate action item.
+
+You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
+Copy and paste the following JSON snippet under the `properties` section.
+
+```json showLineNumebrs
+"schema": {
+    "properties": {
+        "sla": {
+            "type": "number",
+            "title": "SLA",
+            "description": "Days to remediate action item ",
+            "icon": "Clock"
             }
-          ]
-        },
-        "required": [
-          "combinator",
-          "conditions"
-        ]
-      },
-      # highlight-start
-      "sla": {
-        "type": "number",
-        "title": "SLA",
-        "description": "Days to remediate action item ",
-        "icon": "Clock"
-      },
-      # highlight-end
-      "is_fundamental": {
-        "icon": "DefaultProperty",
-        "type": "boolean",
-        "title": "Is Fundamental?",
-        "default": false
-      },
-      "importance": {
-        "icon": "DefaultProperty",
-        "title": "Importance ",
-        "type": "string",
-        "default": "Low",
-        "enum": [
-          "Low",
-          "Medium",
-          "High",
-          "Highest"
-        ],
-        "enumColors": {
-          "Low": "green",
-          "Medium": "yellow",
-          "High": "orange",
-          "Highest": "red"
-        }
-      },
-      "labels": {
-        "icon": "DefaultProperty",
-        "type": "array",
-        "title": "Labels",
-        "items": {
-          "enum": [
-            "appsec",
-            "incident-readiness",
-            "hubbernetes"
-          ],
-          "enumColors": {
-            "appsec": "red",
-            "incident-readiness": "green",
-            "hubbernetes": "blue"
-          },
-          "type": "string"
-        }
-      },
-      "validation_type": {
-        "type": "string",
-        "title": "Validation type",
-        "enum": [
-          "One-time",
-          "Ongoing"
-        ],
-        "enumColors": {
-          "One-time": "red",
-          "Ongoing": "blue"
-        }
-      },
-      # highlight-start
-      "due_date": {
-        "title": "Due date",
-        "icon": "Flag",
-        "type": "string",
-        "format": "date-time"
-      },
-      # highlight-end
-      "criticality": {
-        "type": "string",
-        "title": "Criticality",
-        "enum": [
-          "High",
-          "Medium",
-          "Low"
-        ],
-        "enumColors": {
-          "High": "red",
-          "Medium": "yellow",
-          "Low": "purple"
-        }
-      }
-    },
-    "required": [
-      "level",
-      "query"
-    ]
-  },
-  "mirrorProperties": {
-    "blueprint": {
-      "path": "scorecard.blueprint"
     }
-  },
-  "calculationProperties": {
-    "of_entities_passed": {
-      "title": "% of entities passed",
-      "icon": "LineChart",
-      "calculation": "(.properties.entities_passed/.properties.entities_tested)*100",
-      "type": "number",
-      "colorized": false
-    }
-  },
-  "aggregationProperties": {
-    "entities_tested": {
-      "title": "Entities tested",
-      "icon": "Properties",
-      "type": "number",
-      "target": "_rule_result",
-      "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-      }
-    },
-    "entities_passed": {
-      "title": "Entities passed",
-      "icon": "Rocket",
-      "type": "number",
-      "target": "_rule_result",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "result",
-            "operator": "=",
-            "value": "Passed"
-          }
-        ]
-      },
-      "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-      }
-    }
-  },
-  "relations": {
-    "point_of_contact": {
-      "title": "Point of contact",
-      "target": "_user",
-      "required": false,
-      "many": false
-    },
-    "scorecard": {
-      "title": "Scorecard",
-      "target": "_scorecard",
-      "required": true,
-      "many": false
-    },
-    "rule_owner": {
-      "title": "Rule Owner",
-      "target": "_team",
-      "required": false,
-      "many": false
-    }
-  }
 }
 ```
 </details>
@@ -271,112 +95,101 @@ The following example shows an extended `Scorecard rule` blueprint with addition
 The following example shows an extended `Scorecard rule result` blueprint with additional properties including `Due date`, `SLA`, and `Hours until SLA due`:
 
 <details>
-<summary><b>Scorecard rule result blueprint (click to expand)</b></summary>
+<summary><b>SLA due date property definition (click to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "_rule_result",
-  "description": "This blueprint represents the result of a specific rule test on an entity",
-  "title": "Scorecard Rule Result",
-  "icon": "Siren",
-  "ownership": {
-    "type": "Direct"
-  },
-  "schema": {
+For the `SLA due date` property, fill in the from with following details:
+
+- **Type**: Timer.
+- **Title**: SLA due date.
+- **Description**: Time to remediate based based on the SLA.
+
+You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
+Copy and paste the following JSON snippet under the `properties` section.
+
+```json showLineNumebrs
+"schema": {
     "properties": {
-      "result": {
-        "icon": "Sort",
-        "title": "Result",
-        "description": "Whether this entity passed the related rule's query",
-        "type": "string",
-        "enum": [
-          "Not passed",
-          "Passed"
-        ],
-        "enumColors": {
-          "Not passed": "red",
-          "Passed": "green"
-        }
-      },
-      "entity": {
-        "icon": "General",
-        "type": "string",
-        "title": "Entity",
-        "description": "The entity tested"
-      },
-      "result_last_change": {
-        "icon": "AuditLog",
-        "type": "string",
-        "title": "Result last change",
-        "format": "date-time",
-        "description": "Last time the rule result changed"
-      },
-      # highlight-start
-      "sla_due_date": {
-        "type": "string",
-        "title": "SLA due date",
-        "description": "Time to remediate based based on the SLA ",
-        "icon": "HourGlass",
-        "format": "timer"
-      },
-      "due_date": {
-        "type": "string",
-        "title": "Due Date",
-        "icon": "Clock",
-        "format": "date-time"
-      },
-      "hours_until_sla_due": {
-        "type": "string",
-        "title": "Hours until SLA due",
-        "format": "timer"
+        "sla_due_date": {
+            "type": "string",
+            "title": "SLA due date",
+            "description": "Time to remediate based based on the SLA ",
+            "icon": "HourGlass",
+            "format": "timer"
       }
-      # highlight-end
-    },
-    "required": [
-      "result",
-      "entity"
-    ]
-  },
-  "mirrorProperties": {
-    "level": {
-      "path": "rule.level"
-    },
-    "scorecard": {
-      "path": "rule.scorecard.$title"
-    },
-    "blueprint": {
-      "path": "rule.scorecard.blueprint"
-    },
-    "sla": {
-      "path": "rule.sla"
-    },
-    "is_fundamental": {
-      "title": "Is Fundamental?",
-      "path": "rule.is_fundamental"
-    },
-    "criticality": {
-      "title": "Criticality",
-      "path": "rule.criticality"
     }
-  },
-  "calculationProperties": {
-    "entity_link": {
-      "title": "Entity link",
-      "icon": "LinkOut",
-      "calculation": "\"/\" + .properties.blueprint + \"Entity?identifier=\" + .properties.entity",
-      "type": "string",
-      "format": "url"
-    },
-  },
-  "aggregationProperties": {},
-  "relations": {
-    "rule": {
-      "title": "Rule",
-      "target": "_rule",
-      "required": true,
-      "many": false
+}
+```
+</details>
+
+<details>
+<summary><b>Due date property definition (click to expand)</b></summary>
+
+For the `Due date` property, fill in the form with following details:
+
+- **Type**: Date & time.
+- **Title**: Due date.
+
+You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
+Copy and paste the following JSON snippet under the `properties` section.
+
+```json showLineNumebrs
+"schema": {
+    "properties": {
+        "due_date": {
+            "title": "Due date",
+            "icon": "Flag",
+            "type": "string",
+            "format": "date-time"
+      }
     }
-  }
+}
+```
+</details>
+
+<details>
+<summary><b>Hours until SLA due date property definition (click to expand)</b></summary>
+
+For the `Hours until SLA due date` property, fill in the form with following details:
+
+- **Type**: Timer.
+- **Title**: Hours until SLA due date.
+
+You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
+Copy and paste the following JSON snippet under the `properties` section.
+
+```json showLineNumebrs
+"schema": {
+    "properties": {
+        "hours_until_sla_due": {
+            "type": "string",
+            "title": "Hours until SLA due date",
+            "format": "timer"
+      }
+    }
+}
+```
+</details>
+
+<details>
+<summary><b>SLA mirror property definition (click to expand)</b></summary>
+
+For the `SLA` mirror property, fill in the form with following details:
+
+- **Type**: Mirror.
+- **Title**: Due date.
+- **Relation**: Rule.
+- **Mirror from**: Scorecard rule.
+
+You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
+Copy and paste the following JSON snippet under the `properties` section.
+
+```json showLineNumebrs
+"schema": {
+    "mirrorProperties": {
+        "sla": {
+            "path": "rule.sla"
+        }
+    }
 }
 ```
 </details>
@@ -394,9 +207,7 @@ Let’s look at two examples:
 
 When a scorecard rule fails (changes from `Passed` to `Not passed`), this automation sets the `SLA due date` and `Hours until SLA due` properties on the rule result based on the SLA defined on the rule. This ensures that action items have a clear deadline for remediation based on the rule's SLA requirements, and enables timer-based reminders when the deadline approaches.
 
-The automation triggers when:
-- A rule result's `result` property changes from "Passed" to "Not passed".
-- The `result last change` property is updated (indicating the result actually changed).
+The automation triggers when a rule result's `result` property changes from "Passed" to "Not passed".
 
 The `SLA due date` value is calculated by:
 1. Taking the SLA value (in days) from the rule.
@@ -404,10 +215,10 @@ The `SLA due date` value is calculated by:
 3. Adding it to the `result last change` timestamp (when the rule failed).
 4. Converting the result to a date-time format.
 
-The `Hours until SLA due` property is set to 24 hours before the `SLA due date`, creating a timer property that expires when the reminder should be sent. This timer is used by the reminder automation (described in the next section) to trigger notifications when action items are approaching their SLA deadlines.
+The `Hours until SLA due` property is set to 24 hours before the `SLA due date`, creating a timer property that expires when the reminder should be sent. This timer is used by the [reminder automation](#send-reminder-for-upcoming-due-dates) to trigger notifications when action items are approaching their SLA deadlines.
 
 <details>
-<summary><b>Action item due date automation definition (click to expand)</b></summary>
+<summary><b>Automation definition (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -454,7 +265,7 @@ This automation creates a timer that counts down to the remediation deadline. Th
 Once SLA due dates are set, you can add another automation to send reminders when deadlines approach. This uses the calculation property `Hour until SLA due` to detect when an item is within 24 hours of expiration.
 
 <details>
-<summary><b>Send reminder automation definition (click to expand)</b></summary>
+<summary><b>Automation definition (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -504,107 +315,259 @@ This action is particularly useful when:
 - External dependencies or resource constraints prevent timely remediation.
 - Additional time is needed to properly address the issue.
 
-<details>
-<summary><b>Due date extension action definition (click to expand)</b></summary>
+For the following self-service action we will need to add another blueprint:
 
-```json showLineNumbers
-{
-  "identifier": "request_a_due_date_extension",
-  "title": "Request a due date extension",
-  "description": "Request an exception to extend the due date for an action item. This will require director and VP approval.",
-  "trigger": {
-    "type": "self-service",
-    "operation": "DAY-2",
-    "userInputs": {
-      "properties": {
-        "reason_for_exception": {
-          "icon": "DefaultProperty",
-          "type": "string",
-          "title": "Reason for Exception",
-          "minLength": 10,
-          "maxLength": 500
+1. Navigate to the [Builder](https://app.getport.io/settings/data-model) page.
+
+2. Click on the `+ Blueprint` button.
+
+3. Click on the `{...} Edit JSON` button in the top right corner of the window.
+
+4. Copy and paste the following JSON configuration into the editor:
+
+    <details>
+    <summary><b>Exception request blueprint (click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+    "identifier": "exception_request",
+    "description": "Represent all exceptions requested for open action items",
+    "title": "Exception request ",
+    "icon": "Clock",
+    "schema": {
+        "properties": {
+        "justification": {
+            "icon": "BlankPage",
+            "type": "string",
+            "title": "Justification "
         },
-        "exception_category": {
-          "icon": "DefaultProperty",
-          "type": "string",
-          "title": "Exception Category",
-          "description": "This will help the user to auto select the reason for exceptions",
-          "enum": [
+        "director_status": {
+            "icon": "DefaultProperty",
+            "title": "Director Approval Status",
+            "type": "string",
+            "default": "Pending",
+            "enum": [
+            "Approved",
+            "Not Approved",
+            "Pending"
+            ],
+            "enumColors": {
+            "Approved": "green",
+            "Not Approved": "red",
+            "Pending": "yellow"
+            }
+        },
+        "vp_approved": {
+            "icon": "DefaultProperty",
+            "title": "VP Approval Status",
+            "type": "string",
+            "default": "Pending",
+            "enum": [
+            "Approved",
+            "Not Approved",
+            "Pending"
+            ],
+            "enumColors": {
+            "Approved": "green",
+            "Not Approved": "red",
+            "Pending": "yellow"
+            }
+        },
+        "category": {
+            "type": "string",
+            "title": "Category",
+            "enum": [
             "Complexity",
             "No resources",
             "MSFT dependencies"
-          ],
-          "enumColors": {
-            "Complexity": "purple",
-            "No resources": "red",
-            "MSFT dependencies": "green"
-          }
+            ],
+            "enumColors": {
+            "Complexity": "blue",
+            "No resources": "lightGray",
+            "MSFT dependencies": "orange"
+            }
         },
-        "date_of_resolution": {
-          "type": "string",
-          "title": "Date of Resolution",
-          "format": "date-time"
-        },
-        "director_approval": {
-          "icon": "DefaultProperty",
-          "type": "array",
-          "title": "Director Approval",
-          "description": "For now we will have the requestor manually select the approver, but in the future we want Port to automatically select the next level manager for approval.",
-          "items": {
+        "requested_due_date": {
             "type": "string",
-            "format": "user"
-          }
-        },
-        "vp_approval": {
-          "icon": "DefaultProperty",
-          "type": "array",
-          "title": "VP Approval",
-          "items": {
-            "type": "string",
-            "format": "user"
-          }
+            "title": "Requested Due date",
+            "icon": "Clock",
+            "format": "date-time"
         }
-      },
-      "required": [
-        "reason_for_exception",
-        "date_of_resolution",
-        "director_approval",
-        "vp_approval"
-      ],
-      "order": [
-        "exception_category",
-        "reason_for_exception",
-        "date_of_resolution",
-        "director_approval",
-        "vp_approval"
-      ]
+        },
+        "required": []
     },
-    "blueprintIdentifier": "_rule_result"
-  },
-  "invocationMethod": {
-    "type": "UPSERT_ENTITY",
-    "blueprintIdentifier": "exception_request",
-    "mapping": {
-      "identifier": "{{ .entity.identifier + \"_exception\"}}",
-      "title": "{{ .entity.title + \"_exception\"}}",
-      "properties": {
-        "justification": "{{.inputs.reason_for_exception}}",
-        "requested_due_date": "{{.inputs.date_of_resolution}}",
-        "category": "{{.inputs.exception_category}}"
-      },
-      "relations": {
-        "action_item": "{{ .entity.identifier }}",
-        "requirement": "{{ .entity.relations.rule }}",
-        "approving_directors": "{{.inputs.director_approval}}",
-        "approving_v_ps": "{{.inputs.vp_approval}}"
-      }
+    "mirrorProperties": {
+        "current_due_date": {
+        "title": "Current Due Date",
+        "path": "requirement.due_date"
+        },
+        "scorecard": {
+        "title": "Scorecard",
+        "path": "action_item.rule.scorecard.$title"
+        }
+    },
+    "calculationProperties": {
+        "current_status": {
+        "title": "Current Status",
+        "icon": "DefaultProperty",
+        "calculation": "if .properties.director_status == \"Pending\" and .properties.vp_approved == \"Pending\" then     \"Pending Director and VP\"   elif .properties.director_status == \"Pending\" then     \"Pending Director\"   elif .properties.vp_approved == \"Pending\" then     \"Pending VP\"   elif .properties.director_status == \"Not Approved\" or .properties.vp_approved == \"Not Approved\" then     \"Not Approved\"   else     \"Approved\"   end",
+        "type": "string",
+        "colorized": true,
+        "colors": {
+            "Pending Director and VP": "orange",
+            "Pending Director": "yellow",
+            "Pending VP": "yellow",
+            "Approved": "green",
+            "Not Approved": "red"
+        }
+        }
+    },
+    "aggregationProperties": {},
+    "relations": {
+        "requirement": {
+        "title": "Requirement ",
+        "target": "_rule",
+        "required": false,
+        "many": false
+        },
+        "approving_v_ps": {
+        "title": "Approving VPs",
+        "target": "_user",
+        "required": false,
+        "many": true
+        },
+        "action_item": {
+        "title": "Rule Result",
+        "target": "_rule_result",
+        "required": false,
+        "many": false
+        },
+        "approving_directors": {
+        "title": "Approving Directors",
+        "target": "_user",
+        "required": false,
+        "many": true
+        }
     }
-  },
-  "requiredApproval": false,
-  "icon": "HourGlass"
-}
-```
-</details>
+    }
+    ```
+    </details>
+
+5. Click `Save`.
+
+To add the self-service action:
+
+1. Head to the [self-service](https://app.getport.io/self-serve) page.
+
+2. Click on the `+ New Action` button.
+
+3. Click on the `{...} Edit JSON` button.
+
+4. Copy and paste the following JSON configuration into the editor:
+
+    <details>
+    <summary><b>Self-service action definition (click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+    "identifier": "request_a_due_date_extension",
+    "title": "Request a due date extension",
+    "description": "Request an exception to extend the due date for an action item. This will require director and VP approval.",
+    "trigger": {
+        "type": "self-service",
+        "operation": "DAY-2",
+        "userInputs": {
+        "properties": {
+            "reason_for_exception": {
+            "icon": "DefaultProperty",
+            "type": "string",
+            "title": "Reason for Exception",
+            "minLength": 10,
+            "maxLength": 500
+            },
+            "exception_category": {
+            "icon": "DefaultProperty",
+            "type": "string",
+            "title": "Exception Category",
+            "description": "This will help the user to auto select the reason for exceptions",
+            "enum": [
+                "Complexity",
+                "No resources",
+                "MSFT dependencies"
+            ],
+            "enumColors": {
+                "Complexity": "purple",
+                "No resources": "red",
+                "MSFT dependencies": "green"
+            }
+            },
+            "date_of_resolution": {
+            "type": "string",
+            "title": "Date of Resolution",
+            "format": "date-time"
+            },
+            "director_approval": {
+            "icon": "DefaultProperty",
+            "type": "array",
+            "title": "Director Approval",
+            "description": "For now we will have the requestor manually select the approver, but in the future we want Port to automatically select the next level manager for approval.",
+            "items": {
+                "type": "string",
+                "format": "user"
+            }
+            },
+            "vp_approval": {
+            "icon": "DefaultProperty",
+            "type": "array",
+            "title": "VP Approval",
+            "items": {
+                "type": "string",
+                "format": "user"
+            }
+            }
+        },
+        "required": [
+            "reason_for_exception",
+            "date_of_resolution",
+            "director_approval",
+            "vp_approval"
+        ],
+        "order": [
+            "exception_category",
+            "reason_for_exception",
+            "date_of_resolution",
+            "director_approval",
+            "vp_approval"
+        ]
+        },
+        "blueprintIdentifier": "_rule_result"
+    },
+    "invocationMethod": {
+        "type": "UPSERT_ENTITY",
+        "blueprintIdentifier": "exception_request",
+        "mapping": {
+        "identifier": "{{ .entity.identifier + \"_exception\"}}",
+        "title": "{{ .entity.title + \"_exception\"}}",
+        "properties": {
+            "justification": "{{.inputs.reason_for_exception}}",
+            "requested_due_date": "{{.inputs.date_of_resolution}}",
+            "category": "{{.inputs.exception_category}}"
+        },
+        "relations": {
+            "action_item": "{{ .entity.identifier }}",
+            "requirement": "{{ .entity.relations.rule }}",
+            "approving_directors": "{{.inputs.director_approval}}",
+            "approving_v_ps": "{{.inputs.vp_approval}}"
+        }
+        }
+    },
+    "requiredApproval": false,
+    "icon": "HourGlass"
+    }
+    ```
+    </details>
+
+5. Click `Save`.
 
 ## Visualize and track action items
 
@@ -650,3 +613,5 @@ Who can benefit from this dashboard?
 After creating the dashboard, **group by** `Blueprint` and `Rule`.  
 
 This configuration creates a view where action items are organized by the target blueprint and the specific rule that failed, making it easy to identify which entities have issues and what they are.
+
+ <img src='/img/software-catalog/scorecard/MyActionItemsDashboard.png' width='90%' border='1px' />
