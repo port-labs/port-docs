@@ -28,7 +28,7 @@ To create a scorecard from the UI, you can use either one of the following metho
 
 3. Click the `+ Scorecard` button in the top right corner of the page.
 
-4. Follow the same steps as described in Method 2 below.
+4. Follow the same steps as described in Method 2 below. The only difference is that you need to select the `Blueprint` you want to add the scorecard to.
 
 **Method 2: From the Data model page**
 
