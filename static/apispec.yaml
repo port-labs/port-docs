@@ -33956,7 +33956,7 @@ paths:
                     - ok
                     - error
                   additionalProperties: false
-    /v1/quota/ai-invocations:
+  /v1/quota/ai-invocations:
     get:
       summary: Get monthly AI invocations quota usage
       description: This route returns the monthly quota usage for AI invocations.<br></br><br></br> To learn more about quota limitations, see the [documentation](/ai-interfaces/ai-agents/interact-with-ai-agents/#monitor-your-usage).
