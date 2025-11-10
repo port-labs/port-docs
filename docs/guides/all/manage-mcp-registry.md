@@ -444,7 +444,7 @@ In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.co
 
 ### Add MCP tools extraction script
 
-Create a Python script `scripts/extract_mcp_tools.py` in your repository. Visit the [Port product experiments repository](https://github.com/port-labs/port-product-experiments/blob/main/scripts/extract_mcp_tools.py) to copy the script used in this guide.
+Create a Python script `scripts/extract_mcp_tools.py` in your repository. Visit the [Port experimental mcp server integration repository](https://github.com/port-experimental/mcp-server-integration/blob/main/scripts/extract_mcp_tools.py) to copy the script used in this guide.
 
 The script performs the following operations:
 
