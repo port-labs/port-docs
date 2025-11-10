@@ -24,7 +24,7 @@ Sync your Azure environment to Port at scale using Azure Resource Graph and Ocea
 
 ## Overview
 
-This integration provides a robust solution for syncing your Azure resources to Port by leveraging our open-source [Ocean framework](https://ocean.port.io). It uses the Azure SDK to efficiently query the Azure Resource Graph API, ensuring high-performance data ingestion even in large-scale environments.
+This integration provides a robust solution for syncing your Azure resources to Port by leveraging our open-source [Ocean framework](https://ocean.port.io). It efficiently queries the Azure Resource Graph API, ensuring high-performance data ingestion even in large-scale environments.
 
 On each run, the integration performs a full synchronization, so your software catalog always reflects the current state of your Azure resources. You can use declarative YAML mapping to transform raw data and model it according to your software catalog's structure.
 
@@ -32,10 +32,12 @@ The integration is packaged as a Docker container and can be deployed in any env
 
 ## Supported resources
 
-The integration syncs data from two main Azure Resource Graph tables:
+The Azure Resource Graph integration supports the following `kinds`:
 
-- `Resources`: This table includes a wide array of Azure resources, such as virtual machines, storage accounts, network interfaces, and more. The integration syncs their properties, tags, and metadata.
-- `ResourceContainers`: This table contains management groups, subscriptions, and resource groups, providing the hierarchical context for your Azure resources.
+- `Resources` - represents an Azure resource. By default, they're pulled from the `resources` table, which includes a wide array of Azure resources such as virtual machines, storage accounts, network interfaces, and more. You can override this by specifying another Azure Resource Graph table. To see all supported tables, refer to the [official documentation](https://learn.microsoft.com/en-us/azure/governance/resource-graph/reference/supported-tables-resources).
+- `ResourceContainers` - represents management groups, subscriptions, and resource groups, providing the hierarchical context for your Azure resources.
+- `Subscription` - represents subscriptions from the Azure Resource Manager API.
+
 
 ## Configuration
 
@@ -52,45 +54,70 @@ This is the default mapping configuration you get after installing the Azure int
 
   ```yaml showLineNumbers
 resources:
-  - kind: resource
+  - kind: subscription
     selector:
       query: 'true'
     port:
       entity:
         mappings:
-          identifier: '.id | gsub(" ";"_")'
-          title: .name
-          blueprint: '"azureCloudResources"'
-          properties:
-            tags: .tags
-            type: .type
-            location: .location
-  - kind: resourceContainer
-    selector:
-      query: .type == "microsoft.resources/subscriptions"
-    port:
-      entity:
-        mappings:
-          identifier: '.id | gsub(" ";"_")'
-          title: .name
+          identifier: .subscriptionId
+          title: .displayName
           blueprint: '"azureSubscription"'
           properties:
-            subscriptionId: .subscriptionId
-            location: .location
+            tags: .tags
+            state: .state
+            subscriptionPolicies: .subscriptionPolicies
   - kind: resourceContainer
     selector:
-      query: .type == "microsoft.resources/subscriptions/resourcegroups"
+      query: 'true'
+      graphQuery: >-
+        "resourcecontainers 
+        | where type =~'microsoft.resources/subscriptions/resourcegroups' 
+        | project id, type, name, location, tags, subscriptionId, resourceGroup 
+        | extend resourceGroup=tolower(resourceGroup) 
+        | extend type=tolower(type)"
     port:
       entity:
         mappings:
-          identifier: '.id | gsub(" ";"_")'
+          identifier: .id | gsub(" ";"_")
           title: .name
           blueprint: '"azureResourceGroup"'
           properties:
             tags: .tags
+            type: .type
             location: .location
           relations:
-            subscription: '("/subscriptions/" + .subscriptionId) | gsub(" ";"_")'
+            subscription: ("/subscriptions/" + .subscriptionId) | gsub(" ";"_")
+  - kind: resource
+    selector:
+      query: 'true'
+      graphQuery: >-
+        "resources 
+        | project id, type, name, location, tags, subscriptionId, resourceGroup 
+        | extend resourceGroup=tolower(resourceGroup) 
+        | extend type=tolower(type) 
+        | join kind=leftouter (
+            resourcecontainers
+            | where type =~ 'microsoft.resources/subscriptions/resourcegroups'
+            | project rgName=tolower(name), rgTags=tags, rgSubscriptionId=subscriptionId
+        ) on $left.subscriptionId == $right.rgSubscriptionId and
+        $left.resourceGroup == $right.rgName 
+        | project id, type, name, location, tags, subscriptionId, resourceGroup, rgTags"
+    port:
+      entity:
+        mappings:
+          identifier: .id | gsub(" ";"_")
+          title: .name
+          blueprint: '"azureResource"'
+          properties:
+            tags: .tags
+            location: .location
+          relations:
+            resource_group: >-
+              ("/subscriptions/" + .subscriptionId + "/resourceGroups/"  +
+              .resourceGroup) | gsub(" ";"_")
+
+
   ```
 </details>
 
@@ -580,8 +607,12 @@ You can use the following Port blueprint definitions and integration configurati
     - kind: resource
       selector:
         query: 'true'
-        resource_types:
-          - microsoft.insights/datacollectionendpoints
+        graphQuery: >-
+          "resources 
+          | where type in~ ('microsoft.insights/datacollectionendpoints', 'microsoft.compute/virtualmachines')
+          | project id, type, name, location, tags, subscriptionId, resourceGroup 
+          | extend resourceGroup=tolower(resourceGroup) 
+          | extend type=tolower(type) 
       port:
         entity:
           mappings:
@@ -595,9 +626,6 @@ You can use the following Port blueprint definitions and integration configurati
   ```
 </details>
 
-:::note resource type filter
-You can filter resources from Azure Resource Graph by specifying `resource_types` in the mapping configuration. This provides precise control over synced data, streamlining ingestion and keeping your catalog focused on relevant resources.
-:::
 
 ### Mapping cloud resources and resource groups
 
@@ -635,7 +663,7 @@ You can use the following Port blueprint definitions and integration configurati
       "relations": {}
     },
     {
-      "identifier": "azureCloudResources",
+      "identifier": "azureResource",
       "description": "This blueprint represents an AzureCloud Resource in our software catalog",
       "title": "Azure Cloud Resources",
       "icon": "Git",
@@ -679,12 +707,14 @@ You can use the following Port blueprint definitions and integration configurati
 resources:
   - kind: resourceContainer
     selector:
-      query: .type == "microsoft.resources/subscriptions/resourcegroups"
-      tags:
-        included:
-          environment: staging
-        exluded:
-          environment: production
+      query: 'true'
+      graphQuery: >-
+         "resourcecontainers 
+          | where type =~ 'microsoft.resources/subscriptions/resourcegroups' 
+          | where (tostring(tags['environment']) =~ 'prod')
+          | project id, type, name, location, tags, subscriptionId, resourceGroup 
+          | extend resourceGroup=tolower(resourceGroup) 
+          | extend type=tolower(type)"
     port:
       entity:
         mappings:
@@ -698,17 +728,24 @@ resources:
   - kind: resource
     selector:
       query: 'true'
-      tags:
-        included:
-          environment: staging
-        exluded:
-          environment: production
+      graphQuery: >-
+          "resources 
+           | project id, type, name, location, tags, subscriptionId, resourceGroup 
+           | extend resourceGroup=tolower(resourceGroup) 
+           | extend type=tolower(type) 
+           | join kind=leftouter (
+              resourcecontainers
+              | where type =~ 'microsoft.resources/subscriptions/resourcegroups'
+              | project rgName=tolower(name), rgTags=tags, rgSubscriptionId=subscriptionId
+          ) on $left.subscriptionId == $right.rgSubscriptionId and $left.resourceGroup == $right.rgName 
+           | where (tostring(rgTags['environment']) =~ 'prod') and not (tostring(rgTags['environment']) =~ 'staging')
+           | project id, type, name, location, tags, subscriptionId, resourceGroup, rgTags "
     port:
       entity:
         mappings:
           identifier: .id | gsub(" ";"_")
           title: .name
-          blueprint: '"azureCloudResources"'
+          blueprint: '"azureResource"'
           properties:
             tags: .tags
             type: .type
@@ -716,19 +753,6 @@ resources:
           relations:
             resource_group: >-
               ("/subscriptions/" + .subscriptionId + "/resourceGroups/"  + .resourceGroup) | gsub(" ";"_")
+
   ```
 </details>
-
-:::note resource group tags
-You can filter Azure resources using tags from their parent resource groups. This allows you to define both inclusion and exclusion rules in a single configuration, giving you precise control over which resources are synchronized.
-:::
-
-## Frequently asked questions
-
-### Why should I filter resources by their resource group tags?
-
-Filtering resources by their parent resource group's tags simplifies management and synchronization for several reasons:
-
-- **Simplified Tagging**: Apply tags at the resource group level instead of to individual resources. This is more manageable and ensures resources share a common context.
-- **Consistent Classification**: Resource group tags are often more consistent than individual resource tags, allowing for reliable filtering of related resources.
-- **Improved Efficiency**: Filtering reduces the amount of data synced from Azure, speeding up ingestion and creating a more focused software catalog.
