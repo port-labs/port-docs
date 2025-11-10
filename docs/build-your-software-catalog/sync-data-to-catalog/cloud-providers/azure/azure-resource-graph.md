@@ -16,15 +16,12 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 This integration is in closed beta and is not available for general use. Please contact [Port's support team](http://support.port.io/) to request access.
 :::
 
-Sync your Azure environment to Port at scale using Azure Resource Graph and Ocean framework. This integration is designed for high-volume data ingestion across multiple subscriptions, offering several key advantages:
+This integration provides a robust solution for syncing your Azure resources to Port by leveraging our open-source [Ocean framework](https://ocean.port.io). It is designed for high-volume data ingestion across multiple subscriptions and efficiently queries the Azure Resource Graph API, ensuring high-performance data ingestion even in large-scale environments.
 
+Key advantages:
 - **Centralized Syncing**: Ingest resources from all your Azure subscriptions with a single deployment.
 - **High-Speed Ingestion**: Leverage Azure Resource Graph to query and sync up to 5000 subscriptions simultaneously for maximum performance.
 - **Customizable Mapping**: Take full control over which resource types are ingested and how they are mapped to your software catalog.
-
-## Overview
-
-This integration provides a robust solution for syncing your Azure resources to Port by leveraging our open-source [Ocean framework](https://ocean.port.io). It efficiently queries the Azure Resource Graph API, ensuring high-performance data ingestion even in large-scale environments.
 
 On each run, the integration performs a full synchronization, so your software catalog always reflects the current state of your Azure resources. You can use declarative YAML mapping to transform raw data and model it according to your software catalog's structure.
 
@@ -50,7 +47,7 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 This is the default mapping configuration you get after installing the Azure integration.
 
 <details>
-<summary><b>Default mapping configuration (Click to expand)</b></summary>
+<summary><b>Default mapping configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 resources:
@@ -140,13 +137,13 @@ For example, instead of fetching all resources and then filtering them in the ma
 Here is an example of a broad query versus an optimized query:
 
 **Broad Query:**
-```kusto
+```kusto showLineNumbers
 resources
 | project id, type, name, location, tags, subscriptionId, resourceGroup
 ```
 
 **Optimized Query:**
-```kusto
+```kusto showLineNumbers
 resources
 | where type in~ ('microsoft.compute/virtualmachines', 'microsoft.storage/storageaccounts') and tags.environment == 'production'
 | project id, type, name, location, tags, subscriptionId, resourceGroup
@@ -174,20 +171,18 @@ Keep the following credentials handy after setup:
 
 ## Installation
 
-<Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="helm">
+<Tabs groupId="installation-methods" queryString defaultValue="helm">
 
 <TabItem value="helm" label="Helm (Scheduled)" >
 
-The Azure resource graph exporter is deployed using helm on kubernetes.
+Deploy the Azure resource graph exporter using Helm on Kubernetes to support scheduled resyncs of resources from Azure to Port.
 
-This way of deployment supports scheduled resyncs of resources from Azure to Port.
-
-<h2> Prerequisites </h2>
+<h2>Prerequisites</h2>
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
-<h2> Installation </h2>
+<h2>Installation</h2>
 
 <IntegrationVersion integration="azure-resource-graph" />
 
@@ -226,19 +221,19 @@ helm upgrade --install azure port-labs/port-ocean \
 
 <TabItem value="ci" label="CI/CD (Scheduled)">
 
-<Tabs groupId="ci-methods" defaultValue="azureDevOps" queryString="ci-methods">
+<Tabs groupId="ci-methods" queryString defaultValue="azureDevOps">
 
 <TabItem value="azureDevOps" label="Azure DevOps">
 
-The Azure exporter is deployed using Azure DevOps pipline, which supports scheduled resyncs of resources from Azure to Port.
+Deploy the Azure exporter using an Azure DevOps pipeline to support scheduled resyncs of resources from Azure to Port.
 
-<h2> Prerequisites </h2>
+<h2>Prerequisites</h2>
 
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - Access to an Azure DevOps project with permission to configure pipelines and secrets.
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
-<h2> Installation </h2>
+<h2>Installation</h2>
 
 Now that you have the Azure App Registration details, you can set up the Azure exporter using an Azure DevOps pipeline.
 
@@ -256,7 +251,7 @@ Here is an example for `azure-pipeline-integration.yml` workflow file:
 Make sure to change the highlighted line to your variable group's name.
 
 <details>
-<summary><b>Azure pipline integration (Click to expand)</b></summary>
+<summary><b>Azure pipeline integration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 name: Azure Resource Graph Exporter Pipeline
@@ -321,12 +316,12 @@ steps:
 
 <TabItem value="github" label="GitHub Actions">
 
-The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of resources from Azure to Port.
+Deploy the Azure exporter using Github Actions to support scheduled resyncs of resources from Azure to Port.
 
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
-<h2> Installation </h2>
+<h2>Installation</h2>
 
 Now that you have the Azure App Registration details, you can set up the Azure exporter using Github Actions.
 
@@ -347,7 +342,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 Here is an example for `azure-rg-integration.yml` workflow file:
 
 <details>
-<summary><b>GitHub Action integration (Click to expand)</b></summary>
+<summary><b>GitHub Action integration (click to expand)</b></summary>
 
 		```yaml showLineNumbers
 		name: Azure Resource Graph Exporter Workflow
@@ -379,13 +374,13 @@ Here is an example for `azure-rg-integration.yml` workflow file:
 
 <TabItem value="argocd" label="ArgoCD">
 
-<h2> Prerequisites </h2>
+<h2>Prerequisites</h2>
 
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) >= 2.0.0
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
-<h2> Installation </h2>
+<h2>Installation</h2>
 
 1. Create a `values.yaml` file in `argocd/azure-rg-integration` in your git repository with the content:
 
@@ -407,11 +402,11 @@ Here is an example for `azure-rg-integration.yml` workflow file:
 
 :::note Replace placeholders
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.  
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+Multiple sources ArgoCD documentation can be found in the [official documentation](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 :::
 
 <details>
-<summary><b>ArgoCD Application (Click to expand)</b></summary>
+<summary><b>ArgoCD Application (click to expand)</b></summary>
 
 		```yaml showLineNumbers
 		apiVersion: argoproj.io/v1alpha1
@@ -465,7 +460,7 @@ kubectl apply -f azure-rg-integration.yaml
 
 <TabItem value="gitlab" label="GitLab">
 
-<h2> Prerequisites </h2>
+<h2>Prerequisites</h2>
 
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
@@ -532,12 +527,12 @@ ingest_data:
 
 <TabItem value="on-prem" label="On-Prem (Once)">
 
-<h2> Prerequisites </h2>
+<h2>Prerequisites</h2>
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
-<h2> Installation </h2>
+<h2>Installation</h2>
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using Docker.
 
@@ -552,7 +547,7 @@ You should have the following information ready:
 	- `AZURE_TENANT_ID`: The Directory (tenant) ID from the Azure App Registration.
 
 <details>
-<summary>Environment Variables</summary>
+<summary><b>Environment Variables (click to expand)</b></summary>
 
 | Variable                                          | Description                                                                                                                           |
 |---------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
@@ -572,7 +567,7 @@ You should have the following information ready:
 
 For example:
 
-```bash
+```bash showLineNumbers
 docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__PORT__CLIENT_ID="$PORT_CLIENT_ID" \
   -e OCEAN__PORT__CLIENT_SECRET="$PORT_CLIENT_SECRET" \
@@ -592,7 +587,7 @@ ghcr.io/port-labs/port-ocean-azure-rg:latest
 
 ## Examples
 
-### Mapping Azure Cloud resources
+### Mapping Azure cloud resources
 
 The following example demonstrates how to ingest your Azure Subscriptions to Port.  
 You can use the following Port blueprint definitions and integration configuration:
