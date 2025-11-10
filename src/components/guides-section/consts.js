@@ -1,4 +1,4 @@
-import guideMetadata from './guide-metadata.json';
+const guideMetadata = require('./guide-metadata.json');
 
 export const tagsCategoryMap = {
 
@@ -1480,7 +1480,13 @@ export const availableGuides = [
         link: "/guides/all/manage-ai-instructions",
     },
     {
-        title: "Streamline IaC with AI",
+        title: "Auto-enhance PR descriptions with AI",
+        description: "Automatically generate comprehensive, template-compliant PR descriptions using Claude Code",
+        tags: ["SDLC", "GitHub", "AI", "Automations"],
+        logos: ["AI", "GitHub", "Claude Code"],
+        link: "/guides/all/auto-enhance-pr-descriptions-with-ai",
+    }
+      ,{title: "Streamline IaC with AI",
         description: "Use Port AI agents to automate IaC provisioning and management",
         tags: ["IaC for devs", "Github Copilot", "AI", "Actions"],
         logos: ["AI", "AWS"],
@@ -1513,6 +1519,13 @@ export const availableGuides = [
         tags: [ "BitBucket", "GitHub", "Actions", "Scorecards"],
         logos: ["BitBucket", "GitHub"],
         link: "/guides/all/migrate-project-from-bibucket-to-github",
+    },
+    {
+        title: "Orchestrate incident response with AI",
+        description: "Orchestrate incident response with AI using Port's AI agents and automations",
+        tags: ["Self Healing Incidents", "AI", "Jira", "PagerDuty", "Slack"],
+        logos: ["Jira", "PagerDuty", "Slack"],
+        link: "/guides/all/orchestrate-incident-response-with-ai",
     }
 ]
 

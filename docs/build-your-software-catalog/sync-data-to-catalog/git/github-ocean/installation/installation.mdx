@@ -32,7 +32,20 @@ Starting from **version 3.0.0-beta**, the GitHub integration supports syncing da
 
 :::info Multi-organization configuration
 - GitHub App and fine-grained PAT: use `githubOrganization` (single organization).
-- Classic PAT: to sync multiple organizations, list them in your port mapping under `organizations`.
+- Classic PAT:
+  - To sync multiple organizations, list them in your port mapping under `organizations`.
+
+    ```yaml showLineNumbers
+    deleteDependentEntities: true
+    createMissingRelatedEntities: true
+    enableMergeEntity: true
+    organizations:
+      - org1
+      - org2
+    # ... rest of your mapping (repositoryType, resources, etc.) ...
+    ```
+
+  - If `organizations` are not specified, the integration will sync all organizations the classic PAT is scoped to.
 - Precedence: if `githubOrganization` is set in the environment variables or config and `organizations` are listed in port mapping, the integration syncs only the `githubOrganization` (single‑org behavior).
 - Performance: syncing multiple organizations increases API calls and may slow down the integration.
 :::
