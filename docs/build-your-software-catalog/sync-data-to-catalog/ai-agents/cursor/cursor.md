@@ -7,6 +7,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 # Cursor
 
 Port's Cursor integration allows you to ingest Cursor usage metrics into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework.
+After installing this integration, you would be able to visualize your Cursor usage metrics using Port's dashboards.
 
 <img src="/img/ai-agents/cursorDashboard.png" border="1px" width="100%" />
 
@@ -1212,7 +1213,10 @@ You now have a blank dashboard where you can add widgets to visualize your Curso
 
 Create the following widgets to gain insights into your Cursor usage:
 
-<h3> Total Active Users</h3>
+<h4> Total Active Users</h4>
+
+<details>
+<summary><b>Total Active Users (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Number Chart**.
 
@@ -1228,8 +1232,13 @@ Create the following widgets to gain insights into your Cursor usage:
    - **Chart type**: Select `Count entities`.
 
 3. Click **Save**.
+</details>
 
-<h3>Total AI Accepts</h3>
+
+<h4>Total AI Accepts</h4>
+
+<details>
+<summary><b>Total AI Accepts (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Number Chart**.
 
@@ -1251,7 +1260,12 @@ Create the following widgets to gain insights into your Cursor usage:
 
 3. Click **Save**.
 
-<h3>Total Cost</h3>
+</details>
+
+<h4>Total Cost</h4>
+
+<details>
+<summary><b>Total Cost (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Number Chart**.
 
@@ -1271,7 +1285,12 @@ Create the following widgets to gain insights into your Cursor usage:
 
 3. Click **Save**.
 
-<h3>AI Suggestion Acceptance Rate Over Time</h3>
+</details>
+
+<h4>AI Suggestion Acceptance Rate Over Time</h4>
+
+<details>
+<summary><b>AI Suggestion Acceptance Rate Over Time (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
 
@@ -1299,7 +1318,12 @@ Create the following widgets to gain insights into your Cursor usage:
 
 3. Click **Save**.
 
-<h3>Daily Cost Trends</h3>
+</details>
+
+<h4>Daily Cost Trends</h4>
+
+<details>
+<summary><b>Daily Cost Trends (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
 
@@ -1327,7 +1351,12 @@ Create the following widgets to gain insights into your Cursor usage:
 
 3. Click **Save**.
 
-<h3>AI Code Generation Trends</h3>
+</details>
+
+<h4>AI Code Generation Trends</h4>
+
+<details>
+<summary><b>AI Code Generation Trends (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
 
@@ -1354,8 +1383,12 @@ Create the following widgets to gain insights into your Cursor usage:
    - **Measure time by**: `$record_date`.
 
 3. Click **Save**.
+</details>
 
-<h3>AI Model Usage Distribution</h3>
+<h4>AI Model Usage Distribution</h4>
+
+<details>
+<summary><b>AI Model Usage Distribution (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Pie Chart**.
 
@@ -1373,7 +1406,12 @@ Create the following widgets to gain insights into your Cursor usage:
 
 3. Click **Save**.
 
-<h3>User Activity Breakdown</h3>
+</details>
+
+<h4>User Activity Breakdown</h4>
+
+<details>
+<summary><b>User Activity Breakdown (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Table**.
 
@@ -1398,7 +1436,12 @@ Create the following widgets to gain insights into your Cursor usage:
    - `record_date`
 4. Click **Save**.
 
-<h3>Daily Commit Activity</h3>
+</details>
+
+<h4>Daily Commit Activity</h4>
+
+<details>
+<summary><b>Daily Commit Activity (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
 
@@ -1425,3 +1468,5 @@ Create the following widgets to gain insights into your Cursor usage:
    - **Measure time by**: `$record_date`.
 
 3. Click **Save**.
+
+</details>
