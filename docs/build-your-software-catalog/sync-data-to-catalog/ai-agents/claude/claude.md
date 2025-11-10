@@ -4,26 +4,26 @@ import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalo
 import AdvancedConfig from '/docs/generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Claude
+# Claude AI 
 
-Port's Claude integration allows you to ingest Claude API usage metrics into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework.
+Port's Claude AI integration allows you to ingest Claude API usage metrics into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework. After installing the integration, you can create dashboards to monitor API usage, track costs, analyze model performance, and measure workspace-level metrics using Port's dashboard widgets.
 
 <img src="/img/ai-agents/claudeDashboard.png" border="1px" width="100%" />
 
 
 ## Supported metrics
 
-The Claude integration can ingest usage metrics from the Anthropic Admin API into Port:
+The Claude AI integration can ingest usage metrics from the Anthropic Admin API into Port:
 
-**Available for all Claude organizations:**
+**Available for all Claude AI organizations:**
 - `claude_usage_record` - Organization-level usage metrics from `/v1/organizations/usage_report/messages` including token consumption (input/output/cache), request counts, and detailed breakdowns by workspace, model, service tier, context window, and API key.
 - `claude_cost_record` - Cost tracking from `/v1/organizations/cost_report` for monitoring organizational spending.
 - `claude_workspace_usage` - Workspace-level usage metrics when grouping by `workspace_id`.
 - `claude_model_usage` - Model-level usage metrics when grouping by `model`.
-- `claude_code_analytics` - Claude Code usage metrics from `/v1/organizations/usage_report/claude_code` including sessions, lines of code edited, commits, and pull requests (requires Claude Code access).
+- `claude_code_analytics` - Claude AI Code usage metrics from `/v1/organizations/usage_report/claude_code` including sessions, lines of code edited, commits, and pull requests (requires Claude AI Code access).
 
 :::info User-level metrics
-The Anthropic Admin API does not currently support grouping usage data by user (`user_id`). User-level analytics are not available through these endpoints. If you need user-level insights, consider using Claude Code analytics or other internal telemetry sources.
+The Anthropic Admin API does not currently support grouping usage data by user (`user_id`). User-level analytics are not available through these endpoints. If you need user-level insights, consider using Claude AI Code analytics or other internal telemetry sources.
 :::
 
 
@@ -147,15 +147,15 @@ Before the integration can sync data, you need to create the required blueprints
 3. Copy and paste each blueprint JSON from the sections below.
 
     <details>
-    <summary><b>Claude Usage Record Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude AI Usage Record Blueprint (Click to expand)</b></summary>
 
     Organization-level daily usage metrics:
 
     ```json showLineNumbers
     {
       "identifier": "claude_usage_record",
-      "description": "A daily summary record of Claude API usage for an organization",
-      "title": "Claude Usage Record",
+      "description": "A daily summary record of Claude AI API usage for an organization",
+      "title": "Claude AI Usage Record",
       "icon": "Anthropic",
       "schema": {
         "properties": {
@@ -249,7 +249,7 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Claude Cost Record Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude AI Cost Record Blueprint (Click to expand)</b></summary>
 
     Cost tracking for organizational spending:
 
@@ -257,7 +257,7 @@ Before the integration can sync data, you need to create the required blueprints
     {
       "identifier": "claude_cost_record",
       "description": "Daily cost tracking for Claude API usage",
-      "title": "Claude Cost Record",
+      "title": "Claude AI Cost Record",
       "icon": "Anthropic",
       "schema": {
         "properties": {
@@ -298,7 +298,7 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Claude Workspace Usage Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude AI Workspace Usage Blueprint (Click to expand)</b></summary>
 
     Workspace-level usage metrics:
 
@@ -306,7 +306,7 @@ Before the integration can sync data, you need to create the required blueprints
     {
       "identifier": "claude_workspace_usage",
       "description": "Usage metrics broken down by workspace",
-      "title": "Claude Workspace Usage",
+      "title": "Claude AI Workspace Usage",
       "icon": "Anthropic",
       "schema": {
         "properties": {
@@ -394,7 +394,7 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Claude Model Usage Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude AI Model Usage Blueprint (Click to expand)</b></summary>
 
     Model-level usage statistics:
 
@@ -402,7 +402,7 @@ Before the integration can sync data, you need to create the required blueprints
     {
       "identifier": "claude_model_usage",
       "description": "Usage metrics broken down by Claude model type",
-      "title": "Claude Model Usage",
+      "title": "Claude AI Model Usage",
       "icon": "Anthropic",
       "schema": {
         "properties": {
@@ -495,7 +495,7 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Claude Code analytics Blueprint (Click to expand)</b></summary>
+    <summary><b>Claude AI Code analytics Blueprint (Click to expand)</b></summary>
 
     Claude Code usage metrics for tracking development activity:
 
@@ -503,7 +503,7 @@ Before the integration can sync data, you need to create the required blueprints
     {
       "identifier": "claude_code_analytics",
       "description": "Daily Claude Code usage metrics including sessions, lines of code, commits, and PRs",
-      "title": "Claude Code Analytics",
+      "title": "Claude AI Code Analytics",
       "icon": "Anthropic",
       "schema": {
         "properties": {
@@ -598,7 +598,7 @@ You can set headers from the Ocean integration UI (Advanced settings → Headers
 
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources).
 
-2. Find your Claude integration in the list.
+2. Find your Claude AI integration in the list.
 
 3. Click on the integration to open the mapping editor.
 
@@ -760,7 +760,7 @@ You can set headers from the Ocean integration UI (Advanced settings → Headers
     <details>
     <summary><b>Claude Code analytics mapping (Click to expand)</b></summary>
 
-    Track Claude Code usage metrics including sessions, lines of code, commits, and pull requests:
+    Track Claude AI Code usage metrics including sessions, lines of code, commits, and pull requests:
 
     :::info Requires Claude Code access
     This endpoint requires access to Claude Code. You'll receive an error if your organization doesn't have Claude Code enabled.
@@ -839,7 +839,10 @@ You now have a blank dashboard where you can add widgets to visualize your Claud
 
 Create the following widgets to gain insights into your Claude API usage:
 
-<h3>Total API Requests</h3>
+<h4>Total API Requests</h4>
+
+<details>
+<summary><b>Total API Requests (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Number Chart**.
 
@@ -859,8 +862,12 @@ Create the following widgets to gain insights into your Claude API usage:
    - **Function**: `Sum`.
 
 3. Click **Save**.
+</details>
 
-<h3>Total Cost</h3>
+<h4>Total Cost</h4>
+
+<details>
+<summary><b>Total Cost (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Number Chart**.
 
@@ -881,8 +888,12 @@ Create the following widgets to gain insights into your Claude API usage:
    - **Function**: `Sum`.
 
 3. Click **Save**.
+</details>
 
-<h3>API Success Rate</h3>
+<h4>API Success Rate</h4>
+
+<details>
+<summary><b>API Success Rate (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Number Chart**.
 
@@ -901,8 +912,12 @@ Create the following widgets to gain insights into your Claude API usage:
    - **Function**: `Average`.
 
 3. Click **Save**.
+</details>
 
-<h3>Token Usage Over Time</h3>
+<h4>Token Usage Over Time</h4>
+
+<details>
+<summary><b>Token Usage Over Time (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
 
@@ -930,7 +945,12 @@ Create the following widgets to gain insights into your Claude API usage:
 
 3. Click **Save**.
 
-<h3>Daily Cost Trends</h3>
+</details>
+
+<h4>Daily Cost Trends</h4>
+
+<details>
+<summary><b>Daily Cost Trends (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
 
@@ -958,7 +978,12 @@ Create the following widgets to gain insights into your Claude API usage:
 
 3. Click **Save**.
 
-<h3>Model Usage Distribution</h3>
+</details>
+
+<h4>Model Usage Distribution</h4>
+
+<details>
+<summary><b>Model Usage Distribution (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Pie Chart**.
 
@@ -976,7 +1001,12 @@ Create the following widgets to gain insights into your Claude API usage:
 
 3. Click **Save**.
 
-<h3>Request Success vs Failure Rate</h3>
+</details>
+
+<h4>Request Success vs Failure Rate</h4>
+
+<details>
+<summary><b>Request Success vs Failure Rate (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
 
@@ -1004,7 +1034,12 @@ Create the following widgets to gain insights into your Claude API usage:
 
 3. Click **Save**.
 
-<h3>Claude Code Activity</h3>
+</details>
+
+<h4>Claude Code Activity</h4>
+
+<details>
+<summary><b>Claude Code Activity (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
 
@@ -1032,7 +1067,12 @@ Create the following widgets to gain insights into your Claude API usage:
 
 3. Click **Save**.
 
-<h3>Cache Efficiency</h3>
+</details>
+
+<h4>Cache Efficiency</h4>
+
+<details>
+<summary><b>Cache Efficiency (click to expand)</b></summary>
 
 1. Click on **`+ Widget`** and select **Line Chart**.
 
@@ -1059,4 +1099,6 @@ Create the following widgets to gain insights into your Claude API usage:
    - **Measure time by**: `record_date`.
 
 3. Click **Save**.
+
+</details>
 

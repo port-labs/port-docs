@@ -238,7 +238,14 @@ export const integrations = [
     icon: '/img/guides/icons/GithubCopilot.svg',
     darkIcon: '/img/guides/icons/dark/GithubCopilot.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/github-copilot',
-  }
+  },
+  {
+    name: 'Claude AI',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/ClaudeAI.svg',
+    darkIcon: '/img/guides/icons/dark/ClaudeAI.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/claude',
+  },
 ];
 
 export const categories = {
