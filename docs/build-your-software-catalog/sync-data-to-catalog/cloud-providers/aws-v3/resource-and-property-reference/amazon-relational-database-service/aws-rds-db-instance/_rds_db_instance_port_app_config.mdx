@@ -1,0 +1,27 @@
+<details>
+<summary><b>RDS DB Instance mapping configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::RDS::DBInstance
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.DBInstanceArn
+          title: .Properties.DBInstanceIdentifier
+          blueprint: '"rdsDbInstance"'
+          properties:
+            dbInstanceIdentifier: .Properties.DBInstanceIdentifier
+            dbInstanceArn: .Properties.DBInstanceArn
+            engine: .Properties.Engine
+            dbInstanceClass: .Properties.DBInstanceClass
+            dbInstanceStatus: .Properties.DBInstanceStatus
+            multiAZ: .Properties.MultiAZ
+            storageEncrypted: .Properties.StorageEncrypted
+          relations:
+            account: .__ExtraContext.AccountId
+```
+
+</details>

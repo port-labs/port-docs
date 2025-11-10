@@ -62,12 +62,6 @@ To connect Cursor to Port's remote MCP, follow these steps:
 
    <img src="/img/ai-agents/MCPInstallCursorStep4.png" border="1px" width="100%" />
 
-:::warning Authentication window behavior
-In some cases, after clicking "Accept" in the authentication popup, the window won't get closed but the connection is established successfully. You can safely close the window.
-
-If you still don't see the tool, try it a couple of times. We are aware of this behavior and working to improve it.
-:::
-
 </TabItem>
 <TabItem value="vscode" label="VSCode">
 To connect VSCode to Port's remote MCP server, follow these detailed steps. For complete instructions, refer to the [official VS Code MCP documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers).
@@ -87,14 +81,6 @@ If you encounter errors:
 - **Missing Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
 - **Network issues**: Check your internet connection and proxy settings
 - **Permission issues**: You may need to run with appropriate permissions
-:::
-
-:::warning VSCode action tool issue
-In some versions of VS Code, the MCP server might not start or return an error in the chat because of a configuration issue with the action related tools. To deal with it, [deselect](/ai-interfaces/port-mcp-server/available-tools#select-which-tools-to-use)  the tools `create_action`, `update_action`, and `delete_action`.
-This is relevant for cases where you see an error like this one:
-```
-Failed to validate tool mcp_port_create_action: Error: tool parameters array type must have items. Please open a Github issue for the MCP server or extension which provides this tool
-```
 :::
 
 **Step 1: Configure MCP Server Settings**
