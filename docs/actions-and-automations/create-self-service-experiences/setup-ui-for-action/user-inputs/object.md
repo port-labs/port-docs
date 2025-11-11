@@ -153,8 +153,8 @@ resource "port_action" "myAction" {
 
 Object validations support the following operators:
 
-- `properties` - defines the type for keys if they appear (use `required` array to make keys mandatory);
-- `additionalProperties` - whether keys not defined in `properties` are allowed (boolean) or what type they should be (type definition);
+- `properties` - defines the type for keys if they appear (use `required` array to make keys mandatory).
+- `additionalProperties` - whether keys not defined in `properties` are allowed (boolean) or what type they should be (type definition).
 - `patternProperties` - which regex pattern should properties follow
 
 :::tip
