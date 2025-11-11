@@ -1,0 +1,8 @@
+{
+  "label": "LLM Provider Management",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Manage and configure the Large Language Model (LLM) providers that power all AI interactions in Port. This feature gives you control over which AI models are used across Port AI Assistant, AI Agents, and other AI-powered features."
+  }
+}

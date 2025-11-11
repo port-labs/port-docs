@@ -1,0 +1,94 @@
+<details>
+<summary><b>SCA blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "checkmarxSCA",
+  "title": "Checkmarx SCA",
+  "icon": "Checkmarx",
+  "schema": {
+    "properties": {
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "description": "The severity level of the SCA finding."
+      },
+      "state": {
+        "type": "string",
+        "title": "State",
+        "description": "The state of the SCA finding."
+      },
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "A description of the SCA finding."
+      },
+      "cweId": {
+        "type": "string",
+        "title": "CWE ID",
+        "description": "The Common Weakness Enumeration (CWE) identifier related to the vulnerability."
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "description": "The current status of the SCA finding."
+      },
+      "created": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created",
+        "description": "The date and time when the SCA finding was created."
+      },
+      "firstScanId": {
+        "type": "string",
+        "title": "First Scan ID",
+        "description": "The identifier of the first scan in which this SCA issue was detected."
+      },
+      "packageIdentifier": {
+        "type": "string",
+        "title": "Package Identifier",
+        "description": "The identifier of the affected package."
+      },
+      "recommendations": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Recommendations",
+        "description": "Recommended actions to remediate the SCA finding."
+      },
+      "recommendedVersion": {
+        "type": "string",
+        "title": "Recommended Version",
+        "description": "The recommended version of the package to resolve the vulnerability."
+      },
+      "packageData": {
+        "items": {
+          "type": "object"
+        },
+        "type": "array",
+        "title": "Package Data"
+      },
+      "confidenceLevel": {
+        "type": "string",
+        "title": "Confidence Level",
+        "description": "The confidence level of the SCA finding."
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "scan": {
+      "title": "Scan",
+      "target": "checkmarxScan",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

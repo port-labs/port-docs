@@ -5,6 +5,22 @@ description: Learn how to leverage Port's AI capabilities to enhance incident ma
 
 # Generate incident updates with AI
 
+<center>
+<div className="video-container">
+  <iframe 
+    style={{borderRadius:'4px'}}
+    width="568"
+    height="320"
+    src="https://www.youtube.com/embed/w0AMrc0-O_k" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+</center>
+<br/>
+
 When you are busy fixing an incident, you do not have time to write updates. Yes, others still need to know what is going on. In this guide, we will learn how to build an AI agent that generates incident updates and sends Slack notifications with relevant technical context.
 
 <img src='/img/guides/incidentUpdateWithAIArchitecture.png' border="1px" width="100%" />
@@ -249,17 +265,9 @@ Next, we will create an AI agent that generates helpful incident updates with co
       "icon": "Alert",
       "team": [],
       "properties": {
-        "description": "AI agent that generates contextual incident updates and sends them to Slack with on-call tagging",
+        "description": "AI agent that generates helpful incident updates and sends them to Slack with on-call tagging",
         "status": "active",
-        "allowed_blueprints": [
-          "pagerdutyIncident",
-          "service",
-          "githubRepository"
-        ],
-        "allowed_actions": [
-          "update_incident_with_ai_update"
-        ],
-        "prompt": "You are an expert incident management AI agent generating clear, contextual incident updates for Slack notifications.\nYour task is to produce Slack-compatible incident updates for incident changes shared with engineering and on-call teams. Focus on clarity, relevance, and next steps.\n\nYour Slack incident update MUST follow this structure and tone:\n\n- 🚨 *Problem:* Brief description of what changed and why it triggered this update.\n- 📊 *Impact:* Which services or what is affected? Any delivery, uptime, or user-facing issues?\n- 🧠 *Insights / Diagnostics:* Add key technical context from repository metadata: last commit, contributor, vulnerabilities, etc or draw from your technical knowledge on what would have caused this.\n- 🔧 *Action Required:* List next steps for the on-call team. Be specific about what they need to check or resolve.\n\n🔧 **Slack Output Rules**\n* NEVER USE `**bold**` or `[text](url)` — instead use:\n    * `*bold*` for emphasis\n     * `<https://url.com|Label>` for links\n* Use emoji to indicate sections: `🚨`, `📋`, `👥`, `🔄`\n* Use bullet points (`-`) for clarity\n* Separate sections with one line space (not headers)\n* Never include raw markdown headers like `###` or `---`\n* Your final output **must** look clean when copy-pasted into a Slack message.\n\n*After generating your incident update, you MUST ALWAYS run the 'update_incident_with_ai_update' action to save the update to the incident record.*\n\n## Sample Response Format\n🚨 *Incident Update: API Latency Spike on analytics-service*\n\n*Problem:*\n`analytics-service` has breached its latency SLO for the past 15 minutes. Response time spiked from 800ms to 4.5s\n\n*Impact:*\nThis service powers real-time analytics for customer dashboards. Users may experience slow or failing dashboard loads, particularly in high-traffic regions.\n\n*Insights/Diagnostics:*\n- The latest deployment (2025-07-21 13:03 UTC) introduced new filtering logic\n- Recent commits by Maria include changes to Redis query batching and fallback caching\n- Maria is not currently on-call. Assigned engineers: Omri and Tal.\n- 2 known vulnerability exists—could be a contributing factor.\n\n🔧 *Action Required:*\n- On-call engineers Marvin and Tal should roll back to the previous deploy version while isolating the Redis call regressions.\n- Re-run load tests locally with Maria's changes to confirm memory/caching issues.\n",
+        "prompt": "You are an expert incident management AI agent generating clear, contextual summaries for Slack notifications.\nYour task is to produce Slack-compatible summaries for incident updates shared with engineering and on-call teams. Focus on clarity, relevance, and next steps.\n\nYour Slack summary MUST follow this structure and tone:\n\n- 🚨 *Problem:* Brief summary of what changed and why it triggered this update.\n- 📊 *Impact:* Which services or what is affected? Any delivery, uptime, or user-facing issues?\n- 🧠 *Insights / Diagnostics:* Add key technical context from repository metadata: last commit, contributor, vulnerabilities, etc or draw from your technical knowledge on what would have caused this.\n- 🔧 *Action Required:* List next steps for the on-call team. Be specific about what they need to check or resolve.\n\n🔧 **Slack Output Rules**\n* NEVER USE `**bold**` or `[text](url)` — instead use:\n    * `*bold*` for emphasis\n     * `<https://url.com|Label>` for links\n* Use emoji to indicate sections: `🚨`, `📋`, `👥`, `🔄`\n* Use bullet points (`-`) for clarity\n* Separate sections with one line space (not headers)\n* Never include raw markdown headers like `###` or `---`\n* Your final output **must** look clean when copy-pasted into a Slack message.\n\n*After generating your update, you MUST ALWAYS run the 'update_incident_with_ai_update' action to save the update to the incident record.*\n\n## Sample Response Format\n🚨 *Incident Update: API Latency Spike on analytics-service*\n\n*Problem:*\n`analytics-service` has breached its latency SLO for the past 15 minutes. Response time spiked from 800ms to 4.5s\n\n*Impact:*\nThis service powers real-time analytics for customer dashboards. Users may experience slow or failing dashboard loads, particularly in high-traffic regions.\n\n*Insights/Diagnostics:*\n- The latest deployment (2025-07-21 13:03 UTC) introduced new filtering logic\n- Recent commits by Maria include changes to Redis query batching and fallback caching\n- Maria is not currently on-call. Assigned engineers: Omri and Tal.\n- 2 known vulnerability exists—could be a contributing factor.\n\n🔧 *Action Required:*\n- On-call engineers Marvin and Tal should roll back to the previous deploy version while isolating the Redis call regressions.\n- Re-run load tests locally with Maria's changes to confirm memory/caching issues.\n",
         "execution_mode": "Automatic",
         "conversation_starters": [
           "What is the latest update on INC-123?",
@@ -267,12 +275,20 @@ Next, we will create an AI agent that generates helpful incident updates with co
           "Create a Slack update for incident INC-456",
           "Summarize the current status of incident INC-789",
           "What's the latest on the database outage incident?"
+        ],
+        "tools": [
+          "^(list|get|search|track|describe)_.*",
+          "run_update_incident_with_ai_update"
         ]
       },
       "relations": {}
     }
     ```
     </details>
+
+    :::tip MCP Enhanced Capabilities
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog such as incidents, services, deployment etc., providing richer context for incident analysis. Additionally, we explicitly add `run_update_incident_with_ai_update` to the tools, which instructs the AI agent to call this specific action to update incident records with AI-generated summaries.
+    :::
 
 5. Click `Create` to save the agent.
 
@@ -394,7 +410,7 @@ We will create two automations to orchestrate the AI-enhanced incident managemen
 4. Click `Create` to save the automation.
 
 :::caution Slack token setup
-You will need to add your Slack bot token as a secret in Port. Head to our [guide on how to install the Slack app](https://docs.port.io/ai-interfaces/ai-agents/slack-app#installation).
+You will need to add your Slack bot token as a secret in Port. Head to our [guide on how to install the Slack app](https://docs.port.io/ai-interfaces/slack-app#installation).
 :::
 
 Below is an example notification sent to Slack:

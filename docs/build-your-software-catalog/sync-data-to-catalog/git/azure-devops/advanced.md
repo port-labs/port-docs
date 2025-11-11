@@ -34,6 +34,10 @@ The following advanced configuration parameters are available and can be added t
 
 <TabItem label="Spec path" value="specPath">
 
+:::warning Deprecated parameter
+  The `specPath` parameter is deprecated. We recommend using the [file kind](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/#ingest-files-from-your-repositories) for GitOps instead, which provides more flexible file ingestion capabilities.
+:::
+
 The `specPath` parameter specifies a list of `string` or a single value `string` that Port's Azure Devops app will search for `port.yml` files in.
 
 - **Default value**: `port.yml`
@@ -72,12 +76,16 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 
 <TabItem value="branch" label="Branch">
 
+:::warning Deprecated parameter
+The `branch` parameter is deprecated. We recommend using the [file kind](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/#ingest-files-from-your-repositories) for GitOps instead, which provides more flexible file ingestion capabilities.
+:::
+
 The Azure Devops integration listens to real-time events from the branch specified in the `branch` field which is set to `main` by default. This is configurable and you can set the `branch` parameter to the branch you want to listen to events from.
 
 - **Default value**: `main` (default to the branch specified in the `branch` field.)
 - **Use case**: `develop` if you want to listen to events from the `develop` branch of the repository.
 
-:::note Use Default Branch
+:::info Use default branch
 
 If you want to listen to events from the default branch of the repository, you can set the `useDefaultBranch` parameter to `true`.
 

@@ -32,7 +32,7 @@ Port connects to all your alert sources— APM, monitoring, cloud, and more. Wit
 
 ## Enable manual incident creation
 
-- [Trigger a PagerDuty Incident](../../guides/all/create-pagerduty-incident)
+- [Trigger a PagerDuty Incident](../../guides/all/interact-with-pagerduty-incidents)
 - [Trigger a FireHydrant Incident](../../guides/all/manage-firehydrant-incidents)
 - [Trigger an OpsGenie Incident](../../guides/all/create-an-opsgenie-incident)
 - [Trigger an Incident.io incident](../../guides/all/create-incident-io-incident)
@@ -51,6 +51,7 @@ Set up automations to create incidents, notify responders, and start workflows.
 Do you have bespoke logic or a more complex workflow around incident creation? Try this:
 
 - [Automate Incident Workflows](../../actions-and-automations/define-automations)
+- [Automate incident response with AI](../../guides/all/orchestrate-incident-response-with-ai)
 
 :::tip Review Your Automation Rules
 Automate what matters, but avoid alert fatigue. Regularly review your automation rules to ensure only actionable signals trigger incidents.

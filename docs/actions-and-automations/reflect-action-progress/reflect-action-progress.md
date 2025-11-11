@@ -1,6 +1,6 @@
 import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
 
-# Reflect action progress
+# Interact with action runs
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -37,9 +37,9 @@ In addition to the methods mentioned above, `admins` can find action runs using 
 - Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired entity, then select the `Runs` tab.  
    This page will display all action runs that have been executed for the selected Entity.
 
-## Interacting with action runs
+## Fetch an action run
 
-Once an `actionRun` is created, it will have a unique `runId`. Using this id, you can interact with the action run using Port's API.
+Once an `actionRun` is created, it will have a unique `runId`. Using this id, you can interact with the action run using Port's API. 
 
 ### Obtain a run's id
 
@@ -111,7 +111,7 @@ You will receive a response that looks like this:
 }
 ```
 
-### Update a run
+## Update a run
 
 You can use Port's API to update an the following properties of an action run:
 - `status` - The status of the action run. Initial value is `IN_PROGRESS`, can be set to `SUCCESS` or `FAILURE`.
@@ -126,7 +126,7 @@ When using a `Github workflow` as the action backend, a `Report workflow status`
 When using a `Webhook` as the action backend, a [`Request type` option](/actions-and-automations/setup-backend/webhook/#sync-vs-async-execution) will be available. When set to `sync`, Port will automatically update the status of the action run according to the HTTP response code.
 :::
 
-#### Run details
+### Run details
 
 By sending a [`PATCH` request](/api-reference/update-an-action-run) to Port's API, you can do the following:
 
@@ -154,7 +154,7 @@ You can make a `PATCH` request to the endpoint as many times as you need until t
 Note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the last provided value will be displayed in the action run.
 :::
 
-#### Run logs
+### Run logs
 
 By sending a [`POST` request](/api-reference/add-a-log-to-an-action-run) to Port's API, you can do the following:
 
@@ -188,7 +188,30 @@ If we want to add a final log entry and also mark the action run as successful, 
 
 A log message with the `terminationStatus` key can only be sent once for an action run. After it is sent, the run status is marked accordingly and the run can no longer be modified.
 
-## Tying Entities to an action run
+## Cancel execution request
+
+If a user executes a self-service action that requires approval, and the run's `Status` is still `Waiting for approval`, they can withdraw their request.
+
+To cancel a pending execution request:
+
+1. Click on the <img src="/img/icons/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner of the page.
+2. Navigate to the relevant **run page**.
+3. Click on the `...` button in the top-right corner of the run's `Details` window, then click on `Edit`.
+4. Change the `Status` to **FAILURE**.
+5. Click **Save**.
+
+The run will then be marked as failed, and will no longer require approval or be eligible for execution.
+
+## Re-run action
+
+If a user wants to re-run an action using the same inputs as a previous run, they can follow these steps:
+
+1. Click on the <img src="/img/icons/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner of the page.
+2. Navigate to the relevant **run page**.
+3. Click on the `Re-run action` in the top right corner of the action run page.
+4. Execute the action again by clicking on the `Execute` button.
+
+## Tie entities to action run
 
 You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an entity (i.e. [`POST`](/api-reference/create-an-entity), [`PUT`](/api-reference/change-an-entity), [`PATCH`](/api-reference/update-an-entity) and [`DELETE`](/api-reference/delete-an-entity) entity requests).  
 

@@ -8,7 +8,7 @@ sidebar_position: 2
 
 Port allows you to define roles and permissions to users, in order to control who can view, edit, and delete components in your portal.
 
-- Assign [roles](/sso-rbac/rbac/) to users in your organization, defining their permissions when operating in the portal.
+- Assign [roles](/sso-rbac/users-and-teams/manage-users-teams) to users in your organization, defining their permissions when operating in the portal.
   
 - Define your software catalog's [RBAC](/build-your-software-catalog/set-catalog-rbac/). This allows you to define CRUD permissions for each blueprint in your catalog.
 

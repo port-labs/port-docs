@@ -139,7 +139,11 @@ export const liveEvents = {
     \n\n**Jobs:** \
     \n- build \
     \n\n**Pipelines:** \
-    \n- pipeline ",
+    \n- pipeline \
+    \n\n**Releases:** \
+    \n- release \
+    \n\n**Tags:** \
+    \n- tag_push ",
   Linear:
     "\n- Issue \
     \n- IssueLabel",
@@ -268,6 +272,26 @@ export const liveEvents = {
     \n\n **release:** \
     \n - created \
     \n - edited",
+  CheckmarxOne:
+    "\n- scan_completed_successfully \
+    \n- scan_failed \
+    \n- scan_partial",
+  Okta:
+    "**User:** \
+    \n- user.lifecycle.create \
+    \n- user.lifecycle.activate \
+    \n- user.lifecycle.deactivate \
+    \n- user.lifecycle.suspend \
+    \n- user.lifecycle.unsuspend \
+    \n- user.lifecycle.delete \
+    \n- user.account.update_profile \
+    \n\n**Group:** \
+    \n- group.lifecycle.create \
+    \n- group.lifecycle.delete \
+    \n- group.lifecycle.update \
+    \n\n**Group Membership:** \
+    \n- group.user_membership.add \
+    \n- group.user_membership.remove",
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

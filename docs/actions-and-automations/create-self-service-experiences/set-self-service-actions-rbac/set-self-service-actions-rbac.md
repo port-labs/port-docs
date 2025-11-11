@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem"
 Port provides granular control to make sure every user can only execute and invoke the actions that are relevant for them.
 
 :::tip
-This section covers the self-service actions section of Port's RBAC functionality, while it is not a prerequisite, it is highly recommended you also go over Port's [permission controls](/sso-rbac/rbac/rbac.md).
+This section covers the self-service actions section of Port's RBAC functionality, while it is not a prerequisite, it is highly recommended you also go over Port's [permission controls](/sso-rbac/users-and-teams/manage-users-teams).
 
 In order to manage who can view which pages in Port, check out [page permissions](/customize-pages-dashboards-and-plugins/page/page-permissions.md).
 :::

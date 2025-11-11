@@ -71,7 +71,7 @@ Forwarding                    https://1234-5678-9101-112-1314-1516-abcd-efgh-ijk
 
 Keep the `Forwarding URL` for later use.
 
-### Setup Port resources
+### Set up Port resources
 
 First, set up a Blueprint for an S3 bucket in Port.
 

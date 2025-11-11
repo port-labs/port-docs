@@ -35,7 +35,7 @@ Port allows you to assign ownership of specific entities to teams in your organi
 <img src='/img/software-catalog/role-based-access-control/overview/user-and-teams.png' width='80%' border='1px' />
 
 
-For more details about **ownership** in Port, see the [relevant documentation](/sso-rbac/rbac/#ownership).
+For more details about **ownership** in Port, see the [relevant documentation](/sso-rbac/users-and-teams/manage-users-teams#ownership).
 
 ### Dynamic team filtering
 
@@ -132,7 +132,7 @@ The roles above have configurable permissions that are described in the followin
 
 In addition to the permissions designated for each role, permissions are also inherited based on the following hierarchy: **Admin** > **Moderator** > **Member**.
 
-For more details about Port roles, see the [relevant documentation](/sso-rbac/rbac/).
+For more details about Port roles, see the [relevant documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
 
 ### Blueprint permissions
 

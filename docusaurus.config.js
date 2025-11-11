@@ -11,8 +11,12 @@ const config = {
   url: "https://docs.port.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "throw",
   favicon: "img/logos/port-favicon.png",
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "throw",
+    },
+  },
   organizationName: "port-labs", // Usually your GitHub org/user name.
   projectName: "port", // Usually your repo name.
   staticDirectories: ["static"],
@@ -170,7 +174,7 @@ const config = {
               },
               {
                 label: "Promote scorecards",
-                to: "/promote-scorecards",
+                to: "/scorecards/overview",
               },
               {
                 label: "Search & query",
@@ -241,7 +245,7 @@ const config = {
               },
               {
                 label: "Demo",
-                href: "https://demo.port.io",
+                href: "https://showcase.port.io",
               },
               {
                 label: "GitHub",

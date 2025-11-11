@@ -8,5 +8,5 @@ Using this button, you can save the new view for **all users** in your organizat
 The `revert`(↺) button next to it will revert the table to the last saved view.
 
 :::info Admin role
-The ability to save a view for all users is available only for the [Admin role](/sso-rbac/rbac/rbac.md#roles).
+The ability to save a view for all users is available only for the [Admin role](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
 :::

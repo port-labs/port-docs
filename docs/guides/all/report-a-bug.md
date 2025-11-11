@@ -505,4 +505,4 @@ However we highly recommend you install the Jira integration to have these autom
 ## More Self Service Jira Actions Examples
 - [Open Jira issues with automatic labels](https://docs.port.io/guides/all/open-jira-issue-with-automatic-label)
 - [Change status and assignee of Jira tickets](https://docs.port.io/guides/all/change-status-and-assignee-of-jira-ticket)
-- [Open/close JIRA issues for entities with violated scorecard rules](https://docs.port.io/promote-scorecards/manage-using-3rd-party-apps/jira)
+- [Open/close JIRA issues for entities with violated scorecard rules](https://docs.port.io/scorecards/manage-using-3rd-party-apps/jira)

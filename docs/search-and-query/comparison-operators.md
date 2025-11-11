@@ -261,7 +261,7 @@ The `contains` operator checks if the specified value exists within a string pro
 
 ### doesNotContains
 
-The `contains` operator checks if the specified value **does not** exists in the specified property:
+The `doesNotContains` operator checks if the specified value **does not** exists in the specified property:
 
 ```json showLineNumbers
 {

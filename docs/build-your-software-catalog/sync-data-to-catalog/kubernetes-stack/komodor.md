@@ -17,7 +17,7 @@ Port's Komodor integration allows you to model [Komodor](https://komodor.com/) r
 
 This integration allows you to map, organize, and sync your desired Komodor resources and their metadata in Port.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Komodor into Port are listed below:
 
@@ -50,13 +50,13 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation/>
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 Using this installation method means that the integration will be able to update Port in real time.
 
@@ -182,13 +182,11 @@ The integration uses polling to pull the configuration from Port every minute an
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Komodor integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real-time updates
-If you want the integration to update Port in real time you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
-:::
+
 
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">

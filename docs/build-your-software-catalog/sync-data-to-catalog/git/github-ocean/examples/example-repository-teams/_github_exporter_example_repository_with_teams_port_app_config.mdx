@@ -25,7 +25,7 @@ resources:
   - kind: repository
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-      include: "teams" # Boolean flag to indicate whether to include the repository teams.
+      include: ["teams"] # List of relationship types to include. Can include multiple types like ["teams", "collaborators"].
     port:
       entity:
         mappings:
