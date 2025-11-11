@@ -473,53 +473,18 @@ The script uses a secure pattern for handling MCP server credentials:
 
 Create the file `.github/workflows/extract_mcp_tools.yml` in the `.github/workflows` folder of your repository.
 
-    <details>
-    <summary><b>GitHub workflow for tool extraction (Click to expand)</b></summary>
+You can find a ready-to-use template for the workflow [in the Port experimental mcp server integration repository](https://github.com/port-experimental/mcp-server-integration/blob/main/.github/workflows/extract_mcp_tools.yml). Copy this file into your own repository at `.github/workflows/extract_mcp_tools.yml`.
 
-    ```yaml showLineNumbers
-    name: Sync All MCP Tools to Port
+The template workflow performs the following steps:
+- Installs dependencies (`mcp`, `httpx`, and `uv`).
+- Authenticates using secrets from your repository.
+- Runs the `extract_mcp_tools.py` script (`python scripts/extract_mcp_tools.py`).
+- Provides a manual and scheduled trigger.
 
-    on:
-      workflow_dispatch:  # Allow manual trigger
-      schedule:
-        - cron: '0 0 * * 0'  # Weekly on Sunday at midnight
 
-    jobs:
-      sync-all-mcp-tools:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout repository
-            uses: actions/checkout@v4
+Once copied, customize the secrets and any details needed for your specific set of MCP servers.
 
-          - name: Set up Python
-            uses: actions/setup-python@v5
-            with:
-              python-version: '3.11'
-
-          - name: Install dependencies
-            run: |
-              pip install mcp httpx
-              pip install uv  # Install uv which provides uvx
-
-          - name: Sync tools from all MCP servers
-            env:
-              # Port API credentials (required)
-              PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
-              PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
-              # Add secrets for your MCP servers here (matching YOUR__* placeholders in commands)
-              # Example: If command uses YOUR__GITHUB_TOKEN, add: GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            run: |
-              python scripts/extract_mcp_tools.py
-
-          - name: Report completion
-            if: always()
-            run: |
-              echo "✅ MCP tools sync workflow completed"
-    ```
-
-    </details>
-
-:::warning Important: Managing MCP server credentials
+:::warning Managing MCP server credentials
 For each MCP server that requires credentials, you must:
 
 1. **Add secrets to GitHub**: Store actual credential values in GitHub Secrets.
