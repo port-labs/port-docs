@@ -246,6 +246,13 @@ export const integrations = [
     darkIcon: '/img/guides/icons/dark/ClaudeAI.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/claude',
   },
+  {
+    name: 'Cursor',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/Cursor.svg',
+    darkIcon: '/img/guides/icons/dark/Cursor.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/cursor',
+  }
 ];
 
 export const categories = {
