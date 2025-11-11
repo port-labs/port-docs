@@ -30669,6 +30669,13 @@ paths:
                   description: An optional set of
                     [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                     to filter entities that will be evaluated by the scorecard.
+                properties:
+                  type: object
+                  propertyNames:
+                    pattern: ^[A-Za-z0-9@_=\\-]+$
+                  description: An object containing the additional properties of the scorecard, in
+                    `"key":"value"` pairs where the `key` is the property's
+                    identifier, and the `value` is its value.
                 rules:
                   type: array
                   description: The
@@ -31709,6 +31716,13 @@ paths:
                       [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                       to filter entities that will be evaluated by the
                       scorecard.
+                  properties:
+                    type: object
+                    propertyNames:
+                      pattern: ^[A-Za-z0-9@_=\\-]+$
+                    description: An object containing the additional properties of the scorecard, in
+                      `"key":"value"` pairs where the `key` is the property's
+                      identifier, and the `value` is its value.
                   rules:
                     type: array
                     description: The
@@ -32345,6 +32359,13 @@ paths:
                   description: An optional set of
                     [conditions](https://docs.port.io/scorecards/concepts-and-structure/#conditions)
                     to filter entities that will be evaluated by the scorecard.
+                properties:
+                  type: object
+                  propertyNames:
+                    pattern: ^[A-Za-z0-9@_=\\-]+$
+                  description: An object containing the additional properties of the scorecard, in
+                    `"key":"value"` pairs where the `key` is the property's
+                    identifier, and the `value` is its value.
                 rules:
                   type: array
                   description: The
@@ -33527,61 +33548,393 @@ paths:
                   - message
                 additionalProperties: false
                 description: The json provided does not match the route's schema
-  /v1/agent/{agentIdentifier}/invoke:
-    post:
-      summary: Invoke a specific agent
+  /v1/integration/{integrationInternalId}/syncMetrics:
+    get:
+      summary: Get an integration's metrics and sync status
+      description: |
+        This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br>
+        :::warning Permission requirements
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+        
+        If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
+        :::
       tags:
-        - AI
-      description: This route allows you to create an agent's invocation.<br/><br/>To
-        learn more about AI agents, check out the
-        [documentation](https://docs.port.io/ai-agents/overview).
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                context:
-                  type: object
-                  description: An object used to dynamically inject values into the prompt.
-                prompt:
-                  type: string
-                  description: The user's message or query to be processed by the AI agent.
-                labels:
-                  type: object
-                  description: Optional meta-data about the invocation.
-                provider:
-                  type: string
-                  enum:
-                  - openai
-                  - azure-openai
-                  - anthropic
-                  - bedrock
-                  - port
-                model:
-                  type: string
-                  enum:
-                  - gpt-5
-                  - claude-sonnet-4-20250514
+        - Integrations
       parameters:
         - schema:
             type: string
+          in: query
+          name: resyncId
+          required: false
+          description: The ID of a specific resync. If this field is left empty, the latest resync data will be returned.
+        - schema:
+            type: string
           in: path
-          name: agentIdentifier
+          name: integrationInternalId
           required: true
-          description: The identifier of the agent you want to operate on.
+          description: The ID of the integration you want to operate on.
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          required: false
+          description: Your API token. To get it, go to your [Port account](https://app.port.io/), click the `...` button, then click the `Generate API token` button and copy the generated token. 
       security:
-        - bearer:
-            - read:entities
+        - bearer: []
       responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  count:
+                    type: number
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        integrationType:
+                          type: string
+                        integrationIdentifier:
+                          type: string
+                        integrationVersion:
+                          type: string
+                        oceanVersion:
+                          type: string
+                        kindIdentifier:
+                          type: string
+                        kind:
+                          type: string
+                        kindIndex:
+                          type: number
+                        eventId:
+                          type: string
+                        syncState:
+                          type: string
+                        blueprint:
+                          type: string
+                        metrics:
+                          type: object
+                          properties:
+                            phase:
+                              type: object
+                              properties:
+                                resync:
+                                  type: object
+                                  properties:
+                                    duration_seconds:
+                                      type: number
+                                    success:
+                                      type: number
+                                  additionalProperties: false
+                                load:
+                                  type: object
+                                  properties:
+                                    object_count_type:
+                                      type: object
+                                      properties:
+                                        skipped:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        failed:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        loaded:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        raw_extracted:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        transformed:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        filtered_out:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        deleted:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                      additionalProperties: false
+                                  required:
+                                    - object_count_type
+                                  additionalProperties: false
+                                extract:
+                                  type: object
+                                  properties:
+                                    object_count_type:
+                                      type: object
+                                      properties:
+                                        skipped:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        failed:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        loaded:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        raw_extracted:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        transformed:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        filtered_out:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        deleted:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                      additionalProperties: false
+                                  required:
+                                    - object_count_type
+                                  additionalProperties: false
+                                transform:
+                                  type: object
+                                  properties:
+                                    object_count_type:
+                                      type: object
+                                      properties:
+                                        skipped:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        failed:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        loaded:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        raw_extracted:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        transformed:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        filtered_out:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        deleted:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                      additionalProperties: false
+                                  required:
+                                    - object_count_type
+                                  additionalProperties: false
+                                delete:
+                                  type: object
+                                  properties:
+                                    object_count_type:
+                                      type: object
+                                      properties:
+                                        skipped:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        failed:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        loaded:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        raw_extracted:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        transformed:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        filtered_out:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                        deleted:
+                                          type: object
+                                          properties:
+                                            object_count:
+                                              type: number
+                                          required:
+                                            - object_count
+                                          additionalProperties: false
+                                      additionalProperties: false
+                                  required:
+                                    - object_count_type
+                                  additionalProperties: false
+                              additionalProperties: false
+                          required:
+                            - phase
+                          additionalProperties: false
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                      required:
+                        - integrationType
+                        - integrationIdentifier
+                        - integrationVersion
+                        - oceanVersion
+                        - kindIdentifier
+                        - kind
+                        - eventId
+                        - syncState
+                        - metrics
+                        - createdAt
+                        - updatedAt
+                      additionalProperties: false
+                required:
+                  - ok
+                  - count
+                  - data
+                additionalProperties: false
         "401":
           description: Default Response
           content:
             application/json:
               schema:
+                type: object
                 properties:
                   ok:
-                    const: false
+                    type: boolean
                   error:
                     type: string
                   message:
@@ -33591,31 +33944,14 @@ paths:
                   - error
                 additionalProperties: false
         "404":
-          description: A resource with the provided identifier was not found
+          description: Default Response
           content:
             application/json:
               schema:
+                type: object
                 properties:
                   ok:
-                    const: false
-                  error:
-                    type: string
-                  message:
-                    type: string
-                required:
-                  - ok
-                  - error
-                  - message
-                additionalProperties: false
-                description: A resource with the provided identifier was not found
-        "413":
-          description: Request body is too large (limit is 1MiB)
-          content:
-            application/json:
-              schema:
-                properties:
-                  ok:
-                    const: false
+                    type: boolean
                   error:
                     type: string
                   message:
@@ -33624,15 +33960,15 @@ paths:
                   - ok
                   - error
                 additionalProperties: false
-                description: Request body is too large (limit is 1MiB)
-        "422":
-          description: The json provided does not match the route's schema
+        "500":
+          description: Default Response
           content:
             application/json:
               schema:
+                type: object
                 properties:
                   ok:
-                    const: false
+                    type: boolean
                   error:
                     type: string
                   message:
@@ -33640,438 +33976,7 @@ paths:
                 required:
                   - ok
                   - error
-                  - message
                 additionalProperties: false
-                description: The json provided does not match the route's schema             
-  /v1/integration/{integrationInternalId}/syncMetrics:
-      get:
-        summary: Get an integration's metrics and sync status
-        description: |
-          This route allows you to get a specific integration's metrics and sync status either the latest one or for a specific resync.<br/><br/>It returns the sync's execution status and detailed metrics per kind for each phase of the sync.<br/> For example, the number of fetched objects in the sync's fetch phase, number of objects that were mapped in the mapping phase, etc.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br>
-          :::warning Permission requirements
-          To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
-
-          To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-          
-          If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
-          :::
-        tags:
-          - Integrations
-        parameters:
-          - schema:
-              type: string
-            in: query
-            name: resyncId
-            required: false
-            description: The ID of a specific resync. If this field is left empty, the latest resync data will be returned.
-          - schema:
-              type: string
-            in: path
-            name: integrationInternalId
-            required: true
-            description: The ID of the integration you want to operate on.
-          - schema:
-              type: string
-            in: header
-            name: Authorization
-            required: false
-            description: Your API token. To get it, go to your [Port account](https://app.port.io/), click the `...` button, then click the `Generate API token` button and copy the generated token. 
-        security:
-          - bearer: []
-        responses:
-          "200":
-            description: Default Response
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    ok:
-                      type: boolean
-                    count:
-                      type: number
-                    data:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          integrationType:
-                            type: string
-                          integrationIdentifier:
-                            type: string
-                          integrationVersion:
-                            type: string
-                          oceanVersion:
-                            type: string
-                          kindIdentifier:
-                            type: string
-                          kind:
-                            type: string
-                          kindIndex:
-                            type: number
-                          eventId:
-                            type: string
-                          syncState:
-                            type: string
-                          blueprint:
-                            type: string
-                          metrics:
-                            type: object
-                            properties:
-                              phase:
-                                type: object
-                                properties:
-                                  resync:
-                                    type: object
-                                    properties:
-                                      duration_seconds:
-                                        type: number
-                                      success:
-                                        type: number
-                                    additionalProperties: false
-                                  load:
-                                    type: object
-                                    properties:
-                                      object_count_type:
-                                        type: object
-                                        properties:
-                                          skipped:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          failed:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          loaded:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          raw_extracted:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          transformed:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          filtered_out:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          deleted:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                        additionalProperties: false
-                                    required:
-                                      - object_count_type
-                                    additionalProperties: false
-                                  extract:
-                                    type: object
-                                    properties:
-                                      object_count_type:
-                                        type: object
-                                        properties:
-                                          skipped:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          failed:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          loaded:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          raw_extracted:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          transformed:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          filtered_out:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          deleted:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                        additionalProperties: false
-                                    required:
-                                      - object_count_type
-                                    additionalProperties: false
-                                  transform:
-                                    type: object
-                                    properties:
-                                      object_count_type:
-                                        type: object
-                                        properties:
-                                          skipped:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          failed:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          loaded:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          raw_extracted:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          transformed:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          filtered_out:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          deleted:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                        additionalProperties: false
-                                    required:
-                                      - object_count_type
-                                    additionalProperties: false
-                                  delete:
-                                    type: object
-                                    properties:
-                                      object_count_type:
-                                        type: object
-                                        properties:
-                                          skipped:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          failed:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          loaded:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          raw_extracted:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          transformed:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          filtered_out:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                          deleted:
-                                            type: object
-                                            properties:
-                                              object_count:
-                                                type: number
-                                            required:
-                                              - object_count
-                                            additionalProperties: false
-                                        additionalProperties: false
-                                    required:
-                                      - object_count_type
-                                    additionalProperties: false
-                                additionalProperties: false
-                            required:
-                              - phase
-                            additionalProperties: false
-                          createdAt:
-                            type: string
-                            format: date-time
-                          updatedAt:
-                            type: string
-                            format: date-time
-                        required:
-                          - integrationType
-                          - integrationIdentifier
-                          - integrationVersion
-                          - oceanVersion
-                          - kindIdentifier
-                          - kind
-                          - eventId
-                          - syncState
-                          - metrics
-                          - createdAt
-                          - updatedAt
-                        additionalProperties: false
-                  required:
-                    - ok
-                    - count
-                    - data
-                  additionalProperties: false
-          "401":
-            description: Default Response
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    ok:
-                      type: boolean
-                    error:
-                      type: string
-                    message:
-                      type: string
-                  required:
-                    - ok
-                    - error
-                  additionalProperties: false
-          "404":
-            description: Default Response
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    ok:
-                      type: boolean
-                    error:
-                      type: string
-                    message:
-                      type: string
-                  required:
-                    - ok
-                    - error
-                  additionalProperties: false
-          "500":
-            description: Default Response
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    ok:
-                      type: boolean
-                    error:
-                      type: string
-                    message:
-                      type: string
-                  required:
-                    - ok
-                    - error
-                  additionalProperties: false
   /v1/quota/ai-invocations:
     get:
       summary: Get monthly AI invocations quota usage
@@ -34165,6 +34070,7 @@ paths:
                         enum:
                           - gpt-5
                           - claude-sonnet-4-20250514
+                          - claude-haiku-4-5-20251001
                       createdAt:
                         type: string
                         format: date-time
@@ -34229,6 +34135,7 @@ paths:
                   enum:
                     - gpt-5
                     - claude-sonnet-4-20250514
+                    - claude-haiku-4-5-20251001
               required:
                 - provider
                 - model
@@ -34260,6 +34167,7 @@ paths:
                         enum:
                           - gpt-5
                           - claude-sonnet-4-20250514
+                          - claude-haiku-4-5-20251001
                       createdAt:
                         type: string
                         format: date-time
@@ -34334,8 +34242,16 @@ paths:
                           type: object
                           required:
                             - claude-sonnet-4-20250514
+                            - claude-haiku-4-5-20251001
                           properties:
                             claude-sonnet-4-20250514:
+                              type: object
+                              properties:
+                                enabled:
+                                  type: boolean
+                                  default: true
+                              additionalProperties: false
+                            claude-haiku-4-5-20251001:
                               type: object
                               properties:
                                 enabled:
@@ -34475,8 +34391,16 @@ paths:
                           type: object
                           required:
                             - claude-sonnet-4-20250514
+                            - claude-haiku-4-5-20251001
                           properties:
                             claude-sonnet-4-20250514:
+                              type: object
+                              properties:
+                                enabled:
+                                  type: boolean
+                                  default: true
+                              additionalProperties: false
+                            claude-haiku-4-5-20251001:
                               type: object
                               properties:
                                 enabled:
@@ -34589,6 +34513,7 @@ paths:
                             required:
                               - gpt-5
                               - claude-sonnet-4-20250514
+                              - claude-haiku-4-5-20251001
                             properties:
                               gpt-5:
                                 type: object
@@ -34604,6 +34529,13 @@ paths:
                                     type: boolean
                                     default: true
                                 additionalProperties: false
+                              claude-haiku-4-5-20251001:
+                                type: object
+                                properties:
+                                  enabled:
+                                    type: boolean
+                                    default: true
+                                additionalProperties: false
                             additionalProperties: false
                         additionalProperties: false
                       effectiveModels:
@@ -34611,6 +34543,7 @@ paths:
                         required:
                           - gpt-5
                           - claude-sonnet-4-20250514
+                          - claude-haiku-4-5-20251001
                         properties:
                           gpt-5:
                             type: object
@@ -34620,6 +34553,13 @@ paths:
                                 default: true
                             additionalProperties: false
                           claude-sonnet-4-20250514:
+                            type: object
+                            properties:
+                              enabled:
+                                type: boolean
+                                default: true
+                            additionalProperties: false
+                          claude-haiku-4-5-20251001:
                             type: object
                             properties:
                               enabled:
@@ -34786,6 +34726,7 @@ paths:
                               required:
                                 - gpt-5
                                 - claude-sonnet-4-20250514
+                                - claude-haiku-4-5-20251001
                               properties:
                                 gpt-5:
                                   type: object
@@ -34801,6 +34742,13 @@ paths:
                                       type: boolean
                                       default: true
                                   additionalProperties: false
+                                claude-haiku-4-5-20251001:
+                                  type: object
+                                  properties:
+                                    enabled:
+                                      type: boolean
+                                      default: true
+                                  additionalProperties: false
                               additionalProperties: false
                           additionalProperties: false
                         effectiveModels:
@@ -34808,6 +34756,7 @@ paths:
                           required:
                             - gpt-5
                             - claude-sonnet-4-20250514
+                            - claude-haiku-4-5-20251001
                           properties:
                             gpt-5:
                               type: object
@@ -34817,6 +34766,13 @@ paths:
                                   default: true
                               additionalProperties: false
                             claude-sonnet-4-20250514:
+                              type: object
+                              properties:
+                                enabled:
+                                  type: boolean
+                                  default: true
+                              additionalProperties: false
+                            claude-haiku-4-5-20251001:
                               type: object
                               properties:
                                 enabled:
@@ -34974,6 +34930,7 @@ paths:
                             required:
                               - gpt-5
                               - claude-sonnet-4-20250514
+                              - claude-haiku-4-5-20251001
                             properties:
                               gpt-5:
                                 type: object
@@ -34989,6 +34946,13 @@ paths:
                                     type: boolean
                                     default: true
                                 additionalProperties: false
+                              claude-haiku-4-5-20251001:
+                                type: object
+                                properties:
+                                  enabled:
+                                    type: boolean
+                                    default: true
+                                additionalProperties: false
                             additionalProperties: false
                         additionalProperties: false
                       effectiveModels:
@@ -34996,6 +34960,7 @@ paths:
                         required:
                           - gpt-5
                           - claude-sonnet-4-20250514
+                          - claude-haiku-4-5-20251001
                         properties:
                           gpt-5:
                             type: object
@@ -35005,6 +34970,13 @@ paths:
                                 default: true
                             additionalProperties: false
                           claude-sonnet-4-20250514:
+                            type: object
+                            properties:
+                              enabled:
+                                type: boolean
+                                default: true
+                            additionalProperties: false
+                          claude-haiku-4-5-20251001:
                             type: object
                             properties:
                               enabled:
@@ -35143,6 +35115,11 @@ paths:
                         - secretAccessKeySecretName
                         - region
                       additionalProperties: false
+                    - anyOf:
+                        - not: {}
+                        - type: object
+                          properties: {}
+                          additionalProperties: false
                 overrides:
                   type: object
                   properties:
@@ -35151,6 +35128,7 @@ paths:
                       required:
                         - gpt-5
                         - claude-sonnet-4-20250514
+                        - claude-haiku-4-5-20251001
                       properties:
                         gpt-5:
                           type: object
@@ -35160,6 +35138,13 @@ paths:
                               default: true
                           additionalProperties: false
                         claude-sonnet-4-20250514:
+                          type: object
+                          properties:
+                            enabled:
+                              type: boolean
+                              default: true
+                          additionalProperties: false
+                        claude-haiku-4-5-20251001:
                           type: object
                           properties:
                             enabled:
@@ -35280,6 +35265,7 @@ paths:
                             required:
                               - gpt-5
                               - claude-sonnet-4-20250514
+                              - claude-haiku-4-5-20251001
                             properties:
                               gpt-5:
                                 type: object
@@ -35295,6 +35281,13 @@ paths:
                                     type: boolean
                                     default: true
                                 additionalProperties: false
+                              claude-haiku-4-5-20251001:
+                                type: object
+                                properties:
+                                  enabled:
+                                    type: boolean
+                                    default: true
+                                additionalProperties: false
                             additionalProperties: false
                         additionalProperties: false
                       effectiveModels:
@@ -35302,6 +35295,7 @@ paths:
                         required:
                           - gpt-5
                           - claude-sonnet-4-20250514
+                          - claude-haiku-4-5-20251001
                         properties:
                           gpt-5:
                             type: object
@@ -35311,6 +35305,13 @@ paths:
                                 default: true
                             additionalProperties: false
                           claude-sonnet-4-20250514:
+                            type: object
+                            properties:
+                              enabled:
+                                type: boolean
+                                default: true
+                            additionalProperties: false
+                          claude-haiku-4-5-20251001:
                             type: object
                             properties:
                               enabled:
@@ -35579,6 +35580,7 @@ paths:
                   enum:
                     - gpt-5
                     - claude-sonnet-4-20250514
+                    - claude-haiku-4-5-20251001
                 systemPrompt:
                   type: string
                   description: A set of instructions that guides an AI's behavior and responses by providing its role, persona, and operational rules at the beginning of an interaction.
@@ -35629,6 +35631,153 @@ paths:
                   - error
                 additionalProperties: false
         "403":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/agent/{agentIdentifier}/invoke:
+    post:
+      summary: Invoke a specific agent
+      tags:
+        - AI
+      description: This route allows you to create an agent's invocation.<br/><br/>To
+        learn more about AI agents, check out the
+        [documentation](https://docs.port.io/ai-agents/overview).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The user's message or query to be processed by the AI agent.
+                labels:
+                  type: object
+                  description: Optional meta-data about the invocation.
+                  additionalProperties:
+                    type: string
+                provider:
+                  type: string
+                  enum:
+                    - openai
+                    - azure-openai
+                    - anthropic
+                    - bedrock
+                    - port
+                model:
+                  type: string
+                  enum:
+                    - gpt-5
+                    - claude-sonnet-4-20250514
+                    - claude-haiku-4-5-20251001
+              required:
+                - prompt
+              additionalProperties: false
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: invocation_identifier
+          required: false
+        - schema:
+            type: boolean
+          in: query
+          name: stream
+          required: false
+        - schema:
+            type: boolean
+          in: query
+          name: use_mcp
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: agentIdentifier
+          required: true
+          description: The identifier of the agent you want to operate on.
+      security:
+        - bearer:
+            - read:entities
+      responses:
+        "202":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  invocation:
+                    type: object
+                    properties:
+                      identifier:
+                        type: string
+                    required:
+                      - identifier
+                    additionalProperties: false
+                required:
+                  - ok
+                  - invocation
+                additionalProperties: false
+        "400":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
           description: Default Response
           content:
             application/json:

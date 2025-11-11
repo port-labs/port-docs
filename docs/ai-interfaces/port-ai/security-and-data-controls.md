@@ -161,11 +161,11 @@ AI features typically start streaming responses within 5 seconds and complete wi
 - Current system load
 - Which AI interface is being used
 
-During the closed beta, response times may occasionally be longer as we optimize performance. This is expected behavior and will improve over time.
+Response times may occasionally be longer as we optimize performance. This is expected behavior and will improve over time.
 
 ### What should I do if AI responses seem slow?
 
-Response times up to 30 seconds are normal and expected for AI processing during the closed beta. If you experience consistently longer response times:
+Response times up to 30 seconds are normal and expected for AI processing. If you experience consistently longer response times:
 - Check the AI invocation details for any errors
 - Verify your usage hasn't hit rate limits
 - Contact support if problems persist

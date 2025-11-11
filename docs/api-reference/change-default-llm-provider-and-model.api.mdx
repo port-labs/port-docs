@@ -5,7 +5,7 @@ description: "This route allows you to change the default LLM provider and model
 sidebar_label: "Change default LLM provider and model"
 hide_title: true
 hide_table_of_contents: true
-api: eJzVVclu2zAQ/RWBZ8tLEF98c5dD0RQw0uQU5DCWJhZjSmS5OHEE/XtnKDmWUzVB0Rzai01xFr6Z9zisRY4us9J4qSuxEFeFdInVwWMCSukHl+x1SLxOsgKqDSa+wCTHOwjKJxcX3xJj9U7maBOo8qTUOaqxGAkPGycWN4I9SqhggyVWXtyOhMMsWOn3ZK3FGsGipeVtQyaLPwI6/0HnZK1FpivPQbQEY5TMgCFO7h3jrIXLCiyBV35vkJDr9T1mng4nSAatl+jYegDY83TeympDnliFkmGSfwWSNuApWEyPn5UvKJnMaL3G3Opsy/m1pVKakYjlvpZ3Y3w6p+9MQcgxJeQV+vQ8PZuezafz2Tlladq6pcWcI57RHrJTXyDPJZcOatWr7A6Uw+Y03tuAccMZXbm2/rPplP9OWf7UMXjZeTLG92m33vZ81lorhEq0mOjA/54uMloEj/nSD2W607YEsoicfFIvSxTHkA/7X0PIGkz+pwm7kMGEfyuo03DNHey4e1OKFDv/N9SG1uoBCbEI0DkaR4O2HD1I5YaOHS68bgb71Z7+drsiHF9oihQmxOrAF/Qx2c0mSpXpgTw36UauEzxB7Y624gANlgQtCu+NW0wmYOSY1T6WmsoZsgZ3dOgN4+/c7rajh5H83AIK+4p7OreCkr+XgRBb+RQJo23JDBcIrDGuiCm8PE7yz49QGoWnV/t4g7s72V29htPd6Xi69BwlVgQ3Wa6+kC9X3QpqNp6yr9HO0+vC7h24j+0j9foDJUan+uw9Ne/1/LWt8/joJ0aBjJqMbNQdxTdiNyPHE5Ijro5mIqeg6tixrtfg8NqqpuFt6qzl15OWO7AS1tymG55MHQmsiy0xRt1oy0qvGA67q9Ay+uLCsVbaiGWWofGv+t72RLu6vuJR2z3YXD5tWnjgmUG/C0ELHbsctRX3aqGokyHeQdGmZNlA4Lb0VbeNqusWXNTBVO17AF/Ksa2Df7mqwZC6bjVN/Tz4t6bfRnSdPXgzn/RyNz8BBAUqmw==
+api: eJzdVclu2zAQ/RWBZ8tLEF98c5dD0RQw0uQU5DCWJhZjSmS5OHEE/XtnKDmWUzVB0RyKXmyKs795nKlFji6z0nipK7EQV4V0idXBYwJK6QeX7HVIvE6yAqoNJr7AJMc7CMonFxffEmP1TuZoE6jypNQ5qrEYCQ8bJxY3gjVKqGCDJVZe3I6EwyxY6fckrcUawaKl421DIos/Ajr/QeckrUWmK89GdARjlMyAU5zcO86zFi4rsAQ++b1Bylyv7zHzFJxSMmi9RMfSQ4I9TeetrDakiVUoOU3Sr0DSBTwFi+nxs/IFOZMZndeYW51t2b+2VEozErHc1/xujE/n9J0pCDmmlHmFPj1Pz6Zn8+l8dn4UFSC3gSTzKJtNpzOK0LSYSIs5e3uu5BCZMIM8lwwLqFWv6jtQDptTe28DxgtndOVabM6mU/47ZcCnrruXnSYn+T6t0NuezlprhVCJNicK+F+3kqQWwWO+9ENR7rQtgSQiJ53UyxLF0eTD/lcTkgaT/6nDzmTQ4d+S7dRcM7pdX9+kKdnO/w0morV6gF5MEHSOxtigLEcPUrmhsMOF180gXm30t+GK6fhCk6UwIVYHvqCPyW42UapMD81zk25UO8GT1+7oKg7eYInsovDeuMVkAkaO+SWMpaZyhqTBHRV6Q/w7w90iehjlzxCQ2VfcU9wKSv5eBsrYyqfYMLqW3OECgTnGFXELL48b4PMjlEbh6bM/vu7uvXbPsmF3dzpGl56txIrSTZarL6TLVbeEmo2nrGu087SVWL1L7mO73F5fbGJ0ys/einqvtdlC5/HRT4wCGTkZu1F3Lb4RuxkpnjQ55tW1mZpTUHWsWNdrcHhtVdPwNSFreevScQdWwpphuuHJ1DWBebGljhEabVnpFafD6iq0HX3x4JgrrcUyy9D4V3Vve6RdXV/xGO4WPZdPlxYeeGbQ70LQQUeUI7fiXS0UIRniGxStS6YNBIalz7ptZF134KIOomrfS/AlHds6+JerGjSp65bThOdBvxX91qJD9qDN/aSt3vwEaho5yw==
 sidebar_class_name: "put api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -54,7 +54,7 @@ This route allows you to change the default LLM provider and model.
 
 <RequestSchema
   title={"Body"}
-  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"model":{"type":"string","enum":["gpt-5","claude-sonnet-4-20250514"]}},"required":["provider","model"],"additionalProperties":false}}},"required":true}}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"model":{"type":"string","enum":["gpt-5","claude-sonnet-4-20250514","claude-haiku-4-5-20251001"]}},"required":["provider","model"],"additionalProperties":false}}},"required":true}}
 >
   
 </RequestSchema>
@@ -62,7 +62,7 @@ This route allows you to change the default LLM provider and model.
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"model":{"type":"string","enum":["gpt-5","claude-sonnet-4-20250514"]},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","model"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"model":{"type":"string","enum":["gpt-5","claude-sonnet-4-20250514","claude-haiku-4-5-20251001"]},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","model"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
 >
   
 </StatusCodes>
