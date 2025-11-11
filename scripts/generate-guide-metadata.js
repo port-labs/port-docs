@@ -8,8 +8,10 @@ const path = require('path');
 const constsPath = path.join(__dirname, '../src/components/guides-section/consts.js');
 let constsContent = fs.readFileSync(constsPath, 'utf8');
 
-// Convert ES6 imports and exports to require-compatible format for this script
+// Convert ES6 imports/exports and require statements to require-compatible format for this script
+// Remove both import and require statements for guide-metadata.json
 constsContent = constsContent.replace(/import guideMetadata from '\.\/guide-metadata\.json';\s*/, '');
+constsContent = constsContent.replace(/const guideMetadata = require\('\.\/guide-metadata\.json'\);\s*/, '');
 constsContent = constsContent.replace(/export const/g, 'const');
 
 // Remove the enhancedAvailableGuides section that references guideMetadata

@@ -27,7 +27,7 @@ This integration allows you to:
 - Map and organize your desired SonarQube resources and their metadata in Port (see supported resources below).
 - Watch for SonarQube object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from SonarQube into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -57,7 +57,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 <IntegrationVersion integration="sonarqube" />
 
@@ -185,7 +185,7 @@ This table summarizes the available parameters for the installation.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
 

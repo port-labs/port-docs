@@ -29,7 +29,7 @@ This integration allows you to:
 
 - Map and organize your desired ServiceNow resources and their metadata in Port (see supported resources below).
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from ServiceNow into Port are listed below. 
 
@@ -58,7 +58,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 <IntegrationVersion integration="servicenow" />
 
@@ -191,7 +191,7 @@ This table summarizes the available parameters for the installation.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 
 This workflow/pipeline will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.

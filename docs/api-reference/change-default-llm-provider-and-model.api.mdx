@@ -1,0 +1,71 @@
+---
+id: change-default-llm-provider-and-model
+title: "Change default LLM provider and model"
+description: "This route allows you to change the default LLM provider and model."
+sidebar_label: "Change default LLM provider and model"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVclu2zAQ/RWBZ8tLEF98c5dD0RQw0uQU5DCWJhZjSmS5OHEE/XtnKDmWUzVB0RyKXmyKs795nKlFji6z0nipK7EQV4V0idXBYwJK6QeX7HVIvE6yAqoNJr7AJMc7CMonFxffEmP1TuZoE6jypNQ5qrEYCQ8bJxY3gjVKqGCDJVZe3I6EwyxY6fckrcUawaKl421DIos/Ajr/QeckrUWmK89GdARjlMyAU5zcO86zFi4rsAQ++b1Bylyv7zHzFJxSMmi9RMfSQ4I9TeetrDakiVUoOU3Sr0DSBTwFi+nxs/IFOZMZndeYW51t2b+2VEozErHc1/xujE/n9J0pCDmmlHmFPj1Pz6Zn8+l8dn4UFSC3gSTzKJtNpzOK0LSYSIs5e3uu5BCZMIM8lwwLqFWv6jtQDptTe28DxgtndOVabM6mU/47ZcCnrruXnSYn+T6t0NuezlprhVCJNicK+F+3kqQWwWO+9ENR7rQtgSQiJ53UyxLF0eTD/lcTkgaT/6nDzmTQ4d+S7dRcM7pdX9+kKdnO/w0morV6gF5MEHSOxtigLEcPUrmhsMOF180gXm30t+GK6fhCk6UwIVYHvqCPyW42UapMD81zk25UO8GT1+7oKg7eYInsovDeuMVkAkaO+SWMpaZyhqTBHRV6Q/w7w90iehjlzxCQ2VfcU9wKSv5eBsrYyqfYMLqW3OECgTnGFXELL48b4PMjlEbh6bM/vu7uvXbPsmF3dzpGl56txIrSTZarL6TLVbeEmo2nrGu087SVWL1L7mO73F5fbGJ0ys/einqvtdlC5/HRT4wCGTkZu1F3Lb4RuxkpnjQ55tW1mZpTUHWsWNdrcHhtVdPwNSFreevScQdWwpphuuHJ1DWBebGljhEabVnpFafD6iq0HX3x4JgrrcUyy9D4V3Vve6RdXV/xGO4WPZdPlxYeeGbQ70LQQUeUI7fiXS0UIRniGxStS6YNBIalz7ptZF134KIOomrfS/AlHds6+JerGjSp65bThOdBvxX91qJD9qDN/aSt3vwEaho5yw==
+sidebar_class_name: "put api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Change default LLM provider and model"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/v1/llm-providers/defaults"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to change the default LLM provider and model.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"model":{"type":"string","enum":["gpt-5","claude-sonnet-4-20250514","claude-haiku-4-5-20251001"]}},"required":["provider","model"],"additionalProperties":false}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"model":{"type":"string","enum":["gpt-5","claude-sonnet-4-20250514","claude-haiku-4-5-20251001"]},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","model"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -46,7 +46,7 @@ To avoid hitting rate limits, you should monitor the rate limit headers in your 
 The `x-ratelimit-remaining` header shows how many requests you have left in the current window.
 When this number gets low, you should reduce your request frequency or implement a backoff strategy.
 
-The `x-ratelimit-reset` header tells you when the rate limit window will reset, which can help you plan when to resume normal request rates. */}
+The `x-ratelimit-reset` header tells you when the rate limit window will reset, which can help you plan when to resume normal request rates.
 
 ### Use exponential backoff
 

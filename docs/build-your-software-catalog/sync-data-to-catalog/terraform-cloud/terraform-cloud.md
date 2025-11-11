@@ -34,7 +34,7 @@ Port supports both Terraform Cloud and Terraform Enterprise versions (self hoste
 If installing Port exporter for Terraform Enterprise, you will be required to specify your Terraform 's host URL by passing the following parameter to the installer: `integration.config.appHost` 
 :::
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Terraform Cloud into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -58,7 +58,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 <IntegrationVersion integration="terraform-cloud" />
 
@@ -189,7 +189,7 @@ The integration uses polling to pull the configuration from Port every minute an
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Terraform Cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
 
