@@ -135,7 +135,7 @@ export const availableGuides = [
     {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
-        tags: ["Cloud access management", "Actions", "RBAC"],
+        tags: ["Cloud access management", "Actions", "Access controls"],
         logos: ["AWS" ],
         // category: "Getting started",
         link: "/guides/all/iam-permissions-guide",
@@ -235,7 +235,7 @@ export const availableGuides = [
     {
         title: "Connect CODEOWNERS with Service, Team & User",
         description: "Create a logical connection between your GitHub CODEOWNERS and their corresponding services, teams, and users",
-        tags: ["RBAC", "GitHub"],
+        tags: ["Access controls", "GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/connect-github-codeowners-with-service-team-and-user",
@@ -1102,7 +1102,7 @@ export const availableGuides = [
     {
         title: "Automate admin role assignment",
         description: "Set up automated user role assignment when they are added to Admins group.",
-        tags: ["Security", "Automations", "RBAC"],
+        tags: ["Security", "Automations", "Access controls"],
         logos: ["Automations"],
         link: "/guides/all/automate-user-role-update",
     },
@@ -1482,7 +1482,7 @@ export const availableGuides = [
     {
         title: "Manage MCP Server Registry",
         description: "Build a centralized MCP server registry with governance, discovery, and automated metadata extraction",
-        tags: ["AI", "Actions", "Automations", "RBAC"],
+        tags: ["AI", "Actions", "Automations", "Access controls"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/manage-mcp-registry",
       
