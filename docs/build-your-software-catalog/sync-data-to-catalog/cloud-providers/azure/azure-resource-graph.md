@@ -16,7 +16,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 This integration is in closed beta and is not available for general use. Please contact [Port's support team](http://support.port.io/) to request access.
 :::
 
-This integration provides a robust solution for syncing your Azure resources to Port by leveraging our open-source [Ocean framework](https://ocean.port.io). It is designed for high-volume data ingestion across multiple subscriptions and efficiently queries the Azure Resource Graph API, ensuring high-performance data ingestion even in large-scale environments.
+This integration provides a robust solution for syncing your Azure resources to Port by leveraging the open-source [Ocean framework](https://ocean.port.io). It is designed for high-volume data ingestion across multiple subscriptions and efficiently queries the Azure Resource Graph API, ensuring high-performance data ingestion even in large-scale environments.
 
 Key advantages:
 - **Centralized Syncing**: Ingest resources from all your Azure subscriptions with a single deployment.
