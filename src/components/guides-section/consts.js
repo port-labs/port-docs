@@ -1528,11 +1528,18 @@ export const availableGuides = [
         link: "/guides/all/orchestrate-incident-response-with-ai",
     },
     {
-        title: "Use Port as a context lake for n8n vulnerability management",
-        description: "Use Port as a context lake for n8n workflows to enrich vulnerability management with service metadata, ownership, and dependencies",
+        title: "Remediate security vulnerability with n8n and Port AI",
+        description: "Remediate security vulnerabilities with n8n and Port AI using Port's AI agents and automations",
         tags: ["Security", "n8n", "Webhook", "AI"],
         logos: ["n8n", "Webhook", "AI"],
-        link: "/guides/all/port-as-context-lake-for-n8n-vulnerability-management",
+        link: "/guides/all/remediate-vulnerability-with-n8n-and-port",
+    },
+    {
+        title: "Setup Port's n8n custom node",
+        description: "Setup Port's n8n custom node to integrate Port's AI agents and Context Lake with n8n workflows",
+        tags: ["n8n", "AI"],
+        logos: ["n8n", "AI"],
+        link: "/guides/all/setup-port-n8n-node",
     }
 ]
 
