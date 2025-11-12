@@ -17,8 +17,9 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Terraform Cloud and Terraform Enterprise
 
-Port's Terraform Cloud integration allows you to model Terraform Cloud resources in your software catalog and ingest data into them.
+<IntegrationVersion integration="terraform-cloud" />
 
+Port's Terraform Cloud integration allows you to model Terraform Cloud resources in your software catalog and ingest data into them.
 
 ## Overview
 
@@ -59,8 +60,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="terraform-cloud" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

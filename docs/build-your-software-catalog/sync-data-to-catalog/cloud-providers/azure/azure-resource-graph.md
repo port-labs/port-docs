@@ -12,19 +12,18 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Azure Resource Graph (Beta)
 
+<IntegrationVersion integration="azure-resource-graph" />
+
 :::warning Availability Notice
 This integration is in closed beta and is not available for general use. Please contact [Port's support team](http://support.port.io/) to request access.
 :::
 
-Sync your Azure environment to Port at scale using Azure Resource Graph and Ocean framework. This integration is designed for high-volume data ingestion across multiple subscriptions, offering several key advantages:
+This integration provides a robust solution for syncing your Azure resources to Port by leveraging the open-source [Ocean framework](https://ocean.port.io). It is designed for high-volume data ingestion across multiple subscriptions and efficiently queries the Azure Resource Graph API, ensuring high-performance data ingestion even in large-scale environments.
 
+Key advantages:
 - **Centralized Syncing**: Ingest resources from all your Azure subscriptions with a single deployment.
 - **High-Speed Ingestion**: Leverage Azure Resource Graph to query and sync up to 5000 subscriptions simultaneously for maximum performance.
 - **Customizable Mapping**: Take full control over which resource types are ingested and how they are mapped to your software catalog.
-
-## Overview
-
-This integration provides a robust solution for syncing your Azure resources to Port by leveraging our open-source [Ocean framework](https://ocean.port.io). It uses the Azure SDK to efficiently query the Azure Resource Graph API, ensuring high-performance data ingestion even in large-scale environments.
 
 On each run, the integration performs a full synchronization, so your software catalog always reflects the current state of your Azure resources. You can use declarative YAML mapping to transform raw data and model it according to your software catalog's structure.
 
@@ -32,10 +31,12 @@ The integration is packaged as a Docker container and can be deployed in any env
 
 ## Supported resources
 
-The integration syncs data from two main Azure Resource Graph tables:
+The Azure Resource Graph integration supports the following `kinds`:
 
-- `Resources`: This table includes a wide array of Azure resources, such as virtual machines, storage accounts, network interfaces, and more. The integration syncs their properties, tags, and metadata.
-- `ResourceContainers`: This table contains management groups, subscriptions, and resource groups, providing the hierarchical context for your Azure resources.
+- `Resources` - represents an Azure resource. By default, they're pulled from the `resources` table, which includes a wide array of Azure resources such as virtual machines, storage accounts, network interfaces, and more. You can override this by specifying another Azure Resource Graph table. To see all supported tables, refer to the [official documentation](https://learn.microsoft.com/en-us/azure/governance/resource-graph/reference/supported-tables-resources).
+- `ResourceContainers` - represents management groups, subscriptions, and resource groups, providing the hierarchical context for your Azure resources.
+- `Subscription` - represents subscriptions from the Azure Resource Manager API.
+
 
 ## Configuration
 
@@ -48,51 +49,109 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 This is the default mapping configuration you get after installing the Azure integration.
 
 <details>
-<summary><b>Default mapping configuration (Click to expand)</b></summary>
+<summary><b>Default mapping configuration (click to expand)</b></summary>
 
   ```yaml showLineNumbers
 resources:
-  - kind: resource
+  - kind: subscription
     selector:
       query: 'true'
     port:
       entity:
         mappings:
-          identifier: '.id | gsub(" ";"_")'
-          title: .name
-          blueprint: '"azureCloudResources"'
-          properties:
-            tags: .tags
-            type: .type
-            location: .location
-  - kind: resourceContainer
-    selector:
-      query: .type == "microsoft.resources/subscriptions"
-    port:
-      entity:
-        mappings:
-          identifier: '.id | gsub(" ";"_")'
-          title: .name
+          identifier: .subscriptionId
+          title: .displayName
           blueprint: '"azureSubscription"'
           properties:
-            subscriptionId: .subscriptionId
-            location: .location
+            tags: .tags
+            state: .state
+            subscriptionPolicies: .subscriptionPolicies
   - kind: resourceContainer
     selector:
-      query: .type == "microsoft.resources/subscriptions/resourcegroups"
+      query: 'true'
+      graphQuery: >-
+        "resourcecontainers 
+        | where type =~'microsoft.resources/subscriptions/resourcegroups' 
+        | project id, type, name, location, tags, subscriptionId, resourceGroup 
+        | extend resourceGroup=tolower(resourceGroup) 
+        | extend type=tolower(type)"
     port:
       entity:
         mappings:
-          identifier: '.id | gsub(" ";"_")'
+          identifier: .id | gsub(" ";"_")
           title: .name
           blueprint: '"azureResourceGroup"'
           properties:
             tags: .tags
+            type: .type
             location: .location
           relations:
-            subscription: '("/subscriptions/" + .subscriptionId) | gsub(" ";"_")'
+            subscription: ("/subscriptions/" + .subscriptionId) | gsub(" ";"_")
+  - kind: resource
+    selector:
+      query: 'true'
+      graphQuery: >-
+        "resources 
+        | project id, type, name, location, tags, subscriptionId, resourceGroup 
+        | extend resourceGroup=tolower(resourceGroup) 
+        | extend type=tolower(type) 
+        | join kind=leftouter (
+            resourcecontainers
+            | where type =~ 'microsoft.resources/subscriptions/resourcegroups'
+            | project rgName=tolower(name), rgTags=tags, rgSubscriptionId=subscriptionId
+        ) on $left.subscriptionId == $right.rgSubscriptionId and
+        $left.resourceGroup == $right.rgName 
+        | project id, type, name, location, tags, subscriptionId, resourceGroup, rgTags"
+    port:
+      entity:
+        mappings:
+          identifier: .id | gsub(" ";"_")
+          title: .name
+          blueprint: '"azureResource"'
+          properties:
+            tags: .tags
+            location: .location
+          relations:
+            resource_group: >-
+              ("/subscriptions/" + .subscriptionId + "/resourceGroups/"  +
+              .resourceGroup) | gsub(" ";"_")
+
+
   ```
 </details>
+
+### The `graphQuery` selector
+
+The `graphQuery` selector is a powerful feature that allows you to specify a custom query to fetch the exact Azure resources you need. It uses the [**Kusto Query Language (KQL)**](https://learn.microsoft.com/en-us/azure/governance/resource-graph/concepts/query-language).
+
+With `graphQuery`, you can:
+- **Filter resources** based on their properties, tags, or any other attribute.
+- **Select specific properties** to reduce the amount of data ingested.
+- **Join different resource tables** to enrich the data.
+- **Perform aggregations** and other advanced operations.
+
+:::tip Optimizing your `graphQuery`
+It is highly recommended to optimize your `graphQuery` to fetch only the data you need. A well-crafted query can significantly improve the performance of the integration and ensure that your software catalog is not cluttered with unnecessary information.
+
+For example, instead of fetching all resources and then filtering them in the mapping, you can use the `where` clause in your query to filter the resources at the source.
+:::
+
+Here is an example of a broad query versus an optimized query:
+
+**Broad Query:**
+```kusto showLineNumbers
+resources
+| project id, type, name, location, tags, subscriptionId, resourceGroup
+```
+
+**Optimized Query:**
+```kusto showLineNumbers
+resources
+| where type in~ ('microsoft.compute/virtualmachines', 'microsoft.storage/storageaccounts') and tags.environment == 'production'
+| project id, type, name, location, tags, subscriptionId, resourceGroup
+```
+
+The optimized query fetches only virtual machines and storage accounts that have the `environment` tag set to `production`, which is much more efficient.
 
 ## Setup
 
@@ -114,22 +173,18 @@ Keep the following credentials handy after setup:
 
 ## Installation
 
-<Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="helm">
+<Tabs groupId="installation-methods" queryString defaultValue="helm">
 
 <TabItem value="helm" label="Helm (Scheduled)" >
 
-The Azure resource graph exporter is deployed using helm on kubernetes.
+Deploy the Azure resource graph exporter using Helm on Kubernetes to support scheduled resyncs of resources from Azure to Port.
 
-This way of deployment supports scheduled resyncs of resources from Azure to Port.
-
-<h2> Prerequisites </h2>
+<h2>Prerequisites</h2>
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
-<h2> Installation </h2>
-
-<IntegrationVersion integration="azure-resource-graph" />
+<h2>Installation</h2>
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using Helm.
 
@@ -166,19 +221,19 @@ helm upgrade --install azure port-labs/port-ocean \
 
 <TabItem value="ci" label="CI/CD (Scheduled)">
 
-<Tabs groupId="ci-methods" defaultValue="azureDevOps" queryString="ci-methods">
+<Tabs groupId="ci-methods" queryString defaultValue="azureDevOps">
 
 <TabItem value="azureDevOps" label="Azure DevOps">
 
-The Azure exporter is deployed using Azure DevOps pipline, which supports scheduled resyncs of resources from Azure to Port.
+Deploy the Azure exporter using an Azure DevOps pipeline to support scheduled resyncs of resources from Azure to Port.
 
-<h2> Prerequisites </h2>
+<h2>Prerequisites</h2>
 
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - Access to an Azure DevOps project with permission to configure pipelines and secrets.
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
-<h2> Installation </h2>
+<h2>Installation</h2>
 
 Now that you have the Azure App Registration details, you can set up the Azure exporter using an Azure DevOps pipeline.
 
@@ -196,7 +251,7 @@ Here is an example for `azure-pipeline-integration.yml` workflow file:
 Make sure to change the highlighted line to your variable group's name.
 
 <details>
-<summary><b>Azure pipline integration (Click to expand)</b></summary>
+<summary><b>Azure pipeline integration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 name: Azure Resource Graph Exporter Pipeline
@@ -261,12 +316,12 @@ steps:
 
 <TabItem value="github" label="GitHub Actions">
 
-The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of resources from Azure to Port.
+Deploy the Azure exporter using Github Actions to support scheduled resyncs of resources from Azure to Port.
 
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
-<h2> Installation </h2>
+<h2>Installation</h2>
 
 Now that you have the Azure App Registration details, you can set up the Azure exporter using Github Actions.
 
@@ -287,7 +342,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 Here is an example for `azure-rg-integration.yml` workflow file:
 
 <details>
-<summary><b>GitHub Action integration (Click to expand)</b></summary>
+<summary><b>GitHub Action integration (click to expand)</b></summary>
 
 		```yaml showLineNumbers
 		name: Azure Resource Graph Exporter Workflow
@@ -319,13 +374,13 @@ Here is an example for `azure-rg-integration.yml` workflow file:
 
 <TabItem value="argocd" label="ArgoCD">
 
-<h2> Prerequisites </h2>
+<h2>Prerequisites</h2>
 
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [ArgoCD](https://argoproj.github.io/argo-cd/getting_started/) >= 2.0.0
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
-<h2> Installation </h2>
+<h2>Installation</h2>
 
 1. Create a `values.yaml` file in `argocd/azure-rg-integration` in your git repository with the content:
 
@@ -347,11 +402,11 @@ Here is an example for `azure-rg-integration.yml` workflow file:
 
 :::note Replace placeholders
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.  
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+Multiple sources ArgoCD documentation can be found in the [official documentation](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 :::
 
 <details>
-<summary><b>ArgoCD Application (Click to expand)</b></summary>
+<summary><b>ArgoCD Application (click to expand)</b></summary>
 
 		```yaml showLineNumbers
 		apiVersion: argoproj.io/v1alpha1
@@ -405,7 +460,7 @@ kubectl apply -f azure-rg-integration.yaml
 
 <TabItem value="gitlab" label="GitLab">
 
-<h2> Prerequisites </h2>
+<h2>Prerequisites</h2>
 
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
@@ -472,12 +527,12 @@ ingest_data:
 
 <TabItem value="on-prem" label="On-Prem (Once)">
 
-<h2> Prerequisites </h2>
+<h2>Prerequisites</h2>
 - [Port API credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
-<h2> Installation </h2>
+<h2>Installation</h2>
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using Docker.
 
@@ -492,7 +547,7 @@ You should have the following information ready:
 	- `AZURE_TENANT_ID`: The Directory (tenant) ID from the Azure App Registration.
 
 <details>
-<summary>Environment Variables</summary>
+<summary><b>Environment Variables (click to expand)</b></summary>
 
 | Variable                                          | Description                                                                                                                           |
 |---------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
@@ -512,7 +567,7 @@ You should have the following information ready:
 
 For example:
 
-```bash
+```bash showLineNumbers
 docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__PORT__CLIENT_ID="$PORT_CLIENT_ID" \
   -e OCEAN__PORT__CLIENT_SECRET="$PORT_CLIENT_SECRET" \
@@ -532,7 +587,7 @@ ghcr.io/port-labs/port-ocean-azure-rg:latest
 
 ## Examples
 
-### Mapping Azure Cloud resources
+### Mapping Azure cloud resources
 
 The following example demonstrates how to ingest your Azure Subscriptions to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -580,8 +635,12 @@ You can use the following Port blueprint definitions and integration configurati
     - kind: resource
       selector:
         query: 'true'
-        resource_types:
-          - microsoft.insights/datacollectionendpoints
+        graphQuery: >-
+          "resources 
+          | where type in~ ('microsoft.insights/datacollectionendpoints', 'microsoft.compute/virtualmachines')
+          | project id, type, name, location, tags, subscriptionId, resourceGroup 
+          | extend resourceGroup=tolower(resourceGroup) 
+          | extend type=tolower(type) 
       port:
         entity:
           mappings:
@@ -595,9 +654,6 @@ You can use the following Port blueprint definitions and integration configurati
   ```
 </details>
 
-:::note resource type filter
-You can filter resources from Azure Resource Graph by specifying `resource_types` in the mapping configuration. This provides precise control over synced data, streamlining ingestion and keeping your catalog focused on relevant resources.
-:::
 
 ### Mapping cloud resources and resource groups
 
@@ -635,7 +691,7 @@ You can use the following Port blueprint definitions and integration configurati
       "relations": {}
     },
     {
-      "identifier": "azureCloudResources",
+      "identifier": "azureResource",
       "description": "This blueprint represents an AzureCloud Resource in our software catalog",
       "title": "Azure Cloud Resources",
       "icon": "Git",
@@ -679,12 +735,14 @@ You can use the following Port blueprint definitions and integration configurati
 resources:
   - kind: resourceContainer
     selector:
-      query: .type == "microsoft.resources/subscriptions/resourcegroups"
-      tags:
-        included:
-          environment: staging
-        exluded:
-          environment: production
+      query: 'true'
+      graphQuery: >-
+         "resourcecontainers 
+          | where type =~ 'microsoft.resources/subscriptions/resourcegroups' 
+          | where (tostring(tags['environment']) =~ 'prod')
+          | project id, type, name, location, tags, subscriptionId, resourceGroup 
+          | extend resourceGroup=tolower(resourceGroup) 
+          | extend type=tolower(type)"
     port:
       entity:
         mappings:
@@ -698,17 +756,24 @@ resources:
   - kind: resource
     selector:
       query: 'true'
-      tags:
-        included:
-          environment: staging
-        exluded:
-          environment: production
+      graphQuery: >-
+          "resources 
+           | project id, type, name, location, tags, subscriptionId, resourceGroup 
+           | extend resourceGroup=tolower(resourceGroup) 
+           | extend type=tolower(type) 
+           | join kind=leftouter (
+              resourcecontainers
+              | where type =~ 'microsoft.resources/subscriptions/resourcegroups'
+              | project rgName=tolower(name), rgTags=tags, rgSubscriptionId=subscriptionId
+          ) on $left.subscriptionId == $right.rgSubscriptionId and $left.resourceGroup == $right.rgName 
+           | where (tostring(rgTags['environment']) =~ 'prod') and not (tostring(rgTags['environment']) =~ 'staging')
+           | project id, type, name, location, tags, subscriptionId, resourceGroup, rgTags "
     port:
       entity:
         mappings:
           identifier: .id | gsub(" ";"_")
           title: .name
-          blueprint: '"azureCloudResources"'
+          blueprint: '"azureResource"'
           properties:
             tags: .tags
             type: .type
@@ -716,19 +781,6 @@ resources:
           relations:
             resource_group: >-
               ("/subscriptions/" + .subscriptionId + "/resourceGroups/"  + .resourceGroup) | gsub(" ";"_")
+
   ```
 </details>
-
-:::note resource group tags
-You can filter Azure resources using tags from their parent resource groups. This allows you to define both inclusion and exclusion rules in a single configuration, giving you precise control over which resources are synchronized.
-:::
-
-## Frequently asked questions
-
-### Why should I filter resources by their resource group tags?
-
-Filtering resources by their parent resource group's tags simplifies management and synchronization for several reasons:
-
-- **Simplified Tagging**: Apply tags at the resource group level instead of to individual resources. This is more manageable and ensures resources share a common context.
-- **Consistent Classification**: Resource group tags are often more consistent than individual resource tags, allowing for reliable filtering of related resources.
-- **Improved Efficiency**: Filtering reduces the amount of data synced from Azure, speeding up ingestion and creating a more focused software catalog.
