@@ -16,6 +16,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Installation
 
+<IntegrationVersion integration="gitlab-v2" />
+
 This page details how to install Port's GitLab integration (powered by the Ocean framework).
    
 This page outlines the following steps:
@@ -81,8 +83,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="gitlab-v2" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

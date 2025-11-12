@@ -17,6 +17,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Datadog
 
+<IntegrationVersion integration="datadog" />
+
 Port's Datadog integration allows you to model Datadog resources in Port and ingest data into them.
 
 ## Overview
@@ -56,8 +58,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="datadog" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
