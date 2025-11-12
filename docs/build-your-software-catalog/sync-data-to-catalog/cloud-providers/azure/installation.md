@@ -14,6 +14,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Installation
 
+<IntegrationVersion integration="azure" />
+
 :::tip First Time Installation
 For your first deployment of the Azure exporter, we recommend starting with the Helm/scheduled installation method to perform the initial data sync. Once the initial data sync is complete, you can switch to the Terraform deployment method for real-time data sync.
 :::
@@ -43,8 +45,6 @@ This way of deployment supports scheduled resyncs of resources from Azure to Por
 <AzureAppRegistration/>
 
 <h2> Installation </h2>
-
-<IntegrationVersion integration="azure" />
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using Helm.
 

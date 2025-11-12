@@ -12,6 +12,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Amplication
 
+<IntegrationVersion integration="amplication" />
+
 Port's Amplication integration allows you to model [Amplication](https://amplication.com) resources in your software catalog, from which you can then automate code generation using predefined templates, ensuring standardization for resource creation.
 
 ## Overview
@@ -59,8 +61,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="amplication" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

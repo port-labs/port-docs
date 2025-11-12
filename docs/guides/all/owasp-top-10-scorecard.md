@@ -69,12 +69,18 @@ If the property is not yet included in your `Snyk Vulnerability` blueprint, foll
           ```yaml showLineNumbers
           resources:
             - kind: vulnerability
+              selector:
+                query: 'true'
               port:
                 entity:
                   mappings:
-                  //highlight-start
-                    cwe: .attributes.classes[0].id  
-                  //highlight-end
+                    identifier: .id
+                    title: .attributes.title
+                    blueprint: '"snykVulnerability"'
+                    properties:
+                      # highlight-start
+                      category: .attributes.classes[0].id
+                      # highlight-end
           ```
     </details>
       
