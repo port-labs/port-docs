@@ -18,6 +18,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Opsgenie
 
+<IntegrationVersion integration="opsgenie" />
+
 Port's Opsgenie integration allows you to model Opsgenie resources in your software catalog and ingest data into them.
 
 ## Overview
@@ -56,8 +58,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="opsgenie" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
