@@ -702,6 +702,14 @@ html[data-theme="dark"] .openapi-explorer__request-btn {
   margin-bottom: 0.6rem !important;
 }
 
+/* Override badge alignment in IntegrationVersion component */
+.integration-version-container .badge {
+  margin-bottom: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  vertical-align: middle !important;
+}
+
 .theme-code-block-highlighted-line {
   display: table-row !important;
 }

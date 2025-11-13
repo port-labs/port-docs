@@ -12,6 +12,8 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Azure Resource Graph (Beta)
 
+<IntegrationVersion integration="azure-resource-graph" />
+
 :::warning Availability Notice
 This integration is in closed beta and is not available for general use. Please contact [Port's support team](http://support.port.io/) to request access.
 :::
@@ -183,8 +185,6 @@ Deploy the Azure resource graph exporter using Helm on Kubernetes to support sch
 - [Azure App Registration Credentials](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-resource-graph#setup)
 
 <h2>Installation</h2>
-
-<IntegrationVersion integration="azure-resource-graph" />
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using Helm.
 

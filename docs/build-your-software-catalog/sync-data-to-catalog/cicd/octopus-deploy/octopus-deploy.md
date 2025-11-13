@@ -16,6 +16,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Octopus Deploy Integration
 
+<IntegrationVersion integration="octopus" />
+
 Port's Octopus Deploy integration allows you to model Octopus Deploy resources in your software catalog and ingest data into them.
 
 ## Overview
@@ -52,8 +54,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="octopus" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
