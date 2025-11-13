@@ -9,22 +9,24 @@ Port provides a custom n8n node (`n8n-nodes-portio`) that simplifies integration
 
 This guide walks you through installing and configuring Port's custom n8n node in your n8n instance.
 
+<img src='/img/guides/n8n-port-node/5-n8n-connect-port-node.png' border="1px" width="100%" />
+
 ## Prerequisites
 
 Before you begin, ensure you have:
 
-- **pnpm installed** — Required for building the custom node. [Install pnpm](https://pnpm.io/installation) if you don't have it.
+- **npm installed** — Required for installing the Port n8n node package. npm comes with Node.js, [install Node.js](https://nodejs.org/) if you don't have it.
 - **A working n8n instance** — Either n8n Cloud or a self-hosted instance. If you don't have one, follow n8n's [guide on using Docker](https://docs.n8n.io/hosting/installation/installation/docker/).
 - **Port API credentials** — Your Port `Client ID` and `Client Secret`. [Learn how to get them](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 - **A Port account with AI features enabled** — Required for using Port AI agents in your workflows.
 
 ## Set up n8n instance
 
-If you don't have an n8n instance running, you can set one up using Docker. The location where you mount the n8n data directory is important; this is where you will clone the Port n8n node code.
+If you don't have an n8n instance running, you can set one up using Docker. The location where you mount the n8n data directory is important; this is where you will install the Port n8n node package.
 
 ### Using Docker (bind mount)
 
-Using a bind mount allows the container to read/write directly to your local filesystem, making it easier to work with the custom node code.
+Using a bind mount allows the container to read/write directly to your local filesystem, making it easier to install and manage the Port n8n node package.
 
 1. **Create a directory for n8n data** (we will call this `$n8n_HOME`):
 
@@ -44,9 +46,14 @@ Using a bind mount allows the container to read/write directly to your local fil
      -e TZ="Africa/Accra" \
      -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \
      -e N8N_RUNNERS_ENABLED=true \
+     -e N8N_COMMUNITY_PACKAGES_ENABLED=true \
      -v ~/n8n-data:/home/node/.n8n \
      docker.n8n.io/n8nio/n8n
    ```
+
+   :::tip Community packages enabled
+   The `N8N_COMMUNITY_PACKAGES_ENABLED=true` environment variable is required for n8n to load community-installed nodes like the Port n8n node.
+   :::
 
    :::tip Timezone configuration
    Replace `"Africa/Accra"` with your preferred timezone. The `GENERIC_TIMEZONE` and `TZ` environment variables should match.
@@ -72,9 +79,14 @@ services:
     environment:
       - GENERIC_TIMEZONE=Europe/Madrid
       - TZ=Europe/Madrid
+      - N8N_COMMUNITY_PACKAGES_ENABLED=true
     volumes:
       - ./n8n-data:/home/node/.n8n
 ```
+
+   :::tip Community packages enabled
+   The `N8N_COMMUNITY_PACKAGES_ENABLED=true` environment variable is required for n8n to load community-installed nodes like the Port n8n node.
+   :::
 
 Then run:
 
@@ -91,9 +103,9 @@ docker compose up -d
 
 ## Install Port's n8n node
 
-Now that you have n8n running, let's install Port's custom node.
+Now that you have n8n running, let's install Port's custom node using npm.
 
-### Clone the repository
+### Install the npm package
 
 1. **Navigate to your n8n data directory** (the `$n8n_HOME` directory you created earlier):
 
@@ -101,44 +113,26 @@ Now that you have n8n running, let's install Port's custom node.
    cd ~/n8n-data
    ```
 
-2. **Create the custom nodes directory** (if it doesn't exist):
+2. **Install the Port n8n node package**:
 
    ```bash
    mkdir -p custom
    cd custom
+   npm i @port-labs/n8n-nodes-portio-experimental
    ```
 
-3. **Clone the Port n8n nodes repository**:
-
-   ```bash
-   git clone https://github.com/port-labs/port-n8n-nodes.git
-   cd port-n8n-nodes
-   ```
-
-### Build the node
-
-1. **Install dependencies**:
-
-   ```bash
-   pnpm install
-   ```
-
-2. **Build the TypeScript code**:
-
-   ```bash
-   pnpm build
-   ```
-
-   If the build is successful, you will see a `dist` directory created.
+   :::tip Package location
+   The package is installed in the `custom` folder in your n8n data directory (`$n8n_HOME`).
+   :::
 
 3. **Restart your n8n instance**:
 
    - **If using Docker**: Stop the container (`Ctrl+C` or `docker stop n8n`) and start it again with the same command.
    - **If using Docker Compose**: Run `docker compose restart`.
 
-   :::caution Restart required
-   n8n needs to be restarted after installing custom nodes so it can discover and load them.
-   :::
+:::tip Package information
+The Port n8n node package is available on npm at [@port-labs/n8n-nodes-portio-experimental](https://www.npmjs.com/package/@port-labs/n8n-nodes-portio-experimental). The package is currently in experimental status.
+:::
 
 ## Quick start
 
@@ -229,9 +223,10 @@ Now that you have Port's n8n node installed and configured, you can:
 
 ### Node not appearing in n8n
 
-- **Check the build** — Ensure `pnpm build` completed successfully and created a `dist` directory
-- **Verify the path** — Make sure the repository is cloned in `$n8n_HOME/custom/port-n8n-nodes`
-- **Restart n8n** — Custom nodes are only loaded when n8n starts, so a restart is required
+- **Check package installation** — Verify that `npm i @port-labs/n8n-nodes-portio-experimental` completed successfully. Check for a `node_modules` directory in your `$n8n_HOME` directory.
+- **Verify environment variable** — Ensure `N8N_COMMUNITY_PACKAGES_ENABLED=true` is set in your Docker configuration
+- **Check installation location** — Make sure the package is installed in the same directory that's mounted to `/home/node/.n8n` in the Docker container
+- **Restart n8n** — Community packages are only loaded when n8n starts, so a restart is required after installation
 
 ### Credential errors
 
