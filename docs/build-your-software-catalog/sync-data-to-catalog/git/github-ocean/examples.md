@@ -183,13 +183,13 @@ Both `organization` and `repos` under `folders` are optional. You can:
 Use `path` and `repositoryType` to scope results and improve performance.
 ::::
 
-```yaml
+```yaml showLineNumbers
 - kind: folder
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
       folders: # Specify the repositories and folders to include under this relative path.
         - path: "*" # Relative path to the folders within the repositories.
-          repos: # Optional: list repositories to include; omit to scan all repos
+          repos: # Optional: list repositories to include (omit to scan all repos)
             - name: backend-service
             - name: frontend-service
 ```

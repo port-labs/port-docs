@@ -764,7 +764,7 @@ resources:
       files:
         - path: '**/package.json'
           organization: my-org  # Optional if githubOrganization is set; required if not set
-        # Optional: you can target specific repositories here; omit to scan all repos
+        # Optional: you can target specific repositories here (omit to scan all repos)
           repos:
             - name: MyRepo
               branch: main
@@ -821,7 +821,7 @@ resources:
       query: 'true'
       files:
         - path: values.yaml
-          organization: my-org  # Optional; omit to scan all orgs in scope
+          organization: my-org  # Optional, omit to scan all orgs in scope
           skipParsing: true
           repos:  # Optional: omit to scan all repos
             - name: MyRepo
