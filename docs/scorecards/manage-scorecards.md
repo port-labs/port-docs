@@ -372,4 +372,5 @@ In order to delete a scorecard using the Terraform provider, use the `terraform 
 
 ## Next steps
 
-[Dive into advanced operations on Scorecards with our API ➡️ ](/api-reference/port-api)
+- Explore [scorecard use-cases](/examples/scorecard-use-cases) and [automation use-cases](/examples/automation-use-cases) for examples you can implement in your environment.
+- [Dive into advanced operations on Scorecards with our API ➡️ ](/api-reference/port-api)
