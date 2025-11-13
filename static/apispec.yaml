@@ -7516,6 +7516,14 @@ paths:
           name: attach_identifier_to_title_mirror_properties
           required: false
         - schema:
+            type: boolean
+            default: false
+          in: query
+          name: allow_partial_results
+          required: false
+          description: When enabled allows some of the blueprint searches to fail without
+            failing the full request.
+        - schema:
             type: string
             minLength: 1
           in: path
@@ -8513,6 +8521,14 @@ paths:
           in: query
           name: attach_identifier_to_title_mirror_properties
           required: false
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: allow_partial_results
+          required: false
+          description: When enabled allows some of the blueprint searches to fail without
+            failing the full request.
         - schema:
             type: string
             minLength: 1
@@ -9532,6 +9548,14 @@ paths:
           in: query
           name: attach_identifier_to_title_mirror_properties
           required: false
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: allow_partial_results
+          required: false
+          description: When enabled allows some of the blueprint searches to fail without
+            failing the full request.
       security:
         - bearer:
             - read:entities
@@ -25232,13 +25256,24 @@ paths:
                     portalTitle:
                       type: string
                       maxLength: 30
-                    # supportUserPermission:
-                    #   type: string
-                    #   enum:
-                    #     - OPT_OUT
-                    #     - READ_ONLY
-                    #     - FULL_PERMISSIONS
-                    #   description: Permission level for Port support users accessing this organization
+                    supportUserPermission:
+                      type: string
+                      enum:
+                        - OPT_OUT
+                        - OPT_IN
+                      description: Permission level for Port support users accessing this organization
+                    supportUserTTL:
+                      type: string
+                      enum:
+                        - ONE_DAY
+                        - ONE_WEEK
+                        - ONE_MONTH
+                        - FOREVER
+                      description: Time-to-live for Port support user access
+                    supportUserExpiresAt:
+                      type: string
+                      format: date-time
+                      description: Expiration date for Port support user access
                 isOnboarded:
                   type: boolean
                 toolSelectionProvisioning:
@@ -25765,6 +25800,13 @@ paths:
         
         If you already have an existing Port account, this requirement will be enforced starting **November 15th, 2025**.
         :::
+      parameters:
+        - schema:
+            type: boolean
+          in: query
+          name: actionsProcessingEnabled
+          required: false
+          description: filter by integrations that has actions processing enabled
       security:
         - bearer:
             - read:integrations
@@ -29203,15 +29245,19 @@ paths:
       parameters:
         - schema:
             type: array
+            style: form
+            explode: true
             items:
               type: string
               enum:
                 - id
                 - email
                 - firstName
+                - isInvisible
                 - lastName
                 - picture
                 - status
+                - supportLevel
                 - type
                 - providers
                 - createdAt
