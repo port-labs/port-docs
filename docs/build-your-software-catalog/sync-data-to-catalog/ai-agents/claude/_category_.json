@@ -1,5 +1,6 @@
 {
   "label": "Claude AI",
-  "position": 3
+  "position": 2,
+  "className": "custom-integration"
 }
 

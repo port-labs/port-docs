@@ -528,6 +528,29 @@ html[data-theme="dark"] details details  {
   zoom: 70%;
 }
 
+/* Ocean Custom integration badge */
+
+.custom-integration > .menu__link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom-integration > .menu__link::after {
+  content: "Custom";
+  margin-left: auto;
+  margin-right: 0.25rem;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.8em;
+  background: var(--ifm-color-primary-contrast-background, #f8f9fa);
+  color: var(--ifm-color-primary-contrast-foreground, #5c6370);
+  border: 1px solid var(--ifm-color-primary-dark, #e6e6e6);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+
 /* OpenAPI spec */
 
 .openapi-security__details {
