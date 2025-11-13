@@ -12,6 +12,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Snyk
 
+<IntegrationVersion integration="snyk" />
+
 Port's Snyk integration allows you to model Snyk resources in your software catalog and ingest data into them.
 
 ## Overview
@@ -53,8 +55,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="snyk" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
