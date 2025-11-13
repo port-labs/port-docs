@@ -26,7 +26,7 @@ resources:
       files:
         - path: 'README.md'
           organization: my-org  # Optional if githubOrganization is set; required if not set
-          repos:
+          repos: # Optional: list repositories to include; omit to scan all repos
             - name: test-repo
               branch: main
     port:
