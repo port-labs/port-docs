@@ -234,8 +234,8 @@ resources:
       files:
           # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
-          organization: my-org  # Optional; omit to scan all orgs in scope
-            # Optional: use `repos` to filter repositories/branches; omit to scan all repos
+          organization: my-org  # Optional, omit to scan all orgs in scope
+            # Optional: use `repos` to filter repositories/branches (omit to scan all repos)
           repos:
             - name: MyRepo
               branch: main
@@ -763,7 +763,7 @@ resources:
       query: 'true'
       files:
         - path: '**/package.json'
-          organization: my-org  # Optional if githubOrganization is set; required if not set
+          organization: my-org  # Optional if githubOrganization is set (required if not set)
         # Optional: you can target specific repositories here (omit to scan all repos)
           repos:
             - name: MyRepo
