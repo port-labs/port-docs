@@ -194,7 +194,7 @@ This can be used in either the `property` or `value` key in a query rule:
 
 #### Usage examples
 
-![contextual search rules examples](../../static/img/entities-search/contextual-search-rules.png)
+<img src="/img/entities-search/contextual-search-rules.png" border="1px" width="90%" />
 
 The following rule will result in the entities owned by any one of the user's teams:
 ```json showLineNumbers
