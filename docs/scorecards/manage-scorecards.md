@@ -353,10 +353,23 @@ In order to delete a scorecard using the Terraform provider, use the `terraform 
 
 </Tabs>
 
-## Scorecards as Blueprints
+## Scorecards as blueprints
 
-Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip>.   
-This feature enables you to create and manage scorecards using dedicated blueprints, allowing for rich customization, visualization and automation of your scorecards.  
+With the scorecards as blueprints feature, you can manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip> and entities. This approach provides rich customization, visualization, and automation capabilities for your scorecards.
+
+When this feature is enabled, you can use either of the following methods to manage scorecards:
+
+**Using the API:**
+
+Manage scorecards through the standard blueprints and entities API endpoints:
+- [Create](/api-reference/create-a-blueprint), [update](/api-reference/update-a-blueprint), or [delete](/api-reference/delete-a-blueprint) scorecard blueprints.
+- [Create](/api-reference/create-an-entity), [update](/api-reference/update-an-entity), or [delete](/api-reference/delete-an-entity) scorecard entities.
+
+**Using Terraform:**
+
+Manage scorecards using Terraform resources:
+- [Create, update, or delete scorecard blueprints](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_blueprint).
+- [Create, update, or delete scorecard entities](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_entity).
 
 To learn more, refer to the [scorecards as blueprints](/scorecards/scorecards-as-blueprints) page.
 
