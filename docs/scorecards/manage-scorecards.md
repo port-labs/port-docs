@@ -389,8 +389,6 @@ To create a scorecard from the UI, you can use either one of the following metho
 
 <TabItem value="API">
 
-**Using the API:**
-
 Manage scorecards through the standard blueprints and entities API endpoints:
 - [Create](/api-reference/create-a-blueprint), [update](/api-reference/update-a-blueprint), or [delete](/api-reference/delete-a-blueprint) scorecard blueprints.
 - [Create](/api-reference/create-an-entity), [update](/api-reference/update-an-entity), or [delete](/api-reference/delete-an-entity) scorecard entities.
@@ -398,8 +396,6 @@ Manage scorecards through the standard blueprints and entities API endpoints:
 </TabItem>
 
 <TabItem value="Terraform">
-
-**Using Terraform:**
 
 Manage scorecards using Terraform resources:
 - [Create, update, or delete scorecard blueprints](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_blueprint).
