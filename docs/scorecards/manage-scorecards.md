@@ -359,17 +359,55 @@ With the scorecards as blueprints feature, you can manage scorecards as <PortToo
 
 When this feature is enabled, you can use either of the following methods to manage scorecards:
 
+<Tabs queryString="SCAB" defaultValue="UI">
+
+<TabItem value="UI">
+
+To create a scorecard from the UI, you can use either one of the following methods:
+
+**Method 1: From the scorecards catalog page**
+
+1. Navigate to the [Software Catalog](https://app.getport.io/catalog) page.
+
+2. Go to the [Scorecards page](https://app.getport.io/_scorecards).
+
+3. Click the `+ Scorecard` button in the top right corner of the page.
+
+4. Fill in the form and click `Save`.
+
+**Method 2: From the Data model page**
+
+1. Go to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Expand the relevant blueprint, and click on the `Scorecards` tab.
+
+3. Click on the `+ New scorecard` button.
+
+4. Fill in the form and click `Save`.
+
+</TabItem>
+
+<TabItem value="API">
+
 **Using the API:**
 
 Manage scorecards through the standard blueprints and entities API endpoints:
 - [Create](/api-reference/create-a-blueprint), [update](/api-reference/update-a-blueprint), or [delete](/api-reference/delete-a-blueprint) scorecard blueprints.
 - [Create](/api-reference/create-an-entity), [update](/api-reference/update-an-entity), or [delete](/api-reference/delete-an-entity) scorecard entities.
 
+</TabItem>
+
+<TabItem value="Terraform">
+
 **Using Terraform:**
 
 Manage scorecards using Terraform resources:
 - [Create, update, or delete scorecard blueprints](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_blueprint).
 - [Create, update, or delete scorecard entities](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_entity).
+
+</TabItem>
+
+</Tabs>
 
 To learn more, refer to the [scorecards as blueprints](/scorecards/scorecards-as-blueprints) page.
 
