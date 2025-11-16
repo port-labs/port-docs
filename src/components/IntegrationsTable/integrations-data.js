@@ -334,7 +334,7 @@ export const integrations = [
 export const categories = {
   'All': 'all',
   'Git': 'git',
-  'Kubernetes': 'kubernetes',
+  'Kubernetes stack': 'kubernetes',
   'Cloud providers': 'cloud-providers',
   'IaC': 'iac',
   'Incident management': 'incident',
