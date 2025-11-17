@@ -1,0 +1,33 @@
+## Review guidelines
+
+- Headers should have a capital letter only for the first word, rest in lowercase (e.g., "Promote scorecards").
+- Links should not be capitalized unless at the start of a new sentence.
+- General product names (Lambda, Kubernetes, ArgoCD) should follow standard capitalization.
+- Use second-person pronouns (you, your) when addressing the reader.
+- Avoid commanding language like "You will now create..."; use "We will now create..." or "Let's create..." instead.
+- Keep sentences concise and direct (aim for 15-25 words per sentence).
+- Use active voice rather than passive voice.
+- Break up long paragraphs into smaller chunks (3-5 sentences maximum).
+- Use consistent terminology throughout; avoid using different terms for the same concept.
+- All links must use full paths, not relative ones.
+- Use descriptive link text; avoid generic phrases like "click here" or "learn more".
+- Verify that all links work correctly.
+- Use `-` for bullet lists and end each item with a `.` (not `;`).
+- Keep list items parallel in structure.
+- Images must have a simple black border and use full path links.
+- Images should have proper `width` defined and include alt text.
+- Code blocks with more than one line must include `showLineNumbers`.
+- Ensure code examples are complete and can be copied directly.
+- Use syntax highlighting by specifying the language after opening backticks.
+- For inline code references, use single backticks (e.g., `blueprint`).
+- Tabs component must include `queryString` attribute.
+- Don't use `#` headers inside tabs; use `<h2>` instead.
+- Admonitions must always include a title.
+- Use admonitions sparingly and choose the appropriate type (tip, info, caution, warning).
+- When moving/deleting/changing file paths, verify URLs aren't used elsewhere.
+- Run `npm run build` before pushing to ensure all links are valid.
+- Content must be accurate, up-to-date, and free of spelling/grammar errors.
+- Formatting must be consistent with the style guide.
+- Technical terms should be explained or linked to definitions on first use.
+- Avoid unnecessary jargon or marketing language.
+- Use bold text for UI element labels and buttons (e.g., **Save** button).
