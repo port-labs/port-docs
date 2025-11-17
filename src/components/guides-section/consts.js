@@ -13,6 +13,7 @@ export const tagsCategoryMap = {
         "BitBucket",
         "AzureDevops",
         "Claude Code",
+        "n8n",
         "Azure",
         "Webhook",
         "Kafka",
@@ -1539,8 +1540,8 @@ export const availableGuides = [
     {
         title: "Remediate security vulnerability with n8n and Port AI",
         description: "Remediate security vulnerabilities with n8n and Port AI using Port's AI agents and automations",
-        tags: ["Security", "n8n", "Webhook", "AI"],
-        logos: ["n8n", "Webhook", "AI"],
+        tags: ["Security", "n8n", "Slack", "AI"],
+        logos: ["n8n", "Slack", "AI"],
         link: "/guides/all/remediate-vulnerability-with-n8n-and-port",
     },
     {
