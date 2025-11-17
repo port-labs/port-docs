@@ -357,6 +357,8 @@ In order to delete a scorecard using the Terraform provider, use the `terraform 
 
 With the scorecards as blueprints feature, you can manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip> and entities. This approach provides rich customization, visualization, and automation capabilities for your scorecards.
 
+Since scorecards are now blueprints (which can be extended with additional properties) and their instances are entities, use the following endpoints and Terraform resources to manage them.
+
 When this feature is enabled, you can use either of the following methods to manage scorecards:
 
 <Tabs queryString="SCAB" defaultValue="UI">
@@ -390,7 +392,7 @@ To create a scorecard from the UI, you can use either one of the following metho
 <TabItem value="API">
 
 Manage scorecards through the standard blueprints and entities API endpoints:
-- [Create](/api-reference/create-a-blueprint), [update](/api-reference/update-a-blueprint), or [delete](/api-reference/delete-a-blueprint) scorecard blueprints.
+- [Update](/api-reference/update-a-blueprint) scorecard blueprints.
 - [Create](/api-reference/create-an-entity), [update](/api-reference/update-an-entity), or [delete](/api-reference/delete-an-entity) scorecard entities.
 
 </TabItem>
@@ -398,8 +400,8 @@ Manage scorecards through the standard blueprints and entities API endpoints:
 <TabItem value="Terraform">
 
 Manage scorecards using Terraform resources:
-- [Create, update, or delete scorecard blueprints](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_blueprint).
-- [Create, update, or delete scorecard entities](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_entity).
+- [Update](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_blueprint) scorecard blueprints.
+- [Create, update, or delete](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_entity) scorecard entities.
 
 </TabItem>
 
