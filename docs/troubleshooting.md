@@ -112,6 +112,17 @@ Reach out to us using chat/Slack/support site at [support.port.io](http://suppor
 
 ---
 
+#### How do I delete my organization?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+To delete your organization, reach out to Port's support team by submitting a request in the [support center](https://support.port.io/hc/en-us/requests/new).
+
+</details>
+
+---
+
 ## Ocean integrations
 
 #### Why is my Ocean integration not working?
