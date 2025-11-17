@@ -1538,6 +1538,13 @@ export const availableGuides = [
         link: "/guides/all/orchestrate-incident-response-with-ai",
     },
     {
+        title: "Generate incident updates with n8n and Port",
+        description: "Use Port as a context lake in n8n workflows to automatically generate contextual incident updates and send enriched Slack notifications with relevant technical context",
+        tags: ["Self Healing Incidents", "n8n", "AI", "Slack"],
+        logos: ["n8n", "AI", "Slack"],
+        link: "/guides/all/generate-incident-updates-with-n8n-and-port",
+    },
+    {
         title: "Remediate security vulnerability with n8n and Port AI",
         description: "Remediate security vulnerabilities with n8n and Port AI using Port's AI agents and automations",
         tags: ["Security", "n8n", "Slack", "AI"],
