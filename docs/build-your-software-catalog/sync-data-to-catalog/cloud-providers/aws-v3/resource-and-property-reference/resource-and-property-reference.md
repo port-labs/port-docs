@@ -70,31 +70,32 @@ To collect additional properties from AWS resources, add the optional actions yo
     query: 'true'
     includeActions:
       - DescribeInstanceStatusAction
+```
 
-In this configuration, Port will enrich your catalog by fetching all properties provided by the [DescribeInstanceStatus API](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceStatus.html) for every EC2 instance.
+In this case, Port will enrich your catalog by fetching all properties returned by the [DescribeInstanceStatus API](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceStatus.html) for every EC2 instance.
 
-:::caution Action limit
-You can include a **maximum of 3 optional actions per resource kind** (excluding default actions). To use more than 3 actions, you can configure multiple resource kinds in your integration.
+:::caution Maximum Optional Actions per Resource
+You can include a **maximum of 3 optional actions per resource kind** (default actions excluded). To use more than 3 optional actions, configure multiple resource kinds in your integration.
 :::
 
 
-### Querying resources from specific regions
+### Querying Resources from Specific Regions
 
-The `regionPolicy` selector lets you control which AWS regions are queried by the integration. Use it to include or exclude regions per resource.
+You can control which AWS regions Port queries for resources using the `regionPolicy` selector. This allows you to include or exclude specific regions per resource type.
 
 - allow: List of regions explicitly permitted for querying
 - deny: List of regions explicitly excluded from querying
 
-#### How `regionPolicy` works
+#### How `regionPolicy` Works
 
-1. If both lists are empty: all regions are allowed.
-2. If the region is in `deny`: it is excluded unless explicitly allowed.
-3. If the region is in `allow`: it is included for querying.
-4. If a region appears in both lists: it is excluded.
-5. If only `deny` is specified: only regions in the `deny` list are excluded.
-6. If only `allow` is specified: only regions in the `allow` list are included.
+1. If both lists are empty, all regions are allowed.
+2. If a region is listed in `deny`, it is excluded unless explicitly allowed.
+3. If a region is listed in `allow`, it is included for querying.
+4. If a region is present in both lists, it is excluded.
+5. If only `deny` is specified, only the regions in `deny` are excluded.
+6. If only `allow` is specified, only the regions in `allow` are included.
 
-#### Example configuration
+#### Example Configuration
 
 ```yaml showLineNumbers
 resources:
