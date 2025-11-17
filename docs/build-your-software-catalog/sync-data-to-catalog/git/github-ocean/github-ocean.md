@@ -6,9 +6,9 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
-# GitHub Self-Hosted (Beta)
+# GitHub Ocean (Beta)
 
-Port's GitHub self-hosted integration allows you to model GitHub resources in your software catalog and ingest data into them.
+Port's GitHub integration allows you to model GitHub resources in your software catalog and ingest data into them.
 
 ## Overview
 
@@ -42,11 +42,14 @@ organizations:
 
 - **With classic PAT**:
   - Specify organizations in port mapping: `organizations: ["org1", "org2", "org3"]`
+  - If `organizations` are not specified, the integration will sync all organizations the classic PAT is scoped to.
 - **With GitHub App or Fine-grained PAT**: Specify exactly one organization by setting the `githubOrganization` in the environment variables: `githubOrganization: "my-org"`
 
 **Precedence:** If `githubOrganization` is set in the environment variables or config and `organizations` are also listed in port mapping, the integration prioritizes single‑organization behavior and syncs only the `githubOrganization`.
 
 **Performance consideration:** Syncing multiple organizations will increase the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption. Consider syncing only the organizations you need.
+
+**Default mapping behavior:** First‑time installs may sync more than intended, since organizations aren’t scoped yet. Refer to [installation guide](./installation) on how to ensure a clean catalogue after you scope out required organization.
 :::
 
 ### Supported resources

@@ -47,6 +47,13 @@ To use the API, you need to obtain an API token from your Port application:
     <img src="/img/openapi/getBearerToken.png" width="70%" border="1px" />
     An API token is valid for **3 hours**, after which you will need to generate a new one.
 
+    :::info Active token reuse
+    For each set of API credentials, there can only be one active token at a time.  
+    When a token is generated (for example, by an integration), any subsequent requests to generate a token with the same credentials will return the same active token, as long as it has not expired.
+
+    To avoid errors that might occur due to token expiration, make sure to include retry logic in your code.
+    :::    
+
 ## Size limit
 
 The body of all requests is limited to 1 MiB.
