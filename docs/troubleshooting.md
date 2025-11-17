@@ -125,6 +125,11 @@ If you are facing issues after installing an Ocean integration, follow these ste
 2. Go to the [audit log](https://app.getport.io/settings/AuditLog) in your Port application and check for any errors in the creation of your `blueprints` and/or `entities`.
 3. In your [builder](https://app.getport.io/settings/data-model) page, make sure that the new `blueprints` were created with the correct properties/relations.
 4. If you tried to install a `self-hosted` integration, check the integration's documentation to ensure you included the necessary parameters.
+5. When running self-hosted integrations over TLS, make sure the PEM you mount contains the full certificate chain (service certificate, intermediate certificate(s), and the issuing root) in leaf-to-root order. Missing intermediates cause `CERTIFICATE_VERIFY_FAILED` errors inside the Ocean container even if local curl commands succeed.
+    
+    :::tip How to create a PEM bundle
+    Combine the service (leaf) certificate + intermediate CA certificate(s) + root CA certificate into a single PEM bundle and ensure your endpoints present the chain in order. This avoids `unknown authority` errors and hostname-mismatch headaches. 
+    :::
 
 If you are still facing issues, reach out to us using chat/Slack/mail to [support.port.io](http://support.port.io/), and we will help you resolve the issue.
 
