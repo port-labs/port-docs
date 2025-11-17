@@ -15,7 +15,7 @@ const IntegrationCard = ({ integration }) => {
   return (
     <Link to={integration.docsUrl} className={styles.card}>
       <div className={styles.cardHeader}>
-        <LogoImage logo={integration.name} width='32px' />
+        <LogoImage logo={integration.name} iconName={integration.iconName} width='32px' />
         {/* <img 
           src={iconPath} 
           alt={integration.name} 
