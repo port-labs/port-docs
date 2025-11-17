@@ -55,7 +55,7 @@ Each Port-supported resource type comes with a set of actions that align with AW
 
 These mappings ensure that only the properties available from the selected AWS actions are ingested into your Port catalog.
 
-### Enabling and Customizing Actions
+### Enabling and customizing actions
 
 With Port, you have full control over which AWS resource properties are discovered and ingested into your catalog by specifying the actions to use for each resource type. Actions define what data you collect and the AWS permissions required.
 
@@ -79,14 +79,14 @@ You can include a **maximum of 3 optional actions per resource kind** (default a
 :::
 
 
-### Querying Resources from Specific Regions
+### Querying resources from specific regions
 
 You can control which AWS regions Port queries for resources using the `regionPolicy` selector. This allows you to include or exclude specific regions per resource type.
 
 - allow: List of regions explicitly permitted for querying
 - deny: List of regions explicitly excluded from querying
 
-#### How `regionPolicy` Works
+#### How `regionPolicy` works
 
 1. If both lists are empty, all regions are allowed.
 2. If a region is listed in `deny`, it is excluded unless explicitly allowed.
@@ -95,7 +95,7 @@ You can control which AWS regions Port queries for resources using the `regionPo
 5. If only `deny` is specified, only the regions in `deny` are excluded.
 6. If only `allow` is specified, only the regions in `allow` are included.
 
-#### Example Configuration
+#### Example configuration
 
 ```yaml showLineNumbers
 resources:
