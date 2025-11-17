@@ -9,7 +9,7 @@ Port provides a custom n8n node (`n8n-nodes-portio`) that simplifies integration
 
 This guide walks you through installing and configuring Port's custom n8n node in your n8n instance.
 
-<img src='/img/guides/n8n-port-node/5-n8n-connect-port-node.png' border="1px" width="100%" />
+<img src='/img/guides/n8n-port-node/5-n8n-connect-port-node.png' border="1px" width="80%" />
 
 ## Prerequisites
 
@@ -135,21 +135,21 @@ Now that the Port node is installed, let us verify it works by creating a simple
 
 1. **Create a new workflow** in your n8n instance.
 
-   <img src='/img/guides/n8n-port-node/1-n8n-create-workflow-button.png' border="1px" width="70%" />
+   <img src='/img/guides/n8n-port-node/1-n8n-create-workflow-button.png' border="1px" width="100%" />
 
 2. **Add a trigger** — For testing, add a **Manual Trigger** node so you can trigger the workflow manually by clicking the **Execute Workflow** button.
 
-   <img src='/img/guides/n8n-port-node/2-n8n-manual-trigger-workflow.png' border="1px" width="70%" />
+   <img src='/img/guides/n8n-port-node/2-n8n-manual-trigger-workflow.png' border="1px" width="60%" />
 
 3. **Add the Port node**:
    - Click the **+** button on the left side of the screen to add a new node
    - Search for `port` in the node search
 
-   <img src='/img/guides/n8n-port-node/3-n8n-search-port-node.png' border="1px" width="70%" />
+   <img src='/img/guides/n8n-port-node/3-n8n-search-port-node.png' border="1px" width="50%" />
 
 4. **Select a Port node** — Click the "Port.io" search result and select "General Purpose AI Interaction" (this is the easiest one to test with).
 
-   <img src='/img/guides/n8n-port-node/4-n8n-general-node.png' border="1px" width="70%" />
+   <img src='/img/guides/n8n-port-node/4-n8n-general-node.png' border="1px" width="50%" />
 
 5. **Connect the nodes** — Drag from the **+** icon on the trigger node to the left side of the Port AI node to connect them.
 
@@ -173,7 +173,7 @@ Before you can use the Port node, you need to add your Port API credentials.
    - **Client ID** — Your Port Client ID
    - **Client Secret** — Your Port Client Secret
 
-   <img src='/img/guides/n8n-port-node/6-n8n-port-credentials.png' border="1px" width="70%" />
+   <img src='/img/guides/n8n-port-node/6-n8n-port-credentials.png' border="1px" width="50%" />
 
    If you're not sure how to get your Port credentials, see the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 
@@ -189,7 +189,7 @@ To verify everything is working:
    - Select your Port credential from the dropdown
    - Enter a simple prompt like "List all ec2 instances in the eu-west region"
    - Save the node
-   <img src='/img/guides/n8n-port-node/7-n8n-example-question.png' border="1px" width="70%" />
+   <img src='/img/guides/n8n-port-node/7-n8n-example-question.png' border="1px" width="50%" />
 
 2. **Execute the workflow** — Click **Execute Workflow** to test the connection.
 
