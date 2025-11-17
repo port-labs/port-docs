@@ -13,6 +13,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Kafka
 
+<IntegrationVersion integration="kafka" />
+
 Port's Kafka integration allows you to model Kafka resources in your software catalog and ingest data into them.
 
 ## Overview
@@ -29,8 +31,6 @@ Not sure which method is right for your use case? Check the available [installat
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-self-hosted" label="Self-hosted" default>
-
-<IntegrationVersion integration="kafka" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

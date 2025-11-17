@@ -15,8 +15,9 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Wiz
 
-Port's Wiz integration allows you to model Wiz resources in your software catalog and ingest data into them.
+<IntegrationVersion integration="wiz" />
 
+Port's Wiz integration allows you to model Wiz resources in your software catalog and ingest data into them.
 
 ## Overview
 
@@ -116,8 +117,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="wiz" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

@@ -3,8 +3,11 @@ import TabItem from "@theme/TabItem"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_helm_prerequisites_block.mdx"
 import AdvancedConfig from '/docs/generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import CustomOceanIntegration from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_custom_ocean_integration.mdx"
 
 # Claude AI 
+
+<CustomOceanIntegration />
 
 Port's Claude AI integration allows you to ingest Claude API usage metrics into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework. After installing the integration, you can create dashboards to monitor API usage, track costs, analyze model performance, and measure workspace-level metrics using Port's dashboard widgets.
 

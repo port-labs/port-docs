@@ -5,6 +5,8 @@ sidebar_label: Security & Compliance
 sidebar_class_name: custom-sidebar-item sidebar-menu-security
 ---
 
+import SupportUserPermissions from "/docs/generalTemplates/_support_user_permissions.md"
+
 # Security & compliance
 
 Port is an internal developer portal platform and as such we place the utmost importance on data security, privacy and compliance, so that you can trust that your security needs are met.
@@ -74,6 +76,18 @@ Port exclusively sends data over HTTPS transport layer security (TLS) encrypted 
 Every Port account receives its own dedicated database for data storage, access to an account's database is possible only using a token generated from the account's API credentials, the generated token has permissions only to the database of the customer.
 
 Customer data is never transferred or stored on employee machines or devices.
+
+### Support user access
+
+<SupportUserPermissions/>
+
+It includes several security measures:
+
+- Support user actions are not logged in your audit log.
+- You can set the access duration or disable support access completely.
+- Emergency access requires dual approval (organization + Port).
+
+For more information, see the [support user permissions](/sso-rbac/users-and-teams/manage-users-teams#support-user-permissions).
 
 ### Data retention
 
