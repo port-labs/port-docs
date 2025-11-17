@@ -1,3 +1,9 @@
+---
+---
+
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Test Document For Code Review
 
 ## Create A Blueprint In Port
@@ -14,9 +20,9 @@ Here is another very long sentence that definitely exceeds the recommended 15-25
 
 ## Working With Entities
 
-You can find more information [here](../getting-started/overview.md) and also [click here](overview.md) for additional details.
+You can find more information [here](/getting-started/overview) and also [click here](/getting-started/overview) for additional details.
 
-Check out the [Learn More](getting-started.md) link for documentation.
+Check out the [Learn More](/getting-started/overview) link for documentation.
 
 ### Lists Examples
 
@@ -53,7 +59,7 @@ def example():
 
 ### Images
 
-<img src='../img/example.png' />
+<img src='/img/example.png' />
 
 <img src='/img/example.png' width='50%' />
 
@@ -95,7 +101,7 @@ You can use kubernetes to deploy your services. The lambda function will process
 
 ### Inline Code
 
-You can use `blueprint` or [blueprint](link) or `BLUEPRINT` in your code.
+You can use `blueprint` or [blueprint](/getting-started/overview) or `BLUEPRINT` in your code.
 
 ### UI Elements
 
