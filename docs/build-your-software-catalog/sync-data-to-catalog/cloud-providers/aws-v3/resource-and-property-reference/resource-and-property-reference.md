@@ -74,7 +74,7 @@ To collect additional properties from AWS resources, add the optional actions yo
 
 In this case, Port will enrich your catalog by fetching all properties returned by the [DescribeInstanceStatus API](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceStatus.html) for every EC2 instance.
 
-:::caution Maximum Optional Actions per Resource
+:::caution Maximum actions per resource
 You can include a **maximum of 3 optional actions per resource kind** (default actions excluded). To use more than 3 optional actions, configure multiple resource kinds in your integration.
 :::
 
