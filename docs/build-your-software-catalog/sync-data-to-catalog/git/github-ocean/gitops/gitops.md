@@ -137,7 +137,7 @@ resources:
       query: 'true'
       files:
         - path: package.json
-          organization: my-org  # Optional if githubOrganization is set; required if not set
+          organization: my-org  # Optional if githubOrganization is set (required if not set)
           repos:
             - name: my-repo
               branch: main

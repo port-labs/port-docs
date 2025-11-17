@@ -26,6 +26,10 @@ import TabItem from "@theme/TabItem"
 
 Port allows you to centrally manage reusable prompts and expose them to your users via the MCP Server. Once defined, prompts become available in supported MCP clients (for example, Cursor or Claude) where developers and AI agents can discover and run them with the required inputs.
 
+:::note Client Support Required
+Prompt support in MCP clients depends on whether the client implements the prompts feature according to the [MCP specification](https://modelcontextprotocol.info/docs/clients/). Only some MCP clients currently support prompts. Check the [MCP client documentation](https://modelcontextprotocol.info/docs/clients/) to see if your client supports prompts.
+:::
+
 #### Common use cases
 
 - Automate on-call runbooks and incident-triage guidance
