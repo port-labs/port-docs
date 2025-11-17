@@ -48,8 +48,8 @@ const IntegrationVersion = ({ integration }) => {
   const changelogUrl = `https://github.com/port-labs/ocean/blob/main/integrations/${integration}/CHANGELOG.md`;
 
   return (
-    <div className={styles.container}>
-      <span className={styles.label}>Latest version of this integration:</span>
+    <div className={`${styles.container} integration-version-container`}>
+      <span className={styles.label}><i>Latest Ocean integration version:</i></span>
       <span className={`badge badge--secondary ${styles.versionBadge}`}>
         v{version}
       </span>

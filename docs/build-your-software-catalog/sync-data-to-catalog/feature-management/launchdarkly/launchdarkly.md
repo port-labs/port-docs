@@ -17,8 +17,9 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # LaunchDarkly
 
-Port's LaunchDarkly integration allows you to model LaunchDarkly resources in your software catalog and ingest data into them.
+<IntegrationVersion integration="launchdarkly" />
 
+Port's LaunchDarkly integration allows you to model LaunchDarkly resources in your software catalog and ingest data into them.
 
 ## Overview
 
@@ -52,8 +53,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="launchdarkly" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

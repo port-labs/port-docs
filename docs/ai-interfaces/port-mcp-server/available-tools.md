@@ -30,6 +30,10 @@ Builders have access to all the tools available to Developers, plus additional m
 </TabItem>
 </Tabs>
 
+:::info Client Support
+Tool support in external MCP clients depends on whether the client implements the tools feature according to the [MCP specification](https://modelcontextprotocol.info/docs/clients/). Most MCP clients support tools. Check the [MCP client documentation](https://modelcontextprotocol.info/docs/clients/) to see which features your client supports.
+:::
+
 ## Select which tools to use
 
 By default, when you open a chat with Port MCP, all available tools (based on your permissions) are loaded and ready to use. However, you can customize which tools are available if you want to focus on specific workflows.

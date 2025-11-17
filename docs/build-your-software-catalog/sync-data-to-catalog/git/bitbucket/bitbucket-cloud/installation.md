@@ -17,6 +17,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Installation
 
+<IntegrationVersion integration="bitbucket-cloud" />
+
 This page details how to install Port's Bitbucket Cloud integration (powered by the Ocean framework). It outlines the following steps:
 
 - How to [create](#create-a-workspace-token-or-app-password) a workspace token/app password to give the integration permissions to query your Bitbucket Cloud account.
@@ -82,8 +84,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="bitbucket-cloud" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

@@ -13,6 +13,7 @@ export const tagsCategoryMap = {
         "BitBucket",
         "AzureDevops",
         "Claude Code",
+        "n8n",
         "Azure",
         "Webhook",
         "Kafka",
@@ -135,7 +136,7 @@ export const availableGuides = [
     {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
-        tags: ["Cloud access management", "Actions", "RBAC"],
+        tags: ["Cloud access management", "Actions", "Access controls"],
         logos: ["AWS" ],
         // category: "Getting started",
         link: "/guides/all/iam-permissions-guide",
@@ -235,7 +236,7 @@ export const availableGuides = [
     {
         title: "Connect CODEOWNERS with Service, Team & User",
         description: "Create a logical connection between your GitHub CODEOWNERS and their corresponding services, teams, and users",
-        tags: ["RBAC", "GitHub"],
+        tags: ["Access controls", "GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/connect-github-codeowners-with-service-team-and-user",
@@ -1102,7 +1103,7 @@ export const availableGuides = [
     {
         title: "Automate admin role assignment",
         description: "Set up automated user role assignment when they are added to Admins group.",
-        tags: ["Security", "Automations", "RBAC"],
+        tags: ["Security", "Automations", "Access controls"],
         logos: ["Automations"],
         link: "/guides/all/automate-user-role-update",
     },
@@ -1480,13 +1481,22 @@ export const availableGuides = [
         link: "/guides/all/manage-ai-instructions",
     },
     {
+        title: "Manage MCP Server Registry",
+        description: "Build a centralized MCP server registry with governance, discovery, and automated metadata extraction",
+        tags: ["AI", "Actions", "Automations", "Access controls"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/manage-mcp-registry",
+      
+    },
+    {
         title: "Auto-enhance PR descriptions with AI",
         description: "Automatically generate comprehensive, template-compliant PR descriptions using Claude Code",
         tags: ["SDLC", "GitHub", "AI", "Automations"],
         logos: ["AI", "GitHub", "Claude Code"],
         link: "/guides/all/auto-enhance-pr-descriptions-with-ai",
-    }
-      ,{title: "Streamline IaC with AI",
+    },
+    {
+        title: "Streamline IaC with AI",
         description: "Use Port AI agents to automate IaC provisioning and management",
         tags: ["IaC for devs", "Github Copilot", "AI", "Actions"],
         logos: ["AI", "AWS"],
@@ -1526,6 +1536,20 @@ export const availableGuides = [
         tags: ["Self Healing Incidents", "AI", "Jira", "PagerDuty", "Slack"],
         logos: ["Jira", "PagerDuty", "Slack"],
         link: "/guides/all/orchestrate-incident-response-with-ai",
+    },
+    {
+        title: "Remediate security vulnerability with n8n and Port AI",
+        description: "Remediate security vulnerabilities with n8n and Port AI using Port's AI agents and automations",
+        tags: ["Security", "n8n", "Slack", "AI"],
+        logos: ["n8n", "Slack", "AI"],
+        link: "/guides/all/remediate-vulnerability-with-n8n-and-port",
+    },
+    {
+        title: "Setup Port's n8n custom node",
+        description: "Setup Port's n8n custom node to integrate Port's AI agents and Context Lake with n8n workflows",
+        tags: ["n8n", "AI"],
+        logos: ["n8n", "AI"],
+        link: "/guides/all/setup-port-n8n-node",
     }
 ]
 

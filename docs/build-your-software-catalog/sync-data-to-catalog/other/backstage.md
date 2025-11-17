@@ -8,6 +8,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Backstage
 
+<IntegrationVersion integration="backstage" />
+
 Port's Backstage integration allows you to model Backstage resources in your software catalog and ingest data into them.
 
 ## Overview
@@ -69,8 +71,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="backstage" />
 
 Using this installation method means that the integration will be able to update Port in real time using webhooks.
 
