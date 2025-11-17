@@ -9,11 +9,6 @@ import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
 
 <BetaFeatureNotice id="ai-form" />
 
-:::warning Limited Availability
-The ability to configure your own LLM providers has limited availability. Please reach out to the Port support team for additional information and access.
-:::
-
-
 Manage and configure the Large Language Model (LLM) providers that power all AI interactions in Port. This feature gives you control over which AI models are used across Port AI Assistant, AI Agents, and other AI-powered features.
 
 ## LLM Approach Overview
@@ -39,9 +34,9 @@ For organizations requiring additional control, Port also supports configuring y
 Port supports the following LLM providers and models:
 
 - **OpenAI**: `gpt-5`
-- **Anthropic**: `claude-sonnet-4-20250514`
+- **Anthropic**: `claude-sonnet-4-20250514`, `claude-haiku-4-5-20251001`
 - **Azure OpenAI**: `gpt-5`
-- **AWS Bedrock**: `claude-sonnet-4-20250514`
+- **AWS Bedrock**: `claude-sonnet-4-20250514`, `claude-haiku-4-5-20251001`
 
 Port AI leverages `gpt-5` and `claude-sonnet-4-20250514` by default when no custom provider is configured.
 
@@ -75,8 +70,6 @@ Consider bringing your own LLM provider when you need:
 - **Compliance requirements**: Meet specific regulatory or organizational requirements.
 - **Custom models**: Define custom configuration on models not available through Port's managed infrastructure.
 - **Integration requirements**: Connect with existing AI infrastructure.
-
-**Note**: This feature has limited availability. Contact the Port support team for access.
 
 </details>
 
@@ -144,13 +137,17 @@ Yes, you can opt out of data storage even when using your own LLM provider. Howe
 </details>
 
 <details>
-<summary><b>How do I get access to bring your own LLM functionality? (Click to expand)</b></summary>
+<summary><b>How do I configure my own LLM providers? (Click to expand)</b></summary>
 
-The bring your own LLM feature has limited availability. To get access:
+To configure your own LLM providers:
 
-1. **Contact Port support** - Reach out to the Port support team or your account manager for additional information.
-2. **Get approval** - If approved, you'll receive access to configure your own providers.
-4. **Configure your providers** - Set up your preferred LLM providers and models using the API endpoints.
+1. **Configure your providers** - Set up your preferred LLM providers using the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API endpoint.
+2. **Select defaults** - Once providers are configured, you can view and select default providers and models through the UI (**Builder** → **Organization Settings** → **AI** tab) or via the [Change default LLM provider and model](/api-reference/change-default-llm-provider-and-model) API.
+
+:::info UI vs API
+- **Viewing and selecting defaults**: Available in both UI and API.
+- **Adding new custom providers**: Requires the API.
+:::
 
 This feature is designed for organizations with specific compliance, privacy, or integration requirements that cannot be met by Port's managed infrastructure.
 

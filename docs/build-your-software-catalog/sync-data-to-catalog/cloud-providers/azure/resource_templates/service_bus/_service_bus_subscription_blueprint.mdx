@@ -1,0 +1,78 @@
+<details>
+
+<summary> Service Bus Subscription blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureServiceBusSubscription",
+  "title": "Service Bus Subscription",
+  "icon": "Azure",
+  "schema": {
+    "properties": {
+      "type": {
+        "title": "Type",
+        "type": "string"
+      },
+      "messageCount": {
+        "title": "Message Count",
+        "type": "number"
+      },
+      "maxDeliveryCount": {
+        "title": "Max Delivery Count",
+        "type": "number"
+      },
+      "lockDuration": {
+        "title": "Lock Duration",
+        "type": "string"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string"
+      },
+      "enableBatchedOperations": {
+        "title": "Enable Batched Operations",
+        "type": "boolean"
+      },
+      "requiresSession": {
+        "title": "Requires Session",
+        "type": "boolean"
+      },
+      "defaultMessageTimeToLive": {
+        "title": "Default Message TTL",
+        "type": "string"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "updatedAt": {
+        "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "accessedAt": {
+        "title": "Accessed At",
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "topic": {
+      "title": "Topic",
+      "target": "azureServiceBusTopic",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+
