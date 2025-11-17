@@ -178,7 +178,7 @@ This table summarizes the available parameters for the installation.
 | `initializePortResources`                | When set to true the integration will create default blueprints and the port App config Mapping, defaults is true.                                 | ❌        |
 | `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping, default is true.               | ❌        |
 | `integration.config.terraformCloudHost`  | Your Terraform host. For example `https://app.terraform.io`                                                                                        | ✅        |
-| `integration.config.terraformCloudToken` | The Terraform cloud API token, docs can be found [here](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens) | ✅        |
+| `integration.config.terraformCloudToken` | Terraform Cloud API token with read permissions for organizations, projects, workspaces, runs, and state versions. Provide any one of the following tokens: user API token (default read scopes), team API token (read access to those resources), or organization API token (equivalent read permissions). Docs can be found [here](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens) | ✅        |
 
 <br/>
 
