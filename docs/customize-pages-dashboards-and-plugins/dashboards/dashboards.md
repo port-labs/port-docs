@@ -428,21 +428,36 @@ Note that the iframe request is made directly from the end user’s browser, not
 If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
 :::
 
-![iFrame](/img/software-catalog/widgets/iframeWidget.png)
+<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' style={{borderRadius:'6x'}} />
+
+#### URL type
+
+When configuring an **Iframe widget**, you can specify whether the URL is `public` or `protected`.
+
+For the `protected` URL type, you can configure how the OAuth authentication flow is handled using the **"Use pop-up for authentication URL"** toggle:
+
+- **Toggle off (default)**: The OAuth login flow runs inside the Iframe.
+- **Toggle on**: The OAuth login flow opens in a separate pop-up window.
+
+If the **Authentication URL** points to Microsoft Entra ID (`https://login.microsoftonline.com`), the toggle is automatically turned on, since Entra ID login pages include security headers that prevent them from being displayed inside an Iframe.
+
+:::info Browser pop-up settings
+If you enable the pop-up option, ensure your browser allows pop-ups for the Port app’s domain. If pop-ups are blocked at the browser level, the authentication window will not open and the Iframe widget will fail to load.
+:::
 
 #### Widget properties
 
-| Field               | Type           | Description                                                                                                                                            | Default | Required |
-| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | -------- |
-| `Title`             | `String`       | Iframe widget title                                                                                                                                    | `null`  | `true`   |
-| `Icon`              | `String`       | Iframe widget Icon                                                                                                                                     | `null`  | `false`  |
-| `Description`       | `String`       | Iframe widget description                                                                                                                              | `null`  | `false`  |
-| `URL`               | `String`       | Iframe widget url                                                                                                                                      | `null`  | `false`  |
-| `URL type`          | `String`       | `public` or `protect`                                                                                                                                  | `null`  | `false`  |
-| `Authorization Url` | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| Field  | Type |Description | Default | Required |
+| ------- | -------------- | ---------------- | ------- | -------- |
+| `Title`   | `String`       | Iframe widget title   | `null`  | `true`   |
+| `Icon`              | `String`       | Iframe widget icon.  | `null`  | `false`  |
+| `Description`       | `String`       | Iframe widget description.      | `null`  | `false`  |
+| `URL`               | `String`       | Iframe widget url.           | `null`  | `false`  |
+| `URL type`          | `String`       | `public` or `protect`.     | `null`  | `false`  |
+| `Authentication Url` | `URL String`   | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
+| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
+| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
+| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
 
 ### Action card
 
