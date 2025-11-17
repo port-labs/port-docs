@@ -195,7 +195,7 @@ Initial filters are the most effective way to reduce loading times. You can defi
 
 To define such a filter, use the `Initial filters` field when creating a page:
 
-<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' border='1px' />
+<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' border='1px' style={{borderRadius:'8px'}} />
 
 <br/><br/>
 
