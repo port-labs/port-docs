@@ -5,6 +5,7 @@ sidebar_position: 1
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
+import SupportUserPermissions from "/docs/generalTemplates/_support_user_permissions.md"
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -43,7 +44,7 @@ Users in Port have one of 3 types of roles:
 | ---------------------------- |--------------------------------------- |
 | **Admin**                    | Can perform any operation in the portal |
 | **Moderator** of a blueprint | Can perform any operation on a specific blueprint and its entities. A user can be a moderator of multiple blueprints |
-| **Member** | Has raad-only permissions + permissions to execute self-service actions |
+| **Member** | Has read-only permissions + permissions to execute self-service actions |
 
 ### Software catalog permissions
 
@@ -424,3 +425,15 @@ Port service accounts are treated like any other users and extend the same RBAC 
 Service accounts can easily be disabled at any time. To disable a service account, update it's `status` property to `Disabled`.
 Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`.
 
+## Support user permissions
+
+<SupportUserPermissions/>
+
+### Access duration
+
+Support user access is enabled by default.  
+You can define how long this access will be valid: **1 day**, **7 days**, **30 days**, or **indefinitely (default)**.
+
+:::info Emergency access
+In critical situations, Port can grant emergency access to your organization even if support user permissions are disabled. Port will inform your organization after the fact.
+:::

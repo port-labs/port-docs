@@ -135,13 +135,13 @@ This ensures that sensitive operational data remains accessible only to authoriz
 
 <TabItem value="ui">
 
-<img src='/img/self-service-actions/rbac/viewRunAccess.png' width='70%' border='1px' />
+<img src='/img/self-service-actions/rbac/allowAnyoneToViewRuns.png' width='70%' border='1px' />
 
 </TabItem>
 
 <TabItem value="api">
 
-Add the `isViewRunAccess` field to your action:
+Add the `allowAnyoneToViewRuns` field to your action:
 
 ```json showLineNumbers
 [
@@ -156,14 +156,13 @@ Add the `isViewRunAccess` field to your action:
       "operation": "CREATE",
     }
     // highlight-next-line
-    "isViewRunAccess": true,
+    "allowAnyoneToViewRuns": true,
     ...
   }
 ]
 ```
 
 </TabItem>
-
 </Tabs>
 
 ### Define approval notifications
