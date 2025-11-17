@@ -16,8 +16,9 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Linear
 
-Port's Linear integration allows you to model Linear resources in your software catalog and ingest data into them.
+<IntegrationVersion integration="linear" />
 
+Port's Linear integration allows you to model Linear resources in your software catalog and ingest data into them.
 
 ## Overview
 This integration allows you to:
@@ -48,8 +49,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="linear" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

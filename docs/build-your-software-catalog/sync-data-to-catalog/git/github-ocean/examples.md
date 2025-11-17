@@ -2,56 +2,56 @@
 sidebar_position: 2
 ---
 
-import RepositoryBlueprint from './\_github_exporter_example_repository_blueprint.mdx'
-import PRBlueprint from './\_github_exporter_example_pull_request_blueprint.mdx'
-import PortAppConfig from './\_github_exporter_example_port_app_config.mdx'
-import GitHubResources from '../\_github_exporter_supported_resources.mdx'
+import RepositoryBlueprint from './examples/\_github_exporter_example_repository_blueprint.mdx'
+import PRBlueprint from './examples/\_github_exporter_example_pull_request_blueprint.mdx'
+import PortAppConfig from './examples/\_github_exporter_example_port_app_config.mdx'
+import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
-import UsersBlueprint from './example-repository-admins/\_github_exporter_example_users_blueprint.mdx'
-import GithubUsersBlueprint from './example-repository-admins/\_github_exporter_example_github_users_blueprint.mdx'
-import RepositoryAdminBlueprint from './example-repository-admins/\_github_export_example_repository_with_admins_relation_blueprint.mdx'
-import RepositoryAdminAppConfig from './example-repository-admins/\_github_exporter_example_admins_users_port_app_config.mdx'
+import UsersBlueprint from './examples/example-repository-admins/\_github_exporter_example_users_blueprint.mdx'
+import GithubUsersBlueprint from './examples/example-repository-admins/\_github_exporter_example_github_users_blueprint.mdx'
+import RepositoryAdminBlueprint from './examples/example-repository-admins/\_github_export_example_repository_with_admins_relation_blueprint.mdx'
+import RepositoryAdminAppConfig from './examples/example-repository-admins/\_github_exporter_example_admins_users_port_app_config.mdx'
 
-import IssueBlueprint from './example-issue/\_git_exporter_example_issue_blueprint.mdx'
-import PortIssueAppConfig from './example-issue/\_github_exporter_example_issue_port_app_config.mdx'
-import RepoEnvironmentBlueprint from './example-deployments-environments/\_github_exporter_example_environment_blueprint.mdx'
-import DeploymentBlueprint from './example-deployments-environments/\_github_exporter_example_deployment_blueprint.mdx'
-import PortRepoDeploymentAndEnvironmentAppConfig from './example-deployments-environments/\_github_exporter_example_deployments_and_environments_port_app_config.mdx'
+import IssueBlueprint from './examples/example-issue/\_git_exporter_example_issue_blueprint.mdx'
+import PortIssueAppConfig from './examples/example-issue/\_github_exporter_example_issue_port_app_config.mdx'
+import RepoEnvironmentBlueprint from './examples/example-deployments-environments/\_github_exporter_example_environment_blueprint.mdx'
+import DeploymentBlueprint from './examples/example-deployments-environments/\_github_exporter_example_deployment_blueprint.mdx'
+import PortRepoDeploymentAndEnvironmentAppConfig from './examples/example-deployments-environments/\_github_exporter_example_deployments_and_environments_port_app_config.mdx'
 
-import TagBlueprint from './example-repository-release-tag/\_github_exporter_example_tag_blueprint.mdx'
-import ReleaseBlueprint from './example-repository-release-tag/\_github_exporter_example_release_blueprint.mdx'
-import RepositoryTagReleaseAppConfig from './example-repository-release-tag/\_github_exporter_example_release_tag_port_app_config.mdx'
+import TagBlueprint from './examples/example-repository-release-tag/\_github_exporter_example_tag_blueprint.mdx'
+import ReleaseBlueprint from './examples/example-repository-release-tag/\_github_exporter_example_release_blueprint.mdx'
+import RepositoryTagReleaseAppConfig from './examples/example-repository-release-tag/\_github_exporter_example_release_tag_port_app_config.mdx'
 
-import PackageBlueprint from './example-file-kind/\_example_package_blueprint.mdx'
-import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
-import FileBlueprint from './example-file-kind/\_example_file_blueprint.mdx'
-import RepoFileAppConfig from './example-file-kind/\_file_repo_app_config.mdx'
+import PackageBlueprint from './examples/example-file-kind/\_example_package_blueprint.mdx'
+import PackageAppConfig from './examples/example-file-kind/\_package_json_app_config.mdx'
+import FileBlueprint from './examples/example-file-kind/\_example_file_blueprint.mdx'
+import RepoFileAppConfig from './examples/example-file-kind/\_file_repo_app_config.mdx'
 
-import TeamWithMembersBlueprint from './example-team-members/\_github_exporter_team_blueprint.mdx'
-import TeamMemberBlueprint from './example-team-members/\_github_exporter_team_member_blueprint.mdx'
-import TeamMemberConfig from './example-team-members/\_github_team_member_port_app_config.mdx'
+import TeamWithMembersBlueprint from './examples/example-team-members/\_github_exporter_team_blueprint.mdx'
+import TeamMemberBlueprint from './examples/example-team-members/\_github_exporter_team_member_blueprint.mdx'
+import TeamMemberConfig from './examples/example-team-members/\_github_team_member_port_app_config.mdx'
 
-import TeamBlueprint from './example-repository-teams/\_github_export_example_team_blueprint.mdx'
-import RepositoryTeamBlueprint from './example-repository-teams/\_github_export_example_repository_with_teams_relation_blueprint.mdx'
-import PortRepositoryTeamMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_port_app_config.mdx'
+import TeamBlueprint from './examples/example-repository-teams/\_github_export_example_team_blueprint.mdx'
+import RepositoryTeamBlueprint from './examples/example-repository-teams/\_github_export_example_repository_with_teams_relation_blueprint.mdx'
+import PortRepositoryTeamMappingAppConfig from './examples/example-repository-teams/\_github_exporter_example_repository_with_teams_port_app_config.mdx'
 
-import CollaboratorBlueprint from './example-repository-collaborators/\_github_exporter_example_collaborator_blueprint.mdx'
-import PortRepositoryCollaboratorAppConfig from './example-repository-collaborators/\_github_exporter_example_repository_collaborator_port_app_config.mdx'
+import CollaboratorBlueprint from './examples/example-repository-collaborators/\_github_exporter_example_collaborator_blueprint.mdx'
+import PortRepositoryCollaboratorAppConfig from './examples/example-repository-collaborators/\_github_exporter_example_repository_collaborator_port_app_config.mdx'
 
-import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
-import WorkflowBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_blueprint.mdx'
-import WorkflowRunBlueprint from './example-workflow-workflowrun/\_git_exporter_example_workflow_run_blueprint.mdx'
-import PortWfWfrAppConfig from './example-workflow-workflowrun/\_github_exporter_example_wf_wfr_port_app_config.mdx'
+import PortMonoRepoAppConfig from './examples/example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
+import WorkflowBlueprint from './examples/example-workflow-workflowrun/\_git_exporter_example_workflow_blueprint.mdx'
+import WorkflowRunBlueprint from './examples/example-workflow-workflowrun/\_git_exporter_example_workflow_run_blueprint.mdx'
+import PortWfWfrAppConfig from './examples/example-workflow-workflowrun/\_github_exporter_example_wf_wfr_port_app_config.mdx'
 
-import BranchBlueprint from './example-branch/\_git_exporter_example_branch_blueprint.mdx'
-import PortBrAppConfig from './example-branch/\_github_exporter_example_branch_port_app_config.mdx'
+import BranchBlueprint from './examples/example-branch/\_git_exporter_example_branch_blueprint.mdx'
+import PortBrAppConfig from './examples/example-branch/\_github_exporter_example_branch_port_app_config.mdx'
 
-import DependabotAlertBlueprint from './example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
-import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
-import PortRepositoryDependabotAlertMappingAppConfig from './example-repository-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
+import DependabotAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
+import CodeScanAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
+import PortRepositoryDependabotAlertMappingAppConfig from './examples/example-repository-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
 
-import OrganizationBlueprint from './example-organization/\_github_exporter_example_organization_blueprint.mdx'
-import OrganizationAppConfig from './example-organization/\_github_exporter_example_organization_port_app_config.mdx'
+import OrganizationBlueprint from './examples/example-organization/\_github_exporter_example_organization_blueprint.mdx'
+import OrganizationAppConfig from './examples/example-organization/\_github_exporter_example_organization_port_app_config.mdx'
 
 
 # Resource mapping examples
@@ -175,13 +175,21 @@ The following example demonstrates how to ingest your GitHub repositories and th
 
 To retrieve the root folders of your monorepo, use the following syntax in your `port-app-config.yml`:
 
-```yaml
+::::info Organization and repository filtering for folders
+Both `organization` and `repos` under `folders` are optional. You can:
+- Specify only `organization`: scan all repositories in that organization for matching folders.
+- Specify only `repos`: scan only those repositories across accessible organizations.
+- Omit both: scan all accessible repositories for matching folders.
+Use `path` and `repositoryType` to scope results and improve performance.
+::::
+
+```yaml showLineNumbers
 - kind: folder
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
       folders: # Specify the repositories and folders to include under this relative path.
         - path: "*" # Relative path to the folders within the repositories.
-          repos: # List of repositories to include folders from.
+          repos: # Optional: list repositories to include (omit to scan all repos)
             - name: backend-service
             - name: frontend-service
 ```

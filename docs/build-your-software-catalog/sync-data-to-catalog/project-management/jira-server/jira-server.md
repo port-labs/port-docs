@@ -7,6 +7,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Jira Server (self-hosted)
 
+<IntegrationVersion integration="jira-server" />
+
 Port's Jira Server integration allows you to model Jira Server resources in your software catalog and ingest data into them.
 
 :::info Jira Server Support
@@ -37,8 +39,6 @@ Not sure which method is right for your use case? Check the available [installat
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-self-hosted" label="Self-hosted (Recommended)" default>
-
-<IntegrationVersion integration="jira-server" />
 
 This workflow will run the Jira Server integration and update Port in real time using scheduled polling.
 
