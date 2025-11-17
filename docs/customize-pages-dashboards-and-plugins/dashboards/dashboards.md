@@ -439,7 +439,7 @@ For the `protected` URL type, you can configure how the OAuth authentication flo
 - **Toggle off (default)**: The OAuth login flow runs inside the Iframe.
 - **Toggle on**: The OAuth login flow opens in a separate pop-up window.
 
-If the **Authorization URL** points to Microsoft Entra ID (`https://login.microsoftonline.com`), the toggle is automatically turned on, since Entra ID login pages include security headers that prevent them from being displayed inside an Iframe.
+If the **Authentication URL** points to Microsoft Entra ID (`https://login.microsoftonline.com`), the toggle is automatically turned on, since Entra ID login pages include security headers that prevent them from being displayed inside an Iframe.
 
 :::info Browser pop-up settings
 If you enable the pop-up option, ensure your browser allows pop-ups for the Port app’s domain. If pop-ups are blocked at the browser level, the authentication window will not open and the Iframe widget will fail to load.
