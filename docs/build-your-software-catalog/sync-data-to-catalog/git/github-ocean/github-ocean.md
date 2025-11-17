@@ -210,9 +210,19 @@ For example, say you want to manage your `package.json` files in Port. One optio
 
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
-:::info Organization field in file selectors
-The `organization` field is optional when `githubOrganization` is set in the environment variables and required when it is not provided (e.g., Classic PAT with multiple organizations defined in your port mapping).
-:::
+:::::info Organization and repository filtering
+Both `organization` and `repos` in file selectors are optional. You can:
+- Specify only `organization`: scan all repositories in that organization (respecting `repositoryType`).
+- Specify only `repos`: scan only those repositories across all accessible organizations.
+- Omit both: scan all repositories accessible to your credentials.
+
+When scanning broadly, the integration scope depends on your credentials:
+- With GitHub App or fine‑grained PAT: all repositories in the installed/specified organization.
+- With classic PAT: all repositories across all organizations the token can access.
+Use `repositoryType` and precise `path` patterns to reduce scope.
+
+Note: Omitting `organization` and `repos` will scan all accessible repositories. For large orgs, expect longer resyncs and higher GitHub API usage. Narrow scope with `repos`, `repositoryType`, and specific `path` patterns.
+:::::
 
 <details>
 <summary><b>Package file mapping example (click to expand)</b></summary>
@@ -224,8 +234,8 @@ resources:
       files:
           # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
-          organization: my-org  # Optional if githubOrganization is set; required if not set
-            # The `repos` key can be used to filter the repositories and branch where files should be fetched
+          organization: my-org  # Optional, omit to scan all orgs in scope
+            # Optional: use `repos` to filter repositories/branches (omit to scan all repos)
           repos:
             - name: MyRepo
               branch: main
@@ -753,8 +763,8 @@ resources:
       query: 'true'
       files:
         - path: '**/package.json'
-          organization: my-org  # Optional if githubOrganization is set; required if not set
-        # Note that in this case we are fetching from a specific repository
+          organization: my-org  # Optional if githubOrganization is set (required if not set)
+        # Optional: you can target specific repositories here (omit to scan all repos)
           repos:
             - name: MyRepo
               branch: main
@@ -811,9 +821,9 @@ resources:
       query: 'true'
       files:
         - path: values.yaml
-          organization: my-org  # Optional if githubOrganization is set; required if not set
+          organization: my-org  # Optional, omit to scan all orgs in scope
           skipParsing: true
-          repos:
+          repos:  # Optional: omit to scan all repos
             - name: MyRepo
               branch: main
     port:
