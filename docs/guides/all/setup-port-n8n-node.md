@@ -37,7 +37,7 @@ Using a bind mount allows the container to read/write directly to your local fil
 
 2. **Run n8n with a bind mount**:
 
-   ```bash
+   ```bash showLineNumbers
    docker volume create n8n_data
 
    docker run -it --rm \
@@ -52,16 +52,10 @@ Using a bind mount allows the container to read/write directly to your local fil
      docker.n8n.io/n8nio/n8n
    ```
 
-   :::tip Community packages enabled
-   The `N8N_COMMUNITY_PACKAGES_ENABLED=true` environment variable is required for n8n to load community-installed nodes like the Port n8n node.
-   :::
-
-   :::tip Timezone configuration
-   Replace `"Africa/Accra"` with your preferred timezone. The `GENERIC_TIMEZONE` and `TZ` environment variables should match.
-   :::
-
-   :::tip Bind mount path
-   Replace `~/n8n-data` with the actual local path you want to use such as `/Users/janedoe/n8n-data`. Anything n8n writes to `/home/node/.n8n` (inside the container) will persist directly to your local directory.
+   :::tip Configuration notes
+   - The `N8N_COMMUNITY_PACKAGES_ENABLED=true` environment variable is required for n8n to load community-installed nodes like the Port n8n node.
+   - Replace `"Africa/Accra"` with your preferred timezone. The `GENERIC_TIMEZONE` and `TZ` environment variables should match.
+   - Replace `~/n8n-data` with the actual local path you want to use such as `/Users/janedoe/n8n-data`. Anything n8n writes to `/home/node/.n8n` (inside the container) will persist directly to your local directory.
    :::
 
 3. **Access n8n** — Open your browser and navigate to `http://localhost:5678`.
@@ -85,13 +79,11 @@ services:
       - ./n8n-data:/home/node/.n8n
 ```
 
-   :::tip Community packages enabled
    The `N8N_COMMUNITY_PACKAGES_ENABLED=true` environment variable is required for n8n to load community-installed nodes like the Port n8n node.
-   :::
 
 Then run:
 
-```bash
+```bash showLineNumbers
 # Navigate to the directory containing your docker compose file
 cd /path/to/your/compose/file/directory
 
@@ -116,24 +108,24 @@ Now that you have n8n running, let's install Port's custom node using npm.
 
 2. **Install the Port n8n node package**:
 
-   ```bash
+   ```bash showLineNumbers
    mkdir -p custom
    cd custom
    npm i @port-labs/n8n-nodes-portio-experimental
    ```
 
-   :::tip Package location
    The package is installed in the `custom` folder in your n8n data directory (`$n8n_HOME`).
-   :::
 
 3. **Restart your n8n instance**:
 
    - **If using Docker**: Stop the container (`Ctrl+C` or `docker stop n8n`) and start it again with the same command.
    - **If using Docker Compose**: Run `docker compose restart`.
 
-:::tip Package information
+   :::caution Restart required
+   n8n needs to be restarted after installing community packages so it can discover and load them. Make sure `N8N_COMMUNITY_PACKAGES_ENABLED=true` is set in your Docker configuration.
+   :::
+
 The Port n8n node package is available on npm at [@port-labs/n8n-nodes-portio-experimental](https://www.npmjs.com/package/@port-labs/n8n-nodes-portio-experimental). The package is currently in experimental status.
-:::
 
 ## Quick start
 
@@ -183,15 +175,11 @@ Before you can use the Port node, you need to add your Port API credentials.
 
    <img src='/img/guides/n8n-port-node/6-n8n-port-credentials.png' border="1px" width="70%" />
 
-   :::tip Finding your credentials
    If you're not sure how to get your Port credentials, see the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
-   :::
 
 4. **Save the credential** — Click "Save" to store the credential.
 
-   :::tip Multiple credentials
    You can store multiple Port account credentials in n8n and select which one to use for each node. This is useful if you work with multiple Port organizations.
-   :::
 
 ## Verify the installation
 
