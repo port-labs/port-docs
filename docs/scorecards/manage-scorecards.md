@@ -20,15 +20,15 @@ Port offers a variety of ways to create, edit and delete scorecards:
 
 To create a scorecard from the UI, you can use either one of the following methods:
 
-**Method 1: From the Scorecards page**
+**Method 1: From the scorecards catalog page**
 
 1. Navigate to the [Software Catalog](https://app.getport.io/catalog) page.
 
-2. Go to the [Scorecards page](https://app.getport.io/_scorecards).
+2. Go to the [Scorecards catalog page](https://app.getport.io/_scorecards).
 
 3. Click the `+ Scorecard` button in the top right corner of the page.
 
-4. Follow the same steps as described in Method 2 below. The only difference is that you need to select the `Blueprint` you want to add the scorecard to.
+4. Follow the same steps as described in method 2 below. The only difference is that you need to select the `Blueprint` you want to add the scorecard to.
 
 **Method 2: From the Data model page**
 
@@ -114,7 +114,7 @@ Remember that an access token is necessary in order to make API requests. If you
 
 **Create scorecards**
 
-In order to create a scorecard from the API, you will make a PUT request to the following URL: `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`.
+In order to create a scorecard from the API, you will make a `POST` request to the following URL: `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities`.
 
 Here are some request examples that will create the Scorecard of Ownership on the `microservice` Blueprint:
 
@@ -144,26 +144,28 @@ Here are some request examples that will create the Scorecard of Ownership on th
       {
         'identifier': 'Ownership',
         'title': 'Ownership',
-        'rules': [
-          {
-            'identifier': 'hasSlackChannel',
-            'title': 'Has Slack Channel',
-            'level': 'Silver',
-            'query': {
-              'combinator': 'and',
-              'conditions': [{'operator': 'isNotEmpty', 'property': 'slackChannel'}]
+        'properties': {
+          'rules': [
+            {
+              'identifier': 'hasSlackChannel',
+              'title': 'Has Slack Channel',
+              'level': 'Silver',
+              'query': {
+                'combinator': 'and',
+                'conditions': [{'operator': 'isNotEmpty', 'property': 'slackChannel'}]
+              }
+            },
+            {
+              'identifier': 'hasTeam',
+              'title': 'Has Team',
+              'level': 'Bronze',
+              'query': {
+                'combinator': 'and',
+                'conditions': [{'operator': 'isNotEmpty', 'property': '$team'}]
+              }
             }
-          },
-          {
-            'identifier': 'hasTeam',
-            'title': 'Has Team',
-            'level': 'Bronze',
-            'query': {
-              'combinator': 'and',
-              'conditions': [{'operator': 'isNotEmpty', 'property': '$team'}]
-            }
-          }
-        ]
+          ]
+        }
       }
     ]
 
@@ -171,7 +173,7 @@ Here are some request examples that will create the Scorecard of Ownership on th
         'Authorization': f'Bearer {access_token}'
     }
 
-    response = requests.put(f'{API_URL}/blueprints/{blueprint_name}/scorecards', json=scorecards, headers=headers)
+    response = requests.put(f'{API_URL}/blueprints/{blueprint_name}/entities', json=scorecards, headers=headers)
 
     ```
 </details>
@@ -199,36 +201,38 @@ Here are some request examples that will create the Scorecard of Ownership on th
         {
             identifier: "Ownership",
             title: "Ownership",
-            rules: [
-                {
-                    identifier: "hasSlackChannel",
-                    title: "Has Slack Channel",
-                    level: "Bronze",
-                    query: {
-                        combinator: "and",
-                        conditions: [
-                            {
-                                operator: "isNotEmpty",
-                                property: "slackChannel",
-                            },
-                        ],
-                    },
-                },
-                {
-                    identifier: "hasTeam",
-                    title: "Has Team",
-                    level: "Silver",
-                    query: {
-                        combinator: "and",
-                        conditions: [
-                            {
-                                operator: "isNotEmpty",
-                                property: "$team",
-                            },
-                        ],
-                    },
-                },
-            ],
+            properties: {
+              rules: [
+                  {
+                      identifier: "hasSlackChannel",
+                      title: "Has Slack Channel",
+                      level: "Bronze",
+                      query: {
+                          combinator: "and",
+                          conditions: [
+                              {
+                                  operator: "isNotEmpty",
+                                  property: "slackChannel",
+                              },
+                          ],
+                      },
+                  },
+                  {
+                      identifier: "hasTeam",
+                      title: "Has Team",
+                      level: "Silver",
+                      query: {
+                          combinator: "and",
+                          conditions: [
+                              {
+                                  operator: "isNotEmpty",
+                                  property: "$team",
+                              },
+                          ],
+                      },
+                  },
+              ],
+            }
         },
     ];
 
@@ -239,7 +243,7 @@ Here are some request examples that will create the Scorecard of Ownership on th
     };
 
     const response = await axios.put(
-        `${API_URL}/blueprints/${blueprintName}/scorecards`,
+        `${API_URL}/blueprints/${blueprintName}/entities`,
         scorecards,
         config
     );
@@ -250,7 +254,7 @@ Here are some request examples that will create the Scorecard of Ownership on th
 
 </Tabs>
 
-After creating the Scorecards, you will see a new tab in the profile Entity page of each of your Blueprint's Entities, showing the various scorecards levels.
+After creating the scorecards, you will see a new tab in the profile entity page of each of your blueprint's entities, showing the various scorecards levels.
 
 For example, we can [create the entity below](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entities):
 
@@ -270,35 +274,42 @@ For example, we can [create the entity below](/build-your-software-catalog/sync-
 And then look at the [specific page](https://app.getport.io/MicroserviceEntity?identifier=cart-service&activeTab=3) of this entity, on the scorecards tab.
 
  <img src="/img/software-catalog/scorecard/tutorial/ScorecardsTab.png" width='100%' border='1px' />
+ <br></br>
+ <br></br>
 
 We can see that the `hasSlackChannel` rule passed because we provided one to that entity, while the `hasTeam` failed because we didn't provide any team.
 
 Therefore the level of the entity is `Bronze` because it passed all the rules in the `Bronze` level (hasSlackChannel).
 
+___
+
+
 **Update scorecards**
 
-To update a scorecard you can use 2 different URLs:
+To update a scorecard you can use two different URLs:
 
-1. Update a single Scorecard using the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}`. The request body will be the full Scorecard + the wanted changed values
-2. Make a PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`. to multiple scorecards at once
+1. Update a single Scorecard using the URL `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`. The request body will be the full Scorecard + the wanted changed values
+2. Make a PUT request to the URL `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`. to multiple scorecards at once
 
-The request body will include the existing body of the Scorecard, after the desired updates to the existing Scorecard have been applied.
+The request body will include the existing body of the Scorecard, after the desired updates to the existing scorecard have been applied.
 
 :::note
-When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties.
+When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the scorecard in order to be able to update its properties.
 :::
+
+___
 
 **Delete scorecards**
 
-:::danger
+:::danger Irreversible delete
 A Scorecard cannot be restored after deletion!
 :::
 
 -   Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`.
--   Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delete.
+-   Make an HTTP DELETE request to the URL `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}` the `blueprint_identifier` is the identifier of the scorecard's blueprint, and the `entity_identifier` is the identifier of the scorecard we want to delete.
 
-:::info Using entities API
-Scorecards can be managed either with the dedicated **Scorecards API** mentioned above, or by using the standard **Entity API** endpoints: [Create](/api-reference/create-an-entity), [Update](/api-reference/update-an-entity), [Delete](/api-reference/delete-an-entity).
+:::info Using scorecards API
+Scorecards can be managed either with the entities API endpoints mentioned above, or by the dedicated **Scorecards API** endpoints: [create](/api-reference/create-a-scorecard), [update](/api-reference/change-scorecards), [delete](/api-reference/delete-a-scorecard), etc. Note that if you are extending the scorecards data model you **should** use the entities endpoints.
 :::
 
 
@@ -308,7 +319,7 @@ Scorecards can be managed either with the dedicated **Scorecards API** mentioned
 
 **Create scorecards**
 
-In order to create a scorecard from the [Terraform provider](/build-your-software-catalog/custom-integration/iac/terraform/) , you will need to use the `port_scorecard` resource.
+In order to create a scorecard from the [Terraform provider](/build-your-software-catalog/custom-integration/iac/terraform/) , you will need to use the `port_entity` resource.
 
 Here is an example of how to create an Ownership scorecard with the Terraform provider:
 
@@ -354,13 +365,17 @@ Here is an example of how to create an Ownership scorecard with the Terraform pr
     ```
 </details>
 
+___
+
 **Update scorecards**
 
 In order to update a scorecard with the Terraform provider, you will need to run the `terraform apply -target=port_scorecard.<resourceId>` command with the updated scorecard resource.
 
+___
+
 **Delete Scorecards**
 
-:::danger
+:::danger Irreversible delete
 A Scorecard cannot be restored after deletion!
 :::
 
