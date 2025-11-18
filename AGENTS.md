@@ -8,6 +8,13 @@
 - **REQUIRED**: Links must not be capitalized unless at the start of a new sentence. **FLAG** capitalized links mid-sentence.
 - **REQUIRED**: General product names (Lambda, Kubernetes, ArgoCD) must follow standard capitalization. **FLAG** incorrect product name capitalization.
 
+### Code Examples - CRITICAL STANDARDS
+
+- **REQUIRED**: Code blocks with more than one line must include `showLineNumbers`. **FLAG** code blocks missing `showLineNumbers`.
+- **REQUIRED**: Ensure code examples are complete and can be copied directly. **FLAG** incomplete or non-functional code examples.
+- **REQUIRED**: Use syntax highlighting by specifying the language after opening backticks. **FLAG** code blocks without language specification.
+- **REQUIRED**: For inline code references, use single backticks (e.g., `blueprint`). **FLAG** incorrect inline code formatting.
+
 ### Tone & Style - MANDATORY
 
 - **REQUIRED**: Use second-person pronouns (you, your) when addressing the reader. **FLAG** third-person or inconsistent pronoun usage.
@@ -32,13 +39,6 @@
 
 - **REQUIRED**: Images must have a simple black border and use full path links. **FLAG** images missing borders or using relative paths.
 - **REQUIRED**: Images must have proper `width` defined and include alt text. **FLAG** images missing width or alt text.
-
-### Code Examples - CRITICAL STANDARDS
-
-- **REQUIRED**: Code blocks with more than one line must include `showLineNumbers`. **FLAG** code blocks missing `showLineNumbers`.
-- **REQUIRED**: Ensure code examples are complete and can be copied directly. **FLAG** incomplete or non-functional code examples.
-- **REQUIRED**: Use syntax highlighting by specifying the language after opening backticks. **FLAG** code blocks without language specification.
-- **REQUIRED**: For inline code references, use single backticks (e.g., `blueprint`). **FLAG** incorrect inline code formatting.
 
 ### Components - MANDATORY CONFIGURATION
 
