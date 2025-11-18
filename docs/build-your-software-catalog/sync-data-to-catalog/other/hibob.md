@@ -1,6 +1,6 @@
 # HiBob
 
-Port's HiBob integration allows you to model HiBob HR resources in your software catalog and ingest data into them using the [Generic HTTP Integration](/build-your-software-catalog/custom-integration/ocean-http/overview).
+Port's HiBob integration allows you to model HiBob HR resources in your software catalog and ingest data into them using the [Generic HTTP Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview).
 
 ## Overview
 
@@ -44,11 +44,11 @@ The HiBob API base URL follows this format: `https://api.hibob.com/v1`
 
 ## Setup
 
-This integration uses Port's [Generic HTTP Integration](/build-your-software-catalog/custom-integration/ocean-http/overview) to connect to the HiBob API. You can use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-http/build-your-integration) to configure and install the integration, or follow the manual setup below.
+This integration uses Port's [Generic HTTP Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) to connect to the HiBob API. You can use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/build-your-integration) to configure and install the integration, or follow the manual setup below.
 
 ### Quick setup with interactive builder
 
-1. Go to the [Generic HTTP Integration builder](/build-your-software-catalog/custom-integration/ocean-http/build-your-integration).
+1. Go to the [Generic HTTP Integration builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/build-your-integration).
 2. Configure your HiBob API connection:
    - **Base URL**: `https://api.hibob.com/v1`
    - **Authentication**: Bearer Token
@@ -303,6 +303,6 @@ To view and test the integration's mapping against examples of the HiBob API res
 ## Additional resources
 
 - [HiBob API Documentation](https://apidocs.hibob.com/)
-- [Generic HTTP Integration Overview](/build-your-software-catalog/custom-integration/ocean-http/overview)
-- [Build Your Integration (Interactive Builder)](/build-your-software-catalog/custom-integration/ocean-http/build-your-integration)
+- [Generic HTTP Integration Overview](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview)
+- [Build Your Integration (Interactive Builder)](/build-your-software-catalog/custom-integration/ocean-custom-integration/build-your-integration)
 
