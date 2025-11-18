@@ -90,6 +90,9 @@ Note the parameters specific to this integration, they are last in the table.
 | **`integration.secrets.oktaApiToken`**   | The Okta API token used to authenticate Port to Okta                                                                                | ✅        |
 | **`integration.config.oktaDomain`**      | Your Okta domain (e.g., dev-123456.okta.com)                                                                                        | ✅        |
 | **`integration.secrets.oktaWebhookSecret`** | Optional secret used to verify incoming webhook requests                                                                             | ❌        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 </TabItem>
 

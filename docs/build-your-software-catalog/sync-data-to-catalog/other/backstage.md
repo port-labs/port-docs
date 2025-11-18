@@ -97,6 +97,9 @@ Note the parameters specific to this integration, they are last in the table.
 | `integration.eventListener.type`         | The method used to listen to events from the 3rd party tool (`POLLING` or `KAFKA`)                                                  | ✅        |
 | **`integration.secrets.backstageToken`** | The Backstage token used to authenticate Port to Backstage                                                                          | ✅        |
 | **`integration.config.backstageUrl`**    | The URL of the Backstage instance, including the port of the Backend API (usually 7007)                                             | ✅        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 </TabItem>
 

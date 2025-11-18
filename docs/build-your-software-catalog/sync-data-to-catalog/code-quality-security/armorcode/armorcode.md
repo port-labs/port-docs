@@ -161,6 +161,9 @@ This table summarizes the available parameters for the installation.
 | `integration.config.armorcodeApiUrl` | The ArmorCode API URL. If not specified, the default will be https://api.armorcode.com                                              | ❌        |
 | `scheduledResyncInterval`           | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 <br/>
 

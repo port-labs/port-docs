@@ -180,6 +180,9 @@ This table summarizes the available parameters for the installation. The paramet
 | `integration.eventListener.type` | The event listener type                                                                                                             | ✅        |
 | `integration.secrets.apiToken`   | The Opsgenie API token, docs can be found [here](https://support.atlassian.com/opsgenie/docs/api-key-management/)                   | ✅        |
 | `integration.config.apiUrl`      | The Opsgenie API URL. If not specified, the default will be https://api.opsgenie.com                                                | ✅        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 
 <br/>

@@ -172,7 +172,10 @@ This table summarizes the available parameters for the installation.
 | `liveEvents.baseUrl`                             | The base url of the instance where the LaunchDarkly integration is hosted, used for real-time updates. (e.g.`https://mylaunchdarklyoceanintegration.com`)                             | ❌        |
 | `scheduledResyncInterval`              | The number of minutes between each resync                                                                                        | ❌        |
 | `initializePortResources`              | Default true, When set to true the integration will create default blueprints and the port App config Mapping                    | ❌        |
-| `sendRawDataExamples`                  | Default, true, Enable sending raw data examples from the third part API to port for testing and managing the integration mapping | ❌        | 
+| `sendRawDataExamples`                  | Default, true, Enable sending raw data examples from the third part API to port for testing and managing the integration mapping | ❌        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        | 
 
 <h3>Event listener</h3>
 

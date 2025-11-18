@@ -181,6 +181,9 @@ Note the parameters specific to this integration, they are last in the table.
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                          | ❌        |
 | `integration.secrets.amplicationToken`  | The Amplication API [token](https://docs.amplication.com/docs/api-reference/authentication).                                                           | ✅        |
 | `integration.config.amplicationHost`    | The Amplication host. For example https://server.amplication.com/graphql                                                                               | ✅        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 
 <br/>

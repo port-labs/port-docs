@@ -244,6 +244,9 @@ Note the parameters specific to this integration, they are last in the table.
 | `integration.config.wizApiUrl`                   | The Wiz API URL.                                                                                                                                        | ✅        |
 | `integration.config.wizTokenUrl`                 | The Wiz Token Authentication URL                                                                                                                        | ✅        |
 | `integration.secret.wizWebhookVerificationToken` | This is a password you create, that is used to verify webhook events to Port                                                                            | ❌        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 <br/>
 

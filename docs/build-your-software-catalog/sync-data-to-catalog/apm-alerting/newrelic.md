@@ -188,6 +188,9 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.webhookUsername`           | Webhook username used for authenticating incoming events. [Learn more](http://docs.newrelic.com/docs/alerts/get-notified/intro-notifications/)                                   | ❌        |
 | `integration.secrets.webhookSecret`           | Webhook secret for authenticating incoming events. [Learn more](http://docs.newrelic.com/docs/alerts/get-notified/intro-notifications/)                                           | ❌        |
 | `liveEvents.baseUrl`              | The base url of the instance where the New Relic integration is hosted, used for real-time updates. (e.g.`https://mynewrelicoceanintegration.com`)                     | ❌        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 <br/>
 
 <AdvancedConfig/>

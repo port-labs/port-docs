@@ -252,6 +252,9 @@ Note the parameters specific to this integration, they are last in the table.
 | `integration.config.serverUrl`         | The ArgoCD server url                                                                                                                                                | ✅        |
 | `integration.config.ignoreServerError` | Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event | ❌        |
 | `scheduledResyncInterval`              | The number of minutes between each resync                                                                                                                            | ❌        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 
 </TabItem>

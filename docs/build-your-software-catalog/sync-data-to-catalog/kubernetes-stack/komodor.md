@@ -172,6 +172,9 @@ Note the parameters specific to this integration, they are last in the table.
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                                                              | ❌        |
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                          | ❌        |
 | `integration.secrets.komodorApiKey`     | The Komodor API key [token](https://help.komodor.com/hc/en-us/articles/22434108566674-Using-the-Komodor-API).                                          | ✅        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 <br/>
 <AdvancedConfig/>

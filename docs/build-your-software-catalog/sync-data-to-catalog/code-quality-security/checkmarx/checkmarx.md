@@ -231,6 +231,9 @@ Note the parameters specific to this integration, they are last in the table.
 | `integration.config.checkmarxTenant`             | Your Checkmarx One tenant name                                                                                                                           | ✅        |
 | `integration.secrets.checkmarxApiKey`            | Your Checkmarx One API key                                                                                                                               | ✅        |
 | `integration.secrets.webhookSecret`            | A secret to secure webhooks from Checkmarx One. This is optional but highly recommended for security if you enable live-events.                                                                                                                               | ❌        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 <br/>
 

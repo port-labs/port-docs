@@ -214,6 +214,9 @@ Note the parameters specific to this integration, they are last in the table.
 | `integration.secrets.jenkinsUser`  | The Jenkins username                                                                                                                                    | ✅        |
 | `integration.secrets.jenkinsToken` | The Jenkins password or token                                                                                                                           | ✅        |
 | `integration.config.jenkinsHost`   | The Jenkins host                                                                                                                                        | ✅        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 <br/>
 

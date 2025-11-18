@@ -94,6 +94,21 @@ export default function ParametersTable({ showingApp }) {
             <td>❌</td>
           </tr>
         </>}
+        <tr>
+          <td><code>service.portName</code></td>
+          <td>The name of the port in the Kubernetes Service resource for the main Ocean service. Default is <code>ocean-port</code>.</td>
+          <td>❌</td>
+        </tr>
+        <tr>
+          <td><code>liveEvents.service.portName</code></td>
+          <td>The name of the port in the Kubernetes Service resource for the live events service. Default is <code>ocean-port</code>.</td>
+          <td>❌</td>
+        </tr>
+        <tr>
+          <td><code>actionsProcessor.service.portName</code></td>
+          <td>The name of the port in the Kubernetes Service resource for the actions processor service. Default is <code>ocean-port</code>.</td>
+          <td>❌</td>
+        </tr>
       </tbody>
     </table>
   );

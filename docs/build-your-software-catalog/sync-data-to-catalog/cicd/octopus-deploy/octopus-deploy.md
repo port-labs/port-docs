@@ -180,6 +180,9 @@ This table summarizes the available parameters for the installation.
 | `sendRawDataExamples`               | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                     | ❌        |
 | `integration.secrets.webhookSecret`           | Webhook secret for authenticating incoming events. [Learn more](https://octopus.com/docs/administration/managing-infrastructure/subscriptions)                                           | ❌        |
 | `liveEvents.baseUrl`              | The base url of the instance where the Octopus integration is hosted, used for real-time updates. (e.g.`https://myoctopusdeployoceanintegration.com`)                    | ❌        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 <br/>
 
 <AdvancedConfig/>

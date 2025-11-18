@@ -176,6 +176,9 @@ Note the parameters specific to this integration, they are last in the table.
 | `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Member`, `Team`, `Organization`, `Project` and `Issue & Event` | ✅        |
 | `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                                                         | ✅        |
 | `integration.config.sentryOrganization` | The Sentry organization slug. For example `acme` from `https://acme.sentry.io`                                                                         | ✅        |
+| `service.portName`                    | The name of the port in the Kubernetes Service resource for the main Ocean service. Default is `ocean-port`.                                                                                                                                                                                      | ❌        |
+| `liveEvents.service.portName`         | The name of the port in the Kubernetes Service resource for the live events service. Default is `ocean-port`.                                                                                                                                                                                     | ❌        |
+| `actionsProcessor.service.portName`   | The name of the port in the Kubernetes Service resource for the actions processor service. Default is `ocean-port`.                                                                                                                                                                               | ❌        |
 
 
 <br/>
