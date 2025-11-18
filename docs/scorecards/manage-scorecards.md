@@ -128,54 +128,55 @@ Here are some request examples that will create the Scorecard of Ownership on th
 <details>
 <summary><b>Create scorecards python example (click to expand)</b></summary>
 
-    ```python showLineNumbers
-    # Dependencies to install:
-    # $ python -m pip install requests
+  ```python showLineNumbers
+  # Dependencies to install:
+  # $ python -m pip install requests
 
-    # the access_token variable should already have the token from previous examples
+  # the access_token variable should already have the token from previous examples
+  import requests
 
-    import requests
+  API_URL = 'https://api.getport.io/v1'
+        
+  blueprint_name = '_scorecard'
 
-    API_URL = 'https://api.getport.io/v1'
-
-    blueprint_name = 'microservice'
-
-    scorecards = [
-      {
-        'identifier': 'Ownership',
-        'title': 'Ownership',
-        'properties': {
+  scorecard_definition = {
+      'identifier': 'Ownership',
+      'title': 'Ownership',
+      'properties': {
+          'blueprint': 'blueprint_identifier', # The blueprint the scorecard belongs to
           'rules': [
-            {
-              'identifier': 'hasSlackChannel',
-              'title': 'Has Slack Channel',
-              'level': 'Silver',
-              'query': {
-                'combinator': 'and',
-                'conditions': [{'operator': 'isNotEmpty', 'property': 'slackChannel'}]
-              }
-            },
-            {
-              'identifier': 'hasTeam',
-              'title': 'Has Team',
-              'level': 'Bronze',
-              'query': {
-                'combinator': 'and',
-                'conditions': [{'operator': 'isNotEmpty', 'property': '$team'}]
-              }
-            }
-          ]
-        }
+              {
+                  'identifier': 'hasSlackChannel',
+                  'title': 'Has Slack Channel',
+                  'level': 'Silver',
+                  'query': {
+                      'combinator': 'and',
+                      'conditions': [
+                          {'operator': 'isNotEmpty', 'property': 'slackChannel'}
+                      ],
+                  },
+              },
+              {
+                  'identifier': 'hasTeam',
+                  'title': 'Has Team',
+                  'level': 'Bronze',
+                  'query': {
+                      'combinator': 'and',
+                      'conditions': [
+                          {'operator': 'isNotEmpty', 'property': '$team'}
+                      ],
+                  },
+              },
+          ],
       }
-    ]
+  }
 
-    headers = {
-        'Authorization': f'Bearer {access_token}'
-    }
+  headers = { 'Authorization': f'Bearer {access_token}'}
 
-    response = requests.put(f'{API_URL}/blueprints/{blueprint_name}/entities', json=scorecards, headers=headers)
+  response = requests.post(f'{API_URL}/blueprints/{blueprint_name}/entities', json=scorecard_definition, headers=headers,)
 
-    ```
+  ```
+
 </details>
 
 </TabItem>
@@ -195,13 +196,13 @@ Here are some request examples that will create the Scorecard of Ownership on th
 
     const API_URL = "https://api.getport.io/v1";
 
-    const blueprintName = "microservice";
+    const blueprintName = "_scorecard";
 
-    const scorecards = [
-        {
+    const scorecard_definition =  {
             identifier: "Ownership",
             title: "Ownership",
             properties: {
+              blueprint: "blueprint_identifier", // The blueprint the scorecard belongs to
               rules: [
                   {
                       identifier: "hasSlackChannel",
@@ -233,8 +234,7 @@ Here are some request examples that will create the Scorecard of Ownership on th
                   },
               ],
             }
-        },
-    ];
+        };
 
     const config = {
         headers: {
@@ -242,9 +242,9 @@ Here are some request examples that will create the Scorecard of Ownership on th
         },
     };
 
-    const response = await axios.put(
+    const response = await axios.post(
         `${API_URL}/blueprints/${blueprintName}/entities`,
-        scorecards,
+        scorecard_definition,
         config
     );
     ```
@@ -293,7 +293,7 @@ To update a scorecard you can use two different URLs:
 
 The request body will include the existing body of the Scorecard, after the desired updates to the existing scorecard have been applied.
 
-:::note
+:::note New identifier on scorecard update 
 When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the scorecard in order to be able to update its properties.
 :::
 
