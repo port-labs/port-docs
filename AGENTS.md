@@ -6,7 +6,7 @@
 
 - **REQUIRED**: Headers must have a capital letter only for the first word, rest in lowercase (e.g., "Promote scorecards"). **FLAG** any header with multiple capitalized words.
 - **REQUIRED**: Links must not be capitalized unless at the start of a new sentence. **FLAG** capitalized links mid-sentence.
-- **REQUIRED**: General product names (Lambda, Kubernetes, ArgoCD) must follow standard capitalization. **FLAG** incorrect product name capitalization.
+- **REQUIRED**: General product names (Lambda, Kubernetes, ArgoCD) and inisialism must follow standard capitalization. **FLAG** incorrect product name capitalization. So for example: "Create a Cursor API key" is ok.
 
 ### Code Examples - CRITICAL STANDARDS
 
