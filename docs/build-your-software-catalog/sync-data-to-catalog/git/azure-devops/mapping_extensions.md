@@ -37,8 +37,7 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
     port:
       entity:
         mappings:
-          identifier: >-
-            "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
+          identifier: .id
           title: .name
           blueprint: '"service"'
           properties:
@@ -60,7 +59,7 @@ This allows you to create a direct relationship between a pipeline and its sourc
   port:
     entity:
       mappings:
-        identifier: .id | tostring
+        identifier: ."__projectId" + "/" + (.id | tostring)
         title: .name
         blueprint: '"azureDevOpsPipeline"'
         properties:
