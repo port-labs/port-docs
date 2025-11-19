@@ -223,4 +223,4 @@ To assess the deployment frequency of a `service`, simply checking the `deployme
 ___
 <br></br>
 
-For more advanced use cases that include extending the scorecard's data model, see the [extend the default scorecards](/extend-data-model) page, which shows how to extend the scorecard data model with additional properties to enable SLA tracking, due date management, and automated workflows that go beyond simple pass or fail compliance. 
+For more advanced use cases that include extending the scorecard's data model, see the [extend the default scorecards](/scorecards/examples/extend-data-model) page, which shows how to extend the scorecard data model with additional properties to enable SLA tracking, due date management, and automated workflows that go beyond simple pass or fail compliance. 
