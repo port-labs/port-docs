@@ -31,60 +31,11 @@ Below is the structure of a single `scorecard` blueprint:
 |` Rules passed` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful [rule](#rule-elements) evaluations. |
 | `% of rules passed` | Number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules. |
 
-Relations: The scorecard blueprint doesn't have any relations by default.
+:::warning Default scorecard properties
+The properties above are default scorecard properties. They cannot be deleted or modified. 
+:::
 
-A scorecard contains and groups multiple rules that are relevant to its specific category, for example a scorecard for _service maturity_ can contain 3 rules, while the _production readiness_ scorecard can contain 2 completely different rules.
-
-### Constraints and restrictions
-
-#### Core limitations
-
-1. The scorecard blueprints are **protected** and their core structure **cannot be modified**:
-   - Default properties cannot be changed or deleted.
-   - Required relations cannot be modified.
-   - The blueprints themselves cannot be deleted.
-
-2. You can **extend** the blueprints with:
-   - New properties.
-   - New non-required relations.
-   - Additional configurations that do not affect the core functionality.
-
-3. Rule results are **automatically generated and managed** by Port:
-   - They cannot be created, deleted, or modified directly.
-   - You can update the custom properties you created for the rule results.
-   - Rule results are not searchable in the global search.
-   - They are updated automatically when rules are evaluated.
-
-#### Validation rules
-
-The system enforces several validation rules to maintain data integrity:
-
-1. Rule levels must match one of the levels defined in their parent scorecard.
-2. Scorecard blueprint built-in relations cannot be renamed or modified.
-3. Rule results maintain immutable core properties while allowing updates to custom properties.
-
-#### Delayed rule results
-
-When creating scorecards, adding new rules, or modifying existing rules for blueprints that contain a large number of entities, it may take some time for the `rule results` to appear in your catalog.
-
-This delay occurs because Port needs to create or update rule result blueprint instances for each entity and rule combination. The more entities you have in the blueprint, the more rule results need to be created or updated, which increases the processing time.
-
-#### Rule result entity limits
-
-Port supports up to **5 million** rule result entities.
-
-To monitor how many rule result entities you have, you can:
-
-1. Use the following [API path](/api-reference/get-a-blueprints-entity-count): Query the `_rule_result` blueprint identifier.
-2. Create a [number chart](/customize-pages-dashboards-and-plugins/dashboards/#number-chart):
-   - Type: `count entities`.
-   - Function: `count`.
-   - Blueprint: `_rule_result`.
-   
-If you reach this limit, you can:
-- Contact [Port support](https://support.port.io) for assistance.
-- Review your scorecards to reduce the number of rules.
-- Reduce the number of entities in the blueprints that your scorecards are defined for.
+In addition to the default properties, a scorecard contains and groups multiple rules that are relevant to its specific category, for example a scorecard for _service maturity_ can contain three rules, while the _production readiness_ scorecard can contain two completely different rules.
 
 ### Levels
 
@@ -384,6 +335,57 @@ A scorecard filter is used to make sure only relevant entities are evaluated, on
 |-----------------------------|-----------------------------------------------------------|
 | [`combinator`](#combinator) | Defines the logical operation to apply to the query rules.|
 | [`conditions`](#conditions) | An array of boolean conditions to filter entities with.   |
+
+## Limitations
+
+#### Core limitations
+
+1. The scorecard blueprints are **protected** and their core structure **cannot be modified**:
+   - Default properties cannot be changed or deleted.
+   - Required relations cannot be modified.
+   - The blueprints themselves cannot be deleted.
+
+2. You can **extend** the blueprints with:
+   - New properties.
+   - New non-required relations.
+   - Additional configurations that do not affect the core functionality.
+
+3. Rule results are **automatically generated and managed** by Port:
+   - They cannot be created, deleted, or modified directly.
+   - You can update the custom properties you created for the rule results.
+   - Rule results are not searchable in the global search.
+   - They are updated automatically when rules are evaluated.
+
+#### Validation rules
+
+The system enforces several validation rules to maintain data integrity:
+
+1. Rule levels must match one of the levels defined in their parent scorecard.
+2. Scorecard blueprint built-in relations cannot be renamed or modified.
+3. Rule results maintain immutable core properties while allowing updates to custom properties.
+
+#### Delayed rule results
+
+When creating scorecards, adding new rules, or modifying existing rules for blueprints that contain a large number of entities, it may take some time for the `rule results` to appear in your catalog.
+
+This delay occurs because Port needs to create or update rule result blueprint instances for each entity and rule combination. The more entities you have in the blueprint, the more rule results need to be created or updated, which increases the processing time.
+
+#### Rule result entity limits
+
+Port supports up to **5 million** rule result entities.
+
+To monitor how many rule result entities you have, you can:
+
+1. Use the following [API path](/api-reference/get-a-blueprints-entity-count): Query the `_rule_result` blueprint identifier.
+2. Create a [number chart](/customize-pages-dashboards-and-plugins/dashboards/#number-chart):
+   - Type: `count entities`.
+   - Function: `count`.
+   - Blueprint: `_rule_result`.
+   
+If you reach this limit, you can:
+- Contact [Port support](https://support.port.io) for assistance.
+- Review your scorecards to reduce the number of rules.
+- Reduce the number of entities in the blueprints that your scorecards are defined for.
 
 ## Scorecard UI indications
 

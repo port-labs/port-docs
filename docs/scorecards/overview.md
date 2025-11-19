@@ -8,6 +8,8 @@ sidebar_label: Overview
  
 Scorecards help you ensure every component and process meets your engineering standards. They enable you to continuously monitor quality, security, and compliance across your software catalog, and easily act on insights through Port actions and automations.
 
+<img src="/img/scorecards/production-readiness-scorecard.png" border='1px' width='90%' style={{borderRadius:'8px'}} /> 
+
 ## What is a Scorecard?
 
 **Scorecards** are used to define and track metrics and standards for Port entities, based on their properties.
