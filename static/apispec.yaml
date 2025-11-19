@@ -25816,7 +25816,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         
-        If you already have an existing Port account, this requirement will be enforced starting **November 20th, 2025**.
+        If you already have an existing Port account, this requirement will be enforced starting **November 27th, 2025**.
         :::
       parameters:
         - schema:
@@ -25877,7 +25877,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         
-        If you already have an existing Port account, this requirement will be enforced starting **November 20th, 2025**.
+        If you already have an existing Port account, this requirement will be enforced starting **November 27th, 2025**.
         :::
       parameters:
         - schema:
@@ -26369,7 +26369,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         
-        If you already have an existing Port account, this requirement will be enforced starting **November 20th, 2025**.
+        If you already have an existing Port account, this requirement will be enforced starting **November 27th, 2025**.
         :::
       parameters:
         - schema:
@@ -27177,7 +27177,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         
-        If you already have an existing Port account, this requirement will be enforced starting **November 20th, 2025**.
+        If you already have an existing Port account, this requirement will be enforced starting **November 27th, 2025**.
         :::
       security:
         - bearer:
@@ -28131,7 +28131,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         
-        If you already have an existing Port account, this requirement will be enforced starting **November 20th, 2025**.
+        If you already have an existing Port account, this requirement will be enforced starting **27th, 2025**.
         :::
       parameters:
         - schema:
@@ -33615,7 +33615,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         
-        If you already have an existing Port account, this requirement will be enforced starting **November 20th, 2025**.
+        If you already have an existing Port account, this requirement will be enforced starting **November 27th, 2025**.
         :::
       tags:
         - Integrations
