@@ -1557,6 +1557,13 @@ export const availableGuides = [
         tags: ["n8n", "AI"],
         logos: ["n8n", "AI"],
         link: "/guides/all/setup-port-n8n-node",
+    },
+    {
+        title: "Automatically resolve tickets with n8n and Port context",
+        description: "Automatically resolve tickets with n8n and Port context using Port's AI agents and automations",
+        tags: ["Autonomous Ticket Resolution", "n8n", "AI", "Jira"],
+        logos: ["n8n", "AI", "Jira", "GitHub"],
+        link: "/guides/all/automatically-resolve-tickets-with-n8n-port-context",
     }
 ]
 
