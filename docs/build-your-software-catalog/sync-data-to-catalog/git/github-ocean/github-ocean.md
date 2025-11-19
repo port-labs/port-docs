@@ -914,9 +914,9 @@ The repository search feature is subject to the limitations of the GitHub Search
 
 
 
-### Ingesting the Authenticated User’s Personal GitHub Account
+### Ingesting the Authenticated User’s Personal Account
 
-You can optionally ingest the authenticated user’s personal GitHub account as a pseudo-organization. This allows you to sync personal repositories and dependent resource types when needed.
+You can optionally ingest the authenticated user’s personal account as a pseudo-organization. This allows you to sync personal repositories and dependent resource types as needed.
 
 #### Multi-Organization Setup
 
