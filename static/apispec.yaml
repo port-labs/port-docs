@@ -3030,6 +3030,8 @@ components:
                             - protected
                     then:
                       properties:
+                        popupAuth:
+                          type: boolean
                         tokenUrl:
                           type: string
                           format: url
@@ -5437,6 +5439,8 @@ components:
                                   - protected
                           then:
                             properties:
+                              popupAuth:
+                                type: boolean
                               tokenUrl:
                                 type: string
                                 format: url
@@ -23024,6 +23028,13 @@ paths:
                           - array
                           - object
                         items: {}
+                      pendingExecution:
+                        type: boolean
+                      claimedUntil:
+                        type: string
+                        format: date-time
+                      installationId:
+                        type: string
                       createdBy:
                         type: string
                       impersonatedBy:
@@ -23877,6 +23888,13 @@ paths:
                           - array
                           - object
                         items: {}
+                      pendingExecution:
+                        type: boolean
+                      claimedUntil:
+                        type: string
+                        format: date-time
+                      installationId:
+                        type: string
                       createdBy:
                         type: string
                       impersonatedBy:
