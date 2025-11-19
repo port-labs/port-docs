@@ -451,6 +451,8 @@ You can customize the dashboard by adding additional widgets or modifying existi
 
 Admins can control who can view and manage scorecards.
 
+Scorecard editing permissions can be granted via the scorecard blueprint permissions configuration. By setting permissions on the `Scorecard` blueprint, you control who can create, edit, and delete scorecards across your organization.
+
 To edit a scorecard permissions:
 
 1. Navigate to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
@@ -475,7 +477,6 @@ Here are some common permission configurations:
 
 - If a user has the `register` permission to the `scorecard` blueprint, they can create scorecards on any other blueprint. The rules defined in the scorecard will be created as a result, even if the user is not a `scorecard rule` blueprint moderator.
 - A user with a `moderator` role on a blueprint can create scorecards **for that specific blueprint**. They can add them using the `+ New scorecard` button in the blueprint’s scorecards tab in the [Builder](https://app.getport.io/settings/data-model) page.
-
 
 For more information on configuring permissions, refer to the RBAC [documentation](/build-your-software-catalog/set-catalog-rbac/).
 

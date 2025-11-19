@@ -37,7 +37,7 @@ Whether you create, edit, or delete a scorecard, follow the next steps, then pro
 
 1. Click the `+ Scorecard` button in the top right corner of the page.
 
-    <img src="/img/scorecards/create-sorecard-in-catalog-page.png" border='1px' width='90%' style={{borderRadius:'8px'}} />
+    <img src="/img/scorecards/manage-scorecards/create-sorecard-in-catalog-page.png" border='1px' width='90%' style={{borderRadius:'8px'}} />
 
 2. In the **Basic Details** tab, specify the scorecard's basic details:
 
@@ -61,7 +61,7 @@ Whether you create, edit, or delete a scorecard, follow the next steps, then pro
 
 1. Click on the `...` button in line that represents your scorecard in the table, then choose `Edit`.
 
-    <img src="/img/scorecards/edit-scorecard-in-catalog-page.png" border='1px' width='90%' style={{borderRadius:'8px'}} />
+    <img src="/img/scorecards/manage-scorecards/edit-scorecard-in-catalog-page.png" border='1px' width='90%' style={{borderRadius:'8px'}} />
 
 2. Edit the scorecard.
 
@@ -75,7 +75,7 @@ A Scorecard cannot be restored after deletion!
 
 1. Click on the `...` button in line that represents your scorecard in the table, then choose `Delete`.
 
-    <img src="/img/scorecards/delete-scorecard-in-catalog-page.png" border='1px' style={{borderRadius:'8px'}} />
+    <img src="/img/scorecards/manage-scorecards/delete-scorecard-in-catalog-page.png" border='1px' style={{borderRadius:'8px'}} />
 
 2. Confirm the deletion in the pop-up window.
 
@@ -93,7 +93,7 @@ Whether you create, edit, or delete a scorecard, follow the next steps, then pro
 
 1. Click on the `+ New scorecard` button.
 
-    <img src="/img/scorecards/create-scorecard-datamodel-page.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
+    <img src="/img/scorecards/manage-scorecards/create-scorecard-datamodel-page.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
 
 2. In the **Basic Details** tab, specify the scorecard's basic details:
 
@@ -117,7 +117,7 @@ Whether you create, edit, or delete a scorecard, follow the next steps, then pro
 
 1. Click on the `...` button in line that represents your scorecard, then choose `Edit`.
 
-    <img src="/img/scorecards/edit-scorecard-datamodel-page.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
+    <img src="/img/scorecards/manage-scorecards/edit-scorecard-datamodel-page.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
 
 2. Make your changes to the scorecard.
 
@@ -131,7 +131,7 @@ A Scorecard cannot be restored after deletion!
 
 1. Click on the `...` button in line that represents your scorecard, then choose `Delete`.
 
-    <img src="/img/scorecards/delete-scorecard-datamodel-page.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
+    <img src="/img/scorecards/manage-scorecards/delete-scorecard-datamodel-page.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
 
 2. Confirm the deletion in the pop-up window.
 
