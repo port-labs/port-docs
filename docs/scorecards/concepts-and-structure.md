@@ -387,7 +387,7 @@ If you reach this limit, you can:
 - Review your scorecards to reduce the number of rules.
 - Reduce the number of entities in the blueprints that your scorecards are defined for.
 
-## Scorecard UI indications
+## Scorecard views
 
 Scorecards are available in two contexts in Port's software catalog:
 
@@ -451,6 +451,18 @@ You can customize the dashboard by adding additional widgets or modifying existi
 
 Admins can control who can view and manage scorecards.
 
+To edit a scorecard permissions:
+
+1. Navigate to the [Builder](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Click on the `...` button in the top right corner of the blueprint.
+
+3. Choose `Edit blueprint`.
+
+4. Go to the `Permissions` tab and edit the scorecard permissions.
+
+5. Click `Save`.
+
 **Permission examples:**
 
 Here are some common permission configurations:
@@ -465,7 +477,7 @@ Here are some common permission configurations:
 - A user with a `moderator` role on a blueprint can create scorecards **for that specific blueprint**. They can add them using the `+ New scorecard` button in the blueprint’s scorecards tab in the [Builder](https://app.getport.io/settings/data-model) page.
 
 
-For more information on configuring permissions, refer to the [documentation](/build-your-software-catalog/set-catalog-rbac/examples).
+For more information on configuring permissions, refer to the RBAC [documentation](/build-your-software-catalog/set-catalog-rbac/).
 
 ## Next steps
   

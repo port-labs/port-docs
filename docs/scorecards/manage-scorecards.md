@@ -18,34 +18,91 @@ Port offers a variety of ways to create, edit and delete scorecards:
 
 <TabItem value="UI">
 
-To create a scorecard from the UI, you can use either one of the following methods:
+You can create, edit, or delete scorecards either from the catalog page or the Data model page.
 
-**Method 1: From the scorecards catalog page**
+<Tabs queryString="ui-method" defaultValue="catalog">
+
+<TabItem value="catalog" label="From the catalog page">
+
+Whether you create, edit, or delete a scorecard, follow the next steps, then proceed with the relevant section below.
 
 1. Navigate to the [Software Catalog](https://app.getport.io/catalog) page.
 
-2. Go to the [Scorecards catalog page](https://app.getport.io/_scorecards).
+2. Go to a Scorecard catalog page in your catalog section.  
+   :::tip Creating a scorecards catalog page
+   If you don't have a scorecards catalog page, you can create one. To learn more, refer to the catalog page [documentation](/customize-pages-dashboards-and-plugins/page/catalog-page).
+   :::
 
-3. Click the `+ Scorecard` button in the top right corner of the page.
+**To create a new scorecard:**
 
-4. Follow the same steps as described in method 2 below. The only difference is that you need to select the `Blueprint` you want to add the scorecard to.
+1. Click the `+ Scorecard` button in the top right corner of the page.
 
-**Method 2: From the Data model page**
+    <img src="/img/scorecards/create-sorecard-in-catalog-page.png" border='1px' width='90%' style={{borderRadius:'8px'}} />
+
+2. In the **Basic Details** tab, specify the scorecard's basic details:
+
+    - `Title` - The scorecard's title.
+    - `Identifier` - The scorecard's unique identifier (must be unique among all scorecards).
+    - `Blueprint` - Select the blueprint you want to add the scorecard to.
+    - `Filter` - Filter which entities the scorecard applies to.
+
+3. In the **Rules** tab, define the scorecard's rules:
+
+     - Add or remove [levels](/scorecards/concepts-and-structure#levels), as well as edit their names and colors. 
+     - Add [rule elements](/scorecards/concepts-and-structure#rule-elements) to each level:
+       - `Title` - The rule's title.
+       - `Identifier` - The rule's identifier.
+       - `Description` - The rule's description.
+       - `Conditions` - The rule's [conditions](/scorecards/concepts-and-structure#conditions).
+
+4. Click `Save` to create the scorecard.
+
+**To edit an existing scorecard:**
+
+1. Click on the `...` button in line that represents your scorecard in the table, then choose `Edit`.
+
+    <img src="/img/scorecards/edit-scorecard-in-catalog-page.png" border='1px' width='90%' style={{borderRadius:'8px'}} />
+
+2. Edit the scorecard.
+
+3. Click `Save` to apply your changes.
+
+**To delete a scorecard:**
+
+:::danger Irreversible delete
+A Scorecard cannot be restored after deletion!
+:::
+
+1. Click on the `...` button in line that represents your scorecard in the table, then choose `Delete`.
+
+    <img src="/img/scorecards/delete-scorecard-in-catalog-page.png" border='1px' style={{borderRadius:'8px'}} />
+
+2. Confirm the deletion in the pop-up window.
+
+</TabItem>
+
+<TabItem value="data-model" label="From the Data model page">
+
+Whether you create, edit, or delete a scorecard, follow the next steps, then proceed with the relevant section below.
 
 1. Go to the [Data model](https://app.getport.io/settings/data-model) page of your portal.
 
 2. Expand the relevant blueprint, and click on the `Scorecards` tab.
 
-3. Click on the `+ New scorecard` button.
+**To create a new scorecard:**
 
-4. In the **Basic Details** tab, specify the scorecard's basic details:
+1. Click on the `+ New scorecard` button.
+
+    <img src="/img/scorecards/create-scorecard-datamodel-page.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
+
+2. In the **Basic Details** tab, specify the scorecard's basic details:
 
     - `Title` - The scorecard's title.
     - `Identifier` - The scorecard's unique identifier (must be unique among all scorecards).
-    - `Blueprint` - Set to the blueprint you selected.
+    - `Blueprint` - This field will already be preselected and non-editable, set to the blueprint you expanded.
     - `Filter` - Filter which entities the scorecard applies to.
 
-5. In the **Rules** tab, define the scorecard's rules:
+3. In the **Rules** tab, define the scorecard's rules:
 
      - Add or remove [levels](/scorecards/concepts-and-structure#levels), as well as edit their names. 
      - Add [rule elements](/scorecards/concepts-and-structure#rule-elements) to each level:
@@ -54,12 +111,38 @@ To create a scorecard from the UI, you can use either one of the following metho
        - `Description` - The rule's description.
        - `Conditions` - The rule's [conditions](/scorecards/concepts-and-structure#conditions).
 
-6. Click `Save` to create the scorecard.
+4. Click `Save` to create the scorecard.
+
+**To edit an existing scorecard**
+
+1. Click on the `...` button in line that represents your scorecard, then choose `Edit`.
+
+    <img src="/img/scorecards/edit-scorecard-datamodel-page.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
+
+2. Make your changes to the scorecard.
+
+3. Click `Save` to apply your changes.
+
+**To delete a scorecard:**
+
+:::danger Irreversible delete
+A Scorecard cannot be restored after deletion!
+:::
+
+1. Click on the `...` button in line that represents your scorecard, then choose `Delete`.
+
+    <img src="/img/scorecards/delete-scorecard-datamodel-page.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
+
+2. Confirm the deletion in the pop-up window.
+
+</TabItem>
+
+</Tabs>
 
 **Scorecard JSON structure**
 
 Instead of using the form, you can also create or edit scorecards in JSON format.  
-Click on the `{...} Edit JSON` button in the top right corner of the scorecard creation form. 
+Click on the `{...} Edit JSON` button in the top right corner of the scorecard creation or editing form. 
 
 Below is an example of a scorecard in JSON format:
 
