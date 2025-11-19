@@ -2,7 +2,11 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
-# GitHub
+# GitHub (deprecated)
+
+:::warning Deprecation Notice
+This integration is deprecated and will be discontinued soon, please use the [GitHub self-hosted](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/) integration instead.
+:::
 
 Port's GitHub integration allows you to model GitHub resources in your software catalog and ingest data into them.
 
