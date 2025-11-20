@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
@@ -113,6 +117,10 @@ Users can be synced into Port either manually or automatically, depending on you
   </TabItem>
   </Tabs>
 
+  :::warning SSO automatic sync
+  When using an SSO provider, users are synced automatically, so there is no need to manually sync users using the mapping above.
+  :::
+
 - **Custom integrations**: We can create a simple automation to link new Port users to the matching integration user upon creation:
 
   - [Slack](https://docs.port.io/guides/all/map-slack-users-to-port-accounts/#sync-slack-users-when-a-new-port-user-is-added)
@@ -154,25 +162,27 @@ Teams can also be synced into Port either manually or automatically, depending o
   
   Using the integration mapping, we can define how to create/update teams in Port.
   
-  For example, the following mapping can be used to create/update teams in Port using GitHub:
+  For example, the following mapping can be used to create/update teams using GitHub:
     ```yaml showLineNumbers
     - kind: team
-    selector:
-      query: 'true'
-    port:
-      entity:
-      mappings:
-        identifier: .id | tostring
-        title: .name
-        blueprint: '"_team"'
-        relations:
-          git_hub_team: .id | tostring
+      selector:
+        query: 'true'
+      port:
+        entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"_team"'
+          relations:
+            git_hub_team: .id | tostring
     ```
 
   In this example, if the team already exists in Port, it will be connected to the GitHub team with the same identifier.  
   If it does not exist, it will be created and connected to the GitHub team with the same identifier.
   
-  
+  :::warning SSO automatic sync
+  When using an SSO provider, teams are synced automatically, so there is no need to manually sync teams using the mapping above.
+  :::
  
 <!-- - **Custom integrations**:
 -  Automatic mapping is usually not reliable because team names and identifiers may not match. In most cases, automation will require consistent identifiers across systems, which is uncommon.
