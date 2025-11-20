@@ -441,6 +441,11 @@ For the `protected` URL type, you can configure how the OAuth authentication flo
 
 If the **Authentication URL** points to Microsoft Entra ID (`https://login.microsoftonline.com`), the toggle is automatically turned on, since Entra ID login pages include security headers that prevent them from being displayed inside an Iframe.
 
+Make sure your application allows CORS requests from the Port app origin for the authentication flow to work correctly:
+
+- For the EU region, add `https://app.port.io` to your allowed origins.
+- For the US region, add `https://app.us.port.io` to your allowed origins.
+
 :::info Browser pop-up settings
 If you enable the pop-up option, ensure your browser allows pop-ups for the Port app’s domain. If pop-ups are blocked at the browser level, the authentication window will not open and the Iframe widget will fail to load.
 :::
