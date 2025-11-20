@@ -25,7 +25,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .id | tostring
+          identifier: ."__projectId" + "/" + (.id | tostring)
           title: .name
           blueprint: '"azureDevopsPipeline"'
           properties:

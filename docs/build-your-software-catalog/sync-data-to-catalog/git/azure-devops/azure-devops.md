@@ -67,8 +67,7 @@ resources:
   port:
     entity:
       mappings:
-        identifier: >-
-          "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
+        identifier: .id
         title: .name
         blueprint: '"service"'
         properties:
