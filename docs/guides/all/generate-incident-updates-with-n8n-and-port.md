@@ -71,12 +71,12 @@ This workflow demonstrates how Port serves as a context lake by enriching incide
             624,
             0
           ],
-          "id": "e087f654-3439-4cb9-95b7-b3c1244b290b",
+          "id": "2c8d4a08-8b21-42ce-8b76-7af1b6122684",
           "name": "Send a message",
           "webhookId": "65bc11b4-1b52-4d28-ad86-b947a780aa79",
           "credentials": {
             "slackApi": {
-              "id": "GoOLAtWBRwTADKc8",
+              "id": "WbMbgVb4paOjFSiI",
               "name": "Slack account"
             }
           }
@@ -95,11 +95,11 @@ This workflow demonstrates how Port serves as a context lake by enriching incide
             208,
             0
           ],
-          "id": "95ceebed-96ca-4cfb-82a8-a427f8c0c7d2",
+          "id": "dcb95f48-554b-45bb-8734-e652167959a0",
           "name": "Extract Incident Context from Port",
           "credentials": {
             "portIoApi": {
-              "id": "a9s5zHKi57ADlTON",
+              "id": "vphYNYaTZimXT7su",
               "name": "Port.io account"
             }
           }
@@ -115,11 +115,11 @@ This workflow demonstrates how Port serves as a context lake by enriching incide
             416,
             0
           ],
-          "id": "c30fceda-20a5-4507-ad99-57cfd95b20b2",
+          "id": "27168b70-560b-49bb-ab6b-0cf90c0e3bcf",
           "name": "Get Port Context Response",
           "credentials": {
             "portIoApi": {
-              "id": "a9s5zHKi57ADlTON",
+              "id": "vphYNYaTZimXT7su",
               "name": "Port.io account"
             }
           }
@@ -136,9 +136,24 @@ This workflow demonstrates how Port serves as a context lake by enriching incide
             0,
             0
           ],
-          "id": "2db67b04-3240-4cf7-81bc-6c1066fee235",
+          "id": "4438b0a6-e3d6-4d8e-bfc4-4b667527439d",
           "name": "On PagerDuty Incident Update",
           "webhookId": "a3c02869-071e-4bc7-bebe-28c692f26b68"
+        },
+        {
+          "parameters": {
+            "content": "## Generate Incident Updates with Port AI\n\n### How it works\n1. A PagerDuty incident create/update arrives via the webhook trigger.\n2. The workflow calls Port.io to gather contextual metadata: affected services, owners, on-call, recent deployments, related PRs/commits, vulnerabilities, and topology.\n3. An AI step synthesizes a concise, structured incident summary (Problem, Impact, Insights/Diagnostics, Action Required) using Port context.\n4. The final message is posted to the #incident-updates Slack channel so the on-call team gets actionable guidance.\n\n### Setup\n- [ ] Create a PagerDuty webhook and point it to the workflow webhook URL.\n- [ ] Register for a free account with Port.io\n- [ ] Connect your Port.io account and add the API key/credentials.\n- [ ] Grant Port.io read access to service catalog, deployment history, and code links.\n- [ ] Connect your Slack account and confirm or set the channel to #incident-updates.\n- [ ] Enable the Port AI tools/model credentials used to enrich incidents.\n- [ ] Send a test incident to verify the Slack summary format and actionable recommendations.",
+            "height": 608,
+            "width": 416
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "typeVersion": 1,
+          "position": [
+            -464,
+            -224
+          ],
+          "id": "67b8c149-f1d8-47ab-803c-d9a2a1d90d1a",
+          "name": "Sticky Note"
         }
       ],
       "pinData": {},
@@ -181,12 +196,12 @@ This workflow demonstrates how Port serves as a context lake by enriching incide
       "settings": {
         "executionOrder": "v1"
       },
-      "versionId": "ab6cfb55-8495-48c7-8fc3-25fb9b480014",
+      "versionId": "20e3058d-5c29-46cc-80d9-3c60e2c32d7d",
       "meta": {
         "templateCredsSetupCompleted": true,
-        "instanceId": "e9a36cfd74df34fd103d5f6c7fed0e3d25bfc51a5d136cd0fb7eba9c77b96ae3"
+        "instanceId": "be7665cef51b13547e586e0f385e42416ebee48719c71d7dc7c03dbdf41fc246"
       },
-      "id": "q1yDUfKJ8ueTukOo",
+      "id": "fwnjT4a7bagWJqXd",
       "tags": []
     }
     ```
