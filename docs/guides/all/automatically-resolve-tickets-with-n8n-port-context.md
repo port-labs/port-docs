@@ -9,7 +9,7 @@ Coding agents can significantly speed up development, but crucial engineering co
 This guide demonstrates how to use Port as a context lake in n8n workflows to automatically generate GitHub issues from Jira tickets with rich organizational context, ensuring that important information is preserved when assigning them to GitHub Copilot and linking pull requests back to Jira. 
 This setup helps establish a seamless ticket-to-PR workflow, bridging the gap between Jira and GitHub while leveraging Port's comprehensive software catalog as a source of truth.
 
-<img src="/img/guides/automatic-ticket-resolution-n8n-architecture.png" border="1px" width="100%" />
+<img src="/img/guides/automatic-ticket-resolution-n8n-architecture.png" border="1px" alt="workflow banner image" width="100%" />
 
 
 ## Common use cases
@@ -421,7 +421,7 @@ The n8n workflow orchestrates the following steps:
 2. **Verify workflow execution:** In n8n, check the workflow’s execution history. Ensure each node outputs as expected (webhook payload, condition pass, Port context, parsed JSON, GitHub issue creation).
 3. **Verify GitHub issue:** Confirm a new issue was created with the Jira key in the title, context in the description, correct labels, and a comment for Copilot.
 
-    <img src="/img/guides/auto-resolve-jira-ticket-test-n8n-workflow.png" border="1px" width="60%" />
+    <img src="/img/guides/auto-resolve-jira-ticket-test-n8n-workflow.png" alt="example github issue assignment" border="1px" width="60%" />
 
 
 ## Related guides
