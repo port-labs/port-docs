@@ -398,7 +398,7 @@ Follow the steps below to create the action:
 
 Now we'll create the automations that process the HiBob users list and sends the response to the webhook for bulk ingestion and single user ingestion.
 
-<h3> Create automation to bulk ingest HiBob users</h3>
+### Bulk ingest HiBob users
 
 This automation will trigger when the [Sync HiBob Users](#sync-hibob-users-self-service-action) action is executed.
 It will then process the HiBob users list and send the response to the webhook for bulk ingestion.
@@ -461,7 +461,7 @@ Follow the steps below to create the automation:
 
 5. Click `Save` to create the automation.
 
-<h3> Create automation to process single HiBob user</h3>
+### Process a single HiBob user
 
 This automation will trigger when the [Get HiBob user by email](#get-hibob-user-by-email-self-service-action) action is executed.
 It will then process the HiBob user and send the response to the webhook for single user ingestion.
@@ -520,7 +520,7 @@ Follow the steps below to create the automation:
 
 5. Click `Save` to create the automation.
 
-<h3> Create automation to sync HiBob users when a new Port user is added</h3>
+### Sync HiBob users when a new Port user is added
 
 To ensure new Port users get mapped to HiBob users automatically, we'll create an automation that triggers when a new Port user is created.
 This automation will trigger the [Get HiBob user by email](#get-hibob-user-by-email-self-service-action) action to fetch details of the HiBob user by email, which will then be processed by the webhook integration.
