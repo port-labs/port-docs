@@ -19,7 +19,7 @@ In your [Builder](https://app.getport.io/settings/data-model) page scorecards ar
 ## `Scorecard` structure
 
 A single scorecard defines a category to group different checks, validations and evaluations.  
-Below is the structure of a single `scorecard` blueprint:
+Below is the structure of the default `scorecard` blueprint:
 
 | Name | Type | Description |
 |------|------|-------------|
