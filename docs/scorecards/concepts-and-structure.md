@@ -11,31 +11,15 @@ import TabItem from "@theme/TabItem"
 
 # Concepts and structure
 
-In your [Builder](https://app.getport.io/settings/data-model) page scorecards are represented by three blueprints:
-- [`Scorecard`](#scorecard-structure) - Represents a collection of rules and levels for evaluating entities.
-- [`Rule`](#rule-structure) - Defines specific criteria for evaluation.
-- [`Rule Result`](#rule-result-structure) - Stores the evaluation results for each entity.
+This page demonstrates the concepts of scorecards and their structure in Port.
 
-## `Scorecard` structure
+## Concepts
 
-A single scorecard defines a category to group different checks, validations and evaluations.  
-Below is the structure of the default `scorecard` blueprint:
+Scorecards in Port help evaluate entities in your software catalog against defined standards and requirements.  
 
-| Name | Type | Description |
-|------|------|-------------|
-| `Identifier` | String | The unique identifier of the scorecard (Maximum 100 characters). |
-| `Blueprint` | String (format: blueprints) | The target blueprint whose entities will be evaluated. |
-| [`Levels`](#levels) | Array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold). |
-| [`Filter`](#filter-elements) | Object | Optional query to filter which entities should be evaluated. |
-| `Rules tested` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of [rule](#rule-elements) evaluations performed. |
-|` Rules passed` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful [rule](#rule-elements) evaluations. |
-| `% of rules passed` | Number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules. |
+Each scorecard consists of [**rules**](#rule-elements) that define specific [**conditions**](#conditions) an entity must meet, and [**levels**](#levels) that represent different stages of compliance or maturity.
 
-:::warning Default scorecard properties
-The properties above are default scorecard properties. They cannot be deleted or modified. 
-:::
-
-In addition to the default properties, a scorecard contains and groups multiple rules that are relevant to its specific category, for example a scorecard for _service maturity_ can contain three rules, while the _production readiness_ scorecard can contain two completely different rules.
+When a scorecard is applied to an entity, Port evaluates each rule by checking whether the entity's properties satisfy the rule's conditions. Based on which rules pass or fail, the entity is assigned a level that reflects its current state.
 
 ### Levels
 
@@ -55,7 +39,6 @@ The basic level is the default level for all entities.
 
 If the entity didn't pass any rule, it will be at the `Basic` level, and thus can't have a rule associated with it.
 :::
-
 
 <Tabs queryString="Levels" defaultValue="Default">
 
@@ -183,7 +166,7 @@ Once an entity passes all the rules for a certain level, its level changes accor
 4. It has four rules with level `Silver`.
 5. Once the entity passes those four rules (and the rules from `Bronze` level), its level would be `Silver`.
 
-:::note multiple rules scenario
+:::info Multiple rules scenario
 In the example listed above, let's assume the entity passes just one of the two `Bronze` rules, but it passes all of
 the `Silver` rules. The `level` of the scorecard will still be `Basic`, because not all `Bronze` rules have been
 satisfied.
@@ -195,17 +178,17 @@ Rules enable you to generate checks inside a scorecard only for entities and pro
 
 A scorecard rule is a single evaluation consisting of multiple checks, each rule has a level which directly translates to how important it is for the check to pass (the more basic the check, the lower its level).
 
-#### Conditions
+**Conditions**
 
 Conditions are small boolean checks that help when determining the final status of a `query` according to the specified [`combinator`](#combinator):
 
-| Field      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` (see all [available operators](#available-operators) below).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Field      | Description  |
+|------------|--------------|
+| `operator` | Search operator to use when evaluating this rule, for example `=`, `!=`, `contains`, `doesNotContains`, `isEmpty`, `isNotEmpty` (see all [available operators](#available-operators) below).   |
 | `property` | Property to filter by according to its value. It can be a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or any other standard entity property such as `slack_channel` including [mirror properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) and [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/calculation-property.md). |
 | `value`    | Value to compare to (not required in `isEmpty` and `isNotEmpty` operators).  |
 
-##### Combinator
+**Combinator**
 
 <CombinatorIntro />
 
@@ -260,7 +243,7 @@ Conditions are small boolean checks that help when determining the final status 
 
 </Tabs>
 
-##### Available operators
+**Available operators**
 
 | Operator            | Supported Types                                  | Description                                                            |
 |---------------------|--------------------------------------------------|------------------------------------------------------------------------|
@@ -280,7 +263,46 @@ Conditions are small boolean checks that help when determining the final status 
 | `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is an empty string, array, or object.         |
 | `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is not an empty string, array, or object.     |
 
-## `Scorecard Rule` structure 
+### Filter elements
+
+Filters allow you to apply scorecard checks only for entities that meet certain criteria.
+
+Filters follow the same querying structure as [rules](#rule-elements).
+
+A scorecard filter is used to make sure only relevant entities are evaluated, only entities that the filter evaluates to `true` on will have the specified rule checked:
+
+| Field                       | Description                                               |
+|-----------------------------|-----------------------------------------------------------|
+| [`combinator`](#combinator) | Defines the logical operation to apply to the query rules.|
+| [`conditions`](#conditions) | An array of boolean conditions to filter entities with.   |
+
+## Blueprints structure
+
+In your [Builder](https://app.getport.io/settings/data-model) page scorecards are represented by three blueprints:
+- [`Scorecard`](#scorecard-structure) - Represents a collection of rules and levels for evaluating entities.
+- [`Rule`](#rule-structure) - Defines specific criteria for evaluation.
+- [`Rule Result`](#rule-result-structure) - Stores the evaluation results for each entity.
+
+### Scorecard
+
+A single scorecard defines a category to group different checks, validations and evaluations.  
+Below is the structure of the default `scorecard` blueprint:
+
+| Name | Type | Description |
+|------|------|-------------|
+| `Identifier` | String | The unique identifier of the scorecard (Maximum 100 characters). |
+| `Blueprint` | String (format: blueprints) | The target blueprint whose entities will be evaluated. |
+| [`Levels`](#levels) | Array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold). |
+| [`Filter`](#filter-elements) | Object | Optional query to filter which entities should be evaluated. |
+| `Rules tested` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of [rule](#rule-elements) evaluations performed. |
+|` Rules passed` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful [rule](#rule-elements) evaluations. |
+| `% of rules passed` | Number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules. |
+
+:::warning Default scorecard properties
+The properties above are default scorecard properties. They cannot be deleted or modified. 
+:::
+
+### Scorecard Rule
 
 The `Rule` blueprint contains the following properties:
 | Name | Type | Description |
@@ -298,7 +320,7 @@ Relations:
 |:----:|:----------------:|:---------:|:-----:|:-----------:|
 | Scorecard | Scorecard | true | false | The scorecard this rule belongs to |
 
-## `Scorecard Rule Result` structure
+### Scorecard Rule Result
 
 The `Rule result` blueprint contains the following properties:
 
@@ -323,22 +345,9 @@ Relations:
 When a new scorecard is created, Port automatically creates a relation in the Rule Result blueprint to the scorecard's target blueprint. For example, if you create a scorecard for the "service" blueprint, a new relation named "service" will be added to the Rule Result blueprint.
 :::
 
-## Filter elements
-
-Filters allow you to apply scorecard checks only for entities that meet certain criteria.
-
-Filters follow the same querying structure as [rules](#rule-elements).
-
-A scorecard filter is used to make sure only relevant entities are evaluated, only entities that the filter evaluates to `true` on will have the specified rule checked:
-
-| Field                       | Description                                               |
-|-----------------------------|-----------------------------------------------------------|
-| [`combinator`](#combinator) | Defines the logical operation to apply to the query rules.|
-| [`conditions`](#conditions) | An array of boolean conditions to filter entities with.   |
-
 ## Limitations
 
-#### Core limitations
+### Core limitations
 
 1. The scorecard blueprints are **protected** and their core structure **cannot be modified**:
    - Default properties cannot be changed or deleted.
@@ -356,7 +365,7 @@ A scorecard filter is used to make sure only relevant entities are evaluated, on
    - Rule results are not searchable in the global search.
    - They are updated automatically when rules are evaluated.
 
-#### Validation rules
+### Validation rules
 
 The system enforces several validation rules to maintain data integrity:
 
@@ -364,13 +373,13 @@ The system enforces several validation rules to maintain data integrity:
 2. Scorecard blueprint built-in relations cannot be renamed or modified.
 3. Rule results maintain immutable core properties while allowing updates to custom properties.
 
-#### Delayed rule results
+### Delayed rule results
 
 When creating scorecards, adding new rules, or modifying existing rules for blueprints that contain a large number of entities, it may take some time for the `rule results` to appear in your catalog.
 
 This delay occurs because Port needs to create or update rule result blueprint instances for each entity and rule combination. The more entities you have in the blueprint, the more rule results need to be created or updated, which increases the processing time.
 
-#### Rule result entity limits
+### Rule result entity limits
 
 Port supports up to **5 million** rule result entities.
 
