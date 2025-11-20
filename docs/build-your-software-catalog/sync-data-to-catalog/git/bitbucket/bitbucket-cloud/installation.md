@@ -17,6 +17,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Installation
 
+<IntegrationVersion integration="bitbucket-cloud" />
+
 This page details how to install Port's Bitbucket Cloud integration (powered by the Ocean framework). It outlines the following steps:
 
 - How to [create](#create-a-workspace-token-or-app-password) a workspace token/app password to give the integration permissions to query your Bitbucket Cloud account.
@@ -32,20 +34,41 @@ This page details how to install Port's Bitbucket Cloud integration (powered by 
 
 ## Setup
 
-### Create a workspace token or app password
+### Create authentication credentials
 
-:::tip Use of dedicated accounts and tokens
-
-We recommend using multiple workspace tokens for the integration, as this will provide a more secure and scalable solution. Using multiple workspace tokens helps distribute the load and avoid rate limiting issues. You can provide multiple workspace tokens as a comma-separated string in the configuration.
-
-If you are using the username and app password, we recommend using a dedicated account for the integration, as different credentials from the same Bitbucket account share the same rate limits, which can cause issues when using the integration in a large organization.
+:::warning App Password Deprecation
+Bitbucket is deprecating app passwords. As of September 9, 2025, new app passwords cannot be created, and existing ones will be disabled on June 9, 2026. **Use user-scoped tokens or workspace tokens instead.**
 :::
 
-The integration requires either a workspace token or an app password with username to authenticate with your Bitbucket Cloud account.  You can create a workspace token by following the steps [here](https://support.atlassian.com/bitbucket-cloud/docs/workspace-access-tokens/) or an app password by following [these steps](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/).  
+The integration supports three authentication methods:
 
-The token or app password should have `read` permission scope for each of the supported resources you want to ingest into Port and a `read` and `write` permission scope for the webhooks.
+- **Workspace Token** (Recommended for Premium accounts)
+   - Most scalable option for large organizations
+   - Supports multiple tokens (comma-separated) to distribute load and avoid rate limits
+   - [Create a workspace token](https://support.atlassian.com/bitbucket-cloud/docs/workspace-access-tokens/)
+   - **Note:** Workspace tokens are a Bitbucket Premium feature
 
-We recommend using multiple workspace tokens when possible, as they provide better security, are easier to manage than app passwords, and help avoid rate limiting issues by distributing requests across different tokens.
+- **User-Scoped Token** (Replacement for App Passwords)
+   - **Required** for new setups using the `file` kind (existing app passwords also work, but can't be created anymore)
+   - Works in free Bitbucket environments
+   - Requires user's email address for authentication
+   - [Create a user-scoped token](https://support.atlassian.com/bitbucket-cloud/docs/using-api-tokens/)
+   - **Required scopes:**
+     - Read: `read:repository:bitbucket`, `read:project:bitbucket`, `read:pullrequest:bitbucket`, `read:webhook:bitbucket`, `read:workspace:bitbucket`
+     - Write: `write:webhook:bitbucket`
+
+- **App Password** (Deprecated)
+   - ⚠️ Being phased out by Bitbucket - migrate to user-scoped tokens
+   - Requires username and app password combination
+   - [Create an app password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/)
+
+:::tip Use of dedicated accounts and tokens
+We recommend using multiple workspace tokens for the integration, as this provides better security and scalability. Using multiple tokens helps distribute the load and avoid rate limiting issues.
+
+If using user-scoped tokens or app passwords, consider using a dedicated account, as credentials from the same Bitbucket account share rate limits.
+:::
+
+All authentication methods should have `read` permission scope for each of the supported resources you want to ingest into Port and a `read` and `write` permission scope for webhooks.
 
 ## Deploy the integration
 
@@ -61,8 +84,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="bitbucket-cloud" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -90,7 +111,10 @@ To install the integration using ArgoCD:
 1. Create a `values.yaml` file in `argocd/my-ocean-bitbucket-cloud-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `BITBUCKET_USERNAME`, `BITBUCKET_APP_PASSWORD`, `BITBUCKET_WORKSPACE` and `BITBUCKET_WORKSPACE_TOKEN`.
+Replace placeholders based on your chosen authentication method:
+- **Workspace Token**: `BITBUCKET_WORKSPACE` and `BITBUCKET_WORKSPACE_TOKEN`
+- **User-Scoped Token**: `BITBUCKET_WORKSPACE`, `BITBUCKET_USER_EMAIL`, and `BITBUCKET_USER_SCOPED_TOKEN`
+- **App Password (Deprecated)**: `BITBUCKET_WORKSPACE`, `BITBUCKET_USERNAME`, and `BITBUCKET_APP_PASSWORD`
 :::
 ```yaml showLineNumbers
 initializePortResources: true
@@ -102,11 +126,13 @@ integration:
     type: POLLING
   config:
   // highlight-next-line
-    bitbucketUsername: BITBUCKET_USERNAME
+    bitbucketUserEmail: BITBUCKET_USER_EMAIL  # For user-scoped token
+    bitbucketUsername: BITBUCKET_USERNAME  # For app password (deprecated)
     bitbucketWorkspace: BITBUCKET_WORKSPACE
   secrets:
   // highlight-next-line
-    bitbucketAppPassword: BITBUCKET_APP_PASSWORD
+    bitbucketUserScopedToken: BITBUCKET_USER_SCOPED_TOKEN  # Replaces app password
+    bitbucketAppPassword: BITBUCKET_APP_PASSWORD  # Deprecated
     bitbucketWorkspaceToken: BITBUCKET_WORKSPACE_TOKEN
 ```
 <br/>
@@ -181,10 +207,12 @@ This table summarizes the available parameters for the installation.
 | `integration.identifier`         | Change the identifier to describe your integration                                                                                  | ✅        |
 | `integration.type`               | The integration type                                                                                                                | ✅        |
 | `integration.eventListener.type` | The event listener type                                                                                                             | ✅        |
-| `integration.config.bitbucketUsername`      | The username of the Bitbucket Cloud account                                                  | ✅        |
+| `integration.config.bitbucketUserEmail`     | The email address for user-scoped token authentication (required when using user-scoped token)                                                  | ❌        |
+| `integration.config.bitbucketUsername`      | The username for app password authentication (required when using app password - deprecated)                                                  | ❌        |
 | `integration.config.bitbucketWorkspace`     | The workspace of the Bitbucket Cloud account             | ✅        |
-| `integration.config.bitbucketAppPassword`   | The app password of the Bitbucket Cloud account             | ✅        |
-| `integration.config.bitbucketWorkspaceToken`| The workspace token(s) for the Bitbucket Cloud account (can be a single token or comma-separated string of multiple tokens)             | ✅        |
+| `integration.config.bitbucketUserScopedToken`| The user-scoped token for the Bitbucket Cloud account (replaces app password, required for file kind)             | ❌        |
+| `integration.config.bitbucketAppPassword`   | (Deprecated) The app password of the Bitbucket Cloud account - use `bitbucketUserScopedToken` instead             | ❌        |
+| `integration.config.bitbucketWorkspaceToken`| The workspace token(s) for the Bitbucket Cloud account (can be a single token or comma-separated string of multiple tokens)             | ❌        |
 | `integration.config.webhookSecret`          | The secret used to verify the webhook requests             | ❌        |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
@@ -234,9 +262,10 @@ jobs:
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           port_base_url: https://api.getport.io
           config: |
+            bitbucketUserEmail: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_EMAIL }}
             bitbucketUsername: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_USERNAME }}
             bitbucketWorkspace: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE }}
-            bitbucketAppPassword: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_APP_PASSWORD }}
+            bitbucketUserScopedToken: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_SCOPED_TOKEN }}
             bitbucketWorkspaceToken: ${{ secrets.OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE_TOKEN }}
 ```
 
@@ -267,9 +296,10 @@ pipeline {
             steps {
                 script {
                     withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_EMAIL', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_EMAIL'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_USERNAME', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_USERNAME'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_APP_PASSWORD', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_APP_PASSWORD'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_SCOPED_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_SCOPED_TOKEN'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE_TOKEN'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
@@ -283,9 +313,10 @@ pipeline {
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_EMAIL=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_EMAIL \
                                 -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_USERNAME=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_USERNAME \
                                 -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE \
-                                -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_APP_PASSWORD=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_APP_PASSWORD \
+                                -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_SCOPED_TOKEN=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_SCOPED_TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE_TOKEN=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE_TOKEN \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -336,9 +367,10 @@ steps:
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
         -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
+        -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_EMAIL=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_EMAIL) \
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_USERNAME=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_USERNAME) \
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE) \
-        -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_APP_PASSWORD=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_APP_PASSWORD) \
+        -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_SCOPED_TOKEN=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_SCOPED_TOKEN) \
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE_TOKEN=$(OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE_TOKEN) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
@@ -387,9 +419,10 @@ ingest_data:
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
         -e OCEAN__SEND_RAW_DATA_EXAMPLES=true  \
+        -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_EMAIL=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_EMAIL \
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_USERNAME=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_USERNAME \
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE \
-        -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_APP_PASSWORD=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_APP_PASSWORD \
+        -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_SCOPED_TOKEN=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_USER_SCOPED_TOKEN \
         -e OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE_TOKEN=$OCEAN__INTEGRATION__CONFIG__BITBUCKET_WORKSPACE_TOKEN \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \

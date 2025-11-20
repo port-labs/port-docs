@@ -24,6 +24,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Bitbucket (self-hosted)
 
+<IntegrationVersion integration="bitbucket-server" />
+
 Port's Bitbucket (Self-Hosted) integration allows you to model Bitbucket Server / Bitbucket Data Center resources in your software catalog and ingest data into them.
 
 **Note:** While Bitbucket Server has been [deprecated and replaced by Bitbucket Data Center](https://www.atlassian.com/blog/announcements/journey-to-cloud), they expose the same set of APIs and this integration covers both.
@@ -66,8 +68,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="bitbucket-server" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
