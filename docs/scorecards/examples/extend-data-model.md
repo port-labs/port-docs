@@ -16,7 +16,7 @@ In this example, we are going to add the following properties:
 
 - **Due date** - Track when a rule or rule result needs to be addressed. This property can be automatically updated by automations based on business logic.
 - **SLA (Service Level Agreement)** - Define the expected time to remediate issues identified by a rule, enabling SLA tracking and compliance monitoring.
-- **Hours until SLA due** - A calculation property that dynamically calculates the time remaining until the SLA due date, useful for triggering reminders and tracking approaching deadlines.
+- **Hours until SLA due date** - A calculation property that dynamically calculates the time remaining until the SLA due date, useful for triggering reminders and tracking approaching deadlines.
 
 <h4>To create a new property:</h4>
 
@@ -94,7 +94,7 @@ After adding these properties, your blueprint should look like this:
 
 ### Extended scorecard rule result blueprint
 
-The following example shows an extended `Scorecard rule result` blueprint with additional properties including `SLA due date`, `Due date`, `Hours until SLA due` as well as the `SLA` mirror property:
+The following example shows an extended `Scorecard rule result` blueprint with additional properties including `SLA due date`, `Due date`, `Hours until SLA due date` as well as the `SLA` mirror property:
 
 <details>
 <summary><b>SLA due date property definition (click to expand)</b></summary>
@@ -162,7 +162,7 @@ Copy and paste the following JSON snippet under the `properties` section.
 ```json showLineNumebrs
 "schema": {
     "properties": {
-        "hours_until_sla_due": {
+        "hours_until_sla_due_date": {
             "type": "string",
             "title": "Hours until SLA due date",
             "format": "timer"
@@ -213,6 +213,10 @@ Let’s look at two examples:
 
 When a scorecard rule fails (changes from `Passed` to `Not passed`), this automation sets the `SLA due date` and `Hours until SLA due` properties on the rule result based on the SLA defined on the rule. This ensures that action items have a clear deadline for remediation based on the rule's SLA requirements, and enables timer-based reminders when the deadline approaches.
 
+<img src='/img/scorecards/examples/set-action-item-due-date-automation.png' width='90%' border='1px' style={{borderRadius:'8px'}}/>
+<br></br>
+<br></br>
+
 The automation triggers when a rule result's `result` property changes from "Passed" to "Not passed".
 
 The `SLA due date` value is calculated by:
@@ -255,7 +259,7 @@ The `Hours until SLA due` property is set to 24 hours before the `SLA due date`,
       "identifier": "{{ .event.context.entityIdentifier }}",
       "properties": {
         "sla_due_date": "{{((.event.diff.before.properties.sla * 24 * 60 * 60) + ( .event.diff.after.properties.result_last_change | split(\".\")| .[0] | . + \"Z\" | fromdate)) | todate}}",
-        "hours_until_sla_due": "{{(((.event.diff.before.properties.sla * 24 * 60 * 60) + ( .event.diff.after.properties.result_last_change | split(\".\")| .[0] | . + \"Z\" | fromdate)) - (24 * 60 * 60)) | todate}}"
+        "hours_until_sla_due_date": "{{(((.event.diff.before.properties.sla * 24 * 60 * 60) + ( .event.diff.after.properties.result_last_change | split(\".\")| .[0] | . + \"Z\" | fromdate)) - (24 * 60 * 60)) | todate}}"
       }
     }
   },
@@ -269,6 +273,10 @@ This automation creates a timer that counts down to the remediation deadline. Th
 ### Send reminder for upcoming due dates
 
 Once SLA due dates are set, you can add another automation to send reminders when deadlines approach. This uses the calculation property `Hour until SLA due` to detect when an item is within 24 hours of expiration.
+
+<img src='/img/scorecards/examples/send-reminder-for-upcoming-due-dates-automation.png' width='90%' border='1px' style={{borderRadius:'8px'}}/>
+<br></br>
+<br></br>
 
 <details>
 <summary><b>Automation definition (click to expand)</b></summary>
@@ -284,11 +292,13 @@ Once SLA due dates are set, you can add another automation to send reminders whe
     "event": {
       "type": "TIMER_PROPERTY_EXPIRED",
       "blueprintIdentifier": "_rule_result",
-      "propertyIdentifier": "hours_until_sla_due"
+      "propertyIdentifier": "hours_until_sla_due_date"
     },
     "condition": {
       "type": "JQ",
-      "expressions": [],
+      "expressions": [
+        ".diff.after.properties.result == \"Not passed\""
+      ],
       "combinator": "and"
     }
   },
