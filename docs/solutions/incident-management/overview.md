@@ -5,6 +5,12 @@ sidebar_position: 1
 
 # Self-healing incidents
 
+### Incident management overview
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zWCgJpDiQtg" title="Create Surveys" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>
+
+### Self-healing incident example
+<iframe width="560" height="315" src="https://www.youtube.com/embed/amE1jEjF_7g" title="Create Surveys" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>
+
 ## Why manage incidents using a developer portal?
 
 Incident management is much more than just selecting a tool for paging and rotating on-call shifts. It is a discipline that requires almost parallel investigation, communication and reflection - where with little notice, developers are tasked with understanding a problem, identifying a root cause, keeping all internal and external stakeholders aware of what's going on, understanding the impact, resolving the issue and identifying lessons for the future. Quite a tall order. Making this harder is the spread of tools they need to engage with through each step of the process.
