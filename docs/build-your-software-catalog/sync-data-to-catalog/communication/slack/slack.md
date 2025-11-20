@@ -78,10 +78,10 @@ helm upgrade --install my-ocean-slack-integration port-labs/port-ocean \
   --set integration.eventListener.type="POLLING" \
   --set integration.config.baseUrl="https://slack.com/api" \
   --set integration.config.authType="bearer_token" \
+  --set integration.config.apiToken="YOUR_SLACK_BOT_TOKEN" \
   --set integration.config.paginationType="cursor" \
   --set integration.config.cursorPath="response_metadata.next_cursor" \
-  --set integration.config.hasMorePath="response_metadata.next_cursor != null" \
-  --set integration.secrets.authValue="YOUR_SLACK_BOT_TOKEN"
+  --set integration.config.hasMorePath="response_metadata.next_cursor != null"
 ```
 
 <PortApiRegionTip/>
@@ -97,7 +97,7 @@ This table summarizes the available parameters for the installation.
 | `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
 | `integration.config.baseUrl`       | The base URL of the Slack API instance                                                                                                                                                                           | https://slack.com/api | ✅        |
 | `integration.config.authType`   | The authentication type for the API (use `bearer_token` for Slack)                                                                                                                                                                         | bearer_token                                  | ✅        |
-| `integration.secrets.authValue`   | Your Slack Bot User OAuth Token (starts with `xoxb-`)                                                                                                                                                                         | xoxb-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                  | ✅        |
+| `integration.config.apiToken`   | Your Slack Bot User OAuth Token (starts with `xoxb-`)                                                                                                                                                                         | xoxb-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                  | ✅        |
 | `integration.config.paginationType` | How your API handles pagination (offset, page, cursor, or none)                                                                                                                                                                         | cursor                                  | ✅        |
 | `integration.config.cursorPath` | JQ expression pointing to the cursor field in the response                                                                                                                                                                         | response_metadata.next_cursor                                  | ✅        |
 | `integration.config.hasMorePath` | JQ expression to determine if there are more pages                                                                                                                                                                         | response_metadata.next_cursor != null                                  | ✅        |
@@ -129,10 +129,10 @@ docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
   -e OCEAN__INTEGRATION__CONFIG__BASE_URL="https://slack.com/api" \
   -e OCEAN__INTEGRATION__CONFIG__AUTH_TYPE="bearer_token" \
+  -e OCEAN__INTEGRATION__CONFIG__API_TOKEN="YOUR_SLACK_BOT_TOKEN" \
   -e OCEAN__INTEGRATION__CONFIG__PAGINATION_TYPE="cursor" \
   -e OCEAN__INTEGRATION__CONFIG__CURSOR_PATH="response_metadata.next_cursor" \
   -e OCEAN__INTEGRATION__CONFIG__HAS_MORE_PATH="response_metadata.next_cursor != null" \
-  -e OCEAN__INTEGRATION__SECRETS__AUTH_VALUE="YOUR_SLACK_BOT_TOKEN" \
   -e OCEAN__PORT__CLIENT_ID="YOUR_PORT_CLIENT_ID" \
   -e OCEAN__PORT__CLIENT_SECRET="YOUR_PORT_CLIENT_SECRET" \
   -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
@@ -455,7 +455,6 @@ The actual data array is usually at the root level (e.g., `members`, `channels`,
                 isDeleted: .deleted
                 timezone: .tz
                 timezoneLabel: .tz_label
-                updated: .updated
     ```
 
     </details>
@@ -487,8 +486,6 @@ The actual data array is usually at the root level (e.g., `members`, `channels`,
                 isGeneral: .is_general
                 isMember: .is_member
                 memberCount: .num_members
-                created: .created
-                updated: .updated
               relations:
                 creator: .creator
     ```
