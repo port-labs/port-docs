@@ -27,7 +27,7 @@ This guide assumes the following:
 - [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
 - [Port's Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) is installed in your account.
 - You have a working n8n instance (Cloud or self-hosted) with [Port's n8n custom node installed](https://docs.port.io/guides/all/setup-port-n8n-node).
-- You have completed the setup in the [Trigger GitHub Copilot from Port guide](https://docs.port.io/guides/all/trigger-github-copilot-from-port), ensuring that Copilot will be automatically assigned to any GitHub issues created through this guide.
+- Your GitHub organization has GitHub Copilot enabled, so Copilot can be automatically assigned to any issues created through this guide.
 
 
 :::tip Alternative integrations and/or coding agents
