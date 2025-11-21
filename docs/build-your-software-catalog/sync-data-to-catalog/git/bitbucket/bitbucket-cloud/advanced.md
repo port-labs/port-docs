@@ -41,7 +41,22 @@ Use the `repoFilter` parameter is to [narrow down data fetched](https://develope
 - **Default value**: `None` to fetch all repositories.
 - **Use case**: set this in your configuration if you want to opt into this behavior.
   - **role**: Specify role with one of the following values: `member`, `contributor`, `admin`, `owner`.
+  
+    ```yaml showLineNumbers
+    repoFilter:
+      # highlight-next-line
+      role: "admin"
+    resources:
+    # remaining resource definitions omitted for brevity
+    ```
   - **q**: Specify q as a search query string to filter repositories.
+    ```yaml showLineNumbers
+    repoFilter:
+      # highlight-next-line
+      q: 'parent.owner.nickname = ""'
+    resources:
+    # remaining resource definitions omitted for brevity
+    ```
 
 </TabItem>
 
