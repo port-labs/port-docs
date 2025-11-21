@@ -25,6 +25,18 @@ To use this integration, you need:
 - An OpenAI API key with access to the usage and billing endpoints.
 - Network access from the Ocean integration to `api.openai.com`.
 
+**To create an OpenAI API key:**
+
+1. Navigate to the [OpenAI Platform](https://platform.openai.com/) and sign in to your account.
+2. Click on your profile icon in the top right corner and select **API keys**.
+3. Click **Create new secret key**.
+4. Give your key a name (e.g., "Port Integration") and click **Create secret key**.
+5. Copy the API key immediately (it starts with `sk-`). You won't be able to see it again after closing the dialog.
+
+:::warning API key security
+Store your API key securely and never share it. The key provides access to your OpenAI account usage and billing data.
+:::
+
 :::info OpenAI API documentation
 Review the [OpenAI usage docs](https://platform.openai.com/docs/api-reference/usage) to understand the exact response structure returned by each endpoint.
 :::
@@ -60,8 +72,8 @@ helm upgrade --install my-ocean-codex-integration port-labs/port-ocean \
   --set integration.type="custom" \
   --set integration.eventListener.type="POLLING" \
   --set integration.config.baseUrl="https://api.openai.com/v1" \
-  --set integration.config.authType="bearer" \
-  --set integration.secrets.token="YOUR_OPENAI_API_KEY"
+  --set integration.config.authType="bearer_token" \
+  --set integration.config.apiToken="YOUR_OPENAI_API_KEY"
 ```
 
 <PortApiRegionTip/>
@@ -74,8 +86,8 @@ helm upgrade --install my-ocean-codex-integration port-labs/port-ocean \
 | `port.clientSecret` | Your Port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials). |  | ✅ |
 | `port.baseUrl` | Your Port API URL (`https://api.getport.io` for EU, `https://api.us.getport.io` for US). |  | ✅ |
 | `integration.config.baseUrl` | Base URL for the OpenAI API. | https://api.openai.com/v1 | ✅ |
-| `integration.config.authType` | Authentication type for OpenAI. | bearer | ✅ |
-| `integration.secrets.token` | OpenAI API key (starts with `sk-`). | sk-abc123 | ✅ |
+| `integration.config.authType` | Authentication type for OpenAI (use `bearer_token` for OpenAI). | bearer_token | ✅ |
+| `integration.config.apiToken` | OpenAI API key (starts with `sk-`). | sk-abc123 | ✅ |
 | `integration.eventListener.type` | Event listener type for the integration. | POLLING | ✅ |
 | `integration.type` | Integration type. Must be `custom`. | custom | ✅ |
 | `integration.identifier` | Unique identifier for this integration instance. | codex-integration | ✅ |
@@ -103,8 +115,8 @@ docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
   -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
   -e OCEAN__INTEGRATION__CONFIG__BASE_URL="https://api.openai.com/v1" \
-  -e OCEAN__INTEGRATION__CONFIG__AUTH_TYPE="bearer" \
-  -e OCEAN__INTEGRATION__SECRETS__TOKEN="YOUR_OPENAI_API_KEY" \
+  -e OCEAN__INTEGRATION__CONFIG__AUTH_TYPE="bearer_token" \
+  -e OCEAN__INTEGRATION__CONFIG__API_TOKEN="YOUR_OPENAI_API_KEY" \
   -e OCEAN__PORT__CLIENT_ID="YOUR_PORT_CLIENT_ID" \
   -e OCEAN__PORT__CLIENT_SECRET="YOUR_PORT_CLIENT_SECRET" \
   -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
