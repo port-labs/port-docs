@@ -102,12 +102,12 @@ You can use the following Port blueprint definitions and integration configurati
 
 Use the `minTimeInDays` selector to control how many days back abandoned or completed pull requests are ingested for each repository. The default value is `7` days.
 
-```yaml
-  - kind: pullRequest
-    selector:
-      query: 'true'
-      # highlight-next-line
-      minTimeInDays: 30 # default is 7 days
+```yaml showLineNumbers
+- kind: pullRequest
+  selector:
+    query: 'true'
+    # highlight-next-line
+    minTimeInDays: 30 # default is 7 days
 ```
 
 </TabItem>
