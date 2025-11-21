@@ -20,7 +20,7 @@ const glossary = {
   jq:
     '💡 <b>Port Concepts</b><br/><b>JQ</b> - A lightweight JSON processor, used in Port to parse, map, and manipulate data. See <a href="https://jqlang.github.io/jq/" style="color:#30BFBF"><b>JQ docs</b></a> for more information.',
   action:
-    "💡 <b>Port Concepts</b><br/><b>Action</b> - A mechanism to define custom, reusable logic that portal users can execute. <a class='tooltip-link' href='https://docs.port.io/actions-and-automations/create-self-service-experiences/'>Learn more</a>",
+    "💡 <b>Port Concepts</b><br/><b>Self-service action</b> - A mechanism to define custom, reusable logic that portal users can execute. <a class='tooltip-link' href='https://docs.port.io/actions-and-automations/create-self-service-experiences/'>Learn more</a>",
   dataset:
     "💡 <b>Port Concepts</b><br/><b>Dataset</b> - A filtering mechanism for entity inputs comprising two properties: a combinator, and rules.",
   relation:
