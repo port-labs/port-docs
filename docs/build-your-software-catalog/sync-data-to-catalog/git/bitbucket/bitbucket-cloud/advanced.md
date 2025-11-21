@@ -40,7 +40,7 @@ Use the `repoFilter` parameter is to [narrow down data fetched](https://develope
 
 - **Default value**: `None` to fetch all repositories.
 - **Use case**: set this in your configuration if you want to opt into this behavior.
-  - **role**: Specify role with one of the following values: `member`, `contributor`, `admin`, `owner`.
+  - **role**: Specify with one of the following values: `member`, `contributor`, `admin`, `owner`.
   
     ```yaml showLineNumbers
     repoFilter:
@@ -49,7 +49,8 @@ Use the `repoFilter` parameter is to [narrow down data fetched](https://develope
     resources:
     # remaining resource definitions omitted for brevity
     ```
-  - **q**: Specify q as a search query string to filter repositories.
+  - **q**: Specify as a search query string to filter repositories.
+
     ```yaml showLineNumbers
     repoFilter:
       # highlight-next-line
