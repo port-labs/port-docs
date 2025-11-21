@@ -36,12 +36,12 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 
 <TabItem value="repoFilter" label="Filter repositories">
 
-The `repoFilter` parameter is used to [narrow down data fetched](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-get) for repositories with a specific set of query parameters.
+Use the `repoFilter` parameter is to [narrow down data fetched](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-get) for repositories with a specific set of query parameters.
 
 - **Default value**: `None` to fetch all repositories.
 - **Use case**: set this in your configuration if you want to opt into this behavior.
-  - **role**: Users can optionally specify role with one of the following values: `member`, `contributor`, `admin`, `owner`.
-  - **q**: Users can optionally specify q as a search query string to filter repositories.
+  - **role**: Specify role with one of the following values: `member`, `contributor`, `admin`, `owner`.
+  - **q**: Specify q as a search query string to filter repositories.
 
 </TabItem>
 
