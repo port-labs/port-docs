@@ -11,12 +11,15 @@ import CustomOceanIntegration from "/docs/build-your-software-catalog/sync-data-
 
 Port's Codex integration ingests foundational OpenAI usage metrics into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework. It focuses on two reliable data sources: daily cost summaries and model-level usage statistics.
 
-## Supported metrics
+## Supported resources
+
+The Codex integration can ingest the following resources into Port:
 
 - `openai_daily_usage` – Daily totals for requests, tokens, and spend from `/dashboard/billing/usage`.
 - `openai_model_usage` – Model-level request and token breakdowns from `/usage`.
+- `openai_model` – Available OpenAI models and their details from `/models`.
 
-These two metrics give immediate visibility into overall spend and which models teams rely on most.
+These resources provide visibility into your OpenAI usage, costs, and available models.
 
 ## Prerequisites
 
@@ -133,7 +136,7 @@ docker run -i --rm --platform=linux/amd64 \
 
 ## Set up data model
 
-Before syncing data, create the blueprints that define your OpenAI usage entities.
+Before syncing data, create the blueprints that define your OpenAI entities (usage metrics and available models).
 
 **To create the blueprints:**
 
@@ -224,6 +227,50 @@ Before syncing data, create the blueprints that define your OpenAI usage entitie
 
 </details>
 
+<details>
+<summary><b>OpenAI Model blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "openai_model",
+  "title": "OpenAI Model",
+  "icon": "Claude",
+  "schema": {
+    "properties": {
+      "modelId": {
+        "type": "string",
+        "title": "Model ID"
+      },
+      "object": {
+        "type": "string",
+        "title": "Object Type"
+      },
+      "created": {
+        "type": "number",
+        "title": "Created Timestamp"
+      },
+      "ownedBy": {
+        "type": "string",
+        "title": "Owned By"
+      },
+      "permission": {
+        "type": "array",
+        "title": "Permissions"
+      }
+    },
+    "required": [
+      "modelId"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
 4. Click `Save` after each blueprint is added.
 
 ## Configuration 
@@ -291,6 +338,34 @@ resources:
 
 :::info Snapshot identifiers
 `snapshot_id` typically corresponds to the model name (for example, `gpt-4o`). Use it for both the identifier and the model property to keep the mapping simple.
+:::
+
+</details>
+
+<details>
+<summary><b>OpenAI Models mapping (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: /models
+    selector:
+      query: 'true'
+      data_path: '.data'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .id
+          blueprint: '"openai_model"'
+          properties:
+            modelId: .id
+            object: .object
+            ownedBy: .owned_by
+            permission: .permission
+```
+
+:::info Models endpoint
+The `/models` endpoint returns a list of all available OpenAI models. This is useful for cataloging which models are available in your account and tracking model availability over time.
 :::
 
 </details>
