@@ -28,7 +28,7 @@ Before you begin, ensure you have:
 - Completed the [onboarding process](/getting-started/overview) with services, teams, and environments modeled in your Port catalog
 - A Port account with [AI features enabled](/ai-interfaces/ai-agents/overview#access-to-the-feature)
 - [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/) installed and syncing incidents to Port
-- [Port's n8n custom node installed](/guides/all/setup-port-n8n-node) in your n8n instance
+- [Port's n8n custom node installed](/ai-interfaces/port-n8n-node) in your n8n instance
 - An n8n instance (cloud or self-hosted) with access to create workflows
 - Slack workspace and [developer token](https://api.slack.com/) for sending notifications
 - Port API credentials configured in n8n — [learn how to get them](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
@@ -142,7 +142,7 @@ This workflow demonstrates how Port serves as a context lake by enriching incide
         },
         {
           "parameters": {
-            "content": "## Generate Incident Updates with Port AI\n\n### How it works\n1. A PagerDuty incident create/update arrives via the webhook trigger.\n2. The workflow calls Port.io to gather contextual metadata: affected services, owners, on-call, recent deployments, related PRs/commits, vulnerabilities, and topology.\n3. An AI step synthesizes a concise, structured incident summary (Problem, Impact, Insights/Diagnostics, Action Required) using Port context.\n4. The final message is posted to the #incident-updates Slack channel so the on-call team gets actionable guidance.\n\n### Setup\n- [ ] Create a PagerDuty webhook and point it to the workflow webhook URL.\n- [ ] Register for a free account with Port.io\n- [ ] Connect your Port.io account and add the API key/credentials.\n- [ ] Grant Port.io read access to service catalog, deployment history, and code links.\n- [ ] Connect your Slack account and confirm or set the channel to #incident-updates.\n- [ ] Enable the Port AI tools/model credentials used to enrich incidents.\n- [ ] Send a test incident to verify the Slack summary format and actionable recommendations.",
+            "content": "## Generate Incident Updates with Port AI\n\nThis workflow automatically generates contextual incident updates using Port's Context Lake and sends enriched Slack notifications with relevant technical information.\n\n### How it works\n1. A PagerDuty incident create/update arrives via the webhook trigger.\n2. The workflow calls Port.io to gather contextual metadata: affected services, owners, on-call, recent deployments, related PRs/commits, vulnerabilities, and topology.\n3. An AI step synthesizes a concise, structured incident summary (Problem, Impact, Insights/Diagnostics, Action Required) using Port context.\n4. The final message is posted to the #incident-updates Slack channel so the on-call team gets actionable guidance.\n\n### Setup\n- [ ] Create a PagerDuty webhook and point it to the workflow webhook URL.\n- [ ] Register for a free account with Port.io\n- [ ] Connect your Port.io account and add the API key/credentials.\n- [ ] Grant Port.io read access to service catalog, deployment history, and code links.\n- [ ] Connect your Slack account and confirm or set the channel to #incident-updates.\n- [ ] Enable the Port AI tools/model credentials used to enrich incidents.\n- [ ] Send a test incident to verify the Slack summary format and actionable recommendations.",
             "height": 608,
             "width": 416
           },
@@ -242,7 +242,7 @@ This workflow demonstrates how Port serves as a context lake by enriching incide
 
 ## Related guides
 
-- [Set up Port's n8n custom node](/guides/all/setup-port-n8n-node) — Install and configure Port's custom n8n node
+- [Set up Port's n8n custom node](/ai-interfaces/port-n8n-node) — Install and configure Port's custom n8n node
 - [Generate incident updates with AI](/guides/all/generate-incident-updates-with-ai) — Use Port AI agents directly in Port to generate incident updates
 - [Orchestrate incident response with AI](/guides/all/orchestrate-incident-response-with-ai) — Comprehensive guide on AI-powered incident management
 

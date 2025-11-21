@@ -86,13 +86,18 @@ Interact with Port's AI capabilities directly from Slack. Ask questions, run act
 
 **[Learn about the Slack App →](/ai-interfaces/slack-app)**
 
+### Port n8n node
+Integrate Port's AI capabilities into your n8n automation workflows. Use Port as a context lake to enrich your workflows with organizational context, invoke AI agents, and query your software catalog directly from n8n.
+
+**[Set up Port n8n node →](/ai-interfaces/port-n8n-node)**
+
 ## Getting Started
 
 ### For Quick AI Interaction
 Start with **Port AI Assistant** for immediate access to AI-powered insights about your development environment.
 
 ### For Custom Workflows  
-Explore **AI Agents** to build sophisticated, customized AI workflows tailored to your team's specific needs.
+Explore **AI Agents** to build sophisticated, customized AI workflows tailored to your team's specific needs. For n8n automation workflows, use the **Port n8n node** to integrate Port's Context Lake and AI capabilities into your existing automation infrastructure.
 
 ### For IDE Integration
 Set up the **MCP Server** to bring Port's AI capabilities directly into your development environment.
@@ -114,6 +119,7 @@ The following table shows which capabilities are supported across Port's AI inte
 | **Port AI Chat Widget** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
 | **Port Slack App** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | **Port AI Assistant** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Port n8n node** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
 
 </div>
 
@@ -122,11 +128,12 @@ The following table shows which capabilities are supported across Port's AI inte
 <details>
 <summary>What are the available Port AI interfaces? (Click to expand)</summary>
 
-Port offers four main AI interfaces:
+Port offers five main AI interfaces:
 - **Port AI Assistant**: Chat interface for quick questions and insights.
 - **AI Agents**: Customizable workflows for automations.
 - **MCP Server**: IDE integration for development workflows.
 - **Slack App**: Team collaboration interface.
+- **Port n8n node**: n8n automation integration for custom workflows.
 </details>
 
 <details>
@@ -146,6 +153,8 @@ If you're a developer who works primarily in an IDE, consider starting with the 
 
 For custom workflows or automation, explore **AI Agents**. **[Learn about AI Agents →](/ai-interfaces/ai-agents/overview)**
 
+For n8n automation workflows, use the **Port n8n node** to integrate Port's Context Lake and AI capabilities. **[Set up Port n8n node →](/ai-interfaces/port-n8n-node)**
+
 For team collaboration, try the **Slack App** to bring AI insights into your communication platform. **[Explore Slack App →](/ai-interfaces/slack-app)**
 </details>
 
@@ -156,6 +165,7 @@ For team collaboration, try the **Slack App** to bring AI insights into your com
 - **MCP Server**: Open beta - available to all users.
 - **AI Agents**: Open beta - available to all users.
 - **Slack App**: Open beta - available to all users.
+- **Port n8n node**: Open beta - available to all users.
 </details>
 
 <details>
