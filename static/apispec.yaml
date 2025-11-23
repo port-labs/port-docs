@@ -25417,7 +25417,7 @@ paths:
                 description: The json provided does not match the route's schema
   /v1/organization/secrets:
     get:
-      summary: Get all organization secrets metadata
+      summary: Get all organization secrets' metadata
       tags:
         - Organization
       description: This route allows you to retrieve metadata about all secrets
@@ -25568,7 +25568,7 @@ paths:
                 description: The json provided does not match the route's schema
   /v1/organization/secrets/{secret_name}:
     get:
-      summary: Get an organization secret metadata
+      summary: Get an organization secret's metadata
       tags:
         - Organization
       description: This route allows you to retrieve metadata about a specific

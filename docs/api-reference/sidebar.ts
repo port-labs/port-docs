@@ -469,7 +469,7 @@ const sidebar: SidebarsConfig = {
         {
           type: "doc",
           id: "api-reference/get-all-organization-secrets-metadata",
-          label: "Get all organization secrets metadata",
+          label: "Get all organization secrets' metadata",
           className: "api-method get",
         },
         {
@@ -480,8 +480,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/get-an-organization-secret-metadata",
-          label: "Get an organization secret metadata",
+          id: "api-reference/get-an-organization-secrets-metadata",
+          label: "Get an organization secret's metadata",
           className: "api-method get",
         },
         {
