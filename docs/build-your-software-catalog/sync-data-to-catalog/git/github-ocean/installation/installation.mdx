@@ -69,7 +69,7 @@ To create a personal access token see Github's [managing your personal access to
 - The token must belong to a user with access to the relevant Github resources (e.g., repositories, teams) across all organizations you want to sync.
 
 <details>
-  <summary>Required permissions</summary>
+<summary><b>Required permissions (click to expand)</b></summary>
   
   These are the necessary permissions if you're creating a fine-grained PAT.
   
@@ -125,7 +125,7 @@ You can create and install a custom GitHub App directly from Port's UI using OAu
 
 <h4>Manual setup</h4>
 
-For advanced configurations or if you prefer to manually create the GitHub App, see the [GitHub App installation guide](./github-app.mdx).
+For advanced configurations or if you prefer to manually create the GitHub App, see the [GitHub App installation guide](/github-app).
 
 :::caution Single organization limitation
 GitHub App authentication supports **exactly one organization** only. You must specify one organization using the `githubOrganization` configuration parameter.
@@ -149,7 +149,7 @@ When `event_workers_count > 1`, related GitHub events get grouped together:
 - Push events grouped by commit SHA.
 
 <details>
-  <summary>Event grouping behavior</summary>
+<summary><b>Event grouping behavior (click to expand)</b></summary>
   
   **Supported event types:**
   - **Pull Requests**: Grouped by PR number (`pull_request`, `pull_request_review`, `pull_request_review_comment`)
