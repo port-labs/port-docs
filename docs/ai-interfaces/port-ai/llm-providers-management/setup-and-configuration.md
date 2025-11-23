@@ -64,6 +64,112 @@ Before configuring LLM providers, ensure you have:
 2. **Provider Accounts**: Active accounts with the LLM providers you want to use
 3. **Admin Permissions**: Organization administrator role in Port
 
+<details>
+<summary><b>Provider-Specific Prerequisites (Click to expand)</b></summary>
+
+Some providers require additional setup before you can configure them in Port. Follow the provider-specific instructions below.
+
+<Tabs groupId="provider-prerequisites" queryString>
+<TabItem value="bedrock" label="AWS Bedrock">
+
+<h3>AWS IAM Policy Configuration</h3>
+
+Set up an IAM policy to grant permissions for invoking Bedrock models. Serverless models are automatically available, but you control access through IAM policies. Anthropic models require additional setup (see below).
+
+<h4>Option 1: Allow Specific Models</h4>
+
+Restrict access to specific models (recommended). Example for Anthropic models in Europe:
+
+```json showLineNumbers
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowBedrockInference",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+      ],
+      "Resource": [
+        "arn:aws:bedrock:*:*:inference-profile/eu.anthropic.claude-sonnet-4-20250514-v1:0",
+        "arn:aws:bedrock:*::foundation-model/anthropic.claude-sonnet-4-20250514-v1:0",
+        "arn:aws:bedrock:*:*:inference-profile/eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+        "arn:aws:bedrock:*::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+      ]
+    }
+  ]
+}
+```
+
+Each model requires two ARN entries: `inference-profile` and `foundation-model`. Adjust the region and model as needed.
+
+<h4>Option 2: Allow All Models</h4>
+
+Use a wildcard policy to allow all models. You can still disable specific models using the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API.
+
+```json showLineNumbers
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowBedrockInference",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+      ],
+      "Resource": [
+        "arn:aws:bedrock:*:*:inference-profile/*",
+        "arn:aws:bedrock:*::foundation-model/*"
+      ]
+    }
+  ]
+}
+```
+
+<h4>Using Guardrails</h4>
+
+If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGuardrail` action to your IAM policy:
+
+```json showLineNumbers
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowBedrockInference",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream",
+        "bedrock:ApplyGuardrail"
+      ],
+      "Resource": [
+        "arn:aws:bedrock:*:*:inference-profile/*",
+        "arn:aws:bedrock:*::foundation-model/*"
+      ]
+    }
+  ]
+}
+```
+
+<h3>Anthropic Models Requirements</h3>
+
+**One-time Usage Form**
+- Submit a one-time usage form through the Amazon Bedrock playground or `PutUserCaseForModelAccess` API.
+- For AWS Organizations, complete at the management account level; approval extends to child accounts.
+
+**AWS Marketplace Subscription**
+- Some Anthropic models require an AWS Marketplace subscription.
+- Subscriptions auto-create on first invocation if IAM includes `aws-marketplace:Subscribe`, or an admin can enable models first via console/API.
+
+For details, see the [AWS Security Blog post](https://aws.amazon.com/blogs/security/simplified-amazon-bedrock-model-access/).
+
+</TabItem>
+</Tabs>
+
+</details>
+
 ## Step 1: Store API Keys in Secrets
 
 Before configuring providers, store your API keys in Port's secrets system. The secret names you choose are flexible - you'll reference them in your provider configuration.
