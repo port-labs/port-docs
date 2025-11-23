@@ -247,21 +247,21 @@ Conditions are small boolean checks that help when determining the final status 
 
 | Operator            | Supported Types                                  | Description                                                            |
 |---------------------|--------------------------------------------------|------------------------------------------------------------------------|
-| `=`                 | `String`, `Number`, `Boolean`                    | checks if the rule value is equal to the entity value.                 |
-| `!=`                | `String`, `Number`, `Boolean`                    | checks if the rule value is not equal to the entity value.             |
-| `<=`                | `Number`                                         | checks if the rule value is less than or equal to the entity value.    |
-| `>=`                | `Number`                                         | checks if the rule value is greater than or equal to the entity value. |
-| `<`                 | `Number`                                         | checks if the rule value is less than the entity value.                |
-| `>`                 | `Number`                                         | checks if the rule value is greater than the entity value.             |
-| `contains`          | `String`, `Number`                               | checks if the rule value is contained within the entity value.         |
-| `containsAny`       | `Array`                                          | checks if any of the specified strings exist in the target array.      |
-| `doesNotContains`   | `String`, `Number`                               | checks if the rule value is not contained within the entity value.     |
-| `endsWith`          | `String`, `Number`                               | checks if the rule value ends with the entity value.                   |
-| `doesNotEndsWith`   | `String`, `Number`                               | checks if the rule value does not end with the entity value.           |
-| `beginsWith`        | `String`, `Number`                               | checks if the rule value begins with the entity value.                 |
-| `doesNotBeginsWith` | `String`, `Number`                               | checks if the rule value does not begin with the entity value.         |
-| `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is an empty string, array, or object.         |
-| `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is not an empty string, array, or object.     |
+| `=`                 | `String`, `Number`, `Boolean`                    | Checks if the rule value is equal to the entity value.                 |
+| `!=`                | `String`, `Number`, `Boolean`                    | Checks if the rule value is not equal to the entity value.             |
+| `<=`                | `Number`                                         | Checks if the rule value is less than or equal to the entity value.    |
+| `>=`                | `Number`                                         | Checks if the rule value is greater than or equal to the entity value. |
+| `<`                 | `Number`                                         | Checks if the rule value is less than the entity value.                |
+| `>`                 | `Number`                                         | Checks if the rule value is greater than the entity value.             |
+| `contains`          | `String`, `Number`                               | Checks if the rule value is contained within the entity value.         |
+| `containsAny`       | `Array`                                          | Checks if any of the specified strings exist in the target array.      |
+| `doesNotContains`   | `String`, `Number`                               | Checks if the rule value is not contained within the entity value.     |
+| `endsWith`          | `String`, `Number`                               | Checks if the rule value ends with the entity value.                   |
+| `doesNotEndsWith`   | `String`, `Number`                               | Checks if the rule value does not end with the entity value.           |
+| `beginsWith`        | `String`, `Number`                               | Checks if the rule value begins with the entity value.                 |
+| `doesNotBeginsWith` | `String`, `Number`                               | Checks if the rule value does not begin with the entity value.         |
+| `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | Checks if the rule value is an empty string, array, or object.         |
+| `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | Checks if the rule value is not an empty string, array, or object.     |
 
 ### Filter elements
 
@@ -283,6 +283,10 @@ In your [Builder](https://app.getport.io/settings/data-model) page scorecards ar
 - [`Rule`](#rule-structure) - Defines specific criteria for evaluation.
 - [`Rule Result`](#rule-result-structure) - Stores the evaluation results for each entity.
 
+:::warning Default scorecard properties
+The properties below are default `scorecard`, `scorecard rule` and `scorecard rule result` properties. They cannot be deleted or modified. 
+:::
+
 ### Scorecard
 
 A single scorecard defines a category to group different checks, validations and evaluations.  
@@ -297,10 +301,6 @@ Below is the structure of the default `scorecard` blueprint:
 | `Rules tested` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of [rule](#rule-elements) evaluations performed. |
 |` Rules passed` | Number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful [rule](#rule-elements) evaluations. |
 | `% of rules passed` | Number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules. |
-
-:::warning Default scorecard properties
-The properties above are default scorecard properties. They cannot be deleted or modified. 
-:::
 
 ### Scorecard Rule
 

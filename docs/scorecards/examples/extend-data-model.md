@@ -585,7 +585,7 @@ To add the self-service action:
 
 5. Click `Save`.
 
-Bellow is an example for a filled form for an exception request:
+Below is an example for a filled form for an exception request:
 
 <img src='/img/scorecards/examples/handle-SLA-exception-form.png' width='50%' border='1px' style={{borderRadius:'8px'}}/>
 
