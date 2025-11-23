@@ -27,7 +27,7 @@ As a user with `account admin` permissions on a paid account, you can create new
 If you wish to grant `account admin` permissions to another user, please contact Port's support team.
 
 :::info Account admin permission
-`Account admin` is a permission that can be granted in addition to a user's existing role (`admin`, `moderator`, or `member`).
+You can grant the `Account admin` permission to users who have an `admin` role in at least one organization within the account.
 :::
 
 ## Switch organizations
@@ -38,8 +38,12 @@ In order to switch to a different organization:
 2. Click on the logo in the top left corner of the page.
 3. Click on the organization you want to switch to.
 
-:::info Login behavior
-Note that when users log in, they automatically access their **last visited** organization.
+:::caution Login behavior and organization switching
+When users log in, they automatically access their **last visited** organization.
+
+If you have active sessions in multiple tabs or browsers, switching organizations in one session will switch all other active sessions to that same organization.
+
+We recommend you verify the active organization before making changes.
 :::
 
 ## Automatic user access

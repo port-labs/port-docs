@@ -9,6 +9,10 @@ import TabItem from "@theme/TabItem"
 
 # Context lake
 
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
+
 Port's Context Lake is your unified engineering knowledge layer—connecting data from across your entire toolchain into a single, semantically-rich source of truth. It's not a separate feature, but rather the powerful result of Port's core capabilities working together to provide organizational context that AI agents, developers, and workflows can understand and act upon.
 
 ## What comprises the context lake
@@ -96,6 +100,17 @@ Define your organizational semantics once—service definitions, environment typ
 
 </TabItem>
 </Tabs>
+
+## External agents and AI workflows
+
+External AI agents and automation workflows can leverage Port's Context Lake to make intelligent, context-aware decisions without needing direct access to your entire toolchain. Instead of building custom integrations for each tool, external systems can query Port's unified knowledge layer to understand your organization's structure, relationships, and standards.
+
+### n8n integration
+
+Port provides a custom n8n node that simplifies integration with Port's AI agents and Context Lake. To get started:
+
+1. **[Set up Port's n8n custom node](/guides/all/setup-port-n8n-node)** — Install and configure the Port node in your n8n instance
+2. **[Build automation workflows](/guides/all/remediate-vulnerability-with-n8n-and-port)** — See an example of using Port as a context lake for vulnerability management workflows
 
 ## Getting started
 

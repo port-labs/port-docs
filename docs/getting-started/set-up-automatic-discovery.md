@@ -487,16 +487,38 @@ Common examples for resources that can be used as a source of truth for `users`:
 <details>
 <summary><LogoImage logo="GitLab" /> **GitLab user (click to expand)**</summary>
 ```yaml showLineNumbers
-- kind: user
+- kind: group-with-members
   selector:
     query: 'true'
+    includeBotMembers: 'true'
+    includeInheritedMembers: 'true'
   port:
+    itemsToParse: .__members
     entity:
       mappings:
-        identifier: .username
-        title: .username
+        identifier: .item.username
+        title: .item.name
         blueprint: '"_user"'
+        relations:
+          gitlab_user: .item.username
 ```
+</details>
+
+<details>
+<summary><LogoImage logo="AzureDevops" /> **Azure DevOps user (click to expand)**</summary>
+  ```yaml showLineNumbers
+  - kind: user
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: '.id'
+          title: '.user.displayName'
+          blueprint: '"_user"'
+          relations:
+            azure_devops_user: '.id'
+  ```
 </details>
 
 </TabItem>

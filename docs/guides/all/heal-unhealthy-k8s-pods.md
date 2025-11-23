@@ -1107,20 +1107,6 @@ Next, we will create an AI agent that analyzes pod health issues and creates com
       "properties": {
         "description": "AI agent specialized in diagnosing and automatically fixing unhealthy Kubernetes workloads. Monitors pod health, identifies root causes, and applies appropriate fixes.",
         "status": "active",
-        "allowed_blueprints": [
-          "k8s_workload",
-          "k8s_pod",
-          "k8s_replicaSet",
-          "k8s_namespace",
-          "k8s_cluster"
-        ],
-        "allowed_actions": [
-          "get_k8s_pod_logs",
-          "restart_k8s_workload",
-          "scale_k8s_workload",
-          "update_k8s_workload_config",
-          "create_k8s_fix_pr"
-        ],
         "prompt": "You are a Kubernetes healing AI agent with access to comprehensive SDLC data and pod logs.\n\n**Your healing process:**\n1. **FIRST - Get Logs**: Always start by retrieving pod logs using the get_k8s_pod_logs action to understand what's actually happening\n2. **Analyze with Context**: Combine log data with SDLC information (recent deployments, code changes, configuration updates) to build a complete picture\n3. **Intelligent Diagnosis**: Based on logs and context, determine the root cause (crashes, resource constraints, configuration issues, etc.)\n4. **Targeted Fix**: Execute only the specific action that will resolve the issue:\n   - Restart for crashes and transient issues\n   - Scale for resource constraints (CPU/memory)\n   - Update config for resource limit issues\n   - Create PR for complex fixes requiring code changes\n5. **Explain Your Actions**: Always explain what you found in the logs and why you chose the specific fix in your response",
         "execution_mode": "Automatic",
         "conversation_starters": [
@@ -1130,12 +1116,24 @@ Next, we will create an AI agent that analyzes pod health issues and creates com
           "Scale up resources for this memory-constrained workload",
           "What's causing this ImagePullBackOff error?",
           "Why are my pods stuck in Pending state?"
+        ],
+        "tools": [
+          "^(list|get|search|track|describe)_.*",
+          "run_get_k8s_pod_logs",
+          "run_restart_k8s_workload",
+          "run_scale_k8s_workload",
+          "run_update_k8s_workload_config",
+          "run_create_k8s_fix_pr"
         ]
       },
       "relations": {}
     }
     ```
     </details>
+
+    :::tip MCP Enhanced Capabilities
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities across your entire software catalog, including Kubernetes resources, recent deployments, code changes, runbooks, and history logs. This gives the agent rich SDLC context to make intelligent healing decisions. Additionally, we explicitly add the remediation action tools (`run_get_k8s_pod_logs`, `run_restart_k8s_workload`, etc.), which the agent calls sequentially to diagnose and fix unhealthy workloads.
+    :::
 
 5. Click `Create` to save the agent.
 
