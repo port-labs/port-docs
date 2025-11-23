@@ -25417,13 +25417,13 @@ paths:
                 description: The json provided does not match the route's schema
   /v1/organization/secrets:
     get:
-      summary: Get all organization secrets
+      summary: Get all organization secrets metadata
       tags:
         - Organization
-      description: This route allows you to retrieve all of the secrets in your
-        organization.<br/><br/>To learn more about secrets management in Port,
-        check out the
-        [documentation](https://docs.port.io/sso-rbac/port-secrets).
+      description: This route allows you to retrieve metadata about all secrets
+        in your organization. Note that this endpoint returns only the metadata
+        of the secrets, not the secret content itself.<br/><br/>To learn more about secrets management in Port,
+        check out the [documentation](https://docs.port.io/sso-rbac/port-secrets).
       security:
         - bearer:
             - read:secrets
@@ -25568,13 +25568,13 @@ paths:
                 description: The json provided does not match the route's schema
   /v1/organization/secrets/{secret_name}:
     get:
-      summary: Get an organization secret
+      summary: Get an organization secret metadata
       tags:
         - Organization
-      description: This route allows you to retrieve a specific secret in your
-        organization.<br/><br/>To learn more about secrets management in Port,
-        check out the
-        [documentation](https://docs.port.io/sso-rbac/port-secrets).
+      description: This route allows you to retrieve metadata about a specific
+        secret in your organization. Note that this endpoint returns only the
+        metadata of the secret, not the secret content itself.<br/><br/>To learn more about secrets management
+        in Port, check out the [documentation](https://docs.port.io/sso-rbac/port-secrets).
       security:
         - bearer:
             - read:secrets
