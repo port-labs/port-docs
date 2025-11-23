@@ -8,9 +8,9 @@ import TabItem from "@theme/TabItem"
 
 # Setup & Configuration
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 This guide covers all technical details for setting up and configuring LLM providers, including permissions, changing defaults, validation flow, and troubleshooting common issues.
 
@@ -115,12 +115,24 @@ For more details on managing secrets, see the [Port Secrets documentation](/sso-
 
 Use the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API to configure your providers. The interactive API reference provides detailed examples and allows you to test the configuration for each provider type (OpenAI, Anthropic, Azure OpenAI, AWS Bedrock).
 
+:::info After configuration
+Once providers are configured, you can view and select default providers and models through the UI (**Builder** → **Organization Settings** → **AI** tab) or continue using the API for all operations.
+:::
+
 ## Step 3: Validate Configuration
 
 Test your provider configuration with connection validation using the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API with the `validate_connection=true` parameter. The interactive API reference shows how to test your configuration before saving it.
 
 ## Getting Your Current Configuration
 
+You can view your organization's current LLM provider defaults through the UI or API:
+
+**Using the UI:**
+1. Go to **Builder** → **Organization Settings** → **AI** tab.
+2. View all configured providers and models.
+3. See which provider and model are currently set as defaults.
+
+**Using the API:**
 Retrieve your organization's current LLM provider defaults using the [Get default LLM provider and model](/api-reference/get-default-llm-provider-and-model) API. The interactive API reference shows the response format and allows you to test the endpoint.
 
 ### System Defaults
@@ -131,6 +143,19 @@ When no organization-specific defaults are configured, Port uses these system de
 
 ## Changing Default Providers
 
+You can change your organization's default LLM provider and model through the UI or API:
+
+**Using the UI:**
+1. Go to **Builder** → **Organization Settings** → **AI** tab.
+2. Select your preferred **Default LLM provider** from the dropdown.
+3. Select your preferred **Default model** from the dropdown.
+4. Click **Save** to apply your changes.
+
+:::info Adding new providers
+To add a new custom LLM provider, you still need to use the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API. Once a provider is configured, it will appear in the UI dropdown for selection.
+:::
+
+**Using the API:**
 Update your organization's default LLM provider and model using the [Change default LLM provider and model](/api-reference/change-default-llm-provider-and-model) API. The interactive API reference provides the request format and response examples.
 
 ## Validation Flow

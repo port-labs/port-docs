@@ -183,16 +183,24 @@ The description will be displayed at the top of the page, under the page title:
 
 <img src='/img/software-catalog/pages/catalogPageDescription.png' width='80%' border='1px' />
 
+## Performance
+
+Large entity tables can result in long loading times. Use the following tips and best practices to improve performance.
+
+The [initial filters](#initial-filters) and [excluded properties](#excluded-properties) are defined when creating the page, while [calculation properties](#calculation-properties) are configured as part of the blueprint definition.
+
 ### Initial filters
 
-In some cases, an entities table may be very large, resulting in long loading times. To prevent this, you can define filters that resolve when Port queries the data (rather than after querying).  
+Initial filters are the most effective way to reduce loading times. You can define filters that resolve when Port queries the data (rather than after querying, like table filters), reducing the number of entities displayed in the table.
+
 To define such a filter, use the `Initial filters` field when creating a page:
 
-<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' border='1px' />
+<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' border='1px' style={{borderRadius:'8px'}} />
 
 <br/><br/>
 
-You can define any [supported rule](/search-and-query/#rules) in JSON format. Here is an example that will only display `Deployments` that were updated in the past month:
+You can define any [supported rule](/search-and-query/#rules) in JSON format.  
+Here is an example that will only display `Deployments` that were updated in the past month:
 
 ```json showLineNumbers
 [
@@ -211,9 +219,18 @@ You can use [dynamic properties](/search-and-query/#dynamic-properties) of the l
 ### Excluded properties
 
 Another way to reduce loading times is to exclude undesired properties from an entities table when querying the data. When using this option, the new table will not contain columns for the excluded properties.  
+
+We recommend excluding properties with no actual benefit when shown in the table, such as large object properties, long array properties, and other complex data types.
+
 To do this, use the `Excluded properties` field when creating a page:
 
 <img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%'  border='1px' />
+
+### Calculation properties
+
+While calculation properties provide powerful functionality, they can impact performance when used in blueprints that have many entities. To improve performance, consider excluding calculation properties from the table or replacing them with regular properties.
+
+To learn more about calculation properties performance, refer to the [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/#performance-impact) page.
 
 ## Customization
 

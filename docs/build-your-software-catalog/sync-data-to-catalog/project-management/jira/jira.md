@@ -21,6 +21,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Jira
 
+<IntegrationVersion integration="jira" />
+
 Port's Jira Cloud integration allows you to model Jira Cloud resources in your software catalog and ingest data into them.
 
 :::info Jira Cloud integration
@@ -34,7 +36,7 @@ This integration allows you to:
 - Watch for Jira object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Define self-service actions that can create/delete Jira objects or perform any other logic on Jira resources.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Jira into Port are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
@@ -93,8 +95,6 @@ OAuth is best suited for the **initial setup** phase, such as configuring mappin
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="jira" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

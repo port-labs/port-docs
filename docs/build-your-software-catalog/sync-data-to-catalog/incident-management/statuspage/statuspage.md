@@ -17,6 +17,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Statuspage
 
+<IntegrationVersion integration="statuspage" />
+
 Port's Statuspage integration allows you to model Statuspage resources in your software catalog and ingest data into them.
 
 ## Overview
@@ -26,7 +28,7 @@ This integration allows you to:
 - Map and organize your desired Statuspage resources and their metadata in Port (see supported resources below).
 - Watch for Statuspage object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Statuspage into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -51,8 +53,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="statuspage" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

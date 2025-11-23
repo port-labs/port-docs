@@ -8,9 +8,9 @@ import TabItem from "@theme/TabItem"
 
 # Port AI
 
-:::info Closed Beta
-Port's AI offerings are currently in closed beta and will be gradually rolled out to users by the end of 2025.
-:::
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+
+<BetaFeatureNotice id="ai-form" />
 
 Port AI is the foundational AI system that enables intelligent interaction with your Port data through natural language. As an MCP (Model Context Protocol) client, Port AI accepts prompts and tools, runs autonomous processes to query your software catalog, and returns comprehensive responses.
 
@@ -162,7 +162,7 @@ Port acts as a bridge to leading LLM providers and doesn't host LLM models inter
 - These limits reset hourly.
 
 ### Monthly Quota
-- **Default quota**: 20 AI invocations per month.
+- **Default quota**: 50 AI invocations per month.
 - Each interaction with Port AI counts as one request against your quota.
 - Quota resets monthly.
 
@@ -335,7 +335,7 @@ Yes, Port AI has usage limits to ensure fair usage across all customers:
 - These limits reset hourly
 
 **Monthly Quota:**
-- Default quota: 20 AI invocations per month
+- Default quota: 50 AI invocations per month
 - Each interaction with Port AI counts as one request
 - Quota resets monthly
 
