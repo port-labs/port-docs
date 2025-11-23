@@ -8,7 +8,7 @@
 - **REQUIRED**: Links must not be capitalized unless at the start of a new sentence. **FLAG** capitalized links mid-sentence.
 - **REQUIRED**: General product names (Lambda, Kubernetes, ArgoCD) and inisialism must follow standard capitalization. **FLAG** incorrect product name capitalization. So for example: "Create a Cursor API key" is ok, but "Create a New Blueprint" is not.
 
-### Code Examples - CRITICAL STANDARDS
+### Code Examples - CRITICAL
 
 - **REQUIRED**: Code blocks with more than one line must include `showLineNumbers`. **FLAG** code blocks missing `showLineNumbers`.
 - **REQUIRED**: Ensure code examples are complete and can be copied directly. **FLAG** incomplete or non-functional code examples.
@@ -19,15 +19,14 @@
 
 - **REQUIRED**: Use second-person pronouns (you, your) when addressing the reader. **FLAG** third-person or inconsistent pronoun usage.
 - **REQUIRED**: Avoid commanding language like "You will now create...". **FLAG** any instance and require "We will now create..." or "Let's create..." instead.
-- **REQUIRED**: Keep sentences concise and direct (aim for 15-25 words per sentence). **FLAG** any sentence exceeding 25 words.
 - **REQUIRED**: Use active voice rather than passive voice. **FLAG** passive voice constructions.
 - **REQUIRED**: Break up long paragraphs into smaller chunks (3-5 sentences maximum). **FLAG** paragraphs with more than 5 sentences.
-- **REQUIRED**: Use consistent terminology throughout; avoid using different terms for the same concept. **FLAG** inconsistent terminology.
+- **REQUIRED**: Use consistent terminology throughout. Avoid using different terms for the same concept. **FLAG** inconsistent terminology.
 
 ### Links - BLOCKING ISSUES
 
 - **REQUIRED**: All links must use full paths, not relative ones. **FLAG** any relative link as a blocking issue.
-- **REQUIRED**: Use descriptive link text; avoid generic phrases like "click here" or "learn more". **FLAG** generic link text.
+- **REQUIRED**: Use descriptive link text. Avoid generic phrases like "click here" or "learn more". **FLAG** generic link text.
 - **REQUIRED**: Verify that all links work correctly. **FLAG** broken links as blocking issues.
 
 ### Lists - MANDATORY FORMATTING
@@ -37,8 +36,8 @@
 
 ### Images - REQUIRED ATTRIBUTES
 
-- **REQUIRED**: Images must have a simple black border and use full path links. **FLAG** images missing borders or using relative paths.
-- **REQUIRED**: Images must have proper `width` defined and include alt text. **FLAG** images missing width or alt text.
+- **REQUIRED**: Images must have a simple black border and use full path links. 
+                For example, this path is wrong: ![Action form](../../../static/img/self-service-actions/service-pipeline-example/createNewServiceForm.png). And this one is correct: <img src="/img/port-overview/port-stack.png"/>. **FLAG** images missing borders or using relative paths.
 
 ### Components - MANDATORY CONFIGURATION
 
