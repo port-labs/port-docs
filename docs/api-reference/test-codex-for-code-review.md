@@ -63,7 +63,7 @@ def example():
 
 <img src='/img/example.png' width='50%' />
 
-![Action form](../../../static/img/self-service-actions/service-pipeline-example/createNewServiceForm.png)
+![Action form](../static/img/self-service-actions/service-pipeline-example/createNewServiceForm.png)
 
 ### Tabs
 
