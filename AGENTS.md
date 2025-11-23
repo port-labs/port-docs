@@ -37,7 +37,7 @@
 ### Images - REQUIRED ATTRIBUTES
 
 - **REQUIRED**: Images must have a simple black border and use full path links. 
-                For example, this path is wrong: ![Action form](../../../static/img/self-service-actions/service-pipeline-example/createNewServiceForm.png). And this one is correct: <img src="/img/port-overview/port-stack.png"/>. **FLAG** images missing borders or using relative paths.
+                For example, this path is wrong: `![Action form](../../../static/img/self-service-actions/service-pipeline-example/createNewServiceForm.png)`. And this one is correct: `<img src="/img/port-overview/port-stack.png"/>`. **FLAG** images missing borders or using relative paths.
 
 ### Components - MANDATORY CONFIGURATION
 
