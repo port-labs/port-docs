@@ -1,0 +1,26 @@
+<h2> Fetching Key file </h2>
+
+There are multiple ways to use the service account we just created. In this guide, we'll use the Service Account Key method.
+
+:::warning
+According to Google Cloud, This isn't the preferred way for Production purposes. The Terraform Installation is using Google's native method to authenticate, and is the one we propose for a Production setup.
+:::
+
+1. Make sure you have your selected project in the top left toggle.
+
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png' width='50%' border='1px' /> <br/><br/>
+
+2. In the search text box, search for `service accounts`. Click the `IAM & Admin` option
+
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png' width='50%' border='1px' /> <br/><br/>
+
+3. Click on the Service account. 
+
+   Should look like this:
+
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png' width='50%' border='1px' /> <br/><br/>
+
+4. Click on `Keys` -> `Add Key` -> `Create new key` -> `JSON` -> `CREATE`
+5. This will download your new Service Account Key configuration file.
+6. Done!
+

@@ -4,7 +4,8 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import CreateServiceAccountAndKey from './\_create-service-account-and-key.mdx'
+import CreateServiceAccount from './\_create-service-account.mdx'
+import CreateKey from './\_create-key.mdx'
 import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-service-account.mdx'
 import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVersion"
 
@@ -25,12 +26,103 @@ For your first deployment of the GCP exporter, we recommend starting with the He
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm (Scheduled)">  
 
-The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
+The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set up, this guide will be divided into two parts:
 
 1. Creating a service account.
-2. Running the Helm Command.
+2. Choosing an authentication method and running the Helm command.
 
-<CreateServiceAccountAndKey/>
+
+<CreateServiceAccount/>
+
+<h2> Choose authentication method </h2>
+
+After creating the service account, choose one of the following authentication methods:
+
+<Tabs groupId="helm-auth-method" queryString="helm-auth-method" defaultValue="service-account-key">
+
+<TabItem value="workload-identity" label="Workload Identity (Recommended)">
+
+The Ocean Google Cloud integration can use Google's Workload Identity to authenticate without requiring service account key files. This method is recommended for Kubernetes deployments.
+
+<h2> Setting up Kubernetes </h2>
+
+1. Set up a Kubernetes cluster in the Kubernetes Engine in GCP.
+
+2. Make sure Workload Identity is enabled in the cluster:
+
+   ```bash
+   gcloud container clusters update CLUSTER_NAME --workload-pool=PROJECT_ID.svc.id.goog
+   ```
+
+3. Bind the Kubernetes service account to the GCP service account:
+
+   ```bash
+   gcloud iam service-accounts add-iam-policy-binding GCP_SERVICE_ACCOUNT_EMAIL@PROJECT_ID.iam.gserviceaccount.com \
+     --role roles/iam.workloadIdentityUser \
+     --member "serviceAccount:PROJECT_ID.svc.id.goog[NAMESPACE/KUBERNETES_SA_NAME]"
+   ```
+
+   Replace the following placeholders:
+   - `GCP_SERVICE_ACCOUNT_EMAIL` with your GCP service account email.
+   - `PROJECT_ID` with your GCP project ID.
+   - `NAMESPACE` with your Kubernetes namespace.
+   - `KUBERNETES_SA_NAME` with the service account name that will be used in the integration's values.yaml.
+
+<h2> Configuring and running the Helm command </h2>
+
+1. Add the Port Labs Helm repository:
+
+   ```bash
+   helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+   ```
+
+2. Create a `values.yaml` file with the following configuration:
+
+   ```yaml showLineNumbers
+   port:
+     clientId: "<port-client-id>"
+     clientSecret: "<port-client-secret-id>"
+     baseUrl: "https://api.getport.io"
+   
+   initializePortResources: true
+   sendRawDataExamples: true
+   scheduledResyncInterval: 1440
+   
+   integration:
+     identifier: "ocean-gcp-integration"
+     type: "gcp"
+     eventListener:
+       type: "POLLING"
+     config:
+       extra:
+         GCP_PROJECT: "<base-gcp-project>"
+   
+   podServiceAccount:
+     create: true
+     name: "<service-account-from-step-3>"
+     annotations:
+       iam.gke.io/gcp-service-account: "<service-account-email-from-step-1>"
+   ```
+
+   Replace the following placeholders:
+   - `<port-client-id>` with your Port client ID.
+   - `<port-client-secret-id>` with your Port client secret.
+   - `<base-gcp-project>` with your base GCP project ID.
+   - `<service-account-from-step-3>` with the Kubernetes service account name from step 3.
+   - `<service-account-email-from-step-1>` with the GCP service account email from the service account creation step.
+
+3. Install the integration using Helm:
+
+   ```bash
+   helm upgrade --install gcp port-labs/port-ocean -f values.yaml
+   ```
+
+</TabItem>
+<TabItem value="service-account-key" label="Service Account Key">
+
+The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials) with a service account key file.
+
+<CreateKey/>
 
 <h2> Running the Helm command </h2>
 
@@ -74,7 +166,10 @@ It is saved locally, and is NOT sent to Port at any time.
      --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"
    ```
 
-<h2> Optional- Scale permissions for a Service account </h2>
+</TabItem>
+</Tabs>
+
+<h2> Optional - Scale permissions for a service account </h2>
 
 <GivePermissionsToNewServiceAccount/>
 
@@ -91,7 +186,8 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 1. Creating a service account.
 2. Setting up the GitHub Actions workflow.
 
-<CreateServiceAccountAndKey/>
+<CreateServiceAccount/>
+<CreateKey/>
 
 <h2> Setting up the GitHub Actions workflow </h2>
 
@@ -166,7 +262,8 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 1. Creating a service account.
 2. Running the Docker Command.
 
-<CreateServiceAccountAndKey/>
+<CreateServiceAccount/>
+<CreateKey/>
 
 <h2> Running the Docker command </h2>
 
