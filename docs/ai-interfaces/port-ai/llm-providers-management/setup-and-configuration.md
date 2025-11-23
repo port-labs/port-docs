@@ -65,18 +65,18 @@ Before configuring LLM providers, ensure you have:
 3. **Admin Permissions**: Organization administrator role in Port
 
 <details>
-<summary><b>Provider-Specific Prerequisites (Click to expand)</b></summary>
+<summary><b>Provider-specific prerequisites (click to expand)</b></summary>
 
 Some providers require additional setup before you can configure them in Port. Follow the provider-specific instructions below.
 
 <Tabs groupId="provider-prerequisites" queryString>
 <TabItem value="bedrock" label="AWS Bedrock">
 
-<h3>AWS IAM Policy Configuration</h3>
+<h3>AWS IAM policy configuration</h3>
 
 Set up an IAM policy to grant permissions for invoking Bedrock models. Serverless models are automatically available, but you control access through IAM policies. Anthropic models require additional setup (see below).
 
-<h4>Option 1: Allow Specific Models</h4>
+<h4>Option 1: Allow specific models</h4>
 
 Restrict access to specific models (recommended). Example for Anthropic models in Europe:
 
@@ -104,7 +104,7 @@ Restrict access to specific models (recommended). Example for Anthropic models i
 
 Each model requires two ARN entries: `inference-profile` and `foundation-model`. Adjust the region and model as needed.
 
-<h4>Option 2: Allow All Models</h4>
+<h4>Option 2: Allow all models</h4>
 
 Use a wildcard policy to allow all models. You can still disable specific models using the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API.
 
@@ -128,7 +128,7 @@ Use a wildcard policy to allow all models. You can still disable specific models
 }
 ```
 
-<h4>Using Guardrails</h4>
+<h4>Using guardrails</h4>
 
 If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGuardrail` action to your IAM policy:
 
@@ -153,13 +153,13 @@ If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGu
 }
 ```
 
-<h3>Anthropic Models Requirements</h3>
+<h3>Anthropic models requirements</h3>
 
-**One-time Usage Form**
+**One-time usage form**
 - Submit a one-time usage form through the Amazon Bedrock playground or `PutUserCaseForModelAccess` API.
 - For AWS Organizations, complete at the management account level; approval extends to child accounts.
 
-**AWS Marketplace Subscription**
+**AWS Marketplace subscription**
 - Some Anthropic models require an AWS Marketplace subscription.
 - Subscriptions auto-create on first invocation if IAM includes `aws-marketplace:Subscribe`, or an admin can enable models first via console/API.
 
