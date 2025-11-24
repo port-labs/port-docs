@@ -914,11 +914,11 @@ The repository search feature is subject to the limitations of the GitHub Search
 
 
 
-### Ingesting the Authenticated User’s Personal Account
+### Ingesting the authenticated user’s personal account
 
 You can optionally ingest the authenticated user’s personal account as a pseudo-organization. This allows you to sync personal repositories and dependent resource types as needed.
 
-#### Multi-Organization Setup
+#### Multi-organization setup
 
 To include the authenticated user’s personal account in addition to regular organizations:
 - Set `includeAuthenticatedUser: true` in your configuration
@@ -934,7 +934,7 @@ resources:
       query: "true"
 ```
 
-#### Single-Organization Setup (Personal Account Only)
+#### Single-organization setup (personal account only)
 
 To sync only the authenticated user’s personal account when using single-organization authentication:
 - Set the GitHub organization value to the GitHub username of the authenticated user using the environment variable  `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<github_username>`.
@@ -943,9 +943,6 @@ This will treat the personal GitHub account as the sole organization for ingesti
 
 
 #### Limitations
-
-- Syncing personal accounts is supported only when authenticating with Personal Access Tokens (PATs).
-- Personal accounts not supported when using the GitHub App installation flow.
 - Webhooks are not supported for personal GitHub accounts.
 
 
