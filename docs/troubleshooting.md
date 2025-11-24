@@ -11,7 +11,7 @@ This page contains answers to common questions and issues that users encounter w
 
 ## General
 
-#### Do I need an expert to set up an Internal Developer Portal with Port?
+#### Do I need an expert to set up an internal developer portal with Port?
 
 <details>
 <summary><b>Answer (click to expand)</b></summary>
@@ -31,7 +31,8 @@ If you're trying to find out if Port is right for you, you can reach out to us b
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-Spotify’s backstage is spot-on in recognizing the need for a streamlined end-to-end development environment. It is also flexible, which lets you build your software catalog according to your data model. However, it requires coding, personnel to implement it, and domain expertise. You also need to invest in deployment, configuration and updates. You can read a detailed comparison of Port and Backstage [here](https://www.getport.io/compare/backstage-vs-port).
+Spotify’s backstage is spot-on in recognizing the need for a streamlined end-to-end development environment. It is also flexible, which lets you build your software catalog according to your data model.  
+However, it requires coding, personnel to implement it, and domain expertise. You also need to invest in deployment, configuration and updates. You can read a detailed comparison of Port and Backstage [here](https://www.getport.io/compare/backstage-vs-port).
 
 </details>
 
@@ -42,11 +43,26 @@ Spotify’s backstage is spot-on in recognizing the need for a streamlined end-t
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-Port is free up to 15 users, you can check our [pricing page](https://www.getport.io/pricing) for more information. Using the free version of Port you can set up an advanced, fully functioning, internal developer portal.
+Port is free up to 15 users, you can check our [pricing page](https://www.getport.io/pricing) for more information. Using the free version of Port you can set up a modern, fully functioning internal developer portal.
 
 The free version includes all of the features in Port, except for SSO and a certain limitation on the number of software catalog entities (up to 10,000), for reasons of fair use.  
 
 In case you're evaluating Port, it provides you with everything you need, and if you need SSO for a given period, contact us.
+
+</details>
+
+---
+
+#### Can I self-host Port?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+Port is a multi-tenant SaaS product. While there is no option to fully self-host Port, specific elements of Port such as integrations and the Port Agent (which is used to trigger self-service actions and automations) can be self-hosted on your premises.  
+
+For enterprises with specific needs due to security, governance and regulation - it is possible to receive a single tenant deployment of Port. To learn more about the single tenant offering, please contact your sales representative.
+
+While not as robust as a self-hosted option, Port does offer security-oriented features such as support for AWS Private Link. To learn more about our Private Link support, click [here](/api-reference/security/#aws-privatelink).
 
 </details>
 
@@ -220,12 +236,6 @@ To understand if you can embed your desired content, the first step will be to c
 
 ---
 
-## API
-
-To troubleshoot requests to Port's API, refer to the [API troubleshooting](/docs/api-reference/port-api.info.mdx#troubleshooting) section.
-
----
-
 ## Security
 
 #### What security does Port have in place?
@@ -243,3 +253,7 @@ You can find the complete coverage of the **security policy** in the [security p
 </details>
 
 ---
+
+## API
+
+To troubleshoot requests to Port's API, refer to the [API troubleshooting](/docs/api-reference/port-api.info.mdx#troubleshooting) section.
