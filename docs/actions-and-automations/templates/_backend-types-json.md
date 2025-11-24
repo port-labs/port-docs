@@ -1,7 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-The **`type`** field defines the action's backend type, and can have one of the following values: `WEBHOOK`, `GITHUB`, `GITLAB`, `KAFKA`, `UPSERT_ENTITY`.
+The **`type`** field defines the action's backend type, and can have one of the following values: `WEBHOOK`, `GITHUB`, `INTEGRATION_ACTION`, `GITLAB`, `KAFKA`, `UPSERT_ENTITY`.
 
 Depending on the backend type you choose, the available fields will be different:
 
@@ -22,7 +22,7 @@ Depending on the backend type you choose, the available fields will be different
 
 </TabItem>
 
-<TabItem value="github" label="Github">
+<TabItem value="github-app" label="Github app">
 
 `invocationMethod.type` should be set to `GITHUB`.
 
@@ -33,6 +33,27 @@ Depending on the backend type you choose, the available fields will be different
 | `workflow`             | `string`  | Defines the GitHub *workflow ID* to run (You can also pass the workflow file name as a string).                                                                | `workflow.yml`                           |  |
 | `reportWorkflowStatus` | `boolean` | A flag to control whether to automatically update the Port `run` object status (SUCCESS/FAILURE) at the end of the workflow (default: `true`).                | `true` or `false` |
 | `workflowInputs` | `object` | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs. |  |
+
+</TabItem>
+
+<TabItem value="github-ocean" label="GitHub Ocean">
+
+The `invocationMethod.type` should be set to `INTEGRATION_ACTION`.  
+
+You can specify which integration to use using the `invocationMethod.installationId` field.
+
+| Field  | Type | Description  | Example values  |
+| ------ | ---- | ------------ | --------------- |
+| `org`  | `string`  | The GitHub *organization* name. If the *organization* was specified when installing the integration, the field will be prefilled automatically. Otherwise, specify the organization where the workflow resides. | `port-labs` |
+| `repo` | `string`  | The GitHub *repository* name.  | `port-docs`     |
+| `workflow`  | `string`  | Defines the GitHub *workflow ID* to run (You can also pass the workflow file name as a string). | `workflow.yml` |  |
+| `reportWorkflowStatus` | `boolean` | A flag to control whether to automatically update the Port `run` object status (SUCCESS/FAILURE) at the end of the workflow (default: `true`).  | `true` or `false` |
+| `workflowInputs` | `object` | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs. |  |
+
+:::info Token requirements
+This invocation method works only with integrations that use Port machine tokens (organization-level tokens).  
+Personal tokens or service account tokens are not supported at the moment.
+:::
 
 </TabItem>
 
