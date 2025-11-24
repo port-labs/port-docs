@@ -329,6 +329,49 @@ If the query contains multiple words, entities that contain all of these words w
 
 -> [Explore how to control page visibility and permissions](./page-permissions.md)
 
+## Catalog discovery
+
+Catalog discovery uses AI to automatically find and suggest entities that should be added to your catalog. This feature is particularly useful for discovering entities that aren't automatically synced from integrations, such as services that need to be added manually.
+
+You can access catalog discovery from the top right corner of any catalog page. The AI analyzes related blueprints in your catalog to identify potential entities that match the blueprint you're viewing.
+
+### How it works
+
+When you open catalog discovery, you can configure two main settings:
+
+1. **Related blueprints**: Select which related blueprints the AI should analyze when searching for potential entities. The AI examines entities from these blueprints to find patterns and suggest new entities.
+
+2. **Additional context**: Provide a description or specific patterns to help guide the AI's search. For example, you can specify that your services use a `-service` suffix, or provide other naming conventions or patterns that help identify entities.
+
+:::info Common use cases
+Catalog discovery is available for all catalog pages. The most common use cases include:
+
+- **Services**: Finding services that need to be added manually, unlike repositories or PagerDuty services which are synced from integrations.
+- **Users**: Discovering users from related entities. For example, if you have GitHub repositories synced from GitHub, the AI can analyze pull requests and issues to suggest users who created them.
+:::
+
+### Adding suggestions
+
+After the AI analyzes your catalog, you'll see a list of suggested entities. You can:
+
+- Add suggestions individually by selecting specific entities.
+- Add all suggestions at once using the bulk action option.
+
+### Iterative discovery
+
+Each time you run catalog discovery, the AI can find:
+
+- New entities that weren't discovered in previous runs.
+- Additional information about entities you've already added.
+
+This allows you to continuously improve your catalog coverage over time.
+
+### Limitations
+
+Catalog discovery has the following limitations:
+- **Entity limit per blueprint**: No more than 1,000 entities per each related blueprint are evaluated during discovery.
+
+
 ## Page operations
 
 Pages have a set of operations that can be performed from the UI.  
