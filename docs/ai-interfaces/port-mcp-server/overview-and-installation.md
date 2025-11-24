@@ -155,9 +155,9 @@ You cannot move an existing MCP connection. Update the configuration for your MC
 </details>
 
 <details>
-<summary><b>How do I connect to two organizations at once? (Click to expand)</b></summary>
+<summary><b>How does the remote MCP server work with multiple organizations? (Click to expand)</b></summary>
 
-Create separate MCP configurations and start each one while you are logged in to the desired organization in your browser. Each configuration keeps its own connection.
+Each organization requires a separate connection. Create separate MCP configurations and start each one while you are logged in to the desired organization in your browser. Each configuration keeps its own connection.
 
 </details>
 
