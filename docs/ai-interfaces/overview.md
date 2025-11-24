@@ -128,7 +128,7 @@ The following table shows which capabilities are supported across Port's AI inte
 <details>
 <summary>What are the available Port AI interfaces? (Click to expand)</summary>
 
-Port offers five main AI interfaces:
+Port offers several AI interfaces:
 - **Port AI Assistant**: Chat interface for quick questions and insights.
 - **AI Agents**: Customizable workflows for automations.
 - **MCP Server**: IDE integration for development workflows.
