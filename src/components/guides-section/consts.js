@@ -1550,6 +1550,20 @@ export const availableGuides = [
         tags: ["Security", "n8n", "Slack", "AI"],
         logos: ["n8n", "Slack"],
         link: "/guides/all/remediate-vulnerability-with-n8n-and-port",
+    },
+    {
+        title: "Setup Port's n8n custom node",
+        description: "Setup Port's n8n custom node to integrate Port's AI agents and Context Lake with n8n workflows",
+        tags: ["n8n", "AI"],
+        logos: ["n8n", "AI"],
+        link: "/guides/all/setup-port-n8n-node",
+    },
+    {
+        title: "Automatically resolve tickets with n8n and Port context",
+        description: "Automatically resolve tickets with n8n and Port context using Port's AI agents and automations",
+        tags: ["Autonomous Ticket Resolution", "n8n", "AI", "Jira"],
+        logos: ["n8n", "Jira", "GitHub"],
+        link: "/guides/all/automatically-resolve-tickets-with-n8n-port-context",
     }
 ]
 
