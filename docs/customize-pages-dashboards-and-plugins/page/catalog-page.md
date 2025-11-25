@@ -386,7 +386,7 @@ When deleting a blueprint from your portal, all pages tied to that blueprint (in
 
 ## Catalog auto discovery
 
-**Catalog auto discovery** utilizes AI to automatically suggest entities that should be added to your catalog. 
+**Catalog auto discovery** uses AI to analyze your existing catalog data and suggest missing entities based on relationships and patterns. This helps you maintain a complete and accurate catalog, especially for entities that aren't automatically created through integrations.
 
 ### Common use cases
 
@@ -394,33 +394,33 @@ Catalog auto discovery is particularly useful for discovering entities that are 
 
 The most common use cases include:
 
-- **Services**: Finding services that need to be added manually, unlike repositories or PagerDuty services which are synced from integrations.
-- **Users**: Discovering users from related entities. For example, if you have GitHub repositories synced from GitHub, the AI can analyze pull requests and issues to suggest users who created them.
+- **Services**: Unlike GitHub repositories or PagerDuty services that sync automatically from integrations, services are typically created manually. Auto discovery helps you identify and create these missing services.
+- **Users**: Discover users from related entities. For instance, if you have GitHub repositories synced, the AI can analyze pull requests and issues to suggest users who contributed to them but do not yet exist in your catalog.
 
-### Execute the catalog auto discovery flow
+### How to use catalog auto discovery
 
-**Execute the flow:**
+**Run the discovery:**
 
 1. Navigate to the [Catalog](https://app.port.io/organization/catalog) page of your portal.
 
-2. Go to the catalog page of the blueprint you want to use the auto discovery flow on.
+2. Open the catalog page of the blueprint you want to discover new entities.
 
 3. Click on the <ThemedImage sources={{light: "/img/icons/AI-icon.svg", dark: "/img/icons/AI-dark-icon.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top right corner of the page.
 
-4. Select which related blueprints the AI should analyze when discovering for potential entities. The AI examines entities from these blueprints to find patterns and suggest new entities.
+4. Select related blueprints for the AI to analyze. The AI examines entities from these blueprints to identify patterns and suggest new entities for your target blueprint.
 
-5. Provide a description or specific patterns to help guide the discovery.
+5. Provide a description or specific patterns to guide the discovery process.
 
 6. Click on the `Discover` button.
 
-**Edit the suggestions:**
+**Review and edit suggestions:**
 
-After the AI analyzes reuquest, you will see a list of suggested entities, which you can then:
+Once the AI completes its analysis, you will see a list of suggested entities. You can:
 
-- Edit a suggestion.
+- Edit suggestions.
 - Approve or decline suggestions individually by selecting specific entities.
 - Approve or decline all suggestions at once.
 
 ### Limitations
 
-- **Entity limit per blueprint**: Only the most recently added 1,000 entities per each related blueprint are evaluated during discovery.
+- **Entity evaluation limit**: The AI analyzes only the 1,000 most recently added entities from each related blueprint during discovery.
