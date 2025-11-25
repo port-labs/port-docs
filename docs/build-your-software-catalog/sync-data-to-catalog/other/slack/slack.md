@@ -15,9 +15,9 @@ Port's Slack integration allows you to model Slack resources in your software ca
 
 The Slack integration can ingest the following resources into Port:
 
-- `slack-user` - Workspace users and their profile information from [`/users.list`](https://api.slack.com/methods/users.list)
-- `slack-channel` - Public and private channels from [`/conversations.list`](https://api.slack.com/methods/conversations.list)
-- `slack-user-group` - User groups and their memberships from [`/usergroups.list`](https://api.slack.com/methods/usergroups.list)
+- `slack-user` - Workspace users and their profile information from [`/users.list`](https://api.slack.com/methods/users.list).
+- `slack-channel` - Public and private channels from [`/conversations.list`](https://api.slack.com/methods/conversations.list).
+- `slack-user-group` - User groups and their memberships from [`/usergroups.list`](https://api.slack.com/methods/usergroups.list).
 
 It is possible to reference any field that appears in the API responses linked above in the mapping configuration.
 
@@ -26,10 +26,10 @@ It is possible to reference any field that appears in the API responses linked a
 To use this integration, you need:
 
 - A Slack Bot User OAuth Token with the following scopes:
-  - `users:read` - View people in a workspace
-  - `channels:read` - View basic information about public channels
-  - `groups:read` - View basic information about private channels
-  - `usergroups:read` - View user groups in a workspace
+  - `users:read` - View people in a workspace.
+  - `channels:read` - View basic information about public channels.
+  - `groups:read` - View basic information about private channels.
+  - `usergroups:read` - View user groups in a workspace.
 
 **To create a Slack app and obtain an access token:**
 
