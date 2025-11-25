@@ -921,8 +921,8 @@ You can optionally ingest the authenticated user’s personal account as a pseud
 #### Multi-organization setup
 
 To include the authenticated user’s personal account in addition to regular organizations:
-- Set `includeAuthenticatedUser: true` in your configuration
-- Run a resync to pull personal account data
+- Set `includeAuthenticatedUser: true` in your configuration.
+- Run a resync to pull personal account data.
 
 
 ```yaml showLineNumbers
