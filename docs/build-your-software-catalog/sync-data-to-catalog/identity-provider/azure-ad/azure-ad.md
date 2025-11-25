@@ -15,10 +15,10 @@ Port's Microsoft Entra ID (formerly Azure AD) integration allows you to model En
 
 The Microsoft Entra ID integration can ingest the following resources into Port:
 
-- `entra-id-user` - User accounts and their profile information from [`/users`](https://learn.microsoft.com/en-us/graph/api/user-list)
-- `entra-id-group` - Security and Microsoft 365 groups from [`/groups`](https://learn.microsoft.com/en-us/graph/api/group-list)
-- `entra-id-application` - Enterprise applications registered in Entra ID from [`/applications`](https://learn.microsoft.com/en-us/graph/api/application-list)
-- `entra-id-service-principal` - Service principal objects representing applications from [`/servicePrincipals`](https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list)
+- `entra-id-user` - User accounts and their profile information from [`/users`](https://learn.microsoft.com/en-us/graph/api/user-list).
+- `entra-id-group` - Security and Microsoft 365 groups from [`/groups`](https://learn.microsoft.com/en-us/graph/api/group-list).
+- `entra-id-application` - Enterprise applications registered in Entra ID from [`/applications`](https://learn.microsoft.com/en-us/graph/api/application-list).
+- `entra-id-service-principal` - Service principal objects representing applications from [`/servicePrincipals`](https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list).
 
 It is possible to reference any field that appears in the API responses linked above in the mapping configuration.
 
@@ -26,10 +26,10 @@ It is possible to reference any field that appears in the API responses linked a
 
 To use this integration, you need:
 
-- A Microsoft Entra ID application registration with appropriate API permissions
-- A client secret for the application
-- Admin consent for the required permissions
-- An access token (bearer token) for Microsoft Graph API
+- A Microsoft Entra ID application registration with appropriate API permissions.
+- A client secret for the application.
+- Admin consent for the required permissions.
+- An access token (bearer token) for Microsoft Graph API.
 
 **To register an application in Microsoft Entra ID:**
 
@@ -61,10 +61,10 @@ Store your client secret securely and never share it. The secret provides access
 3. Select **Microsoft Graph**.
 4. Select **Application permissions**.
 5. Add the following permissions:
-   - `User.Read.All` - Read all users' full profiles
-   - `Group.Read.All` - Read all groups
-   - `Application.Read.All` - Read all applications
-   - `Directory.Read.All` - Read directory data
+   - `User.Read.All` - Read all users' full profiles.
+   - `Group.Read.All` - Read all groups.
+   - `Application.Read.All` - Read all applications.
+   - `Directory.Read.All` - Read directory data.
 6. Click **Add permissions**.
 7. Click **Grant admin consent for [Your Organization]**.
 
@@ -76,7 +76,7 @@ An Entra ID administrator must grant consent for these permissions before the in
 
 You need to obtain an OAuth2 access token to authenticate with Microsoft Graph API. Use the following curl command to get a token:
 
-```bash
+```bash showLineNumbers
 curl -X POST "https://login.microsoftonline.com/YOUR_TENANT_ID/oauth2/v2.0/token" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "client_id=YOUR_CLIENT_ID" \
@@ -86,9 +86,9 @@ curl -X POST "https://login.microsoftonline.com/YOUR_TENANT_ID/oauth2/v2.0/token
 ```
 
 Replace:
-- `YOUR_TENANT_ID` with your Directory (tenant) ID
-- `YOUR_CLIENT_ID` with your Application (client) ID
-- `YOUR_CLIENT_SECRET` with your client secret value
+- `YOUR_TENANT_ID` with your Directory (tenant) ID.
+- `YOUR_CLIENT_ID` with your Application (client) ID.
+- `YOUR_CLIENT_SECRET` with your client secret value.
 
 :::warning Token expiration
 Access tokens typically expire after 1 hour. For production use, consider implementing automatic token refresh or using OAuth2 client credentials flow with automatic token management.
@@ -140,21 +140,21 @@ helm upgrade --install my-ocean-entra-id-integration port-labs/port-ocean \
 
 This table summarizes the available parameters for the installation.
 
-| Parameter                          | Description                                                                                                                                                                                                                                                                                    | Example                          | Required |
-|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
-| `port.clientId`                    | Your Port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
-| `port.clientSecret`                | Your Port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
-| `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
-| `integration.config.baseUrl`       | The base URL of the Microsoft Graph API instance                                                                                                                                                                           | https://graph.microsoft.com/v1.0 | ✅        |
-| `integration.config.authType`   | The authentication type for the API (use `bearer_token` for Entra ID)                                                                                                                                                                         | bearer_token                                  | ✅        |
-| `integration.config.apiToken`   | Your Microsoft Graph API access token (bearer token). Get this using the OAuth2 client credentials flow as described in Prerequisites                                                                                                                                                                         | eyJ0eXAiOiJKV1QiLCJub25jZSI6...                                  | ✅        |
-| `integration.config.paginationType` | How your API handles pagination (offset, page, cursor, skip_token, or none)                                                                                                                                                                         | skip_token                                  | ❌        |
-| `integration.eventListener.type`   | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | POLLING                                  | ✅        |
-| `integration.type`                 | The integration type (must be `custom` for Ocean Custom Integration)                                                                                                                                                                                                                                                                | custom                                  | ✅        |
-| `integration.identifier`          | Unique identifier for the integration instance                                                                                                                                                                         | entra-id-integration                                  | ✅        |
-| `scheduledResyncInterval`          | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) | 120                                  | ❌        |
-| `initializePortResources`          | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       | true                                  | ❌        |
-| `sendRawDataExamples`              | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            | true                                  | ❌        |
+| Parameter | Description | Example | Required |
+| --- | --- | --- | --- |
+| `port.clientId` | Your Port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials). |  | ✅ |
+| `port.clientSecret` | Your Port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials). |  | ✅ |
+| `port.baseUrl` | Your Port API URL (`https://api.getport.io` for EU, `https://api.us.getport.io` for US). |  | ✅ |
+| `integration.config.baseUrl` | Base URL of the Microsoft Graph API. | https://graph.microsoft.com/v1.0 | ✅ |
+| `integration.config.authType` | Authentication type for the API (use `bearer_token` for Entra ID). | bearer_token | ✅ |
+| `integration.config.apiToken` | Microsoft Graph API bearer token created via the OAuth2 client credentials flow. | eyJ0eXAiOiJKV1QiLCJub25jZSI6... | ✅ |
+| `integration.config.paginationType` | How the API handles pagination (offset, page, cursor, skip_token, or none). | skip_token | ❌ |
+| `integration.eventListener.type` | Event listener type. See [event listeners](https://ocean.getport.io/framework/features/event-listener). | POLLING | ✅ |
+| `integration.type` | Integration type (must be `custom`). | custom | ✅ |
+| `integration.identifier` | Unique identifier for the integration instance. | entra-id-integration | ✅ |
+| `scheduledResyncInterval` | Minutes between scheduled syncs. When omitted, the event listener interval is used. | 120 | ❌ |
+| `initializePortResources` | When true, creates default blueprints and mappings on first run. | true | ❌ |
+| `sendRawDataExamples` | Sends sample payloads from the API to Port for easier mapping. | true | ❌ |
 
 <br/>
 
@@ -441,7 +441,7 @@ Create the blueprints in the following order:
 :::tip Adding relations after creation
 After creating both the User and Group blueprints, you can edit the User blueprint to add a relation to Group. In the User blueprint, add this to the `relations` section:
 
-```json
+```json showLineNumbers
 "groups": {
   "title": "Groups",
   "target": "entra-id-group",
