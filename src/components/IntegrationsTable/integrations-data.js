@@ -313,7 +313,7 @@ export const integrations = [
     category: 'other',
     icon: '/img/guides/icons/Okta.svg',
     darkIcon: '/img/guides/icons/dark/Backstage.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/okta',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/okta',
   },
   {
     name: 'Ocean custom',
