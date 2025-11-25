@@ -347,7 +347,7 @@ When a new scorecard is created, Port automatically creates a relation in the Ru
 
 ## Limitations
 
-### Core limitations
+<h3>Core limitations</h3>
 
 1. The scorecard blueprints are **protected** and their core structure **cannot be modified**:
    - Default properties cannot be changed or deleted.
@@ -365,7 +365,7 @@ When a new scorecard is created, Port automatically creates a relation in the Ru
    - Rule results are not searchable in the global search.
    - They are updated automatically when rules are evaluated.
 
-### Validation rules
+<h3>Validation rules</h3>
 
 The system enforces several validation rules to maintain data integrity:
 
@@ -373,13 +373,13 @@ The system enforces several validation rules to maintain data integrity:
 2. Scorecard blueprint built-in relations cannot be renamed or modified.
 3. Rule results maintain immutable core properties while allowing updates to custom properties.
 
-### Delayed rule results
+<h3>Delayed rule results</h3>
 
 When creating scorecards, adding new rules, or modifying existing rules for blueprints that contain a large number of entities, it may take some time for the `rule results` to appear in your catalog.
 
 This delay occurs because Port needs to create or update rule result blueprint instances for each entity and rule combination. The more entities you have in the blueprint, the more rule results need to be created or updated, which increases the processing time.
 
-### Rule result entity limits
+<h3>Rule result entity limits</h3>
 
 Port supports up to **5 million** rule result entities.
 

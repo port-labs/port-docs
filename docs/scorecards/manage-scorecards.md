@@ -22,7 +22,7 @@ You can create, edit, or delete scorecards either from the catalog page or the D
 
 <Tabs queryString="ui-method" defaultValue="catalog">
 
-<TabItem value="catalog" label="From the catalog page">
+<TabItem value="catalog" label="From the ''Catalog'' page">
 
 Whether you create, edit, or delete a scorecard, follow the next steps, then proceed with the relevant section below.
 
@@ -81,7 +81,7 @@ A Scorecard cannot be restored after deletion!
 
 </TabItem>
 
-<TabItem value="data-model" label="From the Data model page">
+<TabItem value="data-model" label="From the ''Data model'' page">
 
 Whether you create, edit, or delete a scorecard, follow the next steps, then proceed with the relevant section below.
 
