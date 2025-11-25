@@ -44,7 +44,7 @@
 - **REQUIRED**: Tabs component must include `queryString` attribute. **FLAG** tabs missing `queryString`.
 - **REQUIRED**: Don't use `#` headers inside tabs; use `<h2>` instead. **FLAG** `#` headers inside tabs.
 - **REQUIRED**: Admonitions must always include a title. **FLAG** admonitions without titles.
-- **REQUIRED**: Use admonitions sparingly and choose the appropriate type (tip, info, caution, warning). **FLAG** overuse or incorrect admonition types.
+- **REQUIRED**: Never put two or more admonitions in a row. **FLAG** consecutive admonitions.
 
 ### File Management - BLOCKING CHECKS
 
