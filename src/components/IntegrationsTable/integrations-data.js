@@ -279,6 +279,14 @@ export const integrations = [
     darkIcon: '/img/guides/icons/dark/Kafka.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka',
   },
+  // Identity providers
+  {
+    name: 'Okta',
+    category: 'identity-providers',
+    icon: '/img/guides/icons/Okta.svg',
+    darkIcon: '/img/guides/icons/dark/Backstage.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/okta',
+  },
   {
     name: 'Amplication',
     category: 'other',
@@ -292,13 +300,6 @@ export const integrations = [
     icon: '/img/guides/icons/Backstage.svg',
     darkIcon: '/img/guides/icons/dark/Backstage.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/backstage',
-  },
-  {
-    name: 'Okta',
-    category: 'other',
-    icon: '/img/guides/icons/Okta.svg',
-    darkIcon: '/img/guides/icons/dark/Backstage.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/okta',
   },
   {
     name: 'Ocean custom',
@@ -346,5 +347,6 @@ export const categories = {
   'Event processing': 'event',
   'CI/CD': 'cicd',
   'AI agents': 'ai-agents',
+  'Identity providers': 'identity-providers',
   'Other': 'other',
 }; 
