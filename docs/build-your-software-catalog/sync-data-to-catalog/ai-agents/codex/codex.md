@@ -40,9 +40,7 @@ To use this integration, you need:
 Store your API key securely and never share it. The key provides access to your OpenAI account usage and billing data.
 :::
 
-:::info OpenAI API documentation
 Review the [OpenAI usage docs](https://platform.openai.com/docs/api-reference/usage) to understand the exact response structure returned by each endpoint.
-:::
 
 ## Installation
 
@@ -143,134 +141,134 @@ Before syncing data, create the blueprints that define your OpenAI entities (usa
 1. Go to your [Builder page](https://app.getport.io/settings/data-model).
 2. Click the `+ Blueprint` button.
 3. Copy each blueprint JSON from the sections below.
-
-<details>
-<summary><b>OpenAI daily usage blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "openai_daily_usage",
-  "title": "OpenAI Daily Usage",
-  "icon": "OpenAI",
-  "schema": {
-    "properties": {
-      "date": {
-        "type": "string",
-        "format": "date",
-        "title": "Date"
+    
+    <details>
+    <summary><b>OpenAI daily usage blueprint (Click to expand)</b></summary>
+    
+    ```json showLineNumbers
+    {
+      "identifier": "openai_daily_usage",
+      "title": "OpenAI Daily Usage",
+      "icon": "OpenAI",
+      "schema": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "total_requests": {
+            "type": "number",
+            "title": "Total Requests"
+          },
+          "total_tokens": {
+            "type": "number",
+            "title": "Total Tokens"
+          },
+          "total_cost": {
+            "type": "number",
+            "title": "Total Cost (USD)"
+          }
+        },
+        "required": [
+          "date"
+        ]
       },
-      "total_requests": {
-        "type": "number",
-        "title": "Total Requests"
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
+    
+    </details>
+    
+    <details>
+    <summary><b>OpenAI model usage blueprint (Click to expand)</b></summary>
+    
+    ```json showLineNumbers
+    {
+      "identifier": "openai_model_usage",
+      "title": "OpenAI Model Usage",
+      "icon": "OpenAI",
+      "schema": {
+        "properties": {
+          "model": {
+            "type": "string",
+            "title": "Model Name"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "requests": {
+            "type": "number",
+            "title": "Requests"
+          },
+          "tokens": {
+            "type": "number",
+            "title": "Tokens Used"
+          }
+        },
+        "required": [
+          "model",
+          "date"
+        ]
       },
-      "total_tokens": {
-        "type": "number",
-        "title": "Total Tokens"
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
+    
+    </details>
+    
+    <details>
+    <summary><b>OpenAI Model blueprint (Click to expand)</b></summary>
+    
+    ```json showLineNumbers
+    {
+      "identifier": "openai_model",
+      "title": "OpenAI Model",
+      "icon": "Claude",
+      "schema": {
+        "properties": {
+          "modelId": {
+            "type": "string",
+            "title": "Model ID"
+          },
+          "object": {
+            "type": "string",
+            "title": "Object Type"
+          },
+          "created": {
+            "type": "number",
+            "title": "Created Timestamp"
+          },
+          "ownedBy": {
+            "type": "string",
+            "title": "Owned By"
+          },
+          "permission": {
+            "type": "array",
+            "title": "Permissions"
+          }
+        },
+        "required": [
+          "modelId"
+        ]
       },
-      "total_cost": {
-        "type": "number",
-        "title": "Total Cost (USD)"
-      }
-    },
-    "required": [
-      "date"
-    ]
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary><b>OpenAI model usage blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "openai_model_usage",
-  "title": "OpenAI Model Usage",
-  "icon": "OpenAI",
-  "schema": {
-    "properties": {
-      "model": {
-        "type": "string",
-        "title": "Model Name"
-      },
-      "date": {
-        "type": "string",
-        "format": "date",
-        "title": "Date"
-      },
-      "requests": {
-        "type": "number",
-        "title": "Requests"
-      },
-      "tokens": {
-        "type": "number",
-        "title": "Tokens Used"
-      }
-    },
-    "required": [
-      "model",
-      "date"
-    ]
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary><b>OpenAI Model blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "openai_model",
-  "title": "OpenAI Model",
-  "icon": "Claude",
-  "schema": {
-    "properties": {
-      "modelId": {
-        "type": "string",
-        "title": "Model ID"
-      },
-      "object": {
-        "type": "string",
-        "title": "Object Type"
-      },
-      "created": {
-        "type": "number",
-        "title": "Created Timestamp"
-      },
-      "ownedBy": {
-        "type": "string",
-        "title": "Owned By"
-      },
-      "permission": {
-        "type": "array",
-        "title": "Permissions"
-      }
-    },
-    "required": [
-      "modelId"
-    ]
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
+    
+    </details>
+    
 4. Click `Save` after each blueprint is added.
 
 ## Configuration 
