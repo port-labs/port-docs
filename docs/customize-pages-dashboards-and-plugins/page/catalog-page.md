@@ -407,17 +407,23 @@ The most common use cases include:
 
 4. Select related blueprints to analyze. The entities from these blueprints will be used to identify patterns and suggest new entities for your target blueprint.
 
-5. Provide a description or specific patterns to guide the discovery process.
+5. It is recommended to turn on the `Advanced configuration` toggle and provide more information, or specific patterns to guide the discovery process.
 
 6. Click on the `Discover` button.
 
+    <img src="/img/software-catalog/pages/catalogDiscoveryForm.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
+
 **Review and edit suggestions:**
 
-Once the process is complete, you will see a list of suggested entities. You can:
+Once the process is complete, a list of suggested entities will be displayed, divided into two sections: **Create** and **Update**.  
 
-- Edit the suggestions.
-- Approve or decline suggestions individually by selecting specific entities.
-- Approve or decline all suggestions at once.
+You can:
+
+- Edit individual entity suggestions.
+- Approve or decline suggestions individually or in bulk.
+- View the proposed updates to existing entities by clicking the <ThemedImage sources={{light: "/img/icons/Show-icon.svg", dark: "/img/icons/Show-icon-dark.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button.
+
+<img src="/img/software-catalog/pages/catalogDiscoveryResultsWindow.png" border='1px' width='80%' style={{borderRadius:'8px'}} />
 
 ### Limitations
 
