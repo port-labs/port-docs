@@ -47,8 +47,7 @@ For the `Due date` property, fill in the form with following details:
 You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
 Copy and paste the following JSON snippet under the `properties` section.
 
-```json showLineNumebrs
-
+```json showLineNumbers
 "schema": {
     "properties": {
         "due_date": {
@@ -74,7 +73,7 @@ For the `SLA` property, fill in the from with following details:
 You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
 Copy and paste the following JSON snippet under the `properties` section.
 
-```json showLineNumebrs
+```json showLineNumbers
 "schema": {
     "properties": {
         "sla": {
@@ -108,7 +107,7 @@ For the `SLA due date` property, fill in the from with following details:
 You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
 Copy and paste the following JSON snippet under the `properties` section.
 
-```json showLineNumebrs
+```json showLineNumbers
 "schema": {
     "properties": {
         "sla_due_date": {
@@ -134,7 +133,7 @@ For the `Due date` property, fill in the form with following details:
 You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
 Copy and paste the following JSON snippet under the `properties` section.
 
-```json showLineNumebrs
+```json showLineNumbers
 "schema": {
     "properties": {
         "due_date": {
@@ -159,7 +158,7 @@ For the `Hours until SLA due date` property, fill in the form with following det
 You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
 Copy and paste the following JSON snippet under the `properties` section.
 
-```json showLineNumebrs
+```json showLineNumbers
 "schema": {
     "properties": {
         "hours_until_sla_due_date": {
@@ -185,7 +184,7 @@ For the `SLA` mirror property, fill in the form with following details:
 You can also edit the blueprint's JSON form by clicking on the `...` in the top right corner of the blueprint, then choosing `Edit blueprint`.
 Copy and paste the following JSON snippet under the `properties` section.
 
-```json showLineNumebrs
+```json showLineNumbers
 "schema": {
     "mirrorProperties": {
         "sla": {
