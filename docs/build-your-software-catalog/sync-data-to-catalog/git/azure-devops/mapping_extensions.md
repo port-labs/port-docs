@@ -61,18 +61,14 @@ This allows you to create a direct relationship between a pipeline and its sourc
       mappings:
         identifier: ."__projectId" + "/" + (.id | tostring)
         title: .name
-        blueprint: '"azureDevOpsPipeline"'
+        blueprint: '"azureDevopsPipeline"'
         properties:
           url: .url
           revision: .revision
           folder: .folder
         relations:
           project: .__projectId | gsub(" "; "")
-          repository: >-
-            if .__repository
-            then .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
-            else null
-            end
+          repository: if .__repository then .__repository.id else null end
 ```
 :::tip Recommendation
 Use this only when necessary, as including repository data requires an extra API call per pipeline, which increases the number of requests made and can impact your Azure DevOps API rate limits.

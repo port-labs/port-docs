@@ -9,7 +9,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .id | tostring
+					identifier: .__project.id + "/" + (.environmentId | tostring) + "/" + (.id | tostring) | gsub(" "; "")
           title: .requestIdentifier | tostring
           blueprint: '"azureDevopsPipelineDeployment"'
           properties:
@@ -20,7 +20,7 @@ resources:
             startTime: .startTime
             finishTime: .finishTime
           relations:
-            environment: .environment.id | tostring
+						environment: .__project.id + "/" + (.environmentId | tostring) | gsub(" "; "")
 ```
 
 </details>

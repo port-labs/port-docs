@@ -53,7 +53,7 @@ resources:
     entity:
       mappings:
         identifier: .id | gsub(" "; "")
-        blueprint: '"project"'
+        blueprint: '"azureDevopsproject"'
         title: .name
         properties:
           state: .state
@@ -69,7 +69,7 @@ resources:
       mappings:
         identifier: .id
         title: .name
-        blueprint: '"service"'
+        blueprint: '"azureDevopsRepository"'
         properties:
           url: .remoteUrl
           readme: file://README.md
@@ -83,9 +83,8 @@ resources:
   port:
     entity:
       mappings:
-        identifier: >-
-          "\(.__repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
-        blueprint: '"service"'
+        identifier: .__repository.id
+        blueprint: '"azureDevopsRepository"'
         properties:
           minimumApproverCount: .settings.minimumApproverCount
 - kind: repository-policy
@@ -94,9 +93,8 @@ resources:
   port:
     entity:
       mappings:
-        identifier: >-
-          "\(.__repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
-        blueprint: '"service"'
+        identifier: .__repository.id
+        blueprint: '"azureDevopsRepository"'
         properties:
           workItemLinking: .isEnabled and .isBlocking
 - kind: user
@@ -133,15 +131,14 @@ resources:
   port:
     entity:
       mappings:
-        identifier: >-
-          "\(.repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.repository.name | ascii_downcase | gsub("[ ();]"; ""))/\(.pullRequestId | tostring)"
+        identifier: .repository.id + "/" + (.pullRequestId | tostring)
         blueprint: '"azureDevopsPullRequest"'
         properties:
           status: .status
           createdAt: .creationDate
           leadTimeHours: (.creationDate as $createdAt | .status as $status | .closedDate as $closedAt | ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | ($closedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $closedTimestamp | if $status == "completed" and $closedTimestamp != null then (((($closedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) else null end)
         relations:
-          repository: .repository.project.name + "/" + .repository.name | gsub(" "; "")
+          repository: .repository.id
           service:
             combinator: '"and"'
             rules:
@@ -168,9 +165,9 @@ resources:
   port:
     entity:
       mappings:
-        identifier: .__project.id + "-" + (.id | tostring) | gsub(" "; "")
+        identifier: .__project.id + "/" + (.id | tostring) | gsub(" "; "")
         title: .buildNumber
-        blueprint: '"build"'
+        blueprint: '"azureDevopsbuild"'
         properties:
           status: .status
           result: .result
@@ -188,11 +185,9 @@ resources:
   port:
     entity:
       mappings:
-        identifier: >-
-          .__project.id + "-" + (.__buildId | tostring) + "-" + (.id |
-          tostring) | gsub(" "; "")
+				identifier: .__project.id + "/" + (.__build.id | tostring) + "/" + (.id | tostring) | gsub(" "; "")
         title: .name
-        blueprint: '"pipeline-stage"'
+        blueprint: '"azureDevopsPipelineStage"'
         properties:
           state: .state
           result: .result
@@ -201,17 +196,15 @@ resources:
           stageType: .type
         relations:
           project: .__project.id | gsub(" "; "")
-          build: (.__project.id + "-" + (.__buildId | tostring)) | gsub(" "; "")
+          build: (.__project.id + "/" + (.__buildId | tostring)) | gsub(" "; "")
 - kind: pipeline-run
   selector:
     query: 'true'
   port:
     entity:
       mappings:
-        identifier: >-
-          .__project.id + "-" + (.__pipeline.id | tostring) + "-" + (.id |
-          tostring) | gsub(" "; "")
-        blueprint: '"pipeline-run"'
+				identifier: .__project.id + "/" + (.__pipeline.id | tostring) + "/" + (.id | tostring) | gsub(" "; "")
+        blueprint: '"azureDevopsPipelineRun"'
         properties:
           state: .state
           result: .result
@@ -226,7 +219,7 @@ resources:
   port:
     entity:
       mappings:
-        identifier: .id | tostring
+				identifier: .project.id + "/" + (.id | tostring) | gsub(" "; "")
         title: .name | tostring
         blueprint: '"azureDevopsEnvironment"'
         properties:
@@ -242,7 +235,7 @@ resources:
   port:
     entity:
       mappings:
-        identifier: .id | tostring
+				identifier: .releaseDefinition.projectReference.id + "/" + (.release.id | tostring) + "/" + (.id | tostring) | gsub(" "; "")
         title: .release.name + "-" + (.id | tostring) | gsub(" "; "")
         blueprint: '"azureDevopsReleaseDeployment"'
         properties:
@@ -255,14 +248,14 @@ resources:
           operationStatus: .operationStatus
           environment: .releaseEnvironment.name
         relations:
-          release: .release.id | tostring
+					release: .releaseDefinition.projectReference.id + "/" + (.release.id | tostring) | gsub(" "; "")
 - kind: pipeline-deployment
   selector:
     query: 'true'
   port:
     entity:
       mappings:
-        identifier: .id | tostring
+				identifier: .__project.id + "/" + (.environmentId | tostring) + "/" + (.id | tostring) | gsub(" "; "")
         title: .requestIdentifier | tostring
         blueprint: '"azureDevopsPipelineDeployment"'
         properties:
@@ -273,7 +266,7 @@ resources:
           startTime: .startTime
           finishTime: .finishTime
         relations:
-          environment: .environment.id | tostring
+					environment: .__project.id + "/" + (.environmentId | tostring) | gsub(" "; "")
 ```
 
 </details>

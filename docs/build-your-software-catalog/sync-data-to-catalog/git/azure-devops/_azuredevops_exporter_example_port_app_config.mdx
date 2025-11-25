@@ -12,7 +12,7 @@ resources:
       entity:
         mappings:
           identifier: '.id | gsub(" "; "")'
-          blueprint: '"project"'
+          blueprint: '"azureDevopsProject"'
           title: .name
           properties:
             state: .state
@@ -28,7 +28,7 @@ resources:
         mappings:
           identifier: .id
           title: .name
-          blueprint: '"service"'
+          blueprint: '"azureDevopsRepository"'
           properties:
             url: .remoteUrl
             readme: file://README.md
@@ -42,7 +42,7 @@ resources:
         mappings:
           identifier: >-
             "\(.__repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
-          blueprint: '"service"'
+          blueprint: '"azureDevopsRepository"'
           properties:
             minimumApproverCount: .settings.minimumApproverCount
   - kind: repository-policy
@@ -53,7 +53,7 @@ resources:
         mappings:
           identifier: >-
             "\(.__repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
-          blueprint: '"service"'
+          blueprint: '"azureDevopsRepository"'
           properties:
             workItemLinking: .isEnabled and .isBlocking
   - kind: pull-request
@@ -62,8 +62,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: >-
-            "\(.repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.repository.name | ascii_downcase | gsub("[ ();]"; ""))/\(.pullRequestId | tostring)"
+          identifier: .repository.id + "/" + (.pullRequestId | tostring)
           blueprint: '"azureDevopsPullRequest"'
           properties:
             status: .status
@@ -77,8 +76,7 @@ resources:
               (((($closedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100)
               else null end)
           relations:
-            service: >-
-              "\(.repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.repository.name | ascii_downcase | gsub("[ ();]"; ""))"
+            repository: .repository.id
             creator: .createdBy.uniqueName
             reviewers: '[.reviewers[].uniqueName]'
 ```

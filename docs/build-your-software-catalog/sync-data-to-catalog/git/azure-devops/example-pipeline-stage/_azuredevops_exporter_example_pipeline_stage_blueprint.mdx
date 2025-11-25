@@ -3,7 +3,7 @@
 
 ```json showLineNumbers
 {
-  "identifier": "pipeline-stage",
+  "identifier": "azureDevopsPipelineStage",
   "title": "Pipeline Stage",
   "icon": "AzureDevops",
   "schema": {
@@ -39,13 +39,13 @@
   "relations": {
     "project": {
       "title": "Project",
-      "target": "project",
+      "target": "azureDevopsProject",
       "required": true,
       "many": false
     },
     "build": {
       "title": "Build",
-      "target": "build",
+      "target": "azureDevopsBuild",
       "required": true,
       "many": false
     }
