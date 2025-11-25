@@ -245,13 +245,13 @@ We highly recommend using these customizations to provide a clean and accurate v
 
 All table customizations are available on the top bar of the table:
 
-![Table operations bar](/img/software-catalog/pages/TableOperationsBar.png)
+<img src='/img/software-catalog/pages/TableOperationsBar.png' width='100%' border='1px' />
 
 ### Filter
 
 You can filter the table by using the following menu:
 
-![Table filter menu marked](/img/software-catalog/pages/TableFilterMenu.png)
+<img src='/img/software-catalog/pages/TableFilterMenu.png' width='100%' border='1px' />
 
 You can define any filtering operator with a suitable value.
 
@@ -266,7 +266,7 @@ This filter works on:
 - `string` properties with the format `team`.
 - The [meta property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties) `Team`.
 
-![My Teams Filter](/img/software-catalog/pages/MyTeamsFilter.png)
+<img src='/img/software-catalog/pages/MyTeamsFilter.png' width='100%' border='1px' />
 
 #### `Me` filter
 
@@ -274,13 +274,13 @@ By using the `Me` filter you will only see entities that belong to the logged-in
 
 This filter works on [`User`](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/user) properties.
 
-![Me Filter](../../../static/img/software-catalog/pages/meFilter.png)
+<img src='/img/software-catalog/pages/meFilter.png' width='90%' border='1px' />
 
 ### Sort
 
 You can sort the table by using the following menu:
 
-![Table sort menu marked](/img/software-catalog/pages/TableSortMenu.png)
+<img src='/img/software-catalog/pages/TableSortMenu.png' width='100%' border='1px' />
 
 You can sort by one or more fields of any kind.
 
@@ -326,7 +326,7 @@ Just create your `group-by` view (and any other table customizations you desire)
 Port provides a free-text search option on tables. This will search all of the entities' properties and display the entities that match the query.  
 If the query contains multiple words, entities that contain all of these words will be displayed, even if they are spread across different properties. 
 
-![Table search bar marked](/img/software-catalog/pages/TableSearchBar.png)
+<img src='/img/software-catalog/pages/TableSearchBar.png' width='100%' border='1px' />
 
 -> [Explore how to control page visibility and permissions](./page-permissions.md)
 
@@ -358,7 +358,7 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 <center>
 
-![Page menu](/img/software-catalog/pages/PageMenu.png)
+<img src='/img/software-catalog/pages/PageMenu.png' width='30%' border='1px' />
 
 </center>
 
@@ -366,7 +366,7 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 Editing a page allows you to change various properties:
 
-![Edit Page popup window](/img/software-catalog/pages/EditPageForm.png)
+<img src='/img/software-catalog/pages/EditPageForm.png' width='100%' border='1px' />
 
 #### Locking pages
 
