@@ -386,16 +386,14 @@ When deleting a blueprint from your portal, all pages tied to that blueprint (in
 
 ## Catalog auto discovery
 
-**Catalog auto discovery** uses AI to analyze your existing catalog data and suggest missing entities based on relationships and patterns. This helps you maintain a complete and accurate catalog, especially for entities that aren't automatically created through integrations.
+**Catalog auto discovery** analyzes your existing catalog data and suggests missing entities based on relationships and patterns. This helps you maintain a complete and accurate catalog, especially for entities that are not automatically created through integrations.
 
 ### Common use cases
-
-Catalog auto discovery is particularly useful for discovering entities that are not automatically synced from integrations.
 
 The most common use cases include:
 
 - **Services**: Unlike GitHub repositories or PagerDuty services that sync automatically from integrations, services are typically created manually. Auto discovery helps you identify and create these missing services.
-- **Users**: Discover users from related entities. For instance, if you have GitHub repositories synced, the AI can analyze pull requests and issues to suggest users who contributed to them but do not yet exist in your catalog.
+- **Users**: Discover users from related entities. For instance, if you have GitHub repositories synced, we can analyze pull requests and issues entities to suggest users who contributed to them but do not yet exist in your catalog.
 
 ### How to use catalog auto discovery
 
@@ -407,7 +405,7 @@ The most common use cases include:
 
 3. Click on the <ThemedImage sources={{light: "/img/icons/AI-icon.svg", dark: "/img/icons/AI-dark-icon.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top right corner of the page.
 
-4. Select related blueprints for the AI to analyze. The AI examines entities from these blueprints to identify patterns and suggest new entities for your target blueprint.
+4. Select related blueprints to analyze. The entities from these blueprints will be used to identify patterns and suggest new entities for your target blueprint.
 
 5. Provide a description or specific patterns to guide the discovery process.
 
@@ -415,12 +413,12 @@ The most common use cases include:
 
 **Review and edit suggestions:**
 
-Once the AI completes its analysis, you will see a list of suggested entities. You can:
+Once the process is complete, you will see a list of suggested entities. You can:
 
-- Edit suggestions.
+- Edit the suggestions.
 - Approve or decline suggestions individually by selecting specific entities.
 - Approve or decline all suggestions at once.
 
 ### Limitations
 
-- **Entity evaluation limit**: The AI analyzes only the 1,000 most recently added entities from each related blueprint during discovery.
+- **Entity evaluation limit**: Discovery evaluates only the 1,000 most recently added entities from each related blueprint.
