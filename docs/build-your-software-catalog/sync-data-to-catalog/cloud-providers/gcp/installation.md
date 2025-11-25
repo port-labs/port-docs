@@ -26,15 +26,16 @@ For your first deployment of the GCP exporter, we recommend starting with the He
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm (Scheduled)">  
 
-The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set up, this guide will be divided into two parts:
+The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set up, this guide will be divided into four parts:
 
-1. Creating a service account.
-2. Choosing an authentication method and running the Helm command.
-
+1. Checking the prerequisites.
+2. Creating a service account.
+3. Choosing an authentication method.
+4. Installing the integration using Helm.
 
 <CreateServiceAccount/>
 
-<h2> Choose authentication method </h2>
+<h1> Choose authentication method </h1>
 
 After creating the service account, choose one of the following authentication methods:
 
@@ -56,7 +57,7 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
 
 3. Bind the Kubernetes service account to the GCP service account:
 
-   ```bash
+   ```bash showLineNumbers
    gcloud iam service-accounts add-iam-policy-binding GCP_SERVICE_ACCOUNT_EMAIL@PROJECT_ID.iam.gserviceaccount.com \
      --role roles/iam.workloadIdentityUser \
      --member "serviceAccount:PROJECT_ID.svc.id.goog[NAMESPACE/KUBERNETES_SA_NAME]"
