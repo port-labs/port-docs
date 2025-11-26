@@ -293,7 +293,7 @@ export const integrations = [
     iconName: 'Azure',
     icon: '/img/guides/icons/Azure.svg',
     darkIcon: '/img/guides/icons/Azure.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-provider/azure-ad',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/azure-ad',
   },
   {
     name: 'Amplication',
