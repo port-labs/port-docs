@@ -184,7 +184,7 @@ The description will be displayed at the top of the page, under the page title:
 
 <img src='/img/software-catalog/pages/catalogPageDescription.png' width='80%' border='1px' />
 
-## Filter and performance
+## Filters and performance
 
 Large entity tables can result in long loading times. Use the following tips and best practices to improve performance.
 
@@ -247,9 +247,9 @@ All table customizations are available on the top bar of the table:
 
 <img src='/img/software-catalog/pages/TableOperationsBar.png' width='100%' border='1px' />
 
-### Filter
+### Table filters
 
-:::info Table filter vs initial filters
+:::info Table filters vs initial filters
 Unlike the filters described in the [scection above](#filter-and-performance), this filter does not affect performance. It filters entities that have already been loaded and only affects what is displayed in the table view.
 :::
 
