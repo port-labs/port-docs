@@ -317,13 +317,6 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/slack',
   },
   {
-    name: 'Okta',
-    category: 'other',
-    icon: '/img/guides/icons/Okta.svg',
-    darkIcon: '/img/guides/icons/dark/Backstage.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/okta',
-  },
-  {
     name: 'Ocean custom',
     category: 'other',
     iconName: 'APIcatalog',
