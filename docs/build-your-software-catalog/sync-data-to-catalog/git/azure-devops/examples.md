@@ -98,9 +98,9 @@ You can use the following Port blueprint definitions and integration configurati
 
 <Tabs groupId="config" queryString="parameter">
 
-<TabItem label="Include Minimum Days" value="includeMinTimeInDays">
+<TabItem label="Include minimum days" value="includeMinTimeInDays">
 
-Use the `minTimeInDays` selector to control how many days back abandoned or completed pull requests are ingested for each repository. The default value is `7` days.
+The minTimeInDays selector controls how many days back abandoned or completed pull requests are ingested per repository. The default is **7 days**.
 
 ```yaml showLineNumbers
 - kind: pullRequest
@@ -112,9 +112,9 @@ Use the `minTimeInDays` selector to control how many days back abandoned or comp
 
 </TabItem>
 
-<TabItem label="Include Maximum Results" value="includeMaxResults">
+<TabItem label="Include maximum results" value="includeMaxResults">
 
-Use the `maxResults` selector to control how many abandoned or completed pull requests are ingested for each repository. The default value is `100`.
+The `maxResults` selector controls how many abandoned or completed pull requests are ingested per repository. Its default value is **100 pull requests**.
 
 ```yaml showLineNumbers
 - kind: pullRequest
