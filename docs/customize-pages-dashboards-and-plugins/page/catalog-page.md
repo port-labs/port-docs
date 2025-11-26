@@ -171,7 +171,7 @@ Other properties will be hidden by default.
 You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
 :::
 
-### Description
+<h3>Description</h3>
 
 You can provide additional context to your developers by using the `Description` field when creating a catalog page.  
 This field supports adding links in markdown format: `[link text](https://www.address.com)`.
@@ -184,7 +184,7 @@ The description will be displayed at the top of the page, under the page title:
 
 <img src='/img/software-catalog/pages/catalogPageDescription.png' width='80%' border='1px' />
 
-## Performance
+## Filter and performance
 
 Large entity tables can result in long loading times. Use the following tips and best practices to improve performance.
 
@@ -249,6 +249,10 @@ All table customizations are available on the top bar of the table:
 
 ### Filter
 
+:::info Table filter vs initial filters
+Unlike the filters described in the [scection above](#filter-and-performance), this filter does not affect performance. It filters entities that have already been loaded and only affects what is displayed in the table view.
+:::
+
 You can filter the table by using the following menu:
 
 <img src='/img/software-catalog/pages/TableFilterMenu.png' width='100%' border='1px' />
@@ -257,7 +261,7 @@ You can define any filtering operator with a suitable value.
 
 You can filter one or more values while setting the relation between each field with a `And/Or`.
 
-#### `My Teams` filter
+**`My Teams` filter**
 
 By using the `My Teams` filter you will only see entities that belong to one of your teams. This means you will only see entities from teams that you are a member of.
 
@@ -267,8 +271,9 @@ This filter works on:
 - The [meta property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties) `Team`.
 
 <img src='/img/software-catalog/pages/MyTeamsFilter.png' width='100%' border='1px' />
+<br></br><br></br>
 
-#### `Me` filter
+**`Me` filter**s
 
 By using the `Me` filter you will only see entities that belong to the logged-in user.
 
@@ -330,6 +335,56 @@ If the query contains multiple words, entities that contain all of these words w
 
 -> [Explore how to control page visibility and permissions](./page-permissions.md)
 
+
+## Catalog auto discovery
+
+The **auto discovery** capability uses AI to analyze your existing catalog data and suggests missing entities based on existing relationships and patterns.
+This helps you maintain a complete and accurate catalog, especially for entities that are not automatically created through integrations (see common use-cases below).
+
+<h3>Common use cases</h3>
+
+- **Services**: Service blueprint centralizes different components of a service like its repository, incidents for example. For that reason, unlike GitHub repositories or PagerDuty services that sync automatically from integrations, services are typically created manually. Auto discovery helps you identify and create these missing services.
+- **Users**: Discover users from related entities. For instance, if you have GitHub repositories synced, we can analyze pull requests and issues entities to suggest users who contributed to them but do not yet exist in your catalog.
+
+### How to use catalog auto discovery
+
+**Run the discovery:**
+
+1. Navigate to the [Catalog](https://app.port.io/organization/catalog) page of your portal.
+
+2. Open the catalog page of the blueprint for which you want to discover new entities.
+
+3. Click on the <ThemedImage sources={{light: "/img/icons/AI-icon.svg", dark: "/img/icons/AI-dark-icon.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top right corner of the page.
+
+4. Select related blueprints to analyze. The entities from these blueprints will be used to identify patterns and suggest new entities for your target blueprint.
+
+5. For the best result we recommended to turn on the `Advanced configuration` toggle and provide more information, or specific patterns to guide the discovery process.
+
+    For example:
+
+    - Service identifiers end with `_service` (e.g., `payment_service`, `auth_service`).
+    - Services are represented by directories in repositories. Look for service directories in monorepos to identify individual services.
+
+6. Click on the `Discover` button.
+
+    <img src="/img/software-catalog/pages/catalogDiscoveryForm.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
+
+**Review and edit suggestions:**
+
+Once the process is complete, a list of suggested entities will be displayed, divided into two sections: **Create** and **Update**.  
+
+You can:
+
+- Edit individual entity suggestions.
+- Approve or decline suggestions individually or in bulk.
+- View the proposed updates to existing entities by clicking the <ThemedImage sources={{light: "/img/icons/Show-icon.svg", dark: "/img/icons/Show-icon-dark.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button.
+
+<img src="/img/software-catalog/pages/catalogDiscoveryResultsWindow.png" border='1px' width='80%' style={{borderRadius:'8px'}} />
+
+### Limitations
+
+- **Entity evaluation limit**: Discovery evaluates only the 1,000 most recently added entities from each related blueprint.
+
 ## Page operations
 
 Pages have a set of operations that can be performed from the UI.  
@@ -362,13 +417,13 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 </center>
 
-#### Editing pages
+**Editing pages**
 
 Editing a page allows you to change various properties:
 
 <img src='/img/software-catalog/pages/EditPageForm.png' width='100%' border='1px' />
 
-#### Locking pages
+**Locking pages**
 
 Locking a catalog page disables the option to hide columns or apply filters to modify the displayed data.
 
@@ -376,55 +431,10 @@ Locking pages gives you a way to specifically curate pages to your developers' n
 
 To learn how to lock pages, refer to [page permissions](./page-permissions.md#lock-pages).
 
-#### Deleting pages
+**Deleting pages**
 
 Any page (whether created automatically or manually) can be deleted by clicking the `Delete page` button.
 
 :::warning Default pages
 When deleting a blueprint from your portal, all pages tied to that blueprint (including the default page that was created for it) will be deleted as well.
 :::
-
-## Catalog auto discovery
-
-**Catalog auto discovery** analyzes your existing catalog data and suggests missing entities based on relationships and patterns. This helps you maintain a complete and accurate catalog, especially for entities that are not automatically created through integrations.
-
-### Common use cases
-
-The most common use cases include:
-
-- **Services**: Unlike GitHub repositories or PagerDuty services that sync automatically from integrations, services are typically created manually. Auto discovery helps you identify and create these missing services.
-- **Users**: Discover users from related entities. For instance, if you have GitHub repositories synced, we can analyze pull requests and issues entities to suggest users who contributed to them but do not yet exist in your catalog.
-
-### How to use catalog auto discovery
-
-**Run the discovery:**
-
-1. Navigate to the [Catalog](https://app.port.io/organization/catalog) page of your portal.
-
-2. Open the catalog page of the blueprint you want to discover new entities.
-
-3. Click on the <ThemedImage sources={{light: "/img/icons/AI-icon.svg", dark: "/img/icons/AI-dark-icon.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top right corner of the page.
-
-4. Select related blueprints to analyze. The entities from these blueprints will be used to identify patterns and suggest new entities for your target blueprint.
-
-5. It is recommended to turn on the `Advanced configuration` toggle and provide more information, or specific patterns to guide the discovery process.
-
-6. Click on the `Discover` button.
-
-    <img src="/img/software-catalog/pages/catalogDiscoveryForm.png" border='1px' width='50%' style={{borderRadius:'8px'}} />
-
-**Review and edit suggestions:**
-
-Once the process is complete, a list of suggested entities will be displayed, divided into two sections: **Create** and **Update**.  
-
-You can:
-
-- Edit individual entity suggestions.
-- Approve or decline suggestions individually or in bulk.
-- View the proposed updates to existing entities by clicking the <ThemedImage sources={{light: "/img/icons/Show-icon.svg", dark: "/img/icons/Show-icon-dark.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button.
-
-<img src="/img/software-catalog/pages/catalogDiscoveryResultsWindow.png" border='1px' width='80%' style={{borderRadius:'8px'}} />
-
-### Limitations
-
-- **Entity evaluation limit**: Discovery evaluates only the 1,000 most recently added entities from each related blueprint.
