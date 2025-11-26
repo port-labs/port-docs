@@ -52,11 +52,16 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
 2. Make sure Workload Identity is enabled in the cluster:
 
    ```bash
-   gcloud container clusters update CLUSTER_NAME --workload-pool=PROJECT_ID.svc.id.goog
+   gcloud container clusters update CLUSTER_NAME --workload-pool=PROJECT_ID.svc.id.goog --region REGION
    ```
-
+   Replace the following placeholders:
+   - `CLUSTER_NAME` with the cluster name
+   - `PROJECT_ID` with the Kubernetes cluster's project id
+   - `REGION` The region of the cluster
 3. Bind the Kubernetes service account to the GCP service account:
-
+  :::tip
+  No need for the Kubernetes service account to exist in this point , We'll create it once we deploy the helm chart
+  :::
    ```bash showLineNumbers
    gcloud iam service-accounts add-iam-policy-binding GCP_SERVICE_ACCOUNT_EMAIL@PROJECT_ID.iam.gserviceaccount.com \
      --role roles/iam.workloadIdentityUser \
@@ -67,7 +72,7 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
    - `GCP_SERVICE_ACCOUNT_EMAIL` with your GCP service account email.
    - `PROJECT_ID` with your GCP project ID.
    - `NAMESPACE` with your Kubernetes namespace.
-   - `KUBERNETES_SA_NAME` with the service account name that will be used in the integration's values.yaml.
+   - `KUBERNETES_SA_NAME` with the service account name that will be used in the integration's values.yaml. (Note: the service account doesn't need to exist)
 
 <h2> Configuring and running the Helm command </h2>
 
@@ -95,14 +100,14 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
      eventListener:
        type: "POLLING"
      config:
-       extra:
+       extraConfig:
          GCP_PROJECT: "<base-gcp-project>"
    
    podServiceAccount:
      create: true
      name: "<service-account-from-step-3>"
      annotations:
-       iam.gke.io/gcp-service-account: "<service-account-email-from-step-1>"
+       iam.gke.io/gcp-service-account: "<gcp-service-account-email>"
    ```
 
    Replace the following placeholders:
@@ -110,7 +115,7 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
    - `<port-client-secret-id>` with your Port client secret.
    - `<base-gcp-project>` with your base GCP project ID.
    - `<service-account-from-step-3>` with the Kubernetes service account name from step 3.
-   - `<service-account-email-from-step-1>` with the GCP service account email from the service account creation step.
+   - `<gcp-service-account-email>` with the GCP service account email from step 7 in the *Creating a service account* guide above.
 
 3. Install the integration using Helm:
 
