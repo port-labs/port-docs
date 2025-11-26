@@ -24,7 +24,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__repository + "-" + (.number | tostring)
+          identifier: .__repository + "/" + (.number | tostring)
           title: .number | tostring
           blueprint: '"githubDependabotAlert"'
           properties:
@@ -49,15 +49,33 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__repository + "-" + (.number | tostring)
+          identifier: .__repository + "/" + (.number | tostring)
           title: .rule.name
-          blueprint: '"githubCodeScanAlerts"'
+          blueprint: '"githubCodeScanAlert"'
           properties:
             state: .state
             severity: .rule.severity
             tags: .rule.tags
             description: .rule.description
             url: .html_url
+          relations:
+            repository: .__repository
+
+  - kind: secret-scanning-alerts
+    selector:
+      query: 'true'
+      state: all
+      hideSecret: false
+    port:
+      entity:
+        mappings:
+          identifier: .__repository + "/" + (.number | tostring)
+          title: .number | tostring
+          blueprint: '"githubSecretScanAlert"'
+          properties:
+            state: .state
+            secret_type: .rule.secret_type
+            url: .url
           relations:
             repository: .__repository
 ```

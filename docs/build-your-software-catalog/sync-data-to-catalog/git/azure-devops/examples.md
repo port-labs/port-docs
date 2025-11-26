@@ -96,6 +96,38 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PortAppConfig/>
 
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include minimum days" value="includeMinTimeInDays">
+
+The `minTimeInDays` selector controls how many days back abandoned or completed pull requests are ingested per repository. The default is **7 days**.
+
+```yaml showLineNumbers
+- kind: pullRequest
+  selector:
+    query: 'true'
+    # highlight-next-line
+    minTimeInDays: 30 # default is 7 days
+```
+
+</TabItem>
+
+<TabItem label="Include maximum results" value="includeMaxResults">
+
+The `maxResults` selector controls how many abandoned or completed pull requests are ingested per repository. Its default value is **100 pull requests**.
+
+```yaml showLineNumbers
+- kind: pullRequest
+  selector:
+    query: 'true'
+    # highlight-next-line
+    maxResults: 100 # default is 100
+```
+
+</TabItem>
+
+</Tabs>
+
 :::tip To Learn more
 
 - Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
