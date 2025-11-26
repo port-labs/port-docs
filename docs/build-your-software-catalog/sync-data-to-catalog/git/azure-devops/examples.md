@@ -112,6 +112,20 @@ Use the `minTimeInDays` selector to control how many days back abandoned or comp
 
 </TabItem>
 
+<TabItem label="Include Maximum Results" value="includeMaxResults">
+
+Use the `maxResults` selector to control how many abandoned or completed pull requests are ingested for each repository. The default value is `100`.
+
+```yaml showLineNumbers
+- kind: pullRequest
+  selector:
+    query: 'true'
+    # highlight-next-line
+    maxResults: 100 # default is 100
+```
+
+</TabItem>
+
 </Tabs>
 
 :::tip To Learn more
