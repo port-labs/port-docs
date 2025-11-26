@@ -288,6 +288,14 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/okta',
   },
   {
+    name: 'Microsoft Entra ID',
+    category: 'identity-providers',
+    iconName: 'Azure',
+    icon: '/img/guides/icons/Azure.svg',
+    darkIcon: '/img/guides/icons/Azure.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-provider/azure-ad',
+  },
+  {
     name: 'Amplication',
     category: 'other',
     icon: '/img/guides/icons/Amplication.svg',
