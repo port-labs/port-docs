@@ -49,7 +49,7 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
 
 1. Set up a Kubernetes cluster in the Kubernetes Engine in GCP.
 
-2. Make sure Workload Identity is enabled in the cluster:
+2. Enable Workload Identity in the cluster:
 
    ```bash
    gcloud container clusters update CLUSTER_NAME --workload-pool=PROJECT_ID.svc.id.goog --region REGION
@@ -58,12 +58,20 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
    - `CLUSTER_NAME` with the cluster name
    - `PROJECT_ID` with the Kubernetes cluster's project id
    - `REGION` The region of the cluster
-3. Bind the Kubernetes service account to the GCP service account:
+3. Make sure you are connected to the cluster through the CLI:
+   ```bash
+   gcloud container clusters get-credentials CLUSTER_NAME --region REGION --project PROJECT_ID
+   ```
+   Replace the following placeholders:
+   - `CLUSTER_NAME` with the cluster name
+   - `PROJECT_ID` with the Kubernetes cluster's project id
+   - `REGION` The region of the cluster
+4. Bind the Kubernetes service account to the GCP service account:
   :::tip
   No need for the Kubernetes service account to exist in this point , We'll create it once we deploy the helm chart
   :::
    ```bash showLineNumbers
-   gcloud iam service-accounts add-iam-policy-binding GCP_SERVICE_ACCOUNT_EMAIL@PROJECT_ID.iam.gserviceaccount.com \
+   gcloud iam service-accounts add-iam-policy-binding GCP_SERVICE_ACCOUNT_EMAIL \
      --role roles/iam.workloadIdentityUser \
      --member "serviceAccount:PROJECT_ID.svc.id.goog[NAMESPACE/KUBERNETES_SA_NAME]"
    ```
@@ -72,7 +80,7 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
    - `GCP_SERVICE_ACCOUNT_EMAIL` with your GCP service account email.
    - `PROJECT_ID` with your GCP project ID.
    - `NAMESPACE` with your Kubernetes namespace.
-   - `KUBERNETES_SA_NAME` with the service account name that will be used in the integration's values.yaml. (Note: the service account doesn't need to exist)
+   - `KUBERNETES_SA_NAME` with the Kubernetes service account name that will be used in the integration's values.yaml. (Note: the service account doesn't need to exist)
 
 <h2> Configuring and running the Helm command </h2>
 
