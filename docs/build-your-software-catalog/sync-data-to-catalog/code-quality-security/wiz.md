@@ -556,6 +556,16 @@ resources:
 
 </details>
 
+### Additional configuration
+
+The integration can be configured to fetch a number of pages of data from the Wiz API. The default value is **500**.
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+# highlight-next-line
+maxPages: 500
+```
 
 <MetricsAndSyncStatus/>
 
@@ -631,6 +641,38 @@ resources:
 ```
 
 </details>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include archived projects" value="includeArchivedProjects">
+
+The `includeArchived` selector controls whether to include archived projects in the integration. The default is **false**.
+
+```yaml showLineNumbers
+- kind: project
+  selector:
+    query: 'true'
+    # highlight-next-line
+    includeArchived: false # default is false
+```
+
+</TabItem>
+
+<TabItem label="Include business impact" value="includeBusinessImpact">
+
+The `impact` selector controls whether to filter projects by business impact in the integration. The default is **""**.
+
+```yaml showLineNumbers
+- kind: project
+  selector:
+    query: 'true'
+    # highlight-next-line
+    impact: "HBI" # default is ""
+```
+
+</TabItem>
+
+</Tabs>
 
 ### Control
 
@@ -908,6 +950,39 @@ resources:
 ```
 
 </details>
+
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include severity list" value="severityList">
+
+The `severityList` selector controls whether to filter issues by severity in the integration. The default is an **empty array**.
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: 'true'
+    # highlight-next-line
+    severityList: [] # default is []
+```
+
+</TabItem>
+
+<TabItem label="Include type list" value="typeList">
+
+The `typeList` selector controls whether to filter issues by type in the integration. The default is an **empty array**.
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: 'true'
+    # highlight-next-line
+    typeList: [] # default is []
+```
+
+</TabItem>
+
+</Tabs>
 
 ### Service Ticket
 
