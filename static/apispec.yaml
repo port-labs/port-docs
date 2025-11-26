@@ -1372,6 +1372,12 @@ components:
                       entity:
                         type: string
                         description: Fetch all audit logs related to the specified entity.
+                      include_deleted_entities:
+                        type: boolean
+                        description: Include deleted entities when searching for audit logs. This
+                          requires the `entity`, `blueprint`, `status`,
+                          `from`and `to` parameters. And the diff between `from`
+                          & `to` is limited to 1 day.
                       blueprint:
                         type: string
                         description: Fetch all audit logs related to the specified blueprint.
@@ -3836,6 +3842,12 @@ components:
                             entity:
                               type: string
                               description: Fetch all audit logs related to the specified entity.
+                            include_deleted_entities:
+                              type: boolean
+                              description: Include deleted entities when searching for audit logs. This
+                                requires the `entity`, `blueprint`, `status`,
+                                `from`and `to` parameters. And the diff between
+                                `from` & `to` is limited to 1 day.
                             blueprint:
                               type: string
                               description: Fetch all audit logs related to the specified blueprint.
@@ -11387,7 +11399,7 @@ paths:
                           description: The identifier of the blueprint.
                         title:
                           type: string
-                          maxLength: 30
+                          maxLength: 100
                           minLength: 1
                           description: The title of the blueprint.
                         description:
@@ -12017,7 +12029,7 @@ paths:
                   description: The identifier of the blueprint.
                 title:
                   type: string
-                  maxLength: 30
+                  maxLength: 100
                   minLength: 1
                   description: The title of the blueprint.
                 description:
@@ -12602,7 +12614,7 @@ paths:
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -13285,7 +13297,7 @@ paths:
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -13913,7 +13925,7 @@ paths:
                   description: The identifier of the blueprint.
                 title:
                   type: string
-                  maxLength: 30
+                  maxLength: 100
                   minLength: 1
                   description: The title of the blueprint.
                 description:
@@ -14495,7 +14507,7 @@ paths:
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -15158,7 +15170,7 @@ paths:
                   description: The identifier of the blueprint.
                 title:
                   type: string
-                  maxLength: 30
+                  maxLength: 100
                   minLength: 1
                   description: The title of the blueprint.
                 description:
@@ -15729,7 +15741,7 @@ paths:
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -16541,7 +16553,7 @@ paths:
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -17242,7 +17254,7 @@ paths:
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -17945,7 +17957,7 @@ paths:
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -20371,6 +20383,9 @@ paths:
                   type: boolean
                   description: Only relevant for **automations**. If `false`, the automation will
                     be inactive (will not be triggered).
+                allowAnyoneToViewRuns:
+                  type: boolean
+                  description: Whether members can view the runs of this action.
               additionalProperties: false
               required:
                 - identifier
@@ -28518,6 +28533,14 @@ paths:
           name: entity
           required: false
           description: Fetch all audit logs related to the specified entity.
+        - schema:
+            type: boolean
+          in: query
+          name: include_deleted_entities
+          required: false
+          description: Include deleted entities when searching for audit logs. This
+            requires the `entity`, `blueprint`, `status`, `from`and `to`
+            parameters. And the diff between `from` & `to` is limited to 1 day.
         - schema:
             type: string
           in: query
