@@ -362,8 +362,9 @@ This helps you maintain a complete and accurate catalog, especially for entities
 
     For example:
 
-    - Service identifiers end with `_service` (e.g., `payment_service`, `auth_service`).
     - **Mono-repo microservices:** Services are represented as code in a repository. Check the file structure of each repository to identify services. Services may be found in specific folders, such as `apps` or `services`.
+    - **Service repository identification:** Focus on repos that have keywords that can indicate they are services (e.g., `service`, `ms`, `srv`). Ignore repos of libraries and packages. Having also a PagerDuty service with a similar name as a repo is a strong indication that this is a service.
+    - **Identify users:** Check `Jira issues` assignees and `pull requests` to identify developers in the organization.
 
 6. Click on the `Discover` button.
 
