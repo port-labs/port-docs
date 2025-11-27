@@ -1,6 +1,7 @@
 ## Dashboard filters
 
-**Dashboard filters** allow you to apply selected filters **across all supported widgets** within a dashboard at once. This makes it easier to explore data consistently, without having to filter each widget individually.
+Dashboard filters allow you to apply selected filters **across all supported widgets** within a dashboard at once.  
+This makes it easier to explore data consistently, without having to filter each widget individually.
 
 ### Supported widgets
 
@@ -13,18 +14,19 @@ Dashboard filters currently apply to the following widgets:
 
 ### Supported filter types
 
-When creating a dashboard filter, the first select box allows you to choose between:
+When creating a dashboard filter, you can choose between:
 
 - **Basic properties** - Meta properties that apply across all blueprints in the dashboard.
-- **Blueprint-specific properties** - Properties from a specific blueprint that exists in the page's widgets.
+- **Blueprint-specific properties** - Properties from a specific blueprint that is selected in one or more widgets in the dashboard.
 
 The blueprint dropdown will only show blueprints that are used in widgets within the dashboard. For example, if a widget uses the `microservice` blueprint, `microservice` will appear as an option in the filter dropdown.
 
-<img src='/img/software-catalog/pages/dashboardFilterBlueprintServiceExample.png' width='80%' style={{borderRadius:'8px'}}/>
+<img src='/img/software-catalog/pages/dashboardFilterBlueprintServiceExample.png' width='80%' style={{borderRadius:'8px'}} border='1px'/>
 <br></br><br></br>
 
 :::info Filter scope
-Filters applied to a specific blueprint will only affect widgets that are relevant to that blueprint in the dashboard. Filters applied to basic properties will affect all supported widgets across all blueprints.
+Filters applied to a specific blueprint will only affect widgets that are relevant to that blueprint in the dashboard.  
+Filters applied to basic properties will affect all supported widgets across all blueprints.
 :::
 
 **Basic properties**
@@ -54,7 +56,7 @@ Below is an example dashboard with **two types of filters applied**:
 
 In the example, the **Services by language** widget reflects the blueprint filter by omitting microservices with `language = Ruby`, while every widget is narrowed by the **Owning teams** filter to show only entities associated with the selected team(s).
 
-<img src='/img/software-catalog/pages/dashboardFiltersExample.png' width='80%' style={{borderRadius:'8px'}}/>
+<img src='/img/software-catalog/pages/dashboardFiltersExample.png' width='80%' border='1px' style={{borderRadius:'8px'}}/>
 
 ### Permissions
 
@@ -62,4 +64,4 @@ In the example, the **Services by language** widget reflects the blueprint filte
 
 **Member role:** As a member, you can view and edit the operator and value of the current filters within the page (unless the page is locked).
 
-<img src='/img/software-catalog/pages/dashboardFiltersMemberEdit.png' width='80%' style={{borderRadius:'8px'}}/>
+<img src='/img/software-catalog/pages/dashboardFiltersMemberEdit.png' width='80%' border='1px' style={{borderRadius:'8px'}}/>
