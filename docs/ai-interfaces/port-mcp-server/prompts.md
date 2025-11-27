@@ -26,8 +26,8 @@ import TabItem from "@theme/TabItem"
 
 Port MCP Server supports two types of prompts:
 
-1. **Static prompts**: Pre-built prompts that are always available and don't require any setup
-2. **Custom dynamic prompts**: Organization-specific prompts that you create and manage in your Port portal
+1. **Static prompts**: Pre-built prompts that are always available and don't require any setup.
+2. **Custom dynamic prompts**: Organization-specific prompts that you create and manage in your Port portal.
 
 Both types become available in supported MCP clients (for example, Cursor or Claude) where developers and AI agents can discover and run them with the required inputs.
 
