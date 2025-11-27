@@ -10,7 +10,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .id | tostring
+					identifier: .releaseDefinition.projectReference.id + "/" + (.release.id | tostring) + "/" + (.id | tostring) | gsub(" "; "")
           title: .release.name + "-" + (.id | tostring) | gsub(" "; "")
           blueprint: '"azureDevopsReleaseDeployment"'
           properties:
@@ -23,7 +23,7 @@ resources:
             operationStatus: .operationStatus
             environment: .releaseEnvironment.name
           relations:
-            release: .release.id | tostring
+						release: .releaseDefinition.projectReference.id + "/" + (.release.id | tostring) | gsub(" "; "")
 ```
 
 </details>
