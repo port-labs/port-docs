@@ -358,12 +358,12 @@ This helps you maintain a complete and accurate catalog, especially for entities
 
 4. Select related blueprints to analyze. The entities from these blueprints will be used to identify patterns and suggest new entities for your target blueprint.
 
-5. For the best result we recommended to turn on the `Advanced configuration` toggle and provide more information, or specific patterns to guide the discovery process.
+5. For the best results, we recommend turning on the `Advanced configuration` toggle and providing the definition of the blueprint you want to discover, along with clear instructions for patterns or specific properties that should be considered.
 
     For example:
 
     - Service identifiers end with `_service` (e.g., `payment_service`, `auth_service`).
-    - Services are represented by directories in repositories. Look for service directories in monorepos to identify individual services.
+    - **Mono-repo microservices:** Services are represented as code in a repository. Check the file structure of each repository to identify services. Services may be found in specific folders, such as `apps` or `services`.
 
 6. Click on the `Discover` button.
 
