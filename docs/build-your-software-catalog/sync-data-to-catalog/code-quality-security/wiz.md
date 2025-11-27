@@ -556,21 +556,6 @@ resources:
 
 </details>
 
-### Additional configuration
-
-The integration can be configured to fetch a number of pages of data from the Wiz API. The default value is **500**.
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-# highlight-next-line
-maxPages: 500
-```
-
-:::caution Performance impact
-Setting high values for `maxPages` may significantly slow down your integration. This configuration allows the integration to fetch a number of pages of data from the Wiz API, which can be very resource-intensive. Consider setting this value to a lower number to improve performance.
-:::
-
 <MetricsAndSyncStatus/>
 
 ## Examples
@@ -986,7 +971,25 @@ The `typeList` selector controls whether to filter issues by type in the integra
 
 </TabItem>
 
+<TabItem label="Include max pages" value="maxPages">
+
+The `maxPages` selector controls the maximum number of pages to fetch from the Wiz API. The default is **500**.
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: 'true'
+    # highlight-next-line
+    maxPages: 500 # default is 500
+```
+
+</TabItem>
+
 </Tabs>
+
+:::caution Performance impact
+Setting high values for `maxPages` may significantly slow down your integration. This configuration allows the integration to fetch a number of pages of data from the Wiz API, which can be very resource-intensive. Consider setting this value to a lower number to improve performance.
+:::
 
 ### Service Ticket
 
