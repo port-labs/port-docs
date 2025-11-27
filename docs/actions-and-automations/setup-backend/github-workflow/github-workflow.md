@@ -33,6 +33,12 @@ When using this backend, you need to provide the GitHub **organization** and **r
 
 <GitHubWorkflowCommon />
 
+### Automatic workflow status update
+
+You can define whether Port should automatically use the workflow's end status (`SUCCESS`/`FAILURE`) to update the action/automation status in Port.
+
+By default, this is set to `true`. To disable this option, set the `reportWorkflowStatus` field to `false` in the `invocationMethod` object, or set the `Report workflow status` option to `No` if using the UI.
+
 <GitHubWorkflowLimitations />
 
 ## Examples

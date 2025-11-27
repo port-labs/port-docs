@@ -14,7 +14,8 @@ The GitHub Ocean backend uses the `INTEGRATION_ACTION` type and requires you to 
 Before using the GitHub Ocean backend, you need to:
 
 1. Install the [GitHub Ocean integration](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation/installation.mdx) in your Port organization.
-2. Ensure the integration uses Port machine tokens (organization-level tokens). Personal tokens or service account tokens are not supported.
+2. Ensure that actions processing is enabled. This is automatically enabled via the UI and OAuth installations.
+3. Ensure the integration uses Port machine tokens (organization-level tokens). Personal tokens or service account tokens are not supported.
 
 ## Configuration
 
@@ -26,8 +27,22 @@ When using this backend, you need to provide:
 
 <GitHubWorkflowCommon />
 
+### Automatic workflow status update
+
+You can define whether Port should automatically use the workflow's end status (`SUCCESS`/`FAILURE`) to update the action/automation status in Port.
+
+By default, this is set to `true`. To disable this option, set the `reportWorkflowStatus` field to `false` in the `invocationMethod` object, or set the `Report workflow status` option to `No` if using the UI.
+
+:::info Live events requirement
+Enabling this toggle requires the integration to run with live events enabled. The workflow status is updated via webhook events from GitHub. Live events are automatically activated via hosted by Port integration but are not automatically activated for self-hosted installations.
+:::
+
 ### Organization auto-fill
 
-If the organization was specified when installing the GitHub Ocean integration, the `org` field will be prefilled automatically. Otherwise, you need to specify the organization where the workflow resides.
+The `org` field behavior depends on the installation type:
+
+- **Hosted by Port**: If GitHub Ocean is installed via SaaS, the `org` input field will be hidden and prefilled in the UI only. Port automatically knows which organization the user selected during installation.
+- **Self-hosted**: If the integration is self-hosted, you must always fill in the organization input, even if it is configured for a specific organization.
+- **API configuration**: When creating an action through the API, you must specify the organization even if the integration is hosted by Port.
 
 <GitHubWorkflowLimitations />
