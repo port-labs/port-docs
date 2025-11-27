@@ -988,7 +988,7 @@ The `maxPages` selector controls the maximum number of pages to fetch from the W
 </Tabs>
 
 :::caution Performance impact
-Setting high values for `maxPages` may significantly slow down your integration. This configuration allows the integration to fetch a number of pages of data from the Wiz API, which can be very resource-intensive. Consider setting this value to a lower number to improve performance.
+Setting high values for `maxPages` may significantly prolong the sync process. This configuration allows the integration to fetch a number of pages of data from the Wiz API, which can be very resource-intensive. Consider setting this value to a lower number to improve performance.
 :::
 
 ### Service Ticket
