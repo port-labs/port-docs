@@ -11,7 +11,7 @@ import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
 
 The Port AI Assistant is the fastest way to start using AI with Port - no configuration required. Available through a floating chat button, it provides instant, intelligent answers about your software catalog, actions, and Port's capabilities.
 
-## What is the Port AI assistant?
+## What is the Port AI Assistant?
 
 The Port AI Assistant is an out-of-the-box chat interface that:
 
@@ -23,7 +23,7 @@ The Port AI Assistant is an out-of-the-box chat interface that:
 
 Built on [Port AI](/ai-interfaces/port-ai/overview), the assistant operates using [Port AI's developer tools](/ai-interfaces/port-ai/overview#port-ai-tools) in safe mode - meaning all actions run in **approval mode** (you get a link to review and execute) and uses read-only tools for data queries. The assistant also has access to Port's documentation through a dedicated MCP tool.
 
-## How to use the Port AI assistant
+## How to Use the Port AI Assistant
 
 The Port AI Assistant is available through a floating chat button in the Port interface. Simply click the button at the bottom-right corner to open the chat interface and start asking questions.
 
@@ -74,7 +74,7 @@ Consider selecting a specific agent when:
 
 For general questions about your catalog, Port features, or exploratory queries, the default Port AI Assistant provides the fastest and most flexible experience.
 
-## Example questions
+## Example Questions
 
 The Port AI Assistant can help with a wide variety of questions out of the box:
 
@@ -142,7 +142,7 @@ The Port AI Assistant can help with a wide variety of questions out of the box:
 </details>
 
 
-## Security & permissions
+## Security & Permissions
 
 The Port AI Assistant respects your organization's security controls:
 
@@ -154,7 +154,7 @@ The Port AI Assistant respects your organization's security controls:
 
 For comprehensive security information, see [AI Security and Data Controls](/ai-interfaces/port-ai/security-and-data-controls).
 
-## Frequently asked questions
+## Frequently Asked Questions
 
 <details>
 <summary><b>Do I need to configure anything to use the Port AI Assistant? (Click to expand)</b></summary>
