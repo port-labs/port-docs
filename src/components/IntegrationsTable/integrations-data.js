@@ -293,7 +293,7 @@ export const integrations = [
     iconName: 'Azure',
     icon: '/img/guides/icons/Azure.svg',
     darkIcon: '/img/guides/icons/Azure.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-provider/azure-ad',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/azure-ad',
   },
   {
     name: 'Amplication',
@@ -308,6 +308,13 @@ export const integrations = [
     icon: '/img/guides/icons/Backstage.svg',
     darkIcon: '/img/guides/icons/dark/Backstage.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/backstage',
+  },
+  {
+    name: 'Slack',
+    category: 'other',
+    icon: '/img/guides/icons/Slack.svg',
+    darkIcon: '/img/guides/icons/Slack.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/slack',
   },
   {
     name: 'Ocean custom',
