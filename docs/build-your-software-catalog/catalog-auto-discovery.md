@@ -44,7 +44,20 @@ You can:
 - Approve or decline suggestions individually or in bulk.
 - View the proposed updates to existing entities by clicking the <ThemedImage sources={{light: "/img/icons/Show-icon.svg", dark: "/img/icons/Show-icon-dark.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button.
 
+Suggested entities persist until they are approved or declined. You can close the discovery results window and return to review pending suggestions at any time by accessing the discovery results from the blueprint's catalog page using the <ThemedImage sources={{light: "/img/icons/AI-icon.svg", dark: "/img/icons/AI-dark-icon.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button.
+
 <img src="/img/software-catalog/pages/catalogDiscoveryResultsWindow.png" border='1px' width='80%' style={{borderRadius:'8px'}} />
+<br/><br/>
+
+**Re-run the discovery**
+
+You can re-run the discovery process at any time to generate additional or different suggestions. Each discovery run analyzes the current state of your catalog and may produce new suggestions based on newly added entities, updated relationships, or refined patterns. Re-running the discovery does not affect previously approved or declined suggestions.
+
+## Permissions
+
+The permissions are derived from the blueprint permissions.  
+You can approve suggested entities only if you have write access to the blueprint.  
+For more information about blueprint permissions, see the [set catalog RBAC](/build-your-software-catalog/set-catalog-rbac/) documentation.
 
 ## Limitations
 
