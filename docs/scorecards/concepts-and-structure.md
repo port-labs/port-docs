@@ -278,6 +278,10 @@ A scorecard filter is used to make sure only relevant entities are evaluated, on
 
 ## Blueprints structure
 
+:::info Feature rollout
+This feature is being rolled out gradually in the next couple of weeks. The new blueprints structure provides enhanced flexibility for managing and customizing scorecards, scorecard rules and scorecard rule results.
+:::
+
 In your [Builder](https://app.getport.io/settings/data-model) page scorecards are represented by three blueprints:
 - [`Scorecard`](#scorecard-structure) - Represents a collection of rules and levels for evaluating entities.
 - [`Rule`](#rule-structure) - Defines specific criteria for evaluation.
