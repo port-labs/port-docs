@@ -1,7 +1,7 @@
 import GitHubWorkflowCommon from '/docs/actions-and-automations/templates/_github-workflow-common.md'
 import GitHubWorkflowLimitations from '/docs/actions-and-automations/templates/_github-workflow-limitations.md'
 
-# GitHub app workflow
+# GitHub workflow
 
 The GitHub backend allows you to trigger GitHub workflows for your self-service actions and automations, using [Port's GitHub application](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup).  
 
