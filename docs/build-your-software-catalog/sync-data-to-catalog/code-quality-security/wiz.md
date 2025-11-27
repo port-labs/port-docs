@@ -567,6 +567,10 @@ deleteDependentEntities: true
 maxPages: 500
 ```
 
+:::caution Performance impact
+Setting high values for `maxPages` may significantly slow down your integration. This configuration allows the integration to fetch a number of pages of data from the Wiz API, which can be very resource-intensive. Consider setting this value to a lower number to improve performance.
+:::
+
 <MetricsAndSyncStatus/>
 
 ## Examples
