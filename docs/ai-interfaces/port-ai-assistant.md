@@ -5,7 +5,7 @@ title: Port AI Assistant
 
 import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
 
-# Port AI assistant
+# Port AI Assistant
 
 <BetaFeatureNotice id="ai-form" />
 
