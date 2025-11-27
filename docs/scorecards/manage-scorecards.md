@@ -369,16 +369,9 @@ ___
 
 **Update scorecards**
 
-To update a scorecard you can use two different URLs:
-
-1. Update a single Scorecard using the URL `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`. The request body will be the full Scorecard + the wanted changed values
-2. Make a PUT request to the URL `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`. to multiple scorecards at once
+In order to update a scorecard from the API, you will make a `PATCH` request to the following URL: `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`.
 
 The request body will include the existing body of the Scorecard, after the desired updates to the existing scorecard have been applied.
-
-:::note New identifier on scorecard update 
-When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the scorecard in order to be able to update its properties.
-:::
 
 ___
 
@@ -388,8 +381,8 @@ ___
 A Scorecard cannot be restored after deletion!
 :::
 
--   Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`.
--   Make an HTTP DELETE request to the URL `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}` the `blueprint_identifier` is the identifier of the scorecard's blueprint, and the `entity_identifier` is the identifier of the scorecard we want to delete.
+- In order to delete a scorecard using the API, you will make a `DELETE` request to the following URL: `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`.
+- In order to delete all entities of scorecards using the API, you wil make a `DELETE` request to the following URL: `https://api.port.io/v1/blueprints/{blueprint_identifier}/all-entities`.
 
 :::info Using scorecards API
 Scorecards can be managed either with the entities API endpoints mentioned above, or by the dedicated **Scorecards API** endpoints: [create](/api-reference/create-a-scorecard), [update](/api-reference/change-scorecards), [delete](/api-reference/delete-a-scorecard), etc. Note that if you are extending the scorecards data model you **should** use the entities endpoints.
