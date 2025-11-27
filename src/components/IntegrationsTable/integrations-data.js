@@ -341,9 +341,8 @@ export const integrations = [
   {
     name: 'Codex',
     category: 'ai-agents',
-    iconName: 'AI',
-    icon: '/img/guides/icons/AI.svg',
-    darkIcon: '/img/guides/icons/AI.svg',
+    icon: '/img/guides/icons/Codex.svg',
+    darkIcon: '/img/guides/icons/dark/Codex.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/codex',
   }
 ];
