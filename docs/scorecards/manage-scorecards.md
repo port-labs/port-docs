@@ -20,7 +20,7 @@ Port offers a variety of ways to create, edit and delete scorecards:
 
 You can create, edit, or delete scorecards either from the catalog page or the Data model page.
 
-<Tabs queryString="ui-method" defaultValue="catalog">
+<Tabs queryString="ui-method" defaultValue="data-model">
 
 <TabItem value="data-model" label="From the ''Data model'' page">
 
