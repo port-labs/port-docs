@@ -344,6 +344,13 @@ export const integrations = [
     icon: '/img/guides/icons/Cursor.svg',
     darkIcon: '/img/guides/icons/dark/Cursor.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/cursor',
+  },
+  {
+    name: 'Codex',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/Codex.svg',
+    darkIcon: '/img/guides/icons/dark/Codex.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/codex',
   }
 ];
 
