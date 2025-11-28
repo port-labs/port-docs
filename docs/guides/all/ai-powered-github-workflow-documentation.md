@@ -176,8 +176,7 @@ Before setting up the AI agent, we need to create a self-service action that the
           }
         }
       },
-      "requiredApproval": false,
-      "publish": true
+      "requiredApproval": false
     }
     ```
 
