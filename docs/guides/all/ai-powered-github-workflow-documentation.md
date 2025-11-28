@@ -23,10 +23,8 @@ This solution addresses several key challenges:
 
 This guide assumes you have:
 
-- A Port account and have completed the [onboarding process](/getting-started/overview).
 - Port's [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) installed and configured.
 - [AI agents feature enabled](/ai-interfaces/ai-agents/overview#access-to-the-feature) in your Port account.
-- Access to create blueprints, actions, and automations.
 
 ## Set up data model
 
@@ -131,6 +129,63 @@ The GitHub integration needs to be configured to fetch workflow file contents an
 <img src="/img/guides/ingestedYamlContent.png" border="1px" width="100%" />
 
 
+## Create workflow explanation update action
+
+Before setting up the AI agent, we need to create a self-service action that the agent can invoke to update the workflow explanation property.
+
+1. Go to [Self-Service](https://app.getport.io/self-serve).
+
+2. Click `+ New Action`.
+
+3. Click `{...} Edit JSON`.
+
+4. Copy and paste the following configuration:
+
+    <details>
+    <summary><b>Update Workflow Explanation action (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "update_workflow_explanation",
+      "title": "Update Workflow Explanation",
+      "icon": "Github",
+      "description": "Update the explanation property of a GitHub workflow entity",
+      "trigger": {
+        "type": "self-service",
+        "blueprintIdentifier": "githubWorkflow",
+        "userInputs": {
+          "properties": {
+            "explanation": {
+              "title": "Explanation",
+              "type": "string",
+              "format": "markdown",
+              "description": "The markdown documentation for this workflow"
+            }
+          },
+          "required": ["explanation"]
+        },
+        "operation": "DAY-2"
+      },
+      "invocationMethod": {
+        "type": "UPSERT_ENTITY",
+        "blueprintIdentifier": "githubWorkflow",
+        "mapping": {
+          "identifier": "{{ .entity.identifier }}",
+          "properties": {
+            "explanation": "{{ .inputs.explanation }}"
+          }
+        }
+      },
+      "requiredApproval": false,
+      "publish": true
+    }
+    ```
+
+    </details>
+
+5. Click `Save` to create the action.
+
+
 ## Create AI agent for documentation
 
 Create an AI agent that analyzes workflow YAML and generates comprehensive documentation.
@@ -154,11 +209,11 @@ Create an AI agent that analyzes workflow YAML and generates comprehensive docum
       "properties": {
         "description": "AI agent that automatically generates human-readable documentation for GitHub Actions workflows by analyzing YAML configurations",
         "status": "active",
-        "prompt": "You are a GitHub Actions workflow documentation agent. Analyze workflow YAML files and generate clear markdown documentation.\n\n**Your Task**: Generate developer-friendly documentation covering:\n\n## 1. Overview\nBrief summary (2-3 sentences) of what the workflow does and its purpose.\n\n## 2. Triggers\n- When the workflow runs (push, PR, schedule, manual)\n- Branch and path filters\n- How to trigger manually (if applicable)\n\n## 3. Jobs & Steps\nFor each job, explain:\n- Job purpose and runner environment\n- Key steps and what they do\n- Dependencies between steps\n\n## 4. Configuration Requirements\n- **Secrets**: List required secrets and their purpose\n- **Permissions**: GitHub permissions needed\n- **Inputs**: Required workflow inputs (if any)\n\n## 5. Outputs\n- What the workflow produces (artifacts, deployments)\n- Where to find results\n\n## 6. Usage\nHow developers can:\n- Use this workflow\n- Set up required secrets\n- Trigger and monitor runs\n\n**Guidelines**:\n- Write clearly for all developer skill levels\n- Explain security considerations (secrets, permissions)\n- Use markdown formatting (headers, lists, code blocks)\n- Keep it concise but comprehensive\n\n**Action**: Always update the workflow entity's `explanation` property with your generated documentation using the `update_entity` tool.",
+        "prompt": "You are a GitHub Actions workflow documentation agent. Analyze workflow YAML files and generate clear markdown documentation.\n\n**Your Task**: Generate developer-friendly documentation covering:\n\n## 1. Overview\nBrief summary (2-3 sentences) of what the workflow does and its purpose.\n\n## 2. Triggers\n- When the workflow runs (push, PR, schedule, manual)\n- Branch and path filters\n- How to trigger manually (if applicable)\n\n## 3. Jobs & Steps\nFor each job, explain:\n- Job purpose and runner environment\n- Key steps and what they do\n- Dependencies between steps\n\n## 4. Configuration Requirements\n- **Secrets**: List required secrets and their purpose\n- **Permissions**: GitHub permissions needed\n- **Inputs**: Required workflow inputs (if any)\n\n## 5. Outputs\n- What the workflow produces (artifacts, deployments)\n- Where to find results\n\n## 6. Usage\nHow developers can:\n- Use this workflow\n- Set up required secrets\n- Trigger and monitor runs\n\n**Guidelines**:\n- Write clearly for all developer skill levels\n- Explain security considerations (secrets, permissions)\n- Use markdown formatting (headers, lists, code blocks)\n- Keep it concise but comprehensive\n\n**Action**: Invoke the 'update_workflow_explanation' action to update the workflow entity's explanation property with your generated markdown documentation.",
         "execution_mode": "Automatic",
         "tools": [
           "^(list|get|search|track|describe)_.*",
-          "update_entity"
+          "update_workflow_explanation"
         ]
       },
       "relations": {}
@@ -171,7 +226,18 @@ Create an AI agent that analyzes workflow YAML and generates comprehensive docum
 
 
 
-## Create self-service action
+## Trigger documentation generation
+
+You can trigger documentation generation either manually or automatically:
+
+<Tabs groupId="trigger-mode" defaultValue="manual" values={[
+{label: "Manual (On-Demand)", value: "manual"},
+{label: "Automated (On Workflow Changes)", value: "automated"}
+]}>
+
+<TabItem value="manual">
+
+<h3> Create self-service action</h3>
 
 Create a self-service action that developers can trigger to generate documentation on demand.
 
@@ -227,12 +293,12 @@ Create a self-service action that developers can trigger to generate documentati
 
 5. Click `Save` to create the action.
 
-<img src="/img/guides/workflowTriggeredExplanationUpdate.png" border="1px" width="100%" />
 
-<img src="/img/guides/workflowTriggeredExplanationPropertyUpdate.png" border="1px" width="100%" />
+</TabItem>
 
+<TabItem value="automated">
 
-## Set up automation
+<h3> Set up automation</h3>
 
 Create automation to automatically generate documentation when workflows are created or updated.
 
@@ -295,11 +361,19 @@ Create automation to automatically generate documentation when workflows are cre
 
 5. Click `Create` to save the automation.
 
+</TabItem>
+
+</Tabs>
+
+<img src="/img/guides/workflowTriggeredExplanationUpdate.png" border="1px" width="100%" />
+
+<img src="/img/guides/workflowTriggeredExplanationPropertyUpdate.png" border="1px" width="100%" />
 
 
 ## Customization examples
 
-<h3> Example 1: Technical deep-dive style</h3>
+<details>
+<summary><b>Example 1: Technical deep-dive style</b></summary>
 
 Modify the AI agent prompt to generate more technical documentation:
 
@@ -311,7 +385,10 @@ Modify the AI agent prompt to generate more technical documentation:
 
 <img src="/img/guides/workflowTriggeredExplanationUpdateTechnicalDeepDive.png" border="1px" width="100%" />
 
-<h3> Example 2: Business stakeholder focus</h3>
+</details>
+
+<details>
+<summary><b>Example 2: Business stakeholder focus</b></summary>
 
 Generate high-level, business-focused explanations:
 
@@ -323,7 +400,10 @@ Generate high-level, business-focused explanations:
 
 <img src="/img/guides/workflowTriggeredExplanationUpdateBusinessStakeholderFocus.png" border="1px" width="100%" />
 
-<h3> Example 3: Security-focused explanations</h3>
+</details>
+
+<details>
+<summary><b>Example 3: Security-focused explanations</b></summary>
 
 For security-critical workflows:
 
@@ -335,7 +415,10 @@ For security-critical workflows:
 
 <img src="/img/guides/workflowTriggeredExplanationUpdateSecurityFocused.png" border="1px" width="100%" />
 
-<h3> Example 4: Filter specific workflows</h3>
+</details>
+
+<details>
+<summary><b>Example 4: Filter specific workflows</b></summary>
 
 Only auto-document production workflows:
 
@@ -353,7 +436,10 @@ Only auto-document production workflows:
 
 <img src="/img/guides/workflowTriggeredExplanationUpdateFilterSpecificWorkflows.png" border="1px" width="100%" />
 
-<h3> Example 5: Add team-specific context</h3>
+</details>
+
+<details>
+<summary><b>Example 5: Add team-specific context</b></summary>
 
 Include team conventions in the prompt:
 
@@ -364,6 +450,8 @@ Include team conventions in the prompt:
 ```
 
 <img src="/img/guides/workflowTriggeredExplanationUpdateAddTeamSpecificContext.png" border="1px" width="100%" />
+
+</details>
 
 
 ## Related guides
