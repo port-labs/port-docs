@@ -635,28 +635,28 @@ resources:
 
 <TabItem label="Include archived projects" value="includeArchivedProjects">
 
-The `includeArchived` selector controls whether to include archived projects in the integration. The default is **false**.
+The `includeArchived` selector controls whether to include archived projects in the integration. If not specified, archived projects are not included.
 
 ```yaml showLineNumbers
 - kind: project
   selector:
     query: 'true'
     # highlight-next-line
-    includeArchived: false # default is false
+    includeArchived: true
 ```
 
 </TabItem>
 
 <TabItem label="Include business impact" value="includeBusinessImpact">
 
-The `impact` selector controls whether to filter projects by business impact in the integration. The default is **""**.
+The `impact` selector controls whether to filter projects by business impact in the integration. If not specified, no business impact filters are applied.
 
 ```yaml showLineNumbers
 - kind: project
   selector:
     query: 'true'
     # highlight-next-line
-    impact: "HBI" # default is ""
+    impact: "HBI"
 ```
 
 </TabItem>
@@ -941,56 +941,6 @@ resources:
 </details>
 
 
-<Tabs groupId="config" queryString="parameter">
-
-<TabItem label="Include severity list" value="severityList">
-
-The `severityList` selector controls whether to filter issues by severity in the integration. The default is an **empty array**.
-
-```yaml showLineNumbers
-- kind: issue
-  selector:
-    query: 'true'
-    # highlight-next-line
-    severityList: [] # default is []
-```
-
-</TabItem>
-
-<TabItem label="Include type list" value="typeList">
-
-The `typeList` selector controls whether to filter issues by type in the integration. The default is an **empty array**.
-
-```yaml showLineNumbers
-- kind: issue
-  selector:
-    query: 'true'
-    # highlight-next-line
-    typeList: [] # default is []
-```
-
-</TabItem>
-
-<TabItem label="Include max pages" value="maxPages">
-
-The `maxPages` selector controls the maximum number of pages to fetch from the Wiz API. The default is **500**.
-
-```yaml showLineNumbers
-- kind: issue
-  selector:
-    query: 'true'
-    # highlight-next-line
-    maxPages: 500 # default is 500
-```
-
-</TabItem>
-
-</Tabs>
-
-:::caution Performance impact
-Setting high values for `maxPages` may significantly prolong the sync process. This configuration allows the integration to fetch a number of pages of data from the Wiz API, which can be very resource-intensive. Consider setting this value to a lower number to improve performance.
-:::
-
 ### Service Ticket
 
 <details>
@@ -1041,6 +991,64 @@ resources:
 ```
 
 </details>
+
+### Advanced configuration for Issue, Control and Service Ticket
+
+The following selectors can be used to filter the data fetched from the Wiz API:
+
+- `severityList`: List of severity values to filter issues by.
+- `typeList`: List of type values to filter issues by.
+- `maxPages`: Maximum number of pages to fetch from the Wiz API.
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include severity list" value="severityList">
+
+The `severityList` selector controls whether to filter issues by severity in the integration. If not specified, no severity filtering is applied.
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: 'true'
+    # highlight-next-line
+    severityList: ["HIGH", "CRITICAL", "INFORMATIONAL"]
+```
+
+</TabItem>
+
+<TabItem label="Include type list" value="typeList">
+
+The `typeList` selector optionally controls whether to filter issues by type in the integration. If not specified, no type filtering is applied.
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: 'true'
+    # highlight-next-line
+    typeList: ["TOXIC_COMBINATION", "THREAT_DETECTION"]
+```
+
+</TabItem>
+
+<TabItem label="Include max pages" value="maxPages">
+
+The `maxPages` selector controls the maximum number of pages to fetch from the Wiz API. The default is **500**.
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: 'true'
+    # highlight-next-line
+    maxPages: 100 # default is 500
+```
+
+</TabItem>
+
+</Tabs>
+
+:::caution Performance impact
+Setting high values for `maxPages` may significantly prolong the sync process. This configuration allows the integration to fetch a number of pages of data from the Wiz API, which can be very resource-intensive. Consider setting this value to a lower number to improve performance.
+:::
 
 ## Let's Test It
 
