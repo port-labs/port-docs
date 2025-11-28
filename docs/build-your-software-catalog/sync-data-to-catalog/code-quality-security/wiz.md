@@ -994,7 +994,7 @@ resources:
 
 ### Advanced configuration for Issue, Control and Service Ticket
 
-The following selectors can be used to filter the data fetched from the Wiz API:
+The following selectors can be used to filter the data fetched from the Wiz API for **Issue**, **Control** and **Service Ticket** kinds:
 
 - `severityList`: List of severity values to filter issues by.
 - `typeList`: List of type values to filter issues by.
