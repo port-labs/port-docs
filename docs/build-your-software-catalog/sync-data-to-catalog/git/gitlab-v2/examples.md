@@ -50,6 +50,31 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PortGroupsAppConfig/>
 
+#### Group configuration options
+
+:::caution Group search filtering effect
+If `search.group` is specified, only groups that match that search criteria will be synced.
+This means, the following kinds will be fetched based on the groups filtered with the search criteria:
+
+- `issue`
+- `project`
+
+For more information, see the [troubleshooting](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/installation#troubleshooting) section.
+
+:::
+
+The `search` port app configuration allows you to filter groups based on the matching the search criteria provided.
+By default, if `group` is not specified, all groups for the authorized user will be synced.
+
+```yaml
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+# highlight-next-line
+search:
+  # highlight-next-line
+  group: "port-labs" # filter groups by name matching the provided value
+```
 
 :::tip Learn more
 
@@ -79,6 +104,34 @@ You can use the following Port blueprint definitions and integration configurati
 <MergeRequestBlueprint />
 
 <MergeRequestConfig />
+
+#### Project configuration options
+
+:::caution Project search filtering effect
+If `search.project` is specified, only projects that match that search criteria will be synced.
+This means, the following kinds will be fetched based on the projects filtered with the search criteria:
+
+- `pipeline`
+- `job`
+- `release`
+- `tag`
+
+For more information, see the [troubleshooting](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/installation#troubleshooting) section.
+
+:::
+
+The `search` port app configuration allows you to filter projects based on the matching the search criteria provided.
+By default, if `project` is not specified, all projects for the authorized user will be synced.
+
+```yaml
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+# highlight-next-line
+search:
+  # highlight-next-line
+  project: "ocean" # filter projects by name matching the provided value
+```
 
 #### Merge request configuration options
 
@@ -127,6 +180,20 @@ By default, if not specified, it is set to `90` days.
 ```
 </TabItem>
 
+<TabItem label="Search" value="search">
+
+The `search` selector allows you to filter merge requests based on their title or description matching the search criteria.
+By default, if not specified, all merge requests will be synced.
+
+```yaml
+  - kind: merge-request
+    selector:
+      query: 'true'
+      # highlight-next-line
+      search: "port"
+```
+</TabItem>
+
 </Tabs>
 
 :::tip Learn more
@@ -149,6 +216,16 @@ You can use the following Port blueprint definitions and integration configurati
 
 <IssueConfig />
 
+The `search` selector allows you to filter issues based on their title or description matching the search criteria.
+By default, if not specified, all issues for the authorized group will be synced.
+
+```yaml
+- kind: issue
+  selector:
+    query: 'true'
+    # highlight-next-line
+    search: "pydantic"
+```
 
 :::tip Learn more
 
