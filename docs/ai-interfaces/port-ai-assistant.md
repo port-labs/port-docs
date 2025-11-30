@@ -37,6 +37,43 @@ After processing your request, you'll receive a detailed answer along with any r
 
 <img src='/img/ai-agents/AIChatFinalResponse.png' width='40%' border='1px' />
 
+## Using AI agents in the assistant
+
+While the Port AI Assistant provides comprehensive out-of-the-box capabilities, you can also select specific [AI Agents](/ai-interfaces/ai-agents/overview) to leverage their specialized expertise and custom configurations directly from the chat interface.
+
+### Selecting an agent
+
+To select an agent, click the **+** button next to the input field:
+
+<img src='/img/ai-agents/AIChatPlusButton.png' width='40%' border='1px' />
+
+This opens the categories menu where you can browse different options:
+
+<img src='/img/ai-agents/AIChatCategoryMenu.png' width='40%' border='1px' />
+
+From the categories menu, select the agents option to view all your active agents:
+
+<img src='/img/ai-agents/AIChatAgentsMenu.png' width='40%' border='1px' />
+
+Once you select an agent, it will be indicated in the chat interface, and your conversation will use that agent's specialized capabilities:
+
+<img src='/img/ai-agents/AIChatSelectedAgent.png' width='40%' border='1px' />
+
+### Switching between agents
+
+You can switch between different agents at any time during your conversation. Simply click the **+** button again to select a different agent or return to the default Port AI Assistant. This flexibility allows you to leverage different specialized agents as your needs change throughout a conversation.
+
+### When to use specific agents
+
+Consider selecting a specific agent when:
+
+- **Domain expertise needed**: You have a question that requires specialized knowledge (e.g., security, compliance, deployment workflows).
+- **Custom tools**: The agent has access to custom tools or integrations not available in the default assistant.
+- **Specific prompts**: The agent is configured with specific instructions or context for your team's workflows.
+- **Consistent behavior**: You want responses aligned with a particular agent's configuration and personality.
+
+For general questions about your catalog, Port features, or exploratory queries, the default Port AI Assistant provides the fastest and most flexible experience.
+
 ## Example Questions
 
 The Port AI Assistant can help with a wide variety of questions out of the box:
@@ -186,6 +223,17 @@ Try asking questions like "How do I create a blueprint?" or "What's the best way
 **Use AI Chat Widgets** (with [AI Agents](/ai-interfaces/ai-agents/overview)) when you need customized AI experiences embedded in dashboards - configure prompts, conversation starters, and specific tool selections for team-specific workflows.
 
 **Use AI Agents** for domain-specific expertise, machine-to-machine communication, and autonomous operations that require advanced customization.
+
+</details>
+
+<details>
+<summary><b>Can I select a specific AI Agent in the Port AI Assistant? (Click to expand)</b></summary>
+
+Yes! You can select any of your active [AI Agents](/ai-interfaces/ai-agents/overview) directly from the Port AI Assistant by clicking the **+** button next to the input field. This allows you to leverage specialized agents with domain-specific expertise, custom tools, or specific configurations.
+
+You can also switch between different agents at any time during your conversation, giving you the flexibility to use the right agent for each part of your workflow. Up to 50 agents are displayed in the selector, and you can use the search function to quickly find a specific agent if you have more.
+
+For more details, see the [Using AI Agents in the Assistant](#using-ai-agents-in-the-assistant) section above.
 
 </details>
 

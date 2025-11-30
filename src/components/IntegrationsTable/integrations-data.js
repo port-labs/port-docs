@@ -288,6 +288,14 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/okta',
   },
   {
+    name: 'Microsoft Entra ID',
+    category: 'identity-providers',
+    iconName: 'Azure',
+    icon: '/img/guides/icons/Azure.svg',
+    darkIcon: '/img/guides/icons/Azure.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/azure-ad',
+  },
+  {
     name: 'Amplication',
     category: 'other',
     icon: '/img/guides/icons/Amplication.svg',
@@ -300,6 +308,13 @@ export const integrations = [
     icon: '/img/guides/icons/Backstage.svg',
     darkIcon: '/img/guides/icons/dark/Backstage.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/backstage',
+  },
+  {
+    name: 'Slack',
+    category: 'other',
+    icon: '/img/guides/icons/Slack.svg',
+    darkIcon: '/img/guides/icons/Slack.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/slack',
   },
   {
     name: 'Ocean custom',
@@ -329,6 +344,13 @@ export const integrations = [
     icon: '/img/guides/icons/Cursor.svg',
     darkIcon: '/img/guides/icons/dark/Cursor.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/cursor',
+  },
+  {
+    name: 'Codex',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/Codex.svg',
+    darkIcon: '/img/guides/icons/dark/Codex.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/codex',
   }
 ];
 
