@@ -393,7 +393,7 @@ Scorecards can be managed either with the entities API endpoints mentioned above
 
 <TabItem value="Terraform">
 
-Since the `scorecard`, `scorecard rule` and `scorecard rule result` blueprints can only be extended, to configure them using Terraform you need use the `port_scorecard` resource.  
+Since the `scorecard`, `scorecard rule` and `scorecard rule result` blueprints can only be extended, to configure them using Terraform you need use the `port_entity` resource.  
 
 These blueprints can not be created so don't forget to **import** them to your `Terraform state`.
 
@@ -406,50 +406,119 @@ Here is an example of how to create an Ownership scorecard with the Terraform pr
 <details>
 <summary><b>Terraform create example (click to expand)</b></summary>
 
-    ```hcl showLineNumbers
-    resource "port_scorecard" "ownership" {
-      blueprint = "microservice"
-      identifier = "Ownership"
-      title = "Ownership"
-      rules = [
-        {
-          identifier = "hasSlackChannel"
-          title = "Has Slack Channel"
-          level = "Silver"
-          query = {
-            combinator = "and"
-            conditions = [
-              jsonencode({
-                operator = "isNotEmpty"
-                property = "slackChannel"
-              })
-            ]
-          }
-        },
-        {
-          identifier = "hasTeam"
-          title = "Has Team"
-          level = "Bronze"
-          query = {
-            combinator = "and"
-            conditions = [
-              jsonencode({
-                operator = "isNotEmpty"
-                property = "$team"
-              })
-            ]
-          }
-        }
-      ]
+```hcl showLineNumbers
+# Create the Ownership Scorecard entity
+resource "port_entity" "ownership_scorecard" {
+  title      = "Ownership"
+  identifier = "ownership"
+  blueprint  = "_scorecard"
+  
+  properties = {
+    string_props = {
+      "blueprint" = "microservice"
     }
-    ```
+    
+    array_props = {
+      object_items = {
+        "levels" = [
+          jsonencode({
+            color = "paleBlue"
+            title = "Basic"
+          }),
+          jsonencode({
+            color = "bronze"
+            title = "Bronze"
+          }),
+          jsonencode({
+            color = "silver"
+            title = "Silver"
+          }),
+          jsonencode({
+            color = "gold"
+            title = "Gold"
+          }),
+        ]
+      }
+    }
+  }
+}
+
+# Create the "Has Slack Channel" rule
+resource "port_entity" "ownership_has_slack_channel_rule" {
+  title      = "Has Slack Channel"
+  identifier = "${port_entity.ownership_scorecard.identifier}_has_slack_channel"
+  blueprint  = "_rule"
+  
+  properties = {
+    string_props = {
+      "level"            = "Silver"
+      "rule_description" = "Checks if the microservice has a Slack channel"
+    }
+    
+    object_props = {
+      "query" = jsonencode({
+        "combinator" = "and"
+        "conditions" = [
+          {
+            "operator" = "isNotEmpty"
+            "property" = "slackChannel"
+          }
+        ]
+      })
+    }
+  }
+  
+  relations = {
+    single_relations = {
+      "scorecard" = port_entity.ownership_scorecard.identifier
+    }
+  }
+  
+  depends_on = [port_entity.ownership_scorecard]
+}
+
+# Create the "Has Team" rule
+resource "port_entity" "ownership_has_team_rule" {
+  title      = "Has Team"
+  identifier = "${port_entity.ownership_scorecard.identifier}_has_team"
+  blueprint  = "_rule"
+  
+  properties = {
+    string_props = {
+      "level"            = "Bronze"
+      "rule_description" = "Checks if the microservice has a team assigned"
+    }
+    
+    object_props = {
+      "query" = jsonencode({
+        "combinator" = "and"
+        "conditions" = [
+          {
+            "operator" = "isNotEmpty"
+            "property" = "$team"
+          }
+        ]
+      })
+    }
+  }
+  
+  relations = {
+    single_relations = {
+      "scorecard" = port_entity.ownership_scorecard.identifier
+    }
+  }
+  
+  depends_on = [port_entity.ownership_scorecard]
+}
+```
+
 </details>
 
 ___
 
 **Update scorecards**
 
-In order to update a scorecard with the Terraform provider, you will need to run the `terraform apply -target=port_scorecard.<resourceId>` command with the updated scorecard resource.
+In order to update a scorecard with the Terraform provider, you will need to run the `terraform apply -target=port_entity.<resourceId>` command with the updated scorecard resource.
 
 ___
 
@@ -459,7 +528,7 @@ ___
 A Scorecard cannot be restored after deletion!
 :::
 
-In order to delete a scorecard using the Terraform provider, use the `terraform destroy -target=port_scorecard.<resourceId>` command with the scorecard resource you want to delete. (remember that it is also possible to remove the definition of the `port_scorecard` resource from the `.tf` file and run `terraform apply`)
+In order to delete a scorecard using the Terraform provider, use the `terraform destroy -target=port_entity.<resourceId>` command with the scorecard resource you want to delete. (remember that it is also possible to remove the definition of the `port_entity` resource from the `.tf` file and run `terraform apply`)
 
 </TabItem>
 
