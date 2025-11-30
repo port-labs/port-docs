@@ -698,6 +698,42 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Catalog auto discovery",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/create-an-auto-discovery-invocation",
+          label: "Create an auto-discovery invocation",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/review-auto-discovery-invocation-suggestions",
+          label: "Review auto-discovery invocation suggestions",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-auto-discovery-invocation-suggestions",
+          label: "Get auto-discovery invocation suggestions",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-latest-auto-discovery-invocation-for-a-blueprint",
+          label: "Get latest auto-discovery invocation for a blueprint",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-auto-discovery-invocation-suggestion",
+          label: "Update auto-discovery invocation suggestion",
+          className: "api-method patch",
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Apps",
       items: [
         {
