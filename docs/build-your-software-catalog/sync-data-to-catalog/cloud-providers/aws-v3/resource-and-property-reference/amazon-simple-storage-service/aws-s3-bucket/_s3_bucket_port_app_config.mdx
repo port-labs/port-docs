@@ -1,0 +1,23 @@
+<details>
+<summary><b>S3 Bucket mapping configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::S3::Bucket
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.Arn
+          title: .Properties.BucketName
+          blueprint: '"s3Bucket"'
+          properties:
+            arn: .Properties.Arn
+            creationDate: .Properties.CreationDate
+            tags: .Properties.Tags
+          relations:
+            account: .__ExtraContext.AccountId
+```
+
+</details>

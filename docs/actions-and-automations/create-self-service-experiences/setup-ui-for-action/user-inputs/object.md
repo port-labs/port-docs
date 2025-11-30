@@ -22,7 +22,7 @@ The object input type can be used to store any key/value based data, for example
 - HTTP responses
 - Dictionaries/Hash maps
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **Open terraform PR to add S3 bucket** action whose `policy` input is an object input. 🎬
+In the [live demo](https://showcase.port.io/self-serve) self-service hub page, we can see the **Open terraform PR to add S3 bucket** action whose `policy` input is an object input. 🎬
 
 ## API definition
 
@@ -153,8 +153,8 @@ resource "port_action" "myAction" {
 
 Object validations support the following operators:
 
-- `properties` - which keys must appear and what their type should be;
-- `additionalProperties` - are keys not defined in `properties` allowed and what their type should be;
+- `properties` - defines the type for keys if they appear (use `required` array to make keys mandatory).
+- `additionalProperties` - whether keys not defined in `properties` are allowed (boolean) or what type they should be (type definition).
 - `patternProperties` - which regex pattern should properties follow
 
 :::tip

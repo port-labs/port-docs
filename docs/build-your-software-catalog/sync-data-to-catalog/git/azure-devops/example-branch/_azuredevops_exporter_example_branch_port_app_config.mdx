@@ -1,0 +1,40 @@
+<details>
+<summary><b>Integration mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"azureDevopsRepository"'
+          properties:
+            url: .remoteUrl
+            readme: file://README.md
+            id: .id
+            last_activity: .project.lastUpdateTime
+          relations:
+            project: .project.id | gsub(" "; "")
+  - kind: branch
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .objectId
+          title: .name
+          blueprint: '"azureDevopsBranch"'
+          properties:
+            repositoryName: .__repository.name
+            projectName: .__repository.project.name
+            link: .__repository.webUrl + "?version=GB" + .name
+          relations:
+            repository: .__repository.id
+
+```
+
+</details>

@@ -22,6 +22,14 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-cloud',
   },
   {
+    name: 'BitBucket server integration',
+    category: 'git',
+    iconName: 'BitBucket',
+    icon: '/img/guides/icons/BitBucket.svg',
+    darkIcon: '/img/guides/icons/dark/BitBucket.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket-server',
+  },
+  {
     name: 'AzureDevops',
     category: 'git',
     icon: '/img/guides/icons/AzureDevops.svg',
@@ -50,10 +58,33 @@ export const integrations = [
     darkIcon: '/img/guides/icons/dark/ArgoCD.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/argocd',
   },
+  {
+    name: 'Komodor',
+    category: 'kubernetes',
+    icon: '/img/guides/icons/Komodor.svg',
+    darkIcon: '/img/guides/icons/dark/Komodor.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/komodor',
+  },
+  {
+    name: 'Istio',
+    category: 'kubernetes',
+    icon: '/img/guides/icons/Istio.svg',
+    darkIcon: '/img/guides/icons/dark/Istio.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/istio',
+  },
   // Project Management
   {
     name: 'Jira',
     category: 'project',
+    iconName: 'Jira',
+    icon: '/img/guides/icons/Jira.svg',
+    darkIcon: '/img/guides/icons/dark/Jira.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/project-management/jira',
+  },
+  {
+    name: 'Jira server (self-hosted)',
+    category: 'project',
+    iconName: 'Jira',
     icon: '/img/guides/icons/Jira.svg',
     darkIcon: '/img/guides/icons/dark/Jira.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/project-management/jira',
@@ -74,11 +105,20 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes',
   },
   {
-    name: 'AWS',
+    name: 'AWS self-hosted',
     category: 'cloud-providers',
+    iconName: 'AWS',
     icon: '/img/guides/icons/AWS.svg',
     darkIcon: '/img/guides/icons/dark/AWS.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws',
+  },
+  {
+    name: 'AWS hosted by Port',
+    category: 'cloud-providers',
+    iconName: 'AWS',
+    icon: '/img/guides/icons/AWS.svg',
+    darkIcon: '/img/guides/icons/dark/AWS.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/Overview',
   },
   {
     name: 'Azure',
@@ -144,6 +184,27 @@ export const integrations = [
     icon: '/img/guides/icons/SonarQube.svg',
     darkIcon: '/img/guides/icons/dark/SonarQube.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube',
+  },
+  {
+    name: 'Aikido',
+    category: 'security',
+    icon: '/img/guides/icons/Aikido.svg',
+    darkIcon: '/img/guides/icons/dark/Aikido.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/code-quality-security/aikido',
+  },
+  {
+    name: 'Checkmarx',
+    category: 'security',
+    icon: '/img/guides/icons/Checkmarx.svg',
+    darkIcon: '/img/guides/icons/dark/Checkmarx.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/code-quality-security/checkmarx',
+  },
+  {
+    name: 'Armorcode',
+    category: 'security',
+    icon: '/img/guides/icons/Armorcode.svg',
+    darkIcon: '/img/guides/icons/dark/Armorcode.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/code-quality-security/armorcode',
   },
   // Feature Management
   {
@@ -218,6 +279,22 @@ export const integrations = [
     darkIcon: '/img/guides/icons/dark/Kafka.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka',
   },
+  // Identity providers
+  {
+    name: 'Okta',
+    category: 'identity-providers',
+    icon: '/img/guides/icons/Okta.svg',
+    darkIcon: '/img/guides/icons/dark/Backstage.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/okta',
+  },
+  {
+    name: 'Microsoft Entra ID',
+    category: 'identity-providers',
+    iconName: 'Azure',
+    icon: '/img/guides/icons/Azure.svg',
+    darkIcon: '/img/guides/icons/Azure.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/azure-ad',
+  },
   {
     name: 'Amplication',
     category: 'other',
@@ -233,18 +310,54 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/backstage',
   },
   {
+    name: 'Slack',
+    category: 'other',
+    icon: '/img/guides/icons/Slack.svg',
+    darkIcon: '/img/guides/icons/Slack.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/slack',
+  },
+  {
+    name: 'Ocean custom',
+    category: 'other',
+    iconName: 'APIcatalog',
+    icon: '/img/guides/icons/APIcatalog.svg',
+    darkIcon: '/img/guides/icons/dark/APIcatalog.svg',
+    docsUrl: '/build-your-software-catalog/custom-integration/ocean-custom-integration/overview',
+  },
+  {
     name: 'Github Copilot',
     category: 'ai-agents',
     icon: '/img/guides/icons/GithubCopilot.svg',
     darkIcon: '/img/guides/icons/dark/GithubCopilot.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/github-copilot',
+  },
+  {
+    name: 'Claude AI',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/ClaudeAI.svg',
+    darkIcon: '/img/guides/icons/dark/ClaudeAI.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/claude',
+  },
+  {
+    name: 'Cursor',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/Cursor.svg',
+    darkIcon: '/img/guides/icons/dark/Cursor.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/cursor',
+  },
+  {
+    name: 'Codex',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/Codex.svg',
+    darkIcon: '/img/guides/icons/dark/Codex.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/codex',
   }
 ];
 
 export const categories = {
   'All': 'all',
   'Git': 'git',
-  'Kubernetes': 'kubernetes',
+  'Kubernetes stack': 'kubernetes',
   'Cloud providers': 'cloud-providers',
   'IaC': 'iac',
   'Incident management': 'incident',
@@ -256,5 +369,6 @@ export const categories = {
   'Event processing': 'event',
   'CI/CD': 'cicd',
   'AI agents': 'ai-agents',
+  'Identity providers': 'identity-providers',
   'Other': 'other',
 }; 

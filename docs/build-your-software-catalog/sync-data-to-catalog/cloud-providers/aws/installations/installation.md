@@ -8,10 +8,12 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Installation
 
+<IntegrationVersion integration="aws" />
+
 ## Permissions
 
 - To get Port API credentials, you check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
-- In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the relevant resources (ECS, IAM, and VPC).
+- In order to successfully deploy the AWS on-premise integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the relevant resources (ECS, IAM, and VPC).
 
 :::tip Multiple Account Support
 To do the following:
@@ -27,9 +29,7 @@ Choose one of the following installation methods:
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm (Scheduled)">
 
-<IntegrationVersion integration="aws" />
-
-The AWS integration is deployed using Helm on you cluster.
+The AWS on-premise integration is deployed using Helm on you cluster.
 You can check out the Helm chart [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-ocean).
 
 ## Prerequisites

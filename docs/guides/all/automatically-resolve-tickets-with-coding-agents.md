@@ -125,37 +125,31 @@ Next, we will create an AI agent that generates GitHub issues from Jira tickets 
 
     ```json showLineNumbers
     {
-      "identifier": "github_issue_creation",
-      "title": "Github Issue Creation",
+      "identifier": "work_item_synchronizer",
+      "title": "Work Item Synchronizer",
       "icon": "Details",
       "team": [],
       "properties": {
-        "description": "Creates Github issues from Jira tickets",
+        "description": "Ensures seamless workflow continuity across development tools",
         "status": "active",
-        "allowed_blueprints": [
-          "service",
-          "githubIssue",
-          "githubRepository",
-          "_user",
-          "_team"
-        ],
-        "allowed_actions": [
-          "create_github_issue"
-        ],
         "prompt": "Create a GitHub issue that builds on the context of a linked Jira ticket.\n\nThe GitHub issue should:\n1.\tSummarize and clearly explain the task, using the Jira description as a base.\n2.\tAugment the description with relevant insights from the repository — such as the README, setup or contribution instructions, existing issues, or implementation notes — to make the issue fully self-contained.\n3.\tThe **issue title MUST start with the Jira ticket key**, using the format: `<Jira-Ticket-ID> - <what needs to be done>` (e.g., `JIRA-1234 - Add missing lint configuration`). This ensures PRs created by Copilot are linkable back to Jira.\n4.\tAdd GitHub labels, including one with the Jira ticket key (e.g., `JIRA-1234`), and any additional relevant labels (e.g., bug, enhancement, infra).\n5.\tAlso include a label named `auto_assign` in all creations.\n6. The GitHub issue body should end with the following directive:\n🚨 **IMPORTANT NOTE FOR COPILOT**: When creating the pull request to resolve this issue:\n    1. You **must ALWAY include the Jira ticket ID** (e.g., `JIRA-1234`) in the **PR title**.\n    2. Do **not** rename the PR title or remove the Jira ticket reference.\n    3. Add GitHub labels with the Jira ticket key (e.g., `JIRA-1234`) to the PR.\n\nIf no direct match can be confidently made (e.g., across multiple repos), make a best guess, and clearly state any assumptions in the issue body.",
         "execution_mode": "Automatic",
-        "conversation_starters": []
+        "conversation_starters": [],
+        "tools": [
+          "^(list|get|search|track|describe)_.*",
+          "run_create_github_issue"
+        ]
       },
       "relations": {}
     }
     ```
     </details>
 
-5. Click `Create` to save the agent.
+    :::tip MCP Enhanced Capabilities
+    The AI agent uses MCP (Model Context Protocol) enhanced capabilities to automatically discover important and relevant blueprint entities via its tools. The `^(list|get|search|track|describe)_.*` pattern allows the agent to access and analyze related entities in your software catalog, providing richer context for GitHub issue creation. Additionally, we explicitly add `run_create_github_issue` to the tools, which instructs the AI agent to call this specific action to create GitHub issues from Jira tickets.
+    :::
 
-:::tip Enhance Context with Integrations
-The more integrations and data you add to the agent, the richer the context it will provide to the Copilot agent. Consider integrating additional data sources like deployment history, related incidents, and more to enhance the AI agent's effectiveness.
-:::
+5. Click `Create` to save the agent.
 
 
 ## Set up automations
@@ -207,7 +201,7 @@ This automation can be configured to trigger based on various criteria. Currentl
       },
       "invocationMethod": {
         "type": "WEBHOOK",
-        "url": "https://api.getport.io/v1/agent/github_issue_creation/invoke",
+        "url": "https://api.getport.io/v1/agent/work_item_synchronizer/invoke",
         "agent": false,
         "synchronized": true,
         "method": "POST",

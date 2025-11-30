@@ -16,8 +16,9 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Linear
 
-Port's Linear integration allows you to model Linear resources in your software catalog and ingest data into them.
+<IntegrationVersion integration="linear" />
 
+Port's Linear integration allows you to model Linear resources in your software catalog and ingest data into them.
 
 ## Overview
 This integration allows you to:
@@ -25,7 +26,7 @@ This integration allows you to:
 - Map and organize your desired Linear resources and their metadata in Port (see supported resources below).
 - Watch for Linear object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Linear into Port are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
@@ -41,15 +42,13 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation integration="Linear"/>
 
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="linear" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

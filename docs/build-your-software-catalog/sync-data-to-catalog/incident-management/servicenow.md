@@ -20,8 +20,9 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # ServiceNow
 
-Port's ServiceNow integration allows you to model ServiceNow resources in your software catalog and ingest data into them.
+<IntegrationVersion integration="servicenow" />
 
+Port's ServiceNow integration allows you to model ServiceNow resources in your software catalog and ingest data into them.
 
 ## Overview
 
@@ -29,7 +30,7 @@ This integration allows you to:
 
 - Map and organize your desired ServiceNow resources and their metadata in Port (see supported resources below).
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from ServiceNow into Port are listed below. 
 
@@ -59,8 +60,6 @@ Not sure which method is right for your use case? Check the available [installat
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="servicenow" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

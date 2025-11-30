@@ -16,7 +16,7 @@ This integration allows you to:
 - Manage Port entities using GitOps.
 
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Azure DevOps into Port are listed below.
 
@@ -53,7 +53,7 @@ resources:
     entity:
       mappings:
         identifier: .id | gsub(" "; "")
-        blueprint: '"project"'
+        blueprint: '"azureDevopsproject"'
         title: .name
         properties:
           state: .state
@@ -67,10 +67,9 @@ resources:
   port:
     entity:
       mappings:
-        identifier: >-
-          "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
+        identifier: .id
         title: .name
-        blueprint: '"service"'
+        blueprint: '"azureDevopsRepository"'
         properties:
           url: .remoteUrl
           readme: file://README.md
@@ -84,9 +83,8 @@ resources:
   port:
     entity:
       mappings:
-        identifier: >-
-          "\(.__repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
-        blueprint: '"service"'
+        identifier: .__repository.id
+        blueprint: '"azureDevopsRepository"'
         properties:
           minimumApproverCount: .settings.minimumApproverCount
 - kind: repository-policy
@@ -95,9 +93,8 @@ resources:
   port:
     entity:
       mappings:
-        identifier: >-
-          "\(.__repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
-        blueprint: '"service"'
+        identifier: .__repository.id
+        blueprint: '"azureDevopsRepository"'
         properties:
           workItemLinking: .isEnabled and .isBlocking
 - kind: user
@@ -134,15 +131,14 @@ resources:
   port:
     entity:
       mappings:
-        identifier: >-
-          "\(.repository.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.repository.name | ascii_downcase | gsub("[ ();]"; ""))/\(.pullRequestId | tostring)"
+        identifier: .repository.id + "/" + (.pullRequestId | tostring)
         blueprint: '"azureDevopsPullRequest"'
         properties:
           status: .status
           createdAt: .creationDate
           leadTimeHours: (.creationDate as $createdAt | .status as $status | .closedDate as $closedAt | ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | ($closedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $closedTimestamp | if $status == "completed" and $closedTimestamp != null then (((($closedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) else null end)
         relations:
-          repository: .repository.project.name + "/" + .repository.name | gsub(" "; "")
+          repository: .repository.id
           service:
             combinator: '"and"'
             rules:
@@ -169,9 +165,9 @@ resources:
   port:
     entity:
       mappings:
-        identifier: .__project.id + "-" + (.id | tostring) | gsub(" "; "")
+        identifier: .__project.id + "/" + (.id | tostring) | gsub(" "; "")
         title: .buildNumber
-        blueprint: '"build"'
+        blueprint: '"azureDevopsbuild"'
         properties:
           status: .status
           result: .result
@@ -189,11 +185,9 @@ resources:
   port:
     entity:
       mappings:
-        identifier: >-
-          .__project.id + "-" + (.__buildId | tostring) + "-" + (.id |
-          tostring) | gsub(" "; "")
+				identifier: .__project.id + "/" + (.__build.id | tostring) + "/" + (.id | tostring) | gsub(" "; "")
         title: .name
-        blueprint: '"pipeline-stage"'
+        blueprint: '"azureDevopsPipelineStage"'
         properties:
           state: .state
           result: .result
@@ -202,17 +196,15 @@ resources:
           stageType: .type
         relations:
           project: .__project.id | gsub(" "; "")
-          build: (.__project.id + "-" + (.__buildId | tostring)) | gsub(" "; "")
+          build: (.__project.id + "/" + (.__buildId | tostring)) | gsub(" "; "")
 - kind: pipeline-run
   selector:
     query: 'true'
   port:
     entity:
       mappings:
-        identifier: >-
-          .__project.id + "-" + (.__pipeline.id | tostring) + "-" + (.id |
-          tostring) | gsub(" "; "")
-        blueprint: '"pipeline-run"'
+				identifier: .__project.id + "/" + (.__pipeline.id | tostring) + "/" + (.id | tostring) | gsub(" "; "")
+        blueprint: '"azureDevopsPipelineRun"'
         properties:
           state: .state
           result: .result
@@ -221,6 +213,60 @@ resources:
           pipelineName: .pipeline.name
         relations:
           project: .__project.id | gsub(" "; "")
+- kind: environment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+				identifier: .project.id + "/" + (.id | tostring) | gsub(" "; "")
+        title: .name | tostring
+        blueprint: '"azureDevopsEnvironment"'
+        properties:
+          description: .description
+          createdOn: .createdOn
+          lastModifiedOn: .lastModifiedOn
+        relations:
+          project: .project.id
+- kind: release-deployment
+  selector:
+    query: 'true'
+    includeRelease: true
+  port:
+    entity:
+      mappings:
+				identifier: .releaseDefinition.projectReference.id + "/" + (.release.id | tostring) + "/" + (.id | tostring) | gsub(" "; "")
+        title: .release.name + "-" + (.id | tostring) | gsub(" "; "")
+        blueprint: '"azureDevopsReleaseDeployment"'
+        properties:
+          status: .deploymentStatus
+          url: .url
+          reason: .reason
+          startedOn: .startedOn
+          completedOn: .completedOn
+          requestedBy: .requestedBy.displayName
+          operationStatus: .operationStatus
+          environment: .releaseEnvironment.name
+        relations:
+					release: .releaseDefinition.projectReference.id + "/" + (.release.id | tostring) | gsub(" "; "")
+- kind: pipeline-deployment
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+				identifier: .__project.id + "/" + (.environmentId | tostring) + "/" + (.id | tostring) | gsub(" "; "")
+        title: .requestIdentifier | tostring
+        blueprint: '"azureDevopsPipelineDeployment"'
+        properties:
+          planType: .planType
+          stageName: .stageName
+          jobName: .jobName
+          result: .result
+          startTime: .startTime
+          finishTime: .finishTime
+        relations:
+					environment: .__project.id + "/" + (.environmentId | tostring) | gsub(" "; "")
 ```
 
 </details>
@@ -661,7 +707,7 @@ This section includes a sample response data from Azure DevOps. In addition, it 
 Here is an example of the payload structure from Azure DevOps:
 
 <details>
-<summary> Project response data</summary>
+<summary><b>Project response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -696,7 +742,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Repository response data</summary>
+<summary><b>Repository response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -725,7 +771,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Work-item response data</summary>
+<summary><b>Work-item response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -805,7 +851,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline response data</summary>
+<summary><b>Pipeline response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -828,7 +874,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pull request response data</summary>
+<summary><b>Pull request response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -917,7 +963,7 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 <details>
-<summary> Build response data</summary>
+<summary><b>Build response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -956,7 +1002,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline-stage response data</summary>
+<summary><b>Pipeline-stage response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -978,7 +1024,7 @@ Here is an example of the payload structure from Azure DevOps:
 </details>
 
 <details>
-<summary> Pipeline-run response data</summary>
+<summary><b>Pipeline-run response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1006,12 +1052,75 @@ Here is an example of the payload structure from Azure DevOps:
 
 
 
+<details>
+<summary><b>Iteration response data (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "id": "Sprint 1",
+  "name": "Sprint 1",
+  "path": "\\Port Integration\\Sprint 1",
+  "attributes": {
+    "startDate": "2023-11-01T00:00:00.000Z",
+    "finishDate": "2023-11-15T00:00:00.000Z",
+    "timeFrame": "past"
+  },
+  "__project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Branch response data (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "name": "refs/heads/feature/new-feature",
+  "objectId": "ffe9cba521f00d7f60e322845072238635edb451",
+  "creator": {
+    "displayName": "Normal Paulk",
+    "url": "https://vssps.dev.azure.com/fabrikam/_apis/Identities/ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
+    "_links": {
+      "avatar": {
+        "href": "https://dev.azure.com/fabrikam/_apis/GraphProfile/MemberAvatars/aad.YmFjMGYyZDctNDA3ZC03OGRhLTlhMjUtNmJhZjUwMWFjY2U5"
+      }
+    },
+    "id": "ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
+    "uniqueName": "dev@mailserver.com",
+    "imageUrl": "https://dev.azure.com/fabrikam/_api/_common/identityImage?id=ac5aaba6-a66a-4e1d-b508-b060ec624fa9",
+    "descriptor": "aad.YmFjMGYyZDctNDA3ZC03OGRhLTlhMjUtNmJhZjUwMWFjY2U5"
+  },
+  "url": "https://dev.azure.com/fabrikam/7484f783-66a3-4f27-b7cd-6b08b0b077ed/_apis/git/repositories/d3d1760b-311c-4175-a726-20dfc6a7f885/refs?filter=heads%2Ffeature%2Fnew-feature",
+  "__repository": {
+    "id": "d3d1760b-311c-4175-a726-20dfc6a7f885",
+    "name": "my-repository",
+    "url": "https://dev.azure.com/fabrikam/7484f783-66a3-4f27-b7cd-6b08b0b077ed/_apis/git/repositories/d3d1760b-311c-4175-a726-20dfc6a7f885",
+    "webUrl": "https://dev.azure.com/fabrikam/7484f783-66a3-4f27-b7cd-6b08b0b077ed/_git/my-repository",
+    "project": {
+      "id": "7484f783-66a3-4f27-b7cd-6b08b0b077ed",
+      "name": "My Project",
+      "url": "https://dev.azure.com/fabrikam/_apis/projects/7484f783-66a3-4f27-b7cd-6b08b0b077ed",
+      "state": "wellFormed",
+      "revision": 12,
+      "visibility": "public",
+      "lastUpdateTime": "2025-05-04T09:34:21.397Z"
+    }
+  }
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Project entity in Port</summary>
+<summary><b>Project entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1031,7 +1140,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Repository entity in Port </summary>
+<summary><b>Repository entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1052,7 +1161,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Work-item entity in Port </summary>
+<summary><b>Work-item entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1080,7 +1189,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline entity in Port </summary>
+<summary><b>Pipeline entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1101,7 +1210,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pull request entity in Port </summary>
+<summary><b>Pull request entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1127,7 +1236,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 <details>
-<summary> Build entity in Port </summary>
+<summary><b>Build entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1153,7 +1262,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline-stage entity in Port </summary>
+<summary><b>Pipeline-stage entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1177,7 +1286,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Pipeline-run entity in Port </summary>
+<summary><b>Pipeline-run entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1200,6 +1309,48 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 
+
+<details>
+<summary><b> Iteration entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "Sprint 1",
+  "title": "Sprint 1",
+  "blueprint": "iteration",
+  "properties": {
+    "name": "Sprint 1",
+    "path": "\\Port Integration\\Sprint 1",
+    "timeFrame": "past"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Branch entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "7b3d6f8480e87f728ebce5378322c6a77d3fv19d",
+  "title": "refs/heads/feature/new-feature",
+  "blueprint": "branch",
+  "properties": {
+    "repositoryName": "my-repository",
+    "projectName": "My Project",
+    "link": "https://dev.azure.com/fabrikam/7484f783-66a3-4f27-b7cd-6b08b0b077ed/_git/my-repository?version=GBrefs/heads/feature/new-feature"
+  },
+  "relations": {
+    "repository": "myproject/my-repository"
+  }
+}
+```
+
+</details>
 
 ## Relevant Guides
 For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=AzureDevops).

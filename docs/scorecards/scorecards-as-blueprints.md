@@ -9,9 +9,8 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-:::info Closed beta feature
-This capability is currently in closed beta, and is not yet generally available.  
-If you would like to join the beta, please reach out to us.
+:::info Feature rollout
+This feature is being rolled out gradually and will be broadly available soon.
 :::
 
 Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip>.   
@@ -142,6 +141,26 @@ The system enforces several validation rules to maintain data integrity:
 1. Rule levels must match one of the levels defined in their parent scorecard.
 2. Scorecard blueprint built-in relations cannot be renamed or modified.
 3. Rule results maintain immutable core properties while allowing updates to custom properties.
+
+## Permission management
+
+Admins can control who can view and manage scorecards.
+
+**Permission examples:**
+
+Here are some common permission configurations:
+
+- Security scorecards can be edited only by the security team.
+- The Production Readiness scorecard can be edited by directors.
+- If the scorecard category is `production`, only SREs can edit it.
+
+**Permission behavior:**
+
+- If a user has the `register` permission to the `scorecard` blueprint, they can create scorecards on any other blueprint. The rules defined in the scorecard will be created as a result, even if the user is not a `scorecard rule` blueprint moderator.
+- A user with a `moderator` role on a blueprint can create scorecards **for that specific blueprint**. They can add them using the `+ New scorecard` button in the blueprint’s scorecards tab in the [Builder](https://app.getport.io/settings/data-model) page.
+
+
+For more information on configuring permissions, refer to the [documentation](/build-your-software-catalog/set-catalog-rbac/examples).
 
 ## Scorecard automation examples
 

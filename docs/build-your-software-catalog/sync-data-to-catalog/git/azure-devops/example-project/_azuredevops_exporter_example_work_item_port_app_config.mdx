@@ -1,6 +1,6 @@
 <details>
 
-<summary> Integration mapping </summary>
+<summary><b>Integration mapping (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -14,7 +14,7 @@ resources:
         mappings:
           identifier: .id | tostring
           title: .fields."System.Title"
-          blueprint: '"workItem"'
+          blueprint: '"azureDevopsWorkItem"'
           properties:
             type: .fields."System.WorkItemType"
             state: .fields."System.State"
@@ -30,7 +30,7 @@ resources:
           relations:
             project: .__projectId | gsub(" "; "")
             column: >-
-              .fields."System.WorkItemType"+"-"+.fields."System.BoardColumn"+"-"+.__project.id
+              .fields."System.WorkItemType" + "/" + .fields."System.BoardColumn" + "/" + .__project.id
               | gsub(" "; "")
 
 ```

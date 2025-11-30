@@ -12,6 +12,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Snyk
 
+<IntegrationVersion integration="snyk" />
+
 Port's Snyk integration allows you to model Snyk resources in your software catalog and ingest data into them.
 
 ## Overview
@@ -21,7 +23,7 @@ This integration allows you to:
 - Map and organize your desired Snyk resources and their metadata in Port (see supported resources below).
 - Watch for Snyk object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Snyk into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -46,15 +48,13 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation integration="Snyk" />
 
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="snyk" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -163,7 +163,7 @@ Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readth
 :::
 
 <details>
-  <summary>ArgoCD Application</summary>
+  <summary><b>ArgoCD Application (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 apiVersion: argoproj.io/v1alpha1
@@ -305,7 +305,7 @@ jobs:
 </TabItem>
    <TabItem value="jenkins" label="Jenkins">
 
-:::tip
+:::tip Jenkins agent requirements
 Your Jenkins agent should be able to run docker commands.
 :::
 
@@ -371,7 +371,7 @@ pipeline {
   </TabItem>
    <TabItem value="azure" label="Azure Devops">
 
-:::tip
+:::tip Azure DevOps agent requirements
 Your Azure Devops agent should be able to run docker commands.
 :::
 
@@ -518,121 +518,74 @@ deleteDependentEntities: true
 createMissingRelatedEntities: true
 enableMergeEntity: true
 resources:
-- kind: organization
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .attributes.name
-        blueprint: '"snykOrganization"'
-        properties:
-          slug: .attributes.slug
-          url: ("https://app.snyk.io/org/" + .attributes.slug | tostring)
-        relations:
-          group: '"all_teams"'
-- kind: project
-  selector:
-    query: 'true'
-    attachIssuesToProject: false
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .attributes.name
-        blueprint: '"snykProject"'
-        properties:
-          url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-          businessCriticality: .attributes.business_criticality
-          environment: .attributes.environment
-          lifeCycle: .attributes.lifecycle
-          highOpenVulnerabilities: .meta.latest_issue_counts.high
-          mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
-          lowOpenVulnerabilities: .meta.latest_issue_counts.low
-          criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-          tags: .attributes.tags
-          targetOrigin: .attributes.origin
-          snyk_product_type: ".attributes.type | if (. ==\"dockerfile\" or .==\"apk\" or .==\"linux\" or .==\"rpm\" or\t.==\"deb\") then \"Snyk Container\" elif((.|contains(\"config\")) or .==\"terraformplan\") then \"Snyk IaC\" elif .==\"sast\" then \"Snyk Code\" else \"Snyk Open Source\" end"
-        relations:
-          snyk_target: .relationships.target.data.id
-          service:
-            combinator: '"and"'
-            rules:
-            - property: '"snyk_target_name"'
-              operator: '"="'
-              value: .relationships.target.data.attributes.display_name
-- kind: target
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .attributes.display_name
-        blueprint: '"snykTarget"'
-        properties:
-          origin: .relationships.integration.data.attributes.integration_type
-          snyk_project_types: .__projects | map(.attributes.type) | unique
-          snyk_product_types: ".__projects | map(.attributes.type) | unique |\tmap(if(.==\"dockerfile\" or .==\"apk\" or .==\"linux\" or .==\"rpm\" or\t.==\"deb\") then \"Snyk Container\" elif((.|contains(\"config\")) or .==\"terraformplan\") then \"Snyk IaC\" elif.==\"sast\" then \"Snyk Code\" else \"Snyk Open Source\" end) | unique"
-        relations:
-          snyk_organization: .relationships.organization.data.id
-- kind: vulnerability
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .attributes.title
-        blueprint: '"snykVulnerability"'
-        properties:
-          score: .attributes.risk.score.value
-          packageNames: '[.attributes.coordinates[].representations[].dependency?.package_name | select(. != null)]'
-          packageVersions: '[.attributes.coordinates[].representations[].dependency?.package_version | select(. != null)]'
-          severity: .attributes.effective_severity_level
-          url: ("https://app.snyk.io/project/" + .relationships.scan_item.data.id + "#issue-" + .attributes.key | tostring)
-          nvd_url: .attributes.problems[] | select(.source == "NVD") | .url
-          publicationTime: .attributes.created_at
-          status: .attributes.status
-          type: .attributes.type
-          is_ignored: .attributes.ignored
-          resolved_at: .attributes.resolution.resolved_at
-          resolution_type: .attributes.resolution.type
-          snyk_problem_id: .attributes.key
-        relations:
-          project: .relationships.scan_item.data.id
-- kind: target
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .attributes.display_name
-        blueprint: '"snykTarget"'
-        relations:
-          repository:
-            combinator: '"and"'
-            rules:
-            - property: '"$identifier"'
-              operator: '"="'
-              value: .attributes.display_name
-- kind: target
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier:
-          combinator: '"and"'
-          rules:
-          - property: '"$identifier"'
-            operator: '"="'
-            value: .attributes.display_name
-        blueprint: '"githubRepository"'
-        relations:
-          snyk_target: .id
+  - kind: organization
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .attributes.name
+          blueprint: '"snykOrganization"'
+          properties:
+            slug: .attributes.slug
+            url: ("https://app.snyk.io/org/" + .attributes.slug | tostring)
+  - kind: project
+    selector:
+      query: 'true'
+      attachIssuesToProject: 'false'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .attributes.name
+          blueprint: '"snykProject"'
+          properties:
+            url: ("https://app.snyk.io/org/" + .__organization.slug + "/project/" + .id | tostring)
+            businessCriticality: .attributes.business_criticality
+            environment: .attributes.environment
+            lifeCycle: .attributes.lifecycle
+            highOpenVulnerabilities: .meta.latest_issue_counts.high
+            mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
+            lowOpenVulnerabilities: .meta.latest_issue_counts.low
+            criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
+            tags: .attributes.tags
+            targetOrigin: .attributes.origin
+          relations:
+            snyk_target: '.relationships.target.data.id'
+  - kind: target
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .attributes.display_name
+          blueprint: '"snykTarget"'
+          properties:
+            origin: .relationships.integration.data.attributes.integration_type
+          relations:
+            snyk_organization: '.relationships.organization.data.id'
+  - kind: vulnerability
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .attributes.title
+          blueprint: '"snykVulnerability"'
+          properties:
+            score: .attributes.risk.score.value
+            packageNames: '[.attributes.coordinates[].representations[].dependency?.package_name | select(. != null)]'
+            packageVersions: '[.attributes.coordinates[].representations[].dependency?.package_version | select(. != null)]'
+            severity: .attributes.effective_severity_level
+            url: ("https://app.snyk.io/org/" + .__organization.slug + "/project/" + .relationships.scan_item.data.id + "#issue-" + .attributes.key | tostring)
+            publicationTime: .attributes.created_at
+            status: .attributes.status
+            type: .attributes.type
+          relations:
+            project: .relationships.scan_item.data.id
 ```
 
 </details>
@@ -647,7 +600,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Organization
 
 <details>
-<summary>Organization blueprint</summary>
+<summary><b>Organization blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -679,7 +632,7 @@ Examples of blueprints and the relevant integration configurations:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -703,7 +656,7 @@ resources:
 ### Target
 
 <details>
-<summary>Target blueprint</summary>
+<summary><b>Target blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -787,7 +740,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -817,7 +770,7 @@ resources:
 ### Project
 
 <details>
-<summary>Project blueprint</summary>
+<summary><b>Project blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -922,7 +875,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -938,7 +891,7 @@ resources:
           title: .attributes.name
           blueprint: '"snykProject"'
           properties:
-            url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
+            url: ("https://app.snyk.io/org/" + .__organization.slug + "/project/" + .id | tostring)
             businessCriticality: .attributes.business_criticality
             environment: .attributes.environment
             lifeCycle: .attributes.lifecycle
@@ -957,7 +910,7 @@ resources:
 ### Vulnerability
 
 <details>
-<summary>Vulnerability blueprint</summary>
+<summary><b>Vulnerability blueprint (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 {
@@ -1044,7 +997,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -1084,25 +1037,41 @@ This section includes a sample response data from Snyk. In addition, it includes
 Here is an example of the payload structure from Snyk:
 
 <details>
-<summary>Organization response data</summary>
+<summary><b>Organization response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-  "name": "My Other Org",
-  "id": "a04d9cbd-ae6e-44af-b573-0556b0ad4bd2",
-  "slug": "my-other-org",
-  "url": "https://api.snyk.io/org/my-other-org",
-  "group": {
-    "name": "ACME Inc.",
-    "id": "a060a49f-636e-480f-9e14-38e773b2a97f"
-  }
+  "id": "a37b1727-ed7c-4f2c-9b59-7c5908e",
+  "type": "org",
+  "attributes": {
+    "group_id": "c7ec7fa4-50ae-450f-8b48-49270cfc54b5",
+    "is_personal": false,
+    "name": "NFR - Shared",
+    "slug": "nfr-shared",
+    "created_at": "2023-08-14T18:34:58Z",
+    "updated_at": "2025-08-22T10:09:27Z"
+  },
+  "relationships": {
+    "member_role": {
+      "data": {
+        "id": "d8ba290b-aa9e-4957-9f0b-9409d7b4",
+        "type": "org_role"
+      }
+    }
+  },
+  "group_id": "c7ec7fa4-50ae-450f-8b48-49270cfc",
+  "is_personal": false,
+  "name": "NFR - Shared",
+  "slug": "nfr-shared",
+  "created_at": "2023-08-14T18:34:58Z",
+  "updated_at": "2025-08-22T10:09:27Z"
 }
 ```
 
 </details>
 
 <details>
-<summary>Target response data</summary>
+<summary><b>Target response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1137,57 +1106,106 @@ Here is an example of the payload structure from Snyk:
 </details>
 
 <details>
-<summary>Project response data</summary>
+<summary><b>Project response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-  "name": "snyk/goof",
-  "id": "af137b96-6966-46c1-826b-2e79ac49bbd9",
-  "created": "2018-10-29T09:50:54.014Z",
-  "origin": "github",
-  "type": "maven",
-  "readOnly": false,
-  "testFrequency": "daily",
-  "totalDependencies": 42,
-  "issueCountsBySeverity": {
-    "low": 13,
-    "medium": 8,
-    "high": 1,
-    "critical": 3
-  },
-  "imageId": "sha256:caf27325b298a6730837023a8a342699c8b7b388b8d878966b064a1320043019",
-  "imageTag": "latest",
-  "imageBaseImage": "alpine:3",
-  "imagePlatform": "linux/arm64",
-  "imageCluster": "Production",
-  "hostname": null,
-  "remoteRepoUrl": "https://github.com/snyk/goof.git",
-  "lastTestedDate": "2019-02-05T08:54:07.704Z",
-  "browseUrl": "https://app.snyk.io/org/4a18d42f-0706-4ad0-b127-24078731fbed/project/af137b96-6966-46c1-826b-2e79ac49bbd9",
-  "importingUser": {
-    "id": "e713cf94-bb02-4ea0-89d9-613cce0caed2",
-    "name": "example-user@snyk.io",
-    "username": "exampleUser",
-    "email": "example-user@snyk.io"
-  },
-  "isMonitored": false,
-  "branch": null,
-  "targetReference": null,
-  "tags": [
-    {
-      "key": "example-tag-key",
-      "value": "example-tag-value"
+  "type": "project",
+  "id": "4db4ea77-1bb5-43e3-9542-3db993c8e",
+  "meta": {
+    "latest_issue_counts": {
+      "updated_at": "2025-11-12T01:32:36.078Z",
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
     }
-  ],
-  "attributes": {
-    "criticality": ["high"],
-    "environment": ["backend"],
-    "lifecycle": ["development"]
   },
-  "remediation": {
-    "upgrade": {},
-    "patch": {},
-    "pin": {}
+  "attributes": {
+    "name": "experimental/Py:src/requirements.txt",
+    "type": "pip",
+    "target_file": "src/requirements.txt",
+    "target_reference": "main",
+    "origin": "github",
+    "created": "2025-08-01T04:50:31.081Z",
+    "status": "active",
+    "business_criticality": [],
+    "environment": [],
+    "lifecycle": [],
+    "tags": [],
+    "read_only": false,
+    "settings": {
+      "recurring_tests": {
+        "frequency": "daily"
+      },
+      "pull_requests": {}
+    }
+  },
+  "relationships": {
+    "organization": {
+      "data": {
+        "type": "org",
+        "id": "a37b1727-9dc0-4f2c-9b59-7c5908e4d4d2"
+      },
+      "links": {
+        "related": "/rest/orgs/a37b1727-9dc0-4f2c-9b59-7c5908e4d4d2"
+      }
+    },
+    "target": {
+      "data": {
+        "id": "d25f0f1b-c45c-40b5-9dc2-d04b8a4a659f",
+        "type": "target",
+        "attributes": {
+          "display_name": "experimental/Py",
+          "url": "https://github.com/experimental/Py"
+        },
+        "meta": {
+          "integration_data": {
+            "id": 929419086,
+            "name": "Py",
+            "owner": "experimental"
+          }
+        }
+      },
+      "links": {
+        "related": "/rest/orgs/a37b1727-9dc0-4f2c-9b59-7c5908e4d4d2/targets/d25f0f1b-c45c-40b5-9dc2-d04b8a4a"
+      }
+    },
+    "importer": {
+      "data": {
+        "type": "user",
+        "id": "412b9360-5ae2-48d6-8d47-a9e27a10ff"
+      },
+      "links": {
+        "related": "/rest/orgs/a37b1727-9dc0-4f2c-9b59-7c5908e4d4d2/users/412b9360-5ae2-48d6-8d47-a9e27a10"
+      }
+    }
+  },
+  "__organization": {
+    "id": "a37b1727-9dc0-4f2c-9b59-7c5908e4",
+    "type": "org",
+    "attributes": {
+      "group_id": "c7ec7fa4-50ae-450f-8b48-49270cfc5",
+      "is_personal": false,
+      "name": "Port NFR - Shared",
+      "slug": "port-nfr-shared",
+      "created_at": "2023-08-14T18:34:58Z",
+      "updated_at": "2025-08-22T10:09:27Z"
+    },
+    "relationships": {
+      "member_role": {
+        "data": {
+          "id": "d8ba290b-aa9e-4957-9f0b-9409d7b4f",
+          "type": "org_role"
+        }
+      }
+    },
+    "group_id": "c7ec7fa4-50ae-450f-8b48-49270cfc",
+    "is_personal": false,
+    "name": "NFR - Shared",
+    "slug": "nfr-shared",
+    "created_at": "2023-08-14T18:34:58Z",
+    "updated_at": "2025-08-22T10:09:27Z"
   }
 }
 ```
@@ -1195,83 +1213,106 @@ Here is an example of the payload structure from Snyk:
 </details>
 
 <details>
-<summary>Vulnerability response data</summary>
+<summary><b>Vulnerability response data (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-  "id": "npm:ms:20170412",
-  "issueType": "vuln",
-  "pkgName": "ms",
-  "pkgVersions": ["1.0.0"],
-  "issueData": {
-    "id": "npm:ms:20170412",
-    "title": "Regular Expression Denial of Service (ReDoS)",
-    "severity": "low",
-    "originalSeverity": "high",
-    "url": "https://snyk.io/vuln/npm:ms:20170412",
-    "description": "`## Overview\\r\\n[`ms`](https://www.npmjs.com/package/ms) is a tiny millisecond conversion utility.\\r\\n\\r\\nAffected versions of this package are vulnerable to Regular Expression Denial of Service (ReDoS) due to an incomplete fix for previously reported vulnerability [npm:ms:20151024](https://snyk.io/vuln/npm:ms:20151024). The fix limited the length of accepted input string to 10,000 characters, and turned to be insufficient making it possible to block the event loop for 0.3 seconds (on a typical laptop) with a specially crafted string passed to `ms",
-    "identifiers": {
-      "CVE": [],
-      "CWE": ["CWE-400"],
-      "OSVDB": []
-    },
-    "credit": ["Snyk Security Research Team"],
-    "exploitMaturity": "no-known-exploit",
-    "semver": {
-      "vulnerable": [">=0.7.1 <2.0.0"],
-      "unaffected": ""
-    },
-    "publicationTime": "2017-05-15T06:02:45Z",
-    "disclosureTime": "2017-04-11T21:00:00Z",
-    "CVSSv3": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
-    "cvssScore": 3.7,
-    "language": "js",
-    "patches": [
+  "id": "ff2dc68c-8889-431c-91d1-6ed46dfd2",
+  "type": "issue",
+  "attributes": {
+    "classes": [
       {
-        "id": "patch:npm:ms:20170412:0",
-        "urls": [
-          "https://snyk-patches.s3.amazonaws.com/npm/ms/20170412/ms_100.patch"
-        ],
-        "version": "=1.0.0",
-        "comments": [],
-        "modificationTime": "2019-12-03T11:40:45.863964Z"
+        "id": "CWE-506",
+        "source": "CWE",
+        "type": "weakness"
       }
     ],
-    "nearestFixedInVersion": "2.0.0",
-    "path": "[DocId: 1].input.spec.template.spec.containers[snyk2].securityContext.privileged",
-    "violatedPolicyPublicId": "SNYK-CC-K8S-1",
-    "isMaliciousPackage": true
+    "coordinates": [
+      {
+        "is_fixable_manually": false,
+        "is_fixable_snyk": false,
+        "is_fixable_upstream": false,
+        "is_patchable": false,
+        "is_pinnable": false,
+        "is_upgradeable": false,
+        "reachability": "no-info",
+        "representations": [
+          {
+            "dependency": {
+              "package_name": "techdocs-cli-embedded-app",
+              "package_version": "0.2.83-next.2"
+            }
+          }
+        ]
+      }
+    ],
+    "created_at": "2023-09-03T15:00:43.639Z",
+    "effective_severity_level": "critical",
+    "ignored": false,
+    "key": "SNYK-JS-TECHDOCSCLIEMBEDDEDAPP-5868849",
+    "problems": [
+      {
+        "id": "SNYK-JS-TECHDOCSCLIEMBEDDEDAPP-5868849",
+        "source": "SNYK",
+        "type": "vulnerability",
+        "updated_at": "2025-04-10T06:43:02.418711Z"
+      }
+    ],
+    "resolution": {
+      "details": "",
+      "resolved_at": "2023-09-19T03:19:14.456Z",
+      "type": "disappeared"
+    },
+    "status": "resolved",
+    "title": "Malicious Package",
+    "type": "package_vulnerability",
+    "updated_at": "2023-09-19T03:19:14.456Z"
   },
-  "introducedThrough": [
-    {
-      "kind": "imageLayer",
-      "data": {}
+  "relationships": {
+    "organization": {
+      "data": {
+        "id": "a37b1727-9dc0-4f2c-9b59-7c5908e4d4d2",
+        "type": "organization"
+      },
+      "links": {
+        "related": "/orgs/a37b1727-9dc0-4f2c-9b59-7c5908e4d4d2"
+      }
+    },
+    "scan_item": {
+      "data": {
+        "id": "049630b0-d8id-4e8c-97f8-1daf396642fb",
+        "type": "project"
+      },
+      "links": {
+        "related": "/orgs/a37b1727-9dc0-4f2c-9b59-7c5908e4d4d2/projects/049630b0-c683-4e8c-97f8-1daf396642fb"
+      }
     }
-  ],
-  "isPatched": false,
-  "isIgnored": false,
-  "ignoreReasons": [
-    {
-      "reason": "",
-      "expires": "",
-      "source": "cli"
-    }
-  ],
-  "fixInfo": {
-    "isUpgradable": false,
-    "isPinnable": false,
-    "isPatchable": false,
-    "isFixable": false,
-    "isPartiallyFixable": false,
-    "nearestFixedInVersion": "2.0.0",
-    "fixedIn": ["2.0.0"]
   },
-  "priority": {
-    "score": 399,
-    "factors": [{}, "name: `isFixable`", "description: `Has a fix available`"]
-  },
-  "links": {
-    "paths": ""
+  "__organization": {
+    "id": "a37b1727-9dc0-4f2c-9b59-7c5908e4",
+    "type": "org",
+    "attributes": {
+      "group_id": "c7ec7fa4-50ae-450f-8b48-49270cfc",
+      "is_personal": false,
+      "name": "NFR - Shared",
+      "slug": "nfr-shared",
+      "created_at": "2023-08-14T18:34:58Z",
+      "updated_at": "2025-08-22T10:09:27Z"
+    },
+    "relationships": {
+      "member_role": {
+        "data": {
+          "id": "d8ba290b-de7a-4957-9f0b-9409d7b4",
+          "type": "org_role"
+        }
+      }
+    },
+    "group_id": "c7ec7fa4-10dx-450f-8b48-49270cfc54b5",
+    "is_personal": false,
+    "name": "NFR - Shared",
+    "slug": "nfr-shared",
+    "created_at": "2023-08-14T18:34:58Z",
+    "updated_at": "2025-08-22T10:09:27Z"
   }
 }
 ```
@@ -1292,7 +1333,7 @@ In this example you are going to create a webhook integration between [Snyk](htt
 Create the following blueprint definition:
 
 <details>
-<summary>Snyk vulnerability blueprint</summary>
+<summary><b>Snyk vulnerability blueprint (click to expand)</b></summary>
 
 <SnykBlueprint/>
 
@@ -1301,7 +1342,7 @@ Create the following blueprint definition:
 Create the following webhook configuration [using Port UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
-<summary>Snyk vulnerability webhook configuration</summary>
+<summary><b>Snyk vulnerability webhook configuration (click to expand)</b></summary>
 
 1. **Basic details** tab - fill the following details:
    1. Title : `Snyk Mapper`;
@@ -1341,7 +1382,7 @@ Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when c
    ```
 5. Click **Send** to create your Snyk webhook;
 
-:::note
+:::note Webhook creation using cURL
 You can also create the Snyk webhook using the `curl` command below:
 
 ```curl showLineNumbers

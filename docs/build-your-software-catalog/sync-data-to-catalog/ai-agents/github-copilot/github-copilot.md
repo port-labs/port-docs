@@ -14,8 +14,9 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # GitHub Copilot
 
-Port's Github Copilot integration allows you to ingest your Github Copilot usage metrics into your software catalog.
+<IntegrationVersion integration="github-copilot" />
 
+Port's Github Copilot integration allows you to ingest your Github Copilot usage metrics into your software catalog.
 
 ## Supported aggregation hierarchies
 
@@ -32,15 +33,13 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation integration="Github Copilot"/>
 
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="github-copilot" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

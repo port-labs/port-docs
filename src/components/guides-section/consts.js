@@ -1,8 +1,11 @@
-import guideMetadata from './guide-metadata.json';
+const guideMetadata = require('./guide-metadata.json');
 
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog", "Approval workflow"],
-    "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "RBAC"],
+
+    "Solutions": ["Security", "Autonomous Ticket Resolution", "Self Healing Incidents", "Engineering Intelligence"],
+    "Use-cases": ["K8s for devs", "IaC for devs", "Cloud access management", "Feature flag management", /*"Cloud cost",*/ "Dev environments", "Dependency management", "API catalog", "Approval workflow"],
+    "Port pillars": ["Actions", "AI", "Automations", "Dashboards", "Scorecards", "Access controls"],
+
     Technologies: [
         "GitHub",
         "Github Copilot",
@@ -10,6 +13,7 @@ export const tagsCategoryMap = {
         "BitBucket",
         "AzureDevops",
         "Claude Code",
+        "n8n",
         "Azure",
         "Webhook",
         "Kafka",
@@ -21,7 +25,6 @@ export const tagsCategoryMap = {
         "Slack",
         "PagerDuty",
         "Terraform",
-        "SonarQube",
         // "GCP",
         // "Kubecost",
         "Launchdarkly",
@@ -30,9 +33,10 @@ export const tagsCategoryMap = {
         "Snyk",
         "Datadog",
         "Dynatrace",
-        "Humanitec",
         "New Relic",
         "ServiceNow",
+        "SonarQube",
+        "Humanitec",
     ]
 };
 
@@ -40,7 +44,7 @@ export const availableGuides = [
     {
         title: "Scaffold a new service",
         description: "Create a self-service action that scaffolds a new service",
-        tags: ["SDLC", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
         // category: "Getting started",
@@ -49,7 +53,7 @@ export const availableGuides = [
     {
         title: "Ensure production readiness",
         description: "Define and track metrics for your services to ensure their production readiness",
-        tags: ["SDLC", "Scorecards", "PagerDuty"],
+        tags: ["Autonomous Ticket Resolution", "Scorecards", "PagerDuty"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["PagerDuty", "Git"],
         // category: "Getting started",
@@ -83,7 +87,7 @@ export const availableGuides = [
     {
         title: "Enrich services using Gitops",
         description: "Empower developers to independently enrich their services using a self-service action",
-        tags: ["SDLC", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
         // category: "Getting started",
@@ -92,7 +96,7 @@ export const availableGuides = [
     {
         title: "Slack reminders for scorecards",
         description: "Send a Slack reminder for uncompleted scorecard rules using a self-service action",
-        tags: ["Engineering metrics", "Actions", "Scorecards"],
+        tags: ["Engineering Intelligence", "Actions", "Scorecards"],
         logos: ["Slack"],
         // category: "Getting started",
         link: "/guides/all/setup-slack-reminders",
@@ -100,7 +104,7 @@ export const availableGuides = [
     {
         title: "Create & use surveys in your portal",
         description: "Create & use surveys in your portal to collect feedback from your users",
-        tags: ["Engineering metrics", "Actions"],
+        tags: ["Engineering Intelligence", "Actions"],
         logos: ["Actions"],
         // category: "Experiences",
         link: "/guides/all/create-and-use-surveys-in-your-portal",
@@ -108,7 +112,7 @@ export const availableGuides = [
     {
         title: "Create & track DORA metrics in your portal",
         description: "Create & track DORA metrics in your portal to measure engineering performance",
-        tags: ["Engineering metrics", "Actions"],
+        tags: ["Engineering Intelligence", "Actions"],
         logos: ["Actions"],
         // category: "Experiences",
         link: "/guides/all/create-and-track-dora-metrics-in-your-portal",
@@ -116,7 +120,7 @@ export const availableGuides = [
     {
         title: "Set up deployments using GitLab merge requests or jobs",
         description: "Set up deployments using GitLab merge requests or jobs",
-        tags: ["Engineering metrics"],
+        tags: ["Engineering Intelligence"],
         logos: ["GitLab"],
         // category: "Experiences",
         link: "/guides/all/set-up-deployments-dora-gitlab",
@@ -124,7 +128,7 @@ export const availableGuides = [
     {
         title: "Set up DORA metrics using Jira",
         description: "Configure DORA metrics tracking using Jira for both deployments and incidents",
-        tags: ["Engineering metrics", "Jira"],
+        tags: ["Engineering Intelligence", "Jira"],
         logos: ["Jira"],
         // category: "Experiences",
         link: "/guides/all/setup-dora-metrics-jira",
@@ -132,7 +136,7 @@ export const availableGuides = [
     {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
-        tags: ["Cloud access management", "Actions", "RBAC"],
+        tags: ["Cloud access management", "Actions", "Access controls"],
         logos: ["AWS" ],
         // category: "Getting started",
         link: "/guides/all/iam-permissions-guide",
@@ -140,7 +144,7 @@ export const availableGuides = [
     {
         title: "Automate Slack alerts for Overdue PRs",
         description: "Send a Slack notification for pull requests that have been open longer than a specified time using an automation",
-        tags: ["SDLC", "Automations"],
+        tags: ["Autonomous Ticket Resolution", "Automations"],
         logos: ["Slack"],
         // category: "Getting started",
         link: "/guides/all/automate-slack-alert-for-overdue-prs",
@@ -156,7 +160,7 @@ export const availableGuides = [
     {
         title: "Auto-create Slack channel & GitHub issue for PagerDuty incidents",
         description: "Automatically create a Slack channel and GitHub issue when a PagerDuty incident is reported",
-        tags: ["Incident management", "Automations"],
+        tags: ["Self Healing Incidents", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/create-slack-channel-for-reported-incident",
@@ -164,7 +168,7 @@ export const availableGuides = [
     {
         title: "Resolve PagerDuty incidents",
         description: "Create a self-service action to resolve incidents and notify stakeholders",
-        tags: ["Incident management", "Automations"],
+        tags: ["Self Healing Incidents", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/resolve-pagerduty-incident",
@@ -172,7 +176,7 @@ export const availableGuides = [
     {
         title: "Connect GitHub pull request with Jira Issue",
         description: "Create a logical connection between your GitHub PRs and their corresponding Jira issues",
-        tags: ["SDLC", "Jira", "GitHub"],
+        tags: ["Autonomous Ticket Resolution", "Jira", "GitHub"],
         logos: ["Jira", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/connect-github-pr-with-jira-issue",
@@ -200,7 +204,7 @@ export const availableGuides = [
     {
         title: "Ingest cloud resources using Dynatrace",
         description: "Ingest any cloud resources from your Dynatrace environment into Port",
-        tags: ["SDLC", "Dynatrace"],
+        tags: ["Autonomous Ticket Resolution", "Dynatrace"],
         logos: ["Dynatrace"],
         // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-dynatrace",
@@ -224,7 +228,7 @@ export const availableGuides = [
     {
         title: "Pull-request metrics",
         description: "Compute pull-request metrics for a GitHub repository",
-        tags: ["Engineering metrics", "GitHub"],
+        tags: ["Engineering Intelligence", "GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/pull-request-metrics",
@@ -232,7 +236,7 @@ export const availableGuides = [
     {
         title: "Connect CODEOWNERS with Service, Team & User",
         description: "Create a logical connection between your GitHub CODEOWNERS and their corresponding services, teams, and users",
-        tags: ["RBAC", "GitHub"],
+        tags: ["Access controls", "GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/connect-github-codeowners-with-service-team-and-user",
@@ -264,7 +268,7 @@ export const availableGuides = [
     {
         title: "Set up a basic execution runner using Kafka & AWS Lambda",
         description: "Deploy an AWS Lambda function that will perform an action based on Port action invocations",
-        tags: ["SDLC", "Kafka", "Actions", "AWS"],
+        tags: ["Autonomous Ticket Resolution", "Kafka", "Actions", "AWS"],
         logos: ["Kafka", "AWS"],
         // category: "Getting started",
         link: "/guides/all/execution-basic-runner-using-aws-lambda",
@@ -312,7 +316,7 @@ export const availableGuides = [
     {
         title: "Promote Deployment to Production",
         description: "Create a self-service action that promotes an image from staging to production",
-        tags: ["SDLC", "Actions", "GitHub"],
+        tags: ["Autonomous Ticket Resolution", "Actions", "GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/promote-to-production",
@@ -328,7 +332,7 @@ export const availableGuides = [
     {
         title: "Lock and Unlock Services",
         description: "Create a self-service action that locks and unlocks a service",
-        tags: ["SDLC", "Actions", "GitHub"],
+        tags: ["Autonomous Ticket Resolution", "Actions", "GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/lock-and-unlock-services-in-port",
@@ -336,7 +340,7 @@ export const availableGuides = [
     {
         title: "Create Slack channel for Incident Management",
         description: "Create a self-service action that creates a dedicated Slack channel for a service",
-        tags: ["Incident management", "Actions", "Slack"],
+        tags: ["Self Healing Incidents", "Actions", "Slack"],
         logos: ["GitHub", "Slack"],
         // category: "Getting started",
         link: "/guides/all/open-slack-channel",
@@ -472,7 +476,7 @@ export const availableGuides = [
     {
         title: "Trigger Datadog Incident",
         description: "Create a self-service action that triggers a Datadog incident",
-        tags: ["Incident management", "Datadog", "Actions", "Webhook"],
+        tags: ["Self Healing Incidents", "Datadog", "Actions", "Webhook"],
         logos: ["Datadog", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/trigger-datadog-incident",
@@ -520,7 +524,7 @@ export const availableGuides = [
     {
         title: "Create an Opsgenie Incident",
         description: "Create a self-service action that creates an Opsgenie incident",
-        tags: ["Incident management", "GitHub", "Actions"],
+        tags: ["Self Healing Incidents", "GitHub", "Actions"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/create-an-opsgenie-incident",
@@ -528,7 +532,7 @@ export const availableGuides = [
     {
         title: "Acknowledge Incident In PagerDuty",
         description: "Create a self-service action that acknowledges an incident in PagerDuty",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
+        tags: ["Self Healing Incidents", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/acknowledge-incident",
@@ -536,7 +540,7 @@ export const availableGuides = [
     {
         title: "Change the on-call In PagerDuty",
         description: "Create a self-service action that changes the on-call in PagerDuty",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions"],
+        tags: ["Self Healing Incidents", "PagerDuty", "GitHub", "Actions"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/change-on-call-user",
@@ -544,7 +548,7 @@ export const availableGuides = [
     {
         title: "Change Incident Owner In PagerDuty",
         description: "Create a self-service action that changes the incident owner in PagerDuty",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions"],
+        tags: ["Self Healing Incidents", "PagerDuty", "GitHub", "Actions"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/change-pagerduty-incident-owner",
@@ -552,7 +556,7 @@ export const availableGuides = [
     {
         title: "Interact with PagerDuty Incidents",
         description: "Create a self-service action that creates and triggers PagerDuty incidents",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
+        tags: ["Self Healing Incidents", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/interact-with-pagerduty-incidents",
@@ -560,7 +564,7 @@ export const availableGuides = [
     {
         title: "Create a PagerDuty Service",
         description: "Create a self-service action that creates a PagerDuty service",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
+        tags: ["Self Healing Incidents", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/create-pagerduty-service",
@@ -568,7 +572,7 @@ export const availableGuides = [
     {
         title: "Escalate incident in PagerDuty",
         description: "Create a self-service action that escalates an incident in PagerDuty",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions", "Webhook", "Automations"],
+        tags: ["Self Healing Incidents", "PagerDuty", "GitHub", "Actions", "Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/escalate-an-incident",
@@ -576,7 +580,7 @@ export const availableGuides = [
     {
         title: "Resolve incident in PagerDuty",
         description: "Create a self-service action that resolves an incident in PagerDuty",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions", "Webhook", "Automations"],
+        tags: ["Self Healing Incidents", "PagerDuty", "GitHub", "Actions", "Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/resolve-incident",
@@ -584,7 +588,7 @@ export const availableGuides = [
     {
         title: "Trigger a ServiceNow Incident",
         description: "Create a self-service action that triggers a ServiceNow incident",
-        tags: ["Incident management", "ServiceNow", "GitHub", "Actions", "Webhook", "Automations"],
+        tags: ["Self Healing Incidents", "ServiceNow", "GitHub", "Actions", "Webhook", "Automations"],
         logos: ["ServiceNow", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/trigger-servicenow-incident",
@@ -672,7 +676,7 @@ export const availableGuides = [
     {
         title: "Create a Jira Issue",
         description: "Create a self-service action that creates a Jira issue",
-        tags: ["SDLC", "Jira", "Actions", "GitLab"],
+        tags: ["Autonomous Ticket Resolution", "Jira", "Actions", "GitLab"],
         logos: ["Jira", "GitLab"],
         // category: "Getting started",
         link: "/guides/all/report-a-bug-gitlab",
@@ -680,7 +684,7 @@ export const availableGuides = [
     {
         title: "Scaffold BitBucket Repositories Using Cookiecutter",
         description: "Create a self-service action that scaffolds BitBucket repositories using a Cookiecutter template",
-        tags: ["SDLC", "Jenkins", "BitBucket", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "Jenkins", "BitBucket", "Actions"],
         logos: ["Jenkins", "BitBucket"],
         // category: "Getting started",
         link: "/guides/all/scaffold-bitbucket-using-cookiecutter",
@@ -688,7 +692,7 @@ export const availableGuides = [
     {
         title: "Scaffold GitHub Repositories Using Cookiecutter",
         description: "Create a self-service action that scaffolds GitHub repositories using a Cookiecutter template",
-        tags: ["SDLC", "Jenkins", "GitHub", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "Jenkins", "GitHub", "Actions"],
         logos: ["Jenkins", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/scaffold-github-using-cookiecutter",
@@ -712,7 +716,7 @@ export const availableGuides = [
     {
         title: "Scaffold Azure DevOps Repositories Using Cookiecutter",
         description: "Create a self-service action that scaffolds Azure DevOps repositories using a Cookiecutter template",
-        tags: ["SDLC", "AzureDevops", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "AzureDevops", "Actions"],
         logos: ["AzureDevops"],
         // category: "Getting started",
         link: "/guides/all/scaffold-repositories-using-cookiecutter",
@@ -728,7 +732,7 @@ export const availableGuides = [
     {
         title: "Ingest dependencies from package.json file to service",
         description: "Ingest dependencies from a package.json file and relate them to the corresponding service entities",
-        tags: ["SDLC","GitHub"],
+        tags: ["Autonomous Ticket Resolution","GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/ingest-dependencies-from-package-json-to-service",
@@ -744,7 +748,7 @@ export const availableGuides = [
     {
         title: "Sync Service Entities to incident.io",
         description: "Create a GitHub action that syncs service entities to your incident.io catalog",
-        tags: ["Incident management","GitHub"],
+        tags: ["Self Healing Incidents","GitHub"],
         logos: ["GitHub"],
         link: "/guides/all/sync-service-entities-to-incident-io",
     },
@@ -758,7 +762,7 @@ export const availableGuides = [
     // {
     //     title: "Track DORA Metrics",
     //     description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-    //     tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
+    //     tags: ["Engineering Intelligence","GitHub","GitLab","AzureDevops","Dashboards"],
     //     logos: ["Git"],
     //     link: "/guides/all/setup-dora-metrics",
     // },
@@ -800,7 +804,7 @@ export const availableGuides = [
     {
         title: "Ingest cloud resources using New Relic",
         description: "Ingest cloud resources from your New Relic environment into Port",
-        tags: ["SDLC", "New Relic"],
+        tags: ["Autonomous Ticket Resolution", "New Relic"],
         logos: ["New Relic"],
         // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-newrelic",
@@ -815,7 +819,7 @@ export const availableGuides = [
     {
         title: "Measure pull request standards",
         description: "Implement working agreements and measure pr standards",
-        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/working_agreements_and_measuring_pr_standards"
        
@@ -830,7 +834,7 @@ export const availableGuides = [
     {
         title: "Copy ADO Pipeline Template to Target Repo",
         description: "Create a self-service action that copies an AzureDevops pipeline template to a target repository",
-        tags: ["SDLC", "AzureDevops", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "AzureDevops", "Actions"],
         logos: ["AzureDevops"],
         link: "/guides/all/copy-pipeline-template-to-target-repo",
 
@@ -838,7 +842,7 @@ export const availableGuides = [
     {
         title: "Track SLOs and SLIs for services",
         description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
-        tags: ["Engineering metrics", "New Relic", "Dashboards"],
+        tags: ["Engineering Intelligence", "New Relic", "Dashboards"],
         logos: ["New Relic"],
         link: "/guides/all/track-slos-and-slis-for-services"
     },
@@ -859,7 +863,7 @@ export const availableGuides = [
     // {
     //     title: "Set up DORA Metrics benchmark",
     //     description: "Track and improve engineering performance by setting up DORA metrics benchmark",
-    //     tags: ["Engineering metrics","Scorecards","Dashboards"],
+    //     tags: ["Engineering Intelligence","Scorecards","Dashboards"],
     //     logos: ["Git"],
     //     link: "/guides/all/setup-dora-metrics-benchmark"
     // },
@@ -873,35 +877,35 @@ export const availableGuides = [
     {
         title: "Assign teams to monitored entities", 
         description: "Configure your Dynatrace data sources to map entities to teams",
-        tags: ["SDLC", "Dynatrace"],
+        tags: ["Autonomous Ticket Resolution", "Dynatrace"],
         logos: ["Dynatrace"],
         link: "/guides/all/connect-dynatrace-team-with-entities"
     },
     // {
     //     title: "Create surveys in your portal",
     //     description: "Create surveys to collect feedback from your developers",
-    //     tags: ["Engineering metrics", "Actions", "Dashboards"],
-    //     logos: ["Engineering metrics"],
+    //     tags: ["Engineering Intelligence", "Actions", "Dashboards"],
+    //     logos: ["Engineering Intelligence"],
     //     link: "/guides/all/create-surveys",
     // },
     {
         title: "Ingest Slack channels data with Airbyte, S3 & webhook",
         description: "Send Slack channel data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["SDLC", "Slack", "AWS", "Webhook"],
+        tags: ["Autonomous Ticket Resolution", "Slack", "AWS", "Webhook"],
         logos: ["Slack", "AWS", "Webhook"],
         link: "/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook"
     },
     {
         title: "Ingest HiBob data with Airbyte, S3 & webhook",
         description: "Send Hibob data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["SDLC", "AWS", "Webhook"],
+        tags: ["Autonomous Ticket Resolution", "AWS", "Webhook"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook"
     },
     {
         title: "Ingest Okta data with Airbyte, S3 & webhook",
         description: "Send Okta data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["SDLC", "AWS", "Webhook"],
+        tags: ["Autonomous Ticket Resolution", "AWS", "Webhook"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
     },
@@ -916,24 +920,24 @@ export const availableGuides = [
     {
         title: "Create an incident.io Incident",
         description: "Create a self-service action that creates an incident.io incident",
-        tags: ["Incident management", "Actions", "Webhook", "Automations"],
+        tags: ["Self Healing Incidents", "Actions", "Webhook", "Automations"],
         logos: ["Webhook"],
         link: "/guides/all/create-incident-io-incident",
     },
     {
         title: "Manage FireHydrant incidents",
         description: "Create a self-service action that manages FireHydrant incidents",
-        tags: ["Incident management", "FireHydrant", "Actions", "Webhook"],
+        tags: ["Self Healing Incidents", "FireHydrant", "Actions", "Webhook"],
         logos: ["FireHydrant", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/manage-firehydrant-incidents",
     },
     {
-        title: "Enrich security vulnerabilities using AI",
-        description: "Use Port AI agents with Claude Code to enrich security vulnerabilities and trigger automated fixes",
+        title: "Remediate vulnerabilities with AI",
+        description: "Use Port AI agents with Claude Code to remediate security vulnerabilities and trigger automated fixes",
         tags: ["Security", "Claude Code", "GitHub", "AI"],
         logos: ["AI", "Snyk", "Wiz"],
-        link: "/guides/all/enrich-security-vulnerability-using-ai",
+        link: "/guides/all/remediate-vulnerability-with-ai",
     },
     {
         title: "Monitor integrations",
@@ -966,7 +970,7 @@ export const availableGuides = [
     {
         title: "Set up the Incident Manager AI agent",
         description: "Set up an AI agent that helps developers track and manage incidents efficiently",
-        tags: ["Incident management", "AI", "PagerDuty", "Slack"],
+        tags: ["Self Healing Incidents", "AI", "PagerDuty", "Slack"],
         logos: ["AI", "PagerDuty", "Slack"],
         link: "/guides/all/setup-incident-manager-ai-agent",
     },
@@ -980,7 +984,7 @@ export const availableGuides = [
     {
         title: "Enrich pull requests using AI",
         description: "Set up an AI agent that automatically comments on pull requests with additional context",
-        tags: ["SDLC", "AI", "GitHub", "Jira", "PagerDuty"],
+        tags: ["Autonomous Ticket Resolution", "AI", "GitHub", "Jira", "PagerDuty"],
         logos: ["AI", "GitHub", "Jira"],
         link: "/guides/all/setup-pr-enricher-ai-agent",
     },
@@ -1050,7 +1054,7 @@ export const availableGuides = [
     {
         title: "Automatically create Jira issue from Datadog alert",
         description: "Create an automation that creates a Jira issue from a Datadog alert",
-        tags: ["Incident management", "Jira", "Datadog", "Automations"],
+        tags: ["Self Healing Incidents", "Jira", "Datadog", "Automations"],
         logos: ["Jira", "Datadog"],
         link: "/guides/all/create-jira-issue-from-datadog-alert",
     },
@@ -1071,7 +1075,7 @@ export const availableGuides = [
     {
         title: "Visualize your GitHub repository and developer activity",
         description: "Create a dashboard that visualizes your GitHub repository and developer activity",
-        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-your-github-repository-activity",
     },
@@ -1092,14 +1096,14 @@ export const availableGuides = [
     {
         title: "Ingest Slack channels data with Fivetran, S3 & webhook",
         description: "Send Slack channel data to S3 with Fivetran, then ingest it into Port via a custom webhook integration",
-        tags: ["SDLC", "Slack", "AWS", "Webhook"],
+        tags: ["Autonomous Ticket Resolution", "Slack", "AWS", "Webhook"],
         logos: ["Slack", "AWS", "Webhook"],
         link: "/guides/all/ingest-slack-data-via-fivetran-s3-and-webhook"
     },
     {
         title: "Automate admin role assignment",
         description: "Set up automated user role assignment when they are added to Admins group.",
-        tags: ["Security", "Automations", "RBAC"],
+        tags: ["Security", "Automations", "Access controls"],
         logos: ["Automations"],
         link: "/guides/all/automate-user-role-update",
     },
@@ -1120,7 +1124,7 @@ export const availableGuides = [
     {
         title: "Interact with ServiceNow records and delete incidents",
         description: "Create a self-service action that interacts with ServiceNow records and delete ServiceNow incidents",
-        tags: ["Incident management", "ServiceNow", "Actions","Webhook","Automations"],
+        tags: ["Self Healing Incidents", "ServiceNow", "Actions","Webhook","Automations"],
         logos: ["ServiceNow"],
         link: "/guides/all/interact-with-servicenow",
     },
@@ -1141,28 +1145,28 @@ export const availableGuides = [
     {
         title: "Create an Azure DevOps Work Item",
         description: "Create a self-service action that creates an Azure DevOps work item",
-        tags: ["SDLC", "AzureDevops", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "AzureDevops", "Actions"],
         logos: ["AzureDevops", "Webhook"],
         link: "/guides/all/create-azure-devops-work-item",
     },    
     {
         title: "Deploy a service using AWS CodeDeploy",
         description: "Create a self-service action that deploys a service using AWS CodeDeploy",
-        tags: ["SDLC", "AWS", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "AWS", "Actions"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/deploy-service-using-aws-codedeploy",
     },
     {
         title: "Auto approve and merge Dependabot PRs",
         description: "Create an automation that approves and merges Dependabot pull requests",
-        tags: ["SDLC", "GitHub", "Automations"],
+        tags: ["Autonomous Ticket Resolution", "GitHub", "Automations"],
         logos: ["GitHub"],
         link: "/guides/all/auto-approve-and-merge-dependabot-prs",
     },
     {
         title: "Send TypeForm survey results to Port",
         description: "Create a webhook integration that sends TypeForm survey results to Port",
-        tags: ["Engineering metrics", "Webhook"],
+        tags: ["Engineering Intelligence", "Webhook"],
         logos: ["Webhook"],
         link: "/guides/all/send-typeform-survey-results-to-port",
     },
@@ -1176,35 +1180,35 @@ export const availableGuides = [
     {
         title: "Visualize and manage your ServiceNow incidents",
         description: "Create a dashboard that visualizes and manages your ServiceNow incidents",
-        tags: ["Incident management", "ServiceNow", "Actions", "Dashboards"],
+        tags: ["Self Healing Incidents", "ServiceNow", "Actions", "Dashboards"],
         logos: ["ServiceNow"],
         link: "/guides/all/visualize-and-manage-servicenow-incidents",
     },
     {
         title: "Visualize and manage your GitLab deployments",
         description: "Create a dashboard that visualizes and manages your GitLab deployments",
-        tags: ["SDLC", "GitLab", "Actions", "Dashboards"],
+        tags: ["Autonomous Ticket Resolution", "GitLab", "Actions", "Dashboards"],
         logos: ["GitLab"],
         link: "/guides/all/visualize-and-manage-gitlab-deployments",
     },
     {
         title: "Visualize and manage your Azure DevOps deployments",
         description: "Create a dashboard that visualizes and manages your Azure DevOps deployments",
-        tags: ["SDLC", "AzureDevops", "Actions", "Dashboards"],
+        tags: ["Autonomous Ticket Resolution", "AzureDevops", "Actions", "Dashboards"],
         logos: ["AzureDevops"],
         link: "/guides/all/visualize-and-manage-azure-devops-deployments",
     },
     {
         title: "Visualize and manage your Statuspage incidents and components",
         description: "Create a dashboard that visualizes and manages your Statuspage incidents and components",
-        tags: ["Incident management", "StatusPage", "Actions", "Dashboards"],
+        tags: ["Self Healing Incidents", "StatusPage", "Actions", "Dashboards"],
         logos: ["StatusPage"],
         link: "/guides/all/visualize-and-manage-statuspage-incidents",
     },
     {
         title: "Manage PagerDuty on-call schedules",
         description: "Track on-call engineers across different teams and services with dashboards and self-service actions",
-        tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+        tags: ["Self Healing Incidents", "PagerDuty", "Actions", "Dashboards"],
         logos: ["PagerDuty"],
         link: "/guides/all/manage-pagerduty-on-call-schedules",
     },
@@ -1218,7 +1222,7 @@ export const availableGuides = [
     {
          title: "Manage and visualize your PagerDuty incidents",
           description: "Manage your PagerDuty incidents with self-service actions and create dashboards for visualization",
-          tags: ["Incident management", "PagerDuty", "Actions", "Dashboards"],
+          tags: ["Self Healing Incidents", "PagerDuty", "Actions", "Dashboards"],
           logos: ["PagerDuty"],
           link: "/guides/all/manage-and-visualize-pagerduty-incidents",
     },
@@ -1240,14 +1244,14 @@ export const availableGuides = [
     {
         title: "Manage and visualize your Jira issues",
         description: "Create a comprehensive Jira issue management system to create, update, and archive issues",
-        tags: ["Incident management", "Jira", "Actions", "Dashboards"],
+        tags: ["Self Healing Incidents", "Jira", "Actions", "Dashboards"],
         logos: ["Jira"],
         link: "/guides/all/manage-and-visualize-jira-issues",
     },
     {
         title: "Add RCA context to AI agents",
         description: "Enhance AI agents with Root Cause Analysis context",
-        tags: ["Incident management", "AI", "Actions"],
+        tags: ["Self Healing Incidents", "AI", "Actions"],
         logos: ["AI"],
         link: "/guides/all/add-rca-context-to-ai-agents",
     },
@@ -1303,7 +1307,7 @@ export const availableGuides = [
     {
         title: "Track and show MTBF for services",
         description: "Track Mean Time Between Failures (MTBF) for your services to measure reliability and identify improvement opportunities",
-        tags: ["Engineering metrics", "PagerDuty", "Dashboards", "Scorecards"],
+        tags: ["Engineering Intelligence", "PagerDuty", "Dashboards", "Scorecards"],
         logos: ["PagerDuty"],
         link: "/guides/all/track-and-show-mtbf-for-services",
     },
@@ -1317,14 +1321,14 @@ export const availableGuides = [
     {
         title: "Pull GitHub metrics and build visualizations",
         description: "Collect comprehensive GitHub metrics and build powerful visualizations to track engineering performance",
-        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/pull-github-metrics-and-build-visualizations",
     },
     {
         title: "Visualize and manage your GitHub deployments",
         description: "Create a dashboard that visualizes and manages your GitHub deployments",
-        tags: ["SDLC", "GitHub", "Actions", "Dashboards"],
+        tags: ["Autonomous Ticket Resolution", "GitHub", "Actions", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/visualize-and-manage-github-deployments",
     },
@@ -1346,14 +1350,14 @@ export const availableGuides = [
 
         title: "Map Git users to Port user accounts",
         description: "Automatically map Git users to their Port user accounts for seamless integration",
-        tags: ["SDLC","Git", "GitHub", "GitLab", "AzureDevops", "Automations"],
+        tags: ["Autonomous Ticket Resolution","Git", "GitHub", "GitLab", "AzureDevops", "Automations"],
         logos: ["Git"],
         link: "/guides/all/map-git-users-to-port-accounts",
     },
     {
         title: "Ingest and map HiBob users to Port user accounts",
         description: "Ingest and map HiBob users to Port user accounts for seamless integration",
-        tags: ["SDLC","Actions", "Automations", "Webhook"],
+        tags: ["Autonomous Ticket Resolution","Actions", "Automations", "Webhook"],
         logos: ["Webhook"],
         link: "/guides/all/map-hibob-users-to-port-accounts",
     },
@@ -1367,42 +1371,42 @@ export const availableGuides = [
     {
         title: "Ingest and map Slack users to Port user accounts",
         description: "Ingest and map Slack users to Port user accounts for seamless integration",
-        tags: ["SDLC", "Slack",  "Actions", "Automations","Webhook"],
+        tags: ["Autonomous Ticket Resolution", "Slack",  "Actions", "Automations","Webhook"],
         logos: ["Slack", "Webhook"],
         link: "/guides/all/map-slack-users-to-port-accounts",
     },
     {
         title: "Ingest and map ServiceNow users to Port user accounts",
         description: "Ingest and map ServiceNow users to Port user accounts for seamless integration",
-        tags: ["SDLC", "ServiceNow", "Actions", "Automations", "Webhook"],
+        tags: ["Autonomous Ticket Resolution", "ServiceNow", "Actions", "Automations", "Webhook"],
         logos: ["ServiceNow", "Webhook"],
         link: "/guides/all/map-servicenow-users-to-port-accounts",
     },
     {
         title: "Generate incident updates with AI",
         description: "Generate incident updates with AI and send them to Slack",
-        tags: ["Incident management", "AI", "Automations"],
+        tags: ["Self Healing Incidents", "AI", "Automations"],
         logos: ["AI", "Slack", "PagerDuty"],
         link: "/guides/all/generate-incident-updates-with-ai",
     },
     {
         title: "Map PRs to services in a monorepo",
         description: "Automatically map GitHub pull requests to services in a monorepo using file path analysis",
-        tags: ["SDLC", "GitHub", "Automations"],
+        tags: ["Autonomous Ticket Resolution", "GitHub", "Automations"],
         logos: ["GitHub"],
         link: "/guides/all/map-prs-to-services-in-monorepo",
     },
     {
         title: "Trigger GitHub Copilot from Port",
         description: "Learn how to set up GitHub Copilot triggers from Port to enable AI-powered coding assistance",
-        tags: ["SDLC", "Github Copilot", "AI", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "Github Copilot", "AI", "Actions"],
         logos: ["GitHub", "AI"],
         link: "/guides/all/trigger-github-copilot-from-port",
     },
     {
         title: "Trigger Google Gemini Assistant from Port",
         description: "Learn how to trigger Google Gemini Assistant from Port to enable AI-powered coding assistance in your development workflow",
-        tags: ["SDLC", "GitHub", "AI", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "GitHub", "AI", "Actions"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/trigger-gemini-assistant-from-port",
     },
@@ -1416,28 +1420,28 @@ export const availableGuides = [
     {
         title: "Automatically resolve tickets with coding agents",
         description: "Learn how to create an AI agent that automatically resolves tickets with coding agents",
-        tags: ["SDLC", "Jira", "Github Copilot", "AI"],
+        tags: ["Autonomous Ticket Resolution", "Jira", "Github Copilot", "AI"],
         logos: ["Jira", "GitHub", "AI"],
         link: "/guides/all/automatically-resolve-tickets-with-coding-agents",
     },
     {
         title: "Auto-fix services when scorecards degrade",
         description: "Learn how to use Port's AI capabilities to detect scorecard degradation and automatically use a coding agent like GitHub Copilot to fix it",
-        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        tags: ["Autonomous Ticket Resolution", "AI", "GitHub", "Scorecards"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/self-heal-scorecards-with-ai",
     },
     {
         title: "Track AI-driven pull requests",
         description: "Track AI-driven pull requests and visualize them in a dashboard",
-        tags: ["Engineering metrics", "Github Copilot", "Dashboards", "AI"],
+        tags: ["Engineering Intelligence", "Github Copilot", "Dashboards", "AI"],
         logos: ["GitHub"],
         link: "/guides/all/track-ai-driven-pull-requests",
     },
     {
         title: "Trigger Claude Code from Port",
         description: "Learn how to trigger Claude Code from Port to enable AI-powered coding assistance",
-        tags: ["SDLC", "Claude Code", "AI", "Actions"],
+        tags: ["Autonomous Ticket Resolution", "Claude Code", "AI", "Actions"],
         logos: ["AI", "Claude Code"],
         link: "/guides/all/trigger-claude-code-from-port",
     },
@@ -1451,14 +1455,14 @@ export const availableGuides = [
     {
         title: "Enforce AI coding security standards",
         description: "Learn how to enforce AI coding security standards in your organization",
-        tags: ["SDLC", "AI", "GitHub", "Scorecards"],
+        tags: ["Autonomous Ticket Resolution", "AI", "GitHub", "Scorecards"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/enforce-ai-coding-security-standards",
     },
     {
         title: "Find internal documentation with AI",
         description: "Find internal documentation using AI by storing documentation as entities in your Port catalog",
-        tags: ["SDLC","AI"],
+        tags: ["Autonomous Ticket Resolution","AI"],
         logos: ["AI"],
         link: "/guides/all/find-internal-documentation-with-ai",
     },
@@ -1472,9 +1476,94 @@ export const availableGuides = [
     {
         title: "Manage AI instructions with Port",
         description: "Learn how to centralize AI instructions in Port and automatically sync them to GitHub repositories",
-        tags: ["SDLC", "GitHub", "AI",  "Automations"],
+        tags: ["Autonomous Ticket Resolution", "GitHub", "AI",  "Automations"],
         logos: ["AI", "GitHub"],
         link: "/guides/all/manage-ai-instructions",
+    },
+    {
+        title: "Manage MCP Server Registry",
+        description: "Build a centralized MCP server registry with governance, discovery, and automated metadata extraction",
+        tags: ["AI", "Actions", "Automations", "Access controls"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/manage-mcp-registry",
+      
+    },
+    {
+        title: "Auto-enhance PR descriptions with AI",
+        description: "Automatically generate comprehensive, template-compliant PR descriptions using Claude Code",
+        tags: ["SDLC", "GitHub", "AI", "Automations"],
+        logos: ["AI", "GitHub", "Claude Code"],
+        link: "/guides/all/auto-enhance-pr-descriptions-with-ai",
+    },
+    {
+        title: "Streamline IaC with AI",
+        description: "Use Port AI agents to automate IaC provisioning and management",
+        tags: ["IaC for devs", "Github Copilot", "AI", "Actions"],
+        logos: ["AI", "AWS"],
+        link: "/guides/all/streamline-iac-with-ai",
+    },
+    {
+        title: "Auto-remediate insecure cloud resources with AI",
+        description: "Learn how to use Port's AI capabilities to detect insecure cloud resources and automatically use a coding agent like Claude Code to fix it",
+        tags: ["Cloud access management", "AI", "GitHub", "Claude Code"],
+        logos: ["AI", "Claude Code"],
+        link: "/guides/all/auto-remediate-insecure-cloud-resources-with-ai",
+    },
+    {
+        title: "Improve specifications with Port AI",
+        description: "Learn how to implement an AI-powered triage system that automatically evaluates tickets, enriches them with missing context, and ensures only well-defined tasks reach your coding agents",
+        tags: ["Autonomous Ticket Resolution", "AI", "Claude Code", "Jira"],
+        logos: ["AI", "Claude Code", "Jira"],
+        link: "/guides/all/triage-tickets-to-coding-agents",
+    },
+    {
+        title: "Query DORA metrics using Port MCP",
+        description: "Query DORA metrics using natural language commands directly from your IDE with Port's MCP server",
+        tags: ["Engineering Intelligence", "AI"],
+        logos: ["AI"],
+        link: "/guides/all/query-dora-metrics-using-port-mcp",
+    },
+    {
+        title: "Migrate repositories from Bitbucket to GitHub",
+        description: "Migrate repositories from Bitbucket to GitHub using Port self-service actions and GitHub Actions",
+        tags: [ "BitBucket", "GitHub", "Actions", "Scorecards"],
+        logos: ["BitBucket", "GitHub"],
+        link: "/guides/all/migrate-project-from-bibucket-to-github",
+    },
+    {
+        title: "Orchestrate incident response with AI",
+        description: "Orchestrate incident response with AI using Port's AI agents and automations",
+        tags: ["Self Healing Incidents", "AI", "Jira", "PagerDuty", "Slack"],
+        logos: ["Jira", "PagerDuty", "Slack"],
+        link: "/guides/all/orchestrate-incident-response-with-ai",
+    },
+    {
+        title: "Generate incident updates with n8n and Port",
+        description: "Use Port as a context lake in n8n workflows to automatically generate contextual incident updates and send enriched Slack notifications with relevant technical context",
+        tags: ["Self Healing Incidents", "n8n", "Slack", "AI"],
+        logos: ["n8n", "Slack"],
+        link: "/guides/all/generate-incident-updates-with-n8n-and-port",
+    },
+    {
+        title: "Remediate security vulnerability with n8n and Port AI",
+        description: "Remediate security vulnerabilities with n8n and Port AI using Port's AI agents and automations",
+        tags: ["Security", "n8n", "Slack", "AI"],
+        logos: ["n8n", "Slack"],
+        link: "/guides/all/remediate-vulnerability-with-n8n-and-port",
+    },
+    {
+        title: "Setup Port's n8n custom node",
+        description: "Setup Port's n8n custom node to integrate Port's AI agents and Context Lake with n8n workflows",
+        tags: ["n8n", "AI"],
+        logos: ["n8n", "AI"],
+        link: "/guides/all/setup-port-n8n-node",
+    },
+    {
+        title: "Automatically resolve tickets with n8n and Port context",
+        description: "Automatically resolve tickets with n8n and Port context using Port's AI agents and automations",
+        tags: ["Autonomous Ticket Resolution", "n8n", "AI", "Jira"],
+        logos: ["n8n", "Jira", "GitHub"],
+        link: "/guides/all/automatically-resolve-tickets-with-n8n-port-context",
     }
 ]
 

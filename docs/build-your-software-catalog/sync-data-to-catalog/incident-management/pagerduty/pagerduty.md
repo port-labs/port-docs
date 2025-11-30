@@ -21,9 +21,9 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # PagerDuty
 
+<IntegrationVersion integration="pagerduty" />
+
 Port's PagerDuty integration allows you to model PagerDuty resources in your software catalog and ingest data into them.
-
-
 
 ## Overview
 
@@ -57,15 +57,13 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation integration="PagerDuty" />
 
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="pagerduty" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 

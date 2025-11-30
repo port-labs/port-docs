@@ -1,6 +1,5 @@
 <details>
-
-<summary>Integration mapping</summary>
+<summary><b>Integration mapping (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -12,7 +11,7 @@ resources:
       entity:
         mappings:
           identifier: .id | gsub(" "; "")
-          blueprint: '"project"'
+          blueprint: '"azureDevopsProject"'
           title: .name
           properties:
             state: .state
@@ -27,9 +26,9 @@ resources:
       entity:
         mappings:
           identifier: >-
-            .__project.id + "-" + (.__pipeline.id | tostring) + "-" + (.id |
+            .__project.id + "/" + (.__pipeline.id | tostring) + "/" + (.id |
             tostring) | gsub(" "; "")
-          blueprint: '"pipeline-run"'
+          blueprint: '"azureDevopsPipelineRun"'
           properties:
             state: .state
             result: .result

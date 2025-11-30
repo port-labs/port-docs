@@ -9,10 +9,6 @@ import MetricsAndSyncStatus from "/docs/build-your-software-catalog/sync-data-to
 
 # Overview
 
-:::warning Beta Feature
-AWS Hosted by Port is currently in **beta mode** and is not yet available for all Port users. Contact Port's support team to get access to this integration.
-:::
-
 Port's AWS Hosted by Port integration allows you to import your AWS resources into Port with **zero maintenance required**. The integration is fully hosted and managed by Port, providing a seamless experience for discovering and managing your AWS infrastructure.
 
 The integration periodically syncs your AWS resources to ensure your Port catalog stays up-to-date with your AWS infrastructure.
@@ -26,20 +22,10 @@ Easily fill your software catalog with data directly from your AWS Organization,
 - Use relations to create complete, easily digestible views of your AWS infrastructure inside Port.
 - Enjoy a fully managed experience with no infrastructure to maintain or updates to apply.
 
-## Supported resources
-
-The integration currently supports the following AWS resource types:
-- `S3 Buckets`: Complete bucket information including properties, tags, and metadata.
-- `ECS Clusters`: Cluster details, services, and task definitions.
-- `EC2 Instances`: Instance information, security groups, and networking details.
-
-:::info More Resource Types Coming Soon
-We're actively working on adding support for additional AWS resource types to provide comprehensive coverage of your AWS infrastructure.
-:::
 
 ## Key advantages
 
-AWS Hosted by Port provides several advantages over the [self-hosted AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/installations/installation.md):
+AWS Hosted by Port provides several advantages over the [AWS on-premise integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/installations/installation.md):
 
 - **Fully hosted**: No infrastructure to maintain, update, or monitor.
 - **Simplified installation**: Just deploy CloudFormation templates to create IAM roles.
@@ -56,6 +42,9 @@ For detailed information about the IAM role architecture and security model, see
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+:::info Property naming conventions
+The AWS Hosted by Port integration returns all resource properties in **PascalCase** (for example: `Arn`, `BucketName`, `CreationDate`). When writing mappings and JQ expressions, reference properties using PascalCasing as shown in the examples below.
+:::
 
 ### Default mapping configuration
 
@@ -141,6 +130,6 @@ resources:
 
 <MetricsAndSyncStatus/>
 
-## Advanced
+## Resource and property reference
 
-Refer to the [Advanced configuration](./advanced.md) page for advanced use cases and examples.
+Refer to the [resource and property reference](./resource-and-property-reference/resource-and-property-reference.md) page for details on available AWS resources, their properties, and mapping examples.

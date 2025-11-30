@@ -125,7 +125,11 @@ To edit a mapping configuration:
 
 For example, say you want to ingest a `package.json` file form your repository. You can add the following to your GitHub integration mapping:
 
-```yaml
+:::info Organization field for file selectors
+Optional if `githubOrganization` is set; required only when not set.
+:::
+
+```yaml showLineNumbers
 resources:
   ...
   - kind: file
@@ -133,23 +137,31 @@ resources:
       query: 'true'
       files:
         - path: package.json
+          organization: my-org  # Optional if githubOrganization is set (required if not set)
+          repos:
+            - name: my-repo
+              branch: main
     port:
       entity:
         mappings:
-          identifier: .file.name
+          identifier: .path
           blueprint: '"file"'
           properties:
-            content: .file.content
+            content: .content
 ```
 
 The `selector.files.path` key also supports glob patterns, so you can ingest multiple files by matching against a pattern and create an entity in Port for each one, for example:
 
-```yaml
+```yaml showLineNumbers
 - kind: file
   selector:
     query: 'true'
     files:
       - path: 'resources/*.yml'
+        organization: my-org  # Optional if githubOrganization is set; required if not set
+        repos:
+          - name: my-repo
+            branch: main
 ```
 
 ### Advantages

@@ -24,7 +24,30 @@ import TabItem from "@theme/TabItem"
 </center>
 <br/>
 
-Port allows you to centrally manage reusable prompts and expose them to your users via the MCP Server. Once defined, prompts become available in supported MCP clients (for example, Cursor or Claude) where developers and AI agents can discover and run them with the required inputs.
+Port MCP Server supports two types of prompts:
+
+1. **Static prompts**: Pre-built prompts that are always available and don't require any setup.
+2. **Custom dynamic prompts**: Organization-specific prompts that you create and manage in your Port portal.
+
+Both types become available in supported MCP clients (for example, Cursor or Claude) where developers and AI agents can discover and run them with the required inputs.
+
+:::note Client Support Required
+Prompt support in MCP clients depends on whether the client implements the prompts feature according to the [MCP specification](https://modelcontextprotocol.info/docs/clients/). Only some MCP clients currently support prompts. Check the [MCP client documentation](https://modelcontextprotocol.info/docs/clients/) to see if your client supports prompts.
+:::
+
+## Static prompts
+
+The Port MCP Server comes with pre-built static prompts that are always available in your MCP clients. These prompts provide helpful guidance and assistance for common Port workflows and don't require any setup or configuration.
+
+The following static prompt is included:
+
+- **troubleshoot_integration**: Troubleshoot integration issues. This prompt guides you through a systematic approach to identify and fix integration problems by analyzing sync metrics, event logs, and providing fixed configurations. Requires an `integration` argument specifying the name or identifier of the integration to troubleshoot.
+
+Static prompts are automatically available in all MCP clients connected to your Port organization and don't appear in your Port portal's Prompts page.
+
+## Custom dynamic prompts
+
+You can create custom prompts specific to your organization and expose them via the MCP Server. Once defined, these prompts become available in supported MCP clients where developers and AI agents can discover and run them.
 
 #### Common use cases
 
@@ -437,4 +460,29 @@ Claude will ask for any required arguments before running the prompt and will su
 </TabItem>
 </Tabs>
 
+## Using prompts in Port's AI Agent UI
+
+Port's AI Agent web interface now supports MCP prompts, including both static prompts and custom dynamic prompts. You can browse and use prompts directly from the chat input without needing external MCP clients like Cursor or Claude Desktop.
+
+### How it works
+
+1. **Access prompts**: Click the **+** button in the chat input to open the menu, then select **Prompts**.
+
+<img src="/img/ai-agents/MCPSelectPromptsMenu.png" style={{border: '1px solid black'}}/>
+
+2. **Browse and search**: View all available prompts from your Port organization with search and filter support.
+
+<img src="/img/ai-agents/MCPSelectAPrompt.png" style={{border: '1px solid black'}}/>
+
+3. **Fill arguments**: When selecting a prompt with arguments (required or optional), a dialog appears to fill in the values.
+
+<img src="/img/ai-agents/MCPPromptArgumentsDialog.png" style={{border: '1px solid black'}}/>
+
+4. **Use the prompt**: After submitting arguments, the prompt content is attached to your message and sent to the AI agent.
+
+<img src="/img/ai-agents/MCPPromptSelected.png" style={{border: '1px solid black'}}/>
+
+:::info Argument handling
+When you select a prompt with arguments (required or optional), an arguments dialog appears. When you select a prompt with no arguments, Port uses it immediately without any additional steps.
+:::
 

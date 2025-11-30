@@ -181,6 +181,10 @@ Port offers three types of line charts:
 
 This chart type displays the values of one or more properties of a **single entity** over time.  
 
+It reflects the state of the catalog **at the chosen time**. Past values are not recalculated if entities are later changed or deleted. This includes calculation and aggregation properties, which are stored as they were computed at that time.
+
+Unlike other chart types, this chart preserves **past values**, while others always reflect the current state of the catalog and recalculate when data changes.
+
 When creating this type of line chart:
 
 1. Choose the **blueprint** you want to visualize.
@@ -218,6 +222,8 @@ For example, here is a line chart displaying a service's resource usage over the
 
 This chart type displays the aggregated values of one or more properties across **all entities** of a specific blueprint.  
 Each property will be displayed as a separate line in the chart.
+
+This chart type reflects the **current state** of the catalog and recalculate when data changes.
 
 When creating this type of line chart:
 
@@ -277,6 +283,8 @@ For example, here is a line chart displaying the maximum cost of all services ov
 
 This chart type displays either the total count of entities or the average number of entities from a specific blueprint over time.  
 If you choose to break down the chart by a property, each line will represent a distinct value of that property.
+
+This chart type reflects the **current state** of the catalog and recalculate when data changes.
 
 When creating this type of line chart:
 
@@ -392,7 +400,7 @@ The widget also supports a wide variety of HTML tags, allowing you to create ric
 **Note:** For external video URLs from providers such as YouTube, use the [iframe visualization widget](/customize-pages-dashboards-and-plugins/dashboards/#iframe-visualization).
 
 :::tip Practical example
-A practical example of using HTML in a markdown widget can be found in Port's [live demo](https://demo.getport.io/organization/home), in the `Catalog quick access` widget. 
+A practical example of using HTML in a markdown widget can be found in Port's [live demo](https://showcase.port.io/organization/home), in the `Catalog quick access` widget. 
 :::
 
 #### Markdown widget properties
@@ -407,7 +415,7 @@ A practical example of using HTML in a markdown widget can be found in Port's [l
 
 When linking to other pages in your portal, you can use `/` as the URL base, instead of using full URLs.  
 
-For example, you can use `<a href="/plan_my_day">` instead of `<a href="https://demo.getport.io/plan_my_day">`.
+For example, you can use `<a href="/plan_my_day">` instead of `<a href="https://showcase.port.io/plan_my_day">`.
 
 ### Iframe visualization
 
@@ -420,21 +428,41 @@ Note that the iframe request is made directly from the end user’s browser, not
 If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
 :::
 
-![iFrame](/img/software-catalog/widgets/iframeWidget.png)
+<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' style={{borderRadius:'6x'}} />
+
+#### URL type
+
+When configuring an **Iframe widget**, you can specify whether the URL is `public` or `protected`.
+
+For the `protected` URL type, you can configure how the OAuth authentication flow is handled using the **"Use pop-up for authentication URL"** toggle:
+
+- **Toggle off (default)**: The OAuth login flow runs inside the Iframe.
+- **Toggle on**: The OAuth login flow opens in a separate pop-up window.
+
+If the **Authentication URL** points to Microsoft Entra ID (`https://login.microsoftonline.com`), the toggle is automatically turned on, since Entra ID login pages include security headers that prevent them from being displayed inside an Iframe.
+
+Make sure your application allows CORS requests from the Port app origin for the authentication flow to work correctly:
+
+- For the EU region, add `https://app.port.io` to your allowed origins.
+- For the US region, add `https://app.us.port.io` to your allowed origins.
+
+:::info Browser pop-up settings
+If you enable the pop-up option, ensure your browser allows pop-ups for the Port app’s domain. If pop-ups are blocked at the browser level, the authentication window will not open and the Iframe widget will fail to load.
+:::
 
 #### Widget properties
 
-| Field               | Type           | Description                                                                                                                                            | Default | Required |
-| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | -------- |
-| `Title`             | `String`       | Iframe widget title                                                                                                                                    | `null`  | `true`   |
-| `Icon`              | `String`       | Iframe widget Icon                                                                                                                                     | `null`  | `false`  |
-| `Description`       | `String`       | Iframe widget description                                                                                                                              | `null`  | `false`  |
-| `URL`               | `String`       | Iframe widget url                                                                                                                                      | `null`  | `false`  |
-| `URL type`          | `String`       | `public` or `protect`                                                                                                                                  | `null`  | `false`  |
-| `Authorization Url` | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
+| Field  | Type |Description | Default | Required |
+| ------- | -------------- | ---------------- | ------- | -------- |
+| `Title`   | `String`       | Iframe widget title   | `null`  | `true`   |
+| `Icon`              | `String`       | Iframe widget icon.  | `null`  | `false`  |
+| `Description`       | `String`       | Iframe widget description.      | `null`  | `false`  |
+| `URL`               | `String`       | Iframe widget url.           | `null`  | `false`  |
+| `URL type`          | `String`       | `public` or `protect`.     | `null`  | `false`  |
+| `Authentication Url` | `URL String`   | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
+| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
+| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
+| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
 
 ### Action card
 

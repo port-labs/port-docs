@@ -10,6 +10,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Installation
 
+<IntegrationVersion integration="gcp" />
+
 ## Installation Methods
 
 The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials.
@@ -22,8 +24,6 @@ For your first deployment of the GCP exporter, we recommend starting with the He
 
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm (Scheduled)">  
-
-<IntegrationVersion integration="gcp" />
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 

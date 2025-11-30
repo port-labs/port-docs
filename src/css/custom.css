@@ -392,10 +392,6 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/resources.svg');
 }
 
-.sidebar-menu-customization .menu__link::before {
-  content: url('/static/img/sidebar-icons/main-menu/customization.svg');
-}
-
 .sidebar-menu-docs-ai-assistant .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/docs-ai-assistant.svg');
 }
@@ -530,6 +526,29 @@ html[data-theme="dark"] details details  {
 
 .menu__link--sublist-caret::after {
   zoom: 70%;
+}
+
+/* Ocean Custom integration badge */
+
+.custom-integration > .menu__link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom-integration > .menu__link::after {
+  content: "Custom";
+  margin-left: auto;
+  margin-right: 0.25rem;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.8em;
+  background: var(--ifm-color-primary-contrast-background, #f8f9fa);
+  color: var(--ifm-color-primary-contrast-foreground, #5c6370);
+  border: 1px solid var(--ifm-color-primary-dark, #e6e6e6);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
 }
 
 /* OpenAPI spec */
@@ -704,6 +723,14 @@ html[data-theme="dark"] .openapi-explorer__request-btn {
 
 .badge:not(.openapi__method-endpoint *) {
   margin-bottom: 0.6rem !important;
+}
+
+/* Override badge alignment in IntegrationVersion component */
+.integration-version-container .badge {
+  margin-bottom: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  vertical-align: middle !important;
 }
 
 .theme-code-block-highlighted-line {

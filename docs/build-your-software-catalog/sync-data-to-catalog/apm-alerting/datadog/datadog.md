@@ -17,6 +17,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Datadog
 
+<IntegrationVersion integration="datadog" />
+
 Port's Datadog integration allows you to model Datadog resources in Port and ingest data into them.
 
 ## Overview
@@ -26,7 +28,7 @@ This integration allows you to:
 - Map and organize your desired Datadog resources and their metadata in Port (see supported resources below).
 - Watch for Datadog object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
-### Supported Resources
+### Supported resources
 
 - [`Monitor`](https://docs.datadoghq.com/api/latest/monitors/#get-all-monitor-details)
 - [`Service`](https://docs.datadoghq.com/api/latest/service-definition/#get-all-service-definitions)
@@ -49,15 +51,13 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation integration="Datadog" />
 
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Self-hosted">
-
-<IntegrationVersion integration="datadog" />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
