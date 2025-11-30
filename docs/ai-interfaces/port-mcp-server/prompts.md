@@ -483,6 +483,6 @@ Port's AI Agent web interface now supports MCP prompts, including both static pr
 <img src="/img/ai-agents/MCPPromptSelected.png" style={{border: '1px solid black'}}/>
 
 :::info Argument handling
-Prompts with any arguments (required or optional) display an arguments dialog. Prompts with no arguments are used immediately without any additional steps.
+When you select a prompt with arguments (required or optional), an arguments dialog appears. When you select a prompt with no arguments, Port uses it immediately without any additional steps.
 :::
 
