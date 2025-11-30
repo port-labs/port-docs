@@ -5,6 +5,10 @@ sidebar_label: Overview
 ---
 
 # Scorecards
+ 
+Scorecards help you ensure every component and process meets your engineering standards. They enable you to continuously monitor quality, security, and compliance across your software catalog, and easily act on insights through Port actions and automations.
+
+<img src="/img/scorecards/overview/production-readiness-scorecard.png" border='1px' width='100%' style={{borderRadius:'8px'}} /> 
 
 ## What is a Scorecard?
 
