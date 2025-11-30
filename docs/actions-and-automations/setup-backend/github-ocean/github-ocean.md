@@ -1,4 +1,3 @@
-import GitHubWorkflowCommon from '/docs/actions-and-automations/templates/_github-workflow-common.md'
 import GitHubWorkflowLimitations from '/docs/actions-and-automations/templates/_github-workflow-limitations.md'
 
 # GitHub workflow via Ocean
@@ -26,7 +25,11 @@ When using this backend, you need to provide:
 - The workflow **name**.
 - The **integration action type** (`integrationActionType`) - must be set to `dispatch_workflow`.
 
-<GitHubWorkflowCommon />
+Important notes:
+
+- The workflow must reside in the repository's `.github/workflows/` directory.
+- The workflow must use the [workflow_dispatch](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow) trigger.  
+  For example, see the workflow implementation in [this guide](/guides/all/manage-pull-requests#guide).
 
 ### Automatic workflow status update
 
