@@ -42,7 +42,7 @@ You can:
 
 - Edit individual entity suggestions.
 - Approve or decline suggestions individually or in bulk.
-- View the proposed updates to existing entities by clicking the <ThemedImage sources={{light: "/img/icons/Show-icon.svg", dark: "/img/icons/Show-icon-dark.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button.
+- View the proposed updates to existing entities by clicking the <ThemedImage sources={{light: "/img/icons/Diff-icon.svg", dark: "/img/icons/Diff-dark-icon.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button.
 
 Suggested entities persist until they are approved or declined. You can close the discovery results window and return to review pending suggestions at any time by accessing the discovery results from the blueprint's catalog page using the <ThemedImage sources={{light: "/img/icons/AI-icon.svg", dark: "/img/icons/AI-dark-icon.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button.
 
