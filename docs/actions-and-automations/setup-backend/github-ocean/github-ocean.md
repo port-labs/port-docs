@@ -24,6 +24,7 @@ When using this backend, you need to provide:
 - The **integration installation ID** (`installationId`) - specifies which GitHub Ocean integration instance to use.
 - The GitHub **organization** and **repository** where the workflow is located.
 - The workflow **name**.
+- The **integration action type** (`integrationActionType`) - must be set to `dispatch_workflow`.
 
 <GitHubWorkflowCommon />
 

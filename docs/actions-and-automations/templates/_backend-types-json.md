@@ -44,7 +44,9 @@ To learn more about this backend type, refer to the [GitHub workflow backend](/a
 
 The `invocationMethod.type` should be set to `INTEGRATION_ACTION`.  
 
-You can specify which integration to use using the `invocationMethod.installationId` field.
+You can specify which integration to use using the `invocationMethod.installationId` field.  
+
+The `integrationActionType` is `dispatch_workflow`.
 
 | Field  | Type | Description  | Example values  |
 | ------ | ---- | ------------ | --------------- |
