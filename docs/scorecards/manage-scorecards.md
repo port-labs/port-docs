@@ -393,6 +393,10 @@ Scorecards can be managed either with the entities API endpoints mentioned above
 
 <TabItem value="Terraform">
 
+Since the `scorecard`, `scorecard rule` and `scorecard rule result` blueprints can only be extended, to configure them using Terraform you need use the `port_scorecard` resource.  
+
+These blueprints can not be created so don't forget to **import** them to your `Terraform state`.
+
 **Create scorecards**
 
 In order to create a scorecard from the [Terraform provider](/build-your-software-catalog/custom-integration/iac/terraform/) , you will need to use the `port_entity` resource.
