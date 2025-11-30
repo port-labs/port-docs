@@ -197,7 +197,7 @@ Remember that an access token is necessary in order to make API requests. If you
 
 **Create scorecards**
 
-In order to create a scorecard from the API, you will make a `POST` request to the following URL: `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities`.
+In order to create a scorecard from the API, you will make a `POST` request to the following URL: `https://api.port.io/v1/blueprints/_scorecard/entities`.
 
 Here are some request examples that will create the Scorecard of Ownership on the `microservice` Blueprint:
 
@@ -369,7 +369,7 @@ ___
 
 **Update scorecards**
 
-In order to update a scorecard from the API, you will make a `PATCH` request to the following URL: `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`.
+In order to update a scorecard from the API, you will make a `PATCH` request to the following URL: `https://api.port.io/v1/blueprints/_scorecard/entities/{entity_identifier}`.
 
 The request body will include the existing body of the Scorecard, after the desired updates to the existing scorecard have been applied.
 
@@ -381,8 +381,8 @@ ___
 A Scorecard cannot be restored after deletion!
 :::
 
-- In order to delete a scorecard using the API, you will make a `DELETE` request to the following URL: `https://api.port.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`.
-- In order to delete all entities of scorecards using the API, you wil make a `DELETE` request to the following URL: `https://api.port.io/v1/blueprints/{blueprint_identifier}/all-entities`.
+- In order to delete a scorecard using the API, you will make a `DELETE` request to the following URL: `https://api.port.io/v1/blueprints/_scorecard/entities/{entity_identifier}`.
+- In order to delete all entities of scorecards using the API, you wil make a `DELETE` request to the following URL: `https://api.port.io/v1/blueprints/_scorecard/all-entities`.
 
 :::info Using scorecards API
 Scorecards can be managed either with the entities API endpoints mentioned above, or by the dedicated **Scorecards API** endpoints: [create](/api-reference/create-a-scorecard), [update](/api-reference/change-scorecards), [delete](/api-reference/delete-a-scorecard), etc. Note that if you are extending the scorecards data model you **should** use the entities endpoints.
@@ -393,7 +393,9 @@ Scorecards can be managed either with the entities API endpoints mentioned above
 
 <TabItem value="Terraform">
 
-Since the `scorecard`, `scorecard rule` and `scorecard rule result` blueprints can only be extended, to configure them using Terraform you need use the `port_entity` resource.  
+**Extend scorecard blueprints** 
+
+Since the `scorecard`, `scorecard rule` and `scorecard rule result` blueprints can only be **extended**, to configure them using Terraform you need use the `port_system_blueprint` resource.  
 
 These blueprints can not be created so don't forget to **import** them to your `Terraform state`.
 
