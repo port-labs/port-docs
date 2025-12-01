@@ -1032,7 +1032,7 @@ The `typeList` selector optionally restricts returned results to specific issue 
 
 <TabItem label="Include max pages" value="maxPages">
 
-The `maxPages` selector controls the maximum number of pages to fetch from the Wiz API. The default is **500**.
+Wiz issues can grow to an extremely large volume, which may significantly increase the time required to complete a resync for the integration. To help manage this, use the `maxPages` selector to control how many pages the integration fetches from the Wiz API. The default value is **500**, which ingests up to 50,000 results since each page contains 100 results.
 
 ```yaml showLineNumbers
 - kind: issue # one of the supported kinds: issue, serviceControl, serviceTicket
