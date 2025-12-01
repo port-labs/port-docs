@@ -1035,7 +1035,7 @@ The `typeList` selector optionally controls whether to filter issues by type in 
 The `maxPages` selector controls the maximum number of pages to fetch from the Wiz API. The default is **500**.
 
 ```yaml showLineNumbers
-- kind: issue
+- kind: issue # one of the supported kinds: issue, serviceControl, serviceTicket
   selector:
     query: 'true'
     # highlight-next-line
