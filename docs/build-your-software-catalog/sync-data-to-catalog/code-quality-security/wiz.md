@@ -992,7 +992,7 @@ resources:
 
 </details>
 
-### Advanced configuration for Issue, Control and Service Ticket
+### Advanced configuration
 
 The following selectors can be used to filter the data fetched from the Wiz API for **Issue**, **Control** and **Service Ticket** kinds:
 
