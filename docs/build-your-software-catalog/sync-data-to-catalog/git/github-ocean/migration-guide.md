@@ -2,12 +2,13 @@
 
 This guide will walk you through the process of migrating from Port's existing GitHub cloud app to the improved GitHub integration powered by [Ocean](https://ocean.port.io/).
 
-:::warning Entity ownership transfer is recommended
-**This migration focuses on transferring entity ownership from the legacy GitHub App to the new GitHub Ocean integration.** This is recommended step before uninstalling the old app.
+:::warning Entity ownership transfer
+**This migration focuses on transferring entity ownership from the legacy GitHub App to the new GitHub Ocean integration.**  
+This is a recommended step before uninstalling the old app.
 
-- Only the integration that created an entity can delete it
-- If you uninstall before transferring ownership, entities created by the old integration will become orphaned and will have to be deleted manually
-- See the [step-by-step migration plan](#step-by-step-migration-plan) below for the complete process
+Note that:
+- Only the integration that created an entity can delete it.
+- If you uninstall before transferring ownership, entities created by the old integration will become orphaned and will have to be deleted manually.
   :::
 
 ## Improvements
