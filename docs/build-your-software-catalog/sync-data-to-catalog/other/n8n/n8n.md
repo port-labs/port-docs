@@ -57,7 +57,7 @@ Choose one of the following installation methods to deploy the Ocean Custom Inte
 
 <h2> Installation </h2>
 
-1. Add Port's Helm repo and install the Ocean Custom Integration:
+Add Port's Helm repo and install the Ocean Custom Integration:
 
 :::note Replace placeholders
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, `YOUR_N8N_INSTANCE_URL`, and `YOUR_N8N_API_KEY`.
@@ -310,69 +310,80 @@ Each resource maps an n8n endpoint to the Port entities defined above.
 - **`selector`** – Request payload, pagination controls, and data selection logic.
 - **`port.entity.mappings`** – JQ expressions that transform the API payload into Port entities.
 
-<details>
-<summary><b>Complete mapping configuration (Click to expand)</b></summary>
+To configure the mapping:
 
-```yaml showLineNumbers
-deleteDependentEntities: true
-createMissingRelatedEntities: true
-enableMergeEntity: true
-resources:
-  - kind: /v1/users
-    selector:
-      query: 'true'
-      data_path: .data
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .email
-          blueprint: '"n8nUser"'
-          properties:
-            full_name: >-
-              if (.firstName // null) != null or (.lastName // null) != null
-              then ((.firstName // "") + " " + (.lastName // "")) else .email
-              end
-            is_active: (.isPending | not)
-            created_at: .createdAt
-            email: .email
-  - kind: /v1/projects
-    selector:
-      query: 'true'
-      data_path: .data
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .name
-          blueprint: '"n8nProject"'
-          properties: {}
-  - kind: /v1/workflows
-    selector:
-      query: 'true'
-      data_path: .data
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .name
-          blueprint: '"n8nWorkflow"'
-          properties:
-            nodes: .nodes
-            connections: .connections
-            trigger_count: .triggerCount
-            is_active: .active
-            is_archived: .isArchived
-            tags: (.tags | map(.name))
-            created_at: .createdAt
-            updated_at: .updatedAt
-          relations:
-            project: .shared[0].projectId
-```
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources).
 
-</details>
+2. Find your n8n integration in the list.
 
-5. Click `Save` to persist the mapping.
+3. Click on the integration to open the mapping editor.
+
+4. Add the resource mapping configurations below.
+
+    <details>
+    <summary><b>Complete n8n mapping configuration (Click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+    deleteDependentEntities: true
+    createMissingRelatedEntities: true
+    enableMergeEntity: true
+    resources:
+      - kind: /v1/users
+        selector:
+          query: 'true'
+          data_path: .data
+        port:
+          entity:
+            mappings:
+              identifier: .id
+              title: .email
+              blueprint: '"n8nUser"'
+              properties:
+                full_name: >-
+                  if (.firstName // null) != null or (.lastName // null) != null
+                  then ((.firstName // "") + " " + (.lastName // "")) else .email
+                  end
+                is_active: (.isPending | not)
+                created_at: .createdAt
+                email: .email
+      - kind: /v1/projects
+        selector:
+          query: 'true'
+          data_path: .data
+        port:
+          entity:
+            mappings:
+              identifier: .id
+              title: .name
+              blueprint: '"n8nProject"'
+              properties: {}
+      - kind: /v1/workflows
+        selector:
+          query: 'true'
+          data_path: .data
+        port:
+          entity:
+            mappings:
+              identifier: .id
+              title: .name
+              blueprint: '"n8nWorkflow"'
+              properties:
+                nodes: .nodes
+                connections: .connections
+                trigger_count: .triggerCount
+                is_active: .active
+                is_archived: .isArchived
+                tags: (.tags | map(.name))
+                created_at: .createdAt
+                updated_at: .updatedAt
+              relations:
+                project: .shared[0].projectId
+    ```
+
+    </details>
+
+5. Click `Save` to save the mapping.
+
 
 ## Customization
 
