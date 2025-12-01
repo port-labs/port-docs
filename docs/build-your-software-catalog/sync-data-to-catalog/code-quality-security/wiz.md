@@ -1021,7 +1021,7 @@ The `severityList` selector controls whether to filter issues by severity in the
 The `typeList` selector optionally controls whether to filter issues by type in the integration. If not specified, no type filtering is applied.
 
 ```yaml showLineNumbers
-- kind: issue
+- kind: issue # one of the supported kinds: issue, serviceControl, serviceTicket
   selector:
     query: 'true'
     # highlight-next-line
