@@ -351,7 +351,14 @@ export const integrations = [
     icon: '/img/guides/icons/Codex.svg',
     darkIcon: '/img/guides/icons/dark/Codex.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/codex',
-  }
+  },
+  {
+    name: 'n8n',
+    category: 'other',
+    icon: '/img/guides/icons/n8n.svg',
+    darkIcon: '/img/guides/icons/n8n.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/n8n',
+  },
 ];
 
 export const categories = {
