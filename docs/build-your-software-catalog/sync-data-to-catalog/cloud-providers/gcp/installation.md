@@ -35,7 +35,7 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <CreateServiceAccount/>
 
-<h1> Choose authentication method </h1>
+<h2> Choose authentication method </h2>
 
 After creating the service account, choose one of the following authentication methods:
 
@@ -45,7 +45,7 @@ After creating the service account, choose one of the following authentication m
 
 The Ocean Google Cloud integration can use Google's Workload Identity to authenticate without requiring service account key files. This method is recommended for Kubernetes deployments.
 
-<h2> Setting up Kubernetes </h2>
+<h3> Setting up Kubernetes </h3>
 
 1. Set up a Kubernetes cluster in the Kubernetes Engine in GCP.
 
@@ -82,7 +82,7 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
    - `NAMESPACE` with your Kubernetes namespace.
    - `KUBERNETES_SA_NAME` with the Kubernetes service account name that will be used in the integration's values.yaml. (Note: the service account doesn't need to exist)
 
-<h2> Configuring and running the Helm command </h2>
+<h3> Configuring and running the Helm command </h3>
 
 1. Add the Port Labs Helm repository:
 
@@ -138,7 +138,7 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <CreateKey/>
 
-<h2> Running the Helm command </h2>
+<h3> Running the Helm command </h3>
 
 :::info Data security
 The Ocean integration does not store the encoded file anywhere.  
@@ -183,7 +183,7 @@ It is saved locally, and is NOT sent to Port at any time.
 </TabItem>
 </Tabs>
 
-<h2> Optional - Scale permissions for a service account </h2>
+<h3> Optional - Scale permissions for a service account </h3>
 
 <GivePermissionsToNewServiceAccount/>
 
