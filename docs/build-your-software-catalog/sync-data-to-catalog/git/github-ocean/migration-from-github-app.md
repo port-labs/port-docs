@@ -1,4 +1,4 @@
-# GitHub migration guide
+# Migration from GitHub app
 
 This guide will walk you through the process of migrating from Port's existing GitHub cloud app to the improved GitHub integration powered by [Ocean](https://ocean.port.io/).
 
@@ -7,6 +7,7 @@ This guide will walk you through the process of migrating from Port's existing G
 This is a recommended step before uninstalling the old app.
 
 Note that:
+
 - Only the integration that created an entity can delete it.
 - If you uninstall before transferring ownership, entities created by the old integration will become orphaned and will have to be deleted manually.
   :::
@@ -577,9 +578,9 @@ This section provides a high-level summary of the key changes for mappings.
 
 | Area                         | Old Value                            | New Value                                      | Notes                                                                                                                                                                                                                                                                                                         |
 | ---------------------------- | ------------------------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Multi-Organization**       | N/A                                  | `githubOrganization` is not optional           | **Classic PAT supports multiple orgs using the `organization` parameter in port mapping; GitHub App and Fine-grained PAT do not support multi organization and there required the `githubOrganization` configuration**. Syncing multiple organizations increases API calls and may slow down the integration. |
-| **File Organization**        | N/A                                  | `organization: "my-org"`                       | Optional if `githubOrganization` is set; required when not (e.g., Classic PAT multi-org).                                                                                                                                                                                                                     |
-| **Folder Organization**      | N/A                                  | `organization: "my-org"`                       | Optional if `githubOrganization` is set; required when not set(e.g., Classic PAT multi-org).                                                                                                                                                                                                                  |
+| **Multi-Organization**       | N/A                                  | `githubOrganization` is not optional           | **Classic PAT supports multiple orgs using the `organization` parameter in port mapping, GitHub App and Fine-grained PAT do not support multi organization and there required the `githubOrganization` configuration**. Syncing multiple organizations increases API calls and may slow down the integration. |
+| **File Organization**        | N/A                                  | `organization: "my-org"`                       | Optional if `githubOrganization` is set, required when not (e.g., Classic PAT multi-org).                                                                                                                                                                                                                     |
+| **Folder Organization**      | N/A                                  | `organization: "my-org"`                       | Optional if `githubOrganization` is set, required when not set(e.g., Classic PAT multi-org).                                                                                                                                                                                                                  |
 | **Authentication**           | GitHub App Installation              | PAT or Self-Created GitHub App                 | The integration can be authenticated using a Personal Access Token (PAT) or a self-created GitHub App. **Multi-org requires classic PAT**.                                                                                                                                                                    |
 | **Webhooks**                 | App Webhook                          | Automatic Setup by Integration                 | The integration now manages its own webhooks for live events. This requires `webhook` permissions and `liveEvents.baseUrl` to be set.                                                                                                                                                                         |
 | **Workflow Runs**            | 10 per repository                    | 100 per workflow                               | The number of ingested workflow runs has been increased.                                                                                                                                                                                                                                                      |
@@ -594,7 +595,9 @@ This section provides a high-level summary of the key changes for mappings.
 
 This section provides the practical steps to migrate your entities and transfer ownership to the new GitHub Ocean integration.
 
-### Get your installation IDs
+### Prerequisites
+
+#### Get your installation IDs
 
 Before migrating, you need to identify both installation IDs:
 
@@ -614,16 +617,11 @@ Before migrating, you need to identify both installation IDs:
 
 The installation ID is the numeric value circled in the URL bar (e.g., `97269548` in the example above).
 
-**To copy the installation ID:**
-
-- Note the numeric ID from the URL in your browser's address bar
-- Use this number when running the migrator commands
-
 **For the new GitHub Ocean integration:**
 
 - The installation ID is the **name you gave to the new GitHub Ocean integration** when you created it
 
-### Install the migrator tool
+#### Install the migrator tool
 
 ```bash
 curl -sL https://raw.githubusercontent.com/port-labs/port-github-migrator/main/install.sh | bash
@@ -635,7 +633,9 @@ Gather your Port API credentials:
 - Port API client secret
 - Your Port instance URL
 
-### Phase 1: Set up the new integration
+For detailed command reference and usage examples, refer to the [port-github-migrator GitHub repository](https://github.com/port-labs/port-github-migrator#commands-reference). The repository contains complete documentation for all available commands.
+
+### Set up the new integration
 
 1. **Install GitHub Ocean** — Follow the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation)
 
@@ -643,7 +643,7 @@ Gather your Port API credentials:
 
 3. **Verify legacy integration** — Trigger a resync of the legacy GitHub App integration to confirm the current entities structure
 
-### Phase 2: Migrate each blueprint (entity ownership transfer)
+### Migrate each blueprint (entity ownership transfer)
 
 **This is where you transfer ownership of entities from the old app to the new one.**
 
@@ -700,35 +700,19 @@ port-github-migrator migrate githubRepository \
 
 **Step 7:** Repeat for each remaining blueprint
 
-### Reverting entity ownership transfer
-
-If needed, you can revert the ownership transfer for a blueprint:
-
-1. **Delete the transferred entities** from the Port UI (entities now owned by the new integration)
-2. **Trigger a resync** of the legacy GitHub App integration
-3. The old integration will **recreate the entities under its ownership**
-
-This allows you to roll back to the old integration if issues arise during migration.
-
-### Migrator tool commands reference
-
-For detailed command reference and usage examples, refer to the [port-github-migrator GitHub repository](https://github.com/port-labs/port-github-migrator#commands-reference). The repository contains complete documentation for all available commands.
-
-### When to uninstall the legacy app
+### Finalize and uninstall
 
 Only uninstall the legacy GitHub App **after:**
 
-- ✅ All blueprints are migrated.
-- ✅ Ownership is transferred for each blueprint (using the `migrate` command).
-- ✅ The new integration is syncing correctly.
+- ✅ All blueprints are migrated
+- ✅ Ownership is transferred for each blueprint (using the `migrate` command)
+- ✅ The new integration is syncing correctly
 
-**Uninstalling early = orphaned entities that cannot be deleted.**
+### Best practices
 
-### Migration tips
-
-- **Entity ownership transfer** — The `migrate` command transfers ownership; you can revert by deleting entities and resyncing the old integration
 - **Start with non-critical blueprints** — Build confidence before migrating critical data
 - **One blueprint at a time** — Easier to debug if issues arise
 - **Use `get-diff` before migrating** — Verify entities match before transferring ownership
-- **Keep legacy app active** — Don't remove until all migrations complete
+- **Keep legacy app active** — Don't remove until all migrations complete, removing it early will leave orphaned entities that can only be deleted manually
 - **Check Port logs** — Monitor for any sync issues after migration
+- **Ownership is reversible** — If issues arise, you can revert by deleting the migrated entities and resyncing the old integration, this will recreate those entities under the old integration ownership
