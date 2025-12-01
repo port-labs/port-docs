@@ -312,7 +312,7 @@ Each resource maps an n8n endpoint to the Port entities defined above.
 
 To configure the mapping:
 
-1. Go to your [data sources page](https://app.getport.io/settings/data-sources).
+1. Go to the [data sources page](https://app.getport.io/settings/data-sources) of your portal.
 
 2. Find your n8n integration in the list.
 
