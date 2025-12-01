@@ -2,6 +2,14 @@
 
 This guide will walk you through the process of migrating from Port's existing GitHub Cloud App to our new and improved GitHub Integration, which is powered by [Ocean](https://ocean.port.io/).
 
+:::warning Entity ownership transfer is recommended
+**This migration focuses on transferring entity ownership from the legacy GitHub App to the new GitHub Ocean integration.** This is recommended step before uninstalling the old app.
+
+- Only the integration that created an entity can delete it
+- If you uninstall before transferring ownership, entities created by the old integration will become orphaned and will have to be deleted manually
+- See the [step-by-step migration plan](#step-by-step-migration-plan) below for the complete process
+  :::
+
 ## Improvements
 
 The new Ocean-powered GitHub integration comes with several key improvements:
@@ -576,3 +584,151 @@ This section provides a high-level summary of the key changes for mappings.
 | **File** properties | `.file.path` | `.path` | All file properties are now at the top level of the object, no longer nested under `.file`. |
 | **Repository** reference | `.repo` or `.head.repo.name` | `.__repository` | The integration now consistently provides repository information under the `__repository` field for all relevant kinds. |
 | **Folder** name | `.folder.name` | `.folder.path \| split('/') \| last` | The folder name is no longer directly available and should be derived from the folder path using a JQ expression. |
+
+## Step-by-step migration plan {#step-by-step-migration-plan}
+
+This section provides the practical steps to migrate your entities and transfer ownership to the new GitHub Ocean integration.
+
+### Get your installation IDs
+
+Before migrating, you need to identify both installation IDs:
+
+**For the legacy GitHub App installation ID:**
+
+1. Navigate to GitHub App installations:
+   - **Personal installations**: `https://github.com/settings/installations`
+   - **Organization installations**: `https://github.com/organizations/YOUR-ORG/settings/installations`
+
+2. Click on Port's GitHub App installation from the list
+
+3. Look at the **URL in your browser address bar** — it contains the installation ID at the end
+
+**Visual guide:**
+
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/github/githubAppInstallationId.png"/>
+
+The installation ID is the numeric value circled in the URL bar (e.g., `97269548` in the example above).
+
+**To copy the installation ID:**
+
+- Note the numeric ID from the URL in your browser's address bar
+- Use this number when running the migrator commands
+
+**For the new GitHub Ocean integration:**
+
+- The installation ID is the **name you gave to the new GitHub Ocean integration** when you created it
+
+### Install the migrator tool
+
+```bash
+curl -sL https://raw.githubusercontent.com/port-labs/port-github-migrator/main/install.sh | bash
+```
+
+Gather your Port API credentials:
+
+- Port API client ID
+- Port API client secret
+- Your Port instance URL
+
+### Phase 1: Set up the new integration
+
+1. **Install GitHub Ocean** — Follow the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation)
+
+2. **Reduce legacy mappings** — Remove all resource mappings from the legacy app, keep only `organization`
+
+3. **Verify** — Trigger a resync to ensure nothing broke
+
+### Phase 2: Migrate each blueprint (entity ownership transfer)
+
+**This is where you transfer ownership of entities from the old app to the new one.**
+
+For each blueprint, repeat these steps:
+
+**Step 1:** Create temporary blueprint
+
+- Duplicate your existing blueprint and rename to `<blueprint>-ocean-temp`
+
+**Step 2:** Remap new integration to temp blueprint
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    port:
+      entity:
+        mappings:
+          blueprint: '"githubRepository-ocean-temp"' # Use temp blueprint
+          # ... rest of config ...
+```
+
+**Step 3:** Compare entities
+
+```bash showLineNumbers
+port-github-migrator get-diff githubRepository githubRepository-ocean-temp \
+  --client-id <your-client-id> --client-secret <your-client-secret> \
+  --old-installation-id <legacy-id> --new-installation-id <ocean-id> \
+  --port-url https://your-port.com
+```
+
+**Step 4:** Adjust mappings if needed
+
+- Review the [Kind mapping changes](#kind-mapping-changes) section and update your configuration if there are differences
+
+**Step 5:** Transfer ownership (critical step)
+
+```bash showLineNumbers
+port-github-migrator migrate githubRepository \
+  --client-id <your-client-id> --client-secret <your-client-secret> \
+  --old-installation-id <legacy-id> --new-installation-id <ocean-id> \
+  --port-url https://your-port.com
+```
+
+**This command transfers ownership of all entities in the blueprint from the old app to the new integration.**
+
+**Step 6:** Update mapping and clean up
+
+- Point integration back to original blueprint
+- Delete the temp blueprint
+
+**Step 7:** Repeat for next blueprint
+
+### Migrator tool commands reference
+
+```bash showLineNumbers
+# Compare blueprints to see if entities match
+port-github-migrator get-diff <source> <target> \
+  --client-id <id> --client-secret <secret> \
+  --old-installation-id <old-id> --new-installation-id <new-id> \
+  --port-url <url>
+
+# Transfer ownership (entities created by old app now owned by new one)
+port-github-migrator migrate <blueprint> \
+  --client-id <id> --client-secret <secret> \
+  --old-installation-id <old-id> --new-installation-id <new-id> \
+  --port-url <url>
+
+# List all blueprints managed by legacy app
+port-github-migrator get-blueprints \
+  --client-id <id> --client-secret <secret> \
+  --old-installation-id <old-id> \
+  --port-url <url>
+```
+
+### When to uninstall the legacy app
+
+Only uninstall the legacy GitHub App **after:**
+
+- ✅ All blueprints migrated
+- ✅ Ownership transferred for each blueprint (using `migrate` command)
+- ✅ New integration syncing correctly
+- ✅ Verified no orphaned entities exist
+
+**Uninstalling early = orphaned entities that cannot be deleted.**
+
+### Migration tips
+
+- **Emphasize: Entity ownership transfer** — Every `migrate` command permanently transfers ownership
+- **Start with non-critical blueprints** — Build confidence before migrating critical data
+- **One blueprint at a time** — Easier to debug if issues arise
+- **Use `get-diff` before migrating** — Verify entities match before transferring ownership
+- **Keep legacy app active** — Don't remove until all migrations complete
+- **Check Port logs** — Monitor for any sync issues after migration
