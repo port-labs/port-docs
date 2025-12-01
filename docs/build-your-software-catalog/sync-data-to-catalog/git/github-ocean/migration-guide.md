@@ -638,9 +638,9 @@ Gather your Port API credentials:
 
 1. **Install GitHub Ocean** — Follow the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation)
 
-2. **Reduce legacy mappings** — Remove all resource mappings from the legacy integration, keeping only `organization` mapped
+2. **Keep new integration mappings minimal** — For now, configure only the `organization` kind in the new GitHub Ocean integration. You'll add additional kinds one at a time during Phase 2.
 
-3. **Verify** — Trigger a resync of the legacy integration to confirm it still works correctly
+3. **Verify legacy integration** — Trigger a resync of the legacy GitHub App integration to confirm the current entities structure
 
 ### Phase 2: Migrate each blueprint (entity ownership transfer)
 
@@ -731,4 +731,3 @@ Only uninstall the legacy GitHub App **after:**
 - **Use `get-diff` before migrating** — Verify entities match before transferring ownership
 - **Keep legacy app active** — Don't remove until all migrations complete
 - **Check Port logs** — Monitor for any sync issues after migration
-```
