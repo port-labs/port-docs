@@ -717,9 +717,9 @@ For detailed command reference and usage examples, refer to the [port-github-mig
 
 Only uninstall the legacy GitHub App **after:**
 
-- ✅ All blueprints migrated
-- ✅ Ownership transferred for each blueprint (using `migrate` command)
-- ✅ New integration syncing correctly
+- ✅ All blueprints are migrated.
+- ✅ Ownership is transferred for each blueprint (using the `migrate` command).
+- ✅ The new integration is syncing correctly.
 
 **Uninstalling early = orphaned entities that cannot be deleted.**
 
