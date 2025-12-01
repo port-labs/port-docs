@@ -90,6 +90,16 @@ This difference happens because the two charts are likely working with different
 
 To align both charts and ensure consistency in what they reflect, apply a time filter to the number chart that matches the line chart’s time range. This helps prevent confusion and ensures both charts are working with the same scope of data.
 
+#### Display formatting
+
+You can customize how numbers are displayed in number chart by selecting a formatting function:
+
+- `None` - displays the number without any formatting.
+
+- `Round` - rounds the number to the nearest integer.
+
+- `Custom` - allows you to specify decimal precision between one to five decimal places.
+
 #### Conditional formatting
 
 You can customize the appearance of a number chart based on specific conditions, helping viewers to quickly understand what the value indicates.
@@ -124,6 +134,7 @@ However, since 5 is closer to 6 than to 8, the widget will be colored yellow - t
 | `Empty state text`      | `String` | Number chart empty state text         | `No data for this widget`  | `false`  |
 | `Chart type`    | `String` | Defines the operation type for the chart. Possible values: `Display single property`, `Count entities`, `Aggregate by property`                                                                                                                      | `null` | `true`   |
 | `Blueprint`       | `String` | The chosen blueprint from which related entities data is visualized from                                                                                                                                                                    | `null`     | `true`   |
+| `Display formatting` | `String` | Defines how numbers are displayed. Possible values: `None`, `Round`, `Custom` (allows decimal precision between one to five decimal places) | `null`     | `false`   |
 | `Condition`       | `Object` | Defines the condition under which the number chart widget will update its color, display a status label, and have a tooltip message                                                                                                                                                                    | `null`     | `false`   |
 
 **Chart type: display single property** 
