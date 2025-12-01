@@ -338,41 +338,69 @@ components:
                   - propertySchema
                 additionalProperties: false
               - type: object
-                title: Path Filter Rule
+                title: matchAny Rule
                 anyOf:
                   - type: object
                     properties:
                       property:
-                        type: object
-                        properties:
-                          path:
-                            type: array
-                            items:
-                              anyOf:
-                                - type: string
-                                - type: object
-                                  properties:
-                                    relation:
-                                      type: string
-                                    maxHops:
-                                      type: number
-                                      minimum: 1
-                                      maximum: 15
-                          fromBlueprint:
-                            type: string
-                        required:
-                          - path
-                        additionalProperties: false
+                        oneOf:
+                          - type: object
+                            properties:
+                              path:
+                                type: array
+                                items:
+                                  anyOf:
+                                    - type: string
+                                    - type: object
+                                      properties:
+                                        relation:
+                                          type: string
+                                        maxHops:
+                                          type: number
+                                          minimum: 1
+                                          maximum: 15
+                              fromBlueprint:
+                                type: string
+                            required:
+                              - path
+                            additionalProperties: false
+                          - oneOf:
+                              - type: string
+                              - type: object
+                                properties:
+                                  property:
+                                    type: string
+                                  context:
+                                    type: string
+                                    enum:
+                                      - user
+                                      - userTeams
+                                required:
+                                  - property
+                                  - context
                       operator:
                         type: string
                         enum:
                           - matchAny
                       value:
                         anyOf:
-                          - type: string
                           - type: array
                             items:
                               type: string
+                          - oneOf:
+                              - type: string
+                              - type: object
+                                properties:
+                                  property:
+                                    type: string
+                                  context:
+                                    type: string
+                                    enum:
+                                      - user
+                                      - userTeams
+                                required:
+                                  - property
+                                  - context
                     required:
                       - property
                       - operator
@@ -717,41 +745,69 @@ components:
                   - propertySchema
                 additionalProperties: false
               - type: object
-                title: Path Filter Rule
+                title: matchAny Rule
                 anyOf:
                   - type: object
                     properties:
                       property:
-                        type: object
-                        properties:
-                          path:
-                            type: array
-                            items:
-                              anyOf:
-                                - type: string
-                                - type: object
-                                  properties:
-                                    relation:
-                                      type: string
-                                    maxHops:
-                                      type: number
-                                      minimum: 1
-                                      maximum: 15
-                          fromBlueprint:
-                            type: string
-                        required:
-                          - path
-                        additionalProperties: false
+                        oneOf:
+                          - type: object
+                            properties:
+                              path:
+                                type: array
+                                items:
+                                  anyOf:
+                                    - type: string
+                                    - type: object
+                                      properties:
+                                        relation:
+                                          type: string
+                                        maxHops:
+                                          type: number
+                                          minimum: 1
+                                          maximum: 15
+                              fromBlueprint:
+                                type: string
+                            required:
+                              - path
+                            additionalProperties: false
+                          - oneOf:
+                              - type: string
+                              - type: object
+                                properties:
+                                  property:
+                                    type: string
+                                  context:
+                                    type: string
+                                    enum:
+                                      - user
+                                      - userTeams
+                                required:
+                                  - property
+                                  - context
                       operator:
                         type: string
                         enum:
                           - matchAny
                       value:
                         anyOf:
-                          - type: string
                           - type: array
                             items:
                               type: string
+                          - oneOf:
+                              - type: string
+                              - type: object
+                                properties:
+                                  property:
+                                    type: string
+                                  context:
+                                    type: string
+                                    enum:
+                                      - user
+                                      - userTeams
+                                required:
+                                  - property
+                                  - context
                     required:
                       - property
                       - operator
@@ -1316,6 +1372,12 @@ components:
                       entity:
                         type: string
                         description: Fetch all audit logs related to the specified entity.
+                      include_deleted_entities:
+                        type: boolean
+                        description: Include deleted entities when searching for audit logs. This
+                          requires the `entity`, `blueprint`, `status`,
+                          `from`and `to` parameters. And the diff between `from`
+                          & `to` is limited to 1 day.
                       blueprint:
                         type: string
                         description: Fetch all audit logs related to the specified blueprint.
@@ -2495,41 +2557,69 @@ components:
                                       - propertySchema
                                     additionalProperties: false
                                   - type: object
-                                    title: Path Filter Rule
+                                    title: matchAny Rule
                                     anyOf:
                                       - type: object
                                         properties:
                                           property:
-                                            type: object
-                                            properties:
-                                              path:
-                                                type: array
-                                                items:
-                                                  anyOf:
-                                                    - type: string
-                                                    - type: object
-                                                      properties:
-                                                        relation:
-                                                          type: string
-                                                        maxHops:
-                                                          type: number
-                                                          minimum: 1
-                                                          maximum: 15
-                                              fromBlueprint:
-                                                type: string
-                                            required:
-                                              - path
-                                            additionalProperties: false
+                                            oneOf:
+                                              - type: object
+                                                properties:
+                                                  path:
+                                                    type: array
+                                                    items:
+                                                      anyOf:
+                                                        - type: string
+                                                        - type: object
+                                                          properties:
+                                                            relation:
+                                                              type: string
+                                                            maxHops:
+                                                              type: number
+                                                              minimum: 1
+                                                              maximum: 15
+                                                  fromBlueprint:
+                                                    type: string
+                                                required:
+                                                  - path
+                                                additionalProperties: false
+                                              - oneOf:
+                                                  - type: string
+                                                  - type: object
+                                                    properties:
+                                                      property:
+                                                        type: string
+                                                      context:
+                                                        type: string
+                                                        enum:
+                                                          - user
+                                                          - userTeams
+                                                    required:
+                                                      - property
+                                                      - context
                                           operator:
                                             type: string
                                             enum:
                                               - matchAny
                                           value:
                                             anyOf:
-                                              - type: string
                                               - type: array
                                                 items:
                                                   type: string
+                                              - oneOf:
+                                                  - type: string
+                                                  - type: object
+                                                    properties:
+                                                      property:
+                                                        type: string
+                                                      context:
+                                                        type: string
+                                                        enum:
+                                                          - user
+                                                          - userTeams
+                                                    required:
+                                                      - property
+                                                      - context
                                         required:
                                           - property
                                           - operator
@@ -2856,41 +2946,69 @@ components:
                                       - propertySchema
                                     additionalProperties: false
                                   - type: object
-                                    title: Path Filter Rule
+                                    title: matchAny Rule
                                     anyOf:
                                       - type: object
                                         properties:
                                           property:
-                                            type: object
-                                            properties:
-                                              path:
-                                                type: array
-                                                items:
-                                                  anyOf:
-                                                    - type: string
-                                                    - type: object
-                                                      properties:
-                                                        relation:
-                                                          type: string
-                                                        maxHops:
-                                                          type: number
-                                                          minimum: 1
-                                                          maximum: 15
-                                              fromBlueprint:
-                                                type: string
-                                            required:
-                                              - path
-                                            additionalProperties: false
+                                            oneOf:
+                                              - type: object
+                                                properties:
+                                                  path:
+                                                    type: array
+                                                    items:
+                                                      anyOf:
+                                                        - type: string
+                                                        - type: object
+                                                          properties:
+                                                            relation:
+                                                              type: string
+                                                            maxHops:
+                                                              type: number
+                                                              minimum: 1
+                                                              maximum: 15
+                                                  fromBlueprint:
+                                                    type: string
+                                                required:
+                                                  - path
+                                                additionalProperties: false
+                                              - oneOf:
+                                                  - type: string
+                                                  - type: object
+                                                    properties:
+                                                      property:
+                                                        type: string
+                                                      context:
+                                                        type: string
+                                                        enum:
+                                                          - user
+                                                          - userTeams
+                                                    required:
+                                                      - property
+                                                      - context
                                           operator:
                                             type: string
                                             enum:
                                               - matchAny
                                           value:
                                             anyOf:
-                                              - type: string
                                               - type: array
                                                 items:
                                                   type: string
+                                              - oneOf:
+                                                  - type: string
+                                                  - type: object
+                                                    properties:
+                                                      property:
+                                                        type: string
+                                                      context:
+                                                        type: string
+                                                        enum:
+                                                          - user
+                                                          - userTeams
+                                                    required:
+                                                      - property
+                                                      - context
                                         required:
                                           - property
                                           - operator
@@ -3724,6 +3842,12 @@ components:
                             entity:
                               type: string
                               description: Fetch all audit logs related to the specified entity.
+                            include_deleted_entities:
+                              type: boolean
+                              description: Include deleted entities when searching for audit logs. This
+                                requires the `entity`, `blueprint`, `status`,
+                                `from`and `to` parameters. And the diff between
+                                `from` & `to` is limited to 1 day.
                             blueprint:
                               type: string
                               description: Fetch all audit logs related to the specified blueprint.
@@ -4904,41 +5028,69 @@ components:
                                             - propertySchema
                                           additionalProperties: false
                                         - type: object
-                                          title: Path Filter Rule
+                                          title: matchAny Rule
                                           anyOf:
                                             - type: object
                                               properties:
                                                 property:
-                                                  type: object
-                                                  properties:
-                                                    path:
-                                                      type: array
-                                                      items:
-                                                        anyOf:
-                                                          - type: string
-                                                          - type: object
-                                                            properties:
-                                                              relation:
-                                                                type: string
-                                                              maxHops:
-                                                                type: number
-                                                                minimum: 1
-                                                                maximum: 15
-                                                    fromBlueprint:
-                                                      type: string
-                                                  required:
-                                                    - path
-                                                  additionalProperties: false
+                                                  oneOf:
+                                                    - type: object
+                                                      properties:
+                                                        path:
+                                                          type: array
+                                                          items:
+                                                            anyOf:
+                                                              - type: string
+                                                              - type: object
+                                                                properties:
+                                                                  relation:
+                                                                    type: string
+                                                                  maxHops:
+                                                                    type: number
+                                                                    minimum: 1
+                                                                    maximum: 15
+                                                        fromBlueprint:
+                                                          type: string
+                                                      required:
+                                                        - path
+                                                      additionalProperties: false
+                                                    - oneOf:
+                                                        - type: string
+                                                        - type: object
+                                                          properties:
+                                                            property:
+                                                              type: string
+                                                            context:
+                                                              type: string
+                                                              enum:
+                                                                - user
+                                                                - userTeams
+                                                          required:
+                                                            - property
+                                                            - context
                                                 operator:
                                                   type: string
                                                   enum:
                                                     - matchAny
                                                 value:
                                                   anyOf:
-                                                    - type: string
                                                     - type: array
                                                       items:
                                                         type: string
+                                                    - oneOf:
+                                                        - type: string
+                                                        - type: object
+                                                          properties:
+                                                            property:
+                                                              type: string
+                                                            context:
+                                                              type: string
+                                                              enum:
+                                                                - user
+                                                                - userTeams
+                                                          required:
+                                                            - property
+                                                            - context
                                               required:
                                                 - property
                                                 - operator
@@ -5265,41 +5417,69 @@ components:
                                             - propertySchema
                                           additionalProperties: false
                                         - type: object
-                                          title: Path Filter Rule
+                                          title: matchAny Rule
                                           anyOf:
                                             - type: object
                                               properties:
                                                 property:
-                                                  type: object
-                                                  properties:
-                                                    path:
-                                                      type: array
-                                                      items:
-                                                        anyOf:
-                                                          - type: string
-                                                          - type: object
-                                                            properties:
-                                                              relation:
-                                                                type: string
-                                                              maxHops:
-                                                                type: number
-                                                                minimum: 1
-                                                                maximum: 15
-                                                    fromBlueprint:
-                                                      type: string
-                                                  required:
-                                                    - path
-                                                  additionalProperties: false
+                                                  oneOf:
+                                                    - type: object
+                                                      properties:
+                                                        path:
+                                                          type: array
+                                                          items:
+                                                            anyOf:
+                                                              - type: string
+                                                              - type: object
+                                                                properties:
+                                                                  relation:
+                                                                    type: string
+                                                                  maxHops:
+                                                                    type: number
+                                                                    minimum: 1
+                                                                    maximum: 15
+                                                        fromBlueprint:
+                                                          type: string
+                                                      required:
+                                                        - path
+                                                      additionalProperties: false
+                                                    - oneOf:
+                                                        - type: string
+                                                        - type: object
+                                                          properties:
+                                                            property:
+                                                              type: string
+                                                            context:
+                                                              type: string
+                                                              enum:
+                                                                - user
+                                                                - userTeams
+                                                          required:
+                                                            - property
+                                                            - context
                                                 operator:
                                                   type: string
                                                   enum:
                                                     - matchAny
                                                 value:
                                                   anyOf:
-                                                    - type: string
                                                     - type: array
                                                       items:
                                                         type: string
+                                                    - oneOf:
+                                                        - type: string
+                                                        - type: object
+                                                          properties:
+                                                            property:
+                                                              type: string
+                                                            context:
+                                                              type: string
+                                                              enum:
+                                                                - user
+                                                                - userTeams
+                                                          required:
+                                                            - property
+                                                            - context
                                               required:
                                                 - property
                                                 - operator
@@ -6152,41 +6332,69 @@ components:
                   - propertySchema
                 additionalProperties: false
               - type: object
-                title: Path Filter Rule
+                title: matchAny Rule
                 anyOf:
                   - type: object
                     properties:
                       property:
-                        type: object
-                        properties:
-                          path:
-                            type: array
-                            items:
-                              anyOf:
-                                - type: string
-                                - type: object
-                                  properties:
-                                    relation:
-                                      type: string
-                                    maxHops:
-                                      type: number
-                                      minimum: 1
-                                      maximum: 15
-                          fromBlueprint:
-                            type: string
-                        required:
-                          - path
-                        additionalProperties: false
+                        oneOf:
+                          - type: object
+                            properties:
+                              path:
+                                type: array
+                                items:
+                                  anyOf:
+                                    - type: string
+                                    - type: object
+                                      properties:
+                                        relation:
+                                          type: string
+                                        maxHops:
+                                          type: number
+                                          minimum: 1
+                                          maximum: 15
+                              fromBlueprint:
+                                type: string
+                            required:
+                              - path
+                            additionalProperties: false
+                          - oneOf:
+                              - type: string
+                              - type: object
+                                properties:
+                                  property:
+                                    type: string
+                                  context:
+                                    type: string
+                                    enum:
+                                      - user
+                                      - userTeams
+                                required:
+                                  - property
+                                  - context
                       operator:
                         type: string
                         enum:
                           - matchAny
                       value:
                         anyOf:
-                          - type: string
                           - type: array
                             items:
                               type: string
+                          - oneOf:
+                              - type: string
+                              - type: object
+                                properties:
+                                  property:
+                                    type: string
+                                  context:
+                                    type: string
+                                    enum:
+                                      - user
+                                      - userTeams
+                                required:
+                                  - property
+                                  - context
                     required:
                       - property
                       - operator
@@ -6605,41 +6813,69 @@ paths:
                                       - propertySchema
                                     additionalProperties: false
                                   - type: object
-                                    title: Path Filter Rule
+                                    title: matchAny Rule
                                     anyOf:
                                       - type: object
                                         properties:
                                           property:
-                                            type: object
-                                            properties:
-                                              path:
-                                                type: array
-                                                items:
-                                                  anyOf:
-                                                    - type: string
-                                                    - type: object
-                                                      properties:
-                                                        relation:
-                                                          type: string
-                                                        maxHops:
-                                                          type: number
-                                                          minimum: 1
-                                                          maximum: 15
-                                              fromBlueprint:
-                                                type: string
-                                            required:
-                                              - path
-                                            additionalProperties: false
+                                            oneOf:
+                                              - type: object
+                                                properties:
+                                                  path:
+                                                    type: array
+                                                    items:
+                                                      anyOf:
+                                                        - type: string
+                                                        - type: object
+                                                          properties:
+                                                            relation:
+                                                              type: string
+                                                            maxHops:
+                                                              type: number
+                                                              minimum: 1
+                                                              maximum: 15
+                                                  fromBlueprint:
+                                                    type: string
+                                                required:
+                                                  - path
+                                                additionalProperties: false
+                                              - oneOf:
+                                                  - type: string
+                                                  - type: object
+                                                    properties:
+                                                      property:
+                                                        type: string
+                                                      context:
+                                                        type: string
+                                                        enum:
+                                                          - user
+                                                          - userTeams
+                                                    required:
+                                                      - property
+                                                      - context
                                           operator:
                                             type: string
                                             enum:
                                               - matchAny
                                           value:
                                             anyOf:
-                                              - type: string
                                               - type: array
                                                 items:
                                                   type: string
+                                              - oneOf:
+                                                  - type: string
+                                                  - type: object
+                                                    properties:
+                                                      property:
+                                                        type: string
+                                                      context:
+                                                        type: string
+                                                        enum:
+                                                          - user
+                                                          - userTeams
+                                                    required:
+                                                      - property
+                                                      - context
                                         required:
                                           - property
                                           - operator
@@ -9444,41 +9680,69 @@ paths:
                           - propertySchema
                         additionalProperties: false
                       - type: object
-                        title: Path Filter Rule
+                        title: matchAny Rule
                         anyOf:
                           - type: object
                             properties:
                               property:
-                                type: object
-                                properties:
-                                  path:
-                                    type: array
-                                    items:
-                                      anyOf:
-                                        - type: string
-                                        - type: object
-                                          properties:
-                                            relation:
-                                              type: string
-                                            maxHops:
-                                              type: number
-                                              minimum: 1
-                                              maximum: 15
-                                  fromBlueprint:
-                                    type: string
-                                required:
-                                  - path
-                                additionalProperties: false
+                                oneOf:
+                                  - type: object
+                                    properties:
+                                      path:
+                                        type: array
+                                        items:
+                                          anyOf:
+                                            - type: string
+                                            - type: object
+                                              properties:
+                                                relation:
+                                                  type: string
+                                                maxHops:
+                                                  type: number
+                                                  minimum: 1
+                                                  maximum: 15
+                                      fromBlueprint:
+                                        type: string
+                                    required:
+                                      - path
+                                    additionalProperties: false
+                                  - oneOf:
+                                      - type: string
+                                      - type: object
+                                        properties:
+                                          property:
+                                            type: string
+                                          context:
+                                            type: string
+                                            enum:
+                                              - user
+                                              - userTeams
+                                        required:
+                                          - property
+                                          - context
                               operator:
                                 type: string
                                 enum:
                                   - matchAny
                               value:
                                 anyOf:
-                                  - type: string
                                   - type: array
                                     items:
                                       type: string
+                                  - oneOf:
+                                      - type: string
+                                      - type: object
+                                        properties:
+                                          property:
+                                            type: string
+                                          context:
+                                            type: string
+                                            enum:
+                                              - user
+                                              - userTeams
+                                        required:
+                                          - property
+                                          - context
                             required:
                               - property
                               - operator
@@ -11131,11 +11395,11 @@ paths:
                         identifier:
                           type: string
                           pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                          maxLength: 30
+                          maxLength: 100
                           description: The identifier of the blueprint.
                         title:
                           type: string
-                          maxLength: 30
+                          maxLength: 100
                           minLength: 1
                           description: The title of the blueprint.
                         description:
@@ -11145,20 +11409,6 @@ paths:
                         icon:
                           type: string
                           description: The icon of the blueprint.
-                        teamInheritance:
-                          type: object
-                          description: 'A relation to another blueprint from which to inherit the team.
-                            Can be any blueprint connected to this one via any
-                            number of relations. `path` is the path to the
-                            desired blueprint via relations, for example:
-                            `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                          properties:
-                            path:
-                              type: string
-                              description: The path to the desired blueprint via relations.
-                          additionalProperties: false
-                          required:
-                            - path
                         ownership:
                           anyOf:
                             - type: object
@@ -11775,11 +12025,11 @@ paths:
                 identifier:
                   type: string
                   pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                  maxLength: 30
+                  maxLength: 100
                   description: The identifier of the blueprint.
                 title:
                   type: string
-                  maxLength: 30
+                  maxLength: 100
                   minLength: 1
                   description: The title of the blueprint.
                 description:
@@ -11789,20 +12039,6 @@ paths:
                 icon:
                   type: string
                   description: The icon of the blueprint.
-                teamInheritance:
-                  type: object
-                  description: 'A relation to another blueprint from which to inherit the team.
-                    Can be any blueprint connected to this one via any number of
-                    relations. `path` is the path to the desired blueprint via
-                    relations, for example:
-                    `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                  properties:
-                    path:
-                      type: string
-                      description: The path to the desired blueprint via relations.
-                  additionalProperties: false
-                  required:
-                    - path
                 ownership:
                   anyOf:
                     - type: object
@@ -12374,11 +12610,11 @@ paths:
                       identifier:
                         type: string
                         pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                        maxLength: 30
+                        maxLength: 100
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -12388,20 +12624,6 @@ paths:
                       icon:
                         type: string
                         description: The icon of the blueprint.
-                      teamInheritance:
-                        type: object
-                        description: 'A relation to another blueprint from which to inherit the team.
-                          Can be any blueprint connected to this one via any
-                          number of relations. `path` is the path to the desired
-                          blueprint via relations, for example:
-                          `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                        properties:
-                          path:
-                            type: string
-                            description: The path to the desired blueprint via relations.
-                        additionalProperties: false
-                        required:
-                          - path
                       ownership:
                         anyOf:
                           - type: object
@@ -13071,11 +13293,11 @@ paths:
                       identifier:
                         type: string
                         pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                        maxLength: 30
+                        maxLength: 100
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -13085,20 +13307,6 @@ paths:
                       icon:
                         type: string
                         description: The icon of the blueprint.
-                      teamInheritance:
-                        type: object
-                        description: 'A relation to another blueprint from which to inherit the team.
-                          Can be any blueprint connected to this one via any
-                          number of relations. `path` is the path to the desired
-                          blueprint via relations, for example:
-                          `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                        properties:
-                          path:
-                            type: string
-                            description: The path to the desired blueprint via relations.
-                        additionalProperties: false
-                        required:
-                          - path
                       ownership:
                         anyOf:
                           - type: object
@@ -13713,11 +13921,11 @@ paths:
                 identifier:
                   type: string
                   pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                  maxLength: 30
+                  maxLength: 100
                   description: The identifier of the blueprint.
                 title:
                   type: string
-                  maxLength: 30
+                  maxLength: 100
                   minLength: 1
                   description: The title of the blueprint.
                 description:
@@ -13727,20 +13935,6 @@ paths:
                 icon:
                   type: string
                   description: The icon of the blueprint.
-                teamInheritance:
-                  type: object
-                  description: 'A relation to another blueprint from which to inherit the team.
-                    Can be any blueprint connected to this one via any number of
-                    relations. `path` is the path to the desired blueprint via
-                    relations, for example:
-                    `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                  properties:
-                    path:
-                      type: string
-                      description: The path to the desired blueprint via relations.
-                  additionalProperties: false
-                  required:
-                    - path
                 ownership:
                   anyOf:
                     - type: object
@@ -14309,11 +14503,11 @@ paths:
                       identifier:
                         type: string
                         pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                        maxLength: 30
+                        maxLength: 100
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -14323,20 +14517,6 @@ paths:
                       icon:
                         type: string
                         description: The icon of the blueprint.
-                      teamInheritance:
-                        type: object
-                        description: 'A relation to another blueprint from which to inherit the team.
-                          Can be any blueprint connected to this one via any
-                          number of relations. `path` is the path to the desired
-                          blueprint via relations, for example:
-                          `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                        properties:
-                          path:
-                            type: string
-                            description: The path to the desired blueprint via relations.
-                        additionalProperties: false
-                        required:
-                          - path
                       ownership:
                         anyOf:
                           - type: object
@@ -14986,11 +15166,11 @@ paths:
                 identifier:
                   type: string
                   pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                  maxLength: 30
+                  maxLength: 100
                   description: The identifier of the blueprint.
                 title:
                   type: string
-                  maxLength: 30
+                  maxLength: 100
                   minLength: 1
                   description: The title of the blueprint.
                 description:
@@ -15000,20 +15180,6 @@ paths:
                 icon:
                   type: string
                   description: The icon of the blueprint.
-                teamInheritance:
-                  type: object
-                  description: 'A relation to another blueprint from which to inherit the team.
-                    Can be any blueprint connected to this one via any number of
-                    relations. `path` is the path to the desired blueprint via
-                    relations, for example:
-                    `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                  properties:
-                    path:
-                      type: string
-                      description: The path to the desired blueprint via relations.
-                  additionalProperties: false
-                  required:
-                    - path
                 ownership:
                   anyOf:
                     - type: object
@@ -15571,11 +15737,11 @@ paths:
                       identifier:
                         type: string
                         pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                        maxLength: 30
+                        maxLength: 100
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -15585,20 +15751,6 @@ paths:
                       icon:
                         type: string
                         description: The icon of the blueprint.
-                      teamInheritance:
-                        type: object
-                        description: 'A relation to another blueprint from which to inherit the team.
-                          Can be any blueprint connected to this one via any
-                          number of relations. `path` is the path to the desired
-                          blueprint via relations, for example:
-                          `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                        properties:
-                          path:
-                            type: string
-                            description: The path to the desired blueprint via relations.
-                        additionalProperties: false
-                        required:
-                          - path
                       ownership:
                         anyOf:
                           - type: object
@@ -16397,11 +16549,11 @@ paths:
                       identifier:
                         type: string
                         pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                        maxLength: 30
+                        maxLength: 100
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -16411,20 +16563,6 @@ paths:
                       icon:
                         type: string
                         description: The icon of the blueprint.
-                      teamInheritance:
-                        type: object
-                        description: 'A relation to another blueprint from which to inherit the team.
-                          Can be any blueprint connected to this one via any
-                          number of relations. `path` is the path to the desired
-                          blueprint via relations, for example:
-                          `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                        properties:
-                          path:
-                            type: string
-                            description: The path to the desired blueprint via relations.
-                        additionalProperties: false
-                        required:
-                          - path
                       ownership:
                         anyOf:
                           - type: object
@@ -17112,11 +17250,11 @@ paths:
                       identifier:
                         type: string
                         pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                        maxLength: 30
+                        maxLength: 100
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -17126,20 +17264,6 @@ paths:
                       icon:
                         type: string
                         description: The icon of the blueprint.
-                      teamInheritance:
-                        type: object
-                        description: 'A relation to another blueprint from which to inherit the team.
-                          Can be any blueprint connected to this one via any
-                          number of relations. `path` is the path to the desired
-                          blueprint via relations, for example:
-                          `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                        properties:
-                          path:
-                            type: string
-                            description: The path to the desired blueprint via relations.
-                        additionalProperties: false
-                        required:
-                          - path
                       ownership:
                         anyOf:
                           - type: object
@@ -17829,11 +17953,11 @@ paths:
                       identifier:
                         type: string
                         pattern: ^(?!\.{1,2}$)[\p{L}0-9@_.+:\\/-]+$
-                        maxLength: 30
+                        maxLength: 100
                         description: The identifier of the blueprint.
                       title:
                         type: string
-                        maxLength: 30
+                        maxLength: 100
                         minLength: 1
                         description: The title of the blueprint.
                       description:
@@ -17843,20 +17967,6 @@ paths:
                       icon:
                         type: string
                         description: The icon of the blueprint.
-                      teamInheritance:
-                        type: object
-                        description: 'A relation to another blueprint from which to inherit the team.
-                          Can be any blueprint connected to this one via any
-                          number of relations. `path` is the path to the desired
-                          blueprint via relations, for example:
-                          `"relationIdentifier.relationIdentifierInRelatedBlueprint"`'
-                        properties:
-                          path:
-                            type: string
-                            description: The path to the desired blueprint via relations.
-                        additionalProperties: false
-                        required:
-                          - path
                       ownership:
                         anyOf:
                           - type: object
@@ -19299,41 +19409,69 @@ paths:
                                       - propertySchema
                                     additionalProperties: false
                                   - type: object
-                                    title: Path Filter Rule
+                                    title: matchAny Rule
                                     anyOf:
                                       - type: object
                                         properties:
                                           property:
-                                            type: object
-                                            properties:
-                                              path:
-                                                type: array
-                                                items:
-                                                  anyOf:
-                                                    - type: string
-                                                    - type: object
-                                                      properties:
-                                                        relation:
-                                                          type: string
-                                                        maxHops:
-                                                          type: number
-                                                          minimum: 1
-                                                          maximum: 15
-                                              fromBlueprint:
-                                                type: string
-                                            required:
-                                              - path
-                                            additionalProperties: false
+                                            oneOf:
+                                              - type: object
+                                                properties:
+                                                  path:
+                                                    type: array
+                                                    items:
+                                                      anyOf:
+                                                        - type: string
+                                                        - type: object
+                                                          properties:
+                                                            relation:
+                                                              type: string
+                                                            maxHops:
+                                                              type: number
+                                                              minimum: 1
+                                                              maximum: 15
+                                                  fromBlueprint:
+                                                    type: string
+                                                required:
+                                                  - path
+                                                additionalProperties: false
+                                              - oneOf:
+                                                  - type: string
+                                                  - type: object
+                                                    properties:
+                                                      property:
+                                                        type: string
+                                                      context:
+                                                        type: string
+                                                        enum:
+                                                          - user
+                                                          - userTeams
+                                                    required:
+                                                      - property
+                                                      - context
                                           operator:
                                             type: string
                                             enum:
                                               - matchAny
                                           value:
                                             anyOf:
-                                              - type: string
                                               - type: array
                                                 items:
                                                   type: string
+                                              - oneOf:
+                                                  - type: string
+                                                  - type: object
+                                                    properties:
+                                                      property:
+                                                        type: string
+                                                      context:
+                                                        type: string
+                                                        enum:
+                                                          - user
+                                                          - userTeams
+                                                    required:
+                                                      - property
+                                                      - context
                                         required:
                                           - property
                                           - operator
@@ -20083,6 +20221,27 @@ paths:
                         type:
                           type: string
                           enum:
+                            - INTEGRATION_ACTION
+                        installationId:
+                          type: string
+                        integrationActionType:
+                          type: string
+                          enum:
+                            - dispatch_workflow
+                        integrationActionExecutionProperties:
+                          type: object
+                      required:
+                        - type
+                        - installationId
+                        - integrationActionType
+                        - integrationActionExecutionProperties
+                      additionalProperties: false
+                      title: Integration Action
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
                             - GITLAB
                         projectName:
                           type: string
@@ -20224,6 +20383,9 @@ paths:
                   type: boolean
                   description: Only relevant for **automations**. If `false`, the automation will
                     be inactive (will not be triggered).
+                allowAnyoneToViewRuns:
+                  type: boolean
+                  description: Whether members can view the runs of this action.
               additionalProperties: false
               required:
                 - identifier
@@ -21252,41 +21414,69 @@ paths:
                                       - propertySchema
                                     additionalProperties: false
                                   - type: object
-                                    title: Path Filter Rule
+                                    title: matchAny Rule
                                     anyOf:
                                       - type: object
                                         properties:
                                           property:
-                                            type: object
-                                            properties:
-                                              path:
-                                                type: array
-                                                items:
-                                                  anyOf:
-                                                    - type: string
-                                                    - type: object
-                                                      properties:
-                                                        relation:
-                                                          type: string
-                                                        maxHops:
-                                                          type: number
-                                                          minimum: 1
-                                                          maximum: 15
-                                              fromBlueprint:
-                                                type: string
-                                            required:
-                                              - path
-                                            additionalProperties: false
+                                            oneOf:
+                                              - type: object
+                                                properties:
+                                                  path:
+                                                    type: array
+                                                    items:
+                                                      anyOf:
+                                                        - type: string
+                                                        - type: object
+                                                          properties:
+                                                            relation:
+                                                              type: string
+                                                            maxHops:
+                                                              type: number
+                                                              minimum: 1
+                                                              maximum: 15
+                                                  fromBlueprint:
+                                                    type: string
+                                                required:
+                                                  - path
+                                                additionalProperties: false
+                                              - oneOf:
+                                                  - type: string
+                                                  - type: object
+                                                    properties:
+                                                      property:
+                                                        type: string
+                                                      context:
+                                                        type: string
+                                                        enum:
+                                                          - user
+                                                          - userTeams
+                                                    required:
+                                                      - property
+                                                      - context
                                           operator:
                                             type: string
                                             enum:
                                               - matchAny
                                           value:
                                             anyOf:
-                                              - type: string
                                               - type: array
                                                 items:
                                                   type: string
+                                              - oneOf:
+                                                  - type: string
+                                                  - type: object
+                                                    properties:
+                                                      property:
+                                                        type: string
+                                                      context:
+                                                        type: string
+                                                        enum:
+                                                          - user
+                                                          - userTeams
+                                                    required:
+                                                      - property
+                                                      - context
                                         required:
                                           - property
                                           - operator
@@ -22036,6 +22226,27 @@ paths:
                         type:
                           type: string
                           enum:
+                            - INTEGRATION_ACTION
+                        installationId:
+                          type: string
+                        integrationActionType:
+                          type: string
+                          enum:
+                            - dispatch_workflow
+                        integrationActionExecutionProperties:
+                          type: object
+                      required:
+                        - type
+                        - installationId
+                        - integrationActionType
+                        - integrationActionExecutionProperties
+                      additionalProperties: false
+                      title: Integration Action
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
                             - GITLAB
                         projectName:
                           type: string
@@ -22177,6 +22388,9 @@ paths:
                   type: boolean
                   description: Only relevant for **automations**. If `false`, the automation will
                     be inactive (will not be triggered).
+                allowAnyoneToViewRuns:
+                  type: boolean
+                  description: Whether members can view the runs of this action.
               additionalProperties: false
               required:
                 - identifier
@@ -25417,13 +25631,13 @@ paths:
                 description: The json provided does not match the route's schema
   /v1/organization/secrets:
     get:
-      summary: Get all organization secrets
+      summary: Get all organization secrets' metadata
       tags:
         - Organization
-      description: This route allows you to retrieve all of the secrets in your
-        organization.<br/><br/>To learn more about secrets management in Port,
-        check out the
-        [documentation](https://docs.port.io/sso-rbac/port-secrets).
+      description: This route allows you to retrieve metadata about all secrets
+        in your organization. Note that this endpoint returns only the metadata
+        of the secrets, not the secret content itself.<br/><br/>To learn more about secrets management in Port,
+        check out the [documentation](https://docs.port.io/sso-rbac/port-secrets).
       security:
         - bearer:
             - read:secrets
@@ -25568,17 +25782,50 @@ paths:
                 description: The json provided does not match the route's schema
   /v1/organization/secrets/{secret_name}:
     get:
-      summary: Get an organization secret
+      summary: Get an organization secret's metadata
       tags:
         - Organization
-      description: This route allows you to retrieve a specific secret in your
-        organization.<br/><br/>To learn more about secrets management in Port,
-        check out the
+      description: This route allows you to retrieve metadata about a specific secret
+        in your organization. Note that this endpoint returns only the metadata
+        of the secret, not the secret content itself.<br/><br/>To learn more
+        about secrets management in Port, check out the
         [documentation](https://docs.port.io/sso-rbac/port-secrets).
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: secret_name
+          required: true
+          description: The name of the secret you want to operate on.
       security:
         - bearer:
             - read:secrets
       responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  secret:
+                    type: object
+                    properties:
+                      secretName:
+                        type: string
+                      description:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                required:
+                  - ok
+                  - secret
         "401":
           description: Default Response
           content:
@@ -28286,6 +28533,14 @@ paths:
           name: entity
           required: false
           description: Fetch all audit logs related to the specified entity.
+        - schema:
+            type: boolean
+          in: query
+          name: include_deleted_entities
+          required: false
+          description: Include deleted entities when searching for audit logs. This
+            requires the `entity`, `blueprint`, `status`, `from`and `to`
+            parameters. And the diff between `from` & `to` is limited to 1 day.
         - schema:
             type: string
           in: query

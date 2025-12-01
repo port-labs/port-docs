@@ -545,6 +545,19 @@ resources:
       state: open # ✅  new
 ```
 
+### `secret-scanning-alerts`
+
+The `secret-scanning-alerts` kind is now available in Ocean GitHub. You can filter by a single `state` (e.g., `open`) and control whether the secret content is included using the `hideSecret` option (defaults to `true`, which hides the secret):
+
+```yaml showLineNumbers
+resources:
+  - kind: secret-scanning-alerts
+    selector:
+      query: "true"
+      state: open # ["open", "resolved", "all"]
+      hideSecret: true # (default: true)
+```
+
 ## Summary of key changes
 
 This section provides a high-level summary of the key changes for mappings.
