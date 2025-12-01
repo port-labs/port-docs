@@ -1018,7 +1018,7 @@ The `severityList` selector controls whether to filter issues by severity in the
 
 <TabItem label="Include type list" value="typeList">
 
-The `typeList` selector optionally controls whether to filter issues by type in the integration. If not specified, no type filtering is applied.
+The `typeList` selector optionally restricts returned results to specific issue types. If not specified, no type filtering is applied. This selector is valid for the `issues`, `serviceTicket`, and `serviceControl` kinds.
 
 ```yaml showLineNumbers
 - kind: issue # one of the supported kinds: issue, serviceControl, serviceTicket
