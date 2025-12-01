@@ -352,7 +352,14 @@ export const integrations = [
     icon: '/img/guides/icons/AI.svg',
     darkIcon: '/img/guides/icons/AI.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/openai',
-  }
+  },
+  {
+    name: 'n8n',
+    category: 'other',
+    icon: '/img/guides/icons/n8n.svg',
+    darkIcon: '/img/guides/icons/n8n.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/n8n',
+  },
 ];
 
 export const categories = {
