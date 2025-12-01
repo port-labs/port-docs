@@ -354,10 +354,10 @@ export const integrations = [
   },
   {
     name: 'n8n',
-    category: 'other',
+    category: 'ai-agents',
     icon: '/img/guides/icons/n8n.svg',
     darkIcon: '/img/guides/icons/n8n.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/n8n',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/n8n',
   },
 ];
 
