@@ -1007,7 +1007,7 @@ The following selectors can be used to filter the data fetched from the Wiz API 
 The `severityList` selector controls whether to filter issues by severity in the integration. If not specified, no severity filtering is applied.
 
 ```yaml showLineNumbers
-- kind: issue
+- kind: issue # one of [issue, serviceControl, serviceTicket] kinds
   selector:
     query: 'true'
     # highlight-next-line
