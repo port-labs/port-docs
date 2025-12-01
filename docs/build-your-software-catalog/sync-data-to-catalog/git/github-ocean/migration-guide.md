@@ -1,6 +1,6 @@
 # GitHub migration guide
 
-This guide will walk you through the process of migrating from Port's existing GitHub Cloud App to our new and improved GitHub Integration, which is powered by [Ocean](https://ocean.port.io/).
+This guide will walk you through the process of migrating from Port's existing GitHub cloud app to the improved GitHub integration powered by [Ocean](https://ocean.port.io/).
 
 :::warning Entity ownership transfer is recommended
 **This migration focuses on transferring entity ownership from the legacy GitHub App to the new GitHub Ocean integration.** This is recommended step before uninstalling the old app.
