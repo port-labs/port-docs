@@ -109,7 +109,7 @@ External AI agents and automation workflows can leverage Port's Context Lake to 
 
 Port provides a custom n8n node that simplifies integration with Port's AI agents and Context Lake. To get started:
 
-1. **[Set up Port's n8n custom node](/guides/all/setup-port-n8n-node)** — Install and configure the Port node in your n8n instance
+1. **[Set up Port's n8n custom node](/ai-interfaces/port-n8n-node)** — Install and configure the Port node in your n8n instance
 2. **[Build automation workflows](/guides/all/remediate-vulnerability-with-n8n-and-port)** — See an example of using Port as a context lake for vulnerability management workflows
 
 ## Getting started
