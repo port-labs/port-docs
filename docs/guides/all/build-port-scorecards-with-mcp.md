@@ -23,7 +23,7 @@ Whether you're building security agents, compliance automation, or developer pro
 
 This guide assumes you have:
 
-- Basic understanding of [scorecards](/scorecards/) and [scorecard rules](/scorecards/concepts-and-structure).
+- Basic understanding of [scorecards](/scorecards/overview) and [scorecard rules](/scorecards/concepts-and-structure).
 - Port MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor)
 
 ## Designing scorecards for MCP queries
@@ -328,7 +328,7 @@ The agent will:
 
 ## Related documentation
 
-- [Scorecards overview](/scorecards/) - Introduction to scorecards and their use cases.
+- [Scorecards overview](/scorecards/overview) - Introduction to scorecards and their use cases.
 - [Scorecard structure](/scorecards/concepts-and-structure) - Detailed guide on rules, levels, and conditions.
 - [Available MCP tools](/ai-interfaces/port-mcp-server/available-tools) - Complete reference for all MCP tools.
 - [Manage scorecards](/scorecards/manage-scorecards) - Creating and updating scorecards via UI and API.
