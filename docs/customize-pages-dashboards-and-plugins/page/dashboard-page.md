@@ -676,7 +676,7 @@ The description will be displayed at the top of the page, under the page title:
 
 ## Adding new widgets
 
-A dashboard can include any of the [supported widgets](/customize-pages-dashboards-and-plugins/dashboards/#visualization-types).
+A dashboard can include any of the [supported widgets](/customize-pages-dashboards-and-plugins/dashboards/data-widgets).
 
 To add a new widget, click `Add` and choose your desired visualization type:
 

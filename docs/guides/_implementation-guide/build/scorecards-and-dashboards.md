@@ -26,7 +26,7 @@ Define scorecards for the blueprints you created as part of your MVP.
 
 ## Create dashboards
 
-[Dashboards](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/) are a great way to visualize and track data from your software catalog.  
+[Dashboards](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/data-widgets) are a great way to visualize and track data from your software catalog.  
 A dashboard can contain any number of widgets that display data relevant to your users.
 
 We recommend creating dashboards for different personas in your organization to display data that is important to them.  
@@ -45,7 +45,7 @@ Dashboards can be created/modified in 3 locations:
   - In a specific entity page.
 
 :::tip Static & dynamic filters
-When creating certain widgets, you can define [**static filters**](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters) to exclude specific data.
+When creating certain widgets, you can define [**static filters**](/customize-pages-dashboards-and-plugins/dashboards/custom-widgets/#chart-filters) to exclude specific data.
 
 You can also define [**dynamic filters**](/search-and-query/#dynamic-properties) to display data relevant to the logged-in user.
 :::

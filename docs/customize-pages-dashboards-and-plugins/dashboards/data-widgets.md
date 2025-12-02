@@ -28,7 +28,7 @@ You can also filter entities so the aggregation number chart will only apply to 
 
 The value shown in a **number chart** is calculated over **all available entities** of the selected blueprint. By default, it does not apply any time-based filtering.
 
-When a **number chart** is used alongside a [**line chart**](/customize-pages-dashboards-and-plugins/dashboards/#line-chart) in a dashboard, for example a number chart showing average monthly deployment frequency and a line chart showing deployment frequency over time, you might notice that the average values differ, even if both charts reference the same metric (e.g. deployment frequency).
+When a **number chart** is used alongside a [**line chart**](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#line-chart) in a dashboard, for example a number chart showing average monthly deployment frequency and a line chart showing deployment frequency over time, you might notice that the average values differ, even if both charts reference the same metric (e.g. deployment frequency).
 
 This difference happens because the two charts are likely working with different time ranges:
 
@@ -347,10 +347,10 @@ If you leave this field blank, the widget will display a default message: **"No 
 
 The following widget types support the custom empty state message:
 
-- [Pie chart](/customize-pages-dashboards-and-plugins/dashboards/#pie-chart)
-- [Number chart](/customize-pages-dashboards-and-plugins/dashboards/#number-chart)
-- [Line chart](/customize-pages-dashboards-and-plugins/dashboards/#line-chart)
-- [Tables](/customize-pages-dashboards-and-plugins/dashboards/#table)
+- [Pie chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#pie-chart)
+- [Number chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#number-chart)
+- [Line chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#line-chart)
+- [Tables](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#table)
 
 ## Widget type identifiers (Terraform)
 
