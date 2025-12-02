@@ -1136,6 +1136,13 @@ export const availableGuides = [
         link: "/guides/all/visualize-your-github-identity-and-access-management",
     },
     {
+        title: "Visualize Microsoft Entra ID security insights",
+        description: "Create a security analytics dashboard to monitor identity risks, sign-in activity, and application security in Microsoft Entra ID",
+        tags: ["Security", "Azure", "Dashboards"],
+        logos: ["Azure"],
+        link: "/guides/all/visualize-entra-id-security-insights",
+    },
+    {
         title: "Auto-label your GitHub PRs with Sonar Scans",
         description: "Create an automation that applies labels to GitHub pull requests based on SonarQube scans",
         tags: ["Security", "GitHub", "SonarQube", "Automations"],
