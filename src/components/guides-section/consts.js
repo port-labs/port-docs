@@ -1524,6 +1524,13 @@ export const availableGuides = [
         link: "/guides/all/query-dora-metrics-using-port-mcp",
     },
     {
+        title: "Build Port Scorecards with MCP",
+        description: "Design scorecards that AI agents can query to evaluate compliance, security posture, and production readiness",
+        tags: ["AI", "Scorecards"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-scorecards-with-mcp",
+    },
+    {
         title: "Migrate repositories from Bitbucket to GitHub",
         description: "Migrate repositories from Bitbucket to GitHub using Port self-service actions and GitHub Actions",
         tags: [ "BitBucket", "GitHub", "Actions", "Scorecards"],
