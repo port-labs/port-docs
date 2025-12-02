@@ -52,26 +52,6 @@ You can use the following Port blueprint definitions and integration configurati
 
 #### Group configuration options
 
-<Tabs groupId="config" queryString="parameter">
-
-<TabItem label="Search" value="search">
-
-The `search` port app configuration allows you to filter groups based on the matching the search criteria provided.
-By default, if `group` is not specified, all groups for the authorized user will be synced.
-
-```yaml showLineNumbers
-deleteDependentEntities: true
-createMissingRelatedEntities: true
-enableMergeEntity: true
-# highlight-next-line
-search:
-  # highlight-next-line
-  group: "ocean" # filter groups by name matching the provided value
-```
-</TabItem>
-
-<TabItem label="Include Active Groups" value="includeActiveGroups">
-
 The `includeActiveGroups` selector allows you to filter groups based on whether they are active or not.
 By default, if not specified, all groups will be synced.
 
@@ -82,12 +62,9 @@ By default, if not specified, all groups will be synced.
     # highlight-next-line
     includeActiveGroups: true
 ```
-</TabItem>
-
-</Tabs>
 
 :::caution Group search filtering effect
-If any of the above options are specified, only **groups**, **issues**, **files**, **members** and **merge requests** that match the criteria will be synced.
+If `includeActiveGroups` is specified, only **groups**, **issues**, **files**, **members** and **merge requests** that match the criteria will be synced.
 This means, the following kinds will be fetched based on the groups filtered with the search criteria:
 
 - `group`
@@ -131,26 +108,6 @@ You can use the following Port blueprint definitions and integration configurati
 
 #### Project configuration options
 
-<Tabs groupId="config" queryString="parameter">
-
-<TabItem label="Search" value="search">
-
-The `search` port app configuration allows you to filter projects based on the matching the search criteria provided.
-By default, if `project` is not specified, all projects for the authorized user will be synced.
-
-```yaml showLineNumbers
-deleteDependentEntities: true
-createMissingRelatedEntities: true
-enableMergeEntity: true
-# highlight-next-line
-search:
-  # highlight-next-line
-  project: "ocean" # filter projects by name matching the provided value
-```
-</TabItem>
-
-<TabItem label="Include Active Projects" value="includeActiveProjects">
-
 The `includeActiveProjects` selector allows you to filter projects based on whether they are active or not.
 By default, if not specified, all projects will be synced.
 
@@ -161,12 +118,9 @@ By default, if not specified, all projects will be synced.
     # highlight-next-line
     includeActiveProjects: true
 ```
-</TabItem>
-
-</Tabs>
 
 :::caution Project search filtering effect
-If any of the above options are specified, only **projects**, **pipelines**, **jobs**, **releases** and **tags** that match the criteria will be synced.
+If `includeActiveProjects` is specified, only **projects**, **pipelines**, **jobs**, **releases** and **tags** that match the criteria will be synced.
 This means, the following kinds will be fetched based on the projects filtered with the search criteria:
 
 - `project`
