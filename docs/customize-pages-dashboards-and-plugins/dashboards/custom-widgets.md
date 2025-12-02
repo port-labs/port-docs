@@ -307,7 +307,5 @@ The following table lists the identifiers for each custom widget type:
 | ----------- | ---------- |
 | IFrame | `iframe-widget` |
 | Action card | `action-card-widget` |
-| Action History | `action-runs-table-widget` |
+| Action history | `action-runs-table-widget` |
 | Markdown | `markdown` |
-| AI Agent | `ai-chat-widget`* |
-| Links | `links-widget` |

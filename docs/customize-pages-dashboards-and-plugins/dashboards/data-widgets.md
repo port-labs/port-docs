@@ -360,4 +360,3 @@ The following table lists the identifiers for each data widget type:
 | Pie chart | `entities-pie-chart` |
 | Line chart | `line-chart` |
 | Table | `table-entities-explorer` |
-| Entity card | `entity-information-widget`* |
