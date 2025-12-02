@@ -167,6 +167,38 @@ When linking to other pages in your portal, you can use `/` as the URL base, ins
 
 For example, you can use `<a href="/plan_my_day">` instead of `<a href="https://showcase.port.io/plan_my_day">`.
 
+### Template variables
+
+You can use template variables in your markdown widget content to dynamically display information about the current user or entity.
+
+**User information**  
+In every dashboard, you can access user information using the `{{ .user... }}` template syntax.  
+Available user properties include:
+
+- `{{ .user.name }}`
+- `{{ .user.email }}`
+- `{{ .user.fullName }}`
+- `{{ .user.firstName }}`
+- `{{ .user.lastName }}`
+
+For example:
+
+```markdown
+Welcome, {{ .user.firstName }}!
+```
+
+**Entity information**  
+
+On specific entity pages, you can also access entity information using template variables. Available properties depend on the entity's specific properties. For example, if an entity has a `title` property, you can access it using `{{ .entity.title }}`.
+
+**Exploring available properties**  
+
+To see what properties are available, you can print the whole object in your markdown widget. For example, use `{{ .user }}` to see all available user properties, or `{{ .entity }}` to see all available entity properties on entity pages.
+
+:::caution Template syntax
+The template syntax requires spaces around the dot. Make sure to use `{{ .user... }}` (with spaces), not `{{.user...}}` (without spaces).
+:::
+
 ## AI Agent
 
 The AI Agent widget provides an interactive chat interface that helps you work with Port. You can ask questions and get assistance with various tasks in your software catalog.
