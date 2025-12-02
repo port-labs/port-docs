@@ -313,7 +313,7 @@ When using Port's UI, you can use properties of the logged-in user when writing 
 - `blueprint` - the blueprint identifier of the current page.
 
 :::info UI only
-Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
+Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/custom-widgets/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
 :::
 Several relation-based operators are available, see them [here](./relation-operators).
 

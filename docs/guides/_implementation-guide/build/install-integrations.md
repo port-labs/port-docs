@@ -44,7 +44,7 @@ Once your software catalog is populated with data from different sources, you ca
 This is one of the main strengths of a developer portal - tools in your ecosystem that were once unaware of each other are now part of a catalog that can be used to create new insights and workflows.
 
 For example:
-- Once you connect your **Jira issue** and **Service** blueprints, you can create a [dashboard widget](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/) that tracks and displays the open issues in Jira that are related to a specific service.
+- Once you connect your **Jira issue** and **Service** blueprints, you can create a [dashboard widget](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/overview) that tracks and displays the open issues in Jira that are related to a specific service.
 - Once you connect your **PagerDuty incident** and **Service** blueprints, you can define an [automation](https://docs.port.io/actions-and-automations/define-automations/) that notifies the service owner when a new incident is created for their service.
 
 :::tip Default relations
