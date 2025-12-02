@@ -83,10 +83,22 @@ The table will automatically display data about each run, including status, inpu
 
 ## Markdown
 
-This widget allows you to display any markdown content you wish in formatted form:
+This widget allows you to display markdown content in formatted form. You can create custom markdown content or display markdown from an entity property.
 
 <img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' style={{borderRadius:'8px'}}/>
 <br/><br/>
+
+### Markdown content types
+
+The markdown widget supports two data source types, selected via the **Data source** field:
+
+- **Custom**: create and edit markdown content directly in the widget configuration. When selecting this option, you will proceed to a second page where you can enter your custom markdown content.
+- **Property**: display markdown content from a specific entity's markdown property. This is useful for displaying entity-specific documentation, such as a service's README file.
+
+:::info Entity page vs. dashboard
+- **In specific entity pages**: When using the **Property** data source, only the **Property** field is required. The blueprint and entity are automatically selected from the page context, so you don't need to specify them. There's no separate creation step since the markdown property already exists on the entity.
+- **In dashboards**: When using the **Property** data source, you must select the **Blueprint**, **Entity**, and **Property** fields to specify which entity's markdown property to display.
+:::
 
 The widget also supports a wide variety of HTML tags, allowing you to create rich content:
 <details>
@@ -158,8 +170,23 @@ A practical example of using HTML in a markdown widget can be found in Port's [l
 | Field      | Type     | Description           | Default | Required |
 | ---------- | -------- | --------------------- | ------- | -------- |
 | `Title`    | `String` | Markdown widget title | `null`  | `true`   |
+| `Description` | `String` | Markdown widget description | `null`  | `false`  |
 | `Icon`     | `String` | Markdown widget Icon  | `null`  | `false`  |
-| `markdown` | `String` | Markdown content      | `null`  | `false`  |
+| `Data source` | `String` | The data source type for the markdown content. Possible values: `Custom` or `Property`. | `null`  | `true`   |
+
+**When Data source is `Custom`:**
+
+| Field      | Type     | Description           | Default | Required |
+| ---------- | -------- | --------------------- | ------- | -------- |
+| `markdown` | `String` | Markdown content. Configured on a separate page after selecting Custom data source. | `null`  | `true`   |
+
+**When Data source is `Property`:**
+
+| Field      | Type     | Description           | Default | Required |
+| ---------- | -------- | --------------------- | ------- | -------- |
+| `Blueprint` | `String` | The blueprint of the entity containing the markdown property. Required in dashboards. Not shown in specific entity pages (auto-selected from context). | `null`  | `false`  |
+| `Entity` | `String` | The entity containing the markdown property. Required in dashboards. Not shown in specific entity pages (auto-selected from context). | `null`  | `false`  |
+| `Property` | `String` | The markdown property to display from the selected entity. | `null`  | `true`   |
 
 ### Internal markdown links
 
