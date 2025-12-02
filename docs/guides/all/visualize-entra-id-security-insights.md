@@ -11,6 +11,10 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide demonstrates how to set up a security analytics dashboard to gain visibility into your Microsoft Entra ID (formerly Azure AD) identity security posture. We will see how to visualize identity risks, sign-in activity, application security, and policy gaps using Port's **Microsoft Entra ID** integration.
 
+:::info Licensing requirements
+Some features in this guide require **Microsoft Entra ID Premium P2** licensing, including risky sign-ins detection (`/identityProtection/riskySignIns`), identity risk events, and advanced security analytics. Basic identity monitoring (users, groups, applications, service principals) works with all Entra ID licensing tiers (Free, P1, P2).
+:::
+
 ## Common use cases
 
 - Monitor risky sign-ins and compromised identities in your environment.
