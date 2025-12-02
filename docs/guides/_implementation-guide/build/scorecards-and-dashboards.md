@@ -26,7 +26,7 @@ Define scorecards for the blueprints you created as part of your MVP.
 
 ## Create dashboards
 
-[Dashboards](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/data-widgets) are a great way to visualize and track data from your software catalog.  
+[Dashboards](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/overview) are a great way to visualize and track data from your software catalog.  
 A dashboard can contain any number of widgets that display data relevant to your users.
 
 We recommend creating dashboards for different personas in your organization to display data that is important to them.  

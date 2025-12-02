@@ -17,7 +17,7 @@ Each [entity](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-cat
 
 ## Overview
 
-The overview tab is a dashboard, used to display [widgets](/customize-pages-dashboards-and-plugins/dashboards/data-widgets) related to the entity.
+The overview tab is a dashboard, used to display [widgets](/customize-pages-dashboards-and-plugins/dashboards/overview) related to the entity.
 
 By default, each entity will have a `Details` widget, which displays the entity's properties and their values, and other metadata.
 

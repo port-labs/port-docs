@@ -1,14 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
 import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/templates/_save_table_view.md"
-import DashboardLocations from "/docs/customize-pages-dashboards-and-plugins/templates/_dashboard_locations.md"
 
 # Custom widgets
-
-<DashboardLocations />
 
 Custom widgets are specialized widgets that provide additional functionality beyond data visualization, such as executing actions, displaying external content, or showing formatted markdown.
 
@@ -23,7 +20,7 @@ Note that the iframe request is made directly from the end user’s browser, not
 If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
 :::
 
-<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' style={{borderRadius:'6x'}} />
+<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' width='70%' style={{borderRadius:'6x'}} />
 
 ### URL type
 
@@ -68,14 +65,14 @@ A single action card can contain one or multiple actions:
 **Single action**  
 To execute the action, click on the button in the bottom left corner of the widget:
 
-<img src='/img/software-catalog/widgets/actionCardSingle.png' width='50%' />
+<img src='/img/software-catalog/widgets/actionCardSingle.png' width='50%' style={{borderRadius:'8px'}}/>
 <br/><br/>
 
 **Multiple actions**  
 When choosing multiple actions, you can choose your own title for the widget.  
 To execute an action, click on the ⚡ button next to it:
 
-<img src='/img/software-catalog/widgets/actionCardMultiple.png' width='45%' />
+<img src='/img/software-catalog/widgets/actionCardMultiple.png' width='45%' style={{borderRadius:'8px'}}/>
 
 
 ## Action history
@@ -83,13 +80,13 @@ To execute an action, click on the ⚡ button next to it:
 This widget allows you to create a table displaying all past runs of a [self-service action](/actions-and-automations/create-self-service-experiences) in your portal.  
 The table will automatically display data about each run, including status, input parameters, the executing user, and more. 
 
-<img src='/img/software-catalog/widgets/actionRunsTableExample.png' width='100%' />
+<img src='/img/software-catalog/widgets/actionRunsTableExample.png' width='100%' style={{borderRadius:'8px'}}/>
 
 ## Markdown
 
 This widget allows you to display any markdown content you wish in formatted form:
 
-<img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' />
+<img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' style={{borderRadius:'8px'}}/>
 <br/><br/>
 
 The widget also supports a wide variety of HTML tags, allowing you to create rich content:
@@ -171,11 +168,26 @@ When linking to other pages in your portal, you can use `/` as the URL base, ins
 
 For example, you can use `<a href="/plan_my_day">` instead of `<a href="https://showcase.port.io/plan_my_day">`.
 
+## AI Agent
+
+The AI Agent widget provides an interactive chat interface that helps you work with Port. You can ask questions and get assistance with various tasks in your software catalog.
+
+<img src='/img/software-catalog/widgets/aiAgentWidget.png' width='50%' border='1px' style={{borderRadius:'8px'}}/>
+<br/><br/>
+
+The AI Agent can help you with:
+
+- **Exploring your data model** - viewing blueprints, entities, and relationships.
+- **Understanding your integrations** - checking integration status, sync metrics, and configurations.
+- **Managing scorecards** - viewing scorecard details and rules.
+- **Executing actions** - running self-service and automation actions.
+- **Finding Port documentation** - searching for help and best practices.
+
 ## Links
 
 This widget allows you to display a list of links, both internal and external, for quick access to useful pages.
 
-<img src='/img/software-catalog/widgets/linksExample.png' width='50%' border='1px' />
+<img src='/img/software-catalog/widgets/linksExample.png' width='50%' border='1px' style={{borderRadius:'8px'}}/>
 
 - **External links** - links to external websites, such as documentation, 3rd party tools, etc.  
   These links will open in a new tab when clicked.  
@@ -202,7 +214,7 @@ Chart filters allow you to limit which entities are included in your dashboard v
 
 Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
 
-<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' border='1px' />
+<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' border='1px' style={{borderRadius:'8px'}}/>
 <br/><br/>
 
 These are used internally in Port and cannot be modified/removed.
@@ -297,7 +309,5 @@ The following table lists the identifiers for each custom widget type:
 | Action card | `action-card-widget` |
 | Action History | `action-runs-table-widget` |
 | Markdown | `markdown` |
+| AI Agent | `ai-chat-widget`* |
 | Links | `links-widget` |
-| My entities | `my-entities` |
-| Recently viewed | `recently-viewed-entities` |
-| Recently used actions | `recently-used-actions` |

@@ -44,7 +44,7 @@ Initially, your homepage contains two widgets:
 
 **Learn more:**
 
-- [Dashboard widgets](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/custom-widgets)
+- [Dashboard widgets](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/overview)
 
 ---
 
@@ -135,7 +135,7 @@ This dashboard also visualizes data about your services, but this time the focus
 **Learn more:**
 
 - [Dashboard page](https://docs.port.io/customize-pages-dashboards-and-plugins/page/dashboard-page)
-- [Dashboard widgets](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/data-widgets)
+- [Dashboard widgets](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/overview)
 
 ---
 

@@ -1,13 +1,10 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/templates/_save_table_view.md"
-import DashboardLocations from "/docs/customize-pages-dashboards-and-plugins/templates/_dashboard_locations.md"
 
 # Data widgets
-
-<DashboardLocations />
 
 Data widgets are visualization widgets that display data from your software catalog, including charts, tables, and entity information.
 
