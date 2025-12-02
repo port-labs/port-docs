@@ -119,7 +119,7 @@ Pie charts illustrate data from entities in your software catalog divided by cat
 
 <img src='/img/software-catalog/widgets/pieChartExample.png' width='70%' style={{border:'1px', borderRadius:'6px'}}/>
 
-### Visualization properties
+<h3>Properties</h3>
 
 | Field                   | Type     | Description                                                                                                                  | Default | Required |
 | ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
@@ -131,13 +131,17 @@ Pie charts illustrate data from entities in your software catalog divided by cat
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Additional filters`     | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
 
+**Limitations**
+
+- Pie charts are limited to displaying **up to 9 slices**. If there are more than 9 categories, the additional categories will be grouped into an "other" section.
+
 ## Bar chart
 
 Bar charts illustrate data from entities in your software catalog divided by categories and entity properties, displayed as vertical bars.
 
 <img src='/img/software-catalog/widgets/barChartWidgetExample.png' width='70%' style={{border:'1px', borderRadius:'6px'}}/>
 
-### Visualization properties
+<h3>Properties</h3>
 
 | Field                   | Type     | Description                                                                                                                  | Default | Required |
 | ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
@@ -148,6 +152,10 @@ Bar charts illustrate data from entities in your software catalog divided by cat
 | `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Additional filters`    | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
+
+**Limitations**
+
+- Bar charts are limited to displaying **up to 9 bars**. If there are more than 9 categories, the additional categories will be grouped into an "other" section.
 
 ## Line chart
 
