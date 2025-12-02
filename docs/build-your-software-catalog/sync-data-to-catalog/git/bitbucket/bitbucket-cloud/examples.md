@@ -54,6 +54,10 @@ The following example demonstrates how to ingest your Bitbucket repositories and
 
 The following example demonstrates how to ingest files from a specific repository. You will be able to map files and file contents from specific repositories as entities in Port:
 
+:::warning User-Scoped Token Required
+The `file` kind requires **user-scoped token** (or existing app password) for authentication. Workspace tokens do not support file ingestion. Since new app passwords cannot be created as of September 9, 2025, ensure you've configured a user-scoped token in your integration setup.
+:::
+
 <FileBlueprint/>
 
 <FileAppConfig/>

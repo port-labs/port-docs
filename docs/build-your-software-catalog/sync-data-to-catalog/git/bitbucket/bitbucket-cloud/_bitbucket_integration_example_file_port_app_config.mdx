@@ -4,6 +4,8 @@
 
 ```yaml showLineNumbers
 resources:
+  # IMPORTANT: The 'file' kind requires user-scoped token (or existing app password)
+  # Workspace tokens do not support file ingestion
   - kind: file
     selector:
       query: 'true'

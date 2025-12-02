@@ -9,10 +9,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: >-
-            "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
+          identifier: .id
           title: .name
-          blueprint: '"service"'
+          blueprint: '"azureDevopsRepository"'
           properties:
             url: .remoteUrl
             readme: file://README.md
@@ -28,15 +27,13 @@ resources:
         mappings:
           identifier: .objectId
           title: .name
-          blueprint: '"branch"'
+          blueprint: '"azureDevopsBranch"'
           properties:
             repositoryName: .__repository.name
             projectName: .__repository.project.name
             link: .__repository.webUrl + "?version=GB" + .name
           relations:
-            repository: >-
-              "\(.__repository.project.name | ascii_downcase | gsub("[ ();]";
-              ""))/\(.__repository.name | ascii_downcase | gsub("[ ();]"; ""))"
+            repository: .__repository.id
 
 ```
 

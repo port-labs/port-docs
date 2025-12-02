@@ -75,7 +75,7 @@ Initial filters offer an easy way to **lock a Catalog Page view dynamically for 
 
 #### Dynamic filters for dashboard widgets
 
-Advanced filters and dynamic filters are also available for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/) in your catalog or homepage, using the same logic as described in the **Filters** or **Initial Filters** section above.
+Advanced filters and dynamic filters are also available for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/overview) in your catalog or homepage, using the same logic as described in the **Filters** or **Initial Filters** section above.
 
 You can create widgets with data dynamically based on the logged in user’s identity or team's ownserhip.
 

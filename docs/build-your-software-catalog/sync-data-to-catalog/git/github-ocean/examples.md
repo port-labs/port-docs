@@ -48,6 +48,7 @@ import PortBrAppConfig from './examples/example-branch/\_github_exporter_example
 
 import DependabotAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
 import CodeScanAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
+import SecretScanAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_secret_scan_alert_blueprint.mdx'
 import PortRepositoryDependabotAlertMappingAppConfig from './examples/example-repository-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
 
 import OrganizationBlueprint from './examples/example-organization/\_github_exporter_example_organization_blueprint.mdx'
@@ -175,13 +176,21 @@ The following example demonstrates how to ingest your GitHub repositories and th
 
 To retrieve the root folders of your monorepo, use the following syntax in your `port-app-config.yml`:
 
-```yaml
+::::info Organization and repository filtering for folders
+Both `organization` and `repos` under `folders` are optional. You can:
+- Specify only `organization`: scan all repositories in that organization for matching folders.
+- Specify only `repos`: scan only those repositories across accessible organizations.
+- Omit both: scan all accessible repositories for matching folders.
+Use `path` and `repositoryType` to scope results and improve performance.
+::::
+
+```yaml showLineNumbers
 - kind: folder
     selector:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
       folders: # Specify the repositories and folders to include under this relative path.
         - path: "*" # Relative path to the folders within the repositories.
-          repos: # List of repositories to include folders from.
+          repos: # Optional: list repositories to include (omit to scan all repos)
             - name: backend-service
             - name: frontend-service
 ```
@@ -315,7 +324,7 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 <CollaboratorBlueprint />
 <PortRepositoryCollaboratorAppConfig />
 
-## Map repositories, dependabot alerts, and code scan alerts
+## Map repositories, dependabot alerts, code and secrets scan alerts
 
 The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
 
@@ -324,6 +333,8 @@ The following example shows how to ingest your GitHub repositories and their ale
 <DependabotAlertBlueprint/>
 
 <CodeScanAlertBlueprint/>
+
+<SecretScanAlertBlueprint/>
 
 <PortRepositoryDependabotAlertMappingAppConfig/>
 
