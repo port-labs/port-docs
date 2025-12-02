@@ -220,7 +220,6 @@ Create an AI agent that analyzes workflow YAML and generates comprehensive docum
       "relations": {}
     }
     ```
-
     </details>
 
 5. Click `Create` to save the agent.
