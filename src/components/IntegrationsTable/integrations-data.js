@@ -346,12 +346,20 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/cursor',
   },
   {
-    name: 'Codex',
+    name: 'OpenAI',
     category: 'ai-agents',
-    icon: '/img/guides/icons/Codex.svg',
-    darkIcon: '/img/guides/icons/dark/Codex.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/codex',
-  }
+    iconName: 'OpenAI',
+    icon: '/img/guides/icons/OpenAI.svg',
+    darkIcon: '/img/guides/icons/OpenAI.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/openai',
+  },
+  {
+    name: 'n8n',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/n8n.svg',
+    darkIcon: '/img/guides/icons/n8n.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/n8n',
+  },
 ];
 
 export const categories = {

@@ -218,7 +218,7 @@ resources:
             organization: .organization
             link: .__link
             lastAnalysisStatus: .__branch.status.qualityGateStatus
-            lastAnalysisDate: .__branch.analysisDate
+            lastAnalysisDate: (.__branch.analysisDate // null) | if . then sub("(?<h>[+-]\\d{2})(?<m>\\d{2})$"; "\(.h):\(.m)") else null end
             numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
             numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
             numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
@@ -262,7 +262,7 @@ resources:
             organization: .organization
             link: .__link
             qualityGateStatus: .__branch.status.qualityGateStatus
-            lastAnalysisDate: .analysisDate
+            lastAnalysisDate: (.lastAnalysisDate // null) | if . then sub("(?<h>[+-]\\d{2})(?<m>\\d{2})$"; "\(.h):\(.m)") else null end
             numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
             numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
             numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
@@ -270,7 +270,7 @@ resources:
             numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
             coverage: .__measures[]? | select(.metric == "coverage") | .value
             mainBranch: .__branch.name
-            mainBranchLastAnalysisDate: .__branch.analysisDate
+            mainBranchLastAnalysisDate: (.__branch.analysisDate // null) | if . then sub("(?<h>[+-]\\d{2})(?<m>\\d{2})$"; "\(.h):\(.m)") else null end
             revision: .revision
             managed: .managed
 ```
