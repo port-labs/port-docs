@@ -7,9 +7,9 @@ import DashboardLocations from "/docs/customize-pages-dashboards-and-plugins/tem
 
 # Data widgets
 
-Data widgets are visualization widgets that display data from your software catalog, including charts, tables, and entity information.
-
 <DashboardLocations />
+
+Data widgets are visualization widgets that display data from your software catalog, including charts, tables, and entity information.
 
 ## Number chart
 

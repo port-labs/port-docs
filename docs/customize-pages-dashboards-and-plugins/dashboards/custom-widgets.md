@@ -8,10 +8,9 @@ import DashboardLocations from "/docs/customize-pages-dashboards-and-plugins/tem
 
 # Custom widgets
 
-Custom widgets are specialized widgets that provide additional functionality beyond data visualization, such as executing actions, displaying external content, or showing formatted markdown.
-
 <DashboardLocations />
 
+Custom widgets are specialized widgets that provide additional functionality beyond data visualization, such as executing actions, displaying external content, or showing formatted markdown.
 
 ## Iframe visualization
 
