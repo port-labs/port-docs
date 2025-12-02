@@ -350,7 +350,7 @@ export const integrations = [
     category: 'ai-agents',
     iconName: 'OpenAI',
     icon: '/img/guides/icons/OpenAI.svg',
-    darkIcon: '/img/guides/icons/OpenAI-dark.svg',
+    darkIcon: '/img/guides/icons/OpenAI.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/openai',
   },
   {
