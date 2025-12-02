@@ -55,6 +55,40 @@ If you enable the pop-up option, ensure your browser allows pop-ups for the Port
 | `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
 | `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
 
+### Template variables
+
+You can use template variables in your iframe widget URL to dynamically construct links based on user or entity information. This is useful for creating dynamic iframe URLs that adapt to the current context.
+
+**User information**  
+
+In every dashboard, you can access user information using the `{{ .user... }}` template syntax. Available user properties include:
+
+- `{{ .user.name }}`
+- `{{ .user.email }}`
+- `{{ .user.fullName }}`
+- `{{ .user.firstName }}`
+- `{{ .user.lastName }}`
+
+**Entity information**  
+
+On specific entity pages, you can also access entity information using template variables. Available properties depend on the entity's specific properties. For example, if an entity has a `title` property, you can access it using `{{ .entity.title }}`.
+
+**Example use case**  
+
+You can create an iframe widget that links to external resources based on entity properties. For example, you can create an iframe widget that links to a Grafana dashboard filtered by the entity's title:
+
+```markdown
+https://grafana.example.com?var-service={{ .entity.title }}
+```
+
+**Exploring available properties** 
+ 
+To see what properties are available, you can print the whole object in your iframe URL. For example, use `{{ .user }}` to see all available user properties, or `{{ .entity }}` to see all available entity properties on entity pages.
+
+:::caution Template syntax
+The template syntax requires spaces around the dot. Make sure to use `{{ .user... }}` (with spaces), not `{{.user...}}` (without spaces).
+:::
+
 ## Action card
 
 This widget allows you to execute [self-service actions](/actions-and-automations/create-self-service-experiences) directly from any dashboard (including your homepage).
