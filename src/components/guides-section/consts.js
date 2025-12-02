@@ -1524,6 +1524,13 @@ export const availableGuides = [
         link: "/guides/all/query-dora-metrics-using-port-mcp",
     },
     {
+        title: "Build Port Data Model with MCP",
+        description: "Design your Port data model to optimize it for MCP tool consumption, enabling AI agents to effectively reason about your software catalog",
+        tags: ["AI"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-data-model-with-mcp",
+    },
+    {
         title: "Migrate repositories from Bitbucket to GitHub",
         description: "Migrate repositories from Bitbucket to GitHub using Port self-service actions and GitHub Actions",
         tags: [ "BitBucket", "GitHub", "Actions", "Scorecards"],
