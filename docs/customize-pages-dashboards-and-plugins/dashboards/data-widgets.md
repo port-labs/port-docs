@@ -3,6 +3,7 @@ sidebar_position: 2
 ---
 
 import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/templates/_save_table_view.md"
+import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
 
 # Data widgets
 
@@ -348,6 +349,98 @@ The following widget types support the custom empty state message:
 - [Number chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#number-chart)
 - [Line chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#line-chart)
 - [Tables](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#table)
+
+## Chart filters
+
+Chart filters allow you to limit which entities are included in your dashboard visualizations, making your charts more relevant and performant.
+
+<ChartFilters />
+
+Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
+
+<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' border='1px' style={{borderRadius:'8px'}}/>
+<br/><br/>
+
+These are used internally in Port and cannot be modified/removed.
+You can add additional filters as you wish, by adding new objects to the `rules` array, for example:
+
+<details>
+<summary><b>Filter with additional rule example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "operator": "=",
+      "value": "someValue",
+      "property": "someProp"
+    }
+  ]
+}
+```
+</details>
+
+If you want to add additional rules with a different combinator, you can nest them inside a new object, for example:
+
+<details>
+<summary><b>Filter with nested rules example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "combinator": "or",
+      "rules": [
+        {
+          "operator": "=",
+          "value": "someValue",
+          "property": "someProp"
+        },
+        {
+          "operator": "=",
+          "value": "anotherValue",
+          "property": "anotherProp"
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
+
+### Filter example: only deployment entities from the last week
+
+Let's assume we have a [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
+
+To achieve this desired state, we can go into one of the `Service`'s profile pages and create a new visualization. After selecting the `Deployment` blueprint in the dropdown, we can add the following filter to the `Filters` array:
+
+```json showLineNumbers
+[
+  {
+    "property": "$createdAt",
+    "operator": "between",
+    "value": {
+      "preset": "lastWeek"
+    }
+  }
+]
+```
+
+### Dynamic filters
+
+You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when filtering a widget.
 
 ## Widget type identifiers (Terraform)
 
