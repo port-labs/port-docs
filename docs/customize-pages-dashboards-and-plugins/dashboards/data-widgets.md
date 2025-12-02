@@ -57,7 +57,7 @@ If the number chart’s value is 5, both conditions (`< 8` and `< 6`) are techni
 However, since 5 is closer to 6 than to 8, the widget will be colored yellow - the color associated with the closest matching condition.
 :::
 
-<img src='/img/software-catalog/widgets/numberChartConditionExample.png' width='50%' border='1px' />
+<img src='/img/software-catalog/widgets/numberChartConditionExample.png' width='50%' style={{border:'1px', borderRadius:'8px'}}/>
 
 ### Number chart properties
 
@@ -117,9 +117,9 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 
 Pie charts illustrate data from entities in your software catalog divided by categories and entity properties.
 
-<img src='/img/software-catalog/widgets/pieChartExample.png' width='70%' />
+<img src='/img/software-catalog/widgets/pieChartExample.png' width='70%' style={{border:'1px', borderRadius:'6px'}}/>
 
-### Visualization properties
+<h3>Properties</h3>
 
 | Field                   | Type     | Description                                                                                                                  | Default | Required |
 | ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
@@ -129,7 +129,33 @@ Pie charts illustrate data from entities in your software catalog divided by cat
 | `Empty state text`      | `String` | Pie chart empty state text                                                  | `No data for this widget`  | `false`  |
 | `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
-| `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
+| `Additional filters`     | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
+
+**Limitations**
+
+- Pie charts are limited to displaying **up to 9 slices**. If there are more than 9 categories, the additional categories will be grouped into an "other" section.
+
+## Bar chart
+
+Bar charts illustrate data from entities in your software catalog divided by categories and entity properties, displayed as vertical bars.
+
+<img src='/img/software-catalog/widgets/barChartWidgetExample.png' width='70%' style={{border:'1px', borderRadius:'6px'}}/>
+
+<h3>Properties</h3>
+
+| Field                   | Type     | Description                                                                                                                  | Default | Required |
+| ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
+| `Title`                 | `String` | Bar chart title                                                                                                              | `null`  | `true`   |
+| `Icon`                  | `String` | Bar chart Icon                                                                                                               | `null`  | `false`  |
+| `Description`           | `String` | Bar chart description                                                                                                        | `null`  | `false`  |
+| `Empty state text`      | `String` | Bar chart empty state text                                                  | `No data for this widget`  | `false`  |
+| `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
+| `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
+| `Additional filters`    | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
+
+**Limitations**
+
+- Bar charts are limited to displaying **up to 9 bars**. If there are more than 9 categories, the additional categories will be grouped into an "other" section.
 
 ## Line chart
 
@@ -172,7 +198,7 @@ When creating a line chart in an [entity page](/customize-pages-dashboards-and-p
 :::
 
 For example, here is a line chart displaying a service's resource usage over the span of a week, in daily intervals:
-<img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' border='1px' />
+<img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' style={{border:'1px', borderRadius:'6px'}} />
 <br/><br/>
 
 **Limitations**
@@ -221,7 +247,7 @@ When creating this type of line chart:
      Note that the available time ranges differ according to the selected time interval.
 
 For example, here is a line chart displaying the maximum cost of all services over the span of a month, in weekly intervals:
-<img src='/img/software-catalog/widgets/lineChartAggregationExample.png' width='100%' border='1px' />
+<img src='/img/software-catalog/widgets/lineChartAggregationExample.png' width='100%' style={{border:'1px', borderRadius:'6px'}}/>
 <br/><br/>
 
 **Limitations**
@@ -285,7 +311,7 @@ When creating this type of line chart:
      Note that the available time ranges differ according to the selected time interval.
 
 For example, here is a line chart displaying the average deployment rate over the span of a month, in weekly intervals, broken down by the `status` property (Success and Fail).
-<img src='/img/software-catalog/widgets/countEntitiesLineChartExample.png' width='70%' border='1px' />
+<img src='/img/software-catalog/widgets/countEntitiesLineChartExample.png' width='70%' style={{border:'1px', borderRadius:'6px'}}/>
 <br/><br/>
 
 **Limitations**
@@ -333,7 +359,7 @@ This widget displays information about a specific entity, including its properti
 
 Simply choose a blueprint and a specific entity, and the widget will display information similar to that found on the entity's page.
 
-<img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' border='1px' />
+<img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' style={{border:'1px', borderRadius:'6px'}}/>
 
 ## Custom empty state
 
@@ -346,6 +372,7 @@ If you leave this field blank, the widget will display a default message: **"No 
 The following widget types support the custom empty state message:
 
 - [Pie chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#pie-chart)
+- [Bar chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#bar-chart)
 - [Number chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#number-chart)
 - [Line chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#line-chart)
 - [Tables](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#table)
@@ -358,7 +385,7 @@ Chart filters allow you to limit which entities are included in your dashboard v
 
 Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
 
-<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' border='1px' style={{borderRadius:'8px'}}/>
+<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' style={{border:'1px', borderRadius:'8px'}}/>
 <br/><br/>
 
 These are used internally in Port and cannot be modified/removed.
