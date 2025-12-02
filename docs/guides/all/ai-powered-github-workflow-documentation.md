@@ -10,6 +10,8 @@ import TabItem from '@theme/TabItem';
 
 This guide demonstrates how to automatically generate and maintain clear, developer-friendly documentation for GitHub Actions workflows using Port's AI agents and automation system. When workflows are ingested or updated in Port, an AI agent analyzes the YAML configuration and generates markdown documentation explaining what the workflow does and how developers can use it.
 
+<img src="/img/guides/aiPoweredGithubWorkflowDocumentation.png" border="1px" width="100%" />
+
 ## Common use cases
 
 This solution addresses several key challenges:
@@ -212,7 +214,7 @@ Create an AI agent that analyzes workflow YAML and generates comprehensive docum
         "execution_mode": "Automatic",
         "tools": [
           "^(list|get|search|track|describe)_.*",
-          "update_workflow_explanation"
+          "run_update_workflow_explanation"
         ]
       },
       "relations": {}
@@ -343,8 +345,7 @@ Create automation to automatically generate documentation when workflows are cre
           "RUN_ID": "{{ .run.id }}",
           "Content-Type": "application/json"
         },
-        "body": {
-          "prompt": "Analyze the GitHub Actions workflow and generate comprehensive documentation.\n\nWorkflow Identifier: {{.event.diff.after.identifier}}\nWorkflow Path: {{.event.diff.after.properties.path}}\nRepository: {{.event.diff.after.relations.repository}}\n\nYAML Content:\n{{.event.diff.after.properties.yamlContent}}\n\nGenerate a detailed markdown explanation covering:\n1. Overview of what the workflow does\n2. When it runs (triggers, conditions)\n3. Workflow steps and their purposes\n4. Required configuration (secrets, env vars, permissions)\n5. Outputs and artifacts\n6. Usage instructions for developers\n7. Troubleshooting tips\n\nFirst, retrieve the full workflow entity details. Then update the workflow entity's explanation property with the generated documentation.",
+        "body": {   
           "labels": {
             "source": "auto_workflow_documentation",
             "workflow_id": "{{ .event.diff.after.identifier }}",
