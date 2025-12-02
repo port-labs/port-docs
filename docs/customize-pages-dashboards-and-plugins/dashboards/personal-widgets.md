@@ -14,13 +14,19 @@ Personal widgets are only available on the [Home page](https://app.getport.io/or
 
 This widget displays entities that are assigned to or owned by the logged-in user.
 
+<img src='/img/software-catalog/widgets/myEntitiesWidget.png' width='50%' border='1px' style={{borderRadius:'8px'}}/>
+
 ## Recently viewed
 
 This widget displays entities that the logged-in user has recently viewed in Port.
 
+<img src='/img/software-catalog/widgets/recentlyUsedEntitiesWidget.png' width='50%' border='1px' style={{borderRadius:'8px'}}/>
+
 ## Recently used actions
 
 This widget displays self-service actions that the logged-in user has recently executed.
+
+<img src='/img/software-catalog/widgets/recentlyUsedActionsWidget.png' width='50%' border='1px' style={{borderRadius:'8px'}}/>
 
 ## Widget type identifiers (Terraform)
 
