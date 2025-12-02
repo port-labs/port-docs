@@ -12,9 +12,9 @@ const glossary = {
   scorecard:
     "💡 <b>Port Concepts</b><br/><b>Scorecard</b> - A set of custom rules used to define and track standards for your assets.",
   dashboard:
-    "💡 <b>Port Concepts</b><br/><b>Dashboard</b> - A page containing one or more <a class='tooltip-link' href='https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/'>widgets</a> that visualize data about your entities.",
+    "💡 <b>Port Concepts</b><br/><b>Dashboard</b> - A page containing one or more <a class='tooltip-link' href='https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/overview'>widgets</a> that visualize data about your entities.",
   widget:
-    "💡 <b>Port Concepts</b><br/><b>Widget</b> - A visual representation of data about your entities. <a class='tooltip-link' href='https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/'>Learn more</a>",
+    "💡 <b>Port Concepts</b><br/><b>Widget</b> - A visual representation of data about your entities. <a class='tooltip-link' href='https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/overview '>Learn more</a>",
   catalog:
     "💡 <b>Port Concepts</b><br/><b>Software Catalog</b> - A central metadata store for your assets. Reflects your data model and is used to track and manage your assets.",
   jq:
