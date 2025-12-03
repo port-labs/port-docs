@@ -12,12 +12,12 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 This guide demonstrates how to set up a security analytics dashboard to gain visibility into your Microsoft Entra ID (formerly Azure AD) identity security posture. We will see how to visualize identity risks, sign-in activity, application security, and policy gaps using Port's **Microsoft Entra ID** integration.
 
 :::info Licensing requirements
-Some features in this guide require **Microsoft Entra ID Premium P2** licensing, including risky sign-ins detection (`/identityProtection/riskySignIns`), identity risk events, and advanced security analytics. Basic identity monitoring (users, groups, applications, service principals) works with all Entra ID licensing tiers (Free, P1, P2).
+Some features in this guide require **Microsoft Entra ID Premium P2** licensing, including risk detection (`/identityProtection/riskDetections`), identity risk events, and advanced security analytics. Basic identity monitoring (users, groups, applications, service principals) works with all Entra ID licensing tiers (Free, P1, P2).
 :::
 
 ## Common use cases
 
-- Monitor risky sign-ins and compromised identities in your environment.
+- Monitor risk detections and compromised identities in your environment.
 - Track sensitive admin roles and recent role assignment changes.
 - Identify applications and service principals with security gaps (missing owners, expired credentials, weak configurations).
 - Visualize conditional access policy coverage and enforcement status.
@@ -53,7 +53,7 @@ An Entra ID administrator must grant consent for these permissions before the in
 
 ## Set up data model
 
-To visualize security insights, we need to extend the basic Entra ID integration with security-focused blueprints and properties. We will create additional blueprints for risky sign-ins, directory roles, conditional access policies, and device compliance.
+To visualize security insights, we need to extend the basic Entra ID integration with security-focused blueprints and properties. We will create additional blueprints for risk detections, directory roles, conditional access policies, and device compliance.
 
 ### Extend user blueprint with security properties
 
@@ -68,12 +68,12 @@ To visualize security insights, we need to extend the basic Entra ID integration
   "type": "string",
   "enum": ["none", "low", "medium", "high", "hidden", "unknownFutureValue"]
 },
-"riskySignInCount": {
-  "title": "Risky Sign-In Count",
+"riskDetectionCount": {
+  "title": "Risk Detection Count",
   "type": "number"
 },
-"lastRiskySignInDateTime": {
-  "title": "Last Risky Sign In",
+"lastRiskDetectionDateTime": {
+  "title": "Last Risk Detection",
   "type": "string",
   "format": "date-time"
 },
@@ -92,7 +92,7 @@ To visualize security insights, we need to extend the basic Entra ID integration
 
 5. Click `Save` to update the blueprint.
 
-### Create risky sign-in blueprint
+### Create risk detection blueprint
 
 1. Go to your [Builder page](https://app.getport.io/settings/data-model).
 2. Click on `+ Blueprint`.
@@ -100,13 +100,13 @@ To visualize security insights, we need to extend the basic Entra ID integration
 4. Add this JSON schema:
 
 <details>
-<summary><b>Risky sign-in blueprint (Click to expand)</b></summary>
+<summary><b>Risk detection blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-  "identifier": "entra-id-risky-sign-in",
-  "description": "A risky sign-in event detected by Microsoft Entra ID Identity Protection",
-  "title": "Risky Sign-In",
+  "identifier": "entra-id-risk-detection",
+  "description": "A risk detection event identified by Microsoft Entra ID Identity Protection",
+  "title": "Risk Detection",
   "icon": "Alert",
   "schema": {
     "properties": {
@@ -350,20 +350,19 @@ resources:
             createdDateTime: .createdDateTime
             lastSignInDateTime: .signInActivity.lastSignInDateTime
 
-  # Risky sign-ins mapping
-  - kind: /identityProtection/riskySignIns
+  # Risk detections mapping
+  - kind: /identityProtection/riskDetections
     selector:
       query: 'true'
       data_path: '.value'
       query_params:
         $top: "999"
-        $filter: "riskLevel ne 'none'"
     port:
       entity:
         mappings:
           identifier: .id
           title: .userDisplayName + " - " + .riskLevel + " risk"
-          blueprint: '"entra-id-risky-sign-in"'
+          blueprint: '"entra-id-risk-detection"'
           properties:
             riskLevel: .riskLevel
             riskState: .riskState
@@ -382,7 +381,6 @@ resources:
       query: 'true'
       data_path: '.value'
       query_params:
-        $top: "999"
         $expand: "members($select=id)"
     port:
       entity:
@@ -489,24 +487,24 @@ In the new dashboard, create the following widgets:
 </details>
 
 <details>
-<summary><b>Risky sign-ins count (click to expand)</b></summary>
+<summary><b>Risk detections count (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Number Chart**.
-2. Title: `Risky sign-ins count` (add the `Alert` icon).
-3. Select `Count entities` **Chart type** and choose **Risky Sign-In** as the **Blueprint**.
+2. Title: `Risk detections count` (add the `Alert` icon).
+3. Select `Count entities` **Chart type** and choose **Risk Detection** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Click `Save`.
 
 </details>
 
 <details>
-<summary><b>High-risk sign-ins (click to expand)</b></summary>
+<summary><b>High-risk detections (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Number Chart**.
-2. Title: `High-risk sign-ins` (add the `Alert` icon).
-3. Select `Count entities` **Chart type** and choose **Risky Sign-In** as the **Blueprint**.
+2. Title: `High-risk detections` (add the `Alert` icon).
+3. Select `Count entities` **Chart type** and choose **Risk Detection** as the **Blueprint**.
 4. Select `count` for the **Function**.
-5. Add this JSON to the **Additional filters** editor to filter high-risk sign-ins:
+5. Add this JSON to the **Additional filters** editor to filter high-risk detections:
     ```json showLineNumbers
     [
         {
@@ -526,23 +524,23 @@ In the new dashboard, create the following widgets:
 </details>
 
 <details>
-<summary><b>Risky sign-ins by risk level (click to expand)</b></summary>
+<summary><b>Risk detections by risk level (click to expand)</b></summary>
 
 1. Click **`+ Widget`** and select **Pie chart**.
-2. Title: `Risky sign-ins by risk level` (add the `Alert` icon).
-3. Choose the **Risky Sign-In** blueprint.
+2. Title: `Risk detections by risk level` (add the `Alert` icon).
+3. Choose the **Risk Detection** blueprint.
 4. Under `Breakdown by property`, select the **Risk Level** property.
 5. Click **Save**.
 
 </details>
 
 <details>
-<summary><b>Recent risky sign-ins table (click to expand)</b></summary>
+<summary><b>Recent risk detections table (click to expand)</b></summary>
 
 1. Click **`+ Widget`** and select **Table**.
-2. Title: `Recent risky sign-ins` (add the `Alert` icon).
-3. Choose the **Risky Sign-In** blueprint.
-4. Add this JSON to the **Additional filters** editor to show only recent risky sign-ins:
+2. Title: `Recent risk detections` (add the `Alert` icon).
+3. Choose the **Risk Detection** blueprint.
+4. Add this JSON to the **Additional filters** editor to show only recent risk detections:
     ```json showLineNumbers
     [
         {
@@ -561,11 +559,11 @@ In the new dashboard, create the following widgets:
 6. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
 7. In the top right corner of the table, click on `Manage Properties` and add the following properties:
     - **User Display Name**: The name of the user.
-    - **Risk Level**: The risk level of the sign-in.
+    - **Risk Level**: The risk level of the detection.
     - **Risk Type**: The type of risk detected.
-    - **IP Address**: The IP address from which the sign-in occurred.
-    - **Location**: The location of the sign-in.
-    - **Detected Date**: When the risky sign-in was detected.
+    - **IP Address**: The IP address from which the activity occurred.
+    - **Location**: The location of the activity.
+    - **Detected Date**: When the risk was detected.
 8. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
 </details>
@@ -798,10 +796,10 @@ These widgets provide a comprehensive view of your Entra ID security posture, ma
 
 ## Possible daily routine integrations
 
-- Send a Slack message to security teams when high-risk sign-ins are detected.
+- Send a Slack message to security teams when high-risk detections are identified.
 - Notify administrators when new privileged role assignments are made.
 - Alert application owners when their applications have missing owners or expired credentials.
-- Generate weekly security reports summarizing risky sign-ins, admin role changes, and exposed applications.
+- Generate weekly security reports summarizing risk detections, admin role changes, and exposed applications.
 - Create automated workflows to remediate security issues (e.g., assign owners to exposed applications).
 
 ## Conclusion
