@@ -1563,7 +1563,7 @@ export const availableGuides = [
         description: "Setup Port's n8n custom node to integrate Port's AI agents and Context Lake with n8n workflows",
         tags: ["n8n", "AI"],
         logos: ["n8n", "AI"],
-        link: "/guides/all/setup-port-n8n-node",
+        link: "/ai-interfaces/port-n8n-node#set-up-n8n-instance",
     },
     {
         title: "Automatically resolve tickets with n8n and Port context",
