@@ -19,7 +19,7 @@ Note that the iframe request is made directly from the end user’s browser, not
 If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
 :::
 
-<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' width='70%' style={{borderRadius:'6x'}} />
+<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' width='70%' style={{borderRadius:'6px'}} />
 
 ### URL type
 
@@ -83,10 +83,21 @@ The table will automatically display data about each run, including status, inpu
 
 ## Markdown
 
-This widget allows you to display any markdown content you wish in formatted form:
+This widget allows you to display markdown content in formatted form. You can create custom markdown content or display markdown from an entity property.
 
-<img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' style={{borderRadius:'8px'}}/>
-<br/><br/>
+<img src='/img/software-catalog/widgets/markdownWidget.png' width='80%' style={{borderRadius:'8px'}}/>
+
+### Markdown content types
+
+The markdown widget supports two data source types, selected via the **data source** field:
+
+- **Custom**: create and edit markdown content directly in the widget configuration. When selecting this option, you will proceed to a second page where you can enter your custom markdown content. You can edit this content later by modifying the widget configuration.
+- **Property**: display markdown content from a specific entity's markdown property. This is useful for displaying entity-specific documentation, such as a service's README file. The content is read-only in the widget and cannot be edited directly from the widget. To update the content, you need to edit the entity's markdown property.
+
+:::info Entity page vs. dashboard
+- **In specific entity pages**: When using the **property** data source, only the **property** field is required. The blueprint and entity are automatically selected from the page context, so you don't need to specify them. There's no separate creation step since the markdown property already exists on the entity.
+- **In dashboards**: When using the **property** data source, you must select the **blueprint**, **entity**, and **property** fields to specify which entity's markdown property to display.
+:::
 
 The widget also supports a wide variety of HTML tags, allowing you to create rich content:
 <details>
@@ -158,14 +169,62 @@ A practical example of using HTML in a markdown widget can be found in Port's [l
 | Field      | Type     | Description           | Default | Required |
 | ---------- | -------- | --------------------- | ------- | -------- |
 | `Title`    | `String` | Markdown widget title | `null`  | `true`   |
+| `Description` | `String` | Markdown widget description | `null`  | `false`  |
 | `Icon`     | `String` | Markdown widget Icon  | `null`  | `false`  |
-| `markdown` | `String` | Markdown content      | `null`  | `false`  |
+| `Data source` | `String` | The data source type for the markdown content. Possible values: `Custom` or `Property`. | `null`  | `true`   |
+
+**When Data source is `Custom`:**
+
+| Field      | Type     | Description           | Default | Required |
+| ---------- | -------- | --------------------- | ------- | -------- |
+| `markdown` | `String` | Markdown content. Configured on a separate page after selecting Custom data source. | `null`  | `true`   |
+
+**When Data source is `Property`:**
+
+| Field      | Type     | Description           | Default | Required |
+| ---------- | -------- | --------------------- | ------- | -------- |
+| `Blueprint` | `String` | The blueprint of the entity containing the markdown property. Required in dashboards. Not shown in specific entity pages (auto-selected from context). | `null`  | `false`  |
+| `Entity` | `String` | The entity containing the markdown property. Required in dashboards. Not shown in specific entity pages (auto-selected from context). | `null`  | `false`  |
+| `Property` | `String` | The markdown property to display from the selected entity. | `null`  | `true`   |
 
 ### Internal markdown links
 
 When linking to other pages in your portal, you can use `/` as the URL base, instead of using full URLs.  
 
 For example, you can use `<a href="/plan_my_day">` instead of `<a href="https://showcase.port.io/plan_my_day">`.
+
+### Template variables
+
+You can use template variables in your markdown widget content to dynamically display information about the current user or entity.
+
+**User information**  
+In every dashboard, you can access user information using the `{{ .user... }}` template syntax.  
+Available user properties include:
+
+- `{{ .user.name }}`
+- `{{ .user.email }}`
+- `{{ .user.fullName }}`
+- `{{ .user.firstName }}`
+- `{{ .user.lastName }}`
+
+For example:
+
+```markdown
+Welcome, {{ .user.firstName }}!
+```
+
+**Entity information**  
+
+On specific entity pages, you can also access entity information using template variables. Available properties depend on the entity's specific properties. For example, if an entity has a `title` property, you can access it using `{{ .entity.title }}`.
+
+**Exploring available properties**  
+
+To see what properties are available, you can print the whole object in your markdown widget. For example, use `{{ .user }}` to see all available user properties, or `{{ .entity }}` to see all available entity properties on entity pages.
+
+:::caution Template syntax
+Template expressions require spaces inside the delimiters: a space after `{{` and a space before `}}`.  
+Make sure to use `{{ .user... }}`, and not `{{.user...}}`.
+:::
 
 ## AI Agent
 
