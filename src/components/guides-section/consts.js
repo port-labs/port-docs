@@ -1524,8 +1524,8 @@ export const availableGuides = [
         link: "/guides/all/query-dora-metrics-using-port-mcp",
     },
     {
-        title: "Build Port Data Model with MCP",
-        description: "Design your Port data model to optimize it for MCP tool consumption, enabling AI agents to effectively reason about your software catalog",
+        title: "Build your software catalog with MCP",
+        description: "Use Port's MCP (Model Context Protocol) server to build and manage your software catalog through natural language conversations with AI.",
         tags: ["AI"],
         logos: ["AI"],
         link: "/guides/all/build-port-data-model-with-mcp",

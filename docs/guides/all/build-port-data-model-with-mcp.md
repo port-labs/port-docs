@@ -6,9 +6,9 @@ description: Use AI to build and manage your Port software catalog through natur
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Build your software catalog with AI
+# Build your software catalog with MCP
 
-Use Port's MCP (Model Context Protocol) server to build and manage your software catalog through natural language conversations with AI. This guide shows you how to create blueprints, populate entities, define relations, and set up actions and scorecards—all by describing what you need in plain English.
+Use Port's MCP (Model Context Protocol) server to build and manage your software catalog through natural language conversations with AI. This guide shows you how to create blueprints, populate entities and define relations by describing what you need in plain English.
 
 Instead of manually configuring JSON schemas or clicking through UI forms, you can have conversations with your AI assistant to build your catalog iteratively, getting instant feedback and making adjustments on the fly.
 
@@ -27,6 +27,9 @@ This guide assumes you have:
 - Basic understanding of [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) and [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
 - Port MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor).
 
+:::info Permissions
+MCP operations use the permissions of the authenticated user. Only users with appropriate access (typically admins) can create or modify blueprints, entities, and other catalog components.
+:::
 
 ## Creating blueprints with AI
 
@@ -67,7 +70,6 @@ The AI will:
 4. Configure the relationships between them.
 
 
-
 <Tabs groupId="mcp-output" queryString>
 <TabItem value="mcp" label="MCP server input">
 <img src="/img/guides/MCPCreateBlueprintMultiple.png" border="1px" />
@@ -83,11 +85,31 @@ The AI will:
 
 Describe aggregations and calculations you need, and AI will configure them:
 
-**Example conversation:**
+**Example conversations:**
 
 *"Add an aggregation property to the service blueprint that counts the number of open incidents from PagerDuty"*
 
-The AI will add an `aggregationProperties` section with the correct query structure.
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPAggregationPropertyAddition.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPAggregationPropertyAdditionPort.png" border="1px" />
+</TabItem>
+</Tabs>
+
+*"Add a calculation property that combines the service name and version into a display title"*
+
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCalculationPropertyAddition.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCalculationPropertyAdditionPort.png" border="1px" />
+</TabItem>
+</Tabs>
+
+The AI will add the appropriate `aggregationProperties` or `calculationProperties` section with the correct structure.
 
 ## Populating entities with AI
 
@@ -176,67 +198,6 @@ The AI will use `update_blueprint` to add the relation configuration.
 
 <img src="/img/guides/MCPUpdateBlueprintRelations.png" border="1px" />
 
-
-## Setting up permissions for MCP
-
-MCP servers authenticate with Port using client credentials. Configure [service accounts](/sso-rbac/users-and-teams/manage-users-teams#service-accounts) with appropriate permissions to control what the AI can do.
-
-### Create a service account for MCP
-
-[Service accounts](https://docs.port.io/sso-rbac/users-and-teams/manage-users-teams/#service-accounts) are non-human users (bots) that can be used for integrating external tools like MCP servers. Create one via Port's API:
-
-<details>
-<summary><b>Full example (click to expand)</b></summary>
-
-```bash showLineNumbers
-curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
--d '{
-    "identifier": "mcp-agent@serviceaccounts.getport.io",
-    "title": "MCP Agent Service Account",
-    "blueprint": "_user",
-    "icon": "User",
-    "properties": {
-        "port_type": "Service Account",
-        "port_role": "Member",
-        "status": "Active"
-    },
-    "relations": {}
-}' \
--H 'content-type: application/json' \
--H 'Authorization: <YOUR_API_TOKEN>'
-```
-
-</details>
-
-:::info Credentials in response
-The response contains a `additionalData.credentials` object with `clientId` and `clientSecret`. Store these securely—they will not be shown again.
-:::
-
-### Configure role-based access
-
-Assign appropriate roles to service accounts based on their intended use:
-
-- **Member role**: For read-only access to query catalog data via MCP.
-- **Admin role**: For service accounts that need to create or update entities through MCP tools.
-
-### Add service accounts to teams
-
-Service accounts can be added to [teams](/sso-rbac/users-and-teams/manage-users-teams) to inherit team-based permissions:
-
-```json showLineNumbers
-{
-  "team": ["platform-team"],
-  "properties": {
-    "port_type": "Service Account",
-    "port_role": "Member"
-  }
-}
-```
-
-:::tip Least privilege
-Follow the principle of least privilege: grant service accounts only the permissions they need. For most MCP use cases, the Member role with team membership is sufficient.
-:::
-
 ## Best practices for AI-driven catalog building
 
 When using AI to build your catalog, follow these practices to get the best results:
@@ -274,67 +235,15 @@ After AI creates components, review them in the Port UI:
 
 ## Querying and managing your catalog
 
-Once your catalog is built, use AI to query and manage it:
+Once your catalog is built, use natural language to query and manage it:
 
-<h3>Find entities by criteria</h3>
+- *"Show me all services owned by the platform team"*
+- *"Give me a summary of services by deployment status"*
 
-*"Show me all services owned by the platform team that are in experimental status"*
-
-<h3>Analyze relationships</h3>
-
-*"Which services are deployed to production but don't have an owning team?"*
-
-<h3>Bulk updates</h3>
-
-*"Change the status of all experimental services to active"*
-
-<h3>Generate reports</h3>
-
-*"Give me a summary of services by team, including their deployment status"*
-
-## Real-world use cases
-
-Here are practical scenarios where AI-driven catalog building shines:
-
-<h3>Migrating from spreadsheets</h3>
-
-**Scenario**: You have service inventory in spreadsheets and want to move to Port.
-
-**Conversation:**
-
-*"I have a spreadsheet with services. Create a service blueprint with these columns: name, team, language, repo_url, and status. Then create entities for these services: [paste spreadsheet data]"*
-
-<h3>Onboarding new teams</h3>
-
-**Scenario**: A new team joins and needs their services cataloged.
-
-**Conversation:**
-
-*"Create a team called 'mobile-team' and add these services they own: ios-app (Swift, active), android-app (Kotlin, active), and mobile-api (Node.js, active). Connect all of them to the mobile-team."*
-
-<h3>Adding compliance checks</h3>
-
-**Scenario**: You need to track compliance requirements.
-
-**Conversation:**
-
-*"Create a scorecard for SOC2 compliance that checks: services have documentation, are owned by a team, have recent deployments (within 30 days), and no high-severity security issues."*
-
-<h3>Setting up incident management</h3>
-
-**Scenario**: Connect services to your incident management system.
-
-**Conversation:**
-
-*"Update the service blueprint to include a relation to PagerDuty services. Then create an action called 'Trigger Incident' that creates a PagerDuty incident for the selected service."*
-
-
+For more query examples and capabilities, see the [MCP server documentation](/ai-interfaces/port-mcp-server/available-tools).
 
 ## Related documentation
 
 - [Port MCP server overview](/ai-interfaces/port-mcp-server/overview-and-installation) - Installation and configuration for your IDE.
 - [Available MCP tools](/ai-interfaces/port-mcp-server/available-tools) - Complete reference for all MCP tools and their capabilities.
 - [Set up blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) - Detailed blueprint configuration reference.
-- [Create self-service actions](/actions-and-automations/create-self-service-experiences/) - Learn more about action configuration.
-- [Build scorecards](/scorecards/overview) - Deep dive into scorecard rules and levels.
-- [Service accounts](/sso-rbac/users-and-teams/manage-users-teams#service-accounts) - Managing service accounts for MCP access.
