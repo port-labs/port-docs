@@ -111,26 +111,7 @@ Here are patterns you can describe to AI:
 **Timer-based events:**
 - *"When a service's compliance certificate expires, create a renewal ticket"*
 
-## Building incident management actions
 
-A common use case is creating actions for incident management. Here's how to build a complete incident workflow using AI.
-
-<h3>Create a trigger incident action</h3>
-
-**Example conversation:**
-
-*"Create a 'Trigger PagerDuty Incident' action for the pagerdutyService blueprint. It should accept a summary, severity (critical, high, low), and source. Use the PagerDuty Events API."*
-
-<h3>Create complementary actions</h3>
-
-Build a complete workflow by asking for related actions:
-
-**Example conversations:**
-
-- *"Create an 'Acknowledge Incident' action that acknowledges a PagerDuty incident"*
-- *"Create a 'Resolve Incident' action that resolves and closes the incident"*
-
-The AI will create actions that work together, enabling a complete incident lifecycle.
 
 ## Chaining actions for complex workflows
 
@@ -142,6 +123,15 @@ AI agents can chain multiple actions together. Design your actions to be composa
 
 The AI will create three separate actions that can be chained:
 1. Create a feature flag → Deploy the service → Toggle the flag
+
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateChainedActions.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateChainedActionsPort.png" border="1px" />
+</TabItem>
+</Tabs>
 
 ## Let's test it
 
