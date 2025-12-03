@@ -1496,7 +1496,7 @@ export const availableGuides = [
         link: "/guides/all/auto-enhance-pr-descriptions-with-ai",
     },
     {
-        title: "AI-Powered GitHub Workflow Documentation",
+        title: "Auto-generate GitHub workflow documentation",
         description: "Automatically generate and maintain human-readable documentation for GitHub Actions workflows using Port's AI agents and automation system",
         tags: ["AI", "GitHub", "Automations"],
         logos: ["AI", "GitHub"],
