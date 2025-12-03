@@ -1,231 +1,185 @@
 ---
 displayed_sidebar: null
-description: Design your Port data model with MCP-first patterns to enable seamless AI agent integration, tool orchestration, and ecosystem interoperability
+description: Use AI to build and manage your Port software catalog through natural language conversations, creating blueprints, entities, relations, actions, and scorecards
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Build Port data model with MCP
+# Build your software catalog with AI
 
-Developers using MCP (Model Context Protocol) need clear patterns for designing Port entities that AI agents can effectively consume. This guide provides MCP-first architecture patterns for building intelligent data models that enable seamless tool orchestration and ecosystem interoperability.
+Use Port's MCP (Model Context Protocol) server to build and manage your software catalog through natural language conversations with AI. This guide shows you how to create blueprints, populate entities, define relations, and set up actions and scorecards—all by describing what you need in plain English.
 
-Whether you're building MCP servers, integrating Port with AI systems, or standardizing on MCP for tool integration, these patterns will help you create a data model that AI agents can reason about effectively.
+Instead of manually configuring JSON schemas or clicking through UI forms, you can have conversations with your AI assistant to build your catalog iteratively, getting instant feedback and making adjustments on the fly.
 
 ## Common use cases
 
-- **Tool orchestration**: Design entities that MCP tools can discover, query, and manipulate through natural language.
-- **AI agent integration**: Structure your catalog so agents can traverse relationships and understand your software architecture.
-- **Ecosystem interoperability**: Create consistent schemas that work across multiple MCP-enabled tools and platforms.
-- **Automated workflows**: Enable agents to trigger actions and update entities based on contextual understanding.
+- **Bootstrap new catalogs**: Describe your architecture and let AI create the initial blueprint structure.
+- **Populate entities**: Ask AI to create services, teams, or environments based on your requirements.
+- **Define relations**: Explain how components connect and let AI configure the relationships.
+- **Set up actions**: Describe workflows you want to enable and have AI create self-service actions.
+- **Create scorecards**: Explain quality standards and let AI build evaluation rules.
 
 ## Prerequisites
 
 This guide assumes you have:
 
 - Basic understanding of [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) and [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
-- Port MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor)
+- Port MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor).
 
-## Designing blueprints for MCP tool consumption
 
-Port's MCP server exposes tools like `list_blueprints`, `list_entities`, and `get_entities_by_identifiers` that AI agents use to interact with your catalog. Your blueprint design directly impacts how effectively these tools work. Focus on making blueprints discoverable, queryable, and self-documenting.
+## Creating blueprints with AI
 
-<h3>Use descriptive identifiers and titles</h3>
+The Port MCP server provides tools like `create_blueprint`, `list_blueprints`, and `update_blueprint` that enable AI agents to build your catalog through natural language conversations. You can describe what you need, and the AI will generate the appropriate JSON schema and create it in Port.
 
-Choose blueprint identifiers and titles that clearly communicate their purpose:
+<h3>Start with a simple description</h3>
 
-```json showLineNumbers
-{
-  "identifier": "microservice",
-  "title": "Microservice",
-  "description": "A microservice in our architecture that can be independently deployed"
-}
-```
+Describe the blueprint you want to create in natural language. The AI will interpret your requirements and generate the appropriate schema.
 
-:::tip Clear naming
-Avoid abbreviations or internal jargon. Use names that an AI agent can understand without domain-specific knowledge.
+**Example conversation:**
+
+*"Create a microservice blueprint with properties for programming language, repository URL, and deployment status"*
+
+The AI will use the MCP `create_blueprint` tool to generate and create the blueprint:
+
+<details>
+<summary><b>Screenshot example (click to expand)</b></summary>
+<img src="/img/guides/MCPCreateBlueprint.png" border="1px" />
+</details>
+
+:::tip Iterative refinement
+After creating a blueprint, you can refine it by asking follow-up questions like "Add a team property" or "Change the status enum to include 'maintenance'".
 :::
 
-<h3>Add meaningful descriptions</h3>
+<h3>Create multiple related blueprints</h3>
 
-Include descriptions for blueprints and properties to help AI agents understand their purpose:
+You can describe an entire architecture and let AI create multiple blueprints at once:
 
-```json showLineNumbers
-{
-  "identifier": "service",
-  "title": "Service",
-  "description": "A service represents an application or microservice that provides business functionality. Services can be deployed to multiple environments and have dependencies on other services.",
-  "schema": {
-    "properties": {
-      "tier": {
-        "title": "Service Tier",
-        "type": "string",
-        "enum": ["tier-1", "tier-2", "tier-3"],
-        "description": "The criticality tier of the service. Tier-1 services are customer-facing and require high availability."
-      }
-    }
-  }
-}
-```
+**Example conversation:**
 
-<h3>Structure properties for queryability</h3>
+*"Create blueprints for libraries, packages, and dependencies. Libraries should have properties for programming language and license type. Packages should have version and publish date properties. Dependencies should connect packages to libraries they depend on."*
 
-Design properties that enable effective filtering and searching:
+The AI will:
 
-- **Use enums for categorical data**: This helps agents understand valid values and filter effectively.
-- **Include date-time properties**: Enable time-based queries and trend analysis.
-- **Add status fields**: Help agents understand entity state and filter by status.
+1. Create the library blueprint with appropriate properties.
+2. Create the package blueprint.
+3. Create the dependency blueprint with relations to both package and library.
+4. Configure the relationships between them.
 
-```json showLineNumbers
-{
-  "properties": {
-    "status": {
-      "title": "Status",
-      "type": "string",
-      "enum": ["active", "deprecated", "archived"],
-      "enumColors": {
-        "active": "green",
-        "deprecated": "yellow",
-        "archived": "gray"
-      }
-    },
-    "lastDeployed": {
-      "title": "Last Deployed",
-      "type": "string",
-      "format": "date-time"
-    }
-  }
-}
-```
 
-## Entity schema best practices for AI agents
 
-When an AI agent queries Port through MCP, it receives entity data as structured JSON. The agent then reasons about this data to answer questions or take actions. Well-structured schemas enable better reasoning and more accurate responses.
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateBlueprintMultiple.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateBlueprintMultiple2.png" border="1px" />
+</TabItem>
+</Tabs>
 
-<h3>Provide context through properties</h3>
 
-Include properties that give agents enough context to answer questions:
 
-```json showLineNumbers
-{
-  "properties": {
-    "description": {
-      "title": "Description",
-      "type": "string",
-      "format": "markdown",
-      "description": "A detailed description of what this service does, its main responsibilities, and key features"
-    },
-    "documentation": {
-      "title": "Documentation URL",
-      "type": "string",
-      "format": "url",
-      "description": "Link to service documentation or README"
-    },
-    "team": {
-      "title": "Owning Team",
-      "type": "string",
-      "description": "The team responsible for maintaining this service"
-    }
-  }
-}
-```
+<h3>Add computed properties</h3>
 
-<h3>Use consistent property naming</h3>
+Describe aggregations and calculations you need, and AI will configure them:
 
-Maintain consistent naming conventions across blueprints to help agents understand patterns:
+**Example conversation:**
 
-- Use the same property names for similar concepts (e.g., `team` for ownership across all blueprints).
-- Follow a consistent format for related properties (e.g., `lastDeployed`, `lastUpdated`, `lastModified`).
+*"Add an aggregation property to the service blueprint that counts the number of open incidents from PagerDuty"*
 
-<h3>Include searchable metadata</h3>
+The AI will add an `aggregationProperties` section with the correct query structure.
 
-Add properties that enable agents to find entities through natural language queries:
+## Populating entities with AI
 
-```json showLineNumbers
-{
-  "properties": {
-    "tags": {
-      "title": "Tags",
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Tags for categorizing and searching this entity"
-    },
-    "environment": {
-      "title": "Environment",
-      "type": "string",
-      "enum": ["production", "staging", "development"],
-      "description": "The environment where this entity is deployed"
-    }
-  }
-}
-```
+Once you have blueprints, use AI to create entities. The MCP server provides `create_entity` and `update_entity` tools that work through natural language.
 
-## Defining relations that enable agent reasoning
+<h3>Create individual entities</h3>
 
-Relations are how AI agents understand the topology of your software catalog. When an agent uses the `list_entities` tool with the `relatedTo` operator, it can traverse your entity graph to answer questions like "What services depend on this database?" or "Who owns the infrastructure this service runs on?".
+Describe the entity you want to create:
 
-<h3>Create explicit relations</h3>
+**Example conversation:**
 
-Define relations that represent meaningful connections in your architecture:
+*"Create a service called order-api with Python as the language, status active, and assign it to the platform team"*
 
-```json showLineNumbers
-{
-  "relations": {
-    "dependsOn": {
-      "title": "Depends On",
-      "target": "service",
-      "required": false,
-      "many": true,
-      "description": "Services that this service depends on"
-    },
-    "deployedTo": {
-      "title": "Deployed To",
-      "target": "environment",
-      "required": false,
-      "many": true,
-      "description": "Environments where this service is deployed"
-    },
-    "ownedBy": {
-      "title": "Owned By",
-      "target": "_team",
-      "required": true,
-      "many": false,
-      "description": "The team that owns this service"
-    }
-  }
-}
-```
 
-<h3>Use bidirectional thinking</h3>
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateEntity.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateEntityPort.png" border="1px" />
+</TabItem>
+</Tabs>
 
-Consider how agents might traverse relations in both directions:
 
-- If Service A depends on Service B, agents should be able to find all services that depend on Service B.
-- Use the `relatedTo` operator in queries to enable flexible relationship traversal.
+<h3>Bulk entity creation</h3>
 
-<h3>Document relation purposes</h3>
+You can describe multiple entities and let AI create them all:
 
-Add descriptions to relations to help agents understand their meaning:
+**Example conversation:**
 
-```json showLineNumbers
-{
-  "relations": {
-    "parentService": {
-      "title": "Parent Service",
-      "target": "service",
-      "required": false,
-      "many": false,
-      "description": "The parent service that this microservice belongs to. Used for grouping related microservices under a larger service boundary."
-    }
-  }
-}
-```
+*"Create three services: payment-api (Node.js, active, payments team), user-service (Python, active, identity team), and notification-service (Go, experimental, platform team)"*
 
-## Permission models for MCP service accounts
+The AI will create all three entities with the correct properties and team assignments.
 
-MCP servers authenticate with Port using client credentials. When deploying MCP servers for team use, configure [service accounts](/sso-rbac/users-and-teams/manage-users-teams#service-accounts) with appropriate permissions to balance security with functionality.
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateEntityMultiple.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateEntityMultiplePortOutput.png" border="1px" />
+</TabItem>
+</Tabs>
+
+<h3>Update existing entities</h3>
+
+Modify entities by describing the changes:
+
+**Example conversation:**
+
+*"Change the status of notification-service to active and update its description to include SMS and email capabilities"*
+
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateEntityUpdate.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateEntityUpdatePort.png" border="1px" />
+</TabItem>
+</Tabs>
+
+## Defining relations with AI
+
+Relations connect entities in your catalog. AI can help you understand existing relations and create new ones based on your architecture.
+
+<h3>Query existing relations</h3>
+
+Ask AI about how entities are connected:
+
+**Example conversation:**
+
+*"What services depend on the payment-database?"*
+
+The AI uses `list_entities` with the `relatedTo` operator to traverse relationships and answer your question.
+
+<img src="/img/guides/MCPQueryRelations.png" border="1px" />
+
+<h3>Update blueprint relations</h3>
+
+Add new relations by describing them:
+
+**Example conversation:**
+
+*"Update the service blueprint to include a relation to databases. Services should be able to connect to multiple databases."*
+
+The AI will use `update_blueprint` to add the relation configuration.
+
+<img src="/img/guides/MCPUpdateBlueprintRelations.png" border="1px" />
+
+
+## Setting up permissions for MCP
+
+MCP servers authenticate with Port using client credentials. Configure [service accounts](/sso-rbac/users-and-teams/manage-users-teams#service-accounts) with appropriate permissions to control what the AI can do.
 
 ### Create a service account for MCP
 
@@ -233,6 +187,7 @@ MCP servers authenticate with Port using client credentials. When deploying MCP 
 
 <details>
 <summary><b>Full example (click to expand)</b></summary>
+
 ```bash showLineNumbers
 curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
 -d '{
@@ -250,6 +205,7 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
 -H 'content-type: application/json' \
 -H 'Authorization: <YOUR_API_TOKEN>'
 ```
+
 </details>
 
 :::info Credentials in response
@@ -265,7 +221,7 @@ Assign appropriate roles to service accounts based on their intended use:
 
 ### Add service accounts to teams
 
-Service accounts can be added to [teams](/sso-rbac/users-and-teams/manage-users-teams) to inherit team-based permissions, giving them access to team-owned entities:
+Service accounts can be added to [teams](/sso-rbac/users-and-teams/manage-users-teams) to inherit team-based permissions:
 
 ```json showLineNumbers
 {
@@ -281,176 +237,104 @@ Service accounts can be added to [teams](/sso-rbac/users-and-teams/manage-users-
 Follow the principle of least privilege: grant service accounts only the permissions they need. For most MCP use cases, the Member role with team membership is sufficient.
 :::
 
-## Service blueprint optimized for MCP
+## Best practices for AI-driven catalog building
 
-The following blueprint demonstrates MCP-first patterns with properties optimized for AI agent queries. This example includes queryable enums for filtering, relations for graph traversal, and aggregation properties for computed metrics:
+When using AI to build your catalog, follow these practices to get the best results:
 
-<details>
-<summary><b>Service blueprint optimized for MCP (click to expand)</b></summary>
+<h3>Be specific in your requests</h3>
 
-```json showLineNumbers
-{
-  "identifier": "service",
-  "title": "Service",
-  "icon": "Microservice",
-  "description": "A service represents an application or microservice. Services have ownership, can be deployed to environments, and connect to monitoring and security tools.",
-  "ownership": {
-    "type": "Direct"
-  },
-  "schema": {
-    "properties": {
-      "type": {
-        "type": "string",
-        "title": "Type",
-        "description": "The service type for categorization",
-        "enum": ["backend", "frontend", "library"],
-        "enumColors": {
-          "backend": "blue",
-          "frontend": "green",
-          "library": "purple"
-        }
-      },
-      "lifecycle": {
-        "type": "string",
-        "title": "Lifecycle",
-        "description": "The lifecycle state determines if this service is actively maintained",
-        "enum": ["Production", "Experimental", "Deprecated"],
-        "enumColors": {
-          "Production": "green",
-          "Experimental": "yellow",
-          "Deprecated": "red"
-        }
-      }
-    },
-    "required": []
-  },
-  "relations": {
-    "owning_team": {
-      "title": "Owning Team",
-      "target": "_team",
-      "required": false,
-      "many": false,
-      "description": "The team responsible for this service"
-    },
-    "repository": {
-      "title": "Repository",
-      "target": "githubRepository",
-      "required": false,
-      "many": false,
-      "description": "The source code repository"
-    },
-    "pager_duty_service": {
-      "title": "PagerDuty Service",
-      "target": "pagerdutyService",
-      "required": false,
-      "many": false,
-      "description": "The PagerDuty service for on-call alerts"
-    },
-    "domain": {
-      "title": "Domain",
-      "description": "The business domain this service belongs to",
-      "target": "domain",
-      "required": false,
-      "many": false
-    }
-  },
-  "aggregationProperties": {
-    "total_incidents": {
-      "title": "Total Monthly Incidents",
-      "type": "number",
-      "target": "pagerdutyIncident",
-      "calculationSpec": {
-        "calculationBy": "entities",
-        "func": "count"
-      }
-    },
-    "open_critical_vulnerabilities": {
-      "title": "Open Critical Vulnerabilities",
-      "type": "number",
-      "target": "snykVulnerability",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          { "property": "status", "operator": "=", "value": "open" },
-          { "property": "severity", "operator": "=", "value": "critical" }
-        ]
-      },
-      "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-      }
-    }
-  }
-}
-```
+The more detail you provide, the better AI can configure your catalog:
 
-</details>
+- **Good**: *"Create a service blueprint with properties for language (enum: Python, Node.js, Go), status (enum: active, deprecated), and a markdown description field"*
+- **Less effective**: *"Create a service blueprint"*
 
-This blueprint design enables AI agents to:
+<h3>Iterate incrementally</h3>
 
-- **Filter by type and lifecycle**: "Show me all deprecated backend services".
-- **Traverse ownership**: "Which team owns the order-service?".
-- **Access computed metrics**: "Which services have open critical vulnerabilities?".
-- **Navigate the service graph**: "What repository is the payment-service connected to?".
+Build your catalog in steps, refining as you go:
 
-## Let's test it
+1. Start with basic blueprints and a few properties.
+2. Add more properties and relations based on your needs.
+3. Create entities to test the structure.
+4. Adjust based on what works.
 
-After designing your data model, test it with an MCP-enabled AI assistant to ensure agents can query and reason about your catalog effectively.
+<h3>Use consistent naming</h3>
 
-<Tabs queryString="ide">
-<TabItem value="cursor" label="Cursor">
+Ask AI to follow consistent naming patterns across blueprints:
 
-<h4>Filter by type and lifecycle</h4>
+*"Use the same property name 'owning_team' for team ownership across all blueprints"*
 
-Ask: *"Show me all deprecated backend services"*
+<h3>Validate and review</h3>
 
-<details>
-<summary><b>Example (click to expand)</b></summary>
-<img src="/img/guides/MCPDataModelCursorFilter.png" border="1px" />
-</details>
+After AI creates components, review them in the Port UI:
 
-<h4>Traverse ownership</h4>
-
-Ask: *"Which team owns the order-service?"*
-
-<details>
-<summary><b>Example (click to expand)</b></summary>
-<img src="/img/guides/MCPDataModelCursorOwnership.png" border="1px" />
-</details>
+- Check that enums have the right values.
+- Verify relations point to the correct blueprints.
+- Test actions in a non-production environment first.
 
 
+## Querying and managing your catalog
 
-</TabItem>
-<TabItem value="vscode" label="VS Code">
+Once your catalog is built, use AI to query and manage it:
 
+<h3>Find entities by criteria</h3>
 
-<h4>Filter by type and lifecycle</h4>
+*"Show me all services owned by the platform team that are in experimental status"*
 
-Ask: *"Show me all deprecated backend services"*
+<h3>Analyze relationships</h3>
 
-<details>
-<summary><b>Example (click to expand)</b></summary>
-<img src="/img/guides/MCPDataModelVSCodeFilter.png" border="1px" />
-</details>
+*"Which services are deployed to production but don't have an owning team?"*
 
-<h4>Traverse ownership</h4>
+<h3>Bulk updates</h3>
 
-Ask: *"Which team owns the order-service?"*
+*"Change the status of all experimental services to active"*
 
-<details>
-<summary><b>Example (click to expand)</b></summary>
-<img src="/img/guides/MCPDataModelVSCodeOwnership.png" border="1px" />
-</details>
+<h3>Generate reports</h3>
 
-</TabItem>
-</Tabs>
+*"Give me a summary of services by team, including their deployment status"*
+
+## Real-world use cases
+
+Here are practical scenarios where AI-driven catalog building shines:
+
+<h3>Migrating from spreadsheets</h3>
+
+**Scenario**: You have service inventory in spreadsheets and want to move to Port.
+
+**Conversation:**
+
+*"I have a spreadsheet with services. Create a service blueprint with these columns: name, team, language, repo_url, and status. Then create entities for these services: [paste spreadsheet data]"*
+
+<h3>Onboarding new teams</h3>
+
+**Scenario**: A new team joins and needs their services cataloged.
+
+**Conversation:**
+
+*"Create a team called 'mobile-team' and add these services they own: ios-app (Swift, active), android-app (Kotlin, active), and mobile-api (Node.js, active). Connect all of them to the mobile-team."*
+
+<h3>Adding compliance checks</h3>
+
+**Scenario**: You need to track compliance requirements.
+
+**Conversation:**
+
+*"Create a scorecard for SOC2 compliance that checks: services have documentation, are owned by a team, have recent deployments (within 30 days), and no high-severity security issues."*
+
+<h3>Setting up incident management</h3>
+
+**Scenario**: Connect services to your incident management system.
+
+**Conversation:**
+
+*"Update the service blueprint to include a relation to PagerDuty services. Then create an action called 'Trigger Incident' that creates a PagerDuty incident for the selected service."*
 
 
 
 ## Related documentation
 
-- [Port MCP server overview](/ai-interfaces/port-mcp-server/overview-and-installation) - Installation and configuration.
-- [Available MCP tools](/ai-interfaces/port-mcp-server/available-tools) - Complete reference for all MCP tools.
-- [Set up blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) - Blueprint configuration reference.
-- [Service accounts](/sso-rbac/users-and-teams/manage-users-teams#service-accounts) - Creating and managing service accounts.
-
+- [Port MCP server overview](/ai-interfaces/port-mcp-server/overview-and-installation) - Installation and configuration for your IDE.
+- [Available MCP tools](/ai-interfaces/port-mcp-server/available-tools) - Complete reference for all MCP tools and their capabilities.
+- [Set up blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) - Detailed blueprint configuration reference.
+- [Create self-service actions](/actions-and-automations/create-self-service-experiences/) - Learn more about action configuration.
+- [Build scorecards](/scorecards/) - Deep dive into scorecard rules and levels.
+- [Service accounts](/sso-rbac/users-and-teams/manage-users-teams#service-accounts) - Managing service accounts for MCP access.
