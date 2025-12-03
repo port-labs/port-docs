@@ -117,7 +117,7 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 
 Pie charts illustrate data from entities in your software catalog divided by categories and entity properties.
 
-<img src='/img/software-catalog/widgets/pieChartExample.png' width='70%' style={{border:'1px', borderRadius:'6px'}}/>
+<img src='/img/software-catalog/widgets/pieChartExample.png' width='60%' style={{border:'1px', borderRadius:'6px'}}/>
 
 <h3>Properties</h3>
 
@@ -131,9 +131,26 @@ Pie charts illustrate data from entities in your software catalog divided by cat
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Additional filters`     | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
 
-**Limitations**
+### Pie chart drill down
 
-- Pie charts are limited to displaying **up to 9 slices**. If there are more than 9 categories, the additional categories will be grouped into an "other" section.
+Hover over a pie chart slice to see the percentage it represents of the total.
+
+Click a slice to open a temporary entity view listing the entities included in that slice. For example, in a chart showing programming languages used by services, clicking the JavaScript slice shows all services where the language is JavaScript.
+
+In this entity view, you can:
+
+- Add filters to further refine the displayed entities.
+- Group entities by other properties.
+- Customize the table (for example, columns and sorting).
+
+:::info Temporary view
+The entity view opened from a pie chart slice is temporary and can not be saved. Any filters, grouping, or table customizations you apply are lost when you leave this view.
+:::
+
+<h3>Limitations</h3>
+
+- Pie charts can display **up to 9 slices**. If the breakdown contains more than 9 values, the remaining values are grouped into `Other`.
+- Drill down is not available when the breakdown property is a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/), [scorecard](/scorecards/concepts-and-structure), or [scorecard rule](/scorecards/concepts-and-structure). In these cases, clicking a slice will open an empty view.
 
 ## Bar chart
 
