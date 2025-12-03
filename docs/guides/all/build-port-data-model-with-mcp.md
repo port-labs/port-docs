@@ -170,7 +170,7 @@ Modify entities by describing the changes:
 </TabItem>
 </Tabs>
 
-## Defining relations with AI
+## Define relations with AI
 
 Relations connect entities in your catalog. AI can help you understand existing relations and create new ones based on your architecture.
 
