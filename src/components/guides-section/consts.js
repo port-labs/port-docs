@@ -1525,7 +1525,7 @@ export const availableGuides = [
     },
     {
         title: "Build your software catalog with MCP",
-        description: "Use Port's MCP (Model Context Protocol) server to build and manage your software catalog through natural language conversations with AI.",
+        description: "Use Port's MCP server to build and manage your software catalog through natural language conversations with AI.",
         tags: ["AI"],
         logos: ["AI"],
         link: "/guides/all/build-port-data-model-with-mcp",
