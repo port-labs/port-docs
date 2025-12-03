@@ -912,6 +912,40 @@ The repository search feature is subject to the limitations of the GitHub Search
 - **Search results are limited to 1,000 items**: You can only ingest a maximum of 1,000 repositories per search query.
 - **Strict rate limits**: The API allows a maximum of 30 requests per minute.
 
+
+
+### Ingest the authenticated user’s personal account
+
+You can optionally ingest the authenticated user’s personal account as a pseudo-organization. This allows you to sync personal repositories and dependent resource types as needed.
+
+#### Multi-organization setup
+
+To include the authenticated user’s personal account in addition to regular organizations:
+- Set `includeAuthenticatedUser: true` in your configuration.
+- Run a resync to pull personal account data.
+
+
+```yaml showLineNumbers
+includeAuthenticatedUser: true #This is disabled by default.
+repositoryType: "all"
+resources:
+  - kind: organization
+    selector:
+      query: "true"
+```
+
+#### Single-organization setup (personal account only)
+
+To sync only the authenticated user’s personal account when using single-organization authentication:
+- Set the GitHub organization value to the GitHub username of the authenticated user using the environment variable  `OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION=<github_username>`.
+
+This will treat the personal GitHub account as the sole organization for ingestion.
+
+
+#### Limitations
+- Webhooks are not supported for personal GitHub accounts.
+
+
 ## Examples
 
 Refer to the [examples](./examples) page for practical configurations and their corresponding blueprint definitions.

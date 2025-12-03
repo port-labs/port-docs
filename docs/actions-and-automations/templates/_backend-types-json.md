@@ -20,6 +20,8 @@ Depending on the backend type you choose, the available fields will be different
 | `headers` | `object`  | An object containing the payload headers to be sent to the webhook in each execution, in `"key":"value"` pairs.                                        |
 | `body`    | `object`  | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs.                                                  |
 
+To learn more about this backend type, refer to the [webhook backend](/actions-and-automations/setup-backend/webhook/webhook.md) documentation.
+
 </TabItem>
 
 <TabItem value="github-app" label="Github app">
@@ -34,17 +36,21 @@ Depending on the backend type you choose, the available fields will be different
 | `reportWorkflowStatus` | `boolean` | A flag to control whether to automatically update the Port `run` object status (SUCCESS/FAILURE) at the end of the workflow (default: `true`).                | `true` or `false` |
 | `workflowInputs` | `object` | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs. |  |
 
+To learn more about this backend type, refer to the [GitHub workflow backend](/actions-and-automations/setup-backend/github-workflow/github-workflow.md) documentation.
+
 </TabItem>
 
 <TabItem value="github-ocean" label="GitHub Ocean">
 
 The `invocationMethod.type` should be set to `INTEGRATION_ACTION`.  
 
-You can specify which integration to use using the `invocationMethod.installationId` field.
+You can specify which integration to use using the `invocationMethod.installationId` field.  
+
+The `integrationActionType` is `dispatch_workflow`.
 
 | Field  | Type | Description  | Example values  |
 | ------ | ---- | ------------ | --------------- |
-| `org`  | `string`  | The GitHub *organization* name. If the *organization* was specified when installing the integration, the field will be prefilled automatically. Otherwise, specify the organization where the workflow resides. | `port-labs` |
+| `org`  | `string`  | The GitHub *organization* name. Behavior depends on installation type: **hosted by Port** (hidden/prefilled in UI), **self-hosted** and **API** (always required). | `port-labs` |
 | `repo` | `string`  | The GitHub *repository* name.  | `port-docs`     |
 | `workflow`  | `string`  | Defines the GitHub *workflow ID* to run (You can also pass the workflow file name as a string). | `workflow.yml` |  |
 | `reportWorkflowStatus` | `boolean` | A flag to control whether to automatically update the Port `run` object status (SUCCESS/FAILURE) at the end of the workflow (default: `true`).  | `true` or `false` |
@@ -54,6 +60,8 @@ You can specify which integration to use using the `invocationMethod.installatio
 This invocation method works only with integrations that use Port machine tokens (organization-level tokens).  
 Personal tokens or service account tokens are not supported at the moment.
 :::
+
+To learn more about this backend type, refer to the [GitHub Ocean backend](/actions-and-automations/setup-backend/github-ocean/github-ocean.md) documentation.
 
 </TabItem>
 
@@ -68,6 +76,7 @@ Personal tokens or service account tokens are not supported at the moment.
 | `groupName`            | `string`  | The GitLab *group* name.<br></br>Can only be used if `type` is set to `GITLAB`.                                                                                                                                          | `port-labs`                              |
 | `pipelineVariables` | `object` | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs. |  |
 
+To learn more about this backend type, refer to the [GitLab pipeline backend](/actions-and-automations/setup-backend/gitlab-pipeline/gitlab-pipeline.md) documentation.
 
 </TabItem>
 
@@ -81,6 +90,8 @@ Personal tokens or service account tokens are not supported at the moment.
 | `org` | `string` | The Azure DevOps organization in which the pipeline is located. | `port-labs` |
 | `payload` | `object` | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs. |  |
 
+To learn more about this backend type, refer to the [Azure pipeline backend](/actions-and-automations/setup-backend/azure-pipeline/azure-pipeline.md) documentation.
+
 </TabItem>
 
 <TabItem value="kafka" label="Kafka">
@@ -90,6 +101,8 @@ Personal tokens or service account tokens are not supported at the moment.
 | Field                  | Type      | Description                                                                                                                                                                                                              | Example values                           |
 | ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
 | `payload`              | `object`  | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs.                                                              |
+
+To learn more about this backend type, refer to the [Kafka backend](/actions-and-automations/setup-backend/webhook/kafka/kafka.md) documentation.
 
 </TabItem>
 
@@ -102,6 +115,7 @@ Personal tokens or service account tokens are not supported at the moment.
 | `blueprintIdentifier` | `string` | The identifier of the blueprint from which the entity will be created/updated. | `service` |
 | `mapping` | `object` | Defines the properties of the entity that will be created/updated. | `{"name":"newEntityName"}`
 
+To learn more about this backend type, refer to the [create/update entity backend](/actions-and-automations/setup-backend/create-update-entity/create-update-entity.md) documentation.
 
 </TabItem>
 

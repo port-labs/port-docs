@@ -279,6 +279,22 @@ export const integrations = [
     darkIcon: '/img/guides/icons/dark/Kafka.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka',
   },
+  // Identity providers
+  {
+    name: 'Okta',
+    category: 'identity-providers',
+    icon: '/img/guides/icons/Okta.svg',
+    darkIcon: '/img/guides/icons/dark/Backstage.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/okta',
+  },
+  {
+    name: 'Microsoft Entra ID',
+    category: 'identity-providers',
+    iconName: 'Azure',
+    icon: '/img/guides/icons/Azure.svg',
+    darkIcon: '/img/guides/icons/Azure.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/identity-providers/azure-ad',
+  },
   {
     name: 'Amplication',
     category: 'other',
@@ -294,11 +310,11 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/backstage',
   },
   {
-    name: 'Okta',
+    name: 'Slack',
     category: 'other',
-    icon: '/img/guides/icons/Okta.svg',
-    darkIcon: '/img/guides/icons/dark/Backstage.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/okta',
+    icon: '/img/guides/icons/Slack.svg',
+    darkIcon: '/img/guides/icons/Slack.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/slack',
   },
   {
     name: 'Ocean custom',
@@ -328,7 +344,22 @@ export const integrations = [
     icon: '/img/guides/icons/Cursor.svg',
     darkIcon: '/img/guides/icons/dark/Cursor.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/cursor',
-  }
+  },
+  {
+    name: 'OpenAI',
+    category: 'ai-agents',
+    iconName: 'OpenAI',
+    icon: '/img/guides/icons/OpenAI.svg',
+    darkIcon: '/img/guides/icons/OpenAI.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/openai',
+  },
+  {
+    name: 'n8n',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/n8n.svg',
+    darkIcon: '/img/guides/icons/n8n.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/n8n',
+  },
 ];
 
 export const categories = {
@@ -346,5 +377,6 @@ export const categories = {
   'Event processing': 'event',
   'CI/CD': 'cicd',
   'AI agents': 'ai-agents',
+  'Identity providers': 'identity-providers',
   'Other': 'other',
 }; 
