@@ -33,7 +33,7 @@ MCP operations use the permissions of the authenticated user. Only users with ap
 
 ## Creating blueprints with AI
 
-The Port MCP server provides tools like `create_blueprint`, `list_blueprints`, and `update_blueprint` that enable AI agents to build your catalog through natural language conversations. You can describe what you need, and the AI will generate the appropriate JSON schema and create it in Port.
+Port's MCP server provides tools like `create_blueprint`, `list_blueprints`, and `update_blueprint` that enable AI agents to build your catalog through natural language conversations. You can describe what you need, and the AI will generate the appropriate JSON schema and create it in Port.
 
 <h3>Start with a simple description</h3>
 
