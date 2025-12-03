@@ -31,7 +31,7 @@ This guide assumes you have:
 MCP operations use the permissions of the authenticated user. Only users with appropriate access (typically admins) can create or modify blueprints, entities, and other catalog components.
 :::
 
-## Creating blueprints with AI
+## Create blueprints with AI
 
 Port's MCP server provides tools like `create_blueprint`, `list_blueprints`, and `update_blueprint` that enable AI agents to build your catalog through natural language conversations. You can describe what you need, and the AI will generate the appropriate JSON schema and create it in Port.
 
