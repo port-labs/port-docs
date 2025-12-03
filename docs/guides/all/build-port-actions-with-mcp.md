@@ -1,6 +1,6 @@
 ---
 displayed_sidebar: null
-description: Create Port self-service actions and automations optimized for MCP tool consumption, enabling AI agents to execute workflows and chain complex operations
+description: Use AI to create Port self-service actions and automations through natural language conversations, enabling workflow orchestration without manual configuration
 ---
 
 import Tabs from "@theme/Tabs"
@@ -8,16 +8,16 @@ import TabItem from "@theme/TabItem"
 
 # Build Port actions and automations with MCP
 
-Developers using MCP need clear patterns for creating Port actions that AI agents can discover, understand, and execute. This guide provides MCP-first patterns for designing self-service actions and automations that enable seamless tool orchestration through natural language.
+Use Port's MCP (Model Context Protocol) server to create self-service actions and automations through natural language conversations with AI. This guide shows you how to design workflows, configure action inputs, and set up automations—all by describing what you need in plain English.
 
-Whether you're building developer workflows, creating automated pipelines, or enabling AI-driven operations, these patterns will help you create actions that MCP clients can effectively invoke and chain together.
+Instead of manually writing JSON schemas or navigating complex forms, you can have conversations with your AI assistant to build actions iteratively, getting instant feedback and making adjustments on the fly.
 
 ## Common use cases
 
-- **Natural language operations**: Enable developers to trigger complex workflows through conversational AI interfaces.
-- **Workflow chaining**: Design actions that can be combined into multi-step operations by AI agents.
-- **Automated responses**: Create automations that AI agents can monitor and respond to.
-- **Self-service at scale**: Expose organizational capabilities as discoverable MCP tools.
+- **Create deployment workflows**: Describe deployment processes and let AI create the actions.
+- **Set up incident management**: Ask AI to create PagerDuty or Opsgenie integration actions.
+- **Build approval workflows**: Explain approval requirements and have AI configure the action.
+- **Configure automations**: Describe event-driven workflows and let AI set them up.
 
 ## Prerequisites
 
@@ -26,314 +26,126 @@ This guide assumes you have:
 - Basic understanding of [self-service actions](/actions-and-automations/create-self-service-experiences/) and [automations](/actions-and-automations/define-automations/).
 - Port MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor).
 
-## Creating actions for MCP tool consumption
+## Creating actions with AI
 
-Port's MCP server dynamically generates `run_*` tools for each self-service action in your organization. When you create an action called `trigger_pagerduty_incident`, MCP exposes it as `run_trigger_pagerduty_incident`. The action's input schema becomes the tool's parameters, making your action immediately available to AI agents.
+The Port MCP server provides tools like `create_action`, `list_actions`, and `update_action` that enable AI agents to build your actions through natural language conversations. You can describe what you need, and the AI will generate the appropriate configuration and create it in Port.
 
-<h3>Use descriptive identifiers and titles</h3>
+<h3>Start with a simple description</h3>
 
-Choose action identifiers that clearly communicate what the action does:
+Describe the action you want to create in natural language. The AI will interpret your requirements and generate the appropriate schema.
 
-```json showLineNumbers
-{
-  "identifier": "trigger_pagerduty_incident",
-  "title": "Trigger PagerDuty incident",
-  "description": "Trigger a new PagerDuty incident directly from Port"
-}
-```
+**Example conversation:**
 
-:::tip Clear naming
-Use verb-noun patterns like `create_service`, `deploy_to_environment`, or `restart_workload`. Avoid abbreviations that AI agents might not understand.
+*"Create a self-service action called 'Deploy to Staging' for the service blueprint. It should trigger a GitHub workflow that accepts an optional version parameter and deployment environment."*
+
+The AI will use the MCP `create_action` tool to generate and create the action:
+
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateAction.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateActionPort.png" border="1px" />
+</TabItem>
+</Tabs>
+
+:::tip Iterative refinement
+After creating an action, you can refine it by asking follow-up questions like "Add a required approval step" or "Change the backend to use a webhook instead of GitHub".
 :::
 
-<h3>Write detailed descriptions</h3>
+<h3>Add complex user inputs</h3>
 
-The action description appears in the MCP tool listing. Include enough context for AI agents to understand when to use the action:
+Describe dynamic forms and the AI will configure them:
 
-```json showLineNumbers
-{
-  "identifier": "scale_k8s_workload",
-  "title": "Scale Kubernetes Workload",
-  "description": "Scale a Kubernetes workload up or down to resolve resource issues. Use this when a service needs more capacity or to reduce costs during low-traffic periods."
-}
-```
+**Example conversation:**
 
-<h3>Choose appropriate operations</h3>
+*"Add a multi-select input for deployment regions with options for us-east-1, us-west-2, and eu-west-1"*
 
-Port actions support three operation types that determine how they appear in MCP:
+The AI will update the action's `userInputs` schema with the appropriate configuration.
 
-- **CREATE**: For provisioning new resources. Appears without requiring an entity context.
-- **DAY-2**: For operations on existing entities. Requires an entity identifier.
-- **DELETE**: For removing resources. Requires an entity identifier.
+<h3>Configure different backends</h3>
 
-```json showLineNumbers
-{
-  "trigger": {
-    "type": "self-service",
-    "operation": "DAY-2",
-    "blueprintIdentifier": "service"
-  }
-}
-```
+Port actions support multiple backend types. Describe your preferred backend and AI will configure it:
 
-## Action input schemas for MCP compliance
+**Example conversations:**
 
-When an AI agent calls a Port action through MCP, it needs to understand what inputs are required and what values are valid. Well-designed input schemas enable agents to construct correct requests without user intervention.
+- *"Create a restart service action that triggers a GitHub workflow in the ops-automation repo"*
+- *"Create an action that calls our internal API at https://api.internal.com/deploy"*
+- *"Create an action that triggers a GitLab pipeline in the infrastructure project"*
 
-<h3>Define clear input properties</h3>
+The AI will configure the appropriate `invocationMethod` (GitHub, GitLab, Webhook, etc.).
 
-Include titles and descriptions for every input:
+## Setting up automation triggers
 
-<details>
-<summary><b>Example action input schema (click to expand)</b></summary>
-```json showLineNumbers
-{
-  "userInputs": {
-    "properties": {
-      "environment": {
-        "title": "Target Environment",
-        "type": "string",
-        "description": "The environment to deploy to",
-        "enum": ["production", "staging", "development"],
-        "default": "staging"
-      },
-      "replicas": {
-        "title": "Number of Replicas",
-        "type": "number",
-        "description": "How many instances to run (1-10)",
-        "minimum": 1,
-        "maximum": 10,
-        "default": 2
-      }
-    },
-    "required": ["environment"]
-  }
-}
-```
-</details>
+Automations respond to events in your software catalog. AI can help you create event-driven workflows that react to changes automatically.
 
-<h3>Use enums for constrained choices</h3>
+<h3>Describe the trigger condition</h3>
 
-Enums help AI agents understand valid options:
+Explain what event should trigger the automation:
 
-<details>
-<summary><b>Example enum input schema (click to expand)</b></summary>
-```json showLineNumbers
-{
-  "severity": {
-    "title": "Severity",
-    "type": "string",
-    "description": "The severity level of the incident",
-    "enum": ["critical", "error", "warning", "info"],
-    "enumColors": {
-      "critical": "red",
-      "error": "red",
-      "warning": "yellow",
-      "info": "blue"
-    },
-    "default": "warning"
-  }
-}
-```
-</details>
+**Example conversation:**
 
-<h3>Provide sensible defaults</h3>
+*"Create an automation that triggers a Slack notification when a service's health score drops below 50"*
 
-Defaults reduce the information agents need to collect:
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateAutomation.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateAutomationPort.png" border="1px" />
+</TabItem>
+</Tabs>
 
-```json showLineNumbers
-{
-  "source": {
-    "title": "Source",
-    "type": "string",
-    "description": "The source system triggering this action",
-    "default": "Port MCP"
-  }
-}
-```
+<h3>Common automation patterns</h3>
 
-<h3>Order inputs logically</h3>
+Here are patterns you can describe to AI:
 
-Use the `order` array to present inputs in a logical sequence:
+**Entity lifecycle events:**
+- *"When a new service is created, send a welcome message to the owning team's Slack channel"*
+- *"When a service is deleted, create a cleanup task in Jira"*
 
-```json showLineNumbers
-{
-  "userInputs": {
-    "properties": { ... },
-    "required": ["summary", "severity"],
-    "order": ["summary", "severity", "source", "event_action"]
-  }
-}
-```
+**Property change events:**
+- *"When a service's status changes to deprecated, notify the platform team"*
+- *"When an incident severity is upgraded to critical, page the on-call engineer"*
+
+**Timer-based events:**
+- *"When a service's compliance certificate expires, create a renewal ticket"*
+
+## Building incident management actions
+
+A common use case is creating actions for incident management. Here's how to build a complete incident workflow using AI.
+
+<h3>Create a trigger incident action</h3>
+
+**Example conversation:**
+
+*"Create a 'Trigger PagerDuty Incident' action for the pagerdutyService blueprint. It should accept a summary, severity (critical, high, low), and source. Use the PagerDuty Events API."*
+
+<h3>Create complementary actions</h3>
+
+Build a complete workflow by asking for related actions:
+
+**Example conversations:**
+
+- *"Create an 'Acknowledge Incident' action that acknowledges a PagerDuty incident"*
+- *"Create a 'Resolve Incident' action that resolves and closes the incident"*
+
+The AI will create actions that work together, enabling a complete incident lifecycle.
 
 ## Chaining actions for complex workflows
 
-AI agents can chain multiple actions together to accomplish complex tasks. Design your actions to be composable—each action should do one thing well and return useful information for subsequent actions.
+AI agents can chain multiple actions together. Design your actions to be composable by asking AI to create focused, single-purpose actions.
 
-<h3>Return actionable data</h3>
+**Example conversation:**
 
-Configure your action's backend to return data that can inform the next step:
+*"Create three actions for feature rollouts: 'Create Feature Flag' to create a new LaunchDarkly flag, 'Deploy Service' to deploy the service version, and 'Enable Feature' to toggle the flag on"*
 
-<details>
-<summary><b>Example action return schema (click to expand)</b></summary>
-```json showLineNumbers
-{
-  "invocationMethod": {
-    "type": "WEBHOOK",
-    "url": "https://api.example.com/deploy",
-    "synchronized": true,
-    "method": "POST",
-    "body": {
-      "service": "{{.entity.identifier}}",
-      "environment": "{{.inputs.environment}}"
-    }
-  }
-}
-```
-</details>
-
-:::info Synchronized actions
-Set `synchronized: true` for actions where you want the MCP client to wait for completion. This enables agents to use the result before proceeding to the next action.
-:::
-
-<h3>Design for composition</h3>
-
-Create actions that work well together:
-
-| Action | Purpose | Enables |
-|--------|---------|---------|
-| `create_feature_flag` | Create a new feature flag | Controlled rollouts |
-| `toggle_feature_flag` | Enable/disable a flag | Quick feature control |
-| `deploy_to_environment` | Deploy service version | Code releases |
-
-An agent can chain these: create a feature flag → deploy the service → toggle the flag to enable the feature.
-
-## Complementing actions with automations
-
-[Automations](/actions-and-automations/define-automations/) are event-driven workflows that complement MCP-triggered actions. When an agent triggers an action that creates or updates entities, automations can automatically handle follow-up tasks—extending your workflows beyond the initial action.
-
-<h3>How automations extend MCP workflows</h3>
-
-Automations respond to events in your software catalog, enabling you to build reactive workflows:
-
-<details>
-<summary><b>Sync PagerDuty incident status automation (click to expand)</b></summary>
-```json showLineNumbers
-{
-  "identifier": "sync_incident_status",
-  "title": "Sync PagerDuty Incident Status",
-  "trigger": {
-    "type": "automation",
-    "event": {
-      "type": "ENTITY_UPDATED",
-      "blueprintIdentifier": "pagerdutyIncident"
-    },
-    "condition": {
-      "type": "JQ",
-      "expressions": [".diff.after.properties.status != .diff.before.properties.status"],
-      "combinator": "and"
-    }
-  }
-}
-```
-</details>
-
-<h3>Build end-to-end workflows</h3>
-
-Combine MCP-triggered actions with automations to create complete workflows:
-
-1. **Agent triggers action**: An agent calls `run_trigger_pagerduty_incident` to create an incident.
-2. **Automation responds**: When the incident status changes in PagerDuty, an automation syncs the update to Port.
-3. **Follow-up automation**: When the incident is resolved, another automation notifies the team via Slack.
-
-
-## Example: multi-step workflow action
-
-The following action demonstrates MCP-first patterns with clear inputs, detailed descriptions, and a structure that enables AI agents to execute it effectively:
-
-<details>
-<summary><b>PagerDuty incident action (click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "trigger_pagerduty_incident",
-  "title": "Trigger PagerDuty incident",
-  "icon": "pagerduty",
-  "description": "Trigger a new PagerDuty incident directly from Port. Use this to alert on-call engineers about service issues.",
-  "trigger": {
-    "type": "self-service",
-    "operation": "DAY-2",
-    "blueprintIdentifier": "pagerdutyService",
-    "userInputs": {
-      "properties": {
-        "summary": {
-          "title": "Summary",
-          "type": "string",
-          "description": "A brief description of the incident"
-        },
-        "source": {
-          "title": "Source",
-          "type": "string",
-          "description": "The system or person reporting the incident",
-          "default": "Port MCP"
-        },
-        "severity": {
-          "title": "Severity",
-          "type": "string",
-          "description": "The severity level determines escalation urgency",
-          "enum": ["critical", "error", "warning", "info"],
-          "enumColors": {
-            "critical": "red",
-            "error": "red",
-            "warning": "yellow",
-            "info": "blue"
-          },
-          "default": "warning"
-        },
-        "event_action": {
-          "title": "Event Action",
-          "type": "string",
-          "description": "The action to take: trigger creates new, acknowledge confirms receipt, resolve closes",
-          "enum": ["trigger", "acknowledge", "resolve"],
-          "default": "trigger"
-        }
-      },
-      "required": ["summary", "severity"],
-      "order": ["summary", "severity", "source", "event_action"]
-    }
-  },
-  "invocationMethod": {
-    "type": "WEBHOOK",
-    "url": "https://events.pagerduty.com/v2/enqueue",
-    "synchronized": true,
-    "method": "POST",
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "body": {
-      "payload": {
-        "summary": "{{.inputs.summary}}",
-        "source": "{{.inputs.source}}",
-        "severity": "{{.inputs.severity}}"
-      },
-      "routing_key": "{{.secrets.PAGERDUTY_ROUTING_KEY}}",
-      "event_action": "{{.inputs.event_action}}"
-    }
-  }
-}
-```
-
-</details>
-
-This action design enables AI agents to:
-
-- **Trigger incidents naturally**: "Create a critical PagerDuty incident for the payment service".
-- **Use sensible defaults**: Agent only needs to provide summary and severity.
-- **Chain with other actions**: Follow up with `acknowledge_pagerduty_incident` or `resolve_pagerduty_incident`.
+The AI will create three separate actions that can be chained:
+1. Create a feature flag → Deploy the service → Toggle the flag
 
 ## Let's test it
 
-After creating your actions, test them with an MCP-enabled AI assistant. In this example, we'll create a PagerDuty incident using the `create_incident_webhook` action.
+After creating your actions, test them with an MCP-enabled AI assistant. In this example, we'll create a PagerDuty incident using the action we built.
 
 <h3>Prompt</h3>
 
@@ -345,79 +157,80 @@ Ask your AI assistant:
 
 The agent will:
 1. **Discover the action** - Find `create_incident_webhook` via `list_actions`.
-2. **Understand the inputs** - Use the action schema to determine required fields (title, urgency).
+2. **Understand the inputs** - Use the action schema to determine required fields.
 3. **Execute the action** - Call `run_create_incident_webhook` with the entity identifier and input parameters.
 4. **Return the result** - Report whether the incident was created successfully.
-5. **Automation triggered** - The `pagerduty_incident_to_slack` automation sends a Slack notification to the team.
 
-    <details>
-    <summary><b>Slack notification automation setup (click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-    "identifier": "pagerduty_incident_to_slack",
-    "title": "PagerDuty incident to Slack",
-    "description": "Sends a Slack message when a new incident is created",
-    "trigger": {
-        "type": "automation",
-        "event": {
-        "type": "ENTITY_CREATED",
-        "blueprintIdentifier": "pagerdutyIncident"
-        }
-    },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://slack.com/api/chat.postMessage",
-        "synchronized": true,
-        "method": "POST",
-        "headers": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Authorization": "Bearer {{ .secrets.SLACK_BOT_TOKEN }}"
-        },
-        "body": {
-        "channel": "incident-alerts",
-        "blocks": [
-            {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": "*New PagerDuty Incident*\n*Title:* {{ .event.diff.after.title }}\n*Assignees:* {{ .event.diff.after.properties.assignees }}"
-            }
-            }
-        ]
-        }
-    }
-    }
-    ```
-
-    </details>
-
-<Tabs queryString="ide">
-<TabItem value="cursor" label="Cursor">
-
-<details>
-<summary><b>Example output (click to expand)</b></summary>
-
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
 <img src="/img/guides/MCPActionsCreateIncidentCursor.png" border="1px" />
-
-<img src="/img/guides/MCPActionsCreateIncidentPort.png" border="1px" />
-
-</details>
-
 </TabItem>
-<TabItem value="vscode" label="VS Code">
-
-<details>
-<summary><b>Example output (click to expand)</b></summary>
-
-<img src="/img/guides/MCPActionsCreateIncidentVSCode.png" border="1px" />
-
+<TabItem value="port" label="Port output">
 <img src="/img/guides/MCPActionsCreateIncidentPort.png" border="1px" />
-
-</details>
-
 </TabItem>
 </Tabs>
+
+## Best practices for AI-driven action creation
+
+When using AI to create actions, follow these practices to get the best results:
+
+<h3>Be specific about inputs</h3>
+
+The more detail you provide about inputs, the better the action schema:
+
+- **Good**: *"Create a deploy action with inputs for environment (enum: production, staging, dev), version (string, required), and notify_slack (boolean, default true)"*
+- **Less effective**: *"Create a deploy action"*
+
+<h3>Specify the backend type</h3>
+
+Tell AI what backend to use:
+
+- *"...that triggers a GitHub workflow in the deployments repo"*
+- *"...that calls a webhook at https://api.example.com/deploy"*
+- *"...that triggers a GitLab pipeline"*
+
+<h3>Describe approval requirements</h3>
+
+If your action needs approval:
+
+*"Create a production deploy action that requires approval from the platform-admins team"*
+
+<h3>Use clear action names</h3>
+
+Use verb-noun patterns that AI can understand:
+
+- Good: `deploy_to_production`, `restart_service`, `trigger_incident`
+- Less clear: `prod_dep`, `svc_rst`, `inc`
+
+## Real-world use cases
+
+Here are practical scenarios where AI-driven action creation shines:
+
+<h3>Setting up a new service workflow</h3>
+
+**Scenario**: You need deployment and operational actions for a new service.
+
+**Conversation:**
+
+*"Create these actions for the service blueprint: 'Deploy to Staging' (GitHub workflow, accepts version), 'Promote to Production' (requires approval, GitHub workflow), and 'Rollback' (GitHub workflow, accepts version to rollback to)"*
+
+<h3>Incident response automation</h3>
+
+**Scenario**: Connect services to incident management with automation.
+
+**Conversation:**
+
+*"Create an automation that sends a Slack message to the #incidents channel whenever a new PagerDuty incident is created in Port. Include the incident title, severity, and a link to the Port entity."*
+
+<h3>Compliance workflows</h3>
+
+**Scenario**: Automate compliance checks and remediation.
+
+**Conversation:**
+
+*"Create an action called 'Request Security Review' that creates a Jira ticket in the SECURITY project with the service name, owner, and a checklist of compliance requirements"*
+
+
 
 ## Related documentation
 
@@ -425,4 +238,3 @@ The agent will:
 - [Define automations](/actions-and-automations/define-automations/) - Event-driven workflow configuration.
 - [Available MCP tools](/ai-interfaces/port-mcp-server/available-tools) - Complete reference for all MCP tools.
 - [Action backends](/actions-and-automations/create-self-service-experiences/setup-the-backend/) - Configure webhooks, GitHub, GitLab, and more.
-
