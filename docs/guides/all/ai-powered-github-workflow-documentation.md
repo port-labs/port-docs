@@ -6,7 +6,7 @@ description: Automatically generate and maintain human-readable documentation fo
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# AI-Powered GitHub Workflow Documentation
+# Auto-generate GitHub workflow documentation
 
 This guide demonstrates how to automatically generate and maintain clear, developer-friendly documentation for GitHub Actions workflows using Port's AI agents and automation system. When workflows are ingested or updated in Port, an AI agent analyzes the YAML configuration and generates markdown documentation explaining what the workflow does and how developers can use it.
 
