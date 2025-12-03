@@ -6,7 +6,7 @@ description: Use AI to create Port self-service actions and automations through 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Build Port actions and automations with MCP
+# Build Port actions and automations with AI
 
 Use Port's MCP (Model Context Protocol) server to create self-service actions and automations through natural language conversations with AI. This guide shows you how to design workflows, configure action inputs, and set up automations—all by describing what you need in plain English.
 
@@ -75,6 +75,61 @@ Port actions support multiple backend types. Describe your preferred backend and
 
 The AI will configure the appropriate `invocationMethod` (GitHub, GitLab, Webhook, etc.).
 
+<h3>Real webhook backend examples</h3>
+
+When you have web search access enabled, AI can research API documentation to build complete actions. Here are examples:
+
+<Tabs groupId="webhook-examples" queryString>
+<TabItem value="jira" label="Create Jira ticket">
+
+*"Create a self-service action called 'Open Jira Issue' for the service blueprint. It should use a webhook to call the Jira REST API to create an issue. Include inputs for project key, issue type, summary, and description."*
+
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateActionJira.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateActionJiraPort.png" border="1px" />
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="pr" label="Update PR status">
+
+*"Create an action called 'Update PR Status' that calls the GitHub API via webhook to add a status check to a pull request. Accept repository, PR number, and status as inputs."*
+
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateActionPR.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateActionPRPort.png" border="1px" />
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="pagerduty" label="Trigger incident">
+
+*"Create a 'Trigger PagerDuty Incident' action using a webhook to call the PagerDuty Events API. Include inputs for summary, severity, and routing key."*
+
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateActionPagerDuty.png" border="1px" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateActionPagerDutyPort.png" border="1px" />
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+:::tip Running and reusing actions
+Once you've created an action, you can immediately run it through your AI assistant. Simply ask: *"Run the 'Open Jira Issue' action for the checkout-service"*. The AI will discover the action, understand its inputs, and execute it.
+
+To ensure AI can effectively run your actions later, include detailed descriptions and tooltips when creating them. These provide context when developers run actions from their IDE.
+:::
+
 ## Setting up automation triggers
 
 Automations respond to events in your software catalog. AI can help you create event-driven workflows that react to changes automatically.
@@ -115,14 +170,14 @@ Here are patterns you can describe to AI:
 
 ## Chaining actions for complex workflows
 
-AI agents can chain multiple actions together. Design your actions to be composable by asking AI to create focused, single-purpose actions.
+Port can chain multiple actions together. Design your workflows by asking AI to create a holistic chain of actions to achieve your goal.
 
 **Example conversation:**
 
-*"Create three actions for feature rollouts: 'Create Feature Flag' to create a new LaunchDarkly flag, 'Deploy Service' to deploy the service version, and 'Enable Feature' to toggle the flag on"*
+*"Create an automation: when a PagerDuty incident is created with critical severity, automatically create a Jira ticket for tracking, post to the #incidents Slack channel, and trigger a 'Scale Up Resources' action for the affected service."*
 
-The AI will create three separate actions that can be chained:
-1. Create a feature flag → Deploy the service → Toggle the flag
+This creates actions that trigger one another:
+1. Critical incident detected → Create Jira ticket → Post to Slack → Scale up resources
 
 <Tabs groupId="mcp-output" queryString>
 <TabItem value="mcp" label="MCP server input">
@@ -191,36 +246,6 @@ Use verb-noun patterns that AI can understand:
 
 - Good: `deploy_to_production`, `restart_service`, `trigger_incident`
 - Less clear: `prod_dep`, `svc_rst`, `inc`
-
-## Real-world use cases
-
-Here are practical scenarios where AI-driven action creation shines:
-
-<h3>Setting up a new service workflow</h3>
-
-**Scenario**: You need deployment and operational actions for a new service.
-
-**Conversation:**
-
-*"Create these actions for the service blueprint: 'Deploy to Staging' (GitHub workflow, accepts version), 'Promote to Production' (requires approval, GitHub workflow), and 'Rollback' (GitHub workflow, accepts version to rollback to)"*
-
-<h3>Incident response automation</h3>
-
-**Scenario**: Connect services to incident management with automation.
-
-**Conversation:**
-
-*"Create an automation that sends a Slack message to the #incidents channel whenever a new PagerDuty incident is created in Port. Include the incident title, severity, and a link to the Port entity."*
-
-<h3>Compliance workflows</h3>
-
-**Scenario**: Automate compliance checks and remediation.
-
-**Conversation:**
-
-*"Create an action called 'Request Security Review' that creates a Jira ticket in the SECURITY project with the service name, owner, and a checklist of compliance requirements"*
-
-
 
 ## Related documentation
 
