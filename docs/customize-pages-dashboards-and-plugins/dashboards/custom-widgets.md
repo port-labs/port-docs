@@ -85,19 +85,18 @@ The table will automatically display data about each run, including status, inpu
 
 This widget allows you to display markdown content in formatted form. You can create custom markdown content or display markdown from an entity property.
 
-<img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' style={{borderRadius:'8px'}}/>
-<br/><br/>
+<img src='/img/software-catalog/widgets/markdownWidget.png' width='80%' style={{borderRadius:'8px'}}/>
 
 ### Markdown content types
 
-The markdown widget supports two data source types, selected via the **Data source** field:
+The markdown widget supports two data source types, selected via the **data source** field:
 
 - **Custom**: create and edit markdown content directly in the widget configuration. When selecting this option, you will proceed to a second page where you can enter your custom markdown content.
 - **Property**: display markdown content from a specific entity's markdown property. This is useful for displaying entity-specific documentation, such as a service's README file.
 
 :::info Entity page vs. dashboard
-- **In specific entity pages**: When using the **Property** data source, only the **Property** field is required. The blueprint and entity are automatically selected from the page context, so you don't need to specify them. There's no separate creation step since the markdown property already exists on the entity.
-- **In dashboards**: When using the **Property** data source, you must select the **Blueprint**, **Entity**, and **Property** fields to specify which entity's markdown property to display.
+- **In specific entity pages**: When using the **property** data source, only the **property** field is required. The blueprint and entity are automatically selected from the page context, so you don't need to specify them. There's no separate creation step since the markdown property already exists on the entity.
+- **In dashboards**: When using the **property** data source, you must select the **blueprint**, **entity**, and **property** fields to specify which entity's markdown property to display.
 :::
 
 The widget also supports a wide variety of HTML tags, allowing you to create rich content:
