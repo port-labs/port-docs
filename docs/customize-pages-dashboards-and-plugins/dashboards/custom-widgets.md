@@ -19,7 +19,7 @@ Note that the iframe request is made directly from the end user’s browser, not
 If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
 :::
 
-<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' width='70%' style={{borderRadius:'6x'}} />
+<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' width='70%' style={{borderRadius:'6px'}} />
 
 ### URL type
 
@@ -166,6 +166,39 @@ A practical example of using HTML in a markdown widget can be found in Port's [l
 When linking to other pages in your portal, you can use `/` as the URL base, instead of using full URLs.  
 
 For example, you can use `<a href="/plan_my_day">` instead of `<a href="https://showcase.port.io/plan_my_day">`.
+
+### Template variables
+
+You can use template variables in your markdown widget content to dynamically display information about the current user or entity.
+
+**User information**  
+In every dashboard, you can access user information using the `{{ .user... }}` template syntax.  
+Available user properties include:
+
+- `{{ .user.name }}`
+- `{{ .user.email }}`
+- `{{ .user.fullName }}`
+- `{{ .user.firstName }}`
+- `{{ .user.lastName }}`
+
+For example:
+
+```markdown
+Welcome, {{ .user.firstName }}!
+```
+
+**Entity information**  
+
+On specific entity pages, you can also access entity information using template variables. Available properties depend on the entity's specific properties. For example, if an entity has a `title` property, you can access it using `{{ .entity.title }}`.
+
+**Exploring available properties**  
+
+To see what properties are available, you can print the whole object in your markdown widget. For example, use `{{ .user }}` to see all available user properties, or `{{ .entity }}` to see all available entity properties on entity pages.
+
+:::caution Template syntax
+Template expressions require spaces inside the delimiters: a space after `{{` and a space before `}}`.  
+Make sure to use `{{ .user... }}`, and not `{{.user...}}`.
+:::
 
 ## AI Agent
 
