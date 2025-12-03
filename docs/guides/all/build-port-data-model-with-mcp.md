@@ -111,7 +111,7 @@ Describe aggregations and calculations you need, and AI will configure them:
 
 The AI will add the appropriate `aggregationProperties` or `calculationProperties` section with the correct structure.
 
-## Populating entities with AI
+## Populate entities with AI
 
 Once you have blueprints, use AI to create entities. The MCP server provides `create_entity` and `update_entity` tools that work through natural language.
 
