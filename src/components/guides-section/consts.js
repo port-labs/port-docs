@@ -1496,6 +1496,13 @@ export const availableGuides = [
         link: "/guides/all/auto-enhance-pr-descriptions-with-ai",
     },
     {
+        title: "Auto-generate GitHub workflow documentation",
+        description: "Automatically generate and maintain human-readable documentation for GitHub Actions workflows using Port's AI agents and automation system",
+        tags: ["AI", "GitHub", "Automations"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/ai-powered-github-workflow-documentation",
+    },
+    {
         title: "Streamline IaC with AI",
         description: "Use Port AI agents to automate IaC provisioning and management",
         tags: ["IaC for devs", "Github Copilot", "AI", "Actions"],
