@@ -149,7 +149,7 @@ The entity view opened from a pie chart slice is temporary and can not be saved.
 
 <h3>Limitations</h3>
 
-- Pie charts can display **up to 14 slices**. If the breakdown contains more than 9 values, the remaining values are grouped into `Other`.
+- Pie charts can display **up to 14 slices**. If the breakdown contains more than 14 values, the remaining values are grouped into `Other`.
 - Drill down is not available when the breakdown property is a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/), [scorecard](/scorecards/concepts-and-structure), or [scorecard rule](/scorecards/concepts-and-structure). In these cases, clicking a slice will open an empty view.
 
 ## Bar chart
