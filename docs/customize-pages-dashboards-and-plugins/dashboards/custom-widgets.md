@@ -86,7 +86,8 @@ https://grafana.example.com?var-service={{ .entity.title }}
 To see what properties are available, you can print the whole object in your iframe URL. For example, use `{{ .user }}` to see all available user properties, or `{{ .entity }}` to see all available entity properties on entity pages.
 
 :::caution Template syntax
-The template syntax requires spaces around the dot. Make sure to use `{{ .user... }}` (with spaces), not `{{.user...}}` (without spaces).
+Template expressions require spaces inside the delimiters: a space after `{{` and a space before `}}`.  
+Make sure to use `{{ .user... }}`, and not `{{.user...}}`.
 :::
 
 ## Action card
