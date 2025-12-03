@@ -336,5 +336,5 @@ Here are practical scenarios where AI-driven catalog building shines:
 - [Available MCP tools](/ai-interfaces/port-mcp-server/available-tools) - Complete reference for all MCP tools and their capabilities.
 - [Set up blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) - Detailed blueprint configuration reference.
 - [Create self-service actions](/actions-and-automations/create-self-service-experiences/) - Learn more about action configuration.
-- [Build scorecards](/scorecards/) - Deep dive into scorecard rules and levels.
+- [Build scorecards](/scorecards/overview) - Deep dive into scorecard rules and levels.
 - [Service accounts](/sso-rbac/users-and-teams/manage-users-teams#service-accounts) - Managing service accounts for MCP access.
