@@ -91,8 +91,8 @@ This widget allows you to display markdown content in formatted form. You can cr
 
 The markdown widget supports two data source types, selected via the **data source** field:
 
-- **Custom**: create and edit markdown content directly in the widget configuration. When selecting this option, you will proceed to a second page where you can enter your custom markdown content.
-- **Property**: display markdown content from a specific entity's markdown property. This is useful for displaying entity-specific documentation, such as a service's README file.
+- **Custom**: create and edit markdown content directly in the widget configuration. When selecting this option, you will proceed to a second page where you can enter your custom markdown content. You can edit this content later by modifying the widget configuration.
+- **Property**: display markdown content from a specific entity's markdown property. This is useful for displaying entity-specific documentation, such as a service's README file. The content is read-only in the widget and cannot be edited directly from the widget. To update the content, you need to edit the entity's markdown property.
 
 :::info Entity page vs. dashboard
 - **In specific entity pages**: When using the **property** data source, only the **property** field is required. The blueprint and entity are automatically selected from the page context, so you don't need to specify them. There's no separate creation step since the markdown property already exists on the entity.
