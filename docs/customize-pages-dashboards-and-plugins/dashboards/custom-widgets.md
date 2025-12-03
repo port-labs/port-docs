@@ -19,7 +19,7 @@ Note that the iframe request is made directly from the end user’s browser, not
 If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
 :::
 
-<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' width='70%' style={{borderRadius:'6x'}} />
+<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' width='70%' style={{borderRadius:'6px'}} />
 
 ### URL type
 
