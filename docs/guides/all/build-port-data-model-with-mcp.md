@@ -24,8 +24,8 @@ Instead of manually configuring JSON schemas or clicking through UI forms, you c
 
 This guide assumes you have:
 
-- Basic understanding of [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) and [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
-- Port MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor).
+- A basic understanding of [blueprints](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) and [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
+- Port's MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor).
 
 :::info Permissions
 MCP operations use the permissions of the authenticated user. Only users with appropriate access (typically admins) can create or modify blueprints, entities, and other catalog components.
