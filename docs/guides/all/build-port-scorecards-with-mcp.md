@@ -1,16 +1,16 @@
 ---
 displayed_sidebar: null
-description: Design Port scorecards that AI agents can query to evaluate compliance, security posture, and production readiness in real-time
+description: Use AI to create and manage Port scorecards through natural language conversations, defining quality standards and compliance rules without manual configuration
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Build Port scorecards with MCP
+# Build Port scorecards with AI
 
-AI agents need access to real-time compliance and quality metrics to make informed decisions. This guide provides MCP-first patterns for designing scorecards that agents can query to evaluate security posture, production readiness, and engineering standards across your software catalog.
+Use Port's MCP (Model Context Protocol) server to create and manage scorecards through natural language conversations with AI. This guide shows you how to define quality standards, configure compliance rules, and set up progressive maturity levels—all by describing what you need in plain English.
 
-Whether you're building security agents, compliance automation, or developer productivity tools, these patterns will help you create scorecards that provide actionable insights through natural language queries.
+Instead of manually writing JSON schemas or configuring complex rule conditions, you can have conversations with your AI assistant to build scorecards iteratively, getting instant feedback and making adjustments on the fly.
 
 ## Common use cases
 
@@ -24,286 +24,106 @@ Whether you're building security agents, compliance automation, or developer pro
 This guide assumes you have:
 
 - Basic understanding of [scorecards](/scorecards/overview) and [scorecard rules](/scorecards/concepts-and-structure).
-- Port MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor)
+- Port MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor).
 
-## Designing scorecards for MCP queries
+## Creating scorecards with AI
 
-Port's MCP server exposes tools like `get_scorecards`, `list_entities`, and `get_entities_by_identifiers` that AI agents use to query scorecard data. Your scorecard design directly impacts how effectively agents can assess compliance and provide recommendations.
+The Port MCP server provides tools like `create_scorecard`, `get_scorecards`, and `update_scorecard` that enable AI agents to build your scorecards through natural language conversations. You can describe what you need, and the AI will generate the appropriate configuration and create it in Port.
 
-<h3>Use descriptive identifiers and titles</h3>
+<h3>Start with a simple description</h3>
 
-Scorecard identifiers and titles help agents understand what each scorecard measures:
+Describe the scorecard you want to create in natural language. The AI will interpret your requirements and generate the appropriate schema.
 
-```json showLineNumbers
-{
-  "identifier": "security-maturity",
-  "title": "Security Maturity",
-  "levels": [
-    {"title": "Basic", "color": "paleBlue"},
-    {"title": "Maturing", "color": "purple"},
-    {"title": "Bronze", "color": "bronze"},
-    {"title": "Silver", "color": "silver"},
-    {"title": "Gold", "color": "gold"}
-  ]
-}
-```
+**Example conversation:**
 
-:::tip Naming conventions
-Use kebab-case identifiers that describe the domain (e.g., `security-maturity`, `production-readiness`, `quality-maturity`). This helps agents discover relevant scorecards when users ask about specific topics.
+*"Create a security maturity scorecard for the service blueprint with levels Basic, Bronze, Silver, and Gold. Add a rule at Bronze level that checks services have no critical vulnerabilities."*
+
+The AI will use the MCP `create_scorecard` tool to generate and create the scorecard:
+
+<Tabs groupId="mcp-output" queryString>
+<TabItem value="mcp" label="MCP server input">
+<img src="/img/guides/MCPCreateScorecard.png" border="1px" width="80%" />
+</TabItem>
+<TabItem value="port" label="Port output">
+<img src="/img/guides/MCPCreateScorecardPort.png" border="1px" width="80%" />
+</TabItem>
+</Tabs>
+
+:::tip Iterative refinement
+After creating a scorecard, you can refine it by asking follow-up questions like "Add a rule for high vulnerabilities at Silver level" or "Change the Gold level to require active fixes in the last 30 days".
 :::
 
-<h3>Add descriptions to rules</h3>
+<h3>Add rules incrementally</h3>
 
-Rule descriptions enable agents to explain why a service is failing and what needs to be fixed:
+Build comprehensive scorecards by adding rules through conversation:
 
-<details>
-<summary><b>Example rule configuration (click to expand)</b></summary>
-```json showLineNumbers
-{
-  "identifier": "noOpenCritical",
-  "title": "No open critical vulnerabilities",
-  "description": "The service does not have any open critical vulnerabilities",
-  "level": "Bronze",
-  "query": {
-    "combinator": "and",
-    "conditions": [
-      {
-        "property": "open_critical_vulnerabilities",
-        "operator": "=",
-        "value": 0
-      }
-    ]
-  }
-}
-```
-</details>
+**Example conversations:**
 
-When an agent retrieves scorecard results, it can use these descriptions to provide actionable feedback:
-- **Pass**: "This service meets the Bronze level requirement: no open critical vulnerabilities."
-- **Fail**: "This service fails the Bronze level requirement. Action needed: remediate the open critical vulnerabilities."
+- *"Add a rule to the security scorecard that requires Snyk Code scanning at the Maturing level"*
+- *"Add a Silver level rule that checks for no critical or high vulnerabilities"*
+- *"Add a Gold level rule requiring at least one vulnerability fix in the last 30 days"*
 
-<h3>Structure levels progressively</h3>
+The AI will update the scorecard's rules array with the appropriate conditions.
 
-Define levels that represent a clear progression path. Agents can then guide users through incremental improvements:
+<h3>Configure progressive levels</h3>
+
+Describe maturity progression and AI will structure the levels appropriately:
+
+**Example conversation:**
+
+*"Create a production readiness scorecard with five levels: Basic (starting point), Developing (has monitoring), Established (has alerts and runbooks), Mature (meets SLO targets), and Exemplary (has automated remediation)"*
+
+The AI will create levels with appropriate colors and rules that represent clear progression paths.
+
+## Querying scorecard results
+
+Once your scorecards are created, use natural language to query compliance status across your catalog.
+
+<h3>Check entity compliance</h3>
+
+**Example conversation:**
+
+*"What's the security maturity level of the checkout-service and which rules is it failing?"*
 
 <details>
-<summary><b>Example scorecard configuration (click to expand)</b></summary>
-  ```json showLineNumbers
-  {
-    "levels": [
-      {"title": "Basic", "color": "paleBlue"},
-      {"title": "Maturing", "color": "purple"},
-      {"title": "Bronze", "color": "bronze"},
-      {"title": "Silver", "color": "silver"},
-      {"title": "Gold", "color": "gold"}
-    ],
-    "rules": [
-      {"identifier": "has_snyk_code", "level": "Maturing", "title": "Has Snyk Code"},
-      {"identifier": "has_snyk_open_source", "level": "Maturing", "title": "Has Snyk Open Source"},
-      {"identifier": "noOpenCritical", "level": "Bronze", "title": "No open critical vulnerabilities"},
-      {"identifier": "noOpenSnyk", "level": "Silver", "title": "No open critical or high vulnerabilities"},
-      {"identifier": "someFixedIssues", "level": "Gold", "title": "Some issues actively fixed in the last 30 days"}
-    ]
-  }
-  ```
-</details>
+<summary><b>Screenshot of the MCP server input and output (click to expand)</b></summary>
 
-## Querying scorecards via MCP
-
-Agents use several MCP tools to interact with scorecards:
-
-<h3>Discover available scorecards</h3>
-
-The `get_scorecards` tool returns all scorecards with their rules and levels:
-
-```
-Agent: "What scorecards are defined for services?"
-→ Calls get_scorecards
-→ Returns: security-maturity, ProductionReadiness, quality_maturity
-```
-
-<h3>Query scorecard results for entities</h3>
-
-Use `get_entities_by_identifiers` with scorecard identifiers in the `include` parameter:
-
-```
-Agent: "What's the security maturity level of the Stack-Nova-Proto-Repo service?"
-→ Calls get_entities_by_identifiers with include: ["security-maturity"]
-→ Returns: level "Basic", with rule-by-rule results
-```
-
-<h3>Filter entities by scorecard level</h3>
-
-Use `list_entities` with scorecard filters to find entities at specific compliance levels:
-
-```
-Agent: "Which services have Gold security maturity?"
-→ Calls list_entities with query filter on security-maturity scorecard
-→ Returns: List of compliant services
-```
-
-## Embedding scorecard logic in agent decisions
-
-Agents can use scorecard data to make intelligent decisions about deployments, prioritization, and remediation.
-
-<h3>Pre-deployment checks</h3>
-
-Before deploying, an agent can verify scorecard compliance:
-
-```
-User: "Deploy the checkout service to production"
-Agent: 
-  1. Queries security-maturity scorecard for checkout service
-  2. Finds level is "Basic" (failing critical rules)
-  3. Responds: "Cannot deploy - service has open critical vulnerabilities. 
-     Fix these issues first or request an exception."
-```
-
-<h3>Prioritization based on compliance</h3>
-
-Agents can prioritize work based on scorecard results:
-
-```
-User: "What should I work on to improve our security posture?"
-Agent:
-  1. Queries all services with security-maturity scorecard
-  2. Identifies services at "Basic" level with failing rules
-  3. Responds with prioritized list based on rule failures
-```
-
-## Example: security maturity scorecard
-
-Here's a complete security maturity scorecard optimized for MCP queries:
-
-<details>
-<summary><b>Full scorecard configuration (click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "security-maturity",
-  "title": "Security Maturity",
-  "blueprint": "service",
-  "levels": [
-    {"title": "Basic", "color": "paleBlue"},
-    {"title": "Maturing", "color": "purple"},
-    {"title": "Bronze", "color": "bronze"},
-    {"title": "Silver", "color": "silver"},
-    {"title": "Gold", "color": "gold"}
-  ],
-  "rules": [
-    {
-      "identifier": "has_snyk_code",
-      "title": "Has Snyk Code",
-      "description": "All services should have Snyk Code to scan 1st party code",
-      "level": "Maturing",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "property": "enabled_snyk_products",
-            "operator": "contains",
-            "value": "Snyk Code"
-          }
-        ]
-      }
-    },
-    {
-      "identifier": "has_snyk_open_source",
-      "title": "Has Snyk Open Source",
-      "description": "All services should have Snyk Open Source to scan 3rd party code",
-      "level": "Maturing",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "property": "enabled_snyk_products",
-            "operator": "contains",
-            "value": "Snyk Open Source"
-          }
-        ]
-      }
-    },
-    {
-      "identifier": "noOpenCritical",
-      "title": "No open critical vulnerabilities",
-      "description": "The service does not have any open critical vulnerabilities",
-      "level": "Bronze",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "property": "open_critical_vulnerabilities",
-            "operator": "=",
-            "value": 0
-          }
-        ]
-      }
-    },
-    {
-      "identifier": "noOpenSnyk",
-      "title": "No open critical or high vulnerabilities",
-      "description": "The service does not have any open critical or high vulnerabilities",
-      "level": "Silver",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "property": "open_critical_vulnerabilities",
-            "operator": "=",
-            "value": 0
-          },
-          {
-            "property": "open_high_vulnerabilities",
-            "operator": "=",
-            "value": 0
-          }
-        ]
-      }
-    },
-    {
-      "identifier": "someResolvedIssues",
-      "title": "Some issues resolved in the last 30 days",
-      "description": "Any Snyk issues resolved in the last 30 days",
-      "level": "Silver",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "property": "resolved_in_last_30_days",
-            "operator": ">",
-            "value": 0
-          }
-        ]
-      }
-    },
-    {
-      "identifier": "someFixedIssues",
-      "title": "Some issues actively fixed in the last 30 days",
-      "description": "Any Snyk issues actively fixed in the last 30 days",
-      "level": "Gold",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "property": "fixes_in_the_last_30_days",
-            "operator": ">",
-            "value": 0
-          }
-        ]
-      }
-    }
-  ]
-}
-```
+<img src="/img/guides/MCPSecurityMaturity.png" border="1px" width="80%" />
 
 </details>
 
-This scorecard design enables AI agents to:
 
-- **Assess compliance**: "What's the security maturity of my service?"
-- **Identify gaps**: "Which security rules is my service failing?"
-- **Provide guidance**: "What do I need to do to reach Silver level?"
-- **Track progress**: "Have we fixed any vulnerabilities this month?"
+<h3>Find entities by compliance level</h3>
+
+Query across your catalog to identify services at specific maturity levels:
+
+**Example conversations:**
+
+- *"Which services have Gold security maturity?"*
+- *"Show me all services failing the production readiness scorecard"*
+- *"List services at Basic level that are owned by the platform team"*
+
+The AI uses `list_entities` with scorecard filters to find matching entities.
+
+## Using scorecards in AI decisions
+
+AI agents can use scorecard data to make intelligent decisions about deployments and prioritization.
+
+<h3>Pre-deployment compliance checks</h3>
+
+**Example conversation:**
+
+*"Deploy the checkout-service to production if it passes the security maturity scorecard"*
+
+The AI will automatically check scorecard compliance before proceeding. If the service fails critical rules, it responds with what needs to be fixed first.
+
+<h3>Prioritization recommendations</h3>
+
+**Example conversation:**
+
+*"What should I work on to improve our team's security posture?"*
+
+The AI queries all services, identifies those at lower maturity levels, and provides a prioritized list based on failing rules and their severity.
 
 ## Let's test it
 
@@ -313,7 +133,7 @@ After creating your scorecards, test them with an MCP-enabled AI assistant. In t
 
 Ask your AI assistant:
 
-> *"What's the security maturity level of the AwesomeService service and which rules is it failing?"*
+> *"What's the security maturity level of the awesome-service and which rules is it failing?"*
 
 <h3>What happens</h3>
 
@@ -323,7 +143,46 @@ The agent will:
 3. **Analyze rule results** - Identify which rules have `status: FAILURE`.
 4. **Provide recommendations** - Explain what needs to be fixed to improve the level.
 
-<img src="/img/guides/MCPScorecardsSecurityCursor.png" border="1px" />
+<details>
+<summary><b>Screenshot of the MCP server input and output (click to expand)</b></summary>
+
+<img src="/img/guides/MCPScorecardsSecurityCursor.png" border="1px" width="80%"/>
+
+</details>
+
+## Best practices for AI-driven scorecard creation
+
+When using AI to create scorecards, follow these practices to get the best results:
+
+<h3>Be specific about rules</h3>
+
+The more detail you provide about rules, the better the scorecard configuration:
+
+- **Good**: *"Create a security scorecard with a Bronze rule that checks open_critical_vulnerabilities equals 0, and a Silver rule that also checks open_high_vulnerabilities equals 0"*
+- **Less effective**: *"Create a security scorecard"*
+
+<h3>Include rule descriptions</h3>
+
+Ask AI to add descriptions that explain what each rule measures:
+
+*"Add a description to each rule explaining why it matters and how to fix failures"*
+
+This helps AI provide actionable feedback when services fail rules.
+
+<h3>Use progressive levels</h3>
+
+Design levels that represent achievable progression:
+
+- Start with basic requirements at lower levels.
+- Add more stringent checks at higher levels.
+- Ensure each level builds on the previous one.
+
+<h3>Use clear naming conventions</h3>
+
+Use kebab-case identifiers that describe the domain:
+
+- Good: `security-maturity`, `production-readiness`, `quality-standards`
+- Less clear: `sc1`, `prod_ready`, `quality`
 
 
 ## Related documentation
