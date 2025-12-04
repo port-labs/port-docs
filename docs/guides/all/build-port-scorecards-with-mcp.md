@@ -26,7 +26,7 @@ This guide assumes you have:
 - Basic understanding of [scorecards](/scorecards/overview) and [scorecard rules](/scorecards/concepts-and-structure).
 - Port MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor).
 
-## Creating scorecards with AI
+## Create scorecards with AI
 
 The Port MCP server provides tools like `create_scorecard`, `get_scorecards`, and `update_scorecard` that enable AI agents to build your scorecards through natural language conversations. You can describe what you need, and the AI will generate the appropriate configuration and create it in Port.
 
@@ -75,7 +75,7 @@ Describe maturity progression and AI will structure the levels appropriately:
 
 The AI will create levels with appropriate colors and rules that represent clear progression paths.
 
-## Querying scorecard results
+## Query scorecard results
 
 Once your scorecards are created, use natural language to query compliance status across your catalog.
 
@@ -105,7 +105,7 @@ Query across your catalog to identify services at specific maturity levels:
 
 The AI uses `list_entities` with scorecard filters to find matching entities.
 
-## Using scorecards in AI decisions
+## Use scorecards in AI decisions
 
 AI agents can use scorecard data to make intelligent decisions about deployments and prioritization.
 
