@@ -957,12 +957,12 @@ This ensures that the AI agent can only call tools the user has permission to us
 2. **Trigger a test message**:
    - In your Slack channel, mention the bot with a message like: `@bot create a PagerDuty incident`.
    - Check the workflow execution in n8n to verify each step completes successfully.
+   
+      <img src='/img/guides/n8n-rbac-create-pagerduty-incident.png' border="1px" width="100%" />
 
 3. **Verify permission enforcement**:
    - Try requesting a tool you don't have access to.
    - Verify that the agent responds with an authorization error.
-
-      <img src='/img/guides/n8n-rbac-create-pagerduty-incident.png' border="1px" width="100%" />
 
       <img src='/img/guides/n8n-rbac-create-s3.png' border="1px" width="100%" />
 
