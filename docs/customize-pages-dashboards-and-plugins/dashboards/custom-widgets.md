@@ -215,7 +215,10 @@ Welcome, {{ .user.firstName }}!
 
 **Entity information**  
 
-On specific entity pages, you can also access entity information using template variables. Available properties depend on the entity's specific properties. For example, if an entity has a `title` property, you can access it using `{{ .entity.title }}`.
+On specific entity pages, you can also access entity information using template variables. The way you access properties depends on the property type:
+
+- **Built-in properties** (identifier, title, team, etc.) are accessed directly: `{{ .entity.title }}`, `{{ .entity.identifier }}`.
+- **Custom properties** (user-added properties defined in the blueprint) are accessed via the `properties` object: `{{ .entity.properties.custom_field }}`.
 
 **Exploring available properties**  
 
