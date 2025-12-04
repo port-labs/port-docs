@@ -390,7 +390,7 @@ For more details on how the Ocean Custom Integration works, see the [How it work
               properties:
                 title: .attributes.title
                 status: .attributes.status
-                severity: .attributes.severity
+                severity: .attributes.severity.data.attributes.severity
                 started_at: .attributes.started_at
                 resolved_at: .attributes.resolved_at
                 url: .attributes.url
