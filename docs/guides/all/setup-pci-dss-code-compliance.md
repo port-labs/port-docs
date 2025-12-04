@@ -1,6 +1,8 @@
 ---
 displayed_sidebar: null
-description: Build a comprehensive PCI DSS Code Security Scorecard in Port to continuously track compliance with PCI DSS requirements using vulnerability data from Snyk. This scorecard includes 5-level maturity model from Basic to Platinum.
+description: Build a comprehensive PCI DSS Code Security Scorecard in Port
+title: "PCI DSS Code Security Scorecard"
+tags: ["Security", "Scorecards", "Snyk", "PCI-DSS"]
 ---
 
 # PCI DSS Code Security Scorecard
@@ -224,7 +226,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 ```json showLineNumbers
 {
     "hardcoded_secrets": {
-      "title": "hardcoded_secrets",
+      "title": "Hardcoded Secrets",
       "icon": "Bug",
       "type": "number",
       "target": "snykVulnerability",
@@ -300,11 +302,11 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 </details>
 
 <details>
-<summary><b>Maximum Risk Score aggregation(Click to expand)</b></summary>
+<summary><b>Maximum Risk Score Aggregation(Click to expand)</b></summary>
 ```json showLineNumbers
 {
     "max_risk_score": {
-      "title": "Max risk score",
+      "title": "Max Risk Score",
       "icon": "Bug",
       "type": "number",
       "description": "Alternate to ASV Pass Parity CVSS > 4",
@@ -604,7 +606,7 @@ Below are all rules organized by the level at which they apply.
 - **Identifier:** `class_no_inj_auth`
 - **Goal:** Eliminate high-severity vulnerabilities in input validation and access control.
 - **Rule:**
-  ```text
+  ```text showLineNumbers
   a3_injection = 0
   a1_access_control_flaws = 0
   ```
@@ -643,7 +645,7 @@ Below are all rules organized by the level at which they apply.
 
 - **Identifier:** `asv_pass_parity`
 - **Goal:** Align with PCI DSS **Approved Scanning Vendor (ASV)** pass/fail standards.
-- **Rule:** `max_risk_score_replacing_asv < 400`
+**Rule:** `asv_pass_parity = 0` (or use `max_risk_score < 400` if using the max-risk aggregation)
 - **Description:**
   Ensures public-facing services do not have vulnerabilities equivalent to CVSS ≥ 4.0.
 
