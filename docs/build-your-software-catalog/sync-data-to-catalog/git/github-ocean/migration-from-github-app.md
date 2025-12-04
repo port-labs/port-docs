@@ -1,6 +1,16 @@
-# GitHub migration guide
+# Migration from GitHub app
 
-This guide will walk you through the process of migrating from Port's existing GitHub Cloud App to our new and improved GitHub Integration, which is powered by [Ocean](https://ocean.port.io/).
+This guide will walk you through the process of migrating from Port's existing GitHub cloud app to the improved GitHub integration powered by [Ocean](https://ocean.port.io/).
+
+:::warning Entity ownership transfer
+**This migration focuses on transferring entity ownership from the legacy GitHub App to the new GitHub Ocean integration.**  
+This is a recommended step before uninstalling the old app.
+
+Note that:
+
+- Only the integration that created an entity can delete it.
+- If you uninstall before transferring ownership, entities created by the old integration will become orphaned and will have to be deleted manually.
+  :::
 
 ## Improvements
 
@@ -9,7 +19,6 @@ The new Ocean-powered GitHub integration comes with several key improvements:
 - **More authentication options** - You can now connect the integration using a Personal Access Token (PAT) that you control, giving you more flexibility.
 - **Enhanced performance** - Faster resyncs thanks to improved API efficiency, making your data available sooner.
 - **Better selectors** - More granular control over what you sync with improved selectors for `pull requests`, `issues`, `dependabot alerts`, `codescanning alerts`, `files`, and `folders`.
-
 
 ### Multi-organization support
 
@@ -31,13 +40,14 @@ organizations:
 
 #### Personal access token (PAT)
 
-You can now authenticate with our GitHub integration using a Personal Access Token (PAT) instead of a GitHub App. This gives you more control over the integration's permissions. For more details, see the [installation page](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).  
+You can now authenticate with our GitHub integration using a Personal Access Token (PAT) instead of a GitHub App. This gives you more control over the integration's permissions. For more details, see the [installation page](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
 
 :::info Classic PAT required for multi-org
 For multi-organization support, you must use a **classic Personal Access Token**. Fine-grained PAT tokens do not work with multi-organization configurations.
 :::
 
 Below is a sample Helm value for this configuration:
+
 ```yaml showLineNumbers
 integration:
   secrets:
@@ -46,18 +56,19 @@ integration:
 
 #### GitHub App
 
-If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is [documented here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation/github-app). 
+If you prefer using a GitHub App, you can still authenticate with our Ocean-powered GitHub integration. You will need to create the app yourself, which is a process similar to our existing self-hosted app installation. This process is [documented here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation/github-app).
 
 :::caution Single organization limitation
 GitHub App authentication only supports **one organization** at a time. You must specify exactly one organization using `githubOrganization`.
 :::
 
 Below is a sample Helm value for this configuration:
+
 ```yaml showLineNumbers
 integration:
   config:
     githubAppId: "<GITHUB_APP_ID>" # app client id also works
-    githubOrganization: "my-org"  # Required for single organization support regardlass of token type
+    githubOrganization: "my-org" # Required for single organization support regardlass of token type
   secrets:
     githubAppPrivateKey: "<BASE_64_ENCODED_PRIVATEKEY>"
 ```
@@ -79,12 +90,11 @@ We have increased the number of workflow runs ingested for any given workflow in
 You can now specify the type of repositories (`public`, `private`, or `all`) from which to ingest data. All other data kinds that are associated with repositories (like pull requests, issues, etc.) will only be fetched from repositories that match this configuration.
 
 ```yaml showLineNumbers
-repositoryType: 'all' # ✅ fetch pull requests from all repositories. can also be "private", "public", etc
+repositoryType: "all" # ✅ fetch pull requests from all repositories. can also be "private", "public", etc
 resources:
   - kind: pull-request
     selector:
       # ...
-
 ```
 
 ## Kind mapping changes
@@ -106,11 +116,11 @@ The `organization` field is optional when `githubOrganization` is set in the env
 resources:
   - kind: file
     selector:
-      query: 'true'
+      query: "true"
       files:
         # Note that glob patterns are supported, so you can use wildcards to match multiple files
-        - path: '**/package.json'
-        # The `repos` key can be used to filter the repositories from which the files will be fetched
+        - path: "**/package.json"
+          # The `repos` key can be used to filter the repositories from which the files will be fetched
           repos:
             - "MyRepo" # ❌ changed
     port:
@@ -123,8 +133,8 @@ resources:
             project_name: .file.content.name
             project_version: .file.content.version
             license: .file.content.license
-
 ```
+
 </details>
 
 <details>
@@ -134,11 +144,12 @@ resources:
 resources:
   - kind: file
     selector:
-      query: 'true'
+      query: "true"
       files:
-          # Note that glob patterns are supported, so you can use wildcards to match multiple files
-        - path: '**/package.json'
-          organization: my-org # Optional if githubOrganization is set; required if not set
+        # Note that glob patterns are supported, so you can use wildcards to match multiple files
+        - path: "**/package.json"
+          organization:
+            my-org # Optional if githubOrganization is set; required if not set
             # The `repos` key can be used to filter the repositories and branch where files should be fetched
           repos:
             - name: MyRepo # ✅  new key:value pairs rather than a string.
@@ -155,9 +166,11 @@ resources:
             project_version: .content.version
             license: .content.license
 ```
+
 </details>
 
 Here are the key changes for file mappings:
+
 1. The `organization` field can be specified per file pattern when no global organization is configured.
 2. The `repos` selector is now a list of objects, where each object can specify the repository `name` and an optional `branch`. This provides more granular control over which files are fetched.
 3. File attributes are no longer nested under a `file` key. They are now at the top level of the data structure. For example, instead of `.file.path`, you should now use `.path`.
@@ -172,7 +185,7 @@ Fetching related data for a repository, like teams and collaborators, is now man
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
 resources:
   - kind: repository
     selector:
@@ -190,13 +203,14 @@ resources:
             defaultBranch: .default_branch
           relations:
             githubTeams: "[.teams[].id | tostring]" # ❌ changed
-  ```
+```
+
 </details>
 
 <details>
 <summary><b>New configuration (click to expand)</b></summary>
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
 resources:
   - kind: repository
     selector:
@@ -213,8 +227,9 @@ resources:
             url: .html_url
             defaultBranch: .default_branch
           relations:
-            githubTeams: '[.__teams[].id | tostring]' # ✅ new
-  ```
+            githubTeams: "[.__teams[].id | tostring]" # ✅ new
+```
+
 </details>
 
 #### Repository and collaborators
@@ -222,7 +237,7 @@ resources:
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
 resources:
   - kind: repository
     selector:
@@ -240,13 +255,14 @@ resources:
             defaultBranch: .default_branch
           relations:
             collaborators: "[.collaborators[].login]" # ❌ changed
-  ```
+```
+
 </details>
 
 <details>
 <summary><b>New configuration (click to expand)</b></summary>
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
 resources:
   - kind: repository
     selector:
@@ -263,8 +279,9 @@ resources:
             url: .html_url
             defaultBranch: .default_branch
           relations:
-            collaborators: '[.__collaborators[].login]' # ✅ new
-  ```
+            collaborators: "[.__collaborators[].login]" # ✅ new
+```
+
 </details>
 
 ### Issues
@@ -330,7 +347,6 @@ resources:
 
 </details>
 
-
 ### Pull requests
 
 We've introduced new selectors to give you more control over which pull requests are ingested. The `states` selector allows you to filter pull requests by their state (e.g., `open`, `closed`). Additionally, you can use `maxResults` to limit the number of closed pull requests fetched and `since` to fetch pull requests created within a specific time period (in days).
@@ -360,8 +376,8 @@ resources:
             createdAt: ".created_at"
           relations:
             repository: .head.repo.name
-
 ```
+
 </details>
 
 <details>
@@ -375,7 +391,7 @@ resources:
       query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
       states: ["open"] # ✅ new
       maxResults: 50 # ✅ new, limit closed PRs to 50 capped at 300
-      since: 60  # ✅ new, fetch closed PRs within 60 days capped at 90 days
+      since: 60 # ✅ new, fetch closed PRs within 60 days capped at 90 days
     port:
       entity:
         mappings:
@@ -409,12 +425,12 @@ For the `folder` kind, the `folder.name` attribute is no longer part of the resp
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
 resources:
   - kind: folder
     selector:
       query: "true"
-      folders: 
+      folders:
         - path: apps/*
           repos:
             - backend-service # ❌  changed
@@ -427,20 +443,19 @@ resources:
           properties:
             url: .repo.html_url + "/tree/" + .repo.default_branch  + "/" + .folder.path # ❌  changed
             readme: file://README.md
+```
 
-  ```
 </details>
 
 <details>
 <summary><b>New configuration (click to expand)</b></summary>
 
-
-  ```yaml showLineNumbers
+```yaml showLineNumbers
 resources:
   - kind: folder
     selector:
       query: "true"
-      folders: 
+      folders:
         - path: apps/*
           organization: my-org # Optional if githubOrganization is set; required if not set
           repos:
@@ -455,14 +470,13 @@ resources:
           properties:
             url: .__repository.html_url + "/tree/" + .__repository.default_branch  + "/" + .folder.path # ✅  new, repository is a custom enrichment
             readme: file://README.md
+```
 
-  ```
 </details>
-
 
 ### Teams
 
-To improve performance when fetching team members, we now use GitHub's GraphQL API instead of the REST API. 
+To improve performance when fetching team members, we now use GitHub's GraphQL API instead of the REST API.
 
 This change has two main consequences:
 
@@ -472,49 +486,49 @@ This change has two main consequences:
 <details>
 <summary><b>Existing configuration (click to expand)</b></summary>
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
+- kind: team
+  selector:
+    query: "true"
+    members: true # ✅  unchanged
+  port:
+    entity:
+      mappings:
+        identifier: .id | tostring
+        title: .name
+        blueprint: '"githubTeam"'
+        properties:
+          slug: .slug
+          description: .description
+          link: .url
+        relations:
+          team_member: "[.members[].login]" # ❌  changed
+```
 
-  - kind: team
-    selector:
-      query: 'true'
-      members: true # ✅  unchanged
-    port:
-      entity:
-        mappings:
-          identifier: .id | tostring
-          title: .name
-          blueprint: '"githubTeam"'
-          properties:
-            slug: .slug
-            description: .description
-            link: .url
-          relations:
-            team_member: '[.members[].login]' # ❌  changed
-  ```
 </details>
 
 <details>
 <summary><b>New configuration (click to expand)</b></summary>
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
+- kind: team
+  selector:
+    query: "true"
+    members: true # ✅  unchanged
+  port:
+    entity:
+      mappings:
+        identifier: .id # toString is not neccesary, graphql id is a string
+        title: .name
+        blueprint: '"githubTeam"'
+        properties:
+          slug: .slug
+          description: .description
+          link: .url
+        relations:
+          team_member: "[.members.nodes[].login]" # ✅  new, nodes subarray
+```
 
-  - kind: team
-    selector:
-      query: 'true'
-      members: true # ✅  unchanged
-    port:
-      entity:
-        mappings:
-          identifier: .id # toString is not neccesary, graphql id is a string
-          title: .name
-          blueprint: '"githubTeam"'
-          properties:
-            slug: .slug
-            description: .description
-            link: .url
-          relations:
-            team_member: '[.members.nodes[].login]' # ✅  new, nodes subarray
-  ```
 </details>
 
 ## Other changes
@@ -562,17 +576,143 @@ resources:
 
 This section provides a high-level summary of the key changes for mappings.
 
-| Area | Old Value | New Value | Notes |
-|---|---|---|---|
-| **Multi-Organization** | N/A | `githubOrganization` is not optional | **Classic PAT supports multiple orgs using the `organization` parameter in port mapping; GitHub App and Fine-grained PAT do not support multi organization and there required the `githubOrganization` configuration**. Syncing multiple organizations increases API calls and may slow down the integration. |
-| **File Organization** | N/A | `organization: "my-org"` | Optional if `githubOrganization` is set; required when not (e.g., Classic PAT multi-org). |
-| **Folder Organization** | N/A | `organization: "my-org"` | Optional if `githubOrganization` is set; required when not set(e.g., Classic PAT multi-org). |
-| **Authentication** | GitHub App Installation | PAT or Self-Created GitHub App | The integration can be authenticated using a Personal Access Token (PAT) or a self-created GitHub App. **Multi-org requires classic PAT**. |
-| **Webhooks** | App Webhook | Automatic Setup by Integration | The integration now manages its own webhooks for live events. This requires `webhook` permissions and `liveEvents.baseUrl` to be set. |
-| **Workflow Runs** | 10 per repository | 100 per workflow | The number of ingested workflow runs has been increased. |
-| **Repository Type** | N/A | `repositoryType` configuration | A new top-level configuration is available to filter repositories by type (`public`, `private`, or `all`). |
-| **Repository Relationships** | `teams: true`, `collaborators: true` | `include: "teams"`, `include: "collaborators"` | The `include` selector replaces boolean flags for fetching related data. The fetched data is also now prefixed with `__` (e.g., `.__teams`). |
-| **Pull Requests** | N/A | `states`, `maxResults`, `since` selectors |  New selectors are available for more granular filtering. |
-| **File** properties | `.file.path` | `.path` | All file properties are now at the top level of the object, no longer nested under `.file`. |
-| **Repository** reference | `.repo` or `.head.repo.name` | `.__repository` | The integration now consistently provides repository information under the `__repository` field for all relevant kinds. |
-| **Folder** name | `.folder.name` | `.folder.path \| split('/') \| last` | The folder name is no longer directly available and should be derived from the folder path using a JQ expression. |
+| Area                         | Old Value                            | New Value                                      | Notes                                                                                                                                                                                                                                                                                                         |
+| ---------------------------- | ------------------------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Multi-Organization**       | N/A                                  | `githubOrganization` is not optional           | **Classic PAT supports multiple orgs using the `organization` parameter in port mapping, GitHub App and Fine-grained PAT do not support multi organization and there required the `githubOrganization` configuration**. Syncing multiple organizations increases API calls and may slow down the integration. |
+| **File Organization**        | N/A                                  | `organization: "my-org"`                       | Optional if `githubOrganization` is set, required when not (e.g., Classic PAT multi-org).                                                                                                                                                                                                                     |
+| **Folder Organization**      | N/A                                  | `organization: "my-org"`                       | Optional if `githubOrganization` is set, required when not set(e.g., Classic PAT multi-org).                                                                                                                                                                                                                  |
+| **Authentication**           | GitHub App Installation              | PAT or Self-Created GitHub App                 | The integration can be authenticated using a Personal Access Token (PAT) or a self-created GitHub App. **Multi-org requires classic PAT**.                                                                                                                                                                    |
+| **Webhooks**                 | App Webhook                          | Automatic Setup by Integration                 | The integration now manages its own webhooks for live events. This requires `webhook` permissions and `liveEvents.baseUrl` to be set.                                                                                                                                                                         |
+| **Workflow Runs**            | 10 per repository                    | 100 per workflow                               | The number of ingested workflow runs has been increased.                                                                                                                                                                                                                                                      |
+| **Repository Type**          | N/A                                  | `repositoryType` configuration                 | A new top-level configuration is available to filter repositories by type (`public`, `private`, or `all`).                                                                                                                                                                                                    |
+| **Repository Relationships** | `teams: true`, `collaborators: true` | `include: "teams"`, `include: "collaborators"` | The `include` selector replaces boolean flags for fetching related data. The fetched data is also now prefixed with `__` (e.g., `.__teams`).                                                                                                                                                                  |
+| **Pull Requests**            | N/A                                  | `states`, `maxResults`, `since` selectors      | New selectors are available for more granular filtering.                                                                                                                                                                                                                                                      |
+| **File** properties          | `.file.path`                         | `.path`                                        | All file properties are now at the top level of the object, no longer nested under `.file`.                                                                                                                                                                                                                   |
+| **Repository** reference     | `.repo` or `.head.repo.name`         | `.__repository`                                | The integration now consistently provides repository information under the `__repository` field for all relevant kinds.                                                                                                                                                                                       |
+| **Folder** name              | `.folder.name`                       | `.folder.path \| split('/') \| last`           | The folder name is no longer directly available and should be derived from the folder path using a JQ expression.                                                                                                                                                                                             |
+
+## Step-by-step migration plan {#step-by-step-migration-plan}
+
+This section provides the practical steps to migrate your entities and transfer ownership to the new GitHub Ocean integration.
+
+### Prerequisites
+
+#### Get your installation IDs
+
+Before migrating, you need to identify both installation IDs:
+
+**For the legacy GitHub App installation ID:**
+
+1. Navigate to GitHub App installations:
+   - **Personal installations**: `https://github.com/settings/installations`
+   - **Organization installations**: `https://github.com/organizations/YOUR-ORG/settings/installations`
+
+2. Click on Port's GitHub App installation from the list
+
+3. Look at the **URL in your browser address bar** — it contains the installation ID at the end
+
+**Visual guide:**
+
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/github/githubAppInstallationId.png"/>
+
+The installation ID is the numeric value circled in the URL bar (e.g., `97269548` in the example above).
+
+**For the new GitHub Ocean integration:**
+
+- The installation ID is the **name you gave to the new GitHub Ocean integration** when you created it
+
+#### Install the migrator tool
+
+```bash
+curl -sL https://raw.githubusercontent.com/port-labs/port-github-migrator/main/install.sh | bash
+```
+
+Gather your Port API credentials:
+
+- Port API client ID
+- Port API client secret
+- Your Port instance URL
+
+For detailed command reference and usage examples, refer to the [port-github-migrator GitHub repository](https://github.com/port-labs/port-github-migrator#commands-reference). The repository contains complete documentation for all available commands.
+
+### Set up the new integration
+
+1. **Install GitHub Ocean** — Follow the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation)
+
+2. **Keep new integration mappings minimal** — For now, configure only the `organization` kind in the new GitHub Ocean integration. You'll add additional kinds one at a time during Phase 2.
+
+3. **Verify legacy integration** — Trigger a resync of the legacy GitHub App integration to confirm the current entities structure
+
+### Migrate each blueprint (entity ownership transfer)
+
+**This is where you transfer ownership of entities from the old app to the new one.**
+
+For each blueprint, repeat these steps:
+
+**Step 1:** Create temporary blueprint
+
+- Duplicate your existing blueprint and rename to `<blueprint>-ocean-temp` (choose whatever name you want)
+
+**Step 2:** Map the new integration to the temporary blueprint
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    port:
+      entity:
+        mappings:
+          blueprint: '"githubRepository-ocean-temp"' # Use temp blueprint
+          # ... rest of config ...
+```
+
+**Step 3:** Compare entities
+
+```bash showLineNumbers
+port-github-migrator get-diff githubRepository githubRepository-ocean-temp \
+  --client-id <your-client-id> \
+  --client-secret <your-client-secret> \
+  --old-installation-id <legacy-id> \
+  --new-installation-id <ocean-id> \
+  --port-url https://your-port.com
+```
+
+**Step 4:** Adjust mappings if needed
+
+- Review the [Kind mapping changes](#kind-mapping-changes) section and update your configuration if there are differences
+
+**Step 5:** Transfer ownership (critical step)
+
+```bash showLineNumbers
+port-github-migrator migrate githubRepository \
+  --client-id <your-client-id> \
+  --client-secret <your-client-secret> \
+  --old-installation-id <legacy-id> \
+  --new-installation-id <ocean-id> \
+  --port-url https://your-port.com
+```
+
+**This command transfers ownership of all entities in the blueprint from the old app to the new integration.**
+
+**Step 6:** Update mapping and clean up
+
+- Point the new integration back to the original blueprint
+- Delete the temporary blueprint
+
+**Step 7:** Repeat for each remaining blueprint
+
+### Finalize and uninstall
+
+Only uninstall the legacy GitHub App **after:**
+
+- ✅ All blueprints are migrated
+- ✅ Ownership is transferred for each blueprint (using the `migrate` command)
+- ✅ The new integration is syncing correctly
+
+### Best practices
+
+- **Start with non-critical blueprints** — Build confidence before migrating critical data
+- **One blueprint at a time** — Easier to debug if issues arise
+- **Use `get-diff` before migrating** — Verify entities match before transferring ownership
+- **Keep legacy app active** — Don't remove until all migrations complete, removing it early will leave orphaned entities that can only be deleted manually
+- **Check Port logs** — Monitor for any sync issues after migration
+- **Ownership is reversible** — If issues arise, you can revert by deleting the migrated entities and resyncing the old integration, this will recreate those entities under the old integration ownership

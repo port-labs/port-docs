@@ -460,4 +460,29 @@ Claude will ask for any required arguments before running the prompt and will su
 </TabItem>
 </Tabs>
 
+## Using prompts in Port's AI Agent UI
+
+Port's AI Agent web interface now supports MCP prompts, including both static prompts and custom dynamic prompts. You can browse and use prompts directly from the chat input without needing external MCP clients like Cursor or Claude Desktop.
+
+### How it works
+
+1. **Access prompts**: Click the **+** button in the chat input to open the menu, then select **Prompts**.
+
+<img src="/img/ai-agents/MCPSelectPromptsMenu.png" style={{border: '1px solid black'}}/>
+
+2. **Browse and search**: View all available prompts from your Port organization with search and filter support.
+
+<img src="/img/ai-agents/MCPSelectAPrompt.png" style={{border: '1px solid black'}}/>
+
+3. **Fill arguments**: When selecting a prompt with arguments (required or optional), a dialog appears to fill in the values.
+
+<img src="/img/ai-agents/MCPPromptArgumentsDialog.png" style={{border: '1px solid black'}}/>
+
+4. **Use the prompt**: After submitting arguments, the prompt content is attached to your message and sent to the AI agent.
+
+<img src="/img/ai-agents/MCPPromptSelected.png" style={{border: '1px solid black'}}/>
+
+:::info Argument handling
+When you select a prompt with arguments (required or optional), an arguments dialog appears. When you select a prompt with no arguments, Port uses it immediately without any additional steps.
+:::
 

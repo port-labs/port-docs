@@ -1909,6 +1909,40 @@ components:
                     type: string
                   type:
                     enum:
+                      - bar-chart
+                  title:
+                    type: string
+                  blueprint:
+                    type: string
+                  property:
+                    type: string
+                  description:
+                    type: string
+                  dataset:
+                    $ref: "#/components/schemas/def-1"
+                  emptyStateText:
+                    type: string
+                additionalProperties: false
+                required:
+                  - type
+                  - dataset
+                  - property
+              - type: object
+                properties:
+                  id:
+                    type: string
+                  updatedAt:
+                    type: string
+                  updatedBy:
+                    type: string
+                  createdAt:
+                    type: string
+                  createdBy:
+                    type: string
+                  icon:
+                    type: string
+                  type:
+                    enum:
                       - entities-pie-chart
                   title:
                     type: string
@@ -3193,11 +3227,37 @@ components:
                     type: string
                   icon:
                     type: string
-                  markdown:
-                    type: string
                 required:
                   - type
                   - title
+                anyOf:
+                  - type: object
+                    properties:
+                      source:
+                        type: string
+                        enum:
+                          - custom
+                      markdown:
+                        type: string
+                    required:
+                      - markdown
+                  - type: object
+                    properties:
+                      source:
+                        type: string
+                        enum:
+                          - property
+                      blueprintIdentifier:
+                        type: string
+                      propertyIdentifier:
+                        type: string
+                      entityIdentifier:
+                        type: string
+                    required:
+                      - source
+                      - blueprintIdentifier
+                      - propertyIdentifier
+                      - entityIdentifier
               - type: object
                 properties:
                   id:
@@ -4204,6 +4264,11 @@ components:
                               minimum: 1
                               maximum: 1000
                               description: The maximum number of action runs to fetch.
+                            exclude:
+                              type: array
+                              items:
+                                type: string
+                              description: The fields to exclude from the response
                             external_run_id:
                               type: string
                               description: The run id of your backend, for example the id that GitHub gives
@@ -4365,6 +4430,40 @@ components:
                       required:
                         - type
                         - dataset
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                        updatedAt:
+                          type: string
+                        updatedBy:
+                          type: string
+                        createdAt:
+                          type: string
+                        createdBy:
+                          type: string
+                        icon:
+                          type: string
+                        type:
+                          enum:
+                            - bar-chart
+                        title:
+                          type: string
+                        blueprint:
+                          type: string
+                        property:
+                          type: string
+                        description:
+                          type: string
+                        dataset:
+                          $ref: "#/components/schemas/def-1"
+                        emptyStateText:
+                          type: string
+                      additionalProperties: false
+                      required:
+                        - type
+                        - dataset
+                        - property
                     - type: object
                       properties:
                         id:
@@ -5665,11 +5764,37 @@ components:
                           type: string
                         icon:
                           type: string
-                        markdown:
-                          type: string
                       required:
                         - type
                         - title
+                      anyOf:
+                        - type: object
+                          properties:
+                            source:
+                              type: string
+                              enum:
+                                - custom
+                            markdown:
+                              type: string
+                          required:
+                            - markdown
+                        - type: object
+                          properties:
+                            source:
+                              type: string
+                              enum:
+                                - property
+                            blueprintIdentifier:
+                              type: string
+                            propertyIdentifier:
+                              type: string
+                            entityIdentifier:
+                              type: string
+                          required:
+                            - source
+                            - blueprintIdentifier
+                            - propertyIdentifier
+                            - entityIdentifier
                     - type: object
                       properties:
                         id:
@@ -24260,6 +24385,14 @@ paths:
           required: false
           description: The maximum number of action runs to fetch.
         - schema:
+            type: array
+            items:
+              type: string
+          in: query
+          name: exclude
+          required: false
+          description: The fields to exclude from the response
+        - schema:
             type: string
           in: query
           name: external_run_id
@@ -28594,6 +28727,7 @@ paths:
             anyOf:
               - type: array
                 items:
+                  type: string
                   enum:
                     - blueprint
                     - entity
