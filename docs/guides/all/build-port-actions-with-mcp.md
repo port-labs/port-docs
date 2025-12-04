@@ -26,7 +26,7 @@ This guide assumes you have:
 - Basic understanding of [self-service actions](/actions-and-automations/create-self-service-experiences/) and [automations](/actions-and-automations/define-automations/).
 - Port MCP server configured in your [IDE](/ai-interfaces/port-mcp-server/overview-and-installation?mcp-setup=cursor).
 
-## Creating actions with AI
+## Create actions with AI
 
 The Port MCP server provides tools like `create_action`, `list_actions`, and `update_action` that enable AI agents to build your actions through natural language conversations. You can describe what you need, and the AI will generate the appropriate configuration and create it in Port.
 
@@ -130,7 +130,7 @@ Once you've created an action, you can immediately run it through your AI assist
 To ensure AI can effectively run your actions later, include detailed descriptions and tooltips when creating them. These provide context when developers run actions from their IDE.
 :::
 
-## Setting up automation triggers
+## Set up automation triggers
 
 Automations respond to events in your software catalog. AI can help you create event-driven workflows that react to changes automatically.
 
@@ -168,7 +168,7 @@ Here are patterns you can describe to AI:
 
 
 
-## Chaining actions for complex workflows
+## Chain actions for complex workflows
 
 Port can chain multiple actions together. Design your workflows by asking AI to create a holistic chain of actions to achieve your goal.
 
