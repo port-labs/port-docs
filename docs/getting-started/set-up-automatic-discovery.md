@@ -58,9 +58,13 @@ If you have a monorepo structure with multiple services, you can discover `servi
 
 **Recommended prompt:**
 
-> Services are represented as code in a repository. Check the file structure of each repository to identify services. Services may be found in specific folders, such as `apps` or `services`.
+```
+Services are represented as code in a repository.  
+Check the file structure of each repository to identify services.  
+Services may be found in specific folders, such as "apps" or "services".
+```
 
-**Related blueprints:** `GitHub Repository`.
+Add the relevant blueprints to base the auto discovery on, for example: `GitHub Repository`.
 
 ___
 
@@ -70,9 +74,13 @@ If you have individual repositories and want to identify which ones represent se
 
 **Recommended prompt:**
 
-> Focus on repos that have keywords that can indicate they are services (e.g., `service`, `ms`, `srv`). Ignore repos of libraries and packages. Having also a PagerDuty service with a similar name as a repo is a strong indication that this is a service.
+```
+Focus on repos that have keywords that can indicate they are services (e.g., "service", "ms", "srv").  
+Ignore repos of libraries and packages. Having also a PagerDuty service with a similar name as a repo  
+is a strong indication that this is a service.
+```
 
-**Related blueprints:** `GitHub Repository`, `PagerDuty Service`.
+Add the relevant blueprints to base the auto discovery on, for example: `GitHub Repository`, `PagerDuty Service`.
 
 ___
 
@@ -82,9 +90,11 @@ If you want to identify users who contribute to your codebase but don't yet exis
 
 **Recommended prompt:**
 
-> Check `Jira issues` assignees and `pull requests` to identify developers in the organization.
+```
+Check "Jira issues" assignees and "pull requests" to identify developers in the organization.
+```
 
-**Related blueprints:** `Jira Issue`, `Jira User` ,`Pull Requests`.
+Add the relevant blueprints to base the auto discovery on, for example: `Jira Issue`, `Jira User` ,`Pull Requests`.
 
 ___
 
