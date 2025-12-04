@@ -1,0 +1,71 @@
+---
+id: create-an-auto-discovery-invocation
+title: "Create an auto-discovery invocation"
+description: "This route allows you to create an auto-discovery invocation.<br></br> To learn more about the auto-discovery feature, see the [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery)."
+sidebar_label: "Create an auto-discovery invocation"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVktv20YQ/iuLPbWAJNpBe6gRFHCSFjByqJG4J0NohtyRuPGSy+5Dtkrov2dmSYqyRNs95JDkQq125/nNNzvbygBrLy9u5VsIYOxaQAxWKO0Lu0G3lcuZVOgLp5ugbS0v5E2pvXA2BhRgjL33YmujIJ3CIfBmnUzM9yaErje2AFZfvM7d768z+ogbKwyCq0VlHSnlZFCEEo91V2QzOpwJj5jOb5UtYoV1SAaXP5UhNP4iy2jbLxrrwkJbleVRGzWnwNzc21W4B4fzoksw63/njz39vJAz6bGIToct4dHKnMJDR8vljkBw+G9EH95YRaetLGwdKAheQtMY3eWXffaMUSt9UWIFvArbBgk1m3/GIpCLxtkGXdDo+TQ3ERun63ClyJpeaXa4V/KBjtbytAIo9F5e2FUCZm9KHNRPsBQ7EyvrFnI3k/hQmKhQvTn17A9cg3OwJc86YOVPQ9o9H5MfgnJoiBNqDM5zdH0MYuVslcTGeidcH8LixMNLoFwqpXkJhvhGyVapIOxtHSmwKW55KnBRLsSflnB6gKoxxDMmc0EcpjptWA8ExcrqEEjBbXSBooaKEMVaiXsdSvHpn/7gE4W966iiHSruqqkCE5tgH+31AR9WYDzuHpsILiJtNODIaUhFqqMxLOIbW/uOR6/OzvjnMSTvcAXRBPGhlyTMvhJt7d2BTG4tdXLNFRs7/UpNkOYIG7JypPIiMmThl7PfvoVU0Tk70at0QtzwsMYnmiaANn7K7XTi7W4Stc77/4Hr12+DGd8HXCmcUFrSlI31KT0IJf3LNucZ6Gy4To+GRxodbpO6kyZHdIZUhskEjR4GE+U0dRr9KLAcp9BHxryfE/0sGu/nRr9H9st3EV9/kcJ2+r9UtdRW7ANBkRanxXX8MI6wP7rr7skRNN6yz8+L20Hw5JkwFpGv4xS5DuxRXlOq4vL6iowzYp34+eKMZRn0ChLj+sTevvyqOJ4FB9P5h36t9FTgeZk1BnRqtMSutqftrdycc69oLuQT1KXKlUx1Em7bHDz+7cxux9vEFsdPIVpuwGnIuXz0GpoNxGKu3xELqUod4PMbDonFiS2JpUc3CfO/07gsCmzCs7LLg268/uvjDQnn/fOrsop1HNzTJn8vJC1sIkBqmLTXSgP1OqbbRXY2uRcIgPJxK92lVuoXnNVwVG8PIjzusS4R/nJakypt2zUqATrId0dPavTQDtJc1CVF/QWjjR+1
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create an auto-discovery invocation"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/ai/entities-auto-discovery"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create an auto-discovery invocation.<br></br> To learn more about the auto-discovery feature, see the [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={null}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"blueprintIdentifier":{"type":"string","description":"The identifier of the blueprint to discover entities for."},"excludedBlueprintIdentifiers":{"type":"array","items":{"type":"string"},"description":"The identifiers of the related blueprints to exclude from the discovery context."},"description":{"type":"string","description":"Additional information to guide the auto-discovery search. For example, you can provide a clue that service names end with `_service`."}},"required":["blueprintIdentifier"],"additionalProperties":false}}},"required":true}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"invocationId":{"type":"string"}},"required":["ok","invocationId"],"additionalProperties":false}}}},"409":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
