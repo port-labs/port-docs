@@ -1580,7 +1580,7 @@ export const availableGuides = [
         link: "/guides/all/automatically-resolve-tickets-with-n8n-port-context",
     },
     {
-        title: "Build Port actions and automations with AI",
+        title: "Build actions and automations with AI",
         description: "Create self-service actions and automations optimized for MCP, enabling AI agents to execute workflows and chain complex operations",
         tags: ["AI", "Actions", "Automations"],
         logos: ["AI"],
