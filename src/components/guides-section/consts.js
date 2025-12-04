@@ -1496,6 +1496,13 @@ export const availableGuides = [
         link: "/guides/all/auto-enhance-pr-descriptions-with-ai",
     },
     {
+        title: "Auto-generate GitHub workflow documentation",
+        description: "Automatically generate and maintain human-readable documentation for GitHub Actions workflows using Port's AI agents and automation system",
+        tags: ["AI", "GitHub", "Automations"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/ai-powered-github-workflow-documentation",
+    },
+    {
         title: "Streamline IaC with AI",
         description: "Use Port AI agents to automate IaC provisioning and management",
         tags: ["IaC for devs", "Github Copilot", "AI", "Actions"],
@@ -1529,6 +1536,13 @@ export const availableGuides = [
         tags: ["AI", "Scorecards"],
         logos: ["AI"],
         link: "/guides/all/build-port-scorecards-with-mcp",
+    },
+    {
+        title: "Build your software catalog with MCP",
+        description: "Use Port's MCP server to build and manage your software catalog through natural language conversations with AI.",
+        tags: ["AI"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-data-model-with-mcp",
     },
     {
         title: "Migrate repositories from Bitbucket to GitHub",

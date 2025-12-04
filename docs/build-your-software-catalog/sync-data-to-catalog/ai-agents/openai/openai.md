@@ -5,15 +5,17 @@ import AdvancedConfig from '/docs/generalTemplates/_ocean_advanced_configuration
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import CustomOceanIntegration from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_custom_ocean_integration.mdx"
 
-# Codex
+# OpenAI
 
 <CustomOceanIntegration />
 
-Port's Codex integration ingests foundational OpenAI usage metrics into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework. It focuses on two reliable data sources: daily cost summaries and model-level usage statistics.
+Port's OpenAI integration ingests foundational OpenAI usage metrics into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework. It focuses on two reliable data sources: daily cost summaries and model-level usage statistics.
+
+The integration tracks usage across all OpenAI models, including ChatGPT models (GPT-4, GPT-3.5, etc.) and other OpenAI API models.
 
 ## Supported resources
 
-The Codex integration can ingest the following resources into Port:
+The OpenAI integration can ingest the following resources into Port:
 
 - `openai_daily_usage` – Daily totals for requests, tokens, and spend from `/dashboard/billing/usage`.
 - `openai_model_usage` – Model-level request and token breakdowns from `/usage`.
@@ -64,12 +66,12 @@ Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIEN
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-ocean-codex-integration port-labs/port-ocean \
+helm upgrade --install my-ocean-openai-integration port-labs/port-ocean \
   --set port.clientId="YOUR_PORT_CLIENT_ID" \
   --set port.clientSecret="YOUR_PORT_CLIENT_SECRET" \
   --set port.baseUrl="https://api.getport.io" \
   --set initializePortResources=true \
-  --set integration.identifier="codex-integration" \
+  --set integration.identifier="openai-integration" \
   --set integration.type="custom" \
   --set integration.eventListener.type="POLLING" \
   --set integration.config.baseUrl="https://api.openai.com/v1" \
@@ -91,7 +93,7 @@ helm upgrade --install my-ocean-codex-integration port-labs/port-ocean \
 | `integration.config.apiToken` | OpenAI API key (starts with `sk-`). | sk-abc123 | ✅ |
 | `integration.eventListener.type` | Event listener type for the integration. | POLLING | ✅ |
 | `integration.type` | Integration type. Must be `custom`. | custom | ✅ |
-| `integration.identifier` | Unique identifier for this integration instance. | codex-integration | ✅ |
+| `integration.identifier` | Unique identifier for this integration instance. | openai-integration | ✅ |
 | `initializePortResources` | Create default blueprints and mappings on first run. | true | ❌ |
 | `scheduledResyncInterval` | Minutes between scheduled syncs. Defaults to event listener interval when omitted. | 120 | ❌ |
 | `sendRawDataExamples` | Send sample payloads for easier mapping. | true | ❌ |
