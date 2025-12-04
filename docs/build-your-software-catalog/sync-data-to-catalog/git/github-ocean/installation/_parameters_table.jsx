@@ -27,6 +27,11 @@ export default function ParametersTable({ showingApp }) {
           <td>✅</td>
         </tr>
         <tr>
+          <td><code>actionsProcessor.enabled</code></td>
+          <td>when set to true, the integration will be able to process actions and automations</td>
+          <td>❌</td>
+        </tr>
+        <tr>
           <td><code>integration.identifier</code></td>
           <td>A unique identifier for your integration.</td>
           <td>✅</td>
