@@ -4,40 +4,35 @@ Port manages a Kafka Topic per customer that publishes the execution run request
 
 You can listen to a Kafka Topic with any code platform you wish to use, and also use it as a trigger for a serverless function. For example, AWS Lambda.
 
-![Port Kafka Architecture](/img/self-service-actions/portKafkaArchitecture.jpg)
+<img src="/img/self-service-actions/portKafkaArchitecture.svg" width="85%" border='1px' />
+<br/><br/>
 
 The steps shown in the image above are as follows:
 
-1. Port publishes an invoked `Action` or `Change` message to Kafka;
-2. A secure Kafka topic holds all of the action invocations and changes;
+1. Port publishes an invoked `Action` or `Change` message to Kafka.  
+   Note that the `actions` and `changes` topics are separated, their formats are:
+   - Action Topic - `ORG_ID.runs`
+   - Changes Topic - `ORG_ID.change.log`
+2. A secure Kafka topic holds all of the action invocations and changes.
 
-:::note about topics
-The actions and changes topics are separated, their formats are:
+    :::note about consumer groups
+    As part of the setup, you will need to create a consumer group that listens to the topics.  
+    The consumer group id can be one of the following:
 
-- Action Topic - `ORG_ID.runs`
-- Changes Topic - `ORG_ID.change.log`
+    - Any group name with a prefix of your org id, for example `ORG_ID.my-group-name`
+    - A group name that matches your username provided by Port
 
-:::
-
-:::note about consumer groups
-As part of the setup, you will need to create a consumer group that listens to the topics. The consumer group id can be one of:
-
-- Any group name with a prefix of your org id, for example `ORG_ID.my-group-name`
-- A group name that matches your username provided by Port
-
-:::
+    :::
 
 3. A listener implemented on the Client side receives the new topic message and runs code defined by the DevOps team.
 
-:::info
-The listener can be anything that can read from a Kafka topic and run code based on the received message, for example:
+    The listener can be anything that can read from a Kafka topic and run code based on the received message, for example:
 
-- AWS Lambda;
-- Python code that reads from the topic;
-- Docker container running code.
+    - AWS Lambda.
+    - Python code that reads from the topic.
+    - Docker container running code.
 
-You control how you interact with these topics, in the way that best suits your organization and infrastructure.
-:::
+    You control how you interact with these topics, in the way that best suits your organization and infrastructure.
 
 An example flow would be:
 

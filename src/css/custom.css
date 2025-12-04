@@ -965,3 +965,11 @@ html[data-embed-mode='iframe'] main {
   --embed-navbar-bg-dark: #1e1c26;
   --embed-navbar-border-dark: rgba(255, 255, 255, 0.45);
 }
+
+/* Improve image rendering quality for documentation images */
+img {
+  image-rendering: auto;
+  -ms-interpolation-mode: bicubic;
+  /* WebKit optimization for better quality when scaling */
+  image-rendering: -webkit-optimize-contrast;
+}
