@@ -60,7 +60,7 @@ const ProductPillars: React.FC = () => {
     },
     {
       title: 'Scorecards',
-      description: 'Define software standards and know they are met. Ensure quality, security, compliance, and velocity for all software catalog components.',
+      description: 'Ensure every component and process meets your engineering standards. Continuously monitor quality, security, and compliance across your software catalog, and easily act on insights through Port actions and automations.',
       demoUrl: 'https://showcase.port.io/serviceEntity?identifier=authentication&activeTab=2',
       icon: 'military_tech',
     },
