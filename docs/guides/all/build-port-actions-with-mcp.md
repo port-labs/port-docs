@@ -6,7 +6,7 @@ description: Use AI to create Port self-service actions and automations through 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Build Port actions and automations with AI
+# Build actions and automations with AI
 
 Use Port's MCP (Model Context Protocol) server to create self-service actions and automations through natural language conversations with AI. This guide shows you how to design workflows, configure action inputs, and set up automations—all by describing what you need in plain English.
 
