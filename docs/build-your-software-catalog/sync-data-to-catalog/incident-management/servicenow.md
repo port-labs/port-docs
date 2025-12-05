@@ -82,6 +82,8 @@ To use OAuth authentication, you need to create an OAuth application endpoint in
 6. Click **Submit** to save the configuration.
 7. Use the generated **Client ID** and **Client Secret** in your integration configuration.
 
+For detailed information about OAuth client credentials configuration in ServiceNow, refer to the [ServiceNow OAuth documentation](https://www.servicenow.com/docs/bundle/zurich-platform-security/page/integrate/machine-identity/task/configure-an-oauth-client-credential-grant.html).
+
 </details>
 
 ### Installation
