@@ -1586,6 +1586,14 @@ export const availableGuides = [
         logos: ["AI"],
         link: "/guides/all/build-port-actions-with-mcp",
     },
+    {
+        title: "RBAC for AI agents with n8n and Port",
+        description: "Implement role-based access control (RBAC) for multi-agent systems using Port and n8n, enabling dynamic tool access control for AI agents based on user roles and permissions",
+        tags: ["Security", "n8n", "Slack", "AI"],
+        logos: ["n8n", "Slack"],
+        link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
+    },
+
 ]
 
 // Enhance guides with metadata (isNew property)
