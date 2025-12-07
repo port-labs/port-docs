@@ -11,7 +11,7 @@ resources:
       entity:
         mappings:
           identifier: .id | gsub(" "; "")
-          blueprint: '"project"'
+          blueprint: '"azureDevopsProject"'
           title: .name
           properties:
             state: .state
@@ -25,9 +25,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .id | gsub(" "; "")
+          identifier: '.__project.id + "/" + (.id | tostring) | gsub(" "; "")
           title: .name
-          blueprint: '"iteration"'
+          blueprint: '"azureDevopsIteration"'
           properties:
             name: .name
             path: .path

@@ -119,18 +119,125 @@ You can use Port's MCP to find the use cases that will be valuable to you. Try u
 
 <MCPInstallation />
 
+## Connect the server to multiple organizations
+
+Port uses your browser's OAuth session to approve MCP connections. When your MCP client opens the authentication prompt, you approve access in the organization where you are currently logged in. Follow these steps to connect to the correct organization:
+
+- Make sure you are logged in to the desired organization in your browser before you start the MCP connection flow.
+- Approve the OAuth prompt from your MCP client while you remain logged in to that organization.
+- Continue using the MCP client; changing your browser session afterward does not change the connected organization.
+
+To connect another organization from the same MCP client, add a second configuration and repeat the flow while logged in to the other organization. Each configuration keeps its own OAuth approval, so you can work with multiple organizations in parallel.
+
+## Connecting the server when SSO is enabled
+
+If your organization uses SSO (Single Sign-On) and you see an error like the one below when trying to connect to the MCP Server:
+
+<img src="/img/ai-agents/PortAIMCPServerSSOEreror.png" width="80%" border="1px" />
+
+This error occurs because the SSO connection needs to be configured for domain-level authentication to work with the MCP Server's OAuth flow.
+
+*Why this happens* - When SSO is initially configured in Port, the authentication connection starts as a standard type. For the MCP Server to authenticate users through SSO, the connection needs to be upgraded to "domain level" mode, which enables Dynamic Client Registration (DCR). This configuration change can only be made by Port on the backend.
+
+*How to resolve* - Contact our support team and let them know you're experiencing an SSO authentication error when connecting to the MCP Server. The support team will update your SSO connection configuration to enable domain-level authentication, which will allow the MCP Server OAuth flow to work correctly with your SSO provider.
+
+Once the configuration is updated, retry the MCP Server connection and the authentication should work as expected.
+
 ## Token-based authentication
 
 You can also connect using token-based authentication for automated environments like CI/CD pipelines where interactive authentication isn't possible:
 
-```bash
+```bash showLineNumbers
 curl -X POST "https://api.getport.io/v1/auth/access_token" \
   -H "Content-Type: application/json" \
   -d '{"clientId":"YOUR_CLIENT_ID","clientSecret":"YOUR_CLIENT_SECRET"}'
 ```
 
-For complete examples and detailed setup instructions, see our [token-based authentication guide](./token-based-authentication).
+For complete examples and detailed setup instructions, see our [token-based authentication guide](/ai-interfaces/port-mcp-server/token-based-authentication).
 
 ## Connecting to AI Agents
 
-To connect the Port MCP server to AI agents in CI/CD environments or other automated contexts where interactive authentication isn't possible, see our [token-based authentication](./token-based-authentication).
+To connect the Port MCP server to AI agents in CI/CD environments or other automated contexts where interactive authentication isn't possible, see our [token-based authentication](/ai-interfaces/port-mcp-server/token-based-authentication).
+
+## FAQ
+
+<details>
+<summary><b>Can I change the organization after connecting? (Click to expand)</b></summary>
+
+You cannot move an existing MCP connection. Update the configuration for your MCP client and reconnect while you are logged in to the organization you want to use.
+
+</details>
+
+<details>
+<summary><b>How does the remote MCP server work with multiple organizations? (Click to expand)</b></summary>
+
+Each organization requires a separate connection. Create separate MCP configurations and start each one while you are logged in to the desired organization in your browser. Each configuration keeps its own connection.
+
+</details>
+
+<details>
+<summary><b>Do I need to stay logged in to the same browser session? (Click to expand)</b></summary>
+
+You do not need to keep the browser logged in after approval. Your MCP client stays connected to the organization you authorized.
+
+</details>
+
+<details>
+<summary><b>What happens if I approve the OAuth prompt in the wrong organization? (Click to expand)</b></summary>
+
+Disconnect the MCP client or remove its credentials, then reconnect while logged in to the correct organization in your browser so you grant access to the right workspace.
+
+</details>
+
+<details>
+<summary><b>How do I connect without using my browser for approval? (Click to expand)</b></summary>
+
+Use token-based authentication when you are in CI/CD or another non-interactive environment. Generate a token with your client credentials and configure the MCP client with that token instead of signing in through the browser.
+
+</details>
+
+<details>
+<summary><b>Why do I get an error when trying to connect with SSO enabled? (Click to expand)</b></summary>
+
+If your organization uses SSO and you see an authentication error when connecting to the MCP Server, your SSO connection may need to be configured for domain-level authentication. This is a one-time configuration change that enables the MCP Server's OAuth flow to work with your SSO provider. Contact [Port support](https://www.getport.io/community) to have this enabled for your organization. See the [Connecting the server when SSO is enabled](#connecting-the-server-when-sso-is-enabled) section for more details.
+
+</details>
+
+<details>
+<summary><b>How can I connect to the MCP? (Click to expand)</b></summary>
+
+Refer back to the [setup instructions](#installing-port-mcp) for your specific application (Cursor, VSCode, or Claude). Make sure you're using the correct regional URL for your Port organization.
+
+</details>
+
+<details>
+<summary><b>I completed the connection but nothing happens (Click to expand)</b></summary>
+
+Check that you've followed all the [setup steps](#installing-port-mcp) correctly for your application. Ensure you're authenticated with Port and have the necessary permissions. If you've followed all the steps and still have issues, please reach out to our support team.
+
+</details>
+
+<details>
+<summary><b>Why do I see an error about too many tools? (Click to expand)</b></summary>
+
+Each self-service action in your Port instance becomes an individual tool (as `run_<action_identifier>`). If your organization has many actions, this can result in a large number of tools being available.
+
+While most AI models handle this well, some have restrictions and may limit you to around 40 tools total. If you encounter errors about tool limits:
+
+1. **Reduce the number of tools** by customizing which tools are enabled (see [select which tools to use](/ai-interfaces/port-mcp-server/available-tools#select-which-tools-to-use)).
+2. **Focus on essential tools** by only enabling the read-only tools you need plus a few key actions.
+3. **Contact your Port Admin** to review which actions are essential for your workflow.
+
+This is completely normal behavior and doesn't indicate a problem with Port MCP - it's just a limitation of some AI models.
+
+</details>
+
+:::tip Getting help
+If you continue to experience issues, please reach out to Port support with:
+- Your IDE/application version.
+- The specific error messages you're seeing.
+- Your Port region (EU/US).
+- Steps you've already tried.
+
+This information will help us provide more targeted assistance.
+:::

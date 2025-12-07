@@ -161,6 +161,42 @@ export const mcpTools = [
     roles: ['builder']
   },
 
+  // Integration tools
+  {
+    name: 'list_integrations',
+    description: 'Retrieve all integrations in your organization. Returns basic details including identifier, integration type, title, version, and resync state. To get the full integration details including config, use get_integration.',
+    apiReference: '/api-reference/get-all-integrations',
+    roles: ['builder']
+  },
+  {
+    name: 'get_integration',
+    description: 'Get a single integration by its identifier. Returns the full integration details including the complete config with mapping configuration.',
+    apiReference: '/api-reference/get-an-integration',
+    roles: ['builder']
+  },
+  {
+    name: 'test_integration_mapping',
+    description: 'Test an integration mapping against raw data examples. Validates the mapping, checks for errors, and returns the mapped results or error messages.',
+    roles: ['builder']
+  },
+  {
+    name: 'get_integration_sync_metrics',
+    description: 'Fetch sync metrics for an integration. Returns detailed metrics including status, number of items handled in each phase of the integration pipeline (extract, transform, load, delete), and per-kind statistics.',
+    apiReference: '/api-reference/get-an-integrations-metrics-and-sync-status',
+    roles: ['builder']
+  },
+  {
+    name: 'get_integration_event_logs',
+    description: 'Fetch event logs for an integration. Supports pagination to read logs page by page. You can paginate by using the timestamp and log_id from the previous response.',
+    apiReference: '/api-reference/get-an-integrations-audit-logs',
+    roles: ['builder']
+  },
+  {
+    name: 'get_integration_kinds_with_examples',
+    description: 'Fetch all kinds (data types) that an integration ingests, along with raw data examples for each kind. For example, a GitHub integration might have kinds like "pull_request", "issue", and "repo".',
+    roles: ['builder']
+  },
+
   // Documentation and user tools
   {
     name: 'search_port_sources',

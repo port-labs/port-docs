@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-sidebar_label: "3. Set up automatic discovery"
+sidebar_label: "3. Set up automatic data mapping"
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
@@ -8,7 +8,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
 
-# Set up automatic discovery
+# Set up automatic data mapping
 
 As part of the onboarding process, Port allows you to create new `services`, `workloads`, `environments`, `users`, and `teams` via the UI.  
 This involves manually selecting the components related to the new <PortTooltip id="entity">entity</PortTooltip>.
@@ -21,9 +21,9 @@ This guide will walk you through automating the process of creating and updating
 Not sure what these entities mean? See their definitions [here](/getting-started/default-components).
 :::
 
-## Discovery methods
+## Methods
 
-This page describes two methods you can use to automatically discover and update entities in your catalog:
+This page describes two methods you can use to automatically map and update entities in your catalog:
 
 1. Define one of your external tools as a "source of truth" for the resources you want to ingest.
 2. Use metadata from your external tools (e.g. labels, naming conventions) to identify and update an <PortTooltip id="entity">entity</PortTooltip> in Port.
@@ -487,16 +487,38 @@ Common examples for resources that can be used as a source of truth for `users`:
 <details>
 <summary><LogoImage logo="GitLab" /> **GitLab user (click to expand)**</summary>
 ```yaml showLineNumbers
-- kind: user
+- kind: group-with-members
   selector:
     query: 'true'
+    includeBotMembers: 'true'
+    includeInheritedMembers: 'true'
   port:
+    itemsToParse: .__members
     entity:
       mappings:
-        identifier: .username
-        title: .username
+        identifier: .item.username
+        title: .item.name
         blueprint: '"_user"'
+        relations:
+          gitlab_user: .item.username
 ```
+</details>
+
+<details>
+<summary><LogoImage logo="AzureDevops" /> **Azure DevOps user (click to expand)**</summary>
+  ```yaml showLineNumbers
+  - kind: user
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: '.id'
+          title: '.user.displayName'
+          blueprint: '"_user"'
+          relations:
+            azure_devops_user: '.id'
+  ```
 </details>
 
 </TabItem>

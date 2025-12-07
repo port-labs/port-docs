@@ -1,3 +1,5 @@
+import GitHubWorkflowLimitations from '/docs/actions-and-automations/templates/_github-workflow-limitations.md'
+
 # GitHub workflow
 
 The GitHub backend allows you to trigger GitHub workflows for your self-service actions and automations, using [Port's GitHub application](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup).  
@@ -31,7 +33,6 @@ When using this backend, you need to provide the GitHub **organization** and **r
 Important notes:
 
 - The workflow must reside in the repository's `.github/workflows/` directory.
-
 - The workflow must use the [workflow_dispatch](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow) trigger.  
   For example, see the workflow implementation in [this guide](/guides/all/manage-pull-requests#guide).
 
@@ -57,25 +58,9 @@ TIP: If you prefer not to include the full workflow file in the **default branch
 
 Additionally, you can define whether or not Port should automatically use the workflow's end status (`SUCCESS`/`FAILURE`) to update the action/automation status in Port.  
 
-By default, this is set to `true`. To disable this option, set the `reportWorkflowStatus` field to `true` in the `invocationMethod` object, or set the `Report workflow status` option to `No` if using the UI.
+By default, this is set to `true`. To disable this option, set the `reportWorkflowStatus` field to `false` in the `invocationMethod` object, or set the `Report workflow status` option to `No` if using the UI.
 
-## Limitations
-
-### Input limit
-
-A GitHub workflow can have **up to 10** input parameters. Note this when defining your payloads.  
-If you need more than 10 inputs, you can use a JSON object as a single parameter.
-
-### Workflow chains
-
-A workflow triggered using the `workflow_dispatch` trigger is self-contained. This means its actions and effects over the repository cannot trigger other automatic workflows.  
-
-For example, take the following scenario:
-
-1. A developer executes a "Create a new microservice in a monorepo" workflow.
-2. The workflow opens a new pull request in the target repository based on a pre-defined template.
-3. The repository also has a workflow which is automatically triggered using the `on: pull_request: types: "opened"` trigger.
-4. In this instance, the automatic PR workflow **will not** be triggered.
+<GitHubWorkflowLimitations />
 
 ## Examples
 

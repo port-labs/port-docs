@@ -1,0 +1,260 @@
+name: Feedback Collector
+
+concurrency:
+  group: feedback-tracker-${{ github.event.issue.number }}
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  detect-ai-mention:
+    if: |
+      github.event.issue.pull_request &&
+      (
+        contains(github.event.comment.user.login, 'qodo') ||
+        contains(github.event.comment.user.login, 'codex') ||
+        contains(github.event.comment.user.login, 'claude')
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    outputs:
+      ai-assistant: ${{ steps.detect-assistant.outputs.assistant }}
+      comment-id: ${{ steps.detect-assistant.outputs.comment-id }}
+      pr-number: ${{ steps.detect-assistant.outputs.pr-number }}
+      already-requested: ${{ steps.check-feedback-request.outputs.already-requested }}
+    steps:
+      - name: Check for Existing Feedback Request
+        id: check-feedback-request
+        uses: actions/github-script@v8
+        with:
+          result-encoding: string
+          script: |
+            // Get the most recent comment on the PR
+            const issue_number = context.issue.number;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number
+            });
+
+            // The last comment (if any)
+            const lastComment = comments.length > 0 ? comments[comments.length - 1] : null;
+
+            // Check if the last comment is a feedback request by the bot
+            const feedbackRequest = lastComment &&
+              lastComment.user.login === 'github-actions[bot]' &&
+              lastComment.body.includes('AI Assistant Feedback Request');
+
+            if (feedbackRequest) {
+              core.setOutput('already-requested', 'true');
+              console.log('Latest comment is already a feedback request, will cancel.');
+            } else {
+              core.setOutput('already-requested', 'false');
+              console.log('No feedback request as last comment.');
+            }
+
+      - name: Detect AI Assistant
+        id: detect-assistant
+        run: |
+          comment_author="${{ github.event.comment.user.login }}"
+          echo "comment-id=${{ github.event.comment.id }}" >> $GITHUB_OUTPUT
+          echo "pr-number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+
+          if [[ "$comment_author" == *"qodo"* ]]; then
+            echo "assistant=qodo" >> $GITHUB_OUTPUT
+          elif [[ "$comment_author" == *"codex"* ]]; then
+            echo "assistant=codex" >> $GITHUB_OUTPUT  
+          elif [[ "$comment_author" == *"claude"* ]]; then
+            echo "assistant=claude" >> $GITHUB_OUTPUT
+          fi
+
+  ask-for-feedback:
+    needs: detect-ai-mention
+    runs-on: ubuntu-latest
+    if: needs.detect-ai-mention.outputs.already-requested == 'false'
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Delete previous feedback request comment if exists
+        uses: actions/github-script@v8
+        with:
+          script: |
+            // Get all comments on current PR
+            const issue_number = ${{ needs.detect-ai-mention.outputs.pr-number }};
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number
+            });
+
+            // Delete all previous feedback request comments by github-actions[bot] containing the feedback request marker
+            const feedbackRequestComments = comments.filter(comment =>
+              comment.user.login === 'github-actions[bot]' &&
+              comment.body && comment.body.includes('AI Assistant Feedback Request')
+            );
+
+            if (feedbackRequestComments.length > 0) {
+              for (const comment of feedbackRequestComments) {
+                await github.rest.issues.deleteComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: comment.id
+                });
+                console.log('Deleted previous feedback request comment:', comment.id);
+              }
+            } else {
+              console.log('No previous feedback request comments found.');
+            }
+      - name: Post feedback request
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const { data: comment } = await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ needs.detect-ai-mention.outputs.pr-number }},
+              body: `🤖 **AI Assistant Feedback Request**
+              
+              I noticed that **${{ needs.detect-ai-mention.outputs.ai-assistant }}** authored a comment!
+              
+              To help us improve our AI assistance, could you please let us know:
+
+              **Did the AI assistant help you?** 
+              - ✅ **Helpful** - The AI provided useful assistance
+              - ❌ **Not helpful** - The AI didn't provide useful assistance  
+              - 🔄 **Partially helpful** - The AI was somewhat useful but could be better
+              
+              **How to provide feedback**
+              Please reply to this comment with **/feedback/** followed by any feedback you'd like to share.  
+              For example: \`/feedback The AI's answer was unclear.\` or \`/feedback Great job! Very helpful.\`
+
+              We appreciate any thoughts or suggestions that help us improve.
+
+              Your input helps us make our AI tools better. 🚀
+              
+              Detected AI assistant: ${{ needs.detect-ai-mention.outputs.ai-assistant }}`
+            });
+
+            // Store the feedback request comment ID for later reference
+            return comment.id;
+
+  collect-feedback:
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/feedback')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Check if this is feedback response
+        id: check-feedback
+        uses: actions/github-script@v8
+        with:
+          script: |
+            // Get all comments on this PR
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            // Look for our bot's feedback request comment
+            const botComment = comments.find(comment => 
+              comment.user.login === 'github-actions[bot]' &&
+              comment.body.includes('AI Assistant Feedback Request')
+            );
+
+            // Check if comment contains /feedback
+            const commentBody = context.payload.comment.body;
+            if (!commentBody.includes('/feedback')) {
+              console.log('Comment does not contain /feedback');
+              return { isFeedback: false };
+            }
+
+            // Fetch the AI assistant from the detected value at the end of the comment body
+            const assistantMatch = botComment && botComment.body ? botComment.body.match(/Detected AI assistant:\s*(.*)\s*$/) : null;
+            const aiAssistant = assistantMatch ? assistantMatch[1] : 'unknown';
+
+            // Parse feedback sentiment
+            let sentiment = 'unknown';
+
+            if (commentBody.includes('❌') || commentBody.toLowerCase().includes('not helpful')) {
+              sentiment = 'not_helpful';
+            } else if (commentBody.includes('✅') || commentBody.toLowerCase().includes('helpful')) {
+              if (commentBody.includes('Partially helpful') || commentBody.includes('🔄')) {
+                sentiment = 'partially_helpful';
+              } else {
+                sentiment = 'helpful';
+              }
+            }
+
+            return {
+              isFeedback: true,
+              aiAssistant,
+              sentiment,
+              feedbackText: commentBody,
+              originalCommentId: botComment.body.match(/#issuecomment-(\d+)/)?.[1] || 'unknown',
+              prNumber: context.issue.number,
+              userId: context.payload.comment.user.login,
+              userType: context.payload.comment.user.type
+            };
+
+      - name: Send feedback to Port
+        if: fromJson(steps.check-feedback.outputs.result).isFeedback == true
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: UPSERT
+          identifier: "${{ github.repository_owner }}-${{ github.event.repository.name }}-pr-${{ fromJson(steps.check-feedback.outputs.result).prNumber }}-ai-feedback-${{ github.event.comment.id }}"
+          blueprint: devops_feedback
+          properties: |
+            {
+              "ai_assistant": "${{ fromJson(steps.check-feedback.outputs.result).aiAssistant }}",
+              "sentiment": "${{ fromJson(steps.check-feedback.outputs.result).sentiment }}",
+              "feedback_text": "${{ fromJson(steps.check-feedback.outputs.result).feedbackText }}",
+              "pr_number": ${{ fromJson(steps.check-feedback.outputs.result).prNumber }},
+              "repository": "${{ github.repository }}",
+              "user_login": "${{ fromJson(steps.check-feedback.outputs.result).userId }}",
+              "user_type": "${{ fromJson(steps.check-feedback.outputs.result).userType }}",
+              "original_comment_id": "${{ fromJson(steps.check-feedback.outputs.result).originalCommentId }}",
+              "feedback_comment_id": "${{ github.event.comment.id }}",
+              "created_at": "${{ github.event.comment.created_at }}",
+              "pr_url": "${{ github.event.issue.html_url }}",
+              "comment_url": "${{ github.event.comment.html_url }}"
+            }
+
+      - name: Confirm feedback received
+        if: fromJson(steps.check-feedback.outputs.result).isFeedback == true
+        uses: actions/github-script@v8
+        env:
+          FEEDBACK_RESULT: ${{ steps.check-feedback.outputs.result }}
+        with:
+          script: |
+            // Parse the feedback result JSON
+            const feedbackResult = JSON.parse(process.env.FEEDBACK_RESULT || '');
+
+            // Build Port entity link
+            const entityIdentifier = `${context.repo.owner}-${context.repo.repo}-pr-${feedbackResult.prNumber}-ai-feedback-${context.payload.comment.id}`;
+            const entityLink = `https://app.getport.io/devops_feedbackEntity?identifier=${encodeURIComponent(entityIdentifier)}`;
+
+            // Post a thank you PR comment to confirm feedback receipt and include Port entity link
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🙏 **Thank you for your feedback!**
+              
+              Your feedback about **${feedbackResult.aiAssistant}** has been recorded and will help us improve our AI assistance tools.
+
+              _This feedback has been sent to our improvement tracking system._  
+              [🔗 View the feedback entity in Port](${entityLink})
+              `
+            });
