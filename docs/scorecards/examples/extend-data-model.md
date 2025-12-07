@@ -642,5 +642,5 @@ After creating the dashboard, **group by** `Blueprint` and `Rule`.
 This configuration creates a view where action items are organized by the target blueprint and the specific rule that failed, making it easy to identify which entities have issues and what they are.
 
 :::info Table widget option
-This table can also be added to a dashboard as a [table widget](/customize-pages-dashboards-and-plugins/dashboards/#table) with the same configurations. This allows you to embed the action items view directly into other dashboards.
+This table can also be added to a dashboard as a [table widget](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#table) with the same configurations. This allows you to embed the action items view directly into other dashboards.
 :::

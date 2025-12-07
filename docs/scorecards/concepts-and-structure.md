@@ -390,7 +390,7 @@ Port supports up to **5 million** rule result entities.
 To monitor how many rule result entities you have, you can:
 
 1. Use the following [API path](/api-reference/get-a-blueprints-entity-count): Query the `_rule_result` blueprint identifier.
-2. Create a [number chart](/customize-pages-dashboards-and-plugins/dashboards/#number-chart):
+2. Create a [number chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#number-chart):
    - Type: `count entities`.
    - Function: `count`.
    - Blueprint: `_rule_result`.
