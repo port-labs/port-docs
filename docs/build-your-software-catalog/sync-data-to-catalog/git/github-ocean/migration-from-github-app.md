@@ -700,6 +700,19 @@ port-github-migrator migrate githubRepository \
 
 **Step 7:** Repeat for each remaining blueprint
 
+### Update action backend types
+
+If you have self-service actions or automations that use the legacy GitHub App backend, you must update them to use the new GitHub Ocean backend before uninstalling the old integration.
+
+For each action that uses GitHub workflows:
+
+1. Navigate to the action's configuration in Port
+2. Update the backend type from the legacy GitHub App backend to `GitHub Ocean`
+3. Set the `installationId` field to the name of your GitHub Ocean integration installation
+4. Configure the organization, repository, and workflow details as needed
+
+For detailed configuration instructions, refer to the [GitHub Ocean backend documentation](/docs/actions-and-automations/setup-backend/github-ocean/github-ocean.md).
+
 ### Finalize and uninstall
 
 Only uninstall the legacy GitHub App **after:**
@@ -707,6 +720,7 @@ Only uninstall the legacy GitHub App **after:**
 - ✅ All blueprints are migrated
 - ✅ Ownership is transferred for each blueprint (using the `migrate` command)
 - ✅ The new integration is syncing correctly
+- ✅ All actions are migrated to use the GitHub Ocean backend
 
 ### Best practices
 

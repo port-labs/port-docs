@@ -6,7 +6,7 @@ import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md
 
 The webhook backend allows you to trigger your own custom webhooks, for both self-service actions and automations.
 
-<img src="/img/self-service-actions/portWebhookArchitecture.jpg" width="90%" border='1px' />
+<img src="/img/self-service-actions/portWebhookArchitecture.svg" width="85%" border='1px' />
 <br/><br/>
 
 The steps shown in the image above are as follows:
