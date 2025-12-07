@@ -720,7 +720,7 @@ Only uninstall the legacy GitHub App **after:**
 - ✅ All blueprints are migrated
 - ✅ Ownership is transferred for each blueprint (using the `migrate` command)
 - ✅ The new integration is syncing correctly
-- ✅ all actions are migrated to use the GitHub Ocean backend
+- ✅ All actions are migrated to use the GitHub Ocean backend
 
 ### Best practices
 
