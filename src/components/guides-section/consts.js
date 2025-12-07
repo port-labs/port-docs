@@ -1531,6 +1531,13 @@ export const availableGuides = [
         link: "/guides/all/query-dora-metrics-using-port-mcp",
     },
     {
+        title: "Define scorecards with AI",
+        description: "Design scorecards that AI agents can query to evaluate compliance, security posture, and production readiness",
+        tags: ["AI", "Scorecards"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-scorecards-with-mcp",
+    },
+    {
         title: "Build your software catalog with MCP",
         description: "Use Port's MCP server to build and manage your software catalog through natural language conversations with AI.",
         tags: ["AI"],
