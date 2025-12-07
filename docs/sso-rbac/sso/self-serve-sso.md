@@ -1,6 +1,7 @@
 ---
 title: "Self-serve SSO setup"
 sidebar_position: 1
+description: Set up SSO for your organization directly from the portal
 ---
 
 # Self-serve SSO setup
@@ -17,7 +18,7 @@ This self-serve flow guides you through connecting your identity provider (IdP) 
 
 ## Set up SSO
 
-Follow these steps to configure SSO for your company:
+Let's configure SSO for your company:
 
 ### Step 1: Initiate the SSO setup
 
@@ -38,7 +39,7 @@ After clicking the setup button, you will be guided to configure the SSO connect
 - **Custom SAML** - Configure a custom SAML 2.0 connection for any SAML-compatible identity provider. Refer to the [SAML documentation](/sso-rbac/sso/sso-providers/saml/saml) for more details.
 - **Custom OIDC** - Configure a custom OpenID Connect connection for any OIDC-compatible identity provider. Refer to the [OIDC documentation](/sso-rbac/sso/sso-providers/oidc/oidc) for more details.
 
-Follow the instructions to complete the configuration in your identity provider's admin console.
+Complete the configuration in your identity provider's admin console following the on-screen instructions.
 
 ### Step 3: Monitor the connection status
 
@@ -50,7 +51,7 @@ While configuring your IdP, the Port UI displays the current status of your SSO 
 | <img src="/img/sso/self-serve/sso-status-success.png" width="50px" border='1px' style={{borderRadius:'6px'}}/> | The SSO connection was successfully created and verified. |
 | <img src="/img/sso/self-serve/sso-status-failed.png" width="50px" border='1px' style={{borderRadius:'6px'}}/> | The SSO connection setup failed. See the [troubleshooting](#troubleshooting) section below for resolution options. |
 
-Once you have completed the configuration in your identity provider, click the button in Port to indicate that the process is finished.
+Once you have completed the configuration in your identity provider, click the **Setup is Done** button in Port to indicate that the process is finished.
 
 ### Step 4: Finalize your SSO settings
 
@@ -58,11 +59,23 @@ After the SSO connection is successfully established:
 
 1. **Block social logins** (optional) - You can choose to block social login methods (such as Google or GitHub sign-in) and require all users to authenticate through your SSO provider. This setting is reversible.
 
-2. **Access tab enabled** - Once SSO is configured, the **Access** tab becomes available in your organization settings. This allows you to manage SSO-related access controls for your organization.
+2. **Access tab enabled** - Once SSO is configured, the **Access** tab becomes available in your organization settings. <!-- TODO(verify): What does the Access tab control specifically? -->
 
 :::info Organization-level setting
 The SSO configuration and access settings apply at the organization level, not the company level.
 :::
+
+## Group filters
+
+Once SSO is configured, you can set up group filters to control which IdP groups sync into Port teams. Click **Set Group Filters** in the SSO tab to configure this.
+
+<!--
+TODO: Add details about group filters:
+- How to configure group filters
+- What filtering options are available
+- How synced groups appear in Port
+- Any limitations or considerations
+-->
 
 ## Audit log
 
@@ -78,7 +91,7 @@ Additional audit log details to be added:
 
 ## Limitations
 
-- Domain verification requires DNS configuration. To add domains to your SSO connection, contact [Port's support team](hhttp://support.port.io/).
+- Domain verification requires DNS configuration. To add domains to your SSO connection, contact [Port's support team](http://support.port.io/).
 - Terraform is not supported for self-serve SSO setup.
 
 ## Troubleshooting
@@ -87,6 +100,6 @@ If you click **Setup is Done** and encounter an error, use the following table t
 
 | Error | Cause | Resolution |
 | ----- | ----- | ---------- |
-| Connection not created | The SSO connection was not created in Auth0. | Click **Start Again** to generate a new setup URL and repeat the configuration process. |
-| Mapping failed | The mapping between Auth0 and Port failed. | Click **Edit Connection** to review and fix the configuration. |
-| Linking failed | Auth0 is connected, but linking to the company in Port failed. | Contact [Port's support team](http://support.port.io/) for assistance. |
+| Connection not created | The SSO connection was not created successfully. | Click **Start Again** to generate a new setup URL and repeat the configuration process. |
+| Mapping failed | The connection mapping failed. | Click **Edit Connection** to review and fix the configuration. |
+| Linking failed | The SSO provider is connected, but linking to the company in Port failed. | Contact [Port's support team](http://support.port.io/) for assistance. |
