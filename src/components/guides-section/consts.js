@@ -1496,6 +1496,13 @@ export const availableGuides = [
         link: "/guides/all/auto-enhance-pr-descriptions-with-ai",
     },
     {
+        title: "Auto-generate GitHub workflow documentation",
+        description: "Automatically generate and maintain human-readable documentation for GitHub Actions workflows using Port's AI agents and automation system",
+        tags: ["AI", "GitHub", "Automations"],
+        logos: ["AI", "GitHub"],
+        link: "/guides/all/ai-powered-github-workflow-documentation",
+    },
+    {
         title: "Streamline IaC with AI",
         description: "Use Port AI agents to automate IaC provisioning and management",
         tags: ["IaC for devs", "Github Copilot", "AI", "Actions"],
@@ -1522,6 +1529,13 @@ export const availableGuides = [
         tags: ["Engineering Intelligence", "AI"],
         logos: ["AI"],
         link: "/guides/all/query-dora-metrics-using-port-mcp",
+    },
+    {
+        title: "Build your software catalog with MCP",
+        description: "Use Port's MCP server to build and manage your software catalog through natural language conversations with AI.",
+        tags: ["AI"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-data-model-with-mcp",
     },
     {
         title: "Migrate repositories from Bitbucket to GitHub",
@@ -1564,7 +1578,22 @@ export const availableGuides = [
         tags: ["Autonomous Ticket Resolution", "n8n", "AI", "Jira"],
         logos: ["n8n", "Jira", "GitHub"],
         link: "/guides/all/automatically-resolve-tickets-with-n8n-port-context",
-    }
+    },
+    {
+        title: "Build actions and automations with AI",
+        description: "Create self-service actions and automations optimized for MCP, enabling AI agents to execute workflows and chain complex operations",
+        tags: ["AI", "Actions", "Automations"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-actions-with-mcp",
+    },
+    {
+        title: "RBAC for AI agents with n8n and Port",
+        description: "Implement role-based access control (RBAC) for multi-agent systems using Port and n8n, enabling dynamic tool access control for AI agents based on user roles and permissions",
+        tags: ["Security", "n8n", "Slack", "AI"],
+        logos: ["n8n", "Slack"],
+        link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
+    },
+
 ]
 
 // Enhance guides with metadata (isNew property)

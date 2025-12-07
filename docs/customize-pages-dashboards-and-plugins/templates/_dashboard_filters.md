@@ -7,10 +7,10 @@ This makes it easier to explore data consistently, without having to filter each
 
 Dashboard filters currently apply to the following widgets:
 
-- [Number chart](/customize-pages-dashboards-and-plugins/dashboards/#number-chart)
-- [Pie chart](/customize-pages-dashboards-and-plugins/dashboards/#pie-chart)
-- [Line chart](/customize-pages-dashboards-and-plugins/dashboards/#line-chart)
-- [Table](/customize-pages-dashboards-and-plugins/dashboards/#table)
+- [Number chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#number-chart)
+- [Pie chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#pie-chart)
+- [Line chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#line-chart)
+- [Table](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#table)
 
 ### Supported filter types
 

@@ -1,70 +1,15 @@
-import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
+---
+sidebar_position: 2
+---
+
 import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/templates/_save_table_view.md"
+import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
 
-# Dashboard widgets
+# Data widgets
 
-Port supports various visualizations in the form of widgets, allowing you to display data from your software catalog using graphic elements, making it easier to make sense of large datasets.
+Data widgets are visualization widgets that display data from your software catalog, including charts, tables, and entity information.
 
-Dashboards are available in the following locations:
-
-1. The [Home page](https://app.getport.io/organization/home) of your Port app - the home page itself is a dashboard, allowing you to add and customize any of the widgets described on this page.
-2. Every [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets) can have a `dashboard` tab with its own widgets.
-3. The [software catalog](https://app.getport.io/services) allows you to create customizable [dashboard pages](/customize-pages-dashboards-and-plugins/page/dashboard-page).
-
-## Widget types
-
-### Table
-
-This widget allows you to create tables displaying all entities based on a selected blueprint.  
-Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
-
-<img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
-<br/><br/>
-
-:::info Default table columns
-By default, a new table will display the following columns for each entity:  
-`Title`, `Last update time`, and `Creation time`.  
-Other properties will be hidden by default.  
-
-You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
-:::
-
-#### Save table view
-
-<SaveTableView />
-
-#### Customization
-
-Just like catalog pages, tables support the following customization options:
-
-- [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
-- [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
-
-#### Limitations
-
-- Tables are limited to displaying up to **100,000** entities.  
-  All UI table operations such as searching, filtering, grouping, etc. will be limited only to the entities that are displayed in the table.  
-  If one of your blueprints has more than 100,000 entities, you can use the [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to narrow down the entities displayed in the table.
-
-### Pie chart
-
-Pie charts illustrate data from entities in your software catalog divided by categories and entity properties.
-
-<img src='/img/software-catalog/widgets/pieChartExample.png' width='70%' />
-
-#### Visualization properties
-
-| Field                   | Type     | Description                                                                                                                  | Default | Required |
-| ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
-| `Title`                 | `String` | Pie chart title                                                                                                              | `null`  | `true`   |
-| `Icon`                  | `String` | Pie chart Icon                                                                                                               | `null`  | `false`  |
-| `Description`           | `String` | Pie chart description                                                                                                        | `null`  | `false`  |
-| `Empty state text`      | `String` | Pie chart empty state text                                                  | `No data for this widget`  | `false`  |
-| `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
-| `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
-| `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
-
-### Number chart
+## Number chart
 
 Number charts display a number value related to an entity and its properties.
 
@@ -77,11 +22,11 @@ You can choose one of these chart types:
 You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 ::: 
 
-#### Time filtering in number charts vs. line charts
+### Time filtering in number charts vs. line charts
 
 The value shown in a **number chart** is calculated over **all available entities** of the selected blueprint. By default, it does not apply any time-based filtering.
 
-When a **number chart** is used alongside a [**line chart**](/customize-pages-dashboards-and-plugins/dashboards/#line-chart) in a dashboard, for example a number chart showing average monthly deployment frequency and a line chart showing deployment frequency over time, you might notice that the average values differ, even if both charts reference the same metric (e.g. deployment frequency).
+When a **number chart** is used alongside a [**line chart**](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#line-chart) in a dashboard, for example a number chart showing average monthly deployment frequency and a line chart showing deployment frequency over time, you might notice that the average values differ, even if both charts reference the same metric (e.g. deployment frequency).
 
 This difference happens because the two charts are likely working with different time ranges:
 
@@ -90,7 +35,17 @@ This difference happens because the two charts are likely working with different
 
 To align both charts and ensure consistency in what they reflect, apply a time filter to the number chart that matches the line chart’s time range. This helps prevent confusion and ensures both charts are working with the same scope of data.
 
-#### Conditional formatting
+#### Display formatting
+
+You can customize how numbers are displayed in number chart by selecting a formatting function:
+
+- `None` - displays the number without any formatting.
+
+- `Round` - rounds the number to the nearest integer.
+
+- `Custom` - allows you to specify decimal precision between one to five decimal places.
+
+### Conditional formatting
 
 You can customize the appearance of a number chart based on specific conditions, helping viewers to quickly understand what the value indicates.
 When configuring a condition, you will need to provide the following:
@@ -112,9 +67,9 @@ If the number chart’s value is 5, both conditions (`< 8` and `< 6`) are techni
 However, since 5 is closer to 6 than to 8, the widget will be colored yellow - the color associated with the closest matching condition.
 :::
 
-<img src='/img/software-catalog/widgets/numberChartConditionExample.png' width='50%' border='1px' />
+<img src='/img/software-catalog/widgets/numberChartConditionExample.png' width='50%' style={{border:'1px', borderRadius:'8px'}}/>
 
-#### Number chart properties
+### Number chart properties
 
 | Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
 | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
@@ -124,6 +79,7 @@ However, since 5 is closer to 6 than to 8, the widget will be colored yellow - t
 | `Empty state text`      | `String` | Number chart empty state text         | `No data for this widget`  | `false`  |
 | `Chart type`    | `String` | Defines the operation type for the chart. Possible values: `Display single property`, `Count entities`, `Aggregate by property`                                                                                                                      | `null` | `true`   |
 | `Blueprint`       | `String` | The chosen blueprint from which related entities data is visualized from                                                                                                                                                                    | `null`     | `true`   |
+| `Display formatting` | `String` | Defines how numbers are displayed. Possible values: `None`, `Round`, `Custom` (allows decimal precision between one to five decimal places) | `null`     | `false`   |
 | `Condition`       | `Object` | Defines the condition under which the number chart widget will update its color, display a status label, and have a tooltip message                                                                                                                                                                    | `null`     | `false`   |
 
 **Chart type: display single property** 
@@ -168,7 +124,68 @@ When performing calculations of average time intervals, such as by hour, day, we
 For example, if the dataset includes information spanning across 2 hours and 20 minutes, but the selected average timeframe is `hour`, then the summed value will be divided by 3 hours.
 :::
 
-### Line chart
+## Pie chart
+
+Pie charts illustrate data from entities in your software catalog divided by categories and entity properties.
+
+<img src='/img/software-catalog/widgets/pieChartExample.png' width='60%' style={{border:'1px', borderRadius:'6px'}}/>
+
+<h3>Properties</h3>
+
+| Field                   | Type     | Description                                                                                                                  | Default | Required |
+| ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
+| `Title`                 | `String` | Pie chart title                                                                                                              | `null`  | `true`   |
+| `Icon`                  | `String` | Pie chart Icon                                                                                                               | `null`  | `false`  |
+| `Description`           | `String` | Pie chart description                                                                                                        | `null`  | `false`  |
+| `Empty state text`      | `String` | Pie chart empty state text                                                  | `No data for this widget`  | `false`  |
+| `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
+| `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
+| `Additional filters`     | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
+
+### Pie chart drill down
+
+Hover over a pie chart slice to see the percentage it represents of the total.
+
+Click a slice to open a temporary entity view listing the entities included in that slice. For example, in a chart showing programming languages used by services, clicking the JavaScript slice shows all services where the language is JavaScript.
+
+In this entity view, you can:
+
+- Add filters to further refine the displayed entities.
+- Group entities by other properties.
+- Customize the table (for example, columns and sorting).
+
+:::info Temporary view
+The entity view opened from a pie chart slice is temporary and can not be saved. Any filters, grouping, or table customizations you apply are lost when you leave this view.
+:::
+
+<h3>Limitations</h3>
+
+- Pie charts can display **up to 14 slices**. If the breakdown contains more than 14 values, the remaining values are grouped into `Other`.
+- Drill down is not available when the breakdown property is a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/), [scorecard](/scorecards/concepts-and-structure), or [scorecard rule](/scorecards/concepts-and-structure). In these cases, clicking a slice will open an empty view.
+
+## Bar chart
+
+Bar charts illustrate data from entities in your software catalog divided by categories and entity properties, displayed as vertical bars.
+
+<img src='/img/software-catalog/widgets/barChartWidgetExample.png' width='70%' style={{border:'1px', borderRadius:'6px'}}/>
+
+<h3>Properties</h3>
+
+| Field                   | Type     | Description                                                                                                                  | Default | Required |
+| ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
+| `Title`                 | `String` | Bar chart title                                                                                                              | `null`  | `true`   |
+| `Icon`                  | `String` | Bar chart Icon                                                                                                               | `null`  | `false`  |
+| `Description`           | `String` | Bar chart description                                                                                                        | `null`  | `false`  |
+| `Empty state text`      | `String` | Bar chart empty state text                                                  | `No data for this widget`  | `false`  |
+| `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
+| `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
+| `Additional filters`    | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
+
+**Limitations**
+
+- Bar charts are limited to displaying **up to 9 bars**. If there are more than 9 categories, the additional categories will be grouped into an "other" section.
+
+## Line chart
 
 Line charts visualize trends over time, either by tracking `number` properties of entities or by tracking the entities themselves.
 
@@ -177,7 +194,7 @@ Port offers three types of line charts:
 2. [Aggregate property (all entities)](#2-aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
 3. [Count entities (all entities)](#3-count-entities-all-entities) - displays either the total count of entities or the average number of entities from a specific blueprint over time.
 
-#### 1. Property history (single entity)
+### Property history (single entity)
 
 This chart type displays the values of one or more properties of a **single entity** over time.  
 
@@ -209,7 +226,7 @@ When creating a line chart in an [entity page](/customize-pages-dashboards-and-p
 :::
 
 For example, here is a line chart displaying a service's resource usage over the span of a week, in daily intervals:
-<img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' border='1px' />
+<img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' style={{border:'1px', borderRadius:'6px'}} />
 <br/><br/>
 
 **Limitations**
@@ -218,7 +235,7 @@ For example, here is a line chart displaying a service's resource usage over the
   Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
 - Line chart data is limited to the last 365 days.
 
-#### 2. Aggregate property (all entities)
+### Aggregate property (all entities)
 
 This chart type displays the aggregated values of one or more properties across **all entities** of a specific blueprint.  
 Each property will be displayed as a separate line in the chart.
@@ -258,7 +275,7 @@ When creating this type of line chart:
      Note that the available time ranges differ according to the selected time interval.
 
 For example, here is a line chart displaying the maximum cost of all services over the span of a month, in weekly intervals:
-<img src='/img/software-catalog/widgets/lineChartAggregationExample.png' width='100%' border='1px' />
+<img src='/img/software-catalog/widgets/lineChartAggregationExample.png' width='100%' style={{border:'1px', borderRadius:'6px'}}/>
 <br/><br/>
 
 **Limitations**
@@ -279,7 +296,7 @@ For example, here is a line chart displaying the maximum cost of all services ov
 | `Time interval` | `String` | The time interval to display in the x-axis of the chart.<br/>Possible values: `hour`, `day`, `week`, `month` | `null` | `true` |
 | `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` | -->
 
-#### 3. Count entities (all entities)
+### Count entities (all entities)
 
 This chart type displays either the total count of entities or the average number of entities from a specific blueprint over time.  
 If you choose to break down the chart by a property, each line will represent a distinct value of that property.
@@ -322,204 +339,71 @@ When creating this type of line chart:
      Note that the available time ranges differ according to the selected time interval.
 
 For example, here is a line chart displaying the average deployment rate over the span of a month, in weekly intervals, broken down by the `status` property (Success and Fail).
-<img src='/img/software-catalog/widgets/countEntitiesLineChartExample.png' width='70%' border='1px' />
+<img src='/img/software-catalog/widgets/countEntitiesLineChartExample.png' width='70%' style={{border:'1px', borderRadius:'6px'}}/>
 <br/><br/>
 
 **Limitations**
 
 - This chart type does not support [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/).
 - Line chart data is limited to the last 365 days.
-- The chart can display up to 10 separate lines when choosing to break down by property. 
+- The chart can display up to 10 separate lines when choosing to break down by property.
 
-### Markdown
+## Table
 
-This widget allows you to display any markdown content you wish in formatted form:
+This widget allows you to create tables displaying all entities based on a selected blueprint.  
+Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
 
-<img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' />
+<img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
 <br/><br/>
 
-The widget also supports a wide variety of HTML tags, allowing you to create rich content:
-<details>
-<summary>**Supported HTML tags (click to expand)**</summary>
-```bash
-'iframe',
-'a',
-'style',
-'h1',
-'h2',
-'h3',
-'h4',
-'h5',
-'h6',
-'nav',
-'blockquote',
-'dd',
-'div',
-'pre',
-'dl',
-'hr',
-'li',
-'menu',
-'ol',
-'p',
-'ul',
-'b',
-'br',
-'cite',
-'code',
-'em',
-'i',
-'mark',
-'q',
-'s',
-'samp',
-'small',
-'span',
-'strong',
-'sub',
-'sup',
-'time',
-'u',
-'var',
-'wbr',
-'img',
-'video',
-'caption',
-'col',
-'colgroup',
-'table',
-'tbody',
-'td',
-'tfoot',
-'th',
-'thead',
-'tr'
-```
-</details>
+:::info Default table columns
+By default, a new table will display the following columns for each entity:  
+`Title`, `Last update time`, and `Creation time`.  
+Other properties will be hidden by default.  
 
-**Note:** For external video URLs from providers such as YouTube, use the [iframe visualization widget](/customize-pages-dashboards-and-plugins/dashboards/#iframe-visualization).
-
-:::tip Practical example
-A practical example of using HTML in a markdown widget can be found in Port's [live demo](https://showcase.port.io/organization/home), in the `Catalog quick access` widget. 
+You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
 :::
 
-#### Markdown widget properties
+### Save table view
 
-| Field      | Type     | Description           | Default | Required |
-| ---------- | -------- | --------------------- | ------- | -------- |
-| `Title`    | `String` | Markdown widget title | `null`  | `true`   |
-| `Icon`     | `String` | Markdown widget Icon  | `null`  | `false`  |
-| `markdown` | `String` | Markdown content      | `null`  | `false`  |
+<SaveTableView />
 
-#### Internal markdown links
+### Customization
 
-When linking to other pages in your portal, you can use `/` as the URL base, instead of using full URLs.  
+Just like catalog pages, tables support the following customization options:
 
-For example, you can use `<a href="/plan_my_day">` instead of `<a href="https://showcase.port.io/plan_my_day">`.
+- [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
+- [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
-### Iframe visualization
+### Limitations
 
-You can create an iframe widget to display an embedded url in the dashboard. The iframe widget is useful to display external dashboards or other external content. It also appends to the iframe URL query params the entity identifier and the blueprint identifier so the embedded page can use it for various purposes.
+- Tables are limited to displaying up to **100,000** entities.  
+  All UI table operations such as searching, filtering, grouping, etc. will be limited only to the entities that are displayed in the table.  
+  If one of your blueprints has more than 100,000 entities, you can use the [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to narrow down the entities displayed in the table.
 
-The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
-
-:::info Embedded Dashboard Access
-Note that the iframe request is made directly from the end user’s browser, not from Port’s backend.  
-If you are implementing IP whitelisting at the network or firewall level, you will need to account for the IP addresses of the users accessing the embedded dashboard - not the IP of Port itself.
-:::
-
-<img src="/img/software-catalog/widgets/iframeWidget.png" border='1px' style={{borderRadius:'6x'}} />
-
-#### URL type
-
-When configuring an **Iframe widget**, you can specify whether the URL is `public` or `protected`.
-
-For the `protected` URL type, you can configure how the OAuth authentication flow is handled using the **"Use pop-up for authentication URL"** toggle:
-
-- **Toggle off (default)**: The OAuth login flow runs inside the Iframe.
-- **Toggle on**: The OAuth login flow opens in a separate pop-up window.
-
-If the **Authentication URL** points to Microsoft Entra ID (`https://login.microsoftonline.com`), the toggle is automatically turned on, since Entra ID login pages include security headers that prevent them from being displayed inside an Iframe.
-
-Make sure your application allows CORS requests from the Port app origin for the authentication flow to work correctly:
-
-- For the EU region, add `https://app.port.io` to your allowed origins.
-- For the US region, add `https://app.us.port.io` to your allowed origins.
-
-:::info Browser pop-up settings
-If you enable the pop-up option, ensure your browser allows pop-ups for the Port app’s domain. If pop-ups are blocked at the browser level, the authentication window will not open and the Iframe widget will fail to load.
-:::
-
-#### Widget properties
-
-| Field  | Type |Description | Default | Required |
-| ------- | -------------- | ---------------- | ------- | -------- |
-| `Title`   | `String`       | Iframe widget title   | `null`  | `true`   |
-| `Icon`              | `String`       | Iframe widget icon.  | `null`  | `false`  |
-| `Description`       | `String`       | Iframe widget description.      | `null`  | `false`  |
-| `URL`               | `String`       | Iframe widget url.           | `null`  | `false`  |
-| `URL type`          | `String`       | `public` or `protect`.     | `null`  | `false`  |
-| `Authentication Url` | `URL String`   | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
-| `clientId`          | `String`       | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
-| `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
-| `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. <br></br>Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce). | `null`  | `false`  |
-
-### Action card
-
-This widget allows you to execute [self-service actions](/actions-and-automations/create-self-service-experiences) directly from any dashboard (including your homepage).
-
-A single action card can contain one or multiple actions:
-
-**Single action**  
-To execute the action, click on the button in the bottom left corner of the widget:
-
-<img src='/img/software-catalog/widgets/actionCardSingle.png' width='50%' />
-<br/><br/>
-
-**Multiple actions**  
-When choosing multiple actions, you can choose your own title for the widget.  
-To execute an action, click on the ⚡ button next to it:
-
-<img src='/img/software-catalog/widgets/actionCardMultiple.png' width='45%' />
-
-
-### Action runs
-
-This widget allows you to create a table displaying all past runs of a [self-service action](/actions-and-automations/create-self-service-experiences) in your portal.  
-The table will automatically display data about each run, including status, input parameters, the executing user, and more. 
-
-<img src='/img/software-catalog/widgets/actionRunsTableExample.png' width='100%' />
-
-### Entity information
+## Entity card
 
 This widget displays information about a specific entity, including its properties and scorecard compliance.
 
 Simply choose a blueprint and a specific entity, and the widget will display information similar to that found on the entity's page.
 
-<img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' border='1px' />
+<img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' style={{border:'1px', borderRadius:'6px'}}/>
 
-### Links
+## Custom empty state
 
-This widget allows you to display a list of links, both internal and external, for quick access to useful pages.
+The custom empty state field gives you the ability to define a custom message that appears when a widget has no data. This message can provide useful context to users such as setup instructions, relevant explanations, or helpful links.
 
-<img src='/img/software-catalog/widgets/linksExample.png' width='50%' border='1px' />
+The custom message supports Markdown formatting, so you can include links and other rich text elements. These will be rendered directly in the widget, making your guidance more actionable.
 
-- **External links** - links to external websites, such as documentation, 3rd party tools, etc.  
-  These links will open in a new tab when clicked.  
-  For example: "https://www.google.com".
+If you leave this field blank, the widget will display a default message: **"No data for this widget"**.
 
-- **Internal links** - links to internal pages in your portal, such as an entity page, a catalog page, an entity's audit log page, etc.  
-  These links will open in the same tab when clicked.  
-  For example: "https://app.getport.io/serviceEntity?identifier=frontend".
+The following widget types support the custom empty state message:
 
-- **Dynamic links** (available in specific entity page only) - links to external websites or internal pages while using the identifier of an entity.  
-These links will open according to the methods mentioned above.  
-For example: Let's take the following specific entity page `/Services?identifier=myService`.<br/>
-  - An external link: `https://slack.com/myOrganization/channel={{url.identifier}}` -> translated into `https://slack.com/myOrganization/channel=myService`.<br/>
-  
-  - An internal link: `https://app.getport.io/PagerDutyService?identifier={{url.identifier}}` -> translated into `https://app.getport.io/PagerDutyService?identifier=myService`.
-
-During creation/editing of the widget, you can sort the links by dragging and dropping them.
+- [Pie chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#pie-chart)
+- [Bar chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#bar-chart)
+- [Number chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#number-chart)
+- [Line chart](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#line-chart)
+- [Tables](/customize-pages-dashboards-and-plugins/dashboards/data-widgets/#table)
 
 ## Chart filters
 
@@ -529,7 +413,7 @@ Chart filters allow you to limit which entities are included in your dashboard v
 
 Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
 
-<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' border='1px' />
+<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' style={{border:'1px', borderRadius:'8px'}}/>
 <br/><br/>
 
 These are used internally in Port and cannot be modified/removed.
@@ -613,36 +497,14 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
 
 You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when filtering a widget.
 
-## Custom empty state
-
-The custom empty state field gives you the ability to define a custom message that appears when a widget has no data. This message can provide useful context to users such as setup instructions, relevant explanations, or helpful links.
-
-The custom message supports Markdown formatting, so you can include links and other rich text elements. These will be rendered directly in the widget, making your guidance more actionable.
-
-If you leave this field blank, the widget will display a default message: **"No data for this widget"**.
-
-The following widget types support the custom empty state message:
-
-- [Pie chart](/customize-pages-dashboards-and-plugins/dashboards/#pie-chart)
-- [Number chart](/customize-pages-dashboards-and-plugins/dashboards/#number-chart)
-- [Line chart](/customize-pages-dashboards-and-plugins/dashboards/#line-chart)
-- [Tables](/customize-pages-dashboards-and-plugins/dashboards/#table)
-
 ## Widget type identifiers (Terraform)
 
 When creating widgets using [Port's Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_page), you need to provide the widget type's identifier in the `type` key.  
-The following table lists the identifiers for each widget type:
+The following table lists the identifiers for each data widget type:
 
 | Widget type | Identifier |
 | ----------- | ---------- |
 | Number chart | `entities-number-chart` |
 | Pie chart | `entities-pie-chart` |
 | Line chart | `line-chart` |
-| Markdown | `markdown` |
-| IFrame | `iframe-widget` |
 | Table | `table-entities-explorer` |
-| Action card | `action-card-widget` |
-| Action History | `action-runs-table-widget` |
-| My entities | `my-entities` |
-| Recently viewed | `recently-viewed-entities` |
-| Recently used actions | `recently-used-actions` |

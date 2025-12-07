@@ -107,7 +107,7 @@ The `minTimeInDays` selector controls how many days back abandoned or completed 
   selector:
     query: 'true'
     # highlight-next-line
-    minTimeInDays: 30 # default is 7 days
+    minTimeInDays: 7 # default is 7 days
 ```
 
 </TabItem>
@@ -127,6 +127,10 @@ The `maxResults` selector controls how many abandoned or completed pull requests
 </TabItem>
 
 </Tabs>
+
+:::caution Performance impact
+Setting high values for `maxResults` or `minTimeInDays` on the `pull-request` kind may significantly slow down your integration. These configs make additional API calls for each pull request, which can be very resource-intensive. Consider setting these values to a lower number to improve performance.
+:::
 
 :::tip To Learn more
 

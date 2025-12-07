@@ -310,6 +310,13 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/backstage',
   },
   {
+    name: 'Slack',
+    category: 'other',
+    icon: '/img/guides/icons/Slack.svg',
+    darkIcon: '/img/guides/icons/Slack.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/slack',
+  },
+  {
     name: 'Ocean custom',
     category: 'other',
     iconName: 'APIcatalog',
@@ -337,7 +344,22 @@ export const integrations = [
     icon: '/img/guides/icons/Cursor.svg',
     darkIcon: '/img/guides/icons/dark/Cursor.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/cursor',
-  }
+  },
+  {
+    name: 'OpenAI',
+    category: 'ai-agents',
+    iconName: 'OpenAI',
+    icon: '/img/guides/icons/OpenAI.svg',
+    darkIcon: '/img/guides/icons/OpenAI.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/openai',
+  },
+  {
+    name: 'n8n',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/n8n.svg',
+    darkIcon: '/img/guides/icons/n8n.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/n8n',
+  },
 ];
 
 export const categories = {
