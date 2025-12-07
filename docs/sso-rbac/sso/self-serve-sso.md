@@ -1,7 +1,6 @@
 ---
 title: "Self-serve SSO setup"
 sidebar_position: 1
-description: Set up SSO for your organization without contacting Port support
 ---
 
 # Self-serve SSO setup
@@ -12,22 +11,23 @@ This self-serve flow guides you through connecting your identity provider (IdP) 
 ## Prerequisites
 
 - This feature is available for **enterprise accounts** only.
+- Your account must have migrated to [multi-organization](/sso-rbac/multi-organization).
 - You must be a **company admin** to configure SSO.
 - You need access to your identity provider's admin console to create and configure applications.
 
 ## Set up SSO
 
-Follow these steps to configure SSO for your organization:
+Follow these steps to configure SSO for your company:
 
 ### Step 1: Initiate the SSO setup
 
-1. Go to the [Builder page](https://app.getport.io/settings) of your portal.
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
 2. Click on **Organization settings** in the left sidebar.
 3. Navigate to the **SSO** tab.
 4. Click the **Setup SSO Connection** button.
 
 :::info URL validity
-A unique setup URL will be generated for you, it will be valid for 5 hours after you first open it, or 5 days if you don't open it. You can copy and save the link to complete the setup later.
+A unique SSO setup link will be generated for you, it will be valid for 5 hours after you first open it, or 5 days if you don't open it. You can copy and save the link to complete the setup later.
 :::
 
 ### Step 2: Configure your identity provider
@@ -64,6 +64,23 @@ After the SSO connection is successfully established:
 The SSO configuration and access settings apply at the organization level, not the company level.
 :::
 
+## Audit log
+
+Port maintains an audit log of SSO-related activities to help you track changes and monitor your SSO configuration. The audit log records events such as SSO setup attempts, configuration changes, and connection status updates.
+
+<!--
+Additional audit log details to be added:
+- How to access the audit log
+- What events are logged
+- Log retention period
+- Example log entries
+-->
+
+## Limitations
+
+- Domain verification requires DNS configuration. To add domains to your SSO connection, contact [Port's support team](hhttp://support.port.io/).
+- Terraform is not supported for self-serve SSO setup.
+
 ## Troubleshooting
 
 If you click **Setup is Done** and encounter an error, use the following table to identify and resolve the issue:
@@ -72,4 +89,4 @@ If you click **Setup is Done** and encounter an error, use the following table t
 | ----- | ----- | ---------- |
 | Connection not created | The SSO connection was not created in Auth0. | Click **Start Again** to generate a new setup URL and repeat the configuration process. |
 | Mapping failed | The mapping between Auth0 and Port failed. | Click **Edit Connection** to review and fix the configuration. |
-| Linking failed | Auth0 is connected, but linking to the company in Port failed. | Contact [Port's support team](https://www.getport.io/community) for assistance. |
+| Linking failed | Auth0 is connected, but linking to the company in Port failed. | Contact [Port's support team](http://support.port.io/) for assistance. |
