@@ -2276,6 +2276,20 @@ components:
                       required:
                         - operator
                         - value
+                  displayFormatting:
+                    type: string
+                    enum:
+                      - none
+                      - round
+                      - custom
+                  decimalPlaces:
+                    type: string
+                    enum:
+                      - ".0"
+                      - ".00"
+                      - ".000"
+                      - ".0000"
+                      - ".00000"
                 required:
                   - type
                   - unit
@@ -3145,6 +3159,25 @@ components:
                           type: string
                       required:
                         - unitCustom
+                  - if:
+                      properties:
+                        displayFormatting:
+                          enum:
+                            - custom
+                      required:
+                        - displayFormatting
+                    then:
+                      properties:
+                        decimalPlaces:
+                          type: string
+                          enum:
+                            - ".0"
+                            - ".00"
+                            - ".000"
+                            - ".0000"
+                            - ".00000"
+                      required:
+                        - decimalPlaces
               - type: object
                 properties:
                   id:
@@ -4813,6 +4846,20 @@ components:
                             required:
                               - operator
                               - value
+                        displayFormatting:
+                          type: string
+                          enum:
+                            - none
+                            - round
+                            - custom
+                        decimalPlaces:
+                          type: string
+                          enum:
+                            - ".0"
+                            - ".00"
+                            - ".000"
+                            - ".0000"
+                            - ".00000"
                       required:
                         - type
                         - unit
@@ -5682,6 +5729,25 @@ components:
                                 type: string
                             required:
                               - unitCustom
+                        - if:
+                            properties:
+                              displayFormatting:
+                                enum:
+                                  - custom
+                            required:
+                              - displayFormatting
+                          then:
+                            properties:
+                              decimalPlaces:
+                                type: string
+                                enum:
+                                  - ".0"
+                                  - ".00"
+                                  - ".000"
+                                  - ".0000"
+                                  - ".00000"
+                            required:
+                              - decimalPlaces
                     - type: object
                       properties:
                         id:
