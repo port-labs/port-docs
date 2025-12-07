@@ -881,9 +881,9 @@ Before the workflow can run, you need to configure credentials for Slack, OpenAI
    - Replace `REPLACE WITH CLIENT ID` with your Port Client ID.
    - Replace `REPLACE WITH CLIENT SECRET` with your Port Client Secret.
 
-   :::tip Finding your Port credentials
-   You can find your Port credentials in your [Port application](https://app.getport.io) under **Settings → Credentials**. [Learn more about Port API credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
-   :::
+     :::tip Finding your Port credentials
+     You can find your Port credentials in your [Port application](https://app.getport.io) under **Settings → Credentials**. [Learn more about Port API credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+     :::
 
 2. In the **Get user permission from Port** node, configure the Bearer Auth credential:
    - Click on the credentials dropdown.
