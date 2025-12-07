@@ -1531,7 +1531,7 @@ export const availableGuides = [
         link: "/guides/all/query-dora-metrics-using-port-mcp",
     },
     {
-        title: "Build Port scorecards with AI",
+        title: "Define scorecards with AI",
         description: "Design scorecards that AI agents can query to evaluate compliance, security posture, and production readiness",
         tags: ["AI", "Scorecards"],
         logos: ["AI"],
