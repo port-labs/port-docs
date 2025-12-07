@@ -1578,7 +1578,14 @@ export const availableGuides = [
         tags: ["Autonomous Ticket Resolution", "n8n", "AI", "Jira"],
         logos: ["n8n", "Jira", "GitHub"],
         link: "/guides/all/automatically-resolve-tickets-with-n8n-port-context",
-    }
+    },
+    {
+        title: "Build actions and automations with AI",
+        description: "Create self-service actions and automations optimized for MCP, enabling AI agents to execute workflows and chain complex operations",
+        tags: ["AI", "Actions", "Automations"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-actions-with-mcp",
+    },
 ]
 
 // Enhance guides with metadata (isNew property)
