@@ -64,7 +64,7 @@ Choose one of the following installation methods to deploy the Ocean Custom Inte
 
 <h2> Installation </h2>
 
-1. Add Port's Helm repo and install the Ocean Custom Integration:
+Add Port's Helm repo and install the Ocean Custom Integration:
 
 :::note Replace placeholders
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID`, `YOUR_PORT_CLIENT_SECRET`, and `YOUR_ROOTLY_API_KEY`.
