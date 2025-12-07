@@ -201,7 +201,7 @@ In addition to password login and social login, multi-factor authentication (MFA
 
 ### Single sign-on (SSO)
 
-Port integrates with all major [SSO providers](/sso-rbac/sso-providers/), allowing you to seamlessly import users and teams, and also exposing Port to your organization in a managed manner.
+Port integrates with all major [SSO providers](/sso-rbac/sso/sso-providers/), allowing you to seamlessly import users and teams, and also exposing Port to your organization in a managed manner.
 
 Port supports SSO using the OIDC protocol and the SAML 2.0 protocol, and as such supports all modern Identity Providers.
 

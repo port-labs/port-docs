@@ -4,7 +4,7 @@ sidebar_position: 2
 description: Integrate Okta with Port using SAML
 ---
 
-import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
+import ScimFunctionality from "/docs/sso-rbac/sso/sso-providers/_scim_functionality_list.mdx"
 import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
 # Okta

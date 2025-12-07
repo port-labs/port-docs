@@ -4,8 +4,8 @@ sidebar_position: 1
 description: Integrate AzureAD with Port using OIDC
 ---
 
-import ScimFunctionality from "/docs/sso-rbac/sso-providers/\_scim_functionality_list.mdx"
-import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/\_scim_oidc_limitation.mdx"
+import ScimFunctionality from "/docs/sso-rbac/sso/sso-providers/\_scim_functionality_list.mdx"
+import ScimLimitation from "/docs/sso-rbac/sso/sso-providers/oidc/\_scim_oidc_limitation.mdx"
 import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
 
 # Entra ID (AzureAD)
