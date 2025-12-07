@@ -6,7 +6,7 @@ description: Use AI to create and manage Port scorecards through natural languag
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Build Port scorecards with AI
+# Define scorecards with AI
 
 Use Port's MCP (Model Context Protocol) server to create and manage scorecards through natural language conversations with AI. This guide shows you how to define quality standards, configure compliance rules, and set up progressive maturity levels—all by describing what you need in plain English.
 
