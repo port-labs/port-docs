@@ -48,6 +48,7 @@ import PortBrAppConfig from './examples/example-branch/\_github_exporter_example
 
 import DependabotAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
 import CodeScanAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
+import SecretScanAlertBlueprint from './examples/example-repository-alerts/\_github_exporter_example_secret_scan_alert_blueprint.mdx'
 import PortRepositoryDependabotAlertMappingAppConfig from './examples/example-repository-alerts/\_github_exporter_example_repo_dependabot_port_app_config.mdx'
 
 import OrganizationBlueprint from './examples/example-organization/\_github_exporter_example_organization_blueprint.mdx'
@@ -323,7 +324,7 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 <CollaboratorBlueprint />
 <PortRepositoryCollaboratorAppConfig />
 
-## Map repositories, dependabot alerts, and code scan alerts
+## Map repositories, dependabot alerts, code and secrets scan alerts
 
 The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
 
@@ -332,6 +333,8 @@ The following example shows how to ingest your GitHub repositories and their ale
 <DependabotAlertBlueprint/>
 
 <CodeScanAlertBlueprint/>
+
+<SecretScanAlertBlueprint/>
 
 <PortRepositoryDependabotAlertMappingAppConfig/>
 

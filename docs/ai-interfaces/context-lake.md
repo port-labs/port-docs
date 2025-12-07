@@ -33,7 +33,7 @@ The [software catalog](/build-your-software-catalog) is where you define YOUR or
 
 ### Interface layer - how you access it
 
-Context Lake data becomes actionable through multiple interfaces: **[AI Interfaces](/ai-interfaces/overview)** where AI agents and assistants query through [Port MCP Server](/ai-interfaces/port-mcp-server/overview-and-installation) to understand your organization, **[API](/api-reference/port-api)** for programmatic access, and **[Interface Designer](/customize-pages-dashboards-and-plugins/dashboards/)** with dashboards and visualizations that surface insights to your teams—providing multiple ways to query, visualize, and act on your organizational context.
+Context Lake data becomes actionable through multiple interfaces: **[AI Interfaces](/ai-interfaces/overview)** where AI agents and assistants query through [Port MCP Server](/ai-interfaces/port-mcp-server/overview-and-installation) to understand your organization, **[API](/api-reference/port-api)** for programmatic access, and **[Interface Designer](/customize-pages-dashboards-and-plugins/dashboards/overview)** with dashboards and visualizations that surface insights to your teams—providing multiple ways to query, visualize, and act on your organizational context.
 
 ## Why the context lake matters
 
@@ -109,7 +109,7 @@ External AI agents and automation workflows can leverage Port's Context Lake to 
 
 Port provides a custom n8n node that simplifies integration with Port's AI agents and Context Lake. To get started:
 
-1. **[Set up Port's n8n custom node](/guides/all/setup-port-n8n-node)** — Install and configure the Port node in your n8n instance
+1. **[Set up Port's n8n custom node](/ai-interfaces/port-n8n-node)** — Install and configure the Port node in your n8n instance
 2. **[Build automation workflows](/guides/all/remediate-vulnerability-with-n8n-and-port)** — See an example of using Port as a context lake for vulnerability management workflows
 
 ## Getting started
