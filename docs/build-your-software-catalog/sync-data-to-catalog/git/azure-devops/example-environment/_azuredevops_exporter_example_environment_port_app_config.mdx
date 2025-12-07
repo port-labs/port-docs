@@ -9,7 +9,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .id | tostring
+					identifier: .project.id + "/" + (.id | tostring) | gsub(" "; "")
           title: .name | tostring
           blueprint: '"azureDevopsEnvironment"'
           properties:

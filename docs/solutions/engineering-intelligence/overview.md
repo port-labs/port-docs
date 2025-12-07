@@ -27,7 +27,7 @@ During these formative periods, qualitative data from surveys often serves as th
 Don't just make the developer survey yet another administrative task. With the right approach, you can make your developer survey a seminal moment for your new Platform initiative, and communicate the "why" behind it.
 To maximize the impact of your developer survey, involve senior leadership in its rollout, create open channels for feedback, and ensure high participation through reminders and visible engagement. Share anonymized results and insights with the team to demonstrate that their input is valued and leads to meaningful action.
 
-You will learn more about surveys in the next part of the solution, [surveys](/solutions/engineering-360/surveys).
+You will learn more about surveys in the next part of the solution, [surveys](/solutions/engineering-intelligence/surveys).
 
 ### DORA metrics
 
@@ -42,7 +42,7 @@ The four core DORA metrics are:
 
 By tracking these metrics, engineering teams gain a data-driven understanding of their delivery process, identify bottlenecks, and benchmark their performance against industry standards. DORA metrics are widely recognized as a standard for measuring DevOps and engineering effectiveness, helping organizations focus on both speed and stability.
 
-You will learn more about [DORA metrics](/solutions/engineering-360/measure-dora-metrics) later in this solution.
+You will learn more about [DORA metrics](/solutions/engineering-intelligence/measure-dora-metrics) later in this solution.
 
 ### More engineering metrics and improvement inititatives
 
@@ -58,4 +58,4 @@ This enables tracking of custom metrics that matter specifically to your organiz
 
 The managed relations between entities allow for multi-dimensional analysis, helping you understand not just what's happening, but where and why. For example, you could analyze deployment frequency not just by team, but by service type, technology stack, or business domain. This deeper insight helps engineering leaders make more informed decisions about where to focus improvement efforts.
 
-You will learn more about [measuring arbitrary engineering metrics](/solutions/engineering-360/more-engineering-metrics) later in this solution.
+You will learn more about [measuring arbitrary engineering metrics](/solutions/engineering-intelligence/more-engineering-metrics) later in this solution.

@@ -11,7 +11,7 @@ resources:
         mappings:
           identifier: .projectReference.id + "-" + (.id | tostring) | gsub(" "; "")
           title: .name
-          blueprint: '"release"'
+          blueprint: '"azureDevopsRelease"'
           properties:
             status: .status
             reason: .reason
