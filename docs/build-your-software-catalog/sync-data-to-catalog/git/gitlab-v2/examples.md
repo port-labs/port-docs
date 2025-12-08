@@ -52,7 +52,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 #### Group configuration options
 
-The `includeActiveGroups` selector allows you to filter groups based on whether they are active or not.
+The `includeOnlyActiveGroups` selector allows you to filter groups based on whether they are active or not.
 By default, if not specified, all groups will be synced.
 
 ```yaml showLineNumbers
@@ -60,11 +60,11 @@ By default, if not specified, all groups will be synced.
   selector:
     query: 'true'
     # highlight-next-line
-    includeActiveGroups: true
+    includeOnlyActiveGroups: true
 ```
 
 :::caution Group search filtering effect
-If `includeActiveGroups` is specified, only **groups**, **issues**, **files**, **members** and **merge requests** that match the criteria will be synced.
+If `includeOnlyActiveGroups` is specified, only **groups**, **issues**, **files**, **members** and **merge requests** that match the criteria will be synced.
 This means, the following kinds will be fetched based on the groups filtered with the search criteria:
 
 - `group`
@@ -108,7 +108,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 #### Project configuration options
 
-The `includeActiveProjects` selector allows you to filter projects based on whether they are active or not.
+The `includeOnlyActiveProjects` selector allows you to filter projects based on whether they are active or not.
 By default, if not specified, all projects will be synced.
 
 ```yaml showLineNumbers
@@ -116,11 +116,11 @@ By default, if not specified, all projects will be synced.
   selector:
     query: 'true'
     # highlight-next-line
-    includeActiveProjects: true
+    includeOnlyActiveProjects: true
 ```
 
 :::caution Project search filtering effect
-If `includeActiveProjects` is specified, only **projects**, **pipelines**, **jobs**, **releases** and **tags** that match the criteria will be synced.
+If `includeOnlyActiveProjects` is specified, only **projects**, **pipelines**, **jobs**, **releases** and **tags** that match the criteria will be synced.
 This means, the following kinds will be fetched based on the projects filtered with the search criteria:
 
 - `project`
@@ -180,9 +180,9 @@ By default, if not specified, it is set to `90` days.
 ```
 </TabItem>
 
-<TabItem label="Include Active Groups" value="includeActiveGroups">
+<TabItem label="Include Active Groups" value="includeOnlyActiveGroups">
 
-The `includeActiveGroups` selector allows you to filter merge based on whether they are active or not.
+The `includeOnlyActiveGroups` selector allows you to filter merge requests based on whether the parent group is active or not.
 By default, if not specified, all merge requests for the authorized groups will be synced.
 
 ```yaml
@@ -190,7 +190,7 @@ By default, if not specified, all merge requests for the authorized groups will 
     selector:
       query: 'true'
       # highlight-next-line
-      includeActiveGroups: true
+      includeOnlyActiveGroups: true
 ```
 </TabItem>
 
@@ -260,9 +260,9 @@ By default, if not specified, all issues for the authorized groups will be synce
 ```
 </TabItem>
 
-<TabItem label="Include Active Groups" value="includeActiveGroups">
+<TabItem label="Include Active Groups" value="includeOnlyActiveGroups">
 
-The `includeActiveGroups` selector allows you to filter issues based on whether they are active or not.
+The `includeOnlyActiveGroups` selector allows you to filter issues based on whether the parent group is active or not.
 By default, if not specified, all issues for the authorized groups will be synced.
 
 ```yaml
@@ -270,7 +270,7 @@ By default, if not specified, all issues for the authorized groups will be synce
     selector:
       query: 'true'
       # highlight-next-line
-      includeActiveGroups: true
+      includeOnlyActiveGroups: true
 ```
 </TabItem>
 
@@ -472,7 +472,7 @@ To retrieve the members of your **active groups** only, you can use the followin
   selector:
     query: "true"
     # highlight-next-line
-    includeActiveGroups: true
+    includeOnlyActiveGroups: true
 ```
 
 #### Mapping groups with members
@@ -561,7 +561,7 @@ To retrieve the pipelines of your **active projects** only, you can use the foll
   selector:
     query: "true"
     # highlight-next-line
-    includeActiveProjects: true
+    includeOnlyActiveProjects: true
 ```
 
 To retrieve the jobs of your **active projects** only, you can use the following syntax in your `port-app-config.yml`:
@@ -571,7 +571,7 @@ To retrieve the jobs of your **active projects** only, you can use the following
   selector:
     query: "true"
     # highlight-next-line
-    includeActiveProjects: true
+    includeOnlyActiveProjects: true
 ```
 
 :::tip Learn more
@@ -600,7 +600,7 @@ To retrieve the releases of your **active projects** only, you can use the follo
   selector:
     query: "true"
     # highlight-next-line
-    includeActiveProjects: true
+    includeOnlyActiveProjects: true
 ```
 
 :::tip Learn more
@@ -627,7 +627,7 @@ To retrieve the tags of your **active projects** only, you can use the following
   selector:
     query: "true"
     # highlight-next-line
-    includeActiveProjects: true
+    includeOnlyActiveProjects: true
 ```
 
 :::tip Learn more
