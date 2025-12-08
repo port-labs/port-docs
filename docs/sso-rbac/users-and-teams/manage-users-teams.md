@@ -113,11 +113,18 @@ Since these teams are synced from your IdP, you cannot edit SSO team membership.
 #### Terraform support
 
 Since the `User` and `Team` blueprints can only be extended, to configure them using Terraform you need use the `port_system_blueprint` resource.  
-These blueprints can not be created so don't forget to **import** them to your Terraform state`.
+These blueprints can not be created so don't forget to **import** them to your `Terraform state`.
 
 The `port_system_blueprint` resource is supported in Terraform starting from version **2.2.0**.
 
-For example:
+To configure these blueprints with Terraform, you must first import them into your Terraform state, then define the resource with any additional properties you want to add.
+
+For example, to extend the `User` blueprint:
+
+```bash showLineNumbers
+# Import the blueprint to the state
+terraform import port_system_blueprint.user _user
+```
 
 ```hcl showLineNumbers
 resource "port_system_blueprint" "user" {
@@ -133,6 +140,8 @@ resource "port_system_blueprint" "user" {
   }
 }
 ```
+
+Similarly, to extend the `Team` blueprint, import it with `terraform import port_system_blueprint.team _team` and define the resource with identifier `_team`.
 
 ### User status
 
