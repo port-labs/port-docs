@@ -20,7 +20,7 @@ This helps you maintain a complete and accurate catalog, especially for entities
 
 3. Click on the <ThemedImage sources={{light: "/img/icons/AI-icon.svg", dark: "/img/icons/AI-dark-icon.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top right corner of the page.
 
-4. For the best results, we recommend turning on the `Advanced configuration` toggle and providing the definition of the blueprint you want to discover, along with clear instructions for patterns or specific properties that should be considered.
+4. For the best results, we recommend providing the definition of the blueprint you want to discover, along with clear instructions for patterns or specific properties that should be considered.
 
     For example:
 
@@ -42,7 +42,7 @@ This helps you maintain a complete and accurate catalog, especially for entities
         Check "Jira issues" assignees and "pull requests" to identify developers in the organization.
         ```
 
-5. Select related blueprints to analyze. The entities from these blueprints will be used to identify patterns and suggest new entities for your target blueprint.
+5. Select related blueprints to analyze. The entities from these blueprints will be used to identify patterns and suggest new entities for your target blueprint. This field is mandatory and is automatically filled with all directly related blueprints.
 
 6. Click on the `Discover` button.
 
