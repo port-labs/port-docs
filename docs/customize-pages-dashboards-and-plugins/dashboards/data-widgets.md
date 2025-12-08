@@ -187,12 +187,39 @@ Bar charts illustrate data from entities in your software catalog divided by cat
 
 ## Line chart
 
-Line charts visualize trends over time, either by tracking `number` properties of entities or by tracking the entities themselves.
+Line charts visualize trends over time, either by tracking `number` properties of entities or by tracking the entities themselves.  
+A single line chart widget can display multiple lines, allowing you to compare different metrics side by side.
 
-Port offers three types of line charts:
-1. [Property history (single entity)](#1-property-history-single-entity) - displays the values of one or more properties of a single entity.
-2. [Aggregate property (all entities)](#2-aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
-3. [Count entities (all entities)](#3-count-entities-all-entities) - displays either the total count of entities or the average number of entities from a specific blueprint over time.
+Port offers three types of lines:
+1. [Property history (single entity)](#property-history-single-entity) - displays the values of one or more properties of a single entity.
+2. [Aggregate property (all entities)](#aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
+3. [Count entities (all entities)](#count-entities-all-entities) - displays either the total count of entities or the average number of entities from a specific blueprint over time.
+
+### Creating a multi-line chart
+
+To add a new line chart widget:
+
+1. **Configure the chart settings**:
+   - Provide a **title**, **icon**, **description**, and optionally a custom **empty state text** for the widget.
+
+2. **Configure the X axis** (shared across all lines):
+   - Give the axis a **title**.
+   - Choose a `datetime` property to **measure time by** (e.g., creation time, last update time).
+   - Select a **time interval**, which is the amount of time between each data point.
+   - Select a **time range**, which determines how far back the chart displays data (maximum 1 year).
+
+3. **Add lines using the "+ Line" button**:
+   - Click **+ Line** to open the line configuration window.
+   - Choose the line type and configure its specific settings (see below for details on each type).
+   - Repeat to add multiple lines to the same chart.
+
+:::info Shared Y axis
+All lines in the chart share a single Y axis scale and unit. When adding multiple lines, make sure you choose comparable metrics to ensure the chart remains meaningful and readable.
+:::
+
+:::caution Line colors
+Even if a property value (such as an enum) has a defined color in Port (e.g., "Failed" → red), the line chart may not use the same color. Line colors are assigned automatically and may differ from property colors.
+:::
 
 ### Property history (single entity)
 
