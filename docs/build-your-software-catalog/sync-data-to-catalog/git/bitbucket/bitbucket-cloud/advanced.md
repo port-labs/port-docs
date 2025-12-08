@@ -49,12 +49,12 @@ Use the `repoFilter` parameter is to [narrow down data fetched](https://develope
     resources:
     # remaining resource definitions omitted for brevity
     ```
-  - **q**: Specify as a search query string to filter repositories.
+  - **query**: Specify as a search query string to filter repositories.
 
     ```yaml showLineNumbers
     repoFilter:
       # highlight-next-line
-      q: 'parent.owner.nickname = ""'
+      query: 'parent.owner.nickname = ""'
     resources:
     # remaining resource definitions omitted for brevity
     ```
