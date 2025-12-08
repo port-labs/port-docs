@@ -22,7 +22,7 @@ You can choose one of these chart types:
 You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 ::: 
 
-### Time filtering in number charts vs. line charts
+<h3>Time filtering in number charts vs. line charts</h3>
 
 The value shown in a **number chart** is calculated over **all available entities** of the selected blueprint. By default, it does not apply any time-based filtering.
 
@@ -35,7 +35,7 @@ This difference happens because the two charts are likely working with different
 
 To align both charts and ensure consistency in what they reflect, apply a time filter to the number chart that matches the line chart’s time range. This helps prevent confusion and ensures both charts are working with the same scope of data.
 
-#### Display formatting
+### Display formatting
 
 You can customize how numbers are displayed in number chart by selecting a formatting function:
 
@@ -69,7 +69,7 @@ However, since 5 is closer to 6 than to 8, the widget will be colored yellow - t
 
 <img src='/img/software-catalog/widgets/numberChartConditionExample.png' width='50%' style={{border:'1px', borderRadius:'8px'}}/>
 
-### Number chart properties
+### Properties
 
 | Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
 | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
@@ -185,7 +185,13 @@ Bar charts illustrate data from entities in your software catalog divided by cat
 
 - Bar charts are limited to displaying **up to 9 bars**. If there are more than 9 categories, the additional categories will be grouped into an "other" section.
 
-## Line chart
+## Multi-line chart
+
+:::info Transitioning to multi-line charts
+Starting from **[DATE]**, the multi-line chart is the only line chart type available for creation in Port. Existing line charts remain fully functional and can still be edited via the UI and API, but they do not support the enhanced capabilities of multi-line charts.
+
+The multi-line chart offers greater flexibility by allowing you to combine multiple line types within a single widget. If you need this functionality, we recommend creating a new multi-line chart rather than editing an existing legacy line chart.
+:::
 
 Line charts visualize trends over time, either by tracking `number` properties of entities or by tracking the entities themselves.  
 A single line chart widget can display multiple lines, allowing you to compare different metrics side by side.
@@ -195,7 +201,7 @@ Port offers three types of lines:
 2. [Aggregate property (all entities)](#aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
 3. [Count entities (all entities)](#count-entities-all-entities) - displays either the total count of entities or the average number of entities from a specific blueprint over time.
 
-### Creating a multi-line chart
+<h3>Creating a multi-line chart</h3>
 
 To add a new line chart widget:
 
@@ -208,18 +214,15 @@ To add a new line chart widget:
    - Select a **time interval**, which is the amount of time between each data point.
    - Select a **time range**, which determines how far back the chart displays data (maximum 1 year).
 
-3. **Add lines using the "+ Line" button**:
-   - Click **+ Line** to open the line configuration window.
+3. **Add lines using the `+ Line` button**:
+   - Click `+ Line` to open the line configuration window.
    - Choose the line type and configure its specific settings (see below for details on each type).
    - Repeat to add multiple lines to the same chart.
 
-:::info Shared Y axis
-All lines in the chart share a single Y axis scale and unit. When adding multiple lines, make sure you choose comparable metrics to ensure the chart remains meaningful and readable.
-:::
+**Considerations:**
 
-:::caution Line colors
-Even if a property value (such as an enum) has a defined color in Port (e.g., "Failed" → red), the line chart may not use the same color. Line colors are assigned automatically and may differ from property colors.
-:::
+- **Shared Y axis**: All lines in the chart share a single Y axis scale and unit. When adding multiple lines, make sure you choose comparable metrics to ensure the chart remains meaningful and readable.
+- **Line colors**: Even if a property value (such as an enum) has a defined color in Port (e.g., "Failed" → red), the line chart may not use the same color. Line colors are assigned automatically and may differ from property colors.
 
 ### Property history (single entity)
 
@@ -229,24 +232,13 @@ It reflects the state of the catalog **at the chosen time**. Past values are not
 
 Unlike other chart types, this chart preserves **past values**, while others always reflect the current state of the catalog and recalculate when data changes.
 
-When creating this type of line chart:
+When creating this line type:
 
 1. Choose the **blueprint** you want to visualize.
 
-2. Under the `Y axis` section
-   - Give the axis a title.
+2. Choose the **entity** you want to visualize.
    
-   - Choose the **entity** you want to visualize.
-   
-   - Select one or more of the entity's `number` **properties** to visualize.
-
-3. Under the `X axis` section:
-   - Give the axis a title.
-
-   - Choose a **time interval**, which is the amount of time between each data point in the chart.
-
-   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
-     Note that the available time ranges differ according to the selected time interval.
+3. Select one or more of the entity's `number` **properties** to visualize.
 
 :::tip Specific entity page
 When creating a line chart in an [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets), the chosen entity will be the entity whose page you are on.
@@ -269,37 +261,22 @@ Each property will be displayed as a separate line in the chart.
 
 This chart type reflects the **current state** of the catalog and recalculate when data changes.
 
-When creating this type of line chart:
+When creating this line type:
 
 1. Choose the **blueprint** you want to visualize.
 
-2. Under the `Y axis` section:
-   - Give the axis a title.
+2. Choose one or more of the blueprint's `number` **properties** to visualize.  
 
-   - Choose one or more of the blueprint's `number` **properties** to visualize.  
+3. Choose an **aggregation function**, which is the operation to apply to the selected properties across all entities, for each time interval.  
+   The possible values are:
+   - `average`: The average value of each selected property.
+   - `median`: The median value of each selected property.
+   - `sum`: The sum of values in each selected property.
+   - `max`: The maximum value of each selected property.
+   - `min`: The minimum value of each selected property.
+   - `last`: The last value of each selected property.
 
-   - Choose an **aggregation function**, which is the operation to apply to the selected properties across all entities, for each time interval.  
-     The possible values are:
-     - `average`: The average value of each selected property.
-     - `median`: The median value of each selected property.
-     - `sum`: The sum of values in each selected property.
-     - `max`: The maximum value of each selected property.
-     - `min`: The minimum value of each selected property.
-     - `last`: The last value of each selected property.
-
-   - Optionally, define [additional filters](#chart-filters) in order to include/exclude specific entities from the chart.  
-     For example, you can filter the entities by a specific property value, or by a specific time range.
-
-3. Under the `X axis` section:
-   - Give the axis a title.
-   
-   - Choose one of the blueprint's `datetime` properties by which to **measure the time** of the chart data.  
-     This can be the entity's creation time, last update time, or any other `datetime` property.  
-
-   - Choose a **time interval**, which is the amount of time between each data point in the chart.
-
-   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
-     Note that the available time ranges differ according to the selected time interval.
+4. Optionally, define [additional filters](#chart-filters) to include/exclude specific entities from the chart.  
 
 For example, here is a line chart displaying the maximum cost of all services over the span of a month, in weekly intervals:
 <img src='/img/software-catalog/widgets/lineChartAggregationExample.png' width='100%' style={{border:'1px', borderRadius:'6px'}}/>
@@ -330,40 +307,25 @@ If you choose to break down the chart by a property, each line will represent a 
 
 This chart type reflects the **current state** of the catalog and recalculate when data changes.
 
-When creating this type of line chart:
+When creating this line type:
 
 1. Choose the **blueprint** you want to visualize.
 
-2. Under the `Y axis` section:
-   - Give the axis a title.
+2. Choose one of the following functions:
+   - `count`: Counts the number of entities in each time interval.
+   - `average`: Calculates the average number of entities in each time interval.
 
-   - Choose one of the following functions:
-     - `count`: Counts the number of entities in each time interval.
-     - `average`: Calculates the average number of entities in each time interval.
-
-   - Optionally, break down the chart by a specific blueprint `breakdown property`, generating a separate line for each distinct value of that property.
+3. Optionally, break down the chart by a specific **breakdown property**, generating a separate line for each distinct value of that property.
    
-   - Optionally, define [additional filters](#chart-filters) in order to include/exclude specific entities from the chart.  
-     For example, filter the entities by a specific property value, or by a specific time range.
+4. Optionally, define [additional filters](#chart-filters) to include/exclude specific entities from the chart.  
 
-3. Under the `X axis` section:
-   - Give the axis a title.
-   
-   - Choose one of the blueprint's `datetime` properties by which to **measure the time** of the chart data.  
-     This can be the entity's creation time, last update time, or any other `datetime` property.  
+:::info How time intervals affect the function
+The selected time interval determines how the function is calculated. For example, if the time interval is a week:
+- The `count` function will count the total entities that week.
+- The `average` function will count the total entities that week and divide it by 7.
 
-   - Choose a **time interval**, which is the amount of time between each data point in the chart.  
-   The selected interval also determines how the function is calculated:  
-
-        For example, if the time interval is a week, each data point will be calculated in the following manner:
-        - The `count` function will count the total entities that week.
-        - The `average` function will count the total entities that week and divide it by 7.  
-          
-      The same logic applies to all time intervals: `Hour`, `Day`, `Week`, and `Month` -  
-      when using the `average` function, the total entity count will be divided by: 60, 24, 7, and 30 respectively.
-
-   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
-     Note that the available time ranges differ according to the selected time interval.
+The same logic applies to all time intervals: `Hour`, `Day`, `Week`, and `Month` - when using the `average` function, the total entity count will be divided by 60, 24, 7, and 30 respectively.
+:::
 
 For example, here is a line chart displaying the average deployment rate over the span of a month, in weekly intervals, broken down by the `status` property (Success and Fail).
 <img src='/img/software-catalog/widgets/countEntitiesLineChartExample.png' width='70%' style={{border:'1px', borderRadius:'6px'}}/>
