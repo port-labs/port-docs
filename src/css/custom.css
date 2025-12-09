@@ -973,3 +973,13 @@ img {
   /* WebKit optimization for better quality when scaling */
   image-rendering: -webkit-optimize-contrast;
 }
+
+/* Sidebar dividers for items within a category */
+
+.sidebar-divider-after::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: var(--ifm-color-emphasis-300);
+  margin: 0.5rem 1rem 0.5rem 0.5rem;
+}

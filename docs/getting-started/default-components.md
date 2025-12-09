@@ -2,6 +2,7 @@
 sidebar_position: 5
 title: Default components
 sidebar_label: "Default components"
+sidebar_class_name: sidebar-divider-after
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
