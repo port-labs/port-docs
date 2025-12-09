@@ -1,0 +1,81 @@
+---
+id: get-an-integrations-sync-metadata
+title: "Get an integration's sync metadata"
+description: "This route allows you to get an integration's sync metadata, which includes the sync's ID, state, creation and last update dates.\n\nReturns resyncs from the last 4 days, or the 50 most recent ones.<br/><br/>:::warning Permission requirements"
+sidebar_label: "Get an integration's sync metadata"
+hide_title: true
+hide_table_of_contents: true
+api: eJztV1Fr40YQ/iuL+tBLsC0n5PogSiFwJaSlEHLpQ/EFvJLG1l6kXd3uyjnX6L/3m5VsK4lNei8l0IPDJ2lnZr/55tuZzSbycumiZBZda09LK70y2kX3oygnl1lV83uURHeFcsKaxpOQZWkenVibRngjluSF1ELtvX90wq11JiryMpdejsRjobICJlnZIKrwBQULGF5/GAnnpaeRyCwFd0TLRSmdF00NdxL84yafPmn8uyXfWA0kxAGcWFhThXjB4QK2azcSxoZv76eiMvhsKSPthdEI83Nq41/CT5Ikj9JqpZfihmylnOPNLX1plKUKDg476jsjGkcIh/RJ57VBoqOQe9UgdCFXIETMK5MTsjd2zpvPZV4pPQdfJSFtNrfixlhgsEup1d8h0UkfvyTAAFKLSCkYDthztViQZdgcxAVS6h1M5FjDDcAswYzrwE6z3GQNQw/x798V3tcuiWN8dpMa+0+UiZ0zY5vKLEZe1o0ReOxJVi6upJZLGnefw6cfwt7j8WDjk4D6ehEokCVqlq97FrSgr8r5QCjnKrPMNMxWIG9ArHhUZSlSAqELYzPKWQI2OJ6e/iZ1I+1anDl4nk/Pfzo9DVuiXNEoqqWV0BUQQrKbyGUFVTJKNpFf1wSZOm8RJmpHkWLV1tIX8NLwwdtAoyx2q2V5nWO5h5ZHibcNvVQ+QabCLALFgxiBgkeJfEC/qbn+BJFNsPvryAoQR3aP7bLxhbG9Mp5gWsjSvQD1Fyvq8uYaWz+Qnoi77iAqcLY0jCdIbjasw14Osq53ajjBwStV9hCSm08mk7lIG++N5rKRHi5eke5y3O27tQ3qzEy9DobL3i7vwUUtuomjrLHKr0PZUigeySeze17CWa6hLHLM1vl0yv89zfYDLWRTenHbW4KfzKAQ2rMt0gHIQFz82bHDAfpN+pkyzwqyXCqvuu3Mw8AmNZC71FyjwNhgSTdVCsRY4Y42WJDWyjXCKk+Ve30/WgE0RHdIF9zRPnIvPLga2iPll/7l6ijCMaokVhgdjb2CpODS9c9vcGmHupvtwA6hDYEMd0AdZZ4rLoIsbwY5B/m2z0OD9y3JPaWvBkCEi+nZWxAHWWvswSJV5Bx66IG1Q/l3cf5d4hf/z8Tfv4128F8nHgJjIMAzQl8Pgw+TLIni1Vk8GEHx5uBMa+NwO/qjv4DxASa72g7NxpY8gHbDQG2HQRhcL1cbtzcYdPKPzGlH27af77tirX6n9fHpNhyBbRiJCxPclS/ZPswtjBmYMuyu7GeTKTNe40qHqwqb99GvXr2CRs/m52YvmO832+8327dws+1PjqevPq5LqULfCYdx0x/+WbQ6C2dnp0e8JccutU87AM5tAcFwkM0mBb1/2rJt+fOXhizfyvC4klbJlA8gukSuHD8fuYAOD9C7277NnYhvvysfSXzbRzQ3kZUsG37D4wO6yrGLfHsPx76pcAad7WWWUe0HUV7MB25qu2579esdbGXDhA/b2UNoZ/0DRz+I8Hmf6yDwL7fWgy6bTdcsUY2tfbd01GP3p8OWDM68bf8BUHSKLw==
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an integration's sync metadata"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/integration/{integrationInternalId}/syncsMetadata"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to get an integration's sync metadata, which includes the sync's ID, state, creation and last update dates.\n\nReturns resyncs from the last 4 days, or the 50 most recent ones.
+
+:::warning Permission requirements
+
+To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+To learn more about the different roles and permissions, please refer to the [documentation](https://docs.port.io/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+
+If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
+
+:::
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"integrationInternalId","required":true,"description":"The ID of the integration you want to operate on."},{"schema":{"type":"string"},"in":"header","name":"Authorization","required":false,"description":"Your API token. To get it, go to your [Port account](https://app.port.io/), click the `...` button, then click the `Generate API token` button and copy the generated token."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"count":{"type":"number"},"data":{"type":"array","items":{"type":"object","properties":{"eventId":{"type":"string"},"syncState":{"type":"string"},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"}},"required":["eventId","syncState","createdAt","updatedAt"],"additionalProperties":false}}},"required":["ok","count","data"],"additionalProperties":false}}}},"401":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"404":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
