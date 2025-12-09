@@ -1,8 +1,10 @@
 ---
-sidebar_position: 4
+sidebar_position: 1
 ---
 
-# Examples
+# Scorecard use-cases
+
+Scorecards help you track compliance, enforce standards, and maintain quality across your software catalog. This page demonstrates practical scorecard examples and automations that respond to scorecard rule result changes.
 
 ### Ownership scorecard
 
@@ -14,15 +16,17 @@ It has one filter defined:
 
 It has two rules:
 
-- Check that a defined on-call exists and that the number of `open_incidents` is lower than 5;
+- Check that a defined on-call exists and that the number of `open_incidents` is lower than 5.
 - Check if a team exists.
 
+<details>
+<summary><b>Ownership scorecard definition (click to expand)</b></summary>
+
 ```json showLineNumbers
-[
-  {
-    "title": "Ownership",
-    "identifier": "ownership",
-    "filter": {
+{
+  "identifier": "ownership",
+  "title": "Ownership",
+  "filter": {
       "combinator": "and",
       "conditions": [
         {
@@ -32,7 +36,7 @@ It has two rules:
         }
       ]
     },
-    "rules": [
+  "rules": [
       {
         "title": "Has on call?",
         "identifier": "has_on_call",
@@ -61,26 +65,50 @@ It has two rules:
           "conditions": [
             {
               "operator": "isNotEmpty",
-              "property": "$team"
+              "relation": "team"
             }
           ]
         }
       }
-    ]
-  }
-]
+  ],
+  "levels": [
+    {
+      "color": "paleBlue",
+      "title": "Basic"
+    },
+    {
+      "color": "bronze",
+      "title": "Bronze"
+    },
+    {
+      "color": "silver",
+      "title": "Silver"
+    },
+    {
+      "color": "gold",
+      "title": "Gold"
+    }
+  ]
+}
 ```
+</details>
+
+<br></br>
 ___
+<br></br>
 
 ### Ensure relation existence
 
 Say we have a `service` blueprint that has a relation to another blueprint named `domain`.  
 We can define a scorecard that checks that all of our services have a related domain. Services with empty `domain` relations will fail this check:
 
+<details>
+<summary><b>Ensure relation existence scorecard definition (click to expand)</b></summary>
+
 ```json showLineNumbers
 {
-  "title": "Domain definition",
   "identifier": "domain_definition",
+  "title": "Domain definition",
   "rules": [
     {
       "identifier": "hasDomain",
@@ -96,11 +124,32 @@ We can define a scorecard that checks that all of our services have a related do
         ]
       }
     }
+  ],
+  "levels": [
+    {
+      "color": "paleBlue",
+      "title": "Basic"
+    },
+    {
+      "color": "bronze",
+      "title": "Bronze"
+    },
+    {
+      "color": "silver",
+      "title": "Silver"
+    },
+    {
+      "color": "gold",
+      "title": "Gold"
+    }
   ]
 }
 ```
+</details>
 
+<br></br>
 ___
+<br></br>
 
 ### DORA metrics based on number of deployments
 
@@ -109,10 +158,13 @@ To assess the deployment frequency of a `service`, simply checking the `deployme
 - Add an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property.md) to the `service` blueprint that counts the number of related `deployment` entities.
 - Add a scorecard with a rule based on the new aggregation property:
 
+<details>
+<summary><b>DORA metrics scorecard definition (click to expand)</b></summary>
+
 ```json showLineNumbers
-{ 
-  "title": "DORA Metrics",
+{
   "identifier": "dora_metrics",
+  "title": "DORA Metrics",
   "rules": [
     {
       "identifier": "deployFreqBronze",
@@ -144,6 +196,31 @@ To assess the deployment frequency of a `service`, simply checking the `deployme
         ]
       }
     }
+  ],
+  "levels": [
+    {
+      "color": "paleBlue",
+      "title": "Basic"
+    },
+    {
+      "color": "bronze",
+      "title": "Bronze"
+    },
+    {
+      "color": "silver",
+      "title": "Silver"
+    },
+    {
+      "color": "gold",
+      "title": "Gold"
+    }
   ]
 }
 ```
+</details>
+
+<br></br>
+___
+<br></br>
+
+For more advanced use cases that include extending the scorecard's data model, see the [extend the default scorecards](/scorecards/examples/extend-data-model) page, which shows how to extend the scorecard data model with additional properties to enable SLA tracking, due date management, and automated workflows that go beyond simple pass or fail compliance. 

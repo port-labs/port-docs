@@ -544,6 +544,12 @@ const sidebar: SidebarsConfig = {
           label: "Get an integration's metrics and sync status",
           className: "api-method get",
         },
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-sync-metadata",
+          label: "Get an integration's sync metadata",
+          className: "api-method get",
+        },
       ],
     },
     {
