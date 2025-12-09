@@ -2,6 +2,10 @@ import ThemedImage from "@theme/ThemedImage"
 
 # Catalog auto discovery
 
+:::info Open beta
+This feature is currently in open beta and available to all organizations.
+:::
+
 The **auto discovery** capability uses [Port AI](/ai-interfaces/port-ai/overview) to discover entities and their relations.
 This helps you maintain a complete and accurate catalog, especially for entities that are not automatically created through integrations (see common use-cases below).
 
@@ -81,14 +85,17 @@ To learn more about how Port AI uses your data, see the [security and data contr
 
 ## Limitations
 
-- **Entity evaluation limit**: Discovery evaluates only the 1,000 most recently added entities from each related blueprint.
+- **Entity evaluation limit**: Discovery evaluates only the 500 most recently added entities from each related blueprint.
+- **Property truncation**: Only the first 100 characters of each property value are analyzed. Longer content (such as large markdown fields) will be truncated.
+- **LLM provider**: This feature currently uses Port's LLM and does not support [Bring Your Own LLM (BYOLLM)](/ai-interfaces/port-ai/overview#bring-your-own-llm-byollm).
 
 ## FAQs
 
 <details>
 <summary><b>Which LLM model is used? (click to expand)</b></summary>
 
-The AI uses the default LLM defined in Port. To learn more, see the [LLM models and providers](/ai-interfaces/port-ai/overview#llm-models-and-providers) documentation.
+The AI uses the default LLM defined in Port. To learn more, see the [LLM models and providers](/ai-interfaces/port-ai/overview#llm-models-and-providers) documentation.  
+Bring Your Own LLM (BYOLLM) is not currently supported for catalog auto discovery.
 
 </details>
 
