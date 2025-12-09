@@ -34496,6 +34496,127 @@ paths:
                   - ok
                   - error
                 additionalProperties: false
+  /v1/integration/{integrationInternalId}/syncsMetadata:
+    get:
+      summary: Get an integration's sync metadata
+      tags:
+        - Integrations
+      description: |-
+        This route allows you to get an integration's sync metadata, which includes the sync's ID, state, creation and last update dates.\n\nReturns resyncs from the last 4 days, or the 50 most recent ones.<br/><br/>:::warning Permission requirements
+
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](https://docs.port.io/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+
+        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
+
+        :::
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: integrationInternalId
+          required: true
+          description: The ID of the integration you want to operate on.
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          required: false
+          description: Your API token. To get it, go to your [Port
+            account](https://app.port.io/), click the `...` button, then click
+            the `Generate API token` button and copy the generated token.
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  count:
+                    type: number
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        eventId:
+                          type: string
+                        syncState:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                      required:
+                        - eventId
+                        - syncState
+                        - createdAt
+                        - updatedAt
+                      additionalProperties: false
+                required:
+                  - ok
+                  - count
+                  - data
+                additionalProperties: false
+        "401":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
   /v1/quota/ai-invocations:
     get:
       summary: Get monthly AI invocations quota usage
