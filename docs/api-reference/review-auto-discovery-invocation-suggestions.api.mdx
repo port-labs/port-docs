@@ -1,0 +1,71 @@
+---
+id: review-auto-discovery-invocation-suggestions
+title: "Review auto-discovery invocation suggestions"
+description: "This route allows you to review suggestions for an auto-discovery invocation. You can accept or reject individual suggestions, or accept or reject all suggestions at once.<br></br> To learn more about the auto-discovery feature, see the [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery)."
+sidebar_label: "Review auto-discovery invocation suggestions"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWEuP2zYQ/iuE0EMC2NZu0B66CApsNzksiiILZ3soDDegpJHNrCSqfHjjCvrvnSElS7Zke9saaQ+92LQ0nMfHbx50FRi+0sHNIrjjhmdyxbg1kiVCx3IDahssJ0ECOlaiNEIWwU3wuBaaKWkNMJ5l8lmzrbQM9yjYCHhm2q5WoElYs1QqxguncrpTyUSxkTEniRn7FffGJBLHUBqG8go+Q2xQKBEbkVie9TVOSGIgi37smeX4sohh9jZSP7wN8YM9SpYBVwXLpUK/I3SfmTUcepYCN1bBhGkA936RyNjmUBjn7vLV2phS34QhPtazUiozEzIJIyuyZIowqKmWqXnmCqaxhzNsvqf7ll7PgkmgIbZKmC2iXwURugcKl8saIVfwu8VofpQJvq2CWBYGnaAlL8tMePTCz5pOpAp0vIac08psS8AzkhHhgiZKJUtQRoB2e2OHT0+QK8W3KCcM5F6k2H5InUNGmIxEbj3aHb4oftoMeopR3Sf0nQoKamdPGyWKVTDkFDCxk2cydeB7PUQtf+KzoJ40MYyphMLmRGQvHCzr2uMoFCT0fODWThkCzpNE0JpnD71YUp5pqCcdGHNPuH8VDE/6F4LhhRGMSbNE+TlwPb5r6Ihysi6Rm/3FqucPenEplN15RTZ7ut0FdZSMBwl/9hBeSppPqHhY8caNDkP/u2y6fDT+qMajGTfq6HQ5hlwIK8eJUwI1CZRc8RwMKO24MqiGO+dLblCKHP9tcTX9nk/TZfXm2/obil3QYxRYo1yB6vBX16c+iSTo+2+UhTEs7t+16Xq05SFI2GIKSFi0dZIxAmhObYAiKaUoKONdZ9AlIuqZ8Obqir72HXkHKbeZYfNGEj2/UP+QTz2ZSEpsqYXnDXV+SO6k9UYaEWRj5CrAECn/itDqN+5WUVPcKO0uoLVV1OP4RXz1imaePfT8vVJS/WPFZo3zS8pFhhzBch9hN3DaG1NARk728K/bkF7g7c+gNV/Byyy5HSz3W/6KsfONaM+ZM6XnUB1y/5DohxQ9JNcILXbHd9Y6mv/uv5HdzuPh2eGb/Ni51nSwBs9plI/jgVfjkHvr5+Fy7pi1TKiMS218uV/jr3BzHXIROj7gnoNJPKz2ynwd+jN247natD3Fqgw1tdM/L0U7/AfUz4dvre4Elt2k/5GOwqPdzvtdGpfiJ9h23efWYjRK/MGbMdM1qDXwBHdRtHS88+6a8P4Lz8sM9sb8xVi2d7nXzhHtxEyhvEi+GSpHBoYdAZaDWW7fmJtNalc5U+lQaGaiB4SN3T7co3ZC3++5nl0Rp+hcc+7UNSDN/Z3zePPcn6v2Uql3rfr/UnuxS23DZgNfTFhmXLgS4hKkahJyEWyuiU3CDayjSYlvbobTl8tLJNaa0hvVVFXENfyisrqmx5gKiu7SuNxwJXhEfMIUQK20TppicYIFr+ZN9XnNvsI0dwSrthwUhMKGZ5Z+4fIJi8PhTFrTva6pCRSql7nzAU0fSVOnY9AbKN/9Dn/DOSm77NXXhw8fH1E4av6dyGVCexSnqkmfzl9Z7v5scM+qIOPFyrp+EXidbrq3xIl+FXxyVbBZuMvfGCKH5dEHQp/uhjW2pap8jUW6tPL+1dEdDbQd+IR4Xf8JEu/PDw==
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Review auto-discovery invocation suggestions"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/ai/entities-auto-discovery/{invocation_id}/review"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to review suggestions for an auto-discovery invocation. You can accept or reject individual suggestions, or accept or reject all suggestions at once.<br></br> To learn more about the auto-discovery feature, see the [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","pattern":"^[0-9a-f]{24}$"},"in":"path","name":"invocation_id","required":true,"description":"The ID of the auto-discovery invocation returned by the create auto-discovery invocation endpoint."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"actions":{"type":"array","items":{"anyOf":[{"title":"Accept suggestion","type":"object","properties":{"entityIdentifier":{"type":"string","description":"The identifier of the entity to accept."},"action":{"type":"string","enum":["accept"]}},"required":["entityIdentifier","action"],"additionalProperties":false},{"title":"Reject suggestion","type":"object","properties":{"entityIdentifier":{"type":"string","description":"The identifier of the entity to reject."},"action":{"type":"string","enum":["reject"]},"rejectionReason":{"type":"string","description":"The reason for rejecting the entity."}},"required":["entityIdentifier","action"],"additionalProperties":false}]}},"bulkAction":{"anyOf":[{"title":"Accept all suggestions","type":"object","properties":{"action":{"type":"string","enum":["accept_all"],"description":"Accept all suggestions."}},"required":["action"],"additionalProperties":false},{"title":"Reject all suggestions","type":"object","properties":{"action":{"type":"string","enum":["reject_all"],"description":"Reject all suggestions."},"rejectionReason":{"type":"string","description":"The reason for rejecting all suggestions."}},"required":["action"],"additionalProperties":false}]}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"reviewedCount":{"type":"number","description":"The number of suggestions reviewed."},"acceptedCount":{"type":"number","description":"The number of suggestions accepted."},"rejectedCount":{"type":"number","description":"The number of suggestions rejected."},"ingestErrorCount":{"type":"number","description":"The number of suggestions that failed to be ingested."},"errors":{"type":"array","items":{"type":"object","properties":{"entityIdentifier":{"type":"string","description":"The identifier of the entity that failed to be ingested."},"errorMessage":{"type":"string","description":"The error message of the entity that failed to be ingested."}},"required":["entityIdentifier","errorMessage"],"additionalProperties":false}}},"required":["ok","reviewedCount","acceptedCount","rejectedCount","ingestErrorCount","errors"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
