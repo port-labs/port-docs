@@ -251,6 +251,13 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow',
   },
   {
+    name: 'Rootly',
+    category: 'incident',
+    icon: '/img/guides/icons/Rootly.svg',
+    darkIcon: '/img/guides/icons/dark/Rootly.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/incident-management/rootly',
+  },
+  {
     name: 'Dynatrace',
     category: 'monitoring',
     icon: '/img/guides/icons/Dynatrace.svg',
