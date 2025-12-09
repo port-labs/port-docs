@@ -2,7 +2,7 @@ import ThemedImage from "@theme/ThemedImage"
 
 # Catalog auto discovery
 
-The **auto discovery** capability uses AI to analyze your existing catalog data and suggests missing entities based on existing relationships and patterns.
+The **auto discovery** capability uses [Port AI](/ai-interfaces/port-ai/overview) to discover entities and their relations.
 This helps you maintain a complete and accurate catalog, especially for entities that are not automatically created through integrations (see common use-cases below).
 
 <h3>Common use cases</h3>
@@ -67,12 +67,52 @@ Suggested entities persist until they are approved or declined. You can close th
 
 You can re-run the discovery process at any time to generate additional or different suggestions. Each discovery run analyzes the current state of your catalog and may produce new suggestions based on newly added entities, updated relationships, or refined patterns. Re-running the discovery does not affect previously approved or declined suggestions.
 
+:::info Using auto discovery via the API
+This feature is also available via API for a more programatic execution of the process. Refer to the [API reference](/api-reference/port-api) catalog auto discovery for the full list of paths.
+:::
+
 ## Permissions
 
 The permissions are derived from the blueprint permissions.  
 You can approve suggested entities only if you have write access to the blueprint.  
 For more information about blueprint permissions, see the [set catalog RBAC](/build-your-software-catalog/set-catalog-rbac/) documentation.
 
+To learn more about how Port AI uses your data, see the [security and data controls](/ai-interfaces/port-ai/security-and-data-controls) documentation.
+
 ## Limitations
 
 - **Entity evaluation limit**: Discovery evaluates only the 1,000 most recently added entities from each related blueprint.
+
+## FAQs
+
+<details>
+<summary><b>Which LLM model is used? (click to expand)</b></summary>
+
+The AI uses the default LLM defined in Port. To learn more, see the [LLM models and providers](/ai-interfaces/port-ai/overview#llm-models-and-providers) documentation.
+
+</details>
+
+<details>
+<summary><b>Are there usgae limits? (click to expand)</b></summary>
+
+It depends on your LLM setup. To learn more, see the [limits and usage](/ai-interfaces/port-ai/overview#limits-and-usage) documentation.
+
+</details>
+
+<details>
+<summary><b>Is the AI trained based on my data? (click to expand)</b></summary>
+
+No, Port AI does not use your data to train models. To learn more, see the [security and data controls](/ai-interfaces/port-ai/security-and-data-controls) documentation.
+
+</details>
+
+<details>
+<summary><b>How can I improve the auto discovery results? (click to expand)</b></summary>
+
+You can improve results by:
+- Providing more specific instructions in the prompt about patterns to look for.
+- Including clear definitions of what constitutes your target entity type.
+- Selecting the most relevant related blueprints for analysis.
+- Re-running the discovery after refining your prompt based on initial results.
+
+</details>

@@ -42,8 +42,10 @@ Methods two and three require modifying the [mapping configuration](/build-your-
 
 ## 1. Catalog auto discovery
 
-This approach uses AI to analyze your existing catalog data and suggests missing entities based on existing relationships and patterns.  
-It is particularly useful for discovering entities that are not automatically created through integrations, such as `services` and `users`.
+The **auto discovery** capability uses [Port AI](/ai-interfaces/port-ai/overview) to discover entities and their relations.
+It is particularly useful for discovering entities that are not automatically created through integrations, such as `services` and `users`.  
+
+To learn more about how Port AI uses your data, see the [security and data controls](/ai-interfaces/port-ai/security-and-data-controls) documentation.
 
 ### Examples
 
