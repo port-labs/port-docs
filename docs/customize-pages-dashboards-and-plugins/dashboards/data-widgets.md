@@ -495,5 +495,7 @@ The following table lists the identifiers for each data widget type:
 | ----------- | ---------- |
 | Number chart | `entities-number-chart` |
 | Pie chart | `entities-pie-chart` |
+| Bar chart | 'bar-chart' |
+| Multi line chart | `line-chart` |
 | Line chart | `line-chart` |
 | Table | `table-entities-explorer` |
