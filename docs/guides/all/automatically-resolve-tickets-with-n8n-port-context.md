@@ -26,7 +26,7 @@ This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
 - [Port's Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) is installed in your account.
-- You have a working n8n instance (Cloud or self-hosted) with [Port's n8n custom node installed](https://docs.port.io/guides/all/setup-port-n8n-node).
+- You have a working n8n instance (Cloud or self-hosted) with [Port's n8n custom node installed](https://docs.port.io/ai-interfaces/port-n8n-node).
 - Your GitHub organization has GitHub Copilot enabled, so Copilot can be automatically assigned to any issues created through this guide.
 
 
@@ -562,7 +562,7 @@ The n8n workflow orchestrates the following steps:
 
 ## Related guides
 
-- [Set up Port's n8n custom node](https://docs.port.io/guides/all/setup-port-n8n-node) — Learn how to install and configure Port's n8n node.
+- [Set up Port's n8n custom node](https://docs.port.io/ai-interfaces/port-n8n-node) — Learn how to install and configure Port's n8n node.
 - [Remediate vulnerability with n8n and Port](https://docs.port.io/guides/all/remediate-vulnerability-with-n8n-and-port) — Another example of using Port as a context lake in n8n workflows.
 - [Automatically resolve tickets with coding agents](https://docs.port.io/guides/all/automatically-resolve-tickets-with-coding-agents) — The Port-native version of this workflow using Port automations and AI agents.
 

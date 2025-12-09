@@ -69,9 +69,13 @@ Install the Helm chart:
     secrets:
       githubAppPrivateKey: "<BASE_64_ENCODED_PRIVATEKEY>"
 
-  # uncomment to enable live events
+  # uncomment to enable live events or to support actions processing
   # liveEvents:
-  #  baseUrl: "<your-domain>"
+  #   baseUrl: "<your-domain>"
+
+  # uncomment to enable actions processing
+  # actionsProcessor:
+  #   enabled: true
 
   initializePortResources: true
   sendRawDataExamples: true
