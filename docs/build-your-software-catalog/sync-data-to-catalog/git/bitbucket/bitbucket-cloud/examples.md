@@ -1,7 +1,8 @@
 ---
 sidebar_position: 2
 ---
-
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import MicroserviceBlueprint from './\_bitbucket_integration_example_repository_blueprint.mdx'
 import PRBlueprint from './\_bitbucket_integration_example_pull_request_blueprint.mdx'
 import PortAppConfig from './\_bitbucket_integration_example_port_app_config.mdx'
@@ -25,6 +26,69 @@ The following example demonstrates how to ingest your Bitbucket projects, reposi
 
 <PortAppConfig/>
 
+### Repository configuration options
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="User Role" value="userRole">
+
+The `userRole` selector allows you to filter repositories based on the user role. You can specify only one user role to include in the sync.
+
+Allowed values:
+- `owner`: Repositories owned by the current user.
+- `member`: Repositories to which the user has explicit read access.
+- `admin`: Repositories to which the user has explicit administrator access.
+- `contributor`: Repositories to which the user has explicit write access.
+
+By default, if not specified, no user role filter will be applied.
+
+```yaml
+  - kind: repository
+    selector:
+      query: 'true'
+      # highlight-next-line
+      userRole: owner
+```
+
+</TabItem>
+
+<TabItem label="Repository Query" value="repoQuery">
+
+The `repoQuery` selector allows you to filter repositories based on a custom query. You can specify a custom query to include in the sync.
+
+```yaml
+  - kind: repository
+    selector:
+      query: 'true'
+      # highlight-next-line
+      repoQuery: 'language="python"'
+```
+
+</TabItem>
+
+</Tabs>
+
+### Pull request configuration options
+
+The `pullRequestQuery` selector allows you to filter pull requests based on a custom query. You can specify a custom query per the official BitBucket filtering and sorting specifications to include in the sync.
+
+By default, if not specified, all open pull requests will be ingested.
+
+```yaml
+  - kind: pull-request
+    selector:
+      query: 'true'
+      # highlight-next-line
+      pullRequestQuery: 'state="OPEN" OR (state="MERGED" AND updated_on > "2025-12-10T14:00:00-07:00")'
+```
+
+:::warning Performance impact
+Non-open pull requests (such as `MERGED` or `DECLINED`) can accumulate to an extremely large volume over time, which may significantly increase the time required to complete a resync for the integration.
+
+To prevent performance degradation, if you intend to ingest non-open pull requests, you must add a filtering criteria such as `updated_on` to limit the number of items ingested.
+The example above demonstrates this by retrieving all `OPEN` pull requests, while limiting `MERGED` pull requests to those updated after a specific timestamp.
+:::
+
 :::tip
 
 - Refer to the [installation](installation.md) guide to learn more about the `port-app-config.yml` installation process;
@@ -32,6 +96,7 @@ The following example demonstrates how to ingest your Bitbucket projects, reposi
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-projects-get) for the Bitbucket project object structure.
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) for the Bitbucket repository object structure.
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-get) for the Bitbucket pull request object structure.
+- Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#filtering) for the Bitbucket filtering and sorting API.
 :::
 
 After creating the blueprints and updating the mapping, you will see new entities in Port matching your repositories alongside their README.md file contents and pull requests.
