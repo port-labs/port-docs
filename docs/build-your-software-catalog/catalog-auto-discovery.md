@@ -1,10 +1,9 @@
 import ThemedImage from "@theme/ThemedImage"
+import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
 
 # Catalog auto discovery
 
-:::info Open beta
-This feature is currently in open beta and available to all organizations.
-:::
+<BetaFeatureNotice id="ai-form" />
 
 The **auto discovery** capability uses [Port AI](/ai-interfaces/port-ai/overview) to discover entities and their relations.
 This helps you maintain a complete and accurate catalog, especially for entities that are not automatically created through integrations (see common use-cases below).
