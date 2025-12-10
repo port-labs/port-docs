@@ -54,7 +54,8 @@ Follow these steps in order to diagnose and fix common pipeline issues.
    - Check webhook logs for any failed attempts.
    - Check if the webhook name matches the one referenced in your pipeline.
    - Test webhook manually:
-     ```bash
+
+     ```bash showLineNumbers
      curl -X POST 'https://dev.azure.com/{org_name}/_apis/public/distributedtask/webhooks/{webhook_name}?api-version=6.0-preview' \
      -H "Content-Type: application/json" \
      -d '{
@@ -99,7 +100,7 @@ Follow these steps in order to diagnose and fix common pipeline issues.
    - **Trigger the new pipeline** from Port and check if it runs successfully.
 
       <details>
-      <summary><b>Sample minimal pipeline YAML</b></summary>
+      <summary><b>Sample minimal pipeline YAML (click to expand)</b></summary>
 
       ```yaml showLineNumbers
       trigger: none  # Disables automatic triggers on code commits.
@@ -183,7 +184,7 @@ Follow these steps in order to diagnose and fix common pipeline issues.
 ### Checking pipeline status with API
 Use this API to verify pipeline configuration and status when the UI doesn't provide enough information or you need programmatic access:
 
-```bash
+```bash showLineNumbers
 curl -X GET 'https://dev.azure.com/{organization}/{project}/_apis/pipelines/{pipelineId}?api-version=7.1-preview.1' \
 -H "Content-Type: application/json"
 ```
@@ -191,7 +192,7 @@ curl -X GET 'https://dev.azure.com/{organization}/{project}/_apis/pipelines/{pip
 ### Manual pipeline trigger with API
 Use this API when testing or troubleshooting webhook issues, or when you need to trigger pipelines programmatically:
 
-```bash
+```bash showLineNumbers
 curl -X POST 'https://dev.azure.com/{organization}/{project}/_apis/pipelines/{pipelineId}/runs?api-version=7.1-preview.1' \
 -H "Content-Type: application/json" \
 -d '{

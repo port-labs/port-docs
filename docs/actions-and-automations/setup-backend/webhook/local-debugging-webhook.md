@@ -32,6 +32,9 @@ In this example you will:
 
 Let’s configure a `VM` Blueprint, its base structure is:
 
+<details>
+<summary><b>VM blueprint structure (click to expand)</b></summary>
+
 ```json showLineNumbers
 {
   "identifier": "vm",
@@ -76,11 +79,14 @@ Let’s configure a `VM` Blueprint, its base structure is:
 }
 ```
 
+</details>
+
 Below you can see the `python` code to create this Blueprint (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token)
 
 <details>
-<summary>Click here to see the code</summary>
+<summary><b>Python code to create the blueprint (click to expand)</b></summary>
 <PortApiRegion />
+
 ```python showLineNumbers
 import requests
 
@@ -157,11 +163,12 @@ All you have to do is click on `Start new channel` and copy the provided `Webhoo
 
 Now let’s configure a Self-Service Action. You will add a `CREATE` action that will be triggered every time a developer creates a new VM entity, the Self-Service Action will trigger a small web-server running on your local machine.
 
-:::tip
-You will configure the web-server a bit later [in this guide](#creating-small-example-server-in-nodejs).
-:::
+You will configure the web-server a bit later [in this guide](#creating-a-small-example-server-in-nodejs).
 
 Here is the action JSON:
+
+<details>
+<summary><b>Action definition (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -246,23 +253,17 @@ Here is the action JSON:
   }
 }
 ```
+</details>
 
 Below you can see the `python` code to create this action.
 
-:::info Replacing placeholders
+<details>
+<summary><b>Python code to create action (click to expand)</b></summary>
 
 - Remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token.
 - Remember to insert the proxy URL you got from `smee` in order to redirect the webhook messages to your localhost.
+- Note how the `vm` Blueprint identifier is used to add the action to the new blueprint.
 
-:::
-
-:::note Specifying the target blueprint
-Note how the `vm` Blueprint identifier is used to add the action to the new Blueprint
-:::
-
-<details>
-<summary>Click here to see code</summary>
-<PortApiRegion />
 ```python showLineNumbers
 import requests
 
@@ -325,6 +326,8 @@ response = requests.post(f'{API_URL}/blueprints/{blueprint_identifier}/actions',
 print(response.json())
 ```
 
+<PortApiRegion />
+
 </details>
 
 ## Forwarding events to localhost
@@ -351,9 +354,7 @@ You should see a log line output like this:
 
 Now because you are forwarding events to your localhost, all you need to do is create a small server that will listen to `POST` requests that are being sent to the /webhooks route.
 
-:::tip
 This example shows how to setup a small listener server using [Nodejs](https://nodejs.org/en/) and [Express](https://expressjs.com/) but you can use any language and framework you prefer.
-:::
 
 Create a folder and run the following in it
 
@@ -364,7 +365,7 @@ npm install express
 
 Inside this folder create an `index.js` file and paste the following:
 
-```js
+```js showLineNumbers
 const { createHmac } = require("crypto");
 const express = require("express");
 const app = express();
@@ -404,18 +405,16 @@ node index.js
 
 Login to Port and go to the VM page and trigger the action via the **Create VM** action button:
 
-![Create VM button](/img/self-service-actions/CreateVMDropdown.png)
+<img src='/img/self-service-actions/CreateVMDropdown.png' width='30%' border='1px' />
 
-Fill the wanted details and click on `Create`
+Fill the wanted details and click on **Create**.
 
-![Create VM action form](/img/self-service-actions/CreateVMExecution.png)
+<img src='/img/self-service-actions/CreateVMExecution.png' width='80%' border='1px' />
 
 And that's it, the `Success!` output shows that your local server really did receive your webhook payload:
 
-![Webhook server response](/img/self-service-actions/HelloWorldLog.png)
+<img src='/img/self-service-actions/HelloWorldLog.png' width='40%' border='1px' />
 
 Since `synchronized` is set to `true` in the action JSON, the action's run status will also be updated to `Success` in Port. 
 
-:::tip
 Now that webhook requests are forwarded to your local machine, you can use your IDE to place breakpoints, examine the structure of the webhook request and iterate on your custom handler logic.
-:::

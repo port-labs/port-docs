@@ -47,7 +47,7 @@ To define an incoming webhook in Azure, follow the steps below:
 
 2. **Use the Webhook in Your Pipeline**
     - Add the service connection resources in the Azure pipeline yaml:
-      ```yaml
+      ```yaml showLineNumbers
       resources:
         webhooks:
           - webhook: { webhookName }

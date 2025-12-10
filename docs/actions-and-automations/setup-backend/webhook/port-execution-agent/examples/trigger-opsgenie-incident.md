@@ -13,9 +13,9 @@ This example helps internal developer teams to trigger [Opsgenie](https://www.at
 1. Create an OpsGenie incident blueprint in Port.
 
     <details>
-    <summary>OpsGenie incident blueprint (Click to expand)</summary>
+    <summary><b>OpsGenie incident blueprint (click to expand)</b></summary>
 
-    ```json
+    ```json showLineNumbers
     {
         "identifier": "opsgenieIncident",
         "description": "This blueprint represent an incident in opsgenie",
@@ -53,9 +53,9 @@ This example helps internal developer teams to trigger [Opsgenie](https://www.at
 2. Create a Port action using the following JSON definition:
 
     <details>
-    <summary>Port action (Click to expand)</summary>
+    <summary><b>Port action (click to expand)</b></summary>
 
-    ```json
+    ```json showLineNumbers
     {
     "identifier": "create_opsgenie_incident",
     "title": "Create Opsgenie Incident",
@@ -133,7 +133,7 @@ This example helps internal developer teams to trigger [Opsgenie](https://www.at
 3. Create a JSON file (`invocations.json`) in your working directory.
 
     <details>
-    <summary>Invocation Mapping (Click to expand)</summary>
+    <summary><b>Invocation Mapping (click to expand)</b></summary>
 
     ```json showLineNumbers title="invocations.json"
         [
@@ -161,11 +161,11 @@ This example helps internal developer teams to trigger [Opsgenie](https://www.at
 4. Run the helm command below to install a port agent for OpsGenie incidents.
 
     <details>
-    <summary>Port agent installation for OpsGenie incidents (Click to expand)</summary>
+    <summary><b>Port agent installation for OpsGenie incidents (click to expand)</b></summary>
 
     **Remember to replace the boilerplate credentials in the helm command with your actual credentials.**
 
-    ```sh
+    ```sh showLineNumbers
     helm repo add port-labs https://port-labs.github.io/helm-charts
 
     helm repo update

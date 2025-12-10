@@ -145,7 +145,6 @@ And finally, you need to connect your source code repository to this pipeline an
 Google Cloud Build enables developers to bind incoming webhook payload data to the pipeline configuration file. If you take a look at the sample `cloudbuild.yaml` file above, you will see the **substitutions** section has the below content. This is where you define the variables which will be passed to your pipeline run.
 
 ```yaml showLineNumbers
-
 ... # Cloud Build pipeline steps
 substitutions:
   _REPOSITORY: <YOUR_CONTAINER_REPOSITORY_NAME>
