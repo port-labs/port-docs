@@ -1,4 +1,4 @@
-# Kafka self-service actions
+# Kafka topic
 
 Port manages a Kafka topic per customer that publishes the execution run requests.
 
