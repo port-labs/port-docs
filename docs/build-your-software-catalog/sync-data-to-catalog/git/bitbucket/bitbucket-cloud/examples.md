@@ -70,55 +70,24 @@ The `repoQuery` selector allows you to filter repositories based on a custom que
 
 ### Pull request configuration options
 
-<Tabs groupId="config" queryString="parameter">
+The `pullRequestQuery` selector allows you to filter pull requests based on a custom query. You can specify a custom query per the official BitBucket filtering and sorting specifications to include in the sync.
 
-<TabItem label="States" value="states">
-
-The `states` selector allows you to filter pull requests based on their state. You can specify one or more states to include in the sync.
-
-Allowed values:
-- `OPEN`: Pull requests that are currently open.
-- `MERGED`: Pull requests that have been merged.
-- `DECLINED`: Pull requests that have been declined.
-- `SUPERSEDED`: Pull requests that have been superseded.
-
-By default, if not specified, only `OPEN` pull requests will be synced.
+By default, if not specified, all open pull requests will be ingested.
 
 ```yaml
   - kind: pull-request
     selector:
       query: 'true'
       # highlight-next-line
-      states:
-        - OPEN
-        - MERGED
-        - DECLINED
-        - SUPERSEDED
+      pullRequestQuery: 'state="OPEN" OR (state="MERGED" AND updated_on > "2025-12-10T14:00:00-07:00")'
 ```
-</TabItem>
 
-<TabItem label="Max Results" value="maxResults">
+:::warning Performance impact
+Non-open pull requests (such as `MERGED` or `DECLINED`) can accumulate to an extremely large volume over time, which may significantly increase the time required to complete a resync for the integration.
 
-The `maxResults` selector allows you to limit the number of pull requests synced. This helps you control the amount of data being synced and reduce the time taken to sync.
-
-The value represents the maximum number of pull requests to sync. For example, setting it to `100` will only sync the first 100 pull requests.
-
-:::info Important
-The `maxResults` parameter only affects pull requests that are not in the "open" state. Open pull requests will always be synced regardless of their last update time.
+To prevent performance degradation, if you intend to ingest non-open pull requests, you must add a filtering criteria such as `updated_on` to limit the number of items ingested.
+The example above demonstrates this by retrieving all `OPEN` pull requests, while limiting `MERGED` pull requests to those updated after a specific timestamp.
 :::
-
-By default, if not specified, it is set to `100` pull requests.
-
-```yaml
-  - kind: pull-request
-    selector:
-      query: 'true'
-      # highlight-next-line
-      maxResults: 1000
-```
-</TabItem>
-
-</Tabs>
 
 :::tip
 
@@ -127,6 +96,7 @@ By default, if not specified, it is set to `100` pull requests.
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-projects-get) for the Bitbucket project object structure.
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) for the Bitbucket repository object structure.
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-get) for the Bitbucket pull request object structure.
+- Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#filtering) for the Bitbucket filtering and sorting API.
 :::
 
 After creating the blueprints and updating the mapping, you will see new entities in Port matching your repositories alongside their README.md file contents and pull requests.
