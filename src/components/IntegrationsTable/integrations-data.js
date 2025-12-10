@@ -264,6 +264,14 @@ export const integrations = [
     darkIcon: '/img/guides/icons/dark/Dynatrace.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace',
   },
+  {
+    name: 'Azure Monitor',
+    category: 'monitoring',
+    iconName: 'Azure',
+    icon: '/img/guides/icons/Azure.svg',
+    darkIcon: '/img/guides/icons/Azure.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/azure-monitor',
+  },
   // Cloud Cost
   {
     name: 'Kubecost',
