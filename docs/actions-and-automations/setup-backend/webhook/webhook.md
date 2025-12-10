@@ -43,14 +43,10 @@ An example flow would be:
 
 When choosing webhook as the backend type, there are several configurations you can customize:
 
-:::info Use Port secrets for sensitive data
+### Invocation type
 
-If your webhook URL contains sensitive data (such as a token), you can store it using [Port secrets](/sso-rbac/port-secrets/) and reference it using `{{ .secrets.SECRET_NAME }}`:
-
-```bash
-https://example.com?token={{ .secrets.secret_token_name }}
-```
-:::
+To use a webhook as your backend, set the `Invocation type` to **Trigger Webhook URL**.  
+When editing the JSON file, set the `type` field in the `invocationMethod` object to `WEBHOOK`.
 
 ### Use self-hosted agent
 
@@ -66,10 +62,34 @@ By default, the request type is set to **asynchronous** (`Async`), meaning your 
 
 Alternatively, you can set the request type to **synchronous** (`Sync`), which causes the action to automatically report its result back to Port via the returned HTTP status code and payload.
 
-### Method
+### Configure the invocation payload
+
+Configure the following fields to define the request that Port will send to your webhook:
+
+**Method**
 
 By default, a `POST` request will be sent to the specified endpoint URL.  
 You can change the request to any of the supported types: `POST`, `PUT`, `PATCH`, `GET`, or `DELETE`.
+
+**Endpoint URL**
+
+Specify the target URL where the webhook request will be sent. This is the endpoint your backend service listens on.
+
+:::info Use Port secrets for sensitive data
+If your webhook URL contains sensitive data (such as a token), you can store it using [Port secrets](/sso-rbac/port-secrets/) and reference it using `{{ .secrets.SECRET_NAME }}`:
+
+```bash
+https://example.com?token={{ .secrets.secret_token_name }}
+```
+:::
+
+**Headers**
+
+You can define custom HTTP headers to include in the webhook request.
+
+**Body**
+
+Defines the payload that will be sent to the backend upon execution of the action. The body is an object containing `"key": "value"` pairs.
 
 ## Trigger Port API
 
