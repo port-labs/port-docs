@@ -188,7 +188,7 @@ Bar charts illustrate data from entities in your software catalog divided by cat
 ## Multi-line chart
 
 :::info Transitioning to multi-line charts
-Starting December 10, 2025, the multi-line chart is the only line chart type you can create in Port. Existing line charts remain fully functional and can still be edited through the UI and API, but they don’t support the enhanced capabilities available in multi-line charts.
+Starting December 11, 2025, the multi-line chart is the only line chart type you can create in Port. Existing line charts remain fully functional and can still be edited through the UI and API, but they don’t support the enhanced capabilities available in multi-line charts.
 
 Multi-line charts offer greater flexibility by letting you combine multiple line chart types in a single widget. If you need this functionality, we recommend creating a new multi-line chart.
 :::
