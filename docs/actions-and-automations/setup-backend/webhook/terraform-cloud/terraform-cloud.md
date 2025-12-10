@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Terraform Cloud Actions
+# Terraform cloud actions
 
 Port's Terraform Cloud integration allows you to trigger [Terraform Cloud runs](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run#create-a-run) directly from Port.
 

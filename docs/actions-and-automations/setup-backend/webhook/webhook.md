@@ -2,8 +2,6 @@ import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md
 
 # Webhook
 
-## Overview
-
 The webhook backend allows you to trigger your own custom webhooks, for both self-service actions and automations.
 
 <img src="/img/self-service-actions/portWebhookArchitecture.svg" width="85%" border='1px' />
@@ -13,81 +11,74 @@ The steps shown in the image above are as follows:
 
 1. Port generates an invocation of an action/automation.
 2. Port signs the payload + timestamp using `HMAC-SHA-256` and puts it in the request header.
-   :::info WEBHOOK SECURITY
-   Verifying the webhook request using the request headers provides the following benefits:
+   
+   Validating the webhook request using the request headers ensures that:
 
-   - Ensures that the request payload has not been tampered with.
-   - Ensures that the sender of the message is Port.
-   - Ensures that the received message is not a replay of an older message.
+   - The request payload has not been tampered with.
+   - The sender of the message is Port.
+   - The received message is not a replay of an older message.
 
-   To learn how to verify the webhook request, refer to the [Verifying Webhook Signature](../webhook/signature-verification) page.
-
-   :::
+   To learn more, refer to the [validate webhook signature](/actions-and-automations/setup-backend/webhook/signature-verification) page.
 
 3. Port publishes an invoked action/automation via a `POST` request to the customer defined `URL`.
-4. A listener implemented on the Client side receives the `POST` request and runs custom logic provided by the user.
+4. A listener implemented on the client side receives the `POST` request and runs custom logic provided by the user.  
 
-:::info
-The listener can be anything that can read from a Kafka topic and run code based on the received message, for example:
+   A listener can be any service that can receive HTTP requests and execute code based on the payload, for example:
 
-- AWS Lambda.
-- Python code that reads from the topic.
-- Docker container running code.
+    - AWS Lambda.
+    - Python code that reads from the topic.
+    - Docker container running code.
 
-You control how you interact with webhooks, in the way that best suits your organization and infrastructure.
-:::
+    You can implement webhook handling in the way that best fits your organization and infrastructure.
 
 An example flow would be:
 
-1. A developer asks to deploy a new version of an existing `Microservice`.
-2. The `create` action is sent to the defined `URL`.
+1. A developer executes a self-service action to deploy a new version of an existing `Microservice`.
+2. The `Create` action is sent to the defined `URL` webhook.
 3. An AWS Lambda function is triggered by this new action message.
-4. The Lambda function deploys a new version of the service.
-5. When the Lambda is done, it reports back to Port about the new Microservice `Deployment`.
+4. The Lambda function deploys a new version of the microservice.
+5. When the Lambda is done, it reports back to Port about the new microservice `Deployment`.
 
 ## Configuration
 
-When using this backend, there are several configurations that you can customize:
+When choosing webhook as the backend type, there are several configurations you can customize:
 
-### Use Port secrets for sensitive data
+:::info Use Port secrets for sensitive data
 
-Sensitive data such as tokens and passwords can be stored using [Port secrets](/sso-rbac/port-secrets/).
-
-Sometimes your webhook URL might contain sensitive data, such as a token.  
-To use a secret in the URL, you can reference it using `{{ .secrets.secret_name }}`.
+If your webhook URL contains sensitive data (such as a token), you can store it using [Port secrets](/sso-rbac/port-secrets/) and reference it using `{{ .secrets.SECRET_NAME }}`:
 
 ```bash
 https://example.com?token={{ .secrets.secret_token_name }}
 ```
+:::
 
-### Use Port agent
+### Use self-hosted agent
 
-The [Port execution agent](/actions-and-automations/setup-backend/webhook/port-execution-agent/) provides you with a secure and convenient way to act upon webhook invocations of self-service actions and automations.  
-The agent pulls the new invocation event from your dedicated Kafka topic, and sends it to the URL you specified.  
+The [Port execution agent](/actions-and-automations/setup-backend/webhook/port-execution-agent/) provides a secure and convenient way to act upon webhook invocations of self-service actions and automations. The agent pulls the new invocation event from your dedicated Kafka topic, and sends it to the URL you specified.  
 
-If you prefer to send a webhook without using the agent, you can [validate the webhook signature](https://docs.port.io/create-self-service-experiences/setup-backend/webhook/signature-verification) for increased security.
+If you prefer to send a webhook without using the agent, you can [validate the webhook signature](/actions-and-automations/setup-backend/webhook/signature-verification) for increased security.
 
-To use the agent, set the `agent` field to `true` in the `invocationMethod` object, or set the `Use self-hosted agent` toggle to `Yes` if using the UI.
+To use the agent, set the `agent` field to `true` in the `invocationMethod` object, or select **Yes** from the `Use self-hosted agent` dropdown in the UI.
 
-### Request type - sync vs. async
+### Request type
 
-By default, the action will be executed **asynchronous**, meaning that your backend will need to explicitly send Port its result via the API.
+By default, the request type is set to **asynchronous** (`Async`), meaning your backend will need to explicitly send Port its result via the API.
 
-Alternatively, you can set the execution type to **synchronous**, which will cause the action to automatically report its result back to Port via the returned HTTP status code and payload.
+Alternatively, you can set the request type to **synchronous** (`Sync`), which causes the action to automatically report its result back to Port via the returned HTTP status code and payload.
 
-### HTTP method
+### Method
 
 By default, a `POST` request will be sent to the specified endpoint URL.  
-You can change the request to any of the supported types: `POST`, `GET`, `PUT`, `DELETE`, or `PATCH`.
+You can change the request to any of the supported types: `POST`, `PUT`, `PATCH`, `GET`, or `DELETE`.
 
 ## Trigger Port API
 
-You can use this backend type to trigger [Port's API](https://docs.port.io/api-reference/port-api), allowing you to execute any route you wish with automatic authentication.  
+You can use this backend type to trigger [Port's API](/api-reference/port-api), allowing you to execute any route you wish with automatic authentication.  
 Port will automatically use the organization's API key to authenticate the request.
 
 This can be useful when you want to perform an operation in Port, such as creating a new user or executing a self-service action, especially if you want to trigger logic that you have already defined.
 
-### Example - Triggering a self-service action
+### Example - Trigger self-service action
 
 Say you have a self-service action that sends a Slack notification, with the identifier `slack_notify`.  
 The following example shows an automation definition that triggers this self-service action, when a service's `passed` property changes from `Passed` to `Not passed`:
@@ -134,16 +125,17 @@ The following example shows an automation definition that triggers this self-ser
 - In the `url` field, you can add `run_as` to the url to specify the user that will execute the action (replace `user-email@gmail.com` with the desired user's email).  
   If you don't specify a user, the action will be executed using the organization's default credentials.
 - The `body.properties` object contains the action's user inputs. If the action does not require any inputs, pass an empty object:
-   ```json
-   "body": {
-      "properties": {}
-   }
-   ```
+
+```json showLineNumbers
+"body": {
+   "properties": {}
+}
+```
 
 ## Local setup, debugging and security validation
 
-- [Debugging webhooks locally](./local-debugging-webhook.md)
-- [Validating webhook signatures](./signature-verification.md)
+- [Debugging webhooks locally](/actions-and-automations/setup-backend/webhook/local-debugging-webhook)
+- [Validating webhook signatures](/actions-and-automations/setup-backend/webhook/signature-verification)
 
 ## Examples
 
