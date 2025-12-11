@@ -15,8 +15,7 @@ This helps you maintain a complete and accurate catalog, especially for entities
 
 ## When to use catalog auto discovery
 
-This feature is most effective for blueprints that don't have a single clear source of truth.  
-Below are some guidelines to help you decide when to use catalog discovery and when to use classic integration mapping.
+This feature is most effective for blueprints that don't have a single clear source of truth. Below are some guidelines to help you decide when to use catalog discovery and when to use classic integration mapping.
 
 **When classic data mapping is preferred**
 
