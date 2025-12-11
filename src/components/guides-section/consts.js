@@ -1593,6 +1593,13 @@ export const availableGuides = [
         logos: ["n8n", "Slack"],
         link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
     },
+    {
+        title: "Measure and track delivery performance",
+        description: "Measure and track delivery performance as part of your engineering intelligence framework using key metrics like PR cycle time, PR throughput, deployment frequency, and overdue PRs",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-and-track-delivery-performance",
+    }
 
 ]
 
