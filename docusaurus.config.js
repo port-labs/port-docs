@@ -346,6 +346,9 @@ const config = {
         docsRouteBasePath: "/",
         hashed: true,
         explicitSearchResultPath: true,
+        searchResultLimits: 8,
+        searchResultContextMaxLength: 50,
+        highlightSearchTermsOnTargetPage: false,
       },
     ]
   ],
