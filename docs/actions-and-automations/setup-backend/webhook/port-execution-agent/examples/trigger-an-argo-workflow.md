@@ -66,10 +66,7 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
       - Automatically, by integrating Argo as a data source.
       - Manually, by creating workflow entities yourself.
       
-      In this example, we will manually add an `Argo Workflow`:  
-      In your `Argo workflows` catalog page click the `+ Argo Workflow` button in the top right corner. Then click the toggle button to edit a JSON file. Paste the template data of the workflow you wish to trigger. An example template has been provided below for your convenience.
-
-      In this example, we will manually add an `Argo Workflow`:  
+      The following example demonstrates how to we manually add an `Argo Workflow`:  
       On your Argo Workflows catalog page, click the `+ Argo Workflow` button in the top-right corner.  
       Then, toggle the JSON mode button to switch to JSON mode. Paste the template of the workflow you want to trigger. You can use the example provided below as a starting point.
 

@@ -20,7 +20,7 @@ Before troubleshooting, ensure you have:
 
 The ADO trigger flow is more complex than other pipelines because it requires multiple components working together:
 
-<img src="/img/self-service-actions/setup-backend/azurepipeline/ADOpipelineFlowImg.png" width="90%" border='1px' />
+<img src="/img/self-service-actions/setup-backend/azurepipeline/ADOpipelineFlowImg.png" width="80%" border='1px' />
 
 ## Troubleshoot pipeline issues
 
