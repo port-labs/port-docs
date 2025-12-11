@@ -4,7 +4,7 @@ sidebar_position: 4
 
 import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
 
-# Debugging webhooks locally
+# Debug webhooks locally
 
 In this guide, we will show you how to debug Webhook Self-Service Actions that are sent from Port locally.
 
