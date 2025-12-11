@@ -371,12 +371,15 @@ When a new scorecard is created, Port automatically creates a relation in the Ru
 
 <h3>Scorecard entity identifiers are immutable</h3>
 
-Identifiers for `scorecard`, `scorecard rule`, and `scorecard rule result` entities are immutable.  
-If you need to change one of these identifiers, follow this workflow:
+Identifiers for `scorecard` and `scorecard rule` entities are immutable.  
 
-1. Copy the configuration of the existing entity.
-2. Create a new entity with the desired identifier.
-3. Delete the original entity.
+If you need to change the identifier of a `scorecard`, follow this workflow:
+
+1. Copy the configuration of the existing scorecard.
+2. Create a new scorecard with the desired identifier.
+3. Delete the original scorecard.
+
+If you need to change the identifier of a `scorecard rule`, edit the rule within the scorecard.
 
 <h3>Validation rules</h3>
 
