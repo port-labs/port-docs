@@ -5,8 +5,6 @@ import TabItem from '@theme/TabItem';
 
 Port's Circle CI integration allows you to trigger [new pipelines](https://circleci.com/docs/api/v2/) in Circle CI directly from Port.
 
-## Overview
-
 You can implement this action in two ways:
 1. **Synced webhook and secrets**: A simpler approach that uses Port's secret management to store your Circle CI credentials.
 2. **Execution agent**: A slightly more complex approach that runs within your infrastructure, keeping credentials in your environment.
@@ -28,7 +26,7 @@ Before implementing either approach, you will need to create a blueprint for Cir
 4. Add this JSON schema:
 
     <details>
-    <summary>Circle CI project blueprint</summary>
+    <summary><b>Circle CI project blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -90,7 +88,7 @@ To create a self-service action that triggers a Circle CI pipeline, follow these
 4. Copy and paste the following JSON configuration into the editor.
 
     <details>
-    <summary>Trigger Circle CI pipeline action</summary>
+    <summary><b>Trigger Circle CI pipeline action (click to expand)</b></summary>
 
       ```json showLineNumbers
       {
@@ -167,7 +165,7 @@ To create a self-service action that triggers a Circle CI pipeline, follow these
 4. Copy and paste the following JSON configuration into the editor.
 
     <details>
-    <summary>Trigger Circle CI pipeline Action</summary>
+    <summary><b>Trigger Circle CI pipeline action (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -232,9 +230,9 @@ To create a self-service action that triggers a Circle CI pipeline, follow these
 Create a JSON file named `invocations.json` with the following content:
 
 <details>
-<summary>Mapping (invocations.json)</summary>
+<summary><b>Mapping invocations.json (click to expand)</b></summary>
 
-```json
+```json showLineNumbers
 [
   {
     "enabled": ".action == \"trigger_circle_ci_pipeline\"",
