@@ -14,14 +14,13 @@ The steps shown in the image above are as follows:
 1. An action is invoked in Port;
 2. Port signs the action payload using SHA-1 with the [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
 
-   :::info WEBHOOK SECURITY
-   Verifying the webhook request using the request headers provides the following benefits:
+   Validating the webhook request using the request headers ensures that:
 
-   - Ensures that the request payload has not been tampered with
-   - Ensures that the sender of the message is Port
-   - Ensures that the received message is not a replay of an older message
+   - The request payload has not been tampered with.
+   - The sender of the message is Port.
+   - The received message is not a replay of an older message.
 
-   :::
+   To learn more, refer to the [validate webhook signature](/actions-and-automations/setup-backend/webhook/signature-verification) page.
 
 3. Port publishes an invoked `WEBHOOK` via a `POST` request to `https://cloudbuild.googleapis.com/v1/projects/{project_id}/triggers/{webhook_name}:webhook?key={google_api_key}&secret={webhook_secret}`
 
@@ -145,7 +144,6 @@ And finally, you need to connect your source code repository to this pipeline an
 Google Cloud Build enables developers to bind incoming webhook payload data to the pipeline configuration file. If you take a look at the sample `cloudbuild.yaml` file above, you will see the **substitutions** section has the below content. This is where you define the variables which will be passed to your pipeline run.
 
 ```yaml showLineNumbers
-
 ... # Cloud Build pipeline steps
 substitutions:
   _REPOSITORY: <YOUR_CONTAINER_REPOSITORY_NAME>
