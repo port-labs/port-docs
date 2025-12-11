@@ -10,14 +10,13 @@ The steps shown in the image above are as follows:
 1. A self-service action or automation is invoked in Port.
 2. Port signs the action payload using SHA-1 with your Port [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `x-port-signature` request header.
 
-   :::info Webhook security
-   Verifying the webhook request using the request headers provides the following benefits:
+   Validating the webhook request using the request headers ensures that:
 
-   - Ensures that the request payload has not been tampered with.
-   - Ensures that the sender of the message is Port.
-   - Ensures that the received message is not a replay of an older message.
+   - The request payload has not been tampered with.
+   - The sender of the message is Port.
+   - The received message is not a replay of an older message.
 
-   :::
+   To learn more, refer to the [validate webhook signature](/actions-and-automations/setup-backend/webhook/signature-verification) page.
 
 3. Port publishes an invoked `WEBHOOK` via a `POST` request to `https://dev.azure.com/{org_name}/_apis/public/distributedtask/webhooks/{webhook_name}?api-version=6.0-preview`
 
@@ -47,7 +46,8 @@ To define an incoming webhook in Azure, follow the steps below:
 
 2. **Use the Webhook in Your Pipeline**
     - Add the service connection resources in the Azure pipeline yaml:
-      ```yaml
+    
+      ```yaml showLineNumbers
       resources:
         webhooks:
           - webhook: { webhookName }

@@ -98,7 +98,7 @@ Port will automatically use the organization's API key to authenticate the reque
 
 This can be useful when you want to perform an operation in Port, such as creating a new user or executing a self-service action, especially if you want to trigger logic that you have already defined.
 
-### Example - Trigger self-service action
+### Example - Trigger a self-service action
 
 Say you have a self-service action that sends a Slack notification, with the identifier `slack_notify`.  
 The following example shows an automation definition that triggers this self-service action, when a service's `passed` property changes from `Passed` to `Not passed`:

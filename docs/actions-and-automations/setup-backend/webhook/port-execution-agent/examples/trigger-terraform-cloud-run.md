@@ -14,9 +14,9 @@ This example helps internal developer teams to trigger an [Terraform Cloud run](
 1. Create a Terraform Cloud Workspace blueprint in Port.
 
     <details>
-    <summary>Terraform Cloud Workspace blueprint (Click to expand)</summary>
+    <summary><b>Terraform Cloud Workspace blueprint (click to expand)</b></summary>
 
-    ```json
+    ```json showLineNumbers
     {
     "identifier": "terraform_cloud_workspace",
     "title": "Terraform Cloud Workspace",
@@ -52,9 +52,9 @@ This example helps internal developer teams to trigger an [Terraform Cloud run](
 2. Create a Port action using the following JSON definition:1
 
     <details>
-    <summary>Port Action (Click to expand)</summary>
+    <summary><b>Port Action (click to expand)</b></summary>
 
-    ```json
+    ```json showLineNumbers
     [
     {
         "identifier": "trigger_tf_run",
@@ -82,7 +82,7 @@ This example helps internal developer teams to trigger an [Terraform Cloud run](
 3. Create a JSON file (`invocations.json`) in your working directory.
 
     <details>
-    <summary>Invocation Mapping (Click to expand)</summary>
+    <summary><b>Invocation Mapping (click to expand)</b></summary>
 
     ```json showLineNumbers title="invocations.json"
     [
@@ -123,11 +123,11 @@ This example helps internal developer teams to trigger an [Terraform Cloud run](
 4. Run the helm command below to install a port agent for Terraform Cloud run.
 
     <details>
-    <summary>Port agent installation for Terraform Cloud run (Click to expand)</summary>
+    <summary><b>Port agent installation for Terraform Cloud run (click to expand)</b></summary>
 
     **Remember to replace the boilerplate credentials in the helm command with your actual credentials.**
 
-    ```sh
+    ```sh showLineNumbers
     helm repo add port-labs https://port-labs.github.io/helm-charts
 
     helm repo update

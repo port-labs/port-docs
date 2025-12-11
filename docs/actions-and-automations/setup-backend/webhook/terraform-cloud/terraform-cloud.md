@@ -5,8 +5,6 @@ import TabItem from '@theme/TabItem';
 
 Port's Terraform Cloud integration allows you to trigger [Terraform Cloud runs](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run#create-a-run) directly from Port.
 
-## Overview
-
 You can implement this action in two ways:
 1. **Synced webhook and secrets**: A simpler approach that uses Port's secret management to store your Terraform Cloud credentials.
 2. **Execution agent**: A slightly more complex approach that runs within your infrastructure, keeping credentials in your environment.
@@ -33,7 +31,7 @@ Before implementing either approach, you'll need to create a blueprint for Terra
 4. Add this JSON schema:
 
     <details>
-    <summary>Terraform Cloud workspace blueprint</summary>
+    <summary><b>Terraform Cloud workspace blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -100,7 +98,7 @@ To create a self-service action that triggers a Terraform Cloud run, follow thes
 4. Copy and paste the following JSON configuration into the editor.
 
     <details>
-    <summary>Trigger TF Cloud Run action</summary>
+    <summary><b>Trigger TF Cloud run action (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -197,7 +195,7 @@ To create a self-service action that triggers a Terraform Cloud run, follow thes
 4. Copy and paste the following JSON configuration into the editor.
 
     <details>
-    <summary>Trigger TF Cloud run Action</summary>
+    <summary><b>Trigger TF Cloud run action (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -262,9 +260,9 @@ Now you should see the `Trigger TF Cloud run` action in the self-service page. ð
 Create a JSON file named `invocations.json` with the following content:
 
 <details>
-<summary>Mapping (invocations.json)</summary>
+<summary><b>Mapping - invocations.json (click to expand)</b></summary>
 
-```json
+```json showLineNumbers
 [
   {
     "enabled": ".action == \"trigger_tf_run\"",
