@@ -2,7 +2,7 @@
 
 Port manages a Kafka topic per customer that publishes the execution run requests.
 
-You can listen to this Kafka topic with any code platform you wish to use, and also use it as a trigger for a serverless function. For example, AWS Lambda.
+You can listen to this Kafka topic with any code platform you wish to use, and also use it as a trigger for a server-less function (e.g. AWS Lambda).
 
 <img src="/img/self-service-actions/portKafkaArchitecture.svg" width="85%" border='1px' />
 <br/><br/>
@@ -15,13 +15,11 @@ The steps shown in the image above are as follows:
    - Changes topic - `ORG_ID.change.log`
 2. A secure Kafka topic holds all of the action invocations and changes.
 
-   :::info Consumer group configuration
    As part of the setup, you need to create a consumer group that listens to the topics.  
    The consumer group ID can have one of these formats:
 
     - Any group name with a prefix of your org id, for example `ORG_ID.my-group-name`.
     - A group name that matches your username provided by Port.
-   :::
 
 3. A listener implemented on the client side receives the new topic message and runs code defined by the DevOps team.
 
@@ -40,6 +38,11 @@ An example flow would be:
 3. An AWS Lambda function is triggered by this new action message.
 4. The Lambda function deploys a new version of the service.
 5. When the Lambda is done, it reports back to Port about the new microservice `Deployment`.
+
+## Prerequisites
+
+To use Kafka as your backend, you need a dedicated Kafka topic.  
+Contact [Port's support team](http://support.port.io/) to receive one.
 
 ## Configuration
 
