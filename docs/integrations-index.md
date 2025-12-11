@@ -213,7 +213,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Kafka
 
 - [Kafka integration](/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka.md)
-- [Kafka queue for self-service actions](/actions-and-automations/setup-backend/webhook/kafka/kafka.md)
+- [Kafka queue for self-service actions](/actions-and-automations/setup-backend/kafka/)
 
 ## Kratix (by Syntasso)
 - [Combine Kratix and Port](https://www.syntasso.io/solutions/port-and-kratix)
