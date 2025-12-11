@@ -24,7 +24,6 @@
     "@docusaurus/plugin-ideal-image": "^3.9.2",
     "@docusaurus/preset-classic": "^3.9.2",
     "@docusaurus/theme-live-codeblock": "^3.9.2",
-    "@easyops-cn/docusaurus-search-local": "^0.52.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@kapaai/react-sdk": "^0.9.0",
