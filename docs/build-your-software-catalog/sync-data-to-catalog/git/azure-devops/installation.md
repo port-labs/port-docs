@@ -157,6 +157,73 @@ spec:
 kubectl apply -f my-ocean-azure-devops-integration.yaml
 ```
 </TabItem>
+
+<TabItem value="real-time-self-hosted-aci" label="Azure Container Instance">
+
+
+To Install the integration using Azure Container Instance:
+
+Navigate to Azure portal homepage, select `Create resource` and follow the steps below.
+
+![Azure Portal create resource](../../../../../static/img/sync-data-to-catalog/quickstart-portal-create-resource.png)
+
+
+1. Basics
+
+- Select your **Subscription** and **Resource Group** . Create a new resource group if required.
+- Set the **Container name**. Example: `port-ocean-azure-devops`
+- Select your **Region**. Example: `Australia Southeast`
+- Select your **Image type**
+- Select your **Image source**
+   - **Azure Container Registry (ACR)**  
+     - Ensure the Port Ocean image is available in your registry.
+   - **Public registry (recommended for quick setup)**  
+     - Image name: `ghcr.io/port-labs/port-ocean-azure-devops:latest`
+- Select **Linux** as the **OS type**
+- Set the **container size**
+   - Default: `1 vCPU`, `1.5 GiB memory`, `0 GPUs`
+   - These values can be increased if required.
+
+2. Networking
+
+- Set **Networking type** to `Private`
+- Select your **Virtual Network**
+- Select the appropriate **Subnet**
+- Expose **Port 443** using **TCP**
+
+
+3. Insights
+
+- Enable **Container Instance Logs**
+- Select your **Subscription**
+- Select your **Log Analytics Workspace**
+
+
+4. Advanced
+
+- Set **Restart policy** to `On failure`
+
+- Configure the following **Environment Variables**
+
+:::note
+If deploying in a US region, use `https://api.us.port.io` as the base URL.
+:::
+### Environment Variables
+
+| Mark as Secure | Key                                                | Value                  | Required |
+|----------------|-----------------------------------------------------|------------------------|----------|
+| No             | `OCEAN__PORT__CLIENT_ID`                            | `<PORT_CLIENT_ID>`     | Yes      |
+| Yes            | `OCEAN__PORT__CLIENT_SECRET`                        | `<PORT_CLIENT_SECRET>` | Yes      |
+| No             | `OCEAN__PORT__BASE_URL`                             | `https://api.port.io`  | Yes      |
+| No             | `OCEAN__INITIALIZE_PORT_RESOURCES`                  | `true`                 | Yes      |
+| No             | `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | `true`                 | Yes      |
+| No             | `OCEAN__EVENT_LISTENER`                             | `{"type":"POLLING"}`   | Yes      |
+| No             | `OCEAN__SCHEDULED_RESYNC_INTERVAL`                  | `30`                   | Yes      |
+| No             | `OCEAN__INTEGRATION__IDENTIFIER`                    | `azure-devops`         | No       |
+| No
+
+
+</TabItem>
 </Tabs>
 
 This table summarizes the available parameters for the installation.
