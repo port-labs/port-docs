@@ -161,12 +161,19 @@ kubectl apply -f my-ocean-azure-devops-integration.yaml
 <TabItem value="real-time-self-hosted-aci" label="Azure Container Instance">
 
 
-To Install the integration using Azure Container Instance:
+To Install Azure DevOps integration using Azure Container Instance:
 
-Navigate to Azure portal homepage, select `Create resource` and follow the steps below.
+Navigate to Azure portal homepage, select `Create resource`
+
+Navigate to Azure portal homepage, select `Create resource`.
 
 ![Azure Portal create resource](../../../../../static/img/sync-data-to-catalog/quickstart-portal-create-resource.png)
 
+Select containers > Container instances
+
+![Azure Portal create aci](../../../../../static/img/sync-data-to-catalog/aci-instance.png)
+
+Follow the steps below.
 
 1. Basics
 
@@ -208,7 +215,8 @@ Navigate to Azure portal homepage, select `Create resource` and follow the steps
 :::note
 If deploying in a US region, use `https://api.us.port.io` as the base URL.
 :::
-### Environment Variables
+
+Environment Variables
 
 | Mark as Secure | Key                                                | Value                  | Required |
 |----------------|-----------------------------------------------------|------------------------|----------|
