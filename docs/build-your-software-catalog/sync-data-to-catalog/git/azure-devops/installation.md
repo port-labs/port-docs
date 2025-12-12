@@ -163,8 +163,6 @@ kubectl apply -f my-ocean-azure-devops-integration.yaml
 
 To Install Azure DevOps integration using Azure Container Instance:
 
-Navigate to Azure portal homepage, select `Create resource`
-
 Navigate to Azure portal homepage, select `Create resource`.
 
 ![Azure Portal create resource](../../../../../static/img/sync-data-to-catalog/quickstart-portal-create-resource.png)
