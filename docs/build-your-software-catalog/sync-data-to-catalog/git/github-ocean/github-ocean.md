@@ -17,7 +17,7 @@ Here's what you can do with the GitHub integration:
 - Map and organize your desired GitHub resources and their metadata in Port (see supported resources below).
 - Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Manage Port entities using GitOps.
-- **Sync data from multiple GitHub organizations** using a single integration instance.
+- Sync data from **multiple GitHub organizations** using a single integration instance.
 
 ### Multi-organization support
 
@@ -38,7 +38,7 @@ organizations:
 
 </details>
 
-:::caution Authentication and configuration requirements:
+:::caution Authentication and configuration requirements
 
 - **With classic PAT**:
   - Specify organizations in port mapping: `organizations: ["org1", "org2", "org3"]`
@@ -49,7 +49,7 @@ organizations:
 
 **Performance consideration:** Syncing multiple organizations will increase the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption. Consider syncing only the organizations you need.
 
-**Default mapping behavior:** First‑time installs may sync more than intended, since organizations aren’t scoped yet. Refer to [installation guide](./installation) on how to ensure a clean catalogue after you scope out required organization.
+**Default mapping behavior:** First‑time installs may sync more than intended, since organizations aren’t scoped yet. Refer to the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) for how to ensure a clean catalog after you scope out the required organization.
 :::
 
 ### Supported resources
@@ -61,11 +61,11 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
-To install the integration, see the [installation page](./installation).
+To install the integration, see the [installation page](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation).
 
 ## Configuration
 
-Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party API into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
@@ -75,7 +75,7 @@ You can manage your GitHub integration configuration using Port:
 2. Under `Exporters`, click on the installed integration.
 3. A window will open containing the default YAML configuration of your GitHub integration.
 4. Here you can modify the configuration to suit your needs, by adding/removing entries.
-5. When finished, click `resync` to apply any changes.
+5. When finished, click **Resync** to apply any changes.
 
 Using this method applies the configuration to all repositories that the GitHub app has permissions to.
 
@@ -89,10 +89,10 @@ The `repositoryType` parameter filters which repositories are ingested. It corre
 <summary><b>Possible values (Click to expand)</b></summary>
 
 - `all` (default): All repositories accessible to the provided token.
-- `public`: Public repositories.
-- `private`: Private repositories.
-- `forks`: Only forked repositories.
-- `sources`: Only non-forked repositories.
+- `public`: Public repositories only.
+- `private`: Private repositories only.
+- `forks`: Forked repositories only.
+- `sources`: Non-forked repositories only.
 </details>
 
 See the default mapping below for a usage example.
@@ -189,7 +189,7 @@ resources:
 
 Using Port's GitHub integration, you can automatically ingest GitHub resources into Port based on real-time events.
 
-The app allows you to ingest a variety of objects resources provided by the GitHub API, including organizations, repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
+The app allows you to ingest a variety of object resources provided by the GitHub API, including organizations, repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
 
 The GitHub integration uses a YAML configuration file to describe the ETL process to load data into the developer portal. This approach provides a flexible and powerful way to model your Git data without being overly opinionated or complex.
 
@@ -203,14 +203,13 @@ Organizations serve as parent entities for repositories, teams, and other GitHub
 
 ### Ingest files from your repositories
 
-Port allows you to fetch `JSON` and `YAML` files from your repositories, and create entities from them in your software catalog.  
-This is done using the `file` kind in your Github mapping configuration.
+Port allows you to fetch `JSON` and `YAML` files from your repositories, and create entities from them in your software catalog. This is done using the `file` kind in your GitHub mapping configuration.
 
 For example, say you want to manage your `package.json` files in Port. One option is to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
 
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
-:::::info Organization and repository filtering
+:::info Organization and repository filtering
 Both `organization` and `repos` in file selectors are optional. You can:
 - Specify only `organization`: scan all repositories in that organization (respecting `repositoryType`).
 - Specify only `repos`: scan only those repositories across all accessible organizations.
@@ -222,7 +221,7 @@ When scanning broadly, the integration scope depends on your credentials:
 Use `repositoryType` and precise `path` patterns to reduce scope.
 
 Note: Omitting `organization` and `repos` will scan all accessible repositories. For large orgs, expect longer resyncs and higher GitHub API usage. Narrow scope with `repos`, `repositoryType`, and specific `path` patterns.
-:::::
+:::
 
 <details>
 <summary><b>Package file mapping example (click to expand)</b></summary>
@@ -255,10 +254,9 @@ resources:
 </details>
 
 :::tip Test your mapping
-After adding the `file` kind to your mapping configuration, click on the `Resync` button. When you open the mapping configuration again, you will see real examples of files fetched from your GitHub organization.
+After adding the `file` kind to your mapping configuration, click on the **Resync** button. When you open the mapping configuration again, you will see real examples of files fetched from your GitHub organization.
 
-This will help you see what data is available to use in your `jq` expressions.  
-Click on the `Test mapping` button to test your mapping against the example data.
+This will help you see what data is available to use in your `jq` expressions. Click on the **Test mapping** button to test your mapping against the example data.
 
 In any case, the structure of the available data looks like this:
 
@@ -747,15 +745,15 @@ In any case, the structure of the available data looks like this:
 
 #### Create multiple entities from a single file
 
-In some cases, we would like to parse a single JSON/YAML file and create multiple entities from it.  
-For this purpose, we can use the `itemsToParse` key in our mapping configuration.
+In some cases, you may want to parse a single JSON/YAML file and create multiple entities from it. For this purpose, you can use the `itemsToParse` key in your mapping configuration.
 
 For example, say you want to track/manage a project's dependencies in Port. One option is to create a `package` blueprint, with each of its entities representing a dependency from a `package.json` file.
 
 The following configuration fetches a `package.json` file from a specific repository, and creates an entity for each of the dependencies in the file, based on the `package` blueprint:
 
 <details>
-<summary><b>File mapping example for mulitiple entities (click to expand)</b></summary>
+<summary><b>File mapping example for multiple entities (click to expand)</b></summary>
+
 ```yaml showLineNumbers
 resources:
   - kind: file
@@ -805,8 +803,7 @@ itemsToParse: .content | if type== "object" then [.] else . end
 
 #### Ingest raw file content
 
-If you need to ingest the raw content of a file without parsing it, you can use the `skipParsing` key in your file selector.  
-This is useful when you want to store the file content as a string or YAML property.
+If you need to ingest the raw content of a file without parsing it, you can use the `skipParsing` key in your file selector. This is useful when you want to store the file content as a string or YAML property.
 
 When `skipParsing` is set to `true`, the file content will be kept in its original string format instead of being parsed into a JSON/YAML object.
 
@@ -840,8 +837,7 @@ resources:
 #### Limitations
 
 - Currently only files up to 1MB in size are supported.
-- Only JSON and YAML formats are automatically parsed.  
-  Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
+- Only JSON and YAML formats are automatically parsed. Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
 
 ### Ingest repositories via search API
 
@@ -903,7 +899,7 @@ The repository search feature supports all resource kinds except `team`, `user`,
 
 #### Benefits
 
-- **Granular filtering**: Precisely control which repositories are ingested..
+- **Granular filtering**: Precisely control which repositories are ingested.
 
 #### Limitations
 
@@ -943,9 +939,10 @@ This will treat the personal GitHub account as the sole organization for ingesti
 
 
 #### Limitations
+
 - Webhooks are not supported for personal GitHub accounts.
 
 
 ## Examples
 
-Refer to the [examples](./examples) page for practical configurations and their corresponding blueprint definitions.
+Refer to the [examples](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/examples) page for practical configurations and their corresponding blueprint definitions.
