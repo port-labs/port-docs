@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
 ---
 
 import RepositoryBlueprint from './examples/\_github_exporter_example_repository_blueprint.mdx'
@@ -55,7 +55,7 @@ import OrganizationBlueprint from './examples/example-organization/\_github_expo
 import OrganizationAppConfig from './examples/example-organization/\_github_exporter_example_organization_port_app_config.mdx'
 
 
-# Resource mapping examples
+# Examples
 
 ## Map organizations and repositories
 
