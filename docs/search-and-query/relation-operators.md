@@ -296,7 +296,7 @@ Instead of thinking about the path as downstream from the target, we treat it as
 
 Suppose you have the following data model:
 
-![Dependency graph upstream downstream diagram](/img/software-catalog/search-in-port/specific-path-diagram-example.png)
+<img src="/img/software-catalog/search-in-port/specific-path-diagram-example.png" border='1px' style={{borderRadius:'6px'}} />
 
 <h4> Example 1: Find all services related to a cluster (upstream) </h4>
 
@@ -352,6 +352,71 @@ To find all deployments related to a specific service (e.g., "production-service
 ```
 
 This will return all **deployments** that are related to the "production-service".
+
+---
+
+<h4> Example 3: Filter using contextual values </h4>
+
+You can combine relation-path filters with [contextual query rules](/search-and-query/#contextual-query-rules) to dynamically filter entities based on the current user. This is useful when you need to filter entities based on ownership derived from related entities.
+
+The following rule filters deployments where the related cluster is owned by the current user:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "$blueprint",
+      "operator": "=",
+      "value": "deployment"
+    },
+    {
+      "operator": "matchAny",
+      "property": {
+        "path": ["deployedOn", "ownedBy"]
+      },
+      "value": {
+        "context": "user",
+        "property": "$identifier"
+      }
+    }
+  ]
+}
+```
+
+This will return all **deployments** on clusters owned by the current user, by traversing the `deployedOn` relation to the cluster and then the `ownedBy` relation to the user.
+
+You can also filter services based on a single relation. The following rule filters services where the current user is the owner:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "$blueprint",
+      "operator": "=",
+      "value": "service"
+    },
+    {
+      "operator": "matchAny",
+      "property": {
+        "path": ["ownedBy"]
+      },
+      "value": {
+        "context": "user",
+        "property": "$identifier"
+      }
+    }
+  ]
+}
+```
+
+This will return all **services** owned by the current user.
+
+In these examples:
+- `property.path` specifies the chain of relations to traverse.
+- The contextual `value` dynamically resolves to the current user's identifier.
+- The `matchAny` operator matches entities where the value at the end of the relation path equals the contextual value.
 
 ---
 
