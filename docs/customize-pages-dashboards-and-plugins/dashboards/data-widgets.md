@@ -185,12 +185,12 @@ Bar charts illustrate data from entities in your software catalog divided by cat
 
 - Bar charts are limited to displaying **up to 9 bars**. If there are more than 9 categories, the additional categories will be grouped into an "other" section.
 
-## Multi-line chart
+## Line chart
 
-:::info Transitioning to multi-line charts
-Starting December 11, 2025, the multi-line chart is the only line chart type you can create in Port. Existing line charts remain fully functional and can still be edited through the UI and API, but they don’t support the enhanced capabilities available in multi-line charts.
+:::info New line chart capabilities
+Starting [PLACEHOLDER], the line chart has been enhanced with new capabilities. Existing line charts remain fully functional, backward compatible, and can still be edited through the UI and API.
 
-Multi-line charts offer greater flexibility by letting you combine multiple line chart types in a single widget. If you need this functionality, we recommend creating a new multi-line chart.
+The new line chart offers greater flexibility by letting you combine multiple line chart types in a single widget. If you want to use these enhanced capabilities, you should create a new line chart. Note that in the API, the new line chart is named `multi-line-chart`.
 :::
 
 Line charts visualize trends over time, either by tracking `number` properties of entities or by tracking the entities themselves.  
@@ -201,12 +201,12 @@ Port offers three types of lines:
 2. [Aggregate property (all entities)](#aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
 3. [Count entities (all entities)](#count-entities-all-entities) - displays either the total count of entities or the average number of entities from a specific blueprint over time.
 
-<h3>Creating a multi-line chart</h3>
+<h3>Creating a line chart</h3>
 
 To add a new line chart widget:
 
 1. **Configure the chart settings**:
-   - Provide a **title**, **icon**, **description**, and optionally a custom **empty state text** for the widget.
+   - Provide a **title**, **icon**, **description**, and optionally a custom [**empty state text**](#custom-empty-state) for the widget.
 
 2. **Configure the X axis** (shared across all lines):
    - Give the axis a **title**.
@@ -215,15 +215,15 @@ To add a new line chart widget:
 
 3. **Configure the Y axis title**.
 
-4. **Add lines using the `+ Line` button**:
+4. **Add lines**:
    - Click `+ Line` to open the line configuration window.
-   - Choose the line type and configure its specific settings (see below for details on each type).
+   - Choose the chart type and configure its specific settings (see below for details on each type).
    - Repeat to add multiple lines to the same chart.
 
 **Considerations:**
 
-- **Shared Y axis**: All lines in the chart share a single Y axis scale and unit. When adding multiple lines, make sure you choose comparable metrics to ensure the chart remains meaningful and readable.
-- **Line colors**: Even if a property value (such as an enum) has a defined color in Port (e.g., "Failed" → red), the line chart may not use the same color. Line colors are assigned automatically and may differ from property colors.
+- **Shared Y axis**: All lines in the chart share a single Y axis scale. When adding multiple lines, make sure you choose comparable metrics to ensure the chart remains meaningful and readable.
+- **Line colors**: Even if a property value (such as an enum) has a defined color in Port (e.g., "Failed" → red), the line chart may not use the same color. Line colors may differ from property colors.
 
 ### Property history (single entity)
 
@@ -237,7 +237,7 @@ When creating this line type:
 
 1. Give the line a **title**.
 
-2. Choose the **line type**: `Property history`.
+2. Choose the **chart type**: `Property history`.
 
 3. Choose the **blueprint** you want to visualize.
 
@@ -270,7 +270,7 @@ When creating this line type:
 
 1. Give the line a **title**.
 
-2. Choose the **line type**: `Aggregate property`.
+2. Choose the **chart type**: `Aggregate property`.
 
 3. Choose the **blueprint** you want to visualize.
 
@@ -320,7 +320,7 @@ When creating this line type:
 
 1. Give the line a **title**.
 
-2. Choose the **line type**: `Count entities`.
+2. Choose the **chart type**: `Count entities`.
 
 3. Choose the **blueprint** you want to visualize.
 
@@ -507,7 +507,7 @@ The following table lists the identifiers for each data widget type:
 | ----------- | ---------- |
 | Number chart | `entities-number-chart` |
 | Pie chart | `entities-pie-chart` |
-| Bar chart | 'bar-chart' |
-| Multi line chart | `line-chart` |
+| Bar chart | `bar-chart` |
 | Line chart | `line-chart` |
+| New line chart | `multi-line-chart` |
 | Table | `table-entities-explorer` |
