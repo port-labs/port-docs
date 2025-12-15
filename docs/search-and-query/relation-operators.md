@@ -292,59 +292,6 @@ When using downstream paths, the `fromBlueprint` parameter specifies the source 
 
 Instead of thinking about the path as downstream from the target, we treat it as upstream from the specified blueprint to the target blueprint. This means that the path will be traversed starting from entities of the specified `fromBlueprint`.
 
-### Filter with contextual values
-
-You can combine relation-path filters with [contextual query rules](/search-and-query/#contextual-query-rules) to dynamically filter entities based on the current user. This is useful when you need to filter entities based on ownership derived from related entities.
-
-The following rule filters entities where the owner is derived from a **directly related entity**:
-
-```json showLineNumbers
-{
-  "combinator": "and",
-  "rules": [
-    {
-      "operator": "matchAny",
-      "property": {
-        "path": ["relationID_1"]
-      },
-      "value": {
-        "context": "user",
-        "property": "$identifier"
-      }
-    }
-  ]
-}
-```
-
-This will return all entities where the related entity (via `relationID_1`) matches the current user's identifier.
-
-You can also traverse **multiple relations** to find ownership. The following rule filters entities where the owner is derived by traversing through two related entities:
-
-```json showLineNumbers
-{
-  "combinator": "and",
-  "rules": [
-    {
-      "operator": "matchAny",
-      "property": {
-        "path": ["relationID_1", "relationID_2"]
-      },
-      "value": {
-        "context": "user",
-        "property": "$identifier"
-      }
-    }
-  ]
-}
-```
-
-This will return all entities where the entity at the end of the relation chain (traversing `relationID_1` → `relationID_2`) matches the current user's identifier.
-
-In the above examples:
-- `property.path` specifies the chain of relations to traverse (replace the relation names with your actual relation identifiers).
-- The contextual `value` dynamically resolves to the current user's identifier.
-- The `matchAny` operator matches entities where the value at the end of the relation path equals the contextual value.
-
 ### Examples
 
 Suppose you have the following data model:
@@ -405,6 +352,59 @@ To find all deployments related to a specific service (e.g., "production-service
 ```
 
 This will return all **deployments** that are related to the "production-service".
+
+### MatchAny and contextual values
+
+You can combine relation-path filters with [contextual query rules](/search-and-query/#contextual-query-rules) to dynamically filter entities based on the current user. This is useful when you need to filter entities based on ownership derived from related entities.
+
+The following rule filters entities where the owner is derived from a **directly related entity**:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "matchAny",
+      "property": {
+        "path": ["relationID_1"]
+      },
+      "value": {
+        "context": "user",
+        "property": "$identifier"
+      }
+    }
+  ]
+}
+```
+
+This will return all entities where the related entity (via `relationID_1`) matches the current user's identifier.
+
+You can also traverse **multiple relations** to find ownership. The following rule filters entities where the owner is derived by traversing through two related entities:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "matchAny",
+      "property": {
+        "path": ["relationID_1", "relationID_2"]
+      },
+      "value": {
+        "context": "user",
+        "property": "$identifier"
+      }
+    }
+  ]
+}
+```
+
+This will return all entities where the entity at the end of the relation chain (traversing `relationID_1` → `relationID_2`) matches the current user's identifier.
+
+In the above examples:
+- `property.path` specifies the chain of relations to traverse (replace the relation names with your actual relation identifiers).
+- The contextual `value` dynamically resolves to the current user's identifier.
+- The `matchAny` operator matches entities where the value at the end of the relation path equals the contextual value.
 
 ## Self-relation
 
