@@ -17,16 +17,16 @@ The integration periodically syncs your AWS resources to ensure your Port catalo
 
 The following AWS resource kinds can be ingested into Port using the AWS Hosted by Port integration. You can reference any field that appears in the API responses linked below when writing your mapping configuration.
 
-- `AWS::Account::Info`.
-- `AWS::Organization::Account`.
-- `AWS::S3::Bucket`.
-- `AWS::EC2::Instance`.
-- `AWS::ECS::Cluster`.
-- `AWS::ECS::Service`.
-- `AWS::EKS::Cluster`.
-- `AWS::RDS::DBInstance`.
-- `AWS::Lambda::Function`.
-- `AWS::SQS::Queue`.
+- `AWS::Account::Info`
+- `AWS::Organization::Account`
+- `AWS::S3::Bucket`
+- `AWS::EC2::Instance`
+- `AWS::ECS::Cluster`
+- `AWS::ECS::Service`
+- `AWS::EKS::Cluster`
+- `AWS::RDS::DBInstance`
+- `AWS::Lambda::Function`
+- `AWS::SQS::Queue`
 
 For a full, always up-to-date list of supported resource kinds and their properties, see the [Resource and property reference](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/resource-and-property-reference).
 
