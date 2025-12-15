@@ -216,7 +216,7 @@ kubectl apply -f my-ocean-snyk-integration.yaml
 
 <TabItem value="azure-container-instance" label="Azure Container Instance">
 
-To Install Terraform Cloud integration using Azure Container Instance:
+To Install Snyk Integration using Azure Container Instance:
 
 Navigate to Azure portal homepage, select `Create resource`.
 
