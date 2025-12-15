@@ -28,7 +28,7 @@ The following AWS resource kinds can be ingested into Port using the AWS Hosted 
 - `AWS::Lambda::Function`
 - `AWS::SQS::Queue`
 
-For a full, always up-to-date list of supported resource kinds and their properties, see the [Resource and property reference](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/resource-and-property-reference).
+For a full, always up-to-date list of supported resource kinds and their properties, see the [Resource and property reference](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/resource-and-property-reference).
 
 ## Common use cases
 
