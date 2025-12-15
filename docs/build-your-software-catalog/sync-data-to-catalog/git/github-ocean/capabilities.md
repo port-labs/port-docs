@@ -30,7 +30,8 @@ For example, say you want to manage your `package.json` files in Port. One optio
 
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
-:::info Organization and repository filtering
+**Organization and repository filtering:**
+
 Both `organization` and `repos` in file selectors are optional. You can:
 - Specify only `organization`: scan all repositories in that organization (respecting `repositoryType`).
 - Specify only `repos`: scan only those repositories across all accessible organizations.
@@ -41,11 +42,11 @@ When scanning broadly, the integration scope depends on your credentials:
 - With classic PAT: all repositories across all organizations the token can access.
 Use `repositoryType` and precise `path` patterns to reduce scope.
 
-Note: Omitting `organization` and `repos` will scan all accessible repositories. For large orgs, expect longer resyncs and higher GitHub API usage. Narrow scope with `repos`, `repositoryType`, and specific `path` patterns.
-:::
+**Note:** Omitting `organization` and `repos` will scan all accessible repositories. For large orgs, expect longer resyncs and higher GitHub API usage. Narrow scope with `repos`, `repositoryType`, and specific `path` patterns.
 
 <details>
 <summary><b>Package file mapping example (click to expand)</b></summary>
+
 ```yaml showLineNumbers
 resources:
   - kind: file
@@ -74,7 +75,8 @@ resources:
 ```
 </details>
 
-:::tip Test your mapping
+**Test your mapping:**
+
 After adding the `file` kind to your mapping configuration, click on the `Resync` button. When you open the mapping configuration again, you will see real examples of files fetched from your GitHub organization.
 
 This will help you see what data is available to use in your `jq` expressions. Click on the **Test mapping** button to test your mapping against the example data.
@@ -562,7 +564,6 @@ In any case, the structure of the available data looks like this:
 ```
 
 </details>
-:::
 
 ### Create multiple entities from a single file
 
@@ -613,14 +614,13 @@ You can use one of these methods to ingest multi-document YAML files:
 1. Use the `itemsToParse` key to create multiple entities from such a file (see example above).
 2. Map the result to an `array` property.
 
-:::tip Mixed YAML types
+**Mixed YAML types:**
+
 If you have both single-document and multi-document YAML files in your repositories, you can use the `itemsToParse` key like this to handle both cases:
 
 ```yaml
 itemsToParse: .content | if type== "object" then [.] else . end
 ```
-
-:::
 
 ### Ingest raw file content
 
