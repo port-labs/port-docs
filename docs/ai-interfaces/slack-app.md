@@ -57,6 +57,8 @@ To install the Slack app, follow these steps:
 
 Once you install the Port Slack app, Port automatically enriches any Slack channel URL in your catalog with the actual channel name. This makes it easier to understand context, ownership, and communication paths at a glance.
 
+<img src='/img/ai-agents/SlackAppChannelNameInCatalog.png' width='80%' border='1px' alt='Slack channel names displayed in catalog' />
+
 The feature works automatically with no additional configuration required. Install the Slack app from the [Slack app installation page](https://app.port.io/settings/slack-app), and channel names will appear wherever Slack URLs are present in your catalog.
 
 
