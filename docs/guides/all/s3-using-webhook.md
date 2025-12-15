@@ -11,7 +11,7 @@ In this guide, we are going to present different methods to create an S3 bucket 
 :::note
 Throughout this tutorial, we will use [webhook-actions](/build-your-software-catalog/custom-integration/webhook), and a simple backend that listens to the webhook events.
 
-You can choose to use [kafka-actions](/actions-and-automations/setup-backend/webhook/kafka/kafka.md) as well.
+You can choose to use [kafka-actions](/actions-and-automations/setup-backend/kafka/) as well.
 
 Each action shown in this example, creates a new Entity in Port and updates action run info in order to keep track of the action status and its outcomes.
 :::
