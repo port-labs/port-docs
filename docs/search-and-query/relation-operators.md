@@ -353,7 +353,9 @@ To find all deployments related to a specific service (e.g., "production-service
 
 This will return all **deployments** that are related to the "production-service".
 
-### MatchAny and contextual values
+___
+
+#### Contextual values
 
 You can combine relation-path filters with [contextual query rules](/search-and-query/#contextual-query-rules) to dynamically filter entities based on the current user. This is useful when you need to filter entities based on ownership derived from related entities.
 
