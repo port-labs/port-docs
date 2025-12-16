@@ -13,9 +13,9 @@ This example helps internal developer teams to trigger [Windmill](https://www.wi
 1. Create a Windmill job blueprint in Port.
 
     <details>
-    <summary>Windmill job blueprint (Click to expand)</summary>
+    <summary><b>Windmill job blueprint (click to expand)</b></summary>
 
-    ```json
+    ```json showLineNumbers
     {
     "identifier": "windmillJob",
     "description": "This blueprint represents a windmill job in our software catalog",
@@ -54,9 +54,9 @@ This example helps internal developer teams to trigger [Windmill](https://www.wi
 2. Create a Port action using the following JSON definition:
 
     <details>
-    <summary>Port action (Click to expand)</summary>
+    <summary><b>Port action (click to expand)</b></summary>
 
-    ```json
+    ```json showLineNumbers
     [
     {
         "identifier":"trigger_windmill_pipeline",
@@ -108,7 +108,7 @@ This example helps internal developer teams to trigger [Windmill](https://www.wi
 3. Create a JSON file (`invocations.json`) in your working directory.
 
     <details>
-    <summary>Invocation Mapping (Click to expand)</summary>
+    <summary><b>Invocation Mapping (click to expand)</b></summary>
 
     ```json showLineNumbers title="invocations.json"
     [
@@ -133,11 +133,11 @@ This example helps internal developer teams to trigger [Windmill](https://www.wi
 4. Run the helm command below to install port agent for Windmill job.
 
     <details>
-    <summary>Port agent installation for a Windmill job (Click to expand)</summary>
+    <summary><b>Port agent installation for a Windmill job (click to expand)</b></summary>
 
     **Remember to replace the boilerplate credentials in the helm command with your actual credentials.**
 
-    ```sh
+    ```sh showLineNumbers
     helm repo add port-labs https://port-labs.github.io/helm-charts
 
     helm repo update
@@ -179,9 +179,9 @@ This example helps internal developer teams to trigger [Windmill](https://www.wi
 1. Create a windmill job blueprint in Port.
 
     <details>
-    <summary>Windmill job blueprint (Click to expand)</summary>
+    <summary><b>Windmill job blueprint (click to expand)</b></summary>
 
-    ```json
+    ```json showLineNumbers
     {
     "identifier": "windmillJob",
     "description": "This blueprint represents a windmill job in our software catalog",
@@ -220,9 +220,9 @@ This example helps internal developer teams to trigger [Windmill](https://www.wi
 2. Create a Port action using the following JSON definition:
 
     <details>
-    <summary>Port action (Click to expand)</summary>
+    <summary><b>Port action (click to expand)</b></summary>
 
-    ```json
+    ```json showLineNumbers
     [
     {
         "identifier":"trigger_windmill_pipeline",
@@ -274,7 +274,7 @@ This example helps internal developer teams to trigger [Windmill](https://www.wi
 3. Create a JSON file (`invocations.json`) in your working directory.
 
     <details>
-    <summary>Invocation Mapping (Click to expand)</summary>
+    <summary><b>Invocation Mapping (click to expand)</b></summary>
 
     ```json showLineNumbers title="invocations.json"
     [
@@ -298,11 +298,11 @@ This example helps internal developer teams to trigger [Windmill](https://www.wi
 4. Run the helm command below to install a port agent for Windmill job.
 
     <details>
-    <summary>Port agent installation for a Windmill job (Click to expand)</summary>
+    <summary><b>Port agent installation for a Windmill job (click to expand)</b></summary>
 
     **Remember to replace the boilerplate credentials in the helm command with your actual credentials.**
 
-    ```sh
+    ```sh showLineNumbers
     helm repo add port-labs https://port-labs.github.io/helm-charts
 
     helm repo update
