@@ -1594,7 +1594,7 @@ export const availableGuides = [
         link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
     },
     {
-        title: "Measure reliability and stability",
+        title: "Measure reliability and stability of delivery pipeline",
         description: "Measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration",
         tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
         logos: ["GitHub"],

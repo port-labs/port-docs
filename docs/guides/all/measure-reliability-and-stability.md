@@ -3,7 +3,7 @@ displayed_sidebar: null
 description: Learn how to measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration.
 ---
 
-# Measure reliability and stability
+# Measure reliability and stability of delivery pipeline
 
 This guide demonstrates how to set up a reliability and stability monitoring solution across engineering teams. You will learn how to measure key engineering metrics that help platform engineering teams understand, assess, and improve the reliability and resilience of software systems using operational and delivery signals stored in Port's catalog.
 
