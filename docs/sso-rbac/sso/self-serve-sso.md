@@ -4,7 +4,7 @@ sidebar_position: 1
 description: Set up SSO for your organization directly from the portal
 ---
 
-# Self-serve SSO setup
+# Self-serve SSO
 
 Port allows company admins to configure SSO (Single Sign-On) directly from the portal.  
 This self-serve flow guides you through connecting your identity provider (IdP) to Port.
@@ -15,6 +15,10 @@ This self-serve flow guides you through connecting your identity provider (IdP) 
 - Your account must have migrated to [multi-organization](/sso-rbac/multi-organization).
 - You must be a **company admin** to configure SSO.
 - You need access to your identity provider's admin console to create and configure applications.
+
+:::info SSO tab access
+The **SSO** tab in organization settings is only visible to company admins with an enterprise account.
+:::
 
 ## Set up SSO
 
@@ -55,43 +59,28 @@ Once you have completed the configuration in your identity provider, click the *
 
 ### Step 4: Finalize your SSO settings
 
-After the SSO connection is successfully established:
+After the SSO connection is successfully established, you can configure the following options:
 
-1. **Block social logins** (optional) - You can choose to block social login methods (such as Google or GitHub sign-in) and require all users to authenticate through your SSO provider. This setting is reversible.
+<img src="/img/sso/self-serve/sso-connection-ready.png" width="50%" border='1px' style={{borderRadius:'6px'}}/>
 
-2. **Access tab enabled** - Once SSO is configured, the **Access** tab becomes available in your organization settings. <!-- TODO(verify): What does the Access tab control specifically? -->
+1. **Set group filters** - Click `Set Group Filters` to control which IdP groups sync into Port teams. You can use regular expressions (RegEx) to define allowed and blocked group patterns.
+
+   :::info Group filter playground
+   The group filter configuration in Port is a playground for testing your RegEx patterns. It does not modify the actual groups in your IdP - group management should always be done in your identity provider's admin console. Groups that are already synced to Port will appear by default in the playground, allowing you to test how your filters would affect them.
+   :::
+
+2. **Block social login for domains** - Your configured domains are displayed here. You can toggle social login blocking per domain. When enabled for a domain, users with email addresses from that domain must sign in through your SSO provider and cannot use social login methods (such as Google or GitHub sign-in). To add more domains, use `Edit Connection`.
+
+3. **Session settings** - Click `Session Settings` to configure session timeout settings for your SSO users.
+
+4. **Edit connection** - Click `Edit Connection` to open the Auth0 management interface where you can modify your SSO configuration, including adding or managing domains associated with your SSO connection.
 
 :::info Organization-level setting
 The SSO configuration and access settings apply at the organization level, not the company level.
 :::
 
-## Group filters
-
-Once SSO is configured, you can set up group filters to control which IdP groups sync into Port teams. Click **Set Group Filters** in the SSO tab to configure this.
-
-<!--
-TODO: Add details about group filters:
-- How to configure group filters
-- What filtering options are available
-- How synced groups appear in Port
-- Any limitations or considerations
--->
-
-## Audit log
-
-Port maintains an audit log of SSO-related activities to help you track changes and monitor your SSO configuration. The audit log records events such as SSO setup attempts, configuration changes, and connection status updates.
-
-<!--
-Additional audit log details to be added:
-- How to access the audit log
-- What events are logged
-- Log retention period
-- Example log entries
--->
-
 ## Limitations
 
-- Domain verification requires DNS configuration. To add domains to your SSO connection, contact [Port's support team](http://support.port.io/).
 - Terraform is not supported for self-serve SSO setup.
 
 ## Troubleshooting
@@ -103,3 +92,63 @@ If you click **Setup is Done** and encounter an error, use the following table t
 | Connection not created | The SSO connection was not created successfully. | Click **Start Again** to generate a new setup URL and repeat the configuration process. |
 | Mapping failed | The connection mapping failed. | Click **Edit Connection** to review and fix the configuration. |
 | Linking failed | The SSO provider is connected, but linking to the company in Port failed. | Contact [Port's support team](http://support.port.io/) for assistance. |
+
+## FAQ
+
+<details>
+<summary><b>Can we use multiple SSO providers (e.g., Okta and Azure)? (click to expand)</b></summary>
+
+No. Port supports only one SSO provider per company at a time.
+
+</details>
+
+<details>
+<summary><b>How do we switch providers (e.g., from Okta to Azure)? (click to expand)</b></summary>
+
+You must **delete** the existing connection and start the setup process from the beginning. There is no migration path between SSO providers.
+
+</details>
+
+<details>
+<summary><b>Can clients rotate (update) the SSO secret via API? (click to expand)</b></summary>
+
+No, you should rotate the SSO secret via the Auth0 UI. Port can provide the link to the Auth0 UI via API, but the actual rotation must be done in Auth0's interface.
+<!-- TODO: which path is this? -->
+</details>
+
+<details>
+<summary><b>Does the Okta setup include SCIM? Will it work? (click to expand)</b></summary>
+
+Not until the company is set as SCIM enabled. Contact [Port's support team](http://support.port.io/) to enable SCIM for your organization.
+
+</details>
+
+<details>
+<summary><b>Does self-serve SSO support all protocols? (click to expand)</b></summary>
+
+No. OIDC and SAML are supported. For LDAP, refer to the [LDAP documentation](/sso-rbac/sso/sso-providers/ldap/ldap) for manual setup.
+
+</details>
+
+<details>
+
+<summary><b>Which IdPs were tested and verified? (click to expand)</b></summary>
+
+EntraID and JumpCloud have been fully QA tested. Other IdPs following OIDC or SAML standards should work as well.
+
+</details>
+
+<details>
+<summary><b>Which protocols were tested and verified? (click to expand)</b></summary>
+
+OIDC and SAML protocols have been fully QA tested.
+
+</details>
+
+<details>
+<summary><b>Is the manual creation flow still available? (click to expand)</b></summary>
+
+Yes. You can still request manual SSO setup by contacting [Port's support team](http://support.port.io/).
+
+<!-- TODO: ask Naama, if this is still possible, if we remove the SSO providers section, they will find it hard to do it without them. -->
+</details>
