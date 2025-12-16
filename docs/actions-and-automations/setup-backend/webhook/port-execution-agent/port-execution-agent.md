@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Port execution agent
 
-Port's [execution agent](https://github.com/port-labs/port-agent) provides you with a secure and convenient way to listen and act on invocations of Self-Service Actions and changes in the software catalog.
+Port's [execution agent](https://github.com/port-labs/port-agent) provides you with a secure and convenient way to listen and act on invocations of self-service actions and changes in the software catalog.
 
 By using the execution agent, you don't need to expose a public endpoint for Port to contact.
 
@@ -15,7 +15,7 @@ Contact [Port's support team](http://support.port.io/) to receive one.
 
 The data flow when using the Port execution agent is as follows:
 
-- A new Self-Service Action or change in the software catalog is invoked.
+- A new self-service action or change in the software catalog is invoked.
 - Port sends the invocation event to your dedicated Kafka topic.
 - The execution agent pulls the new invocation event from your Kafka topic, and sends it to the URL you specified.
 

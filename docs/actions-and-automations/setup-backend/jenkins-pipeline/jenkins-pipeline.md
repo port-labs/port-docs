@@ -12,13 +12,13 @@ The steps shown in the image above are as follows:
 1. A self-service action or automation is invoked in Port.
 2. Port signs the action payload using SHA-1 with your Port [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `x-port-signature` request header.
 
-   :::info Webhook security
-   Verifying the webhook request using the request headers provides the following benefits:
+   Validating the webhook request using the request headers ensures that:
 
-   - Ensures that the request payload has not been tampered with.
-   - Ensures that the sender of the message is Port.
-   - Ensures that the received message is not a replay of an older message.
-   :::
+   - The request payload has not been tampered with.
+   - The sender of the message is Port.
+   - The received message is not a replay of an older message.
+
+   To learn more, refer to the [validate webhook signature](/actions-and-automations/setup-backend/webhook/signature-verification) page.
 
 3. Port publishes an invoked `WEBHOOK` via a `POST` request to `https://{JENKINS_URL}/generic-webhook-trigger/invoke`
 
@@ -91,7 +91,7 @@ Here is an example of the required configuration:
 <img src="/img/self-service-actions/setup-backend/jenkins-pipeline/validate-webhook.png" width="100%" border='1px' />
 <br/><br/>
 
-:::info Important
+:::info IP and HMAC configuration
 
 - The IP field should be set to one of our hosted outbound WEBHOOK Gateway addresses: `44.221.30.248`, `44.193.148.179`, `34.197.132.205`, `3.251.12.205`, `34.252.219.131` or `54.75.236.107`.
   - For more information about Port's outbound calls, check out Port's [actions security](/actions-and-automations/create-self-service-experiences/security/security.md) page.
