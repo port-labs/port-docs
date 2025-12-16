@@ -9,7 +9,7 @@ import CustomOceanIntegration from "/docs/build-your-software-catalog/sync-data-
 
 <CustomOceanIntegration />
 
-Port's Azure Monitor integration allows you to ingest Azure Monitor resources into your software catalog using the [Ocean Custom Integration](/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework. After installing this integration, you can visualize metrics, alerts, activity logs, and diagnostic settings from your Azure resources.
+Port's Azure Monitor integration allows you to ingest Azure Monitor resources into your software catalog using the [Ocean Custom Integration](https://docs.port.io/build-your-software-catalog/custom-integration/ocean-custom-integration/overview) framework. After installing this integration, you can visualize metrics, alerts, activity logs, and diagnostic settings from your Azure resources.
 
 ## Supported resources
 
@@ -22,7 +22,7 @@ The Azure Monitor integration can ingest the following resources into Port. It i
 
 ## Prerequisites
 
-To use this integration, you need:
+To use this integration, the following prerequisites are required:
 
 - An Azure subscription with appropriate permissions.
 - A Microsoft Entra ID application registration with appropriate API permissions.
@@ -30,7 +30,7 @@ To use this integration, you need:
 - Admin consent for the required permissions.
 - An access token (bearer token) for Azure Resource Manager API.
 
-**To register an application in Microsoft Entra ID:**
+**Registering an application in Microsoft Entra ID**
 
 1. Log in to the [Azure Portal](https://portal.azure.com).
 2. Navigate to **Microsoft Entra ID** > **App registrations**.
@@ -40,7 +40,7 @@ To use this integration, you need:
 6. Click **Register**.
 7. Note the **Application (client) ID** and **Directory (tenant) ID**.
 
-**To create a client secret:**
+**Creating a client secret**
 
 1. In your app registration, navigate to **Certificates & secrets**.
 2. Click **New client secret**.
@@ -68,9 +68,9 @@ Store your client secret securely and never share it. The secret provides access
 An Entra ID administrator must grant consent for these permissions before the integration can access Azure Monitor data.
 :::
 
-**To get an access token (bearer token):**
+**Generating an access token (bearer token)**
 
-You need to obtain an OAuth2 access token to authenticate with Azure Resource Manager API. Use the following curl command to get a token:
+To authenticate with Azure Resource Manager API we need to obtain an OAuth2 access token. We can use the following curl command to get a token:
 
 ```bash showLineNumbers
 curl -X POST "https://login.microsoftonline.com/YOUR_TENANT_ID/oauth2/v2.0/token" \
@@ -203,7 +203,7 @@ Before the integration can sync data, you need to create the required blueprints
 3. Copy and paste each blueprint JSON from the sections below.
 
     <details>
-    <summary><b>Azure Monitor Alert Blueprint (Click to expand)</b></summary>
+    <summary><b>Azure monitor alert blueprint (click to expand)</b></summary>
 
     Metric alert rules:
 
@@ -277,7 +277,7 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Azure Monitor Activity Log Blueprint (Click to expand)</b></summary>
+    <summary><b>Azure monitor activity log blueprint (click to expand)</b></summary>
 
     Activity log events:
 
@@ -384,7 +384,7 @@ The actual data array is in the `.value` property.
 4. Add the resource mapping configurations below.
 
     <details>
-    <summary><b>Metric Alerts mapping (Click to expand)</b></summary>
+    <summary><b>Metric Alerts mapping (click to expand)</b></summary>
 
     ```yaml showLineNumbers
     resources:
@@ -424,7 +424,7 @@ The actual data array is in the `.value` property.
     </details>
 
     <details>
-    <summary><b>Activity Logs mapping (Click to expand)</b></summary>
+    <summary><b>Activity Logs mapping (click to expand)</b></summary>
 
     ```yaml showLineNumbers
     resources:
@@ -465,7 +465,7 @@ The actual data array is in the `.value` property.
 
 ## Customization
 
-If you want to customize your setup or test different API endpoints before committing to a configuration, use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/build-your-integration).
+If you want to customize your setup or test different API endpoints before committing to a configuration, use the [interactive builder](https://docs.port.io/build-your-software-catalog/custom-integration/ocean-custom-integration/build-your-integration).
 
 **The interactive builder helps you:**
 1. Test your Azure Monitor API endpoints with live data.
