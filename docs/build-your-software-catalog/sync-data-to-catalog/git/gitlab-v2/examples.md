@@ -63,20 +63,6 @@ By default, if not specified, all groups will be synced.
     includeOnlyActiveGroups: true
 ```
 
-:::caution Group search filtering effect
-If `includeOnlyActiveGroups` is specified, only **groups**, **issues**, **files**, **members** and **merge requests** that match the criteria will be synced.
-This means, the following kinds will be fetched based on the groups filtered with the search criteria:
-
-- `group`
-- `issue`
-- `file`
-- `member`
-- `merge-request`
-
-For more information, see the [troubleshooting](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/installation#troubleshooting) section.
-
-:::
-
 :::tip Learn more
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
@@ -118,20 +104,6 @@ By default, if not specified, all projects will be synced.
     # highlight-next-line
     includeOnlyActiveProjects: true
 ```
-
-:::caution Project search filtering effect
-If `includeOnlyActiveProjects` is specified, only **projects**, **pipelines**, **jobs**, **releases** and **tags** that match the criteria will be synced.
-This means, the following kinds will be fetched based on the projects filtered with the search criteria:
-
-- `project`
-- `pipeline`
-- `job`
-- `release`
-- `tag`
-
-For more information, see the [troubleshooting](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/installation#troubleshooting) section.
-
-:::
 
 #### Merge request configuration options
 
