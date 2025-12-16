@@ -17,6 +17,7 @@
     "generate-guide-metadata": "node scripts/generate-guide-metadata.js"
   },
   "dependencies": {
+    "@aws-amplify/backend": "^1.19.0",
     "@docusaurus/core": "^3.9.2",
     "@docusaurus/faster": "^3.9.2",
     "@docusaurus/plugin-client-redirects": "^3.9.2",
