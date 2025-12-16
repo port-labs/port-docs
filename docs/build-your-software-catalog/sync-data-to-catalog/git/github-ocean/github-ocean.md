@@ -17,39 +17,7 @@ The integration allows you to:
 - Map and organize GitHub resources and metadata into Port (see [supported resources](#supported-resources) below).
 - Detect changes (create/update/delete) in real-time and keep your catalog up to date.
 - Manage Port entities using GitOps.
-- Sync **multiple GitHub organizations** with a single integration instance.
-
-### Multi-organization support
-
-The GitHub integration supports syncing data from multiple GitHub organizations starting from **version 3.0.0-beta**. You can configure which organizations to sync using a single-org `githubOrganization`, or by listing organizations in your port mapping (`organizations`).
-
-<details>
-<summary><b>Mapping multi organizations (click to expand)</b></summary>
-
-```yaml showLineNumbers
-deleteDependentEntities: true
-createMissingRelatedEntities: true
-enableMergeEntity: true
-organizations:
-  - org1
-  - org2
-# ... rest of your mapping (repositoryType, resources, etc.) ...
-```
-
-</details>
-
-**Authentication and configuration requirements**
-
-- **With classic PAT**:
-  - Specify organizations in port mapping: `organizations: ["org1", "org2", "org3"]`
-  - If `organizations` are not specified, the integration will sync all organizations the classic PAT is scoped to.
-- **With GitHub App or Fine-grained PAT**: Specify exactly one organization by setting the `githubOrganization` in the environment variables: `githubOrganization: "my-org"`
-
-**Precedence:** If `githubOrganization` is set in the environment variables or config and `organizations` are also listed in port mapping, the integration prioritizes single‑organization behavior and syncs only the `githubOrganization`.
-
-**Performance consideration:** Syncing multiple organizations will increase the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption. Consider syncing only the organizations you need.
-
-**Default mapping behavior:** First‑time installs may sync more than intended, since organizations aren’t scoped yet. Refer to the [installation guide](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation) for how to ensure a clean catalog after you scope out the required organization.
+- Sync [multiple GitHub organizations](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/installation#multi-github-organization-support) with a single integration instance.
 
 ### Supported resources
 
