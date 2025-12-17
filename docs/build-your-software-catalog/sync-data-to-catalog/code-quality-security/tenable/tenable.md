@@ -16,9 +16,8 @@ Port's Tenable integration allows you to ingest Tenable.io vulnerability managem
 The Tenable integration can ingest the following resources into Port. It is possible to reference any field that appears in the API responses in the mapping configuration. For detailed API documentation, see the [Tenable.io API documentation](https://developer.tenable.com/reference/navigate).
 
 - **Assets** - Asset information from [`/assets`](https://developer.tenable.com/reference/io-v2-assets-list).
-- **Vulnerabilities** - Vulnerability findings from [`/vulnerabilities`](https://developer.tenable.com/reference/io-v2-vulnerabilities-list).
+- **Findings** - Vulnerability findings with asset context from [`/workbenches/vulnerabilities`](https://developer.tenable.com/reference/io-v2-workbenches-vulnerabilities-list). This endpoint provides per-asset vulnerability findings with fields like `first_seen`, `last_seen`, `state`, and `severity`.
 - **Scans** - Scan configurations and results from [`/scans`](https://developer.tenable.com/reference/io-v2-scans-list).
-- **Findings** - Vulnerability findings with asset context from [`/workbenches/vulnerabilities`](https://developer.tenable.com/reference/io-v2-workbenches-vulnerabilities-list).
 
 ## Prerequisites
 
@@ -74,7 +73,7 @@ helm upgrade --install my-ocean-tenable-integration port-labs/port-ocean \
   --set port.clientId="YOUR_PORT_CLIENT_ID" \
   --set port.clientSecret="YOUR_PORT_CLIENT_SECRET" \
   --set port.baseUrl="https://api.getport.io" \
-  --set initializePortResources=true \
+  --set initializePortResources=false \
   --set scheduledResyncInterval=120 \
   --set integration.identifier="tenable-integration" \
   --set integration.type="custom" \
@@ -100,7 +99,7 @@ This table summarizes the available parameters for the installation.
 | `integration.config.authType` | Authentication type for the API (use `basic` for Tenable.io). | basic | ✅ |
 | `integration.config.username` | Your Tenable.io Access Key (used as username in Basic Auth). |  | ✅ |
 | `integration.config.password` | Your Tenable.io Secret Key (used as password in Basic Auth). |  | ✅ |
-| `integration.config.paginationType` | How the API handles pagination (offset, page, cursor, or none). | offset | ❌ |
+| `integration.config.paginationType` | How the API handles pagination. Use `offset` for `/assets` and `/scans`, `cursor` for `/workbenches/vulnerabilities`. | offset | ❌ |
 | `integration.eventListener.type` | Event listener type. See [event listeners](https://ocean.getport.io/framework/features/event-listener). | POLLING | ✅ |
 | `integration.type` | Integration type (must be `custom`). | custom | ✅ |
 | `integration.identifier` | Unique identifier for the integration instance. | tenable-integration | ✅ |
@@ -190,7 +189,10 @@ Before the integration can sync data, you need to create the required blueprints
           },
           "macAddress": {
             "title": "MAC Address",
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "agentUuid": {
             "title": "Agent UUID",
@@ -227,14 +229,14 @@ Before the integration can sync data, you need to create the required blueprints
     </details>
 
     <details>
-    <summary><b>Tenable Vulnerability Blueprint (Click to expand)</b></summary>
+    <summary><b>Tenable Finding Blueprint (Click to expand)</b></summary>
 
-    Vulnerability findings:
+    Vulnerability findings with asset context:
 
     ```json showLineNumbers
     {
-      "identifier": "tenable-vulnerability",
-      "title": "Tenable Vulnerability",
+      "identifier": "tenable-finding",
+      "title": "Tenable Finding",
       "icon": "Security",
       "schema": {
         "properties": {
@@ -277,9 +279,13 @@ Before the integration can sync data, you need to create the required blueprints
               "type": "string"
             }
           },
-          "assetCount": {
-            "title": "Asset Count",
-            "type": "number"
+          "assetId": {
+            "title": "Asset ID",
+            "type": "string"
+          },
+          "assetHostname": {
+            "title": "Asset Hostname",
+            "type": "string"
           },
           "firstSeen": {
             "title": "First Seen",
@@ -341,25 +347,18 @@ Before the integration can sync data, you need to create the required blueprints
           },
           "startTime": {
             "title": "Start Time",
-            "type": "string"
+            "type": "number"
           },
           "endTime": {
             "title": "End Time",
-            "type": "string",
-            "format": "date-time"
+            "type": "number"
           },
           "createdAt": {
             "title": "Created At",
-            "type": "string",
-            "format": "date-time"
+            "type": "number"
           },
           "updatedAt": {
             "title": "Updated At",
-            "type": "string",
-            "format": "date-time"
-          },
-          "vulnerabilityCount": {
-            "title": "Vulnerability Count",
             "type": "number"
           }
         },
@@ -388,30 +387,17 @@ For more details on how the Ocean Custom Integration works, see the [How it work
 
 **Tenable.io API response format:**
 
-Tenable.io API responses typically follow this structure:
+Tenable.io API responses vary by endpoint:
 
-```json showLineNumbers
-{
-  "assets": [
-    {
-      "id": "asset-uuid",
-      "hostname": "example.com",
-      "ipv4": ["192.168.1.1"],
-      "fqdn": ["example.com"],
-      "operating_system": ["Linux"],
-      ...
-    }
-  ],
-  "pagination": {
-    "total": 100,
-    "limit": 50,
-    "offset": 0,
-    "sort": [{"name": "updated_at", "order": "desc"}]
-  }
-}
-```
+- **`/assets`** - Returns data in `.assets` array with offset-based pagination in `.pagination`
+- **`/workbenches/vulnerabilities`** - Returns data in `.vulnerabilities` array with cursor-based pagination
+- **`/scans`** - Returns data in `.scans` array with offset-like pagination
 
-The actual data array is typically in a property like `.assets`, `.vulnerabilities`, or `.scans`, and pagination information is in `.pagination`.
+**Important notes:**
+
+- Timestamps in Tenable API responses are often returned as **epoch timestamps** (numbers), not ISO strings. You may need to convert them or store them as numbers.
+- The `mac_address` field is typically an **array**, not a string.
+- Pagination types differ by endpoint - use `offset` for `/assets`, `cursor` for `/workbenches/vulnerabilities`.
 
 **To configure the mappings:**
 
@@ -446,7 +432,7 @@ The actual data array is typically in a property like `.assets`, `.vulnerabiliti
                 ipAddress: .ipv4[0] // ""
                 fqdn: .fqdn[0] // ""
                 operatingSystem: .operating_system
-                macAddress: .mac_address
+                macAddress: (.mac_address | if type == "array" then . else [.] end)
                 agentUuid: .agent_uuid
                 lastSeen: .last_seen
                 firstSeen: .first_seen
@@ -454,44 +440,54 @@ The actual data array is typically in a property like `.assets`, `.vulnerabiliti
                 vulnerabilityCount: .vulnerability_count
     ```
 
-    :::info Tenable.io pagination
-    Tenable.io uses offset-based pagination. Use `limit` and `offset` query parameters to paginate through results. The integration will automatically handle pagination if `paginationType` is set to `offset`.
+    :::info Pagination for /assets
+    The `/assets` endpoint uses offset-based pagination. Set `paginationType` to `offset` in your integration configuration. Use `limit` and `offset` query parameters to paginate through results.
     :::
 
     </details>
 
     <details>
-    <summary><b>Vulnerabilities mapping (Click to expand)</b></summary>
+    <summary><b>Findings mapping (Click to expand)</b></summary>
+
+    Vulnerability findings with asset context from `/workbenches/vulnerabilities`:
 
     ```yaml showLineNumbers
     resources:
-      - kind: /vulnerabilities
+      - kind: /workbenches/vulnerabilities
         selector:
           query: 'true'
           data_path: '.vulnerabilities'
           query_params:
             limit: "50"
-            offset: "0"
         port:
           entity:
             mappings:
-              identifier: .plugin_id
-              title: .plugin_name
-              blueprint: '"tenable-vulnerability"'
+              identifier: '"\(.plugin.id)-\(.asset.uuid)"'
+              title: .plugin.name
+              blueprint: '"tenable-finding"'
               properties:
-                pluginId: .plugin_id
-                pluginName: .plugin_name
-                severity: .severity
+                pluginId: .plugin.id
+                pluginName: .plugin.name
+                severity: (.severity.name // .severity)
                 state: .state
-                description: .description
-                solution: .solution
-                cvssScore: .cvss_score
-                cvssV3Score: .cvss_v3_score
-                cve: .cve
-                assetCount: .asset_count
-                firstSeen: .first_seen
-                lastSeen: .last_seen
+                description: .plugin.description
+                solution: .plugin.solution
+                cvssScore: (.plugin.cvss_base_score // .cvss_score)
+                cvssV3Score: (.plugin.cvss3_base_score // .cvss_v3_score)
+                cve: (.plugin.cve // [])
+                assetId: .asset.uuid
+                assetHostname: .asset.hostname
+                firstSeen: .first_found
+                lastSeen: .last_found
     ```
+
+    :::warning Pagination for /workbenches/vulnerabilities
+    The `/workbenches/vulnerabilities` endpoint uses **cursor-based pagination**, not offset. Set `paginationType` to `cursor` in your integration configuration. The cursor path is typically `.pagination.cursor` or similar. Do not use `offset` query parameters with this endpoint.
+    :::
+
+    :::info Composite identifier
+    The identifier uses a composite of `plugin_id` and `asset.uuid` to ensure uniqueness, as the same plugin can appear on multiple assets. This prevents findings from overwriting each other.
+    :::
 
     </details>
 
@@ -518,14 +514,21 @@ The actual data array is typically in a property like `.assets`, `.vulnerabiliti
                 description: .description
                 status: .status
                 scanType: .type
-                scheduleEnabled: .schedule.enabled
+                scheduleEnabled: (.schedule.enabled // false)
                 timezone: .schedule.timezone
-                startTime: .starttime
-                endTime: .endtime
-                createdAt: .creation_date
-                updatedAt: .last_modification_date
-                vulnerabilityCount: .vulnerabilities.count
+                startTime: (.starttime // null)
+                endTime: (.endtime // null)
+                createdAt: (.creation_date // null)
+                updatedAt: (.last_modification_date // null)
     ```
+
+    :::caution Timestamp format
+    Tenable scan timestamps (`starttime`, `endtime`, `creation_date`, `last_modification_date`) are often returned as **epoch timestamps** (numbers), not ISO date strings. The blueprint stores them as numbers. If you need ISO format, you can convert them using JQ expressions or store them as strings.
+    :::
+
+    :::info Pagination for /scans
+    The `/scans` endpoint uses offset-like pagination. Set `paginationType` to `offset` in your integration configuration.
+    :::
 
     </details>
 
@@ -542,46 +545,3 @@ If you want to customize your setup or test different API endpoints before commi
 4. Get installation commands with your configuration pre-filled.
 
 Simply provide your Tenable.io API details, and the builder will generate everything you need to install and create the integration in Port.
-
-## Troubleshooting
-
-### Authentication errors
-
-**Symptom:** 401 "Unauthorized" errors.
-
-**Solution:**
-- Verify your Access Key and Secret Key are correct
-- Ensure the API keys are active and not expired
-- Check that your account has the necessary permissions to access the requested resources
-- Verify you're using Basic Authentication with Access Key as username and Secret Key as password
-
-### Rate limiting errors
-
-**Symptom:** 429 "Too Many Requests" errors.
-
-**Solution:**
-- Tenable.io has rate limits on API requests
-- Reduce the `scheduledResyncInterval` to sync less frequently
-- Use smaller `limit` values in query parameters to reduce request size
-- Implement retry logic with exponential backoff if needed
-
-### Pagination issues
-
-**Symptom:** Only partial data is syncing.
-
-**Solution:**
-- Ensure `paginationType` is set to `offset` for Tenable.io
-- Verify `limit` and `offset` parameters are correctly configured in query_params
-- Check that the integration is handling pagination correctly by reviewing logs
-- Consider using smaller `limit` values if experiencing timeouts
-
-### API endpoint errors
-
-**Symptom:** 404 "Not Found" or 403 "Forbidden" errors.
-
-**Solution:**
-- Verify the API endpoint paths are correct for your Tenable.io version
-- Check that your API keys have permissions for the requested resources
-- Ensure you're using the correct base URL (`https://cloud.tenable.com` for Tenable.io)
-- Review the [Tenable.io API documentation](https://developer.tenable.com/reference/navigate) for the correct endpoint structure
-
