@@ -44,6 +44,8 @@ After clicking the setup button, you will be guided to configure the SSO connect
 - [Custom SAML](/sso-rbac/sso/sso-providers/saml/)
 - [Custom OIDC](/sso-rbac/sso/sso-providers/oidc/)
 
+The setup process is fully guided by Auth0's self-service assistant, which walks you through each step including creating an application in your IdP, configuring the connection, mapping claims, and testing the SSO integration. For a detailed example walkthrough of the assistant flow, see the [Auth0 Self-Service SSO documentation](https://auth0.com/docs/authenticate/enterprise-connections/self-service-SSO#example-self-service-assistant-flow).
+
 Complete the configuration in your identity provider's admin console following the on-screen instructions.
 
 ### Step 3: Monitor the connection status
