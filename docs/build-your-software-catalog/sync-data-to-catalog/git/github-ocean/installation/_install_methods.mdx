@@ -9,6 +9,7 @@ import CiInstallMethod from "./\_ci_install.mdx"
 import DockerInstallMethod from "./_docker_install.mdx"
 import ParametersTable from "./_parameters_table.jsx"
 import Base64Tip from "./\_base_64_tip.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 
@@ -24,6 +25,12 @@ ___
 Choose the installation method that best suits your needs:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation integration="GithubOcean" />
+
+</TabItem>
 
 <TabItem value="real-time-self-hosted" label="Kubernetes">
 
