@@ -129,7 +129,7 @@ Not until the company is set as SCIM enabled. Contact [Port's support team](http
 <details>
 <summary><b>Does self-serve SSO support all protocols? (click to expand)</b></summary>
 
-No. OIDC and SAML are supported. For LDAP, refer to the [LDAP documentation](/sso-rbac/sso/sso-providers/ldap/ldap) for manual setup.
+No. OIDC and SAML are supported. For LDAP, refer to the [LDAP documentation](/sso-rbac/sso/sso-providers/ldap/) for manual setup.
 
 </details>
 
