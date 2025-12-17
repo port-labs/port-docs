@@ -388,14 +388,12 @@ The actual data array is in the `.value` property.
 
     ```yaml showLineNumbers
     resources:
-      - kind: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts
+      - kind: /subscriptions/YOUR_SUBSCRIPTION_ID/providers/Microsoft.Insights/metricAlerts
         selector:
           query: 'true'
-          data_path: '.value'
-          path_parameters:
-            subscriptionId: "YOUR_SUBSCRIPTION_ID"
+          data_path: .value
           query_params:
-            api-version: "2018-03-01"
+            api-version: '2018-03-01'
         port:
           entity:
             mappings:
@@ -418,7 +416,7 @@ The actual data array is in the `.value` property.
     ```
 
     :::info Subscription ID
-    Replace `YOUR_SUBSCRIPTION_ID` in the path with your actual Azure subscription ID.
+    Replace `YOUR_SUBSCRIPTION_ID` in the `kind` path with your actual Azure subscription ID.
     :::
 
     </details>
@@ -428,15 +426,13 @@ The actual data array is in the `.value` property.
 
     ```yaml showLineNumbers
     resources:
-      - kind: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values
+      - kind: /subscriptions/YOUR_SUBSCRIPTION_ID/providers/Microsoft.Insights/eventtypes/management/values
         selector:
           query: 'true'
-          data_path: '.value'
-          path_parameters:
-            subscriptionId: "YOUR_SUBSCRIPTION_ID"
+          data_path: .value
           query_params:
-            api-version: "2015-04-01"
-            $filter: "eventTimestamp ge '2024-01-01T00:00:00Z'"
+            api-version: '2015-04-01'
+            $filter: "eventTimestamp ge '2025-12-01T00:00:00Z'"
         port:
           entity:
             mappings:
@@ -456,7 +452,7 @@ The actual data array is in the `.value` property.
     ```
 
     :::info Activity log filtering
-    Activity logs can be very large. Use the `$filter` query parameter to limit results by date range or other criteria. Adjust the date filter to match your needs.
+    Activity logs can be very large and the API requires a date filter. Use the `$filter` query parameter to limit results by date range. The start time cannot be more than 90 days in the past. Replace the date in the filter with a date within the last 90 days.
     :::
 
     </details>
