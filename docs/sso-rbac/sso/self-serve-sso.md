@@ -1,10 +1,10 @@
 ---
-title: "Self-serve SSO setup"
+title: "Manage your SSO connection"
 sidebar_position: 1
-description: Set up SSO for your organization directly from the portal
+description: Set up and manage SSO for your organization directly from the portal
 ---
 
-# Self-serve SSO
+# Manage your SSO connection
 
 Port allows company admins to configure SSO (Single Sign-On) directly from the portal.  
 This self-serve flow guides you through connecting your identity provider (IdP) to Port.
@@ -25,7 +25,7 @@ Let's configure SSO for your company:
 1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
 2. Click on **Organization settings** in the left sidebar.
 3. Navigate to the **SSO** tab.
-4. Click the **Setup SSO Connection** button.
+4. Click the **Set up SSO connection** button.
 
 :::info URL validity
 A unique SSO setup link will be generated for you, it will be valid for 5 hours after you first open it, or 5 days if you don't open it. You can copy and save the link to complete the setup later.
@@ -60,7 +60,7 @@ While configuring your IdP, the Port UI displays the current status of your SSO 
 
 Once you have completed the configuration in your identity provider, click the **Setup is Done** button in Port to indicate that the process is finished.
 
-### Step 4: Finalize your SSO settings
+## Manage the connection
 
 After the SSO connection is successfully established, you can configure the following options:
 
@@ -80,17 +80,13 @@ After the SSO connection is successfully established, you can configure the foll
 
 4. **Edit connection** - Click `Edit Connection` to open the Auth0 management interface where you can modify your SSO configuration, including adding or managing domains associated with your SSO connection.
 
-:::info Organization-level setting
-The SSO configuration and access settings apply at the organization level, not the company level.
-:::
-
 ## Limitations
 
 - Terraform is not supported for self-serve SSO setup.
 
 ## Troubleshooting
 
-If you click **Setup is Done** and encounter an error, use the following table to identify and resolve the issue:
+If you click `Setup is Done` and encounter an error, use the following table to identify and resolve the issue:
 
 | Error | Cause | Resolution |
 | ----- | ----- | ---------- |
@@ -115,30 +111,8 @@ You need to **delete** the existing connection and start the setup process from 
 </details>
 
 <details>
-<summary><b>Can clients rotate (update) the SSO secret via API? (click to expand)</b></summary>
+<summary><b>Is LDAP protocol supported? (click to expand)</b></summary>
 
-No, you should rotate the SSO secret via the Auth0 UI. Port can provide the link to the Auth0 UI via API, but the actual rotation must be done in Auth0's interface.
-<!-- TODO: which path is this? -->
-</details>
+No. For LDAP, refer to the [LDAP documentation](/sso-rbac/sso/sso-providers/ldap/) for manual setup.
 
-<details>
-<summary><b>Does the Okta setup include SCIM? Will it work? (click to expand)</b></summary>
-
-Not until the company is set as SCIM enabled. Contact [Port's support team](http://support.port.io/) to enable SCIM for your organization.
-
-</details>
-
-<details>
-<summary><b>Does self-serve SSO support all protocols? (click to expand)</b></summary>
-
-No. OIDC and SAML are supported. For LDAP, refer to the [LDAP documentation](/sso-rbac/sso/sso-providers/ldap/) for manual setup.
-
-</details>
-
-<details>
-<summary><b>Is the manual creation flow still available? (click to expand)</b></summary>
-
-Yes. You can still request manual SSO setup by contacting [Port's support team](http://support.port.io/).
-
-<!-- TODO: ask Naama, if this is still possible, if we remove the SSO providers section, they will find it hard to do it without them. -->
 </details>
