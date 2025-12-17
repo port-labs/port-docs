@@ -18,7 +18,7 @@ This self-serve flow guides you through connecting your identity provider (IdP) 
 
 ## Setup
 
-Let's configure SSO for your company:
+Follow these steps to configure SSO for your company:
 
 ### Step 1: Initiate the SSO setup
 
