@@ -209,8 +209,8 @@ export const integrations = [
   {
     name: 'Tenable',
     category: 'security',
-    icon: '/img/guides/icons/Security.svg',
-    darkIcon: '/img/guides/icons/Security.svg',
+    icon: '/img/guides/icons/Tenable.svg',
+    darkIcon: '/img/guides/icons/dark/Tenable.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/code-quality-security/tenable',
   },
   // Feature Management
