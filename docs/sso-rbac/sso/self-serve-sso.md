@@ -16,11 +16,7 @@ This self-serve flow guides you through connecting your identity provider (IdP) 
 - You must be a **company admin** to configure SSO.
 - You need access to your identity provider's admin console to create and configure applications.
 
-:::info SSO tab access
-The **SSO** tab in organization settings is only visible to company admins with an enterprise account.
-:::
-
-## Set up SSO
+## Setup
 
 Let's configure SSO for your company:
 
@@ -37,11 +33,16 @@ A unique SSO setup link will be generated for you, it will be valid for 5 hours 
 
 ### Step 2: Configure your identity provider
 
-After clicking the setup button, you will be guided to configure the SSO connection using one of the following options:
+After clicking the setup button, you will be guided to configure the SSO connection. The following identity providers are supported:
 
-- **Pre-configured identity providers** - Select from popular IdPs such as Okta, Azure AD, Google Workspace, and others.
-- **Custom SAML** - Configure a custom SAML 2.0 connection for any SAML-compatible identity provider. Refer to the [SAML documentation](/sso-rbac/sso/sso-providers/saml/saml) for more details.
-- **Custom OIDC** - Configure a custom OpenID Connect connection for any OIDC-compatible identity provider. Refer to the [OIDC documentation](/sso-rbac/sso/sso-providers/oidc/oidc) for more details.
+- Okta
+- Entra ID
+- Keycloak
+- ADFS
+- Google Workspace
+- PingFederate
+- [Custom SAML](/sso-rbac/sso/sso-providers/saml/)
+- [Custom OIDC](/sso-rbac/sso/sso-providers/oidc/)
 
 Complete the configuration in your identity provider's admin console following the on-screen instructions.
 
@@ -71,7 +72,9 @@ After the SSO connection is successfully established, you can configure the foll
 
 2. **Block social login for domains** - Your configured domains are displayed here. You can toggle social login blocking per domain. When enabled for a domain, users with email addresses from that domain must sign in through your SSO provider and cannot use social login methods (such as Google or GitHub sign-in). To add more domains, use `Edit Connection`.
 
-3. **Session settings** - Click `Session Settings` to configure session timeout settings for your SSO users.
+3. **Session settings** - Click `Session Settings` to configure session timeout settings for your SSO users. You can set the following:
+   - **Max session TTL** - The maximum session duration in minutes.
+   - **Idle session TTL** - The idle timeout duration in minutes before a session expires due to inactivity.
 
 4. **Edit connection** - Click `Edit Connection` to open the Auth0 management interface where you can modify your SSO configuration, including adding or managing domains associated with your SSO connection.
 
@@ -105,7 +108,7 @@ No. Port supports only one SSO provider per company at a time.
 <details>
 <summary><b>How do we switch providers (e.g., from Okta to Azure)? (click to expand)</b></summary>
 
-You must **delete** the existing connection and start the setup process from the beginning. There is no migration path between SSO providers.
+You need to **delete** the existing connection and start the setup process from the beginning. There is no migration path between SSO providers.
 
 </details>
 
@@ -127,21 +130,6 @@ Not until the company is set as SCIM enabled. Contact [Port's support team](http
 <summary><b>Does self-serve SSO support all protocols? (click to expand)</b></summary>
 
 No. OIDC and SAML are supported. For LDAP, refer to the [LDAP documentation](/sso-rbac/sso/sso-providers/ldap/ldap) for manual setup.
-
-</details>
-
-<details>
-
-<summary><b>Which IdPs were tested and verified? (click to expand)</b></summary>
-
-EntraID and JumpCloud have been fully QA tested. Other IdPs following OIDC or SAML standards should work as well.
-
-</details>
-
-<details>
-<summary><b>Which protocols were tested and verified? (click to expand)</b></summary>
-
-OIDC and SAML protocols have been fully QA tested.
 
 </details>
 
