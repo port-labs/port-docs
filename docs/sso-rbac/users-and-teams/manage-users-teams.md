@@ -34,7 +34,7 @@ There are several ways to manage users and teams in Port:
 - Via the [Users & Teams page](https://app.getport.io/settings/users) in your portal.  
   This page allows you to view/delete/invite users, assign roles, and manage teams.
 - Via Port's [API](https://docs.getport.io/api-reference/get-all-users-in-your-organization).
-- By integrating with your [identity provider (IdP)](/sso-rbac/sso/sso-providers/) to sync users and teams from your organization.
+- By integrating with your [identity provider (IdP)](/sso-rbac/self-serve-sso) to sync users and teams from your organization.
 
 ## Roles & permissions
 

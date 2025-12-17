@@ -1,6 +1,6 @@
 ---
 title: "Manage your SSO connection"
-sidebar_position: 1
+sidebar_position: 4
 description: Set up and manage SSO for your organization directly from the portal
 ---
 
@@ -107,12 +107,5 @@ No. Port supports only one SSO provider per company at a time.
 <summary><b>How do we switch providers (e.g., from Okta to Azure)? (click to expand)</b></summary>
 
 You need to **delete** the existing connection and start the setup process from the beginning. There is no migration path between SSO providers.
-
-</details>
-
-<details>
-<summary><b>Is LDAP protocol supported? (click to expand)</b></summary>
-
-No. For LDAP, refer to the [LDAP documentation](/sso-rbac/sso/sso-providers/ldap/) for manual setup.
 
 </details>
