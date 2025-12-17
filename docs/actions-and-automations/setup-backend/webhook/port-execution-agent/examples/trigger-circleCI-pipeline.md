@@ -14,9 +14,9 @@ This example helps internal developer teams to trigger [CircleCI](https://circle
 1. Create a CircleCI project blueprint in Port.
 
     <details>
-    <summary>CircleCI Project blueprint (Click to expand)</summary>
+    <summary><b>CircleCI Project blueprint (click to expand)</b></summary>
 
-    ```json
+    ```json showLineNumbers
     {
         "identifier": "circle_ci_project",
         "title": "CircleCI Project",
@@ -42,9 +42,9 @@ This example helps internal developer teams to trigger [CircleCI](https://circle
 2. Create a Port action using the following JSON definition:
 
     <details>
-    <summary>Port Action (Click to expand)</summary>
+    <summary><b>Port Action (click to expand)</b></summary>
 
-    ```json
+    ```json showLineNumbers
     [
         {
             "identifier": "trigger_circle_ci_pipeline",
@@ -72,7 +72,7 @@ This example helps internal developer teams to trigger [CircleCI](https://circle
 3. Create a JSON file (`invocations.json`) in your working directory.
 
     <details>
-    <summary>Invocation Mapping (Click to expand)</summary>
+    <summary><b>Invocation Mapping (click to expand)</b></summary>
 
     ```json showLineNumbers title="invocations.json"
     [{
@@ -92,11 +92,11 @@ This example helps internal developer teams to trigger [CircleCI](https://circle
 4. Run the helm command below to install a port agent for CircleCI pipeline.
 
     <details>
-    <summary>Port agent installation for CircleCI pipeline (Click to expand)</summary>
+    <summary><b>Port agent installation for CircleCI pipeline (click to expand)</b></summary>
 
     **Remember to replace the boilerplate credentials in the helm command with your actual credentials.**
 
-    ```sh
+    ```sh showLineNumbers
     helm repo add port-labs https://port-labs.github.io/helm-charts
 
     helm repo update
