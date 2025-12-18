@@ -218,12 +218,13 @@ kubectl apply -f my-ocean-snyk-integration.yaml
 
 To Install Snyk Integration using Azure Container Instance:
 
-1. Navigate to Azure portal homepage.
-2. Select `Create resource`.
+Navigate to Azure portal homepage.
+
+Select `Create resource`.
 
 <img src="/img/sync-data-to-catalog/quickstart-portal-create-resource.png" width='50%' border='1px' />
 
-3. Select containers , then Container instances.
+Select containers , then Container instances.
 
 <img src="/img/sync-data-to-catalog/aci-instance.png" width='50%' border='1px' />
 
