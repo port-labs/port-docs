@@ -253,6 +253,8 @@ The following rule asserts that only users in the user's team/s will get the res
 ]
 ```
 
+For examples of using contextual values with relation path filters, see [filter with contextual values](/search-and-query/relation-operators#filter-with-contextual-values).
+
 ### Filter by relations/scorecards
 
 When using the [search a blueprint's entities](/api-reference/search-a-blueprints-entities) API route, you can also filter results by <PortTooltip id="relation">relations</PortTooltip> or <PortTooltip id="scorecard">scorecards</PortTooltip>.
