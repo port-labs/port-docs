@@ -276,7 +276,7 @@ Follow the steps below.
 - Set **Restart policy** to `On failure`
 - Configure the following **Environment Variables**
 
-:::note
+:::note Deploying in a US region
 If deploying in a US region, use `https://api.us.port.io` as the base URL.
 :::
 
