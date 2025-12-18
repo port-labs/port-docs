@@ -85,8 +85,7 @@ Using a scorecard in one of your dashboards, you can:
 - Collaborate with owners and teams.
 - Maintain accurate metadata and catalog hygiene.
 
-<img src="/img/quickstart/endUserOnboarding/scorecardExample.png" alt="Scorecard example" width="60%" border="1px" />
-<br/><br/>
+<img src="/img/quickstart/endUserOnboarding/scorecardExample.png" alt="Scorecard example" width="70%" border="1px" />
 
 ## Best practices for success
 
