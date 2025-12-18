@@ -53,7 +53,7 @@ To use this integration, the following prerequisites are required:
 Store your client secret securely and never share it. The secret provides access to your Azure resources.
 :::
 
-**To grant API permissions:**
+**Granting API permissions:**
 
 1. In your app registration, navigate to **API permissions**.
 2. Click **Add a permission**.
