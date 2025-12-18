@@ -195,8 +195,8 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 :::info supported last contributor
 The last contributor is the author of the last commit in the default branch of the repository.  
-This example uses the `branch` kind with `detailed: true` to fetch the latest commit data and mirrors the last contributor and last commit date back onto the repository entity.
-:::
+This example uses the `branch` kind with `detailed: true` to fetch the latest commit data and mirrors the last contributor and last commit date back onto the repository entity. By default, `detailed` is set to `false`, which returns a lighter branch payload. It should only be set to `true` when you need access to commit-level fields.
+
 
 ## Files and file contents
 
