@@ -220,10 +220,10 @@ If you already have a pull request blueprint, you need to add the following prop
             "type": "number",
             "title": "Cycle Time"
           },
-          "freshness": {
+          "pr_age_label": {
             "icon": "DefaultProperty",
             "type": "string",
-            "title": "Freshness"
+            "title": "PR Age Label"
           }
         },
         "required": []
@@ -263,7 +263,7 @@ If you already have a pull request blueprint, you need to add the following prop
     </details>
 
 :::caution Properties to create for existing PR blueprint
-If you're updating an existing pull request blueprint, make sure to add the `pr_age`, `cycle_time`, and `freshness` properties if they don't already exist.
+If you're updating an existing pull request blueprint, make sure to add the `pr_age`, `cycle_time`, and `pr_age_label` properties if they don't already exist.
 :::
 
 4. Click `Save` to create or update the blueprint.
@@ -407,7 +407,7 @@ Now we'll configure the GitHub integration to ingest data into your catalog.
                 pr_age: >-
                   ((now - (.created_at | sub("\\.[0-9]+Z$"; "Z") | fromdateiso8601))
                   / 86400) | round
-                freshness: >-
+                pr_age_label: >-
                   ((now - (.created_at | sub("\\.[0-9]+Z$"; "Z") | fromdateiso8601))
                   / 86400 | round) as $age | if $age <= 3 then "0-3 days" elif $age
                   <= 7 then "3-7 days" else ">7 days" end
@@ -676,13 +676,13 @@ In the new dashboard, create the following widgets:
 </details>
 
 <details>
-<summary><b>PR freshness distribution (click to expand)</b></summary>
+<summary><b>PR age distribution (click to expand)</b></summary>
 
 1. Click **`+ Widget`** and select **Pie chart**.
-2. Title: `PR Freshness Distribution`.
+2. Title: `PR Age Distribution`.
 3. Description: `0–3 days | 3–7 days | >7 days`.
 4. Choose the **Pull Request** blueprint.
-5. Under `Breakdown by property`, select the **Freshness** property.
+5. Under `Breakdown by property`, select the **PR Age** property.
 6. Add this JSON to the **Additional filters** editor:
 
     ```json showLineNumbers
