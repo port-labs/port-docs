@@ -5,29 +5,22 @@
  * Calls a webhook endpoint that handles JIRA task creation.
  * 
  * Configuration:
- * Set window.KAPA_JIRA_CONFIG.webhookUrl before this script loads to configure the webhook URL.
- * Example: window.KAPA_JIRA_CONFIG = { webhookUrl: 'https://your-webhook.com/api/create-jira-task' };
+ * The webhook URL is configured by default. Can be overridden by setting window.KAPA_JIRA_CONFIG.webhookUrl
+ * before this script loads.
  */
 
 (function() {
   'use strict';
 
   // Configuration - Webhook URL for creating JIRA tasks
-  // Configure this by setting window.KAPA_JIRA_CONFIG before this script loads
-  // Example: window.KAPA_JIRA_CONFIG = { webhookUrl: 'https://your-webhook.com/api/create-jira-task' };
-  const WEBHOOK_URL = (window.KAPA_JIRA_CONFIG && window.KAPA_JIRA_CONFIG.webhookUrl) || null;
+  // Can be overridden by setting window.KAPA_JIRA_CONFIG.webhookUrl before this script loads
+  const WEBHOOK_URL = (window.KAPA_JIRA_CONFIG && window.KAPA_JIRA_CONFIG.webhookUrl) || 'https://ingest.getport.io/vGx33gz082ylDAJD';
 
   /**
    * Creates a JIRA task via webhook
    * @param {Object} feedbackData - The feedback data from Kapa
    */
   async function createJiraTask(feedbackData) {
-    // Check if webhook URL is configured
-    if (!WEBHOOK_URL) {
-      console.warn('Kapa JIRA integration: Webhook URL not configured. Set window.KAPA_JIRA_CONFIG.webhookUrl to enable.');
-      return null;
-    }
-
     try {
       const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
