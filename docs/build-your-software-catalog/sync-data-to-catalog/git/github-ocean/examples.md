@@ -187,8 +187,10 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 <LastContributorBlueprint/>
 <LastContributorAppConfig/>
 
+
 :::info supported last contributor
-The last contributor is the author of the last commit in the default branch of the repository
+The last contributor is the author of the last commit in the default branch of the repository.  
+This example uses the `branch` kind with `detailed: true` to fetch the latest commit data and mirrors the last contributor and last commit date back onto the repository entity.
 :::
 
 ## Map files and file contents
