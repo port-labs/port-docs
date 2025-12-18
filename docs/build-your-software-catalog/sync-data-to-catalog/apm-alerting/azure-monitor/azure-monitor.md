@@ -65,7 +65,7 @@ Store your client secret securely and never share it. The secret provides access
 7. Click **Grant admin consent for [Your Organization]**.
 
 :::info Admin consent required
-An Entra ID administrator must grant consent for these permissions before the integration can access Azure Monitor data.
+You need an Entra ID administrator to grant consent for these permissions before the integration can access Azure Monitor data.
 :::
 
 **Generating an access token (bearer token)**
