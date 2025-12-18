@@ -158,6 +158,20 @@ resources:
 
 The `file` kind follows [GitLab's Advanced Search type](https://docs.gitlab.com/ee/user/search/advanced_search.html#:~:text=Advanced%20search%20is%20based%20on,Projects/), adhering to its syntax, limitations, and capabilities.
 
+:::info Path field capabilities
+The `path` parameter uses [GitLab's Advanced Search syntax](https://docs.gitlab.com/ee/user/search/advanced_search/#use-advanced-search), which differs from glob patterns. The search supports:
+
+- Simple `*` wildcards for filename patterns: `*.tf`, `package.json`, `test_*`
+- Exact file paths: `src/app/main.py`, `infra/terraform/main.tf`
+
+The search doesn't support:
+- Path wildcards like `infra/terraform/*.tf`
+- Recursive patterns like `**/filename`
+- Complex patterns like `*.{js,ts}`, `[abc]*`, and `!exclude`
+
+For complex patterns, you can split them into multiple file kinds or specify exact paths for targeted files.
+:::
+
 :::tip Test your mapping
 After adding the `file` kind to your mapping configuration, click on the `Resync` button.  
 When you open the mapping configuration again, you will see real examples of files fetched from your GitLab organization.
