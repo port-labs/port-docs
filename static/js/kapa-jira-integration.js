@@ -2,25 +2,34 @@
  * Kapa to JIRA Integration
  * 
  * Listens for Kapa feedback events and creates JIRA tasks when users downvote answers.
- * Calls an AWS Amplify Lambda function API endpoint.
+ * Calls a webhook endpoint that handles JIRA task creation.
+ * 
+ * Configuration:
+ * Set window.KAPA_JIRA_CONFIG.webhookUrl before this script loads to configure the webhook URL.
+ * Example: window.KAPA_JIRA_CONFIG = { webhookUrl: 'https://your-webhook.com/api/create-jira-task' };
  */
 
 (function() {
   'use strict';
 
-  // Configuration - API endpoint for creating JIRA tasks
-  // AWS Amplify automatically creates API endpoints for Lambda functions
-  // The endpoint will be: https://your-app-id.amplifyapp.com/api/create-jira-task
-  // You can configure this by setting window.KAPA_JIRA_CONFIG before this script loads
-  const API_ENDPOINT = (window.KAPA_JIRA_CONFIG && window.KAPA_JIRA_CONFIG.apiEndpoint) || '/api/create-jira-task';
+  // Configuration - Webhook URL for creating JIRA tasks
+  // Configure this by setting window.KAPA_JIRA_CONFIG before this script loads
+  // Example: window.KAPA_JIRA_CONFIG = { webhookUrl: 'https://your-webhook.com/api/create-jira-task' };
+  const WEBHOOK_URL = (window.KAPA_JIRA_CONFIG && window.KAPA_JIRA_CONFIG.webhookUrl) || null;
 
   /**
-   * Creates a JIRA task via the AWS Amplify Lambda function
+   * Creates a JIRA task via webhook
    * @param {Object} feedbackData - The feedback data from Kapa
    */
   async function createJiraTask(feedbackData) {
+    // Check if webhook URL is configured
+    if (!WEBHOOK_URL) {
+      console.warn('Kapa JIRA integration: Webhook URL not configured. Set window.KAPA_JIRA_CONFIG.webhookUrl to enable.');
+      return null;
+    }
+
     try {
-      const response = await fetch(API_ENDPOINT, {
+      const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
