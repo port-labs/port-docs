@@ -223,7 +223,7 @@ To Install Snyk Integration using Azure Container Instance:
 
 <img src=/img/sync-data-to-catalog/quickstart-portal-create-resource.png width='50%' border='1px' />
 
-Select containers > Container instances
+3. Select containers , then Container instances.
 
 ![Azure Portal create aci](../../../../../static/img/sync-data-to-catalog/aci-instance.png)
 
