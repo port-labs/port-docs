@@ -9,6 +9,9 @@ sidebar_label: "End-user onboarding"
 This page is intended for **end-users** of Port - stakeholders within the organization who will be using Port in their daily work (e.g. developers, SREs, r&d managers, etc.).  
 Platform engineers can share this page with their end-users to help them get started with Port.
 
+<img src="/img/quickstart/endUserOnboarding/overviewDiagram.png" alt="Overview diagram" width="85%" border="1px" />
+<br/><br/>
+
 Port is your internal developer portal - it integrates with your 3rd-party platforms and centralizes everything developers and other stakeholders in your organization need to do and know about your software.  
 This short guide will help you understand what Port is for, how to use it day-to-day, and how to get value from it right away.
 
@@ -25,6 +28,9 @@ Port enables you to onboard services faster, resolve issues quicker, and focus m
 ## How to use Port
 
 ### Discover
+
+<img src="/img/quickstart/endUserOnboarding/catalogMenu.png" alt="Discover" width="50%" border="1px" />
+<br/><br/>
 
 Your [software catalog](https://app.getport.io/organization/catalog) is the main entry point to your portal. It centralizes everything you need to know about your services, resources, and environments.  
 
@@ -45,6 +51,8 @@ The catalog answers 5 core questions:
 - **How do they connect?**  
   Relationships and dependency maps.
 
+<img src="/img/quickstart/endUserOnboarding/serviceCatalog.png" alt="Service catalog" width="80%" border="1px" />
+
 ### Self-Service
 
 Self-service actions allow users (and AI agents) to perform operational, development, or administrative tasks on their own, without needing to wait for DevOps, Platform, or IT teams.  
@@ -60,6 +68,9 @@ For example, as a user, you can:
 - Automate complex multi-step workflows.
 - Update catalog data cleanly and consistently.
 
+<img src="/img/quickstart/endUserOnboarding/developerActions.png" alt="Developer actions" width="30%" border="1px" />
+<br/><br/>
+
 ### Governance
 
 Scorecards give users a quick, visual way to understand the health, quality, compliance, and readiness of their services or assets.  
@@ -74,15 +85,18 @@ Using a scorecard in one of your dashboards, you can:
 - Collaborate with owners and teams.
 - Maintain accurate metadata and catalog hygiene.
 
+<img src="/img/quickstart/endUserOnboarding/scorecardExample.png" alt="Scorecard example" width="60%" border="1px" />
+<br/><br/>
+
 ## Best practices for success
 
 | Best practice | Impact on you | Impact on the organization |
 |--------------|--------------|---------------------------|
-| Use search, filters, and views to find what you need | Saves time, reduces confusion, keeps you focused | Higher productivity and fewer blockers across teams |
+| In tables and widgets, use [search](/customize-pages-dashboards-and-plugins/page/catalog-page#search), [filters](/customize-pages-dashboards-and-plugins/dashboards/data-widgets#chart-filters), and [views](/customize-pages-dashboards-and-plugins/page/catalog-page#save-a-view) to find what you need | Saves time, reduces confusion, keeps you focused | Higher productivity and fewer blockers across teams |
 | Keep catalog data accurate (ownership, metadata, tags) | Your services stay healthy and easier to manage | Reliable reporting, stronger governance, and accurate automation |
-| Check scorecards regularly | Catch issues early before they cause problems | Higher service quality, reliability, and compliance |
-| Use Self-Service Actions within your dashboards | No waiting for DevOps/IT — get work done instantly | Faster delivery, fewer bottlenecks, more empowered teams |
-| Use dependency graphs before making changes | Avoid breaking changes and deploy safely | Fewer incidents and less firefighting across engineering |
+| Check [scorecards](/scorecards/overview) regularly | Catch issues early before they cause problems | Higher service quality, reliability, and compliance |
+| Use [self-service actions](/actions-and-automations/create-self-service-experiences) within your dashboards | No waiting for DevOps/IT — get work done instantly | Faster delivery, fewer bottlenecks, more empowered teams |
+| Use [dependency graphs](/customize-pages-dashboards-and-plugins/page/entity-page#related-entities) before making changes | Avoid breaking changes and deploy safely | Fewer incidents and less firefighting across engineering |
 | Rely on documentation & runbooks linked in the portal | Faster troubleshooting and easier onboarding | Centralized knowledge, fewer repeated questions, consistent ops |
 
 ## Resources
@@ -90,9 +104,9 @@ Using a scorecard in one of your dashboards, you can:
 **Documentation** – Use the sidebar to navigate to the documentation, or click on the `Ask AI` button in the top-right corner and ask a question.
 
 **Videos**
-- [Getting Around Port](https://www.youtube.com/watch?v=IRz7QOZ13x4)
-- [Before and After Using Port](https://www.youtube.com/watch?v=tau5zfvCZFc)
-- [A Full Port Walkthrough](https://www.youtube.com/watch?v=fC59QS2r9aI)
+- [Getting around Port](https://www.youtube.com/watch?v=IRz7QOZ13x4)
+- [Before and after using Port](https://www.youtube.com/watch?v=tau5zfvCZFc)
+- [A full Port walkthrough](https://www.youtube.com/watch?v=fC59QS2r9aI)
 
 **Need help?** – Reach out to your Port champion, send a [support request](https://support.port.io), or join Port's [Slack community](https://port.io/community).
 
