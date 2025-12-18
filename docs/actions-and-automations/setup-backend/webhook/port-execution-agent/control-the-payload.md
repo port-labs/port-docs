@@ -144,7 +144,7 @@ Invoking the action with the input 8080 to the property `network_port` will caus
 Below is an example for incoming event:
 
 <details>
-<summary>Example for incoming event (Click to expand)</summary>
+<summary><b>Example for incoming event (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -248,7 +248,7 @@ Use the `fieldsToDecryptPaths` field in your mapping to specify which fields sho
 - **Path Context**: The paths are relative to the root of the incoming message structure, not relative to the `.body` field used in other mappings.
 
 <details>
-<summary>Basic Example - Simple Fields (Click to expand)</summary>
+<summary><b>Basic example - simple fields (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -317,7 +317,7 @@ To have the agent automatically decrypt the `api_key` and `db_password` fields, 
 </details>
 
 <details>
-<summary>Advanced Example - Array Elements (Click to expand)</summary>
+<summary><b>Advanced example - array elements (click to expand)</b></summary>
 
 For payloads containing arrays of objects with encrypted values, you must specify each array element individually by its index:
 

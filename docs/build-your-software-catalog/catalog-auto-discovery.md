@@ -13,6 +13,23 @@ This helps you maintain a complete and accurate catalog, especially for entities
 - **Services**: Service blueprint centralizes different components of a service like its repository, incidents for example. For that reason, unlike GitHub repositories or PagerDuty services that sync automatically from integrations, services are typically created manually. Auto discovery helps you identify and create these missing services.
 - **Users**: Discover users from related entities. For instance, if you have GitHub repositories synced, we can analyze pull requests and issues entities to suggest users who contributed to them but do not yet exist in your catalog.
 
+## When to use catalog auto discovery
+
+This feature is most effective for blueprints that don't have a single clear source of truth. Below are some guidelines to help you decide when to use catalog discovery and when to use classic integration mapping.
+
+**When classic data mapping is preferred**
+
+Use [integration mapping](/build-your-software-catalog/customize-integrations/configure-mapping) when an entity has a clear, single source of truth, for example:
+
+- **Repositories**: When a repository is ingested directly from your SCM tool (e.g., GitHub, GitLab), it makes more sense to use integration mapping to create and maintain it.
+
+**When catalog auto discovery is preferred**
+
+Use catalog discovery when an entity can be created based on multiple relations to different blueprints, without a clear source of truth or a single mapping pattern:
+
+- **Services**: A service can be identified through various sources such as Jira projects, Snyk projects, PagerDuty services, Sonar projects, or a combination of these. Since no single integration fully represents the service, catalog discovery can analyze these related entities to suggest services.
+- **Users**: A user can be derived from multiple relations, including Jira users, Snyk users, PagerDuty users, and more. Catalog discovery helps unify these sources to identify users who should exist in your catalog.
+
 ## How to use catalog auto discovery
 
 **Run the discovery:**
@@ -99,7 +116,7 @@ Bring Your Own LLM (BYOLLM) is not currently supported for catalog auto discover
 </details>
 
 <details>
-<summary><b>Are there usgae limits? (click to expand)</b></summary>
+<summary><b>Are there usage limits? (click to expand)</b></summary>
 
 It depends on your LLM setup. To learn more, see the [limits and usage](/ai-interfaces/port-ai/overview#limits-and-usage) documentation.
 
