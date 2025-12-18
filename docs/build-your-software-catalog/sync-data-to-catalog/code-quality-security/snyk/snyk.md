@@ -231,31 +231,31 @@ Follow the steps below.
 
 1. Basics
 
-- Select your **Subscription** and **Resource Group**  
-  - Create a new resource group if required.
-
-- Set the **Container name**  
-  - Example: `port-ocean-snyk`
-
-- Select your **Region**  
-  - Example: `Australia Southeast`
-
-- Select your **Image type**
-
-- Select your **Image source**
-  - **Azure Container Registry (ACR)**  
-    - Ensure the Port Ocean Snyk image is available in your registry.
-  - **Public registry (recommended for quick setup)**  
-    - Image name:
-      ```
-      ghcr.io/port-labs/port-ocean-snyk:latest
-      ```
-
-- Select **Linux** as the **OS type**
-
-- Set the **container size**
-  - Default: `1 vCPU`, `1.5 GiB memory`, `0 GPUs`
-  - These values can be increased if required.
+    - Select your **Subscription** and **Resource Group**  
+      - Create a new resource group if required.
+    
+    - Set the **Container name**  
+      - Example: `port-ocean-snyk`
+    
+    - Select your **Region**  
+      - Example: `Australia Southeast`
+    
+    - Select your **Image type**
+    
+    - Select your **Image source**
+      - **Azure Container Registry (ACR)**  
+        - Ensure the Port Ocean Snyk image is available in your registry.
+      - **Public registry (recommended for quick setup)**  
+        - Image name:
+          ```
+          ghcr.io/port-labs/port-ocean-snyk:latest
+          ```
+    
+    - Select **Linux** as the **OS type**
+    
+    - Set the **container size**
+      - Default: `1 vCPU`, `1.5 GiB memory`, `0 GPUs`
+      - These values can be increased if required.
 
 2. Networking
 
