@@ -259,23 +259,20 @@ Follow the steps below.
       - These values can be increased if required.
 
 2. Networking
-
-- Set **Networking type** to `Private`
-- Select your **Virtual Network**
-- Select the appropriate **Subnet**
-- Expose **Port 443** using **TCP**
+  - Set **Networking type** to `Private`
+  - Select your **Virtual Network**
+  - Select the appropriate **Subnet**
+  - Expose **Port 443** using **TCP**
 
 
 3. Insights
-
-- Enable **Container Instance Logs**
-- Select your **Subscription**
-- Select your **Log Analytics Workspace**
+  - Enable **Container Instance Logs**
+  - Select your **Subscription**
+  - Select your **Log Analytics Workspace**
 
 4. Advanced
-
-- Set **Restart policy** to `On failure`
-- Configure the following **Environment Variables**
+  - Set **Restart policy** to `On failure`
+  - Configure the following **Environment Variables**
 
 :::note Deploying in a US region
 If deploying in a US region, use `https://api.us.port.io` as the base URL.
