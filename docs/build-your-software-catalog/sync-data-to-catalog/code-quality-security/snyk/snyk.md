@@ -280,7 +280,7 @@ Follow the steps below.
 If deploying in a US region, use `https://api.us.port.io` as the base URL.
 :::
 
-### Environment Variables
+<h3>Environment Variables</h3>
 
 | Mark as Secure | Key                                           | Value                    | Required |
 |----------------|-----------------------------------------------|--------------------------|----------|
