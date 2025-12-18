@@ -5,9 +5,18 @@ description: Learn how to measure and track delivery performance as part of your
 
 # Measure and track delivery performance
 
-This guide demonstrates how to set up a comprehensive delivery performance monitoring solution across engineering teams. You will learn how to measure key engineering metrics that answer the question: **How fast and consistently do we deliver?**
+Measuring delivery performance is essential for understanding how effectively your engineering teams ship value to customers. Without visibility into delivery metrics, teams struggle to identify bottlenecks, optimize workflows, and make data-driven decisions about process improvements.
+
+This guide helps engineering managers, platform engineers, DevEx teams, and product leaders answer critical questions about their delivery pipeline:
+
+- **Flow**: How smoothly does work move through the development lifecycle?
+- **Bottlenecks**: Where are the friction points that slow down delivery?
+- **Predictability**: Can we reliably forecast when features will be delivered?
+
+By the end of this guide, you'll have a working dashboard that tracks key delivery performance metrics, enabling you to identify improvement opportunities, measure the impact of process changes, and communicate delivery health across your organization.
 
 <img src="/img/guides/delivery-performance-dashboard.png" border="1px" width="100%" />
+
 
 ## Common use cases
 
@@ -23,14 +32,21 @@ This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - Port's [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
 
+:::tip Initial scope
+
+This guide focuses on measuring delivery performance using source control management (SCM) data, including repositories, pull requests, commits, and workflows. This is the first iteration of delivery performance measurement and will expand in future versions to include additional metrics and data sources such as issue trackers, deployment platforms, and other development tools.
+:::
+
 ## Key metrics overview
 
 We will track four key metrics to measure delivery performance:
 
-1. **PR cycle time** - Exposes friction in reviews, CI wait times, and other bottlenecks.
-2. **PR throughput** - Shows delivery flow and whether CI or platform issues block output.
-3. **Deployment frequency** - Shows how often customer value is shipped.
-4. **Overdue PRs** (open > 3 days) - Signals workflow inefficiencies, unclear ownership, or blocked work.
+| Metric | What it measures | Why it matters |
+|--------|------------------|----------------|
+| **PR cycle time** | Time from PR creation to merge | Exposes friction in reviews, CI wait times, and other bottlenecks that slow down delivery |
+| **PR throughput** | Number of PRs merged over time | Shows delivery flow and whether CI or platform issues block output |
+| **Deployment frequency** | How often code is deployed to production | Shows how often customer value is shipped and indicates delivery cadence |
+| **Overdue PRs** (open > 3 days) | PRs that have been open longer than 3 days | Signals workflow inefficiencies, unclear ownership, or blocked work that needs attention |
 
 ## Set up data model
 
