@@ -369,6 +369,18 @@ When a new scorecard is created, Port automatically creates a relation in the Ru
    - Rule results are not searchable in the global search.
    - They are updated automatically when rules are evaluated.
 
+<h3>Scorecard entity identifiers are immutable</h3>
+
+Identifiers for `scorecard` and `scorecard rule` entities are immutable.  
+
+If you need to change the identifier of a `scorecard`, follow this workflow:
+
+1. Copy the configuration of the existing scorecard.
+2. Create a new scorecard with the desired identifier.
+3. Delete the original scorecard.
+
+If you need to change the identifier of a `scorecard rule`, edit the rule within the scorecard.
+
 <h3>Validation rules</h3>
 
 The system enforces several validation rules to maintain data integrity:

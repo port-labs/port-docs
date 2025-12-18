@@ -25840,10 +25840,11 @@ paths:
       summary: Get all organization secrets' metadata
       tags:
         - Organization
-      description: This route allows you to retrieve metadata about all secrets
-        in your organization. Note that this endpoint returns only the metadata
-        of the secrets, not the secret content itself.<br/><br/>To learn more about secrets management in Port,
-        check out the [documentation](https://docs.port.io/sso-rbac/port-secrets).
+      description: This route allows you to retrieve metadata about all secrets in
+        your organization. Note that this endpoint returns only the metadata of
+        the secrets, not the secret content itself.<br/><br/>To learn more
+        about secrets management in Port, check out the
+        [documentation](https://docs.port.io/sso-rbac/port-secrets).
       security:
         - bearer:
             - read:secrets
@@ -26260,15 +26261,13 @@ paths:
       summary: Get all integrations
       tags:
         - Integrations
-      description: |
-        This route allows you to fetch all integrations in your Port
-        organization.<br/><br/>To learn more about integrations, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br> 
+      description: |-
+        This route allows you to fetch all integrations in your Port organization.
+        To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
         :::warning Permission requirements
-        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
 
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        
         If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       parameters:
@@ -26321,15 +26320,13 @@ paths:
       summary: Get an integration
       tags:
         - Integrations
-      description: |
-        This route allows you to fetch a specific integration in your Port
-        organization.<br/><br/>To learn more about integrations, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br>
+      description: |-
+        This route allows you to fetch a specific integration in your Port organization.
+        To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
         :::warning Permission requirements
-        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
 
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        
         If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       parameters:
@@ -26812,16 +26809,13 @@ paths:
       summary: Get an integration's audit logs
       tags:
         - Integrations
-      description: |
-        This route allows you to fetch the audit logs of a specific
-        integration in your Port organization.<br/><br/>To learn more about
-        integrations, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/). <br></br>
+      description: |-
+        This route allows you to fetch the audit logs of a specific integration in your Port organization.
+        To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
         :::warning Permission requirements
-        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
 
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        
         If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       parameters:
@@ -26858,6 +26852,29 @@ paths:
           required: false
           description: Determines whether to fetch logs before or after the specified
             timestamp.
+        - schema:
+            type: string
+            nullable: true
+          in: query
+          name: eventId
+          required: false
+          description: Filter logs belonging to a specific event.
+        - schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - DEBUG
+                - INFO
+                - WARNING
+                - ERROR
+                - FATAL
+            minItems: 1
+            nullable: true
+          in: query
+          name: level
+          required: false
+          description: Filter logs by severity level.
         - schema:
             type: string
           in: path
@@ -27619,17 +27636,12 @@ paths:
       summary: Get all webhooks
       tags:
         - Webhook
-      description: |
-        This route allows you to fetch all webhooks configured in your Port
-        organization. You can also see them in the [data sources
-        page](https://app.getport.io/settings/data-sources) of your Port
-        account.<br/><br/>To learn more about webhooks, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/). <br></br>
+      description: |-
+        This route allows you to fetch all webhooks configured in your Port organization. You can also see them in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.
+        To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
         :::warning Permission requirements
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
-
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        
         If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       security:
@@ -28573,17 +28585,12 @@ paths:
       summary: Get a webhook
       tags:
         - Webhook
-      description: |
-        This route allows you to fetch a specific webhook in your Port
-        organization. You can also see it in the [data sources
-        page](https://app.getport.io/settings/data-sources) of your Port
-        account.<br/><br/>To learn more about webhooks, check out the
-        [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/). <br></br>
+      description: |-
+        This route allows you to fetch a specific webhook in your Port organization. You can also see it in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.
+        To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
         :::warning Permission requirements
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
-
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        
         If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       parameters:
@@ -34496,6 +34503,127 @@ paths:
                   - ok
                   - error
                 additionalProperties: false
+  /v1/integration/{integrationInternalId}/syncsMetadata:
+    get:
+      summary: Get an integration's sync metadata
+      tags:
+        - Integrations
+      description: |-
+        This route allows you to get an integration's sync metadata, which includes the sync's ID, state, creation and last update dates.\n\nReturns resyncs from the last 4 days, or the 50 most recent ones.<br/><br/>:::warning Permission requirements
+
+        To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
+
+        To learn more about the different roles and permissions, please refer to the [documentation](https://docs.port.io/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+
+        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
+
+        :::
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: integrationInternalId
+          required: true
+          description: The ID of the integration you want to operate on.
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          required: false
+          description: Your API token. To get it, go to your [Port
+            account](https://app.port.io/), click the `...` button, then click
+            the `Generate API token` button and copy the generated token.
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  count:
+                    type: number
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        eventId:
+                          type: string
+                        syncState:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                      required:
+                        - eventId
+                        - syncState
+                        - createdAt
+                        - updatedAt
+                      additionalProperties: false
+                required:
+                  - ok
+                  - count
+                  - data
+                additionalProperties: false
+        "401":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
   /v1/quota/ai-invocations:
     get:
       summary: Get monthly AI invocations quota usage
@@ -36275,6 +36403,655 @@ paths:
                 required:
                   - ok
                   - invocation
+                additionalProperties: false
+        "400":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/entities-auto-discovery:
+    post:
+      summary: Create an auto-discovery invocation
+      tags:
+        - Catalog auto discovery
+      description: This route allows you to create an auto-discovery
+        invocation.<br></br> To learn more about the auto-discovery feature, see
+        the
+        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                blueprintIdentifier:
+                  type: string
+                  description: The identifier of the blueprint to discover entities for.
+                excludedBlueprintIdentifiers:
+                  type: array
+                  items:
+                    type: string
+                  description: The identifiers of the related blueprints to exclude from the
+                    discovery context.
+                description:
+                  type: string
+                  description: Additional information to guide the auto-discovery search. For
+                    example, you can provide a clue that service names end with
+                    `_service`.
+              required:
+                - blueprintIdentifier
+              additionalProperties: false
+        required: true
+      parameters:
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  invocationId:
+                    type: string
+                required:
+                  - ok
+                  - invocationId
+                additionalProperties: false
+        "409":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/entities-auto-discovery/{invocation_id}/review:
+    post:
+      summary: Review auto-discovery invocation suggestions
+      tags:
+        - Catalog auto discovery
+      description: This route allows you to review suggestions for an auto-discovery
+        invocation. You can accept or reject individual suggestions, or accept
+        or reject all suggestions at once.<br></br> To learn more about the
+        auto-discovery feature, see the
+        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                actions:
+                  type: array
+                  items:
+                    anyOf:
+                      - title: Accept suggestion
+                        type: object
+                        properties:
+                          entityIdentifier:
+                            type: string
+                            description: The identifier of the entity to accept.
+                          action:
+                            type: string
+                            enum:
+                              - accept
+                        required:
+                          - entityIdentifier
+                          - action
+                        additionalProperties: false
+                      - title: Reject suggestion
+                        type: object
+                        properties:
+                          entityIdentifier:
+                            type: string
+                            description: The identifier of the entity to reject.
+                          action:
+                            type: string
+                            enum:
+                              - reject
+                          rejectionReason:
+                            type: string
+                            description: The reason for rejecting the entity.
+                        required:
+                          - entityIdentifier
+                          - action
+                        additionalProperties: false
+                bulkAction:
+                  anyOf:
+                    - title: Accept all suggestions
+                      type: object
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - accept_all
+                          description: Accept all suggestions.
+                      required:
+                        - action
+                      additionalProperties: false
+                    - title: Reject all suggestions
+                      type: object
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - reject_all
+                          description: Reject all suggestions.
+                        rejectionReason:
+                          type: string
+                          description: The reason for rejecting all suggestions.
+                      required:
+                        - action
+                      additionalProperties: false
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+            pattern: ^[0-9a-f]{24}$
+          in: path
+          name: invocation_id
+          required: true
+          description: The ID of the auto-discovery invocation returned by the create
+            auto-discovery invocation endpoint.
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  reviewedCount:
+                    type: number
+                    description: The number of suggestions reviewed.
+                  acceptedCount:
+                    type: number
+                    description: The number of suggestions accepted.
+                  rejectedCount:
+                    type: number
+                    description: The number of suggestions rejected.
+                  ingestErrorCount:
+                    type: number
+                    description: The number of suggestions that failed to be ingested.
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        entityIdentifier:
+                          type: string
+                          description: The identifier of the entity that failed to be ingested.
+                        errorMessage:
+                          type: string
+                          description: The error message of the entity that failed to be ingested.
+                      required:
+                        - entityIdentifier
+                        - errorMessage
+                      additionalProperties: false
+                required:
+                  - ok
+                  - reviewedCount
+                  - acceptedCount
+                  - rejectedCount
+                  - ingestErrorCount
+                  - errors
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/entities-auto-discovery/{invocation_id}/suggestions:
+    get:
+      summary: Get auto-discovery invocation suggestions
+      tags:
+        - Catalog auto discovery
+      description: This route allows you to get suggestions for an auto-discovery
+        invocation.<br></br> To learn more about the auto-discovery feature, see
+        the
+        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+      security:
+        - bearer: []
+      parameters:
+        - schema:
+            type: string
+            pattern: ^[0-9a-f]{24}$
+          in: path
+          name: invocation_id
+          required: true
+          description: The ID of the auto-discovery invocation returned by the create
+            auto-discovery invocation endpoint.
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  status:
+                    type: string
+                    enum:
+                      - in_progress
+                      - completed
+                      - failed
+                    description: The status of the auto-discovery invocation.
+                  durationSeconds:
+                    type: number
+                    description: The duration of the auto-discovery invocation in seconds.
+                  generatedCount:
+                    type: number
+                    description: The number of entities generated by the auto-discovery invocation.
+                  errorMessage:
+                    type: string
+                  upstreamBlueprintCounts:
+                    type: object
+                    additionalProperties:
+                      type: number
+                  downstreamBlueprintCounts:
+                    type: object
+                    additionalProperties:
+                      type: number
+                  enrichSuggestions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          type: string
+                        title:
+                          type: string
+                        icon:
+                          type: string
+                        properties:
+                          type: object
+                          additionalProperties: {}
+                        relations:
+                          type: object
+                          additionalProperties:
+                            anyOf:
+                              - type: string
+                              - type: array
+                                items:
+                                  type: string
+                      required:
+                        - identifier
+                      additionalProperties: false
+                  createSuggestions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          type: string
+                        title:
+                          type: string
+                        icon:
+                          type: string
+                        properties:
+                          type: object
+                          additionalProperties: {}
+                        relations:
+                          type: object
+                          additionalProperties:
+                            anyOf:
+                              - type: string
+                              - type: array
+                                items:
+                                  type: string
+                      required:
+                        - identifier
+                      additionalProperties: false
+                required:
+                  - ok
+                  - status
+                  - enrichSuggestions
+                  - createSuggestions
+                additionalProperties: false
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/entities-auto-discovery/blueprint/{blueprint_identifier}/latest:
+    get:
+      summary: Get latest auto-discovery invocation for a blueprint
+      tags:
+        - Catalog auto discovery
+      description: This route allows you to get the latest auto-discovery invocation
+        for a blueprint.<br></br> To learn more about the auto-discovery
+        feature, see the
+        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+      security:
+        - bearer: []
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: blueprint_identifier
+          required: true
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  invocationId:
+                    type: string
+                    description: The ID of the auto-discovery invocation.
+                  status:
+                    type: string
+                    enum:
+                      - in_progress
+                      - pending_review
+                      - completed
+                      - failed
+                    description: The status of the latest auto-discovery invocation for the
+                      blueprint.
+                  generatedCount:
+                    type: number
+                    description: The number of entities generated by the latest auto-discovery
+                      invocation for the blueprint.
+                  pendingReviewCount:
+                    type: number
+                    description: The number of suggestions waiting for review in the latest
+                      auto-discovery invocation for the blueprint.
+                  errorMessage:
+                    type: string
+                    description: The error message of the latest auto-discovery invocation for the
+                      blueprint, if failed.
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                required:
+                  - ok
+                  - invocationId
+                  - status
+                  - pendingReviewCount
+                  - createdAt
+                  - updatedAt
+                additionalProperties: false
+        "404":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+        "500":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  details:
+                    type: object
+                    additionalProperties: {}
+                required:
+                  - ok
+                  - error
+                additionalProperties: false
+  /v1/ai/entities-auto-discovery/{invocation_id}/suggestions/{entity_identifier}:
+    patch:
+      summary: Update auto-discovery invocation suggestion
+      tags:
+        - Catalog auto discovery
+      description: This route allows you to update a suggestion for an auto-discovery
+        invocation. If a suggestion is not accurate, you can update it with the
+        correct information.<br></br> To learn more about the auto-discovery
+        feature, see the
+        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+      security:
+        - bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                title:
+                  type: string
+                icon:
+                  type: string
+                properties:
+                  type: object
+                  additionalProperties: {}
+                relations:
+                  type: object
+                  additionalProperties:
+                    anyOf:
+                      - type: string
+                      - type: array
+                        items:
+                          type: string
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+            pattern: ^[0-9a-f]{24}$
+          in: path
+          name: invocation_id
+          required: true
+          description: The ID of the auto-discovery invocation returned by the create
+            auto-discovery invocation endpoint.
+        - schema:
+            type: string
+          in: path
+          name: entity_identifier
+          required: true
+          description: The identifier of the entity to update the suggestion for.
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  entity:
+                    type: object
+                    properties:
+                      identifier:
+                        type: string
+                      title:
+                        type: string
+                      icon:
+                        type: string
+                      properties:
+                        type: object
+                        additionalProperties: {}
+                      relations:
+                        type: object
+                        additionalProperties:
+                          anyOf:
+                            - type: string
+                            - type: array
+                              items:
+                                type: string
+                    required:
+                      - identifier
+                    additionalProperties: false
+                required:
+                  - ok
+                  - entity
                 additionalProperties: false
         "400":
           description: Default Response
