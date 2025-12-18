@@ -411,62 +411,27 @@ Chart filters allow you to limit which entities are included in your dashboard v
 
 <ChartFilters />
 
-Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
-
-<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' style={{border:'1px', borderRadius:'8px'}}/>
-<br/><br/>
-
-These are used internally in Port and cannot be modified/removed.
-You can add additional filters as you wish, by adding new objects to the `rules` array, for example:
+If you want to add additional filters, you can do so in the UI, or in the following manner:
 
 <details>
-<summary><b>Filter with additional rule example (click to expand)</b></summary>
+<summary><b>Filter rules example (click to expand)</b></summary>
 
 ```json
 {
   "combinator": "and",
   "rules": [
-    {
-      "operator": "=",
-      "value": "service",
-      "property": "$blueprint"
-    },
-    {
-      "operator": "=",
-      "value": "someValue",
-      "property": "someProp"
-    }
-  ]
-}
-```
-</details>
-
-If you want to add additional rules with a different combinator, you can nest them inside a new object, for example:
-
-<details>
-<summary><b>Filter with nested rules example (click to expand)</b></summary>
-
-```json
-{
-  "combinator": "and",
-  "rules": [
-    {
-      "operator": "=",
-      "value": "service",
-      "property": "$blueprint"
-    },
     {
       "combinator": "or",
       "rules": [
         {
           "operator": "=",
-          "value": "someValue",
-          "property": "someProp"
+          "value": "value1",
+          "property": "property1"
         },
         {
           "operator": "=",
-          "value": "anotherValue",
-          "property": "anotherProp"
+          "value": "value2",
+          "property": "property2"
         }
       ]
     }
