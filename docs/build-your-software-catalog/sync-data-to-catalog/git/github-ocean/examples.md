@@ -4,7 +4,7 @@ sidebar_position: 2
 
 import RepositoryBlueprint from './examples/\_github_exporter_example_repository_blueprint.mdx'
 import PRBlueprint from './examples/\_github_exporter_example_pull_request_blueprint.mdx'
-import PortAppConfig from './examples/\_github_exporter_example_port_app_config.mdx'
+import PortAppConfig from './examples/\_github_exporter_example_pull_request_port_app_config.mdx'
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
 import UsersBlueprint from './examples/example-repository-admins/\_github_exporter_example_users_blueprint.mdx'
@@ -124,20 +124,23 @@ You can also choose which GitHub API to use for pull requests. By default, the i
 - kind: pull-request
   selector:
     query: "true"
-    state: "open"
+    state: ["open"]
     api: "graphql" # Use the GraphQL API instead of REST.
   port:
     entity:
       mappings:
-        identifier: .id|tostring
+        identifier: .__repository + (.fullDatabaseId|tostring)
         title: .title
         blueprint: '"githubPullRequest"'
         properties:
-          creator: .author.login
+          creator: (.author.login | gsub("\\["; "-") | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; ""))
+          assignees: '[.assignees[].login | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; "")]'
+          reviewers: '[.requested_reviewers[].login | gsub("\\](?=[^$])"; "-") | gsub("\\]$"; "")]'
           status: .state
           createdAt: .createdAt
           updatedAt: .updatedAt
           mergedAt: .mergedAt
+          prNumber: ".number"
           link: .url
         relations:
           repository: .__repository
