@@ -218,11 +218,12 @@ kubectl apply -f my-ocean-snyk-integration.yaml
 
 To Install Snyk Integration using Azure Container Instance:
 
-Navigate to Azure portal homepage, select `Create resource`.
+1. Navigate to Azure portal homepage.
+2. Select `Create resource`.
 
 <img src="/img/sync-data-to-catalog/quickstart-portal-create-resource.png" width='50%' border='1px' />
 
-Select containers > Container instances
+3. Select containers , then Container instances.
 
 <img src="/img/sync-data-to-catalog/aci-instance.png" width='50%' border='1px' />
 
@@ -230,31 +231,31 @@ Follow the steps below.
 
 1. Basics
 
-- Select your **Subscription** and **Resource Group**  
-  - Create a new resource group if required.
-
-- Set the **Container name**  
-  - Example: `port-ocean-snyk`
-
-- Select your **Region**  
-  - Example: `Australia Southeast`
-
-- Select your **Image type**
-
-- Select your **Image source**
-  - **Azure Container Registry (ACR)**  
-    - Ensure the Port Ocean Snyk image is available in your registry.
-  - **Public registry (recommended for quick setup)**  
-    - Image name:
-      ```
-      ghcr.io/port-labs/port-ocean-snyk:latest
-      ```
-
-- Select **Linux** as the **OS type**
-
-- Set the **container size**
-  - Default: `1 vCPU`, `1.5 GiB memory`, `0 GPUs`
-  - These values can be increased if required.
+    - Select your **Subscription** and **Resource Group**  
+      - Create a new resource group if required.
+    
+    - Set the **Container name**  
+      - Example: `port-ocean-snyk`
+    
+    - Select your **Region**  
+      - Example: `Australia Southeast`
+    
+    - Select your **Image type**
+    
+    - Select your **Image source**
+      - **Azure Container Registry (ACR)**  
+        - Ensure the Port Ocean Snyk image is available in your registry.
+      - **Public registry (recommended for quick setup)**  
+        - Image name:
+          ```
+          ghcr.io/port-labs/port-ocean-snyk:latest
+          ```
+    
+    - Select **Linux** as the **OS type**
+    
+    - Set the **container size**
+      - Default: `1 vCPU`, `1.5 GiB memory`, `0 GPUs`
+      - These values can be increased if required.
 
 2. Networking
 
@@ -275,11 +276,11 @@ Follow the steps below.
 - Set **Restart policy** to `On failure`
 - Configure the following **Environment Variables**
 
-:::note
+:::note Deploying in a US region
 If deploying in a US region, use `https://api.us.port.io` as the base URL.
 :::
 
-### Environment Variables
+<h3>Environment Variables</h3>
 
 | Mark as Secure | Key                                           | Value                    | Required |
 |----------------|-----------------------------------------------|--------------------------|----------|
