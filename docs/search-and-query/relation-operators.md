@@ -296,7 +296,7 @@ Instead of thinking about the path as downstream from the target, we treat it as
 
 Suppose you have the following data model:
 
-<img src="/img/software-catalog/search-in-port/specific-path-diagram-example.png" border='1px' style={{borderRadius:'6px'}} />
+<img src="/img/software-catalog/search-in-port/specific-path-diagram-example.png" border='1px' style={{borderRadius:'8px'}} />
 
 <h4>Find all services related to a cluster (upstream)</h4>
 
