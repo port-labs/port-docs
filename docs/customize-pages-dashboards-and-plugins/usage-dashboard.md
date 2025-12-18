@@ -9,7 +9,8 @@ import TabItem from "@theme/TabItem"
 
 # Usage dashboard
 
-The usage dashboard provides visibility into how your Port environment is being used across your organization. Use these insights to optimize adoption, identify engagement opportunities, and maximize the value your teams get from Port.
+The usage dashboard provides visibility into how your Port environment is being used across your organization.  
+Use these insights to optimize adoption, identify engagement opportunities, and maximize the value your teams get from Port.
 
 The dashboard tracks key metrics across five areas:
 
@@ -31,6 +32,12 @@ To access the usage dashboard:
 
 1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
 2. In the left sidebar, select **Usage dashboard**.
+
+:::tip Export reports
+All reports can be exported by clicking the `...` button in the top right corner of each table or chart, then choosing the format to download and clicking `Download`. Data will be exported locally in the chosen format for further analysis.
+
+Additionally, the entire dashboard can be downloaded in PDF format.
+:::
 
 ## Users activity
 
@@ -57,10 +64,6 @@ A time-series graph showing the total number of activated users for each month:
 **Activated user log:**
 
 The entire user base that is defined as activated.
-
-:::tip Export reports
-All reports can be exported by clicking the **...** button in the top right corner of each table or chart. Data will be exported locally in CSV format for further analysis.
-:::
 
 ### User activity
 
