@@ -21,7 +21,7 @@ The dashboard tracks key metrics across five areas:
 - **AI usage** - analyze AI agent and MCP interactions.
 
 :::info Multi-organization support
-All data in the usage dashboard is displayed at the company level across all organizations under your company. The dashboard is only available for customers who have completed the migration to [multi-organization](/sso-rbac/multi-organization).
+All data in the usage dashboard is displayed at the company level across all organizations under your company. The dashboard is only available for customers who have completed the migration to the [multi-organization](/sso-rbac/multi-organization) structure.
 
 Each table provides total aggregated data, with detailed breakdowns by organization available in the raw data tables. This allows you to view organization-specific metrics when needed.
 :::
@@ -33,173 +33,166 @@ To access the usage dashboard:
 1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
 2. In the left sidebar, select **Usage dashboard**.
 
-:::tip Export reports
-All reports can be exported by clicking the `...` button in the top right corner of each table or chart, then choosing the format to download and clicking `Download`. Data will be exported locally in the chosen format for further analysis.
-
-Additionally, the entire dashboard can be downloaded in PDF format.
-:::
-
 ## Users activity
 
 The users activity tab provides insights into user adoption and engagement patterns. It is divided into two main sections: **activated users** and **user activity**.
 
-### Activated users
+### Active seats
 
 This section tracks user activation based on Port's activation criteria and provides historical trends.
 
-:::tip Activated user definition
-An activated user is defined as someone who has logged into Port **3 or more times across 3 different calendar weeks**. This metric helps measure meaningful user engagement beyond one-time logins.
-:::
+**Active seat definition:**  
 
-The activated users section includes:
+An active seat is any end user who has logged into the Port platform **3 or more times in 3 different calendar weeks during the subscription term**.
 
-**Total monthly activated users graph:**
+Once someone becomes an active seat, they continue to count as such unless:
 
-A time-series graph showing the total number of activated users for each month:
+- They are removed from the customer's Port environment.
+- They are marked as disabled using Port's "User Type" setting or another deactivation option.
 
-- Total count of activated users per month.
-- Trend visualization to track growth or decline.
-- Month-over-month changes to identify patterns.
+The active seats section includes:
 
-**Activated user log:**
-
-The entire user base that is defined as activated.
+- **Total monthly active seats graph** - a time-series graph showing the total number of active users for each month, with trend visualization and month-over-month changes.
+- **Activated seats log** - the entire user base that is defined as activated.
 
 ### User activity
 
-This section provides detailed engagement metrics divided into team engagement, specific user activity, and page visits.
+This section includes metrics that will help you monitor and analyze the activity in Port across your organization.
 
-**Team engagement:**
+**Team engagement** - see which teams use Port regularly and which teams require more attention:
 
-View the most and least engaged teams in each month.
+- Most engaged teams.
+- Least engaged teams.
 
-**Most engaged teams:**
+**Specific user activity** - your most and least engaged users:
 
-- Team name.
-- Month.
-- Daily login in each team.
-- Difference from the previous month.
+- Least engaged users.
+- Latest logins (last 7 days).
 
-**Least engaged teams:**
+**Page visits** - your most and least popular pages:
 
-- Team name.
-- Month.
-- Daily login in each team.
-- Difference from the previous month.
+- Popular pages by member users (current month).
+- Popular pages by admin users (current month).
+- Member page visits during month.
+- Admin page visits during month.
 
-**User activity tables:**
-
-Two key tables show user login patterns:
-
-- **Inactive users** - users who haven't logged in for 3 or more months.
-- **Latest logins** - users who have logged in within the last 7 days.
-
-**Popular pages:**
-
-Shows the most frequently accessed pages, separated by:
-
-- Popular pages used by members.
-- Popular pages used by admins.
 
 ## Entities
 
-The entities tab provides visibility into your software catalog growth and composition.
+The entities tab provides visibility into your software catalog growth and composition. It includes:
 
-:::info Historical data availability
-Entity count historical data is only available from **November 2025 onwards**.
-:::
+- **Total monthly entities graph** - shows total entities in each month.
+- **Total amount of entities** - the current total number of entities in your catalog.
+- **Entities by blueprint** - entities by blueprint displayed in a pie chart form.
+- **Entities log by organization** - entities log broken down by organization.
 
-### Total monthly entities
+## Actions & automations
 
-**Total monthly entities graph:**
+The actions and automations tab tracks self-service action and automation usage. It includes:
 
-- Total entities in each month.
-- Current total entities count.
-
-### Entities by blueprint
-
-Entities by blueprint in a pie chart form.
-
-### Entities by data source and blueprint
-
-Each blueprint, data source entities, and the difference from the previous month.
-
-## Actions and automations
-
-The actions and automations tab tracks self-service action and automation usage.
-
-### Overview metric
-
-The current number of actions triggered via API + all automation triggers.
+- **Actions triggered via API + automation triggers (current year)** - the combined total for the current year.
 
 ### Automations
 
-**Total monthly automations:**
+Track the usage of automations defined in Port.
 
-Total monthly automations and the details broken down by the different organizations.
+- **Total monthly automation runs** - automation runs per month broken down by organization.
+- **Automation runs log** - detailed log of automation executions.
 
 ### Actions
 
-**Total monthly actions:**
+Track the usage of actions defined in Port.
 
-Total monthly actions broken down by the different organizations.
-
-**Top actions:**
-
-The top 6 most frequently used actions.
-
-**Actions log:**
-
-Provides data about total actions, actions by user, and also by role and team.
+- **Total monthly actions runs** - action runs per month broken down by organization.
+- **Top actions (current month)** - the top 6 most frequently used actions in the current month.
+- **Action logs** - provides data about:
+  - Total actions by organization.
+  - Actions by user breakdown.
+  - Actions by role.
+  - Actions by team.
 
 ## Data sources
 
-### Total monthly data sources
+The data sources tab provides visibility into your connected integrations. It includes:
 
-Total monthly graph and the current total.
+- **Total monthly data sources** - total monthly graph showing data sources over time.
+- **Data sources total amount** - the current total number of connected data sources.
+- **Data sources log** - the type and name per organization, as well as the created date for each data source.
 
-### Data sources log
+## AI & MCP
 
-The type and name per organization, as well as the created date for each data source.
+Port's AI interfaces provide intelligent assistance across your entire software development lifecycle. All AI features are currently in open beta.
 
-## AI and MCP
+To learn more about AI capabilities in Port, see the [AI interfaces documentation](/ai-interfaces/overview).
 
-### Total monthly AI interactions
+The AI and MCP tab provides analytics on AI agent usage and MCP interactions. It includes:
 
-Total monthly AI interactions (any type of source or AI feature) for each month.
-
-### AI agent invocation by source
-
-AI agent invocation by source (AI assistant, agent widget, etc.).
-
-### AI invocation by agent type
-
-AI invocation by agent type.
-
-### Total monthly MCP calls
-
-Total monthly MCP calls.
-
-### AI agent invocation details
-
-**AI agent invocation by source and organization:**
-
-Raw data about the AI agent invocation number by source by organization.
-
-**AI agent invocation by user and type:**
-
-AI agent invocation by user and type.
+- **Monthly AI interactions** - total monthly AI interactions (any type of source or AI feature) for each month.
+- **Monthly MCP calls** - total monthly MCP calls.
+- **AI invocation by source** - AI agent invocation by source (AI assistant, agent widget, etc.).
+- **AI & MCP usage per user** - detailed breakdown of AI and MCP usage by individual users.
 
 ## Export and reporting
 
-All tables and visualizations in the usage dashboard can be exported:
+All tables and visualizations in the usage dashboard can be exported for further analysis.
 
-1. Click the **...** button in the top right corner of any table or chart.
-2. Select **Export to CSV**.
-3. The file will be downloaded locally.
+**Export individual reports:**
 
-## Related resources
+To export a specific table or chart:
 
-- [Manage users and teams](/sso-rbac/users-and-teams/manage-users-teams).
-- [Multi-organization](/sso-rbac/multi-organization).
-- [Ownership](/sso-rbac/ownership).
+1. Click the `...` button in the top right corner of any table or chart.
+2. Choose the format to download: **CSV**, **XLSX**, or **JSON**.
+3. Click **Download**.
+4. The file will be downloaded locally in the chosen format.
+
+**Export entire dashboard:**
+
+Additionally, the entire dashboard tab can be downloaded in **PDF format** for comprehensive reporting.
+
+## Limitations
+
+- The dashboard is available to organization admins with enterprise account only.
+- The dashboard is static without the ability to change filters.
+- Usage data is not currently available via the API.
+- Entity count data is available from **November 2025** onwards.
+- User activity data is available from **July 2025** onwards.
+
+## FAQs
+
+<details>
+<summary><b>Why don't I see the complete history for total monthly entities or user activity? (click to expand)</b></summary>
+
+Historical data availability varies by metric:
+- **Entity count data** is available from November 2025 onwards.
+- **User activity data** is available from July 2025 onwards.
+
+Data from before these dates is not available in the system.
+
+</details>
+
+<details>
+<summary><b>What is the "Other" category in the "AI invocations by source" report? (click to expand)</b></summary>
+
+"Other" refers to AI invocations that didn't include the "source" key as part of the API call. This typically includes invocations from custom automations or direct API calls in your code.
+
+</details>
+
+<details>
+<summary><b>Can I filter the dashboard by organization, timeframe, or team? (click to expand)</b></summary>
+
+Currently, the dashboard is static and does not support filtering by organization, timeframe, or team.
+
+As a workaround, you can export the data (CSV, XLSX, or JSON) and apply filters locally using your preferred tools.
+
+</details>
+
+<details>
+<summary><b>Is usage data available via API or MCP? (click to expand)</b></summary>
+
+Usage dashboard data is not currently available via API or MCP.
+
+Some related data is available through Port's regular API, such as:
+- Data sources list.
+- Run history (via the audit log).
+
+</details>
