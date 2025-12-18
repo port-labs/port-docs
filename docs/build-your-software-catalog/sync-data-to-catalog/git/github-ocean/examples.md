@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
 ---
 
 import RepositoryBlueprint from './examples/\_github_exporter_example_repository_blueprint.mdx'
@@ -58,9 +58,11 @@ import LastContributorBranchBlueprint from './examples/example-branch/\_git_expo
 import LastContributorAppConfig from './examples/example-branch/\_github_exporter_example_last_contributor_port_app_config.mdx'
 import LastContributorBlueprint from './examples/example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
 
-# Resource mapping examples
+# Examples
 
-## Map organizations and repositories
+This page provides practical examples for mapping various GitHub resources to Port.
+
+## Organizations and repositories
 
 :::info Available from v3.0.0-beta
 The `organization` kind is available from version `v3.0.0-beta` onwards.
@@ -85,7 +87,7 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 After creating the blueprints and committing the `port-app-config.yml` file, you will see new entities in Port matching your organizations and their repositories. The repositories will have a relation to their parent organization.
 
-## Map repositories and pull requests
+## Repositories and pull requests
 
 The following example demonstrates how to ingest your GitHub repositories, their README.md file contents and open pull requests to Port.  
 You can use the following Port blueprint definitions and `port-app-config.yml`:
@@ -151,7 +153,7 @@ When you use `api: "graphql"`, the pull request data follows the GraphQL schema 
 
 Make sure you update your jq mappings to use the correct keys for the API you choose.
 
-## Map repositories and issues
+## Repositories and issues
 
 The following example demonstrates how to ingest your GitHub repositories and their issues to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
@@ -171,7 +173,7 @@ The following example demonstrates how to ingest your GitHub repositories and th
 
 :::
 
-## Map repositories and branches
+## Repositories and branches
 
 The following example demonstrates how to ingest your GitHub repositories and their branches to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
@@ -181,7 +183,7 @@ The following example demonstrates how to ingest your GitHub repositories and th
 
 <PortBrAppConfig/>
 
-## Map repositories and last contributor
+## Repositories and last contributor
 
 The following example demonstrates how to ingest your GitHub repositories and their last contributor to Port.  
 You can use the following Port blueprint definitions and `port-app-config.yml`:
@@ -196,7 +198,7 @@ The last contributor is the author of the last commit in the default branch of t
 This example uses the `branch` kind with `detailed: true` to fetch the latest commit data and mirrors the last contributor and last commit date back onto the repository entity.
 :::
 
-## Map files and file contents
+## Files and file contents
 
 The following example demonstrates ingestion of dependencies from a `package.json` file in your repository into Port: 
 
@@ -207,7 +209,7 @@ The example will parse the `package.json` file in your repository and extract th
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/github-ocean/#ingest-files-from-your-repositories).
 
 
-## Map files and repositories
+## Files and repositories
 
 The following example demonstrates mapping files to repository.
 
@@ -215,7 +217,7 @@ The following example demonstrates mapping files to repository.
 <FileBlueprint />
 <RepoFileAppConfig />
 
-## Map repositories and monorepos
+## Repositories and monorepos
 
 The following example demonstrates how to ingest your GitHub repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. You may use the following Port blueprint definitions and `port-app-config.yml`:
 
@@ -255,7 +257,7 @@ Use `path` and `repositoryType` to scope results and improve performance.
 :::
 
 
-## Map repositories, workflows and workflow runs
+## Repositories, workflows and workflow runs
 
 The following example demonstrates how to ingest your GitHub repositories, their workflows and workflow runs to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
@@ -273,7 +275,7 @@ The following example demonstrates how to ingest your GitHub repositories, their
 
 :::
 
-## Map repositories and teams
+## Repositories and teams
 
 The following example demonstrates how to ingest your GitHub repositories and their teams to Port.  
 You can use the following Port blueprint definitions and `port-app-config.yml`:
@@ -285,7 +287,7 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 <PortRepositoryTeamMappingAppConfig/>
 
 
-## Map repositories with multiple relationships
+## Repositories with multiple relationships
 
 You can now include multiple relationship types in a single repository configuration. For example, to include both teams and collaborators:
 
@@ -329,7 +331,7 @@ While you can include multiple relationship types in a single configuration, thi
 :::
 
 
-## Map teams and team members
+## Teams and team members
 
 The following shows how we can map teams and team members using the "members" selector.
 
@@ -338,7 +340,7 @@ The following shows how we can map teams and team members using the "members" se
 <TeamMemberConfig />
 
 
-## Map repositories, repository admins and users
+## Repositories, repository admins and users
 
 The following example demonstrates how to ingest your GitHub repositories, their admins and related users to Port.  
 You can use the following Port blueprint definitions and `port-app-config.yml`:
@@ -365,7 +367,7 @@ For the `user` kind, only the following fields are supported: `.name`, `.login`,
 Other fields from the [GitHub User API](https://docs.github.com/en/rest/users/users#get-a-user) are not available.
 :::
 
-## Map repositories and collaborators
+## Repositories and collaborators
 
 The following example demonstrates how to ingest your GitHub repositories and their collaborators to Port.  
 You can use the following Port blueprint definitions and `port-app-config.yml`:
@@ -374,7 +376,7 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 <CollaboratorBlueprint />
 <PortRepositoryCollaboratorAppConfig />
 
-## Map repositories, dependabot alerts, code and secrets scan alerts
+## Repositories, dependabot alerts, code and secrets scan alerts
 
 The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
 
@@ -388,7 +390,7 @@ The following example shows how to ingest your GitHub repositories and their ale
 
 <PortRepositoryDependabotAlertMappingAppConfig/>
 
-## Map repositories, deployments and environments
+## Repositories, deployments and environments
 
 The following example demonstrates how to ingest your GitHub repositories, their deployments and environments to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
@@ -400,7 +402,7 @@ The following example demonstrates how to ingest your GitHub repositories, their
 
 <PortRepoDeploymentAndEnvironmentAppConfig/>
 
-## Map repositories, repository releases and tags
+## Repositories, repository releases and tags
 
 The following example demonstrates how to ingest your GitHub repositories, their releases and tags to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
@@ -412,7 +414,7 @@ The following example demonstrates how to ingest your GitHub repositories, their
 
 <RepositoryTagReleaseAppConfig/>
 
-## Map supported resources
+## Supported resources
 
 The examples above show specific use cases, but Port's GitHub integration supports the ingestion of many other GitHub objects.
 To adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
