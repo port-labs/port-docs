@@ -40,12 +40,13 @@ This guide focuses on measuring reliability and stability using source control m
 
 ## Key metrics overview
 
-We will track two key metrics to measure reliability and stability:
+We will track three key metrics to measure reliability and stability:
 
 | Metric | What it measures | Why it matters |
 |--------|------------------|----------------|
 | **Workflow failure rate** | How often CI/CD workflows fail and where failures occur | Identifies unstable workflows and services that need attention, helping prioritize infrastructure improvements |
 | **PRs blocked by failing CI/CD** | Number of pull requests blocked by failed workflow runs | Shows the direct impact of CI/CD failures on delivery velocity and helps quantify the cost of instability |
+| **CI/CD failure concentration** | Distribution of CI/CD failures across workflows, services, or repos | Helps to identify recurring failure patterns and prioritise the most important issues to fix |
 
 ## Set up data model
 
