@@ -54,6 +54,9 @@ import PortRepositoryDependabotAlertMappingAppConfig from './examples/example-re
 import OrganizationBlueprint from './examples/example-organization/\_github_exporter_example_organization_blueprint.mdx'
 import OrganizationAppConfig from './examples/example-organization/\_github_exporter_example_organization_port_app_config.mdx'
 
+import LastContributorBranchBlueprint from './examples/example-branch/\_git_exporter_example_last_contributor_branch_blueprint.mdx'
+import LastContributorAppConfig from './examples/example-branch/\_github_exporter_example_last_contributor_port_app_config.mdx'
+import LastContributorBlueprint from './examples/example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
 
 # Resource mapping examples
 
@@ -104,17 +107,46 @@ You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 After creating the blueprints and committing the `port-app-config.yml` file to your `.github-private` repository (for global configuration), or to any specific repositories (for per-repo configuration), you will see new entities in Port matching your repositories alongside their README.md file contents and pull requests. (Remember that the `port-app-config.yml` file has to be in the **default branch** of the repository to take effect).
 
-Additionally, you can configure your selector to limit the number of closed pull requests to ingest using a combination of `maxResults` and `since`. By Default, we only fetch 100 cloosed pull requests within 60 days.
+Additionally, you can configure your selector to limit the number of closed pull requests to ingest using a combination of `maxResults` and `since`. By default, we only fetch 100 closed pull requests within 60 days.
 
-```yaml
+```yaml showLineNumbers
 - kind: pull-request
   selector:
     query: "true"
-    states: ["closed"]  # Specifically for closed PRs
-    maxResults: 50  # Limit closed PRs to 50 capped at 300
-    since: 60  # Fetch closed PRs within 60 days capped at 90 days
+    states: ["closed"]  # Specifically for closed PRs.
+    maxResults: 50  # Limit closed PRs to 50 capped at 300.
+    since: 60  # Fetch closed PRs within 60 days capped at 90 days.
 ```
 
+You can also choose which GitHub API to use for pull requests. By default, the integration uses the REST API, but you can switch to GraphQL by adding an `api` selector:
+
+```yaml showLineNumbers
+- kind: pull-request
+  selector:
+    query: "true"
+    state: "open"
+    api: "graphql" # Use the GraphQL API instead of REST.
+  port:
+    entity:
+      mappings:
+        identifier: .id|tostring
+        title: .title
+        blueprint: '"githubPullRequest"'
+        properties:
+          creator: .author.login
+          status: .state
+          createdAt: .createdAt
+          updatedAt: .updatedAt
+          mergedAt: .mergedAt
+          link: .url
+        relations:
+          repository: .__repository
+```
+
+When you use `api: "rest"`, the pull request data follows the REST API shape (for example `.user.login`, `.created_at`, `.updated_at`, `.merged_at`, `.html_url`, `.additions`, `.deletions`, `.changed_files`).  
+When you use `api: "graphql"`, the pull request data follows the GraphQL schema and uses different key names (for example `.author.login`, `.createdAt`, `.updatedAt`, `.mergedAt`, `.url`, `.number`, `.additions`, `.deletions`, `.changedFiles`) and also adds convenience fields such as `assignees`, `requested_reviewers`, `comments`, `review_comments`, `commits`, `mergeable_state` and `mergeable`.  
+
+Make sure you update your jq mappings to use the correct keys for the API you choose.
 
 ## Map repositories and issues
 
@@ -145,6 +177,19 @@ The following example demonstrates how to ingest your GitHub repositories and th
 <BranchBlueprint/>
 
 <PortBrAppConfig/>
+
+## Map repositories and last contributor
+
+The following example demonstrates how to ingest your GitHub repositories and their last contributor to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<LastContributorBranchBlueprint/>
+<LastContributorBlueprint/>
+<LastContributorAppConfig/>
+
+:::info supported last contributor
+The last contributor is the author of the last commit in the default branch of the repository
+:::
 
 ## Map files and file contents
 

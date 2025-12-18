@@ -1,0 +1,33 @@
+<details>
+<summary><b>Port port-app-config.yml (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: branch
+    selector:
+      query: .name == .__repository_object.default_branch
+    port:
+      entity:
+        mappings:
+          identifier: .__repository_object.name + "-" + .name
+          blueprint: '"githubBranch"'
+          properties:
+            last_contributor: .commit.commit.author.email | ascii_downcase
+            last_push: .commit.commit.committer.date
+  - kind: repository
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name
+          blueprint: '"githubRepository"'
+          properties:
+            readme: file://README.md
+            url: .html_url
+            language: .language
+          relations:
+            github_branch: .name + "-" + .default_branch
+```
+</details>
