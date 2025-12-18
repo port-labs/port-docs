@@ -5,11 +5,18 @@ description: Learn how to measure reliability and stability of your delivery pip
 
 # Measure reliability and stability of delivery pipeline
 
-This guide demonstrates how to set up a reliability and stability monitoring solution across engineering teams. You will learn how to measure key engineering metrics that help platform engineering teams understand, assess, and improve the reliability and resilience of software systems using operational and delivery signals stored in Port's catalog.
+Measuring reliability and stability is essential for understanding how resilient your delivery pipeline is and where instability impacts your team's ability to ship value. Without visibility into workflow failures and CI/CD bottlenecks, teams struggle to identify problematic patterns, prioritize infrastructure improvements, and ensure consistent delivery.
+
+This guide helps engineering managers, platform engineers, and product leaders answer critical questions about their delivery pipeline:
+
+- **Workflow failures**: How often do CI/CD workflows fail, and where do failures concentrate?
+- **Bottlenecks**: Which workflows or services have the highest failure rates?
+- **Impact on delivery**: How frequently do failing workflows block pull requests and slow down delivery?
+
+By the end of this guide, you'll have a working dashboard that tracks key reliability and stability metrics, enabling you to identify unstable workflows, measure the impact of failures on delivery, and prioritize improvements to your CI/CD infrastructure.
 
 <img src="/img/guides/reliability-dashboard-1.png" border="1px" width="100%" />
 <img src="/img/guides/reliability-dashboard-2.png" border="1px" width="100%" />
-
 
 ## Common use cases
 
@@ -26,12 +33,19 @@ This guide assumes the following:
 - Port's [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) is installed in your account.
 - The `githubPullRequest` and `githubRepository` blueprints are already created (these are created when you install the GitHub integration).
 
+:::tip Initial scope
+
+This guide focuses on measuring reliability and stability using source control management (SCM) data, including repositories, pull requests, and workflows. This is the first iteration of reliability and stability measurement and will expand in future versions to include additional metrics and data sources such as monitoring tools, and other operational signals.
+:::
+
 ## Key metrics overview
 
 We will track two key metrics to measure reliability and stability:
 
-1. **Workflow failure rate** - Measures how often workflows succeed and where failures concentrate.
-2. **PRs blocked by failing CI/CD** - Shows how frequently failures block PRs and impact delivery.
+| Metric | What it measures | Why it matters |
+|--------|------------------|----------------|
+| **Workflow failure rate** | How often CI/CD workflows fail and where failures occur | Identifies unstable workflows and services that need attention, helping prioritize infrastructure improvements |
+| **PRs blocked by failing CI/CD** | Number of pull requests blocked by failed workflow runs | Shows the direct impact of CI/CD failures on delivery velocity and helps quantify the cost of instability |
 
 ## Set up data model
 
