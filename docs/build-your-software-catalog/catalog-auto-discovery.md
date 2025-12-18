@@ -116,7 +116,7 @@ Bring Your Own LLM (BYOLLM) is not currently supported for catalog auto discover
 </details>
 
 <details>
-<summary><b>Are there usgae limits? (click to expand)</b></summary>
+<summary><b>Are there usage limits? (click to expand)</b></summary>
 
 It depends on your LLM setup. To learn more, see the [limits and usage](/ai-interfaces/port-ai/overview#limits-and-usage) documentation.
 
