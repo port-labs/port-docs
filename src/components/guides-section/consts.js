@@ -1593,6 +1593,13 @@ export const availableGuides = [
         logos: ["n8n", "Slack"],
         link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
     },
+    {
+        title: 'Measure standards',
+        description: "Learn how to measure standards compliance across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.",
+        tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-standards",
+    }
 
 ]
 
