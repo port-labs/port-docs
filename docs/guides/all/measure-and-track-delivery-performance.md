@@ -3,7 +3,7 @@ displayed_sidebar: null
 description: Learn how to measure and track delivery performance as part of your engineering intelligence framework using key metrics like PR cycle time, PR throughput, deployment frequency, and overdue PRs.
 ---
 
-# Measure and track delivery performance
+# Gain visibility into delivery performance
 
 Measuring delivery performance is essential for understanding how effectively your engineering teams ship value to customers. Without visibility into delivery metrics, teams struggle to identify bottlenecks, optimize workflows, and make data-driven decisions about process improvements.
 
