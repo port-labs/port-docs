@@ -3,7 +3,7 @@ displayed_sidebar: null
 description: Learn how to measure standards compliance across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.
 ---
 
-# Reveal standards adherence
+# Track standards adherence
 
 Visibility into standards adherence is essential for ensuring that software delivery consistently meets defined expectations for quality, security, and compliance.
 

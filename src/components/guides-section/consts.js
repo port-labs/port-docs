@@ -1594,8 +1594,8 @@ export const availableGuides = [
         link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
     },
     {
-        title: 'Reveal standards adherence',
-        description: "Learn how to reveal standards adherence across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.",
+        title: 'Track standards adherence',
+        description: "Learn how to track standards adherence across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.",
         tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-standards",
