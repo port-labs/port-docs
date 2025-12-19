@@ -195,7 +195,7 @@ export const liveEvents = {
     \n- issue.ignored.manual \
     \n- issue.closed',
   GithubOcean:
-    " **Repository:** \
+    " **repository:** \
     \n - created \
     \n - edited \
     \n - renamed \
@@ -205,6 +205,15 @@ export const liveEvents = {
     \n - privatized \
     \n - archived \
     \n - deleted \
+    \n\n **pull_request:** \
+    \n - opened \
+    \n - edited \
+    \n - ready_for_review \
+    \n - reopened \
+    \n - synchronize \
+    \n - unassigned \
+    \n - review_request_removed \
+    \n - closed \
     \n\n **issues:** \
     \n - assigned \
     \n - closed \
@@ -224,36 +233,20 @@ export const liveEvents = {
     \n - unpinned \
     \n - untyped \
     \n - deleted \
-    \n\n **team:** \
+    \n\n **release:** \
     \n - created \
     \n - edited \
     \n - deleted \
-    \n - added_to_repository \
-  \n\n **membership:** \
-    \n - added \
-    \n - removed \
-  \n\n **member:** \
-    \n - added \
-    \n - edited \
-    \n - removed \
-  \n\n **organization:** \
-    \n - member_added \
-    \n - member_removed \
-    \n\n **pull_request:** \
-    \n - opened \
-    \n - edited \
-    \n - ready_for_review \
-    \n - reopened \
-    \n - synchronize \
-    \n - unassigned \
-    \n - review_request_removed \
-    \n - closed \
+    \n\n **create** \
+    \n\n **delete** \
     \n\n **push** \
+    \n\n **deployment** \
+    \n\n **deployment_status** \
     \n\n **workflow_run:** \
     \n - in_progress \
     \n - requested \
     \n - completed \
-    \n\n **dependabot_alert** \
+    \n\n **dependabot_alert:** \
     \n - created \
     \n - reopened \
     \n - auto_reopened \
@@ -261,17 +254,33 @@ export const liveEvents = {
     \n - dismissed \
     \n - auto_dismissed \
     \n - fixed \
-    \n\n **code_scanning_alert** \
+    \n\n **code_scanning_alert:** \
     \n - appeared_in_branch \
     \n - reopened \
     \n - created \
     \n - fixed \
     \n - closed_by_user \
-    \n\n **deployment** \
-    \n\n **deployment_status** \
-    \n\n **release:** \
+    \n\n **organization:** \
+    \n - member_added \
+    \n - member_removed \
+    \n\n **team:** \
     \n - created \
-    \n - edited",
+    \n - edited \
+    \n - deleted \
+    \n - added_to_repository \
+    \n\n **membership:** \
+    \n - added \
+    \n - removed \
+    \n\n **member:** \
+    \n - added \
+    \n - edited \
+    \n - removed \
+    \n\n **secret_scanning_alert:** \
+    \n - created \
+    \n - publicly_leaked \
+    \n - reopened \
+    \n - validated \
+    \n - resolved",
   CheckmarxOne:
     "\n- scan_completed_successfully \
     \n- scan_failed \
