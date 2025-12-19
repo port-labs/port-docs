@@ -5,7 +5,9 @@ description: Learn how to measure standards compliance across your software deli
 
 # Measure standards
 
-Measuring standards is essential for ensuring that software delivery consistently meets defined expectations for quality, security, and compliance across your organization. Without visibility into standards adherence, teams struggle to identify gaps, prevent risk, and scale delivery without sacrificing quality.
+Visibility into standards adherence is essential for ensuring that software delivery consistently meets defined expectations for quality, security, and compliance.
+
+This visibility is achieved through standards and scorecards, which translate organizational expectations into clear, observable indicators across repositories and services. By making adherence visible, teams can identify gaps, understand risk, and scale delivery without relying on manual reviews or audits.
 
 This guide helps engineering managers, platform engineers and product leaders answer critical questions about their delivery standards:
 
@@ -43,13 +45,13 @@ We will track seven key metrics to measure standards compliance:
 
 | Metric | What it measures | Why it matters |
 |--------|------------------|----------------|
-| **Private visibility enabled** | Repository visibility is set to private (not public or internal) | Reduces accidental exposure of source code, credentials, and IP. Protects intellectual property and reduces security and reputational risk from unintended public exposure |
-| **Has a README file** | Repository contains a README file in the default branch | Improves discoverability, onboarding, and self-service. Reduces tribal knowledge and support overhead for platform teams. Faster onboarding and lower cognitive load across teams, translating into higher engineering efficiency and consistency |
-| **Repo has a pipeline** | Repository is configured with an automated CI pipeline that runs on commits and/or pull requests | Enables standardized automation for build, test, and security checks. Increases delivery reliability and predictability while reducing manual effort and risk in the delivery process |
-| **Default branch is protected** | Default branch (e.g. main) has protection rules | Prevents unsafe changes and enforces consistent workflows. Reduces production risk and change failure rate |
-| **Service owner assigned** | Repository is explicitly linked to a service owner | Clarifies accountability for maintenance, incidents, and standards enforcement. Improves operational accountability and incident response while reducing "orphaned" services over time |
-| **Has a PR template** | Repository includes a pull request template that guides contributors on required context, checks, and documentation | Improves PR quality and review efficiency. Faster review cycles and higher change quality lead to better flow efficiency and developer productivity |
-| **Forced push disabled** | Force pushes are disabled on protected branches, preventing history rewrites | Preserves auditability and traceability of changes. Supports compliance requirements and reduces risk by ensuring a reliable, auditable change history |
+| **Private visibility enabled** | Repository visibility is set to private (not public or internal) | Prevents accidental code and IP exposure |
+| **Has a README file** | Repository contains a README file in the default branch | Improves onboarding and discoverability |
+| **Repo has a pipeline** | Repository is configured with an automated CI pipeline | Increases delivery reliability through automation |
+| **Default branch is protected** | Default branch (e.g. main) has protection rules | Reduces risk from unsafe changes |
+| **Service owner assigned** | Repository is explicitly linked to a service owner | Establishes clear ownership and accountability |
+| **Has a PR template** | Repository includes a pull request template | Improves review quality and flow efficiency |
+| **Forced push disabled** | Force pushes are disabled on protected branches | Preserves auditability and compliance |
 
 ## Set up data model
 
