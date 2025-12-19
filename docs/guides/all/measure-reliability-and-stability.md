@@ -331,7 +331,7 @@ For the workflow run to pull request relation to work correctly, ensure your `gi
                 pr_age: >-
                   ((now - (.created_at | sub("\\.[0-9]+Z$"; "Z") | fromdateiso8601))
                   / 86400) | round
-                freshness: >-
+                pr_age_label: >-
                   ((now - (.created_at | sub("\\.[0-9]+Z$"; "Z") | fromdateiso8601))
                   / 86400 | round) as $age | if $age <= 3 then "0-3 days" elif $age
                   <= 7 then "3-7 days" else ">7 days" end
@@ -383,12 +383,7 @@ For the workflow run to pull request relation to work correctly, ensure your `gi
                 headBranch: .head_branch
               relations:
                 workflow: .repository.full_name + (.workflow_id|tostring)
-                pullRequests:
-                  combinator: '"and"'
-                  rules:
-                    - property: '"branch"'
-                      operator: '"="'
-                      value: .head_branch
+                pullRequests: if (.pull_requests | length) > 0 then (.pull_requests | map(.id)) else null end
     ```
 
     </details>
@@ -556,7 +551,7 @@ In the new dashboard, create the following widgets:
 
 1. Click `+ Widget` and select **Number Chart**.
 2. Title: `PRs Blocked by Failing CI/CD`.
-3. Select `Count entities` **Chart type** and choose **Workflow Run** as the **Blueprint**.
+3. Select `Count entities` **Chart type** and choose **Pull Request** as the **Blueprint**.
 4. Select `count` for the **Function**.
 5. Add this JSON to the **Dataset filter** editor:
 
@@ -565,21 +560,18 @@ In the new dashboard, create the following widgets:
       "combinator": "and",
       "rules": [
         {
-          "value": "failure",
-          "property": "conclusion",
-          "operator": "="
+          "value": 1,
+          "property": "failedWorkflowsCount",
+          "operator": ">="
         },
         {
-          "property": "pullRequests",
-          "operator": "isNotEmpty"
+          "value": "open",
+          "property": "status",
+          "operator": "="
         }
       ]
     }
     ```
-
-:::tip Filtering by related entities
-The filter `"property": "pullRequests", "operator": "isNotEmpty"` ensures we only count workflow runs that have related pull requests, indicating PRs that are blocked by failing CI/CD.
-:::
 
 6. Select `custom` as the **Unit** and input `prs` as the **Custom unit**.
 7. Click `Save`.
@@ -591,7 +583,7 @@ The filter `"property": "pullRequests", "operator": "isNotEmpty"` ensures we onl
 
 1. Click **`+ Widget`** and select **Table**.
 2. Title the widget **PRs Blocked by Failing CI/CD**.
-3. Choose the **Workflow Run** blueprint.
+3. Choose the **Pull Request** blueprint.
 4. Add this JSON to the **Initial filters** editor:
 
     ```json showLineNumbers
@@ -599,13 +591,14 @@ The filter `"property": "pullRequests", "operator": "isNotEmpty"` ensures we onl
       "combinator": "and",
       "rules": [
         {
-          "value": "failure",
-          "property": "conclusion",
-          "operator": "="
+          "value": 1,
+          "property": "failedWorkflowsCount",
+          "operator": ">="
         },
         {
-          "property": "pullRequests",
-          "operator": "isNotEmpty"
+          "value": "open",
+          "property": "status",
+          "operator": "="
         }
       ]
     }
@@ -614,11 +607,10 @@ The filter `"property": "pullRequests", "operator": "isNotEmpty"` ensures we onl
 5. Click **Save** to add the widget to the dashboard.
 6. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
 7. In the top right corner of the table, click on `Manage Properties` and add the following properties:
-    - **Pull Requests**: The related pull requests (this will show as a relation).
-    - **Link**: The URL to the workflow run.
-    - **Repository**: The repository name (mirror property).
-    - **Workflow**: The workflow name (via the workflow relation).
-    - **Run Attempts**: The number of attempts for this workflow run.
+    - **Title**: The title of the pull request.
+    - **Link**: The URL to the pull request.
+    - **Repository**: The related repository.
+    - **PR Age**: The age of the pull request.
 8. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
 </details>
