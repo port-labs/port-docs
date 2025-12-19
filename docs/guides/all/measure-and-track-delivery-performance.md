@@ -230,7 +230,28 @@ If you already have a pull request blueprint, you need to add the following prop
       },
       "mirrorProperties": {},
       "calculationProperties": {},
-      "aggregationProperties": {},
+      "aggregationProperties": {
+          "failedWorkflowsCount": {
+            "title": "Failed Workflows",
+            "type": "number",
+            "description": "Count of failed workflow runs for this PR",
+            "target": "githubWorkflowRun",
+            "query": {
+              "combinator": "and",
+              "rules": [
+                {
+                  "property": "conclusion",
+                  "operator": "=",
+                  "value": "failure"
+                }
+              ]
+            },
+            "calculationSpec": {
+              "func": "count",
+              "calculationBy": "entities"
+            }
+          }
+      },
       "relations": {
         "git_hub_assignees": {
           "title": "GitHub Assignees",
