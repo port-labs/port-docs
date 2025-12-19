@@ -37,6 +37,7 @@ The resources that can be ingested from ServiceNow into Port are listed below.
 - `Group` - (`<your-servicenow-url>/api/now/table/sys_user_group`)
 - `Service Catalog` - (`<your-servicenow-url>/api/now/table/sc_catalog`)
 - `Incident` - (`<your-servicenow-url>/api/now/table/incident`)
+- `Release Management` - (`<your-servicenow-url>/api/now/table/release_project`)
 
 :::tip Ingesting extra resources
 While the section above only lists three supported resources, Port's ServiceNow integration uses the [ServiceNow Table API](https://developer.servicenow.com/dev.do#!/reference/api/xanadu/rest/c_TableAPI#table-GET) to ingest entities.  
@@ -740,6 +741,34 @@ resources:
           createdBy: .sys_created_by
           isActive: .active
           priority: .priority
+  - kind: release_project
+    selector:
+      query: 'true'
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
+        sysparmFields: 'sys_id,number,name,type,workflow_state,description,planned_start_date,planned_end_date,priority,risk,sys_created_on,sys_created_by,sys_updated_on,sys_updated_by,active'
+    port:
+      entity:
+        mappings:
+          identifier: .sys_id
+          title: (.name // .number // "Release")
+          blueprint: '"servicenowRelease"'
+          properties:
+            number: .number
+            name: .name
+            type: .type
+            workflowState: .workflow_state
+            description: .description
+            priority: .priority
+            risk: .risk
+            plannedStartDate: .planned_start_date
+            plannedEndDate: .planned_end_date
+            createdOn: '.sys_created_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))'
+            createdBy: .sys_created_by
+            updatedOn: '.sys_updated_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))'
+            updatedBy: .sys_updated_by
+            isActive: .active
 ```
 
 </details>
@@ -988,6 +1017,125 @@ resources:
 
 </details>
 
+### Release Management
+
+<details>
+<summary>Release Management blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "servicenowRelease",
+  "title": "Servicenow Release",
+  "icon": "Servicenow",
+  "schema": {
+    "properties": {
+      "number": {
+        "title": "Release Number",
+        "type": "string"
+      },
+      "name": {
+        "title": "Release Name",
+        "type": "string"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string"
+      },
+      "workflowState": {
+        "title": "Workflow State",
+        "type": "string"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "string"
+      },
+      "risk": {
+        "title": "Risk",
+        "type": "string"
+      },
+      "plannedStartDate": {
+        "title": "Planned Start Date",
+        "type": "string"
+      },
+      "plannedEndDate": {
+        "title": "Planned End Date",
+        "type": "string"
+      },
+      "createdOn": {
+        "title": "Created On",
+        "type": "string"
+      },
+      "createdBy": {
+        "title": "Created By",
+        "type": "string"
+      },
+      "updatedOn": {
+        "title": "Updated On",
+        "type": "string"
+      },
+      "updatedBy": {
+        "title": "Updated By",
+        "type": "string"
+      },
+      "isActive": {
+        "title": "Is Active",
+        "type": "boolean"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: release_project
+    selector:
+      query: "true"
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
+        sysparmFields: 'sys_id,number,name,type,workflow_state,description,planned_start_date,planned_end_date,priority,risk,sys_created_on,sys_created_by,sys_updated_on,sys_updated_by,active'
+    port:
+      entity:
+        mappings:
+          identifier: .sys_id
+          title: (.name // .number // "Release")
+          blueprint: '"servicenowRelease"'
+          properties:
+            number: .number
+            name: .name
+            type: .type
+            workflowState: .workflow_state
+            description: .description
+            priority: .priority
+            risk: .risk
+            plannedStartDate: .planned_start_date
+            plannedEndDate: .planned_end_date
+            createdOn: '.sys_created_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))'
+            createdBy: .sys_created_by
+            updatedOn: '.sys_updated_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))'
+            updatedBy: .sys_updated_by
+            isActive: .active
+```
+
+</details>
+
 ### Filtering ServiceNow resources
 Port's ServiceNow integration provides an option to filter the data that is retrieved from the ServiceNow Table API using the following attributes:
 
@@ -1225,6 +1373,44 @@ Here is an example of the payload structure from ServiceNow:
 
 </details>
 
+<details>
+<summary> Release Management response data</summary>
+
+```json showLineNumbers
+{
+  "sys_id": "053892cb47357650360b3b12d16d43eb",
+  "number": "REL0010001",
+  "name": "Test Release Project - Port Integration",
+  "type": "Feature",
+  "workflow_state": "Complete",
+  "description": "Test release project created for Port Ocean integration testing",
+  "planned_start_date": "",
+  "planned_end_date": "",
+  "actual_start_date": "",
+  "actual_end_date": "2025-12-18",
+  "due_date": "",
+  "requested_date": "",
+  "priority": "4 - Low",
+  "risk": "Low",
+  "manager": "",
+  "requested_by": "",
+  "product": "",
+  "phases": null,
+  "phases_wanted": "true",
+  "release_history": "2025-12-18 03:37:47 - System (Release history)\nPhase Build added to project\n\n2025-12-18 03:37:47 - System (Release history)\nPhase Plan added to project\n\n2025-12-18 03:37:47 - System (Release history)\nPhase Accept added to project\n\n2025-12-18 03:37:47 - System (Release history)\nPhase Release added to project\n\n2025-12-18 03:37:47 - System (Release history)\nPhase Deploy added to project\n\n2025-12-18 03:37:47 - System (Release history)\nPhase Back Out added to project\n",
+  "notes": "",
+  "short_description": "",
+  "parent": "",
+  "sys_created_on": "2025-12-18 03:37:46",
+  "sys_created_by": "admin",
+  "sys_updated_on": "2025-12-18 03:37:47",
+  "sys_updated_by": "system",
+  "active": "false"
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1307,6 +1493,42 @@ The combination of the sample payload and the Ocean configuration generates the 
   "createdAt": "2023-12-15T14:52:06.347Z",
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
   "updatedAt": "2023-12-15T15:34:18.248Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Release Management entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "053892cb47357650360b3b12d16d43eb",
+  "title": "Test Release Project - Port Integration",
+  "icon": "ServiceNow",
+  "blueprint": "servicenowRelease",
+  "team": [],
+  "properties": {
+    "number": "REL0010001",
+    "name": "Test Release Project - Port Integration",
+    "type": "Feature",
+    "workflowState": "Complete",
+    "description": "Test release project created for Port Ocean integration testing",
+    "priority": "4 - Low",
+    "risk": "Low",
+    "plannedStartDate": "",
+    "plannedEndDate": "",
+    "createdOn": "2025-12-18T03:37:46Z",
+    "createdBy": "admin",
+    "updatedOn": "2025-12-18T03:37:47Z",
+    "updatedBy": "system",
+    "isActive": "false"
+  },
+  "relations": {},
+  "createdAt": "2025-12-18T03:37:46.000Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2025-12-18T03:37:47.000Z",
   "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
 }
 ```
