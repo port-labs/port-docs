@@ -3,11 +3,13 @@ displayed_sidebar: null
 description: Learn how to measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration.
 ---
 
-# Measure reliability and stability of delivery pipeline
+# Measure delivery reliability and stability
 
-Measuring reliability and stability is essential for understanding how resilient your delivery pipeline is and where instability impacts your team's ability to ship value. Without visibility into workflow failures and CI/CD bottlenecks, teams struggle to identify problematic patterns, prioritize infrastructure improvements, and ensure consistent delivery.
+Measuring delivery reliability and stability provides visibility into how consistently software changes move from commit to production, and where breakdowns disrupt engineering flow. By making failures, delays, and recovery patterns observable, teams can distinguish isolated issues from systemic instability that affects delivery outcomes.
 
-This guide helps engineering managers, platform engineers, and product leaders answer critical questions about their delivery pipeline:
+Without this visibility, workflow failures and CI/CD friction are treated as one-off incidents rather than recurring signals, making it difficult to prioritize improvements, reduce delivery risk, and sustain predictable throughput as the organization scales.
+
+This guide helps engineering managers, platform engineers, and product leaders answer questions such as:
 
 - **Workflow failures**: How often do CI/CD workflows fail, and where do failures concentrate?
 - **Bottlenecks**: Which workflows or services have the highest failure rates?
