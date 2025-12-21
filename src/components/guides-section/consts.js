@@ -1538,6 +1538,13 @@ export const availableGuides = [
         link: "/guides/all/query-dora-metrics-using-port-mcp",
     },
     {
+        title: "Define scorecards with AI",
+        description: "Design scorecards that AI agents can query to evaluate compliance, security posture, and production readiness",
+        tags: ["AI", "Scorecards"],
+        logos: ["AI"],
+        link: "/guides/all/build-port-scorecards-with-mcp",
+    },
+    {
         title: "Build your software catalog with MCP",
         description: "Use Port's MCP server to build and manage your software catalog through natural language conversations with AI.",
         tags: ["AI"],
@@ -1573,13 +1580,6 @@ export const availableGuides = [
         link: "/guides/all/remediate-vulnerability-with-n8n-and-port",
     },
     {
-        title: "Setup Port's n8n custom node",
-        description: "Setup Port's n8n custom node to integrate Port's AI agents and Context Lake with n8n workflows",
-        tags: ["n8n", "AI"],
-        logos: ["n8n", "AI"],
-        link: "/guides/all/setup-port-n8n-node",
-    },
-    {
         title: "Automatically resolve tickets with n8n and Port context",
         description: "Automatically resolve tickets with n8n and Port context using Port's AI agents and automations",
         tags: ["Autonomous Ticket Resolution", "n8n", "AI", "Jira"],
@@ -1593,6 +1593,27 @@ export const availableGuides = [
         logos: ["AI"],
         link: "/guides/all/build-port-actions-with-mcp",
     },
+    {
+        title: "RBAC for AI agents with n8n and Port",
+        description: "Implement role-based access control (RBAC) for multi-agent systems using Port and n8n, enabling dynamic tool access control for AI agents based on user roles and permissions",
+        tags: ["Security", "n8n", "Slack", "AI"],
+        logos: ["n8n", "Slack"],
+        link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
+    },
+    {
+        title: "Measure delivery reliability and stability",
+        description: "Measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-reliability-and-stability",
+    },
+    {
+        title: 'Track standards adherence',
+        description: "Learn how to track standards adherence across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.",
+        tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-standards",
+    }
 ]
 
 // Enhance guides with metadata (isNew property)
