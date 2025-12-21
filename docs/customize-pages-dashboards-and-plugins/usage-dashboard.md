@@ -18,12 +18,10 @@ The dashboard tracks key metrics across five areas:
 - **Entities** - track catalog growth and entity distribution.
 - **Actions & automations** - measure self-service adoption.
 - **Data sources** - understand integration usage.
-- **AI usage** - analyze AI agent and MCP interactions.
+- **AI & MCP** - analyze AI agent and MCP interactions.
 
 :::info Multi-organization support
-All data in the usage dashboard is displayed at the company level across all organizations under your company. The dashboard is only available for customers who have completed the migration to the [multi-organization](/sso-rbac/multi-organization) structure.
-
-Each table provides total aggregated data, with detailed breakdowns by organization available in the raw data tables. This allows you to view organization-specific metrics when needed.
+The dashboard is only available for customers who have completed the migration to the [multi-organization](/sso-rbac/multi-organization) structure.
 :::
 
 ## Access the dashboard
@@ -35,11 +33,11 @@ To access the usage dashboard:
 
 ## Users activity
 
-The users activity tab provides insights into user adoption and engagement patterns. It is divided into two main sections: **activated users** and **user activity**.
+The users activity tab provides insights into user adoption and engagement patterns. It is divided into two main sections: [active seats](#active-seats) and [user activity](#user-activity).
 
 ### Active seats
 
-This section tracks user activation based on Port's activation criteria and provides historical trends.
+This section provides visibility into which users are considered active seats in your Port environment.
 
 **Active seat definition:**  
 
@@ -57,7 +55,8 @@ The active seats section includes:
 
 ### User activity
 
-This section includes metrics that will help you monitor and analyze the activity in Port across your organization.
+This section includes metrics that will help you monitor and analyze the activity in Port across your organization.  
+It includes:
 
 **Team engagement** - see which teams use Port regularly and which teams require more attention:
 
@@ -132,7 +131,11 @@ The AI and MCP tab provides analytics on AI agent usage and MCP interactions. It
 - **AI invocation by source** - AI agent invocation by source (AI assistant, agent widget, etc.).
 - **AI & MCP usage per user** - detailed breakdown of AI and MCP usage by individual users.
 
-## Export and reporting
+    :::info "Other" category in AI invocations
+    The "Other" category in the "AI invocations by source" report refers to AI invocations that didn't include the source key as part of the API call, such as invocations from custom automations or direct API calls.
+    :::
+
+## Export data
 
 All tables and visualizations in the usage dashboard can be exported for further analysis.
 
