@@ -1594,13 +1594,19 @@ export const availableGuides = [
         link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
     },
     {
+        title: "Measure delivery reliability and stability",
+        description: "Measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-reliability-and-stability",
+    },
+    {
         title: 'Track standards adherence',
         description: "Learn how to track standards adherence across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.",
         tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-standards",
     }
-
 ]
 
 // Enhance guides with metadata (isNew property)
