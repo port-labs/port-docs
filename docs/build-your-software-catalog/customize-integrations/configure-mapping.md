@@ -350,6 +350,8 @@ In order to reference an array item attribute, use `.item` in your JQ expression
 
 In some cases, the response from an application's API contains an object with `item` key on the top level. In such cases, to prevent ambiguous access and unexpected results, Port provides the `itemsToParseName` key. Its value should be a string that can be referenced in your mapping properties instead of the default `.item`.
 
+To boost parsing performace we remove the target of `itemsToParse` from the original payload. To keep the property that contains the target of `itemsToParse` you can use the `itemsToParseTopLevelTransform`. This flag is set to `True`, if it's set to false, the target of the `itemsToParse` will remain in the generated objects from `itemsToParse`.
+
 :::warning Limitations
 - The `itemsToParseName` key is not supported on Github, Kubernetes and Webhook integrations.
 - When the key is enabled, you cannot use the "test mapping" option in Port's UI.
@@ -365,6 +367,7 @@ Here is an example mapping configuration of a Jira `issue`, where we want to map
   port:
     # highlight-next-line
     itemsToParse: .fields.comments
+    itemsToParseTopLevelTransform: True
     entity:
       mappings:
         # highlight-next-line
