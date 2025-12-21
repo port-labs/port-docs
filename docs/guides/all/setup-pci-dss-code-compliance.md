@@ -7,7 +7,7 @@ tags: ["Security", "Scorecards", "Snyk", "PCI-DSS"]
 
 # PCI DSS code security scorecard
 
-The **PCI DSS Code Security Scorecard** is designed to continuously track compliance with PCI DSS requirements by leveraging static application security testing (SAST) and software composition analysis (SCA) data from Snyk.  
+The **PCI DSS code security scorecard** is designed to continuously track compliance with PCI DSS requirements by leveraging static application security testing (SAST) and software composition analysis (SCA) data from Snyk.  
 It helps development teams enforce secure coding practices, identify security weaknesses early in the development lifecycle, and measure progress towards PCI DSS compliance maturity.
 
 This comprehensive security scorecard evaluates repositories and services based on:
@@ -18,15 +18,13 @@ This comprehensive security scorecard evaluates repositories and services based 
 - **Secure dependency management** - Monitors open-source component security.
 
 # Dependencies
-- Depends on [OWASP Top 10 Scorecard](/guides/all/owasp-top-10-scorecard) to make use of some of the aggregation properties generated previously
 
+Depends on [OWASP Top 10 Scorecard](/guides/all/owasp-top-10-scorecard) to make use of some of the aggregation properties generated previously.  
 By organizing into levels, all teams can progressively improve security posture and demonstrate compliance readiness.
-
-
 
 ## Scorecard configuration
 
-- Scorecard requires making use of new properties on Snyk Target that are described in the next section "New Properties".
+- Scorecard requires making use of new properties on Snyk Target that are described in the [section below](#new-properties).
 - Scorecard was created on Repository Blueprint with all the mirrored properties from Snyk Target.
 
 <details>
