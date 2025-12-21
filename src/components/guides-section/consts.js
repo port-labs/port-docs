@@ -1455,7 +1455,7 @@ export const availableGuides = [
     {
         title: "PCI DSS code security scorecard",
         description: "Continuously track compliance with PCI DSS requirements using code scans and vulnerability data",
-        tags: ["Security", "Scorecards", "Snyk", "PCI DSS"],
+        tags: ["Security", "Scorecards", "Snyk"],
         logos: ["Snyk"],
         link: "/guides/all/setup-pci-dss-code-compliance",
     },
