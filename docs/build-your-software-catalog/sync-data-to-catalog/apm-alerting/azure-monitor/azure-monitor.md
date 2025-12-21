@@ -30,7 +30,7 @@ To use this integration, the following prerequisites are required:
 - Admin consent for the required permissions.
 - An access token (bearer token) for Azure Resource Manager API.
 
-**Registering an application in Microsoft Entra ID**
+**Register an application in Microsoft Entra ID**
 
 1. Log in to the [Azure Portal](https://portal.azure.com).
 2. Navigate to **Microsoft Entra ID** > **App registrations**.
