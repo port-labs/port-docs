@@ -458,7 +458,7 @@ By default, Port removes the target array specified in `itemsToParse` from the o
 When `itemsToParseTopLevelTransform` is `false`, you can access the original array (e.g., `.fields.comments`) in addition to individual items via `.item`.
 
 :::warning Limitations
-- The `itemsToParseName` key is not supported on Github App, Kubernetes and Webhook integrations.
+- The `itemsToParseName` key is not supported in non-Ocean integrations: [Github app](/build-your-software-catalog/sync-data-to-catalog/git/github/), [Kubernetes](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/) and [Webhook integrations](/build-your-software-catalog/custom-integration/webhook/).
 - When `itemsToParseName` is enabled, you cannot use the "test mapping" option in Port's UI.
 :::
 
