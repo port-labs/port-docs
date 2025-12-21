@@ -5,17 +5,17 @@ title: "PCI DSS Code Security Scorecard"
 tags: ["Security", "Scorecards", "Snyk", "PCI-DSS"]
 ---
 
-# PCI DSS Code Security Scorecard
+# PCI DSS code security scorecard
 
 The **PCI DSS Code Security Scorecard** is designed to continuously track compliance with PCI DSS requirements by leveraging static application security testing (SAST) and software composition analysis (SCA) data from Snyk.  
 It helps development teams enforce secure coding practices, identify security weaknesses early in the development lifecycle, and measure progress towards PCI DSS compliance maturity.
 
 This comprehensive security scorecard evaluates repositories and services based on:
-- **Scan recency** - Ensures regular vulnerability scanning (PCI DSS 6.3.1)
-- **Severity of open vulnerabilities** - Tracks critical and high-severity issues
-- **Cryptographic hygiene** - Validates secure crypto implementation (PCI DSS 6.5.3)
-- **Exposure of public-facing assets** - ASV compliance for external scans (PCI DSS 11.2.2)
-- **Secure dependency management** - Monitors open-source component security
+- **Scan recency** - Ensures regular vulnerability scanning (PCI DSS 6.3.1).
+- **Severity of open vulnerabilities** - Tracks critical and high-severity issues.
+- **Cryptographic hygiene** - Validates secure crypto implementation (PCI DSS 6.5.3).
+- **Exposure of public-facing assets** - ASV compliance for external scans (PCI DSS 11.2.2).
+- **Secure dependency management** - Monitors open-source component security.
 
 # Dependencies
 - Depends on [OWASP Top 10 Scorecard](/guides/all/owasp-top-10-scorecard) to make use of some of the aggregation properties generated previously
@@ -24,13 +24,13 @@ By organizing into levels, all teams can progressively improve security posture 
 
 
 
-## Scorecard
+## Scorecard configuration
 
 - Scorecard requires making use of new properties on Snyk Target that are described in the next section "New Properties".
 - Scorecard was created on Repository Blueprint with all the mirrored properties from Snyk Target.
 
 <details>
-<summary><b>PCI DSS Scorecard (Click to expand)</b></summary>
+<summary><b>PCI DSS Scorecard configuration (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -216,12 +216,12 @@ By organizing into levels, all teams can progressively improve security posture 
 </details>
 
 
-## New Properties
+## New properties
 
 New properties have been created on Snyk Target Blueprint and then shown as mirrored properties on Repository blueprint. This can be attached to a service blueprint as well or as deemed appropriate to where the data is most relevant. 
 
 <details>
-<summary><b>PCI DSS Scorecard (Click to expand)</b></summary>
+<summary><b>PCI DSS Scorecard (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -255,7 +255,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 </details>
 
 <details>
-<summary><b>ASV Pass parity (Click to expand)</b></summary>
+<summary><b>ASV pass parity property (click to expand)</b></summary>
 ```json showLineNumbers
 {
  "asv_pass_parity": {
@@ -302,7 +302,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 </details>
 
 <details>
-<summary><b>Maximum Risk Score Aggregation(Click to expand)</b></summary>
+<summary><b>Maximum risk score aggregation property (click to expand)</b></summary>
 ```json showLineNumbers
 {
     "max_risk_score": {
@@ -346,7 +346,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 
 
 <details>
-<summary><b>Critical severity package vulnerabilities(Click to expand)</b></summary>
+<summary><b>Critical severity package vulnerabilities property (click to expand)</b></summary>
 ```json showLineNumbers
 {
     "open_sca_critical": {
@@ -392,7 +392,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 </details>
 
 <details>
-<summary><b>High severity package vulnerabilities(Click to expand)</b></summary>
+<summary><b>High severity package vulnerabilities property (click to expand)</b></summary>
 ```json showLineNumbers
 {
     "open_sca_high": {
@@ -438,7 +438,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 </details>
 
 <details>
-<summary><b>High severity code vulnerabilities(Click to expand)</b></summary>
+<summary><b>High severity code vulnerabilities property (click to expand)</b></summary>
 ```json showLineNumbers
 {
     "open_sast_high": {
@@ -484,7 +484,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 </details>
 
 <details>
-<summary><b>SAST Last Scan Days (Click to expand)</b></summary>
+<summary><b>SAST last scan days property (click to expand)</b></summary>
 ```json showLineNumbers
 {
     "sast_last_scan_days": {
@@ -513,7 +513,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 </details>
 
 <details>
-<summary><b>Open Critical Vulnerabilities (Click to expand)</b></summary>
+<summary><b>Open critical vulnerabilities property (click to expand)</b></summary>
 ```json showLineNumbers
 {
     "open_critical": {
@@ -555,7 +555,7 @@ New properties have been created on Snyk Target Blueprint and then shown as mirr
 ```
 </details>
 
-## Scorecard Levels
+## Scorecard levels
 
 The scorecard uses **five maturity levels**, with each level building on the rules from the previous one.
 
@@ -567,21 +567,21 @@ The scorecard uses **five maturity levels**, with each level building on the rul
 | **Gold**   | Focuses on cryptographic security and external vulnerability exposure management.             |
 | **Platinum** | Represents the highest standard, requiring zero high-risk issues and strict dependency security. |
 
-#### **How levels work:**  
- - To reach a higher level, **all rules in that level and all lower levels must pass**.  
- - This creates a clear maturity path from basic hygiene to advanced compliance.
+**How levels work:**
+- To reach a higher level, **all rules in that level and all lower levels must pass**.
+- This creates a clear maturity path from basic hygiene to advanced compliance.
 
 
 
-## Rules by Level
+## Rules by level
 
 Below are all rules organized by the level at which they apply.
 
 
 
-### Bronze Level
+### Bronze level
 
-#### 1. SAST Scan Recency
+**SAST scan recency**
 - **Identifier:** `sast_recent`
 - **Goal:** Ensure regular static application security testing (SAST).
 - **Rule:** `sast_last_scan_days <= 30`
@@ -591,7 +591,7 @@ Below are all rules organized by the level at which they apply.
 
 
 
-#### 2. No Open Critical Issues
+**No open critical issues**
 - **Identifier:** `open_critical_thresh`
 - **Goal:** Prevent critical vulnerabilities from remaining unresolved.
 - **Rule:** `open_critical = 0`
@@ -600,9 +600,9 @@ Below are all rules organized by the level at which they apply.
 
 
 
-### Silver Level
+### Silver level
 
-#### 3. No Injection or Access Control Issues
+**No injection or access control issues**
 - **Identifier:** `class_no_inj_auth`
 - **Goal:** Eliminate high-severity vulnerabilities in input validation and access control.
 - **Rule:**
@@ -618,8 +618,7 @@ Below are all rules organized by the level at which they apply.
   - Broken authentication and authorization logic
 
 
-
-#### 4. No Hardcoded Secrets
+**No hardcoded secrets**
 
 - **Identifier:** `hardcoded_secrets`
 - **Goal:** Prevent sensitive credentials from being exposed in code.
@@ -629,9 +628,9 @@ Below are all rules organized by the level at which they apply.
 
 
 
-### Gold Level
+### Gold level
 
-#### 5. Secure Cryptography
+**Secure cryptography**
 
 - **Identifier:** `insecure_crypto`
 - **Goal:** Ensure proper use of secure algorithms and key management practices.
@@ -641,23 +640,23 @@ Below are all rules organized by the level at which they apply.
 
 
 
-#### 6. ASV Parity for Public-Facing Assets
+**ASV parity for public-facing assets**
 
 - **Identifier:** `asv_pass_parity`
 - **Goal:** Align with PCI DSS **Approved Scanning Vendor (ASV)** pass/fail standards.
-**Rule:** `asv_pass_parity = 0` (or use `max_risk_score < 400` if using the max-risk aggregation)
+- **Rule:** `asv_pass_parity = 0` (or use `max_risk_score < 400` if using the max-risk aggregation)
 - **Description:**
   Ensures public-facing services do not have vulnerabilities equivalent to CVSS ≥ 4.0.
 
-#### **Key Note:**
+**Key Note:**
 - CVSS data is not directly available in this system.
 - Instead, we use **Snyk Risk Score** as a proxy, with a threshold of **400** chosen to approximate the CVSS 4.0 boundary required by PCI DSS for external scans.
 
 
 
-### Platinum Level
+### Platinum level
 
-#### 7. Max Risk Score Validation
+**Max risk score validation**
 
 - **Identifier:** `max_risk_score`
 - **Goal:** Apply alternate or stricter risk scoring models for specific teams or services.
@@ -669,12 +668,12 @@ Below are all rules organized by the level at which they apply.
 - **Description:**
   Allows team-specific compliance requirements to be enforced at the highest level.
   
-:::tip **Note:** Replace `"example_team"` with your actual team name or remove this rule if not needed.
-:::
+**Note:** Replace `"example_team"` with your actual team name or remove this rule if not needed.
 
 
 
-#### 8. No High-Risk Open Source Vulnerabilities
+
+**No high-risk open source vulnerabilities**
 
 - **Identifier:** `no_high_open_source`
 - **Goal:** Maintain a secure open-source dependency posture.
@@ -684,7 +683,7 @@ Below are all rules organized by the level at which they apply.
 
 
 
-#### 9. No High-Risk Code Issues
+**No high-risk code issues**
 
 - **Identifier:** `no_high_code_issues`
 - **Goal:** Ensure all high-risk static analysis findings are remediated.
@@ -694,7 +693,7 @@ Below are all rules organized by the level at which they apply.
 
 
 
-## PCI DSS Requirements Alignment
+## PCI DSS requirements alignment
 
 This scorecard addresses key PCI DSS requirements for secure development:
 
@@ -710,7 +709,7 @@ This scorecard addresses key PCI DSS requirements for secure development:
 
 **Note:** This scorecard focuses on **code security** aspects of PCI DSS. Additional requirements for network security, access controls, and data protection should be implemented separately.
 
-## Summary of Rule Coverage
+## Summary of rule coverage
 
 | Level        | PCI Focus Area                   | Key Rules                                   |
 | ------------ | -------------------------------- | ------------------------------------------- |
@@ -721,20 +720,20 @@ This scorecard addresses key PCI DSS requirements for secure development:
 
 
 
-## Implementation Steps
+## Implementation steps
 
-### 1. Ingest Scan Data
+### 1. Ingest scan data
 
 Ensure outputs from scanning tools are mapped to Port properties:
 
-* `sast_last_scan_days`
-* `open_critical`
-* `a3_injection`
-* `a1_access_control_flaws`
-* `hardcoded_secrets`
-* `open_sca_high`
-* `open_sast_high`
-* `max_risk_score_replacing_asv`
+- `sast_last_scan_days`.
+- `open_critical`.
+- `a3_injection`.
+- `a1_access_control_flaws`.
+- `hardcoded_secrets`.
+- `open_sca_high`.
+- `open_sast_high`.
+- `max_risk_score_replacing_asv`.
 
 
 
@@ -744,19 +743,19 @@ Ensure outputs from scanning tools are mapped to Port properties:
   Use the JSON configuration directly in the Port UI.
 
 - **Infrastructure-as-code approach:**
-  Convert the JSON to TypeScript and deploy using the [Port Pulumi provider](https://docs.port.io/).
+  Convert the JSON to TypeScript and deploy using the [Port Pulumi provider](https://www.pulumi.com/registry/packages/port/).
 
 
 
-### 3. Monitor Compliance Progress
+### 3. Monitor compliance progress
 
-* View real-time compliance status directly within Port.
-* Use levels as **milestones** to measure progression toward PCI DSS compliance.
-* Generate reports for PCI DSS audits using scorecard data as automated evidence.
+- View real-time compliance status directly within Port.
+- Use levels as **milestones** to measure progression toward PCI DSS compliance.
+- Generate reports for PCI DSS audits using scorecard data as automated evidence.
 
 
 
-## Benefits of This Scorecard
+## Benefits of this scorecard
 
 - **Automated Compliance Tracking**
   Continuously validates PCI DSS compliance without manual intervention.
@@ -776,7 +775,7 @@ This visual shows how code scan results flow through the system, get evaluated, 
 
 
 
-## Key Takeaways
+## Key takeaways
 
 - **Bronze → Platinum** represents progressive enforcement of PCI DSS secure coding requirements.
 - Using **Snyk Risk Score** as a proxy ensures external exposure checks align with ASV expectations even without direct CVSS data. In the future iterations, the intent will be to ingest CVSS Score detail for all `package vulnerabilities`.
