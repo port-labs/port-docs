@@ -10,11 +10,26 @@ import TabItem from "@theme/TabItem"
 
 # Search & query
 
-Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used across the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list.
+Port's API provides tools to easily query, search and filter software catalog data. Port's search and query syntax can be used across the Port product to dynamically filter entities, control permissions, configure automations, and more.
+
+## Where this applies?
+
+You can use search and query syntax in the following areas:
+
+- **Catalog pages** - Initial filters for pages and tables.
+- **Entity pages** - Filters for custom related entity tabs.
+- **Dashboard widgets** - Dashboard-level filters and widget-specific filters for [data widgets](/customize-pages-dashboards-and-plugins/dashboards/data-widgets).
+- **Self-service actions** - Action conditions, entity input datasets, and dynamic permissions.
+- **Automations** - Trigger conditions to filter which entities activate automations.
+- **RBAC** - Dynamic read permissions for blueprints and action execution/approval policies.
+- **Scorecards** - Filters to determine which entities a rule evaluates.
+- **API** - Search endpoints ([search entities](/api-reference/search-entities) and [search a blueprint's entities](/api-reference/search-a-blueprints-entities)).
 
 ## Common queries usage
 
-High quality search is essential to effectively track assets in your software catalog, using Port's search you can:
+High quality search is essential to effectively track assets in your software catalog.  
+
+Using Port's search you can:
 
 - Find all running services that are not healthy.
 - List all libraries that have known vulnerabilities.
