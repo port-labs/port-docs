@@ -24,8 +24,9 @@ By organizing into levels, all teams can progressively improve security posture 
 
 ## Scorecard configuration
 
-- Scorecard requires making use of new properties on Snyk Target that are described in the [section below](#new-properties).
-- Scorecard was created on Repository Blueprint with all the mirrored properties from Snyk Target.
+The scorecard evaluates repositories and services against security rules organized into five maturity levels: Basic, Bronze, Silver, Gold, and Platinum. Each level builds on the previous one, requiring increasingly strict compliance standards.
+
+To implement this scorecard, you will need to create new properties on your Snyk Target blueprint ([detailed below](#new-properties)). The scorecard is then created on the Repository blueprint, using mirrored properties from Snyk Target.
 
 <details>
 <summary><b>PCI DSS Scorecard configuration (click to expand)</b></summary>
@@ -216,10 +217,10 @@ By organizing into levels, all teams can progressively improve security posture 
 
 ## New properties
 
-New properties have been created on Snyk Target Blueprint and then shown as mirrored properties on Repository blueprint. This can be attached to a service blueprint as well or as deemed appropriate to where the data is most relevant. 
+Create the following new properties on your Snyk Target blueprint, then mirror them to your Repository blueprint. You can also attach these properties to a Service blueprint if that's where the data is most relevant for your use case. 
 
 <details>
-<summary><b>PCI DSS Scorecard (click to expand)</b></summary>
+<summary><b>Hardcoded secrets property (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -566,8 +567,8 @@ The scorecard uses **five maturity levels**, with each level building on the rul
 | **Platinum** | Represents the highest standard, requiring zero high-risk issues and strict dependency security. |
 
 **How levels work:**
-- To reach a higher level, **all rules in that level and all lower levels must pass**.
-- This creates a clear maturity path from basic hygiene to advanced compliance.
+ - To reach a higher level, **all rules in that level and all lower levels must pass**.  
+ - This creates a clear maturity path from basic hygiene to advanced compliance.
 
 
 
