@@ -23,11 +23,11 @@ The context lake transforms scattered data across your engineering tools into un
 
 The [software catalog](/build-your-software-catalog) is where you define YOUR organization's data model using blueprints (services, environments, teams, deployments, incidents, etc.) and populate it with entities from all your tools. This catalog becomes your organizational semantic layer—teaching Port what "service," "deployment," or "incident" means specifically in your context, providing the schema and structure that gives meaning to your data.
 
-### Business context - organizational priorities
+### Business context - holistic view
 
 Beyond technical metadata, the Context Lake enriches your software catalog with **business context**—the organizational, financial, and operational signals that help prioritize work, assess risk, and align engineering decisions with business objectives. This business layer transforms technical catalogs into decision-making platforms by answering: *"What matters most to the business?"*
 
-Business context in Port includes:
+Business context in Port can include:
 
 #### Cost & financial context
 - **Cost center attribution** - Track which department or budget owns each resource via [AWS Cost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost) or [Kubecost](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/kubecost)
