@@ -163,6 +163,13 @@ export const integrations = [
     darkIcon: '/img/guides/icons/dark/Sentry.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry',
   },
+  {
+    name: 'Prometheus',
+    category: 'monitoring',
+    icon: '/img/guides/icons/Security.svg',
+    darkIcon: '/img/guides/icons/Security.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/prometheus',
+  },
   // Security & Quality
   {
     name: 'Snyk',
