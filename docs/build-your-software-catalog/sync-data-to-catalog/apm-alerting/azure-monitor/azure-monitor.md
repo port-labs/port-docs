@@ -487,9 +487,9 @@ Simply provide your Azure Monitor API details, and the builder will generate eve
 **Symptom:** 400 "Bad Request" errors with API version messages.
 
 **Solution:**
-- Azure Monitor API requires the `api-version` query parameter
-- Ensure you include `api-version` in your `query_params` (e.g., `api-version: "2018-03-01"`)
-- Check the [Azure Monitor REST API documentation](https://learn.microsoft.com/en-us/rest/api/monitor/) for the correct API version for your endpoint
+- Azure Monitor API requires the `api-version` query parameter.
+- Ensure you include `api-version` in your `query_params` (e.g., `api-version: "2018-03-01"`).
+- Check the [Azure Monitor REST API documentation](https://learn.microsoft.com/en-us/rest/api/monitor/) for the correct API version for your endpoint.
 
 ### Subscription access errors
 
