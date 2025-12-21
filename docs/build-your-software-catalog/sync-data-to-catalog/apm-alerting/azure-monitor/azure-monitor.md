@@ -40,7 +40,7 @@ To use this integration, the following prerequisites are required:
 6. Click **Register**.
 7. Note the **Application (client) ID** and **Directory (tenant) ID**.
 
-**Creating a client secret**
+**Create a client secret**
 
 1. In your app registration, navigate to **Certificates & secrets**.
 2. Click **New client secret**.
@@ -53,7 +53,7 @@ To use this integration, the following prerequisites are required:
 Store your client secret securely and never share it. The secret provides access to your Azure resources.
 :::
 
-**Granting API permissions:**
+**Grant API permissions:**
 
 1. In your app registration, navigate to **API permissions**.
 2. Click **Add a permission**.
@@ -68,7 +68,7 @@ Store your client secret securely and never share it. The secret provides access
 You need an Entra ID administrator to grant consent for these permissions before the integration can access Azure Monitor data.
 :::
 
-**Generating an access token (bearer token)**
+**Generate an access token (bearer token)**
 
 To authenticate with Azure Resource Manager API we need to obtain an OAuth2 access token. We can use the following curl command to get a token:
 
@@ -480,7 +480,7 @@ Simply provide your Azure Monitor API details, and the builder will generate eve
 **Solution:**
 - Access tokens expire after 1 hour
 - For production use, implement automatic token refresh or use OAuth2 client credentials flow with automatic token management
-- See the [Prerequisites](#prerequisites) section for token generation commands
+- See the [prerequisites](#prerequisites) section for token generation commands.
 
 ### API version errors
 
@@ -496,18 +496,18 @@ Simply provide your Azure Monitor API details, and the builder will generate eve
 **Symptom:** 403 "Forbidden" or "Authorization failed" errors.
 
 **Solution:**
-- Ensure your application has the correct permissions in Azure
-- Verify the subscription ID is correct
-- Check that admin consent has been granted for the API permissions
-- Verify your application has "Reader" role or appropriate permissions on the subscription
+- Ensure your application has the correct permissions in Azure.
+- Verify the subscription ID is correct.
+- Check that admin consent has been granted for the API permissions.
+- Verify your application has "Reader" role or appropriate permissions on the subscription.
 
 ### Activity log size issues
 
 **Symptom:** Very large responses or timeouts when fetching activity logs.
 
 **Solution:**
-- Use `$filter` query parameter to limit results by date range
-- Consider syncing only recent activity logs (e.g., last 7 days)
-- Use pagination if available for the specific endpoint
-- Adjust `scheduledResyncInterval` to sync less frequently
+- Use `$filter` query parameter to limit results by date range.
+- Consider syncing only recent activity logs (e.g., last 7 days).
+- Use pagination if available for the specific endpoint.
+- Adjust `scheduledResyncInterval` to sync less frequently.
 
