@@ -5,9 +5,6 @@ on:
     # Runs daily at 2:00 AM UTC
     - cron: '0 2 * * *'
   workflow_dispatch: # Allows manual triggering
-  push:
-    branches:
-      - link-and-fixes
 
 jobs:
   create-jira-tasks:
@@ -16,12 +13,12 @@ jobs:
       - name: Calculate date range
         id: date
         run: |
-          echo "start_date=$(date -d '1 day ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
+          echo "start_date=$(date -d '7 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
           echo "end_date=$(date -u +%Y-%m-%dT23:59:59Z)" >> $GITHUB_ENV
           echo "Start date: ${{ env.start_date }}"
           echo "End date: ${{ env.end_date }}"
 
-      - name: Fetch Kapa question-answers from last day
+      - name: Fetch Kapa question-answers from last week
         id: fetch-qa
         run: |
           # Fetch question-answers from Kapa API
@@ -93,7 +90,7 @@ jobs:
           downvotes=$(echo "$qa_array" | jq -c 'select(.feedback.reaction == "downvote" or .feedback?.reaction == "downvote")' | jq -s '.')
           
           if [ -z "$downvotes" ] || [ "$downvotes" == "[]" ] || [ "$downvotes" == "null" ]; then
-            echo "No downvotes found in the last day."
+            echo "No downvotes found in the last week."
             exit 0
           fi
           
