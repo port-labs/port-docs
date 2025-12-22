@@ -25,14 +25,17 @@ jobs:
           echo "End date: ${{ env.end_date }}"
           echo "Feedback start date (filter): ${{ env.feedback_start_date }}"
 
-      - name: Fetch Kapa question-answers from last week
+      - name: Fetch Kapa question-answers
         id: fetch-qa
         run: |
           # Fetch question-answers from Kapa API
           # The API endpoint: GET /query/v1/projects/:project_id/question-answers/
           # Documentation: https://docs.kapa.ai/api/reference/query-v-1-projects-question-answers-list
+          # Query parameters: ordering, page, page_size (no date filtering supported)
+          # Note: The API doesn't support date filtering, so we fetch recent results and filter client-side
+          # Using pagination to get enough results (adjust page_size as needed, max is typically 100)
           response=$(curl -s -w "\n%{http_code}" -X GET \
-            "https://api.kapa.ai/query/v1/projects/${{ secrets.KAPA_PROJECT_ID }}/question-answers/?start_date_time=${{ env.start_date }}&end_date_time=${{ env.end_date }}" \
+            "https://api.kapa.ai/query/v1/projects/${{ secrets.KAPA_PROJECT_ID }}/question-answers/?page_size=100&ordering=-created_at" \
             -H "X-API-KEY: ${{ secrets.KAPA_API_KEY }}" \
             -H "Content-Type: application/json")
           
@@ -71,6 +74,21 @@ jobs:
             total_count=0
           fi
           
+          # Filter by date client-side since API doesn't support date parameters
+          # Keep only question-answers created in the last 30 days
+          echo "Filtering question-answers by date (last 30 days)..."
+          if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
+            jq --arg start_date "${{ env.start_date }}" '.results[] | select(.created_at >= $start_date)' kapa_question_answers.json | jq -s '.' > kapa_filtered.json
+            filtered_count=$(jq -r 'length' kapa_filtered.json)
+            echo "Question-answers from last 30 days: $filtered_count"
+            mv kapa_filtered.json kapa_question_answers.json
+          elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
+            jq --arg start_date "${{ env.start_date }}" '[.[] | select(.created_at >= $start_date)]' kapa_question_answers.json > kapa_filtered.json
+            filtered_count=$(jq -r 'length' kapa_filtered.json)
+            echo "Question-answers from last 30 days: $filtered_count"
+            mv kapa_filtered.json kapa_question_answers.json
+          fi
+          
           # Debug: Check if any question-answers have non-empty feedback
           echo "Checking for feedback in question-answers..."
           if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
@@ -79,18 +97,6 @@ jobs:
           elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
             feedback_count=$(jq '[.[] | select(.feedback != null and (.feedback | length > 0))] | length' kapa_question_answers.json)
             echo "Question-answers with feedback: $feedback_count"
-          fi
-          
-          # If no feedback found, try fetching feedback separately for each question-answer
-          if [ "$feedback_count" == "0" ] || [ -z "$feedback_count" ]; then
-            echo "Warning: No feedback found in question-answers response."
-            echo "Feedback may need to be fetched separately or the API may not include it."
-            echo "Sample question-answer (first one):"
-            if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
-              jq '.results[0]' kapa_question_answers.json
-            elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
-              jq '.[0]' kapa_question_answers.json
-            fi
           fi
 
       - name: Filter downvotes and create JIRA tasks
