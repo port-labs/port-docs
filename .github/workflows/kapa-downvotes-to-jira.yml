@@ -52,7 +52,7 @@ jobs:
           
           # Validate JSON response
           if ! jq empty kapa_question_answers.json; then
-            echo "Error: Invalid JSON response from Kapa API"
+            echo "Error: Invalid JSON response from Kapa API."
             cat kapa_question_answers.json
             exit 1
           fi
