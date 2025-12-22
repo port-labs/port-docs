@@ -99,15 +99,11 @@ jobs:
             echo "Question-answers with feedback: $feedback_count"
           fi
 
-      - name: Login to JIRA
-        uses: atlassian/gajira-login@v3
+      - name: Filter downvotes and create JIRA issues
         env:
-          JIRA_BASE_URL: https://getport.atlassian.net
-          JIRA_USER_EMAIL: mor@getport.io
+          JIRA_URL: https://getport.atlassian.net
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-
-      - name: Filter downvotes and prepare JIRA issue data
-        env:
           JIRA_PROJECT_KEY: PORT
           JIRA_ISSUE_TYPE: Bug
         run: |
@@ -282,70 +278,13 @@ jobs:
             description+="- Thread ID: ${thread_id}\n"
             description+="- Question Answer ID: ${question_answer_id}\n"
             
-            # Prepare issue data for gajira-create action
-            echo "Preparing JIRA issue data for question: ${question:0:50}..."
+            # Create JIRA issue directly
+            echo "Creating JIRA task for question: ${question:0:50}..."
             
-            # Save issue data to JSON file for the create step
-            jq -n \
+            # Create issue JSON payload
+            issue_json=$(jq -n \
               --arg project_key "$JIRA_PROJECT_KEY" \
               --arg issue_type "$JIRA_ISSUE_TYPE" \
-              --arg summary "$summary" \
-              --arg description "$description" \
-              '{
-                project: $project_key,
-                issuetype: $issue_type,
-                summary: $summary,
-                description: $description
-              }' > "jira_issue_${i}.json"
-            
-            echo "Prepared issue data for index $i"
-          done
-          
-          # Save count for next step
-          echo "downvote_count=$downvote_count" >> $GITHUB_ENV
-          
-          echo ""
-          echo "Prepared $downvote_count downvote(s) for JIRA issue creation"
-
-      - name: Create JIRA issues using gajira-create
-        if: env.downvote_count > 0
-        env:
-          JIRA_PROJECT_KEY: PORT
-          JIRA_ISSUE_TYPE: Bug
-        run: |
-          # Count how many issue files we have
-          issue_count=$(ls jira_issue_*.json 2>/dev/null | wc -l || echo "0")
-          
-          if [ "$issue_count" -eq 0 ]; then
-            echo "No issues to create"
-            exit 0
-          fi
-          
-          echo "Creating $issue_count JIRA issue(s)..."
-          
-          # Process each issue file
-          # Note: We can't call gajira-create action from within a script loop,
-          # so we use the JIRA API directly with the same authentication method
-          # that gajira-create uses (Basic auth with email:API_TOKEN)
-          # The gajira-login action sets up authentication for subsequent steps
-          jira_base_url="https://getport.atlassian.net"
-          
-          for issue_file in jira_issue_*.json; do
-            if [ ! -f "$issue_file" ]; then
-              continue
-            fi
-            
-            project=$(jq -r '.project' "$issue_file")
-            issuetype=$(jq -r '.issuetype' "$issue_file")
-            summary=$(jq -r '.summary' "$issue_file")
-            description=$(jq -r '.description' "$issue_file")
-            
-            echo "Creating issue: ${summary:0:50}..."
-            
-            # Create issue JSON payload for JIRA API v3 (same format gajira-create uses)
-            issue_json=$(jq -n \
-              --arg project_key "$project" \
-              --arg issue_type "$issuetype" \
               --arg summary "$summary" \
               --arg description "$description" \
               '{
@@ -364,13 +303,12 @@ jobs:
                 }
               }')
             
-            # Use Basic auth (same as gajira-create action uses internally)
-            # The gajira-login action sets up authentication, but since we're in a script,
-            # we use the credentials directly
-            auth_header=$(echo -n "${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}" | base64 -w 0 2>/dev/null || echo -n "${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}" | base64)
+            # Create Basic auth header
+            auth_header=$(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64 -w 0 2>/dev/null || echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)
             
+            # Create issue via JIRA API
             response=$(curl -s -w "\n%{http_code}" -X POST \
-              "${jira_base_url}/rest/api/3/issue" \
+              "${JIRA_URL}/rest/api/3/issue" \
               -H "Content-Type: application/json" \
               -H "Authorization: Basic ${auth_header}" \
               -d "$issue_json" 2>&1)
@@ -390,5 +328,5 @@ jobs:
           done
           
           echo ""
-          echo "Finished creating JIRA issues"
+          echo "Finished processing all downvotes"
 
