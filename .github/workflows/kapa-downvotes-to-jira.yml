@@ -98,14 +98,13 @@ jobs:
           echo "First question-answer structure:"
           echo "$qa_array" | head -n1 | jq '.' || echo "Could not parse"
           
-          # Filter for downvotes - handle different feedback structures
-          # Feedback might be an object with .reaction, or an array of feedback objects
+          # Filter for downvotes
+          # Feedback is an array, so check if any element has reaction == "downvote"
           downvotes=$(echo "$qa_array" | jq -c '
             select(
-              (.feedback != null) and (
-                (type(.feedback) == "object" and .feedback.reaction == "downvote") or
-                (type(.feedback) == "array" and ([.feedback[] | select(.reaction == "downvote")] | length > 0))
-              )
+              .feedback != null and 
+              (.feedback | length > 0) and 
+              ([.feedback[]? | select(.reaction == "downvote")] | length > 0)
             )
           ' | jq -s '.')
           
@@ -130,16 +129,9 @@ jobs:
             question_answer_id=$(echo "$qa" | jq -r '.id // "N/A"')
             thread_id=$(echo "$qa" | jq -r '.thread_id // "N/A"')
             
-            # Extract feedback comment - handle both object and array feedback structures
-            feedback_type=$(echo "$qa" | jq -r 'if .feedback == null then "null" else type(.feedback) end')
-            if [ "$feedback_type" == "object" ]; then
-              feedback_comment=$(echo "$qa" | jq -r '.feedback.comment // .feedback.issue // ""')
-            elif [ "$feedback_type" == "array" ]; then
-              # Get comment from first downvote feedback in array
-              feedback_comment=$(echo "$qa" | jq -r '[.feedback[] | select(.reaction == "downvote")][0].comment // [.feedback[] | select(.reaction == "downvote")][0].issue // ""')
-            else
-              feedback_comment=""
-            fi
+            # Extract feedback comment - handle array feedback structure
+            # Feedback is an array, so get comment from the downvote feedback entry
+            feedback_comment=$(echo "$qa" | jq -r '[.feedback[]? | select(.reaction == "downvote")][0].comment // [.feedback[]? | select(.reaction == "downvote")][0].issue // ""' 2>/dev/null || echo "")
             
             # Build JIRA issue summary
             summary="Kapa AI Answer Downvoted: ${question:0:100}"
