@@ -5,6 +5,9 @@ on:
     # Runs daily at 2:00 AM UTC
     - cron: '0 2 * * *'
   workflow_dispatch: # Allows manual triggering
+  push:
+    branches:
+      - link-and-fixes
 
 jobs:
   create-jira-tasks:
