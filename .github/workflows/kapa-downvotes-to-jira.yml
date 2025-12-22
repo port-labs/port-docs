@@ -104,53 +104,89 @@ jobs:
           JIRA_URL: https://getport.atlassian.net
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          # Optional: OAuth 2.0 credentials (if using OAuth instead of Basic auth)
-          JIRA_CLIENT_ID: ${{ secrets.JIRA_CLIENT_ID }}
-          JIRA_CLIENT_SECRET: ${{ secrets.JIRA_CLIENT_SECRET }}
-          JIRA_REFRESH_TOKEN: ${{ secrets.JIRA_REFRESH_TOKEN }}
           JIRA_PROJECT_KEY: PORT
           JIRA_ISSUE_TYPE: Bug
         run: |
-          # Use Basic auth (email + API token)
-          echo "Using Basic auth (email + API token)"
-          if [ -z "$JIRA_EMAIL" ] || [ -z "$JIRA_API_TOKEN" ]; then
-            echo "❌ Error: JIRA_EMAIL and JIRA_API_TOKEN must be set"
+          # Validate OAuth 2.0 credentials
+          if [ -z "$JIRA_CLIENT_ID" ] || [ -z "$JIRA_CLIENT_SECRET" ] || [ -z "$JIRA_REFRESH_TOKEN" ]; then
+            echo "❌ Error: OAuth 2.0 credentials must be set"
+            echo "Required secrets: JIRA_CLIENT_ID, JIRA_CLIENT_SECRET, JIRA_REFRESH_TOKEN"
             exit 1
           fi
           
-          # Create Basic auth header for testing
-          auth_header=$(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64 -w 0 2>/dev/null || echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)
+          echo "Using OAuth 2.0 authentication"
+          
+          # Exchange refresh token for access token
+          # Reference: https://developer.atlassian.com/cloud/confluence/oauth-2-3lo-apps/#use-a-refresh-token-to-get-another-access-token-and-refresh-token-pair
+          echo "Exchanging refresh token for access token..."
+          token_response=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://auth.atlassian.com/oauth/token" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"grant_type\": \"refresh_token\",
+              \"client_id\": \"${JIRA_CLIENT_ID}\",
+              \"client_secret\": \"${JIRA_CLIENT_SECRET}\",
+              \"refresh_token\": \"${JIRA_REFRESH_TOKEN}\"
+            }" 2>&1)
+          
+          token_http_code=$(echo "$token_response" | tail -n1)
+          token_body=$(echo "$token_response" | sed '$d')
+          
+          if [ "$token_http_code" -ge 200 ] && [ "$token_http_code" -lt 300 ]; then
+            access_token=$(echo "$token_body" | jq -r '.access_token // empty' 2>/dev/null)
+            new_refresh_token=$(echo "$token_body" | jq -r '.refresh_token // empty' 2>/dev/null)
+            
+            if [ -z "$access_token" ] || [ "$access_token" == "null" ]; then
+              echo "❌ Error: Failed to extract access token from response"
+              echo "Response: $token_body"
+              exit 1
+            fi
+            
+            echo "✅ Successfully obtained access token"
+            
+            # If a new refresh token is returned, we should save it (but can't update secrets in workflow)
+            if [ -n "$new_refresh_token" ] && [ "$new_refresh_token" != "null" ]; then
+              echo "⚠️  Note: A new refresh token was returned. Update JIRA_REFRESH_TOKEN secret with the new token."
+            fi
+          else
+            echo "❌ Error: Failed to exchange refresh token for access token. HTTP $token_http_code"
+            echo "Response: $token_body"
+            echo ""
+            echo "Possible causes:"
+            echo "  - Refresh token has expired (need to re-authorize)"
+            echo "  - Client ID or Client Secret is incorrect"
+            echo "  - Refresh token is invalid"
+            exit 1
+          fi
           
           # Test authentication by checking current user
+          # Reference: https://developer.atlassian.com/cloud/confluence/oauth-2-3lo-apps/#how-do-i-retrieve-the-public-profile-of-the-authenticated-user
           echo "Testing authentication..."
           auth_test=$(curl -s -w "\n%{http_code}" -X GET \
-            "${JIRA_URL}/rest/api/3/myself" \
-            -H "Authorization: Basic ${auth_header}" \
+            "https://api.atlassian.com/me" \
+            -H "Authorization: Bearer ${access_token}" \
+            -H "Accept: application/json" \
             2>&1)
           
           auth_http_code=$(echo "$auth_test" | tail -n1)
           auth_response=$(echo "$auth_test" | sed '$d')
           
           if [ "$auth_http_code" -ge 200 ] && [ "$auth_http_code" -lt 300 ]; then
-            user_email=$(echo "$auth_response" | jq -r '.emailAddress // "Unknown"' 2>/dev/null || echo "Unknown")
-            user_display=$(echo "$auth_response" | jq -r '.displayName // "Unknown"' 2>/dev/null || echo "Unknown")
-            echo "✅ Authentication successful - Logged in as: $user_display ($user_email)"
+            user_email=$(echo "$auth_response" | jq -r '.email // "Unknown"' 2>/dev/null || echo "Unknown")
+            user_name=$(echo "$auth_response" | jq -r '.name // "Unknown"' 2>/dev/null || echo "Unknown")
+            echo "✅ Authentication successful - Logged in as: $user_name ($user_email)"
           else
-            echo "❌ Authentication failed. HTTP $auth_http_code"
+            echo "⚠️  Warning: Could not verify user profile. HTTP $auth_http_code"
             echo "Response: $auth_response"
-            echo ""
-            echo "Please verify:"
-            echo "  1. JIRA_EMAIL matches the account that created the API token"
-            echo "  2. JIRA_API_TOKEN is valid and not expired"
-            echo "  3. Generate a new API token at: https://id.atlassian.com/manage-profile/security/api-tokens"
-            exit 1
+            echo "Continuing anyway..."
           fi
           
-          # Check if user has permission to create issues in the project
-          echo "Checking permissions for project: ${JIRA_PROJECT_KEY}..."
+          # Check if user can access the project
+          echo "Checking access to project: ${JIRA_PROJECT_KEY}..."
           perm_test=$(curl -s -w "\n%{http_code}" -X GET \
             "${JIRA_URL}/rest/api/3/project/${JIRA_PROJECT_KEY}" \
-            -H "Authorization: Basic ${auth_header}" \
+            -H "Authorization: Bearer ${access_token}" \
+            -H "Accept: application/json" \
             2>&1)
           
           perm_http_code=$(echo "$perm_test" | tail -n1)
@@ -360,15 +396,17 @@ jobs:
                 }
               }')
             
-            # Create Basic auth header for this request
+            # Use Basic auth header for API calls
+            # Reference: https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis/
             request_auth_header=$(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64 -w 0 2>/dev/null || echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)
             auth_header="Basic ${request_auth_header}"
             
-            # Create issue via JIRA API
+            # Create issue via JIRA API using Basic auth
             response=$(curl -s -w "\n%{http_code}" -X POST \
               "${JIRA_URL}/rest/api/3/issue" \
               -H "Content-Type: application/json" \
               -H "Authorization: ${auth_header}" \
+              -H "Accept: application/json" \
               -d "$issue_json" 2>&1)
             
             http_code=$(echo "$response" | tail -n1)
