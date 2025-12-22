@@ -107,6 +107,9 @@ jobs:
           JIRA_PROJECT_KEY: PORT
           JIRA_ISSUE_TYPE: Bug
         run: |
+          # Set error handling - don't exit on error in while loop
+          set +e
+          
           # Install jq if not available
           sudo apt-get update && sudo apt-get install -y jq || true
           
@@ -202,7 +205,24 @@ jobs:
           echo "Found $downvote_count downvote(s) to process"
           
           # Process each downvote
-          echo "$downvotes" | jq -c '.[]' | while read -r qa; do
+          # Save downvotes to a file to avoid subshell issues
+          echo "$downvotes" > downvotes.json
+          
+          # Process each downvote using a for loop to avoid subshell variable issues
+          downvote_count=$(jq -r 'length' downvotes.json)
+          
+          if [ "$downvote_count" -eq 0 ]; then
+            echo "No downvotes to process"
+            exit 0
+          fi
+          
+          for i in $(seq 0 $((downvote_count - 1))); do
+            qa=$(jq -c ".[$i]" downvotes.json 2>/dev/null)
+            
+            if [ -z "$qa" ] || [ "$qa" == "null" ]; then
+              echo "Skipping invalid question-answer at index $i"
+              continue
+            fi
             if [ -z "$qa" ] || [ "$qa" == "null" ]; then
               continue
             fi
@@ -283,26 +303,44 @@ jobs:
             # Create JIRA issue
             echo "Creating JIRA task for question: ${question:0:50}..."
             
+            # Debug: Show JIRA issue JSON (without sensitive data)
+            echo "JIRA issue JSON structure:"
+            echo "$jira_issue" | jq '{fields: {project: .fields.project, summary: .fields.summary, issuetype: .fields.issuetype}}'
+            
+            # Create base64 auth header (handle different base64 implementations)
+            auth_header=$(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64 -w 0 2>/dev/null || echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)
+            
             response=$(curl -s -w "\n%{http_code}" -X POST \
               "${JIRA_URL}/rest/api/3/issue" \
               -H "Content-Type: application/json" \
-              -H "Authorization: Basic $(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)" \
-              -d "$jira_issue")
+              -H "Authorization: Basic ${auth_header}" \
+              -d "$jira_issue" 2>&1)
             
             http_code=$(echo "$response" | tail -n1)
             response_body=$(echo "$response" | sed '$d')
             
             if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
-              issue_key=$(echo "$response_body" | jq -r '.key // "Unknown"')
+              issue_key=$(echo "$response_body" | jq -r '.key // "Unknown"' 2>/dev/null || echo "Unknown")
               echo "✅ Successfully created JIRA task: $issue_key"
+              success_count=$((success_count + 1))
             else
               echo "❌ Failed to create JIRA task. HTTP $http_code"
               echo "Response: $response_body"
+              echo ""
+              echo "Debug info:"
+              echo "JIRA_URL: ${JIRA_URL}"
+              echo "JIRA_PROJECT_KEY: ${JIRA_PROJECT_KEY}"
+              echo "JIRA_ISSUE_TYPE: ${JIRA_ISSUE_TYPE}"
+              echo "JIRA_EMAIL: ${JIRA_EMAIL}"
+              echo "JIRA_API_TOKEN: ${JIRA_API_TOKEN:0:10}..." # Show first 10 chars only
+              error_count=$((error_count + 1))
+              # Don't exit - continue processing other downvotes
             fi
             
             # Small delay to avoid rate limiting
             sleep 1
           done
           
+          echo ""
           echo "Finished processing all downvotes"
 
