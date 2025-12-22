@@ -291,7 +291,7 @@ The `includeNonArchived` selector allows you to filter issues from non-archived 
 By default, if not specified, all issues for the authorized groups will be synced.
 
 
-```yaml
+```yaml showLineNumbers
   - kind: issue
     selector:
       query: 'true'
