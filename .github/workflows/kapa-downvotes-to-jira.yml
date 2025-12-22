@@ -78,6 +78,11 @@ jobs:
           # Install jq if not available
           sudo apt-get update && sudo apt-get install -y jq || true
           
+          # Debug: Show response structure
+          echo "Response structure check:"
+          jq 'type' kapa_question_answers.json
+          jq 'keys' kapa_question_answers.json 2>/dev/null || echo "Top level is array"
+          
           # Extract question-answers array (handle different response structures)
           if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
             qa_array=$(jq -c '.results[]' kapa_question_answers.json)
@@ -89,8 +94,20 @@ jobs:
             exit 1
           fi
           
-          # Filter for downvotes
-          downvotes=$(echo "$qa_array" | jq -c 'select(.feedback.reaction == "downvote" or .feedback?.reaction == "downvote")' | jq -s '.')
+          # Debug: Show first question-answer structure
+          echo "First question-answer structure:"
+          echo "$qa_array" | head -n1 | jq '.' || echo "Could not parse"
+          
+          # Filter for downvotes - handle different feedback structures
+          # Feedback might be an object with .reaction, or an array of feedback objects
+          downvotes=$(echo "$qa_array" | jq -c '
+            select(
+              (.feedback != null) and (
+                (type(.feedback) == "object" and .feedback.reaction == "downvote") or
+                (type(.feedback) == "array" and ([.feedback[] | select(.reaction == "downvote")] | length > 0))
+              )
+            )
+          ' | jq -s '.')
           
           if [ -z "$downvotes" ] || [ "$downvotes" == "[]" ] || [ "$downvotes" == "null" ]; then
             echo "No downvotes found in the last week."
@@ -112,7 +129,17 @@ jobs:
             answer=$(echo "$qa" | jq -r '.answer // "N/A"')
             question_answer_id=$(echo "$qa" | jq -r '.id // "N/A"')
             thread_id=$(echo "$qa" | jq -r '.thread_id // "N/A"')
-            feedback_comment=$(echo "$qa" | jq -r '.feedback.comment // ""')
+            
+            # Extract feedback comment - handle both object and array feedback structures
+            feedback_type=$(echo "$qa" | jq -r 'if .feedback == null then "null" else type(.feedback) end')
+            if [ "$feedback_type" == "object" ]; then
+              feedback_comment=$(echo "$qa" | jq -r '.feedback.comment // .feedback.issue // ""')
+            elif [ "$feedback_type" == "array" ]; then
+              # Get comment from first downvote feedback in array
+              feedback_comment=$(echo "$qa" | jq -r '[.feedback[] | select(.reaction == "downvote")][0].comment // [.feedback[] | select(.reaction == "downvote")][0].issue // ""')
+            else
+              feedback_comment=""
+            fi
             
             # Build JIRA issue summary
             summary="Kapa AI Answer Downvoted: ${question:0:100}"
