@@ -26268,7 +26268,7 @@ paths:
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
         :::
       parameters:
         - schema:
@@ -26327,7 +26327,7 @@ paths:
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
         :::
       parameters:
         - schema:
@@ -26816,7 +26816,7 @@ paths:
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
         :::
       parameters:
         - schema:
@@ -27642,7 +27642,7 @@ paths:
         :::warning Permission requirements
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
         :::
       security:
         - bearer:
@@ -28591,7 +28591,7 @@ paths:
         :::warning Permission requirements
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
         :::
       parameters:
         - schema:
@@ -34084,7 +34084,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         
-        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
         :::
       tags:
         - Integrations
@@ -34515,7 +34515,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](https://docs.port.io/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
 
-        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
 
         :::
       parameters:
