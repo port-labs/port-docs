@@ -172,7 +172,8 @@ If you want to automatically create missing related entities, you can use the [w
 Here is an example JSON definition of a self-service action that creates a new entity and its related entities:
 
 <details>
-<summary>**Example action JSON definition (click to expand)**</summary>
+<summary><b>Example action JSON definition (click to expand)</b></summary>
+
 ```json showLineNumbers
 {
   "identifier": "create_entity_a",
