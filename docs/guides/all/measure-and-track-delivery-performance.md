@@ -13,7 +13,7 @@ This guide helps engineering managers, platform engineers, DevEx teams, and prod
 - **Bottlenecks**: Where are the friction points that slow down delivery?
 - **Predictability**: Can we reliably forecast when features will be delivered?
 
-By the end of this guide, you'll have a working dashboard that tracks key delivery performance metrics, enabling you to identify improvement opportunities, measure the impact of process changes, and communicate delivery health across your organization.
+By the end of this guide, you will have a working dashboard that tracks key delivery performance metrics, enabling you to identify improvement opportunities, measure the impact of process changes, and communicate delivery health across your organization.
 
 <img src="/img/guides/delivery-performance-dashboard.png" border="1px" width="100%" />
 
