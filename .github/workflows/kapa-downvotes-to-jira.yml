@@ -202,7 +202,7 @@ jobs:
           
           # Count downvotes
           downvote_count=$(echo "$downvotes" | jq -r 'length')
-          echo "Found $downvote_count downvote(s) to process"
+          echo "Found $downvote_count downvote(s) to process."
           
           # Process each downvote
           # Save downvotes to a file to avoid subshell issues
