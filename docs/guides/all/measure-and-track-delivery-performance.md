@@ -95,7 +95,7 @@ We will create several blueprints to model your GitHub data. The `service` bluep
 4. Add this JSON schema:
 
     <details>
-    <summary><b>GitHub repository blueprint (Click to expand)</b></summary>
+    <summary><b>GitHub repository blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
