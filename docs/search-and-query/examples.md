@@ -13,8 +13,6 @@ This page provides practical examples of using search and query syntax across di
 
 You can find these options when creating or editing a catalog page in your [software catalog](https://app.getport.io/organization/catalog).
 
-Search & query can be used in the following places:
-
 **Initial filters for catalog pages** - Pre-filter which entities appear when the catalog page loads, improving performance and showing only relevant data.
 
 <!-- TODO: Add example -->
@@ -27,49 +25,57 @@ Search & query can be used in the following places:
 
 You can add filters when creating custom related entity tabs on any entity page. Click the `+` button above the related entities table to add a new tab.
 
-Search & query can be used in the following places:
-
 **Filters for related entity tabs** - Filter which related entities appear in custom tabs, showing only entities that meet specific criteria.
 
 <!-- TODO: Add example -->
 
 ## Dashboard widgets
 
-You can find these filter options when creating or editing widgets in any dashboard. Dashboard-level filters are accessible at the top of the dashboard page, while widget-specific filters are configured in the widget creation/edit form.
+You can find this filter option when creating or editing widgets. Widget-specific filters are configured in the widget creation/edit form under the "Inital filters" section.
 
-Search & query can be used in the following places:
+**Widget-specific filters** - Filter data in individual data widgets controlling which entities are included in calculations and visualizations.
 
-**Dashboard-level filters** - Apply filters across all supported widgets in a dashboard simultaneously, providing a consistent view of filtered data.
+This example filters a table widget displaying overdue pull requests, showing only PRs with an `open` status that were created in the `past 90 days`:
 
-<!-- TODO: Add example -->
-
-**Widget-specific filters** - Filter data in individual widgets like number charts, pie charts, and tables, controlling which entities are included in calculations and visualizations.
-
-<!-- TODO: Add example -->
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "value": "open",
+      "property": "status",
+      "operator": "="
+    },
+    {
+      "property": "createdAt",
+      "operator": "between",
+      "value": {
+        "preset": "last3Months"
+      }
+    }
+  ]
+}
+```
 
 ## Self-service actions
 
-You can configure these options in the [self-service actions](https://app.getport.io/self-serve) page when creating or editing an action. Conditions are found in the **Trigger** tab, datasets are in the **User Form** tab when configuring entity inputs, and dynamic permissions are in the **Permissions** section.
+Configure these options when creating or editing an action in the [self-service actions](https://app.getport.io/self-serve) page.
 
-Search & query can be used in the following places:
-
-**Action conditions** - Determine which entities an action appears on, ensuring actions are only available for relevant entities.
+**Action conditions** - Determine which entities an action appears on, ensuring actions are only available for relevant entities. Configure this in the **Basic Details** tab of the action form. Note: Only available for DAY-2 and DELETE operations.
 
 <!-- TODO: Add example -->
 
-**Entity input datasets** - Filter dropdown options in action forms, showing only relevant entities based on properties, relations, or user context.
+**Entity input datasets** - Filter dropdown options in action forms, showing only relevant entities based on properties, relations, or user context. Configure this in the **User Form** tab when setting up entity-type inputs.
 
 <!-- TODO: Add example -->
 
-**Dynamic permissions** - Dynamically control who can execute or approve actions based on entity properties and user context.
+**Dynamic permissions** - Dynamically control who can execute or approve actions based on entity properties and user context. After creating an action, edit it and click **Edit JSON** → **Permissions** tab to configure query-based permissions.
 
 <!-- TODO: Add example -->
 
 ## Automations
 
 You can configure automation conditions in the [automations page](https://app.getport.io/settings/automations) when creating or editing an automation. The conditions field is found in the **Trigger** tab.
-
-Search & query can be used in the following places:
 
 **Trigger conditions** - Filter which entities trigger an automation, ensuring automations only run for entities that meet specific criteria.
 
@@ -78,8 +84,6 @@ Search & query can be used in the following places:
 ## RBAC
 
 You can configure these permission policies in the [data model](https://app.getport.io/settings/data-model) page. For blueprint permissions, click on a blueprint and go to the **Permissions** tab. For action permissions, go to the action settings and navigate to the **Permissions** tab.
-
-Search & query can be used in the following places:
 
 **Blueprint read permissions** - Create dynamic read access rules, granting users access to entities based on their properties and team membership.
 
@@ -92,8 +96,6 @@ Search & query can be used in the following places:
 ## Scorecards
 
 You can configure scorecard rule filters in the [scorecards page](https://app.getport.io/settings/scorecards) when creating or editing a scorecard rule. The filter field appears in the rule configuration form.
-
-Search & query can be used in the following places:
 
 **Scorecard rule filters** - Determine which entities a scorecard rule evaluates, applying quality checks only to relevant entities.
 
