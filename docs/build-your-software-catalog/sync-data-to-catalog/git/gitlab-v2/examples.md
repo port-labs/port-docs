@@ -152,7 +152,7 @@ By default, if not specified, it is set to `90` days.
 ```
 </TabItem>
 
-<TabItem label="Include Active Groups" value="includeOnlyActiveGroups">
+<TabItem label="Include active groups" value="includeOnlyActiveGroups">
 
 The `includeOnlyActiveGroups` selector allows you to filter merge requests based on whether the parent group is active or not.
 By default, if not specified, all merge requests for the authorized groups will be synced.
