@@ -2,6 +2,7 @@
 
 import EcrRepositoryBlueprint from './aws-ecr-repository/_ecr_repository_blueprint.mdx'
 import EcrRepositoryConfig from './aws-ecr-repository/_ecr_repository_port_app_config.mdx'
+import EcrRepositoryExampleResponse from './aws-ecr-repository/_ecr_repository_example_response.mdx'
 
 ## AWS::ECR::Repository
 
@@ -27,5 +28,11 @@ You can use the following Port blueprint definitions and integration configurati
 <EcrRepositoryBlueprint/>
 
 <EcrRepositoryConfig/>
+
+#### Example response
+
+The following example shows the structure of the response data that Port processes for an ECR repository.
+
+<EcrRepositoryExampleResponse/>
 
 For more details about ECR repository properties, refer to the [AWS ECR API documentation](https://docs.aws.amazon.com/AmazonECR/latest/APIReference/Welcome.html).
