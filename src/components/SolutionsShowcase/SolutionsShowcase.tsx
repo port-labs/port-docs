@@ -31,7 +31,7 @@ const SolutionsShowcase: React.FC = () => {
   const solutions = [
     {
       title: 'Autonomous ticket resolution',
-      description: 'Automate the entire lifecycle of your tickets. Agents handle PRDs, specs, coding, and safe production releases. Focus your teams on more complex tasks.',
+      description: 'Automate the entire lifecycle of your tickets. Agents handle triaging work items, PRDs, specs, coding, and safe production releases. Focus your teams on more complex tasks.',
       icon: 'confirmation_number',
     },
     {

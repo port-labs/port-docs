@@ -38,8 +38,8 @@ resources:
             updatedAt: ".updated_at"
             mergedAt: ".merged_at"
             createdAt: ".created_at"
-            prNumber: ".id"
-            link: ".html_url"
+            prNumber: ".number"
+            link: ".url"
             leadTimeHours: >-
                 (.created_at as $createdAt | .merged_at as $mergedAt |
                 ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp |
