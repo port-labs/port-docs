@@ -60,7 +60,7 @@ We will create several blueprints to model your GitHub data. The `service` bluep
 4. Add this JSON schema:
 
     <details>
-    <summary><b>GitHub user blueprint (Click to expand)</b></summary>
+    <summary><b>GitHub user blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -159,7 +159,7 @@ If you already have a pull request blueprint, you need to add the following prop
 3. Add or update the JSON schema:
 
     <details>
-    <summary><b>GitHub pull request blueprint (Click to expand)</b></summary>
+    <summary><b>GitHub pull request blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -283,9 +283,9 @@ If you already have a pull request blueprint, you need to add the following prop
 
     </details>
 
-  :::caution Properties to create for existing PR blueprint
-  If you're updating an existing pull request blueprint, make sure to add the `pr_age`, `cycle_time`, and `pr_age_label` properties if they don't already exist.
-  :::
+    :::caution Properties to create for existing PR blueprint
+    If you're updating an existing pull request blueprint, make sure to add the `pr_age`, `cycle_time`, and `pr_age_label` properties if they don't already exist.
+    :::
 
 4. Click `Save` to create or update the blueprint.
 
@@ -297,7 +297,7 @@ If you already have a pull request blueprint, you need to add the following prop
 4. Add this JSON schema:
 
     <details>
-    <summary><b>Deployment blueprint (Click to expand)</b></summary>
+    <summary><b>Deployment blueprint (click to expand)</b></summary>
 
     ```json showLineNumbers
     {
@@ -372,7 +372,7 @@ Now we'll configure the GitHub integration to ingest data into your catalog.
 3. Add the following YAML block into the editor to ingest data from GitHub:
 
     <details>
-    <summary><b>GitHub integration configuration (Click to expand)</b></summary>
+    <summary><b>GitHub integration configuration (click to expand)</b></summary>
 
     ```yaml showLineNumbers
     resources:
@@ -777,6 +777,5 @@ In the new dashboard, create the following widgets:
 
 ## Related guides
 
-- [Visualize your GitHub repository activity](/guides/all/visualize-your-github-repository-activity)
-- [Visualize and manage GitHub deployments](/guides/all/visualize-and-manage-github-deployments)
-- [Visualize your GitHub Dependabot alerts](/guides/all/visualize-your-github-dependabot-alerts)
+- [Measure delivery reliability and stability](https://docs.port.io/guides/all/measure-reliability-and-stability/)
+- [Track standards adherence](https://docs.port.io/guides/all/measure-standards/)
