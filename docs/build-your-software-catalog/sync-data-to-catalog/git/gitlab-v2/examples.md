@@ -276,7 +276,7 @@ By default, if not specified, all issues for the authorized groups will be synce
 Issue must have **all labels** to be returned.
 :::
 
-```yaml
+```yaml showLineNumbers
   - kind: issue
     selector:
       query: 'true'
