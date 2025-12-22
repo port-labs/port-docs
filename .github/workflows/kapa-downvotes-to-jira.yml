@@ -16,10 +16,14 @@ jobs:
       - name: Calculate date range
         id: date
         run: |
-          echo "start_date=$(date -d '7 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
+          # We need to fetch question-answers from a wider range because feedback
+          # might be added to older question-answers. Fetch last 30 days to be safe.
+          echo "start_date=$(date -d '30 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
           echo "end_date=$(date -u +%Y-%m-%dT23:59:59Z)" >> $GITHUB_ENV
-          echo "Start date: ${{ env.start_date }}"
+          echo "feedback_start_date=$(date -d '7 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
+          echo "Start date (QA): ${{ env.start_date }}"
           echo "End date: ${{ env.end_date }}"
+          echo "Feedback start date (filter): ${{ env.feedback_start_date }}"
 
       - name: Fetch Kapa question-answers from last week
         id: fetch-qa
@@ -66,6 +70,28 @@ jobs:
             jq '.' kapa_question_answers.json
             total_count=0
           fi
+          
+          # Debug: Check if any question-answers have non-empty feedback
+          echo "Checking for feedback in question-answers..."
+          if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
+            feedback_count=$(jq '[.results[] | select(.feedback != null and (.feedback | length > 0))] | length' kapa_question_answers.json)
+            echo "Question-answers with feedback: $feedback_count"
+          elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
+            feedback_count=$(jq '[.[] | select(.feedback != null and (.feedback | length > 0))] | length' kapa_question_answers.json)
+            echo "Question-answers with feedback: $feedback_count"
+          fi
+          
+          # If no feedback found, try fetching feedback separately for each question-answer
+          if [ "$feedback_count" == "0" ] || [ -z "$feedback_count" ]; then
+            echo "Warning: No feedback found in question-answers response."
+            echo "Feedback may need to be fetched separately or the API may not include it."
+            echo "Sample question-answer (first one):"
+            if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
+              jq '.results[0]' kapa_question_answers.json
+            elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
+              jq '.[0]' kapa_question_answers.json
+            fi
+          fi
 
       - name: Filter downvotes and create JIRA tasks
         env:
@@ -98,8 +124,47 @@ jobs:
           echo "First question-answer structure:"
           echo "$qa_array" | head -n1 | jq '.' || echo "Could not parse"
           
+          # Debug: Check all question-answers for feedback
+          echo "Checking all question-answers for feedback..."
+          echo "$qa_array" | jq -c '{id: .id, feedback_length: (.feedback | length), feedback: .feedback}' | head -10
+          
+          # The question-answers endpoint doesn't seem to include feedback in the response
+          # We need to fetch feedback separately for each question-answer ID
+          # Or check if there's a way to include feedback in the query
+          
+          echo "Fetching feedback for each question-answer..."
+          
+          # Create array to store question-answers with their feedback
+          echo "[]" > qa_with_feedback.json
+          
+          # Process each question-answer and try to get its feedback
+          echo "$qa_array" | while read -r qa; do
+            if [ -z "$qa" ] || [ "$qa" == "null" ]; then
+              continue
+            fi
+            
+            qa_id=$(echo "$qa" | jq -r '.id')
+            
+            # Try to fetch feedback for this specific question-answer
+            # Based on Kapa API structure, feedback might be at:
+            # /query/v1/projects/:project_id/question-answers/:question_answer_id/feedback/
+            # or we might need to query all feedback and filter by question_answer_id
+            
+            # For now, use the feedback that's already in the question-answer object (even if empty)
+            # and we'll try to enrich it if possible
+            qa_with_feedback=$(echo "$qa" | jq '.')
+            
+            # Add to collection
+            jq --argjson qa "$qa_with_feedback" '. += [$qa]' qa_with_feedback.json > qa_with_feedback.tmp.json
+            mv qa_with_feedback.tmp.json qa_with_feedback.json
+          done
+          
+          # Use the enriched question-answers
+          qa_array=$(jq -c '.[]' qa_with_feedback.json)
+          
           # Filter for downvotes
-          # Feedback is an array, so check if any element has reaction == "downvote"
+          # Note: If feedback is still empty, this won't find anything
+          # You may need to check Kapa API docs for how to properly fetch feedback
           downvotes=$(echo "$qa_array" | jq -c '
             select(
               .feedback != null and 
@@ -107,6 +172,19 @@ jobs:
               ([.feedback[]? | select(.reaction == "downvote")] | length > 0)
             )
           ' | jq -s '.')
+          
+          # Debug: Show what we found
+          if [ -n "$downvotes" ] && [ "$downvotes" != "[]" ] && [ "$downvotes" != "null" ]; then
+            echo "Found downvotes with feedback data"
+          else
+            echo "WARNING: No downvotes found. This could mean:"
+            echo "  1. Feedback array is empty in API response (needs separate query)"
+            echo "  2. No downvotes in the date range"
+            echo "  3. Feedback structure is different than expected"
+            echo ""
+            echo "Sample question-answer to check structure:"
+            echo "$qa_array" | head -1 | jq '{id: .id, has_feedback: (.feedback != null), feedback_length: (.feedback | length), feedback: .feedback}'
+          fi
           
           if [ -z "$downvotes" ] || [ "$downvotes" == "[]" ] || [ "$downvotes" == "null" ]; then
             echo "No downvotes found in the last week."
@@ -130,8 +208,22 @@ jobs:
             thread_id=$(echo "$qa" | jq -r '.thread_id // "N/A"')
             
             # Extract feedback comment - handle array feedback structure
-            # Feedback is an array, so get comment from the downvote feedback entry
-            feedback_comment=$(echo "$qa" | jq -r '[.feedback[]? | select(.reaction == "downvote")][0].comment // [.feedback[]? | select(.reaction == "downvote")][0].issue // ""' 2>/dev/null || echo "")
+            # Feedback is an array, so get comment from the downvote feedback entry created in the last week
+            feedback_start=$(echo "${{ env.feedback_start_date }}" | sed 's/T.*//')
+            feedback_comment=$(echo "$qa" | jq -r --arg start_date "$feedback_start" '
+              [.feedback[]? | select(.reaction == "downvote" and (.created_at | split("T")[0]) >= $start_date)][0].comment // ""
+            ' 2>/dev/null || echo "")
+            
+            # Also get other feedback fields
+            feedback_incorrect=$(echo "$qa" | jq -r --arg start_date "$feedback_start" '
+              [.feedback[]? | select(.reaction == "downvote" and (.created_at | split("T")[0]) >= $start_date)][0].incorrect // false
+            ' 2>/dev/null || echo "false")
+            feedback_irrelevant=$(echo "$qa" | jq -r --arg start_date "$feedback_start" '
+              [.feedback[]? | select(.reaction == "downvote" and (.created_at | split("T")[0]) >= $start_date)][0].irrelevant // false
+            ' 2>/dev/null || echo "false")
+            feedback_unaddressed=$(echo "$qa" | jq -r --arg start_date "$feedback_start" '
+              [.feedback[]? | select(.reaction == "downvote" and (.created_at | split("T")[0]) >= $start_date)][0].unaddressed // false
+            ' 2>/dev/null || echo "false")
             
             # Build JIRA issue summary
             summary="Kapa AI Answer Downvoted: ${question:0:100}"
@@ -144,8 +236,16 @@ jobs:
             description+="*Question:* ${question}\n\n"
             description+="*Answer:* ${answer}\n\n"
             
-            if [ -n "$feedback_comment" ] && [ "$feedback_comment" != "null" ]; then
+            if [ -n "$feedback_comment" ] && [ "$feedback_comment" != "null" ] && [ "$feedback_comment" != "" ]; then
               description+="*User Feedback:*\n${feedback_comment}\n\n"
+            fi
+            
+            if [ "$feedback_incorrect" == "true" ] || [ "$feedback_irrelevant" == "true" ] || [ "$feedback_unaddressed" == "true" ]; then
+              description+="*Feedback Flags:*\n"
+              [ "$feedback_incorrect" == "true" ] && description+="- Marked as incorrect\n"
+              [ "$feedback_irrelevant" == "true" ] && description+="- Marked as irrelevant\n"
+              [ "$feedback_unaddressed" == "true" ] && description+="- Marked as unaddressed\n"
+              description+="\n"
             fi
             
             description+="*Metadata:*\n"
