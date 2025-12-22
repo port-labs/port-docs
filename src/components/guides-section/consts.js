@@ -1595,7 +1595,7 @@ export const availableGuides = [
     },
     {
         title: "Gain visibility into delivery performance",
-        description: "Measure and track delivery performance as part of your engineering intelligence framework using key metrics like PR cycle time, PR throughput, deployment frequency, and overdue PRs",
+        description: "Track engineering delivery performance using key metrics like PR cycle time, throughput, deployment frequency, and overdue PRs",
         tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-and-track-delivery-performance",
