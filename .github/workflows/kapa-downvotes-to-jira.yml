@@ -101,7 +101,7 @@ jobs:
 
       - name: Filter downvotes and create JIRA tasks
         env:
-          JIRA_URL: https://getport.atlassian.net/
+          JIRA_URL: https://getport.atlassian.net
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_PROJECT_KEY: PORT
@@ -354,6 +354,25 @@ jobs:
             else
               echo "❌ Failed to create JIRA task. HTTP $http_code"
               echo "Response: $response_body"
+              echo ""
+              
+              # Provide helpful error messages based on HTTP status code
+              if [ "$http_code" -eq 401 ]; then
+                echo "⚠️  Authentication/Permission Error (401):"
+                echo "   - Check that your JIRA_API_TOKEN is valid and not expired"
+                echo "   - Verify that the email ($JIRA_EMAIL) matches the account that created the API token"
+                echo "   - Ensure the API token has permission to create issues in project '${JIRA_PROJECT_KEY}'"
+                echo "   - You may need to regenerate your API token at: https://id.atlassian.com/manage-profile/security/api-tokens"
+              elif [ "$http_code" -eq 403 ]; then
+                echo "⚠️  Permission Denied (403):"
+                echo "   - The API token doesn't have permission to create issues in project '${JIRA_PROJECT_KEY}'"
+                echo "   - Contact your JIRA administrator to grant 'Create Issues' permission"
+              elif [ "$http_code" -eq 404 ]; then
+                echo "⚠️  Not Found (404):"
+                echo "   - Check that project key '${JIRA_PROJECT_KEY}' exists"
+                echo "   - Verify that the JIRA_URL is correct: ${JIRA_URL}"
+              fi
+              
               echo ""
               echo "Debug info:"
               echo "JIRA_URL: ${JIRA_URL}"
