@@ -283,9 +283,9 @@ If you already have a pull request blueprint, you need to add the following prop
 
     </details>
 
-:::caution Properties to create for existing PR blueprint
-If you're updating an existing pull request blueprint, make sure to add the `pr_age`, `cycle_time`, and `pr_age_label` properties if they don't already exist.
-:::
+  :::caution Properties to create for existing PR blueprint
+  If you're updating an existing pull request blueprint, make sure to add the `pr_age`, `cycle_time`, and `pr_age_label` properties if they don't already exist.
+  :::
 
 4. Click `Save` to create or update the blueprint.
 
