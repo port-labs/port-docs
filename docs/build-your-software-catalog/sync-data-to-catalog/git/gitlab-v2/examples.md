@@ -137,7 +137,7 @@ The `updatedAfter` selector allows you to filter merge requests based on when th
 
 The value represents the number of days to look back for merge requests. For example, setting it to `90` will only sync merge requests that have been updated in the last 90 days.
 
-:::info Important
+:::info Merge request sync behavior
 The `updatedAfter` parameter only affects merge requests that are not in the "opened" state. Open merge requests will always be synced regardless of their last update time.
 :::
 
@@ -217,7 +217,7 @@ The `updatedAfter` selector allows you to filter issues based on when they were 
 
 The value represents the number of days to look back for issues. For example, setting it to `90` will only sync issues that have been updated on or after the last 90 days.
 
-:::info Important
+:::info Issue sync behavior
 The `updatedAfter` parameter only affects issues that are not in the "opened" state. Open issues will always be synced regardless of their last update time.
 :::
 
@@ -272,7 +272,7 @@ By default, if not specified, all issues for the authorized groups will be synce
 The `labels` selector allows you to filter issues based on a comma-separated list of labels.
 By default, if not specified, all issues for the authorized groups will be synced.
 
-:::info Important
+:::info Label filtering logic
 Issue must have **all labels** to be returned.
 :::
 
