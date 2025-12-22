@@ -104,9 +104,66 @@ jobs:
           JIRA_URL: https://getport.atlassian.net
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          # Optional: OAuth 2.0 credentials (if using OAuth instead of Basic auth)
+          JIRA_CLIENT_ID: ${{ secrets.JIRA_CLIENT_ID }}
+          JIRA_CLIENT_SECRET: ${{ secrets.JIRA_CLIENT_SECRET }}
+          JIRA_REFRESH_TOKEN: ${{ secrets.JIRA_REFRESH_TOKEN }}
           JIRA_PROJECT_KEY: PORT
           JIRA_ISSUE_TYPE: Bug
         run: |
+          # Use Basic auth (email + API token)
+          echo "Using Basic auth (email + API token)"
+          if [ -z "$JIRA_EMAIL" ] || [ -z "$JIRA_API_TOKEN" ]; then
+            echo "❌ Error: JIRA_EMAIL and JIRA_API_TOKEN must be set"
+            exit 1
+          fi
+          
+          # Create Basic auth header for testing
+          auth_header=$(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64 -w 0 2>/dev/null || echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)
+          
+          # Test authentication by checking current user
+          echo "Testing authentication..."
+          auth_test=$(curl -s -w "\n%{http_code}" -X GET \
+            "${JIRA_URL}/rest/api/3/myself" \
+            -H "Authorization: Basic ${auth_header}" \
+            2>&1)
+          
+          auth_http_code=$(echo "$auth_test" | tail -n1)
+          auth_response=$(echo "$auth_test" | sed '$d')
+          
+          if [ "$auth_http_code" -ge 200 ] && [ "$auth_http_code" -lt 300 ]; then
+            user_email=$(echo "$auth_response" | jq -r '.emailAddress // "Unknown"' 2>/dev/null || echo "Unknown")
+            user_display=$(echo "$auth_response" | jq -r '.displayName // "Unknown"' 2>/dev/null || echo "Unknown")
+            echo "✅ Authentication successful - Logged in as: $user_display ($user_email)"
+          else
+            echo "❌ Authentication failed. HTTP $auth_http_code"
+            echo "Response: $auth_response"
+            echo ""
+            echo "Please verify:"
+            echo "  1. JIRA_EMAIL matches the account that created the API token"
+            echo "  2. JIRA_API_TOKEN is valid and not expired"
+            echo "  3. Generate a new API token at: https://id.atlassian.com/manage-profile/security/api-tokens"
+            exit 1
+          fi
+          
+          # Check if user has permission to create issues in the project
+          echo "Checking permissions for project: ${JIRA_PROJECT_KEY}..."
+          perm_test=$(curl -s -w "\n%{http_code}" -X GET \
+            "${JIRA_URL}/rest/api/3/project/${JIRA_PROJECT_KEY}" \
+            -H "Authorization: Basic ${auth_header}" \
+            2>&1)
+          
+          perm_http_code=$(echo "$perm_test" | tail -n1)
+          perm_response=$(echo "$perm_test" | sed '$d')
+          
+          if [ "$perm_http_code" -ge 200 ] && [ "$perm_http_code" -lt 300 ]; then
+            project_name=$(echo "$perm_response" | jq -r '.name // "Unknown"' 2>/dev/null || echo "Unknown")
+            echo "✅ Can access project: $project_name"
+          else
+            echo "⚠️  Warning: Cannot access project ${JIRA_PROJECT_KEY}. HTTP $perm_http_code"
+            echo "Response: $perm_response"
+            echo "This may indicate permission issues, but we'll try to create the issue anyway."
+          fi
           # Set error handling - don't exit on error in while loop
           set +e
           
@@ -303,14 +360,15 @@ jobs:
                 }
               }')
             
-            # Create Basic auth header
-            auth_header=$(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64 -w 0 2>/dev/null || echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)
+            # Create Basic auth header for this request
+            request_auth_header=$(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64 -w 0 2>/dev/null || echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)
+            auth_header="Basic ${request_auth_header}"
             
             # Create issue via JIRA API
             response=$(curl -s -w "\n%{http_code}" -X POST \
               "${JIRA_URL}/rest/api/3/issue" \
               -H "Content-Type: application/json" \
-              -H "Authorization: Basic ${auth_header}" \
+              -H "Authorization: ${auth_header}" \
               -d "$issue_json" 2>&1)
             
             http_code=$(echo "$response" | tail -n1)
@@ -322,6 +380,33 @@ jobs:
             else
               echo "❌ Failed to create JIRA task. HTTP $http_code"
               echo "Response: $response_body"
+              
+              # Provide specific guidance based on error
+              if [ "$http_code" -eq 401 ]; then
+                if echo "$response_body" | grep -qi "permission" > /dev/null 2>&1; then
+                  echo ""
+                  echo "⚠️  Permission Error:"
+                  echo "   The authenticated user does not have permission to create issues in project '${JIRA_PROJECT_KEY}'"
+                  echo ""
+                  echo "   To fix this:"
+                  echo "   1. Log into JIRA as an administrator: ${JIRA_URL}"
+                  echo "   2. Go to Project Settings > Permissions for project '${JIRA_PROJECT_KEY}'"
+                  echo "   3. Ensure the user '${JIRA_EMAIL}' has the 'Create Issues' permission"
+                  echo "   4. Or use a different account/API token that has the required permissions"
+                else
+                  echo ""
+                  echo "⚠️  Authentication Error:"
+                  echo "   Please verify your JIRA_EMAIL and JIRA_API_TOKEN are correct"
+                fi
+              elif [ "$http_code" -eq 403 ]; then
+                echo ""
+                echo "⚠️  Permission Denied (403):"
+                echo "   The user does not have permission to create issues in this project"
+              elif [ "$http_code" -eq 404 ]; then
+                echo ""
+                echo "⚠️  Project Not Found (404):"
+                echo "   Check that project key '${JIRA_PROJECT_KEY}' exists and is correct"
+              fi
             fi
             
             sleep 1
