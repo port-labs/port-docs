@@ -211,7 +211,7 @@ By default, if not specified, all issues for the authorized groups will be synce
 ```
 </TabItem>
 
-<TabItem label="Updated After" value="updatedAfter">
+<TabItem label="Updated after" value="updatedAfter">
 
 The `updatedAfter` selector allows you to filter issues based on when they were last updated. This helps you focus on recent changes and reduce the amount of historical data being synced.
 
