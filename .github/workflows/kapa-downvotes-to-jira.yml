@@ -101,12 +101,40 @@ jobs:
 
       - name: Filter downvotes and create JIRA tasks
         env:
-          JIRA_URL: ${{ secrets.JIRA_URL }}
+          JIRA_URL: https://getport.atlassian.net/
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_PROJECT_KEY: PORT
           JIRA_ISSUE_TYPE: Bug
         run: |
+          # Validate all required JIRA secrets are set
+          if [ -z "$JIRA_URL" ]; then
+            echo "❌ Error: JIRA_URL secret is not set in GitHub secrets"
+            echo "Please add JIRA_URL to your repository secrets (Settings > Secrets and variables > Actions)"
+            echo "Example: https://your-domain.atlassian.net"
+            exit 1
+          fi
+          
+          if [ -z "$JIRA_EMAIL" ]; then
+            echo "❌ Error: JIRA_EMAIL secret is not set in GitHub secrets"
+            exit 1
+          fi
+          
+          if [ -z "$JIRA_API_TOKEN" ]; then
+            echo "❌ Error: JIRA_API_TOKEN secret is not set in GitHub secrets"
+            exit 1
+          fi
+          
+          if [ -z "$JIRA_PROJECT_KEY" ]; then
+            echo "❌ Error: JIRA_PROJECT_KEY is not set"
+            exit 1
+          fi
+          
+          echo "✅ All JIRA secrets are configured"
+          echo "JIRA_URL: ${JIRA_URL}"
+          echo "JIRA_PROJECT_KEY: ${JIRA_PROJECT_KEY}"
+          echo "JIRA_ISSUE_TYPE: ${JIRA_ISSUE_TYPE}"
+          
           # Set error handling - don't exit on error in while loop
           set +e
           
