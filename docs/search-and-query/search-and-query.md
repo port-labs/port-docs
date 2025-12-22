@@ -12,9 +12,9 @@ import TabItem from "@theme/TabItem"
 
 Port's API provides tools to easily query, search and filter software catalog data. Port's search and query syntax can be used across the Port product to dynamically filter entities, control permissions, configure automations, and more.
 
-## Where this applies?
+## Where to use search & query?
 
-You can use search and query syntax in the following areas:
+You can use the search and query syntax in the following areas:
 
 - **Catalog pages** - Initial filters for pages and tables.
 - **Entity pages** - Filters for custom related entity tabs.
@@ -24,6 +24,8 @@ You can use search and query syntax in the following areas:
 - **RBAC** - Dynamic read permissions for blueprints and action execution/approval policies.
 - **Scorecards** - Filters to determine which entities a rule evaluates.
 - **API** - Search endpoints ([search entities](/api-reference/search-entities) and [search a blueprint's entities](/api-reference/search-a-blueprints-entities)).
+
+For practical examples of using search & query in each of these areas, see the [examples](/search-and-query/examples) page.
 
 ## Common queries usage
 
