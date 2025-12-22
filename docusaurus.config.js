@@ -427,10 +427,6 @@ const config = {
     {
       src: '/js/embed-mode.js',
       async: false,
-    },
-    {
-      src: '/js/kapa-jira-integration.js',
-      async: true,
     }
   ],
 };

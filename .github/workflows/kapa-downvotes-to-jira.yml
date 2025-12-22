@@ -1,0 +1,180 @@
+name: Create JIRA Tasks for Kapa Downvotes
+
+on:
+  schedule:
+    # Runs daily at 2:00 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  create-jira-tasks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Calculate date range
+        id: date
+        run: |
+          echo "start_date=$(date -d '1 day ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
+          echo "end_date=$(date -u +%Y-%m-%dT23:59:59Z)" >> $GITHUB_ENV
+          echo "Start date: ${{ env.start_date }}"
+          echo "End date: ${{ env.end_date }}"
+
+      - name: Fetch Kapa question-answers from last day
+        id: fetch-qa
+        run: |
+          # Fetch question-answers from Kapa API
+          # The API endpoint: GET /query/v1/projects/:project_id/question-answers/
+          # Documentation: https://docs.kapa.ai/api/reference/query-v-1-projects-question-answers-list
+          response=$(curl -s -w "\n%{http_code}" -X GET \
+            "https://api.kapa.ai/query/v1/projects/${{ secrets.KAPA_PROJECT_ID }}/question-answers/?start_date_time=${{ env.start_date }}&end_date_time=${{ env.end_date }}" \
+            -H "X-API-KEY: ${{ secrets.KAPA_API_KEY }}" \
+            -H "Content-Type: application/json")
+          
+          http_code=$(echo "$response" | tail -n1)
+          response_body=$(echo "$response" | sed '$d')
+          
+          if [ "$http_code" -lt 200 ] || [ "$http_code" -ge 300 ]; then
+            echo "Error: Kapa API returned HTTP $http_code"
+            echo "$response_body"
+            exit 1
+          fi
+          
+          echo "$response_body" > kapa_question_answers.json
+          
+          # Validate JSON response
+          if ! jq empty kapa_question_answers.json; then
+            echo "Error: Invalid JSON response from Kapa API"
+            cat kapa_question_answers.json
+            exit 1
+          fi
+          
+          # Debug: Show response structure
+          echo "Response structure:"
+          jq 'keys' kapa_question_answers.json
+          
+          # Count total question-answers fetched (handle different response structures)
+          if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
+            total_count=$(jq -r '.results | length' kapa_question_answers.json)
+            echo "Total question-answers fetched: $total_count"
+          elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
+            total_count=$(jq -r 'length' kapa_question_answers.json)
+            echo "Total question-answers fetched: $total_count"
+          else
+            echo "Warning: Unexpected response structure"
+            jq '.' kapa_question_answers.json
+            total_count=0
+          fi
+
+      - name: Filter downvotes and create JIRA tasks
+        env:
+          JIRA_URL: ${{ secrets.JIRA_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_PROJECT_KEY: PORT
+          JIRA_ISSUE_TYPE: Bug
+        run: |
+          # Install jq if not available
+          sudo apt-get update && sudo apt-get install -y jq || true
+          
+          # Extract question-answers array (handle different response structures)
+          if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
+            qa_array=$(jq -c '.results[]' kapa_question_answers.json)
+          elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
+            qa_array=$(jq -c '.[]' kapa_question_answers.json)
+          else
+            echo "Error: Could not find question-answers array in response"
+            jq '.' kapa_question_answers.json
+            exit 1
+          fi
+          
+          # Filter for downvotes
+          downvotes=$(echo "$qa_array" | jq -c 'select(.feedback.reaction == "downvote" or .feedback?.reaction == "downvote")' | jq -s '.')
+          
+          if [ -z "$downvotes" ] || [ "$downvotes" == "[]" ] || [ "$downvotes" == "null" ]; then
+            echo "No downvotes found in the last day."
+            exit 0
+          fi
+          
+          # Count downvotes
+          downvote_count=$(echo "$downvotes" | jq -r 'length')
+          echo "Found $downvote_count downvote(s) to process"
+          
+          # Process each downvote
+          echo "$downvotes" | jq -c '.[]' | while read -r qa; do
+            if [ -z "$qa" ] || [ "$qa" == "null" ]; then
+              continue
+            fi
+            
+            # Extract data from question-answer
+            question=$(echo "$qa" | jq -r '.question // "N/A"')
+            answer=$(echo "$qa" | jq -r '.answer // "N/A"')
+            question_answer_id=$(echo "$qa" | jq -r '.id // "N/A"')
+            thread_id=$(echo "$qa" | jq -r '.thread_id // "N/A"')
+            feedback_comment=$(echo "$qa" | jq -r '.feedback.comment // ""')
+            
+            # Build JIRA issue summary
+            summary="Kapa AI Answer Downvoted: ${question:0:100}"
+            if [ ${#question} -gt 100 ]; then
+              summary="${summary}..."
+            fi
+            
+            # Build JIRA issue description
+            description="A user downvoted a Kapa AI answer.\n\n"
+            description+="*Question:* ${question}\n\n"
+            description+="*Answer:* ${answer}\n\n"
+            
+            if [ -n "$feedback_comment" ] && [ "$feedback_comment" != "null" ]; then
+              description+="*User Feedback:*\n${feedback_comment}\n\n"
+            fi
+            
+            description+="*Metadata:*\n"
+            description+="- Thread ID: ${thread_id}\n"
+            description+="- Question Answer ID: ${question_answer_id}\n"
+            
+            # Create JIRA issue using REST API v3
+            jira_issue=$(jq -n \
+              --arg project_key "$JIRA_PROJECT_KEY" \
+              --arg issue_type "$JIRA_ISSUE_TYPE" \
+              --arg summary "$summary" \
+              --arg description "$description" \
+              '{
+                fields: {
+                  project: { key: $project_key },
+                  summary: $summary,
+                  description: {
+                    type: "doc",
+                    version: 1,
+                    content: [{
+                      type: "paragraph",
+                      content: [{ type: "text", text: $description }]
+                    }]
+                  },
+                  issuetype: { name: $issue_type }
+                }
+              }')
+            
+            # Create JIRA issue
+            echo "Creating JIRA task for question: ${question:0:50}..."
+            
+            response=$(curl -s -w "\n%{http_code}" -X POST \
+              "${JIRA_URL}/rest/api/3/issue" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Basic $(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)" \
+              -d "$jira_issue")
+            
+            http_code=$(echo "$response" | tail -n1)
+            response_body=$(echo "$response" | sed '$d')
+            
+            if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+              issue_key=$(echo "$response_body" | jq -r '.key // "Unknown"')
+              echo "✅ Successfully created JIRA task: $issue_key"
+            else
+              echo "❌ Failed to create JIRA task. HTTP $http_code"
+              echo "Response: $response_body"
+            fi
+            
+            # Small delay to avoid rate limiting
+            sleep 1
+          done
+          
+          echo "Finished processing all downvotes"
+
