@@ -35,7 +35,7 @@ jobs:
           # Note: The API doesn't support date filtering, so we fetch recent results and filter client-side
           # Using pagination to get enough results (adjust page_size as needed, max is typically 100)
           response=$(curl -s -w "\n%{http_code}" -X GET \
-            "https://api.kapa.ai/query/v1/projects/${{ secrets.KAPA_PROJECT_ID }}/question-answers/?page_size=100&ordering=-created_at" \
+            "https://api.kapa.ai/query/v1/projects/${{ secrets.KAPA_PROJECT_ID }}/question-answers/?page_size=350" \
             -H "X-API-KEY: ${{ secrets.KAPA_API_KEY }}" \
             -H "Content-Type: application/json")
           
