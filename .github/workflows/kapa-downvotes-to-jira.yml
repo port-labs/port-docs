@@ -407,7 +407,7 @@ jobs:
               elif [ "$http_code" -eq 404 ]; then
                 echo ""
                 echo "⚠️  Project Not Found (404):"
-                echo "   Check that project key '${JIRA_PROJECT_KEY}' exists and is correct"
+                echo "   Check that project key '${JIRA_PROJECT_KEY}' exists and is correct."
               fi
             fi
             
