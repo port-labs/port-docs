@@ -1,3 +1,6 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 <details>
 
 <summary><b>Port port-app-config.yml (click to expand)</b></summary>
@@ -43,3 +46,22 @@ resources:
 ```
 
 </details>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Labels" value="labels">
+
+You can use the `labels` selector to filter issues by labels.  
+An issue is ingested only if it has **all** of the labels you set (AND logic); if it has only some of them, it is not included.
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: ".pull_request == null"
+    # highlight-next-line
+    labels: ["bug", "high-priority"]
+```
+
+</TabItem>
+
+</Tabs>
