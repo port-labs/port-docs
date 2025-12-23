@@ -7,9 +7,6 @@ on:
   schedule:
     # Runs every 2 days at 2:00 AM UTC
     - cron: '0 2 */2 * *'
-  push:
-    branches:
-      - link-and-fixes
   workflow_dispatch: # Allows manual triggering
 
 jobs:
