@@ -310,9 +310,13 @@ jobs:
               [.feedback[]? | select(.reaction == "downvote" and (.created_at | split("T")[0]) >= $start_date)][0].unaddressed // false
             ' 2>/dev/null || echo "false")
             
+            # Sanitize question text by removing newlines and extra whitespace for JIRA summary
+            # JIRA summary field doesn't allow newline characters
+            question_sanitized=$(echo "$question" | tr '\n' ' ' | tr -s ' ' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            
             # Build JIRA issue summary
-            summary="Kapa AI Answer Downvoted: ${question:0:100}"
-            if [ ${#question} -gt 100 ]; then
+            summary="Kapa AI Answer Downvoted: ${question_sanitized:0:100}"
+            if [ ${#question_sanitized} -gt 100 ]; then
               summary="${summary}..."
             fi
             
