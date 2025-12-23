@@ -324,94 +324,102 @@ jobs:
             echo "Creating JIRA task for question: ${question:0:50}..."
             
             # Build JIRA issue description using Atlassian Document Format (ADF)
-            # We need to properly structure the content with multiple paragraphs
-            # Start building the ADF content array
-            adf_content='[
-              {
-                "type": "paragraph",
-                "content": [{"type": "text", "text": "A user downvoted a Kapa AI answer."}]
-              },
-              {
-                "type": "paragraph",
-                "content": [
-                  {"type": "text", "text": "Question: ", "marks": [{"type": "strong"}]},
-                  {"type": "text", "text": "'"$(echo "$question" | jq -Rs .)"'"}
-                ]
-              },
-              {
-                "type": "paragraph",
-                "content": [
-                  {"type": "text", "text": "Answer: ", "marks": [{"type": "strong"}]},
-                  {"type": "text", "text": "'"$(echo "$answer" | jq -Rs .)"'"}
-                ]
-              }'
+            # Create the base content array with question and answer
+            base_content=$(jq -n \
+              --arg question "$question" \
+              --arg answer "$answer" \
+              '[
+                {
+                  "type": "paragraph",
+                  "content": [{"type": "text", "text": "A user downvoted a Kapa AI answer."}]
+                },
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {"type": "text", "text": "Question: ", "marks": [{"type": "strong"}]},
+                    {"type": "text", "text": $question}
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {"type": "text", "text": "Answer: ", "marks": [{"type": "strong"}]},
+                    {"type": "text", "text": $answer}
+                  ]
+                }
+              ]')
             
             # Add user feedback if present
             if [ -n "$feedback_comment" ] && [ "$feedback_comment" != "null" ] && [ "$feedback_comment" != "" ]; then
-              adf_content+=',
-              {
-                "type": "paragraph",
-                "content": [
-                  {"type": "text", "text": "User Feedback: ", "marks": [{"type": "strong"}]},
-                  {"type": "text", "text": "'"$(echo "$feedback_comment" | jq -Rs .)"'"}
-                ]
-              }'
+              base_content=$(echo "$base_content" | jq \
+                --arg feedback "$feedback_comment" \
+                '. += [{
+                  "type": "paragraph",
+                  "content": [
+                    {"type": "text", "text": "User Feedback: ", "marks": [{"type": "strong"}]},
+                    {"type": "text", "text": $feedback}
+                  ]
+                }]')
             fi
             
             # Add feedback flags if any are true
             if [ "$feedback_incorrect" == "true" ] || [ "$feedback_irrelevant" == "true" ] || [ "$feedback_unaddressed" == "true" ]; then
-              adf_content+=',
-              {
+              # Start with the header
+              base_content=$(echo "$base_content" | jq '. += [{
                 "type": "paragraph",
                 "content": [{"type": "text", "text": "Feedback Flags:", "marks": [{"type": "strong"}]}]
-              },
-              {
-                "type": "bulletList",
-                "content": ['
+              }]')
               
-              flags_added=false
+              # Build bullet list items
+              bullet_items='[]'
               if [ "$feedback_incorrect" == "true" ]; then
-                [ "$flags_added" == "true" ] && adf_content+=','
-                adf_content+='{"type": "listItem", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as incorrect"}]}]}'
-                flags_added=true
+                bullet_items=$(echo "$bullet_items" | jq '. += [{
+                  "type": "listItem",
+                  "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as incorrect"}]}]
+                }]')
               fi
               if [ "$feedback_irrelevant" == "true" ]; then
-                [ "$flags_added" == "true" ] && adf_content+=','
-                adf_content+='{"type": "listItem", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as irrelevant"}]}]}'
-                flags_added=true
+                bullet_items=$(echo "$bullet_items" | jq '. += [{
+                  "type": "listItem",
+                  "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as irrelevant"}]}]
+                }]')
               fi
               if [ "$feedback_unaddressed" == "true" ]; then
-                [ "$flags_added" == "true" ] && adf_content+=','
-                adf_content+='{"type": "listItem", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as unaddressed"}]}]}'
-                flags_added=true
+                bullet_items=$(echo "$bullet_items" | jq '. += [{
+                  "type": "listItem",
+                  "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as unaddressed"}]}]
+                }]')
               fi
               
-              adf_content+=']
-              }'
+              # Add bullet list to content
+              base_content=$(echo "$base_content" | jq \
+                --argjson items "$bullet_items" \
+                '. += [{"type": "bulletList", "content": $items}]')
             fi
             
-            # Add metadata
-            adf_content+=',
-              {
-                "type": "paragraph",
-                "content": [{"type": "text", "text": "Metadata:", "marks": [{"type": "strong"}]}]
-              },
-              {
-                "type": "bulletList",
-                "content": [
-                  {
-                    "type": "listItem",
-                    "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Thread ID: '"$thread_id"'"}]}]
-                  },
-                  {
-                    "type": "listItem",
-                    "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Question Answer ID: '"$question_answer_id"'"}]}]
-                  }
-                ]
-              }'
-            
-            # Close the content array
-            adf_content+=']'
+            # Add metadata section
+            adf_content=$(echo "$base_content" | jq \
+              --arg thread_id "$thread_id" \
+              --arg qa_id "$question_answer_id" \
+              '. += [
+                {
+                  "type": "paragraph",
+                  "content": [{"type": "text", "text": "Metadata:", "marks": [{"type": "strong"}]}]
+                },
+                {
+                  "type": "bulletList",
+                  "content": [
+                    {
+                      "type": "listItem",
+                      "content": [{"type": "paragraph", "content": [{"type": "text", "text": ("Thread ID: " + $thread_id)}]}]
+                    },
+                    {
+                      "type": "listItem",
+                      "content": [{"type": "paragraph", "content": [{"type": "text", "text": ("Question Answer ID: " + $qa_id)}]}]
+                    }
+                  ]
+                }
+              ]')
             
             # Create issue JSON payload with proper ADF and components field
             issue_json=$(jq -n \
@@ -432,6 +440,10 @@ jobs:
                   components: [{ name: "port-docs" }]
                 }
               }')
+            
+            # Debug: Print the JSON payload (for troubleshooting)
+            echo "Issue JSON payload:"
+            echo "$issue_json" | jq '.'
             
             # Use Basic auth header for API calls
             # Reference: https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis/
