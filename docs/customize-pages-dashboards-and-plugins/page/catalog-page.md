@@ -330,9 +330,9 @@ Just create your `group-by` view (and any other table customizations you desire)
 Port provides a free-text search option on tables. This will search all of the entities' properties and display the entities that match the query.  
 If the query contains multiple words, entities that contain all of these words will be displayed, even if they are spread across different properties. 
 
-<img src='/img/software-catalog/pages/TableSearchBar.png' width='100%' border='1px' />
+<img src='/img/software-catalog/pages/TableSearchBar.png' width='100%' style={{border:'1px', borderRadius:'8px'}} />
 
--> [Explore how to control page visibility and permissions](./page-permissions.md)
+Explore how to control [page visibility and permissions](/customize-pages-dashboards-and-plugins/page/page-permissions).
 
 
 ## Catalog auto discovery

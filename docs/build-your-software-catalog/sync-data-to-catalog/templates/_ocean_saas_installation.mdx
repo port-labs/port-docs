@@ -11,7 +11,7 @@ Using this installation option means that the integration will be hosted by Port
 <OceanSaasLiveEventsDescription id={props.integration} />
 
 <details style={{ display: liveEvents[props.integration] ? 'block' : 'none' }}>
-  <summary><b>Supported live event triggers</b></summary>
+  <summary><b>Supported live event triggers (click to expand)</b></summary>
   {liveEvents[props.integration] && 
     <OceanSaasLiveEventsTriggersManual id={props.integration} isOAuth={false} />
   }
