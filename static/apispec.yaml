@@ -34509,7 +34509,11 @@ paths:
       tags:
         - Integrations
       description: |-
-        This route allows you to get an integration's sync metadata, which includes the sync's ID, state, creation and last update dates.\n\nReturns resyncs from the last 4 days, or the 50 most recent ones.<br/><br/>:::warning Permission requirements
+        This route allows you to get an integration's sync metadata, which includes the sync's ID, state, creation and last update dates.
+        
+        Returns resyncs from the last 4 days, or the 50 most recent ones.
+        
+        :::warning Permission requirements
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
 
