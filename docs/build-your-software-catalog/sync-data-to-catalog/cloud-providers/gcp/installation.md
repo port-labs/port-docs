@@ -136,6 +136,8 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
    ```
 
 </TabItem>
+
+# AI! I have just added this "self-hosted-kubernetes" section. review whether it follows best practices, and make recommendations where it falters
 <TabItem value="self-hosted-kubernetes" label="Self-hosted Kubernetes">
 
 ### Setting up Kubernetes
