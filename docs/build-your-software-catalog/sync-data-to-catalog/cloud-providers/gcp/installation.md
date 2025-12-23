@@ -137,171 +137,167 @@ The Ocean Google Cloud integration can use Google's Workload Identity to authent
 
 </TabItem>
 
-# AI! I have just added this "self-hosted-kubernetes" section. review whether it follows best practices, and make recommendations where it falters
 <TabItem value="self-hosted-kubernetes" label="Self-hosted Kubernetes">
 
 ### Setting up Kubernetes
 
-  1. Make sure your cluster meets the following criteria:
+First, let's ensure your cluster meets the following criteria:
 
-      - You're running Kubernetes 1.20 or later.
+- You're running Kubernetes 1.20 or later.
+  - Previous versions of Kubernetes used a different ServiceAccount token format that is not compatible with the instructions in this document.
+- You configured `kube-apiserver` so that it supports [ServiceAccount token volume projections](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection).
 
-        Previous versions of Kubernetes used a different ServiceAccount token format that is not compatible with the instructions in this document.
-
-      - You configured kube-apiserver so that it supports [ServiceAccount token volume projections](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection).
-
-  The cluster doesn't need to be accessible over the internet.
+:::info Internet access
+The cluster doesn't need to be accessible over the internet.
+:::
 
 
 ### Configure workload identity federation
 
-  :::note
-    Ensure billing is enabled in your Google cloud project.
-  :::
+:::note Billing
+Ensure billing is enabled in your Google Cloud project.
+:::
 
-  1. [Enable](https://console.cloud.google.com/flows/enableapi?apiid=iam.googleapis.com,cloudresourcemanager.googleapis.com,iamcredentials.googleapis.com,sts.googleapis.com&redirect=https://console.cloud.google.com) the IAM, Resource Manager, Service Account Credentials, and Security Token Service APIs.
-  
-  2. Create workload identity pool and provider:
+1. [Enable](https://console.cloud.google.com/flows/enableapi?apiid=iam.googleapis.com,cloudresourcemanager.googleapis.com,iamcredentials.googleapis.com,sts.googleapis.com&redirect=https://console.cloud.google.com) the IAM, Resource Manager, Service Account Credentials, and Security Token Service APIs.
 
-      - Get your cluster issuer url, this will be used in later steps:
-            ```sh showLineNumbers
-               kubectl get --raw /.well-known/openid-configuration | jq -r .issuer
-            ```
-      - Download the cluster's JSON Web Key Set (JWKS):
-            ```sh showLineNumbers
-               kubectl get --raw /openid/v1/jwks > cluster-jwks.json
-            ```
-        In one of the following steps, you upload the JWKS so that Workload Identity Federation can verify the authenticity of the Kubernetes ServiceAccount tokens issued by your cluster.
-  3. Create a new workload identity pool:
+2. Now, let's create a workload identity pool and provider:
+   - Get your cluster's issuer URL, this will be used in later steps:
+     ```bash showLineNumbers
+     kubectl get --raw /.well-known/openid-configuration | jq -r .issuer
+     ```
+   - Download the cluster's JSON Web Key Set (JWKS):
+     ```bash showLineNumbers
+     kubectl get --raw /openid/v1/jwks > cluster-jwks.json
+     ```
+     In one of the following steps, we will upload the JWKS so that Workload Identity Federation can verify the authenticity of the Kubernetes ServiceAccount tokens issued by your cluster.
+3. Create a new workload identity pool:
+   ```bash showLineNumbers
+   gcloud iam workload-identity-pools create POOL_ID \
+   --location="global" \
+   --description="DESCRIPTION" \
+   --display-name="DISPLAY_NAME"
+   ```
 
-     ```sh showLineNumbers
-      gcloud iam workload-identity-pools create POOL_ID \
-      --location="global" \
-      --description="DESCRIPTION" \
-      --display-name="DISPLAY_NAME"
-        ```
+   Replace the following placeholders:
+   - `POOL_ID`: a unique identifier for the new pool.
+   - `DESCRIPTION`: a description of the pool.
+   - `DISPLAY_NAME`: the name of the pool.
 
-    replace the following placeholders:
-      - `POOL_ID` with a unique identifier for the new pool.
-      - `DESCRIPTION` with a description of the pool.
-      - `DISPLAY_NAME` with the name of the pool.
-
-  4. Add the Kubernetes cluster as a workload identity pool provider and upload the cluster's JWKS:
-    ```sh showLineNumbers
-    gcloud iam workload-identity-pools providers create-oidc WORKLOAD_PROVIDER_ID \
-      --location="global" \
-      --workload-identity-pool="POOL_ID" \
-      --issuer-uri="ISSUER" \
-      --attribute-mapping="google.subject=assertion.sub" \
-      --jwk-json-path="cluster-jwks.json"
-            ```
-    replace the following placeholders:
-      - `WORKLOAD_PROVIDER_ID` with a unique identifier for the new provider.
-      - `POOL_ID` with id of the pool created in step 3.
-      - `ISSUER` with the cluster url we determined earier.
+4. Add the Kubernetes cluster as a workload identity pool provider and upload the cluster's JWKS:
+   ```bash showLineNumbers
+   gcloud iam workload-identity-pools providers create-oidc WORKLOAD_PROVIDER_ID \
+     --location="global" \
+     --workload-identity-pool="POOL_ID" \
+     --issuer-uri="ISSUER" \
+     --attribute-mapping="google.subject=assertion.sub" \
+     --jwk-json-path="cluster-jwks.json"
+   ```
+   Replace the following placeholders:
+   - `WORKLOAD_PROVIDER_ID`: a unique identifier for the new provider.
+   - `POOL_ID`: the ID of the pool created in step 3.
+   - `ISSUER`: the cluster URL we determined earlier.
 
 
-  ### Grant access to Kubernetes workload
+### Grant access to Kubernetes workload
 
-  1. Grant the Kubernetes ServiceAccount access to impersonate the IAM service account:
-      The Kubernetes ServiceAccount does not have to exist yet, we'll create it in a later step when we deploy the workload, just take note of the name.
-      ```sh showLineNumbers
-          gcloud iam service-accounts add-iam-policy-binding \
-            SERVICE_ACCOUNT_EMAIL \
-              --member="principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/subject/MAPPED_SUBJECT" \
-              --role=roles/iam.workloadIdentityUser
-          ```
-      Replace the following placeholders:
-      - `SERVICE_ACCOUNT_EMAIL` with email of your service account.
-      - `PROJECT_NUMBER` with the Google Cloud project number (Not project id).
-      - `POOL_ID` with the pool id we created in step 3
-      - `MAPPED_SUBJECT` with the full name of the Kubernetes service account we'll create, including namespace. It should look something like: `system:serviceaccount:default:my-kube-workload-id-serviceaccount`
+1. Grant the Kubernetes ServiceAccount access to impersonate the IAM service account:
+   :::tip
+   The Kubernetes ServiceAccount does not have to exist yet. We'll create it in a later step when we deploy the workload, so just take note of the name you want to use.
+   :::
+   ```bash showLineNumbers
+   gcloud iam service-accounts add-iam-policy-binding \
+     SERVICE_ACCOUNT_EMAIL \
+     --member="principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/subject/MAPPED_SUBJECT" \
+     --role=roles/iam.workloadIdentityUser
+   ```
+   Replace the following placeholders:
+   - `SERVICE_ACCOUNT_EMAIL`: the email of your service account.
+   - `PROJECT_NUMBER`: the Google Cloud project number (not project ID).
+   - `POOL_ID`: the pool ID we created in step 3.
+   - `MAPPED_SUBJECT`: the mapped subject for the Kubernetes service account. It should have the format `system:serviceaccount:NAMESPACE:KUBERNETES_SA_NAME`. For example: `system:serviceaccount:default:my-kube-workload-id-serviceaccount`.
 
     
-  ### Deploy the Kubernetes workload
+### Deploy the Kubernetes workload
 
-  1. Create a credentials file:
-      ```sh showLineNumbers
-        gcloud iam workload-identity-pools create-cred-config \
-            projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/providers/WORKLOAD_PROVIDER_ID \
-            --service-account=SERVICE_ACCOUNT_EMAIL \
-            --credential-source-file=/var/run/service-account/token \
-            --credential-source-type=text \
-            --sts-location=global \
-            --output-file=credential-configuration.json
-          ```
-      Replace the following placeholders: 
-      - `SERVICE_ACCOUNT_EMAIL` with email of your service account.
-      - `PROJECT_NUMBER` with the Google Cloud project number (Not project id).
-      - `POOL_ID` with the pool id we created in step 3
-      - `WORKLOAD_PROVIDER_ID` with id of the cluster workload provider we created in step 4 of [configure workload identity federation](#configure-workload-identity-federation)
+1. Create a credentials file:
+   ```bash showLineNumbers
+   gcloud iam workload-identity-pools create-cred-config \
+     projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/providers/WORKLOAD_PROVIDER_ID \
+     --service-account=SERVICE_ACCOUNT_EMAIL \
+     --credential-source-file=/var/run/service-account/token \
+     --credential-source-type=text \
+     --sts-location=global \
+     --output-file=credential-configuration.json
+   ```
+   Replace the following placeholders:
+   - `SERVICE_ACCOUNT_EMAIL`: the email of your service account.
+   - `PROJECT_NUMBER`: the Google Cloud project number (not project ID).
+   - `POOL_ID`: the pool ID we created in step 3.
+   - `WORKLOAD_PROVIDER_ID`: the ID of the cluster workload provider we created in step 4 of [configure workload identity federation](#configure-workload-identity-federation).
+   :::note Credential File
+   Unlike a [service account key](https://docs.cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys), a credential configuration file doesn't contain a private key and doesn't need to be kept confidential. Details about the credential configuration file are available at https://google.aip.dev/auth/4117.
+   :::
 
-    :::note
-          Unlike a [service account key](https://docs.cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys), a credential configuration file doesn't contain a private key and doesn't need to be kept confidential. Details about the credential configuration file are available at https://google.aip.dev/auth/4117.
-    :::
+2. Create a base64 representation of the credentials file and copy it to your clipboard:
+   ```bash showLineNumbers
+   cat credential-configuration.json | base64 | pbcopy
+   ```
 
-  2. Create a base64 representation of the credentials file and copy it to your clip board:
-     ```sh showLineNumbers
-      cat credential-configuration.json | base64 | pbcopy
-          ```
+3. Create a `values.yaml` file with the following configuration:
+   ```yaml showLineNumbers
+   port:
+     clientId: "<port-client-id>"
+     clientSecret: "<port-client-secret>"
+     baseUrl: "https://api.getport.io"
+   
+   initializePortResources: true
+   sendRawDataExamples: true
+   scheduledResyncInterval: 1440
+   
+   integration:
+     identifier: "ocean-gcp-integration"
+     type: "gcp"
+     eventListener:
+       type: "POLLING"
+     config:
+         encodedADCConfiguration: "<base64-encoded-credentials-file>"
+     extraConfig:
+         GCP_PROJECT: "<gcp-project-id>"
+   
+   extraVolumeMounts:
+     - name: token
+       mountPath: "/var/run/service-account"
+       readOnly: true
+   extraVolumes:
+     - name: token
+       projected:
+         sources:
+         - serviceAccountToken:
+             audience: "https://iam.googleapis.com/projects/<gcp-project-number>/locations/global/workloadIdentityPools/<workload-identity-pool-id>/providers/<workload-identity-provider-id>"
+             expirationSeconds: 3600
+             path: token
+   
+   podServiceAccount:
+     create: true
+     name: "<k8s-service-account-name>"
+     annotations:
+       iam.gke.io/gcp-service-account: "<gcp-service-account-email>"
+   ```
+   Replace the following placeholder values:
+   - `<port-client-id>`: your Port client ID.
+   - `<port-client-secret>`: your Port client secret.
+   - `<base64-encoded-credentials-file>`: the base64 encoded credentials file from step 2.
+   - `<gcp-project-id>`: your GCP project's ID.
+   - `<gcp-project-number>`: your GCP project's number.
+   - `<workload-identity-pool-id>`: the pool ID we created earlier.
+   - `<workload-identity-provider-id>`: the workload provider ID we created earlier.
+   - `<gcp-service-account-email>`: your service account email.
+   - `<k8s-service-account-name>`: the name of the Kubernetes service account to create.
 
-  3. Make a values.yaml file with the following configuration:
-
-
-            ```yaml showLineNumbers
-            port:
-              clientId: "PORT_CLIENT_ID"
-              clientSecret: "PORT_CLIENT_SECRET"
-              baseUrl: "https://api.getport.io"
-
-            initializePortResources: true
-            sendRawDataExamples: true
-            scheduledResyncInterval: 1440
-
-            integration:
-              identifier: "ocean-gcp-integration"
-              type: "gcp"
-              eventListener:
-                type: "POLLING"
-              config:
-                  encodedADCConfiguration: "BASE64_ENCODED_CREDENTIALS"
-              extraConfig:
-                  GCP_PROJECT: "GCP_PROJECT_ID"
-
-            extraVolumeMounts:
-              - name: token
-                mountPath: "/var/run/service-account"
-                readOnly: true
-            extraVolumes:
-              - name: token
-                projected:
-                  sources:
-                  - serviceAccountToken:
-                      audience: "https://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/providers/WORKLOAD_PROVIDER_ID"
-                      expirationSeconds: 3600
-                      path: token
-
-            podServiceAccount:
-              create: true
-              name: "my-kube-workload-id-serviceaccount`"
-              annotations:
-                iam.gke.io/gcp-service-account: "SERVICE_ACCOUNT_EMAIL"
-              ```
-
-    Replace the following placeholders values:
-    - `PORT_CLIENT_ID` with your Port client id.
-    - `PORT_CLIENT_SECRET` with your Port client secret.
-    - `BASE64_ENCODED_CREDENTIALS`  with base64 encoded credentials file from step 2.
-    - `GCP_PROJECT_ID` with your GCP project's id.
-    - `PROJECT_NUMBER` with your GCP project's number.
-    - `POOL_ID` with the pool id we created earlier.
-    - `WORKLOAD_PROVIDER_ID` with the workload provider id we created earlier.
-    - `SERVICE_ACCOUNT_EMAIL` with your service account email.
-
-  3. Install the integration using helm:
-     ```sh showLineNumbers
-     helm upgrade --install gcp port-labs/port-ocean -f values.yaml
-            ```
+4. Install the integration using Helm:
+   ```bash showLineNumbers
+   helm upgrade --install gcp port-labs/port-ocean -f values.yaml
+   ```
 
 
 </TabItem>
