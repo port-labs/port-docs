@@ -39,7 +39,9 @@ import TabItem from "@theme/TabItem"
 
 # Examples
 
-## Mapping projects, README.md and merge requests
+This page provides practical examples for mapping various GitLab resources to Port.
+
+## Projects, README.md and merge requests
 
 The following example demonstrates how to ingest your GitLab projects, their README.md file contents and merge requests to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -61,7 +63,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their `README.md` file contents and merge requests.
 
-## Mapping files and file contents
+## Files and file contents
 
 The following example shows how to ingest dependencies from a `package.json` file in your GitLab repository into Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -73,7 +75,7 @@ You can use the following Port blueprint definitions and integration configurati
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/#ingest-files-from-your-repositories)
 
-## Mapping Groups, Subgroups and Projects
+## Groups, subgroups and projects
 
 The following example demonstrates how to ingest your GitLab groups, subgroups and projects to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -93,7 +95,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 :::
 
-## Mapping projects, pipelines and jobs
+## Projects, pipelines and jobs
 
 The following example demonstrates how to ingest your GitLab projects, their pipelines and jobs runs to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -118,7 +120,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their pipelines and jobs.
 
-## Mapping projects and monorepos
+## Projects and monorepos
 
 The following example demonstrates how to ingest your GitLab projects and their monorepo folders to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -165,7 +167,7 @@ You can also specify a different path for each monorepo repository, for example:
 
 :::
 
-## Mapping projects and folders
+## Projects and folders
 
 The following example demonstrates how to ingest your GitLab projects and their folders to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -185,7 +187,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 :::
 
-## Mapping projects and issues
+## Projects and issues
 
 The following example demonstrates how to ingest your GitLab projects and their issues to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -208,7 +210,7 @@ You can use the following Port blueprint definitions and integration configurati
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their issues.
 
 
-## Mapping group or project and members
+## Group or project and members
 
 The following example demonstrates how to ingest your GitLab members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -297,7 +299,7 @@ By default, the integration syncs only essential member properties (id, username
 
 </Tabs>
 
-### Mapping members and groups
+### Members and groups
 
 The following example demonstrates how to ingest your GitLab groups and their members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -305,7 +307,7 @@ You can use the following Port blueprint definitions and integration configurati
 <GroupWithMemberRelationBlueprint/>
 <GroupWithMemberPortAppConfig/>
 
-### Mapping members and projects
+### Members and projects
 
 The following example demonstrates how to ingest your GitLab projects and their members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
@@ -325,7 +327,7 @@ Real time webhook events are not supported for the `project-with-members` kind.
 
 :::
 
-## Mapping supported resources
+## Supported resources
 
 The examples above show specific use cases, but Port's GitLab integration supports the ingestion of many other GitLab objects.
 To adapt the examples above, use the GitLab API reference to learn about the available fields for the different supported objects:

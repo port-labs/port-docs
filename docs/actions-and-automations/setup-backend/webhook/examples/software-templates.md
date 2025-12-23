@@ -5,7 +5,7 @@ sidebar_position: 4
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Software Templates
+# Software templates
 
 A software template allows you to generate a customized skeleton of a new resource (e.g. service), usually based on community best practices.
 
@@ -13,8 +13,8 @@ There are a few open source projects out there that enable you to create a proje
 
 In the next section we are going to present an example.
 
-:::tip
-All relevant files and resources for this guide are available [**Here for GitHub**](https://github.com/port-labs/port-cookiecutter-example), and [**Here for GitLab**](https://github.com/port-labs/port-cookiecutter-gitlab-example).
+:::tip Example resources
+All relevant files and resources for this guide are available [**here for GitHub**](https://github.com/port-labs/port-cookiecutter-example), and [**here for GitLab**](https://github.com/port-labs/port-cookiecutter-gitlab-example).
 :::
 
 ## Example - create a new service repository
@@ -24,7 +24,7 @@ The following example utilizes Port [webhook-actions](/build-your-software-catal
 First, you need to create a simple `Service` blueprint.
 
 <details>
-<summary>Service blueprint JSON</summary>
+<summary><b>Service blueprint JSON (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -64,17 +64,15 @@ The action will receive the following user inputs:
 
 <TabItem value="github">
 
-- GitHub organization and repository to host the created service project;
+- GitHub organization and repository to host the created service project.
 - Template specific parameters, such as `project_name` and `description`.
 
-:::note
-In the following JSON, you need to replace the `<WEBHOOK_URL>` placeholders with your URL.
+<details>
+<summary><b>Self-service actions JSON (click to expand)</b></summary>
+
+**In the following JSON, you need to replace the `<WEBHOOK_URL>` placeholders with your URL.**
 
 For local setup, look at this [example](../local-debugging-webhook.md#creating-the-vm-create-action).
-:::
-
-<details>
-<summary>Self-Service Actions JSON</summary>
 
 ```json showLineNumbers
 [
@@ -276,17 +274,15 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
 
 <TabItem value="gitlab">
 
-- Repository to host the created service project;
+- Repository to host the created service project.
 - Template specific parameters, such as `project_name` and `description`.
 
-:::note
-In the following JSON, you need to replace the `https://your-webhook-url.com` placeholders with your URL.
+<details>
+<summary><b>Self-service actions JSON (click to expand)</b></summary>
+
+**In the following JSON, you need to replace the `https://your-webhook-url.com` placeholders with your URL.**
 
 For local setup, look at this [example](../local-debugging-webhook.md#creating-the-vm-create-action).
-:::
-
-<details>
-<summary>Self-Service Actions JSON</summary>
 
 ```json showLineNumbers
 [
@@ -380,15 +376,14 @@ Within the backend, you are going to generate the project from the Cookiecutter 
 
 A full example with a backend, can be found [here for GitHub](https://github.com/port-labs/port-cookiecutter-example) or [here for GitLab](https://github.com/port-labs/port-cookiecutter-gitlab-example).
 
-:::info
+:::info Recommended practice
 The above example also creates a new Service entity in Port, and updates the action run details.
 
 These steps are highly recommended to keep track over time, of the action run, its logs the resulting resources.
 :::
 
 That's it! You can now use the provisioned actions, as shown here:
-
-![create-service.png](/img/complete-use-cases/software-templates/create-service.png)
+<img src='/img/complete-use-cases/software-templates/create-service.png' width='80%' border='1px' />
 
 ## Summary
 

@@ -213,7 +213,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Kafka
 
 - [Kafka integration](/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka.md)
-- [Kafka queue for self-service actions](/actions-and-automations/setup-backend/webhook/kafka/kafka.md)
+- [Kafka queue for self-service actions](/actions-and-automations/setup-backend/kafka/)
 
 ## Kratix (by Syntasso)
 - [Combine Kratix and Port](https://www.syntasso.io/solutions/port-and-kratix)
@@ -249,7 +249,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## New Relic
 
-- [New Relic integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic.md)
+- [New Relic integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic/newrelic.md)
 - [Embed dashboards from New Relic](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#new-relic-chart)
 
 ## Octopus Deploy
@@ -295,7 +295,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Sentry
 
-- [Sentry integration and webhook](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry.md)
+- [Sentry integration and webhook](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/sentry/sentry.md)
 
 ## Slack
 

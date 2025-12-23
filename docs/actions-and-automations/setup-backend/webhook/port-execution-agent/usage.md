@@ -48,7 +48,7 @@ Use this option to provide the certificate content directly in your Helm values 
 **Method A: Inline certificate in values.yaml**
 
 Configure in your `values.yaml`:
-```yaml
+```yaml showLineNumbers
 selfSignedCertificate:
   enabled: true
   certificate: |
@@ -62,7 +62,7 @@ selfSignedCertificate:
 ```
 
 Install with:
-```bash
+```bash showLineNumbers
 helm install my-port-agent port-labs/port-agent \
    --create-namespace --namespace port-agent \
    -f values.yaml
@@ -71,7 +71,7 @@ helm install my-port-agent port-labs/port-agent \
 **Method B: Reference certificate file using `--set-file`**
 
 Configure in your `custom_values.yaml`:
-```yaml
+```yaml showLineNumbers
 selfSignedCertificate:
   enabled: true
   certificate: ""
@@ -82,7 +82,7 @@ selfSignedCertificate:
 ```
 
 Install with:
-```bash
+```bash showLineNumbers
 helm install my-port-agent port-labs/port-agent \
    --create-namespace --namespace port-agent \
    -f custom_values.yaml \
@@ -95,14 +95,14 @@ helm install my-port-agent port-labs/port-agent \
 Use this option to reference a pre-existing Kubernetes secret that you manage separately. The secret must contain the certificate data.
 
 **How to use:**
-1. Set `selfSignedCertificate.enabled` to `true`
-2. Set `selfSignedCertificate.secret.useExistingSecret` to `true`
-3. Specify the secret name in `selfSignedCertificate.secret.name`
-4. Specify the key within the secret in `selfSignedCertificate.secret.key` (defaults to `crt`)
-5. Leave `selfSignedCertificate.certificate` empty
+1. Set `selfSignedCertificate.enabled` to `true`.
+2. Set `selfSignedCertificate.secret.useExistingSecret` to `true`.
+3. Specify the secret name in `selfSignedCertificate.secret.name`.
+4. Specify the key within the secret in `selfSignedCertificate.secret.key` (defaults to `crt`).
+5. Leave `selfSignedCertificate.certificate` empty.
 
 **Complete configuration:**
-```yaml
+```yaml showLineNumbers
 selfSignedCertificate:
   enabled: true
   certificate: ""
@@ -123,7 +123,7 @@ When `selfSignedCertificate.enabled` is set to `true`, the Helm chart automatica
 For environments requiring multiple custom certificates, use the `extraVolumes` and `extraVolumeMounts` parameters alongside the built-in `selfSignedCertificate` feature. One certificate must be provided via `selfSignedCertificate`, and additional certificates can be mounted as extra volumes.
 
 **Configuration:**
-```yaml
+```yaml showLineNumbers
 selfSignedCertificate:
   enabled: true
   secret:
