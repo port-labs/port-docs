@@ -1,9 +1,12 @@
 name: Create JIRA Tasks for Kapa Downvotes
 
+permissions:
+  contents: read
+
 on:
   schedule:
-    # Runs daily at 2:00 AM UTC
-    - cron: '0 2 * * *'
+    # Runs every 2 days at 2:00 AM UTC
+    - cron: '0 2 */2 * *'
   push:
     branches:
       - link-and-fixes
@@ -16,11 +19,10 @@ jobs:
       - name: Calculate date range
         id: date
         run: |
-          # We need to fetch question-answers from a wider range because feedback
-          # might be added to older question-answers. Fetch last 30 days to be safe.
-          echo "start_date=$(date -d '30 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
+          # Fetch question-answers from the last 2 days
+          echo "start_date=$(date -d '2 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
           echo "end_date=$(date -u +%Y-%m-%dT23:59:59Z)" >> $GITHUB_ENV
-          echo "feedback_start_date=$(date -d '7 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
+          echo "feedback_start_date=$(date -d '2 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
           echo "Start date (QA): ${{ env.start_date }}"
           echo "End date: ${{ env.end_date }}"
           echo "Feedback start date (filter): ${{ env.feedback_start_date }}"
@@ -75,17 +77,17 @@ jobs:
           fi
           
           # Filter by date client-side since API doesn't support date parameters
-          # Keep only question-answers created in the last 30 days
-          echo "Filtering question-answers by date (last 30 days)..."
+          # Keep only question-answers created in the last 2 days
+          echo "Filtering question-answers by date (last 2 days)..."
           if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
             jq --arg start_date "${{ env.start_date }}" '.results[] | select(.created_at >= $start_date)' kapa_question_answers.json | jq -s '.' > kapa_filtered.json
             filtered_count=$(jq -r 'length' kapa_filtered.json)
-            echo "Question-answers from last 30 days: $filtered_count"
+            echo "Question-answers from last 2 days: $filtered_count"
             mv kapa_filtered.json kapa_question_answers.json
           elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
             jq --arg start_date "${{ env.start_date }}" '[.[] | select(.created_at >= $start_date)]' kapa_question_answers.json > kapa_filtered.json
             filtered_count=$(jq -r 'length' kapa_filtered.json)
-            echo "Question-answers from last 30 days: $filtered_count"
+            echo "Question-answers from last 2 days: $filtered_count"
             mv kapa_filtered.json kapa_question_answers.json
           fi
           
@@ -253,7 +255,7 @@ jobs:
           fi
           
           if [ -z "$downvotes" ] || [ "$downvotes" == "[]" ] || [ "$downvotes" == "null" ]; then
-            echo "No downvotes found in the last week."
+            echo "No downvotes found in the last 2 days."
             exit 0
           fi
           
@@ -291,7 +293,7 @@ jobs:
             thread_id=$(echo "$qa" | jq -r '.thread_id // "N/A"')
             
             # Extract feedback comment - handle array feedback structure
-            # Feedback is an array, so get comment from the downvote feedback entry created in the last week
+            # Feedback is an array, so get comment from the downvote feedback entry created in the last 2 days
             feedback_start=$(echo "${{ env.feedback_start_date }}" | sed 's/T.*//')
             feedback_comment=$(echo "$qa" | jq -r --arg start_date "$feedback_start" '
               [.feedback[]? | select(.reaction == "downvote" and (.created_at | split("T")[0]) >= $start_date)][0].comment // ""
