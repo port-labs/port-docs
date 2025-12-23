@@ -1620,6 +1620,13 @@ export const availableGuides = [
         tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-standards",
+    },
+    {
+        title: "Track AI adoption and impact",
+        description: "Track AI adoption and impact across your engineering teams and assess the impact of AI usage on delivery metrics like PR throughput and cycle time",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/track-ai-adoption-and-impact",
     }
 ]
 
