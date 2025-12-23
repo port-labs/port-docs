@@ -320,36 +320,105 @@ jobs:
               summary="${summary}..."
             fi
             
-            # Build JIRA issue description
-            description="A user downvoted a Kapa AI answer.\n\n"
-            description+="*Question:* ${question}\n\n"
-            description+="*Answer:* ${answer}\n\n"
-            
-            if [ -n "$feedback_comment" ] && [ "$feedback_comment" != "null" ] && [ "$feedback_comment" != "" ]; then
-              description+="*User Feedback:*\n${feedback_comment}\n\n"
-            fi
-            
-            if [ "$feedback_incorrect" == "true" ] || [ "$feedback_irrelevant" == "true" ] || [ "$feedback_unaddressed" == "true" ]; then
-              description+="*Feedback Flags:*\n"
-              [ "$feedback_incorrect" == "true" ] && description+="- Marked as incorrect\n"
-              [ "$feedback_irrelevant" == "true" ] && description+="- Marked as irrelevant\n"
-              [ "$feedback_unaddressed" == "true" ] && description+="- Marked as unaddressed\n"
-              description+="\n"
-            fi
-            
-            description+="*Metadata:*\n"
-            description+="- Thread ID: ${thread_id}\n"
-            description+="- Question Answer ID: ${question_answer_id}\n"
-            
             # Create JIRA issue directly
             echo "Creating JIRA task for question: ${question:0:50}..."
             
-            # Create issue JSON payload
+            # Build JIRA issue description using Atlassian Document Format (ADF)
+            # We need to properly structure the content with multiple paragraphs
+            # Start building the ADF content array
+            adf_content='[
+              {
+                "type": "paragraph",
+                "content": [{"type": "text", "text": "A user downvoted a Kapa AI answer."}]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {"type": "text", "text": "Question: ", "marks": [{"type": "strong"}]},
+                  {"type": "text", "text": "'"$(echo "$question" | jq -Rs .)"'"}
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {"type": "text", "text": "Answer: ", "marks": [{"type": "strong"}]},
+                  {"type": "text", "text": "'"$(echo "$answer" | jq -Rs .)"'"}
+                ]
+              }'
+            
+            # Add user feedback if present
+            if [ -n "$feedback_comment" ] && [ "$feedback_comment" != "null" ] && [ "$feedback_comment" != "" ]; then
+              adf_content+=',
+              {
+                "type": "paragraph",
+                "content": [
+                  {"type": "text", "text": "User Feedback: ", "marks": [{"type": "strong"}]},
+                  {"type": "text", "text": "'"$(echo "$feedback_comment" | jq -Rs .)"'"}
+                ]
+              }'
+            fi
+            
+            # Add feedback flags if any are true
+            if [ "$feedback_incorrect" == "true" ] || [ "$feedback_irrelevant" == "true" ] || [ "$feedback_unaddressed" == "true" ]; then
+              adf_content+=',
+              {
+                "type": "paragraph",
+                "content": [{"type": "text", "text": "Feedback Flags:", "marks": [{"type": "strong"}]}]
+              },
+              {
+                "type": "bulletList",
+                "content": ['
+              
+              flags_added=false
+              if [ "$feedback_incorrect" == "true" ]; then
+                [ "$flags_added" == "true" ] && adf_content+=','
+                adf_content+='{"type": "listItem", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as incorrect"}]}]}'
+                flags_added=true
+              fi
+              if [ "$feedback_irrelevant" == "true" ]; then
+                [ "$flags_added" == "true" ] && adf_content+=','
+                adf_content+='{"type": "listItem", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as irrelevant"}]}]}'
+                flags_added=true
+              fi
+              if [ "$feedback_unaddressed" == "true" ]; then
+                [ "$flags_added" == "true" ] && adf_content+=','
+                adf_content+='{"type": "listItem", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as unaddressed"}]}]}'
+                flags_added=true
+              fi
+              
+              adf_content+=']
+              }'
+            fi
+            
+            # Add metadata
+            adf_content+=',
+              {
+                "type": "paragraph",
+                "content": [{"type": "text", "text": "Metadata:", "marks": [{"type": "strong"}]}]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Thread ID: '"$thread_id"'"}]}]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Question Answer ID: '"$question_answer_id"'"}]}]
+                  }
+                ]
+              }'
+            
+            # Close the content array
+            adf_content+=']'
+            
+            # Create issue JSON payload with proper ADF and components field
             issue_json=$(jq -n \
               --arg project_key "$JIRA_PROJECT_KEY" \
               --arg issue_type "$JIRA_ISSUE_TYPE" \
               --arg summary "$summary" \
-              --arg description "$description" \
+              --argjson adf_content "$adf_content" \
               '{
                 fields: {
                   project: { key: $project_key },
@@ -357,12 +426,10 @@ jobs:
                   description: {
                     type: "doc",
                     version: 1,
-                    content: [{
-                      type: "paragraph",
-                      content: [{ type: "text", text: $description }]
-                    }]
+                    content: $adf_content
                   },
-                  issuetype: { name: $issue_type }
+                  issuetype: { name: $issue_type },
+                  components: [{ name: "port-docs" }]
                 }
               }')
             
