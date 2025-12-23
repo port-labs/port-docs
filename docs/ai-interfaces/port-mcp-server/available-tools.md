@@ -41,7 +41,7 @@ By default, when you open a chat with Port MCP, all available tools (based on yo
 For example, if you only want to query data from Port without building or modifying anything, you can limit the tools to just the read-only ones. This helps reduce complexity and ensures you don't accidentally make changes.
 
 :::tip Read-only mode header
-You can also use the `x-read-only-mode: 1` header when configuring your MCP server connection to automatically restrict to read-only tools. When this header is set, write tools are completely hidden from the available tools list. See the [installation guide](/ai-interfaces/port-mcp-server/overview-and-installation#installing-port-mcp) for details on how to add this header to your configuration.
+The `x-read-only-mode` header defaults to `0`, which allows all tools based on your permissions. You can change it to `1` when configuring your MCP server connection to automatically restrict to read-only tools. When set to `1`, write tools are completely hidden from the available tools list. See the [installation guide](/ai-interfaces/port-mcp-server/overview-and-installation#installing-port-mcp) for details on how to configure this header.
 :::
 
 <Tabs groupId="tool-selection" queryString>

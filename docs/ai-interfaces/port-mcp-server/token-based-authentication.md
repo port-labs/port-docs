@@ -77,7 +77,7 @@ jobs:
                     "--header",
                     "Authorization: Bearer ${{ steps.port-auth.outputs.access_token }}",
                     "--header",
-                    "x-read-only-mode: 1"
+                    "x-read-only-mode: 0"
                   ]
                 }
               }
@@ -92,12 +92,12 @@ jobs:
 
 1. **Authentication** – The `port-auth` step exchanges your Port client credentials for a short-lived access token using the Client Credentials flow
 2. **MCP Connection** – Claude Code connects to the remote MCP server using the `mcp-remote` package, passing the access token in the Authorization header
-3. **Read-only Mode** – The `x-read-only-mode: 1` header restricts the MCP server to only expose read-only tools, completely hiding write tools from the available tools list
+3. **Read-only Mode** – The `x-read-only-mode` header defaults to `0`, which allows all tools based on your permissions. You can change it to `1` to restrict the MCP server to only expose read-only tools, completely hiding write tools from the available tools list
 4. **Tool Access** – Claude Code can invoke only the specific Port tools listed in `allowed_tools`, ensuring controlled access to your Port instance
 5. **Execution** – The AI agent executes the provided prompt using the available Port tools to query your software catalog
 
 :::tip Customize your integration
-For read-only workflows, you can add the `x-read-only-mode: 1` header to restrict tools to read-only operations, or limit `allowed_tools` to just the query operations you need.
+For read-only workflows, you can change the `x-read-only-mode` header from `0` to `1` to restrict tools to read-only operations, or limit `allowed_tools` to just the query operations you need.
 Choose the appropriate MCP URL for your Port region (EU: `https://mcp.port.io/v1`, US: `https://mcp.us.port.io/v1`)
 :::
 
