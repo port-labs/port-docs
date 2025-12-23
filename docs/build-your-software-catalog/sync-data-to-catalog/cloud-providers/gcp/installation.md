@@ -304,7 +304,7 @@ Ensure billing is enabled in your Google Cloud project.
 
 </Tabs>
 
-  For additional information on GCP workload identity, including deploying to other Kubernetes providers, please refer to [GCP workload identity documentation](https://docs.cloud.google.com/iam/docs/workload-identity-federation).
+  For additional information on GCP workload identity, including deploying to other Kubernetes providers, please refer to [GCP workload identity documentation](https://docs.cloud.google.com/iam/docs/workload-identity-federation). # AI! improve this line
 
 </TabItem>
 <TabItem value="service-account-key" label="Service Account Key">
