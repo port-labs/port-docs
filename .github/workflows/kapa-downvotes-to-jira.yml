@@ -1,0 +1,501 @@
+name: Create JIRA Tasks for Kapa Downvotes
+
+permissions:
+  contents: read
+
+on:
+  schedule:
+    # Runs every 2 days at 2:00 AM UTC
+    - cron: '0 2 */2 * *'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  create-jira-tasks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Calculate date range
+        id: date
+        run: |
+          # Fetch question-answers from the last 2 days
+          echo "start_date=$(date -d '2 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
+          echo "end_date=$(date -u +%Y-%m-%dT23:59:59Z)" >> $GITHUB_ENV
+          echo "feedback_start_date=$(date -d '2 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
+          echo "Start date (QA): ${{ env.start_date }}"
+          echo "End date: ${{ env.end_date }}"
+          echo "Feedback start date (filter): ${{ env.feedback_start_date }}"
+
+      - name: Fetch Kapa question-answers
+        id: fetch-qa
+        run: |
+          # Fetch question-answers from Kapa API
+          # The API endpoint: GET /query/v1/projects/:project_id/question-answers/
+          # Documentation: https://docs.kapa.ai/api/reference/query-v-1-projects-question-answers-list
+          # Query parameters: ordering, page, page_size (no date filtering supported)
+          # Note: The API doesn't support date filtering, so we fetch recent results and filter client-side
+          # Using pagination to get enough results (adjust page_size as needed, max is typically 100)
+          response=$(curl -s -w "\n%{http_code}" -X GET \
+            "https://api.kapa.ai/query/v1/projects/${{ secrets.KAPA_PROJECT_ID }}/question-answers/?page_size=280" \
+            -H "X-API-KEY: ${{ secrets.KAPA_API_KEY }}" \
+            -H "Content-Type: application/json")
+          
+          http_code=$(echo "$response" | tail -n1)
+          response_body=$(echo "$response" | sed '$d')
+          
+          if [ "$http_code" -lt 200 ] || [ "$http_code" -ge 300 ]; then
+            echo "Error: Kapa API returned HTTP $http_code"
+            echo "$response_body"
+            exit 1
+          fi
+          
+          echo "$response_body" > kapa_question_answers.json
+          
+          # Validate JSON response
+          if ! jq empty kapa_question_answers.json; then
+            echo "Error: Invalid JSON response from Kapa API"
+            cat kapa_question_answers.json
+            exit 1
+          fi
+          
+          # Debug: Show response structure
+          echo "Response structure:"
+          jq 'keys' kapa_question_answers.json
+          
+          # Count total question-answers fetched (handle different response structures)
+          if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
+            total_count=$(jq -r '.results | length' kapa_question_answers.json)
+            echo "Total question-answers fetched: $total_count"
+          elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
+            total_count=$(jq -r 'length' kapa_question_answers.json)
+            echo "Total question-answers fetched: $total_count"
+          else
+            echo "Warning: Unexpected response structure"
+            jq '.' kapa_question_answers.json
+            total_count=0
+          fi
+          
+          # Filter by date client-side since API doesn't support date parameters
+          # Keep only question-answers created in the last 2 days
+          echo "Filtering question-answers by date (last 2 days)..."
+          if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
+            jq --arg start_date "${{ env.start_date }}" '.results[] | select(.created_at >= $start_date)' kapa_question_answers.json | jq -s '.' > kapa_filtered.json
+            filtered_count=$(jq -r 'length' kapa_filtered.json)
+            echo "Question-answers from last 2 days: $filtered_count"
+            mv kapa_filtered.json kapa_question_answers.json
+          elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
+            jq --arg start_date "${{ env.start_date }}" '[.[] | select(.created_at >= $start_date)]' kapa_question_answers.json > kapa_filtered.json
+            filtered_count=$(jq -r 'length' kapa_filtered.json)
+            echo "Question-answers from last 2 days: $filtered_count"
+            mv kapa_filtered.json kapa_question_answers.json
+          fi
+          
+          # Debug: Check if any question-answers have non-empty feedback
+          echo "Checking for feedback in question-answers..."
+          if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
+            feedback_count=$(jq '[.results[] | select(.feedback != null and (.feedback | length > 0))] | length' kapa_question_answers.json)
+            echo "Question-answers with feedback: $feedback_count"
+          elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
+            feedback_count=$(jq '[.[] | select(.feedback != null and (.feedback | length > 0))] | length' kapa_question_answers.json)
+            echo "Question-answers with feedback: $feedback_count"
+          fi
+
+      - name: Filter downvotes and create JIRA issues
+        env:
+          JIRA_URL: https://getport.atlassian.net
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_PROJECT_KEY: PORT
+          JIRA_ISSUE_TYPE: Bug
+        run: |
+          # Use Basic auth with email and API token
+          # Reference: https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis/
+          echo "Using Basic auth (email + API token)"
+          
+          if [ -z "$JIRA_EMAIL" ] || [ -z "$JIRA_API_TOKEN" ]; then
+            echo "❌ Error: JIRA_EMAIL and JIRA_API_TOKEN must be set"
+            exit 1
+          fi
+          
+          # Create Basic auth header: base64(email:api_token)
+          auth_header=$(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64 -w 0 2>/dev/null || echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)
+          
+          # Test authentication by checking current user
+          echo "Testing authentication..."
+          auth_test=$(curl -s -w "\n%{http_code}" -X GET \
+            "${JIRA_URL}/rest/api/3/myself" \
+            -H "Authorization: Basic ${auth_header}" \
+            -H "Accept: application/json" \
+            2>&1)
+          
+          auth_http_code=$(echo "$auth_test" | tail -n1)
+          auth_response=$(echo "$auth_test" | sed '$d')
+          
+          if [ "$auth_http_code" -ge 200 ] && [ "$auth_http_code" -lt 300 ]; then
+            user_email=$(echo "$auth_response" | jq -r '.emailAddress // "Unknown"' 2>/dev/null || echo "Unknown")
+            user_display=$(echo "$auth_response" | jq -r '.displayName // "Unknown"' 2>/dev/null || echo "Unknown")
+            echo "✅ Authentication successful - Logged in as: $user_display ($user_email)"
+          else
+            echo "❌ Authentication failed. HTTP $auth_http_code"
+            echo "Response: $auth_response"
+            echo ""
+            echo "Please verify:"
+            echo "  1. JIRA_EMAIL matches the account that created the API token"
+            echo "  2. JIRA_API_TOKEN is valid and not expired"
+            echo "  3. Generate a new API token at: https://id.atlassian.com/manage-profile/security/api-tokens"
+            exit 1
+          fi
+          
+          # Check if user can access the project
+          echo "Checking access to project: ${JIRA_PROJECT_KEY}..."
+          perm_test=$(curl -s -w "\n%{http_code}" -X GET \
+            "${JIRA_URL}/rest/api/3/project/${JIRA_PROJECT_KEY}" \
+            -H "Authorization: Basic ${auth_header}" \
+            -H "Accept: application/json" \
+            2>&1)
+          
+          perm_http_code=$(echo "$perm_test" | tail -n1)
+          perm_response=$(echo "$perm_test" | sed '$d')
+          
+          if [ "$perm_http_code" -ge 200 ] && [ "$perm_http_code" -lt 300 ]; then
+            project_name=$(echo "$perm_response" | jq -r '.name // "Unknown"' 2>/dev/null || echo "Unknown")
+            echo "✅ Can access project: $project_name"
+          else
+            echo "⚠️  Warning: Cannot access project ${JIRA_PROJECT_KEY}. HTTP $perm_http_code"
+            echo "Response: $perm_response"
+            echo "This may indicate permission issues, but we'll try to create the issue anyway."
+          fi
+          # Set error handling - don't exit on error in while loop
+          set +e
+          
+          # Install jq if not available
+          sudo apt-get update && sudo apt-get install -y jq || true
+          
+          # Debug: Show response structure
+          echo "Response structure check:"
+          jq 'type' kapa_question_answers.json
+          jq 'keys' kapa_question_answers.json 2>/dev/null || echo "Top level is array"
+          
+          # Extract question-answers array (handle different response structures)
+          if jq -e '.results' kapa_question_answers.json > /dev/null 2>&1; then
+            qa_array=$(jq -c '.results[]' kapa_question_answers.json)
+          elif jq -e 'type == "array"' kapa_question_answers.json > /dev/null 2>&1; then
+            qa_array=$(jq -c '.[]' kapa_question_answers.json)
+          else
+            echo "Error: Could not find question-answers array in response"
+            jq '.' kapa_question_answers.json
+            exit 1
+          fi
+          
+          # Debug: Show first question-answer structure
+          echo "First question-answer structure:"
+          echo "$qa_array" | head -n1 | jq '.' || echo "Could not parse"
+          
+          # Debug: Check all question-answers for feedback
+          echo "Checking all question-answers for feedback..."
+          echo "$qa_array" | jq -c '{id: .id, feedback_length: (.feedback | length), feedback: .feedback}' | head -10
+          
+          # The question-answers endpoint doesn't seem to include feedback in the response
+          # We need to fetch feedback separately for each question-answer ID
+          # Or check if there's a way to include feedback in the query
+          
+          echo "Fetching feedback for each question-answer..."
+          
+          # Create array to store question-answers with their feedback
+          echo "[]" > qa_with_feedback.json
+          
+          # Process each question-answer and try to get its feedback
+          echo "$qa_array" | while read -r qa; do
+            if [ -z "$qa" ] || [ "$qa" == "null" ]; then
+              continue
+            fi
+            
+            qa_id=$(echo "$qa" | jq -r '.id')
+            
+            # Try to fetch feedback for this specific question-answer
+            # Based on Kapa API structure, feedback might be at:
+            # /query/v1/projects/:project_id/question-answers/:question_answer_id/feedback/
+            # or we might need to query all feedback and filter by question_answer_id
+            
+            # For now, use the feedback that's already in the question-answer object (even if empty)
+            # and we'll try to enrich it if possible
+            qa_with_feedback=$(echo "$qa" | jq '.')
+            
+            # Add to collection
+            jq --argjson qa "$qa_with_feedback" '. += [$qa]' qa_with_feedback.json > qa_with_feedback.tmp.json
+            mv qa_with_feedback.tmp.json qa_with_feedback.json
+          done
+          
+          # Use the enriched question-answers
+          qa_array=$(jq -c '.[]' qa_with_feedback.json)
+          
+          # Filter for downvotes
+          # Note: If feedback is still empty, this won't find anything
+          # You may need to check Kapa API docs for how to properly fetch feedback
+          downvotes=$(echo "$qa_array" | jq -c '
+            select(
+              .feedback != null and 
+              (.feedback | length > 0) and 
+              ([.feedback[]? | select(.reaction == "downvote")] | length > 0)
+            )
+          ' | jq -s '.')
+          
+          # Debug: Show what we found
+          if [ -n "$downvotes" ] && [ "$downvotes" != "[]" ] && [ "$downvotes" != "null" ]; then
+            echo "Found downvotes with feedback data"
+          else
+            echo "WARNING: No downvotes found. This could mean:"
+            echo "  1. Feedback array is empty in API response (needs separate query)"
+            echo "  2. No downvotes in the date range"
+            echo "  3. Feedback structure is different than expected"
+            echo ""
+            echo "Sample question-answer to check structure:"
+            echo "$qa_array" | head -1 | jq '{id: .id, has_feedback: (.feedback != null), feedback_length: (.feedback | length), feedback: .feedback}'
+          fi
+          
+          if [ -z "$downvotes" ] || [ "$downvotes" == "[]" ] || [ "$downvotes" == "null" ]; then
+            echo "No downvotes found in the last 2 days."
+            exit 0
+          fi
+          
+          # Count downvotes
+          downvote_count=$(echo "$downvotes" | jq -r 'length')
+          echo "Found $downvote_count downvote(s) to process."
+          
+          # Process each downvote
+          # Save downvotes to a file to avoid subshell issues
+          echo "$downvotes" > downvotes.json
+          
+          # Process each downvote using a for loop to avoid subshell variable issues
+          downvote_count=$(jq -r 'length' downvotes.json)
+          
+          if [ "$downvote_count" -eq 0 ]; then
+            echo "No downvotes to process"
+            exit 0
+          fi
+          
+          for i in $(seq 0 $((downvote_count - 1))); do
+            qa=$(jq -c ".[$i]" downvotes.json 2>/dev/null)
+            
+            if [ -z "$qa" ] || [ "$qa" == "null" ]; then
+              echo "Skipping invalid question-answer at index $i"
+              continue
+            fi
+            if [ -z "$qa" ] || [ "$qa" == "null" ]; then
+              continue
+            fi
+            
+            # Extract data from question-answer
+            question=$(echo "$qa" | jq -r '.question // "N/A"')
+            answer=$(echo "$qa" | jq -r '.answer // "N/A"')
+            question_answer_id=$(echo "$qa" | jq -r '.id // "N/A"')
+            thread_id=$(echo "$qa" | jq -r '.thread_id // "N/A"')
+            
+            # Extract feedback comment - handle array feedback structure
+            # Feedback is an array, so get comment from the downvote feedback entry created in the last 2 days
+            feedback_start=$(echo "${{ env.feedback_start_date }}" | sed 's/T.*//')
+            feedback_comment=$(echo "$qa" | jq -r --arg start_date "$feedback_start" '
+              [.feedback[]? | select(.reaction == "downvote" and (.created_at | split("T")[0]) >= $start_date)][0].comment // ""
+            ' 2>/dev/null || echo "")
+            
+            # Also get other feedback fields
+            feedback_incorrect=$(echo "$qa" | jq -r --arg start_date "$feedback_start" '
+              [.feedback[]? | select(.reaction == "downvote" and (.created_at | split("T")[0]) >= $start_date)][0].incorrect // false
+            ' 2>/dev/null || echo "false")
+            feedback_irrelevant=$(echo "$qa" | jq -r --arg start_date "$feedback_start" '
+              [.feedback[]? | select(.reaction == "downvote" and (.created_at | split("T")[0]) >= $start_date)][0].irrelevant // false
+            ' 2>/dev/null || echo "false")
+            feedback_unaddressed=$(echo "$qa" | jq -r --arg start_date "$feedback_start" '
+              [.feedback[]? | select(.reaction == "downvote" and (.created_at | split("T")[0]) >= $start_date)][0].unaddressed // false
+            ' 2>/dev/null || echo "false")
+            
+            # Sanitize question text by removing newlines and extra whitespace for JIRA summary
+            # JIRA summary field doesn't allow newline characters
+            question_sanitized=$(echo "$question" | tr '\n' ' ' | tr -s ' ' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            
+            # Build JIRA issue summary
+            summary="Kapa AI Answer Downvoted: ${question_sanitized:0:100}"
+            if [ ${#question_sanitized} -gt 100 ]; then
+              summary="${summary}..."
+            fi
+            
+            # Create JIRA issue directly
+            echo "Creating JIRA task for question: ${question:0:50}..."
+            
+            # Build JIRA issue description using Atlassian Document Format (ADF)
+            # Create the base content array with question and answer
+            base_content=$(jq -n \
+              --arg question "$question" \
+              --arg answer "$answer" \
+              '[
+                {
+                  "type": "paragraph",
+                  "content": [{"type": "text", "text": "A user downvoted a Kapa AI answer."}]
+                },
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {"type": "text", "text": "Question: ", "marks": [{"type": "strong"}]},
+                    {"type": "text", "text": $question}
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {"type": "text", "text": "Answer: ", "marks": [{"type": "strong"}]},
+                    {"type": "text", "text": $answer}
+                  ]
+                }
+              ]')
+            
+            # Add user feedback if present
+            if [ -n "$feedback_comment" ] && [ "$feedback_comment" != "null" ] && [ "$feedback_comment" != "" ]; then
+              base_content=$(echo "$base_content" | jq \
+                --arg feedback "$feedback_comment" \
+                '. += [{
+                  "type": "paragraph",
+                  "content": [
+                    {"type": "text", "text": "User Feedback: ", "marks": [{"type": "strong"}]},
+                    {"type": "text", "text": $feedback}
+                  ]
+                }]')
+            fi
+            
+            # Add feedback flags if any are true
+            if [ "$feedback_incorrect" == "true" ] || [ "$feedback_irrelevant" == "true" ] || [ "$feedback_unaddressed" == "true" ]; then
+              # Start with the header
+              base_content=$(echo "$base_content" | jq '. += [{
+                "type": "paragraph",
+                "content": [{"type": "text", "text": "Feedback Flags:", "marks": [{"type": "strong"}]}]
+              }]')
+              
+              # Build bullet list items
+              bullet_items='[]'
+              if [ "$feedback_incorrect" == "true" ]; then
+                bullet_items=$(echo "$bullet_items" | jq '. += [{
+                  "type": "listItem",
+                  "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as incorrect"}]}]
+                }]')
+              fi
+              if [ "$feedback_irrelevant" == "true" ]; then
+                bullet_items=$(echo "$bullet_items" | jq '. += [{
+                  "type": "listItem",
+                  "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as irrelevant"}]}]
+                }]')
+              fi
+              if [ "$feedback_unaddressed" == "true" ]; then
+                bullet_items=$(echo "$bullet_items" | jq '. += [{
+                  "type": "listItem",
+                  "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Marked as unaddressed"}]}]
+                }]')
+              fi
+              
+              # Add bullet list to content
+              base_content=$(echo "$base_content" | jq \
+                --argjson items "$bullet_items" \
+                '. += [{"type": "bulletList", "content": $items}]')
+            fi
+            
+            # Add metadata section
+            adf_content=$(echo "$base_content" | jq \
+              --arg thread_id "$thread_id" \
+              --arg qa_id "$question_answer_id" \
+              '. += [
+                {
+                  "type": "paragraph",
+                  "content": [{"type": "text", "text": "Metadata:", "marks": [{"type": "strong"}]}]
+                },
+                {
+                  "type": "bulletList",
+                  "content": [
+                    {
+                      "type": "listItem",
+                      "content": [{"type": "paragraph", "content": [{"type": "text", "text": ("Thread ID: " + $thread_id)}]}]
+                    },
+                    {
+                      "type": "listItem",
+                      "content": [{"type": "paragraph", "content": [{"type": "text", "text": ("Question Answer ID: " + $qa_id)}]}]
+                    }
+                  ]
+                }
+              ]')
+            
+            # Create issue JSON payload with proper ADF and components field
+            issue_json=$(jq -n \
+              --arg project_key "$JIRA_PROJECT_KEY" \
+              --arg issue_type "$JIRA_ISSUE_TYPE" \
+              --arg summary "$summary" \
+              --argjson adf_content "$adf_content" \
+              '{
+                fields: {
+                  project: { key: $project_key },
+                  summary: $summary,
+                  description: {
+                    type: "doc",
+                    version: 1,
+                    content: $adf_content
+                  },
+                  issuetype: { name: $issue_type },
+                  components: [{ name: "port-docs" }]
+                }
+              }')
+            
+            # Debug: Print the JSON payload (for troubleshooting)
+            echo "Issue JSON payload:"
+            echo "$issue_json" | jq '.'
+            
+            # Use Basic auth header for API calls
+            # Reference: https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis/
+            request_auth_header=$(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64 -w 0 2>/dev/null || echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)
+            auth_header="Basic ${request_auth_header}"
+            
+            # Create issue via JIRA API using Basic auth
+            response=$(curl -s -w "\n%{http_code}" -X POST \
+              "${JIRA_URL}/rest/api/3/issue" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: ${auth_header}" \
+              -H "Accept: application/json" \
+              -d "$issue_json" 2>&1)
+            
+            http_code=$(echo "$response" | tail -n1)
+            response_body=$(echo "$response" | sed '$d')
+            
+            if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+              issue_key=$(echo "$response_body" | jq -r '.key // "Unknown"' 2>/dev/null || echo "Unknown")
+              echo "✅ Successfully created JIRA task: $issue_key"
+            else
+              echo "❌ Failed to create JIRA task. HTTP $http_code"
+              echo "Response: $response_body"
+              
+              # Provide specific guidance based on error
+              if [ "$http_code" -eq 401 ]; then
+                if echo "$response_body" | grep -qi "permission" > /dev/null 2>&1; then
+                  echo ""
+                  echo "⚠️  Permission Error:"
+                  echo "   The authenticated user does not have permission to create issues in project '${JIRA_PROJECT_KEY}'"
+                  echo ""
+                  echo "   To fix this:"
+                  echo "   1. Log into JIRA as an administrator: ${JIRA_URL}"
+                  echo "   2. Go to Project Settings > Permissions for project '${JIRA_PROJECT_KEY}'"
+                  echo "   3. Ensure the user '${JIRA_EMAIL}' has the 'Create Issues' permission"
+                  echo "   4. Or use a different account/API token that has the required permissions"
+                else
+                  echo ""
+                  echo "⚠️  Authentication Error:"
+                  echo "   Please verify your JIRA_EMAIL and JIRA_API_TOKEN are correct"
+                fi
+              elif [ "$http_code" -eq 403 ]; then
+                echo ""
+                echo "⚠️  Permission Denied (403):"
+                echo "   The user does not have permission to create issues in this project"
+              elif [ "$http_code" -eq 404 ]; then
+                echo ""
+                echo "⚠️  Project Not Found (404):"
+                echo "   Check that project key '${JIRA_PROJECT_KEY}' exists and is correct."
+              fi
+            fi
+            
+            sleep 1
+          done
+          
+          echo ""
+          echo "Finished processing all downvotes"
+
