@@ -1453,6 +1453,13 @@ export const availableGuides = [
         link: "/guides/all/owasp-top-10-scorecard",
     },
     {
+        title: "PCI DSS code security scorecard",
+        description: "Continuously track compliance with PCI DSS requirements using code scans and vulnerability data",
+        tags: ["Security", "Scorecards", "Snyk"],
+        logos: ["Snyk"],
+        link: "/guides/all/setup-pci-dss-code-compliance",
+    },
+    {
         title: "Enforce AI coding security standards",
         description: "Learn how to enforce AI coding security standards in your organization",
         tags: ["Autonomous Ticket Resolution", "AI", "GitHub", "Scorecards"],
@@ -1593,7 +1600,27 @@ export const availableGuides = [
         logos: ["n8n", "Slack"],
         link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
     },
-
+    {
+        title: "Gain visibility into delivery performance",
+        description: "Track engineering delivery performance using key metrics like PR cycle time, throughput, deployment frequency, and overdue PRs",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-and-track-delivery-performance",
+    },
+    {
+        title: "Measure delivery reliability and stability",
+        description: "Measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-reliability-and-stability",
+    },
+    {
+        title: 'Track standards adherence',
+        description: "Learn how to track standards adherence across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.",
+        tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-standards",
+    }
 ]
 
 // Enhance guides with metadata (isNew property)

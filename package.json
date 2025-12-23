@@ -27,7 +27,7 @@
     "@easyops-cn/docusaurus-search-local": "^0.52.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@kapaai/react-sdk": "^0.9.0",
+    "@kapaai/react-sdk": "^0.9.1",
     "@mdx-js/react": "^3.1.1",
     "@mui/material": "^7.3.6",
     "@stackql/docusaurus-plugin-hubspot": "^1.0.1",
