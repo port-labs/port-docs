@@ -42,7 +42,7 @@ Allowed values:
 
 By default, if not specified, no user role filter will be applied.
 
-```yaml
+```yaml showLineNumbers
   - kind: repository
     selector:
       query: 'true'
