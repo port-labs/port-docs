@@ -6,6 +6,7 @@ resources:
     selector:
       query: 'true'
       files:
+        # The path field uses GitLab's Advanced Search syntax: supports simple * wildcards (e.g., *.tf, test_*) and exact paths (e.g., src/app/main.py)
         path: package.json
         repos:
           # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
