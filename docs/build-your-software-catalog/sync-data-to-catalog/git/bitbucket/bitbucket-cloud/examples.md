@@ -32,7 +32,7 @@ The following example demonstrates how to ingest your Bitbucket projects, reposi
 
 <TabItem label="User role" value="userRole">
 
-The `userRole` selector allows you to filter repositories based on the user role. You can specify only one user role to include in the sync.
+The `userRole` selector filters repositories based on the current user’s role. Only **one** role can be specified per sync.
 
 Allowed values:
 - `owner`: Repositories owned by the current user.
