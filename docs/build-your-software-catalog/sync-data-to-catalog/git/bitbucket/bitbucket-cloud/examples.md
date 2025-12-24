@@ -56,7 +56,7 @@ By default, if not specified, no user role filter will be applied.
 
 The `repoQuery` selector allows you to filter repositories based on a custom query. You can specify a custom query to include in the sync.
 
-```yaml
+```yaml showLineNumbers
   - kind: repository
     selector:
       query: 'true'
