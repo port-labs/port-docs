@@ -74,7 +74,7 @@ The `pullRequestQuery` selector allows you to filter pull requests based on a cu
 
 By default, if not specified, all open pull requests will be ingested.
 
-```yaml
+```yaml showLineNumbers
   - kind: pull-request
     selector:
       query: 'true'
