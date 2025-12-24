@@ -70,6 +70,14 @@ The `repoQuery` selector allows you to filter repositories based on a custom que
 
 ### Pull request configuration options
 
+:::caution Pull request performance impact
+
+Non-open pull requests (such as `MERGED` or `DECLINED`) can accumulate to an extremely large volume over time, which may significantly increase the time required to complete a resync for the integration.
+
+To prevent performance degradation, if you intend to ingest non-open pull requests, you must add a filtering criteria such as `updated_on` to limit the number of items ingested.
+The example above demonstrates this by retrieving all `OPEN` pull requests, while limiting `MERGED` pull requests to those updated after a specific timestamp.
+:::
+
 The `pullRequestQuery` selector allows you to filter pull requests based on a custom query. You can specify a custom query per the official BitBucket filtering and sorting specifications to include in the sync.
 
 By default, if not specified, all open pull requests will be ingested.
@@ -82,14 +90,7 @@ By default, if not specified, all open pull requests will be ingested.
       pullRequestQuery: 'state="OPEN" OR (state="MERGED" AND updated_on > "2025-12-10T14:00:00-07:00")'
 ```
 
-:::warning Performance impact
-Non-open pull requests (such as `MERGED` or `DECLINED`) can accumulate to an extremely large volume over time, which may significantly increase the time required to complete a resync for the integration.
-
-To prevent performance degradation, if you intend to ingest non-open pull requests, you must add a filtering criteria such as `updated_on` to limit the number of items ingested.
-The example above demonstrates this by retrieving all `OPEN` pull requests, while limiting `MERGED` pull requests to those updated after a specific timestamp.
-:::
-
-:::tip
+:::tip Learn more
 
 - Refer to the [installation](installation.md) guide to learn more about the `port-app-config.yml` installation process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Bitbucket objects to Port Entities;
@@ -109,7 +110,7 @@ The following example demonstrates how to ingest your Bitbucket repositories and
 
 <PortMonoRepoAppConfig/>
 
-:::tip
+:::tip Learn more
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) for the Bitbucket repository object structure.
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-source/#api-repositories-workspace-repo-slug-src-commit-path-get) for the Bitbucket folder object structure.
 
@@ -127,7 +128,7 @@ The `file` kind requires **user-scoped token** (or existing app password) for au
 
 <FileAppConfig/>
 
-:::tip
+:::tip Learn more
 - Refer to the [GitOps](gitops/gitops.md) guide to learn more about using your repository as a source of truth for your software catalog;
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-source/#api-repositories-workspace-repo-slug-src-commit-path-get) for the Bitbucket file object structure.
 :::
