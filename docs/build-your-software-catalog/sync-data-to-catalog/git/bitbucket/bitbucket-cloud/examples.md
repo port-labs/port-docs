@@ -52,7 +52,7 @@ By default, if not specified, no user role filter will be applied.
 
 </TabItem>
 
-<TabItem label="Repository Query" value="repoQuery">
+<TabItem label="Repository query" value="repoQuery">
 
 The `repoQuery` selector allows you to filter repositories based on a custom query. You can specify a custom query to include in the sync.
 
