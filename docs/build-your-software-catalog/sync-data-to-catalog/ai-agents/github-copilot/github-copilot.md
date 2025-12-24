@@ -645,3 +645,305 @@ resources:
             git_hub_org: .__organization.login
 ```
 </details>
+
+
+## Visualize GitHub Copilot metrics
+
+Once your GitHub Copilot data is synced to Port, you can create dashboards to monitor usage, track acceptance rates, analyze team adoption, and measure productivity. This section shows you how to build insightful visualizations using Port's dashboard widgets.
+
+<img src="/img/ai-agents/copilotDashboard.png" border="1px" width="100%" />
+
+### Create a dashboard
+
+1. Navigate to your [software catalog](https://app.getport.io/organization/catalog).
+
+2. Click on the **`+ New`** button in the left sidebar.
+
+3. Select **New dashboard**.
+
+4. Name the dashboard **Copilot Insights**.
+
+5. Input `Monitor Copilot usage and performance metrics across teams` under **Description**.
+
+6. Select the `Github` icon.
+
+7. Click `Create`.
+
+You now have a blank dashboard where you can add widgets to visualize your GitHub Copilot metrics.
+
+### Add widgets
+
+Create the following widgets to gain insights into your GitHub Copilot usage:
+
+<h4>Total Active Users</h4>
+
+<details>
+<summary><b>Total Active Users (click to expand)</b></summary>
+
+1. Click on **`+ Widget`** and select **Number Chart**.
+
+2. Fill in the following details:
+   - **Title**: `Total Active Users (Avg)`.
+
+   - **Description**: `Average number of active users using Copilot per day`.
+
+   - **Icon**: `Users`.
+
+   - **Blueprint**: `github_copilot_usage`.
+
+   - **Chart type**: Select `Aggregate by property`.
+
+   - **Property**: `total_active_users`.
+
+   - **Function**: `Average`.
+
+   - **Average of**: `day`.
+
+   - **Measure time by**: `createdAt`.
+
+   - **Custom unit**: `users`.
+
+3. Click **Save**.
+</details>
+
+<h4>Overall Acceptance Rate</h4>
+
+<details>
+<summary><b>Overall Acceptance Rate (click to expand)</b></summary>
+
+1. Click on **`+ Widget`** and select **Number Chart**.
+
+2. Fill in the following details:
+
+   - **Title**: `Overall Acceptance Rate (%)`.
+
+   - **Description**: `How often Copilot suggestions are accepted`.
+
+   - **Icon**: `metric`.
+
+   - **Blueprint**: `github_copilot_usage`.
+
+   - **Chart type**: Select `Aggregate by property`.
+
+   - **Property**: `acceptance_rate`.
+
+   - **Function**: `Average`.
+
+   - **Average of**: `total`.
+
+   - **Unit**: `%`.
+
+3. Click **Save**.
+</details>
+
+<h4>Total Suggestions Generated</h4>
+
+<details>
+<summary><b>Total Suggestions Generated (click to expand)</b></summary>
+
+1. Click on **`+ Widget`** and select **Number Chart**.
+
+2. Fill in the following details:
+
+   - **Title**: `Total Suggestions Generated`.
+
+   - **Description**: `Average suggested lines of code per day`.
+
+   - **Blueprint**: `github_copilot_usage`.
+
+   - **Chart type**: Select `Aggregate by property`.
+
+   - **Property**: `total_lines_suggested`.
+
+   - **Function**: `Average`.
+
+   - **Average of**: `day`.
+
+   - **Measure time by**: `createdAt`.
+
+   - **Custom unit**: `suggested lines of code`.
+
+3. Click **Save**.
+</details>
+
+<h4>Chat Productivity</h4>
+
+<details>
+<summary><b>Chat Productivity (click to expand)</b></summary>
+
+1. Click on **`+ Widget`** and select **Number Chart**.
+
+2. Fill in the following details:
+
+   - **Title**: `Chat Productivity`.
+
+   - **Description**: `Average chat turns per day`.
+
+   - **Icon**: `Chat`.
+
+   - **Blueprint**: `github_copilot_usage`.
+
+   - **Chart type**: Select `Aggregate by property`.
+
+   - **Property**: `total_chat_turns`.
+
+   - **Function**: `Average`.
+
+   - **Average of**: `day`.
+
+   - **Measure time by**: `createdAt`.
+
+   - **Custom unit**: `chats`.
+
+3. Click **Save**.
+</details>
+
+<h4>Usage by Team</h4>
+
+<details>
+<summary><b>Usage by Team (click to expand)</b></summary>
+
+1. Click on **`+ Widget`** and select **Pie Chart**.
+
+2. Fill in the following details:
+
+   - **Title**: `Usage by Team`.
+
+   - **Description**: `Contribution of each team to copilot usage`.
+   
+   - **Icon**: `Pie`.
+
+   - **Blueprint**: `github_copilot_usage`.
+
+   - **Breakdown by Property**: `github_team`.
+
+3. Click **Save**.
+</details>
+
+<h4>Acceptance Rate Over Time</h4>
+
+<details>
+<summary><b>Acceptance Rate Over Time (click to expand)</b></summary>
+
+1. Click on **`+ Widget`** and select **Line Chart**.
+
+2. Fill in the following details:
+
+   - **Title**: `Acceptance Rate Over Time`.
+
+   - **Description**: `See quality improvements (or declines) over time`.
+
+   - **Icon**: `LineChart`.
+
+   - **Blueprint**: `github_copilot_usage`.
+
+   - **Chart type**: Select `Aggregate properties(All Entities)`.
+   
+   - **Properties**: `total_acceptances_count`.
+   
+   - **Function**: `average`.
+   
+   - **Time interval**: `Week`.
+   
+   - **Time range**: `In the past 30 days`.
+   
+   - **Measure time by**: `createdAt`.
+
+3. Click **Save**.
+</details>
+
+<h4>Active Users Over Time</h4>
+
+<details>
+<summary><b>Active Users Over Time (click to expand)</b></summary>
+
+1. Click on **`+ Widget`** and select **Line Chart**.
+
+2. Fill in the following details:
+
+   - **Title**: `Active Users Over Time`.
+
+   - **Description**: `Shows if team usage is growing`.
+   
+   - **Icon**: `LineChart`. 
+
+   - **Blueprint**: `github_copilot_usage`.
+
+   - **Chart type**: Select `Aggregate properties(All Entities)`.
+   
+   - **Properties**: `total_active_users`, `total_active_chat_users`.
+   
+   - **Function**: `average`.
+
+   - **Time interval**: `Week`.
+   
+   - **Time range**: `In the past 30 days`.
+   
+   - **Measure time by**: `createdAt`.
+
+3. Click **Save**.
+</details>
+
+<h4>Chat Productivity Over Time</h4>
+
+<details>
+<summary><b>Chat Productivity Over Time (click to expand)</b></summary>
+
+1. Click on **`+ Widget`** and select **Line Chart**.
+
+2. Fill in the following details:
+
+   - **Title**: `Chat Productivity Over Time`.
+
+   - **Description**: `Reveals growing reliance on Copilot Chat`.
+   
+   - **Icon**: `LineChart`.
+
+   - **Blueprint**: `github_copilot_usage`.
+
+   - **Chart type**: Select `Aggregate properties(All Entities)`.
+   
+   - **Properties**: `total_chat_turns`, `total_chat_acceptances`.
+   
+   - **Function**: `average`.
+   
+   - **Time interval**: `Week`.
+   
+   - **Time range**: `In the past 30 days`.
+   
+   - **Measure time by**: `createdAt`.
+
+3. Click **Save**.
+</details>
+
+<h4>Total Suggestions vs. Acceptances Over Time</h4>
+
+<details>
+<summary><b>Total Suggestions vs. Acceptances Over Time (click to expand)</b></summary>
+
+1. Click on **`+ Widget`** and select **Line Chart**.
+
+2. Fill in the following details:
+
+   - **Title**: `Total Suggestions vs. Acceptances Over Time`.
+   
+   - **Description**: `How Copilot suggestions and acceptances change over time to track usage and engagement`.
+
+   - **Icon**: `LineChart`.
+   
+   - **Blueprint**: `github_copilot_usage`.
+   
+   - **Chart type**: Select `Aggregate properties(All Entities)`.
+   
+   - **Properties**: `total_suggestions_count`, `total_acceptances_count`.
+   
+   - **Function**: `average`.
+   
+   - **Time interval**: `Week`.
+   
+   - **Time range**: `In the past 30 days`.
+   
+   - **Measure time by**: `createdAt`.
+
+3. Click **Save**.
+</details>
