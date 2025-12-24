@@ -1,0 +1,76 @@
+<details>
+<summary><b>ECR Repository blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "ecrRepository",
+  "description": "This blueprint represents an AWS ECR repository in our software catalog",
+  "title": "ECR Repository",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "repositoryUri": {
+        "type": "string",
+        "title": "Repository URI"
+      },
+      "registryId": {
+        "type": "string",
+        "title": "Registry ID"
+      },
+      "createdAt": {
+        "type": "string",
+        "title": "Created At"
+      },
+      "imageTagMutability": {
+        "type": "string",
+        "title": "Image Tag Mutability"
+      },
+      "imageScanningConfiguration": {
+        "type": "object",
+        "title": "Image Scanning Configuration"
+      },
+      "encryptionConfiguration": {
+        "type": "object",
+        "title": "Encryption Configuration"
+      },
+      "lifecyclePolicy": {
+        "type": "object",
+        "title": "Lifecycle Policy"
+      },
+      "repositoryPolicyText": {
+        "type": "string",
+        "title": "Repository Policy Text"
+      },
+      "tags": {
+        "type": "array",
+        "title": "Tags",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Key": {
+              "type": "string"
+            },
+            "Value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
