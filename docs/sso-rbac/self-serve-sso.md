@@ -97,14 +97,14 @@ If you click `Setup is Done` and encounter an error, use the following table to 
 ## FAQ
 
 <details>
-<summary><b>Can we use multiple SSO providers (e.g., Okta and Azure)? (click to expand)</b></summary>
+<summary><b>Can we use multiple SSO providers? (click to expand)</b></summary>
 
 No. Port supports only one SSO provider per company at a time.
 
 </details>
 
 <details>
-<summary><b>How do we switch providers (e.g., from Okta to Azure)? (click to expand)</b></summary>
+<summary><b>How do we switch providers? (click to expand)</b></summary>
 
 You need to **delete** the existing connection and start the setup process from the beginning. There is no migration path between SSO providers.
 
