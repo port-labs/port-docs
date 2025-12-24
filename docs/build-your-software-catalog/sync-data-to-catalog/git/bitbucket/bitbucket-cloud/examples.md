@@ -30,7 +30,7 @@ The following example demonstrates how to ingest your Bitbucket projects, reposi
 
 <Tabs groupId="config" queryString="parameter">
 
-<TabItem label="User Role" value="userRole">
+<TabItem label="User role" value="userRole">
 
 The `userRole` selector allows you to filter repositories based on the user role. You can specify only one user role to include in the sync.
 
