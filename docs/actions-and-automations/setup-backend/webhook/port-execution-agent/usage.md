@@ -32,6 +32,125 @@ When a new invocation is detected, the agent pulls it from your Kafka topic and 
 For a complete list of all available configuration parameters and their descriptions, see the [Port Agent Helm chart README](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
 :::
 
+## Transport types
+
+The Port Agent supports two transport mechanisms for receiving and processing action runs:
+
+### Kafka transport (default)
+
+The default and recommended transport mechanism that uses Kafka for real-time event streaming.
+
+**When to use:**
+- For production environments requiring low latency
+- When handling high volumes of action runs
+- When you need support for both action runs and changelog destinations
+
+**Configuration:**
+
+Configure your action with `agent: true`:
+```json showLineNumbers
+{ "type": "WEBHOOK", "agent": true, "url": "URL_TO_API_INSIDE_YOUR_NETWORK" }
+```
+
+Install the agent with Kafka transport:
+```bash showLineNumbers
+helm upgrade --install my-port-agent port-labs/port-agent \
+    --create-namespace --namespace port-agent \
+    --set env.normal.PORT_ORG_ID="YOUR_ORG_ID" \
+    --set env.normal.PORT_AGENT_TRANSPORT_TYPE="KAFKA" \
+    --set env.normal.KAFKA_CONSUMER_GROUP_ID="YOUR_CONSUMER_GROUP_ID" \
+    --set env.secret.PORT_CLIENT_ID="YOUR_CLIENT_ID" \
+    --set env.secret.PORT_CLIENT_SECRET="YOUR_CLIENT_SECRET"
+```
+
+:::info Default transport
+`PORT_AGENT_TRANSPORT_TYPE` defaults to `"KAFKA"`, so you can omit it when using Kafka transport.
+:::
+
+### HTTPS transport (polling)
+
+An alternative transport mechanism that polls the Port API via HTTPS to retrieve pending action runs.
+
+**When to use:**
+- When Kafka connectivity is restricted or unavailable in your environment
+- For simpler network configurations requiring only HTTPS access
+- For environments with moderate action run volumes
+
+**Considerations:**
+- **Polling-based:** Introduces a delay of approximately 10 seconds between checks for new runs
+- **Higher latency:** Not suitable for time-sensitive operations requiring immediate execution
+- **Action runs only:** Does not support changelog destinations
+
+**Configuration:**
+
+Use the same action configuration as Kafka transport. For the Helm installation, set:
+
+```bash showLineNumbers
+--set env.normal.PORT_AGENT_TRANSPORT_TYPE="HTTPS"
+```
+
+Note: HTTPS transport does not require `KAFKA_CONSUMER_GROUP_ID`.
+
+:::tip HTTPS transport benefits
+The HTTPS transport is ideal for environments with network restrictions that prevent Kafka connectivity. While it operates with higher latency than Kafka, it provides a reliable alternative using standard HTTPS connections.
+:::
+
+:::info Transport comparison
+| Feature | Kafka Transport | HTTPS Transport |
+|---------|----------------|-----------------|
+| Latency | Real-time (milliseconds) | Polling-based (~10 seconds) |
+| Network Requirements | Kafka connectivity | HTTPS only |
+| Changelog Support | ✅ Yes | ❌ No |
+| Setup Complexity | Moderate (requires consumer group) | Simple (no additional config) |
+| Best For | Production, high-volume | Network-restricted environments |
+:::
+
+## When to use HTTP polling vs Kafka
+
+### Scaling behavior
+
+**HTTP polling:**
+
+- All pods work in parallel — no duplicates.
+- Scale pods up or down without configuration changes.
+
+**Kafka:**
+
+- Maximum parallel pods equals the number of partitions.
+- Extra pods beyond the partition count remain idle.
+- Adding partitions requires a support ticket.
+
+### Comparison
+
+| Aspect | HTTP Polling | Kafka |
+|--------|--------------|-------|
+| Horizontal scaling | ✅ Unlimited pods | ❌ Limited by partition count |
+| Setup complexity | ✅ Simple (HTTPS only) | ❌ Requires Kafka infrastructure and networking configuration |
+| Latency | ~5–10 seconds (polling) | < 1 second (real-time) |
+| Dynamic scaling | ✅ Add/remove pods instantly | ❌ Requires support ticket to add partitions |
+| Message volume | Low to medium | High |
+| Changelog support | ❌ No | ✅ Yes |
+| Best for | Most teams, dynamic scaling | High-throughput, real-time needs |
+
+### When to use each
+
+**Use HTTP polling when:**
+
+- You need easy horizontal scaling without partition limits.
+- You want simple setup without Kafka infrastructure.
+- You can tolerate 5–10 second latency.
+- You have low to medium message volume.
+
+**Use Kafka when:**
+
+- You need real-time processing.
+- You have high message volume.
+- You need changelog destination support.
+
+:::caution Kafka partition limits
+The number of partitions in a Kafka topic is fixed at topic creation. Adding partitions requires a support ticket. Extra pods beyond the partition count will remain idle.
+:::
+
 ## Self-signed certificate configuration
 
 For self-hosted 3rd-party applications with self-signed certificates, the agent can be configured to trust custom CA certificates. The `selfSignedCertificate` parameters control this behavior.
