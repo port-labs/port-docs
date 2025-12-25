@@ -119,6 +119,10 @@ You can use Port's MCP to find the use cases that will be valuable to you. Try u
 
 <MCPInstallation />
 
+:::info Extended session duration
+MCP clients can maintain authenticated sessions for up to 30 days (as long as you're not idle for 15 days). This applies to OAuth-based authentication for interactive use, providing a more seamless experience for long-running integrations.
+:::
+
 ## Connect the server to multiple organizations
 
 Port uses your browser's OAuth session to approve MCP connections. When your MCP client opens the authentication prompt, you approve access in the organization where you are currently logged in. Follow these steps to connect to the correct organization:
@@ -181,6 +185,7 @@ Each organization requires a separate connection. Create separate MCP configurat
 You do not need to keep the browser logged in after approval. Your MCP client stays connected to the organization you authorized.
 
 </details>
+
 
 <details>
 <summary><b>What happens if I approve the OAuth prompt in the wrong organization? (Click to expand)</b></summary>

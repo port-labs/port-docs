@@ -153,6 +153,60 @@ If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGu
 }
 ```
 
+<h4>Using assume role (optional)</h4>
+
+Instead of using access keys, you can configure Bedrock to use an IAM role that Port's LLM gateway can assume. This provides enhanced security by eliminating the need to store long-lived credentials.
+
+**Trust relationship configuration**
+
+Create a trust relationship policy on your IAM role that allows Port's LLM gateway roles to assume it:
+
+```json showLineNumbers
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Statement1",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::185657066287:role/port-ai-bring-your-own-llm-eu-west-1",
+                    "arn:aws:iam::185657066287:role/port-ai-bring-your-own-llm-us-east-1"
+                ]
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+                "StringEquals": {
+                    "sts:ExternalId": "<OPTIONAL_EXTERNAL_ID>"
+                }
+            }
+        }
+    ]
+}
+```
+
+The `sts:ExternalId` condition is optional but recommended for additional security. If you use an external ID, you must create it as a secret in Port before configuring the provider. See [Step 1: Store API Keys in Secrets](#step-1-store-api-keys-in-secrets) for instructions on creating secrets.
+
+**Configuring Bedrock with assume role**
+
+Use the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API to configure Bedrock with assume role:
+
+```bash showLineNumbers
+curl -X PUT 'https://api.port.io/v1/llm-providers/bedrock?validate_connection=true' \
+  -H 'Authorization: Bearer <TOKEN>' \
+  -H 'content-type: application/json' \
+  -d '{
+  "config": {
+    "roleArn": "arn:aws:iam::891377315606:role/assume-role-test-for-bedrock",
+    "externalIdSecretName": "BEDROCK_ROLE_EXTERNAL_ID"
+  },
+  "enabled": true}'
+```
+
+:::info External ID is optional
+The `externalIdSecretName` parameter is optional. If you use an external ID in your trust relationship, create the secret upfront using the steps in [Step 1: Store API Keys in Secrets](#step-1-store-api-keys-in-secrets). If you don't use an external ID in your trust relationship, omit this parameter from the configuration.
+:::
+
 <h3>Anthropic models requirements</h3>
 
 **One-time usage form**
@@ -200,9 +254,14 @@ Before configuring providers, store your API keys in Port's secrets system. The 
 </TabItem>
 <TabItem value="bedrock" label="AWS Bedrock">
 
-**Required Secrets:**
+**Option 1: Using access keys (required if not using assume role)**
 - Access Key ID secret (e.g., `aws-bedrock-access-key-id`) - Your AWS access key ID
 - Secret Access Key secret (e.g., `aws-bedrock-secret-access-key`) - Your AWS secret access key
+
+**Option 2: Using assume role (alternative to access keys)**
+- External ID secret (e.g., `BEDROCK_ROLE_EXTERNAL_ID`) - Optional external ID for the trust relationship
+
+See the [Using assume role (optional)](#using-assume-role-optional) section in the prerequisites for configuration details.
 
 </TabItem>
 </Tabs>
