@@ -186,7 +186,7 @@ After configuring the IAM policy, choose how Port will authenticate with AWS Bed
 
 Configure an IAM role that Port's LLM gateway can assume. This provides enhanced security by eliminating the need to store long-lived credentials.
 
-###### Trust relationship configuration
+**Trust relationship configuration**
 
 Create a trust relationship policy on your IAM role that allows Port's LLM gateway roles to assume it:
 
@@ -221,7 +221,7 @@ Create a trust relationship policy on your IAM role that allows Port's LLM gatew
 
 The `sts:ExternalId` condition is optional but recommended for additional security. If you use an external ID, you must create it as a secret in Port before configuring the provider. See [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets) for instructions on creating secrets.
 
-###### Configuring Bedrock with assume role
+**Configuring Bedrock with assume role**
 
 Use the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API to configure Bedrock with assume role:
 
