@@ -309,7 +309,32 @@ Filter dropdown options in action forms to show only relevant entities based on 
 
 To configure this, go to the **User Form** tab when setting up entity-type inputs, then expand the [advanced configuration](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) section where you can define a dataset filter. This is particularly useful for filtering entity options based on the logged-in user or their teams.
 
-<!-- TODO: Add example - filter entity input by logged in user or user's teams -->
+This example demonstrates how to filter an entity input dropdown to show only environments owned by the logged-in user's teams. This ensures users can only select environments they have access to:
+
+```json showLineNumbers
+{
+  "properties": {
+    "environment": {
+      "type": "string",
+      "format": "entity",
+      "blueprint": "environment",
+      "title": "Target Environment",
+      "dataset": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "$team",
+            "operator": "containsAny",
+            "value": {
+              "jqQuery": ".user.teams | map(.name)"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+```
 
 </TabItem>
 
