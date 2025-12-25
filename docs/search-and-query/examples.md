@@ -11,9 +11,16 @@ This page provides practical examples of using search and query syntax across di
 
 ## Catalog pages
 
-Initial filters for catalog pages are configured when creating or editing a catalog page in your [software catalog](https://app.getport.io/organization/catalog). These filters pre-filter which entities appear when the page loads, improving performance and showing only relevant data.
+Initial filters for [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page) are configured when creating or editing a catalog page in your [software catalog](https://app.getport.io/organization/catalog). These filters pre-filter which entities appear when the page loads, improving performance and showing only relevant data.
 
 Filters are especially useful when dealing with blueprints that have a large number of entities (such as Snyk vulnerabilities), where the request may time out without filtering.
+
+<Tabs groupId="catalog-filters" defaultValue="basic" values={[
+{label: "Basic example", value: "basic"},
+{label: "Advanced example", value: "advanced"}
+]}>
+
+<TabItem value="basic">
 
 This example demonstrates how to filter a Snyk vulnerability catalog page, showing only `high` and `critical` severity vulnerabilities:
 
@@ -33,11 +40,58 @@ This example demonstrates how to filter a Snyk vulnerability catalog page, showi
 }
 ```
 
+</TabItem>
+
+<TabItem value="advanced">
+
+<!-- TODO: Test this example in your environment -->
+
+This example demonstrates how to filter a service catalog page with multiple conditions, showing only production services owned by specific teams that were deployed in the last 30 days:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "environment",
+      "operator": "=",
+      "value": "production"
+    },
+    {
+      "property": "$team",
+      "operator": "containsAny",
+      "value": [
+        "backend-team",
+        "platform-team"
+      ]
+    },
+    {
+      "property": "lastDeployedAt",
+      "operator": "between",
+      "value": {
+        "preset": "lastMonth"
+      }
+    }
+  ]
+}
+```
+
+</TabItem>
+
+</Tabs>
+
 ## Entity pages
 
-Filters for related entity tabs are configured when creating custom tabs on any entity page. Go to the **Related Entities** tab of the entity, click the `+` button, then under **Additional filters**, click the filters button to add your query. These filters control which related entities appear in the custom tab.
+Filters for related entity tabs are configured when creating custom tabs on any [entity page](/customize-pages-dashboards-and-plugins/page/entity-page). Go to the **Related Entities** tab of the entity, click the `+` button, then under **Additional filters**, click the filters button to add your query. These filters control which related entities appear in the custom tab.
 
 Additional filters are particularly useful for related entities tabs where the number of related entities is very large. Applying filters improves performance and makes the data more manageable.
+
+<Tabs groupId="entity-filters" defaultValue="basic" values={[
+{label: "Basic example", value: "basic"},
+{label: "Advanced example", value: "advanced"}
+]}>
+
+<TabItem value="basic">
 
 This example demonstrates how to filter related pull requests for a repository entity, showing only PRs with an `open` status:
 
@@ -54,9 +108,50 @@ This example demonstrates how to filter related pull requests for a repository e
 }
 ```
 
+</TabItem>
+
+<TabItem value="advanced">
+
+<!-- TODO: Test this example in your environment -->
+
+This example demonstrates how to filter related alerts for a service entity with multiple conditions, showing only critical alerts that were created in the last 24 hours and are still unresolved:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "severity",
+      "operator": "=",
+      "value": "critical"
+    },
+    {
+      "property": "status",
+      "operator": "in",
+      "value": [
+        "open",
+        "investigating",
+        "identified"
+      ]
+    },
+    {
+      "property": "createdAt",
+      "operator": "between",
+      "value": {
+        "preset": "last24Hours"
+      }
+    }
+  ]
+}
+```
+
+</TabItem>
+
+</Tabs>
+
 ## Dashboard widgets
 
-Widget-specific filters are configured in the widget creation/edit form. These filters control which entities are included in calculations and visualizations for individual data widgets.
+Widget-specific filters are configured in the widget creation/edit form for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/overview). These filters control which entities are included in calculations and visualizations for individual data widgets.
 
 <Tabs groupId="widget-filters" defaultValue="basic" values={[
 {label: "Basic property filter", value: "basic"},
@@ -176,31 +271,67 @@ This example demonstrates how to filter entities using relation paths to query r
 
 Configure these options when creating or editing an action in the [self-service actions](https://app.getport.io/self-serve) page.
 
-**Action conditions** - Determine which entities an action appears on, ensuring actions are only available for relevant entities. Configure this in the **Basic Details** tab of the action form. Note: Only available for DAY-2 and DELETE operations.
+<Tabs groupId="action-filters" defaultValue="conditions" values={[
+{label: "Action conditions", value: "conditions"},
+{label: "Entity input datasets", value: "datasets"},
+{label: "Dynamic permissions", value: "permissions"}
+]}>
 
-<!-- TODO: Add example -->
+<TabItem value="conditions">
 
-**Entity input datasets** - Filter dropdown options in action forms, showing only relevant entities based on properties, relations, or user context.
+Action conditions determine which entities an action appears on, ensuring actions are only available for relevant entities. Configure this in the **Basic Details** tab of the action form.
 
-Configure this in the **User Form** tab when setting up entity-type inputs. This is useful for filtering entity options based on the logged-in user or their teams.
+:::info DAY-2 and DELETE only
+Action conditions are only available for DAY-2 and DELETE operations.
+:::
+
+This example demonstrates how to conditionally display an action based on entity properties. It shows the action only on entities where the `environment` property equals `production`:
+
+```json showLineNumbers
+{
+  "type": "SEARCH",
+  "rules": [
+    {
+      "operator": "=",
+      "property": "environment",
+      "value": "production"
+    }
+  ],
+  "combinator": "and"
+}
+```
+
+</TabItem>
+
+<TabItem value="datasets">
+
+Filter dropdown options in action forms to show only relevant entities based on properties, relations, or user context. 
+
+To configure this, go to the **User Form** tab when setting up entity-type inputs, then expand the [advanced configuration](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) section where you can define a dataset filter. This is particularly useful for filtering entity options based on the logged-in user or their teams.
 
 <!-- TODO: Add example - filter entity input by logged in user or user's teams -->
 
-**Dynamic permissions** - Dynamically control who can execute or approve actions based on entity properties and user context.
+</TabItem>
 
-After creating an action, edit it and click **Edit JSON** → **Permissions** tab to configure query-based permissions. This allows you to create complex permission rules using search queries combined with the action's blueprint permissions configuration.
+<TabItem value="permissions">
+
+Dynamic permissions dynamically control who can execute or approve actions based on entity properties and user context. After creating an action, edit it and click **Edit JSON** → **Permissions** tab to configure query-based permissions.
+
+This allows you to create complex permission rules using search queries combined with the action's blueprint permissions configuration.
 
 :::tip Understanding permissions policies
-The permissions policy system can be complex. The `policy` object works together with the `roles`, `users`, and `teams` fields to determine final access. When a `policy` is defined, the roles/users/teams control **visibility**, while the policy controls **execution/approval** permissions.
+The `policy` object works together with the `roles`, `users`, and `teams` fields to determine final access. When a `policy` is defined, the roles/users/teams control **visibility**, while the policy controls **execution/approval** permissions.
 :::
 
 <!-- TODO: Add example - permissions policy with search queries explaining how it works with other permission factors -->
 
+</TabItem>
+
+</Tabs>
+
 ## Automations
 
-You can configure automation conditions in the [automations page](https://app.getport.io/settings/automations) when creating or editing an automation. The conditions field is found in the **Trigger** tab.
-
-**Trigger conditions** - Filter which entities trigger an automation, ensuring automations only run for entities that meet specific criteria.
+Trigger conditions for [automations](/actions-and-automations/define-automations/define-automations) are configured in the [automations page](https://app.getport.io/settings/automations) under the **Trigger** tab. These filters determine which entities trigger an automation, ensuring automations only run for entities that meet specific criteria.
 
 <!-- TODO: Add example -->
 
