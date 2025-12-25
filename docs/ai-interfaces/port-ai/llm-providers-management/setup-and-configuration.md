@@ -72,18 +72,16 @@ Some providers require additional policies and settings to be configured before 
 
 If you're using other providers (OpenAI, Anthropic, or Azure OpenAI), you can skip this step and proceed to [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets).
 
-### AWS Bedrock configuration
-
-Before configuring Bedrock in Port, you need to complete two configuration steps in your AWS account:
-
-1. **Configure IAM policy** (required) - Set up permissions for invoking Bedrock models
-2. **Choose authentication method** - Use either assume role (configured here) or access keys (configured in [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets))
-
 #### Step 1.1: Configure IAM policy
 
-First, set up an IAM policy to grant permissions for invoking Bedrock models. Serverless models are automatically available, but you control access through IAM policies. Anthropic models require additional setup (see [Anthropic models requirements](#anthropic-models-requirements) below).
+Set up an IAM policy to grant permissions for invoking Bedrock models. The configuration varies by provider.
 
-##### Option 1: Allow specific models
+<Tabs groupId="provider-policies" queryString>
+<TabItem value="bedrock" label="AWS Bedrock">
+
+Serverless models are automatically available, but you control access through IAM policies. Anthropic models require additional setup (see [Anthropic models requirements](#anthropic-models-requirements) below).
+
+<h4>Option 1: Allow specific models</h4>
 
 Restrict access to specific models (recommended). Example for Anthropic models in Europe:
 
@@ -116,7 +114,7 @@ Restrict access to specific models (recommended). Example for Anthropic models i
 
 Each model requires two ARN entries: `inference-profile` and `foundation-model`. Adjust the region and model as needed.
 
-##### Option 2: Allow all models
+<h4>Option 2: Allow all models</h4>
 
 Use a wildcard policy to allow all models. You can still disable specific models using the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API.
 
@@ -145,7 +143,7 @@ Use a wildcard policy to allow all models. You can still disable specific models
 
 </details>
 
-##### Using guardrails
+<h4>Using guardrails</h4>
 
 If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGuardrail` action to your IAM policy:
 
@@ -175,14 +173,22 @@ If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGu
 
 </details>
 
+</TabItem>
+</Tabs>
+
 #### Step 1.2: Choose authentication method
 
-After configuring the IAM policy, choose how Port will authenticate with AWS Bedrock:
+After configuring the IAM policy, choose how Port will authenticate with your provider. The available options vary by provider.
+
+<Tabs groupId="provider-policies" queryString>
+<TabItem value="bedrock" label="AWS Bedrock">
+
+You have two authentication options:
 
 - **Option A: Assume role** (recommended) - Configure an IAM role that Port's LLM gateway can assume. This provides enhanced security by eliminating the need to store long-lived credentials. Configure this below.
 - **Option B: Access keys** - Store AWS access key ID and secret access key in Port secrets. You'll configure this in [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets).
 
-##### Option A: Using assume role (recommended)
+<h4>Option A: Using assume role (recommended)</h4>
 
 Configure an IAM role that Port's LLM gateway can assume. This provides enhanced security by eliminating the need to store long-lived credentials.
 
@@ -241,11 +247,11 @@ curl -X PUT 'https://api.port.io/v1/llm-providers/bedrock?validate_connection=tr
 The `externalIdSecretName` parameter is optional. If you use an external ID in your trust relationship, create the secret upfront using the steps in [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets). If you don't use an external ID in your trust relationship, omit this parameter from the configuration.
 :::
 
-##### Option B: Using access keys
+<h4>Option B: Using access keys</h4>
 
 If you prefer to use access keys instead of assume role, store your AWS access key ID and secret access key in Port secrets. See [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets) for instructions on creating these secrets.
 
-#### Anthropic models requirements
+<h3 id="anthropic-models-requirements">Anthropic models requirements</h3>
 
 <details>
 <summary><b>Anthropic models setup requirements (click to expand)</b></summary>
@@ -261,6 +267,9 @@ If you prefer to use access keys instead of assume role, store your AWS access k
 For details, see the [AWS Security Blog post](https://aws.amazon.com/blogs/security/simplified-amazon-bedrock-model-access/).
 
 </details>
+
+</TabItem>
+</Tabs>
 
 ## Step 2: Store API Keys in Secrets
 
