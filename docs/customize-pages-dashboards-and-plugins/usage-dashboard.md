@@ -128,7 +128,7 @@ As a workaround, you can export the data (CSV, XLSX, or JSON) and apply filters 
 Usage dashboard data is not currently available via API or MCP.
 
 Some related data is available through Port's regular API, such as:
-- Data sources list.
-- Run history (via the audit log).
+- [Data sources list](/api-reference/get-all-integrations).
+- [Run history (via the audit log)](/api-reference/get-audit-logs).
 
 </details>
