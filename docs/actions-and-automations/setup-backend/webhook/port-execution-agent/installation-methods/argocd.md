@@ -68,7 +68,7 @@ This page will walk you through the installation of the Port execution agent in 
               value: YOUR_KAFKA_CONSUMER_GROUP
             - name: env.normal.PORT_ORG_ID
               value: YOUR_ORG_ID
-            - name: env.normal.PORT_AGENT_TRANSPORT_TYPE
+            - name: env.normal.STREAMER_NAME
               value: KAFKA
             - name: env.secret.PORT_CLIENT_ID
               value: YOUR_PORT_CLIENT_ID

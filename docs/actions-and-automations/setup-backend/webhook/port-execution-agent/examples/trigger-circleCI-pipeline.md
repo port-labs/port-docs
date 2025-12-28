@@ -108,7 +108,7 @@ This example helps internal developer teams to trigger [CircleCI](https://circle
         --set env.normal.PORT_ORG_ID=YOUR_ORG_ID \
         --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
         --set env.normal.KAFKA_CONSUMER_BROKERS=PORT_KAFKA_BROKERS \
-        --set env.normal.PORT_AGENT_TRANSPORT_TYPE=KAFKA \
+        --set env.normal.STREAMER_NAME=KAFKA \
         --set env.normal.KAFKA_CONSUMER_AUTHENTICATION_MECHANISM=SCRAM-SHA-512 \
         --set env.normal.KAFKA_CONSUMER_AUTO_OFFSET_RESET=earliest \
         --set env.normal.KAFKA_CONSUMER_SECURITY_PROTOCOL=SASL_SSL \

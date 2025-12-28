@@ -42,67 +42,59 @@ The default and recommended transport mechanism that uses Kafka for real-time ev
 
 **When to use:**
 - For production environments requiring low latency
-- When handling high volumes of action runs
 - When you need support for both action runs and changelog destinations
-
-**Configuration:**
-
-Configure your action with `agent: true`:
-```json showLineNumbers
-{ "type": "WEBHOOK", "agent": true, "url": "URL_TO_API_INSIDE_YOUR_NETWORK" }
-```
 
 Install the agent with Kafka transport:
 ```bash showLineNumbers
 helm upgrade --install my-port-agent port-labs/port-agent \
     --create-namespace --namespace port-agent \
     --set env.normal.PORT_ORG_ID="YOUR_ORG_ID" \
-    --set env.normal.PORT_AGENT_TRANSPORT_TYPE="KAFKA" \
+    --set env.normal.STREAMER_NAME="KAFKA" \
     --set env.normal.KAFKA_CONSUMER_GROUP_ID="YOUR_CONSUMER_GROUP_ID" \
     --set env.secret.PORT_CLIENT_ID="YOUR_CLIENT_ID" \
     --set env.secret.PORT_CLIENT_SECRET="YOUR_CLIENT_SECRET"
 ```
 
-:::info Default transport
-`PORT_AGENT_TRANSPORT_TYPE` defaults to `"KAFKA"`, so you can omit it when using Kafka transport.
+:::info Default streamer
+`STREAMER_NAME` defaults to `"KAFKA"`, so you can omit it when using Kafka streamer.
 :::
 
-### HTTPS transport (polling)
+### HTTP transport (polling)
 
-An alternative transport mechanism that polls the Port API via HTTPS to retrieve pending action runs.
+An alternative transport mechanism that polls the Port API via HTTP to retrieve pending action runs.
 
 **When to use:**
 - When Kafka connectivity is restricted or unavailable in your environment
-- For simpler network configurations requiring only HTTPS access
-- For environments with moderate action run volumes
+- For simpler network configurations requiring only HTTP access
+- Where higher latency is acceptable
 
 **Considerations:**
-- **Polling-based:** Introduces a delay of approximately 10 seconds between checks for new runs
+- **Polling-based:** Introduces a delay up to 10 seconds between checks for new runs
 - **Higher latency:** Not suitable for time-sensitive operations requiring immediate execution
 - **Action runs only:** Does not support changelog destinations
 
 **Configuration:**
 
-Use the same action configuration as Kafka transport. For the Helm installation, set:
+For the Helm installation, set:
 
 ```bash showLineNumbers
---set env.normal.PORT_AGENT_TRANSPORT_TYPE="HTTPS"
+--set env.normal.STREAMER_NAME="HTTP"
 ```
 
-Note: HTTPS transport does not require `KAFKA_CONSUMER_GROUP_ID`.
+Note: HTTP transport does not require `KAFKA_CONSUMER_GROUP_ID`.
 
-:::tip HTTPS transport benefits
-The HTTPS transport is ideal for environments with network restrictions that prevent Kafka connectivity. While it operates with higher latency than Kafka, it provides a reliable alternative using standard HTTPS connections.
+:::tip HTTP transport benefits
+The HTTP transport is ideal for environments with network restrictions that prevent Kafka connectivity. While it operates with higher latency than Kafka, it provides a reliable alternative using standard HTTP connections.
 :::
 
 :::info Transport comparison
-| Feature | Kafka Transport | HTTPS Transport |
+| Feature | Kafka Transport | HTTP Transport |
 |---------|----------------|-----------------|
-| Latency | Real-time (milliseconds) | Polling-based (~10 seconds) |
-| Network Requirements | Kafka connectivity | HTTPS only |
+| Latency | Real-time (milliseconds) | Polling-based (up to 10 seconds) |
+| Network Requirements | Kafka connectivity | HTTP only |
 | Changelog Support | ✅ Yes | ❌ No |
 | Setup Complexity | Moderate (requires consumer group) | Simple (no additional config) |
-| Best For | Production, high-volume | Network-restricted environments |
+| Best For | Production, real-time needs | Network-restricted environments |
 :::
 
 ## When to use HTTP polling vs Kafka
@@ -112,7 +104,7 @@ The HTTPS transport is ideal for environments with network restrictions that pre
 **HTTP polling:**
 
 - All pods work in parallel — no duplicates.
-- Scale pods up or down without configuration changes.
+- Scale pods in and out without configuration changes.
 
 **Kafka:**
 
@@ -125,12 +117,11 @@ The HTTPS transport is ideal for environments with network restrictions that pre
 | Aspect | HTTP Polling | Kafka |
 |--------|--------------|-------|
 | Horizontal scaling | ✅ Unlimited pods | ❌ Limited by partition count |
-| Setup complexity | ✅ Simple (HTTPS only) | ❌ Requires Kafka infrastructure and networking configuration |
-| Latency | ~5–10 seconds (polling) | < 1 second (real-time) |
+| Setup complexity | ✅ Simple (HTTP only) | ❌ Requires Kafka infrastructure and networking configuration |
+| Latency | Up to 10 seconds (polling) | < 1 second (real-time) |
 | Dynamic scaling | ✅ Add/remove pods instantly | ❌ Requires support ticket to add partitions |
-| Message volume | Low to medium | High |
 | Changelog support | ❌ No | ✅ Yes |
-| Best for | Most teams, dynamic scaling | High-throughput, real-time needs |
+| Best for | Most teams, dynamic scaling | Real-time needs |
 
 ### When to use each
 
@@ -138,17 +129,15 @@ The HTTPS transport is ideal for environments with network restrictions that pre
 
 - You need easy horizontal scaling without partition limits.
 - You want simple setup without Kafka infrastructure.
-- You can tolerate 5–10 second latency.
-- You have low to medium message volume.
+- Where higher latency is acceptable.
 
 **Use Kafka when:**
 
 - You need real-time processing.
-- You have high message volume.
 - You need changelog destination support.
 
 :::caution Kafka partition limits
-The number of partitions in a Kafka topic is fixed at topic creation. Adding partitions requires a support ticket. Extra pods beyond the partition count will remain idle.
+Kafka scaling is limited by partition count. Extra pods beyond the partition count will remain idle. Adding partitions requires a support ticket.
 :::
 
 ## Self-signed certificate configuration
