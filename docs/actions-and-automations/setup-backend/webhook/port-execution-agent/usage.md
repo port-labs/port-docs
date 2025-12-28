@@ -53,10 +53,6 @@ helm upgrade --install my-port-agent port-labs/port-agent \
     --set env.secret.PORT_CLIENT_SECRET="YOUR_CLIENT_SECRET"
 ```
 
-:::info Default streamer
-`STREAMER_NAME` defaults to `"KAFKA"`, so you can omit it when using Kafka streamer.
-:::
-
 ### HTTP streamer (polling)
 
 An alternative streamer mechanism that polls the Port API via HTTP to retrieve pending action runs.
