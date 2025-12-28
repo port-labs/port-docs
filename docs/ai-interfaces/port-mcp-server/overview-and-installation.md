@@ -166,7 +166,7 @@ The Port MCP Server supports several headers that allow you to customize its beh
 | Header | Type | Default | Description |
 |--------|------|---------|-------------|
 | `x-read-only-mode` | String | `0` | Controls whether write tools are available. Set to `1` to restrict the MCP server to only expose read-only tools, completely hiding write tools from the available tools list. Set to `0` to allow all tools based on your permissions. |
-| `x-allowed-actions-to-run` | String | All actions | Comma-separated list of action identifiers that controls which actions are available through the `run_action` tool. Only the specified actions will be available. If not specified, all actions you have permission to run will be available. Example: `"create_github_issue,create_incident"`. |
+| `x-allowed-actions-to-run` | String | All actions | Comma-separated list of action identifiers that controls which actions are available through the `run_action` tool. Only the specified actions will be available. If not specified, all actions you have permission to run will be available. If set to an empty string, no actions will be allowed to run. Example: `"create_github_issue,create_incident"`. |
 
 These headers can be configured when setting up your MCP server connection. For token-based authentication examples, see the [token-based authentication guide](/ai-interfaces/port-mcp-server/token-based-authentication).
 
@@ -230,22 +230,6 @@ Refer back to the [setup instructions](#installing-port-mcp) for your specific a
 <summary><b>I completed the connection but nothing happens (Click to expand)</b></summary>
 
 Check that you've followed all the [setup steps](#installing-port-mcp) correctly for your application. Ensure you're authenticated with Port and have the necessary permissions. If you've followed all the steps and still have issues, please reach out to our support team.
-
-</details>
-
-<details>
-<summary><b>Why do I see an error about too many tools? (Click to expand)</b></summary>
-
-Actions are executed through the `run_action` tool, which dynamically handles all available actions in your Port instance. If your organization has many actions configured, this can result in a large number of tools being available.
-
-While most AI models handle this well, some have restrictions and may limit you to around 40 tools total. If you encounter errors about tool limits:
-
-1. **Reduce the number of tools** by customizing which tools are enabled (see [select which tools to use](/ai-interfaces/port-mcp-server/available-tools#select-which-tools-to-use)).
-2. **Use the `x-allowed-actions-to-run` header** to restrict which actions are available through the `run_action` tool by specifying a comma-separated list of action identifiers (see [available tools documentation](/ai-interfaces/port-mcp-server/available-tools#control-which-actions-are-available) and [MCP Server Headers](#mcp-server-headers)).
-3. **Focus on essential tools** by only enabling the read-only tools you need plus a few key actions.
-4. **Contact your Port Admin** to review which actions are essential for your workflow.
-
-This is completely normal behavior and doesn't indicate a problem with Port MCP - it's just a limitation of some AI models.
 
 </details>
 
