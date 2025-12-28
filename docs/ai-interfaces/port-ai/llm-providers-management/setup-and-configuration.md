@@ -245,7 +245,7 @@ Retrieve your organization's current LLM provider defaults using the [Get defaul
 
 When no organization-specific defaults are configured, Port uses these system defaults:
 - **Default Provider**: `port`
-- **Default Model**: `claude-sonnet-4-20250514`
+- **Default Model**: `claude-sonnet-4-5-20250929`
 
 ## Changing Default Providers
 
