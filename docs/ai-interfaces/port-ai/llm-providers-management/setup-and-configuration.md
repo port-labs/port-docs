@@ -74,13 +74,14 @@ If you're using other providers (OpenAI, Anthropic, or Azure OpenAI), you can sk
 
 <details>
 <summary><b>AWS Bedrock configuration (click to expand)</b></summary>
-#### Step 1.1: Configure IAM policy
+
+**Step 1.1: Configure IAM policy**
 
 Set up an IAM policy to grant permissions for invoking Bedrock models. The configuration varies by provider.
 
 Serverless models are automatically available, but you control access through IAM policies. Anthropic models require additional setup (see [Anthropic models requirements](#anthropic-models-requirements) below).
 
-##### Option 1: Allow specific models
+**Option 1: Allow specific models**
 
 Restrict access to specific models (recommended). Example for Anthropic models in Europe:
 
@@ -102,7 +103,9 @@ Restrict access to specific models (recommended). Example for Anthropic models i
         "arn:aws:bedrock:*:*:inference-profile/eu.anthropic.claude-sonnet-4-20250514-v1:0",
         "arn:aws:bedrock:*::foundation-model/anthropic.claude-sonnet-4-20250514-v1:0",
         "arn:aws:bedrock:*:*:inference-profile/eu.anthropic.claude-haiku-4-5-20251001-v1:0",
-        "arn:aws:bedrock:*::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+        "arn:aws:bedrock:*::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0",
+        "arn:aws:bedrock:*:*:inference-profile/eu.anthropic.claude-sonnet-4-5-20250929-v1:0",
+        "arn:aws:bedrock:*::foundation-model/anthropic.claude-sonnet-4-5-20250929-v1:0"
       ]
     }
   ]
@@ -113,7 +116,7 @@ Restrict access to specific models (recommended). Example for Anthropic models i
 
 Each model requires two ARN entries: `inference-profile` and `foundation-model`. Adjust the region and model as needed.
 
-##### Option 2: Allow all models
+**Option 2: Allow all models**
 
 Use a wildcard policy to allow all models. You can still disable specific models using the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API.
 
@@ -142,7 +145,7 @@ Use a wildcard policy to allow all models. You can still disable specific models
 
 </details>
 
-##### Using guardrails
+**Using guardrails**
 
 If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGuardrail` action to your IAM policy:
 
@@ -185,14 +188,14 @@ If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGu
 For details, see the [AWS Security Blog post](https://aws.amazon.com/blogs/security/simplified-amazon-bedrock-model-access/).
 
 </details>
-<h3>Step 1.2: Choose authentication method</h3>
+**Step 1.2: Choose authentication method**
 
 After configuring the IAM policy, choose how Port will authenticate with AWS Bedrock. You have two authentication options:
 
 - **Option A: Assume role** (recommended) - Configure an IAM role that Port's LLM gateway can assume. This provides enhanced security by eliminating the need to store long-lived credentials. Configure this below.
 - **Option B: Access keys** - Store AWS access key ID and secret access key in Port secrets. You'll configure this in [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets).
 
-<h4>Option A: Using assume role (recommended)</h4>
+**Option A: Using assume role (recommended)**
 
 Configure an IAM role that Port's LLM gateway can assume. This provides enhanced security by eliminating the need to store long-lived credentials.
 
@@ -231,7 +234,7 @@ Create a trust relationship policy on your IAM role that allows Port's LLM gatew
 
 The `sts:ExternalId` condition is optional but recommended for additional security. If you use an external ID, you must create it as a secret in Port before configuring the provider. See [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets) for instructions on creating secrets.
 
-<h4>Option B: Using access keys</h4>
+**Option B: Using access keys**
 
 If you prefer to use access keys instead of assume role, store your AWS access key ID and secret access key in Port secrets. See [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets) for instructions on creating these secrets.
 
