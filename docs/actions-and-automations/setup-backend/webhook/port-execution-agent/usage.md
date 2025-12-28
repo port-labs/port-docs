@@ -32,19 +32,19 @@ When a new invocation is detected, the agent pulls it from your Kafka topic and 
 For a complete list of all available configuration parameters and their descriptions, see the [Port Agent Helm chart README](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
 :::
 
-## Transport types
+## Streamer types
 
-The Port Agent supports two transport mechanisms for receiving and processing action runs:
+The Port Agent supports two streamer mechanisms for receiving and processing action runs:
 
-### Kafka transport (default)
+### Kafka streamer (default)
 
-The default and recommended transport mechanism that uses Kafka for real-time event streaming.
+The default and recommended streamer mechanism that uses Kafka for real-time event streaming.
 
 **When to use:**
 - Where higher latency is acceptable
 - When you need support for both action runs and changelog destinations
 
-Install the agent with Kafka transport:
+Install the agent with Kafka streamer:
 ```bash showLineNumbers
 helm upgrade --install my-port-agent port-labs/port-agent \
     --create-namespace --namespace port-agent \
@@ -59,9 +59,9 @@ helm upgrade --install my-port-agent port-labs/port-agent \
 `STREAMER_NAME` defaults to `"KAFKA"`, so you can omit it when using Kafka streamer.
 :::
 
-### HTTP transport (polling)
+### HTTP streamer (polling)
 
-An alternative transport mechanism that polls the Port API via HTTP to retrieve pending action runs.
+An alternative streamer mechanism that polls the Port API via HTTP to retrieve pending action runs.
 
 **When to use:**
 - When Kafka connectivity is restricted or unavailable in your environment
@@ -81,14 +81,14 @@ For the Helm installation, set:
 --set env.normal.STREAMER_NAME="HTTP"
 ```
 
-Note: HTTP transport does not require `KAFKA_CONSUMER_GROUP_ID`.
+Note: HTTP streamer does not require `KAFKA_CONSUMER_GROUP_ID`.
 
-:::tip HTTP transport benefits
-The HTTP transport is ideal for environments with network restrictions that prevent Kafka connectivity. While it operates with higher latency than Kafka, it provides a reliable alternative using standard HTTP connections.
+:::tip HTTP streamer benefits
+The HTTP streamer is ideal for environments with network restrictions that prevent Kafka connectivity. While it operates with higher latency than Kafka, it provides a reliable alternative using standard HTTP connections.
 :::
 
-:::info Transport comparison
-| Feature | Kafka Transport | HTTP Transport |
+:::info Streamer comparison
+| Feature | Kafka Streamer | HTTP Streamer |
 |---------|----------------|-----------------|
 | Latency | Real-time (milliseconds) | Polling-based (up to 10 seconds) |
 | Network Requirements | Kafka connectivity | HTTP only |
