@@ -33,7 +33,9 @@ To access the usage dashboard:
 
 ## Dashboard tabs
 
-The usage dashboard is organized into five tabs, each providing specific insights into different aspects of your Port environment usage.
+The usage dashboard is organized into five tabs, each providing specific insights into different aspects of your Port environment usage.  
+
+All metrics are aggregated at the company level across all organizations. Individual tables include detailed breakdowns by organization, allowing you to drill down into organization-specific data when needed.
 
 ### Users activity
 
