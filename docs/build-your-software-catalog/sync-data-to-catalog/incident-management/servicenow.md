@@ -37,6 +37,8 @@ The resources that can be ingested from ServiceNow into Port are listed below.
 - `Group` - (`<your-servicenow-url>/api/now/table/sys_user_group`)
 - `Service Catalog` - (`<your-servicenow-url>/api/now/table/sc_catalog`)
 - `Incident` - (`<your-servicenow-url>/api/now/table/incident`)
+- `Release Management` - (`<your-servicenow-url>/api/now/table/release_project`)
+- `Vulnerability` - (`<your-servicenow-url>/api/now/table/sn_vul_vulnerable_item`)
 
 :::tip Ingesting extra resources
 While the section above only lists three supported resources, Port's ServiceNow integration uses the [ServiceNow Table API](https://developer.servicenow.com/dev.do#!/reference/api/xanadu/rest/c_TableAPI#table-GET) to ingest entities.  
@@ -46,6 +48,47 @@ This means you can ingest a lot more resources from your ServiceNow instance as 
 
 
 ## Setup
+
+### Authentication methods
+
+The ServiceNow integration supports two authentication methods:
+
+1. **Basic authentication** - Uses a ServiceNow username and password.
+2. **OAuth 2.0 client credentials** - Uses OAuth client ID and client secret for more secure authentication.
+
+:::tip OAuth authentication recommended
+OAuth 2.0 is the recommended authentication method as it provides better security and doesn't require sharing user credentials. The integration automatically handles token refresh and expiration.
+:::
+
+You can configure the authentication method by providing the appropriate credentials:
+
+- For **basic authentication**, provide `servicenowUsername` and `servicenowPassword`.
+- For **OAuth authentication**, provide `servicenowClientId` and `servicenowClientSecret`.
+
+The integration will automatically detect and use OAuth authentication if client credentials are provided.
+
+<details>
+<summary><b>Setting up OAuth in ServiceNow (Click to expand)</b></summary>
+
+To use OAuth authentication, you need to create an OAuth application endpoint in ServiceNow:
+
+1. Log in to your ServiceNow instance as an administrator.
+2. Navigate to **System OAuth** > **Application Registry**.
+3. Click **New** to create a new application.
+4. Select **Create an OAuth API endpoint for external clients**.
+5. Fill in the following details:
+   - **Name**: Give your application a descriptive name (e.g., "Port Integration").
+   - **Client ID**: This will be auto-generated, or you can specify a custom one.
+   - **Client Secret**: This will be auto-generated. Make sure to copy it securely.
+   - **Accessible from**: Select "All application scopes".
+6. Click **Submit** to save the configuration.
+7. Use the generated **Client ID** and **Client Secret** in your integration configuration.
+
+For detailed information about OAuth client credentials configuration in ServiceNow, refer to the [ServiceNow OAuth documentation](https://www.servicenow.com/docs/bundle/zurich-platform-security/page/integrate/machine-identity/task/configure-an-oauth-client-credential-grant.html).
+
+</details>
+
+### Installation
 
 Choose one of the following installation methods:  
 Not sure which method is right for your use case? Check the available [installation methods](/build-your-software-catalog/sync-data-to-catalog/#installation-methods).
@@ -86,8 +129,38 @@ To install the integration using ArgoCD:
 1. Create a `values.yaml` file in `argocd/my-ocean-servicenow-integration` in your git repository with the content:
 
 :::note
-Remember to replace the placeholders for `SERVICENOW_URL` `SERVICENOW_USERNAME` and `SERVICENOW_PASSWORD`.
+Remember to replace the placeholders for `SERVICENOW_URL` and your authentication credentials.
+
+For **basic authentication**, use `SERVICENOW_USERNAME` and `SERVICENOW_PASSWORD`.  
+For **OAuth authentication** (recommended), use `SERVICENOW_CLIENT_ID` and `SERVICENOW_CLIENT_SECRET`.
 :::
+
+<Tabs groupId="auth-method" queryString="auth-method">
+
+<TabItem value="oauth" label="OAuth (recommended)" default>
+
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-servicenow-integration
+  type: servicenow
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-start
+    servicenowUrl: SERVICENOW_URL
+    servicenowClientId: SERVICENOW_CLIENT_ID
+  // highlight-end
+  secrets:
+  // highlight-next-line
+    servicenowClientSecret: SERVICENOW_CLIENT_SECRET
+```
+
+</TabItem>
+
+<TabItem value="basic" label="Basic authentication">
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -105,6 +178,10 @@ integration:
   // highlight-next-line
     servicenowPassword: SERVICENOW_PASSWORD
 ```
+
+</TabItem>
+
+</Tabs>
 <br/>
 
 2. Install the `my-ocean-servicenow-integration` ArgoCD Application by creating the following `my-ocean-servicenow-integration.yaml` manifest:
@@ -169,20 +246,28 @@ kubectl apply -f my-ocean-servicenow-integration.yaml
 
 This table summarizes the available parameters for the installation.
 
-| Parameter                                | Description                                                                                                                                                                                                                                                                                    | Required |
-|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| `port.clientId`                          | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                     | ✅        |
-| `port.clientSecret`                      | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                 | ✅        |
-| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        | ✅        |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                                                                                                                                                                                                             | ✅        |
-| `integration.config.servicenowUsername`  | The ServiceNow account username                                                                                                                                                                                                                                                                | ✅        |
-| `integration.secrets.servicenowPassword` | The ServiceNow account password                                                                                                                                                                                                                                                                | ✅        |
-| `integration.config.servicenowUrl`       | The ServiceNow instance URL. For example https://example-id.service-now.com                                                                                                                                                                                                                    | ✅        |
-| `integration.eventListener.type`         | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | ✅        |
-| `integration.type`                       | The integration to be installed                                                                                                                                                                                                                                                                | ✅        |
-| `scheduledResyncInterval`                | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) | ❌        |
-| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       | ❌        |
-| `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            | ❌        |
+| Parameter                                      | Description                                                                                                                                                                                                                                                                                    | Required |
+|------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                                | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                     | ✅        |
+| `port.clientSecret`                            | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                 | ✅        |
+| `port.baseUrl`                                 | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        | ✅        |
+| `integration.identifier`                       | Change the identifier to describe your integration                                                                                                                                                                                                                                             | ✅        |
+| `integration.config.servicenowUrl`             | The ServiceNow instance URL. For example https://example-id.service-now.com                                                                                                                                                                                                                    | ✅        |
+| `integration.config.servicenowUsername`        | The ServiceNow account username (for basic authentication)                                                                                                                                                                                                                                     | ❌*       |
+| `integration.secrets.servicenowPassword`       | The ServiceNow account password (for basic authentication)                                                                                                                                                                                                                                     | ❌*       |
+| `integration.config.servicenowClientId`        | The ServiceNow OAuth client ID (for OAuth authentication)                                                                                                                                                                                                                                      | ❌*       |
+| `integration.secrets.servicenowClientSecret`   | The ServiceNow OAuth client secret (for OAuth authentication)                                                                                                                                                                                                                                  | ❌*       |
+| `integration.eventListener.type`               | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | ✅        |
+| `integration.type`                             | The integration to be installed                                                                                                                                                                                                                                                                | ✅        |
+| `scheduledResyncInterval`                      | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) | ❌        |
+| `initializePortResources`                      | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       | ❌        |
+| `sendRawDataExamples`                          | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            | ❌        |
+
+<br/>
+
+:::note Authentication credentials
+*You must provide either basic authentication credentials (`servicenowUsername` and `servicenowPassword`) or OAuth credentials (`servicenowClientId` and `servicenowClientSecret`). OAuth authentication is recommended for better security.
+:::
 
 <br/>
 
@@ -205,6 +290,40 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 <br/>
 
 Here is an example for `servicenow-integration.yml` workflow file:
+
+<Tabs groupId="github-auth-method" queryString="github-auth-method">
+
+<TabItem value="github-oauth" label="OAuth (recommended)" default>
+
+```yaml showLineNumbers
+name: ServiceNow Exporter Workflow
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
+
+    steps:
+      - uses: port-labs/ocean-sail@v1
+        with: 
+          type: 'servicenow'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
+          config: |
+            servicenow_client_id: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_ID }}
+            servicenow_client_secret: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_SECRET }}
+            servicenow_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL }}
+```
+
+</TabItem>
+
+<TabItem value="github-basic" label="Basic authentication">
 
 ```yaml showLineNumbers
 name: ServiceNow Exporter Workflow
@@ -232,13 +351,16 @@ jobs:
             servicenow_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL }}
 ```
 
+</TabItem>
+
+</Tabs>
+
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
-
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
@@ -248,6 +370,56 @@ of `Secret Text` type:
 <br/>
 
 Here is an example for `Jenkinsfile` groovy pipeline file:
+
+<Tabs groupId="jenkins-auth-method" queryString="jenkins-auth-method">
+
+<TabItem value="jenkins-oauth" label="OAuth (recommended)" default>
+
+```text showLineNumbers
+pipeline {
+    agent any
+
+    stages {
+        stage('Run ServiceNow Integration') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_ID', variable: 'OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_ID'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_SECRET', variable: 'OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_SECRET'),
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL', variable: 'OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
+                    ]) {
+                        sh('''
+                            #Set Docker image and run the container
+                            integration_type="servicenow"
+                            version="latest"
+                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
+                            docker run -i --rm --platform=linux/amd64 \
+                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_ID=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_ID \
+                                -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_SECRET=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_SECRET \
+                                -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL \
+                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
+                                $image_name
+
+                            exit $?
+                        ''')
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+</TabItem>
+
+<TabItem value="jenkins-basic" label="Basic authentication">
 
 ```text showLineNumbers
 pipeline {
@@ -291,6 +463,10 @@ pipeline {
 }
 ```
 
+</TabItem>
+
+</Tabs>
+
   </TabItem>
   <TabItem value="azure" label="Azure Devops">
 <AzurePremise />
@@ -300,6 +476,50 @@ pipeline {
 <br/>
 
 Here is an example for `servicenow-integration.yml` pipeline file:
+
+<Tabs groupId="azure-auth-method" queryString="azure-auth-method">
+
+<TabItem value="azure-oauth" label="OAuth (recommended)" default>
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    # Set Docker image and run the container
+    integration_type="servicenow"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+    docker run -i --rm --platform=linux/amd64 \
+      -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+      -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+      -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
+      -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_ID=$(OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_ID) \
+      -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_SECRET=$(OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_SECRET) \
+      -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL=$(OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL) \
+      -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+      -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+      -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
+      $image_name
+
+    exit $?
+  displayName: 'Ingest Data into Port'
+
+```
+
+</TabItem>
+
+<TabItem value="azure-basic" label="Basic authentication">
 
 ```yaml showLineNumbers
 trigger:
@@ -337,6 +557,10 @@ steps:
 
 ```
 
+</TabItem>
+
+</Tabs>
+
   </TabItem>
  <TabItem value="gitlab" label="GitLab">
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
@@ -345,8 +569,52 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 
 <br/>
 
-
 Here is an example for `.gitlab-ci.yml` pipeline file:
+
+<Tabs groupId="gitlab-auth-method" queryString="gitlab-auth-method">
+
+<TabItem value="gitlab-oauth" label="OAuth (recommended)" default>
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+    
+variables:
+  INTEGRATION_TYPE: servicenow
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+      docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
+        -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_ID=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_ID \
+        -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_SECRET=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_CLIENT_SECRET \
+        -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL \
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
+        $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+```
+
+</TabItem>
+
+<TabItem value="gitlab-basic" label="Basic authentication">
 
 ```yaml showLineNumbers
 default:
@@ -384,6 +652,10 @@ ingest_data:
   rules: # Run only when changes are made to the main branch
     - if: '$CI_COMMIT_BRANCH == "main"'
 ```
+
+</TabItem>
+
+</Tabs>
 
 </TabItem>
   </Tabs>
@@ -470,6 +742,34 @@ resources:
           createdBy: .sys_created_by
           isActive: .active
           priority: .priority
+  - kind: release_project
+    selector:
+      query: 'true'
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
+        sysparmFields: 'sys_id,number,name,type,workflow_state,description,planned_start_date,planned_end_date,priority,risk,sys_created_on,sys_created_by,sys_updated_on,sys_updated_by,active'
+    port:
+      entity:
+        mappings:
+          identifier: .sys_id
+          title: (.name // .number // "Release")
+          blueprint: '"servicenowRelease"'
+          properties:
+            number: .number
+            name: .name
+            type: .type
+            workflowState: .workflow_state
+            description: .description
+            priority: .priority
+            risk: .risk
+            plannedStartDate: .planned_start_date
+            plannedEndDate: .planned_end_date
+            createdOn: '.sys_created_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))'
+            createdBy: .sys_created_by
+            updatedOn: '.sys_updated_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))'
+            updatedBy: .sys_updated_by
+            isActive: .active
 ```
 
 </details>
@@ -714,6 +1014,248 @@ resources:
             createdBy: .sys_created_by
             isActive: .active
             priority: .priority
+  - kind: sn_vul_vulnerable_item
+    selector:
+      query: 'true'
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
+        sysparmFields: 'sys_id,state,first_found,last_found,priority,risk_score,sys_created_on,sys_created_by,sys_updated_on,sys_updated_by,active'
+    port:
+      entity:
+        mappings:
+          identifier: .sys_id
+          title: (.number // "Vulnerability " + .sys_id)
+          blueprint: '"servicenowVulnerability"'
+          properties:
+            state: .state
+            priority: .priority
+            riskScore: .risk_score
+            firstFound: .first_found
+            lastFound: .last_found
+            createdOn: .sys_created_on
+            createdBy: .sys_created_by
+            updatedOn: .sys_updated_on
+            updatedBy: .sys_updated_by
+            isActive: .active
+```
+
+</details>
+
+### Vulnerability
+
+<details>
+<summary>Vulnerability blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "servicenowVulnerability",
+  "title": "Servicenow Vulnerability",
+  "icon": "Servicenow",
+  "schema": {
+    "properties": {
+      "state": {
+        "title": "State",
+        "type": "string"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "string"
+      },
+      "riskScore": {
+        "title": "Risk Score",
+        "type": "number"
+      },
+      "firstFound": {
+        "title": "First Found",
+        "type": "string"
+      },
+      "lastFound": {
+        "title": "Last Found",
+        "type": "string"
+      },
+      "createdOn": {
+        "title": "Created On",
+        "type": "string"
+      },
+      "createdBy": {
+        "title": "Created By",
+        "type": "string"
+      },
+      "updatedOn": {
+        "title": "Updated On",
+        "type": "string"
+      },
+      "updatedBy": {
+        "title": "Updated By",
+        "type": "string"
+      },
+      "isActive": {
+        "title": "Is Active",
+        "type": "boolean"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: sn_vul_vulnerable_item
+    selector:
+      query: "true"
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
+        sysparmFields: 'sys_id,state,first_found,last_found,priority,risk_score,sys_created_on,sys_created_by,sys_updated_on,sys_updated_by,active'
+    port:
+      entity:
+        mappings:
+          identifier: .sys_id
+          title: (.number // "Vulnerability " + .sys_id)
+          blueprint: '"servicenowVulnerability"'
+          properties:
+            state: .state
+            priority: .priority
+            riskScore: .risk_score
+            firstFound: .first_found
+            lastFound: .last_found
+            createdOn: .sys_created_on
+            createdBy: .sys_created_by
+            updatedOn: .sys_updated_on
+            updatedBy: .sys_updated_by
+            isActive: .active
+```
+
+</details>
+
+### Release Management
+
+<details>
+<summary>Release Management blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "servicenowRelease",
+  "title": "Servicenow Release",
+  "icon": "Servicenow",
+  "schema": {
+    "properties": {
+      "number": {
+        "title": "Release Number",
+        "type": "string"
+      },
+      "name": {
+        "title": "Release Name",
+        "type": "string"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string"
+      },
+      "workflowState": {
+        "title": "Workflow State",
+        "type": "string"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "string"
+      },
+      "risk": {
+        "title": "Risk",
+        "type": "string"
+      },
+      "plannedStartDate": {
+        "title": "Planned Start Date",
+        "type": "string"
+      },
+      "plannedEndDate": {
+        "title": "Planned End Date",
+        "type": "string"
+      },
+      "createdOn": {
+        "title": "Created On",
+        "type": "string"
+      },
+      "createdBy": {
+        "title": "Created By",
+        "type": "string"
+      },
+      "updatedOn": {
+        "title": "Updated On",
+        "type": "string"
+      },
+      "updatedBy": {
+        "title": "Updated By",
+        "type": "string"
+      },
+      "isActive": {
+        "title": "Is Active",
+        "type": "boolean"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: release_project
+    selector:
+      query: "true"
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
+        sysparmFields: 'sys_id,number,name,type,workflow_state,description,planned_start_date,planned_end_date,priority,risk,sys_created_on,sys_created_by,sys_updated_on,sys_updated_by,active'
+    port:
+      entity:
+        mappings:
+          identifier: .sys_id
+          title: (.name // .number // "Release")
+          blueprint: '"servicenowRelease"'
+          properties:
+            number: .number
+            name: .name
+            type: .type
+            workflowState: .workflow_state
+            description: .description
+            priority: .priority
+            risk: .risk
+            plannedStartDate: .planned_start_date
+            plannedEndDate: .planned_end_date
+            createdOn: '.sys_created_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))'
+            createdBy: .sys_created_by
+            updatedOn: '.sys_updated_on | (strptime("%Y-%m-%d %H:%M:%S") | strftime("%Y-%m-%dT%H:%M:%SZ"))'
+            updatedBy: .sys_updated_by
+            isActive: .active
 ```
 
 </details>
@@ -955,6 +1497,66 @@ Here is an example of the payload structure from ServiceNow:
 
 </details>
 
+<details>
+<summary> Release Management response data</summary>
+
+```json showLineNumbers
+{
+  "sys_id": "053892cb47357650360b3b12d16d43eb",
+  "number": "REL0010001",
+  "name": "Test Release Project - Port Integration",
+  "type": "Feature",
+  "workflow_state": "Complete",
+  "description": "Test release project created for Port Ocean integration testing",
+  "planned_start_date": "",
+  "planned_end_date": "",
+  "actual_start_date": "",
+  "actual_end_date": "2025-12-18",
+  "due_date": "",
+  "requested_date": "",
+  "priority": "4 - Low",
+  "risk": "Low",
+  "manager": "",
+  "requested_by": "",
+  "product": "",
+  "phases": null,
+  "phases_wanted": "true",
+  "release_history": "2025-12-18 03:37:47 - System (Release history)\nPhase Build added to project\n\n2025-12-18 03:37:47 - System (Release history)\nPhase Plan added to project\n\n2025-12-18 03:37:47 - System (Release history)\nPhase Accept added to project\n\n2025-12-18 03:37:47 - System (Release history)\nPhase Release added to project\n\n2025-12-18 03:37:47 - System (Release history)\nPhase Deploy added to project\n\n2025-12-18 03:37:47 - System (Release history)\nPhase Back Out added to project\n",
+  "notes": "",
+  "short_description": "",
+  "parent": "",
+  "sys_created_on": "2025-12-18 03:37:46",
+  "sys_created_by": "admin",
+  "sys_updated_on": "2025-12-18 03:37:47",
+  "sys_updated_by": "system",
+  "active": "false"
+}
+```
+</details>
+
+<details>
+
+<summary> Vulnerability response data</summary>
+
+```json showLineNumbers
+{
+  "sys_id": "b7ad7e0347b1f650360b3b12d16d434f",
+  "number": "VIT0010001",
+  "state": "Under Investigation",
+  "priority": "2 - High",
+  "risk_score": "75",
+  "first_found": "2024-01-15",
+  "last_found": "2024-12-18",
+  "sys_created_on": "2025-12-18 06:21:33",
+  "sys_created_by": "admin",
+  "sys_updated_on": "2025-12-18 06:21:33",
+  "sys_updated_by": "admin",
+  "active": "true"
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1037,6 +1639,73 @@ The combination of the sample payload and the Ocean configuration generates the 
   "createdAt": "2023-12-15T14:52:06.347Z",
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
   "updatedAt": "2023-12-15T15:34:18.248Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Release Management entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "053892cb47357650360b3b12d16d43eb",
+  "title": "Test Release Project - Port Integration",
+  "icon": "ServiceNow",
+  "blueprint": "servicenowRelease",
+  "team": [],
+  "properties": {
+    "number": "REL0010001",
+    "name": "Test Release Project - Port Integration",
+    "type": "Feature",
+    "workflowState": "Complete",
+    "description": "Test release project created for Port Ocean integration testing",
+    "priority": "4 - Low",
+    "risk": "Low",
+    "plannedStartDate": "",
+    "plannedEndDate": "",
+    "createdOn": "2025-12-18T03:37:46Z",
+    "createdBy": "admin",
+    "updatedOn": "2025-12-18T03:37:47Z",
+    "updatedBy": "system",
+    "isActive": "false"
+  },
+  "relations": {},
+  "createdAt": "2025-12-18T03:37:46.000Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2025-12-18T03:37:47.000Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+<details>
+<summary> Vulnerability entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "b7ad7e0347b1f650360b3b12d16d434f",
+  "title": "VIT0010001",
+  "icon": "ServiceNow",
+  "blueprint": "servicenowVulnerability",
+  "team": [],
+  "properties": {
+    "state": "Under Investigation",
+    "priority": "2 - High",
+    "riskScore": "75",
+    "firstFound": "2024-01-15",
+    "lastFound": "2024-12-18",
+    "createdOn": "2025-12-18 06:21:33",
+    "createdBy": "admin",
+    "updatedOn": "2025-12-18 06:21:33",
+    "updatedBy": "admin",
+    "isActive": "true"
+  },
+  "relations": {},
+  "createdAt": "2025-12-18T06:21:33.000Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2025-12-18T06:21:33.000Z",
   "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
 }
 ```

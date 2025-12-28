@@ -8,9 +8,9 @@ import FindCredentials from "@site/docs/build-your-software-catalog/custom-integ
 
 This page will walk you through the installation of the Port execution agent in your Kubernetes cluster using ArgoCD, utilizing its [Helm Capabilities](https://argo-cd.readthedocs.io/en/stable/user-guide/helm/).
 
-:::info
+:::info Helm chart resources
 - You can observe the Helm chart and the available parameters [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-agent).
-- For the full chart versions list refer to the [Releases](https://github.com/port-labs/helm-charts/releases?q=port-agent&expanded=true) page.
+- For the full chart versions list refer to the [releases](https://github.com/port-labs/helm-charts/releases?q=port-agent&expanded=true) page.
 :::
 
 ## Prerequisites
@@ -43,7 +43,7 @@ This page will walk you through the installation of the Port execution agent in 
     Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 
     <details>
-      <summary>ArgoCD Application</summary>
+      <summary><b>ArgoCD application (click to expand)</b></summary>
 
     ```yaml showLineNumbers
     apiVersion: argoproj.io/v1alpha1

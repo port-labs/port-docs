@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Terraform: No-Code Resource Provisioning
+# Terraform: No-Code resource provisioning
 
 Port's Terraform provider, combined with Port's [self-service actions](/actions-and-automations/create-self-service-experiences) can be used to expose IaC no-code resource provisioning operations to users. These provisioning operations can automate the lifecycle of different cloud resources.
 
@@ -78,7 +78,7 @@ First, set up a [blueprint](/build-your-software-catalog/customize-integrations/
 You can create as many [properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/properties.md) as you want for the bucket, but this example keeps it lean with 4 properties - `URL`, `Bucket Name`, `Bucket ACL` and `Tags`.
 
 <details>
-<summary> AWS bucket blueprint </summary>
+<summary><b>AWS bucket blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -119,7 +119,7 @@ You can create as many [properties](/build-your-software-catalog/customize-integ
 Next, we want to create self-service actions to support `Create`, `Change ACL`, and `Delete` S3 buckets.
 
 <details>
-<summary> Self-service actions for AWS bucket blueprint </summary>
+<summary><b>Self-service actions for AWS bucket blueprint (click to expand)</b></summary>
 
 Replace `https://your-webhook-url.com` with the URL you got earlier from Ngrok or Smee.
 

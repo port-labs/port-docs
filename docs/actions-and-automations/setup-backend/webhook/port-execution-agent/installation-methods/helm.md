@@ -21,7 +21,7 @@ You can observe the helm chart and the available parameters [here](https://githu
 
 1. Add Port's Helm repo by using the following command:
 
-    ```bash
+    ```bash showLineNumbers
     helm repo add port-labs https://port-labs.github.io/helm-charts
     helm repo update
     ```
