@@ -333,8 +333,8 @@ This example demonstrates how to filter an entity input dropdown to show only en
         "combinator": "and",
         "rules": [
           {
-            "property": "team_mirror", // A mirror property of the Owning team 
-            "operator": "in",          // added to the environment blueprint
+            "property": "team_mirror", // Need to add a mirror property of the Owning team 
+            "operator": "in",          // to the environment blueprint
             "value": {
               "jqQuery": ".user.team"
             }
@@ -360,17 +360,40 @@ For examples of dynamic action permissions using search and query syntax, see th
 
 ## Scorecards
 
-You can configure scorecard rule filters in the [scorecards page](https://app.getport.io/settings/scorecards) when creating or editing a scorecard rule. The filter field appears in the rule configuration form.
+Configure filters in the [scorecards page](https://app.getport.io/settings/scorecards) when creating or editing a scorecard rule. Filters determine which entities the rule evaluates, applying quality checks only to relevant entities.
 
-**Scorecard rule filters** - Determine which entities a scorecard rule evaluates, applying quality checks only to relevant entities.
+:::info Scorecards use conditions
+Scorecard filters use `conditions` instead of `rules`, but follow the same structure with `combinator`, `property`, `operator`, and `value`.
+:::
 
-<!-- TODO: Add example -->
+This example demonstrates how to filter a scorecard to apply only to production services owned by specific teams. This ensures the quality check only runs on critical services:
+
+```json showLineNumbers
+{
+  "combinator": "and",
+  "conditions": [
+    {
+      "property": "environment",
+      "operator": "=",
+      "value": "production"
+    },
+    {
+      "property": "$team",
+      "operator": "containsAny",
+      "value": [
+        "backend-team",
+        "platform-team"
+      ]
+    }
+  ]
+}
+```
 
 ## Aggregation properties
 
 [Aggregation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) allow you to calculate metrics based on related entities in your catalog. You can use search and query syntax to filter which entities are included in the aggregation calculations.
 
-Configure aggregation properties in the [data model](https://app.getport.io/settings/data-model) page by editing a blueprint's JSON and adding the `aggregationProperties` key.
+Configure filters when creating or editing an aggregation property in the [data model](https://app.getport.io/settings/data-model) page.
 
 This example demonstrates how to calculate the number of open high-severity vulnerabilities for each service, filtering only vulnerabilities with `severity` set to `high` and `status` set to `open`:
 
