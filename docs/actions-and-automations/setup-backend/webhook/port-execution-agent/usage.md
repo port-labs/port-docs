@@ -24,8 +24,6 @@ When using the execution agent, in the `url` field you need to provide a URL to 
 
 Once configured, the Port Agent will run in your environment and trigger webhooks for self-service actions or software catalog changes.
 
-When a new invocation is detected, the agent pulls it from your Kafka topic and forwards it to the internal API in your private network.
-
 ![Port Execution Agent Logs](/img/self-service-actions/port-execution-agent/portAgentLogs.png)
 
 :::info Advanced configuration
@@ -69,8 +67,7 @@ An alternative streamer mechanism that polls the Port API via HTTP to retrieve p
 - Where higher latency is acceptable
 
 **Considerations:**
-- **Polling-based:** Introduces a delay up to 10 seconds between checks for new runs
-- **Higher latency:** Not suitable for time-sensitive operations requiring immediate execution
+- **Polling-based:** Not suitable for time-sensitive operations requiring immediate execution
 - **Action runs only:** Does not support changelog destinations
 
 **Configuration:**
@@ -83,34 +80,7 @@ For the Helm installation, set:
 
 Note: HTTP streamer does not require `KAFKA_CONSUMER_GROUP_ID`.
 
-:::tip HTTP streamer benefits
-The HTTP streamer is ideal for environments with network restrictions that prevent Kafka connectivity. While it operates with higher latency than Kafka, it provides a reliable alternative using standard HTTP connections.
-:::
-
-:::info Streamer comparison
-| Feature | Kafka Streamer | HTTP Streamer |
-|---------|----------------|-----------------|
-| Latency | Real-time (milliseconds) | Polling-based (up to 10 seconds) |
-| Network Requirements | Kafka connectivity | HTTP only |
-| Changelog Support | ✅ Yes | ❌ No |
-| Setup Complexity | Moderate (requires consumer group) | Simple (no additional config) |
-| Best For | Production, real-time needs | Network-restricted environments |
-:::
-
 ## When to use HTTP polling vs Kafka
-
-### Scaling behavior
-
-**HTTP polling:**
-
-- All pods work in parallel — no duplicates.
-- Scale pods in and out without configuration changes.
-
-**Kafka:**
-
-- Maximum parallel pods equals the number of partitions.
-- Extra pods beyond the partition count remain idle.
-- Adding partitions requires a support ticket.
 
 ### Comparison
 
@@ -118,27 +88,9 @@ The HTTP streamer is ideal for environments with network restrictions that preve
 |--------|--------------|-------|
 | Horizontal scaling | ✅ Unlimited pods | ❌ Limited by partition count |
 | Setup complexity | ✅ Simple (HTTP only) | ❌ Requires Kafka infrastructure and networking configuration |
-| Latency | Up to 10 seconds (polling) | < 1 second (real-time) |
+| Latency | Polling-based | Real-time |
 | Dynamic scaling | ✅ Add/remove pods instantly | ❌ Requires support ticket to add partitions |
 | Changelog support | ❌ No | ✅ Yes |
-| Best for | Most teams, dynamic scaling | Real-time needs |
-
-### When to use each
-
-**Use HTTP polling when:**
-
-- You need easy horizontal scaling without partition limits.
-- You want simple setup without Kafka infrastructure.
-- Where higher latency is acceptable.
-
-**Use Kafka when:**
-
-- You need real-time processing.
-- You need changelog destination support.
-
-:::caution Kafka partition limits
-Kafka scaling is limited by partition count. Extra pods beyond the partition count will remain idle. Adding partitions requires a support ticket.
-:::
 
 ## Self-signed certificate configuration
 
@@ -257,9 +209,7 @@ extraVolumeMounts:
 
 ## Overriding configurations
 
-When installing the Port Agent, you can override default values in the `helm upgrade` command:
-
-By using the `--set` flag, you can override specific agent configuration parameters during agent installation/upgrade:
+You can override default values using the `--set` flag during agent installation/upgrade:
 
 ```bash showLineNumbers
 helm upgrade --install my-port-agent port-labs/port-agent \
