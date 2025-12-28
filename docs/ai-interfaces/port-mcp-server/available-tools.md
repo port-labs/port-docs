@@ -44,6 +44,16 @@ For example, if you only want to query data from Port without building or modify
 The `x-read-only-mode` header defaults to `0`, which allows all tools based on your permissions. You can change it to `1` when configuring your MCP server connection to automatically restrict to read-only tools. When set to `1`, write tools are completely hidden from the available tools list. See the [installation guide](/ai-interfaces/port-mcp-server/overview-and-installation#installing-port-mcp) for details on how to configure this header.
 :::
 
+:::tip Control which actions are available
+The `x-allowed-actions-to-run` header allows you to control which actions are available through the `run_action` tool. This header accepts a comma-separated list of action identifiers. Only the specified actions will be available.
+
+For example:
+- `x-allowed-actions-to-run: "create_github_issue,create_incident"` - Allows only the specified GitHub and incident actions
+- `x-allowed-actions-to-run: "create_service,deploy_to_production"` - Allows only the specified deployment actions
+
+If the header is not specified, all actions you have permission to run will be available. This provides granular control over which actions can be executed through the MCP server, helping you restrict access to specific workflows or integrations. See the [MCP server headers](/ai-interfaces/port-mcp-server/overview-and-installation#mcp-server-headers) section for details on all available headers.
+:::
+
 <Tabs groupId="tool-selection" queryString>
 <TabItem value="cursor" label="Cursor">
 
