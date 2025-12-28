@@ -17,7 +17,8 @@ Filters are especially useful when dealing with blueprints that have a large num
 
 <Tabs groupId="catalog-filters" defaultValue="basic" values={[
 {label: "Basic example", value: "basic"},
-{label: "Advanced example", value: "advanced"}
+{label: "Advanced example", value: "advanced"},
+{label: "Blueprint read permissions", value: "permissions"}
 ]}>
 
 <TabItem value="basic">
@@ -75,6 +76,16 @@ This example demonstrates how to filter a service catalog page with multiple con
   ]
 }
 ```
+
+</TabItem>
+
+<TabItem value="permissions">
+
+Blueprint read permissions can also be configured with dynamic `policy` rules using search and query syntax. Configure these in the [data model](https://app.getport.io/settings/data-model) page by clicking on a blueprint and going to the **Permissions** tab.
+
+The `policy` key allows you to create dynamic read access rules, granting users access to entities based on their properties, team membership, and contextual user data. This controls which entities users can see in catalog pages.
+
+For detailed examples and information about blueprint permissions with search queries, see the [Policy tab](/build-your-software-catalog/set-catalog-rbac/set-catalog-rbac#read) in the catalog RBAC documentation.
 
 </TabItem>
 
@@ -318,15 +329,14 @@ This example demonstrates how to filter an entity input dropdown to show only en
       "type": "string",
       "format": "entity",
       "blueprint": "environment",
-      "title": "Target Environment",
       "dataset": {
         "combinator": "and",
         "rules": [
           {
-            "property": "$team",
-            "operator": "containsAny",
+            "property": "team_mirror", // A mirror property of the Owning team 
+            "operator": "in",          // added to the environment blueprint
             "value": {
-              "jqQuery": ".user.teams | map(.name)"
+              "jqQuery": ".user.team"
             }
           }
         ]
@@ -340,37 +350,13 @@ This example demonstrates how to filter an entity input dropdown to show only en
 
 <TabItem value="permissions">
 
-Dynamic permissions dynamically control who can execute or approve actions based on entity properties and user context. After creating an action, edit it and click **Edit JSON** → **Permissions** tab to configure query-based permissions.
+[Dynamic permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions) control who can execute or approve actions based on entity properties and user context. When creating or editing an action, go to the **Permissions** tab to configure query-based permissions.
 
-This allows you to create complex permission rules using search queries combined with the action's blueprint permissions configuration.
-
-:::tip Understanding permissions policies
-The `policy` object works together with the `roles`, `users`, and `teams` fields to determine final access. When a `policy` is defined, the roles/users/teams control **visibility**, while the policy controls **execution/approval** permissions.
-:::
-
-<!-- TODO: Add example - permissions policy with search queries explaining how it works with other permission factors -->
+For examples of dynamic action permissions using search and query syntax, see the [examples section](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions#examples) of the Dynamic permissions page.
 
 </TabItem>
 
 </Tabs>
-
-## Automations
-
-Trigger conditions for [automations](/actions-and-automations/define-automations/define-automations) are configured in the [automations page](https://app.getport.io/settings/automations) under the **Trigger** tab. These filters determine which entities trigger an automation, ensuring automations only run for entities that meet specific criteria.
-
-<!-- TODO: Add example -->
-
-## RBAC
-
-You can configure these permission policies in the [data model](https://app.getport.io/settings/data-model) page. For blueprint permissions, click on a blueprint and go to the **Permissions** tab. For action permissions, go to the action settings and navigate to the **Permissions** tab.
-
-**Blueprint read permissions** - Create dynamic read access rules, granting users access to entities based on their properties and team membership.
-
-<!-- TODO: Add example -->
-
-**Action permissions** - Define complex execution and approval logic for actions, controlling who can perform actions based on entity and user properties.
-
-<!-- TODO: Add example -->
 
 ## Scorecards
 
@@ -379,6 +365,44 @@ You can configure scorecard rule filters in the [scorecards page](https://app.ge
 **Scorecard rule filters** - Determine which entities a scorecard rule evaluates, applying quality checks only to relevant entities.
 
 <!-- TODO: Add example -->
+
+## Aggregation properties
+
+[Aggregation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) allow you to calculate metrics based on related entities in your catalog. You can use search and query syntax to filter which entities are included in the aggregation calculations.
+
+Configure aggregation properties in the [data model](https://app.getport.io/settings/data-model) page by editing a blueprint's JSON and adding the `aggregationProperties` key.
+
+This example demonstrates how to calculate the number of open high-severity vulnerabilities for each service, filtering only vulnerabilities with `severity` set to `high` and `status` set to `open`:
+
+```json showLineNumbers
+{
+  "aggregationProperties": {
+    "numberOfOpenHighVulnerabilities": {
+      "title": "Number of open high severity vulnerabilities",
+      "target": "vulnerability",
+      "calculationSpec": {
+        "calculationBy": "entities",
+        "func": "count"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "severity",
+            "operator": "=",
+            "value": "high"
+          },
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "open"
+          }
+        ]
+      }
+    }
+  }
+}
+```
 
 ## API
 
@@ -550,9 +574,3 @@ curl --location --request POST 'https://api.getport.io/v1/entities/search?attach
 </TabItem>
 
 </Tabs>
-
-## Limitations and operator availability
-
-Different areas of Port may have specific limitations or operator restrictions when using search & query syntax. This section outlines any unique constraints for each usage location.
-
-<!-- TODO: Add section documenting limitations (available operators, restrictions, etc) unique to different areas where search & query can be used -->

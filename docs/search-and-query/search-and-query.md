@@ -16,13 +16,12 @@ Port's API provides tools to easily query, search and filter software catalog da
 
 You can use the search and query syntax in the following areas:
 
-- **Catalog pages** - Initial filters for pages and tables.
+- **Catalog pages** - Initial filters for pages and blueprint read permissions.
 - **Entity pages** - Filters for custom related entity tabs.
 - **Dashboard widgets** - Dashboard-level filters and widget-specific filters for [data widgets](/customize-pages-dashboards-and-plugins/dashboards/data-widgets).
 - **Self-service actions** - Action conditions, entity input datasets, and dynamic permissions.
-- **Automations** - Trigger conditions to filter which entities activate automations.
-- **RBAC** - Dynamic read permissions for blueprints and action execution/approval policies.
 - **Scorecards** - Filters to determine which entities a rule evaluates.
+- **Aggregation properties** - Filters to determine which entities are included in [aggregation calculations](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property).
 - **API** - Search endpoints ([search entities](/api-reference/search-entities) and [search a blueprint's entities](/api-reference/search-a-blueprints-entities)).
 
 For practical examples of using search & query in each of these areas, see the [examples](/search-and-query/examples) page.

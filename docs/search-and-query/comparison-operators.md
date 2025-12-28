@@ -249,7 +249,7 @@ The `notBetween` operator checks datetime values and returns entities whose rele
 
 ### contains
 
-The `contains` operator checks if the specified value exists within a string property:
+The `contains` operator checks if the specified value exists within a **string** property:
 
 ```json showLineNumbers
 {
