@@ -18,9 +18,9 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 1. Create an Argo Workflow blueprint in Port.
 
     <details>
-    <summary><b>Argo Worklow Blueprint (click to expand)</b></summary>
+    <summary><b>Argo Worklow Blueprint</b> (Click to expand)</summary>
 
-    ```json showLineNumbers
+    ```json
     {
       "identifier": "argoWorkflow",
       "description": "This blueprint represents an Argo Workflow.",
@@ -58,7 +58,7 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
     </details>
 
 2. Register an existing `Argo workflow` entity in the catalog (<b>Recommended</b>).
-    :::info Optional
+    :::note Optional
       This step is optional, but recommended in order to avoid having to re-enter the workflow input properties every time before executing the action. The workflow should exist in your Argo Workflow deployment instance as well. [Learn more](https://argo-workflows.readthedocs.io/en/latest/quick-start/#submit-an-example-workflow).
     :::
 
@@ -66,16 +66,19 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
       - Automatically, by integrating Argo as a data source.
       - Manually, by creating workflow entities yourself.
       
-      The following example demonstrates how to we manually add an `Argo Workflow`:  
+      In this example, we will manually add an `Argo Workflow`:  
+      In your `Argo workflows` catalog page click the `+ Argo Workflow` button in the top right corner. Then click the toggle button to edit a JSON file. Paste the template data of the workflow you wish to trigger. An example template has been provided below for your convenience.
+
+      In this example, we will manually add an `Argo Workflow`:  
       On your Argo Workflows catalog page, click the `+ Argo Workflow` button in the top-right corner.  
       Then, toggle the JSON mode button to switch to JSON mode. Paste the template of the workflow you want to trigger. You can use the example provided below as a starting point.
 
       As stated in the note above, be sure to submit this example workflow to your Argo Workflow deployment instance before using it in Port.
 
       <details>
-      <summary><b>Argo workflow template example (click to expand)</b></summary>
+      <summary><b>Argo workflow template example</b> (Click to expand)</summary>
 
-      ```json showLineNumbers
+      ```json
       {
         "identifier": "f7d561c3-2791-4092-b960-8f2428ef9d79",
         "title": "hello-world-x9w5h",
@@ -172,7 +175,7 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 3. Create a Port action using the following JSON definition:
 
       <details>
-      <summary><b>Port action (click to expand)</b></summary>
+      <summary><b>Port action </b> (Click to expand)</summary>
 
       ```json showLineNumbers title=trigger a workflow
       {
@@ -253,7 +256,7 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 4. Create a JSON file (`invocations.json`) in your working directory.
 
       <details>
-      <summary><b>Invocation Mapping (click to expand)</b></summary>
+      <summary><b> Invocation Mapping </b> (Click to expand)</summary>
 
       ```json showLineNumbers title="invocations.json"
       [
@@ -279,11 +282,11 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
 5. Run the helm command below to install a port agent for Argo Workflows.
 
       <details>
-      <summary><b>Port agent installation for Argo Workflows (click to expand)</b></summary>
+      <summary><b>Port agent installation for Argo Workflows</b> (Click to expand)</summary>
 
       **Remember to replace the boilerplate credentials in the helm command with your actual credentials.**
 
-      ```sh showLineNumbers
+      ```sh
       helm repo add port-labs https://port-labs.github.io/helm-charts
 
       helm repo update
@@ -295,7 +298,7 @@ This example helps internal developer teams to trigger an [Argo Workflow](https:
           --set env.secret.PORT_CLIENT_SECRET=YOUR_PORT_CLIENT_SECRET \
           --set env.normal.KAFKA_CONSUMER_GROUP_ID=YOUR_KAFKA_CONSUMER_GROUP \
           --set env.secret.KAFKA_CONSUMER_USERNAME=YOUR_KAFKA_USERNAME \
-          --set env.secret.KAFKA_CONSUMER_PASSWORD=YOUR_KAFKA_PASSWORD
+          --set env.secret.KAFKA_CONSUMER_PASSWORD=YOUR_KAFKA_PASSWORD \
           --set env.normal.KAFKA_CONSUMER_BROKERS=PORT_KAFKA_BROKERS \
           --set env.normal.STREAMER_NAME=KAFKA \
           --set env.normal.KAFKA_CONSUMER_AUTHENTICATION_MECHANISM=SCRAM-SHA-512 \
