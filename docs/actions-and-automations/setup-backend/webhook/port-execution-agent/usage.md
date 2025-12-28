@@ -83,7 +83,6 @@ Note: HTTP streamer does not require `KAFKA_CONSUMER_GROUP_ID`.
 | Aspect | HTTP Polling | Kafka |
 |--------|--------------|-------|
 | Horizontal scaling | ✅ Unlimited pods | ❌ Limited by partition count |
-| Setup complexity | ✅ Simple (HTTP only) | ❌ Requires Kafka infrastructure and networking configuration |
 | Latency | Polling-based | Real-time |
 | Dynamic scaling | ✅ Add/remove pods instantly | ❌ Requires support ticket to add partitions |
 | Changelog support | ❌ No | ✅ Yes |
