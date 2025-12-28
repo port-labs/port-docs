@@ -1,3 +1,6 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 <details>
 
 <summary><b>Port port-app-config.yml (click to expand)</b></summary>
@@ -24,7 +27,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__repository + "-" + (.number | tostring)
+          identifier: .__repository + "/" + (.number | tostring)
           title: .number | tostring
           blueprint: '"githubDependabotAlert"'
           properties:
@@ -49,9 +52,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__repository + "-" + (.number | tostring)
+          identifier: .__repository + "/" + (.number | tostring)
           title: .rule.name
-          blueprint: '"githubCodeScanAlerts"'
+          blueprint: '"githubCodeScanAlert"'
           properties:
             state: .state
             severity: .rule.severity
@@ -60,6 +63,76 @@ resources:
             url: .html_url
           relations:
             repository: .__repository
+
+  - kind: secret-scanning-alerts
+    selector:
+      query: 'true'
+      state: all
+      hideSecret: false
+    port:
+      entity:
+        mappings:
+          identifier: .__repository + "/" + (.number | tostring)
+          title: .number | tostring
+          blueprint: '"githubSecretScanAlert"'
+          properties:
+            state: .state
+            secret_type: .rule.secret_type
+            url: .url
+          relations:
+            repository: .__repository
 ```
 
 </details>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Dependabot severity" value="dependabotSeverity">
+
+You can use the `severity` selector to filter dependabot alerts by severity levels.  
+An alert is ingested if its severity is **any one** of the severities you set (OR logic across the list). Valid values: `low`, `medium`, `high`, `critical`.
+
+```yaml showLineNumbers
+- kind: dependabot-alert
+  selector:
+    query: "true"
+    states: ["open", "fixed"]
+    # highlight-next-line
+    severity: ["high", "critical"]
+```
+
+</TabItem>
+
+<TabItem label="Dependabot ecosystems" value="dependabotEcosystems">
+
+You can use the `ecosystems` selector to filter dependabot alerts by package ecosystems.  
+An alert is ingested if its ecosystem is **any one** of the ecosystems you set (OR logic across the list). Valid values: `composer`, `go`, `maven`, `npm`, `nuget`, `pip`, `pub`, `rubygems`, `rust`.
+
+```yaml showLineNumbers
+- kind: dependabot-alert
+  selector:
+    query: "true"
+    states: ["open", "fixed"]
+    # highlight-next-line
+    ecosystems: ["npm", "pip"]
+```
+
+</TabItem>
+
+<TabItem label="Code scanning severity" value="codeScanningSeverity">
+
+You can use the `severity` selector to filter code scanning alerts by severity level.  
+An alert is ingested only if its severity matches the value you set. Valid values: `critical`, `high`, `medium`, `low`, `warning`, `note`, `error`.
+
+```yaml showLineNumbers
+- kind: code-scanning-alerts
+  selector:
+    query: "true"
+    state: "open"
+    # highlight-next-line
+    severity: "high"
+```
+
+</TabItem>
+
+</Tabs>

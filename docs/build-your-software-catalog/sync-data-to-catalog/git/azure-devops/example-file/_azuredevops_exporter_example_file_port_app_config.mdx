@@ -1,6 +1,5 @@
 <details>
-
-<summary>Integration mapping</summary>
+<summary><b>Integration mapping (click to expand)</b></summary>
 
 :::tip Configuration Mapping for Azure DevOps File Ingestion
 The `selector` section within a `file` resource demonstrates how to configure file ingestion from Azure DevOps repositories. You can control:
@@ -24,7 +23,7 @@ resources:
         mappings:
           identifier: .file.path | gsub(" "; "")
           title: .file.path
-          blueprint: '"file"'
+          blueprint: '"azureDevopsFile"'
           properties:
             path: .file.path
             size: .file.size
@@ -33,9 +32,8 @@ resources:
             isFolder: .file.isFolder
             extension: .file.extension
           relations:
-            repository: >-
-              "\(.repo.project.name | ascii_downcase | gsub("[ ();]";
-              ""))/\(.repo.name | ascii_downcase | gsub("[ ();]"; ""))"
+            repository: .repo.id
+
   - kind: file
     selector:
       query: 'true'
@@ -51,7 +49,7 @@ resources:
         mappings:
           identifier: .repo.name + "/" + .file.objectId
           title: .file.path
-          blueprint: '"file"'
+          blueprint: '"azureDevopsFile"'
           properties:
             path: .file.path
             size: .file.size
@@ -60,9 +58,7 @@ resources:
             isFolder: .file.isFolder
             extension: .file.extension
           relations:
-            repository: >-
-              "\(.repo.project.name | ascii_downcase | gsub("[ ();]";
-              ""))/\(.repo.name | ascii_downcase | gsub("[ ();]"; ""))"
+            repository: .repo.id
 
 ```
 

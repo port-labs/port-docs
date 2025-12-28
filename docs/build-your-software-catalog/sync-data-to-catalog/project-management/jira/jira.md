@@ -21,6 +21,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Jira
 
+<IntegrationVersion integration="jira" />
+
 Port's Jira Cloud integration allows you to model Jira Cloud resources in your software catalog and ingest data into them.
 
 :::info Jira Cloud integration
@@ -34,7 +36,7 @@ This integration allows you to:
 - Watch for Jira object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Define self-service actions that can create/delete Jira objects or perform any other logic on Jira resources.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Jira into Port are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
@@ -92,9 +94,7 @@ OAuth is best suited for the **initial setup** phase, such as configuring mappin
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
-
-<IntegrationVersion integration="jira" />
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -229,7 +229,7 @@ This table summarizes the available parameters for the installation.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Jira integration once and then exit, this is useful for **scheduled** ingestion of data.
 
@@ -240,8 +240,8 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 
 | Parameter                        | Description                                                                                                                                                                                                                                                                              | Example                       | Required |
 |----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|----------|
-| `port_client_id`                 | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |                               | ✅        |
-| `port_client_secret`             | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |                               | ✅        |
+| `port_client_id`                 | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                |                               | ✅        |
+| `port_client_secret`             | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                           |                               | ✅        |
 | `port_base_url`                  | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |                               | ✅        |
 | `config -> jira_host`            | The URL of your Jira                                                                                                                                                                                                                                                                     | https://example.atlassian.net | ✅        |
 | `config -> atlassian_user_email` | The email of the user used to query Jira                                                                                                                                                                                                                                                 | user@example.com              | ✅        |

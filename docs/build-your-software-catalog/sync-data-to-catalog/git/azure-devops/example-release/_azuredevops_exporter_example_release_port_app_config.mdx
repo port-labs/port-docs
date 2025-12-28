@@ -1,6 +1,5 @@
 <details>
-
-<summary>Integration mapping</summary>
+<summary><b>Integration mapping (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -12,7 +11,7 @@ resources:
         mappings:
           identifier: .projectReference.id + "-" + (.id | tostring) | gsub(" "; "")
           title: .name
-          blueprint: '"release"'
+          blueprint: '"azureDevopsRelease"'
           properties:
             status: .status
             reason: .reason

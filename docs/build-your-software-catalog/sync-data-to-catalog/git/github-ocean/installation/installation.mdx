@@ -2,13 +2,17 @@
 sidebar_position: 1
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import HelmParameters from "../../../templates/\_ocean-advanced-parameters-helm.mdx"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_saas_installation.mdx"
-import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_realtime_installation.mdx"
-import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
-import InstallMethods from "./\_install_methods.mdx"
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import HelmParameters from "../../../templates/\_ocean-advanced-parameters-helm.mdx";
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_saas_installation.mdx";
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_realtime_installation.mdx";
+import {
+  OceanSaasLiveEventsDescription,
+  OceanSaasLiveEventsTriggersManual,
+  liveEvents,
+} from "/src/components/ocean-saas-specifics/live-events.jsx";
+import InstallMethods from "./\_install_methods.mdx";
 
 # Installation
 
@@ -16,7 +20,7 @@ This page details how to install Port's GitHub integration (powered by the Ocean
 
 This page outlines the following steps:
 
-1. How to [create](#create-access-token) an access token to give the integration permissions to query your Github organization.
+1. How to [create](#create-access-token) an access token to give the integration permissions to query your GitHub organization.
 2. How to [deploy](#deploy-the-integration) the integration in the configuration that fits your use case.
 
 ## Prerequisites
@@ -28,18 +32,21 @@ This page outlines the following steps:
 
 ### Create access token
 
-To allow Port to fetch data from your GitHub Organization, you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and GitHub app installation tokens.
+To allow Port to fetch data from your GitHub Organization(s), you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and GitHub app installation tokens.
 
 <Tabs>
 <TabItem value="pat" label="Personal Access Token (PAT)">
 
-A Personal Access Token (PAT) is suitable if you're the only one managing the integration and don't need frequent credential rotation.  
-To create a personal access token see Github's [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
+A Personal Access Token (PAT) is suitable if you are the only one managing the integration and don't need frequent credential rotation.  
+To create a personal access token see GitHub's [managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
 
-- The token must belong to a user with access to the relevant Github resources (e.g., repositories, teams).
+The token must belong to a user with access to the relevant GitHub resources (e.g., repositories, teams) across all organizations you want to sync.
+
+You will use this token as the `githubToken` parameter when [deploying the integration](#deploy-the-integration) below.
+
 
 <details>
-  <summary>Required permissions</summary>
+<summary><b>Required permissions (click to expand)</b></summary>
   
   These are the necessary permissions if you're creating a fine-grained PAT.
   
@@ -60,21 +67,46 @@ To create a personal access token see Github's [managing your personal access to
   - **Administration**: Readonly(for syncing external identities)
   - **Webhooks**: Read and Write (for managing webhook)
 
-
 :::note Default permissions
 You will be prompted to confirm the above listed permissions when creating a personal access token.
 
-Permissions can be given to selected repositories in your organization, or to all repositories.   
+Permissions can be given to selected repositories in your organization, or to all repositories.  
 You can reconfigure the permission at any time, giving it access to new repositories, or removing access.
 
 :::
+
 </details>
 
 </TabItem>
 <TabItem value="github-app" label="GitHub App">
 
-A GitHub App provides automatic access token rotation and is a good alternative to PATs.  
-To set it up, see the [GitHub App installation guide](./github-app.mdx).
+A GitHub App provides automatic access token rotation and is a good alternative to PATs.
+
+<h4>Quick setup with OAuth (recommended)</h4>
+
+You can create and install a custom GitHub App directly from Port's UI using OAuth. This is the recommended approach as it streamlines the entire setup process:
+
+1. Navigate to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+
+2. Click on `+ Data source` and select `Github-ocean`.
+
+3. Click on the `Connect` button.
+
+4. Select the GitHub organization where you want to install the integration.
+
+5. Enter a custom app name and create it.
+
+6. Install your custom app.
+
+7. Your integration will be ready to use immediately.
+
+<h4>Manual setup</h4>
+
+For advanced configurations or if you prefer to manually create the GitHub App, see the [GitHub App installation guide](./github-app).
+
+:::caution Single organization limitation
+GitHub App authentication supports **exactly one organization** only. You must specify one organization using the `githubOrganization` configuration parameter.
+:::
 
 </TabItem>
 </Tabs>
@@ -88,12 +120,13 @@ Starting with Ocean 0.27, a new parameter was added to the configuration, which 
 Set `event_workers_count: 4` in your config (default: 1) to enable parallel group processing.
 
 When `event_workers_count > 1`, related GitHub events get grouped together:
+
 - All PR events (opened, review, status) for PR #123 → same processing group.
 - All issue events for issue #456 → same processing group.
 - Push events grouped by commit SHA.
 
 <details>
-  <summary>Event grouping behavior</summary>
+<summary><b>Event grouping behavior (click to expand)</b></summary>
   
   **Supported event types:**
   - **Pull Requests**: Grouped by PR number (`pull_request`, `pull_request_review`, `pull_request_review_comment`)
@@ -110,6 +143,45 @@ Events within the same group are processed sequentially to maintain order and pr
 Different groups can be processed in parallel across workers.
 With `event_workers_count: 1`, all events are processed sequentially using a simple queue.
 :::
+
 </details>
 
 <InstallMethods setupName="classic" />
+
+## Multi GitHub organization support
+
+Starting from **version 3.0.0-beta**, the GitHub integration supports syncing data from multiple GitHub organizations.
+
+**Configuration:**
+
+- **GitHub App or fine-grained PAT**: Use `githubOrganization` to specify a single organization.
+- **Classic PAT**: 
+  - Specify organizations in your port mapping using `organizations: ["org1", "org2", "org3"]`.
+  - If `organizations` is not specified, the integration syncs all organizations the classic PAT has access to.
+
+<details>
+<summary><b>Multi-organization mapping example (click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+organizations:
+  - org1
+  - org2
+# ... rest of your mapping (repositoryType, resources, etc.) ...
+```
+
+</details>
+
+**Precedence:**
+
+If `githubOrganization` is set in the environment variables or config and `organizations` are also listed in the port mapping, the integration prioritizes single-organization behavior and syncs only the `githubOrganization`.
+
+**Performance considerations:**
+
+Syncing multiple organizations increases the number of API calls to GitHub and may slow down the integration. The more organizations you sync, the longer the resync time and the higher the API rate limit consumption.
+
+**Default mapping behavior:**
+
+First-time installs may sync more data than intended if organizations are not scoped. After installation, review your mapping configuration to ensure only the required organizations are included.

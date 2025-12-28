@@ -152,62 +152,6 @@ ___
 
 Several relation-based operators are available, see them [here](./relation-operators).
 
-### Dynamic properties
-
-When using Port's UI, you can use properties of the logged-in user when writing rules by using the following functions:
-
-- `getUserTeams` - a list of the teams the user belongs to.
-- `getUserEmail` - the user's email.
-- `getUserFullName` - the user's full name.
-- `blueprint` - the blueprint identifier of the current page.
-
-:::info UI only
-Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
-:::
-Several relation-based operators are available, see them [here](./relation-operators).
-
-#### Usage examples
-
-```json showLineNumbers
-[
-  {
-    "property": "$team",
-    "operator": "containsAny",
-    "value": ["{{getUserTeams()}}"]
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
-    "property": "emails",
-    "operator": "contains",
-    "value": "{{getUserEmail()}}"
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
-    "property": "name",
-    "operator": "=",
-    "value": "{{getUserFullName()}}"
-  }
-]
-```
-
-```json showLineNumbers
-[
-  {
-    "property": "$blueprint",
-    "operator": "=",
-    "value": "{{blueprint}}"
-  }
-]
-```
-
 ### Contextual query rules
 
 To implement specific and/or complex queries, you can add the context of the triggering user to a query rule, allowing you to access that user's properties and/or owning teams.  
@@ -249,6 +193,9 @@ This can be used in either the `property` or `value` key in a query rule:
 | `userTeams` | The entities of the owning teams of the user triggering the query                                                                     |
 
 #### Usage examples
+
+<img src="/img/entities-search/contextual-search-rules.png" border="1px" width="90%" />
+
 The following rule will result in the entities owned by any one of the user's teams:
 ```json showLineNumbers
 [ 
@@ -284,7 +231,7 @@ The following rule asserts that only users with `manager` role will get the resu
   { 
     "property": {
       "context": "user",
-      "property": "port_role"
+      "property": "company_role"
     },
     "operator": "=",
     "value": "manager"
@@ -305,6 +252,8 @@ The following rule asserts that only users in the user's team/s will get the res
   }
 ]
 ```
+
+For examples of using contextual values with relation path filters, see [filter with contextual values](/search-and-query/relation-operators#filter-with-contextual-values).
 
 ### Filter by relations/scorecards
 
@@ -350,6 +299,67 @@ See the following examples for each filter type:
 </TabItem>
 
 </Tabs>
+
+
+### Dynamic properties
+
+:::warning Deprecation Notice
+Dynamic properties are deprecated and will be discontinued soon, please use [contextual query rules](#contextual-query-rules) instead.
+:::
+
+When using Port's UI, you can use properties of the logged-in user when writing rules by using the following functions:
+
+- `getUserTeams` - a list of the teams the user belongs to.
+- `getUserEmail` - the user's email.
+- `getUserFullName` - the user's full name.
+- `blueprint` - the blueprint identifier of the current page.
+
+:::info UI only
+Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/custom-widgets/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
+:::
+Several relation-based operators are available, see them [here](./relation-operators).
+
+#### Usage examples
+
+```json showLineNumbers
+[
+  {
+    "property": "$team",
+    "operator": "containsAny",
+    "value": ["{{getUserTeams()}}"]
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "emails",
+    "operator": "contains",
+    "value": "{{getUserEmail()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "name",
+    "operator": "=",
+    "value": "{{getUserFullName()}}"
+  }
+]
+```
+
+```json showLineNumbers
+[
+  {
+    "property": "$blueprint",
+    "operator": "=",
+    "value": "{{blueprint}}"
+  }
+]
+```
 
 ## Examples
 

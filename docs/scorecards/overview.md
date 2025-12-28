@@ -5,6 +5,10 @@ sidebar_label: Overview
 ---
 
 # Scorecards
+ 
+Scorecards help you ensure every component and process meets your engineering standards. They enable you to continuously monitor quality, security, and compliance across your software catalog, and easily act on insights through Port actions and automations.
+
+<img src="/img/scorecards/overview/production-readiness-scorecard.png" border='1px' width='100%' style={{borderRadius:'8px'}} /> 
 
 ## What is a Scorecard?
 
@@ -29,7 +33,7 @@ Scorecards can be used to evaluate the maturity, production readiness and engine
 - Is Grafana defined for the K8s cluster?
 - Is the relation of a certain entity empty?
 
-In this [live demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=2) example, you can see the scorecards defined on a service and their evaluation. 🎬
+In this [live demo](https://showcase.port.io/serviceEntity?identifier=authentication&activeTab=2) example, you can see the scorecards defined on a service and their evaluation. 🎬
 
 ## Next steps
 

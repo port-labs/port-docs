@@ -5,6 +5,7 @@ title: Overview & Installation
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import MCPInstallation from '/docs/generalTemplates/_mcp-installation.md'
 
 # Port MCP server
 
@@ -27,9 +28,9 @@ import TabItem from "@theme/TabItem"
 The Port Model Context Protocol (MCP) Server acts as a bridge, enabling Large Language Models (LLMs)—like those powering Claude, Cursor, or GitHub Copilot—to interact directly with your Port.io developer portal. This allows you to leverage natural language to query your software catalog, analyze service health, manage resources, and even streamline development workflows, all from your preferred interfaces.
 
 :::info AI Agents vs. MCP Server
-The Port MCP Server is currently in open beta and provides significant standalone value, independent of our [AI Agents feature](/ai-interfaces/ai-agents/overview). Port AI Agents are currently in closed beta with limited access, while the MCP Server gives you immediate access to streamline building in Port, query your catalog, analyze service health, and streamline development workflows using natural language.
+The Port MCP Server is currently in open beta and provides significant standalone value, independent of our [AI Agents feature](/ai-interfaces/ai-agents/overview). Both the MCP Server and AI Agents are in open beta and available to all users. The MCP Server gives you immediate access to streamline building in Port, query your catalog, analyze service health, and streamline development workflows using natural language.
 
-While the MCP Server can interact with Port AI Agents when available, the core MCP functionality can be used freely without requiring access to the closed beta AI Agents feature.
+While the MCP Server can interact with Port AI Agents when available, the core MCP functionality can be used freely on its own.
 :::
 
 ## Why integrate LLMs with your developer portal?
@@ -75,7 +76,7 @@ Effortlessly query your software catalog and get immediate answers. This elimina
 *   Ask: "Show me all the microservices owned by the Backend team."
 *   Ask: "What are the dependencies of the 'OrderProcessing' service?"
 
-![Querying the service catalog from an IDE](/img/ai-agents/MCPCopilotAskServices.png)
+<img src="/img/ai-agents/MCPCopilotAskServices.png" width="100%" border="1px" />
 
 ### Vibe-build in Port
 
@@ -86,7 +87,7 @@ Leverage Claude's capabilities to manage and build your entire Port software cat
 *   Ask: "I want a new production readiness scorecard to track the code quality and service alerts"
 *   Ask: "Create a new self-service action in Port to scaffold a new service"
 
-![Claude building a self-service action](/img/ai-agents/MCPClaudeBuildSSA.png)
+<img src="/img/ai-agents/MCPClaudeBuildSSA.png" width="100%" border="1px" />
 
 ### Analyze scorecards and quality
 
@@ -96,11 +97,11 @@ Gain insights into service health, compliance, and quality by leveraging Port's 
 *   Ask: "What's preventing the 'InventoryService' from reaching Gold level in the 'Production Readiness' scorecard?"
 *   Ask: "Show me the bug count vs. test coverage for all Java microservices."
 
-![Asking about bug counts and test coverage correlation](/img/ai-agents/MCPClaudeInsightsBugs.png)
+<img src="/img/ai-agents/MCPClaudeInsightsBugs.png" width="100%" border="1px" />
 
 *   Ask: "Which of our services are missing critical monitoring dashboards?"
 
-![Identifying services lacking proper monitoring](/img/ai-agents/MCPClaudeMonitoringServices.png)
+<img src="/img/ai-agents/MCPClaudeMonitoringServices.png" width="100%" border="1px" />
 
 ### Streamline development and operations
 
@@ -110,209 +111,133 @@ Receive assistance with common development and operational tasks, directly withi
 *   Ask: "Guide me through creating a new component blueprint with 'name', 'description', and 'owner' properties."
 *   Ask: "Help me add a rule to the 'Tier1Services' scorecard that requires an on-call schedule to be defined."
 
-![Getting instructions for new service setup](/img/ai-agents/MCPClaudeServiceSetup.png)
+<img src="/img/ai-agents/MCPClaudeServiceSetup.png" width="100%" border="1px" />
 
 ### Find your own use cases
 
 You can use Port's MCP to find the use cases that will be valuable to you. Try using this prompt: "think of creative prompts I can use to showcase the power of Port's MCP, based on the data available in Port"
 
+<MCPInstallation />
 
-## Installing Port MCP
+## Connect the server to multiple organizations
 
-Installing Port's MCP is simple. Follow the instructions for your preferred tool, or learn about the archived local MCP server.
+Port uses your browser's OAuth session to approve MCP connections. When your MCP client opens the authentication prompt, you approve access in the organization where you are currently logged in. Follow these steps to connect to the correct organization:
 
-<Tabs groupId="mcp-setup" queryString>
-<TabItem value="cursor" label="Cursor">
-To connect Cursor to Port's remote MCP, follow these steps:
+- Make sure you are logged in to the desired organization in your browser before you start the MCP connection flow.
+- Approve the OAuth prompt from your MCP client while you remain logged in to that organization.
+- Continue using the MCP client; changing your browser session afterward does not change the connected organization.
 
-1. **Go to Cursor settings, click on Tools & Integrations, and add a new MCP server**
+To connect another organization from the same MCP client, add a second configuration and repeat the flow while logged in to the other organization. Each configuration keeps its own OAuth approval, so you can work with multiple organizations in parallel.
 
-![Go to Cursor Settings](/img/ai-agents/MCPInstallCursorStep1.png)
+## Connecting the server when SSO is enabled
 
-2. **Add the above configuration**
+If your organization uses SSO (Single Sign-On) and you see an error like the one below when trying to connect to the MCP Server:
 
-Use the appropriate configuration for your region:
+<img src="/img/ai-agents/PortAIMCPServerSSOEreror.png" width="80%" border="1px" />
 
-<Tabs>
-<TabItem value="eu" label="EU">
-```json showLineNumbers
-{
-  "mcpServers": {
-    "port-eu": {
-      "url": "https://mcp.port.io/v1"
-    }
-  }
-}
-```
-</TabItem>
-<TabItem value="us" label="US">
-```json showLineNumbers
-{
-  "mcpServers": {
-    "port-us": {
-      "url": "https://mcp.us.port.io/v1"
-    }
-  }
-}
-```
-</TabItem>
-</Tabs>
+This error occurs because the SSO connection needs to be configured for domain-level authentication to work with the MCP Server's OAuth flow.
 
-![Add configuration](/img/ai-agents/MCPInstallCursorStep2.png)
+*Why this happens* - When SSO is initially configured in Port, the authentication connection starts as a standard type. For the MCP Server to authenticate users through SSO, the connection needs to be upgraded to "domain level" mode, which enables Dynamic Client Registration (DCR). This configuration change can only be made by Port on the backend.
 
-3. **Login to Port**
-Click on "Needs login", and complete the authentication flow in the window that opens up.
-![Login to Port](/img/ai-agents/MCPInstallCursorStep3.png)
+*How to resolve* - Contact our support team and let them know you're experiencing an SSO authentication error when connecting to the MCP Server. The support team will update your SSO connection configuration to enable domain-level authentication, which will allow the MCP Server OAuth flow to work correctly with your SSO provider.
 
-4. **See the MCP tools**
-After successfully connecting to Port, you'll see the list of available tools from the MCP.
-![See tools](/img/ai-agents/MCPInstallCursorStep4.png)
-
-:::warning Authentication window behavior
-In some cases, after clicking "Accept" in the authentication popup, the window won't get closed but the connection is established successfully. You can safely close the window.
-
-If you still don't see the tool, try it a couple of times. We are aware of this behavior and working to improve it.
-:::
-
-</TabItem>
-<TabItem value="vscode" label="VSCode">
-To connect VSCode to Port's remote MCP server, follow these detailed steps. For complete instructions, refer to the [official VS Code MCP documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers).
-
-:::info VSCode MCP requirements
-Before proceeding, ensure your VS Code is updated to the latest version and that MCP is enabled for your GitHub organization. You may need to enable "Editor preview features" under Settings > Code, planning, and automation > Copilot via admin access from your organization.
-:::
-
-:::tip Prerequisites
-This configuration uses the open-source `mcp-remote` package, which requires Node.js to be installed on your system. Before using the configuration, ensure Node.js is available by running:
-
-```bash
-npx -y mcp-remote --help
-```
-
-If you encounter errors:
-- **Missing Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
-- **Network issues**: Check your internet connection and proxy settings
-- **Permission issues**: You may need to run with appropriate permissions
-:::
-
-
-**Step 1: Configure MCP Server Settings**
-
-1. Open VS Code settings
-2. Search for "MCP: Open user configuration" (or follow the instructions on a workspace installation)
-3. Add the server configuration using the appropriate configuration for your region:
-
-<Tabs>
-<TabItem value="eu" label="EU">
-```json showLineNumbers
-{
-  "mcpServers": {
-    "port-vscode-eu": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://mcp.port.io/v1"
-      ]
-    }
-  }
-}
-```
-</TabItem>
-<TabItem value="us" label="US">
-```json showLineNumbers
-{
-  "mcpServers": {
-    "port-vscode-us": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://mcp.us.port.io/v1"
-      ]
-    }
-  }
-}
-```
-</TabItem>
-</Tabs>
-
-**Step 2: Start the MCP Server**
-
-1. After adding the configuration, click on "Start" to initialize the MCP server
-2. If you don't see the "Start" button, ensure:
-   - Your VS Code version is updated to the latest version
-   - MCP is enabled for your GitHub organization
-   - "Editor preview features" is enabled under Settings > Code, planning, and automation > Copilot
-
-**Step 3: Verify Connection**
-
-1. Once started, you should see the number of available tools displayed
-2. If you don't see the tools count:
-   - Click on "More" to expand additional options
-   - Select "Show output" to view detailed logs
-   - Check the output panel for any error messages or connection issues
-
-**Step 4: Access Port Tools**
-
-1. Start a new chat session in VS Code
-2. Click on the tools icon in the chat interface
-3. You should now see Port tools available for use
-
-![VS Code MCP Setup](/img/ai-agents/MCPVSCodeSetup.gif)
-
-</TabItem>
-<TabItem value="claude" label="Claude">
-To connect Claude to Port's remote MCP, you need to create a custom connector. This process does not require a client ID. For detailed instructions, refer to the [official Anthropic documentation on custom connectors](https://support.anthropic.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp).
-
-When prompted for the remote MCP server URL, use the appropriate URL for your region:
-
-<Tabs>
-<TabItem value="eu" label="EU">
-```
-https://mcp.port.io/v1
-```
-</TabItem>
-<TabItem value="us" label="US">
-```
-https://mcp.us.port.io/v1
-```
-</TabItem>
-</Tabs>
-</TabItem>
-<TabItem value="local-mcp" label="Local MCP">
-The local MCP server is an open-source project that you can run on your own infrastructure. It offers a similar set of capabilities, but requires manual setup and maintenance.
-	
-While you can use it, we are no longer supporting it and are not tracking the project issues and activities.
-
-<h2>Prerequisites</h2>
-
--   A Port.io account with appropriate permissions.
--   Your Port credentials (Client ID and Client Secret). You can create these from your Port.io dashboard under Settings > Credentials.
-
-<h2>Installation</h2>
-
-The Port MCP Server can be installed using Docker or `uvx` (a package manager for Python). While the setup is straightforward, the specifics can vary based on your chosen MCP client (Claude, Cursor, VS Code, etc.).
-
-:::info Detailed Installation Guide
-For comprehensive, step-by-step installation instructions for various platforms and methods (Docker, UVX), please refer to the **[Port MCP Server GitHub README](https://github.com/port-labs/port-mcp-server)**.
-The README provides the latest configuration details and examples for different setups.
-:::
-</TabItem>
-</Tabs>
+Once the configuration is updated, retry the MCP Server connection and the authentication should work as expected.
 
 ## Token-based authentication
 
 You can also connect using token-based authentication for automated environments like CI/CD pipelines where interactive authentication isn't possible:
 
-```bash
+```bash showLineNumbers
 curl -X POST "https://api.getport.io/v1/auth/access_token" \
   -H "Content-Type: application/json" \
   -d '{"clientId":"YOUR_CLIENT_ID","clientSecret":"YOUR_CLIENT_SECRET"}'
 ```
 
-For complete examples and detailed setup instructions, see our [token-based authentication guide](./token-based-authentication).
+For complete examples and detailed setup instructions, see our [token-based authentication guide](/ai-interfaces/port-mcp-server/token-based-authentication).
 
 ## Connecting to AI Agents
 
-To connect the Port MCP server to AI agents in CI/CD environments or other automated contexts where interactive authentication isn't possible, see our [token-based authentication](./token-based-authentication).
+To connect the Port MCP server to AI agents in CI/CD environments or other automated contexts where interactive authentication isn't possible, see our [token-based authentication](/ai-interfaces/port-mcp-server/token-based-authentication).
+
+## FAQ
+
+<details>
+<summary><b>Can I change the organization after connecting? (Click to expand)</b></summary>
+
+You cannot move an existing MCP connection. Update the configuration for your MCP client and reconnect while you are logged in to the organization you want to use.
+
+</details>
+
+<details>
+<summary><b>How does the remote MCP server work with multiple organizations? (Click to expand)</b></summary>
+
+Each organization requires a separate connection. Create separate MCP configurations and start each one while you are logged in to the desired organization in your browser. Each configuration keeps its own connection.
+
+</details>
+
+<details>
+<summary><b>Do I need to stay logged in to the same browser session? (Click to expand)</b></summary>
+
+You do not need to keep the browser logged in after approval. Your MCP client stays connected to the organization you authorized.
+
+</details>
+
+<details>
+<summary><b>What happens if I approve the OAuth prompt in the wrong organization? (Click to expand)</b></summary>
+
+Disconnect the MCP client or remove its credentials, then reconnect while logged in to the correct organization in your browser so you grant access to the right workspace.
+
+</details>
+
+<details>
+<summary><b>How do I connect without using my browser for approval? (Click to expand)</b></summary>
+
+Use token-based authentication when you are in CI/CD or another non-interactive environment. Generate a token with your client credentials and configure the MCP client with that token instead of signing in through the browser.
+
+</details>
+
+<details>
+<summary><b>Why do I get an error when trying to connect with SSO enabled? (Click to expand)</b></summary>
+
+If your organization uses SSO and you see an authentication error when connecting to the MCP Server, your SSO connection may need to be configured for domain-level authentication. This is a one-time configuration change that enables the MCP Server's OAuth flow to work with your SSO provider. Contact [Port support](https://www.getport.io/community) to have this enabled for your organization. See the [Connecting the server when SSO is enabled](#connecting-the-server-when-sso-is-enabled) section for more details.
+
+</details>
+
+<details>
+<summary><b>How can I connect to the MCP? (Click to expand)</b></summary>
+
+Refer back to the [setup instructions](#installing-port-mcp) for your specific application (Cursor, VSCode, or Claude). Make sure you're using the correct regional URL for your Port organization.
+
+</details>
+
+<details>
+<summary><b>I completed the connection but nothing happens (Click to expand)</b></summary>
+
+Check that you've followed all the [setup steps](#installing-port-mcp) correctly for your application. Ensure you're authenticated with Port and have the necessary permissions. If you've followed all the steps and still have issues, please reach out to our support team.
+
+</details>
+
+<details>
+<summary><b>Why do I see an error about too many tools? (Click to expand)</b></summary>
+
+Each self-service action in your Port instance becomes an individual tool (as `run_<action_identifier>`). If your organization has many actions, this can result in a large number of tools being available.
+
+While most AI models handle this well, some have restrictions and may limit you to around 40 tools total. If you encounter errors about tool limits:
+
+1. **Reduce the number of tools** by customizing which tools are enabled (see [select which tools to use](/ai-interfaces/port-mcp-server/available-tools#select-which-tools-to-use)).
+2. **Focus on essential tools** by only enabling the read-only tools you need plus a few key actions.
+3. **Contact your Port Admin** to review which actions are essential for your workflow.
+
+This is completely normal behavior and doesn't indicate a problem with Port MCP - it's just a limitation of some AI models.
+
+</details>
+
+:::tip Getting help
+If you continue to experience issues, please reach out to Port support with:
+- Your IDE/application version.
+- The specific error messages you're seeing.
+- Your Port region (EU/US).
+- Steps you've already tried.
+
+This information will help us provide more targeted assistance.
+:::

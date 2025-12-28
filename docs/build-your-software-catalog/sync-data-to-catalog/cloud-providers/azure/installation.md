@@ -14,6 +14,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Installation
 
+<IntegrationVersion integration="azure" />
+
 :::tip First Time Installation
 For your first deployment of the Azure exporter, we recommend starting with the Helm/scheduled installation method to perform the initial data sync. Once the initial data sync is complete, you can switch to the Terraform deployment method for real-time data sync.
 :::
@@ -43,8 +45,6 @@ This way of deployment supports scheduled resyncs of resources from Azure to Por
 <AzureAppRegistration/>
 
 <h2> Installation </h2>
-
-<IntegrationVersion integration="azure" />
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using Helm.
 
@@ -589,7 +589,7 @@ docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
   -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
   -e OCEAN__EVENT_LISTENER='{"type": "ONCE"}' \
-  -e OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_ID=AZURE_CLIENT_ID \
+  -e OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_ID=$AZURE_CLIENT_ID \
   -e OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_SECRET=$AZURE_CLIENT_SECRET \
   -e OCEAN__INTEGRATION__CONFIG__AZURE_TENANT_ID=$AZURE_TENANT_ID \
 ghcr.io/port-labs/port-ocean-azure:latest

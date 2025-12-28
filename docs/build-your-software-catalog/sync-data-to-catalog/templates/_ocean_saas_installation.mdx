@@ -11,14 +11,14 @@ Using this installation option means that the integration will be hosted by Port
 <OceanSaasLiveEventsDescription id={props.integration} />
 
 <details style={{ display: liveEvents[props.integration] ? 'block' : 'none' }}>
-  <summary><b>Supported live event triggers</b></summary>
+  <summary><b>Supported live event triggers (click to expand)</b></summary>
   {liveEvents[props.integration] && 
     <OceanSaasLiveEventsTriggersManual id={props.integration} isOAuth={false} />
   }
 </details>
 
 :::tip Self-hosted installation
-Alternatively, you can install the integration using the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) method to update Port in real time using webhooks.
+Alternatively, you can install the integration using the [Self-hosted](?installation-methods=real-time-self-hosted#setup) method to update Port in real time using webhooks.
 :::
 
 <h3>Installation</h3>

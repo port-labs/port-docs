@@ -1,9 +1,9 @@
 <details>
-<summary>Work item blueprint</summary>
+<summary><b>Work item blueprint (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
-  "identifier": "workItem",
+  "identifier": "azureDevopsWorkItem",
   "title": "Work Item",
   "icon": "AzureDevops",
   "schema": {
@@ -97,14 +97,14 @@
   "relations": {
     "project": {
       "title": "Project",
-      "target": "project",
+      "target": "azureDevopsProject",
       "required": true,
       "many": false
     },
     "column": {
       "title": "Column",
       "description": "The column the entity belongs",
-      "target": "column",
+      "target": "azureDevopsColumn",
       "required": true,
       "many": false
     }

@@ -13,6 +13,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Dynatrace
 
+<IntegrationVersion integration="dynatrace" />
+
 Port's Dynatrace integration allows you to model Dynatrace resources in your software catalog and ingest data into them.
 
 ## Overview
@@ -22,7 +24,7 @@ This integration allows you to:
 - Map and organize your desired Dynatrace resources and their metadata in Port (see supported resources below).
 - Watch for Dynatrace object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Dynatrace into Port are listed below. It is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
@@ -56,9 +58,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
-
-<IntegrationVersion integration="dynatrace" />
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -182,7 +182,7 @@ This table summarizes the available parameters for the installation.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
 

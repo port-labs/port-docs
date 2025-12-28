@@ -161,3 +161,56 @@ Here are some typical scenarios for mapping array relations:
 :::info Entity titles in relations
 Relations can only reference entity **identifiers**, not titles. Even though entity objects contain both `identifier` and `title` properties, you must always use `.identifier` when mapping to relations.
 :::
+
+## Limitations
+
+### Create missing related entities
+The `createMissingRelatedEntities` flag is not supported when using this backend type.  
+
+If you want to automatically create missing related entities, you can use the [webhook backend](/actions-and-automations/setup-backend/webhook/) instead, with an API call to the [create an entity](/api-reference/create-an-entity) endpoint. This way you can set the `createMissingRelatedEntities` flag to `true` in the API call.
+
+Here is an example JSON definition of a self-service action that creates a new entity and its related entities:
+
+<details>
+<summary><b>Example action JSON definition (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "create_entity_a",
+  "title": "Create Entity A",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {},
+      "required": [],
+      "order": []
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.port.io/v1/blueprints/<entity_a_identifier>/entities?create_missing_related_entities=true",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": {
+      "RUN_ID": "{{ .run.id }}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "identifier": "my_new_entity",
+      "title": "MyNewEntity",
+      "icon": "Microservice",
+      "team": [],
+      "properties": {},
+      "relations": {
+        "<relation_identifier>": "<entity_b_identifier>"
+      }
+    }
+  },
+  "requiredApproval": false
+}
+```
+</details>
+
+**Note** that `synchronized` should be set to `true`.

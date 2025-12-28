@@ -1,3 +1,5 @@
+import SupportUserPermissions from "/docs/generalTemplates/_support_user_permissions.md"
+
 # Port RBAC capabilities overview
 
 This page provides a comprehensive summary of all of Port's RBAC capabilities, and links to their associated documentation pages. They are grouped into 3 key topics:
@@ -73,7 +75,7 @@ Initial filters offer an easy way to **lock a Catalog Page view dynamically for 
 
 #### Dynamic filters for dashboard widgets
 
-Advanced filters and dynamic filters are also available for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/) in your catalog or homepage, using the same logic as described in the **Filters** or **Initial Filters** section above.
+Advanced filters and dynamic filters are also available for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/overview) in your catalog or homepage, using the same logic as described in the **Filters** or **Initial Filters** section above.
 
 You can create widgets with data dynamically based on the logged in user’s identity or team's ownserhip.
 
@@ -133,6 +135,12 @@ The roles above have configurable permissions that are described in the followin
 In addition to the permissions designated for each role, permissions are also inherited based on the following hierarchy: **Admin** > **Moderator** > **Member**.
 
 For more details about Port roles, see the [relevant documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
+
+### Support user access
+
+<SupportUserPermissions/>
+
+For more information, see the [support user permissions](/sso-rbac/users-and-teams/manage-users-teams#support-user-permissions).
 
 ### Blueprint permissions
 

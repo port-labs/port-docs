@@ -1,6 +1,6 @@
 <details>
 
-<summary> Integration mapping </summary>
+<summary><b>Integration mapping (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -10,9 +10,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__stateType+"-"+.name+"-"+.__board.__project.id | gsub(" "; "")
+          identifier: .__stateType + "/" +.name+ "/"+.__board.__project.id | gsub(" "; "")
           title: .name
-          blueprint: '"column"'
+          blueprint: '"azureDevopsColumn"'
           relations:
             board: .__board.id | gsub(" "; "")
 ```

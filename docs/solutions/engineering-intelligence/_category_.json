@@ -1,0 +1,9 @@
+{
+    "label": "Engineering intelligence",
+    "collapsible": true,
+    "collapsed": true,
+    "position": 3,
+    "customProps": {
+      "description": "Engineering intelligence"
+    }
+  }

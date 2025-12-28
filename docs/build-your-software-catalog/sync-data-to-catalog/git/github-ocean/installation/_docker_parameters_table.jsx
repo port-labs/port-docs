@@ -30,6 +30,11 @@ export default function DockerParametersTable({ showingApp }) {
           <td>❌</td>
         </tr>
         <tr>
+          <td><code>OCEAN__ACTIONS_PROCESSOR__ENABLED</code></td>
+          <td>when set to true, the integration will be able to process actions and automations</td>
+          <td>❌</td>
+        </tr>
+        <tr>
           <td><code>OCEAN__INTEGRATION__CONFIG__WEBHOOK_SECRET</code></td>
           <td>A secret to secure webhooks from GitHub. This is optional but highly recommended for security if you enable live-events.</td>
           <td>❌</td>
@@ -45,9 +50,9 @@ export default function DockerParametersTable({ showingApp }) {
           <td>❌</td>
         </tr>
         <tr>
-          <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION</code></td>
-          <td>The GitHub organization the integration was installed in.</td>
-          <td>✅</td>
+        <td><code>OCEAN__INTEGRATION__CONFIG__GITHUB_ORGANIZATION</code></td>
+        <td>Single GitHub organization name to sync data from a single organization. Required for single-org authentication.</td>
+        <td>❌</td>
         </tr>
         <tr>
           <td><code>OCEAN__INTEGRATION__IDENTIFIER</code></td>

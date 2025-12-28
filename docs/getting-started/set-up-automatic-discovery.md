@@ -1,14 +1,15 @@
 ---
 sidebar_position: 4
-sidebar_label: "3. Set up automatic discovery"
+sidebar_label: "3. Set up automatic data mapping"
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
+import ThemedImage from "@theme/ThemedImage"
 
-# Set up automatic discovery
+# Set up automatic data mapping
 
 As part of the onboarding process, Port allows you to create new `services`, `workloads`, `environments`, `users`, and `teams` via the UI.  
 This involves manually selecting the components related to the new <PortTooltip id="entity">entity</PortTooltip>.
@@ -21,14 +22,15 @@ This guide will walk you through automating the process of creating and updating
 Not sure what these entities mean? See their definitions [here](/getting-started/default-components).
 :::
 
-## Discovery methods
+## Methods
 
-This page describes two methods you can use to automatically discover and update entities in your catalog:
+This page describes three methods you can use to automatically map and update entities in your catalog:
 
-1. Define one of your external tools as a "source of truth" for the resources you want to ingest.
-2. Use metadata from your external tools (e.g. labels, naming conventions) to identify and update an <PortTooltip id="entity">entity</PortTooltip> in Port.
+1. Use the catalog auto discovery which utilizes AI to analyze your existing catalog data and suggest missing entities.
+2. Define one of your external tools as a "source of truth" for the resources you want to ingest.
+3. Use metadata from your external tools (e.g. labels, naming conventions) to identify and update an <PortTooltip id="entity">entity</PortTooltip> in Port.
 
-All methods require modifying the [mapping configuration](/build-your-software-catalog/customize-integrations/configure-mapping) of the relevant integration.  
+Methods two and three require modifying the [mapping configuration](/build-your-software-catalog/customize-integrations/configure-mapping) of the relevant integration.  
 
 <details>
 <summary>**How to modify a mapping configuration (click to expand)**</summary>
@@ -38,7 +40,71 @@ All methods require modifying the [mapping configuration](/build-your-software-c
 4. Click on the "Save & Resync" button to save the changes and resync the integration.
 </details>
 
-## 1. Define a source of truth
+## 1. Catalog auto discovery
+
+The **auto discovery** capability uses [Port AI](/ai-interfaces/port-ai/overview) to discover entities and their relations.
+It is particularly useful for discovering entities that are not automatically created through integrations, such as `services` and `users`.  
+
+To learn more about how Port AI uses your data, see the [security and data controls](/ai-interfaces/port-ai/security-and-data-controls) documentation.
+
+### Examples
+
+To use catalog auto discovery, navigate to the [Catalog](https://app.port.io/organization/catalog) page, open the catalog page of the blueprint you want to discover, click the <ThemedImage sources={{light: "/img/icons/AI-icon.svg", dark: "/img/icons/AI-dark-icon.svg"}} style={{"vertical-align": "text-top"}} className="not-zoom" /> button, and select related blueprints to analyze.
+
+**Providing a prompt is highly recommended** and gives the best and most accurate results.  
+When you enable `Advanced configuration`, you can provide specific instructions that guide the AI to identify patterns relevant to your organization.
+
+**Example 1: Discover services from a monorepo**
+
+If you have a monorepo structure with multiple services, you can discover `service` entities by analyzing your GitHub repositories.
+
+**Recommended prompt:**
+
+```
+Services are represented as code in a repository.  
+Check the file structure of each repository to identify services.  
+Services may be found in specific folders, such as "apps" or "services".
+```
+
+Add the relevant blueprints to base the auto discovery on, for example: `GitHub Repository`.
+
+___
+
+**Example 2: Discover services from individual repositories**
+
+If you have individual repositories and want to identify which ones represent services, you can use catalog auto discovery with both GitHub and PagerDuty data.
+
+**Recommended prompt:**
+
+```
+Focus on repos that have keywords that can indicate they are services (e.g., "service", "ms", "srv").  
+Ignore repos of libraries and packages. Having also a PagerDuty service with a similar name as a repo  
+is a strong indication that this is a service.
+```
+
+Add the relevant blueprints to base the auto discovery on, for example: `GitHub Repository`, `PagerDuty Service`.
+
+___
+
+**Example 3: Discover users from development activity**
+
+If you want to identify users who contribute to your codebase but don't yet exist in your catalog, you can analyze pull requests and issues.
+
+**Recommended prompt:**
+
+```
+Check "Jira issues" assignees and "pull requests" to identify developers in the organization.
+```
+
+Add the relevant blueprints to base the auto discovery on, for example: `Jira Issue`, `Jira User` ,`Pull Requests`.
+
+___
+
+Once the discovery process is complete, you can review, edit, approve, or decline the suggested entities individually or in bulk.
+
+For more information, see the [catalog auto discovery](/build-your-software-catalog/catalog-auto-discovery) documentation.
+
+## 2. Define a source of truth
 
 This approach is useful when you want to create entities of a specific type (e.g. services, environments, teams, users) based on resources from a specific external tool.  
 
@@ -487,16 +553,38 @@ Common examples for resources that can be used as a source of truth for `users`:
 <details>
 <summary><LogoImage logo="GitLab" /> **GitLab user (click to expand)**</summary>
 ```yaml showLineNumbers
-- kind: user
+- kind: group-with-members
   selector:
     query: 'true'
+    includeBotMembers: 'true'
+    includeInheritedMembers: 'true'
   port:
+    itemsToParse: .__members
     entity:
       mappings:
-        identifier: .username
-        title: .username
+        identifier: .item.username
+        title: .item.name
         blueprint: '"_user"'
+        relations:
+          gitlab_user: .item.username
 ```
+</details>
+
+<details>
+<summary><LogoImage logo="AzureDevops" /> **Azure DevOps user (click to expand)**</summary>
+  ```yaml showLineNumbers
+  - kind: user
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: '.id'
+          title: '.user.displayName'
+          blueprint: '"_user"'
+          relations:
+            azure_devops_user: '.id'
+  ```
 </details>
 
 </TabItem>
@@ -559,7 +647,7 @@ Common examples for resources that can be used as a source of truth for `teams`:
 
 </Tabs>
 
-## 2. Use predefined metadata
+## 3. Use predefined metadata
 
 In addition to defining "sources of truth", you can use data from your external tools to identify and update entities in Port.  
 This is useful when you want to update entities of a specific type (e.g. services, environments, teams, users) based on a label, naming convention, or other piece of metadata in a specific external tool.  

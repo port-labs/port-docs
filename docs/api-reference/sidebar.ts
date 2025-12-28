@@ -456,8 +456,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/update-organization-details",
-          label: "Update organization details",
+          id: "api-reference/change-organization-details",
+          label: "Change organization details",
           className: "api-method put",
         },
         {
@@ -468,8 +468,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/get-all-organization-secrets",
-          label: "Get all organization secrets",
+          id: "api-reference/get-all-organization-secrets-metadata",
+          label: "Get all organization secrets' metadata",
           className: "api-method get",
         },
         {
@@ -480,8 +480,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/get-an-organization-secret",
-          label: "Get an organization secret",
+          id: "api-reference/get-an-organization-secrets-metadata",
+          label: "Get an organization secret's metadata",
           className: "api-method get",
         },
         {
@@ -542,6 +542,12 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api-reference/get-an-integrations-metrics-and-sync-status",
           label: "Get an integration's metrics and sync status",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-sync-metadata",
+          label: "Get an integration's sync metadata",
           className: "api-method get",
         },
       ],
@@ -624,21 +630,111 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/get-an-invocations-result",
-          label: "Get an invocation's result",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
           id: "api-reference/invoke-a-specific-agent",
           label: "Invoke a specific agent",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api-reference/invoke-an-agent",
-          label: "Invoke an agent",
+          id: "api-reference/general-purpose-ai-interactions",
+          label: "General-purpose AI interactions",
           className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-invocations-result",
+          label: "Get an invocation's result",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-monthly-ai-invocations-quota-usage",
+          label: "Get monthly AI invocations quota usage",
+          className: "api-method get",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "LLM management",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-default-llm-provider-and-model",
+          label: "Get default LLM provider and model",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/change-default-llm-provider-and-model",
+          label: "Change default LLM provider and model",
+          className: "api-method put",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-or-connect-an-llm-provider",
+          label: "Create or connect an LLM provider",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-configured-llm-providers",
+          label: "Get configured LLM providers",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-a-specific-provider-configuration",
+          label: "Get a specific provider configuration",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/change-a-specific-provider-configuration",
+          label: "Change a specific provider configuration",
+          className: "api-method put",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-a-specific-provider-configuration",
+          label: "Delete a specific provider configuration",
+          className: "api-method delete",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Catalog auto discovery",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/create-an-auto-discovery-invocation",
+          label: "Create an auto-discovery invocation",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/review-auto-discovery-invocation-suggestions",
+          label: "Review auto-discovery invocation suggestions",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-auto-discovery-invocation-suggestions",
+          label: "Get auto-discovery invocation suggestions",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-latest-auto-discovery-invocation-for-a-blueprint",
+          label: "Get latest auto-discovery invocation for a blueprint",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-auto-discovery-invocation-suggestion",
+          label: "Update auto-discovery invocation suggestion",
+          className: "api-method patch",
         },
       ],
     },

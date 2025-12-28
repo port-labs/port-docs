@@ -18,6 +18,8 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Opsgenie
 
+<IntegrationVersion integration="opsgenie" />
+
 Port's Opsgenie integration allows you to model Opsgenie resources in your software catalog and ingest data into them.
 
 ## Overview
@@ -28,7 +30,7 @@ This integration allows you to:
 - Watch for Opsgenie object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Opsgenie into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -49,15 +51,13 @@ Not sure which method is right for your use case? Check the available [installat
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
+<TabItem value="hosted-by-port" label="Hosted by Port (Recommended)" default>
 
 <OceanSaasInstallation/>
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
-
-<IntegrationVersion integration="opsgenie" />
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -188,7 +188,7 @@ This table summarizes the available parameters for the installation. The paramet
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Opsgenie integration once and then exit, this is useful for **scheduled** ingestion of data.
 

@@ -17,8 +17,9 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Terraform Cloud and Terraform Enterprise
 
-Port's Terraform Cloud integration allows you to model Terraform Cloud resources in your software catalog and ingest data into them.
+<IntegrationVersion integration="terraform-cloud" />
 
+Port's Terraform Cloud integration allows you to model Terraform Cloud resources in your software catalog and ingest data into them.
 
 ## Overview
 
@@ -34,7 +35,7 @@ Port supports both Terraform Cloud and Terraform Enterprise versions (self hoste
 If installing Port exporter for Terraform Enterprise, you will be required to specify your Terraform 's host URL by passing the following parameter to the installer: `integration.config.appHost` 
 :::
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Terraform Cloud into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -58,9 +59,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
-
-<IntegrationVersion integration="terraform-cloud" />
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -179,7 +178,7 @@ This table summarizes the available parameters for the installation.
 | `initializePortResources`                | When set to true the integration will create default blueprints and the port App config Mapping, defaults is true.                                 | ❌        |
 | `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping, default is true.               | ❌        |
 | `integration.config.terraformCloudHost`  | Your Terraform host. For example `https://app.terraform.io`                                                                                        | ✅        |
-| `integration.config.terraformCloudToken` | The Terraform cloud API token, docs can be found [here](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens) | ✅        |
+| `integration.config.terraformCloudToken` | Terraform Cloud API token with read permissions for organizations, projects, workspaces, runs, and state versions. Provide any one of the following tokens: user API token (default read scopes), team API token (read access to those resources), or organization API token (equivalent read permissions). Docs can be found [here](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens) | ✅        |
 
 <br/>
 
@@ -189,7 +188,7 @@ The integration uses polling to pull the configuration from Port every minute an
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Terraform Cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
 

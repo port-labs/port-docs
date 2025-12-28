@@ -24,26 +24,44 @@ import GroupMembersConfig from './example-groups/_gitlab_integration_example_gro
 import PipelineBlueprint from './example-pipelines/_gitlab_integration_example_pipeline_blueprint.mdx'
 import JobBlueprint from './example-jobs/_gitlab_integration_example_job_blueprint.mdx'
 import PipelineJobConfig from './example-pipelines/_gitlab_integration_example_pipeline_job_config.mdx'
+import ReleaseBlueprint from './example-releases/_gitlab_integration_example_release_blueprint.mdx'
+import ReleaseConfig from './example-releases/_gitlab_integration_example_release_config.mdx'
+import TagBlueprint from './example-tags/_gitlab_integration_example_tag_blueprint.mdx'
+import TagConfig from './example-tags/_gitlab_integration_example_tag_config.mdx'
+import TeamBlueprint from './example-files/_gitlab_integration_example_team_blueprint.mdx'
+import YamlConfig from './example-files/_gitlab_integration_example_yaml_config.mdx'
+import TeamsYamlFileExample from './example-files/_gitlab_integration_example_team_yaml_file_example.mdx'
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 # Examples
 
-## Mapping groups
+## Mapping examples
+
+### Groups
 
 The following example demonstrates how to ingest your GitLab groups, subgroups and projects to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Group blueprint</summary>
 <GroupBlueprint/>
-</details>
 
 <ProjectGroupBlueprint/>
 
 <PortGroupsAppConfig/>
 
+#### Group configuration options
+
+The `includeOnlyActiveGroups` selector allows you to filter groups based on whether they are active or not.
+By default, if not specified, all groups will be synced.
+
+```yaml showLineNumbers
+- kind: group
+  selector:
+    query: 'true'
+    # highlight-next-line
+    includeOnlyActiveGroups: true
+```
 
 :::tip Learn more
 
@@ -55,7 +73,7 @@ You can use the following Port blueprint definitions and integration configurati
 
 
 
-## Mapping projects, README.md and merge requests
+### Projects, README.md and merge requests
 
 :::caution Merge request access requirement
 Merge requests are fetched at the **group level**. Ensure your integration token has access to the parent GitLab group that contains your projects. Project-level access alone is not sufficient for merge request visibility.
@@ -68,22 +86,26 @@ For more information, see the [troubleshooting](/build-your-software-catalog/syn
 The following example demonstrates how to ingest your GitLab projects, their README.md file contents and merge requests to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
 
-<details>
-<summary>Merge request blueprint</summary>
 <MergeRequestBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <MergeRequestConfig />
-</details>
 
-### Merge request configuration options
+#### Project configuration options
+
+The `includeOnlyActiveProjects` selector allows you to filter projects based on whether they are active or not.
+By default, if not specified, all projects will be synced.
+
+```yaml showLineNumbers
+- kind: project
+  selector:
+    query: 'true'
+    # highlight-next-line
+    includeOnlyActiveProjects: true
+```
+
+#### Merge request configuration options
 
 <Tabs groupId="config" queryString="parameter">
 
@@ -115,7 +137,7 @@ The `updatedAfter` selector allows you to filter merge requests based on when th
 
 The value represents the number of days to look back for merge requests. For example, setting it to `90` will only sync merge requests that have been updated in the last 90 days.
 
-:::info Important
+:::info Merge request sync behavior
 The `updatedAfter` parameter only affects merge requests that are not in the "opened" state. Open merge requests will always be synced regardless of their last update time.
 :::
 
@@ -130,6 +152,20 @@ By default, if not specified, it is set to `90` days.
 ```
 </TabItem>
 
+<TabItem label="Include active groups" value="includeOnlyActiveGroups">
+
+The `includeOnlyActiveGroups` selector allows you to filter merge requests based on whether the parent group is active or not.
+By default, if not specified, all merge requests for the authorized groups will be synced.
+
+```yaml
+  - kind: merge-request
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeOnlyActiveGroups: true
+```
+</TabItem>
+
 </Tabs>
 
 :::tip Learn more
@@ -141,26 +177,130 @@ By default, if not specified, it is set to `90` days.
 
 
 
-## Mapping projects and issues
+### Projects and issues
 
 The following example demonstrates how to ingest your GitLab projects and their issues to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
 
-<details>
-<summary>Issue blueprint</summary>
 <IssueBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <IssueConfig />
-</details>
 
+#### Issues configuration options
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="State" value="state">
+
+The `state` selector allows you to filter issues based on their state. You can specify one of the allowed values to include in the sync.
+
+Allowed values:
+- `opened`: Issues that are currently open.
+- `closed`: Issues that have been closed.
+
+By default, if not specified, all issues for the authorized groups will be synced.
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: 'true'
+    # highlight-next-line
+    state: "closed"
+```
+</TabItem>
+
+<TabItem label="Updated after" value="updatedAfter">
+
+The `updatedAfter` selector allows you to filter issues based on when they were last updated. This helps you focus on recent changes and reduce the amount of historical data being synced.
+
+The value represents the number of days to look back for issues. For example, setting it to `90` will only sync issues that have been updated on or after the last 90 days.
+
+:::info Issue sync behavior
+The `updatedAfter` parameter only affects issues that are not in the "opened" state. Open issues will always be synced regardless of their last update time.
+:::
+
+By default, if not specified, all issues for the authorized groups will be synced.
+
+```yaml showLineNumbers
+  - kind: issue
+    selector:
+      query: 'true'
+      # highlight-next-line
+      updatedAfter: 90
+```
+</TabItem>
+
+<TabItem label="Include Active Groups" value="includeOnlyActiveGroups">
+
+The `includeOnlyActiveGroups` selector allows you to filter issues based on whether the parent group is active or not.
+By default, if not specified, all issues for the authorized groups will be synced.
+
+```yaml
+  - kind: issue
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeOnlyActiveGroups: true
+```
+</TabItem>
+
+<TabItem label="Issue Type" value="issueType">
+
+The `issueType` selector allows you to filter issues based on their type.
+
+Allowed values:
+- `incident`
+- `issue`
+- `test_case`
+- `task`
+
+By default, if not specified, all issues for the authorized groups will be synced.
+
+```yaml
+  - kind: issue
+    selector:
+      query: 'true'
+      # highlight-next-line
+      issueType: "incident"
+```
+</TabItem>
+
+<TabItem label="Labels" value="labels">
+
+The `labels` selector allows you to filter issues based on a comma-separated list of labels.
+By default, if not specified, all issues for the authorized groups will be synced.
+
+:::info Label filtering logic
+Issue must have **all labels** to be returned.
+:::
+
+```yaml showLineNumbers
+  - kind: issue
+    selector:
+      query: 'true'
+      # highlight-next-line
+      labels: "dev,v1"
+```
+</TabItem>
+
+<TabItem label="Include Non-Archived" value="includeNonArchived">
+
+The `includeNonArchived` selector allows you to filter issues from non-archived projects.
+By default, if not specified, all issues for the authorized groups will be synced.
+
+
+```yaml showLineNumbers
+  - kind: issue
+    selector:
+      query: 'true'
+      # highlight-next-line
+      nonArchived: true
+```
+</TabItem>
+
+</Tabs>
 
 :::tip Learn more
 
@@ -172,36 +312,39 @@ You can use the following Port blueprint definitions and integration configurati
 
 
 
-## Mapping files and file contents
+### Files and file contents
+
+Below are two examples for mapping files and contents:
 
 The following example shows how to ingest dependencies from a `package.json` file in your GitLab repository into Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Package blueprint</summary>
 <PackageBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <PackageConfig />
-</details>
 
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
-For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#ingest-files-from-your-repositories)
 
+___
 
+The following example shows how to ingest teams from a YAML file in your GitLab repository into Port.  
 
-## Mapping projects and monorepos
+<TeamBlueprint/>
+
+<TeamsYamlFileExample/>
+
+<YamlConfig/>
+
+The example will parse the YAML file in your repository and extract the teams into Port entities. 
+
+For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#ingest-files-from-your-repositories).
+
+### Projects and monorepos
 
 The following example demonstrates how to ingest your GitLab projects and their monorepo folders to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
-
 
 <MonoRepoAppConfig/>
 
@@ -245,25 +388,16 @@ You can also specify a different path for each monorepo repository, for example:
 
 
 
-## Mapping projects and folders
+### Projects and folders
 
 The following example demonstrates how to ingest your GitLab projects and their folders to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Project blueprint</summary>
 <ProjectBlueprint />
-</details>
 
-<details>
-<summary>Folder blueprint</summary>
 <FolderBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <FolderConfig />
-</details>
 
 :::tip Folder mapping patterns
 You can specify different paths for different repositories:
@@ -283,9 +417,9 @@ resources:
 ```
 :::
 
-## Mapping members and group with members
+### Mapping members and group with members
 
-### Prerequisites
+#### Prerequisites
 
 - When using **GitLab Self Hosted**, an admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
 - When using **GitLab Enterprise**, accounts can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
@@ -294,37 +428,33 @@ resources:
 Primary email addresses are not available for GitLab "Free plan" users.
 :::
 
-### Mapping members
+#### Mapping members
 
 The following example demonstrates how to ingest your GitLab members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Member blueprint</summary>
 <MemberBlueprint />
-</details>
 
-<details>
-<summary> Integration configuration</summary>
 <MemberConfig />
-</details>
 
+To retrieve the members of your **active groups** only, you can use the following syntax in your `port-app-config.yml`:
 
+```yaml showLineNumbers
+- kind: member
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeOnlyActiveGroups: true
+```
 
-### Mapping groups with members
+#### Mapping groups with members
 
 The following example demonstrates how to ingest your GitLab groups and their members to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Group with members blueprint</summary>
 <GroupMembersBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <GroupMembersConfig />
-</details>
 
 <Tabs groupId="config" queryString="parameter">
 
@@ -351,6 +481,29 @@ By default, this selector is set to `false`, which means the integration will on
 ```
 </TabItem>
 
+<TabItem label="Include Inherited and Invited Members" value="includeInheritedMembers">
+
+You can also specify the `includeInheritedMembers` selector to control the inclusion of inherited and invited members in the member data.
+By default, this parameter is set to `false`, and the integration will sync only direct members without inherited members and/or invited members.
+
+```yaml
+  - kind: group-with-members
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeInheritedMembers: true
+```
+
+```yaml
+  - kind: members
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeInheritedMembers: true
+```
+
+</TabItem>
+
 </Tabs>
 
 :::tip Learn more
@@ -362,25 +515,36 @@ By default, this selector is set to `false`, which means the integration will on
 :::
 
 
-## Mapping projects, pipelines and jobs
+### Projects, pipelines and jobs
 
 The following example demonstrates how to ingest your GitLab projects, their pipelines and jobs runs to Port.  
 You can use the following Port blueprint definitions and integration configuration:
 
-<details>
-<summary>Pipeline blueprint</summary>
 <PipelineBlueprint />
-</details>
 
-<details>
-<summary>Job blueprint</summary>
 <JobBlueprint />
-</details>
 
-<details>
-<summary>Integration Mapping</summary>
 <PipelineJobConfig />
-</details>
+
+To retrieve the pipelines of your **active projects** only, you can use the following syntax in your `port-app-config.yml`:
+
+```yaml showLineNumbers
+- kind: pipeline
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeOnlyActiveProjects: true
+```
+
+To retrieve the jobs of your **active projects** only, you can use the following syntax in your `port-app-config.yml`:
+
+```yaml showLineNumbers
+- kind: job
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeOnlyActiveProjects: true
+```
 
 :::tip Learn more
 
@@ -389,6 +553,60 @@ You can use the following Port blueprint definitions and integration configurati
 - Click [Here](https://docs.gitlab.com/api/projects/#list-projects) for the GitLab project object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines) for the GitLab pipeline object structure.
 - Click [Here](https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs) for the GitLab job object structure.
+
+:::
+
+### Releases
+
+The following example demonstrates how to ingest your GitLab releases to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<ReleaseBlueprint />
+
+<ReleaseConfig />
+
+To retrieve the releases of your **active projects** only, you can use the following syntax in your `port-app-config.yml`:
+
+```yaml showLineNumbers
+- kind: release
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeOnlyActiveProjects: true
+```
+
+:::tip Learn more
+
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
+- Click [Here](https://docs.gitlab.com/api/releases/) for the GitLab release object structure.
+
+:::
+
+### Tags
+
+The following example demonstrates how to ingest your GitLab tags to Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<TagBlueprint />
+
+<TagConfig />
+
+To retrieve the tags of your **active projects** only, you can use the following syntax in your `port-app-config.yml`:
+
+```yaml showLineNumbers
+- kind: tag
+  selector:
+    query: "true"
+    # highlight-next-line
+    includeOnlyActiveProjects: true
+```
+
+:::tip Learn more
+
+- Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
+- Click [Here](https://docs.gitlab.com/api/tags/) for the GitLab tag object structure.
 
 :::
 

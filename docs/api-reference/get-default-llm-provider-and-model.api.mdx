@@ -1,0 +1,63 @@
+---
+id: get-default-llm-provider-and-model
+title: "Get default LLM provider and model"
+description: "This route returns the default LLM provider and model."
+sidebar_label: "Get default LLM provider and model"
+hide_title: true
+hide_table_of_contents: true
+api: eJzNVE1v2zAM/SuGznXsFM2ltw4rimEdUGzdqeiBsZlYjSy5EhUsNfLfR/qjSTtvwbDLLoksPn49PrFVJYbC64a0s+pS3Vc6JN5FwsQjRW9DQhUmJa4gGkpub78kjXdbXaJPwJZJ7Uo0M3WmCNZBXT4oQdRgYY01WlKPZypgEb2mHVtbtUTw6Pn4uGeTx9A4G5A9W3We5/L3tp6PQ+KvA5IzFc6ShGYsNI3RBQg2ewri0KpQVFiDnGjXIIdwyycsiB258AY96T6d2xxhls4ZBKv2XU2c8LT/SMMRMpDXds1ItLEWMhhvQfMFvESP6eHTUsXBdMHnJZbeFRuJ7zwTxiV0pP4p7rqhdCFUGIglpty5RUov0vP8fJEv5hcHUwV6E9my6GzzPJ93GQqPQFhe0VSWlfM1sEWVjElJ16gOLh92v7qwNTbl3wYcXCYDdnN4jtpjKf2+cj1yw9qBstQyeDB3R3NZgQn43t0Ju8NcT3mK7+L/UCJ67ybkJQLBEPiFTdpKJNAmTKWdbrzdT/LVZz9NV1cOVY491Rq77oAq/si288yYOh2HF7JhiwQlS8Fv+arbCdGz2FVF1ITLLINGz+QlzLTjdqasMRwAR/vlm9DdMzpumVcK2O0z7jivhVq+ryJX7PVLNzC+1jLhCkE0Jh1pu3KduyYj+DvOl1zdfWKolN0rYj7LhfDGBeKNJ/Ah+g3SiY2pzt6qqz1o6R9WcN8r4Q/KGgO6E1FHXzvM5EFt5wx8M5WulGEuzGbF3QiwbZcQ8Ls3+71cP0f0ssH5uAWvYSm0PMgqGViTQW6YYua2KLARHWzBxJ78d29DpvaqmZvre5FmlPqO57Xp5jUcJPposruj2O8H2Zcgv6KdSZe27dXAjY343vRbj6HFES3EPrLwfwL1XHh8
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get default LLM provider and model"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/llm-providers/defaults"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route returns the default LLM provider and model.
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"result":{"type":"object","properties":{"provider":{"type":"string","enum":["openai","azure-openai","anthropic","bedrock","port"]},"model":{"type":"string","enum":["gpt-5","claude-sonnet-4-20250514","claude-haiku-4-5-20251001"]},"createdAt":{"type":"string","format":"date-time"},"createdBy":{"type":"string"},"updatedAt":{"type":"string","format":"date-time"},"updatedBy":{"type":"string"}},"required":["provider","model"],"additionalProperties":false}},"required":["ok","result"],"additionalProperties":false}}}},"500":{"description":"Default Response","content":{"application/json":{"schema":{"type":"object","properties":{"ok":{"type":"boolean"},"error":{"type":"string"},"message":{"type":"string"},"details":{"type":"object","additionalProperties":{}}},"required":["ok","error"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

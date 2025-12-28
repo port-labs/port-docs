@@ -1,0 +1,17 @@
+<details>
+<summary><b>AWS Account info mapping configuration (click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Account::Info
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Properties.Id
+          title: .Properties.Name
+          blueprint: '"awsAccount"'
+```
+
+</details>

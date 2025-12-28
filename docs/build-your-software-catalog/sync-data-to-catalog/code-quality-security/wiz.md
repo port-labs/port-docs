@@ -15,8 +15,9 @@ import IntegrationVersion from "/src/components/IntegrationVersion/IntegrationVe
 
 # Wiz
 
-Port's Wiz integration allows you to model Wiz resources in your software catalog and ingest data into them.
+<IntegrationVersion integration="wiz" />
 
+Port's Wiz integration allows you to model Wiz resources in your software catalog and ingest data into them.
 
 ## Overview
 
@@ -26,7 +27,7 @@ This integration allows you to:
 - Watch for Wiz object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from Wiz into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
@@ -115,9 +116,7 @@ Not sure which method is right for your use case? Check the available [installat
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
-
-<IntegrationVersion integration="wiz" />
+<TabItem value="real-time-self-hosted" label="Self-hosted">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -252,7 +251,7 @@ Note the parameters specific to this integration, they are last in the table.
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="Scheduled (CI)">
+<TabItem value="one-time-ci" label="CI">
 
 This workflow/pipeline will run the Wiz integration once and then exit, this is useful for **scheduled** ingestion of data.
 
@@ -557,7 +556,6 @@ resources:
 
 </details>
 
-
 <MetricsAndSyncStatus/>
 
 ## Examples
@@ -632,6 +630,38 @@ resources:
 ```
 
 </details>
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include archived projects" value="includeArchivedProjects">
+
+The `includeArchived` selector controls whether to include archived projects in the integration. If not specified, archived projects are not included.
+
+```yaml showLineNumbers
+- kind: project
+  selector:
+    query: 'true'
+    # highlight-next-line
+    includeArchived: true
+```
+
+</TabItem>
+
+<TabItem label="Include business impact" value="includeBusinessImpact">
+
+The `impact` selector controls whether to filter projects by business impact in the integration. If not specified, no business impact filters are applied.
+
+```yaml showLineNumbers
+- kind: project
+  selector:
+    query: 'true'
+    # highlight-next-line
+    impact: "HBI"
+```
+
+</TabItem>
+
+</Tabs>
 
 ### Control
 
@@ -910,6 +940,7 @@ resources:
 
 </details>
 
+
 ### Service Ticket
 
 <details>
@@ -960,6 +991,64 @@ resources:
 ```
 
 </details>
+
+### Advanced configuration
+
+The following selectors can be used to filter the data fetched from the Wiz API for **Issue**, **Control** and **Service Ticket** kinds:
+
+- `severityList`: List of severity values to filter issues by.
+- `typeList`: List of type values to filter issues by.
+- `maxPages`: Maximum number of pages to fetch from the Wiz API.
+
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include severity list" value="severityList">
+
+The `severityList` selector controls whether to filter results by severity of the issues. If not specified, no severity filtering is applied. This selector is valid for the `issues`, `serviceTicket`, and `serviceControl` kinds.
+
+```yaml showLineNumbers
+- kind: issue # one of [issue, serviceControl, serviceTicket] kinds
+  selector:
+    query: 'true'
+    # highlight-next-line
+    severityList: ["HIGH", "CRITICAL", "INFORMATIONAL"]
+```
+
+</TabItem>
+
+<TabItem label="Include type list" value="typeList">
+
+The `typeList` selector optionally restricts returned results to specific issue types. If not specified, no type filtering is applied. This selector is valid for the `issues`, `serviceTicket`, and `serviceControl` kinds.
+
+```yaml showLineNumbers
+- kind: issue # one of the supported kinds: issue, serviceControl, serviceTicket
+  selector:
+    query: 'true'
+    # highlight-next-line
+    typeList: ["TOXIC_COMBINATION", "THREAT_DETECTION"]
+```
+
+</TabItem>
+
+<TabItem label="Include max pages" value="maxPages">
+
+Wiz issues can grow to an extremely large volume, which may significantly increase the time required to complete a resync for the integration. To help manage this, use the `maxPages` selector to control how many pages the integration fetches from the Wiz API. The default value is **500**, which ingests up to 50,000 results since each page contains 100 results.
+
+```yaml showLineNumbers
+- kind: issue # one of the supported kinds: issue, serviceControl, serviceTicket
+  selector:
+    query: 'true'
+    # highlight-next-line
+    maxPages: 100 # default is 500
+```
+
+</TabItem>
+
+</Tabs>
+
+:::caution Performance impact
+Setting high values for `maxPages` may significantly prolong the sync process. Consider increasing this value only when it is truly necessary.
+:::
 
 ## Let's Test It
 

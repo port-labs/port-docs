@@ -43,9 +43,10 @@ export default function ParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>integration.config.githubOrganization</code></td>
-          <td>The GitHub organization to sync data from.</td>
-          <td>✅</td>
+          <td>Single GitHub organization name to sync data from (for GitHub App or Fine-grained PAT). Required for single-org authentication.</td>
+          <td>❌</td>
         </tr>
+        {/* Multi-organization is configured in Port App Config (organizations) via the mapping, not integration.config */}
         <tr>
           <td><code>integration.config.githubHost</code></td>
           <td>The API endpoint for your GitHub instance. For GitHub Enterprise Cloud, this will be <code>https://api.&lt;SUBDOMAIN&gt;.ghe.com</code>. Defaults to <code>https://api.github.com</code> if not provided.</td>
@@ -73,7 +74,12 @@ export default function ParametersTable({ showingApp }) {
         </tr>
         <tr>
           <td><code>liveEvents.baseUrl</code></td>
-          <td>The base url of the instance where the GitHub integration is hosted, used for real-time updates (e.g. <code>https://mygithuboceanintegration.com</code>).</td>
+          <td>The base url of the instance where the GitHub integration is hosted, used for real-time updates (e.g. <code>https://mygithuboceanintegration.com</code>). Required if you want to enable live-events or actions processing.</td>
+          <td>❌</td>
+        </tr>
+        <tr>
+          <td><code>actionsProcessor.enabled</code></td>
+          <td>when set to true, the integration will be able to process actions and automations.</td>
           <td>❌</td>
         </tr>
         <tr>
