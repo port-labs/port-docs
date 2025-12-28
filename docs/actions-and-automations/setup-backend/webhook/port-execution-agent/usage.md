@@ -41,7 +41,7 @@ The Port Agent supports two transport mechanisms for receiving and processing ac
 The default and recommended transport mechanism that uses Kafka for real-time event streaming.
 
 **When to use:**
-- For production environments requiring low latency
+- Where higher latency is acceptable
 - When you need support for both action runs and changelog destinations
 
 Install the agent with Kafka transport:
