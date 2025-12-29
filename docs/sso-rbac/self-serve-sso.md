@@ -6,6 +6,10 @@ description: Set up and manage SSO for your organization directly from the porta
 
 # Manage your SSO connection
 
+:::info Open Beta
+This feature is currently in open beta and available to all organizations.
+:::
+
 Port allows company admins to configure SSO (Single Sign-On) directly from the portal.  
 This self-serve flow guides you through connecting your identity provider (IdP) to Port.
 
@@ -94,7 +98,7 @@ If you click `Setup is Done` and encounter an error, use the following table to 
 | Mapping failed | The connection mapping failed. | Click **Edit Connection** to review and fix the configuration. |
 | Linking failed | The SSO provider is connected, but linking to the company in Port failed. | Contact [Port's support team](http://support.port.io/) for assistance. |
 
-## FAQ
+## FAQs
 
 <details>
 <summary><b>Can we use multiple SSO providers? (click to expand)</b></summary>
