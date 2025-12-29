@@ -149,9 +149,9 @@ resources:
       query: 'true'
       files:
         path: 'package.json'
-        # Optional: omit to search across all top-most level groups you have access to
-        # Note: repositories not part of any group are excluded from the search
         repos:
+          # Optional: omit to search across all top-most level groups you have access to
+          # Note: repositories not part of any group are excluded from the search
           # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
           - group/my-project
           - group/my-other-project
