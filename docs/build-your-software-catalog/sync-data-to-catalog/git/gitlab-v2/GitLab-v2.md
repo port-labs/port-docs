@@ -149,6 +149,8 @@ resources:
       query: 'true'
       files:
         path: 'package.json'
+        # Optional: omit to search across all top-most level groups you have access to
+        # Note: repositories not part of any group are excluded from the search
         repos:
           # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
           - group/my-project
@@ -487,6 +489,7 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 - Only JSON and YAML formats are automatically parsed.  
   Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
 - Currently only the default branch of the repository is supported.
+- When you omit the `repos` field, the integration searches across all top-most level groups you have access to. Repositories that are not part of any group are excluded from the search, since the integration uses GitLab's group search API.
 
 For a list of known limitations with GitLab’s Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
 
