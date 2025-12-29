@@ -15,7 +15,7 @@ Initial filters for [catalog pages](/customize-pages-dashboards-and-plugins/page
 
 Filters are especially useful when dealing with blueprints that have a large number of entities (such as Snyk vulnerabilities), where the request may time out without filtering.
 
-<Tabs groupId="catalog-filters" defaultValue="basic" values={[
+<Tabs groupId="catalog-filters" queryString defaultValue="basic" values={[
 {label: "Basic example", value: "basic"},
 {label: "Advanced example", value: "advanced"},
 {label: "Blueprint read permissions", value: "permissions"}
@@ -97,7 +97,7 @@ Filters for related entity tabs are configured when creating custom tabs on any 
 
 Additional filters are particularly useful for related entities tabs where the number of related entities is very large. Applying filters improves performance and makes the data more manageable.
 
-<Tabs groupId="entity-filters" defaultValue="basic" values={[
+<Tabs groupId="entity-filters" queryString defaultValue="basic" values={[
 {label: "Basic example", value: "basic"},
 {label: "Advanced example", value: "advanced"}
 ]}>
@@ -164,7 +164,7 @@ This example demonstrates how to filter related alerts for a service entity with
 
 Widget-specific filters are configured in the widget creation/edit form for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/overview). These filters control which entities are included in calculations and visualizations for individual data widgets.
 
-<Tabs groupId="widget-filters" defaultValue="basic" values={[
+<Tabs groupId="widget-filters" queryString defaultValue="basic" values={[
 {label: "Basic property filter", value: "basic"},
 {label: "Filter by contextual data", value: "contextual"},
 {label: "Filter by relation-path", value: "relation"}
@@ -282,7 +282,7 @@ This example demonstrates how to filter entities using relation paths to query r
 
 Configure these options when creating or editing an action in the [self-service actions](https://app.getport.io/self-serve) page.
 
-<Tabs groupId="action-filters" defaultValue="conditions" values={[
+<Tabs groupId="action-filters" queryString defaultValue="conditions" values={[
 {label: "Action conditions", value: "conditions"},
 {label: "Entity input datasets", value: "datasets"},
 {label: "Dynamic permissions", value: "permissions"}
@@ -438,7 +438,7 @@ If you wish to use the US region API, replace `https://api.getport.io` with `htt
 
 The following examples provide a foundation to begin using the search route. Remember that you can always change the content of the `rules` array to the search query that fits your search.
 
-<Tabs groupId="code-examples" defaultValue="python" values={[
+<Tabs groupId="code-examples" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "Javascript", value: "javascript"},
 {label: "cURL", value: "curl"}
