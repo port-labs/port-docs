@@ -34,7 +34,6 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 
 </TabItem>
 
-
 </Tabs>
 
 All of the advanced configurations listed above can be added to the mapping on the data source page.

@@ -26,7 +26,10 @@ To connect Cursor to Port's remote MCP, follow these steps:
 {
   "mcpServers": {
     "port-eu": {
-      "url": "https://mcp.port.io/v1"
+      "url": "https://mcp.port.io/v1",
+      "headers": {
+        "x-read-only-mode": "0"
+      }
     }
   }
 }
@@ -39,7 +42,10 @@ To connect Cursor to Port's remote MCP, follow these steps:
 {
   "mcpServers": {
     "port-us": {
-      "url": "https://mcp.us.port.io/v1"
+      "url": "https://mcp.us.port.io/v1",
+      "headers": {
+        "x-read-only-mode": "0"
+      }
     }
   }
 }
@@ -47,6 +53,10 @@ To connect Cursor to Port's remote MCP, follow these steps:
 
 </TabItem>
 </Tabs>
+
+   :::tip Read-only mode
+   The `x-read-only-mode` header defaults to `0`, which allows all tools based on your permissions. You can change it to `1` to restrict the MCP server to only expose read-only tools. When set to `1`, write tools are completely hidden from the available tools list, ensuring you can only query data without making modifications.
+   :::
 
    <img src="/img/ai-agents/MCPInstallCursorStep2.png" border="1px" width="100%" />
 
@@ -100,7 +110,9 @@ If you encounter errors:
       "args": [
         "-y",
         "mcp-remote",
-        "https://mcp.port.io/v1"
+        "https://mcp.port.io/v1",
+        "--header",
+        "x-read-only-mode: 0"
       ]
     }
   }
@@ -118,7 +130,9 @@ If you encounter errors:
       "args": [
         "-y",
         "mcp-remote",
-        "https://mcp.us.port.io/v1"
+        "https://mcp.us.port.io/v1",
+        "--header",
+        "x-read-only-mode: 0"
       ]
     }
   }
@@ -127,6 +141,10 @@ If you encounter errors:
 
 </TabItem>
 </Tabs>
+
+   :::tip Read-only mode
+   The `x-read-only-mode` header defaults to `0`, which allows all tools based on your permissions. You can change it to `1` to restrict the MCP server to only expose read-only tools. When set to `1`, write tools are completely hidden from the available tools list, ensuring you can only query data without making modifications.
+   :::
 
 **Step 2: Start the MCP Server**
 
@@ -174,6 +192,10 @@ https://mcp.us.port.io/v1
 
 </TabItem>
 </Tabs>
+
+:::tip Read-only mode
+The `x-read-only-mode` header defaults to `0`, which allows all tools based on your permissions. When configuring your custom connector, you can change it to `1` to restrict the MCP server to only expose read-only tools. When set to `1`, write tools are completely hidden from the available tools list, ensuring you can only query data without making modifications. Refer to the Claude custom connector documentation for details on how to add custom headers.
+:::
 
 </TabItem>
 <TabItem value="local-mcp" label="Local MCP">
