@@ -456,8 +456,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/update-organization-details",
-          label: "Update organization details",
+          id: "api-reference/change-organization-details",
+          label: "Change organization details",
           className: "api-method put",
         },
         {
