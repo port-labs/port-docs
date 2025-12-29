@@ -17,8 +17,7 @@ Filters are especially useful when dealing with blueprints that have a large num
 
 <Tabs groupId="catalog-filters" queryString defaultValue="basic" values={[
 {label: "Basic example", value: "basic"},
-{label: "Advanced example", value: "advanced"},
-{label: "Blueprint read permissions", value: "permissions"}
+{label: "Advanced example", value: "advanced"}
 ]}>
 
 <TabItem value="basic">
@@ -45,47 +44,36 @@ This example demonstrates how to filter a Snyk vulnerability catalog page, showi
 
 <TabItem value="advanced">
 
-<!-- TODO: Test this example in your environment -->
-
-This example demonstrates how to filter a service catalog page with multiple conditions, showing only production services owned by specific teams that were deployed in the last 30 days:
+This example demonstrates how to filter a service catalog page with multiple conditions, showing only production services owned by specific teams that were updated within a specific date range:
 
 ```json showLineNumbers
 {
   "combinator": "and",
   "rules": [
     {
+      "value": "production",
       "property": "environment",
-      "operator": "=",
-      "value": "production"
+      "operator": "="
     },
     {
-      "property": "$team",
-      "operator": "containsAny",
       "value": [
-        "backend-team",
-        "platform-team"
-      ]
+        "platform_team",
+        "developers_team"
+      ],
+      "property": "$team",
+      "operator": "containsAny"
     },
     {
-      "property": "lastDeployedAt",
+      "property": "last_push",
       "operator": "between",
       "value": {
-        "preset": "lastMonth"
+        "from": "<START_DATE>",
+        "to": "<END_DATE>"
       }
     }
   ]
 }
 ```
-
-</TabItem>
-
-<TabItem value="permissions">
-
-Blueprint read permissions can also be configured with dynamic `policy` rules using search and query syntax. Configure these in the [data model](https://app.getport.io/settings/data-model) page by clicking on a blueprint and going to the **Permissions** tab.
-
-The `policy` key allows you to create dynamic read access rules, granting users access to entities based on their properties, team membership, and contextual user data. This controls which entities users can see in catalog pages.
-
-For detailed examples and information about blueprint permissions with search queries, see the [Policy tab](/build-your-software-catalog/set-catalog-rbac/set-catalog-rbac#read) in the catalog RBAC documentation.
 
 </TabItem>
 
@@ -278,6 +266,85 @@ This example demonstrates how to filter entities using relation paths to query r
 
 </Tabs>
 
+## Blueprint read permissions
+
+Blueprint read permissions can be configured with dynamic `policy` rules using search and query syntax. Configure these in the [data model](https://app.getport.io/settings/data-model) page by clicking on a blueprint and going to the **Permissions** tab.
+
+The `policy` key allows you to create dynamic read access rules, granting users access to entities based on their properties, team membership, and contextual user data. This controls which entities users can see in catalog pages.
+
+For detailed examples and information about blueprint permissions with search queries, see the [Policy tab](/build-your-software-catalog/set-catalog-rbac/set-catalog-rbac#read) in the catalog RBAC documentation.
+
+## Aggregation properties
+
+Configure filters when creating or editing an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) in the [data model](https://app.getport.io/settings/data-model) page. The search and query filter is defined under the `query` section of the aggregation property.
+
+This example demonstrates how to define an aggregation property to a `service` blueprint that calculates the number of open high-severity vulnerabilities for each service, filtering only vulnerabilities with `severity` set to `high` and `status` set to `open`:
+
+```json showLineNumbers
+{
+  "aggregationProperties": {
+    "numberOfOpenHighVulnerabilities": {
+      "title": "Number of open high severity vulnerabilities",
+      "target": "vulnerability",
+      "calculationSpec": {
+        "calculationBy": "entities",
+        "func": "count"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "severity",
+            "operator": "=",
+            "value": "high"
+          },
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "open"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+## Scorecards
+
+Configure filters when creating or editing a scorecard. [Filters](/scorecards/concepts-and-structure#filter-elements) determine which entities the rule evaluates, filtering out irrelevant entities and performing checks only on entities that pass the filtering.
+
+:::info Scorecards use conditions
+Scorecard filters use `conditions` instead of `rules`, but follow the same structure with `combinator`, `property`, `operator`, and `value`.
+:::
+
+This example demonstrates how to filter a scorecard to apply only to production services owned by specific teams. This ensures the quality check only runs on critical services:
+
+```json showLineNumbers
+"filter": {
+  "combinator": "and",
+  "conditions": [
+    {
+      "value": [
+        "builder_team",
+        "developers_team"
+      ],
+      "operator": "containsAny",
+      "property": "$team"
+    },
+    {
+      "value": "production",
+      "operator": "=",
+      "property": "environment"
+    }
+  ]
+}
+```
+
+:::tip Supported operators
+For a complete list of the available operators in scorecard filters, see the available operators section under the [rule elements](/scorecards/concepts-and-structure#rule-elements) documentation.
+:::
+
 ## Self-service actions
 
 Configure these options when creating or editing an action in the [self-service actions](https://app.getport.io/self-serve) page.
@@ -357,77 +424,6 @@ For examples of dynamic action permissions using search and query syntax, see th
 </TabItem>
 
 </Tabs>
-
-## Scorecards
-
-Configure filters when creating or editing a scorecard. [Filters](/scorecards/concepts-and-structure#filter-elements) determine which entities the rule evaluates, filtering out irrelevant entities and performing checks only on entities that pass the filtering.
-
-:::info Scorecards use conditions
-Scorecard filters use `conditions` instead of `rules`, but follow the same structure with `combinator`, `property`, `operator`, and `value`.
-:::
-
-This example demonstrates how to filter a scorecard to apply only to production services owned by specific teams. This ensures the quality check only runs on critical services:
-
-```json showLineNumbers
-"filter": {
-  "combinator": "and",
-  "conditions": [
-    {
-      "value": [
-        "builder_team",
-        "developers_team"
-      ],
-      "operator": "containsAny",
-      "property": "$team"
-    },
-    {
-      "value": "production",
-      "operator": "=",
-      "property": "environment"
-    }
-  ]
-}
-```
-
-:::tip Supported operators
-For a complete list of the available operators in scorecard filters, see the available operators section under the [rule elements](/scorecards/concepts-and-structure#rule-elements) documentation.
-:::
-
-## Aggregation properties
-
-Configure filters when creating or editing an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) in the [data model](https://app.getport.io/settings/data-model) page. The search and query filter is defined under the `query` section of the aggregation property.
-
-This example demonstrates how to define an aggregation property to a `service` blueprint that calculates the number of open high-severity vulnerabilities for each service, filtering only vulnerabilities with `severity` set to `high` and `status` set to `open`:
-
-```json showLineNumbers
-{
-  "aggregationProperties": {
-    "numberOfOpenHighVulnerabilities": {
-      "title": "Number of open high severity vulnerabilities",
-      "target": "vulnerability",
-      "calculationSpec": {
-        "calculationBy": "entities",
-        "func": "count"
-      },
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "severity",
-            "operator": "=",
-            "value": "high"
-          },
-          {
-            "property": "status",
-            "operator": "=",
-            "value": "open"
-          }
-        ]
-      }
-    }
-  }
-}
-```
 
 ## API
 
