@@ -59,9 +59,9 @@ While configuring your IdP, the Port UI displays the current status of your SSO 
 
 | Status indicator | Description |
 | :----------------: | ----------- |
-| <img src="/img/sso/self-serve/sso-status-pending.png" width="50px" border='1px' style={{borderRadius:'6px'}}/> | The setup process is in progress or hasn't been verified yet. |
-| <img src="/img/sso/self-serve/sso-status-success.png" width="50px" border='1px' style={{borderRadius:'6px'}}/> | The SSO connection was successfully created and verified. |
-| <img src="/img/sso/self-serve/sso-status-failed.png" width="50px" border='1px' style={{borderRadius:'6px'}}/> | The SSO connection setup failed. See the [troubleshooting](#troubleshooting) section below for resolution options. |
+| <img src="/img/sso/self-serve/sso-not-sure.svg" width="50px"/> | The setup process is in progress or hasn't been verified yet. |
+| <img src="/img/sso/self-serve/sso-success.svg" width="50px"/> | The SSO connection was successfully created and verified. |
+| <img src="/img/sso/self-serve/sso-issue.svg" width="50px"/> | The SSO connection setup failed. See the [troubleshooting](#troubleshooting) section below for resolution options. |
 
 Once you have completed the configuration in your identity provider, the window should update automatically. Otherwise click the `Setup is Done` button in Port to indicate that the process is finished.
 
