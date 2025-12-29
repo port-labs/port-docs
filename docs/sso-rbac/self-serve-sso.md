@@ -10,7 +10,11 @@ description: Set up and manage SSO for your organization directly from the porta
 This feature is currently in open beta and available to all organizations.
 :::
 
-Port allows company admins to configure SSO (Single Sign-On) directly from the portal.  
+:::info Open Beta
+This feature is currently in open beta and available to all organizations.
+:::
+
+Port allows company admins to configure SSO (single sign-on) directly from the portal.  
 This self-serve flow guides you through connecting your identity provider (IdP) to Port.
 
 ## Prerequisites
