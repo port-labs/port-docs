@@ -49,10 +49,10 @@ Configure which data tools your agent can access. Configure access to Port data 
 
 
 ### Step 3: Configure actions access
-Actions tools are created dynamically based on your Port self-service actions. When you configure an action for the agent, it becomes available as a tool the agent can use. Here's how to add an action to the agent:
+Actions are executed through the `run_action` tool, which dynamically handles all available actions in your Port instance. When you configure an action for the agent, it becomes available as a tool the agent can use. Here's how to add an action to the agent:
 
 1. Get the action identifier from the [self-service](https://app.getport.io/self-serve) page.
-2. Add it to your agent's configuration as an available tool with a syntax like `run_{action_identifier}`.
+2. Add it to your agent's configuration as an available tool with a syntax like `run_{action_identifier}`. While the underlying implementation uses the unified `run_action` tool, you can still reference actions using the `run_{action_identifier}` format in your configuration for clarity and backward compatibility.
 3. Decide whether the agent can run the action automatically or requires approval.
 
 For details on manual approval vs automatic execution patterns, see [Port AI tools and execution modes](/ai-interfaces/port-ai/overview#port-ai-tools).
