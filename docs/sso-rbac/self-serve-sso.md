@@ -16,7 +16,7 @@ This self-serve flow guides you through connecting your identity provider (IdP) 
 ## Prerequisites
 
 - This feature is available for **enterprise accounts** only.
-- Your account must have migrated to [multi-organization](/sso-rbac/multi-organization).
+- Your account must use the [multi-organization](/sso-rbac/multi-organization) architecture.
 - You must be a **company admin** to configure SSO.
 - You need access to your identity provider's admin console to create and configure applications.
 
@@ -37,18 +37,19 @@ A unique SSO setup link will be generated for you, it will be valid for 5 hours 
 
 ### Step 2: Configure your identity provider
 
-After clicking the setup button, you will be guided to configure the SSO connection. The following identity providers are supported:
+After clicking the `continue` button, you will be guided to configure the SSO connection.  
+The following identity providers are supported:
 
-- Okta
-- Entra ID
-- Keycloak
-- ADFS
-- Google Workspace
-- PingFederate
+- [Okta](https://www.okta.com/)
+- [Entra ID](https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-id)
+- [Keycloak](https://www.keycloak.org/)
+- [ADFS](https://learn.microsoft.com/en-us/windows-server/identity/active-directory-federation-services)
+- [Google Workspace](https://workspace.google.com/)
+- [PingFederate](https://www.pingidentity.com/en/pingone/pingfederate.html)
 - Custom SAML
 - Custom OIDC
 
-The setup process is fully guided by Auth0's self-service assistant, which walks you through each step including creating an application in your IdP, configuring the connection, mapping claims, and testing the SSO integration. For a detailed example walkthrough of the assistant flow, see the [Auth0 Self-Service SSO documentation](https://auth0.com/docs/authenticate/enterprise-connections/self-service-SSO#example-self-service-assistant-flow).
+The setup process is guided by Auth0's self-service assistant, which walks you through each step including creating an application in your IdP, configuring the connection, mapping claims, and testing the SSO integration. For a detailed example walkthrough of the assistant flow, see the [Auth0 Self-Service SSO documentation](https://auth0.com/docs/authenticate/enterprise-connections/self-service-SSO#example-self-service-assistant-flow).
 
 Complete the configuration in your identity provider's admin console following the on-screen instructions.
 
@@ -62,7 +63,7 @@ While configuring your IdP, the Port UI displays the current status of your SSO 
 | <img src="/img/sso/self-serve/sso-status-success.png" width="50px" border='1px' style={{borderRadius:'6px'}}/> | The SSO connection was successfully created and verified. |
 | <img src="/img/sso/self-serve/sso-status-failed.png" width="50px" border='1px' style={{borderRadius:'6px'}}/> | The SSO connection setup failed. See the [troubleshooting](#troubleshooting) section below for resolution options. |
 
-Once you have completed the configuration in your identity provider, click the **Setup is Done** button in Port to indicate that the process is finished.
+Once you have completed the configuration in your identity provider, the window should update automatically. Otherwise click the `Setup is Done` button in Port to indicate that the process is finished.
 
 ## Manage the connection
 
@@ -73,7 +74,7 @@ After the SSO connection is successfully established, you can configure the foll
 1. **Set group filters** - Click `Set Group Filters` to control which IdP groups sync into Port teams. You can use regular expressions (RegEx) to define allowed and blocked group patterns.
 
    :::info Group filter playground
-   The group filter configuration in Port is a playground for testing your RegEx patterns. It does not modify the actual groups in your IdP - group management should always be done in your identity provider's admin console. Groups that are already synced to Port will appear by default in the playground, allowing you to test how your filters would affect them.
+   The group filter configuration in Port is a playground for testing your RegEx patterns. Your patterns will be saved, but the groups themselves are not modified. Group management should always be done in your identity provider's admin console. Groups that are already synced to Port will appear by default in the playground, allowing you to test how your filters would affect them.
    :::
 
 2. **Block social login for domains** - Your configured domains are displayed here. You can toggle social login blocking per domain. When enabled for a domain, users with email addresses from that domain must sign in through your SSO provider and cannot use social login methods (such as Google or GitHub sign-in). To add more domains, use `Edit Connection`.
@@ -82,7 +83,7 @@ After the SSO connection is successfully established, you can configure the foll
    - **Max session TTL** - The maximum session duration in minutes.
    - **Idle session TTL** - The idle timeout duration in minutes before a session expires due to inactivity.
 
-4. **Edit connection** - Click `Edit Connection` to open the Auth0 management interface where you can modify your SSO configuration, including adding or managing domains associated with your SSO connection.
+4. **Edit connection** - Click `Edit Connection` to open the Auth0 management interface where you can modify your SSO configuration, including adding or managing domains associated with your SSO connection as well as managing the client secret.
 
 ## Limitations
 
@@ -90,12 +91,11 @@ After the SSO connection is successfully established, you can configure the foll
 
 ## Troubleshooting
 
-If you click `Setup is Done` and encounter an error, use the following table to identify and resolve the issue:
+If you encounter one of the following issues, use the table to identify and resolve it:
 
 | Error | Cause | Resolution |
 | ----- | ----- | ---------- |
-| Connection not created | The SSO connection was not created successfully. | Click **Start Again** to generate a new setup URL and repeat the configuration process. |
-| Mapping failed | The connection mapping failed. | Click **Edit Connection** to review and fix the configuration. |
+| Connection not created | The SSO connection was not created in Auth0. | Click `Start Again` to generate a new setup URL and repeat the configuration process or click `Setup is Done` once you complete the process. |
 | Linking failed | The SSO provider is connected, but linking to the company in Port failed. | Contact [Port's support team](http://support.port.io/) for assistance. |
 
 ## FAQs
