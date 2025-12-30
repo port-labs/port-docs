@@ -10012,12 +10012,6 @@ paths:
             type: boolean
             default: false
           in: query
-          name: attach_identifier_to_title_mirror_properties
-          required: false
-        - schema:
-            type: boolean
-            default: false
-          in: query
           name: allow_partial_results
           required: false
           description: When enabled allows some of the blueprint searches to fail without
