@@ -10,8 +10,7 @@ import TabItem from "@theme/TabItem"
 
 # Portal usage dashboard
 
-The usage dashboard provides visibility into how your Port environment is being used across your organization.  
-Use these insights to optimize adoption, identify engagement opportunities, and maximize the value your teams get from Port.
+The usage dashboard provides visibility into how your Port environment is being used across your organization. Data is updated once a day, providing the latest insights you need to optimize adoption, identify engagement opportunities, and maximize the value your teams get from Port.
 
 The dashboard tracks key metrics across five areas:
 
