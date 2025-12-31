@@ -264,7 +264,7 @@ Blueprint read permissions can be configured with dynamic `policy` rules using s
 
 The `policy` key allows you to create dynamic read access rules that grant users access to entities based on their properties, team membership, and contextual user data. This determines which entities users can see in catalog pages.
 
-For detailed examples and information, see the [policy tab](/build-your-software-catalog/set-catalog-rbac/set-catalog-rbac#read) section in the catalog RBAC documentation.
+For detailed examples and information, see the [read permissions policy section](/build-your-software-catalog/set-catalog-rbac#set-global-access-controls-to-catalog-data) in the catalog RBAC documentation.
 
 ## Aggregation properties
 
