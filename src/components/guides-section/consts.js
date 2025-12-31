@@ -1627,6 +1627,13 @@ export const availableGuides = [
         tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/track-ai-adoption-and-impact",
+    },
+    {
+        title: "Visualize Cursor metrics",
+        description: "Create dashboards to monitor Cursor AI usage, track adoption, analyze costs, and measure developer productivity",
+        tags: ["Engineering Intelligence", "Dashboards", "AI"],
+        logos: ["Cursor"],
+        link: "/guides/all/visualize-cursor-metrics",
     }
 ]
 
