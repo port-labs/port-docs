@@ -7,13 +7,13 @@ import TabItem from "@theme/TabItem"
 
 # Examples
 
-This page provides practical examples of using search and query syntax across different areas of Port.
+This page provides practical examples of using Port's search and query syntax across different features.
 
 ## Catalog pages
 
 Initial filters for [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page) are configured when creating or editing a catalog page in your [software catalog](https://app.getport.io/organization/catalog). These filters pre-filter which entities appear when the page loads, improving performance and showing only relevant data.
 
-Filters are especially useful when dealing with blueprints that have a large number of entities (such as Snyk vulnerabilities), where the request may time out without filtering.
+Filters are particularly useful for blueprints with large entity counts (such as Snyk vulnerabilities), where requests may take a long time to ld or even time out without filtering.
 
 <Tabs groupId="catalog-filters" queryString defaultValue="basic" values={[
 {label: "Basic example", value: "basic"},
@@ -83,9 +83,9 @@ This example demonstrates how to filter a service catalog page with multiple con
 
 Filters for related entity tabs are configured when creating custom tabs on any [entity page](/customize-pages-dashboards-and-plugins/page/entity-page). 
 
-Navigate to the **Related Entities** tab of the entity, click the `+` button or edit an existing tab. Then under **Additional filters**, click the filters button to add your query. These filters control which related entities appear in the custom tab.
+To add filters, navigate to the **Related Entities** tab, click the `+` button to create a new tab or edit an existing one. Then under **Additional filters**, click the filters button to add your query.
 
-Additional filters are particularly useful for related entities tabs where the number of related entities is very large. Applying filters improves performance and makes the data more manageable.
+These filters are particularly useful when a tab displays a large number of related entities. Filters improve performance and make the data more manageable.
 
 <Tabs groupId="entity-filters" queryString defaultValue="basic" values={[
 {label: "Basic example", value: "basic"},
@@ -149,7 +149,7 @@ This example demonstrates how to filter related PagerDuty incidents for a servic
 
 ## Dashboard widgets
 
-Widget-specific filters are configured in the widget creation/edit form for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/overview). These filters control which entities are included in calculations and visualizations for individual data widgets.
+Widget-specific filters are configured in the widget creatio or edit form for [dashboard widgets](/customize-pages-dashboards-and-plugins/dashboards/overview). These filters determine which entities are included in calculations and visualizations.
 
 <Tabs groupId="widget-filters" queryString defaultValue="basic" values={[
 {label: "Basic property filter", value: "basic"},
@@ -159,7 +159,7 @@ Widget-specific filters are configured in the widget creation/edit form for [das
 
 <TabItem value="basic">
 
-This example demonstrates how to filter overdue pull requests, showing only PRs with an `open` status that were created in the `past 90 days`:
+This example demonstrates how to filter overdue pull requests, showing only PRs with an `open` status that were created in the **past 90 days**:
 
 ```json showLineNumbers
 {
@@ -262,15 +262,15 @@ This example demonstrates how to filter pull requests based on their relationshi
 
 Blueprint read permissions can be configured with dynamic `policy` rules using search and query syntax. Configure these in the [data model](https://app.getport.io/settings/data-model) page by clicking on a blueprint and going to the **Permissions** tab.
 
-The `policy` key allows you to create dynamic read access rules, granting users access to entities based on their properties, team membership, and contextual user data. This controls which entities users can see in catalog pages.
+The `policy` key allows you to create dynamic read access rules that grant users access to entities based on their properties, team membership, and contextual user data. This determines which entities users can see in catalog pages.
 
-For detailed examples and information about blueprint permissions with search queries, see the [Policy tab](/build-your-software-catalog/set-catalog-rbac/set-catalog-rbac#read) in the catalog RBAC documentation.
+For detailed examples and information, see the [policy tab](/build-your-software-catalog/set-catalog-rbac/set-catalog-rbac#read) section in the catalog RBAC documentation.
 
 ## Aggregation properties
 
 Configure filters when creating or editing an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) in the [data model](https://app.getport.io/settings/data-model) page. The search and query filter is defined under the `query` section of the aggregation property.
 
-This example demonstrates how to define an aggregation property to a `service` blueprint that calculates the number of open high-severity vulnerabilities for each service, filtering only vulnerabilities with `severity` set to `high` and `status` set to `open`:
+This example demonstrates how to add an aggregation property to a `service` blueprint that calculates the number of open high-severity vulnerabilities for each service, filtering only vulnerabilities with `severity` set to `high` and `status` set to `open`:
 
 ```json showLineNumbers
 {
@@ -426,7 +426,7 @@ The examples below use the EU region API.
 If you wish to use the US region API, replace `https://api.getport.io` with `https://api.us.getport.io`.
 :::
 
-The following examples provide a foundation to begin using the search route. Remember that you can always change the content of the `rules` array to the search query that fits your search.
+The following examples provide a foundation for using the search route. You can modify the `rules` array to match your specific search requirements.
 
 <Tabs groupId="code-examples" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
