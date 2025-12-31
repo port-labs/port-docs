@@ -81,7 +81,9 @@ This example demonstrates how to filter a service catalog page with multiple con
 
 ## Entity pages
 
-Filters for related entity tabs are configured when creating custom tabs on any [entity page](/customize-pages-dashboards-and-plugins/page/entity-page). Go to the **Related Entities** tab of the entity, click the `+` button, then under **Additional filters**, click the filters button to add your query. These filters control which related entities appear in the custom tab.
+Filters for related entity tabs are configured when creating custom tabs on any [entity page](/customize-pages-dashboards-and-plugins/page/entity-page). 
+
+Navigate to the **Related Entities** tab of the entity, click the `+` button or edit an existing tab. Then under **Additional filters**, click the filters button to add your query. These filters control which related entities appear in the custom tab.
 
 Additional filters are particularly useful for related entities tabs where the number of related entities is very large. Applying filters improves performance and makes the data more manageable.
 
@@ -111,33 +113,30 @@ This example demonstrates how to filter related pull requests for a repository e
 
 <TabItem value="advanced">
 
-<!-- TODO: Test this example in your environment -->
-
-This example demonstrates how to filter related alerts for a service entity with multiple conditions, showing only critical alerts that were created in the last 24 hours and are still unresolved:
+This example demonstrates how to filter related PagerDuty incidents for a service entity with multiple conditions, showing only high-urgency incidents that are still unresolved and were created in the last week:
 
 ```json showLineNumbers
 {
   "combinator": "and",
   "rules": [
     {
-      "property": "severity",
-      "operator": "=",
-      "value": "critical"
+      "value": "high",
+      "property": "urgency",
+      "operator": "="
     },
     {
-      "property": "status",
-      "operator": "in",
       "value": [
-        "open",
-        "investigating",
-        "identified"
-      ]
+        "triggered",
+        "acknowledged"
+      ],
+      "property": "status",
+      "operator": "in"
     },
     {
-      "property": "createdAt",
+      "property": "created_at",
       "operator": "between",
       "value": {
-        "preset": "last24Hours"
+        "preset": "lastWeek"
       }
     }
   ]
@@ -236,27 +235,20 @@ This example demonstrates how to filter entities by the logged-in user's owning 
 
 <TabItem value="relation">
 
-<!-- TODO: come back to this example and test it and all -->
-
-This example demonstrates how to filter entities using relation paths to query related entities. It filters services that are related to a cluster in the `production` environment:
+This example demonstrates how to filter pull requests based on their relationship to a specific repository. It shows only PRs belonging to the `backend-api` service:
 
 ```json showLineNumbers
 {
   "combinator": "and",
   "rules": [
     {
-      "operator": "relatedTo",
-      "blueprint": "cluster",
-      "value": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "environment",
-            "operator": "=",
-            "value": "production"
-          }
+      "operator": "matchAny",
+      "property": {
+        "path": [
+          "service"
         ]
-      }
+      },
+      "value": "backend_api"
     }
   ]
 }
