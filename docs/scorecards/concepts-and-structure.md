@@ -391,7 +391,7 @@ The system enforces several validation rules to maintain data integrity:
 
 <h3>Delayed rule results</h3>
 
-When creating scorecards, adding new rules, or modifying existing rules for blueprints that contain a large number of entities, the `rule results` sync can take up to 24 hours to complete.
+When creating scorecards, adding new rules, or modifying existing rules for blueprints that affect a large number of entities, the `rule results` sync can take up to 24 hours to complete.
 
 This delay occurs because Port needs to create or update rule result blueprint instances for each entity and rule combination. The more entities you have in the blueprint, the more rule results need to be created or updated, which increases the processing time.
 
@@ -408,7 +408,7 @@ To monitor how many rule result entities you have, you can:
    - Blueprint: `_rule_result`.
    
 If you reach this limit, you can:
-- Reduce the number of entities being evaluated by applying a [filter](#filter-elements) in your scorecard (e.g., limit to opened pull requests or active services), or by reducing the number of entities in the target blueprints.
+- Reduce the number of entities being evaluated by editing the scorecard entity and applying a [filter](#filter-elements) to limit evaluation to specific entities (e.g., opened pull requests or active services), or by reducing the number of entities in the target blueprints.
 - Review your scorecards to reduce the number of rules.
 - Contact [Port support](https://support.port.io) for assistance.
 

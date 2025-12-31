@@ -136,19 +136,11 @@ export const mcpTools = [
     roles: ['developer', 'builder']
   },
   {
-    name: 'run_*',
-    description: 'Execute any action you have permission to run in Port. Dynamically generated for each action available in your organization.',
+    name: 'run_action',
+    description: 'Execute any action you have permission to run in Port. Provide the action identifier and inputs to run the action. This unified tool handles all actions in your organization, reducing the total number of tools available.',
     apiReference: '/api-reference/execute-a-self-service-action',
     roles: ['developer', 'builder'],
     isDynamic: true
-  },
-  {
-    name: 'run_action',
-    description: 'Run any action dynamically by providing the action identifier and inputs. Used internally by the MCP server and not directly exposed to clients.',
-    apiReference: '/api-reference/execute-a-self-service-action',
-    roles: ['developer','builder'],
-    isDynamic: true,
-    isInternal: true
   },
   {
     name: 'get_action_permissions',
