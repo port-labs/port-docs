@@ -620,7 +620,7 @@ The actual data array is in the `.value` property, and pagination information is
 
 ## Customization
 
-If you want to customize your setup or test different API endpoints before committing to a configuration, use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/build-your-integration).
+If you want to customize your setup or test different API endpoints before committing to a configuration, use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/installation-types/self-hosted/build-your-integration).
 
 **The interactive builder helps you:**
 1. Test your Microsoft Graph API endpoints with live data.
