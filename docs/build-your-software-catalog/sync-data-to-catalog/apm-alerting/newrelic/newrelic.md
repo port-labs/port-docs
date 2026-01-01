@@ -27,8 +27,13 @@ This integration allows you to:
 
 The resources that can be ingested from New Relic into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-- [`Entity`](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/)
-- [`Issue`](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/get-started/alerts-ai-overview-page/#issues)
+The following kinds are supported by the New Relic integration:
+
+- [**`newRelicService`**](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/) - Maps New Relic services and applications (SERVICE and APPLICATION entity types).
+- [**`newRelicAlert`**](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/get-started/alerts-ai-overview-page/#issues) - Maps New Relic issues/alerts.
+- [**`newRelicServiceLevel`**](https://docs.newrelic.com/docs/service-level-management/consume-slm/) - Maps New Relic service level indicators (SLIs) and service level objectives (SLOs).
+- [**`entity`**](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/) - Maps generic New Relic entities, including cloud resources from AWS, Azure, and GCP.
+- [**`entities`**](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/) - Maps New Relic dashboards.
 
 
 ## Setup
