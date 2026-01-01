@@ -555,7 +555,7 @@ The actual data array is typically nested under `.data.alerts`, `.data.groups` (
 
 ## Customization
 
-If you want to customize your setup or test different API endpoints before committing to a configuration, use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/build-your-integration).
+If you want to customize your setup or test different API endpoints before committing to a configuration, use the [interactive builder](/build-your-software-catalog/custom-integration/ocean-custom-integration/installation-types/self-hosted/build-your-integration).
 
 **The interactive builder helps you:**
 1. Test your Prometheus API endpoints with live data.
