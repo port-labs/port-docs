@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 
 Port provides granular control to make sure every user can only execute and invoke the actions that are relevant for them.
 
-:::tip
+:::tip Related documentation
 This section covers the self-service actions section of Port's RBAC functionality, while it is not a prerequisite, it is highly recommended you also go over Port's [permission controls](/sso-rbac/users-and-teams/manage-users-teams).
 
 In order to manage who can view which pages in Port, check out [page permissions](/customize-pages-dashboards-and-plugins/page/page-permissions.md).
@@ -23,11 +23,11 @@ Self-service actions RBAC allows admins to finely control which users can execut
 - Let a developer provision a database only to his microservice or developer environment.
 - Specify that a new cluster provision request requires manual approval by the DevOps team.
 
-## Triggering an Action on Behalf of Another User
+## Triggering an action on behalf of another user
 
 You can trigger an action on behalf of another user within your organization using an API request. This can be accomplished by including the query parameter `run_as=<user_email>` in your API request.
 
-:::info
+:::info API only
 This feature is accessible only using an organizational token, and is currently only available from [Port's API](/api-reference/port-api).
 :::
 
