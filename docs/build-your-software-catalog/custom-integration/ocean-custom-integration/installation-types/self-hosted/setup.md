@@ -6,27 +6,15 @@ description: Install the Ocean custom integration in your own infrastructure
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Setup
 
 Using this installation option means that the integration will run in your own infrastructure, giving you full control over resources and configuration. You can deploy it using Helm or Docker, and it will run continuously in your environment to keep your data synchronized with Port.
 
-:::warning High-scale performance considerations
-
-For high-scale environments with large datasets, consider the following:
-
-- **Self-hosted installation** is recommended for better control over resources and performance tuning.
-- **Rate limiting** may be required to prevent overwhelming your API.
-- **Resource allocation** - allocate sufficient CPU and memory based on your data volume.
+:::warning High-scale environments
+For high-scale environments with large datasets, allocate sufficient CPU and memory based on your data volume.
 :::
-
-## Prerequisites
-
-<Prerequisites />
-
-For details about the available parameters for the installation, see the table below.
 
 ## Installation
 

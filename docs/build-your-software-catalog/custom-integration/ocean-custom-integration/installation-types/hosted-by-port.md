@@ -18,7 +18,6 @@ For high-scale environments with large datasets, consider the following:
 
 - **Self-hosted installation** is recommended for better control over resources and performance tuning.
 - **Rate limiting** may be required to prevent overwhelming your API.
-- **Resource allocation** - allocate sufficient CPU and memory based on your data volume.
 :::
 
 ## Installation

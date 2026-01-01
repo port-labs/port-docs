@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Configuration
 description: Prerequisites, resource mapping, and advanced configuration for the Ocean custom integration
 ---
@@ -9,70 +9,6 @@ import AdvancedConfig from '/docs/generalTemplates/_ocean_advanced_configuration
 # Configuration
 
 In this page we will cover the configuration steps that apply to both installation methods (hosted by Port and self-hosted). We will walk through the prerequisites you need to gather, how to configure resource mapping, and advanced configuration options for complex scenarios.
-
-
-## Prerequisites
-
-Before installing, gather this information about your API:
-
-### 1. Authentication
-
-How does your API verify requests?
-
-- **Bearer Token:** OAuth2 tokens, personal access tokens (most modern APIs).
-- **API Key:** Custom header like `X-API-Key` or `Authorization`.
-- **Basic Auth:** Username and password (legacy systems).
-- **None:** Public APIs.
-
-**Where to find it:** Check your API's documentation or settings page. Look for sections titled "API Keys," "Access Tokens," or "Authentication."
-
-### 2. Endpoints
-
-Which API endpoint returns the data you want to ingest?
-
-**Example:** `/api/v1/users`, `/v2/projects`, `/tickets`
-
-**How to find it:** Check your API documentation for available endpoints. Look for GET endpoints that return lists of resources.
-
-### 3. Data structure
-
-Where is the actual data in your API's response?
-
-**Direct array:**
-
-```json
-[
-  {"id": 1, "name": "Alice"},
-  {"id": 2, "name": "Bob"}
-]
-```
-
-**Nested data:**
-
-```json
-{
-  "data": [
-    {"id": 1, "name": "Alice"},
-    {"id": 2, "name": "Bob"}
-  ]
-}
-```
-
-**Deeply nested:**
-
-```json
-{
-  "response": {
-    "users": {
-      "items": [
-        {"id": 1, "name": "Alice"}
-      ]
-    }
-  }
-}
-```
-
-You will use a [JQ](https://jqlang.org/manual/) `data_path` expression in your mapping to tell the integration where to find the array of items (e.g., `.data`, `.users.items`).
 
 
 ## How it works

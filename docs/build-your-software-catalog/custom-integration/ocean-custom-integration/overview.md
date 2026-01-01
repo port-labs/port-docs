@@ -18,6 +18,69 @@ This integration is ideal when:
 - Your API follows **REST conventions** (JSON responses, HTTP methods).
 - You want a **configuration-only solution** without custom code.
 
+## Prerequisites
+
+Before installing, gather this information about your API:
+
+### 1. Authentication
+
+How does your API verify requests?
+
+- **Bearer Token:** OAuth2 tokens, personal access tokens (most modern APIs).
+- **API Key:** Custom header like `X-API-Key` or `Authorization`.
+- **Basic Auth:** Username and password (legacy systems).
+- **None:** Public APIs.
+
+**Where to find it:** Check your API's documentation or settings page. Look for sections titled "API Keys," "Access Tokens," or "Authentication."
+
+### 2. Endpoints
+
+Which API endpoint returns the data you want to ingest?
+
+**Example:** `/api/v1/users`, `/v2/projects`, `/tickets`
+
+**How to find it:** Check your API documentation for available endpoints. Look for GET endpoints that return lists of resources.
+
+### 3. Data structure
+
+Where is the actual data in your API's response?
+
+**Direct array:**
+
+```json
+[
+  {"id": 1, "name": "Alice"},
+  {"id": 2, "name": "Bob"}
+]
+```
+
+**Nested data:**
+
+```json
+{
+  "data": [
+    {"id": 1, "name": "Alice"},
+    {"id": 2, "name": "Bob"}
+  ]
+}
+```
+
+**Deeply nested:**
+
+```json
+{
+  "response": {
+    "users": {
+      "items": [
+        {"id": 1, "name": "Alice"}
+      ]
+    }
+  }
+}
+```
+
+You will use a [JQ](https://jqlang.org/manual/) `data_path` expression in your mapping to tell the integration where to find the array of items (e.g., `.data`, `.users.items`).
+
 
 ## Installation methods
 
@@ -28,7 +91,7 @@ The Ocean custom integration can be installed in two ways, depending on your req
 
 ### Hosted by Port
 
-Port hosts and manages the integration infrastructure for you. This is the simplest option - you configure the connection settings through the Port UI, and Port handles the rest. The integration runs on Port's infrastructure with a customizable resync interval to keep your data up to date.
+Port hosts and manages the integration infrastructure for you. This is the simplest option, you configure the connection settings through the Port UI, and Port handles the rest. The integration runs on Port's infrastructure with a customizable resync interval to keep your data up to date.
 
 **Best for:** Quick setup, or when you prefer a managed solution.
 
