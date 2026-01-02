@@ -1627,6 +1627,13 @@ export const availableGuides = [
         tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/track-ai-adoption-and-impact",
+    },
+    {
+        title: "Visualize Claude metrics",
+        description: "Create dashboards to monitor Claude API usage, track costs, analyze model performance, and measure workspace-level metrics",
+        tags: ["Engineering Intelligence", "Dashboards", "Claude Code"],
+        logos: ["Claude Code"],
+        link: "/guides/all/visualize-claude-metrics",
     }
 ]
 
