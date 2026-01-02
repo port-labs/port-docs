@@ -4,6 +4,7 @@ title: Port n8n node
 ---
 
 import BetaFeatureNotice from '/docs/generalTemplates/_beta_feature_notice.md'
+import N8nOperationsList from '@site/src/components/N8nOperationsList'
 
 # Port n8n node
 
@@ -198,6 +199,13 @@ To verify everything is working:
 2. **Execute the workflow** — Click **Execute Workflow** to test the connection.
 
 3. **Check the output** — If successful, you should see the AI response in the node output.
+
+
+## Available operations
+
+The Port n8n node provides operations for interacting with Port's AI capabilities. Each operation corresponds to a different use case for querying and automating with Port's Context Lake.
+
+<N8nOperationsList />
 
 ## What's next?
 
