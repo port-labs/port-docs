@@ -213,6 +213,13 @@ export const integrations = [
     darkIcon: '/img/guides/icons/dark/Armorcode.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/code-quality-security/armorcode',
   },
+  {
+    name: 'Tenable',
+    category: 'security',
+    icon: '/img/guides/icons/Tenable.svg',
+    darkIcon: '/img/guides/icons/dark/Tenable.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/code-quality-security/tenable',
+  },
   // Feature Management
   {
     name: 'Launchdarkly',
