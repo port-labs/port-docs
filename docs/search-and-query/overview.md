@@ -5,7 +5,7 @@ title: Overview
 
 # Overview
 
-Port's API provides tools to easily query, search and filter software catalog data. Port's search and query syntax can be used across the Port product to dynamically filter entities, control permissions, configure automations, and more.
+Port's search and query syntax provides a powerful way to filter and retrieve data from your software catalog. You can use this syntax across the Port product to dynamically filter entities, control permissions, configure automations, and more.
 
 ## Where to use search & query?
 
