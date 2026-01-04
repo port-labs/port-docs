@@ -166,7 +166,7 @@ const config = {
               },
               {
                 label: "Build a software catalog",
-                to: "/build-your-software-catalog",
+                to: "/build-your-software-catalog/overview",
               },
               {
                 label: "Create self-service actions",
