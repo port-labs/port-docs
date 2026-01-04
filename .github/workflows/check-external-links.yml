@@ -1,0 +1,285 @@
+name: Check External Links
+
+on:
+  # Run every Monday at 9 AM UTC
+  schedule:
+    - cron: '0 9 * * 1'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+  
+  # Run on every push to link-checker branch (for testing)
+  push:
+    branches:
+      - link-checker
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check external links
+        id: link-check
+        run: |
+          npm run check-links 2>&1 | tee link-check-output.log || echo "LINKS_BROKEN=true" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      - name: Display results summary
+        if: always()
+        run: |
+          echo "=== Link Check Results ==="
+          cat link-check-report.txt
+          echo ""
+          echo "=== Adding to GitHub Actions Summary ==="
+          
+          # Add to GitHub Actions summary
+          {
+            echo "## 🔗 Link Check Results"
+            echo ""
+            echo '```'
+            cat link-check-report.txt
+            echo '```'
+            echo ""
+            echo "📄 Full report available in workflow artifacts."
+          } >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload link check results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-check-results
+          path: link-check-report.txt
+          retention-days: 30
+
+      - name: Create JIRA issue if links are broken
+        if: steps.link-check.outputs.LINKS_BROKEN == 'true'
+        env:
+          JIRA_URL: https://getport.atlassian.net
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_PROJECT_KEY: PORT
+          JIRA_ISSUE_TYPE: Bug
+        run: |
+          # Use Basic auth with email and API token
+          echo "Using Basic auth (email + API token)"
+          
+          if [ -z "$JIRA_EMAIL" ] || [ -z "$JIRA_API_TOKEN" ]; then
+            echo "❌ Error: JIRA_EMAIL and JIRA_API_TOKEN must be set"
+            exit 1
+          fi
+          
+          # Create Basic auth header: base64(email:api_token)
+          auth_header=$(echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64 -w 0 2>/dev/null || echo -n "${JIRA_EMAIL}:${JIRA_API_TOKEN}" | base64)
+          
+          # Test authentication
+          echo "Testing authentication..."
+          auth_test=$(curl -s -w "\n%{http_code}" -X GET \
+            "${JIRA_URL}/rest/api/3/myself" \
+            -H "Authorization: Basic ${auth_header}" \
+            -H "Accept: application/json" \
+            2>&1)
+          
+          auth_http_code=$(echo "$auth_test" | tail -n1)
+          auth_response=$(echo "$auth_test" | sed '$d')
+          
+          if [ "$auth_http_code" -ge 200 ] && [ "$auth_http_code" -lt 300 ]; then
+            user_email=$(echo "$auth_response" | jq -r '.emailAddress // "Unknown"' 2>/dev/null || echo "Unknown")
+            user_display=$(echo "$auth_response" | jq -r '.displayName // "Unknown"' 2>/dev/null || echo "Unknown")
+            echo "✅ Authentication successful - Logged in as: $user_display ($user_email)"
+          else
+            echo "❌ Authentication failed. HTTP $auth_http_code"
+            echo "Response: $auth_response"
+            exit 1
+          fi
+          
+          # Read the link check report
+          report_content=$(cat link-check-report.txt)
+          
+          # Extract summary statistics
+          broken_count=$(echo "$report_content" | grep -oP '❌ Broken \(404, 500, etc\.\): \K\d+' || echo "0")
+          auth_count=$(echo "$report_content" | grep -oP '🔒 Auth required \(403\): \K\d+' || echo "0")
+          total_count=$(echo "$report_content" | grep -oP '📝 Total external links checked: \K\d+' || echo "0")
+          
+          # Create issue summary
+          summary="Broken External Links Detected in Documentation (${broken_count} broken)"
+          
+          # Build JIRA issue description using Atlassian Document Format (ADF)
+          workflow_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          
+          # Create ADF content with the report
+          adf_content=$(jq -n \
+            --arg timestamp "$timestamp" \
+            --arg workflow_url "$workflow_url" \
+            --arg report "$report_content" \
+            --arg broken_count "$broken_count" \
+            --arg auth_count "$auth_count" \
+            --arg total_count "$total_count" \
+            '[
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "The automated link checker detected broken external links in the documentation.",
+                    "marks": [{"type": "strong"}]
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {"type": "text", "text": "Generated: ", "marks": [{"type": "strong"}]},
+                  {"type": "text", "text": $timestamp}
+                ]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {"type": "text", "text": "Workflow Run: ", "marks": [{"type": "strong"}]},
+                  {
+                    "type": "text",
+                    "text": $workflow_url,
+                    "marks": [
+                      {
+                        "type": "link",
+                        "attrs": {"href": $workflow_url}
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {"level": 2},
+                "content": [{"type": "text", "text": "Summary"}]
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "content": [{
+                      "type": "paragraph",
+                      "content": [{"type": "text", "text": ("❌ Broken links (404, 500, etc.): " + $broken_count)}]
+                    }]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [{
+                      "type": "paragraph",
+                      "content": [{"type": "text", "text": ("🔒 Auth required (403): " + $auth_count)}]
+                    }]
+                  },
+                  {
+                    "type": "listItem",
+                    "content": [{
+                      "type": "paragraph",
+                      "content": [{"type": "text", "text": ("📝 Total checked: " + $total_count)}]
+                    }]
+                  }
+                ]
+              },
+              {
+                "type": "heading",
+                "attrs": {"level": 2},
+                "content": [{"type": "text", "text": "Full Report"}]
+              },
+              {
+                "type": "codeBlock",
+                "attrs": {"language": "text"},
+                "content": [{"type": "text", "text": $report}]
+              },
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Note: Links with 403 errors require authentication and may not be actually broken.",
+                    "marks": [{"type": "em"}]
+                  }
+                ]
+              }
+            ]')
+          
+          # Create issue JSON payload
+          issue_json=$(jq -n \
+            --arg project_key "$JIRA_PROJECT_KEY" \
+            --arg issue_type "$JIRA_ISSUE_TYPE" \
+            --arg summary "$summary" \
+            --argjson adf_content "$adf_content" \
+            '{
+              fields: {
+                project: { key: $project_key },
+                summary: $summary,
+                description: {
+                  type: "doc",
+                  version: 1,
+                  content: $adf_content
+                },
+                issuetype: { name: $issue_type },
+                components: [{ name: "port-docs" }]
+              }
+            }')
+          
+          # Create issue via JIRA API
+          echo "Creating JIRA issue..."
+          response=$(curl -s -w "\n%{http_code}" -X POST \
+            "${JIRA_URL}/rest/api/3/issue" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Basic ${auth_header}" \
+            -H "Accept: application/json" \
+            -d "$issue_json" 2>&1)
+          
+          http_code=$(echo "$response" | tail -n1)
+          response_body=$(echo "$response" | sed '$d')
+          
+          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+            issue_key=$(echo "$response_body" | jq -r '.key // "Unknown"' 2>/dev/null || echo "Unknown")
+            issue_url="${JIRA_URL}/browse/${issue_key}"
+            echo "✅ Successfully created JIRA issue: $issue_key"
+            echo "🔗 View issue at: $issue_url"
+            
+            # Add to GitHub Actions summary
+            {
+              echo ""
+              echo "---"
+              echo ""
+              echo "### 🎫 JIRA Issue Created"
+              echo ""
+              echo "**Issue:** [$issue_key]($issue_url)"
+              echo ""
+              echo "**Broken Links:** $broken_count"
+            } >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Failed to create JIRA issue. HTTP $http_code"
+            echo "Response: $response_body"
+            
+            if [ "$http_code" -eq 401 ]; then
+              echo "⚠️  Authentication Error: Please verify JIRA_EMAIL and JIRA_API_TOKEN"
+            elif [ "$http_code" -eq 403 ]; then
+              echo "⚠️  Permission Denied: User does not have permission to create issues"
+            elif [ "$http_code" -eq 404 ]; then
+              echo "⚠️  Project Not Found: Check that project key '${JIRA_PROJECT_KEY}' exists"
+            fi
+            exit 1
+          fi
+
+      - name: Fail workflow if links are broken
+        if: steps.link-check.outputs.LINKS_BROKEN == 'true'
+        run: |
+          echo "❌ Broken links detected. Check the artifacts or issue for details."
+          exit 1
+
