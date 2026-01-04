@@ -1834,6 +1834,78 @@ components:
                     type: string
                   type:
                     enum:
+                      - workflow-runs-history-table
+                  query:
+                    type: object
+                  tableConfig:
+                    type: object
+                    properties:
+                      filterSettings:
+                        type: object
+                        properties:
+                          filterBy:
+                            $ref: "#/components/schemas/def-1"
+                        additionalProperties: false
+                        required:
+                          - filterBy
+                      groupSettings:
+                        type: object
+                        properties:
+                          groupBy:
+                            type: array
+                            items:
+                              type: string
+                        additionalProperties: false
+                        required:
+                          - groupBy
+                      sortSettings:
+                        type: object
+                        properties:
+                          sortBy:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                property:
+                                  type: string
+                                order:
+                                  enum:
+                                    - asc
+                                    - desc
+                              additionalProperties: false
+                              required:
+                                - property
+                                - order
+                        additionalProperties: false
+                      propertiesSettings:
+                        type: object
+                        properties:
+                          hidden:
+                            type: array
+                            items:
+                              type: string
+                          order:
+                            type: array
+                            items:
+                              type: string
+                        additionalProperties: false
+                additionalProperties: false
+                required:
+                  - type
+              - type: object
+                properties:
+                  id:
+                    type: string
+                  updatedAt:
+                    type: string
+                  updatedBy:
+                    type: string
+                  createdAt:
+                    type: string
+                  createdBy:
+                    type: string
+                  type:
+                    enum:
                       - run-info
                   title:
                     type: string
@@ -4335,6 +4407,78 @@ components:
                               action:
                                 type: "null"
                           additionalProperties: false
+                        tableConfig:
+                          type: object
+                          properties:
+                            filterSettings:
+                              type: object
+                              properties:
+                                filterBy:
+                                  $ref: "#/components/schemas/def-1"
+                              additionalProperties: false
+                              required:
+                                - filterBy
+                            groupSettings:
+                              type: object
+                              properties:
+                                groupBy:
+                                  type: array
+                                  items:
+                                    type: string
+                              additionalProperties: false
+                              required:
+                                - groupBy
+                            sortSettings:
+                              type: object
+                              properties:
+                                sortBy:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      order:
+                                        enum:
+                                          - asc
+                                          - desc
+                                    additionalProperties: false
+                                    required:
+                                      - property
+                                      - order
+                              additionalProperties: false
+                            propertiesSettings:
+                              type: object
+                              properties:
+                                hidden:
+                                  type: array
+                                  items:
+                                    type: string
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              additionalProperties: false
+                      additionalProperties: false
+                      required:
+                        - type
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                        updatedAt:
+                          type: string
+                        updatedBy:
+                          type: string
+                        createdAt:
+                          type: string
+                        createdBy:
+                          type: string
+                        type:
+                          enum:
+                            - workflow-runs-history-table
+                        query:
+                          type: object
                         tableConfig:
                           type: object
                           properties:
@@ -10012,6 +10156,12 @@ paths:
             type: boolean
             default: false
           in: query
+          name: attach_identifier_to_title_mirror_properties
+          required: false
+        - schema:
+            type: boolean
+            default: false
+          in: query
           name: allow_partial_results
           required: false
           description: When enabled allows some of the blueprint searches to fail without
@@ -11121,6 +11271,7 @@ paths:
                         - America/Coral_Harbour
                         - America/Cordoba
                         - America/Costa_Rica
+                        - America/Coyhaique
                         - America/Creston
                         - America/Cuiaba
                         - America/Curacao
@@ -26262,7 +26413,7 @@ paths:
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       parameters:
         - schema:
@@ -26321,7 +26472,7 @@ paths:
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       parameters:
         - schema:
@@ -26810,7 +26961,7 @@ paths:
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       parameters:
         - schema:
@@ -27636,7 +27787,7 @@ paths:
         :::warning Permission requirements
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       security:
         - bearer:
@@ -28585,7 +28736,7 @@ paths:
         :::warning Permission requirements
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       parameters:
         - schema:
@@ -34078,7 +34229,7 @@ paths:
 
         To learn more about the different roles and permissions, please refer to the [documentation](/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
         
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
         :::
       tags:
         - Integrations
@@ -34503,17 +34654,13 @@ paths:
       tags:
         - Integrations
       description: |-
-        This route allows you to get an integration's sync metadata, which includes the sync's ID, state, creation and last update dates.
-        
-        Returns resyncs from the last 4 days, or the 50 most recent ones.
-        
-        :::warning Permission requirements
+        This route allows you to get an integration's sync metadata, which includes the sync's ID, state, creation and last update dates.\n\nReturns resyncs from the last 4 days, or the 50 most recent ones.<br/><br/>:::warning Permission requirements
 
         To use this endpoint, you must have a `moderator` or `admin` role in your Port organization.
 
         To learn more about the different roles and permissions, please refer to the [documentation](https://docs.port.io/sso-rbac/users-and-teams/manage-users-teams#roles--permissions).
 
-        If you already have an existing Port account, this requirement will be enforced starting **February 1st, 2026**.
+        If you already have an existing Port account, this requirement will be enforced starting **January 1st, 2026**.
 
         :::
       parameters:
@@ -34716,7 +34863,6 @@ paths:
                           - gpt-5
                           - claude-sonnet-4-20250514
                           - claude-haiku-4-5-20251001
-                          - claude-sonnet-4-5-20250929
                       createdAt:
                         type: string
                         format: date-time
@@ -34782,7 +34928,6 @@ paths:
                     - gpt-5
                     - claude-sonnet-4-20250514
                     - claude-haiku-4-5-20251001
-                    - claude-sonnet-4-5-20250929
               required:
                 - provider
                 - model
@@ -34815,7 +34960,6 @@ paths:
                           - gpt-5
                           - claude-sonnet-4-20250514
                           - claude-haiku-4-5-20251001
-                          - claude-sonnet-4-5-20250929
                       createdAt:
                         type: string
                         format: date-time
@@ -34876,6 +35020,7 @@ paths:
                         - anthropic
                     config:
                       type: object
+                      title: Anthropic configuration
                       properties:
                         apiKeySecretName:
                           type: string
@@ -34885,16 +35030,18 @@ paths:
                       additionalProperties: false
                     overrides:
                       type: object
+                      title: Model overrides
                       properties:
                         models:
                           type: object
+                          title: Models configuration
                           required:
                             - claude-sonnet-4-20250514
                             - claude-haiku-4-5-20251001
-                            - claude-sonnet-4-5-20250929
                           properties:
                             claude-sonnet-4-20250514:
                               type: object
+                              title: Claude Sonnet 4 configuration
                               properties:
                                 enabled:
                                   type: boolean
@@ -34902,13 +35049,7 @@ paths:
                               additionalProperties: false
                             claude-haiku-4-5-20251001:
                               type: object
-                              properties:
-                                enabled:
-                                  type: boolean
-                                  default: true
-                              additionalProperties: false
-                            claude-sonnet-4-5-20250929:
-                              type: object
+                              title: Claude Haiku 4.5 configuration
                               properties:
                                 enabled:
                                   type: boolean
@@ -34932,6 +35073,7 @@ paths:
                         - openai
                     config:
                       type: object
+                      title: OpenAI configuration
                       properties:
                         apiKeySecretName:
                           type: string
@@ -34941,14 +35083,17 @@ paths:
                       additionalProperties: false
                     overrides:
                       type: object
+                      title: Model overrides
                       properties:
                         models:
                           type: object
+                          title: Models configuration
                           required:
                             - gpt-5
                           properties:
                             gpt-5:
                               type: object
+                              title: GPT-5 configuration
                               properties:
                                 enabled:
                                   type: boolean
@@ -34972,6 +35117,7 @@ paths:
                         - azure-openai
                     config:
                       type: object
+                      title: Azure OpenAI configuration
                       properties:
                         apiKeySecretName:
                           type: string
@@ -34989,14 +35135,17 @@ paths:
                       additionalProperties: false
                     overrides:
                       type: object
+                      title: Model overrides
                       properties:
                         models:
                           type: object
+                          title: Models configuration
                           required:
                             - gpt-5
                           properties:
                             gpt-5:
                               type: object
+                              title: GPT-5 configuration
                               properties:
                                 enabled:
                                   type: boolean
@@ -35019,61 +35168,42 @@ paths:
                       enum:
                         - bedrock
                     config:
-                      anyOf:
-                        - type: object
-                          properties:
-                            accessKeyIdSecretName:
-                              type: string
-                              minLength: 1
-                            secretAccessKeySecretName:
-                              type: string
-                              minLength: 1
-                            region:
-                              type: string
-                              minLength: 1
-                              pattern: ^[a-z]{2}-[a-z]+-\d{1}$
-                            guardrailIdentifier:
-                              type: string
-                            guardrailVersion:
-                              type: string
-                          required:
-                            - accessKeyIdSecretName
-                            - secretAccessKeySecretName
-                            - region
-                          additionalProperties: false
-                        - type: object
-                          properties:
-                            roleArn:
-                              type: string
-                              minLength: 1
-                              pattern: ^arn:aws:iam::\d{12}:role/[\w+=,.@-]+$
-                            externalIdSecretName:
-                              type: string
-                              minLength: 1
-                            region:
-                              type: string
-                              minLength: 1
-                              pattern: ^[a-z]{2}-[a-z]+-\d{1}$
-                            guardrailIdentifier:
-                              type: string
-                            guardrailVersion:
-                              type: string
-                          required:
-                            - roleArn
-                            - region
-                          additionalProperties: false
+                      type: object
+                      title: Bedrock configuration
+                      properties:
+                        accessKeyIdSecretName:
+                          type: string
+                          minLength: 1
+                        secretAccessKeySecretName:
+                          type: string
+                          minLength: 1
+                        region:
+                          type: string
+                          minLength: 1
+                          pattern: ^[a-z]{2}-[a-z]+-\d{1}$
+                        guardrailIdentifier:
+                          type: string
+                        guardrailVersion:
+                          type: string
+                      required:
+                        - accessKeyIdSecretName
+                        - secretAccessKeySecretName
+                        - region
+                      additionalProperties: false
                     overrides:
                       type: object
+                      title: Model overrides
                       properties:
                         models:
                           type: object
+                          title: Models configuration
                           required:
                             - claude-sonnet-4-20250514
                             - claude-haiku-4-5-20251001
-                            - claude-sonnet-4-5-20250929
                           properties:
                             claude-sonnet-4-20250514:
                               type: object
+                              title: Claude Sonnet 4 configuration
                               properties:
                                 enabled:
                                   type: boolean
@@ -35081,13 +35211,7 @@ paths:
                               additionalProperties: false
                             claude-haiku-4-5-20251001:
                               type: object
-                              properties:
-                                enabled:
-                                  type: boolean
-                                  default: true
-                              additionalProperties: false
-                            claude-sonnet-4-5-20250929:
-                              type: object
+                              title: Claude Haiku 4.5 configuration
                               properties:
                                 enabled:
                                   type: boolean
@@ -35134,6 +35258,7 @@ paths:
                       config:
                         anyOf:
                           - type: object
+                            title: Anthropic configuration
                             properties:
                               apiKeySecretName:
                                 type: string
@@ -35142,6 +35267,7 @@ paths:
                               - apiKeySecretName
                             additionalProperties: false
                           - type: object
+                            title: OpenAI configuration
                             properties:
                               apiKeySecretName:
                                 type: string
@@ -35150,6 +35276,7 @@ paths:
                               - apiKeySecretName
                             additionalProperties: false
                           - type: object
+                            title: Azure OpenAI configuration
                             properties:
                               apiKeySecretName:
                                 type: string
@@ -35166,6 +35293,7 @@ paths:
                               - deploymentId
                             additionalProperties: false
                           - type: object
+                            title: Bedrock configuration
                             properties:
                               accessKeyIdSecretName:
                                 type: string
@@ -35186,45 +35314,27 @@ paths:
                               - secretAccessKeySecretName
                               - region
                             additionalProperties: false
-                          - type: object
-                            properties:
-                              roleArn:
-                                type: string
-                                minLength: 1
-                                pattern: ^arn:aws:iam::\d{12}:role/[\w+=,.@-]+$
-                              externalIdSecretName:
-                                type: string
-                                minLength: 1
-                              region:
-                                type: string
-                                minLength: 1
-                                pattern: ^[a-z]{2}-[a-z]+-\d{1}$
-                              guardrailIdentifier:
-                                type: string
-                              guardrailVersion:
-                                type: string
-                            required:
-                              - roleArn
-                              - region
-                            additionalProperties: false
                           - anyOf:
                               - not: {}
                               - type: object
+                                title: Port configuration
                                 properties: {}
                                 additionalProperties: false
                       overrides:
                         type: object
+                        title: Model overrides
                         properties:
                           models:
                             type: object
+                            title: Models configuration
                             required:
                               - gpt-5
                               - claude-sonnet-4-20250514
                               - claude-haiku-4-5-20251001
-                              - claude-sonnet-4-5-20250929
                             properties:
                               gpt-5:
                                 type: object
+                                title: GPT-5 configuration
                                 properties:
                                   enabled:
                                     type: boolean
@@ -35232,6 +35342,7 @@ paths:
                                 additionalProperties: false
                               claude-sonnet-4-20250514:
                                 type: object
+                                title: Claude Sonnet 4 configuration
                                 properties:
                                   enabled:
                                     type: boolean
@@ -35239,13 +35350,7 @@ paths:
                                 additionalProperties: false
                               claude-haiku-4-5-20251001:
                                 type: object
-                                properties:
-                                  enabled:
-                                    type: boolean
-                                    default: true
-                                additionalProperties: false
-                              claude-sonnet-4-5-20250929:
-                                type: object
+                                title: Claude Haiku 4.5 configuration
                                 properties:
                                   enabled:
                                     type: boolean
@@ -35255,14 +35360,15 @@ paths:
                         additionalProperties: false
                       effectiveModels:
                         type: object
+                        title: Effective models configuration
                         required:
                           - gpt-5
                           - claude-sonnet-4-20250514
                           - claude-haiku-4-5-20251001
-                          - claude-sonnet-4-5-20250929
                         properties:
                           gpt-5:
                             type: object
+                            title: GPT-5 configuration
                             properties:
                               enabled:
                                 type: boolean
@@ -35270,6 +35376,7 @@ paths:
                             additionalProperties: false
                           claude-sonnet-4-20250514:
                             type: object
+                            title: Claude Sonnet 4 configuration
                             properties:
                               enabled:
                                 type: boolean
@@ -35277,13 +35384,7 @@ paths:
                             additionalProperties: false
                           claude-haiku-4-5-20251001:
                             type: object
-                            properties:
-                              enabled:
-                                type: boolean
-                                default: true
-                            additionalProperties: false
-                          claude-sonnet-4-5-20250929:
-                            type: object
+                            title: Claude Haiku 4.5 configuration
                             properties:
                               enabled:
                                 type: boolean
@@ -35384,6 +35485,7 @@ paths:
                         config:
                           anyOf:
                             - type: object
+                              title: Anthropic configuration
                               properties:
                                 apiKeySecretName:
                                   type: string
@@ -35392,6 +35494,7 @@ paths:
                                 - apiKeySecretName
                               additionalProperties: false
                             - type: object
+                              title: OpenAI configuration
                               properties:
                                 apiKeySecretName:
                                   type: string
@@ -35400,6 +35503,7 @@ paths:
                                 - apiKeySecretName
                               additionalProperties: false
                             - type: object
+                              title: Azure OpenAI configuration
                               properties:
                                 apiKeySecretName:
                                   type: string
@@ -35416,6 +35520,7 @@ paths:
                                 - deploymentId
                               additionalProperties: false
                             - type: object
+                              title: Bedrock configuration
                               properties:
                                 accessKeyIdSecretName:
                                   type: string
@@ -35436,27 +35541,6 @@ paths:
                                 - secretAccessKeySecretName
                                 - region
                               additionalProperties: false
-                            - type: object
-                              properties:
-                                roleArn:
-                                  type: string
-                                  minLength: 1
-                                  pattern: ^arn:aws:iam::\d{12}:role/[\w+=,.@-]+$
-                                externalIdSecretName:
-                                  type: string
-                                  minLength: 1
-                                region:
-                                  type: string
-                                  minLength: 1
-                                  pattern: ^[a-z]{2}-[a-z]+-\d{1}$
-                                guardrailIdentifier:
-                                  type: string
-                                guardrailVersion:
-                                  type: string
-                              required:
-                                - roleArn
-                                - region
-                              additionalProperties: false
                             - anyOf:
                                 - not: {}
                                 - type: object
@@ -35471,7 +35555,6 @@ paths:
                                 - gpt-5
                                 - claude-sonnet-4-20250514
                                 - claude-haiku-4-5-20251001
-                                - claude-sonnet-4-5-20250929
                               properties:
                                 gpt-5:
                                   type: object
@@ -35494,13 +35577,6 @@ paths:
                                       type: boolean
                                       default: true
                                   additionalProperties: false
-                                claude-sonnet-4-5-20250929:
-                                  type: object
-                                  properties:
-                                    enabled:
-                                      type: boolean
-                                      default: true
-                                  additionalProperties: false
                               additionalProperties: false
                           additionalProperties: false
                         effectiveModels:
@@ -35509,7 +35585,6 @@ paths:
                             - gpt-5
                             - claude-sonnet-4-20250514
                             - claude-haiku-4-5-20251001
-                            - claude-sonnet-4-5-20250929
                           properties:
                             gpt-5:
                               type: object
@@ -35526,13 +35601,6 @@ paths:
                                   default: true
                               additionalProperties: false
                             claude-haiku-4-5-20251001:
-                              type: object
-                              properties:
-                                enabled:
-                                  type: boolean
-                                  default: true
-                              additionalProperties: false
-                            claude-sonnet-4-5-20250929:
                               type: object
                               properties:
                                 enabled:
@@ -35625,6 +35693,7 @@ paths:
                       config:
                         anyOf:
                           - type: object
+                            title: Anthropic configuration
                             properties:
                               apiKeySecretName:
                                 type: string
@@ -35633,6 +35702,7 @@ paths:
                               - apiKeySecretName
                             additionalProperties: false
                           - type: object
+                            title: OpenAI configuration
                             properties:
                               apiKeySecretName:
                                 type: string
@@ -35641,6 +35711,7 @@ paths:
                               - apiKeySecretName
                             additionalProperties: false
                           - type: object
+                            title: Azure OpenAI configuration
                             properties:
                               apiKeySecretName:
                                 type: string
@@ -35657,6 +35728,7 @@ paths:
                               - deploymentId
                             additionalProperties: false
                           - type: object
+                            title: Bedrock configuration
                             properties:
                               accessKeyIdSecretName:
                                 type: string
@@ -35677,27 +35749,6 @@ paths:
                               - secretAccessKeySecretName
                               - region
                             additionalProperties: false
-                          - type: object
-                            properties:
-                              roleArn:
-                                type: string
-                                minLength: 1
-                                pattern: ^arn:aws:iam::\d{12}:role/[\w+=,.@-]+$
-                              externalIdSecretName:
-                                type: string
-                                minLength: 1
-                              region:
-                                type: string
-                                minLength: 1
-                                pattern: ^[a-z]{2}-[a-z]+-\d{1}$
-                              guardrailIdentifier:
-                                type: string
-                              guardrailVersion:
-                                type: string
-                            required:
-                              - roleArn
-                              - region
-                            additionalProperties: false
                           - anyOf:
                               - not: {}
                               - type: object
@@ -35705,17 +35756,19 @@ paths:
                                 additionalProperties: false
                       overrides:
                         type: object
+                        title: Model overrides
                         properties:
                           models:
                             type: object
+                            title: Models configuration
                             required:
                               - gpt-5
                               - claude-sonnet-4-20250514
                               - claude-haiku-4-5-20251001
-                              - claude-sonnet-4-5-20250929
                             properties:
                               gpt-5:
                                 type: object
+                                title: GPT-5 configuration
                                 properties:
                                   enabled:
                                     type: boolean
@@ -35723,6 +35776,7 @@ paths:
                                 additionalProperties: false
                               claude-sonnet-4-20250514:
                                 type: object
+                                title: Claude Sonnet 4 configuration
                                 properties:
                                   enabled:
                                     type: boolean
@@ -35730,13 +35784,7 @@ paths:
                                 additionalProperties: false
                               claude-haiku-4-5-20251001:
                                 type: object
-                                properties:
-                                  enabled:
-                                    type: boolean
-                                    default: true
-                                additionalProperties: false
-                              claude-sonnet-4-5-20250929:
-                                type: object
+                                title: Claude Haiku 4.5 configuration
                                 properties:
                                   enabled:
                                     type: boolean
@@ -35746,14 +35794,15 @@ paths:
                         additionalProperties: false
                       effectiveModels:
                         type: object
+                        title: Effective models configuration
                         required:
                           - gpt-5
                           - claude-sonnet-4-20250514
                           - claude-haiku-4-5-20251001
-                          - claude-sonnet-4-5-20250929
                         properties:
                           gpt-5:
                             type: object
+                            title: GPT-5 configuration
                             properties:
                               enabled:
                                 type: boolean
@@ -35761,6 +35810,7 @@ paths:
                             additionalProperties: false
                           claude-sonnet-4-20250514:
                             type: object
+                            title: Claude Sonnet 4 configuration
                             properties:
                               enabled:
                                 type: boolean
@@ -35768,13 +35818,7 @@ paths:
                             additionalProperties: false
                           claude-haiku-4-5-20251001:
                             type: object
-                            properties:
-                              enabled:
-                                type: boolean
-                                default: true
-                            additionalProperties: false
-                          claude-sonnet-4-5-20250929:
-                            type: object
+                            title: Claude Haiku 4.5 configuration
                             properties:
                               enabled:
                                 type: boolean
@@ -35912,28 +35956,6 @@ paths:
                         - secretAccessKeySecretName
                         - region
                       additionalProperties: false
-                    - type: object
-                      title: Bedrock
-                      properties:
-                        roleArn:
-                          type: string
-                          minLength: 1
-                          pattern: ^arn:aws:iam::\d{12}:role/[\w+=,.@-]+$
-                        externalIdSecretName:
-                          type: string
-                          minLength: 1
-                        region:
-                          type: string
-                          minLength: 1
-                          pattern: ^[a-z]{2}-[a-z]+-\d{1}$
-                        guardrailIdentifier:
-                          type: string
-                        guardrailVersion:
-                          type: string
-                      required:
-                        - roleArn
-                        - region
-                      additionalProperties: false
                     - anyOf:
                         - not: {}
                         - type: object
@@ -35941,17 +35963,19 @@ paths:
                           additionalProperties: false
                 overrides:
                   type: object
+                  title: Model overrides
                   properties:
                     models:
                       type: object
+                      title: Models configuration
                       required:
                         - gpt-5
                         - claude-sonnet-4-20250514
                         - claude-haiku-4-5-20251001
-                        - claude-sonnet-4-5-20250929
                       properties:
                         gpt-5:
                           type: object
+                          title: GPT-5 configuration
                           properties:
                             enabled:
                               type: boolean
@@ -35959,6 +35983,7 @@ paths:
                           additionalProperties: false
                         claude-sonnet-4-20250514:
                           type: object
+                          title: Claude Sonnet 4 configuration
                           properties:
                             enabled:
                               type: boolean
@@ -35966,13 +35991,7 @@ paths:
                           additionalProperties: false
                         claude-haiku-4-5-20251001:
                           type: object
-                          properties:
-                            enabled:
-                              type: boolean
-                              default: true
-                          additionalProperties: false
-                        claude-sonnet-4-5-20250929:
-                          type: object
+                          title: Claude Haiku 4.5 configuration
                           properties:
                             enabled:
                               type: boolean
@@ -36027,6 +36046,7 @@ paths:
                       config:
                         anyOf:
                           - type: object
+                            title: Anthropic configuration
                             properties:
                               apiKeySecretName:
                                 type: string
@@ -36035,6 +36055,7 @@ paths:
                               - apiKeySecretName
                             additionalProperties: false
                           - type: object
+                            title: OpenAI configuration
                             properties:
                               apiKeySecretName:
                                 type: string
@@ -36043,6 +36064,7 @@ paths:
                               - apiKeySecretName
                             additionalProperties: false
                           - type: object
+                            title: Azure OpenAI configuration
                             properties:
                               apiKeySecretName:
                                 type: string
@@ -36059,6 +36081,7 @@ paths:
                               - deploymentId
                             additionalProperties: false
                           - type: object
+                            title: Bedrock configuration
                             properties:
                               accessKeyIdSecretName:
                                 type: string
@@ -36079,27 +36102,6 @@ paths:
                               - secretAccessKeySecretName
                               - region
                             additionalProperties: false
-                          - type: object
-                            properties:
-                              roleArn:
-                                type: string
-                                minLength: 1
-                                pattern: ^arn:aws:iam::\d{12}:role/[\w+=,.@-]+$
-                              externalIdSecretName:
-                                type: string
-                                minLength: 1
-                              region:
-                                type: string
-                                minLength: 1
-                                pattern: ^[a-z]{2}-[a-z]+-\d{1}$
-                              guardrailIdentifier:
-                                type: string
-                              guardrailVersion:
-                                type: string
-                            required:
-                              - roleArn
-                              - region
-                            additionalProperties: false
                           - anyOf:
                               - not: {}
                               - type: object
@@ -36107,17 +36109,19 @@ paths:
                                 additionalProperties: false
                       overrides:
                         type: object
+                        title: Model overrides
                         properties:
                           models:
                             type: object
+                            title: Models configuration
                             required:
                               - gpt-5
                               - claude-sonnet-4-20250514
                               - claude-haiku-4-5-20251001
-                              - claude-sonnet-4-5-20250929
                             properties:
                               gpt-5:
                                 type: object
+                                title: GPT-5 configuration
                                 properties:
                                   enabled:
                                     type: boolean
@@ -36125,6 +36129,7 @@ paths:
                                 additionalProperties: false
                               claude-sonnet-4-20250514:
                                 type: object
+                                title: Claude Sonnet 4 configuration
                                 properties:
                                   enabled:
                                     type: boolean
@@ -36132,13 +36137,7 @@ paths:
                                 additionalProperties: false
                               claude-haiku-4-5-20251001:
                                 type: object
-                                properties:
-                                  enabled:
-                                    type: boolean
-                                    default: true
-                                additionalProperties: false
-                              claude-sonnet-4-5-20250929:
-                                type: object
+                                title: Claude Haiku 4.5 configuration
                                 properties:
                                   enabled:
                                     type: boolean
@@ -36148,14 +36147,15 @@ paths:
                         additionalProperties: false
                       effectiveModels:
                         type: object
+                        title: Effective models configuration
                         required:
                           - gpt-5
                           - claude-sonnet-4-20250514
                           - claude-haiku-4-5-20251001
-                          - claude-sonnet-4-5-20250929
                         properties:
                           gpt-5:
                             type: object
+                            title: GPT-5 configuration
                             properties:
                               enabled:
                                 type: boolean
@@ -36163,6 +36163,7 @@ paths:
                             additionalProperties: false
                           claude-sonnet-4-20250514:
                             type: object
+                            title: Claude Sonnet 4 configuration
                             properties:
                               enabled:
                                 type: boolean
@@ -36170,13 +36171,7 @@ paths:
                             additionalProperties: false
                           claude-haiku-4-5-20251001:
                             type: object
-                            properties:
-                              enabled:
-                                type: boolean
-                                default: true
-                            additionalProperties: false
-                          claude-sonnet-4-5-20250929:
-                            type: object
+                            title: Claude Haiku 4.5 configuration
                             properties:
                               enabled:
                                 type: boolean
@@ -36445,7 +36440,6 @@ paths:
                     - gpt-5
                     - claude-sonnet-4-20250514
                     - claude-haiku-4-5-20251001
-                    - claude-sonnet-4-5-20250929
                 systemPrompt:
                   type: string
                   description: A set of instructions that guides an AI's behavior and responses by providing its role, persona, and operational rules at the beginning of an interaction.
@@ -36571,7 +36565,6 @@ paths:
                     - gpt-5
                     - claude-sonnet-4-20250514
                     - claude-haiku-4-5-20251001
-                    - claude-sonnet-4-5-20250929
               required:
                 - prompt
               additionalProperties: false
