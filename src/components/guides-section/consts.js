@@ -1601,6 +1601,13 @@ export const availableGuides = [
         link: "/guides/all/implement-rbac-for-ai-agents-with-n8n-and-port",
     },
     {
+        title: "Gain visibility into delivery performance",
+        description: "Track engineering delivery performance using key metrics like PR cycle time, throughput, deployment frequency, and overdue PRs",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/measure-and-track-delivery-performance",
+    },
+    {
         title: "Measure delivery reliability and stability",
         description: "Measure reliability and stability of your delivery pipeline by tracking workflow failure rates and PRs blocked by failing CI/CD using Port's GitHub integration",
         tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
@@ -1613,6 +1620,13 @@ export const availableGuides = [
         tags: ["Engineering Intelligence", "GitHub", "Scorecards"],
         logos: ["GitHub"],
         link: "/guides/all/measure-standards",
+    },
+    {
+        title: "Track AI adoption and impact",
+        description: "Track AI adoption and impact across your engineering teams and assess the impact of AI usage on delivery metrics like PR throughput and cycle time",
+        tags: ["Engineering Intelligence", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/track-ai-adoption-and-impact",
     }
 ]
 
