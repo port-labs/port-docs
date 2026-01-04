@@ -9559,7 +9559,7 @@ paths:
         [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For
         more details about Port's search mechanism, rules, and operators - see
         the [search & query
-        documentation](https://docs.port.io/search-and-query/).
+        documentation](https://docs.port.io/search-and-query/overview).
       requestBody:
         content:
           application/json:
@@ -10194,7 +10194,7 @@ paths:
         documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For
         more details about Port's search mechanism, rules, and operators - see
         the [search & query
-        documentation](https://docs.port.io/search-and-query/).
+        documentation](https://docs.port.io/search-and-query/overview).
       requestBody:
         content:
           application/json:
@@ -10203,7 +10203,7 @@ paths:
               properties:
                 query:
                   $ref: "#/components/schemas/def-7"
-                  description: A [search query](https://docs.getport.io/search-and-query) used to
+                  description: A [search query](https://docs.getport.io/search-and-query/overview) used to
                     filter the returned entities.
                 include:
                   type: array
@@ -10436,7 +10436,7 @@ paths:
         [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For
         more details about Port's search mechanism, rules, and operators - see
         the [search & query
-        documentation](https://docs.port.io/search-and-query/).
+        documentation](https://docs.port.io/search-and-query/overview).
       requestBody:
         content:
           application/json:
@@ -10467,7 +10467,7 @@ paths:
                       type: string
                     query:
                       $ref: "#/components/schemas/def-1"
-                      description: A [search query](https://docs.getport.io/search-and-query) used to
+                      description: A [search query](https://docs.getport.io/search-and-query/overview) used to
                         filter the entities before the aggregation is
                         calculated.
                   additionalProperties: false
@@ -10505,7 +10505,7 @@ paths:
                       type: string
                     query:
                       $ref: "#/components/schemas/def-1"
-                      description: A [search query](https://docs.getport.io/search-and-query) used to
+                      description: A [search query](https://docs.getport.io/search-and-query/overview) used to
                         filter the entities before the aggregation is
                         calculated.
                   additionalProperties: false
@@ -10750,7 +10750,7 @@ paths:
         documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For
         more details about Port's search mechanism, rules, and operators - see
         the [search & query
-        documentation](https://docs.port.io/search-and-query/).
+        documentation](https://docs.port.io/search-and-query/overview).
       requestBody:
         content:
           application/json:
@@ -10798,7 +10798,7 @@ paths:
                         - month
                     query:
                       $ref: "#/components/schemas/def-1"
-                      description: A [search query](https://docs.getport.io/search-and-query) used to
+                      description: A [search query](https://docs.getport.io/search-and-query/overview) used to
                         filter the entities before the aggregation is
                         calculated.
                     measureTimeBy:
@@ -10861,7 +10861,7 @@ paths:
                         - month
                     query:
                       $ref: "#/components/schemas/def-1"
-                      description: A [search query](https://docs.getport.io/search-and-query) used to
+                      description: A [search query](https://docs.getport.io/search-and-query/overview) used to
                         filter the entities before the aggregation is
                         calculated.
                     measureTimeBy:
@@ -20307,7 +20307,7 @@ paths:
                                   items:
                                     type: string
                                   description: An array of [jq
-                                    expressions](https://docs.port.io/search-and-query/#jq-expressions)
+                                    expressions](https://docs.port.io/search-and-query/overview#jq-expressions)
                                     used to filter entities.<br/>Read more
                                     [here](https://docs.port.io/actions-and-automations/define-automations/setup-trigger#conditions).
                                 combinator:
@@ -22312,7 +22312,7 @@ paths:
                                   items:
                                     type: string
                                   description: An array of [jq
-                                    expressions](https://docs.port.io/search-and-query/#jq-expressions)
+                                    expressions](https://docs.port.io/search-and-query/overview#jq-expressions)
                                     used to filter entities.<br/>Read more
                                     [here](https://docs.port.io/actions-and-automations/define-automations/setup-trigger#conditions).
                                 combinator:

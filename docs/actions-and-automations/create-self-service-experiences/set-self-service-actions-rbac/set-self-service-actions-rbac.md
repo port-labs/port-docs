@@ -23,7 +23,7 @@ Self-service actions RBAC allows admins to finely control which users can execut
 - Let a developer provision a database only to his microservice or developer environment.
 - Specify that a new cluster provision request requires manual approval by the DevOps team.
 
-## Triggering an action on behalf of another user
+## Trigger an action on behalf of another user
 
 You can trigger an action on behalf of another user within your organization using an API request. This can be accomplished by including the query parameter `run_as=<user_email>` in your API request.
 

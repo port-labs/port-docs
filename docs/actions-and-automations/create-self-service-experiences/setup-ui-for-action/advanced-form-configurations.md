@@ -454,8 +454,8 @@ action = Action(
 
 The `dataset` property is used to filter the displayed options in an [entity](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/user-inputs/entity) input. It is comprised of two properties:
 
-- `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/#combinator).
-- `Rules` - an array of [rules](/search-and-query/#rules), only entities that pass them will be displayed in the form.
+- `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/structure-and-syntax#combinator).
+- `Rules` - an array of [rules](/search-and-query/structure-and-syntax#rules), only entities that pass them will be displayed in the form.
   Note that the `value` key in the dataset can be a constant (string, number, etc) or a "jqQuery" object.
 
 <Tabs
@@ -812,7 +812,7 @@ And this is how the form would show up for admin users:
 
 ### Filter the dropdown's available options based on a property
 
-This example contains a filter that will only display the namespaces that are [related to](/search-and-query/#operators-1) the cluster that was selected in the `Cluster` input:
+This example contains a filter that will only display the namespaces that are [related to](/search-and-query/structure-and-syntax#operators-1) the cluster that was selected in the `Cluster` input:
 
 <Tabs
 defaultValue="api"
@@ -914,7 +914,7 @@ action = Action(
 
 ### Filter the dropdown's available options based on a previous input
 
-This example contains a filter that will only display the namespaces that are [related to](/search-and-query/#operators-1) the cluster that was selected in the `Cluster` input:
+This example contains a filter that will only display the namespaces that are [related to](/search-and-query/structure-and-syntax#operators-1) the cluster that was selected in the `Cluster` input:
 
 <Tabs
 defaultValue="api"

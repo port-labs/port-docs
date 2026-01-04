@@ -176,7 +176,7 @@ The first table will display all of the squads under the tribe of the logged-in 
 To achieve the desired filtering, the tables use the `matchAny` operator.  
 
 This operator allows you to search for entities that are related through a specific path of relations.  
-Read more about this operator [here](/search-and-query/?relation=matchAny#relation-operators).
+Read more about this operator [here](/search-and-query/operators/relation-operators#matchany).
 
 :::
 

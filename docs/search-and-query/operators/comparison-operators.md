@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 
 # Comparison operators
 
-This page details the available comparison operators when writing [rules](/search-and-query/#rules) as part of the search route.
+This page details the available comparison operators when writing [rules](/search-and-query/structure-and-syntax#rules) as part of the search route.
 
 ### = (Equal)
 

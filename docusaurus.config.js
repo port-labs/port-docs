@@ -178,7 +178,7 @@ const config = {
               },
               {
                 label: "Search & query",
-                to: "/search-and-query",
+                to: "/search-and-query/overview",
               },
               {
                 label: "API reference",
