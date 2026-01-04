@@ -85,8 +85,17 @@ jobs:
           if [ -f "link-check-report.txt" ]; then
             echo "✅ link-check-report.txt found!"
             echo "File size: $(wc -c < link-check-report.txt) bytes"
-            if [ $exit_code -ne 0 ]; then
+            echo ""
+            
+            # Check if there are actual broken links in the report
+            broken_count=$(grep -oP '❌ Broken \(404, 500, etc\.\): \K\d+' link-check-report.txt || echo "0")
+            echo "Broken links found: $broken_count"
+            
+            if [ "$broken_count" -gt 0 ]; then
               echo "LINKS_BROKEN=true" >> $GITHUB_OUTPUT
+              echo "✅ Set LINKS_BROKEN=true for JIRA issue creation"
+            else
+              echo "✅ No broken links found - JIRA issue will not be created"
             fi
           else
             echo "❌ link-check-report.txt NOT found"
