@@ -22,7 +22,56 @@ Before installing the integration, ensure you have:
 - AWS account(s) that you want to sync resources from.
 - Permissions to create IAM roles/users and deploy infrastructure.
 
-## Authentication to AWS
+## Understanding single vs multi-account setup
+
+Before configuring authentication, you need to decide whether you're syncing a single AWS account or multiple accounts. This determines which permissions your authentication needs.
+
+<h3>Single account</h3>
+
+Syncs resources from one AWS account only.
+
+**Use this if:**
+- You have one AWS account.
+- You want to test the integration before expanding.
+
+**Permissions needed:**
+- `ReadOnlyAccess` policy only.
+
+<h3>Multi-account</h3>
+
+Syncs resources from multiple AWS accounts using cross-account role assumption.
+
+**Use this if:**
+- You have multiple AWS accounts (2+).
+- You use AWS Organizations or manually manage multiple accounts.
+
+**How it works:**
+1. The integration authenticates to your base account using IRSA, ECS Task Role, or Access Keys.
+2. You create IAM roles with `ReadOnlyAccess` in each member account.
+3. Each member account's role trusts your base identity to assume it.
+4. The integration calls `AssumeRole` (or `AssumeRoleWithWebIdentity` for IRSA) to get temporary credentials for each member account.
+5. With those credentials, it reads resources and syncs them to Port.
+
+**External ID** is a security feature required for cross-account access. It's a secret value that both parties must know when assuming roles, preventing the "confused deputy problem."
+
+**Permissions needed in your base account:**
+
+| Permission | Required For | Purpose |
+|------------|-------------|---------|
+| `ReadOnlyAccess` | All setups | Read AWS resources |
+| `sts:AssumeRole` | ECS Task Role, Access Keys multi-account | Assume roles in member accounts |
+| `sts:AssumeRoleWithWebIdentity` | IRSA multi-account | Assume roles in member accounts using OIDC |
+| `organizations:ListAccounts` | Organizations automatic discovery | List all accounts in your organization |
+| `organizations:DescribeOrganization` | Organizations automatic discovery | Get organization details |
+
+**Account discovery strategies for multi-account:**
+
+- **Organizations mode**: Automatically discovers all accounts via AWS Organizations API. Requires Organizations permissions. Best for large setups (10+ accounts).
+- **Explicit list mode**: You manually provide a list of role ARNs to assume. No Organizations permissions needed. Best for smaller setups (2-10 accounts).
+
+## Authentication to aws
+
+Now that you understand your setup type (single or multi-account), we'll configure authentication with the correct permissions.
 
 The integration needs to authenticate to AWS to read your resources. Choose the authentication method that matches your deployment infrastructure.
 
@@ -41,11 +90,52 @@ IRSA (IAM Roles for Service Accounts) provides secure, keyless authentication by
    - Select **Web identity** as the trust entity type.
    - Choose your EKS cluster's OIDC provider as the identity provider.
    - Set the audience to `sts.amazonaws.com`.
-   - Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
    - Name the role `port-ocean-aws-v3-role`.
-   - Note the role ARN (you'll need it later).
 
-2. **Create a Kubernetes service account** and link it to the IAM role:
+2. **Attach permissions based on your setup**:
+
+**For single account:**
+- Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
+
+**For multi-account:**
+- Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
+- Create and attach an inline policy with these additional permissions:
+
+```json showLineNumbers
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sts:AssumeRoleWithWebIdentity"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "organizations:ListAccounts",
+        "organizations:DescribeOrganization"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "us-east-1"
+        }
+      }
+    }
+  ]
+}
+```
+
+:::info Organizations permissions
+The `organizations:*` permissions are only needed if you're using Organizations automatic discovery. For explicit list mode, you can omit them.
+:::
+
+3. **Note the role ARN** - you'll need it later: `arn:aws:iam::ACCOUNT_ID:role/port-ocean-aws-v3-role`
+
+4. **Create a Kubernetes service account** and link it to the IAM role:
 
 ```bash showLineNumbers
 # Create the namespace (if it doesn't exist)
@@ -68,13 +158,37 @@ Refer to the [AWS guide for associating an IAM role to a service account](https:
 
 **Use this if:** You're deploying with Terraform on AWS ECS Fargate.
 
-ECS Task Roles allow your containerized application to assume an IAM role automatically. The Terraform module creates and manages this role for you, granting it `ReadOnlyAccess` to AWS resources.
+ECS Task Roles allow your containerized application to assume an IAM role automatically. The Terraform module creates and manages this role for you, granting it the necessary permissions.
 
 <h3>Setup steps</h3>
 
-The Terraform Ocean Integration Factory module automatically creates an ECS Task Role with the necessary permissions when you deploy. No manual setup is required.
+The Terraform Ocean Integration Factory module automatically creates an ECS Task Role when you deploy.
 
-For multi-account access, you can grant additional permissions by using the `additional_task_policy_statements` parameter in the Terraform module (see deployment examples below).
+**For single account:**
+- The module automatically attaches `ReadOnlyAccess` policy.
+- No additional configuration needed.
+
+**For multi-account:**
+- Use the `additional_task_policy_statements` parameter to grant additional permissions:
+
+```hcl showLineNumbers
+additional_task_policy_statements = [
+  {
+    actions   = ["sts:AssumeRole"]
+    resources = ["*"]
+  },
+  {
+    actions   = ["organizations:ListAccounts", "organizations:DescribeOrganization"]
+    resources = ["*"]
+  }
+]
+```
+
+:::info Organizations permissions
+The `organizations:*` permissions are only needed if you're using Organizations automatic discovery. For explicit list mode, you can omit them.
+:::
+
+See the deployment examples below for complete Terraform configuration.
 
 </TabItem>
 
@@ -89,10 +203,45 @@ AWS access keys provide programmatic access using a static access key ID and sec
 
 <h3>Setup steps</h3>
 
-1. [Create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with the following permissions:
-   - Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
+1. [Create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) in your AWS account.
 
-2. [Generate access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the user:
+2. **Attach permissions based on your setup**:
+
+**For single account:**
+- Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
+
+**For multi-account:**
+- Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
+- Create and attach an inline policy with these additional permissions:
+
+```json showLineNumbers
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sts:AssumeRole"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "organizations:ListAccounts",
+        "organizations:DescribeOrganization"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+:::info Organizations permissions
+The `organizations:*` permissions are only needed if you're using Organizations automatic discovery. For explicit list mode, you can omit them.
+:::
+
+3. [Generate access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the user:
    - Go to **IAM → Users → Security credentials → Create access key**.
    - Save the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
@@ -104,45 +253,15 @@ Never commit access keys to version control. Use environment variables or secret
 
 </Tabs>
 
-## Choose your deployment method
+## Multi-account setup (optional)
 
-Select the deployment method that best fits your infrastructure:
-
-## Multi-account setup (Optional)
-
-If you need to sync resources from multiple AWS accounts, complete this section before proceeding to your deployment method.
-
-<h3>Understanding multi-account access</h3>
-
-AWS multi-account access relies on **AssumeRole**, a mechanism where the integration temporarily obtains credentials for each member account. Here's how it works:
-
-1. The integration authenticates to AWS using one of the methods above (IRSA, Task Role, or Access Keys).
-2. Each member account has an IAM role with `ReadOnlyAccess` permissions.
-3. Each member account's role trusts your base identity to assume it.
-4. The integration calls `AssumeRole` to get temporary credentials for each account.
-5. With those credentials, it reads resources and syncs them to Port.
-
-**External ID** is a security feature that prevents the "confused deputy problem." It's a secret value that both parties must know when assuming roles across accounts, acting as a shared password.
-
-<h3>Account discovery strategies</h3>
-
-The integration automatically selects how to discover accounts based on your configuration:
-
-- **Single account mode**: No account role ARN specified. The integration syncs only the account it's authenticated to.
-- **Organizations mode**: `accountRoleArn` (singular) is set. The integration calls AWS Organizations API to discover all member accounts and assumes the same role name in each.
-- **Explicit list mode**: `accountRoleArns` (plural) is set. You manually provide a JSON array of specific role ARNs to assume.
-
-**When to use each strategy:**
-
-- **Organizations mode** - Best for large organizations (10+ accounts). New accounts are automatically included. Requires AWS Organizations and `organizations:ListAccounts` permission.
-- **Explicit list mode** - Best for smaller setups (2-10 accounts) or when you don't have AWS Organizations. Requires manual updates when adding accounts.
+If you're syncing multiple AWS accounts, complete this section to create IAM roles in your member accounts. If you're only syncing a single account, skip to [choose your deployment method](#choose-your-deployment-method).
 
 <h3>Setting up cross-account IAM roles</h3>
 
 You need to create IAM roles with `ReadOnlyAccess` in each member account you want to sync. Choose the method that fits your organization:
 
-<details>
-<summary><b>Deploy using CloudFormation StackSet (click to expand)</b></summary>
+<h4>Option 1: Deploy using CloudFormation StackSet</h4>
 
 :::tip Automate with CloudFormation StackSets
 Use CloudFormation StackSets to deploy IAM roles across all your AWS Organization member accounts automatically.
@@ -187,10 +306,7 @@ If you're using IRSA authentication, you'll need a StackSet template that create
    - Role ARN format: `arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole`
    - You'll need the role name and external ID when configuring your deployment below.
 
-</details>
-
-<details>
-<summary><b>Manual IAM role setup (click to expand)</b></summary>
+<h4>Option 2: Manual IAM role setup</h4>
 
 We'll create IAM roles in each member account you want to sync. The setup steps differ based on your authentication method.
 
@@ -386,9 +502,9 @@ Repeat steps 1-3 for each member account.
 
 </Tabs>
 
-</details>
-
 ## Choose your deployment method
+
+Select the deployment method that best fits your infrastructure:
 
 <Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="helm">
 
@@ -462,13 +578,6 @@ If you haven't already, complete the [multi-account setup section](/build-your-s
 
 Now configure the Helm deployment to use those roles.
 
-<h3>Additional prerequisites for multi-account</h3>
-
-Your base IAM role (from single account authentication setup) needs these additional permissions:
-- `organizations:ListAccounts` (only for Organizations mode).
-- `organizations:DescribeOrganization` (only for Organizations mode).
-- `sts:AssumeRole` (required for both strategies).
-
 <h3>Choose your account discovery strategy</h3>
 
 <Tabs groupId="multi-account-strategy" queryString="multi-account-strategy" defaultValue="organizations">
@@ -536,19 +645,6 @@ The integration uses IRSA to call the AWS Organizations API and discover all mem
 <TabItem value="explicit" label="Explicit account list (Manual)">
 
 If you don't use AWS Organizations or want to specify exact accounts, you can provide a list of role ARNs.
-
-<h4>Set up IRSA for multi-account (EKS only)</h4>
-
-For EKS clusters using IRSA, each member account must have the OIDC provider and IAM roles configured. Complete the following for each account:
-
-**Why OIDC providers are needed in each account:**  
-IRSA uses OpenID Connect (OIDC) to establish trust between Kubernetes service accounts and IAM roles. Your EKS cluster has an OIDC provider that issues temporary tokens to pods. For cross-account access, each member account needs to trust your cluster's OIDC provider so it can verify these tokens and allow `AssumeRoleWithWebIdentity`.
-
-1. **Create OIDC provider** in each member account using your EKS cluster's OIDC issuer URL.
-2. **Create or update IAM role** in each account with a trust policy allowing the OIDC provider to assume it via `AssumeRoleWithWebIdentity`.
-3. **Attach `ReadOnlyAccess` policy** to each role.
-
-See the detailed [manual setup instructions](#manual-setup-click-to-expand) in the AWS Organizations section above, or use CloudFormation StackSets for automated deployment.
 
 <h4>Install</h4>
 
