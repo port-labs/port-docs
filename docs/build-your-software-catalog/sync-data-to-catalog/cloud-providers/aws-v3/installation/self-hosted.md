@@ -53,13 +53,21 @@ If you're running on Amazon EKS, we recommend using [IRSA (IAM Roles for Service
 
 <h4>Set up IRSA</h4>
 
-1. **Create an IAM role** with the following permissions:
-   - `arn:aws:iam::aws:policy/ReadOnlyAccess`.
-   - `account:ListRegions`.
+1. **Create an IAM role** with the following configuration:
+   - Go to **AWS Console → IAM → Roles → Create role**.
+   - Select **Web identity** as the trust entity type.
+   - Choose your EKS cluster's OIDC provider as the identity provider.
+   - Set the audience to `sts.amazonaws.com`.
+   - Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
+   - Name the role `port-ocean-aws-v3-role`.
+   - Note the role ARN (you'll need it for the next step).
 
 2. **Create a Kubernetes service account** and link it to the IAM role:
 
 ```bash showLineNumbers
+# Create the namespace (if it doesn't exist)
+kubectl create namespace port-ocean
+
 # Create the service account
 kubectl create serviceaccount port-ocean-aws-v3 -n port-ocean
 
@@ -81,7 +89,6 @@ For non-EKS clusters, you can authenticate using AWS access keys.
 
 1. [Create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with the following permissions:
    - `arn:aws:iam::aws:policy/ReadOnlyAccess`.
-   - `account:ListRegions`.
 
 2. [Generate access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the user. You'll need:
    - `AWS_ACCESS_KEY_ID`.
@@ -101,8 +108,8 @@ For non-EKS clusters, you can authenticate using AWS access keys.
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws-v3 port-labs/port-ocean \
   --create-namespace --namespace port-ocean \
-  --set port.clientId="$PORT_CLIENT_ID" \
-  --set port.clientSecret="$PORT_CLIENT_SECRET" \
+  --set port.clientId="vyRVvY3rn6MxhnhnEdQhc6WOa15X2naN" \
+  --set port.clientSecret="fTpExApZbrxWwTAAliq8snRtGK5aT8poNlb26yWDkvWst7mmn0Totb1Z1WN0GY3a" \
   --set port.baseUrl="https://api.getport.io" \
   --set initializePortResources=true \
   --set sendRawDataExamples=true \
@@ -110,7 +117,8 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set integration.identifier="my-aws-v3" \
   --set integration.type="aws-v3" \
   --set integration.eventListener.type="POLLING" \
-  --set podServiceAccount.name="port-ocean-aws-v3"
+  --set podServiceAccount.name="port-ocean-aws-v3" \
+  --set integration.config.accountRoleArns='["arn:aws:iam::ACCOUNT_ID:role/port-ocean-aws-v3-role"]'
 ```
 
 </TabItem>
@@ -130,8 +138,10 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set integration.identifier="my-aws-v3" \
   --set integration.type="aws-v3" \
   --set integration.eventListener.type="POLLING" \
-  --set integration.secrets.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
-  --set integration.secrets.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"
+  --set extraEnv[0].name="AWS_ACCESS_KEY_ID" \
+  --set extraEnv[0].value="$AWS_ACCESS_KEY_ID" \
+  --set extraEnv[1].name="AWS_SECRET_ACCESS_KEY" \
+  --set extraEnv[1].value="$AWS_SECRET_ACCESS_KEY"
 ```
 
 </TabItem>
@@ -243,6 +253,102 @@ Your base IAM role (from step 1 of single account setup) needs these additional 
 - `organizations:DescribeOrganization`.
 - `sts:AssumeRole`.
 
+<h4>Set up IRSA for multi-account (EKS only)</h4>
+
+For EKS clusters using IRSA, each member account must have the OIDC provider and IAM roles configured. You can use CloudFormation StackSets for automated deployment or set them up manually.
+
+<details>
+<summary><b>Deploy using CloudFormation StackSet (click to expand)</b></summary>
+
+:::tip Automated deployment
+Use CloudFormation StackSets to deploy OIDC providers and IAM roles across all your AWS Organization member accounts automatically.
+:::
+
+1. **Access the CloudFormation template**:
+   - CloudFormation StackSet template will be available soon.
+
+2. **Deploy via AWS Console**:
+   - Go to [AWS CloudFormation StackSets](https://console.aws.amazon.com/cloudformation/home#/stacksets).
+   - Click **Create StackSet**.
+   - Upload the template or provide the S3 URL.
+   - Configure the following parameters:
+     - **OIDCIssuerURL**: Your EKS cluster's OIDC issuer URL (e.g., `https://oidc.eks.REGION.amazonaws.com/id/OIDC_ID`).
+     - **RoleName**: `AWSIntegrationRole` (must be consistent across accounts).
+     - **TrustedPrincipal**: The base IAM role ARN from your EKS cluster account.
+
+3. **Specify deployment targets**:
+   - Choose **Deploy to organization** or **Deploy to specific accounts**.
+   - Select the organizational units (OUs) or account IDs.
+
+4. **Monitor deployment**:
+   - Wait for StackSet instances to complete across all accounts.
+   - Verify OIDC providers and roles were created successfully in the CloudFormation console.
+
+</details>
+
+<details>
+<summary><b>Manual setup (click to expand)</b></summary>
+
+For each member account you want to sync, complete the following steps.
+
+<h4>Step 1: Create OIDC provider</h4>
+
+Get your EKS cluster's OIDC issuer URL:
+
+```bash showLineNumbers
+aws eks describe-cluster --name CLUSTER_NAME --region REGION --query "cluster.identity.oidc.issuer" --output text
+```
+
+Create the OIDC provider in each member account:
+
+```bash showLineNumbers
+aws iam create-open-id-connect-provider \
+  --url https://oidc.eks.REGION.amazonaws.com/id/OIDC_ID \
+  --client-id-list sts.amazonaws.com \
+  --thumbprint-list 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
+```
+
+<h4>Step 2: Create or update IAM role</h4>
+
+Create an IAM role (or update existing role) in each member account with this trust policy:
+
+```json showLineNumbers
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::MEMBER_ACCOUNT_ID:oidc-provider/oidc.eks.REGION.amazonaws.com/id/OIDC_ID"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.REGION.amazonaws.com/id/OIDC_ID:aud": "sts.amazonaws.com"
+        }
+      }
+    }
+  ]
+}
+```
+
+Replace:
+- `MEMBER_ACCOUNT_ID`: The member account ID.
+- `REGION`: Your EKS cluster region.
+- `OIDC_ID`: Your EKS cluster's OIDC ID.
+
+Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy to the role.
+
+<h4>Step 3: Note role ARNs</h4>
+
+Collect the role ARN from each member account. You'll need these for the Helm installation:
+
+```
+arn:aws:iam::MEMBER_ACCOUNT_ID:role/AWSIntegrationRole
+```
+
+</details>
+
 <h4>Install</h4>
 
 <Tabs groupId="org-auth-helm" queryString="org-auth-helm" defaultValue="org-irsa-helm">
@@ -262,7 +368,7 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set integration.type="aws-v3" \
   --set integration.eventListener.type="POLLING" \
   --set podServiceAccount.name="port-ocean-aws-v3" \
-  --set integration.config.accountRoleArn="arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole" \
+  --set integration.config.accountRoleArn="arn:aws:iam::MEMBER_ACCOUNT_ID:role/AWSIntegrationRole" \
   --set integration.config.externalId="YOUR_EXTERNAL_ID"
 ```
 
@@ -282,8 +388,11 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set integration.identifier="my-aws-v3-org" \
   --set integration.type="aws-v3" \
   --set integration.eventListener.type="POLLING" \
-  --set integration.secrets.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
-  --set integration.secrets.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY" \
+  --set podServiceAccount.name="port-ocean-aws-v3" \
+  --set extraEnv[0].name="AWS_ACCESS_KEY_ID" \
+  --set extraEnv[0].value="$AWS_ACCESS_KEY_ID" \
+  --set extraEnv[1].name="AWS_SECRET_ACCESS_KEY" \
+  --set extraEnv[1].value="$AWS_SECRET_ACCESS_KEY" \
   --set integration.config.accountRoleArn="arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole" \
   --set integration.config.externalId="YOUR_EXTERNAL_ID"
 ```
@@ -293,7 +402,7 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
 </Tabs>
 
 :::info How it works
-The integration calls AWS Organizations API to discover all member accounts, then assumes the `PortOceanReadRole` in each account to sync resources.
+The integration uses the base IAM role (via IRSA) to call AWS Organizations API and discover all member accounts. For each discovered account, it uses `AssumeRoleWithWebIdentity` to assume the `AWSIntegrationRole` in that account. This requires the OIDC provider to be configured in each member account.
 :::
 
 </TabItem>
@@ -302,11 +411,17 @@ The integration calls AWS Organizations API to discover all member accounts, the
 
 If you don't use AWS Organizations or want to specify exact accounts, you can provide a list of role ARNs.
 
-<h4>Install</h4>
+<h4>Set up IRSA for multi-account (EKS only)</h4>
 
-:::caution JSON encoding required
-The `accountRoleArns` parameter must be a JSON-encoded array string. Use `--set-json`.
-:::
+For EKS clusters using IRSA, each member account must have the OIDC provider and IAM roles configured. Complete the following for each account:
+
+1. **Create OIDC provider** in each member account using your EKS cluster's OIDC issuer URL.
+2. **Create or update IAM role** in each account with a trust policy allowing the OIDC provider to assume it via `AssumeRoleWithWebIdentity`.
+3. **Attach `ReadOnlyAccess` policy** to each role.
+
+See the detailed [manual setup instructions](#manual-setup-click-to-expand) in the AWS Organizations section above, or use CloudFormation StackSets for automated deployment.
+
+<h4>Install</h4>
 
 <Tabs groupId="explicit-auth-helm" queryString="explicit-auth-helm" defaultValue="explicit-irsa-helm">
 
@@ -325,7 +440,7 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set integration.type="aws-v3" \
   --set integration.eventListener.type="POLLING" \
   --set podServiceAccount.name="port-ocean-aws-v3" \
-  --set-json integration.config.accountRoleArns='["arn:aws:iam::111111111111:role/PortOceanReadRole","arn:aws:iam::222222222222:role/PortOceanReadRole","arn:aws:iam::333333333333:role/PortOceanReadRole"]' \
+  --set integration.config.accountRoleArns='["arn:aws:iam::111111111111:role/AWSIntegrationRole","arn:aws:iam::222222222222:role/AWSIntegrationRole","arn:aws:iam::333333333333:role/AWSIntegrationRole"]' \
   --set integration.config.externalId="YOUR_EXTERNAL_ID"
 ```
 
@@ -345,9 +460,12 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set integration.identifier="my-aws-v3-multi" \
   --set integration.type="aws-v3" \
   --set integration.eventListener.type="POLLING" \
-  --set integration.secrets.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
-  --set integration.secrets.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY" \
-  --set-json integration.config.accountRoleArns='["arn:aws:iam::111111111111:role/PortOceanReadRole","arn:aws:iam::222222222222:role/PortOceanReadRole","arn:aws:iam::333333333333:role/PortOceanReadRole"]' \
+  --set podServiceAccount.name="port-ocean-aws-v3" \
+  --set extraEnv[0].name="AWS_ACCESS_KEY_ID" \
+  --set extraEnv[0].value="$AWS_ACCESS_KEY_ID" \
+  --set extraEnv[1].name="AWS_SECRET_ACCESS_KEY" \
+  --set extraEnv[1].value="$AWS_SECRET_ACCESS_KEY" \
+  --set integration.config.accountRoleArns='["arn:aws:iam::111111111111:role/AWSIntegrationRole","arn:aws:iam::222222222222:role/AWSIntegrationRole","arn:aws:iam::333333333333:role/AWSIntegrationRole"]' \
   --set integration.config.externalId="YOUR_EXTERNAL_ID"
 ```
 
