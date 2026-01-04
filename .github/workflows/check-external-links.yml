@@ -36,14 +36,16 @@ jobs:
           echo "✓ Current directory: $(pwd)"
           echo "✓ Node version: $(node --version)"
           echo "✓ NPM version: $(npm --version)"
+          echo ""
           
           if [ -d "docs" ]; then
             echo "✓ docs/ directory exists"
-            echo "  Files: $(find docs -name "*.md" -o -name "*.mdx" | wc -l)"
+            echo "  Markdown files: $(find docs -name "*.md" -o -name "*.mdx" | wc -l)"
           else
             echo "❌ docs/ directory not found!"
             exit 1
           fi
+          echo ""
           
           if [ -d "scripts" ]; then
             echo "✓ scripts/ directory exists"
@@ -52,22 +54,45 @@ jobs:
             echo "❌ scripts/ directory not found!"
             exit 1
           fi
+          echo ""
+          
+          echo "✓ Checking npm script..."
+          npm run check-links --help 2>&1 || echo "check-links script found in package.json"
+          echo ""
+          
+          echo "Script content from package.json:"
+          cat package.json | grep -A 1 '"check-links"'
 
       - name: Check external links
         id: link-check
         run: |
           echo "Starting link check..."
-          if npm run check-links 2>&1 | tee link-check-output.log; then
-            echo "✅ Link check completed successfully"
-          else
-            exit_code=$?
-            echo "⚠️ Link check exited with code: $exit_code"
-            if [ -f "link-check-report.txt" ]; then
-              echo "✅ Report was generated despite exit code"
+          echo "Current directory: $(pwd)"
+          echo ""
+          
+          set +e  # Don't exit on error
+          npm run check-links 2>&1 | tee link-check-output.log
+          exit_code=$?
+          set -e
+          
+          echo ""
+          echo "Link check finished with exit code: $exit_code"
+          echo ""
+          echo "Checking for output files..."
+          ls -la *.txt *.json 2>/dev/null || echo "No .txt or .json files in root"
+          echo ""
+          
+          if [ -f "link-check-report.txt" ]; then
+            echo "✅ link-check-report.txt found!"
+            echo "File size: $(wc -c < link-check-report.txt) bytes"
+            if [ $exit_code -ne 0 ]; then
               echo "LINKS_BROKEN=true" >> $GITHUB_OUTPUT
-            else
-              echo "❌ Report was NOT generated - check failed"
             fi
+          else
+            echo "❌ link-check-report.txt NOT found"
+            echo ""
+            echo "Showing last 50 lines of output for debugging:"
+            tail -50 link-check-output.log || cat link-check-output.log
           fi
         continue-on-error: true
 
