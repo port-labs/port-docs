@@ -22,36 +22,19 @@ Before installing the integration, ensure you have:
 - AWS account(s) that you want to sync resources from.
 - Permissions to create IAM roles/users and deploy infrastructure.
 
-## Choose your deployment method
+## Authentication to AWS
 
-Select the deployment method that best fits your infrastructure:
+The integration needs to authenticate to AWS to read your resources. Choose the authentication method that matches your deployment infrastructure.
 
-<Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="helm">
+<Tabs groupId="auth-methods" queryString="auth-methods" defaultValue="irsa">
 
-<TabItem value="helm" label="Helm (Scheduled)">
+<TabItem value="irsa" label="IRSA (For EKS)">
 
-The AWS integration is deployed using Helm on your Kubernetes cluster. This deployment supports scheduled resyncs of resources from AWS to Port.
+**Use this if:** You're deploying with Helm on Amazon EKS.
 
-<h2>Prerequisites</h2>
+IRSA (IAM Roles for Service Accounts) provides secure, keyless authentication by linking Kubernetes service accounts to IAM roles using OpenID Connect (OIDC). This eliminates the need for long-term access keys.
 
-- [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0.
-- Kubernetes cluster to deploy the integration.
-
-<h2>Single account installation</h2>
-
-We'll start with the simplest setup: syncing resources from a single AWS account.
-
-<h3>Step 1: Choose authentication method</h3>
-
-Choose how the integration will authenticate to AWS:
-
-<Tabs groupId="helm-auth" queryString="helm-auth" defaultValue="irsa">
-
-<TabItem value="irsa" label="IRSA (Recommended for EKS)">
-
-If you're running on Amazon EKS, we recommend using [IRSA (IAM Roles for Service Accounts)](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) for secure, keyless authentication.
-
-<h4>Set up IRSA</h4>
+<h3>Setup steps</h3>
 
 1. **Create an IAM role** with the following configuration:
    - Go to **AWS Console → IAM → Roles → Create role**.
@@ -60,7 +43,7 @@ If you're running on Amazon EKS, we recommend using [IRSA (IAM Roles for Service
    - Set the audience to `sts.amazonaws.com`.
    - Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
    - Name the role `port-ocean-aws-v3-role`.
-   - Note the role ARN (you'll need it for the next step).
+   - Note the role ARN (you'll need it later).
 
 2. **Create a Kubernetes service account** and link it to the IAM role:
 
@@ -81,24 +64,347 @@ Refer to the [AWS guide for associating an IAM role to a service account](https:
 
 </TabItem>
 
-<TabItem value="access-keys" label="AWS access keys">
+<TabItem value="task-role" label="ECS Task Role (For ECS)">
 
-For non-EKS clusters, you can authenticate using AWS access keys.
+**Use this if:** You're deploying with Terraform on AWS ECS Fargate.
 
-<h4>Create IAM user</h4>
+ECS Task Roles allow your containerized application to assume an IAM role automatically. The Terraform module creates and manages this role for you, granting it `ReadOnlyAccess` to AWS resources.
+
+<h3>Setup steps</h3>
+
+The Terraform Ocean Integration Factory module automatically creates an ECS Task Role with the necessary permissions when you deploy. No manual setup is required.
+
+For multi-account access, you can grant additional permissions by using the `additional_task_policy_statements` parameter in the Terraform module (see deployment examples below).
+
+</TabItem>
+
+<TabItem value="access-keys" label="AWS access keys (Universal)">
+
+**Use this if:** 
+- You're deploying with Helm on non-EKS Kubernetes.
+- You're running Docker locally or on EC2 without instance roles.
+- You need a quick setup for testing.
+
+AWS access keys provide programmatic access using a static access key ID and secret access key pair. Store these securely as they're long-term credentials.
+
+<h3>Setup steps</h3>
 
 1. [Create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with the following permissions:
-   - `arn:aws:iam::aws:policy/ReadOnlyAccess`.
+   - Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy.
 
-2. [Generate access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the user. You'll need:
-   - `AWS_ACCESS_KEY_ID`.
-   - `AWS_SECRET_ACCESS_KEY`.
+2. [Generate access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for the user:
+   - Go to **IAM → Users → Security credentials → Create access key**.
+   - Save the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+
+:::caution Secure your credentials
+Never commit access keys to version control. Use environment variables or secret management tools to store them securely.
+:::
 
 </TabItem>
 
 </Tabs>
 
-<h3>Step 2: Install using Helm</h3>
+## Choose your deployment method
+
+Select the deployment method that best fits your infrastructure:
+
+## Multi-account setup (Optional)
+
+If you need to sync resources from multiple AWS accounts, complete this section before proceeding to your deployment method.
+
+<h3>Understanding multi-account access</h3>
+
+AWS multi-account access relies on **AssumeRole**, a mechanism where the integration temporarily obtains credentials for each member account. Here's how it works:
+
+1. The integration authenticates to AWS using one of the methods above (IRSA, Task Role, or Access Keys).
+2. Each member account has an IAM role with `ReadOnlyAccess` permissions.
+3. Each member account's role trusts your base identity to assume it.
+4. The integration calls `AssumeRole` to get temporary credentials for each account.
+5. With those credentials, it reads resources and syncs them to Port.
+
+**External ID** is a security feature that prevents the "confused deputy problem." It's a secret value that both parties must know when assuming roles across accounts, acting as a shared password.
+
+<h3>Account discovery strategies</h3>
+
+The integration automatically selects how to discover accounts based on your configuration:
+
+- **Single account mode**: No account role ARN specified. The integration syncs only the account it's authenticated to.
+- **Organizations mode**: `accountRoleArn` (singular) is set. The integration calls AWS Organizations API to discover all member accounts and assumes the same role name in each.
+- **Explicit list mode**: `accountRoleArns` (plural) is set. You manually provide a JSON array of specific role ARNs to assume.
+
+**When to use each strategy:**
+
+- **Organizations mode** - Best for large organizations (10+ accounts). New accounts are automatically included. Requires AWS Organizations and `organizations:ListAccounts` permission.
+- **Explicit list mode** - Best for smaller setups (2-10 accounts) or when you don't have AWS Organizations. Requires manual updates when adding accounts.
+
+<h3>Setting up cross-account IAM roles</h3>
+
+You need to create IAM roles with `ReadOnlyAccess` in each member account you want to sync. Choose the method that fits your organization:
+
+<details>
+<summary><b>Deploy using CloudFormation StackSet (click to expand)</b></summary>
+
+:::tip Automate with CloudFormation StackSets
+Use CloudFormation StackSets to deploy IAM roles across all your AWS Organization member accounts automatically.
+:::
+
+:::info IRSA users need different StackSet template
+If you're using IRSA authentication, you'll need a StackSet template that creates both OIDC providers and IAM roles in member accounts. Contact Port support for the IRSA-specific CloudFormation StackSet template, or use the manual setup below.
+:::
+
+**For ECS Task Role and Access Keys:**
+
+**Prerequisites:**
+- AWS Organizations enabled.
+- StackSet permissions in your management account.
+- Know your trusted principal:
+  - **ECS Task Role**: Your ECS task role ARN (from Terraform output after first apply)
+  - **Access Keys**: Your IAM user ARN (e.g., `arn:aws:iam::BASE_ACCOUNT:user/port-ocean`)
+
+**Steps:**
+
+1. **Access the CloudFormation template**:
+   - CloudFormation StackSet template will be available soon. Check back or contact Port support for the latest template.
+
+2. **Deploy via AWS Console**:
+   - Go to [AWS CloudFormation StackSets](https://console.aws.amazon.com/cloudformation/home#/stacksets).
+   - Click **Create StackSet**.
+   - Upload the template or provide the S3 URL.
+   - Configure the following parameters:
+     - **RoleName**: `PortOceanReadRole` (must be consistent across accounts).
+     - **ExternalId**: Generate a secure external ID (e.g., using `openssl rand -hex 16`).
+     - **TrustedPrincipal**: Your trusted principal ARN from prerequisites above.
+
+3. **Specify deployment targets**:
+   - Choose **Deploy to organization** or **Deploy to specific accounts**.
+   - Select the organizational units (OUs) or account IDs.
+
+4. **Monitor deployment**:
+   - Wait for StackSet instances to complete across all accounts.
+   - Verify roles were created successfully in the CloudFormation console.
+
+5. **Note the role name and external ID**:
+   - Role ARN format: `arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole`
+   - You'll need the role name and external ID when configuring your deployment below.
+
+</details>
+
+<details>
+<summary><b>Manual IAM role setup (click to expand)</b></summary>
+
+We'll create IAM roles in each member account you want to sync. The setup steps differ based on your authentication method.
+
+<Tabs groupId="manual-iam-auth" queryString="manual-iam-auth" defaultValue="irsa-manual">
+
+<TabItem value="irsa-manual" label="For IRSA (EKS)">
+
+IRSA authentication requires OIDC provider setup in each member account, as the trust relationship uses OpenID Connect rather than standard IAM role assumption.
+
+<h4>Step 1: Get your EKS cluster's OIDC issuer URL</h4>
+
+Run this command in your base account (where the integration runs):
+
+```bash showLineNumbers
+aws eks describe-cluster --name CLUSTER_NAME --region REGION --query "cluster.identity.oidc.issuer" --output text
+```
+
+This returns a URL like: `https://oidc.eks.REGION.amazonaws.com/id/OIDC_ID`
+
+<h4>Step 2: Create OIDC provider in each member account</h4>
+
+For each member account, create an OIDC identity provider:
+
+```bash showLineNumbers
+aws iam create-open-id-connect-provider \
+  --url https://oidc.eks.REGION.amazonaws.com/id/OIDC_ID \
+  --client-id-list sts.amazonaws.com \
+  --thumbprint-list 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
+```
+
+Replace `REGION` and `OIDC_ID` with values from step 1.
+
+<h4>Step 3: Create IAM role in each member account</h4>
+
+Create an IAM role with this trust policy:
+
+```json showLineNumbers
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::MEMBER_ACCOUNT_ID:oidc-provider/oidc.eks.REGION.amazonaws.com/id/OIDC_ID"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.REGION.amazonaws.com/id/OIDC_ID:aud": "sts.amazonaws.com",
+          "oidc.eks.REGION.amazonaws.com/id/OIDC_ID:sub": "system:serviceaccount:port-ocean:port-ocean-aws-v3"
+        }
+      }
+    }
+  ]
+}
+```
+
+Replace:
+- `MEMBER_ACCOUNT_ID`: The member account ID where you're creating this role.
+- `REGION`: Your EKS cluster region.
+- `OIDC_ID`: Your EKS cluster's OIDC ID from step 1.
+
+<h4>Step 4: Attach permissions</h4>
+
+Attach the AWS managed `ReadOnlyAccess` policy to the role:
+
+```bash showLineNumbers
+aws iam attach-role-policy \
+  --role-name AWSIntegrationRole \
+  --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess
+```
+
+<h4>Step 5: Note the role ARN</h4>
+
+Copy the role ARN from each member account. You'll need these when configuring your deployment:
+
+```
+arn:aws:iam::MEMBER_ACCOUNT_ID:role/AWSIntegrationRole
+```
+
+Repeat steps 2-5 for each member account.
+
+</TabItem>
+
+<TabItem value="ecs-manual" label="For ECS Task Role (Terraform)">
+
+ECS Task Roles use standard IAM role assumption with an external ID for security.
+
+<h4>Step 1: Create IAM role in each member account</h4>
+
+Create an IAM role with this trust policy:
+
+```json showLineNumbers
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::BASE_ACCOUNT_ID:role/ECS_TASK_ROLE_NAME"
+      },
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "StringEquals": {
+          "sts:ExternalId": "YOUR_EXTERNAL_ID"
+        }
+      }
+    }
+  ]
+}
+```
+
+Replace:
+- `BASE_ACCOUNT_ID`: The account where your ECS integration runs.
+- `ECS_TASK_ROLE_NAME`: Your ECS task role name (you'll get this from Terraform outputs after first deployment).
+- `YOUR_EXTERNAL_ID`: Generate a secure external ID using `openssl rand -hex 16`. Use the same value across all member accounts.
+
+<h4>Step 2: Attach permissions</h4>
+
+Attach the AWS managed `ReadOnlyAccess` policy:
+
+```bash showLineNumbers
+aws iam attach-role-policy \
+  --role-name PortOceanReadRole \
+  --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess
+```
+
+<h4>Step 3: Note the role ARN</h4>
+
+Copy the role ARN from each member account:
+
+```
+arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole
+```
+
+Repeat steps 1-3 for each member account.
+
+</TabItem>
+
+<TabItem value="keys-manual" label="For Access Keys">
+
+Access keys use standard IAM role assumption with an external ID for security.
+
+<h4>Step 1: Create IAM role in each member account</h4>
+
+Create an IAM role with this trust policy:
+
+```json showLineNumbers
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::BASE_ACCOUNT_ID:user/port-ocean-aws-v3-user"
+      },
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "StringEquals": {
+          "sts:ExternalId": "YOUR_EXTERNAL_ID"
+        }
+      }
+    }
+  ]
+}
+```
+
+Replace:
+- `BASE_ACCOUNT_ID`: The account where your integration runs (where you created the IAM user).
+- `YOUR_EXTERNAL_ID`: Generate a secure external ID using `openssl rand -hex 16`. Use the same value across all member accounts.
+
+<h4>Step 2: Attach permissions</h4>
+
+Attach the AWS managed `ReadOnlyAccess` policy:
+
+```bash showLineNumbers
+aws iam attach-role-policy \
+  --role-name PortOceanReadRole \
+  --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess
+```
+
+<h4>Step 3: Note the role ARN</h4>
+
+Copy the role ARN from each member account:
+
+```
+arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole
+```
+
+Repeat steps 1-3 for each member account.
+
+</TabItem>
+
+</Tabs>
+
+</details>
+
+## Choose your deployment method
+
+<Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="helm">
+
+<TabItem value="helm" label="Helm (Scheduled)">
+
+The AWS integration is deployed using Helm on your Kubernetes cluster. This deployment supports scheduled resyncs of resources from AWS to Port.
+
+<h2>Prerequisites</h2>
+
+- [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0.
+- Kubernetes cluster to deploy the integration.
+- AWS authentication configured (see [IRSA](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted.md?auth-methods=irsa) or [Access Keys](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted.md?auth-methods=access-keys) in authentication section above).
+
+<h2>Single account installation</h2>
+
+We'll start with the simplest setup: syncing resources from a single AWS account.
 
 <Tabs groupId="helm-single-install" queryString="helm-single-install" defaultValue="irsa-install">
 
@@ -108,8 +414,8 @@ For non-EKS clusters, you can authenticate using AWS access keys.
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws-v3 port-labs/port-ocean \
   --create-namespace --namespace port-ocean \
-  --set port.clientId="vyRVvY3rn6MxhnhnEdQhc6WOa15X2naN" \
-  --set port.clientSecret="fTpExApZbrxWwTAAliq8snRtGK5aT8poNlb26yWDkvWst7mmn0Totb1Z1WN0GY3a" \
+  --set port.clientId="$PORT_CLIENT_ID" \
+  --set port.clientSecret="$PORT_CLIENT_SECRET" \
   --set port.baseUrl="https://api.getport.io" \
   --set initializePortResources=true \
   --set sendRawDataExamples=true \
@@ -138,10 +444,8 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set integration.identifier="my-aws-v3" \
   --set integration.type="aws-v3" \
   --set integration.eventListener.type="POLLING" \
-  --set extraEnv[0].name="AWS_ACCESS_KEY_ID" \
-  --set extraEnv[0].value="$AWS_ACCESS_KEY_ID" \
-  --set extraEnv[1].name="AWS_SECRET_ACCESS_KEY" \
-  --set extraEnv[1].value="$AWS_SECRET_ACCESS_KEY"
+  --set integration.secrets.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
+  --set integration.secrets.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"
 ```
 
 </TabItem>
@@ -152,202 +456,26 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
 
 <h2>Multi-account installation</h2>
 
-To sync resources from multiple AWS accounts, you'll need to set up IAM roles in each account and configure the integration to assume those roles.
-
-<h3>Step 1: Set up IAM roles in your AWS accounts</h3>
-
-You need to create IAM roles with `ReadOnlyAccess` in each account you want to sync.
-
-<details>
-<summary><b>Deploy using CloudFormation StackSet (click to expand)</b></summary>
-
-:::tip Automated deployment
-Use CloudFormation StackSets to deploy IAM roles across all your AWS Organization member accounts automatically.
+:::info Complete multi-account setup first
+If you haven't already, complete the [multi-account setup section](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted.md#multi-account-setup-optional) above to create IAM roles in your member accounts.
 :::
 
-1. **Access the CloudFormation template**:
-   - CloudFormation StackSet template will be available soon.
+Now configure the Helm deployment to use those roles.
 
-2. **Deploy via AWS Console**:
-   - Go to [AWS CloudFormation StackSets](https://console.aws.amazon.com/cloudformation/home#/stacksets).
-   - Click **Create StackSet**.
-   - Upload the template or provide the S3 URL.
-   - Configure the following parameters:
-     - **RoleName**: `PortOceanReadRole` (must be consistent across accounts).
-     - **ExternalId**: Generate a secure external ID (e.g., using `openssl rand -hex 16`).
-     - **TrustedPrincipal**: The IAM role ARN or user ARN from step 1 above.
+<h3>Additional prerequisites for multi-account</h3>
 
-3. **Specify deployment targets**:
-   - Choose **Deploy to organization** or **Deploy to specific accounts**.
-   - Select the organizational units (OUs) or account IDs.
+Your base IAM role (from single account authentication setup) needs these additional permissions:
+- `organizations:ListAccounts` (only for Organizations mode).
+- `organizations:DescribeOrganization` (only for Organizations mode).
+- `sts:AssumeRole` (required for both strategies).
 
-4. **Monitor deployment**:
-   - Wait for StackSet instances to complete across all accounts.
-   - Verify roles were created successfully in the CloudFormation console.
-
-</details>
-
-<details>
-<summary><b>Manual IAM role setup (click to expand)</b></summary>
-
-For each account you want to sync, create an IAM role with the following configuration.
-
-<h4>Create the IAM role</h4>
-
-Create an IAM role with this trust policy (replace placeholders):
-
-```json showLineNumbers
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::BASE_ACCOUNT_ID:role/port-ocean-aws-v3-role"
-      },
-      "Action": "sts:AssumeRole",
-      "Condition": {
-        "StringEquals": {
-          "sts:ExternalId": "YOUR_EXTERNAL_ID"
-        }
-      }
-    }
-  ]
-}
-```
-
-- `BASE_ACCOUNT_ID`: The account where the integration runs.
-- `YOUR_EXTERNAL_ID`: A secure external ID (same across all accounts).
-
-<h4>Attach permissions</h4>
-
-Attach the AWS managed `ReadOnlyAccess` policy:
-
-```bash showLineNumbers
-aws iam attach-role-policy \
-  --role-name PortOceanReadRole \
-  --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess
-```
-
-<h4>Note the role ARN</h4>
-
-Copy the role ARN - you'll need it in the next step:
-```
-arn:aws:iam::ACCOUNT_ID:role/PortOceanReadRole
-```
-
-</details>
-
-<h3>Step 2: Choose your account discovery strategy</h3>
+<h3>Choose your account discovery strategy</h3>
 
 <Tabs groupId="multi-account-strategy" queryString="multi-account-strategy" defaultValue="organizations">
 
 <TabItem value="organizations" label="AWS Organizations (Automatic)">
 
 If you have AWS Organizations enabled, the integration can automatically discover all member accounts.
-
-<h4>Additional prerequisite</h4>
-
-Your base IAM role (from step 1 of single account setup) needs these additional permissions:
-- `organizations:ListAccounts`.
-- `organizations:DescribeOrganization`.
-- `sts:AssumeRole`.
-
-<h4>Set up IRSA for multi-account (EKS only)</h4>
-
-For EKS clusters using IRSA, each member account must have the OIDC provider and IAM roles configured. You can use CloudFormation StackSets for automated deployment or set them up manually.
-
-<details>
-<summary><b>Deploy using CloudFormation StackSet (click to expand)</b></summary>
-
-:::tip Automated deployment
-Use CloudFormation StackSets to deploy OIDC providers and IAM roles across all your AWS Organization member accounts automatically.
-:::
-
-1. **Access the CloudFormation template**:
-   - CloudFormation StackSet template will be available soon.
-
-2. **Deploy via AWS Console**:
-   - Go to [AWS CloudFormation StackSets](https://console.aws.amazon.com/cloudformation/home#/stacksets).
-   - Click **Create StackSet**.
-   - Upload the template or provide the S3 URL.
-   - Configure the following parameters:
-     - **OIDCIssuerURL**: Your EKS cluster's OIDC issuer URL (e.g., `https://oidc.eks.REGION.amazonaws.com/id/OIDC_ID`).
-     - **RoleName**: `AWSIntegrationRole` (must be consistent across accounts).
-     - **TrustedPrincipal**: The base IAM role ARN from your EKS cluster account.
-
-3. **Specify deployment targets**:
-   - Choose **Deploy to organization** or **Deploy to specific accounts**.
-   - Select the organizational units (OUs) or account IDs.
-
-4. **Monitor deployment**:
-   - Wait for StackSet instances to complete across all accounts.
-   - Verify OIDC providers and roles were created successfully in the CloudFormation console.
-
-</details>
-
-<details>
-<summary><b>Manual setup (click to expand)</b></summary>
-
-For each member account you want to sync, complete the following steps.
-
-<h4>Step 1: Create OIDC provider</h4>
-
-Get your EKS cluster's OIDC issuer URL:
-
-```bash showLineNumbers
-aws eks describe-cluster --name CLUSTER_NAME --region REGION --query "cluster.identity.oidc.issuer" --output text
-```
-
-Create the OIDC provider in each member account:
-
-```bash showLineNumbers
-aws iam create-open-id-connect-provider \
-  --url https://oidc.eks.REGION.amazonaws.com/id/OIDC_ID \
-  --client-id-list sts.amazonaws.com \
-  --thumbprint-list 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
-```
-
-<h4>Step 2: Create or update IAM role</h4>
-
-Create an IAM role (or update existing role) in each member account with this trust policy:
-
-```json showLineNumbers
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Federated": "arn:aws:iam::MEMBER_ACCOUNT_ID:oidc-provider/oidc.eks.REGION.amazonaws.com/id/OIDC_ID"
-      },
-      "Action": "sts:AssumeRoleWithWebIdentity",
-      "Condition": {
-        "StringEquals": {
-          "oidc.eks.REGION.amazonaws.com/id/OIDC_ID:aud": "sts.amazonaws.com"
-        }
-      }
-    }
-  ]
-}
-```
-
-Replace:
-- `MEMBER_ACCOUNT_ID`: The member account ID.
-- `REGION`: Your EKS cluster region.
-- `OIDC_ID`: Your EKS cluster's OIDC ID.
-
-Attach the `arn:aws:iam::aws:policy/ReadOnlyAccess` policy to the role.
-
-<h4>Step 3: Note role ARNs</h4>
-
-Collect the role ARN from each member account. You'll need these for the Helm installation:
-
-```
-arn:aws:iam::MEMBER_ACCOUNT_ID:role/AWSIntegrationRole
-```
-
-</details>
 
 <h4>Install</h4>
 
@@ -389,10 +517,8 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set integration.type="aws-v3" \
   --set integration.eventListener.type="POLLING" \
   --set podServiceAccount.name="port-ocean-aws-v3" \
-  --set extraEnv[0].name="AWS_ACCESS_KEY_ID" \
-  --set extraEnv[0].value="$AWS_ACCESS_KEY_ID" \
-  --set extraEnv[1].name="AWS_SECRET_ACCESS_KEY" \
-  --set extraEnv[1].value="$AWS_SECRET_ACCESS_KEY" \
+  --set integration.secrets.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
+  --set integration.secrets.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY" \
   --set integration.config.accountRoleArn="arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole" \
   --set integration.config.externalId="YOUR_EXTERNAL_ID"
 ```
@@ -401,8 +527,8 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
 
 </Tabs>
 
-:::info How it works
-The integration uses the base IAM role (via IRSA) to call AWS Organizations API and discover all member accounts. For each discovered account, it uses `AssumeRoleWithWebIdentity` to assume the `AWSIntegrationRole` in that account. This requires the OIDC provider to be configured in each member account.
+:::info How Organizations mode works
+The integration uses IRSA to call the AWS Organizations API and discover all member accounts. For each account, it assumes the `AWSIntegrationRole` using `AssumeRoleWithWebIdentity`. This requires the OIDC provider to be configured in each member account.
 :::
 
 </TabItem>
@@ -414,6 +540,9 @@ If you don't use AWS Organizations or want to specify exact accounts, you can pr
 <h4>Set up IRSA for multi-account (EKS only)</h4>
 
 For EKS clusters using IRSA, each member account must have the OIDC provider and IAM roles configured. Complete the following for each account:
+
+**Why OIDC providers are needed in each account:**  
+IRSA uses OpenID Connect (OIDC) to establish trust between Kubernetes service accounts and IAM roles. Your EKS cluster has an OIDC provider that issues temporary tokens to pods. For cross-account access, each member account needs to trust your cluster's OIDC provider so it can verify these tokens and allow `AssumeRoleWithWebIdentity`.
 
 1. **Create OIDC provider** in each member account using your EKS cluster's OIDC issuer URL.
 2. **Create or update IAM role** in each account with a trust policy allowing the OIDC provider to assume it via `AssumeRoleWithWebIdentity`.
@@ -461,10 +590,8 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set integration.type="aws-v3" \
   --set integration.eventListener.type="POLLING" \
   --set podServiceAccount.name="port-ocean-aws-v3" \
-  --set extraEnv[0].name="AWS_ACCESS_KEY_ID" \
-  --set extraEnv[0].value="$AWS_ACCESS_KEY_ID" \
-  --set extraEnv[1].name="AWS_SECRET_ACCESS_KEY" \
-  --set extraEnv[1].value="$AWS_SECRET_ACCESS_KEY" \
+  --set integration.secrets.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
+  --set integration.secrets.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY" \
   --set integration.config.accountRoleArns='["arn:aws:iam::111111111111:role/AWSIntegrationRole","arn:aws:iam::222222222222:role/AWSIntegrationRole","arn:aws:iam::333333333333:role/AWSIntegrationRole"]' \
   --set integration.config.externalId="YOUR_EXTERNAL_ID"
 ```
@@ -472,6 +599,10 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
 </TabItem>
 
 </Tabs>
+
+:::info How explicit list mode works
+The integration receives a specific list of role ARNs to assume. It uses `AssumeRole` (or `AssumeRoleWithWebIdentity` for IRSA) with the external ID to get temporary credentials for each role in the list, then syncs resources from those accounts.
+:::
 
 </TabItem>
 
@@ -489,6 +620,7 @@ The AWS v3 integration is deployed using Terraform on AWS ECS Fargate. It uses o
 - AWS account with permissions to create ECS, IAM, and VPC resources.
 - [AWS CLI 2](https://aws.amazon.com/cli/) configured with credentials.
 - VPC with subnets for ECS deployment.
+- AWS authentication configured (see [ECS Task Role](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted.md?auth-methods=task-role) in authentication section above).
 
 <h2>Single account installation</h2>
 
@@ -541,93 +673,13 @@ terraform apply
 
 <h2>Multi-account installation</h2>
 
-To sync resources from multiple AWS accounts, follow these steps:
-
-<h3>Step 1: Set up IAM roles in your AWS accounts</h3>
-
-You need to create IAM roles with `ReadOnlyAccess` in each account you want to sync.
-
-<details>
-<summary><b>Deploy using CloudFormation StackSet (click to expand)</b></summary>
-
-:::tip Automated deployment
-Use CloudFormation StackSets to deploy IAM roles across all your AWS Organization member accounts automatically.
+:::info Complete multi-account setup first
+If you haven't already, complete the [multi-account setup section](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted.md#multi-account-setup-optional) above to create IAM roles in your member accounts.
 :::
 
-1. **Access the CloudFormation template**:
-   - CloudFormation StackSet template will be available soon. Check back or contact Port support for the latest template.
+Now configure your Terraform deployment to use those roles. The Terraform module will automatically grant your ECS task role the necessary `organizations:*` and `sts:AssumeRole` permissions via the `additional_task_policy_statements` parameter.
 
-2. **Deploy via AWS Console**:
-   - Go to [AWS CloudFormation StackSets](https://console.aws.amazon.com/cloudformation/home#/stacksets).
-   - Click **Create StackSet**.
-   - Upload the template or provide the S3 URL.
-   - Configure the following parameters:
-     - **RoleName**: `PortOceanReadRole` (must be consistent across accounts).
-     - **ExternalId**: Generate a secure external ID (e.g., using `openssl rand -hex 16`).
-     - **TrustedPrincipal**: The ECS task role ARN (will be in Terraform outputs after first apply).
-
-3. **Specify deployment targets**:
-   - Choose **Deploy to organization** or **Deploy to specific accounts**.
-   - Select the organizational units (OUs) or account IDs.
-
-4. **Monitor deployment**:
-   - Wait for StackSet instances to complete across all accounts.
-   - Verify roles were created successfully in the CloudFormation console.
-
-</details>
-
-<details>
-<summary><b>Manual IAM role setup (click to expand)</b></summary>
-
-For each account you want to sync, create an IAM role with the following configuration.
-
-<h4>Create the IAM role</h4>
-
-Create an IAM role with this trust policy (replace placeholders):
-
-```json showLineNumbers
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::BASE_ACCOUNT_ID:role/port-ocean-aws-v3-task-role"
-      },
-      "Action": "sts:AssumeRole",
-      "Condition": {
-        "StringEquals": {
-          "sts:ExternalId": "YOUR_EXTERNAL_ID"
-        }
-      }
-    }
-  ]
-}
-```
-
-- `BASE_ACCOUNT_ID`: The account where the integration runs.
-- `YOUR_EXTERNAL_ID`: A secure external ID (same across all accounts).
-
-<h4>Attach permissions</h4>
-
-Attach the AWS managed `ReadOnlyAccess` policy:
-
-```bash showLineNumbers
-aws iam attach-role-policy \
-  --role-name PortOceanReadRole \
-  --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess
-```
-
-<h4>Note the role ARN</h4>
-
-Copy the role ARN - you'll need it in the next step:
-```
-arn:aws:iam::ACCOUNT_ID:role/PortOceanReadRole
-```
-
-</details>
-
-<h3>Step 2: Choose your account discovery strategy</h3>
+<h3>Choose your account discovery strategy</h3>
 
 <Tabs groupId="terraform-multi-strategy" queryString="terraform-multi-strategy" defaultValue="terraform-orgs">
 
@@ -767,7 +819,7 @@ For one-time data synchronization or testing, you can run the integration using 
 <h2>Prerequisites</h2>
 
 - [Docker](https://www.docker.com/get-started) installed.
-- AWS credentials (access keys or IAM role if running on EC2).
+- AWS authentication configured (see [Access Keys](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted.md?auth-methods=access-keys) in authentication section above).
 
 <h2>Single account installation</h2>
 
@@ -809,93 +861,13 @@ docker run -i --rm --platform=linux/amd64 \
 
 <h2>Multi-account installation</h2>
 
-To sync resources from multiple AWS accounts, follow these steps:
-
-<h3>Step 1: Set up IAM roles in your AWS accounts</h3>
-
-You need to create IAM roles with `ReadOnlyAccess` in each account you want to sync.
-
-<details>
-<summary><b>Deploy using CloudFormation StackSet (click to expand)</b></summary>
-
-:::tip Automated deployment
-Use CloudFormation StackSets to deploy IAM roles across all your AWS Organization member accounts automatically.
+:::info Complete multi-account setup first
+If you haven't already, complete the [multi-account setup section](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws-v3/installation/self-hosted.md#multi-account-setup-optional) above to create IAM roles in your member accounts.
 :::
 
-1. **Access the CloudFormation template**:
-   - CloudFormation StackSet template will be available soon. Check back or contact Port support for the latest template.
+Now configure your Docker deployment to use those roles.
 
-2. **Deploy via AWS Console**:
-   - Go to [AWS CloudFormation StackSets](https://console.aws.amazon.com/cloudformation/home#/stacksets).
-   - Click **Create StackSet**.
-   - Upload the template or provide the S3 URL.
-   - Configure the following parameters:
-     - **RoleName**: `PortOceanReadRole` (must be consistent across accounts).
-     - **ExternalId**: Generate a secure external ID (e.g., using `openssl rand -hex 16`).
-     - **TrustedPrincipal**: The IAM user ARN with your access keys (e.g., `arn:aws:iam::ACCOUNT_ID:user/port-ocean`).
-
-3. **Specify deployment targets**:
-   - Choose **Deploy to organization** or **Deploy to specific accounts**.
-   - Select the organizational units (OUs) or account IDs.
-
-4. **Monitor deployment**:
-   - Wait for StackSet instances to complete across all accounts.
-   - Verify roles were created successfully in the CloudFormation console.
-
-</details>
-
-<details>
-<summary><b>Manual IAM role setup (click to expand)</b></summary>
-
-For each account you want to sync, create an IAM role with the following configuration.
-
-<h4>Create the IAM role</h4>
-
-Create an IAM role with this trust policy (replace placeholders):
-
-```json showLineNumbers
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::BASE_ACCOUNT_ID:user/port-ocean-aws-v3-user"
-      },
-      "Action": "sts:AssumeRole",
-      "Condition": {
-        "StringEquals": {
-          "sts:ExternalId": "YOUR_EXTERNAL_ID"
-        }
-      }
-    }
-  ]
-}
-```
-
-- `BASE_ACCOUNT_ID`: The account where the integration runs.
-- `YOUR_EXTERNAL_ID`: A secure external ID (same across all accounts).
-
-<h4>Attach permissions</h4>
-
-Attach the AWS managed `ReadOnlyAccess` policy:
-
-```bash showLineNumbers
-aws iam attach-role-policy \
-  --role-name PortOceanReadRole \
-  --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess
-```
-
-<h4>Note the role ARN</h4>
-
-Copy the role ARN - you'll need it in the next step:
-```
-arn:aws:iam::ACCOUNT_ID:role/PortOceanReadRole
-```
-
-</details>
-
-<h3>Step 2: Choose your account discovery strategy</h3>
+<h3>Choose your account discovery strategy</h3>
 
 <Tabs groupId="docker-multi-strategy" queryString="docker-multi-strategy" defaultValue="docker-orgs">
 
