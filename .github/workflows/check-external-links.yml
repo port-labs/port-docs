@@ -30,30 +30,86 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify environment
+        run: |
+          echo "Checking required files and directories..."
+          echo "✓ Current directory: $(pwd)"
+          echo "✓ Node version: $(node --version)"
+          echo "✓ NPM version: $(npm --version)"
+          
+          if [ -d "docs" ]; then
+            echo "✓ docs/ directory exists"
+            echo "  Files: $(find docs -name "*.md" -o -name "*.mdx" | wc -l)"
+          else
+            echo "❌ docs/ directory not found!"
+            exit 1
+          fi
+          
+          if [ -d "scripts" ]; then
+            echo "✓ scripts/ directory exists"
+            ls -la scripts/*.js
+          else
+            echo "❌ scripts/ directory not found!"
+            exit 1
+          fi
+
       - name: Check external links
         id: link-check
         run: |
-          npm run check-links 2>&1 | tee link-check-output.log || echo "LINKS_BROKEN=true" >> $GITHUB_OUTPUT
+          echo "Starting link check..."
+          if npm run check-links 2>&1 | tee link-check-output.log; then
+            echo "✅ Link check completed successfully"
+          else
+            exit_code=$?
+            echo "⚠️ Link check exited with code: $exit_code"
+            if [ -f "link-check-report.txt" ]; then
+              echo "✅ Report was generated despite exit code"
+              echo "LINKS_BROKEN=true" >> $GITHUB_OUTPUT
+            else
+              echo "❌ Report was NOT generated - check failed"
+            fi
+          fi
         continue-on-error: true
 
       - name: Display results summary
         if: always()
         run: |
           echo "=== Link Check Results ==="
-          cat link-check-report.txt
-          echo ""
-          echo "=== Adding to GitHub Actions Summary ==="
           
-          # Add to GitHub Actions summary
-          {
-            echo "## 🔗 Link Check Results"
-            echo ""
-            echo '```'
+          if [ -f "link-check-report.txt" ]; then
             cat link-check-report.txt
-            echo '```'
             echo ""
-            echo "📄 Full report available in workflow artifacts."
-          } >> $GITHUB_STEP_SUMMARY
+            echo "=== Adding to GitHub Actions Summary ==="
+            
+            # Add to GitHub Actions summary
+            {
+              echo "## 🔗 Link Check Results"
+              echo ""
+              echo '```'
+              cat link-check-report.txt
+              echo '```'
+              echo ""
+              echo "📄 Full report available in workflow artifacts."
+            } >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Error: link-check-report.txt was not created"
+            echo "This usually means the link check step failed."
+            echo ""
+            echo "Check the 'Check external links' step above for errors."
+            
+            # Add error to GitHub Actions summary
+            {
+              echo "## ❌ Link Check Failed"
+              echo ""
+              echo "The link check report was not generated. This usually means:"
+              echo ""
+              echo "- The link extraction step failed"
+              echo "- The link checking step failed"
+              echo "- The formatter script encountered an error"
+              echo ""
+              echo "Please check the 'Check external links' step logs above for details."
+            } >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Upload link check results
         if: always()
