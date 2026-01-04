@@ -1,17 +1,12 @@
 name: Check External Links
 
 on:
-  # Run every Monday at 9 AM UTC
+  # Run every Saturday at 20:00 UTC
   schedule:
-    - cron: '0 9 * * 1'
+    - cron: '0 20 * * 6'
   
   # Allow manual trigger
   workflow_dispatch:
-  
-  # Run on every push to link-checker branch (for testing)
-  push:
-    branches:
-      - link-checker
 
 jobs:
   check-links:
@@ -366,10 +361,3 @@ jobs:
             fi
             exit 1
           fi
-
-      - name: Fail workflow if links are broken
-        if: steps.link-check.outputs.LINKS_BROKEN == 'true'
-        run: |
-          echo "❌ Broken links detected. Check the artifacts or issue for details."
-          exit 1
-
