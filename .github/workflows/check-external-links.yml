@@ -1,5 +1,8 @@
 name: Check External Links
 
+permissions:
+  contents: read
+
 on:
   # Run every Saturday at 20:00 UTC
   schedule:
