@@ -1,4 +1,5 @@
 import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
+import PassUserContext from '/docs/actions-and-automations/templates/_pass_user_context.md'
 
 ## Define the backend
 
@@ -95,13 +96,7 @@ Here is an example of what trigger data could look like for a self-service actio
 }
 ```
 
-You can access any value in this structure and add it to the payload. For example, to add the executing user's email to the payload, you can use the following expression:
-
-```json
-{
-  "executing_user_email": "{{.trigger.by.user.email}}"
-}
-```
+<PassUserContext />
 
 Use the `Test JQ` button in the bottom-left corner to test your expressions against your action/automation and ensure you are sending the correct data.
 
