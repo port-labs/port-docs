@@ -5,6 +5,7 @@ title: Set up backend
 
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
 import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
+import PassUserContext from '/docs/actions-and-automations/templates/_pass_user_context.md'
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
@@ -365,13 +366,7 @@ The other trigger events have the same structure, with the following differences
 </TabItem>
 </Tabs>
 
-You can access any value in this structure and add it to the payload. For example, to add the executing user's email to the payload, you can use the following expression:
-
-```json
-{
-  "executing_user_email": "{{.trigger.by.user.email}}"
-}
-```
+<PassUserContext />
 
 Use the `Test JQ` button in the bottom-left corner to test your expressions against your automation and ensure you are sending the correct data.
 
