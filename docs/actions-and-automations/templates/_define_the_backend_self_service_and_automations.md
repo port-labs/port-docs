@@ -95,7 +95,7 @@ Here is an example of what trigger data could look like for a self-service actio
 }
 ```
 
-You can access any value in this structure and add it to the payload. For example, to add the executing user's name to the payload, you can use the following expression:
+You can access any value in this structure and add it to the payload. For example, to add the executing user's email to the payload, you can use the following expression:
 
 ```json
 {
