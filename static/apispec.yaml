@@ -1834,6 +1834,78 @@ components:
                     type: string
                   type:
                     enum:
+                      - workflow-runs-history-table
+                  query:
+                    type: object
+                  tableConfig:
+                    type: object
+                    properties:
+                      filterSettings:
+                        type: object
+                        properties:
+                          filterBy:
+                            $ref: "#/components/schemas/def-1"
+                        additionalProperties: false
+                        required:
+                          - filterBy
+                      groupSettings:
+                        type: object
+                        properties:
+                          groupBy:
+                            type: array
+                            items:
+                              type: string
+                        additionalProperties: false
+                        required:
+                          - groupBy
+                      sortSettings:
+                        type: object
+                        properties:
+                          sortBy:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                property:
+                                  type: string
+                                order:
+                                  enum:
+                                    - asc
+                                    - desc
+                              additionalProperties: false
+                              required:
+                                - property
+                                - order
+                        additionalProperties: false
+                      propertiesSettings:
+                        type: object
+                        properties:
+                          hidden:
+                            type: array
+                            items:
+                              type: string
+                          order:
+                            type: array
+                            items:
+                              type: string
+                        additionalProperties: false
+                additionalProperties: false
+                required:
+                  - type
+              - type: object
+                properties:
+                  id:
+                    type: string
+                  updatedAt:
+                    type: string
+                  updatedBy:
+                    type: string
+                  createdAt:
+                    type: string
+                  createdBy:
+                    type: string
+                  type:
+                    enum:
                       - run-info
                   title:
                     type: string
@@ -4335,6 +4407,78 @@ components:
                               action:
                                 type: "null"
                           additionalProperties: false
+                        tableConfig:
+                          type: object
+                          properties:
+                            filterSettings:
+                              type: object
+                              properties:
+                                filterBy:
+                                  $ref: "#/components/schemas/def-1"
+                              additionalProperties: false
+                              required:
+                                - filterBy
+                            groupSettings:
+                              type: object
+                              properties:
+                                groupBy:
+                                  type: array
+                                  items:
+                                    type: string
+                              additionalProperties: false
+                              required:
+                                - groupBy
+                            sortSettings:
+                              type: object
+                              properties:
+                                sortBy:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      order:
+                                        enum:
+                                          - asc
+                                          - desc
+                                    additionalProperties: false
+                                    required:
+                                      - property
+                                      - order
+                              additionalProperties: false
+                            propertiesSettings:
+                              type: object
+                              properties:
+                                hidden:
+                                  type: array
+                                  items:
+                                    type: string
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              additionalProperties: false
+                      additionalProperties: false
+                      required:
+                        - type
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                        updatedAt:
+                          type: string
+                        updatedBy:
+                          type: string
+                        createdAt:
+                          type: string
+                        createdBy:
+                          type: string
+                        type:
+                          enum:
+                            - workflow-runs-history-table
+                        query:
+                          type: object
                         tableConfig:
                           type: object
                           properties:
@@ -11121,6 +11265,7 @@ paths:
                         - America/Coral_Harbour
                         - America/Cordoba
                         - America/Costa_Rica
+                        - America/Coyhaique
                         - America/Creston
                         - America/Cuiaba
                         - America/Curacao
