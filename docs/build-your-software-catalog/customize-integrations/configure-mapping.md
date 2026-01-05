@@ -251,7 +251,7 @@ To achieve this, we have two options:
 
 In the example above we map a relation using a direct reference to the related entity's `identifier`.  
 
-Port also allows you to use a [search query rule](/search-and-query/#rules) to map relations based on a **property** of the related entity.  
+Port also allows you to use a [search query rule](/search-and-query/structure-and-syntax#rules) to map relations based on a **property** of the related entity.  
 This is useful in cases where you don't have the identifier of the related entity, but you do have one of its properties.
 
 For example, consider the following scenario:  
@@ -304,7 +304,7 @@ This is especially useful when patching entities whose identifiers are not known
 - Then, in the `PagerDuty` integration mapping, we can use this property to map each `PagerDuty service` to the relevant `service`.  
 - This way, we would not need to have a separate blueprint for `PagerDuty services`, since the integration maps directly to the `service` blueprint.
 
-Mapping by property is done using a [search query rule](/search-and-query/#rules) in the following format:
+Mapping by property is done using a [search query rule](/search-and-query/structure-and-syntax#rules) in the following format:
 
 ```yaml showLineNumbers
 resources:
