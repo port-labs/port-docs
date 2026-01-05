@@ -110,6 +110,27 @@ In the following example, the action will be visible to `Admin` and `Engineering
 ### Using a policy object
 
 Here is an example of using the policy key in a permissions JSON:
+
+### Removing a policy
+
+To remove a policy from an existing permission configuration, you must set `"policy": null` in the JSON. Simply deleting the policy object or clearing its contents will not remove it.
+
+:::caution Deleting policies
+Deleting a policy via backspace in the UI and saving will not actually remove the policy. You must explicitly set `"policy": null` in the JSON configuration to remove it.
+:::
+
+For example, to remove a policy from the `execute` permission:
+
+```json showLineNumbers
+{
+  "execute": {
+    "roles": ["Admin"],
+    "users": [],
+    "teams": ["engineering"],
+    "policy": null
+  }
+}
+```
 <details>
 <summary><b>Example snippet (click to expand)</b></summary>
 
@@ -230,6 +251,10 @@ The `conditions` query checks if the resulting array is empty or not, and return
 In this example we create rules that state that execution of an action can be **approved** only by the team leader of the user that asked to execute the action.
 
 **Note** that this example assumes that the relevant team leader has the `Moderator` role, as you can see in the `approvingUsers` section of the permissions JSON below.
+
+:::info Email notifications for approvers
+When you statically define the list of users who need to approve an action (using `users`, `roles`, or `teams`), Port will send an email notification to those approvers AND request their approval in the UI. However, when the approver list is dynamically defined using a `policy`, Port will only request approval in the UI and will NOT send email notifications. This behavior difference is important to understand when setting up dynamic approval workflows.
+:::
 
 The example contains two queries:
 1. `executingUser` - fetches the user who executed the action.

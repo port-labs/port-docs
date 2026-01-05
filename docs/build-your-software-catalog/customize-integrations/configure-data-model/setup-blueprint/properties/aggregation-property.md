@@ -893,11 +893,131 @@ resource "port_aggregation_properties" "repository_aggregation_properties" {
 
 </TabItem>
 
-<!-- <TabItem value="pulumi">
+<TabItem value="pulumi">
 
-Coming soon...
+In this example, we have a microservice blueprint, and we want to calculate the sum of the story points of open Jira issues related to each microservice.
 
-</TabItem> -->
+<Tabs groupId="pulumi-aggregation" queryString defaultValue="python" values={[
+{label: "Python", value: "python"},
+{label: "TypeScript", value: "typescript"}
+]}>
+
+<TabItem value="python">
+
+```python showLineNumbers
+"""A Python Pulumi program"""
+
+import pulumi
+from port_pulumi import Blueprint, AggregationProperties
+
+# Create blueprints
+microservice_blueprint = Blueprint(
+    "microservice_blueprint",
+    identifier="microservice",
+    title="Microservice Blueprint",
+    icon="Microservice",
+)
+
+jira_issue_blueprint = Blueprint(
+    "jira_issue_blueprint",
+    identifier="jira_issue",
+    title="Jira Issue Blueprint",
+    icon="Jira",
+    properties={
+        "number_props": {
+            "storyPoints": {
+                "title": "Story Points",
+            }
+        }
+    },
+    relations={
+        "microservice": {
+            "title": "Microservice",
+            "target": "microservice",
+        }
+    },
+)
+
+# Create aggregation property
+aggregation_properties = AggregationProperties(
+    "microservice_aggregation_properties",
+    blueprint_identifier="microservice",
+    properties={
+        "sum_of_story_points": {
+            "target_blueprint_identifier": "jira_issue",
+            "title": "Sum of story points",
+            "icon": "Default",
+            "description": "Sum of story points",
+            "method": {
+                "aggregate_by_property": {
+                    "func": "sum",
+                    "property": "storyPoints",
+                }
+            },
+        }
+    },
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript showLineNumbers
+import * as pulumi from "@pulumi/pulumi";
+import * as port from "@port-labs/port";
+
+// Create blueprints
+const microserviceBlueprint = new port.Blueprint("microservice_blueprint", {
+  identifier: "microservice",
+  title: "Microservice Blueprint",
+  icon: "Microservice",
+});
+
+const jiraIssueBlueprint = new port.Blueprint("jira_issue_blueprint", {
+  identifier: "jira_issue",
+  title: "Jira Issue Blueprint",
+  icon: "Jira",
+  properties: {
+    numberProps: {
+      storyPoints: {
+        title: "Story Points",
+      },
+    },
+  },
+  relations: {
+    microservice: {
+      title: "Microservice",
+      target: "microservice",
+    },
+  },
+});
+
+// Create aggregation property
+const aggregationProperties = new port.AggregationProperties("microservice_aggregation_properties", {
+  blueprintIdentifier: "microservice",
+  properties: {
+    sum_of_story_points: {
+      targetBlueprintIdentifier: "jira_issue",
+      title: "Sum of story points",
+      icon: "Default",
+      description: "Sum of story points",
+      method: {
+        aggregateByProperty: {
+          func: "sum",
+          property: "storyPoints",
+        },
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
 
 
 </Tabs>

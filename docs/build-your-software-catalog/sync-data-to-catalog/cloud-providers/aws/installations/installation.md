@@ -151,7 +151,7 @@ The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) a
 	integration = {
 		identifier = "my-aws-integration" # Change the identifier to describe your integration
 		config = {
-			live_events_api_key = "$YOUR_CUSTOM_API_KEY" # AWS API Key for custom events, used to validate the event source for real-time event updates.
+			live_events_api_key = "$YOUR_CUSTOM_API_KEY" # A user-defined API key for authenticating with the live events API. This is not an AWS key or Port key - you create and define this value yourself (e.g., "my-secret"). It is used to validate the event source for real-time event updates.
 		}
 	}
 	event_listener = {
@@ -177,7 +177,7 @@ The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) a
 | port.client_id | The client ID for the Port integration.  |
 | port.client_secret | The client secret for the Port integration.  |
 | integration.identifier | The identifier for the integration.  |
-| integration.config.live_events_api_key | A user-defined API key for authenticating with the live events API, for example "my-secret".  |
+| integration.config.live_events_api_key | A user-defined API key for authenticating with the live events API. This is not an AWS key or Port key - you create and define this value yourself (e.g., "my-secret"). It is used to validate the event source for real-time event updates.  |
 | integration.config.organization_role_arn (optional) | ARN of the role used to assume the organization role.  |
 | integration.config.account_read_role_name (optional) | Name of the role used to assume the read role in the account.  |
 | integration.config.maximum_concurrent_accounts (optional) | Maximum number of accounts to sync concurrently. |
@@ -231,7 +231,7 @@ The AWS integration uses the following AWS infrastructure:
 | `OCEAN__PORT__BASE_URL`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                              |
 | `OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID`      | [The AWS Access Key ID of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                      |
 | `OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY`  | [The AWS Secret Access Key of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                  |
-| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) AWS API Key for live events, used to validate the event source for real-time event, it's value is completely up to you                                                                                                                                    |
+| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) A user-defined API key for authenticating with the live events API. This is not an AWS key or Port key - you create and define this value yourself (e.g., "my-secret"). It is used to validate the event source for real-time event updates.                                                                                                                                    |
 | `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN`  | [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html). |
 | `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` | [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).                                        |
 | `OCEAN__INTEGRATION__CONFIG__MAXIMUM_CONCURRENT_ACCOUNTS` | (Optional) `Maximum Concurrent Account` controls the maximum number of accounts synced concurrently.                                       |
