@@ -14,7 +14,7 @@ Port's self-service actions. You can control the payload sent to your internal s
 
 For the latest updates and source code, see the [Port Agent GitHub repository](https://github.com/port-labs/port-agent).
 
-You can alter the requests sent to your internal service by providing a payload mapping config file when
+You can alter the requests sent to your internal services by providing a payload mapping config file when
 deploying the
 Port execution agent.
 
