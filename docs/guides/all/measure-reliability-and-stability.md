@@ -19,6 +19,10 @@ This guide helps engineering managers, platform engineers, and product leaders a
 
 By the end of this guide, you'll have a working dashboard that tracks key reliability and stability metrics, enabling you to identify unstable workflows, measure the impact of failures on delivery, and prioritize improvements to your CI/CD infrastructure.
 
+:::tip AI-powered insights
+This guide includes configuration for a **Reliability Agent** that provides AI-powered insights into your system reliability and resilience. Ask natural language questions like "What needs attention right now?" or "What are the top 3 actions we should take to improve MTTR?" and receive data-driven recommendations that connect delivery behavior to production outcomes.
+:::
+
 <img src="/img/guides/reliability-dashboard-1.png" border="1px" width="100%" />
 <img src="/img/guides/reliability-dashboard-2.png" border="1px" width="100%" />
 

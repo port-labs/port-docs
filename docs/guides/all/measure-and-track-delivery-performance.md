@@ -17,6 +17,10 @@ This guide helps engineering managers, platform engineers, DevEx teams, and prod
 
 By the end of this guide, you will have a working dashboard that tracks key delivery performance metrics, enabling you to identify improvement opportunities, measure the impact of process changes, and communicate delivery health across your organization.
 
+:::tip AI-powered insights
+This guide includes configuration for a **Delivery Performance Agent** that provides AI-powered insights into your delivery flow. Ask natural language questions like "What needs attention right now?" or "What are the top 3 actions we should take to improve PR throughput?" and receive prioritized, actionable recommendations with expected impact and implementation complexity.
+:::
+
 <img src="/img/guides/delivery-performance-dashboard.png" border="1px" width="100%" />
 
 

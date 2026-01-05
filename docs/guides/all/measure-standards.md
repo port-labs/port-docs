@@ -19,6 +19,10 @@ This guide helps engineering managers, platform engineers and product leaders an
 
 By the end of this guide, you will have scorecards and dashboards that track key standards metrics, enabling you to identify gaps, prioritize improvements, and ensure that what ships is secure, compliant, and aligned with organizational expectations.
 
+:::tip AI-powered insights
+This guide includes configuration for a **Standards Insights Agent** that provides AI-powered insights into your organizational standards adherence. Ask natural language questions like "What needs attention right now?" or "What are the top 3 actions we should take to improve standards adherence?" and receive actionable recommendations that help reduce risk, prevent drift, and ensure consistent delivery at scale.
+:::
+
 <img src="/img/guides/standards-dashboard.png" border="1px" width="100%" />
 
 ## Common use cases
