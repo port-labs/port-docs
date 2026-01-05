@@ -267,44 +267,27 @@ You need to create IAM roles with `ReadOnlyAccess` in each member account you wa
 Use CloudFormation StackSets to deploy IAM roles across all your AWS Organization member accounts automatically.
 :::
 
-:::info IRSA users need different StackSet template
-If you're using IRSA authentication, you'll need a StackSet template that creates both OIDC providers and IAM roles in member accounts. Contact Port support for the IRSA-specific CloudFormation StackSet template, or use the manual setup below.
-:::
+**CloudFormation StackSet templates:**
 
-**For ECS Task Role and Access Keys:**
+- **IRSA (EKS)**: [S3 template URL - coming soon]
+- **ECS Task Role / Access Keys**: [S3 template URL - coming soon]
 
-**Prerequisites:**
-- AWS Organizations enabled.
-- StackSet permissions in your management account.
-- Know your trusted principal:
-  - **ECS Task Role**: Your ECS task role ARN (from Terraform output after first apply)
-  - **Access Keys**: Your IAM user ARN (e.g., `arn:aws:iam::BASE_ACCOUNT:user/port-ocean`)
+**Deploy via AWS console:**
 
-**Steps:**
-
-1. **Access the CloudFormation template**:
-   - CloudFormation StackSet template will be available soon. Check back or contact Port support for the latest template.
-
-2. **Deploy via AWS Console**:
-   - Go to [AWS CloudFormation StackSets](https://console.aws.amazon.com/cloudformation/home#/stacksets).
-   - Click **Create StackSet**.
-   - Upload the template or provide the S3 URL.
-   - Configure the following parameters:
-     - **RoleName**: `PortOceanReadRole` (must be consistent across accounts).
-     - **ExternalId**: Generate a secure external ID (e.g., using `openssl rand -hex 16`).
-     - **TrustedPrincipal**: Your trusted principal ARN from prerequisites above.
-
-3. **Specify deployment targets**:
+1. Go to [AWS CloudFormation StackSets](https://console.aws.amazon.com/cloudformation/home#/stacksets).
+2. Click **Create StackSet**.
+3. Choose **Template is ready** and provide the S3 URL for your authentication method.
+4. Configure the stack parameters as shown in the template.
+5. **Specify deployment targets**:
    - Choose **Deploy to organization** or **Deploy to specific accounts**.
-   - Select the organizational units (OUs) or account IDs.
-
-4. **Monitor deployment**:
-   - Wait for StackSet instances to complete across all accounts.
-   - Verify roles were created successfully in the CloudFormation console.
-
-5. **Note the role name and external ID**:
-   - Role ARN format: `arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole`
-   - You'll need the role name and external ID when configuring your deployment below.
+   - Select the organizational units (OUs) or account IDs where you want to deploy.
+6. Review and click **Submit**.
+7. **Monitor deployment**:
+   - Wait for StackSet instances to show `SUCCEEDED` status across all target accounts.
+   - Verify roles were created successfully in each account.
+8. **Note the role ARNs**:
+   - Format: `arn:aws:iam::ACCOUNT_ID:role/ROLE_NAME`
+   - You'll need these when configuring your deployment below.
 
 <h4>Option 2: Manual IAM role setup</h4>
 
@@ -586,6 +569,10 @@ Now configure the Helm deployment to use those roles.
 
 If you have AWS Organizations enabled, the integration can automatically discover all member accounts.
 
+:::info Organization account role
+The `accountRoleArn` in Organizations mode should reference the role in your **organization/management account** (the account with `organizations:ListAccounts` permissions), not a member account role. This role is used to discover accounts and then assume roles in member accounts.
+:::
+
 <h4>Install</h4>
 
 <Tabs groupId="org-auth-helm" queryString="org-auth-helm" defaultValue="org-irsa-helm">
@@ -605,7 +592,7 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set integration.type="aws-v3" \
   --set integration.eventListener.type="POLLING" \
   --set podServiceAccount.name="port-ocean-aws-v3" \
-  --set integration.config.accountRoleArn="arn:aws:iam::MEMBER_ACCOUNT_ID:role/AWSIntegrationRole" \
+  --set integration.config.accountRoleArn="arn:aws:iam::ORG_ACCOUNT_ID:role/port-ocean-aws-v3-role" \
   --set integration.config.externalId="YOUR_EXTERNAL_ID"
 ```
 
@@ -628,7 +615,7 @@ helm upgrade --install aws-v3 port-labs/port-ocean \
   --set podServiceAccount.name="port-ocean-aws-v3" \
   --set integration.secrets.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
   --set integration.secrets.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY" \
-  --set integration.config.accountRoleArn="arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole" \
+  --set integration.config.accountRoleArn="arn:aws:iam::ORG_ACCOUNT_ID:role/port-ocean-aws-v3-role" \
   --set integration.config.externalId="YOUR_EXTERNAL_ID"
 ```
 
@@ -800,7 +787,7 @@ module "aws_v3_multi_account" {
     identifier = "my-aws-v3-multi"
     type       = "aws-v3"
     config     = {
-      account_role_arn = "arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole"
+      account_role_arn = "arn:aws:iam::ORG_ACCOUNT_ID:role/port-ocean-aws-v3-role"
       external_id      = "YOUR_EXTERNAL_ID"
     }
   }
@@ -979,7 +966,7 @@ docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
   -e OCEAN__INTEGRATION__SECRETS__AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
   -e OCEAN__INTEGRATION__SECRETS__AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
-  -e OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARN="arn:aws:iam::MEMBER_ACCOUNT_ID:role/PortOceanReadRole" \
+  -e OCEAN__INTEGRATION__CONFIG__ACCOUNT_ROLE_ARN="arn:aws:iam::ORG_ACCOUNT_ID:role/port-ocean-aws-v3-role" \
   -e OCEAN__INTEGRATION__CONFIG__EXTERNAL_ID="YOUR_EXTERNAL_ID" \
   ghcr.io/port-labs/port-ocean-aws-v3:latest
 ```
