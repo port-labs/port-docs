@@ -73,7 +73,7 @@ The payload mapping file is mounted to the Port agent as a volume. The path to t
 
 Each of the mapping fields can be constructed with JQ expressions. The agent will evaluate them with the original payload that Port sends, and the result will be sent to your internal service.  
 
-Here is the mapping file example:
+An example mapping file may look like this:
 
 ```json showLineNumbers
 [
