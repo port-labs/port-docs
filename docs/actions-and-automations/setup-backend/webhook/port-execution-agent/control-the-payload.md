@@ -9,7 +9,7 @@ Port offers two ways to control the payload sent to your backend:
 - In any other case, you can define the payload [directly via Port](/actions-and-automations/create-self-service-experiences/setup-the-backend/#define-the-actions-payload).
 :::
 
-Some of your internal service may not accept the raw payload incoming from
+Some of your internal services may not accept the raw payload incoming from
 Port's self-service actions. You can control the payload sent to your internal service with the Port execution agent.
 
 For the latest updates and source code, see the [Port Agent GitHub repository](https://github.com/port-labs/port-agent).
