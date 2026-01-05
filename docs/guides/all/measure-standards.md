@@ -660,6 +660,8 @@ Scorecards enable you to define and track standards compliance for your reposito
 
 To help Platform Engineering teams understand, assess, and improve adherence to organizational standards for quality, security, and compliance using engineering signals stored in Port's Context Lake, we'll configure an AI agent that provides objective insights and prioritized, actionable recommendations.
 
+<img src="/img/guides/eif-standards-ai-agent.png" border="1px" width="100%" />
+
 1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
 2. Click on `+ AI Agent`.
 3. Toggle `Json mode` on.

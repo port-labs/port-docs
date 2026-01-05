@@ -402,6 +402,8 @@ If you already have mappings for repositories and pull requests, make sure to ad
 
 To help Platform Engineering teams understand, assess, and improve the reliability and resilience of software systems using operational and delivery signals stored in Port's Context Lake, we'll configure an AI agent that provides objective insights and prioritized, actionable recommendations.
 
+<img src="/img/guides/eif-reliability-ai-agent.png" border="1px" width="100%" />
+
 1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
 2. Click on `+ AI Agent`.
 3. Toggle `Json mode` on.
