@@ -10,7 +10,7 @@ Port offers two ways to control the payload sent to your backend:
 :::
 
 Some of your internal services may not accept the raw payload incoming from
-Port's self-service actions. You can control the payload sent to your internal service with the Port execution agent.
+Port's self-service actions. You can control the payload sent to your internal services with the Port execution agent.
 
 For the latest updates and source code, see the [Port Agent GitHub repository](https://github.com/port-labs/port-agent).
 
