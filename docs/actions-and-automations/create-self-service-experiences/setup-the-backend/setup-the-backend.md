@@ -8,6 +8,7 @@ import TabItem from "@theme/TabItem"
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
 import ExecuteActionLocations from '/docs/actions-and-automations/create-self-service-experiences/templates/_execute_action_locations.mdx'
 import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
+import PassUserContext from '/docs/actions-and-automations/templates/_pass_user_context.md'
 
 # Set up backend
 
@@ -118,13 +119,7 @@ Here is an example of what trigger data could look like for a self-service actio
 }
 ```
 
-You can access any value in this structure and add it to the payload. For example, to add the executing user's email to the payload, you can use the following expression:
-
-```json
-{
-  "executing_user_email": "{{.trigger.by.user.email}}"
-}
-```
+<PassUserContext />
 
 Use the `Test JQ` button in the bottom-left corner to test your expressions against your action and ensure you are sending the correct data.
 
