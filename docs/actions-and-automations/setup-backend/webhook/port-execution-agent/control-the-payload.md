@@ -69,7 +69,7 @@ To provide the mapping to the agent, mount the mapping file to the container by 
 
 The payload mapping file is a JSON file that specifies how to transform the request sent to the Port agent to the request that is sent to your internal service.
 
-The payload mapping file is mounted to the Port agent as a volume. The path to the payload mapping file is set in the `CONTROL_THE_PAYLOAD_CONFIG_PATH` environment variable. By default, the Port agent will look for the payload mapping file at `~/control_the_payload_config.json`.
+The payload mapping file is mounted to the Port agent as a volume. The path to the payload mapping file is set in the `CONTROL_THE_PAYLOAD_CONFIG_PATH` environment variable. By default, the Port agent will look for the payload mapping file in `~/control_the_payload_config.json`.
 
 Each of the mapping fields can be constructed with JQ expressions. The agent will evaluate them with the original payload that Port sends, and the result will be sent to your internal service.  
 
