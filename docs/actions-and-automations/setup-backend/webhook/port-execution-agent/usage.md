@@ -47,13 +47,13 @@ Install the agent with Kafka streamer:
 helm upgrade --install my-port-agent port-labs/port-agent \
     --create-namespace --namespace port-agent \
     --set env.normal.PORT_ORG_ID="YOUR_ORG_ID" \
-    --set env.normal.STREAMER_NAME="KAFKA" \
+    --set env.normal.STREAMER_NAME=KAFKA \
     --set env.normal.KAFKA_CONSUMER_GROUP_ID="YOUR_CONSUMER_GROUP_ID" \
     --set env.secret.PORT_CLIENT_ID="YOUR_CLIENT_ID" \
     --set env.secret.PORT_CLIENT_SECRET="YOUR_CLIENT_SECRET"
 ```
 
-### HTTP streamer (polling)
+### POLLING streamer
 
 An alternative streamer mechanism that polls the Port API via HTTP to retrieve pending action runs.
 
@@ -71,17 +71,17 @@ An alternative streamer mechanism that polls the Port API via HTTP to retrieve p
 For the Helm installation, set:
 
 ```bash showLineNumbers
---set env.normal.STREAMER_NAME="HTTP"
+--set env.normal.STREAMER_NAME=POLLING
 ```
 
-Note: HTTP streamer does not require `KAFKA_CONSUMER_GROUP_ID`.
+Note: POLLING streamer does not require `KAFKA_CONSUMER_GROUP_ID`.
 
-## When to use HTTP polling vs Kafka
+## When to use POLLING vs Kafka
 
 ### Comparison
 
-| Aspect | HTTP Polling | Kafka |
-|--------|--------------|-------|
+| Aspect | POLLING | Kafka |
+|--------|---------|-------|
 | Horizontal scaling | ✅ Unlimited pods | ❌ Limited by partition count |
 | Latency | Polling-based | Real-time |
 | Dynamic scaling | ✅ Add/remove pods instantly | ❌ Requires support ticket to add partitions |
