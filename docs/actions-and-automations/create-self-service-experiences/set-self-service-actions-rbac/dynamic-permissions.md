@@ -67,7 +67,7 @@ Under each of these two keys, you can add one or more of the following keys:
 - A `users` key, which allows you to specify which **users** can execute/approve the action.
 - A `teams` key, which allows you to specify which **teams** can execute/approve the action.
 - A `policy` key, which allows you to use more complex logic using two keys:
-  - [`"queries"`](/search-and-query/) - a collection of [rules](/search-and-query/#rules) you can use to fetch and filter the data you need from your software catalog.
+  - [`"queries"`](/search-and-query/structure-and-syntax) - a collection of [rules](/search-and-query/structure-and-syntax#rules) you can use to fetch and filter the data you need from your software catalog.
   - `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data. There is an implicit `"OR"` between each condition.
 
 If there is **no** `policy` object defined, then `roles`, `users`, and `teams` control who can **view**, **approve**, or **execute** the action.  

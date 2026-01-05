@@ -64,21 +64,29 @@ Before configuring LLM providers, ensure you have:
 2. **Provider Accounts**: Active accounts with the LLM providers you want to use
 3. **Admin Permissions**: Organization administrator role in Port
 
+Some providers require additional setup before you can configure them in Port. See [Step 1: Configure provider policies and settings](#step-1-configure-provider-policies-and-settings-optional) for provider-specific configuration instructions.
+
+## Step 1: Configure provider policies and settings (optional)
+
+Some providers require additional policies and settings to be configured before you can use them. This step is only needed if you're configuring AWS Bedrock.
+
+If you're using other providers (OpenAI, Anthropic, or Azure OpenAI), you can skip this step and proceed to [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets).
+
 <details>
-<summary><b>Provider-specific prerequisites (click to expand)</b></summary>
+<summary><b>AWS Bedrock configuration (click to expand)</b></summary>
 
-Some providers require additional setup before you can configure them in Port. Follow the provider-specific instructions below.
+**Step 1.1: Configure IAM policy**
 
-<Tabs groupId="provider-prerequisites" queryString>
-<TabItem value="bedrock" label="AWS Bedrock">
+Set up an IAM policy to grant permissions for invoking Bedrock models. The configuration varies by provider.
 
-<h3>AWS IAM policy configuration</h3>
+Serverless models are automatically available, but you control access through IAM policies. Anthropic models require additional setup (see [Anthropic models requirements](#anthropic-models-requirements) below).
 
-Set up an IAM policy to grant permissions for invoking Bedrock models. Serverless models are automatically available, but you control access through IAM policies. Anthropic models require additional setup (see below).
-
-<h4>Option 1: Allow specific models</h4>
+**Option 1: Allow specific models**
 
 Restrict access to specific models (recommended). Example for Anthropic models in Europe:
+
+<details>
+<summary><b>View IAM policy example (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -95,18 +103,25 @@ Restrict access to specific models (recommended). Example for Anthropic models i
         "arn:aws:bedrock:*:*:inference-profile/eu.anthropic.claude-sonnet-4-20250514-v1:0",
         "arn:aws:bedrock:*::foundation-model/anthropic.claude-sonnet-4-20250514-v1:0",
         "arn:aws:bedrock:*:*:inference-profile/eu.anthropic.claude-haiku-4-5-20251001-v1:0",
-        "arn:aws:bedrock:*::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+        "arn:aws:bedrock:*::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0",
+        "arn:aws:bedrock:*:*:inference-profile/eu.anthropic.claude-sonnet-4-5-20250929-v1:0",
+        "arn:aws:bedrock:*::foundation-model/anthropic.claude-sonnet-4-5-20250929-v1:0"
       ]
     }
   ]
 }
 ```
 
+</details>
+
 Each model requires two ARN entries: `inference-profile` and `foundation-model`. Adjust the region and model as needed.
 
-<h4>Option 2: Allow all models</h4>
+**Option 2: Allow all models**
 
 Use a wildcard policy to allow all models. You can still disable specific models using the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API.
+
+<details>
+<summary><b>View IAM policy example (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -128,9 +143,14 @@ Use a wildcard policy to allow all models. You can still disable specific models
 }
 ```
 
-<h4>Using guardrails</h4>
+</details>
+
+**Using guardrails**
 
 If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGuardrail` action to your IAM policy:
+
+<details>
+<summary><b>View IAM policy example with guardrails (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -153,7 +173,9 @@ If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGu
 }
 ```
 
-<h3>Anthropic models requirements</h3>
+</details>
+<details>
+<summary><b>Anthropic models setup requirements (click to expand)</b></summary>
 
 **One-time usage form**
 - Submit a one-time usage form through the Amazon Bedrock playground or `PutUserCaseForModelAccess` API.
@@ -165,12 +187,62 @@ If you want to use guardrails with your Bedrock models, add the `bedrock:ApplyGu
 
 For details, see the [AWS Security Blog post](https://aws.amazon.com/blogs/security/simplified-amazon-bedrock-model-access/).
 
-</TabItem>
-</Tabs>
+</details>
+**Step 1.2: Choose authentication method**
+
+After configuring the IAM policy, choose how Port will authenticate with AWS Bedrock. You have two authentication options:
+
+- **Option A: Assume role** (recommended) - Configure an IAM role that Port's LLM gateway can assume. This provides enhanced security by eliminating the need to store long-lived credentials. Configure this below.
+- **Option B: Access keys** - Store AWS access key ID and secret access key in Port secrets. You'll configure this in [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets).
+
+**Option A: Using assume role (recommended)**
+
+Configure an IAM role that Port's LLM gateway can assume. This provides enhanced security by eliminating the need to store long-lived credentials.
+
+**Trust relationship configuration**
+
+Create a trust relationship policy on your IAM role that allows Port's LLM gateway roles to assume it:
+
+<details>
+<summary><b>View trust relationship policy example (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Statement1",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::185657066287:role/port-ai-bring-your-own-llm-eu-west-1",
+                    "arn:aws:iam::185657066287:role/port-ai-bring-your-own-llm-us-east-1"
+                ]
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+                "StringEquals": {
+                    "sts:ExternalId": "<OPTIONAL_EXTERNAL_ID>"
+                }
+            }
+        }
+    ]
+}
+```
 
 </details>
 
-## Step 1: Store API Keys in Secrets
+The `sts:ExternalId` condition is optional but recommended for additional security. If you use an external ID, you must create it as a secret in Port before configuring the provider. See [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets) for instructions on creating secrets.
+
+**Option B: Using access keys**
+
+If you prefer to use access keys instead of assume role, store your AWS access key ID and secret access key in Port secrets. See [Step 2: Store API Keys in Secrets](#step-2-store-api-keys-in-secrets) for instructions on creating these secrets.
+
+<h3 id="anthropic-models-requirements">Anthropic models requirements</h3>
+
+</details>
+
+## Step 2: Store API Keys in Secrets
 
 Before configuring providers, store your API keys in Port's secrets system. The secret names you choose are flexible - you'll reference them in your provider configuration.
 
@@ -200,9 +272,14 @@ Before configuring providers, store your API keys in Port's secrets system. The 
 </TabItem>
 <TabItem value="bedrock" label="AWS Bedrock">
 
-**Required Secrets:**
+**Option 1: Using access keys (required if not using assume role)**
 - Access Key ID secret (e.g., `aws-bedrock-access-key-id`) - Your AWS access key ID
 - Secret Access Key secret (e.g., `aws-bedrock-secret-access-key`) - Your AWS secret access key
+
+**Option 2: Using assume role (alternative to access keys)**
+- External ID secret (e.g., `BEDROCK_ROLE_EXTERNAL_ID`) - Optional external ID for the trust relationship
+
+See the [AWS Bedrock configuration](#step-1-configure-provider-policies-and-settings-optional) section in Step 1 for configuration details.
 
 </TabItem>
 </Tabs>
@@ -217,7 +294,7 @@ After creating a secret, you will be able to view its value only once. Afterward
 
 For more details on managing secrets, see the [Port Secrets documentation](/sso-rbac/port-secrets).
 
-## Step 2: Configure LLM Providers
+## Step 3: Configure LLM Providers
 
 Use the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API to configure your providers. The interactive API reference provides detailed examples and allows you to test the configuration for each provider type (OpenAI, Anthropic, Azure OpenAI, AWS Bedrock).
 
@@ -225,7 +302,7 @@ Use the [Create or connect an LLM provider](/api-reference/create-or-connect-an-
 Once providers are configured, you can view and select default providers and models through the UI (**Builder** → **Organization Settings** → **AI** tab) or continue using the API for all operations.
 :::
 
-## Step 3: Validate Configuration
+## Step 4: Validate Configuration
 
 Test your provider configuration with connection validation using the [Create or connect an LLM provider](/api-reference/create-or-connect-an-llm-provider) API with the `validate_connection=true` parameter. The interactive API reference shows how to test your configuration before saving it.
 

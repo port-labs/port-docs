@@ -365,7 +365,7 @@ The other trigger events have the same structure, with the following differences
 </TabItem>
 </Tabs>
 
-You can access any value in this structure and add it to the payload. For example, to add the executing user's name to the payload, you can use the following expression:
+You can access any value in this structure and add it to the payload. For example, to add the executing user's email to the payload, you can use the following expression:
 
 ```json
 {
