@@ -46,6 +46,10 @@ It is possible to reference any field that appears in the API responses linked b
 - [`Team`](https://developer.atlassian.com/platform/teams/rest/v1/api-group-teams-public-api/#api-group-teams-public-api)
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-jql-get)
 
+:::warning Scoped token limitation for teams
+
+Scoped tokens are currently not supported for fetching teams. This is because the [Atlassian Teams API](https://developer.atlassian.com/platform/teams/rest/v1/api-group-teams-public-api/) uses separate endpoints and scopes (e.g., `read:team:teams`) that are not available through standard Jira API token scopes. To fetch teams data, you can either configure webhooks manually using the [Webhook installation method](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook) or use an unscoped token with the appropriate base url.
+:::
 
 ## Setup
 
