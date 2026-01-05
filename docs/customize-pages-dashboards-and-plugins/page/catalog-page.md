@@ -199,7 +199,7 @@ To define such a filter, use the `Initial filters` field when creating a page:
 
 <br/><br/>
 
-You can define any [supported rule](/search-and-query/#rules) in JSON format.  
+You can define any [supported rule](/search-and-query/structure-and-syntax#rules) in JSON format.  
 Here is an example that will only display `Deployments` that were updated in the past month:
 
 ```json showLineNumbers
@@ -214,7 +214,7 @@ Here is an example that will only display `Deployments` that were updated in the
 
 #### Dynamic filters
 
-You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when creating a catalog page.
+You can use [dynamic properties](/search-and-query/structure-and-syntax#dynamic-properties) of the logged-in user when creating a catalog page.
 
 ### Excluded properties
 
