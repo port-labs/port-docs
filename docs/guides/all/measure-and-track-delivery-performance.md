@@ -3,6 +3,8 @@ displayed_sidebar: null
 description: Learn how to measure and track delivery performance as part of your engineering intelligence framework using key metrics like PR cycle time, PR throughput, deployment frequency, and overdue PRs.
 ---
 
+import MCPCapabilitiesHint from '/docs/guides/templates/ai/_mcp_capabilities_hint.mdx'
+
 # Gain visibility into delivery performance
 
 Measuring delivery performance is essential for understanding how effectively your engineering teams ship value to customers. Without visibility into delivery metrics, teams struggle to identify bottlenecks, optimize workflows, and make data-driven decisions about process improvements.
@@ -476,6 +478,50 @@ Now we'll configure the GitHub integration to ingest data into your catalog.
 
 4. Click `Save & Resync` to apply the mapping.
 
+## Configure AI agent
+
+To help Platform Engineering teams understand and improve software delivery flow using engineering signals stored in Port's Context Lake, we'll configure an AI agent that provides data-driven insights and actionable recommendations.
+
+1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
+2. Click on `+ AI Agent`.
+3. Toggle `Json mode` on.
+4. Copy and paste the following JSON configuration:
+
+    <details>
+    <summary><b>Delivery Performance Agent configuration (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "delivery_performance_agent",
+      "title": "Delivery Performance Agent",
+      "icon": "Details",
+      "team": [],
+      "properties": {
+        "status": "active",
+        "tools": [
+          "^(list|get|search|track|describe)_.*"
+        ],
+        "prompt": "You are the Flow Insights Agent.\nYour purpose is to help Platform Engineering understand and improve software delivery flow using engineering signals stored in Port's Context Lake. You provide accurate, data-driven insights and actionable recommendations that make flow improvements visible, prioritised, and easy to act on.\nAvailable Data\nUse any relevant blueprints and properties available in the Context Lake (for example: Pull Requests, Repositories, Domains, Services, Workflow Runs, Deployments, Teams, or future signals).\n Do not assume a fixed schema. Use only available data.\nYour Task\nInterpret the user's question and determine the appropriate scope (single metric, comparison, trend, ranking, root cause, or systemic pattern).\n\n\nRetrieve and analyse relevant flow signals, such as:\n\n\nLead time, cycle time, throughput\n\n\nReview wait time, PR aging, stalled or stale PRs\n\n\nWorkflow stability and CI reliability\n\n\nVolume and trend changes over time\n\n\nProvide clear, concise insights that directly answer the question.\n\n\nWhen improvement opportunities exist, include recommendations in a structured table.\n\n\nHow to Think\nStay objective and data-based.\n\n\nPrefer organisational and structural patterns over individual examples.\n\n\nAdapt depth to the scope (team, domain, service, or organisation).\n\n\nAvoid speculation; rely only on available signals.\n\n\nIf the question is unclear, ask one targeted follow-up.\n\n\nOutput Format (only top 10 findings)\nDirect Answer\nShort, precise response to the question.\nSupporting Insights\nKey data patterns or trends explaining the outcome.\nRecommendations (Table)\nInclude when relevant:\nRecommendation\nPriority\nExpected Impact\nImplementation Complexity\nRelated Entities\nActionable improvement\nHigh / Medium / Low\nImpact on flow, speed, or predictability\nLow / Medium / High\nURLs to relevant entities if available (otherwise N/A)\n\nRelevant Port Guides (Optional)\nWhen applicable, reference one or more Port guides that help implement the recommendation (for example: scorecards, dashboards, automation, or data model setup).\nInclude only guides that are directly actionable; if none are relevant, omit this section.\nBe concise, accurate, and aligned with Engineering Intelligence principles: flow, visibility, platform foundations, and actionable clarity.\n",
+        "execution_mode": "Automatic",
+        "conversation_starters": [
+          "What needs attention right now?",
+          "What are the top 3 actions we should take to improve PR throughput?",
+          "Which three top issues should we resolve for the quickest wins to improve delivery speed?",
+          "What best practices are top-performing teams using to improve software delivery?"
+        ],
+        "model": ""
+      },
+      "relations": {}
+    }
+    ```
+
+    </details>
+
+5. Click on `Create` to save the agent.
+
+<MCPCapabilitiesHint/>
+
+
 ## Visualize metrics
 
 Once the GitHub data is synced, we can create a dedicated dashboard in Port to monitor and analyze delivery performance using customizable widgets.
@@ -493,6 +539,16 @@ We now have a blank dashboard where we can start adding widgets to visualize del
 ### Add widgets
 
 In the new dashboard, create the following widgets:
+
+<details>
+<summary><b>Delivery Performance Agent (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **AI Agent**.
+2. Title: `Delivery Performance Agent`.
+3. Choose the **Delivery Performance Agent** we created earlier.
+4. Click **Save**.
+
+</details>
 
 <details>
 <summary><b>PR throughput (weekly avg) (click to expand)</b></summary>

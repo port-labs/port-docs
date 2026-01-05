@@ -3,6 +3,8 @@ displayed_sidebar: null
 description: Learn how to measure standards compliance across your software delivery, tracking quality, security, and organizational alignment using Port's GitHub integration and scorecards.
 ---
 
+import MCPCapabilitiesHint from '/docs/guides/templates/ai/_mcp_capabilities_hint.mdx'
+
 # Track standards adherence
 
 Visibility into standards adherence is essential for ensuring that software delivery consistently meets defined expectations for quality, security, and compliance.
@@ -654,6 +656,49 @@ Scorecards enable you to define and track standards compliance for your reposito
 
 4. Click `Save` to create the scorecard.
 
+## Configure AI agent
+
+To help Platform Engineering teams understand, assess, and improve adherence to organizational standards for quality, security, and compliance using engineering signals stored in Port's Context Lake, we'll configure an AI agent that provides objective insights and prioritized, actionable recommendations.
+
+1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
+2. Click on `+ AI Agent`.
+3. Toggle `Json mode` on.
+4. Copy and paste the following JSON configuration:
+
+    <details>
+    <summary><b>Standards Insights Agent configuration (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "standards_insights_agent",
+      "title": "standards_agent",
+      "icon": "Details",
+      "team": [],
+      "properties": {
+        "description": "AI agent to help teams to improve adherence to organizational standards",
+        "status": "active",
+        "tools": [
+          "^(list|get|search|track|describe)_.*"
+        ],
+        "prompt": "You are the Standards Insights Agent.\n\nYour purpose is to help Platform Engineering understand, assess, and improve adherence to organizational standards for quality, security, and compliance using engineering signals stored in Port's Context Lake. You provide objective insights and prioritised, actionable recommendations that reduce risk, prevent drift, and ensure consistent delivery at scale.\n\nAvailable Data\n\nUse any relevant blueprints and properties available in the Context Lake (for example: Repositories, Services, Domains, Pull Requests, CI/CD pipelines, Branch Rules, Teams, Scorecards, or future standards-related signals).\n\nDo not assume a fixed schema. Use only available data.\n\nYour Task\n\nInterpret the user's question and determine scope (repository, service, domain, or organisation).\n\nAnalyse standards-related signals such as:\n\nRepository hygiene and readiness indicators\n\nOwnership, documentation, and accountability signals\n\nCI/CD and delivery policy enforcement\n\nBranch protection, review guidance, and change controls\n\nSecurity and access guardrails\n\nScorecard results and baseline coverage\n\nSurface standards gaps and risk patterns, including missing standards, inconsistent adoption, baseline drift, or unmanaged repositories or services.\n\nWhen improvement opportunities exist, include recommendations in a structured table.\n\nHow to Think\n\nBe data-driven and standards-aware.\nPrefer systemic patterns over individual issues.\nTreat standards as guardrails that enable scale.\nAvoid speculation; rely only on available signals.\nIf the question is unclear, ask one targeted follow-up.\n\nOutput Format\n\nDirect Answer\nShort, factual response focused on standards adherence or risk.\n\nSupporting Insights\nKey patterns or scorecard results explaining the standards posture.\n\nRecommendations (Table)\nInclude when relevant:\n\nRecommendation\tPriority\tExpected Impact\tImplementation Complexity\tRelated Entities\nActionable standards improvement\tHigh / Medium / Low\tReduced risk, improved consistency\tLow / Medium / High\tURLs or N/A\n\nRelevant Port Guides (Optional)\nReference only directly actionable Port guides (for example: scorecards, dashboards, automation). Omit if none apply.\n\nBe concise, accurate, and aligned with Engineering Intelligence principles: standards visibility, platform guardrails, and actionable clarity.",
+        "execution_mode": "Approval Required",
+        "conversation_starters": [
+          "What needs attention right now?",
+          "What are the top 3 actions we should take to improve standards adherence?",
+          "What are the top recurring standards adherence issues?",
+          "What single improvement will give us the biggest standards adherence gain?"
+        ]
+      },
+      "relations": {}
+    }
+    ```
+
+    </details>
+
+5. Click on `Create` to save the agent.
+
+<MCPCapabilitiesHint/>
+
 ## Visualize metrics
 
 Once the GitHub data is synced and scorecards are configured, we can create a dedicated dashboard in Port to monitor and analyze standards compliance.
@@ -672,6 +717,16 @@ We now have a blank dashboard where we can start adding widgets to visualize sta
 ### Add widgets
 
 In the new dashboard, create the following widgets:
+
+<details>
+<summary><b>Standards Insights Agent (click to expand)</b></summary>
+
+1. Click **`+ Widget`** and select **AI Agent**.
+2. Title: `Standards Insights Agent`.
+3. Choose the **Standards Insights Agent** we created earlier.
+4. Click **Save**.
+
+</details>
 
 <details>
 <summary><b>Services scorecard (click to expand)</b></summary>
@@ -710,6 +765,7 @@ In the new dashboard, create the following widgets:
 
 ## Related guides
 
+- [Gain visibility into delivery performance](https://docs.port.io/guides/all/measure-and-track-delivery-performance/)
+- [Measure delivery reliability and stability](https://docs.port.io/guides/all/measure-reliability-and-stability/)
 - [Enforce branch protection rules with scorecards](https://docs.port.io/guides/all/setup-branch-protection-rules/)
-- [Define scorecards with AI](https://docs.port.io/guides/all/build-port-scorecards-with-mcp/)
 - [Auto-fix services when scorecards degrade](https://docs.port.io/guides/all/self-heal-scorecards-with-ai/)
