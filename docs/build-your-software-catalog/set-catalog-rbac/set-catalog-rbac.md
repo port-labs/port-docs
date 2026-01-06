@@ -141,9 +141,9 @@ To give `read` permissions to members of the owning team of an entity, change th
 
 <TabItem value="policy" label="Policy">
 
-The `policy` key allows you to give **dynamic** `read` permissions to users, by using [search queries](/search-and-query/#rules).
+The `policy` key allows you to give **dynamic** `read` permissions to users, by using [search queries](/search-and-query/structure-and-syntax#rules).
 
-You can also use [contextual query rules](/search-and-query/#contextual-query-rules) to get the context of the user executing the query.
+You can also use [contextual query rules](/search-and-query/structure-and-syntax#contextual-query-rules) to get the context of the user executing the query.
 
 In the following example, `on-call` users are granted `read` access only to entities that share the same `region` as one of their owning teams:
 

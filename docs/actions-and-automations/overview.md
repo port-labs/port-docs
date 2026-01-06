@@ -1,6 +1,11 @@
+---
+sidebar_position: 1
+title: Overview
+---
+
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Actions and automations
+# Overview
 
 One of Port's core offerings is the ability to automate and simplify the processes and routines of your developers.  
 This is done using two powerful tools:
