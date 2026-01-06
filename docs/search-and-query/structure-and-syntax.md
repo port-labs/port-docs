@@ -1,6 +1,5 @@
 ---
-title: Search & query
-sidebar_label: Search & query
+sidebar_position: 2
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
@@ -8,19 +7,9 @@ import CombinatorIntro from "./\_combinator_intro.md"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Search & query
+# Structure & syntax
 
-Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used across the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list.
-
-## Common queries usage
-
-High quality search is essential to effectively track assets in your software catalog, using Port's search you can:
-
-- Find all running services that are not healthy.
-- List all libraries that have known vulnerabilities.
-- Filter all services running in a specific cluster (in a query or self service form).
-- Catalog initial filters based on the logged in user's properties.
-
+This page details the structure and syntax used to build search queries in Port, including how to construct search requests, define rules, use combinators, and apply operators to filter entities.
 
 ## Search request
 
@@ -144,13 +133,13 @@ Port has 2 types of search rule operators:
 
 #### Operators
 
-A wide variety of operators are available, see them [here](./comparison-operators).
+A wide variety of operators are available, see them [here](/search-and-query/operators/comparison-operators).
 
 ___
 
 ### Relation operators
 
-Several relation-based operators are available, see them [here](./relation-operators).
+Several relation-based operators are available, see them [here](/search-and-query/operators/relation-operators).
 
 ### Contextual query rules
 
@@ -253,7 +242,7 @@ The following rule asserts that only users in the user's team/s will get the res
 ]
 ```
 
-For examples of using contextual values with relation path filters, see [filter with contextual values](/search-and-query/relation-operators#filter-with-contextual-values).
+For examples of using contextual values with relation path filters, see [filter with contextual values](/search-and-query/operators/relation-operators#filter-with-contextual-values).
 
 ### Filter by relations/scorecards
 
@@ -317,7 +306,7 @@ When using Port's UI, you can use properties of the logged-in user when writing 
 :::info UI only
 Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/custom-widgets/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
 :::
-Several relation-based operators are available, see them [here](./relation-operators).
+Several relation-based operators are available, see them [here](/search-and-query/operators/relation-operators).
 
 #### Usage examples
 
@@ -360,11 +349,3 @@ Several relation-based operators are available, see them [here](./relation-opera
   }
 ]
 ```
-
-## Examples
-
-Refer to the [examples](./examples.md) page for practical code snippets for search.
-
-## Advanced
-
-Refer to the [advanced](./advanced.md) page for advanced search use cases and outputs.
