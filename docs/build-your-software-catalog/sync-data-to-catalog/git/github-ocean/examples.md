@@ -58,6 +58,9 @@ import LastContributorBranchBlueprint from './examples/example-branch/\_git_expo
 import LastContributorAppConfig from './examples/example-branch/\_github_exporter_example_last_contributor_port_app_config.mdx'
 import LastContributorBlueprint from './examples/example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
 
+import SBOMBlueprint from './examples/example-repository-sbom/_github_exporter_example_sbom_blueprint.mdx'
+import PortRepositorySBOMAppConfig './examples/example-repository-sbom/_github_exporter_example_repository_sbom_port_app_config.mdx'
+
 # Examples
 
 This page provides practical examples for mapping various GitHub resources to Port.
@@ -413,6 +416,15 @@ The following example demonstrates how to ingest your GitHub repositories, their
 <ReleaseBlueprint/>
 
 <RepositoryTagReleaseAppConfig/>
+
+## Repositories and software bill of materials (SBOM)
+
+The following example demonstrates how to ingest your GitHub repositories and their software bill of materials (SBOM) to Port.  
+You can use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+<SBOMBlueprint />
+<PortRepositorySBOMAppConfig />
 
 ## Supported resources
 
