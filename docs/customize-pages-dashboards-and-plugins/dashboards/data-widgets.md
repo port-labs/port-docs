@@ -19,7 +19,7 @@ You can choose one of these chart types:
 * **Aggregate by property** - apply an aggregation function on number properties from multiple entities. 
 
 :::info Filtering entities
-You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
+You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/structure-and-syntax#rules)
 ::: 
 
 ### Time filtering in number charts vs. line charts
@@ -97,7 +97,7 @@ However, since 5 is closer to 6 than to 8, the widget will be colored yellow - t
 | `Function`        | `String` | `count` and `average` (by time).       | `null`     | `true`   |
 | `Average of`      | `String` | `hour`, `day`, `week` and `month`. | `null`     | `true`   |
 | `Measure time by` | `String` | Used to specify an alternative property to use as the time property for the average calculation instead of the default field which is `createdAt`.  | `createdAt`     | `false`  |
-| `Additional filters`    | `Array`  | Filters to include or exclude specific data based on Port's [search rules](/search-and-query/search-and-query.md#rules)         | []         | `false`  |
+| `Additional filters`    | `Array`  | Filters to include or exclude specific data based on Port's [search rules](/search-and-query/structure-and-syntax#rules)         | []         | `false`  |
 | `Unit`            | `String` | The unit of the number chart. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`   | `null`     | `true`   |
 | `Custom unit`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`  | `null`     | `true`   |
 | `Unit alignment`   | `String` | `left`, `right`, `bottom`.  | `null`     | `true`   |
@@ -110,7 +110,7 @@ However, since 5 is closer to 6 than to 8, the widget will be colored yellow - t
 | `Function`        | `String` | `sum`, `min`, `max`, `average` and `median` | `null`     | `true`   |
 | `Average of`      | `String` | `hour`, `day`, `week`, `month` and `total` (divide the sum by the number of entities) | `null`     | `true`   |
 | `Measure time by` | `String` | Used to specify an alternative property to use as the time property for the average calculation instead of the default field which is `createdAt`.    | `createdAt`     | `false`  |
-| `Additional filters`         | `Array`  | Filters to include or exclude specific data based on Port's [search rules](/search-and-query/search-and-query.md#rules)      | []         | `false`  |
+| `Additional filters`         | `Array`  | Filters to include or exclude specific data based on Port's [search rules](/search-and-query/structure-and-syntax#rules)      | []         | `false`  |
 | `Unit`            | `String` | The unit of the number chart. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`       | `null`     | `true`   |
 | `Custom unit`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`   | `null`     | `true`   |
 | `Unit alignment`   | `String` | `left`, `right`, `bottom`.   | `null`     | `true`   |
@@ -140,7 +140,7 @@ Pie charts illustrate data from entities in your software catalog divided by cat
 | `Empty state text`      | `String` | Pie chart empty state text                                                  | `No data for this widget`  | `false`  |
 | `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
-| `Additional filters`     | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
+| `Additional filters`     | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules) | []      | `false`  |
 
 ### Pie chart drill down
 
@@ -179,7 +179,7 @@ Bar charts illustrate data from entities in your software catalog divided by cat
 | `Empty state text`      | `String` | Bar chart empty state text                                                  | `No data for this widget`  | `false`  |
 | `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
-| `Additional filters`    | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
+| `Additional filters`    | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/structure-and-syntax#rules) | []      | `false`  |
 
 **Limitations**
 
@@ -411,62 +411,27 @@ Chart filters allow you to limit which entities are included in your dashboard v
 
 <ChartFilters />
 
-Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
-
-<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' style={{border:'1px', borderRadius:'8px'}}/>
-<br/><br/>
-
-These are used internally in Port and cannot be modified/removed.
-You can add additional filters as you wish, by adding new objects to the `rules` array, for example:
+If you want to add additional filters, you can do so in the UI, or in the following manner:
 
 <details>
-<summary><b>Filter with additional rule example (click to expand)</b></summary>
+<summary><b>Filter rules example (click to expand)</b></summary>
 
 ```json
 {
   "combinator": "and",
   "rules": [
-    {
-      "operator": "=",
-      "value": "service",
-      "property": "$blueprint"
-    },
-    {
-      "operator": "=",
-      "value": "someValue",
-      "property": "someProp"
-    }
-  ]
-}
-```
-</details>
-
-If you want to add additional rules with a different combinator, you can nest them inside a new object, for example:
-
-<details>
-<summary><b>Filter with nested rules example (click to expand)</b></summary>
-
-```json
-{
-  "combinator": "and",
-  "rules": [
-    {
-      "operator": "=",
-      "value": "service",
-      "property": "$blueprint"
-    },
     {
       "combinator": "or",
       "rules": [
         {
           "operator": "=",
-          "value": "someValue",
-          "property": "someProp"
+          "value": "value1",
+          "property": "property1"
         },
         {
           "operator": "=",
-          "value": "anotherValue",
-          "property": "anotherProp"
+          "value": "value2",
+          "property": "property2"
         }
       ]
     }
@@ -495,7 +460,7 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
 
 ### Dynamic filters
 
-You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when filtering a widget.
+You can use [dynamic properties](/search-and-query/structure-and-syntax#dynamic-properties) of the logged-in user when filtering a widget.
 
 ## Widget type identifiers (Terraform)
 

@@ -46,7 +46,7 @@ If the `Action card button text` field is left empty, the button label will defa
 
 #### Conditions
 
-The `condition` field allows you to define rules using Port's [search & query syntax](/search-and-query/#rules) to determine which entities the action will be available for.  
+The `condition` field allows you to define rules using Port's [search & query syntax](/search-and-query/structure-and-syntax#rules) to determine which entities the action will be available for.  
 
 :::info Requirements
 - Since conditions require an existing entity to evaluate, they are only available for actions with `DAY-2` or `DELETE` operations.

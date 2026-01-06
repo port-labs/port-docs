@@ -5,7 +5,7 @@ sidebar_position: 5
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Validating Webhook signatures
+# Validate webhook signatures
 
 In this guide, we will show how to validate that a message your webhook has received was sent by Port.
 

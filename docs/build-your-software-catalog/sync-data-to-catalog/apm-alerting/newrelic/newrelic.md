@@ -1,9 +1,9 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
 import DockerParameters from "./\_newrelic-docker-parameters.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
+import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
@@ -27,8 +27,13 @@ This integration allows you to:
 
 The resources that can be ingested from New Relic into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-- [`Entity`](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/)
-- [`Issue`](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/get-started/alerts-ai-overview-page/#issues)
+The following kinds are supported by the New Relic integration:
+
+- [**`newRelicService`**](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/) - Maps New Relic services and applications (SERVICE and APPLICATION entity types).
+- [**`newRelicAlert`**](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/get-started/alerts-ai-overview-page/#issues) - Maps New Relic issues/alerts.
+- [**`newRelicServiceLevel`**](https://docs.newrelic.com/docs/service-level-management/consume-slm/) - Maps New Relic service level indicators (SLIs) and service level objectives (SLOs).
+- [**`entity`**](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/) - Maps generic New Relic entities, including cloud resources from AWS, Azure, and GCP.
+- [**`entities`**](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/) - Maps New Relic dashboards.
 
 
 ## Setup

@@ -717,7 +717,7 @@ The meaning of this configuration is:
 
 ### Identifier is **unknown**
 
-If the metadata in your external tool is not an identifier, but some other property of the <PortTooltip id="entity">entity</PortTooltip> you want to update, you can use a [query rule](/search-and-query/#rules) to find the relevant entity and update it.
+If the metadata in your external tool is not an identifier, but some other property of the <PortTooltip id="entity">entity</PortTooltip> you want to update, you can use a [query rule](/search-and-query/structure-and-syntax#rules) to find the relevant entity and update it.
 
 Let's see some examples:
 

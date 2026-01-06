@@ -199,7 +199,7 @@ To define such a filter, use the `Initial filters` field when creating a page:
 
 <br/><br/>
 
-You can define any [supported rule](/search-and-query/#rules) in JSON format.  
+You can define any [supported rule](/search-and-query/structure-and-syntax#rules) in JSON format.  
 Here is an example that will only display `Deployments` that were updated in the past month:
 
 ```json showLineNumbers
@@ -214,7 +214,7 @@ Here is an example that will only display `Deployments` that were updated in the
 
 #### Dynamic filters
 
-You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when creating a catalog page.
+You can use [dynamic properties](/search-and-query/structure-and-syntax#dynamic-properties) of the logged-in user when creating a catalog page.
 
 ### Excluded properties
 
@@ -330,9 +330,9 @@ Just create your `group-by` view (and any other table customizations you desire)
 Port provides a free-text search option on tables. This will search all of the entities' properties and display the entities that match the query.  
 If the query contains multiple words, entities that contain all of these words will be displayed, even if they are spread across different properties. 
 
-<img src='/img/software-catalog/pages/TableSearchBar.png' width='100%' border='1px' />
+<img src='/img/software-catalog/pages/TableSearchBar.png' width='100%' style={{border:'1px', borderRadius:'8px'}} />
 
--> [Explore how to control page visibility and permissions](./page-permissions.md)
+Explore how to control [page visibility and permissions](/customize-pages-dashboards-and-plugins/page/page-permissions).
 
 
 ## Catalog auto discovery
