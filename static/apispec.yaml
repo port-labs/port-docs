@@ -36836,7 +36836,7 @@ paths:
       description: This route allows you to create an auto-discovery
         invocation.<br></br> To learn more about the auto-discovery feature, see
         the
-        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+        [documentation](https://docs.port.io/build-your-software-catalog/catalog-auto-discovery).
       security:
         - bearer: []
       requestBody:
@@ -36929,7 +36929,7 @@ paths:
         invocation. You can accept or reject individual suggestions, or accept
         or reject all suggestions at once.<br></br> To learn more about the
         auto-discovery feature, see the
-        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+        [documentation](https://docs.port.io/build-your-software-catalog/catalog-auto-discovery).
       security:
         - bearer: []
       requestBody:
@@ -37083,7 +37083,7 @@ paths:
       description: This route allows you to get suggestions for an auto-discovery
         invocation.<br></br> To learn more about the auto-discovery feature, see
         the
-        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+        [documentation](https://docs.port.io/build-your-software-catalog/catalog-auto-discovery).
       security:
         - bearer: []
       parameters:
@@ -37232,7 +37232,7 @@ paths:
       description: This route allows you to get the latest auto-discovery invocation
         for a blueprint.<br></br> To learn more about the auto-discovery
         feature, see the
-        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+        [documentation](https://docs.port.io/build-your-software-catalog/catalog-auto-discovery).
       security:
         - bearer: []
       parameters:
@@ -37338,7 +37338,7 @@ paths:
         invocation. If a suggestion is not accurate, you can update it with the
         correct information.<br></br> To learn more about the auto-discovery
         feature, see the
-        [documentation](https://docs.port.iod/build-your-software-catalog/catalog-auto-discovery).
+        [documentation](https://docs.port.io/build-your-software-catalog/catalog-auto-discovery).
       security:
         - bearer: []
       requestBody:

@@ -86,6 +86,16 @@ The different components that make up a basic property definition are listed in 
 The name of the property is the key of the property object. For example, in the code block above, the name of the property is `myProp`.
 :::
 
+## Change a property type
+
+The **type** field setting of a property (**number**, **string**, etc.) is permanent and cannot be changed after the property is created. If you create a **number** property, you won't be able to change it later to a **string**.
+
+To change the type configuration after creation:
+1. Create a new property with the desired **type**.
+2. Use the [migrate blueprint data](/build-your-software-catalog/customize-integrations/configure-data-model/migrate-data/) feature to insert the data to the new property. Ensure you apply the correct conversions if needed (for example, converting numbers to strings).
+3. Delete the old property.
+4. Rename the new property to the old property name (optional).
+
 ## Supported properties
 
 <DocCardList />
