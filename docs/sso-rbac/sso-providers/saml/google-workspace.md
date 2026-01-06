@@ -63,7 +63,7 @@ In order to complete the process you will need to contact us to receive the info
    <details>
    <summary>Port Logo</summary>
 
-   ![Port's logo](/img/sso/general-assets/PortIcon.png)
+   ![Port's logo](/img/sso/general-assets/PortLogoLarge.png)
 
    </details>
 

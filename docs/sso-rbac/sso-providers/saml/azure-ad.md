@@ -30,9 +30,12 @@ In order to complete the process you will need to contact us to receive the info
 4. In the getting started section, select the `Set up Single Sign On` button, and choose the SAML method.
 5. Edit the Basic SAML Configuration (step 1) and add the following information (Reach out to Port to receive your `{CONNECTION_NAME}` value):
     ![AD first step](/img/sso/azure-saml/azure-saml-first-step.png)
-    * Identifier (Entity ID): `urn:auth0:port-prod:{CONNECTION_NAME}`
-    * Reply URL (Assertion Consumer Service URL): `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
-    * Logout URL (This is optional): `https://auth.getport.io/logout`
+    
+    Under **Identifier (Entity ID)**, set: `urn:auth0:port-prod:{CONNECTION_NAME}`
+    
+    Under **Reply URL (Assertion Consumer Service URL)**, set: `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
+    
+    Under **Logout URL** (This is optional), set: `https://auth.getport.io/logout`
 
 :::info
 The details listed are for organizations hosted in EU.

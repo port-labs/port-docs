@@ -256,6 +256,7 @@ Below is an example of trigger data for an automation that triggers whenever an 
       "before": {
         "id": "r_Q0YotCZMKxDLdlaU",
         "status": "IN_PROGRESS",
+        "statusLabel": "In Progress",
         // "blueprint" and "entity" will be available if the action is tied to a blueprint
         // (meaning that the action run is tied to an entity)
         "blueprint": {
@@ -301,6 +302,7 @@ Below is an example of trigger data for an automation that triggers whenever an 
       "after": {
         "id": "r_Q0YotCZMKxDLdlaU",
         "status": "IN_PROGRESS",
+        "statusLabel": "In Progress",
         // "blueprint" and "entity" will be available if the action is tied to a blueprint
         // (meaning that the action run is tied to an entity)
         "blueprint": {

@@ -33,9 +33,12 @@ When using the URL format, Port will query the provided URL for the OpenAPI spec
 
 :::note
 
-When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`.
+When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from Port.
 
-To serve the OpenAPI spec from an AWS S3 bucket, please add a CORS policy to the bucket that allows requests from `app.getport.io`, check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
+For EU region organizations, allow requests from `app.getport.io`.  
+For US region organizations, allow requests from `app.us.getport.io`.
+
+To serve the OpenAPI spec from an AWS S3 bucket, please add a CORS policy to the bucket that allows requests from the appropriate Port URL based on your region, check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
 :::
 
 <Tabs groupId="lang" defaultValue="api" values={[
@@ -210,9 +213,12 @@ When using the URL format, Port will query the provided URL for the AsyncAPI spe
 
 :::note
 
-When using URL for the `async-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`
+When using URL for the `async-api` display please make sure that your server allows cross-origin (CORS) requests from Port.
 
-To serve the OpenAPI spec from an AWS S3 bucket, please add a CORS policy to the bucket that allows requests from `app.getport.io`, check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
+For EU region organizations, allow requests from `app.getport.io`.  
+For US region organizations, allow requests from `app.us.getport.io`.
+
+To serve the OpenAPI spec from an AWS S3 bucket, please add a CORS policy to the bucket that allows requests from the appropriate Port URL based on your region, check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
 :::
 
 <Tabs groupId="lang" defaultValue="api" values={[
